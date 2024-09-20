@@ -1,0 +1,11 @@
+{
+    "cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "../vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "cmake.buildArgs": [
+    "--verbose"
+    ],
+    "cmake.configureArgs": [
+    "-DCMAKE_VERBOSE_MAKEFILE=ON"
+    ]
+}

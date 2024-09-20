@@ -1,0 +1,11 @@
+/** \mainpage Threads Documentation
+
+The Threads project provides several systems for convenient thread usage:
+
+1. Thread Base
+   - A foundational class for creating custom thread-based components.
+
+In addition to these core components, this project includes sample code demonstrating how to effectively utilize these systems in your applications.
+
+For detailed information on each component and usage examples, please refer to the respective sections in this documentation.
+*/

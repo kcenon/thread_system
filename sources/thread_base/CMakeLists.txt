@@ -1,0 +1,13 @@
+set(LIBRARY_NAME thread_base)
+
+file(GLOB THREAD_BASE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB THREAD_BASE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+add_library(${LIBRARY_NAME} STATIC ${THREAD_BASE_HEADERS} ${THREAD_BASE_SOURCES} ${THREAD_BASE_MODULES})
+
+target_include_directories(${LIBRARY_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(NOT HAS_STD_FORMAT)
+find_package(fmt CONFIG REQUIRED)
+target_link_libraries(${LIBRARY_NAME} PUBLIC fmt::fmt-header-only)
+endif()
