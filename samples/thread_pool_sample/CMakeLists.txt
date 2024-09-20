@@ -1,0 +1,2 @@
+add_executable(thread_pool_sample thread_pool_sample.cpp)
+target_link_libraries(thread_pool_sample PUBLIC thread_pool logger)
