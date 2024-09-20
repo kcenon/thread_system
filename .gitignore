@@ -39,3 +39,6 @@ documents/
 
 # OSX
 .DS_Store
+
+# test results
+*.log
