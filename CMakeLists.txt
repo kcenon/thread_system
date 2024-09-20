@@ -81,3 +81,4 @@ endif()
 
 # Add the subdirectories
 add_subdirectory(sources)
+add_subdirectory(samples)
