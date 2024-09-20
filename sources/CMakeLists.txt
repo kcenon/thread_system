@@ -1,1 +1,2 @@
 add_subdirectory(thread_base)
+add_subdirectory(logger)
