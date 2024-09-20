@@ -1,0 +1,2 @@
+add_executable(priority_thread_pool_sample test_priority.h priority_thread_pool_sample.cpp)
+target_link_libraries(priority_thread_pool_sample PUBLIC priority_thread_pool logger)

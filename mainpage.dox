@@ -11,6 +11,9 @@ The Threads project provides several systems for convenient thread usage:
 3. Thread Pool
    - Implements a pool of worker threads, also based on the reusable thread base.
 
+4. Priority Thread Pool
+   - An advanced thread pool that supports job prioritization, built on the same thread base.
+
 In addition to these core components, this project includes sample code demonstrating how to effectively utilize these systems in your applications.
 
 For detailed information on each component and usage examples, please refer to the respective sections in this documentation.
