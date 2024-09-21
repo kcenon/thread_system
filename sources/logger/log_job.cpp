@@ -77,8 +77,8 @@ auto log_job::do_work() -> std::tuple<bool, std::optional<std::string>>
 #else
 					fmt::format
 #endif
-					("[{}][{}]: {} [{} ms]", formatted_time,
-					 log_type_utils::to_string(type_.value()), message_, elapsed.count());
+					("[{}][{}]: {} [{} ms]", formatted_time, type_.value(), message_,
+					 elapsed.count());
 			}
 		}
 		else
