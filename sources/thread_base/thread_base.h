@@ -42,7 +42,6 @@ namespace thread_module
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_base>;
 
-	public:
 		/**
 		 * @brief Sets the wake interval for the worker thread.
 		 * @param wake_interval An optional duration specifying how often the thread should wake up.
@@ -75,41 +74,71 @@ namespace thread_module
 		 * @brief Checks if there is work to be done.
 		 * @return bool True if there is work to be done, false otherwise.
 		 */
-		[[nodiscard]] virtual auto has_work(void) const -> bool { return false; };
+		[[nodiscard]] virtual auto has_work(void) const -> bool { return false; }
 
 		/**
 		 * @brief Called before the worker thread starts.
 		 * Derived classes can override this to perform initialization.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the initialization was successful (true) or not
+		 * (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		virtual auto before_start(void) -> void {};
+		virtual auto before_start(void) -> std::tuple<bool, std::optional<std::string>>
+		{
+			return { true, std::nullopt };
+		}
 
 		/**
 		 * @brief Performs the actual work of the thread.
 		 * Derived classes should override this to define the thread's behavior.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the work was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		virtual auto do_work(void) -> void {};
+		virtual auto do_work(void) -> std::tuple<bool, std::optional<std::string>>
+		{
+			return { true, std::nullopt };
+		}
 
 		/**
 		 * @brief Called after the worker thread stops.
 		 * Derived classes can override this to perform cleanup.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		virtual auto after_stop(void) -> void {};
+		virtual auto after_stop(void) -> std::tuple<bool, std::optional<std::string>>
+		{
+			return { true, std::nullopt };
+		}
 
 	protected:
-		std::optional<std::chrono::milliseconds>
-			wake_interval_;	   ///< Interval at which the thread wakes up
+		/** @brief Interval at which the thread wakes up */
+		std::optional<std::chrono::milliseconds> wake_interval_;
 
 	private:
-		std::mutex cv_mutex_;  ///< Mutex for protecting shared data and condition variable
-		std::condition_variable
-			worker_condition_; ///< Condition variable for thread synchronization
+		/** @brief Mutex for protecting shared data and condition variable */
+		std::mutex cv_mutex_;
+
+		/** @brief Condition variable for thread synchronization */
+		std::condition_variable worker_condition_;
 
 #ifdef USE_STD_JTHREAD
-		std::unique_ptr<std::jthread> worker_thread_; ///< The actual worker thread
-		std::optional<std::stop_source> stop_source_; ///< Source for stopping the thread
+		/** @brief The actual worker thread (jthread version) */
+		std::unique_ptr<std::jthread> worker_thread_;
+
+		/** @brief Source for stopping the thread (jthread version) */
+		std::optional<std::stop_source> stop_source_;
 #else
-		std::unique_ptr<std::thread> worker_thread_; ///< The actual worker thread
-		std::atomic<bool> stop_requested_; ///< Flag indicating whether the thread should stop
+		/** @brief The actual worker thread */
+		std::unique_ptr<std::thread> worker_thread_;
+
+		/** @brief Flag indicating whether the thread should stop */
+		std::atomic<bool> stop_requested_;
 #endif
 	};
 } // namespace thread_module

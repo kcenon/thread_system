@@ -1,7 +1,6 @@
 #include "thread_worker.h"
 
 #include "logger.h"
-#include "job_queue.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -35,11 +34,11 @@ namespace thread_pool_module
 		return !job_queue_->empty();
 	}
 
-	auto thread_worker::do_work() -> void
+	auto thread_worker::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{
 		if (job_queue_ == nullptr)
 		{
-			logger::handle().write(log_types::Error, "there is no job_queue");
+			return { false, "there is no job_queue" };
 		}
 
 		auto [job_opt, error] = job_queue_->dequeue();
@@ -47,19 +46,16 @@ namespace thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				if (logger::handle().get_file_target() >= log_types::Error
-					|| logger::handle().get_console_target() >= log_types::Error)
-				{
-					logger::handle().write(
-						log_types::Error,
+				return { false,
 #ifdef USE_STD_FORMAT
-						std::format
+						 std::format
 #else
-						fmt::format
+						 fmt::format
 #endif
-						("error dequeue job: {}", error.value_or("unknown error")));
-				}
+						 ("error dequeue job: {}", error.value_or("unknown error")) };
 			}
+
+			return { true, std::nullopt };
 		}
 
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> time_point
@@ -73,19 +69,13 @@ namespace thread_pool_module
 		auto [worked, work_error] = job_opt.value()->do_work();
 		if (!worked)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				logger::handle().write(
-					log_types::Error,
+			return { false,
 #ifdef USE_STD_FORMAT
-					std::format
+					 std::format
 #else
-					fmt::format
+					 fmt::format
 #endif
-					("error executing job: {}", work_error.value_or("unknown error")),
-					time_point);
-			}
+					 ("error executing job: {}", work_error.value_or("unknown error")) };
 		}
 
 		if (logger::handle().get_file_target() >= log_types::Sequence
@@ -101,5 +91,7 @@ namespace thread_pool_module
 				("job executed successfully: {} on thread_worker", job_opt.value()->get_name()),
 				time_point);
 		}
+
+		return { true, std::nullopt };
 	}
 } // namespace thread_pool_module

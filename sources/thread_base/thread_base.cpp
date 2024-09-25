@@ -55,7 +55,12 @@ namespace thread_module
 					auto stop_token = stop_source_.value().get_token();
 #endif
 
-					before_start();
+					auto [before_started, before_start_error] = before_start();
+					if (!before_started)
+					{
+						std::cerr << "error before start: "
+								  << before_start_error.value_or("unknown error") << std::endl;
+					}
 
 #ifdef USE_STD_JTHREAD
 					while (!stop_token.stop_requested() || has_work())
@@ -99,14 +104,25 @@ namespace thread_module
 
 						try
 						{
-							do_work();
+							auto [do_worked, do_work_error] = do_work();
+							if (!do_worked)
+							{
+								std::cerr << "error doing work: "
+										  << do_work_error.value_or("unknown error") << std::endl;
+							}
 						}
 						catch (const std::exception& e)
 						{
 							std::cerr << e.what() << '\n';
 						}
 					}
-					after_stop();
+
+					auto [after_stopped, after_stop_error] = after_stop();
+					if (!after_stopped)
+					{
+						std::cerr << "error after stop: "
+								  << after_stop_error.value_or("unknown error") << std::endl;
+					}
 				});
 		}
 		catch (const std::bad_alloc& e)

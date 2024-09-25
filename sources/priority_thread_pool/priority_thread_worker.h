@@ -26,7 +26,8 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Constructs a new priority_thread_worker object.
 		 * @param priorities A vector of priority levels this worker can process.
-		 * @param use_time_tag A boolean flag indicating whether to use time tags (default is true).
+		 * @param use_time_tag A boolean flag indicating whether to use time tags in job processing
+		 * (default is true).
 		 */
 		priority_thread_worker(std::vector<priority_type> priorities,
 							   const bool& use_time_tag = true);
@@ -57,14 +58,22 @@ namespace priority_thread_pool_module
 
 		/**
 		 * @brief Performs the actual work by processing jobs from the queue.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the work was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		auto do_work() -> void override;
+		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
-		bool use_time_tag_;						///< Flag indicating whether to use time tags
-		std::vector<priority_type> priorities_; ///< The priority levels this worker can process
-		std::shared_ptr<priority_job_queue<priority_type>>
-			job_queue_;							///< The priority job queue to process
+		/** @brief Flag indicating whether to use time tags in job processing */
+		bool use_time_tag_;
+
+		/** @brief The priority levels this worker can process */
+		std::vector<priority_type> priorities_;
+
+		/** @brief The priority job queue to process */
+		std::shared_ptr<priority_job_queue<priority_type>> job_queue_;
 	};
 } // namespace priority_thread_pool_module
 

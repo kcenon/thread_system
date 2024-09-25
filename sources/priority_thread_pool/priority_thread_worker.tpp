@@ -49,11 +49,13 @@ namespace priority_thread_pool_module
 		return !job_queue_->empty(priorities_);
 	}
 
-	template <typename priority_type> auto priority_thread_worker<priority_type>::do_work() -> void
+	template <typename priority_type>
+	auto priority_thread_worker<priority_type>::do_work()
+		-> std::tuple<bool, std::optional<std::string>>
 	{
 		if (job_queue_ == nullptr)
 		{
-			logger::handle().write(log_types::Error, "there is no job_queue");
+			return { false, "there is no job_queue" };
 		}
 
 		auto [job_opt, error] = job_queue_->dequeue(priorities_);
@@ -61,33 +63,22 @@ namespace priority_thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				if (logger::handle().get_file_target() >= log_types::Error
-					|| logger::handle().get_console_target() >= log_types::Error)
-				{
-					logger::handle().write(
-						log_types::Error,
+				return { false,
 #ifdef USE_STD_FORMAT
-						std::format
+						 std::format
 #else
-						fmt::format
+						 fmt::format
 #endif
-						("cannot dequeue job: {}", error.value_or("unknown error")));
-				}
+						 ("cannot dequeue job: {}", error.value_or("unknown error")) };
 			}
 
-			return;
+			return { true, std::nullopt };
 		}
 
 		auto current_job = std::move(job_opt.value());
 		if (current_job == nullptr)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				logger::handle().write(log_types::Error, "error executing job: nullptr");
-			}
-
-			return;
+			return { false, "error executing job: nullptr" };
 		}
 
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> time_point
@@ -101,19 +92,13 @@ namespace priority_thread_pool_module
 		auto [worked, work_error] = current_job->do_work();
 		if (!worked)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				logger::handle().write(
-					log_types::Error,
+			return { false,
 #ifdef USE_STD_FORMAT
-					std::format
+					 std::format
 #else
-					fmt::format
+					 fmt::format
 #endif
-					("error executing job: {}", work_error.value_or("unknown error")),
-					time_point);
-			}
+					 ("error executing job: {}", work_error.value_or("unknown error")) };
 		}
 
 		if (logger::handle().get_file_target() >= log_types::Sequence
@@ -129,5 +114,7 @@ namespace priority_thread_pool_module
 									current_job->get_name(), current_job->priority()),
 								   time_point);
 		}
+
+		return { true, std::nullopt };
 	}
 } // namespace priority_thread_pool_module
