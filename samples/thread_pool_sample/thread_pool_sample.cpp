@@ -9,6 +9,9 @@
 #include <fmt/format.h>
 #endif
 
+using namespace log_module;
+using namespace thread_pool_module;
+
 uint16_t thread_counts_ = 3;
 uint32_t max_count_ = 1000;
 log_types file_target_ = log_types::None;
