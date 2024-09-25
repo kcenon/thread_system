@@ -14,7 +14,8 @@ namespace priority_thread_pool_module
 	 * @brief A queue for managing priority jobs.
 	 *
 	 * This template class implements a queue that manages jobs with different priority levels.
-	 * It inherits from std::enable_shared_from_this to allow creating shared_ptr from this.
+	 * It inherits from job_queue and std::enable_shared_from_this to allow creating shared_ptr from
+	 * this.
 	 *
 	 * @tparam priority_type The type used to represent the priority levels.
 	 */
@@ -31,7 +32,6 @@ namespace priority_thread_pool_module
 		 */
 		virtual ~priority_job_queue(void) override;
 
-	public:
 		/**
 		 * @brief Enqueues a job into the queue.
 		 * @param value A unique pointer to the job to be enqueued.
@@ -113,8 +113,8 @@ namespace priority_thread_pool_module
 			-> std::optional<std::unique_ptr<priority_job<priority_type>>>;
 
 	private:
-		std::map<priority_type, std::queue<std::unique_ptr<priority_job<priority_type>>>>
-			queues_; ///< Map of priority queues
+		/** @brief Map of priority queues */
+		std::map<priority_type, std::queue<std::unique_ptr<priority_job<priority_type>>>> queues_;
 	};
 } // namespace priority_thread_pool_module
 

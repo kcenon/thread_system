@@ -23,11 +23,8 @@ namespace log_module
 
 	logger::logger()
 		: log_queue_(std::make_shared<job_queue>())
-		, title_("logger")
 		, file_log_type_(log_types::Error)
 		, console_log_type_(log_types::Information)
-		, max_lines_(1000)
-		, use_backup_(false)
 	{
 	}
 
@@ -81,7 +78,7 @@ namespace log_module
 
 	[[nodiscard]] auto logger::has_work() const -> bool { return !log_queue_->empty(); }
 
-	auto logger::before_start() -> void
+	auto logger::before_start() -> std::tuple<bool, std::optional<std::string>>
 	{
 		log_queue_->set_notify(!wake_interval_.has_value());
 
@@ -102,9 +99,11 @@ namespace log_module
 		{
 			write_to_console(buffer);
 		}
+
+		return { true, std::nullopt };
 	}
 
-	auto logger::do_work() -> void
+	auto logger::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{
 		auto remaining_logs = log_queue_->dequeue_all();
 
@@ -137,9 +136,11 @@ namespace log_module
 
 		write_to_console(console_buffer);
 		write_to_file(file_buffer);
+
+		return { true, std::nullopt };
 	}
 
-	auto logger::after_stop() -> void
+	auto logger::after_stop() -> std::tuple<bool, std::optional<std::string>>
 	{
 		log_job job("STOP");
 		auto [worked, work_error] = job.do_work();
@@ -158,6 +159,8 @@ namespace log_module
 		{
 			write_to_console(buffer);
 		}
+
+		return { true, std::nullopt };
 	}
 
 	auto logger::write_to_file(const std::string& message) -> void

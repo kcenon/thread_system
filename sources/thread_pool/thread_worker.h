@@ -23,7 +23,8 @@ namespace thread_pool_module
 	public:
 		/**
 		 * @brief Constructs a new thread_worker object.
-		 * @param use_time_tag A boolean flag indicating whether to use time tags (default is true).
+		 * @param use_time_tag A boolean flag indicating whether to use time tags in job processing
+		 * (default is true).
 		 */
 		thread_worker(const bool& use_time_tag = true);
 
@@ -47,11 +48,18 @@ namespace thread_pool_module
 
 		/**
 		 * @brief Performs the actual work by processing jobs from the queue.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the work was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		auto do_work() -> void override;
+		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
-		bool use_time_tag_;					   ///< Flag indicating whether to use time tags
-		std::shared_ptr<job_queue> job_queue_; ///< The job queue to process
+		/** @brief Flag indicating whether to use time tags in job processing */
+		bool use_time_tag_;
+
+		/** @brief The job queue to process */
+		std::shared_ptr<job_queue> job_queue_;
 	};
 } // namespace thread_pool_module

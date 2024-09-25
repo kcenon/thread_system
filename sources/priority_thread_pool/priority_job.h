@@ -13,8 +13,8 @@ namespace priority_thread_pool_module
 	 * @brief Represents a job with a priority level.
 	 *
 	 * This template class encapsulates a job with a callback function, a priority level,
-	 * and a name. It inherits from std::enable_shared_from_this to allow creating shared_ptr from
-	 * this.
+	 * and a name. It inherits from job and std::enable_shared_from_this to allow creating
+	 * shared_ptr from this.
 	 *
 	 * @tparam priority_type The type used to represent the priority level.
 	 */
@@ -37,7 +37,6 @@ namespace priority_thread_pool_module
 		 */
 		virtual ~priority_job(void) override;
 
-	public:
 		/**
 		 * @brief Get the priority level of the job.
 		 * @return priority_type The priority level of the job.
@@ -52,15 +51,16 @@ namespace priority_thread_pool_module
 
 		/**
 		 * @brief Get the job queue associated with this job.
-		 * @return std::shared_ptr<priority_job_queue<priority_type>> A shared pointer to the
-		 * associated priority job queue.
+		 * @return std::shared_ptr<job_queue> A shared pointer to the associated priority job queue.
 		 */
-		auto get_job_queue(void) const -> std::shared_ptr<job_queue> override;
+		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override;
 
 	private:
-		priority_type priority_; ///< The priority level of the job.
-		std::weak_ptr<priority_job_queue<priority_type>>
-			job_queue_;			 ///< A weak pointer to the associated priority job queue.
+		/** @brief The priority level of the job. */
+		priority_type priority_;
+
+		/** @brief A weak pointer to the associated priority job queue. */
+		std::weak_ptr<priority_job_queue<priority_type>> job_queue_;
 	};
 } // namespace priority_thread_pool_module
 

@@ -32,9 +32,11 @@ namespace log_module
 
 	namespace detail
 	{
+		/** @brief Array of string representations for log types */
 		constexpr std::array log_type_strings
 			= { "NONE", "EXCEPTION", "ERROR", "INFORMATION", "DEBUG", "SEQUENCE", "PARAMETER" };
 
+		/** @brief Number of log types */
 		constexpr size_t log_type_count = log_type_strings.size();
 
 		// Compile-time check to ensure log_type_strings and log_types are in sync
@@ -47,7 +49,7 @@ namespace log_module
 	 * @param log_type The log_types value to convert.
 	 * @return std::string_view A string representation of the log type.
 	 */
-	constexpr std::string_view to_string(log_types log_type)
+	[[nodiscard]] constexpr std::string_view to_string(log_types log_type)
 	{
 		auto index = static_cast<size_t>(log_type);
 		return (index < detail::log_type_count) ? detail::log_type_strings[index] : "UNKNOWN";

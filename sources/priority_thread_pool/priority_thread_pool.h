@@ -46,7 +46,6 @@ namespace priority_thread_pool_module
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<priority_thread_pool<priority_type>>;
 
-	public:
 		/**
 		 * @brief Starts the thread pool.
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
@@ -97,11 +96,14 @@ namespace priority_thread_pool_module
 		auto stop(const bool& immediately_stop = false) -> void;
 
 	private:
-		std::atomic<bool> start_pool_; ///< Flag indicating whether the pool is started
-		std::shared_ptr<priority_job_queue<priority_type>>
-			job_queue_;				   ///< The priority job queue for the thread pool
-		std::vector<std::unique_ptr<priority_thread_worker<priority_type>>>
-			workers_;				   ///< Collection of priority thread workers
+		/** @brief Flag indicating whether the pool is started */
+		std::atomic<bool> start_pool_;
+
+		/** @brief The priority job queue for the thread pool */
+		std::shared_ptr<priority_job_queue<priority_type>> job_queue_;
+
+		/** @brief Collection of priority thread workers */
+		std::vector<std::unique_ptr<priority_thread_worker<priority_type>>> workers_;
 	};
 } // namespace priority_thread_pool_module
 

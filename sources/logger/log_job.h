@@ -59,12 +59,19 @@ namespace log_module
 		[[nodiscard]] auto log() const -> std::string;
 
 	private:
-		std::string message_;			///< The original log message
-		std::string log_message_;		///< The formatted log message
-		std::optional<log_types> type_; ///< The type of the log entry
-		std::chrono::system_clock::time_point
-			timestamp_;					///< The timestamp of when the log job was created
-		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-			start_time_;				///< The optional start time of the log entry
+		/** @brief The original log message */
+		std::string message_;
+
+		/** @brief The formatted log message */
+		std::string log_message_;
+
+		/** @brief The type of the log entry */
+		std::optional<log_types> type_;
+
+		/** @brief The timestamp of when the log job was created */
+		std::chrono::system_clock::time_point timestamp_;
+
+		/** @brief The optional start time of the log entry */
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time_;
 	};
 } // namespace log_module

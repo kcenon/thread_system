@@ -41,7 +41,6 @@ namespace thread_pool_module
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
 
-	public:
 		/**
 		 * @brief Starts the thread pool.
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
@@ -89,8 +88,13 @@ namespace thread_pool_module
 		auto stop(const bool& immediately_stop = false) -> void;
 
 	private:
-		std::atomic<bool> start_pool_;		   ///< Flag indicating whether the pool is started
-		std::shared_ptr<job_queue> job_queue_; ///< The job queue for the thread pool
-		std::vector<std::unique_ptr<thread_worker>> workers_; ///< Collection of worker threads
+		/** @brief Flag indicating whether the pool is started */
+		std::atomic<bool> start_pool_;
+
+		/** @brief The job queue for the thread pool */
+		std::shared_ptr<job_queue> job_queue_;
+
+		/** @brief Collection of worker threads */
+		std::vector<std::unique_ptr<thread_worker>> workers_;
 	};
 } // namespace thread_pool_module

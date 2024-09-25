@@ -42,9 +42,8 @@ namespace thread_module
 		 * @brief Get a shared pointer to this job object.
 		 * @return std::shared_ptr<job> A shared pointer to this job.
 		 */
-		auto get_ptr(void) -> std::shared_ptr<job>;
+		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<job>;
 
-	public:
 		/**
 		 * @brief Get the name of the job.
 		 * @return std::string The name of the job.
@@ -71,11 +70,16 @@ namespace thread_module
 		 * @return std::shared_ptr<job_queue> A shared pointer to the associated job queue.
 		 *         If no job queue is associated, this may return a null shared_ptr.
 		 */
-		virtual auto get_job_queue(void) const -> std::shared_ptr<job_queue>;
+		[[nodiscard]] virtual auto get_job_queue(void) const -> std::shared_ptr<job_queue>;
 
 	protected:
+		/** @brief The name of the job */
 		std::string name_;
+
+		/** @brief Weak pointer to the associated job queue */
 		std::weak_ptr<job_queue> job_queue_;
+
+		/** @brief The callback function to be executed when the job is processed */
 		std::function<std::tuple<bool, std::optional<std::string>>(void)> callback_;
 	};
 } // namespace thread_module

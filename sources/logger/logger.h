@@ -45,7 +45,7 @@ namespace log_module
 		 * @brief Gets the log types that are written to a file.
 		 * @return log_types The log types that are written to a file.
 		 */
-		auto get_file_target(void) const -> log_types;
+		[[nodiscard]] auto get_file_target(void) const -> log_types;
 
 		/**
 		 * @brief Sets the log types that should be written to the console.
@@ -54,10 +54,10 @@ namespace log_module
 		auto set_console_target(const log_types& type) -> void;
 
 		/**
-		 * @brief Gets the log types that are written to a file.
-		 * @return log_types The log types that are written to a file.
+		 * @brief Gets the log types that are written to the console.
+		 * @return log_types The log types that are written to the console.
 		 */
-		auto get_console_target(void) const -> log_types;
+		[[nodiscard]] auto get_console_target(void) const -> log_types;
 
 		/**
 		 * @brief Sets the maximum number of lines to keep in the log.
@@ -69,7 +69,7 @@ namespace log_module
 		 * @brief Gets the maximum number of lines to keep in the log.
 		 * @return uint32_t The maximum number of lines to keep in the log.
 		 */
-		auto get_max_lines(void) const -> uint32_t;
+		[[nodiscard]] auto get_max_lines(void) const -> uint32_t;
 
 		/**
 		 * @brief Sets whether to use a backup log file.
@@ -81,7 +81,7 @@ namespace log_module
 		 * @brief Gets whether to use a backup log file.
 		 * @return bool True if using a backup log file, false otherwise.
 		 */
-		auto get_use_backup(void) const -> bool;
+		[[nodiscard]] auto get_use_backup(void) const -> bool;
 
 		/**
 		 * @brief Gets the current time point.
@@ -111,18 +111,31 @@ namespace log_module
 
 		/**
 		 * @brief Called before the logger thread starts.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the initialization was successful (true) or not
+		 * (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		auto before_start() -> void override;
+		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
 		 * @brief Performs the actual work of the logger thread.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the work was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		auto do_work() -> void override;
+		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
 		 * @brief Called after the logger thread stops.
+		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
-		auto after_stop() -> void override;
+		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
 		 * @brief Writes a message to the console.
@@ -153,13 +166,26 @@ namespace log_module
 		logger& operator=(const logger&) = delete;
 
 	private:
-		bool use_backup_;					   ///< Flag indicating whether to use a backup log file
-		uint32_t max_lines_;				   ///< Maximum number of lines to keep in the log
-		std::string title_;					   ///< Title of the logger
-		log_types file_log_type_;			   ///< Types of logs to write to file
-		log_types console_log_type_;		   ///< Types of logs to write to console
-		std::deque<std::string> log_buffer_;   ///< Buffer for log dequeuing related max lines
-		std::shared_ptr<job_queue> log_queue_; ///< Queue for log jobs
+		/** @brief Flag indicating whether to use a backup log file */
+		bool use_backup_;
+
+		/** @brief Maximum number of lines to keep in the log */
+		uint32_t max_lines_;
+
+		/** @brief Title of the logger */
+		std::string title_;
+
+		/** @brief Types of logs to write to file */
+		log_types file_log_type_;
+
+		/** @brief Types of logs to write to console */
+		log_types console_log_type_;
+
+		/** @brief Buffer for log dequeuing related max lines */
+		std::deque<std::string> log_buffer_;
+
+		/** @brief Queue for log jobs */
+		std::shared_ptr<job_queue> log_queue_;
 
 #pragma region singleton
 	public:
@@ -175,8 +201,11 @@ namespace log_module
 		static auto destroy() -> void;
 
 	private:
-		static std::unique_ptr<logger> handle_; ///< Singleton instance of the logger
-		static std::once_flag once_; ///< Flag to ensure singleton is initialized only once
+		/** @brief Singleton instance of the logger */
+		static std::unique_ptr<logger> handle_;
+
+		/** @brief Flag to ensure singleton is initialized only once */
+		static std::once_flag once_;
 #pragma endregion
 	};
 } // namespace log_module
