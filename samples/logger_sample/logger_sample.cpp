@@ -8,6 +8,8 @@
 #include <fmt/format.h>
 #endif
 
+using namespace log_module;
+
 uint32_t max_count_ = 100000;
 log_types file_target_ = log_types::Error;
 log_types console_target_ = log_types::Parameter;
