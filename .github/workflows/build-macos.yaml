@@ -1,0 +1,46 @@
+name: Build-macOS
+
+on:
+  push:
+    branches:
+      - main
+      - release**
+  pull_request:
+    branches:
+      - main
+      - release**
+  workflow_dispatch:
+
+jobs:
+  build_macos:
+    runs-on: macos-11
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.ACTION_TOKEN }}
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+          key: ${{ runner.os }}-pkg-cache
+      - name: install dependency with Homebrew
+        run: |
+          brew install cmake ninja libsndfile libsamplerate qt@5
+        - name: Install dependencies with vcpkg
+          run: |
+            vcpkg install --binarysource="clear;x-gha,readwrite" --recurse libsndfile libsamplerate crossguid lz4 fmt cryptopp boost-dll boost-json librabbitmq efsw libplist
+      - name: Build application
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G Ninja -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="..\target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake --build .
