@@ -14,12 +14,23 @@ on:
 jobs:
   build_windows:
     runs-on: windows-2019
-    timeout-minutes: 90
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          token: ${{ secrets.ACTION_TOKEN }}
+          repository: kcenon/thread_system
+          ssh-strict: true
+          ssh-user: git
+          persist-credentials: true
+          clean: true
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+          fetch-tags: false
+          show-progress: true
+          lfs: false
+          set-safe-directory: true
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - uses: actions/github-script@v6
         with:
