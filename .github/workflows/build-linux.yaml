@@ -13,6 +13,8 @@ on:
 
 jobs:
   build_linux:
+    permissions:
+      contents: write
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
@@ -42,7 +44,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade -y
-          sudo apt install -y cmake build-essential gdb doxygen pkg-config curl zip unzip tar
+          sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
 
       - name: Check architecture and set environment variable if needed
         run: |
