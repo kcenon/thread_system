@@ -1,7 +1,5 @@
 #include "priority_job_queue.h"
 
-#include <format>
-
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
