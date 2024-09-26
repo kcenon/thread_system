@@ -1,8 +1,15 @@
 #include "logger.h"
 
+#ifdef USE_STD_FORMAT
 #include <format>
-#include <vector>
+#else
+#include "fmt/format.h"
+#endif
+
 #include <fstream>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 
 namespace log_module
 {
@@ -88,7 +95,13 @@ namespace log_module
 			= (worked) ? job.log() : work_error.value_or("Unknown error to convert to log message");
 
 		std::string buffer = "";
-		std::format_to(std::back_inserter(buffer), "{}\n", log);
+
+#ifdef USE_STD_FORMAT
+		std::format_to
+#else
+		fmt::format_to
+#endif
+			(std::back_inserter(buffer), "{}\n", log);
 
 		if (file_log_type_ > log_types::None)
 		{
@@ -125,12 +138,22 @@ namespace log_module
 
 			if (current_log->get_type() <= file_log_type_)
 			{
-				std::format_to(std::back_inserter(file_buffer), "{}\n", log);
+#ifdef USE_STD_FORMAT
+				std::format_to
+#else
+				fmt::format_to
+#endif
+					(std::back_inserter(file_buffer), "{}\n", log);
 			}
 
 			if (current_log->get_type() <= console_log_type_)
 			{
-				std::format_to(std::back_inserter(console_buffer), "{}\n", log);
+#ifdef USE_STD_FORMAT
+				std::format_to
+#else
+				fmt::format_to
+#endif
+					(std::back_inserter(console_buffer), "{}\n", log);
 			}
 		}
 
@@ -148,7 +171,12 @@ namespace log_module
 			= (worked) ? job.log() : work_error.value_or("Unknown error to convert to log message");
 
 		std::string buffer = "";
-		std::format_to(std::back_inserter(buffer), "{}\n", log);
+#ifdef USE_STD_FORMAT
+		std::format_to
+#else
+		fmt::format_to
+#endif
+			(std::back_inserter(buffer), "{}\n", log);
 
 		if (file_log_type_ > log_types::None)
 		{
@@ -174,9 +202,24 @@ namespace log_module
 		const auto today = std::chrono::floor<std::chrono::days>(now);
 		const auto year_month_day = std::chrono::year_month_day{ today };
 
-		const std::string file_name = std::format("{}_{:%Y-%m-%d}.log", title_, year_month_day);
-		const std::string backup_name
-			= std::format("{}_{:%Y-%m-%d}.backup", title_, year_month_day);
+		const int year = static_cast<int>(year_month_day.year());
+		const unsigned month = static_cast<unsigned>(year_month_day.month());
+		const unsigned day = static_cast<unsigned>(year_month_day.day());
+
+		const std::string file_name =
+#ifdef USE_STD_FORMAT
+			std::format
+#else
+			fmt::format
+#endif
+			("{}_{:04d}-{:02d}-{:02d}.log", title_, year, month, day);
+		const std::string backup_name =
+#ifdef USE_STD_FORMAT
+			std::format
+#else
+			fmt::format
+#endif
+			("{}_{:04d}-{:02d}-{:02d}.backup", title_, year, month, day);
 
 		if (max_lines_ == 0)
 		{
