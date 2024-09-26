@@ -10,7 +10,7 @@ elif [ "$(uname)" == "Linux" ]; then
     apt install cmake build-essential gdb doxygen -y
 
     apt-get install curl zip unzip tar -y
-    apt-get install pkg-config -y
+    apt-get install pkg-config ninja-build -y
 
     if [ $(uname -m) == "aarch64" ]; then
         export VCPKG_FORCE_SYSTEM_BINARIES=arm
