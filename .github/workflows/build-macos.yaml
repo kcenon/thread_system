@@ -19,28 +19,78 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          token: ${{ secrets.ACTION_TOKEN }}
+          repository: kcenon/thread_system
+          ssh-strict: true
+          ssh-user: git
+          persist-credentials: true
+          clean: true
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+          fetch-tags: false
+          show-progress: true
+          lfs: false
+          set-safe-directory: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/github-script@v6
         with:
           script: |
             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-      - name: Cache dependencies
-        id: cache-deps
+
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        id: vcpkg-cache
+        with:
+          path: |
+            ~/vcpkg
+            !~/vcpkg/buildtrees
+            !~/vcpkg/packages
+            !~/vcpkg/downloads
+          key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+
+      - name: Cache vcpkg installed
+        uses: actions/cache@v3
+        id: vcpkg-installed
+        with:
+          path: ~/vcpkg_installed
+          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+
+      - name: Set up vcpkg
+        run: |
+          if [ ! -d ~/vcpkg ]; then
+            git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg
+          else
+            cd ~/vcpkg
+            git pull
+          fi
+          ~/vcpkg/bootstrap-vcpkg.sh
+          ~/vcpkg/vcpkg integrate install
+
+      - name: Install dependencies with vcpkg
+        run: |
+          ~/vcpkg/vcpkg install --binarysource="clear;x-gha,readwrite" --recurse libsndfile libsamplerate crossguid lz4 fmt cryptopp boost-dll boost-json librabbitmq efsw libplist
+
+      - name: Cache CMake build
         uses: actions/cache@v3
         with:
           path: |
-            ~/Library/Caches/Homebrew
-          key: ${{ runner.os }}-pkg-cache
-      - name: install dependency with Homebrew
-        run: |
-          brew install cmake ninja libsndfile libsamplerate qt@5
-        - name: Install dependencies with vcpkg
-          run: |
-            vcpkg install --binarysource="clear;x-gha,readwrite" --recurse libsndfile libsamplerate crossguid lz4 fmt cryptopp boost-dll boost-json librabbitmq efsw libplist
+            ${{ github.workspace }}/build
+          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cmake-
+
       - name: Build application
         run: |
-          mkdir build
+          mkdir -p build
           cd build
-          cmake .. -G Ninja -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="..\target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake .. -G Ninja -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="../target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake"
           cmake --build .
+
+      - name: Cache built libraries
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/build
+          key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
+          restore-keys: |
+            ${{ runner.os }}-built-libs-
