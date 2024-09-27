@@ -1,4 +1,7 @@
 #!/bin/bash
+
+ORIGINAL_DIR=$(pwd)
+
 if [ "$(uname)" == "Darwin" ]; then
     brew update
     brew upgrade
@@ -19,15 +22,18 @@ fi
 
 doxygen
 
-cd ..
+pushd ..
 
 if [ ! -d "./vcpkg/" ]; then
     git clone https://github.com/microsoft/vcpkg.git
 fi
 
-cd vcpkg
+pushd vcpkg
 
 git pull
 ./bootstrap-vcpkg.sh
 
-cd ..
+popd
+popd
+
+cd "$ORIGINAL_DIR"
