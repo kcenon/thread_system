@@ -35,7 +35,7 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Virtual destructor for the priority_job class.
 		 */
-		virtual ~priority_job(void) override;
+		~priority_job(void) override;
 
 		/**
 		 * @brief Get the priority level of the job.
