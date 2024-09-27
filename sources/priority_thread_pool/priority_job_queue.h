@@ -30,7 +30,7 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Virtual destructor for the priority_job_queue class.
 		 */
-		virtual ~priority_job_queue(void) override;
+		~priority_job_queue(void) override;
 
 		/**
 		 * @brief Enqueues a job into the queue.
