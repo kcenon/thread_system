@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
+
 # Thread System Project
 
 ## Purpose
