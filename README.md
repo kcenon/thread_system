@@ -18,8 +18,13 @@ This project proposes a reusable Thread system for programmers who struggle with
 ### 2. [Logging System (log_module)](https://github.com/kcenon/thread_system/tree/main/sources/logger)
 
 - `logger` class: Provides logging functionality using a singleton pattern
-- `log_types` enum: Defines various log levels
+- `log_types` enum: Defines various log levels (e.g., INFO, WARNING, ERROR)
 - `log_job` class: Specialized job class for logging operations
+- `log_collector` class: Manages the collection, processing, and distribution of log messages
+- `console_job` class: Represents a console logging job derived from the base job class
+- `console_writer` class: Handles writing log messages to the console in a separate thread
+- `file_job` class: Represents a file logging job derived from the base job class
+- `file_writer` class: Handles writing log messages to files in a separate thread
 
 ### 3. [Thread Pool System (thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/thread_pool)
 
@@ -48,9 +53,9 @@ This project proposes a reusable Thread system for programmers who struggle with
 ## Usage Examples
 
 Sample codes included in the project demonstrate the following use cases:
-- [Basic logger usage](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample)
-- [Basic thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample)
-- [Priority-based thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample)
+- [Basic logger usage](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample/logger_sample.cpp)
+- [Basic thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample/thread_pool_sample.cpp)
+- [Priority-based thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample/priority_thread_pool_sample.cpp)
 
 ## Areas for Improvement
 
