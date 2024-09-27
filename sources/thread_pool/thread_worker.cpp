@@ -58,6 +58,12 @@ namespace thread_pool_module
 			return { true, std::nullopt };
 		}
 
+		auto current_job = std::move(job_opt.value());
+		if (current_job == nullptr)
+		{
+			return { false, "error executing job: nullptr" };
+		}
+
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> time_point
 			= std::nullopt;
 		if (use_time_tag_)
@@ -65,8 +71,8 @@ namespace thread_pool_module
 			time_point = std::chrono::high_resolution_clock::now();
 		}
 
-		job_opt.value()->set_job_queue(job_queue_);
-		auto [worked, work_error] = job_opt.value()->do_work();
+		current_job->set_job_queue(job_queue_);
+		auto [worked, work_error] = current_job->do_work();
 		if (!worked)
 		{
 			return { false,
@@ -88,7 +94,7 @@ namespace thread_pool_module
 #else
 				fmt::format
 #endif
-				("job executed successfully: {} on thread_worker", job_opt.value()->get_name()),
+				("job executed successfully: {} on thread_worker", current_job->get_name()),
 				time_point);
 		}
 
