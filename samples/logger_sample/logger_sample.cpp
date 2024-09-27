@@ -10,13 +10,17 @@
 
 using namespace log_module;
 
-uint32_t max_count_ = 100000;
+bool use_backup_ = true;
+uint32_t max_lines_ = 1000;
+uint32_t test_line_count_ = 10000000;
 log_types file_target_ = log_types::Error;
 log_types console_target_ = log_types::Parameter;
 
 auto main() -> int
 {
 	logger::handle().set_title("logger_sample");
+	logger::handle().set_use_backup(use_backup_);
+	logger::handle().set_max_lines(max_lines_);
 	logger::handle().set_file_target(file_target_);
 	logger::handle().set_console_target(console_target_);
 	logger::handle().set_wake_interval(std::chrono::milliseconds(100));
@@ -29,7 +33,7 @@ auto main() -> int
 		return 0;
 	}
 
-	for (auto index = 0; index < max_count_; ++index)
+	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		logger::handle().write(log_types::Debug,
 #ifdef USE_STD_FORMAT
