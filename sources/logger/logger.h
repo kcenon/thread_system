@@ -4,6 +4,10 @@
 #include "job_queue.h"
 #include "thread_base.h"
 
+#include "log_collector.h"
+#include "console_writer.h"
+#include "file_writer.h"
+
 #include <deque>
 #include <mutex>
 #include <memory>
@@ -21,7 +25,7 @@ namespace log_module
 	 * This class provides logging functionality with support for both console and file output.
 	 * It inherits from thread_base to run logging operations in a separate thread.
 	 */
-	class logger : public thread_base
+	class logger
 	{
 	public:
 		/**
@@ -31,7 +35,7 @@ namespace log_module
 
 		/**
 		 * @brief Sets the title for the logger.
-		 * @param title The title to set.
+		 * @param title The title to set for the logger.
 		 */
 		auto set_title(const std::string& title) -> void;
 
@@ -43,7 +47,7 @@ namespace log_module
 
 		/**
 		 * @brief Gets the log types that are written to a file.
-		 * @return log_types The log types that are written to a file.
+		 * @return The log types that are currently set to be written to a file.
 		 */
 		[[nodiscard]] auto get_file_target(void) const -> log_types;
 
@@ -55,7 +59,7 @@ namespace log_module
 
 		/**
 		 * @brief Gets the log types that are written to the console.
-		 * @return log_types The log types that are written to the console.
+		 * @return The log types that are currently set to be written to the console.
 		 */
 		[[nodiscard]] auto get_console_target(void) const -> log_types;
 
@@ -67,7 +71,7 @@ namespace log_module
 
 		/**
 		 * @brief Gets the maximum number of lines to keep in the log.
-		 * @return uint32_t The maximum number of lines to keep in the log.
+		 * @return The current maximum number of lines set for the log.
 		 */
 		[[nodiscard]] auto get_max_lines(void) const -> uint32_t;
 
@@ -78,15 +82,35 @@ namespace log_module
 		auto set_use_backup(bool use_backup) -> void;
 
 		/**
-		 * @brief Gets whether to use a backup log file.
-		 * @return bool True if using a backup log file, false otherwise.
+		 * @brief Gets whether a backup log file is being used.
+		 * @return True if a backup log file is being used, false otherwise.
 		 */
 		[[nodiscard]] auto get_use_backup(void) const -> bool;
 
 		/**
+		 * @brief Sets the wake interval for the logger.
+		 * @param interval The wake interval to set for the logger thread.
+		 */
+		auto set_wake_interval(std::chrono::milliseconds interval) -> void;
+
+		/**
+		 * @brief Starts the logger.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the logger was started successfully (true) or not
+		 * (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
+		 */
+		auto start(void) -> std::tuple<bool, std::optional<std::string>>;
+
+		/**
+		 * @brief Stops the logger.
+		 */
+		auto stop(void) -> void;
+
+		/**
 		 * @brief Gets the current time point.
-		 * @return std::chrono::time_point<std::chrono::high_resolution_clock> The current time
-		 * point.
+		 * @return The current time point using high resolution clock.
 		 */
 		auto time_point(void) -> std::chrono::time_point<std::chrono::high_resolution_clock>;
 
@@ -102,53 +126,6 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
-	protected:
-		/**
-		 * @brief Checks if there is work to be done.
-		 * @return bool True if there is work to be done, false otherwise.
-		 */
-		[[nodiscard]] auto has_work() const -> bool override;
-
-		/**
-		 * @brief Called before the logger thread starts.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
-		 */
-		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
-
-		/**
-		 * @brief Performs the actual work of the logger thread.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the work was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
-		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
-
-		/**
-		 * @brief Called after the logger thread stops.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
-		 */
-		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
-
-		/**
-		 * @brief Writes a message to the console.
-		 * @param message The message to write to the console.
-		 */
-		auto write_to_console(const std::string& message) -> void;
-
-		/**
-		 * @brief Writes a message to a file.
-		 * @param message The message to write to the file.
-		 */
-		auto write_to_file(const std::string& message) -> void;
-
 	private:
 		/**
 		 * @brief Private constructor for the logger class (singleton pattern).
@@ -156,42 +133,25 @@ namespace log_module
 		logger();
 
 		/**
-		 * @brief Deleted copy constructor.
+		 * @brief Deleted copy constructor to enforce singleton pattern.
 		 */
 		logger(const logger&) = delete;
 
 		/**
-		 * @brief Deleted assignment operator.
+		 * @brief Deleted assignment operator to enforce singleton pattern.
 		 */
 		logger& operator=(const logger&) = delete;
 
 	private:
-		/** @brief Flag indicating whether to use a backup log file */
-		bool use_backup_;
-
-		/** @brief Maximum number of lines to keep in the log */
-		uint32_t max_lines_;
-
-		/** @brief Title of the logger */
-		std::string title_;
-
-		/** @brief Types of logs to write to file */
-		log_types file_log_type_;
-
-		/** @brief Types of logs to write to console */
-		log_types console_log_type_;
-
-		/** @brief Buffer for log dequeuing related max lines */
-		std::deque<std::string> log_buffer_;
-
-		/** @brief Queue for log jobs */
-		std::shared_ptr<job_queue> log_queue_;
+		std::shared_ptr<log_collector> collector_;
+		std::shared_ptr<console_writer> console_writer_;
+		std::shared_ptr<file_writer> file_writer_;
 
 #pragma region singleton
 	public:
 		/**
 		 * @brief Gets the singleton instance of the logger.
-		 * @return logger& Reference to the singleton logger instance.
+		 * @return Reference to the singleton logger instance.
 		 */
 		static auto handle() -> logger&;
 
