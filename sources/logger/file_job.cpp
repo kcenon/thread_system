@@ -95,17 +95,25 @@ namespace log_module
 		const unsigned month = static_cast<unsigned>(year_month_day.month());
 		const unsigned day = static_cast<unsigned>(year_month_day.day());
 
-		const auto format_string =
+		const auto file_name =
 #ifdef USE_STD_FORMAT
 			std::format
 #else
 			fmt::format
 #endif
-			("{}_{:04d}-{:02d}-{:02d}", title_, static_cast<int>(year),
+			("{}_{:04d}-{:02d}-{:02d}.log", title_, static_cast<int>(year),
 			 static_cast<unsigned>(month), static_cast<unsigned>(day));
 
-		return { std::filesystem::path(format_string).replace_extension(".log"),
-				 std::filesystem::path(format_string).replace_extension(".backup") };
+		const auto backup_name =
+#ifdef USE_STD_FORMAT
+			std::format
+#else
+			fmt::format
+#endif
+			("{}_{:04d}-{:02d}-{:02d}.backup", title_, static_cast<int>(year),
+			 static_cast<unsigned>(month), static_cast<unsigned>(day));
+
+		return { file_name, backup_name };
 	}
 
 	auto file_job::read_lines(const std::string& file_name) -> std::vector<std::string>
