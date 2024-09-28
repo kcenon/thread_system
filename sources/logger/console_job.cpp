@@ -23,7 +23,6 @@ namespace log_module
 
 		try
 		{
-
 #ifdef USE_STD_FORMAT
 			std::cout << message_;
 #else

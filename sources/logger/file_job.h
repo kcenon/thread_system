@@ -14,7 +14,7 @@ namespace log_module
 {
 	/**
 	 * @class file_job
-	 * @brief Represents a logging job derived from the base job class.
+	 * @brief Represents a file logging job derived from the base job class.
 	 *
 	 * This class encapsulates the functionality for creating and executing
 	 * logging operations as jobs within the job system. It handles writing
@@ -36,7 +36,7 @@ namespace log_module
 				 const bool& use_backup = false);
 
 		/**
-		 * @brief Executes the logging operation.
+		 * @brief Executes the file logging operation.
 		 * @return A tuple containing:
 		 *         - bool: Indicates whether the logging operation was successful (true) or not
 		 * (false).
@@ -44,6 +44,31 @@ namespace log_module
 		 * error descriptions.
 		 */
 		[[nodiscard]] auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+
+	protected:
+		/**
+		 * @brief Generates the file name for the log file.
+		 * @return A tuple containing:
+		 *         - std::string: The generated file name.
+		 *         - std::string: The generated backup file name (if use_backup_ is true).
+		 */
+		[[nodiscard]] auto generate_file_name() -> std::tuple<std::string, std::string>;
+
+		/**
+		 * @brief Reads lines from the specified file.
+		 * @param file_name The name of the file to read from.
+		 * @return A vector of strings, each representing a line from the file.
+		 */
+		[[nodiscard]] auto read_lines(const std::string& file_name) -> std::vector<std::string>;
+
+		/**
+		 * @brief Appends lines to the specified file.
+		 * @param file_name The name of the file to append to.
+		 * @param messages A vector of strings to be appended to the file.
+		 * @return True if the append operation was successful, false otherwise.
+		 */
+		auto append_lines(const std::string& file_name,
+						  const std::vector<std::string>& messages) -> bool;
 
 	private:
 		/** @brief The title of the log entry */
