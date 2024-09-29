@@ -20,10 +20,12 @@ namespace log_module
 {
 	/**
 	 * @class logger
-	 * @brief A singleton class for logging operations.
+	 * @brief A singleton class for managing logging operations.
 	 *
-	 * This class provides logging functionality with support for both console and file output.
-	 * It inherits from thread_base to run logging operations in a separate thread.
+	 * This class provides comprehensive logging functionality with support for both console and
+	 * file output. It manages log collectors, console writers, and file writers to handle various
+	 * logging tasks. The singleton pattern ensures a single point of control for all logging
+	 * operations.
 	 */
 	class logger
 	{
@@ -129,6 +131,7 @@ namespace log_module
 	private:
 		/**
 		 * @brief Private constructor for the logger class (singleton pattern).
+		 * Initializes the log collector, console writer, and file writer.
 		 */
 		logger();
 
@@ -143,8 +146,13 @@ namespace log_module
 		logger& operator=(const logger&) = delete;
 
 	private:
+		/** @brief Shared pointer to the log collector */
 		std::shared_ptr<log_collector> collector_;
+
+		/** @brief Shared pointer to the console writer */
 		std::shared_ptr<console_writer> console_writer_;
+
+		/** @brief Shared pointer to the file writer */
 		std::shared_ptr<file_writer> file_writer_;
 
 #pragma region singleton
@@ -157,6 +165,7 @@ namespace log_module
 
 		/**
 		 * @brief Destroys the singleton instance of the logger.
+		 * This method should be called when the logger is no longer needed.
 		 */
 		static auto destroy() -> void;
 

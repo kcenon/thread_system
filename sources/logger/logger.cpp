@@ -37,12 +37,12 @@ namespace log_module
 
 	auto logger::set_title(const std::string& title) -> void
 	{
-		if (collector_ == nullptr)
+		if (file_writer_ == nullptr)
 		{
 			return;
 		}
 
-		collector_->set_title(title);
+		file_writer_->set_title(title);
 	}
 
 	auto logger::set_file_target(const log_types& type) -> void
@@ -87,52 +87,55 @@ namespace log_module
 
 	auto logger::set_max_lines(uint32_t max_lines) -> void
 	{
-		if (collector_ == nullptr)
+		if (file_writer_ == nullptr)
 		{
 			return;
 		}
 
-		collector_->set_max_lines(max_lines);
+		file_writer_->set_max_lines(max_lines);
 	}
 
 	auto logger::get_max_lines() const -> uint32_t
 	{
-		if (collector_ == nullptr)
+		if (file_writer_ == nullptr)
 		{
 			return 0;
 		}
 
-		return collector_->get_max_lines();
+		return file_writer_->get_max_lines();
 	}
 
 	auto logger::set_use_backup(bool use_backup) -> void
 	{
-		if (collector_ == nullptr)
+		if (file_writer_ == nullptr)
 		{
 			return;
 		}
 
-		collector_->set_use_backup(use_backup);
+		file_writer_->set_use_backup(use_backup);
 	}
 
 	auto logger::get_use_backup() const -> bool
 	{
-		if (collector_ == nullptr)
+		if (file_writer_ == nullptr)
 		{
 			return false;
 		}
 
-		return collector_->get_use_backup();
+		return file_writer_->get_use_backup();
 	}
 
 	auto logger::set_wake_interval(std::chrono::milliseconds interval) -> void
 	{
-		if (collector_ == nullptr)
+		if (console_writer_ != nullptr)
 		{
-			return;
+			console_writer_->set_wake_interval(interval);
 		}
 
-		collector_->set_wake_interval(interval);
+		if (file_writer_ != nullptr)
+		{
+			file_writer_->set_wake_interval(interval);
+		}
 	}
 
 	auto logger::start() -> std::tuple<bool, std::optional<std::string>>

@@ -1,8 +1,7 @@
 #include "log_collector.h"
 
 #include "log_job.h"
-#include "file_job.h"
-#include "console_job.h"
+#include "message_job.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -14,25 +13,10 @@ namespace log_module
 {
 	log_collector::log_collector(void)
 		: log_queue_(std::make_shared<job_queue>())
-		, title_("log")
-		, use_backup_(false)
-		, max_lines_(0)
 		, file_log_type_(log_types::Error)
 		, console_log_type_(log_types::Information)
 	{
 	}
-
-	auto log_collector::set_title(const std::string& title) -> void { title_ = title; }
-
-	auto log_collector::get_title() const -> std::string { return title_; }
-
-	auto log_collector::set_use_backup(const bool& use_backup) -> void { use_backup_ = use_backup; }
-
-	auto log_collector::get_use_backup() const -> bool { return use_backup_; }
-
-	auto log_collector::set_max_lines(const uint32_t& max_lines) -> void { max_lines_ = max_lines; }
-
-	auto log_collector::get_max_lines() const -> uint32_t { return max_lines_; }
 
 	auto log_collector::set_console_target(const log_types& type) -> void
 	{
@@ -85,28 +69,21 @@ namespace log_module
 
 	auto log_collector::before_start() -> std::tuple<bool, std::optional<std::string>>
 	{
-		log_queue_->set_notify(!wake_interval_.has_value());
-
 		log_job job("START");
 		auto [worked, work_error] = job.do_work();
-		std::string log
-			= (worked) ? job.log() : work_error.value_or("Unknown error to convert to log message");
+		if (!worked)
+		{
+			return { false, work_error };
+		}
 
-		std::string buffer = "";
-
-#ifdef USE_STD_FORMAT
-		std::format_to
-#else
-		fmt::format_to
-#endif
-			(std::back_inserter(buffer), "{}\n", log);
+		auto buffer = job.message();
 
 		if (console_log_type_ > log_types::None)
 		{
 			auto console_queue = console_queue_.lock();
 			if (console_queue != nullptr && !buffer.empty())
 			{
-				console_queue->enqueue(std::make_unique<console_job>(buffer));
+				console_queue->enqueue(std::make_unique<message_job>(buffer));
 			}
 		}
 
@@ -115,8 +92,7 @@ namespace log_module
 			auto file_queue = file_queue_.lock();
 			if (file_queue != nullptr && !buffer.empty())
 			{
-				file_queue->enqueue(
-					std::make_unique<file_job>(title_, buffer, max_lines_, use_backup_));
+				file_queue->enqueue(std::make_unique<message_job>(buffer));
 			}
 		}
 
@@ -130,56 +106,45 @@ namespace log_module
 			return { false, "there is no job_queue" };
 		}
 
-		auto remaining_logs = log_queue_->dequeue_all();
-
-		std::string file_buffer = "";
-		std::string console_buffer = "";
-
-		while (!remaining_logs.empty())
+		auto [job_opt, error] = log_queue_->dequeue();
+		if (!job_opt.has_value())
 		{
-			auto current_job = std::move(remaining_logs.front());
-			remaining_logs.pop();
-
-			auto current_log
-				= std::unique_ptr<log_job>(static_cast<log_job*>(current_job.release()));
-
-			auto [worked, work_error] = current_log->do_work();
-			std::string log = (worked)
-								  ? current_log->log()
-								  : work_error.value_or("Unknown error to convert to log message");
-
-			if (current_log->get_type() <= file_log_type_)
+			if (!log_queue_->is_stopped())
 			{
+				return { false,
 #ifdef USE_STD_FORMAT
-				std::format_to
+						 std::format
 #else
-				fmt::format_to
+						 fmt::format
 #endif
-					(std::back_inserter(file_buffer), "{}\n", log);
+						 ("error dequeue job: {}", error.value_or("unknown error")) };
 			}
 
-			if (current_log->get_type() <= console_log_type_)
-			{
-#ifdef USE_STD_FORMAT
-				std::format_to
-#else
-				fmt::format_to
-#endif
-					(std::back_inserter(console_buffer), "{}\n", log);
-			}
+			return { true, std::nullopt };
 		}
 
-		auto console_queue = console_queue_.lock();
-		if (console_queue != nullptr && !console_buffer.empty())
+		auto current_job = std::move(job_opt.value());
+		if (current_job == nullptr)
 		{
-			console_queue->enqueue(std::make_unique<console_job>(console_buffer));
+			return { false, "error executing job: nullptr" };
+		}
+
+		auto current_log = std::unique_ptr<log_job>(static_cast<log_job*>(current_job.release()));
+
+		auto [worked, work_error] = current_log->do_work();
+		std::string log = (worked) ? current_log->message()
+								   : work_error.value_or("Unknown error to convert to log message");
+
+		auto console_queue = console_queue_.lock();
+		if (current_log->get_type() <= console_log_type_ && console_queue != nullptr)
+		{
+			console_queue->enqueue(std::make_unique<message_job>(log));
 		}
 
 		auto file_queue = file_queue_.lock();
-		if (file_queue != nullptr && !file_buffer.empty())
+		if (current_log->get_type() <= file_log_type_ && file_queue != nullptr)
 		{
-			file_queue->enqueue(
-				std::make_unique<file_job>(title_, file_buffer, max_lines_, use_backup_));
+			file_queue->enqueue(std::make_unique<message_job>(log));
 		}
 
 		return { true, std::nullopt };
@@ -189,24 +154,19 @@ namespace log_module
 	{
 		log_job job("STOP");
 		auto [worked, work_error] = job.do_work();
-		std::string log
-			= (worked) ? job.log() : work_error.value_or("Unknown error to convert to log message");
+		if (!worked)
+		{
+			return { false, work_error };
+		}
 
-		std::string buffer = "";
-
-#ifdef USE_STD_FORMAT
-		std::format_to
-#else
-		fmt::format_to
-#endif
-			(std::back_inserter(buffer), "{}\n", log);
+		auto buffer = job.message();
 
 		if (console_log_type_ > log_types::None)
 		{
 			auto console_queue = console_queue_.lock();
 			if (console_queue != nullptr && !buffer.empty())
 			{
-				console_queue->enqueue(std::make_unique<console_job>(buffer));
+				console_queue->enqueue(std::make_unique<message_job>(buffer));
 			}
 		}
 
@@ -215,8 +175,7 @@ namespace log_module
 			auto file_queue = file_queue_.lock();
 			if (file_queue != nullptr && !buffer.empty())
 			{
-				file_queue->enqueue(
-					std::make_unique<file_job>(title_, buffer, max_lines_, use_backup_));
+				file_queue->enqueue(std::make_unique<message_job>(buffer));
 			}
 		}
 

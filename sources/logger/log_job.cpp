@@ -35,7 +35,7 @@ namespace log_module
 		return type_.value_or(log_types::None);
 	}
 
-	auto log_job::log() const -> std::string { return log_message_; }
+	auto log_job::message() const -> std::string { return log_message_; }
 
 	auto log_job::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{
