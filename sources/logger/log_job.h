@@ -29,7 +29,7 @@ namespace log_module
 		 * @param type An optional parameter specifying the type of log entry (default is
 		 * std::nullopt).
 		 * @param start_time An optional parameter specifying the start time of the log entry
-		 * (default is std::nullopt).
+		 *        (default is std::nullopt). Used for calculating duration of timed operations.
 		 */
 		explicit log_job(
 			const std::string& message,
@@ -49,15 +49,16 @@ namespace log_module
 
 		/**
 		 * @brief Gets the type of the log entry.
-		 * @return The type of the log entry.
+		 * @return The type of the log entry. If no type was specified during construction,
+		 *         a default type may be returned.
 		 */
 		[[nodiscard]] auto get_type() const -> log_types;
 
 		/**
 		 * @brief Gets the formatted log message.
-		 * @return The formatted log message as a string.
+		 * @return The formatted log message as a string, ready for output.
 		 */
-		[[nodiscard]] auto log() const -> std::string;
+		[[nodiscard]] auto message() const -> std::string;
 
 	private:
 		/** @brief The original unformatted log message */

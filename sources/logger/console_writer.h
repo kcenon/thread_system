@@ -12,13 +12,15 @@ namespace log_module
 	 * @brief A class for writing log messages to the console.
 	 *
 	 * This class inherits from thread_base and provides functionality for
-	 * writing log messages to the console in a separate thread.
+	 * writing log messages to the console in a separate thread. It manages
+	 * its own job queue for console writing tasks.
 	 */
 	class console_writer : public thread_base
 	{
 	public:
 		/**
 		 * @brief Constructor for the console_writer class.
+		 * Initializes the job queue for console writing tasks.
 		 */
 		console_writer(void);
 
@@ -32,10 +34,20 @@ namespace log_module
 		}
 
 		/**
-		 * @brief Checks if there is work to be done.
+		 * @brief Checks if there is work to be done in the job queue.
 		 * @return True if there are jobs in the queue, false otherwise.
 		 */
-		[[nodiscard]] bool has_work() const override;
+		[[nodiscard]] auto has_work() const -> bool override;
+
+		/**
+		 * @brief Performs initialization before starting the console writer thread.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the initialization was successful (true) or not
+		 * (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
+		 */
+		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
 		 * @brief Performs the main work of writing log messages to the console.
@@ -44,7 +56,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		std::tuple<bool, std::optional<std::string>> do_work() override;
+		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
 		/** @brief Queue for log jobs to be written to the console */

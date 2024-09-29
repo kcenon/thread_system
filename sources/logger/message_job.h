@@ -13,21 +13,28 @@ using namespace thread_module;
 namespace log_module
 {
 	/**
-	 * @class console_job
+	 * @class message_job
 	 * @brief Represents a console logging job derived from the base job class.
 	 *
 	 * This class encapsulates the functionality for creating and executing
 	 * console logging operations as jobs within the job system. It handles
 	 * writing log messages to the console output.
 	 */
-	class console_job : public job
+	class message_job : public job
 	{
 	public:
 		/**
-		 * @brief Constructs a new console_job object.
+		 * @brief Constructs a new message_job object.
 		 * @param message The log message to be written to the console.
 		 */
-		explicit console_job(const std::string& message);
+		explicit message_job(const std::string& message);
+
+		/**
+		 * @brief Retrieves the log message, optionally appending a newline.
+		 * @param append_newline If true, a newline character will be appended to the message.
+		 * @return The log message as a string, with an optional newline appended.
+		 */
+		[[nodiscard]] auto message(const bool& append_newline = false) const -> std::string;
 
 		/**
 		 * @brief Executes the console logging operation.

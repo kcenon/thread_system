@@ -22,6 +22,10 @@ endif()
 # Include necessary CMake modules
 include(CheckCXXSourceCompiles)
 
+option(SET_STD_FORMAT "Set use std::format if it can use" ON)
+option(SET_STD_JTHREAD "Set use std::jthread if it can use" ON)
+option(SET_STD_CHRONO_CURRENT_ZONE "Set use std::chrono::current_zone if it can use" ON)
+
 # Function to check C++20 features
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
   set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS}")
@@ -45,7 +49,7 @@ check_cxx20_feature(std_format "
   }
 " HAS_STD_FORMAT)
 
-if(HAS_STD_FORMAT)
+if(HAS_STD_FORMAT AND SET_STD_FORMAT)
   add_definitions(-DUSE_STD_FORMAT)
   message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has support for std::format.")
 else()
@@ -62,11 +66,28 @@ check_cxx20_feature(std_jthread "
   }
 " HAS_STD_JTHREAD)
 
-if(HAS_STD_JTHREAD)
+if(HAS_STD_JTHREAD AND SET_STD_JTHREAD)
   add_definitions(-DUSE_STD_JTHREAD)
   message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has support for std::jthread.")
 else()
   message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not have support for std::jthread, so will use the std::thread instead.")
+endif()
+
+# Check for std::chrono::current_zone
+check_cxx20_feature(std_jthread "
+  #include <chrono>
+  int main() {
+    const auto now = std::chrono::system_clock::now();
+    const auto local_time = std::chrono::current_zone()->to_local(now);
+    return 0;
+  }
+" HAS_STD_CHRONO_CURRENT_ZONE)
+
+if(HAS_STD_CHRONO_CURRENT_ZONE AND SET_STD_CHRONO_CURRENT_ZONE)
+  add_definitions(-DUSE_STD_CHRONO_CURRENT_ZONE)
+  message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has support for std::chrono::current_zone.")
+else()
+  message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not have support for std::chrono::current_zone, so will use the time_t instead.")
 endif()
 
 # Set the project output directories

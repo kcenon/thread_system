@@ -14,50 +14,16 @@ namespace log_module
 	 *
 	 * This class inherits from thread_base and provides functionality for collecting,
 	 * processing, and distributing log messages to console and file outputs.
+	 * It manages separate queues for log collection, console output, and file output.
 	 */
 	class log_collector : public thread_base
 	{
 	public:
 		/**
 		 * @brief Constructor for the log_collector class.
+		 * Initializes the log queue and sets up default log types for console and file output.
 		 */
 		log_collector(void);
-
-		/**
-		 * @brief Sets the title for the logger.
-		 * @param title The title to set.
-		 */
-		auto set_title(const std::string& title) -> void;
-
-		/**
-		 * @brief Gets the current title of the logger.
-		 * @return The current title of the logger.
-		 */
-		[[nodiscard]] auto get_title() const -> std::string;
-
-		/**
-		 * @brief Sets whether to use a backup log file.
-		 * @param use_backup Flag indicating whether to use a backup log file.
-		 */
-		auto set_use_backup(const bool& use_backup) -> void;
-
-		/**
-		 * @brief Gets whether a backup log file is being used.
-		 * @return True if a backup log file is being used, false otherwise.
-		 */
-		[[nodiscard]] auto get_use_backup() const -> bool;
-
-		/**
-		 * @brief Sets the maximum number of lines to keep in the log.
-		 * @param max_lines The maximum number of lines to keep in the log.
-		 */
-		auto set_max_lines(const uint32_t& max_lines) -> void;
-
-		/**
-		 * @brief Gets the maximum number of lines to keep in the log.
-		 * @return The current maximum number of lines set for the log.
-		 */
-		[[nodiscard]] auto get_max_lines() const -> uint32_t;
 
 		/**
 		 * @brief Sets the log types that should be written to the console.
@@ -108,52 +74,53 @@ namespace log_module
 			= std::nullopt) -> void;
 
 		/**
-		 * @brief Checks if there is work to be done.
-		 * @return True if there is work to be done, false otherwise.
+		 * @brief Checks if there are log messages to be processed.
+		 * @return True if there are log messages in the queue, false otherwise.
 		 */
-		[[nodiscard]] bool has_work() const override;
+		[[nodiscard]] auto has_work() const -> bool override;
 
 		/**
-		 * @brief Performs initialization before starting the thread.
-		 * @return A tuple containing a boolean indicating success and an optional error message.
+		 * @brief Performs initialization before starting the log collector thread.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the initialization was successful (true) or not
+		 * (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
 		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
-		 * @brief Performs the main work of the thread.
-		 * @return A tuple containing a boolean indicating success and an optional error message.
+		 * @brief Processes log messages and distributes them to console and file queues.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the processing was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
 		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
-		 * @brief Performs cleanup after stopping the thread.
-		 * @return A tuple containing a boolean indicating success and an optional error message.
+		 * @brief Performs cleanup after stopping the log collector thread.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
 		 */
 		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
-		/** @brief Title of the logger */
-		std::string title_;
-
-		/** @brief Flag indicating whether to use a backup log file */
-		bool use_backup_;
-
-		/** @brief Maximum number of lines to keep in the log */
-		uint32_t max_lines_;
-
 		/** @brief Types of logs to write to file */
 		log_types file_log_type_;
 
 		/** @brief Types of logs to write to console */
 		log_types console_log_type_;
 
-		/** @brief Queue for log jobs */
+		/** @brief Queue for incoming log messages */
 		std::shared_ptr<job_queue> log_queue_;
 
-		/** @brief Queue for console jobs */
+		/** @brief Weak pointer to the queue for console output jobs */
 		std::weak_ptr<job_queue> console_queue_;
 
-		/** @brief Queue for file jobs */
+		/** @brief Weak pointer to the queue for file output jobs */
 		std::weak_ptr<job_queue> file_queue_;
 	};
 }

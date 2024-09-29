@@ -11,10 +11,10 @@
 using namespace log_module;
 
 bool use_backup_ = true;
-uint32_t max_lines_ = 1000;
+uint32_t max_lines_ = 0;
 uint32_t test_line_count_ = 10000000;
 log_types file_target_ = log_types::Error;
-log_types console_target_ = log_types::Parameter;
+log_types console_target_ = log_types::Debug;
 
 auto main() -> int
 {
@@ -35,13 +35,17 @@ auto main() -> int
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		logger::handle().write(log_types::Debug,
+		if (logger::handle().get_file_target() >= log_types::Debug
+			|| logger::handle().get_console_target() >= log_types::Debug)
+		{
+			logger::handle().write(log_types::Debug,
 #ifdef USE_STD_FORMAT
-							   std::format
+								   std::format
 #else
-							   fmt::format
+								   fmt::format
 #endif
-							   ("Hello, World!: {}", index));
+								   ("Hello, World!: {}", index));
+		}
 	}
 
 	logger::handle().stop();
