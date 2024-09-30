@@ -37,7 +37,17 @@ auto create_default(const uint16_t& worker_counts)
 
 	for (uint16_t i = 0; i < worker_counts; ++i)
 	{
-		pool->enqueue(std::make_unique<thread_worker>());
+		auto [enqueued, euqueue_error] = pool->enqueue(std::make_unique<thread_worker>());
+		if (!enqueued)
+		{
+			return { nullptr,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("cannot enqueue to worker: {}", euqueue_error.value_or("unknown error")) };
+		}
 	}
 
 	return { pool, std::nullopt };
