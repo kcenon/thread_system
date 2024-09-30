@@ -95,6 +95,59 @@ auto create_default(const uint16_t& top_priority_workers,
 	return { pool, std::nullopt };
 }
 
+auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
+	-> std::tuple<bool, std::optional<std::string>>
+{
+	for (auto index = 0; index < test_line_count_; ++index)
+	{
+		auto target = index % 3;
+		auto [enqueued, enqueue_error]
+			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
+				[target](void) -> std::tuple<bool, std::optional<std::string>>
+				{
+					if (logger::handle().get_file_target() >= log_types::Debug
+						|| logger::handle().get_console_target() >= log_types::Debug)
+					{
+						logger::handle().write(
+							log_types::Debug,
+#ifdef USE_STD_FORMAT
+							std::format
+#else
+							fmt::format
+#endif
+							("Hello, World!: {} priority", static_cast<test_priority>(target)));
+					}
+
+					return { true, std::nullopt };
+				},
+				static_cast<test_priority>(target)));
+		if (!enqueued)
+		{
+			if (logger::handle().get_file_target() >= log_types::Error
+				|| logger::handle().get_console_target() >= log_types::Error)
+			{
+				return { false,
+#ifdef USE_STD_FORMAT
+						 std::format
+#else
+						 fmt::format
+#endif
+						 ("cannot enqueu to job: {}", enqueue_error.value_or("unknown error")) };
+			}
+
+			break;
+		}
+
+		if (logger::handle().get_file_target() >= log_types::Sequence
+			|| logger::handle().get_console_target() >= log_types::Sequence)
+		{
+			logger::handle().write(log_types::Sequence, "enqueued job");
+		}
+	}
+
+	return { true, std::nullopt };
+}
+
 auto main() -> int
 {
 	logger::handle().set_title("priority_thread_pool_sample");
@@ -141,52 +194,17 @@ auto main() -> int
 		logger::handle().write(log_types::Information, "created priority thread pool");
 	}
 
-	for (auto index = 0; index < test_line_count_; ++index)
+	auto [stored, store_error] = store_job(thread_pool);
+	if (!stored)
 	{
-		auto target = index % 3;
-		auto [enqueued, enqueue_error]
-			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
-				[target](void) -> std::tuple<bool, std::optional<std::string>>
-				{
-					if (logger::handle().get_file_target() >= log_types::Debug
-						|| logger::handle().get_console_target() >= log_types::Debug)
-					{
-
-						logger::handle().write(
-							log_types::Debug,
-#ifdef USE_STD_FORMAT
-							std::format
-#else
-							fmt::format
-#endif
-							("Hello, World!: {} priority", static_cast<test_priority>(target)));
-					}
-
-					return { true, std::nullopt };
-				},
-				static_cast<test_priority>(target)));
-		if (!enqueued)
+		if (logger::handle().get_file_target() >= log_types::Error
+			|| logger::handle().get_console_target() >= log_types::Error)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				logger::handle().write(
-					log_types::Error,
-#ifdef USE_STD_FORMAT
-					std::format
-#else
-					fmt::format
-#endif
-					("cannot enqueu to job: {}", enqueue_error.value_or("unknown error")));
-			}
+			logger::handle().write(log_types::Error, store_error.value_or("unknown error"));
 
-			break;
-		}
+			thread_pool.reset();
 
-		if (logger::handle().get_file_target() >= log_types::Sequence
-			|| logger::handle().get_console_target() >= log_types::Sequence)
-		{
-			logger::handle().write(log_types::Sequence, "enqueued job");
+			return 0;
 		}
 	}
 
