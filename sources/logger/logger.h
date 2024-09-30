@@ -25,25 +25,31 @@ namespace log_module
 	 * This class provides comprehensive logging functionality with support for both console and
 	 * file output. It manages log collectors, console writers, and file writers to handle various
 	 * logging tasks. The singleton pattern ensures a single point of control for all logging
-	 * operations.
+	 * operations throughout the application.
 	 */
 	class logger
 	{
 	public:
 		/**
-		 * @brief Destructor for the logger class.
+		 * @brief Virtual destructor for the logger class.
+		 *
+		 * Ensures proper cleanup of derived classes if any.
 		 */
-		~logger(void) = default;
+		virtual ~logger(void) = default;
 
 		/**
 		 * @brief Sets the title for the logger.
 		 * @param title The title to set for the logger.
+		 *
+		 * This title may be used in log file names or console output headers.
 		 */
 		auto set_title(const std::string& title) -> void;
 
 		/**
 		 * @brief Sets the log types that should be written to a file.
 		 * @param type The log types to be written to a file.
+		 *
+		 * This method allows you to specify which types of log messages should be saved to a file.
 		 */
 		auto set_file_target(const log_types& type) -> void;
 
@@ -56,6 +62,9 @@ namespace log_module
 		/**
 		 * @brief Sets the log types that should be written to the console.
 		 * @param type The log types to be written to the console.
+		 *
+		 * This method allows you to specify which types of log messages should be displayed in the
+		 * console.
 		 */
 		auto set_console_target(const log_types& type) -> void;
 
@@ -68,6 +77,8 @@ namespace log_module
 		/**
 		 * @brief Sets the maximum number of lines to keep in the log.
 		 * @param max_lines The maximum number of lines to keep in the log.
+		 *
+		 * This helps in managing the size of log files and prevents them from growing indefinitely.
 		 */
 		auto set_max_lines(uint32_t max_lines) -> void;
 
@@ -80,6 +91,9 @@ namespace log_module
 		/**
 		 * @brief Sets whether to use a backup log file.
 		 * @param use_backup Flag indicating whether to use a backup log file.
+		 *
+		 * When enabled, this feature creates a backup of the log file, which can be useful for
+		 * archiving or recovery purposes.
 		 */
 		auto set_use_backup(bool use_backup) -> void;
 
@@ -92,6 +106,9 @@ namespace log_module
 		/**
 		 * @brief Sets the wake interval for the logger.
 		 * @param interval The wake interval to set for the logger thread.
+		 *
+		 * This interval determines how often the logger thread wakes up to process queued log
+		 * messages.
 		 */
 		auto set_wake_interval(std::chrono::milliseconds interval) -> void;
 
@@ -102,17 +119,24 @@ namespace log_module
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
+		 *
+		 * This method initializes and starts the logging process. It should be called before any
+		 * logging operations.
 		 */
 		auto start(void) -> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Stops the logger.
+		 *
+		 * This method halts all logging operations and performs necessary cleanup.
 		 */
 		auto stop(void) -> void;
 
 		/**
 		 * @brief Gets the current time point.
 		 * @return The current time point using high resolution clock.
+		 *
+		 * This method is useful for precise timing of log events.
 		 */
 		auto time_point(void) -> std::chrono::time_point<std::chrono::high_resolution_clock>;
 
@@ -121,6 +145,8 @@ namespace log_module
 		 * @param type The type of the log message.
 		 * @param message The content of the log message.
 		 * @param start_time An optional start time for the log message.
+		 *
+		 * This overload handles std::string messages.
 		 */
 		auto write(
 			log_types type,
@@ -128,9 +154,52 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
+		/**
+		 * @brief Writes a log message.
+		 * @param type The type of the log message.
+		 * @param message The content of the log message.
+		 * @param start_time An optional start time for the log message.
+		 *
+		 * This overload handles std::wstring messages.
+		 */
+		auto write(
+			log_types type,
+			const std::wstring& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
+		/**
+		 * @brief Writes a log message.
+		 * @param type The type of the log message.
+		 * @param message The content of the log message.
+		 * @param start_time An optional start time for the log message.
+		 *
+		 * This overload handles std::u16string messages.
+		 */
+		auto write(
+			log_types type,
+			const std::u16string& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
+		/**
+		 * @brief Writes a log message.
+		 * @param type The type of the log message.
+		 * @param message The content of the log message.
+		 * @param start_time An optional start time for the log message.
+		 *
+		 * This overload handles std::u32string messages.
+		 */
+		auto write(
+			log_types type,
+			const std::u32string& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
 	private:
 		/**
 		 * @brief Private constructor for the logger class (singleton pattern).
+		 *
 		 * Initializes the log collector, console writer, and file writer.
 		 */
 		logger();
@@ -160,12 +229,17 @@ namespace log_module
 		/**
 		 * @brief Gets the singleton instance of the logger.
 		 * @return Reference to the singleton logger instance.
+		 *
+		 * This method ensures that only one instance of the logger exists throughout the
+		 * application.
 		 */
 		static auto handle() -> logger&;
 
 		/**
 		 * @brief Destroys the singleton instance of the logger.
-		 * This method should be called when the logger is no longer needed.
+		 *
+		 * This method should be called when the logger is no longer needed, typically at
+		 * application shutdown.
 		 */
 		static auto destroy() -> void;
 

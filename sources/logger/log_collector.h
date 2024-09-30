@@ -15,6 +15,8 @@ namespace log_module
 	 * This class inherits from thread_base and provides functionality for collecting,
 	 * processing, and distributing log messages to console and file outputs.
 	 * It manages separate queues for log collection, console output, and file output.
+	 * The class supports various string types for log messages including std::string,
+	 * std::wstring, std::u16string, and std::u32string.
 	 */
 	class log_collector : public thread_base
 	{
@@ -62,7 +64,7 @@ namespace log_module
 		auto set_file_queue(std::shared_ptr<job_queue> queue) -> void;
 
 		/**
-		 * @brief Writes a log message.
+		 * @brief Writes a log message (std::string version).
 		 * @param type The type of the log message.
 		 * @param message The content of the log message.
 		 * @param start_time An optional start time for the log message.
@@ -70,6 +72,42 @@ namespace log_module
 		auto write(
 			log_types type,
 			const std::string& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
+		/**
+		 * @brief Writes a log message (std::wstring version).
+		 * @param type The type of the log message.
+		 * @param message The content of the log message as a wide string.
+		 * @param start_time An optional start time for the log message.
+		 */
+		auto write(
+			log_types type,
+			const std::wstring& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
+		/**
+		 * @brief Writes a log message (std::u16string version).
+		 * @param type The type of the log message.
+		 * @param message The content of the log message as a UTF-16 string.
+		 * @param start_time An optional start time for the log message.
+		 */
+		auto write(
+			log_types type,
+			const std::u16string& message,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
+			= std::nullopt) -> void;
+
+		/**
+		 * @brief Writes a log message (std::u32string version).
+		 * @param type The type of the log message.
+		 * @param message The content of the log message as a UTF-32 string.
+		 * @param start_time An optional start time for the log message.
+		 */
+		auto write(
+			log_types type,
+			const std::u32string& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
@@ -108,19 +146,12 @@ namespace log_module
 		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
-		/** @brief Types of logs to write to file */
-		log_types file_log_type_;
+		log_types file_log_type_;			   ///< Types of logs to write to file
+		log_types console_log_type_;		   ///< Types of logs to write to console
 
-		/** @brief Types of logs to write to console */
-		log_types console_log_type_;
-
-		/** @brief Queue for incoming log messages */
-		std::shared_ptr<job_queue> log_queue_;
-
-		/** @brief Weak pointer to the queue for console output jobs */
-		std::weak_ptr<job_queue> console_queue_;
-
-		/** @brief Weak pointer to the queue for file output jobs */
-		std::weak_ptr<job_queue> file_queue_;
+		std::shared_ptr<job_queue> log_queue_; ///< Queue for incoming log messages
+		std::weak_ptr<job_queue>
+			console_queue_;					  ///< Weak pointer to the queue for console output jobs
+		std::weak_ptr<job_queue> file_queue_; ///< Weak pointer to the queue for file output jobs
 	};
 }
