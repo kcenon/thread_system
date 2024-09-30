@@ -65,6 +65,30 @@ namespace log_module
 		}
 	}
 
+	auto log_collector::write(
+		log_types type,
+		const std::wstring& message,
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
+		-> void
+	{
+	}
+
+	auto log_collector::write(
+		log_types type,
+		const std::u16string& message,
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
+		-> void
+	{
+	}
+
+	auto log_collector::write(
+		log_types type,
+		const std::u32string& message,
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
+		-> void
+	{
+	}
+
 	auto log_collector::has_work() const -> bool { return !log_queue_->empty(); }
 
 	auto log_collector::before_start() -> std::tuple<bool, std::optional<std::string>>
