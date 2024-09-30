@@ -13,12 +13,16 @@
 using namespace log_module;
 using namespace priority_thread_pool_module;
 
-uint32_t max_count_ = 1000;
+bool use_backup_ = false;
+uint32_t max_lines_ = 0;
+uint16_t wait_interval_ = 100;
+uint32_t test_line_count_ = 1000000;
+log_types file_target_ = log_types::Debug;
+log_types console_target_ = log_types::Error;
+
 uint16_t top_priority_workers_ = 3;
 uint16_t middle_priority_workers_ = 2;
 uint16_t bottom_priority_workers_ = 1;
-log_types file_target_ = log_types::None;
-log_types console_target_ = log_types::Parameter;
 
 auto create_default(const uint16_t& top_priority_workers,
 					const uint16_t& middle_priority_workers,
@@ -94,9 +98,14 @@ auto create_default(const uint16_t& top_priority_workers,
 auto main() -> int
 {
 	logger::handle().set_title("priority_thread_pool_sample");
+	logger::handle().set_use_backup(use_backup_);
+	logger::handle().set_max_lines(max_lines_);
 	logger::handle().set_file_target(file_target_);
 	logger::handle().set_console_target(console_target_);
-	logger::handle().set_wake_interval(std::chrono::milliseconds(100));
+	if (wait_interval_ > 0)
+	{
+		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
+	}
 
 	auto [started, start_error] = logger::handle().start();
 	if (!started)
@@ -132,21 +141,26 @@ auto main() -> int
 		logger::handle().write(log_types::Information, "created priority thread pool");
 	}
 
-	for (auto index = 0; index < max_count_; ++index)
+	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		auto target = index % 3;
 		auto [enqueued, enqueue_error]
 			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
 				[target](void) -> std::tuple<bool, std::optional<std::string>>
 				{
-					logger::handle().write(
-						log_types::Debug,
+					if (logger::handle().get_file_target() >= log_types::Debug
+						|| logger::handle().get_console_target() >= log_types::Debug)
+					{
+
+						logger::handle().write(
+							log_types::Debug,
 #ifdef USE_STD_FORMAT
-						std::format
+							std::format
 #else
-						fmt::format
+							fmt::format
 #endif
-						("Hello, World!: {} priority", static_cast<test_priority>(target)));
+							("Hello, World!: {} priority", static_cast<test_priority>(target)));
+					}
 
 					return { true, std::nullopt };
 				},
