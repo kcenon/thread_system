@@ -145,6 +145,25 @@ namespace log_module
 		 */
 		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
+	protected:
+		/**
+		 * @brief Template method for writing log messages of various string types.
+		 *
+		 * @tparam StringType The type of the string (std::string, std::wstring, std::u16string, or
+		 * std::u32string).
+		 * @param type The type of the log message.
+		 * @param message The content of the log message.
+		 * @param start_time An optional start time for the log message.
+		 *
+		 * This method provides a unified implementation for writing log messages,
+		 * regardless of the string type used. It's called by the public write methods.
+		 */
+		template <typename StringType>
+		auto write_string(log_types type,
+						  const StringType& message,
+						  std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
+							  start_time) -> void;
+
 	private:
 		log_types file_log_type_;			   ///< Types of logs to write to file
 		log_types console_log_type_;		   ///< Types of logs to write to console

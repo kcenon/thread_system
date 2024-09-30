@@ -45,24 +45,7 @@ namespace log_module
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
 	{
-		std::unique_ptr<log_job> new_log_job;
-
-		try
-		{
-			new_log_job = std::make_unique<log_job>(message, type, start_time);
-		}
-		catch (const std::bad_alloc& e)
-		{
-			std::cerr << "error allocating log job: " << e.what() << std::endl;
-			return;
-		}
-
-		auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
-		if (!enqueued)
-		{
-			std::cerr << "error enqueuing log job: " << enqueue_error.value_or("unknown error")
-					  << std::endl;
-		}
+		write_string(type, message, start_time);
 	}
 
 	auto log_collector::write(
@@ -71,6 +54,7 @@ namespace log_module
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
 	{
+		write_string(type, message, start_time);
 	}
 
 	auto log_collector::write(
@@ -79,6 +63,7 @@ namespace log_module
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
 	{
+		write_string(type, message, start_time);
 	}
 
 	auto log_collector::write(
@@ -87,6 +72,7 @@ namespace log_module
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
 	{
+		write_string(type, message, start_time);
 	}
 
 	auto log_collector::has_work() const -> bool { return !log_queue_->empty(); }
@@ -204,5 +190,31 @@ namespace log_module
 		}
 
 		return { true, std::nullopt };
+	}
+
+	template <typename StringType>
+	void log_collector::write_string(
+		log_types type,
+		const StringType& message,
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
+	{
+		std::unique_ptr<log_job> new_log_job;
+
+		try
+		{
+			new_log_job = std::make_unique<log_job>(message, type, start_time);
+		}
+		catch (const std::bad_alloc& e)
+		{
+			std::cerr << "error allocating log job: " << e.what() << std::endl;
+			return;
+		}
+
+		auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
+		if (!enqueued)
+		{
+			std::cerr << "error enqueuing log job: " << enqueue_error.value_or("unknown error")
+					  << std::endl;
+		}
 	}
 }

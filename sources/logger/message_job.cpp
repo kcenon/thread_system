@@ -2,7 +2,6 @@
 
 #ifdef USE_STD_FORMAT
 #include <format>
-#include <iostream>
 #else
 #include "fmt/format.h"
 #endif
