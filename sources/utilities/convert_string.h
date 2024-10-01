@@ -32,31 +32,140 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <array>
 #include <string>
+#include <vector>
+#include <cstdint>
+#include <string_view>
 
 namespace utility_module
 {
+	/**
+	 * @class convert_string
+	 * @brief A utility class for string conversions between different character encodings.
+	 *
+	 * This class provides static methods to convert between std::string, std::wstring,
+	 * std::u16string, and std::u32string. It also includes methods for converting
+	 * between strings and byte arrays. Additionally, it provides a constant for the UTF-8 BOM.
+	 */
 	class convert_string
 	{
 	public:
+		/**
+		 * @brief UTF-8 Byte Order Mark (BOM)
+		 *
+		 * This constant represents the UTF-8 Byte Order Mark, which is a sequence of bytes
+		 * (0xEF, 0xBB, 0xBF) that may appear at the beginning of a UTF-8 encoded file or stream.
+		 */
+		static constexpr std::array<uint8_t, 3> UTF8_BOM = { 0xEF, 0xBB, 0xBF };
+
+		/**
+		 * @brief Converts a wide string to a UTF-8 string.
+		 * @param message The wide string to convert.
+		 * @return The converted UTF-8 string.
+		 */
 		static auto to_string(const std::wstring& message) -> std::string;
+
+		/**
+		 * @brief Converts a UTF-16 string to a UTF-8 string.
+		 * @param message The UTF-16 string to convert.
+		 * @return The converted UTF-8 string.
+		 */
 		static auto to_string(const std::u16string& message) -> std::string;
+
+		/**
+		 * @brief Converts a UTF-32 string to a UTF-8 string.
+		 * @param message The UTF-32 string to convert.
+		 * @return The converted UTF-8 string.
+		 */
 		static auto to_string(const std::u32string& message) -> std::string;
 
+		/**
+		 * @brief Converts a UTF-8 string to a wide string.
+		 * @param message The UTF-8 string to convert.
+		 * @return The converted wide string.
+		 */
 		static auto to_wstring(const std::string& message) -> std::wstring;
+
+		/**
+		 * @brief Converts a UTF-16 string to a wide string.
+		 * @param message The UTF-16 string to convert.
+		 * @return The converted wide string.
+		 */
 		static auto to_wstring(const std::u16string& message) -> std::wstring;
+
+		/**
+		 * @brief Converts a UTF-32 string to a wide string.
+		 * @param message The UTF-32 string to convert.
+		 * @return The converted wide string.
+		 */
 		static auto to_wstring(const std::u32string& message) -> std::wstring;
 
+		/**
+		 * @brief Converts a UTF-8 string to a UTF-16 string.
+		 * @param message The UTF-8 string to convert.
+		 * @return The converted UTF-16 string.
+		 */
 		static auto to_u16string(const std::string& message) -> std::u16string;
+
+		/**
+		 * @brief Converts a wide string to a UTF-16 string.
+		 * @param message The wide string to convert.
+		 * @return The converted UTF-16 string.
+		 */
 		static auto to_u16string(const std::wstring& message) -> std::u16string;
+
+		/**
+		 * @brief Converts a UTF-32 string to a UTF-16 string.
+		 * @param message The UTF-32 string to convert.
+		 * @return The converted UTF-16 string.
+		 */
 		static auto to_u16string(const std::u32string& message) -> std::u16string;
 
+		/**
+		 * @brief Converts a UTF-8 string to a UTF-32 string.
+		 * @param message The UTF-8 string to convert.
+		 * @return The converted UTF-32 string.
+		 */
 		static auto to_u32string(const std::string& message) -> std::u32string;
+
+		/**
+		 * @brief Converts a wide string to a UTF-32 string.
+		 * @param message The wide string to convert.
+		 * @return The converted UTF-32 string.
+		 */
 		static auto to_u32string(const std::wstring& message) -> std::u32string;
+
+		/**
+		 * @brief Converts a UTF-16 string to a UTF-32 string.
+		 * @param message The UTF-16 string to convert.
+		 * @return The converted UTF-32 string.
+		 */
 		static auto to_u32string(const std::u16string& message) -> std::u32string;
 
+		/**
+		 * @brief Converts a string to a byte array.
+		 * @param value The string to convert.
+		 * @return A vector of bytes representing the string.
+		 */
+		static auto to_array(const std::string& value) -> std::vector<uint8_t>;
+
+		/**
+		 * @brief Converts a byte array to a string.
+		 * @param value The byte array to convert.
+		 * @return The converted string.
+		 */
+		static auto to_string(const std::vector<uint8_t>& value) -> std::string;
+
 	private:
+		/**
+		 * @brief Generic conversion function between different string types.
+		 * @tparam From The source string type.
+		 * @tparam To The target string type.
+		 * @param from The string to convert.
+		 * @return The converted string.
+		 */
 		template <typename From, typename To>
 		static auto convert(std::basic_string_view<typename From::value_type> from) -> To;
 	};
-}
+} // namespace utility_module
