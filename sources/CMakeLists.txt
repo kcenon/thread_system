@@ -1,3 +1,4 @@
+add_subdirectory(utilities)
 add_subdirectory(thread_base)
 add_subdirectory(logger)
 add_subdirectory(thread_pool)

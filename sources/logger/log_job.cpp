@@ -32,6 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "log_job.h"
 
+#include "datetime_tool.h"
+
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
@@ -42,6 +44,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <codecvt>
 #include <iomanip>
 #include <sstream>
+
+using namespace datetime_module;
 
 namespace log_module
 {
@@ -114,25 +118,20 @@ namespace log_module
 	{
 		try
 		{
-			auto in_time_t = std::chrono::system_clock::to_time_t(timestamp_);
-			auto timeinfo = std::localtime(&in_time_t);
-			auto duration = timestamp_.time_since_epoch();
-			auto milliseconds
-				= std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000;
-			auto microseconds
-				= std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000;
-
-			std::ostringstream time_stream;
-			time_stream << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S") << '.' << std::setw(3)
-						<< std::setfill('0') << milliseconds << std::setw(3) << std::setfill('0')
-						<< microseconds;
-
-			std::string formatted_time = time_stream.str();
+			std::string formatted_time =
+#ifdef USE_STD_FORMAT
+				std::format
+#else
+				fmt::format
+#endif
+				("{} {}.{}{}", datetime_tool::date(timestamp_), datetime_tool::time(timestamp_),
+				 datetime_tool::milliseconds(timestamp_), datetime_tool::microseconds(timestamp_));
 
 			if (start_time_.has_value())
 			{
-				std::chrono::duration<double, std::milli> elapsed
-					= std::chrono::high_resolution_clock::now() - start_time_.value();
+				auto time_gap = datetime_tool::time_difference<std::chrono::milliseconds,
+															   std::chrono::high_resolution_clock>(
+					start_time_.value());
 
 				if (!type_.has_value())
 				{
@@ -142,7 +141,7 @@ namespace log_module
 #else
 						fmt::format
 #endif
-						("[{}][{}] [{} ms]", formatted_time, convert_message(), elapsed.count());
+						("[{}][{}] [{} ms]", formatted_time, convert_message(), time_gap);
 				}
 				else
 				{
@@ -153,31 +152,31 @@ namespace log_module
 						fmt::format
 #endif
 						("[{}][{}]: {} [{} ms]", formatted_time, type_.value(), convert_message(),
-						 elapsed.count());
+						 time_gap);
 				}
+
+				return { true, std::nullopt };
+			}
+
+			if (!type_.has_value())
+			{
+				log_message_ =
+#ifdef USE_STD_FORMAT
+					std::format
+#else
+					fmt::format
+#endif
+					("[{}][{}]", formatted_time, convert_message());
 			}
 			else
 			{
-				if (!type_.has_value())
-				{
-					log_message_ =
+				log_message_ =
 #ifdef USE_STD_FORMAT
-						std::format
+					std::format
 #else
-						fmt::format
+					fmt::format
 #endif
-						("[{}][{}]", formatted_time, convert_message());
-				}
-				else
-				{
-					log_message_ =
-#ifdef USE_STD_FORMAT
-						std::format
-#else
-						fmt::format
-#endif
-						("[{}][{}]: {}", formatted_time, type_.value(), convert_message());
-				}
+					("[{}][{}]: {}", formatted_time, type_.value(), convert_message());
 			}
 
 			return { true, std::nullopt };

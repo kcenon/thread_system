@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "file_writer.h"
 
 #include "message_job.h"
+#include "datetime_tool.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -41,6 +42,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <filesystem>
+
+using namespace datetime_module;
 
 namespace log_module
 {
@@ -163,36 +166,7 @@ namespace log_module
 
 	auto file_writer::generate_file_name() -> std::tuple<std::string, std::string>
 	{
-		const auto now = std::chrono::system_clock::now();
-#ifdef USE_STD_CHRONO_CURRENT_ZONE
-		const auto local_time = std::chrono::current_zone()->to_local(now);
-		const auto today = std::chrono::floor<std::chrono::days>(local_time);
-		const auto year_month_day = std::chrono::year_month_day{ today };
-
-		const auto year = static_cast<int>(year_month_day.year());
-		const auto month = static_cast<unsigned>(year_month_day.month());
-		const auto day = static_cast<unsigned>(year_month_day.day());
-
-		const auto formatted_date =
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:04d}-{:02d}-{:02d}", year, month, day);
-#else
-		auto in_time_t = std::chrono::system_clock::to_time_t(now);
-		auto timeinfo = std::localtime(&in_time_t);
-
-		const auto formatted_date =
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:04d}-{:02d}-{:02d}", static_cast<int>(timeinfo->tm_year + 1900),
-			 static_cast<unsigned>(timeinfo->tm_mon + 1), static_cast<unsigned>(timeinfo->tm_mday));
-#endif
+		const auto formatted_date = datetime_tool::date(std::chrono::system_clock::now());
 
 		const auto file_name =
 #ifdef USE_STD_FORMAT
