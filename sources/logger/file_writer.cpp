@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <filesystem>
 
-using namespace datetime_module;
+using namespace utility_module;
 
 namespace log_module
 {

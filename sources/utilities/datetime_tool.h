@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <string>
 
-namespace datetime_module
+namespace utility_module
 {
 	/**
 	 * @class datetime_tool
