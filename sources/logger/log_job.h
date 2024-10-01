@@ -140,27 +140,6 @@ namespace log_module
 		 */
 		[[nodiscard]] auto convert_message() const -> std::string;
 
-		/**
-		 * @brief Converts a wide string to a std::string.
-		 * @param message The wide string message to convert.
-		 * @return The converted message as a std::string.
-		 */
-		[[nodiscard]] auto to_string(const std::wstring& message) const -> std::string;
-
-		/**
-		 * @brief Converts a UTF-16 string to a std::string.
-		 * @param message The UTF-16 string message to convert.
-		 * @return The converted message as a std::string.
-		 */
-		[[nodiscard]] auto to_string(const std::u16string& message) const -> std::string;
-
-		/**
-		 * @brief Converts a UTF-32 string to a std::string.
-		 * @param message The UTF-32 string message to convert.
-		 * @return The converted message as a std::string.
-		 */
-		[[nodiscard]] auto to_string(const std::u32string& message) const -> std::string;
-
 	private:
 		/**
 		 * @brief Enumeration of supported message string types.

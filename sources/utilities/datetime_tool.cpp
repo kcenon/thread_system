@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fmt/format.h>
 #endif
 
-namespace datetime_module
+namespace utility_module
 {
 	auto datetime_tool::date(const std::chrono::system_clock::time_point& time,
 							 const std::string& separator_character) -> std::string

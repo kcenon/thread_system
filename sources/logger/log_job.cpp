@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "log_job.h"
 
 #include "datetime_tool.h"
+#include "convert_string.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -45,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iomanip>
 #include <sstream>
 
-using namespace datetime_module;
+using namespace utility_module;
 
 namespace log_module
 {
@@ -198,80 +199,13 @@ namespace log_module
 		case message_types::String:
 			return message_;
 		case message_types::WString:
-			return to_string(wmessage_);
+			return convert_string::to_string(wmessage_);
 		case message_types::U16String:
-			return to_string(u16message_);
+			return convert_string::to_string(u16message_);
 		case message_types::U32String:
-			return to_string(u32message_);
+			return convert_string::to_string(u32message_);
 		default:
 			return "";
 		}
-	}
-
-	auto log_job::to_string(const std::wstring& message) const -> std::string
-	{
-		if (message.empty())
-		{
-			return std::string();
-		}
-
-		typedef std::codecvt<wchar_t, char, mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = std::use_facet<codecvt_t>(std::locale());
-
-		mbstate_t state = mbstate_t();
-
-		std::vector<char> result((message.size() + 1) * codecvt.max_length());
-		wchar_t const* in_text = message.data();
-		char* out_text = &result[0];
-
-		codecvt_t::result condition
-			= codecvt.out(state, message.data(), message.data() + message.size(), in_text,
-						  &result[0], &result[0] + result.size(), out_text);
-
-		return std::string(&result[0], out_text);
-	}
-
-	auto log_job::to_string(const std::u16string& message) const -> std::string
-	{
-		if (message.empty())
-		{
-			return std::string();
-		}
-
-		typedef std::codecvt<char16_t, char, mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = std::use_facet<codecvt_t>(std::locale());
-
-		mbstate_t state = mbstate_t();
-
-		std::vector<char> result((message.size() + 1) * codecvt.max_length());
-		char16_t const* in_text = message.data();
-		char* out_text = &result[0];
-
-		codecvt_t::result condition = codecvt.out(state, in_text, in_text + message.size(), in_text,
-												  out_text, out_text + result.size(), out_text);
-
-		return std::string(result.data());
-	}
-
-	auto log_job::to_string(const std::u32string& message) const -> std::string
-	{
-		if (message.empty())
-		{
-			return std::string();
-		}
-
-		typedef std::codecvt<char32_t, char, mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = std::use_facet<codecvt_t>(std::locale());
-
-		mbstate_t state = mbstate_t();
-
-		std::vector<char> result((message.size() + 1) * codecvt.max_length());
-		char32_t const* in_text = message.data();
-		char* out_text = &result[0];
-
-		codecvt_t::result condition = codecvt.out(state, in_text, in_text + message.size(), in_text,
-												  out_text, out_text + message.size(), out_text);
-
-		return std::string(result.data());
 	}
 } // namespace log_module
