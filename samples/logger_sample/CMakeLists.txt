@@ -1,2 +1,2 @@
 add_executable(logger_sample logger_sample.cpp)
-target_link_libraries(logger_sample PUBLIC logger)
+target_link_libraries(logger_sample PUBLIC logger utilities)

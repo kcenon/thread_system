@@ -5,7 +5,7 @@ ORIGINAL_DIR=$(pwd)
 if [ "$(uname)" == "Darwin" ]; then
     brew update
     brew upgrade
-    brew install pkg-config cmake doxygen
+    brew install pkg-config cmake doxygen ninja
 elif [ "$(uname)" == "Linux" ]; then
     apt update
     apt upgrade -y
