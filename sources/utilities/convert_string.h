@@ -41,24 +41,68 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace utility_module
 {
 	/**
+	 * @brief UTF-8 Byte Order Mark (BOM)
+	 *
+	 * This constant represents the UTF-8 Byte Order Mark, which is a sequence of bytes
+	 * (0xEF, 0xBB, 0xBF) that may appear at the beginning of a UTF-8 encoded file or stream.
+	 */
+	constexpr std::array<uint8_t, 3> UTF8_BOM = { 0xEF, 0xBB, 0xBF };
+
+	/**
+	 * @struct ConversionOptions
+	 * @brief Options for string conversion operations.
+	 *
+	 * This struct allows for configuration of various aspects of the string conversion process.
+	 */
+	struct ConversionOptions
+	{
+		bool remove_bom = true; ///< Whether to remove the Byte Order Mark during conversion
+		// Add more options as needed
+	};
+
+	/**
+	 * @class StringConverter
+	 * @brief A utility class for converting between different string types.
+	 *
+	 * This template class provides a mechanism for converting between different string encodings.
+	 * It uses the ConversionOptions to customize the conversion process.
+	 *
+	 * @tparam From The source string type.
+	 * @tparam To The target string type.
+	 */
+	template <typename From, typename To> class StringConverter
+	{
+	private:
+		std::basic_string_view<typename From::value_type> from;
+		ConversionOptions options;
+
+	public:
+		/**
+		 * @brief Constructs a StringConverter object.
+		 * @param f The source string to convert.
+		 * @param opts The conversion options to use.
+		 */
+		StringConverter(std::basic_string_view<typename From::value_type> f,
+						const ConversionOptions& opts = ConversionOptions());
+
+		/**
+		 * @brief Performs the string conversion.
+		 * @return The converted string.
+		 */
+		To convert();
+	};
+
+	/**
 	 * @class convert_string
 	 * @brief A utility class for string conversions between different character encodings.
 	 *
 	 * This class provides static methods to convert between std::string, std::wstring,
 	 * std::u16string, and std::u32string. It also includes methods for converting
-	 * between strings and byte arrays. Additionally, it provides a constant for the UTF-8 BOM.
+	 * between strings and byte arrays.
 	 */
 	class convert_string
 	{
 	public:
-		/**
-		 * @brief UTF-8 Byte Order Mark (BOM)
-		 *
-		 * This constant represents the UTF-8 Byte Order Mark, which is a sequence of bytes
-		 * (0xEF, 0xBB, 0xBF) that may appear at the beginning of a UTF-8 encoded file or stream.
-		 */
-		static constexpr std::array<uint8_t, 3> UTF8_BOM = { 0xEF, 0xBB, 0xBF };
-
 		/**
 		 * @brief Converts a wide string to a UTF-8 string.
 		 * @param message The wide string to convert.
@@ -159,13 +203,37 @@ namespace utility_module
 
 	private:
 		/**
-		 * @brief Generic conversion function between different string types.
-		 * @tparam From The source string type.
-		 * @tparam To The target string type.
-		 * @param from The string to convert.
-		 * @return The converted string.
+		 * @brief Checks if a multi-byte sequence is valid UTF-8.
+		 * @tparam N The number of bytes in the sequence.
+		 * @param view The string view to check.
+		 * @param index The starting index of the sequence.
+		 * @return True if the sequence is valid, false otherwise.
 		 */
-		template <typename From, typename To>
-		static auto convert(std::basic_string_view<typename From::value_type> from) -> To;
+		template <size_t N>
+		static auto is_valid_multi_byte_sequence(std::string_view view,
+												 const size_t& index) -> bool;
+
+		/**
+		 * @brief Checks if a string is valid UTF-8.
+		 * @param value The string view to check.
+		 * @param index The current index in the string.
+		 * @return True if the string is valid UTF-8, false otherwise.
+		 */
+		static auto is_valid_utf8(std::string_view value, size_t& index) -> bool;
 	};
+
+	/**
+	 * @brief Checks if a string starts with a UTF-8 BOM.
+	 * @param value The string to check.
+	 * @return True if the string starts with a UTF-8 BOM, false otherwise.
+	 */
+	bool has_utf8_bom(const std::string& value);
+
+	/**
+	 * @brief Gets the starting index after the UTF-8 BOM, if present.
+	 * @param view The string view to check.
+	 * @return The index after the BOM if present, or 0 if not.
+	 */
+	size_t get_utf8_start_index(std::string_view view);
+
 } // namespace utility_module
