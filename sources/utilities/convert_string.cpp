@@ -1,71 +1,113 @@
 #include "convert_string.h"
 
+#include <bit>
 #include <locale>
-#include <string>
-#include <vector>
 #include <codecvt>
-#include <string_view>
 
 namespace utility_module
 {
+	bool has_utf8_bom(const std::string& value)
+	{
+		return value.size() >= 3 && std::equal(UTF8_BOM.begin(), UTF8_BOM.end(), value.begin());
+	}
+
+	size_t get_utf8_start_index(std::string_view view)
+	{
+		return (view.size() >= 3
+				&& view.substr(0, 3)
+					   == std::string_view(reinterpret_cast<const char*>(UTF8_BOM.data()), 3))
+				   ? 3
+				   : 0;
+	}
+
+	template <typename From, typename To>
+	StringConverter<From, To>::StringConverter(std::basic_string_view<typename From::value_type> f,
+											   const ConversionOptions& opts)
+		: from(f), options(opts)
+	{
+	}
+
+	template <typename From, typename To> To StringConverter<From, To>::convert()
+	{
+		auto& facet = std::use_facet<
+			std::codecvt<typename To::value_type, typename From::value_type, std::mbstate_t>>(
+			std::locale());
+
+		std::mbstate_t state{};
+		std::vector<typename To::value_type> to(from.size() * facet.max_length());
+
+		const auto* from_next = from.data();
+		auto* to_next = to.data();
+
+		const auto result = facet.in(state, from.data(), from.data() + from.size(), from_next,
+									 to.data(), to.data() + to.size(), to_next);
+
+		if (result != std::codecvt_base::ok)
+		{
+			return To();
+		}
+
+		return To(to.data(), to_next);
+	}
+
 	auto convert_string::to_string(const std::wstring& message) -> std::string
 	{
-		return convert<std::wstring_view, std::string>(message);
+		return StringConverter<std::wstring, std::string>(message).convert();
 	}
 
 	auto convert_string::to_string(const std::u16string& message) -> std::string
 	{
-		return convert<std::u16string_view, std::string>(message);
+		return StringConverter<std::u16string, std::string>(message).convert();
 	}
 
 	auto convert_string::to_string(const std::u32string& message) -> std::string
 	{
-		return convert<std::u32string_view, std::string>(message);
+		return StringConverter<std::u32string, std::string>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::string& message) -> std::wstring
 	{
-		return convert<std::string_view, std::wstring>(message);
+		return StringConverter<std::string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::u16string& message) -> std::wstring
 	{
-		return convert<std::u16string_view, std::wstring>(message);
+		return StringConverter<std::u16string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::u32string& message) -> std::wstring
 	{
-		return convert<std::u32string_view, std::wstring>(message);
+		return StringConverter<std::u32string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::string& message) -> std::u16string
 	{
-		return convert<std::string_view, std::u16string>(message);
+		return StringConverter<std::string, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::wstring& message) -> std::u16string
 	{
-		return convert<std::wstring_view, std::u16string>(message);
+		return StringConverter<std::wstring, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::u32string& message) -> std::u16string
 	{
-		return convert<std::u32string_view, std::u16string>(message);
+		return StringConverter<std::u32string, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::string& message) -> std::u32string
 	{
-		return convert<std::string_view, std::u32string>(message);
+		return StringConverter<std::string, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::wstring& message) -> std::u32string
 	{
-		return convert<std::wstring_view, std::u32string>(message);
+		return StringConverter<std::wstring, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::u16string& message) -> std::u32string
 	{
-		return convert<std::u16string_view, std::u32string>(message);
+		return StringConverter<std::u16string, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_array(const std::string& value) -> std::vector<uint8_t>
@@ -78,7 +120,7 @@ namespace utility_module
 		std::vector<uint8_t> result;
 		result.reserve(value.size());
 
-		if (value.size() >= 3 && std::equal(UTF8_BOM.begin(), UTF8_BOM.end(), value.begin()))
+		if (has_utf8_bom(value))
 		{
 			result.insert(result.end(), value.begin() + 3, value.end());
 		}
@@ -98,80 +140,91 @@ namespace utility_module
 		}
 
 		std::string_view view(reinterpret_cast<const char*>(value.data()), value.size());
-		size_t start_index
-			= (view.size() >= 3
-			   && view.substr(0, 3)
-					  == std::string_view(reinterpret_cast<const char*>(UTF8_BOM.data()), 3))
-				  ? 3
-				  : 0;
+		size_t start_index = get_utf8_start_index(view);
 
 		for (size_t i = start_index; i < view.size();)
 		{
-			if (static_cast<uint8_t>(view[i]) <= 0x7F)
+			if (!is_valid_utf8(view, i))
 			{
-				i++;
-				continue;
+				return std::string();
 			}
-
-			if ((view[i] & 0xE0) == 0xC0)
-			{
-				if (i + 1 >= view.size() || (view[i + 1] & 0xC0) != 0x80)
-				{
-					return std::string();
-				}
-				i += 2;
-				continue;
-			}
-
-			if ((view[i] & 0xF0) == 0xE0)
-			{
-				if (i + 2 >= view.size() || (view[i + 1] & 0xC0) != 0x80
-					|| (view[i + 2] & 0xC0) != 0x80)
-				{
-					return std::string();
-				}
-				i += 3;
-				continue;
-			}
-
-			if ((view[i] & 0xF8) == 0xF0)
-			{
-				if (i + 3 >= view.size() || (view[i + 1] & 0xC0) != 0x80
-					|| (view[i + 2] & 0xC0) != 0x80 || (view[i + 3] & 0xC0) != 0x80)
-				{
-					return std::string();
-				}
-				i += 4;
-				continue;
-			}
-
-			return std::string();
 		}
 
 		return std::string(view.substr(start_index));
 	}
 
-	template <typename From, typename To>
-	auto convert_string::convert(std::basic_string_view<typename From::value_type> from) -> To
+	template <size_t N>
+	auto convert_string::is_valid_multi_byte_sequence(std::string_view view,
+													  const size_t& index) -> bool
 	{
-		auto& facet = std::use_facet<
-			std::codecvt<typename To::value_type, typename From::value_type, std::mbstate_t>>(
-			std::locale(""));
-
-		std::mbstate_t state{};
-		std::vector<typename To::value_type> to(from.size() * facet.max_length());
-
-		const auto* from_next = from.data();
-		auto* to_next = to.data();
-
-		const auto result = facet.in(state, from.data(), from.data() + from.size(), from_next,
-									 to.data(), to.data() + to.size(), to_next);
-
-		if (result != std::codecvt_base::ok)
+		if (index + N > view.size())
 		{
-			return To();
+			return false;
 		}
 
-		return To(to.data(), to_next);
+		if constexpr (N > 1)
+		{
+			return (std::bit_cast<uint8_t>(view[index + 1]) & 0xC0) == 0x80
+				   && is_valid_multi_byte_sequence<N - 1>(view, index + 1);
+		}
+		return true;
 	}
+
+	auto convert_string::is_valid_utf8(std::string_view view, size_t& index) -> bool
+	{
+		if (index >= view.size())
+		{
+			return false;
+		}
+
+		auto first_byte = std::bit_cast<uint8_t>(view[index]);
+
+		if (first_byte <= 0x7F)
+		{
+			index++;
+			return true;
+		}
+
+		if ((first_byte & 0xE0) == 0xC0)
+		{
+			if (is_valid_multi_byte_sequence<2>(view, index))
+			{
+				index += 2;
+				return true;
+			}
+		}
+
+		if ((first_byte & 0xF0) == 0xE0)
+		{
+			if (is_valid_multi_byte_sequence<3>(view, index))
+			{
+				index += 3;
+				return true;
+			}
+		}
+
+		if ((first_byte & 0xF8) == 0xF0)
+		{
+			if (is_valid_multi_byte_sequence<4>(view, index))
+			{
+				index += 4;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	template class StringConverter<std::string, std::wstring>;
+	template class StringConverter<std::string, std::u16string>;
+	template class StringConverter<std::string, std::u32string>;
+	template class StringConverter<std::wstring, std::string>;
+	template class StringConverter<std::wstring, std::u16string>;
+	template class StringConverter<std::wstring, std::u32string>;
+	template class StringConverter<std::u16string, std::string>;
+	template class StringConverter<std::u16string, std::wstring>;
+	template class StringConverter<std::u16string, std::u32string>;
+	template class StringConverter<std::u32string, std::string>;
+	template class StringConverter<std::u32string, std::wstring>;
+	template class StringConverter<std::u32string, std::u16string>;
 } // namespace utility_module
