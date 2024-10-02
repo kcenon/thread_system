@@ -32,10 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <tuple>
 #include <array>
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <optional>
 #include <string_view>
 
 namespace utility_module
@@ -49,41 +51,41 @@ namespace utility_module
 	constexpr std::array<uint8_t, 3> UTF8_BOM = { 0xEF, 0xBB, 0xBF };
 
 	/**
-	 * @struct ConversionOptions
+	 * @struct conversion_options
 	 * @brief Options for string conversion operations.
 	 *
 	 * This struct allows for configuration of various aspects of the string conversion process.
 	 */
-	struct ConversionOptions
+	struct conversion_options
 	{
 		bool remove_bom = true; ///< Whether to remove the Byte Order Mark during conversion
-		// Add more options as needed
+								// Add more options as needed
 	};
 
 	/**
-	 * @class StringConverter
+	 * @class converter
 	 * @brief A utility class for converting between different string types.
 	 *
 	 * This template class provides a mechanism for converting between different string encodings.
-	 * It uses the ConversionOptions to customize the conversion process.
+	 * It uses the conversion_options to customize the conversion process.
 	 *
 	 * @tparam From The source string type.
 	 * @tparam To The target string type.
 	 */
-	template <typename From, typename To> class StringConverter
+	template <typename From, typename To> class converter
 	{
 	private:
 		std::basic_string_view<typename From::value_type> from;
-		ConversionOptions options;
+		conversion_options options;
 
 	public:
 		/**
-		 * @brief Constructs a StringConverter object.
+		 * @brief Constructs a converter object.
 		 * @param f The source string to convert.
 		 * @param opts The conversion options to use.
 		 */
-		StringConverter(std::basic_string_view<typename From::value_type> f,
-						const ConversionOptions& opts = ConversionOptions());
+		converter(std::basic_string_view<typename From::value_type> f,
+				  const conversion_options& opts = conversion_options());
 
 		/**
 		 * @brief Performs the string conversion.
@@ -94,15 +96,27 @@ namespace utility_module
 
 	/**
 	 * @class convert_string
-	 * @brief A utility class for string conversions between different character encodings.
+	 * @brief A utility class for string conversions and manipulations.
 	 *
 	 * This class provides static methods to convert between std::string, std::wstring,
 	 * std::u16string, and std::u32string. It also includes methods for converting
-	 * between strings and byte arrays.
+	 * between strings and byte arrays, and for string splitting operations.
+	 * Additionally, it provides a constant for the UTF-8 BOM.
 	 */
 	class convert_string
 	{
 	public:
+		/**
+		 * @brief Splits a string into substrings based on a delimiter token.
+		 * @param source The source string to split.
+		 * @param token The delimiter token to split by.
+		 * @return A tuple containing:
+		 *         - An optional vector of strings representing the split substrings, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
+		 */
+		static auto split(const std::string& source, const std::string& token)
+			-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>;
+
 		/**
 		 * @brief Converts a wide string to a UTF-8 string.
 		 * @param message The wide string to convert.

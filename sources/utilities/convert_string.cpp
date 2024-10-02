@@ -21,13 +21,13 @@ namespace utility_module
 	}
 
 	template <typename From, typename To>
-	StringConverter<From, To>::StringConverter(std::basic_string_view<typename From::value_type> f,
-											   const ConversionOptions& opts)
+	converter<From, To>::converter(std::basic_string_view<typename From::value_type> f,
+								   const conversion_options& opts)
 		: from(f), options(opts)
 	{
 	}
 
-	template <typename From, typename To> To StringConverter<From, To>::convert()
+	template <typename From, typename To> To converter<From, To>::convert()
 	{
 		auto& facet = std::use_facet<
 			std::codecvt<typename To::value_type, typename From::value_type, std::mbstate_t>>(
@@ -50,64 +50,111 @@ namespace utility_module
 		return To(to.data(), to_next);
 	}
 
+	auto convert_string::split(const std::string& source, const std::string& token)
+		-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
+	{
+		if (source.empty() == true)
+		{
+			return { std::nullopt, "source is empty" };
+		}
+
+		size_t offset = 0;
+		size_t last_offset = 0;
+		std::vector<std::string> result = {};
+		std::string temp;
+
+		while (true)
+		{
+			offset = source.find(token, last_offset);
+			if (offset == std::string::npos)
+			{
+				break;
+			}
+
+			temp = source.substr(last_offset, offset - last_offset);
+			if (!temp.empty())
+			{
+				result.push_back(std::move(temp));
+			}
+
+			last_offset = offset + token.size();
+		}
+
+		if (last_offset != 0 && last_offset != std::string::npos)
+		{
+			temp = source.substr(last_offset, offset - last_offset);
+			if (!temp.empty())
+			{
+				result.push_back(std::move(temp));
+			}
+		}
+
+		if (last_offset == 0)
+		{
+			return { std::vector<std::string>{ source }, std::nullopt };
+		}
+
+		return { result, std::nullopt };
+	}
+
 	auto convert_string::to_string(const std::wstring& message) -> std::string
 	{
-		return StringConverter<std::wstring, std::string>(message).convert();
+		return converter<std::wstring, std::string>(message).convert();
 	}
 
 	auto convert_string::to_string(const std::u16string& message) -> std::string
 	{
-		return StringConverter<std::u16string, std::string>(message).convert();
+		return converter<std::u16string, std::string>(message).convert();
 	}
 
 	auto convert_string::to_string(const std::u32string& message) -> std::string
 	{
-		return StringConverter<std::u32string, std::string>(message).convert();
+		return converter<std::u32string, std::string>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::string& message) -> std::wstring
 	{
-		return StringConverter<std::string, std::wstring>(message).convert();
+		return converter<std::string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::u16string& message) -> std::wstring
 	{
-		return StringConverter<std::u16string, std::wstring>(message).convert();
+		return converter<std::u16string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_wstring(const std::u32string& message) -> std::wstring
 	{
-		return StringConverter<std::u32string, std::wstring>(message).convert();
+		return converter<std::u32string, std::wstring>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::string& message) -> std::u16string
 	{
-		return StringConverter<std::string, std::u16string>(message).convert();
+		return converter<std::string, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::wstring& message) -> std::u16string
 	{
-		return StringConverter<std::wstring, std::u16string>(message).convert();
+		return converter<std::wstring, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u16string(const std::u32string& message) -> std::u16string
 	{
-		return StringConverter<std::u32string, std::u16string>(message).convert();
+		return converter<std::u32string, std::u16string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::string& message) -> std::u32string
 	{
-		return StringConverter<std::string, std::u32string>(message).convert();
+		return converter<std::string, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::wstring& message) -> std::u32string
 	{
-		return StringConverter<std::wstring, std::u32string>(message).convert();
+		return converter<std::wstring, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_u32string(const std::u16string& message) -> std::u32string
 	{
-		return StringConverter<std::u16string, std::u32string>(message).convert();
+		return converter<std::u16string, std::u32string>(message).convert();
 	}
 
 	auto convert_string::to_array(const std::string& value) -> std::vector<uint8_t>
@@ -215,16 +262,16 @@ namespace utility_module
 		return false;
 	}
 
-	template class StringConverter<std::string, std::wstring>;
-	template class StringConverter<std::string, std::u16string>;
-	template class StringConverter<std::string, std::u32string>;
-	template class StringConverter<std::wstring, std::string>;
-	template class StringConverter<std::wstring, std::u16string>;
-	template class StringConverter<std::wstring, std::u32string>;
-	template class StringConverter<std::u16string, std::string>;
-	template class StringConverter<std::u16string, std::wstring>;
-	template class StringConverter<std::u16string, std::u32string>;
-	template class StringConverter<std::u32string, std::string>;
-	template class StringConverter<std::u32string, std::wstring>;
-	template class StringConverter<std::u32string, std::u16string>;
+	template class converter<std::string, std::wstring>;
+	template class converter<std::string, std::u16string>;
+	template class converter<std::string, std::u32string>;
+	template class converter<std::wstring, std::string>;
+	template class converter<std::wstring, std::u16string>;
+	template class converter<std::wstring, std::u32string>;
+	template class converter<std::u16string, std::string>;
+	template class converter<std::u16string, std::wstring>;
+	template class converter<std::u16string, std::u32string>;
+	template class converter<std::u32string, std::string>;
+	template class converter<std::u32string, std::wstring>;
+	template class converter<std::u32string, std::u16string>;
 } // namespace utility_module
