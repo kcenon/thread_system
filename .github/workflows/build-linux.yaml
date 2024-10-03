@@ -47,6 +47,7 @@ jobs:
           sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar
           sudo apt-get update
           sudo apt-get install -y doxygen graphviz
+          sudo apt-get install -y autoconf automake autoconf-archive
 
       - name: Check architecture and set environment variable if needed
         run: |
