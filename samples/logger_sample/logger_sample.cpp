@@ -17,7 +17,7 @@ uint32_t test_line_count_ = 1000000;
 log_types file_target_ = log_types::Debug;
 log_types console_target_ = log_types::Error;
 
-auto main() -> int
+auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
 	logger::handle().set_title("logger_sample");
 	logger::handle().set_use_backup(use_backup_);
@@ -29,7 +29,12 @@ auto main() -> int
 		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
 	}
 
-	auto [started, start_error] = logger::handle().start();
+	return logger::handle().start();
+}
+
+auto main() -> int
+{
+	auto [started, start_error] = initialize_logger();
 	if (!started)
 	{
 		std::cerr << "error starting logger: " << start_error.value_or("unknown error")
