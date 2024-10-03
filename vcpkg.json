@@ -2,6 +2,7 @@
   "name": "threadsystem",
   "version": "1.0.0",
   "dependencies": [
-    "fmt"
+    "fmt",
+    "icu"
   ]
 }
