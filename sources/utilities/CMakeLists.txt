@@ -7,7 +7,11 @@ add_library(${LIBRARY_NAME} STATIC ${UTILITIES_BASE_HEADERS} ${UTILITIES_BASE_SO
 
 target_include_directories(${LIBRARY_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(${LIBRARY_NAME} PRIVATE -lc++)
+if(UNIX AND NOT APPLE)
+    target_link_libraries(${LIBRARY_NAME} PRIVATE -lstdc++)
+else()
+    target_link_libraries(${LIBRARY_NAME} PRIVATE -lc++)
+endif()
 
 if(NOT HAS_STD_FORMAT OR NOT SET_STD_FORMAT)
     find_package(fmt CONFIG REQUIRED)
