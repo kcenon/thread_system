@@ -43,65 +43,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace utility_module
 {
 	/**
-	 * @brief UTF-8 Byte Order Mark (BOM)
-	 *
-	 * This constant represents the UTF-8 Byte Order Mark, which is a sequence of bytes
-	 * (0xEF, 0xBB, 0xBF) that may appear at the beginning of a UTF-8 encoded file or stream.
-	 */
-	constexpr std::array<uint8_t, 3> UTF8_BOM = { 0xEF, 0xBB, 0xBF };
-
-	/**
-	 * @struct conversion_options
-	 * @brief Options for string conversion operations.
-	 *
-	 * This struct allows for configuration of various aspects of the string conversion process.
-	 */
-	struct conversion_options
-	{
-		bool remove_bom = true; ///< Whether to remove the Byte Order Mark during conversion
-								// Add more options as needed
-	};
-
-	/**
-	 * @class converter
-	 * @brief A utility class for converting between different string types.
-	 *
-	 * This template class provides a mechanism for converting between different string encodings.
-	 * It uses the conversion_options to customize the conversion process.
-	 *
-	 * @tparam From The source string type.
-	 * @tparam To The target string type.
-	 */
-	template <typename From, typename To> class converter
-	{
-	private:
-		std::basic_string_view<typename From::value_type> from;
-		conversion_options options;
-
-	public:
-		/**
-		 * @brief Constructs a converter object.
-		 * @param f The source string to convert.
-		 * @param opts The conversion options to use.
-		 */
-		converter(std::basic_string_view<typename From::value_type> f,
-				  const conversion_options& opts = conversion_options());
-
-		/**
-		 * @brief Performs the string conversion.
-		 * @return The converted string.
-		 */
-		To convert();
-	};
-
-	/**
 	 * @class convert_string
-	 * @brief A utility class for string conversions and manipulations.
+	 * @brief A utility class for string conversion and manipulation.
 	 *
-	 * This class provides static methods to convert between std::string, std::wstring,
-	 * std::u16string, and std::u32string. It also includes methods for converting
-	 * between strings and byte arrays, and for string splitting operations.
-	 * Additionally, it provides a constant for the UTF-8 BOM.
+	 * This class provides static methods for converting between different string types
+	 * (std::string, std::wstring, std::u16string, std::u32string) and for splitting strings.
 	 */
 	class convert_string
 	{
@@ -119,135 +65,165 @@ namespace utility_module
 
 		/**
 		 * @brief Converts a wide string to a UTF-8 string.
-		 * @param message The wide string to convert.
-		 * @return The converted UTF-8 string.
+		 * @param wide_string_message The wide string to convert.
+		 * @return A tuple containing:
+		 *         - An optional string representing the converted UTF-8 string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_string(const std::wstring& message) -> std::string;
+		static auto to_string(const std::wstring& wide_string_message)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-16 string to a UTF-8 string.
-		 * @param message The UTF-16 string to convert.
-		 * @return The converted UTF-8 string.
+		 * @param utf16_string_message The UTF-16 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional string representing the converted UTF-8 string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_string(const std::u16string& message) -> std::string;
+		static auto to_string(const std::u16string& utf16_string_message)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-32 string to a UTF-8 string.
-		 * @param message The UTF-32 string to convert.
-		 * @return The converted UTF-8 string.
+		 * @param utf32_string_message The UTF-32 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional string representing the converted UTF-8 string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_string(const std::u32string& message) -> std::string;
+		static auto to_string(const std::u32string& utf32_string_message)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-8 string to a wide string.
-		 * @param message The UTF-8 string to convert.
-		 * @return The converted wide string.
+		 * @param utf8_string_message The UTF-8 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional wide string representing the converted wide string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_wstring(const std::string& message) -> std::wstring;
+		static auto to_wstring(const std::string& utf8_string_message)
+			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-16 string to a wide string.
-		 * @param message The UTF-16 string to convert.
-		 * @return The converted wide string.
+		 * @param utf16_string_message The UTF-16 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional wide string representing the converted wide string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_wstring(const std::u16string& message) -> std::wstring;
+		static auto to_wstring(const std::u16string& utf16_string_message)
+			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-32 string to a wide string.
-		 * @param message The UTF-32 string to convert.
-		 * @return The converted wide string.
+		 * @param utf32_string_message The UTF-32 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional wide string representing the converted wide string, if successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_wstring(const std::u32string& message) -> std::wstring;
+		static auto to_wstring(const std::u32string& utf32_string_message)
+			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-8 string to a UTF-16 string.
-		 * @param message The UTF-8 string to convert.
-		 * @return The converted UTF-16 string.
+		 * @param utf8_string_message The UTF-8 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-16 string representing the converted UTF-16 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u16string(const std::string& message) -> std::u16string;
+		static auto to_u16string(const std::string& utf8_string_message)
+			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a wide string to a UTF-16 string.
-		 * @param message The wide string to convert.
-		 * @return The converted UTF-16 string.
+		 * @param wide_string_message The wide string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-16 string representing the converted UTF-16 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u16string(const std::wstring& message) -> std::u16string;
+		static auto to_u16string(const std::wstring& wide_string_message)
+			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-32 string to a UTF-16 string.
-		 * @param message The UTF-32 string to convert.
-		 * @return The converted UTF-16 string.
+		 * @param utf32_string_message The UTF-32 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-16 string representing the converted UTF-16 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u16string(const std::u32string& message) -> std::u16string;
+		static auto to_u16string(const std::u32string& utf32_string_message)
+			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-8 string to a UTF-32 string.
-		 * @param message The UTF-8 string to convert.
-		 * @return The converted UTF-32 string.
+		 * @param utf8_string_message The UTF-8 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-32 string representing the converted UTF-32 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u32string(const std::string& message) -> std::u32string;
+		static auto to_u32string(const std::string& utf8_string_message)
+			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a wide string to a UTF-32 string.
-		 * @param message The wide string to convert.
-		 * @return The converted UTF-32 string.
+		 * @param wide_string_message The wide string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-32 string representing the converted UTF-32 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u32string(const std::wstring& message) -> std::u32string;
+		static auto to_u32string(const std::wstring& wide_string_message)
+			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a UTF-16 string to a UTF-32 string.
-		 * @param message The UTF-16 string to convert.
-		 * @return The converted UTF-32 string.
+		 * @param utf16_string_message The UTF-16 string to convert.
+		 * @return A tuple containing:
+		 *         - An optional UTF-32 string representing the converted UTF-32 string, if
+		 * successful.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_u32string(const std::u16string& message) -> std::u32string;
+		static auto to_u32string(const std::u16string& utf16_string_message)
+			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a string to a byte array.
-		 * @param value The string to convert.
-		 * @return A vector of bytes representing the string.
+		 * @brief Converts a string to a byte array, handling UTF-8 BOM if present.
+		 * @param utf8_string_value The string to convert.
+		 * @return A tuple containing:
+		 *         - An optional vector of bytes representing the string, including BOM if it was
+		 * present in the input.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_array(const std::string& value) -> std::vector<uint8_t>;
+		static auto to_array(const std::string& utf8_string_value)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a byte array to a string.
-		 * @param value The byte array to convert.
-		 * @return The converted string.
+		 * @brief Converts a byte array to a string, handling UTF-8 BOM if present.
+		 * @param byte_array_value The byte array to convert.
+		 * @return A tuple containing:
+		 *         - An optional string representing the converted string, with BOM removed if it
+		 * was present in the input.
+		 *         - An optional string containing an error message, if an error occurred.
 		 */
-		static auto to_string(const std::vector<uint8_t>& value) -> std::string;
+		static auto to_string(const std::vector<uint8_t>& byte_array_value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 	private:
 		/**
-		 * @brief Checks if a multi-byte sequence is valid UTF-8.
-		 * @tparam N The number of bytes in the sequence.
-		 * @param view The string view to check.
-		 * @param index The starting index of the sequence.
-		 * @return True if the sequence is valid, false otherwise.
+		 * @brief Checks if the given byte array starts with a UTF-8 BOM.
+		 * @param value The byte array to check.
+		 * @return true if the array starts with a UTF-8 BOM, false otherwise.
 		 */
-		template <size_t N>
-		static auto is_valid_multi_byte_sequence(std::string_view view,
-												 const size_t& index) -> bool;
+		static auto has_utf8_bom(const std::vector<uint8_t>& value) -> bool;
 
 		/**
-		 * @brief Checks if a string is valid UTF-8.
-		 * @param value The string view to check.
-		 * @param index The current index in the string.
-		 * @return True if the string is valid UTF-8, false otherwise.
+		 * @brief Checks if the given string starts with a UTF-8 BOM.
+		 * @param value The string to check.
+		 * @return true if the string starts with a UTF-8 BOM, false otherwise.
 		 */
-		static auto is_valid_utf8(std::string_view value, size_t& index) -> bool;
+		static auto has_utf8_bom(const std::string& value) -> bool;
 	};
-
-	/**
-	 * @brief Checks if a string starts with a UTF-8 BOM.
-	 * @param value The string to check.
-	 * @return True if the string starts with a UTF-8 BOM, false otherwise.
-	 */
-	bool has_utf8_bom(const std::string& value);
-
-	/**
-	 * @brief Gets the starting index after the UTF-8 BOM, if present.
-	 * @param view The string view to check.
-	 * @return The index after the BOM if present, or 0 if not.
-	 */
-	size_t get_utf8_start_index(std::string_view view);
-
 } // namespace utility_module

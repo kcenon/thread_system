@@ -53,8 +53,13 @@ namespace utility_module
 
 	argument_manager::argument_manager(const std::wstring& arguments)
 	{
-		auto [splitted, message] = convert_string::split(convert_string::to_string(arguments), " ");
+		auto [converted, convert_error] = convert_string::to_string(arguments);
+		if (!converted.has_value())
+		{
+			return;
+		}
 
+		auto [splitted, message] = convert_string::split(converted.value(), " ");
 		if (splitted.has_value())
 		{
 			_arguments = parse(splitted.value());
@@ -172,7 +177,13 @@ namespace utility_module
 		std::vector<std::string> arguments;
 		for (int index = 1; index < argc; ++index)
 		{
-			arguments.push_back(convert_string::to_string(argv[index]));
+			auto [converted, convert_error] = convert_string::to_string(argv[index]);
+			if (!converted.has_value())
+			{
+				continue;
+			}
+
+			arguments.push_back(converted.value());
 		}
 
 		return parse(arguments);

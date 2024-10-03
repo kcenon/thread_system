@@ -1,277 +1,500 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "convert_string.h"
 
-#include <bit>
-#include <locale>
-#include <codecvt>
+#include <stdexcept>
+
+#include "unicode/unistr.h"
+#include "unicode/ustream.h"
+#include "unicode/ucnv.h"
+
+#ifdef USE_STD_FORMAT
+#include <format>
+#else
+#include <fmt/format.h>
+#endif
 
 namespace utility_module
 {
-	bool has_utf8_bom(const std::string& value)
-	{
-		return value.size() >= 3 && std::equal(UTF8_BOM.begin(), UTF8_BOM.end(), value.begin());
-	}
-
-	size_t get_utf8_start_index(std::string_view view)
-	{
-		return (view.size() >= 3
-				&& view.substr(0, 3)
-					   == std::string_view(reinterpret_cast<const char*>(UTF8_BOM.data()), 3))
-				   ? 3
-				   : 0;
-	}
-
-	template <typename From, typename To>
-	converter<From, To>::converter(std::basic_string_view<typename From::value_type> f,
-								   const conversion_options& opts)
-		: from(f), options(opts)
-	{
-	}
-
-	template <typename From, typename To> To converter<From, To>::convert()
-	{
-		auto& facet = std::use_facet<
-			std::codecvt<typename To::value_type, typename From::value_type, std::mbstate_t>>(
-			std::locale());
-
-		std::mbstate_t state{};
-		std::vector<typename To::value_type> to(from.size() * facet.max_length());
-
-		const auto* from_next = from.data();
-		auto* to_next = to.data();
-
-		const auto result = facet.in(state, from.data(), from.data() + from.size(), from_next,
-									 to.data(), to.data() + to.size(), to_next);
-
-		if (result != std::codecvt_base::ok)
-		{
-			return To();
-		}
-
-		return To(to.data(), to_next);
-	}
-
 	auto convert_string::split(const std::string& source, const std::string& token)
 		-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
 	{
-		if (source.empty() == true)
+		try
 		{
-			return { std::nullopt, "source is empty" };
-		}
+			std::vector<std::string> result;
 
-		size_t offset = 0;
-		size_t last_offset = 0;
-		std::vector<std::string> result = {};
-		std::string temp;
-
-		while (true)
-		{
-			offset = source.find(token, last_offset);
-			if (offset == std::string::npos)
+			size_t start = 0;
+			while (true)
 			{
-				break;
+				size_t end = source.find(token, start);
+				if (end == std::string::npos)
+				{
+					result.push_back(source.substr(start));
+					break;
+				}
+
+				result.push_back(source.substr(start, end - start));
+				start = end + token.length();
 			}
 
-			temp = source.substr(last_offset, offset - last_offset);
-			if (!temp.empty())
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error splitting string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_string(const std::wstring& wide_string_message)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				static_cast<int32_t>(wide_string_message.length()));
+
+			std::string result;
+			unicode_string.toUTF8String(result);
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting wstring to string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_string(const std::u16string& utf16_string_message)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(utf16_string_message.data()),
+				static_cast<int32_t>(utf16_string_message.length()));
+
+			std::string result;
+			unicode_string.toUTF8String(result);
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u16string to string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_string(const std::u32string& utf32_string_message)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
+				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
+				static_cast<int32_t>(utf32_string_message.length()));
+
+			std::string result;
+			unicode_string.toUTF8String(result);
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u32string to string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_wstring(const std::string& utf8_string_message)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
+
+			std::wstring result(unicode_string.length(), L'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting string to wstring: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_wstring(const std::u16string& utf16_string_message)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(utf16_string_message.data()),
+				static_cast<int32_t>(utf16_string_message.length()));
+
+			std::wstring result(unicode_string.length(), L'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u16string to wstring: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_wstring(const std::u32string& utf32_string_message)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
+				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
+				static_cast<int32_t>(utf32_string_message.length()));
+
+			std::wstring result(unicode_string.length(), L'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u32string to wstring: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u16string(const std::string& utf8_string_message)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
+
+			std::u16string result(unicode_string.length(), u'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting string to u16string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u16string(const std::wstring& wide_string_message)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				static_cast<int32_t>(wide_string_message.length()));
+
+			std::u16string result(unicode_string.length(), u'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting wstring to u16string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u16string(const std::u32string& utf32_string_message)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
+				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
+				static_cast<int32_t>(utf32_string_message.length()));
+
+			std::u16string result(unicode_string.length(), u'\0');
+			unicode_string.extract(0, unicode_string.length(),
+								   reinterpret_cast<UChar*>(&result[0]));
+
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u32string to u16string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u32string(const std::string& utf8_string_message)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
+
+			std::u32string result(unicode_string.length(), U'\0');
+			UErrorCode error_code = U_ZERO_ERROR;
+			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
+								   static_cast<int32_t>(result.capacity()), error_code);
+
+			if (U_FAILURE(error_code))
 			{
-				result.push_back(std::move(temp));
+				return { std::nullopt,
+#ifdef USE_STD_FORMAT
+						 std::format
+#else
+						 fmt::format
+#endif
+						 ("Error converting string to u32string: {}", u_errorName(error_code)) };
+			}
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting string to u32string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u32string(const std::wstring& wide_string_message)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				static_cast<int32_t>(wide_string_message.length()));
+
+			std::u32string result(unicode_string.length(), U'\0');
+			UErrorCode error_code = U_ZERO_ERROR;
+			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
+								   static_cast<int32_t>(result.capacity()), error_code);
+
+			if (U_FAILURE(error_code))
+			{
+				return { std::nullopt,
+#ifdef USE_STD_FORMAT
+						 std::format
+#else
+						 fmt::format
+#endif
+						 ("Error converting wstring to u32string: {}", u_errorName(error_code)) };
 			}
 
-			last_offset = offset + token.size();
+			return { std::move(result), std::nullopt };
 		}
-
-		if (last_offset != 0 && last_offset != std::string::npos)
+		catch (const std::exception& e)
 		{
-			temp = source.substr(last_offset, offset - last_offset);
-			if (!temp.empty())
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting wstring to u32string: {}", e.what()) };
+		}
+	}
+
+	auto convert_string::to_u32string(const std::u16string& utf16_string_message)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		try
+		{
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const UChar*>(utf16_string_message.data()),
+				static_cast<int32_t>(utf16_string_message.length()));
+
+			std::u32string result(unicode_string.length(), U'\0');
+			UErrorCode error_code = U_ZERO_ERROR;
+			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
+								   static_cast<int32_t>(result.capacity()), error_code);
+
+			if (U_FAILURE(error_code))
 			{
-				result.push_back(std::move(temp));
+				return { std::nullopt,
+#ifdef USE_STD_FORMAT
+						 std::format
+#else
+						 fmt::format
+#endif
+						 ("Error converting u16string to u32string: {}", u_errorName(error_code)) };
 			}
+
+			return { std::move(result), std::nullopt };
 		}
-
-		if (last_offset == 0)
+		catch (const std::exception& e)
 		{
-			return { std::vector<std::string>{ source }, std::nullopt };
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting u16string to u32string: {}", e.what()) };
 		}
-
-		return { result, std::nullopt };
 	}
 
-	auto convert_string::to_string(const std::wstring& message) -> std::string
+	auto convert_string::to_array(const std::string& utf8_string_value)
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
 	{
-		return converter<std::wstring, std::string>(message).convert();
-	}
-
-	auto convert_string::to_string(const std::u16string& message) -> std::string
-	{
-		return converter<std::u16string, std::string>(message).convert();
-	}
-
-	auto convert_string::to_string(const std::u32string& message) -> std::string
-	{
-		return converter<std::u32string, std::string>(message).convert();
-	}
-
-	auto convert_string::to_wstring(const std::string& message) -> std::wstring
-	{
-		return converter<std::string, std::wstring>(message).convert();
-	}
-
-	auto convert_string::to_wstring(const std::u16string& message) -> std::wstring
-	{
-		return converter<std::u16string, std::wstring>(message).convert();
-	}
-
-	auto convert_string::to_wstring(const std::u32string& message) -> std::wstring
-	{
-		return converter<std::u32string, std::wstring>(message).convert();
-	}
-
-	auto convert_string::to_u16string(const std::string& message) -> std::u16string
-	{
-		return converter<std::string, std::u16string>(message).convert();
-	}
-
-	auto convert_string::to_u16string(const std::wstring& message) -> std::u16string
-	{
-		return converter<std::wstring, std::u16string>(message).convert();
-	}
-
-	auto convert_string::to_u16string(const std::u32string& message) -> std::u16string
-	{
-		return converter<std::u32string, std::u16string>(message).convert();
-	}
-
-	auto convert_string::to_u32string(const std::string& message) -> std::u32string
-	{
-		return converter<std::string, std::u32string>(message).convert();
-	}
-
-	auto convert_string::to_u32string(const std::wstring& message) -> std::u32string
-	{
-		return converter<std::wstring, std::u32string>(message).convert();
-	}
-
-	auto convert_string::to_u32string(const std::u16string& message) -> std::u32string
-	{
-		return converter<std::u16string, std::u32string>(message).convert();
-	}
-
-	auto convert_string::to_array(const std::string& value) -> std::vector<uint8_t>
-	{
-		if (value.empty())
+		try
 		{
-			return {};
-		}
-
-		std::vector<uint8_t> result;
-		result.reserve(value.size());
-
-		if (has_utf8_bom(value))
-		{
-			result.insert(result.end(), value.begin() + 3, value.end());
-		}
-		else
-		{
-			result.insert(result.end(), value.begin(), value.end());
-		}
-
-		return result;
-	}
-
-	auto convert_string::to_string(const std::vector<uint8_t>& value) -> std::string
-	{
-		if (value.empty())
-		{
-			return std::string();
-		}
-
-		std::string_view view(reinterpret_cast<const char*>(value.data()), value.size());
-		size_t start_index = get_utf8_start_index(view);
-
-		for (size_t i = start_index; i < view.size();)
-		{
-			if (!is_valid_utf8(view, i))
+			std::vector<uint8_t> result;
+			if (has_utf8_bom(utf8_string_value))
 			{
-				return std::string();
+				result.insert(result.end(), utf8_string_value.begin(),
+							  utf8_string_value.begin() + 3);
+				result.insert(result.end(), utf8_string_value.begin() + 3, utf8_string_value.end());
 			}
-		}
+			else
+			{
+				result.insert(result.end(), utf8_string_value.begin(), utf8_string_value.end());
+			}
 
-		return std::string(view.substr(start_index));
+			return { std::move(result), std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting string to byte array: {}", e.what()) };
+		}
 	}
 
-	template <size_t N>
-	auto convert_string::is_valid_multi_byte_sequence(std::string_view view,
-													  const size_t& index) -> bool
+	auto convert_string::to_string(const std::vector<uint8_t>& byte_array_value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
 	{
-		if (index + N > view.size())
+		try
 		{
-			return false;
-		}
+			std::string result;
+			auto start = has_utf8_bom(byte_array_value) ? byte_array_value.begin() + 3
+														: byte_array_value.begin();
+			result.insert(result.end(), start, byte_array_value.end());
 
-		if constexpr (N > 1)
-		{
-			return (std::bit_cast<uint8_t>(view[index + 1]) & 0xC0) == 0x80
-				   && is_valid_multi_byte_sequence<N - 1>(view, index + 1);
+			return { std::move(result), std::nullopt };
 		}
-		return true;
+		catch (const std::exception& e)
+		{
+			return { std::nullopt,
+#ifdef USE_STD_FORMAT
+					 std::format
+#else
+					 fmt::format
+#endif
+					 ("Error converting byte array to string: {}", e.what()) };
+		}
 	}
 
-	auto convert_string::is_valid_utf8(std::string_view view, size_t& index) -> bool
+	auto convert_string::has_utf8_bom(const std::vector<uint8_t>& value) -> bool
 	{
-		if (index >= view.size())
-		{
-			return false;
-		}
-
-		auto first_byte = std::bit_cast<uint8_t>(view[index]);
-
-		if (first_byte <= 0x7F)
-		{
-			index++;
-			return true;
-		}
-
-		if ((first_byte & 0xE0) == 0xC0)
-		{
-			if (is_valid_multi_byte_sequence<2>(view, index))
-			{
-				index += 2;
-				return true;
-			}
-		}
-
-		if ((first_byte & 0xF0) == 0xE0)
-		{
-			if (is_valid_multi_byte_sequence<3>(view, index))
-			{
-				index += 3;
-				return true;
-			}
-		}
-
-		if ((first_byte & 0xF8) == 0xF0)
-		{
-			if (is_valid_multi_byte_sequence<4>(view, index))
-			{
-				index += 4;
-				return true;
-			}
-		}
-
-		return false;
+		constexpr std::array<uint8_t, 3> utf8_bom = { 0xEF, 0xBB, 0xBF };
+		return value.size() >= 3 && std::equal(utf8_bom.begin(), utf8_bom.end(), value.begin());
 	}
 
-	template class converter<std::string, std::wstring>;
-	template class converter<std::string, std::u16string>;
-	template class converter<std::string, std::u32string>;
-	template class converter<std::wstring, std::string>;
-	template class converter<std::wstring, std::u16string>;
-	template class converter<std::wstring, std::u32string>;
-	template class converter<std::u16string, std::string>;
-	template class converter<std::u16string, std::wstring>;
-	template class converter<std::u16string, std::u32string>;
-	template class converter<std::u32string, std::string>;
-	template class converter<std::u32string, std::wstring>;
-	template class converter<std::u32string, std::u16string>;
+	auto convert_string::has_utf8_bom(const std::string& value) -> bool
+	{
+		constexpr std::array<char, 3> utf8_bom = { '\xEF', '\xBB', '\xBF' };
+		return value.size() >= 3 && std::equal(utf8_bom.begin(), utf8_bom.end(), value.begin());
+	}
 } // namespace utility_module

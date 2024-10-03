@@ -197,15 +197,42 @@ namespace log_module
 		switch (message_type_)
 		{
 		case message_types::String:
+		{
 			return message_;
+		}
+		break;
 		case message_types::WString:
-			return convert_string::to_string(wmessage_);
+		{
+			auto [converted, convert_error] = convert_string::to_string(wmessage_);
+			if (!converted.has_value())
+			{
+				return std::string();
+			}
+			return converted.value();
+		}
+		break;
 		case message_types::U16String:
-			return convert_string::to_string(u16message_);
+		{
+			auto [converted, convert_error] = convert_string::to_string(u16message_);
+			if (!converted.has_value())
+			{
+				return std::string();
+			}
+			return converted.value();
+		}
+		break;
 		case message_types::U32String:
-			return convert_string::to_string(u32message_);
+		{
+			auto [converted, convert_error] = convert_string::to_string(u32message_);
+			if (!converted.has_value())
+			{
+				return std::string();
+			}
+			return converted.value();
+		}
+		break;
 		default:
-			return "";
+			return std::string();
 		}
 	}
 } // namespace log_module
