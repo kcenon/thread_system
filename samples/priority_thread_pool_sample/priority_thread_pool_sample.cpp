@@ -24,6 +24,21 @@ uint16_t top_priority_workers_ = 3;
 uint16_t middle_priority_workers_ = 2;
 uint16_t bottom_priority_workers_ = 1;
 
+auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
+{
+	logger::handle().set_title("priority_thread_pool_sample");
+	logger::handle().set_use_backup(use_backup_);
+	logger::handle().set_max_lines(max_lines_);
+	logger::handle().set_file_target(file_target_);
+	logger::handle().set_console_target(console_target_);
+	if (wait_interval_ > 0)
+	{
+		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
+	}
+
+	return logger::handle().start();
+}
+
 auto create_default(const uint16_t& top_priority_workers,
 					const uint16_t& middle_priority_workers,
 					const uint16_t& bottom_priority_workers)
@@ -150,17 +165,7 @@ auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
 
 auto main() -> int
 {
-	logger::handle().set_title("priority_thread_pool_sample");
-	logger::handle().set_use_backup(use_backup_);
-	logger::handle().set_max_lines(max_lines_);
-	logger::handle().set_file_target(file_target_);
-	logger::handle().set_console_target(console_target_);
-	if (wait_interval_ > 0)
-	{
-		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
-	}
-
-	auto [started, start_error] = logger::handle().start();
+	auto [started, start_error] = initialize_logger();
 	if (!started)
 	{
 		std::cerr << "error starting logger: " << start_error.value_or("unknown error")
