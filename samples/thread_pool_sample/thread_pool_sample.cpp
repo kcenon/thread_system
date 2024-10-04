@@ -21,6 +21,41 @@ log_types console_target_ = log_types::Error;
 
 uint16_t thread_counts_ = 10;
 
+template <typename... Args>
+auto message_formatter(
+#ifdef USE_STD_FORMAT
+	std::format_string<Args...> format_str,
+#else
+	fmt::format_string<Args...> format_str,
+#endif
+	Args&&... args) -> std::string
+{
+	return
+#ifdef USE_STD_FORMAT
+		std::format
+#else
+		fmt::format
+#endif
+		(format_str, std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+auto log_message(log_types log_level,
+#ifdef USE_STD_FORMAT
+				 std::format_string<Args...> format_str,
+#else
+				 fmt::format_string<Args...> format_str,
+#endif
+				 Args&&... args) -> void
+{
+	if (logger::handle().get_file_target() >= log_level
+		|| logger::handle().get_console_target() >= log_level)
+	{
+		logger::handle().write(log_level,
+							   message_formatter(format_str, std::forward<Args>(args)...));
+	}
+}
+
 auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
 	logger::handle().set_title("thread_pool_sample");
@@ -55,13 +90,8 @@ auto create_default(const uint16_t& worker_counts)
 		auto [enqueued, euqueue_error] = pool->enqueue(std::make_unique<thread_worker>());
 		if (!enqueued)
 		{
-			return { nullptr,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("cannot enqueue to worker: {}", euqueue_error.value_or("unknown error")) };
+			return { nullptr, message_formatter("cannot enqueue to worker: {}",
+												euqueue_error.value_or("unknown error")) };
 		}
 	}
 
@@ -76,42 +106,19 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool)
 		auto [enqueued, enqueue_error] = thread_pool->enqueue(std::make_unique<job>(
 			[index](void) -> std::tuple<bool, std::optional<std::string>>
 			{
-				if (logger::handle().get_file_target() >= log_types::Debug
-					|| logger::handle().get_console_target() >= log_types::Debug)
-				{
-					logger::handle().write(log_types::Debug,
-#ifdef USE_STD_FORMAT
-										   std::format
-#else
-										   fmt::format
-#endif
-										   ("Hello, World!: {}", index));
-				}
+				log_message(log_types::Debug, "Hello, World!: {}", index);
 
 				return { true, std::nullopt };
 			}));
 		if (!enqueued)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				return { false,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("error enqueuing job: {}", enqueue_error.value_or("unknown error")) };
-			}
+			log_message(log_types::Error, "error enqueuing job: {}",
+						enqueue_error.value_or("unknown error"));
 
 			break;
 		}
 
-		if (logger::handle().get_file_target() >= log_types::Sequence
-			|| logger::handle().get_console_target() >= log_types::Sequence)
-		{
-			logger::handle().write(log_types::Sequence, "enqueued job");
-		}
+		log_message(log_types::Sequence, "enqueued job");
 	}
 
 	return { true, std::nullopt };
@@ -122,84 +129,49 @@ auto main() -> int
 	auto [started, start_error] = initialize_logger();
 	if (!started)
 	{
-		std::cerr << "error starting logger: " << start_error.value_or("unknown error")
-				  << std::endl;
+		std::cerr << message_formatter("error starting logger: {}\n",
+									   start_error.value_or("unknown error"));
 		return 0;
 	}
 
 	auto [thread_pool, create_error] = create_default(thread_counts_);
 	if (thread_pool == nullptr)
 	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(
-				log_types::Error,
-#ifdef USE_STD_FORMAT
-				std::format
-#else
-				fmt::format
-#endif
-				("error creating thread pool: {}", create_error.value_or("unknown error")));
-		}
+		log_message(log_types::Error, "error creating thread pool: {}",
+					create_error.value_or("unknown error"));
 
 		return 0;
 	}
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
-	{
-		logger::handle().write(log_types::Information, "created thread pool");
-	}
+	log_message(log_types::Information, "created thread pool");
 
 	auto [stored, store_error] = store_job(thread_pool);
 	if (!stored)
 	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(log_types::Error, store_error.value_or("unknown error"));
-
-			thread_pool.reset();
-
-			return 0;
-		}
-	}
-
-	auto [thread_started, thread_start_error] = thread_pool->start();
-	if (!thread_started)
-	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(
-				log_types::Error,
-#ifdef USE_STD_FORMAT
-				std::format
-#else
-				fmt::format
-#endif
-				("error starting thread pool: {}", thread_start_error.value_or("unknown error")));
-		}
+		log_message(log_types::Error, "error storing job: {}",
+					store_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
+	auto [thread_started, thread_start_error] = thread_pool->start();
+	if (!thread_started)
 	{
-		logger::handle().write(log_types::Information, "started thread pool");
+		log_message(log_types::Error, "error starting thread pool: {}",
+					thread_start_error.value_or("unknown error"));
+
+		thread_pool.reset();
+
+		return 0;
 	}
+
+	log_message(log_types::Information, "started thread pool");
 
 	thread_pool->stop();
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
-	{
-		logger::handle().write(log_types::Information, "stopped thread pool");
-	}
+	log_message(log_types::Information, "stopped thread pool");
 
 	thread_pool.reset();
 
