@@ -59,27 +59,29 @@ namespace utility_module
 		 * @brief Constructs the argument manager with a string of arguments.
 		 * @param arguments A string containing the command-line arguments.
 		 */
-		argument_manager(const std::string& arguments);
+		auto try_parse(const std::string& arguments)
+			-> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Constructs the argument manager with a wstring of arguments.
 		 * @param arguments A string containing the command-line arguments.
 		 */
-		argument_manager(const std::wstring& arguments);
+		auto try_parse(const std::wstring& arguments)
+			-> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Constructs the argument manager with argc and argv.
 		 * @param argc The number of arguments.
 		 * @param argv An array of C-style strings containing the arguments.
 		 */
-		argument_manager(int argc, char* argv[]);
+		auto try_parse(int argc, char* argv[]) -> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Constructs the argument manager with argc and argv.
 		 * @param argc The number of arguments.
 		 * @param argv An array of C-style strings containing the arguments.
 		 */
-		argument_manager(int argc, wchar_t* argv[]);
+		auto try_parse(int argc, wchar_t* argv[]) -> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Retrieves the value of an argument as a string.
@@ -152,7 +154,9 @@ namespace utility_module
 		 * @param argv An array of C-style strings containing the arguments.
 		 * @return A map of parsed arguments.
 		 */
-		auto parse(int argc, char* argv[]) -> std::map<std::string, std::string>;
+		auto parse(int argc,
+				   char* argv[]) -> std::tuple<std::optional<std::map<std::string, std::string>>,
+											   std::optional<std::string>>;
 
 		/**
 		 * @brief Parses command-line arguments from argc and argv.
@@ -160,14 +164,18 @@ namespace utility_module
 		 * @param argv An array of C-style strings containing the arguments.
 		 * @return A map of parsed arguments.
 		 */
-		auto parse(int argc, wchar_t* argv[]) -> std::map<std::string, std::string>;
+		auto parse(int argc,
+				   wchar_t* argv[]) -> std::tuple<std::optional<std::map<std::string, std::string>>,
+												  std::optional<std::string>>;
 
 		/**
 		 * @brief Parses command-line arguments from a vector of strings.
 		 * @param arguments A vector of strings containing the arguments.
 		 * @return A map of parsed arguments.
 		 */
-		auto parse(const std::vector<std::string>& arguments) -> std::map<std::string, std::string>;
+		auto parse(const std::vector<std::string>& arguments)
+			-> std::tuple<std::optional<std::map<std::string, std::string>>,
+						  std::optional<std::string>>;
 
 		/**
 		 * @brief Converts a string value to a numeric type.
