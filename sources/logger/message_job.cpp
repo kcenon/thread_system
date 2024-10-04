@@ -32,11 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "message_job.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/format.h"
-#endif
+#include "formatter.h"
+
+using namespace utility_module;
 
 namespace log_module
 {
@@ -52,13 +50,7 @@ namespace log_module
 			return message_;
 		}
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{}\n", message_);
+		return formatter::format("{}\n", message_);
 	}
 
 	auto message_job::do_work() -> std::tuple<bool, std::optional<std::string>>

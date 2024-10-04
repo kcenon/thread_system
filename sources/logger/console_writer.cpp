@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "console_writer.h"
 
+#include "formatter.h"
 #include "message_job.h"
 
 #ifdef USE_STD_FORMAT
@@ -40,8 +41,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fmt/format.h>
 #endif
 
+using namespace utility_module;
+
 namespace log_module
 {
+
 	console_writer::console_writer(void) : job_queue_(std::make_shared<job_queue>()) {}
 
 	auto console_writer::has_work() const -> bool { return !job_queue_->empty(); }
@@ -81,12 +85,8 @@ namespace log_module
 				continue;
 			}
 
-#ifdef USE_STD_FORMAT
-			std::format_to
-#else
-			fmt::format_to
-#endif
-				(std::back_inserter(console_buffer), "{}", current_log->message(true));
+			formatter::format_to(std::back_inserter(console_buffer), "{}",
+								 current_log->message(true));
 		}
 
 #ifdef USE_STD_FORMAT

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "logger.h"
+#include "formatter.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -9,6 +10,7 @@
 #endif
 
 using namespace log_module;
+using namespace utility_module;
 
 bool use_backup_ = false;
 uint32_t max_lines_ = 0;
@@ -16,41 +18,6 @@ uint16_t wait_interval_ = 100;
 uint32_t test_line_count_ = 1000000;
 log_types file_target_ = log_types::Debug;
 log_types console_target_ = log_types::Error;
-
-template <typename... Args>
-auto message_formatter(
-#ifdef USE_STD_FORMAT
-	std::format_string<Args...> format_str,
-#else
-	fmt::format_string<Args...> format_str,
-#endif
-	Args&&... args) -> std::string
-{
-	return
-#ifdef USE_STD_FORMAT
-		std::format
-#else
-		fmt::format
-#endif
-		(format_str, std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-auto log_message(log_types log_level,
-#ifdef USE_STD_FORMAT
-				 std::format_string<Args...> format_str,
-#else
-				 fmt::format_string<Args...> format_str,
-#endif
-				 Args&&... args) -> void
-{
-	if (logger::handle().get_file_target() >= log_level
-		|| logger::handle().get_console_target() >= log_level)
-	{
-		logger::handle().write(log_level,
-							   message_formatter(format_str, std::forward<Args>(args)...));
-	}
-}
 
 auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
@@ -72,7 +39,7 @@ auto main() -> int
 	auto [started, start_error] = initialize_logger();
 	if (!started)
 	{
-		std::cerr << message_formatter("error starting logger: {}\n",
+		std::cerr << formatter::format("error starting logger: {}\n",
 									   start_error.value_or("unknown error"));
 		return 0;
 	}
@@ -82,7 +49,7 @@ auto main() -> int
 		if (logger::handle().get_file_target() >= log_types::Debug
 			|| logger::handle().get_console_target() >= log_types::Debug)
 		{
-			log_message(log_types::Debug, "Hello, World!: {}", index);
+			logger::handle().write(log_types::Debug, formatter::format("Hello, World!: {}", index));
 		}
 	}
 

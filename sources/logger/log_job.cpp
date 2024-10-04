@@ -32,15 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "log_job.h"
 
+#include "formatter.h"
 #include "datetime_tool.h"
 #include "convert_string.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/chrono.h"
-#include "fmt/format.h"
-#endif
 
 #include <codecvt>
 #include <iomanip>
@@ -119,14 +113,9 @@ namespace log_module
 	{
 		try
 		{
-			std::string formatted_time =
-#ifdef USE_STD_FORMAT
-				std::format
-#else
-				fmt::format
-#endif
-				("{} {}.{}{}", datetime_tool::date(timestamp_), datetime_tool::time(timestamp_),
-				 datetime_tool::milliseconds(timestamp_), datetime_tool::microseconds(timestamp_));
+			std::string formatted_time = formatter::format(
+				"{} {}.{}{}", datetime_tool::date(timestamp_), datetime_tool::time(timestamp_),
+				datetime_tool::milliseconds(timestamp_), datetime_tool::microseconds(timestamp_));
 
 			if (start_time_.has_value())
 			{
@@ -136,24 +125,13 @@ namespace log_module
 
 				if (!type_.has_value())
 				{
-					log_message_ =
-#ifdef USE_STD_FORMAT
-						std::format
-#else
-						fmt::format
-#endif
-						("[{}][{}] [{} ms]", formatted_time, convert_message(), time_gap);
+					log_message_ = formatter::format("[{}][{}] [{} ms]", formatted_time,
+													 convert_message(), time_gap);
 				}
 				else
 				{
-					log_message_ =
-#ifdef USE_STD_FORMAT
-						std::format
-#else
-						fmt::format
-#endif
-						("[{}][{}]: {} [{} ms]", formatted_time, type_.value(), convert_message(),
-						 time_gap);
+					log_message_ = formatter::format("[{}][{}]: {} [{} ms]", formatted_time,
+													 type_.value(), convert_message(), time_gap);
 				}
 
 				return { true, std::nullopt };
@@ -161,23 +139,12 @@ namespace log_module
 
 			if (!type_.has_value())
 			{
-				log_message_ =
-#ifdef USE_STD_FORMAT
-					std::format
-#else
-					fmt::format
-#endif
-					("[{}][{}]", formatted_time, convert_message());
+				log_message_ = formatter::format("[{}][{}]", formatted_time, convert_message());
 			}
 			else
 			{
-				log_message_ =
-#ifdef USE_STD_FORMAT
-					std::format
-#else
-					fmt::format
-#endif
-					("[{}][{}]: {}", formatted_time, type_.value(), convert_message());
+				log_message_ = formatter::format("[{}][{}]: {}", formatted_time, type_.value(),
+												 convert_message());
 			}
 
 			return { true, std::nullopt };
