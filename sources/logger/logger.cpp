@@ -32,12 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "logger.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/format.h"
-#endif
-
 #include <fstream>
 #include <chrono>
 #include <iomanip>

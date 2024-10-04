@@ -33,13 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "log_collector.h"
 
 #include "log_job.h"
+#include "formatter.h"
 #include "message_job.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+using namespace utility_module;
 
 namespace log_module
 {
@@ -153,13 +150,8 @@ namespace log_module
 		{
 			if (!log_queue_->is_stopped())
 			{
-				return { false,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("error dequeue job: {}", error.value_or("unknown error")) };
+				return { false, formatter::format("error dequeue job: {}",
+												  error.value_or("unknown error")) };
 			}
 
 			return { true, std::nullopt };
@@ -245,8 +237,8 @@ namespace log_module
 		auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
 		if (!enqueued)
 		{
-			std::cerr << "error enqueuing log job: " << enqueue_error.value_or("unknown error")
-					  << std::endl;
+			std::cerr << formatter::format("error enqueuing log job: {}\n",
+										   enqueue_error.value_or("unknown error"));
 		}
 	}
 }

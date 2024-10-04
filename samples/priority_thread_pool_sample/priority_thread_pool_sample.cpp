@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "logger.h"
+#include "formatter.h"
 #include "test_priority.h"
 #include "priority_thread_pool.h"
 
@@ -11,6 +12,7 @@
 #endif
 
 using namespace log_module;
+using namespace utility_module;
 using namespace priority_thread_pool_module;
 
 bool use_backup_ = false;
@@ -23,41 +25,6 @@ log_types console_target_ = log_types::Error;
 uint16_t top_priority_workers_ = 3;
 uint16_t middle_priority_workers_ = 2;
 uint16_t bottom_priority_workers_ = 1;
-
-template <typename... Args>
-auto message_formatter(
-#ifdef USE_STD_FORMAT
-	std::format_string<Args...> format_str,
-#else
-	fmt::format_string<Args...> format_str,
-#endif
-	Args&&... args) -> std::string
-{
-	return
-#ifdef USE_STD_FORMAT
-		std::format
-#else
-		fmt::format
-#endif
-		(format_str, std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-auto log_message(log_types log_level,
-#ifdef USE_STD_FORMAT
-				 std::format_string<Args...> format_str,
-#else
-				 fmt::format_string<Args...> format_str,
-#endif
-				 Args&&... args) -> void
-{
-	if (logger::handle().get_file_target() >= log_level
-		|| logger::handle().get_console_target() >= log_level)
-	{
-		logger::handle().write(log_level,
-							   message_formatter(format_str, std::forward<Args>(args)...));
-	}
-}
 
 auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
@@ -97,7 +64,7 @@ auto create_default(const uint16_t& top_priority_workers,
 				std::vector<test_priority>{ test_priority::Top }, "top priority worker"));
 		if (!enqueued)
 		{
-			return { nullptr, message_formatter("cannot enqueue to top priority worker: {}",
+			return { nullptr, formatter::format("cannot enqueue to top priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
 		}
 	}
@@ -108,7 +75,7 @@ auto create_default(const uint16_t& top_priority_workers,
 				std::vector<test_priority>{ test_priority::Middle }, "middle priority worker"));
 		if (!enqueued)
 		{
-			return { nullptr, message_formatter("cannot enqueue to middle priority worker: {}",
+			return { nullptr, formatter::format("cannot enqueue to middle priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
 		}
 	}
@@ -119,7 +86,7 @@ auto create_default(const uint16_t& top_priority_workers,
 				std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
 		if (!enqueued)
 		{
-			return { nullptr, message_formatter("cannot enqueue to bottom priority worker: {}",
+			return { nullptr, formatter::format("cannot enqueue to bottom priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
 		}
 	}
@@ -137,20 +104,36 @@ auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
 			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
 				[target](void) -> std::tuple<bool, std::optional<std::string>>
 				{
-					log_message(log_types::Debug, "Hello, World!: {} priority", target);
+					if (logger::handle().get_file_target() >= log_types::Debug
+						|| logger::handle().get_console_target() >= log_types::Debug)
+					{
+						logger::handle().write(
+							log_types::Debug,
+							formatter::format("Hello, World!: {} priority", target));
+					}
 
 					return { true, std::nullopt };
 				},
 				static_cast<test_priority>(target)));
 		if (!enqueued)
 		{
-			log_message(log_types::Error, "error enqueuing job: {}",
-						enqueue_error.value_or("unknown error"));
+			if (logger::handle().get_file_target() >= log_types::Error
+				|| logger::handle().get_console_target() >= log_types::Error)
+			{
+				logger::handle().write(log_types::Error,
+									   formatter::format("error enqueuing job: {}",
+														 enqueue_error.value_or("unknown error")));
+			}
 
 			break;
 		}
 
-		log_message(log_types::Sequence, "enqueued job");
+		if (logger::handle().get_file_target() >= log_types::Sequence
+			|| logger::handle().get_console_target() >= log_types::Sequence)
+		{
+			logger::handle().write(log_types::Sequence,
+								   formatter::format("enqueued job: {}", index));
+		}
 	}
 
 	return { true, std::nullopt };
@@ -161,7 +144,7 @@ auto main() -> int
 	auto [started, start_error] = initialize_logger();
 	if (!started)
 	{
-		std::cerr << message_formatter("error starting logger: {}\n",
+		std::cerr << formatter::format("error starting logger: {}\n",
 									   start_error.value_or("unknown error"));
 		return 0;
 	}
@@ -170,19 +153,33 @@ auto main() -> int
 		= create_default(top_priority_workers_, middle_priority_workers_, bottom_priority_workers_);
 	if (thread_pool == nullptr)
 	{
-		log_message(log_types::Error, "error creating thread pool: {}",
-					create_error.value_or("unknown error"));
+		if (logger::handle().get_file_target() >= log_types::Error
+			|| logger::handle().get_console_target() >= log_types::Error)
+		{
+			logger::handle().write(log_types::Error,
+								   formatter::format("error creating thread pool: {}",
+													 create_error.value_or("unknown error")));
+		}
 
 		return 0;
 	}
 
-	log_message(log_types::Information, "created priority thread pool");
+	if (logger::handle().get_file_target() >= log_types::Information
+		|| logger::handle().get_console_target() >= log_types::Information)
+	{
+		logger::handle().write(log_types::Information, "created priority thread pool");
+	}
 
 	auto [stored, store_error] = store_job(thread_pool);
 	if (!stored)
 	{
-		log_message(log_types::Error, "error storing job: {}",
-					store_error.value_or("unknown error"));
+		if (logger::handle().get_file_target() >= log_types::Error
+			|| logger::handle().get_console_target() >= log_types::Error)
+		{
+			logger::handle().write(
+				log_types::Error,
+				formatter::format("error storing job: {}", store_error.value_or("unknown error")));
+		}
 
 		thread_pool.reset();
 
@@ -192,19 +189,32 @@ auto main() -> int
 	auto [thread_started, thread_start_error] = thread_pool->start();
 	if (!thread_started)
 	{
-		log_message(log_types::Error, "error starting thread pool: {}",
-					thread_start_error.value_or("unknown error"));
+		if (logger::handle().get_file_target() >= log_types::Error
+			|| logger::handle().get_console_target() >= log_types::Error)
+		{
+			logger::handle().write(log_types::Error,
+								   formatter::format("error starting thread pool: {}",
+													 thread_start_error.value_or("unknown error")));
+		}
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	log_message(log_types::Information, "started thread pool");
+	if (logger::handle().get_file_target() >= log_types::Information
+		|| logger::handle().get_console_target() >= log_types::Information)
+	{
+		logger::handle().write(log_types::Information, "started thread pool");
+	}
 
 	thread_pool->stop();
 
-	log_message(log_types::Information, "stopped thread pool");
+	if (logger::handle().get_file_target() >= log_types::Information
+		|| logger::handle().get_console_target() >= log_types::Information)
+	{
+		logger::handle().write(log_types::Information, "stopped thread pool");
+	}
 
 	thread_pool.reset();
 

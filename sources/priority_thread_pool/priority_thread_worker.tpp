@@ -33,15 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "priority_thread_worker.h"
 
 #include "logger.h"
+#include "formatter.h"
 #include "priority_job_queue.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
-
 using namespace log_module;
+using namespace utility_module;
 
 namespace priority_thread_pool_module
 {
@@ -95,13 +91,8 @@ namespace priority_thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				return { false,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("cannot dequeue job: {}", error.value_or("unknown error")) };
+				return { false, formatter::format("cannot dequeue job: {}",
+												  error.value_or("unknown error")) };
 			}
 
 			return { true, std::nullopt };
@@ -124,27 +115,18 @@ namespace priority_thread_pool_module
 		auto [worked, work_error] = current_job->do_work();
 		if (!worked)
 		{
-			return { false,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("error executing job: {}", work_error.value_or("unknown error")) };
+			return { false, formatter::format("error executing job: {}",
+											  work_error.value_or("unknown error")) };
 		}
 
 		if (logger::handle().get_file_target() >= log_types::Sequence
 			|| logger::handle().get_console_target() >= log_types::Sequence)
 		{
-			logger::handle().write(log_types::Sequence,
-#ifdef USE_STD_FORMAT
-								   std::format
-#else
-								   fmt::format
-#endif
-								   ("job executed successfully: {}[{}] on priority_thread_worker",
-									current_job->get_name(), current_job->priority()),
-								   time_point);
+			logger::handle().write(
+				log_types::Sequence,
+				formatter::format("job executed successfully: {}[{}] on priority_thread_worker",
+								  current_job->get_name(), current_job->priority()),
+				time_point);
 		}
 
 		return { true, std::nullopt };

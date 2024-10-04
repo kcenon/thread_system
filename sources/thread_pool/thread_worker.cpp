@@ -33,14 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_worker.h"
 
 #include "logger.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+#include "formatter.h"
 
 using namespace log_module;
+using namespace utility_module;
 
 namespace thread_pool_module
 {
@@ -78,13 +74,8 @@ namespace thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				return { false,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("error dequeue job: {}", error.value_or("unknown error")) };
+				return { false, formatter::format("error dequeue job: {}",
+												  error.value_or("unknown error")) };
 			}
 
 			return { true, std::nullopt };
@@ -107,13 +98,8 @@ namespace thread_pool_module
 		auto [worked, work_error] = current_job->do_work();
 		if (!worked)
 		{
-			return { false,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("error executing job: {}", work_error.value_or("unknown error")) };
+			return { false, formatter::format("error executing job: {}",
+											  work_error.value_or("unknown error")) };
 		}
 
 		if (logger::handle().get_file_target() >= log_types::Sequence
@@ -121,12 +107,8 @@ namespace thread_pool_module
 		{
 			logger::handle().write(
 				log_types::Sequence,
-#ifdef USE_STD_FORMAT
-				std::format
-#else
-				fmt::format
-#endif
-				("job executed successfully: {} on thread_worker", current_job->get_name()),
+				formatter::format("job executed successfully: {} on thread_worker",
+								  current_job->get_name()),
 				time_point);
 		}
 

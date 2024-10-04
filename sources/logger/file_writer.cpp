@@ -32,14 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "file_writer.h"
 
+#include "formatter.h"
 #include "message_job.h"
 #include "datetime_tool.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
 
 #include <filesystem>
 
@@ -168,21 +163,9 @@ namespace log_module
 	{
 		const auto formatted_date = datetime_tool::date(std::chrono::system_clock::now());
 
-		const auto file_name =
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{}_{}.log", title_, formatted_date);
+		const auto file_name = formatter::format("{}_{}.log", title_, formatted_date);
 
-		const auto backup_name =
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{}_{}.backup", title_, formatted_date);
+		const auto backup_name = formatter::format("{}_{}.backup", title_, formatted_date);
 
 		return { file_name, backup_name };
 	}

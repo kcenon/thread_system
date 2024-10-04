@@ -33,14 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_pool.h"
 
 #include "logger.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+#include "formatter.h"
 
 using namespace log_module;
+using namespace utility_module;
 
 namespace thread_pool_module
 {
@@ -153,14 +149,9 @@ namespace thread_pool_module
 			auto [stopped, stop_error] = worker->stop();
 			if (!stopped)
 			{
-				logger::handle().write(
-					log_types::Error,
-#ifdef USE_STD_FORMAT
-					std::format
-#else
-					fmt::format
-#endif
-					("error stopping worker: {}", stop_error.value_or("unknown error")));
+				logger::handle().write(log_types::Error,
+									   formatter::format("error stopping worker: {}",
+														 stop_error.value_or("unknown error")));
 			}
 		}
 

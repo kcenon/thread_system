@@ -33,14 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "priority_thread_pool.h"
 
 #include "logger.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+#include "formatter.h"
 
 using namespace log_module;
+using namespace utility_module;
 
 namespace priority_thread_pool_module
 {
@@ -175,14 +171,9 @@ namespace priority_thread_pool_module
 				if (logger::handle().get_file_target() >= log_types::Error
 					|| logger::handle().get_console_target() >= log_types::Error)
 				{
-					logger::handle().write(
-						log_types::Error,
-#ifdef USE_STD_FORMAT
-						std::format
-#else
-						fmt::format
-#endif
-						("error stopping worker: {}", stop_error.value_or("unknown error")));
+					logger::handle().write(log_types::Error,
+										   formatter::format("error stopping worker: {}",
+															 stop_error.value_or("unknown error")));
 				}
 			}
 		}
