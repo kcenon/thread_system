@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "convert_string.h"
+#include "formatter.h"
 
 #include <stdexcept>
 
@@ -46,39 +47,40 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace utility_module
 {
-	auto convert_string::split(const std::string& source, const std::string& token)
+	auto convert_string::split(const std::string& str, const std::string& delimiter)
 		-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
 	{
-		try
+		if (delimiter.empty())
 		{
-			std::vector<std::string> result;
+			return { std::nullopt, "Delimiter cannot be empty" };
+		}
 
-			size_t start = 0;
-			while (true)
+		std::vector<std::string> tokens;
+		size_t start = 0;
+		size_t end = 0;
+
+		while ((end = str.find(delimiter, start)) != std::string::npos)
+		{
+			std::string token = str.substr(start, end - start);
+			if (!token.empty())
 			{
-				size_t end = source.find(token, start);
-				if (end == std::string::npos)
-				{
-					result.push_back(source.substr(start));
-					break;
-				}
-
-				result.push_back(source.substr(start, end - start));
-				start = end + token.length();
+				tokens.push_back(token);
 			}
+			start = end + delimiter.length();
+		}
 
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
+		std::string lastToken = str.substr(start);
+		if (!lastToken.empty())
 		{
-			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error splitting string: {}", e.what()) };
+			tokens.push_back(lastToken);
 		}
+
+		if (tokens.empty())
+		{
+			return { std::nullopt, "No valid tokens found" };
+		}
+
+		return { tokens, std::nullopt };
 	}
 
 	auto convert_string::to_string(const std::wstring& wide_string_message)
@@ -86,24 +88,47 @@ namespace utility_module
 	{
 		try
 		{
+			std::string result;
+
+#ifdef _WIN32
 			icu::UnicodeString unicode_string(
 				reinterpret_cast<const UChar*>(wide_string_message.data()),
 				static_cast<int32_t>(wide_string_message.length()));
-
-			std::string result;
 			unicode_string.toUTF8String(result);
+#else
+			for (wchar_t ch : wide_string_message)
+			{
+				if (ch <= 0x7F)
+				{
+					result.push_back(static_cast<char>(ch));
+				}
+				else if (ch <= 0x7FF)
+				{
+					result.push_back(static_cast<char>(0xC0 | (ch >> 6)));
+					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
+				}
+				else if (ch <= 0xFFFF)
+				{
+					result.push_back(static_cast<char>(0xE0 | (ch >> 12)));
+					result.push_back(static_cast<char>(0x80 | ((ch >> 6) & 0x3F)));
+					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
+				}
+				else
+				{
+					result.push_back(static_cast<char>(0xF0 | (ch >> 18)));
+					result.push_back(static_cast<char>(0x80 | ((ch >> 12) & 0x3F)));
+					result.push_back(static_cast<char>(0x80 | ((ch >> 6) & 0x3F)));
+					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
+				}
+			}
+#endif
 
 			return { std::move(result), std::nullopt };
 		}
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting wstring to string: {}", e.what()) };
+					 formatter::format("Error converting wstring to string: {}", e.what()) };
 		}
 	}
 
@@ -124,12 +149,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u16string to string: {}", e.what()) };
+					 formatter::format("Error converting u16string to string: {}", e.what()) };
 		}
 	}
 
@@ -150,12 +170,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u32string to string: {}", e.what()) };
+					 formatter::format("Error converting u32string to string: {}", e.what()) };
 		}
 	}
 
@@ -164,23 +179,27 @@ namespace utility_module
 	{
 		try
 		{
+			std::wstring result;
 			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
 
-			std::wstring result(unicode_string.length(), L'\0');
+#ifdef _WIN32
+			result.resize(unicode_string.length(), L'\0');
 			unicode_string.extract(0, unicode_string.length(),
 								   reinterpret_cast<UChar*>(&result[0]));
+#else
+			for (int32_t i = 0; i < unicode_string.length(); ++i)
+			{
+				UChar32 ch = unicode_string.char32At(i);
+				result.push_back(static_cast<wchar_t>(ch));
+			}
+#endif
 
 			return { std::move(result), std::nullopt };
 		}
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting string to wstring: {}", e.what()) };
+					 formatter::format("Error converting string to wstring: {}", e.what()) };
 		}
 	}
 
@@ -202,12 +221,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u16string to wstring: {}", e.what()) };
+					 formatter::format("Error converting u16string to wstring: {}", e.what()) };
 		}
 	}
 
@@ -229,12 +243,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u32string to wstring: {}", e.what()) };
+					 formatter::format("Error converting u32string to wstring: {}", e.what()) };
 		}
 	}
 
@@ -254,12 +263,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting string to u16string: {}", e.what()) };
+					 formatter::format("Error converting string to u16string: {}", e.what()) };
 		}
 	}
 
@@ -281,12 +285,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting wstring to u16string: {}", e.what()) };
+					 formatter::format("Error converting wstring to u16string: {}", e.what()) };
 		}
 	}
 
@@ -308,12 +307,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u32string to u16string: {}", e.what()) };
+					 formatter::format("Error converting u32string to u16string: {}", e.what()) };
 		}
 	}
 
@@ -326,30 +320,24 @@ namespace utility_module
 
 			std::u32string result(unicode_string.length(), U'\0');
 			UErrorCode error_code = U_ZERO_ERROR;
-			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
-								   static_cast<int32_t>(result.capacity()), error_code);
+			int32_t actual_length
+				= unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
+										 static_cast<int32_t>(result.size()), error_code);
 
 			if (U_FAILURE(error_code))
 			{
-				return { std::nullopt,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("Error converting string to u32string: {}", u_errorName(error_code)) };
+				return { std::nullopt, formatter::format("Error converting string to u32string: {}",
+														 u_errorName(error_code)) };
 			}
+
+			result.resize(actual_length);
+
 			return { std::move(result), std::nullopt };
 		}
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting string to u32string: {}", e.what()) };
+					 formatter::format("Error converting string to u32string: {}", e.what()) };
 		}
 	}
 
@@ -370,12 +358,8 @@ namespace utility_module
 			if (U_FAILURE(error_code))
 			{
 				return { std::nullopt,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("Error converting wstring to u32string: {}", u_errorName(error_code)) };
+						 formatter::format("Error converting wstring to u32string: {}",
+										   u_errorName(error_code)) };
 			}
 
 			return { std::move(result), std::nullopt };
@@ -383,12 +367,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting wstring to u32string: {}", e.what()) };
+					 formatter::format("Error converting wstring to u32string: {}", e.what()) };
 		}
 	}
 
@@ -409,12 +388,8 @@ namespace utility_module
 			if (U_FAILURE(error_code))
 			{
 				return { std::nullopt,
-#ifdef USE_STD_FORMAT
-						 std::format
-#else
-						 fmt::format
-#endif
-						 ("Error converting u16string to u32string: {}", u_errorName(error_code)) };
+						 formatter::format("Error converting u16string to u32string: {}",
+										   u_errorName(error_code)) };
 			}
 
 			return { std::move(result), std::nullopt };
@@ -422,12 +397,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting u16string to u32string: {}", e.what()) };
+					 formatter::format("Error converting u16string to u32string: {}", e.what()) };
 		}
 	}
 
@@ -453,12 +423,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting string to byte array: {}", e.what()) };
+					 formatter::format("Error converting string to byte array: {}", e.what()) };
 		}
 	}
 
@@ -477,12 +442,7 @@ namespace utility_module
 		catch (const std::exception& e)
 		{
 			return { std::nullopt,
-#ifdef USE_STD_FORMAT
-					 std::format
-#else
-					 fmt::format
-#endif
-					 ("Error converting byte array to string: {}", e.what()) };
+					 formatter::format("Error converting byte array to string: {}", e.what()) };
 		}
 	}
 

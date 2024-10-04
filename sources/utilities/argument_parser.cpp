@@ -41,36 +41,82 @@ namespace utility_module
 {
 	argument_manager::argument_manager(void) {}
 
-	argument_manager::argument_manager(const std::string& arguments)
+	auto argument_manager::try_parse(const std::string& arguments)
+		-> std::tuple<bool, std::optional<std::string>>
 	{
 		auto [splitted, message] = convert_string::split(arguments, " ");
-
-		if (splitted.has_value())
+		if (!splitted.has_value())
 		{
-			_arguments = parse(splitted.value());
+			return { false, message };
 		}
+
+		auto [parsed, parse_error] = parse(splitted.value());
+
+		if (!parsed.has_value())
+		{
+			return { false, parse_error };
+		}
+
+		_arguments = parsed.value();
+
+		return { true, std::nullopt };
 	}
 
-	argument_manager::argument_manager(const std::wstring& arguments)
+	auto argument_manager::try_parse(const std::wstring& arguments)
+		-> std::tuple<bool, std::optional<std::string>>
 	{
 		auto [converted, convert_error] = convert_string::to_string(arguments);
 		if (!converted.has_value())
 		{
-			return;
+			return { false, convert_error };
 		}
 
 		auto [splitted, message] = convert_string::split(converted.value(), " ");
-		if (splitted.has_value())
+		if (!splitted.has_value())
 		{
-			_arguments = parse(splitted.value());
+			return { false, message };
 		}
+
+		auto [parsed, parse_error] = parse(splitted.value());
+
+		if (!parsed.has_value())
+		{
+			return { false, parse_error };
+		}
+
+		_arguments = parsed.value();
+
+		return { true, std::nullopt };
 	}
 
-	argument_manager::argument_manager(int argc, char* argv[]) { _arguments = parse(argc, argv); }
-
-	argument_manager::argument_manager(int argc, wchar_t* argv[])
+	auto argument_manager::try_parse(int argc,
+									 char* argv[]) -> std::tuple<bool, std::optional<std::string>>
 	{
-		_arguments = parse(argc, argv);
+		auto [parsed, parse_error] = parse(argc, argv);
+
+		if (!parsed.has_value())
+		{
+			return { false, parse_error };
+		}
+
+		_arguments = parsed.value();
+
+		return { true, std::nullopt };
+	}
+
+	auto argument_manager::try_parse(int argc, wchar_t* argv[])
+		-> std::tuple<bool, std::optional<std::string>>
+	{
+		auto [parsed, parse_error] = parse(argc, argv);
+
+		if (!parsed.has_value())
+		{
+			return { false, parse_error };
+		}
+
+		_arguments = parsed.value();
+
+		return { true, std::nullopt };
 	}
 
 	auto argument_manager::to_string(const std::string& key) -> std::optional<std::string>
@@ -161,7 +207,8 @@ namespace utility_module
 #endif
 	}
 
-	std::map<std::string, std::string> argument_manager::parse(int argc, char* argv[])
+	auto argument_manager::parse(int argc, char* argv[])
+		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
 	{
 		std::vector<std::string> arguments;
 		for (int index = 1; index < argc; ++index)
@@ -172,12 +219,13 @@ namespace utility_module
 		return parse(arguments);
 	}
 
-	std::map<std::string, std::string> argument_manager::parse(int argc, wchar_t* argv[])
+	auto argument_manager::parse(int argc, wchar_t* argv[])
+		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
 	{
 		std::vector<std::string> arguments;
 		for (int index = 1; index < argc; ++index)
 		{
-			auto [converted, convert_error] = convert_string::to_string(argv[index]);
+			auto [converted, convert_error] = convert_string::to_string(std::wstring(argv[index]));
 			if (!converted.has_value())
 			{
 				continue;
@@ -189,47 +237,52 @@ namespace utility_module
 		return parse(arguments);
 	}
 
-	std::map<std::string, std::string> argument_manager::parse(
-		const std::vector<std::string>& arguments)
+	auto argument_manager::parse(const std::vector<std::string>& arguments)
+		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
 	{
 		std::map<std::string, std::string> result;
 
 		size_t argc = arguments.size();
 		std::string argument_id;
+		bool found_valid_argument = false;
+
 		for (size_t index = 0; index < argc; ++index)
 		{
 			argument_id = arguments[index];
-			size_t offset = argument_id.find("--", 0);
-			if (offset != 0)
+			if (argument_id.empty())
 			{
-				continue;
+				return { std::nullopt, "empty argument" };
 			}
 
 			if (argument_id.compare("--help") == 0)
 			{
 				result.insert({ argument_id, "display help" });
+				found_valid_argument = true;
 				continue;
+			}
+
+			size_t offset = argument_id.find("--", 0);
+			if (offset != 0)
+			{
+				return { std::nullopt, "invalid argument: " + argument_id };
 			}
 
 			if (index + 1 >= argc)
 			{
-				break;
+				return { std::nullopt, "argument '" + argument_id + "' expects a value." };
 			}
 
-			auto target = result.find(argument_id);
-			if (target == result.end())
-			{
-				result.insert({ argument_id, arguments[index + 1] });
-				++index;
-
-				continue;
-			}
-
-			target->second = arguments[index + 1];
+			result.insert({ argument_id, arguments[index + 1] });
+			found_valid_argument = true;
 			++index;
 		}
 
-		return result;
+		if (!found_valid_argument)
+		{
+			return { std::nullopt, "no valid arguments found." };
+		}
+
+		return { result, std::nullopt };
 	}
 
 	template <typename T>
