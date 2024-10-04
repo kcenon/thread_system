@@ -73,34 +73,21 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool)
 		auto [enqueued, enqueue_error] = thread_pool->enqueue(std::make_unique<job>(
 			[index](void) -> std::tuple<bool, std::optional<std::string>>
 			{
-				if (logger::handle().get_file_target() >= log_types::Debug
-					|| logger::handle().get_console_target() >= log_types::Debug)
-				{
-					logger::handle().write(log_types::Debug,
-										   formatter::format("Hello, World!: {}", index));
-				}
+				logger::handle().write(log_types::Debug,
+									   formatter::format("Hello, World!: {}", index));
 
 				return { true, std::nullopt };
 			}));
 		if (!enqueued)
 		{
-			if (logger::handle().get_file_target() >= log_types::Error
-				|| logger::handle().get_console_target() >= log_types::Error)
-			{
-				logger::handle().write(log_types::Error,
-									   formatter::format("error enqueuing job: {}",
-														 enqueue_error.value_or("unknown error")));
-			}
+			logger::handle().write(log_types::Error,
+								   formatter::format("error enqueuing job: {}",
+													 enqueue_error.value_or("unknown error")));
 
 			break;
 		}
 
-		if (logger::handle().get_file_target() >= log_types::Sequence
-			|| logger::handle().get_console_target() >= log_types::Sequence)
-		{
-			logger::handle().write(log_types::Sequence,
-								   formatter::format("enqueued job: {}", index));
-		}
+		logger::handle().write(log_types::Sequence, formatter::format("enqueued job: {}", index));
 	}
 
 	return { true, std::nullopt };
@@ -119,33 +106,21 @@ auto main() -> int
 	auto [thread_pool, create_error] = create_default(thread_counts_);
 	if (thread_pool == nullptr)
 	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(log_types::Error,
-								   formatter::format("error creating thread pool: {}",
-													 create_error.value_or("unknown error")));
-		}
+		logger::handle().write(log_types::Error,
+							   formatter::format("error creating thread pool: {}",
+												 create_error.value_or("unknown error")));
 
 		return 0;
 	}
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
-	{
-		logger::handle().write(log_types::Information, "created thread pool");
-	}
+	logger::handle().write(log_types::Information, "created thread pool");
 
 	auto [stored, store_error] = store_job(thread_pool);
 	if (!stored)
 	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(
-				log_types::Error,
-				formatter::format("error storing job: {}", store_error.value_or("unknown error")));
-		}
+		logger::handle().write(
+			log_types::Error,
+			formatter::format("error storing job: {}", store_error.value_or("unknown error")));
 
 		thread_pool.reset();
 
@@ -155,32 +130,20 @@ auto main() -> int
 	auto [thread_started, thread_start_error] = thread_pool->start();
 	if (!thread_started)
 	{
-		if (logger::handle().get_file_target() >= log_types::Error
-			|| logger::handle().get_console_target() >= log_types::Error)
-		{
-			logger::handle().write(log_types::Error,
-								   formatter::format("error starting thread pool: {}",
-													 thread_start_error.value_or("unknown error")));
-		}
+		logger::handle().write(log_types::Error,
+							   formatter::format("error starting thread pool: {}",
+												 thread_start_error.value_or("unknown error")));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
-	{
-		logger::handle().write(log_types::Information, "started thread pool");
-	}
+	logger::handle().write(log_types::Information, "started thread pool");
 
 	thread_pool->stop();
 
-	if (logger::handle().get_file_target() >= log_types::Information
-		|| logger::handle().get_console_target() >= log_types::Information)
-	{
-		logger::handle().write(log_types::Information, "stopped thread pool");
-	}
+	logger::handle().write(log_types::Information, "stopped thread pool");
 
 	thread_pool.reset();
 
