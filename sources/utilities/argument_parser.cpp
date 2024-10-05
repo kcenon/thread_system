@@ -62,6 +62,7 @@ namespace utility_module
 		return { true, std::nullopt };
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto argument_manager::try_parse(const std::wstring& arguments)
 		-> std::tuple<bool, std::optional<std::string>>
 	{
@@ -88,6 +89,7 @@ namespace utility_module
 
 		return { true, std::nullopt };
 	}
+#endif
 
 	auto argument_manager::try_parse(int argc,
 									 char* argv[]) -> std::tuple<bool, std::optional<std::string>>
@@ -104,6 +106,7 @@ namespace utility_module
 		return { true, std::nullopt };
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto argument_manager::try_parse(int argc, wchar_t* argv[])
 		-> std::tuple<bool, std::optional<std::string>>
 	{
@@ -118,6 +121,7 @@ namespace utility_module
 
 		return { true, std::nullopt };
 	}
+#endif
 
 	auto argument_manager::to_string(const std::string& key) -> std::optional<std::string>
 	{
@@ -188,7 +192,7 @@ namespace utility_module
 		return to_numeric<unsigned int>(target.value());
 	}
 
-#ifdef _WIN32
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto argument_manager::to_llong(const std::string& key) -> std::optional<long long>
 #else
 	auto argument_manager::to_long(const std::string& key) -> std::optional<long>
@@ -200,7 +204,7 @@ namespace utility_module
 			return std::nullopt;
 		}
 
-#ifdef _WIN32
+#ifdef _WIN32_BUT_NOT_TESTED
 		return to_numeric<long long>(target.value());
 #else
 		return to_numeric<long>(target.value());
@@ -219,6 +223,7 @@ namespace utility_module
 		return parse(arguments);
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto argument_manager::parse(int argc, wchar_t* argv[])
 		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
 	{
@@ -236,6 +241,7 @@ namespace utility_module
 
 		return parse(arguments);
 	}
+#endif
 
 	auto argument_manager::parse(const std::vector<std::string>& arguments)
 		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>

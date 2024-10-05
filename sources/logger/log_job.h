@@ -70,6 +70,7 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt);
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Constructs a new log_job object with wide string message.
 		 * @param message The log message to be recorded as a wide string.
@@ -82,6 +83,7 @@ namespace log_module
 			std::optional<log_types> type = std::nullopt,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt);
+#endif
 
 		/**
 		 * @brief Constructs a new log_job object with UTF-16 string message.

@@ -63,6 +63,7 @@ namespace utility_module
 		static auto split(const std::string& source, const std::string& token)
 			-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Converts a wide string to a UTF-8 string.
 		 * @param wide_string_message The wide string to convert.
@@ -72,6 +73,7 @@ namespace utility_module
 		 */
 		static auto to_string(const std::wstring& wide_string_message)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Converts a UTF-16 string to a UTF-8 string.
@@ -93,6 +95,7 @@ namespace utility_module
 		static auto to_string(const std::u32string& utf32_string_message)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Converts a UTF-8 string to a wide string.
 		 * @param utf8_string_message The UTF-8 string to convert.
@@ -122,6 +125,7 @@ namespace utility_module
 		 */
 		static auto to_wstring(const std::u32string& utf32_string_message)
 			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Converts a UTF-8 string to a UTF-16 string.
@@ -134,6 +138,7 @@ namespace utility_module
 		static auto to_u16string(const std::string& utf8_string_message)
 			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Converts a wide string to a UTF-16 string.
 		 * @param wide_string_message The wide string to convert.
@@ -144,6 +149,7 @@ namespace utility_module
 		 */
 		static auto to_u16string(const std::wstring& wide_string_message)
 			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Converts a UTF-32 string to a UTF-16 string.
@@ -167,6 +173,7 @@ namespace utility_module
 		static auto to_u32string(const std::string& utf8_string_message)
 			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Converts a wide string to a UTF-32 string.
 		 * @param wide_string_message The wide string to convert.
@@ -177,6 +184,7 @@ namespace utility_module
 		 */
 		static auto to_u32string(const std::wstring& wide_string_message)
 			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Converts a UTF-16 string to a UTF-32 string.

@@ -46,6 +46,7 @@ protected:
 	virtual ~ConvertStringTest() {}
 };
 
+#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToStringFromWstring)
 {
 	std::wstring wide = L"Hello, 世界";
@@ -54,6 +55,7 @@ TEST_F(ConvertStringTest, ToStringFromWstring)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), "Hello, 世界");
 }
+#endif
 
 TEST_F(ConvertStringTest, ToStringFromU16string)
 {
@@ -73,6 +75,7 @@ TEST_F(ConvertStringTest, ToStringFromU32string)
 	EXPECT_EQ(result.value(), "Hello, 世界");
 }
 
+#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToWstringFromString)
 {
 	std::string utf8 = "Hello, 世界";
@@ -81,6 +84,25 @@ TEST_F(ConvertStringTest, ToWstringFromString)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), L"Hello, 世界");
 }
+
+TEST_F(ConvertStringTest, ToWstringFromU16String)
+{
+	std::u16string u16 = u"Hello, 世界";
+	auto [result, error] = convert_string::to_wstring(u16);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), L"Hello, 世界");
+}
+
+TEST_F(ConvertStringTest, ToWstringFromU32String)
+{
+	std::u32string u32 = U"Hello, 世界";
+	auto [result, error] = convert_string::to_wstring(u32);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), L"Hello, 世界");
+}
+#endif
 
 TEST_F(ConvertStringTest, ToU16stringFromString)
 {
@@ -91,10 +113,50 @@ TEST_F(ConvertStringTest, ToU16stringFromString)
 	EXPECT_EQ(result.value(), u"Hello, 世界");
 }
 
+#ifdef _WIN32_BUT_NOT_TESTED
+TEST_F(ConvertStringTest, ToU16stringFromWString)
+{
+	std::wstring wide = L"Hello, 世界";
+	auto [result, error] = convert_string::to_u16string(wide);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), u"Hello, 世界");
+}
+#endif
+
+TEST_F(ConvertStringTest, ToU16stringFromU32String)
+{
+	std::u32string u32 = U"Hello, 世界";
+	auto [result, error] = convert_string::to_u16string(u32);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), u"Hello, 世界");
+}
+
 TEST_F(ConvertStringTest, ToU32stringFromString)
 {
 	std::string utf8 = "Hello, 世界";
 	auto [result, error] = convert_string::to_u32string(utf8);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), U"Hello, 世界");
+}
+
+#ifdef _WIN32_BUT_NOT_TESTED
+TEST_F(ConvertStringTest, ToU32stringFromWString)
+{
+	std::wstring wide = L"Hello, 世界";
+	auto [result, error] = convert_string::to_u32string(wide);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), U"Hello, 世界");
+}
+#endif
+
+TEST_F(ConvertStringTest, ToU32stringFromU16String)
+{
+	std::u16string u16 = u"Hello, 世界";
+	auto [result, error] = convert_string::to_u32string(u16);
 	ASSERT_TRUE(result.has_value());
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), U"Hello, 世界");
@@ -120,10 +182,19 @@ TEST_F(ConvertStringTest, ToStringFromArray)
 	EXPECT_EQ(result.value(), "Hello, 世界");
 }
 
-TEST_F(ConvertStringTest, ConvertEmptyString)
+TEST_F(ConvertStringTest, ConvertEmptyU16String)
 {
 	std::string empty = "";
-	auto [result, error] = convert_string::to_wstring(empty);
+	auto [result, error] = convert_string::to_u16string(empty);
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_TRUE(result.value().empty());
+}
+
+TEST_F(ConvertStringTest, ConvertEmptyU32String)
+{
+	std::string empty = "";
+	auto [result, error] = convert_string::to_u32string(empty);
 	ASSERT_TRUE(result.has_value());
 	ASSERT_FALSE(error.has_value());
 	EXPECT_TRUE(result.value().empty());

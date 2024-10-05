@@ -57,6 +57,8 @@ namespace log_module
 		, log_message_("")
 	{
 	}
+
+#ifdef _WIN32_BUT_NOT_TESTED
 	log_job::log_job(
 		const std::wstring& message,
 		std::optional<log_types> type,
@@ -70,6 +72,8 @@ namespace log_module
 		, log_message_("")
 	{
 	}
+#endif
+
 	log_job::log_job(
 		const std::u16string& message,
 		std::optional<log_types> type,
@@ -83,6 +87,7 @@ namespace log_module
 		, log_message_("")
 	{
 	}
+
 	log_job::log_job(
 		const std::u32string& message,
 		std::optional<log_types> type,
@@ -168,6 +173,7 @@ namespace log_module
 			return message_;
 		}
 		break;
+#ifdef _WIN32_BUT_NOT_TESTED
 		case message_types::WString:
 		{
 			auto [converted, convert_error] = convert_string::to_string(wmessage_);
@@ -178,6 +184,7 @@ namespace log_module
 			return converted.value();
 		}
 		break;
+#endif
 		case message_types::U16String:
 		{
 			auto [converted, convert_error] = convert_string::to_string(u16message_);
