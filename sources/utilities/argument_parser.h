@@ -62,12 +62,14 @@ namespace utility_module
 		auto try_parse(const std::string& arguments)
 			-> std::tuple<bool, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Constructs the argument manager with a wstring of arguments.
 		 * @param arguments A string containing the command-line arguments.
 		 */
 		auto try_parse(const std::wstring& arguments)
 			-> std::tuple<bool, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Constructs the argument manager with argc and argv.
@@ -76,12 +78,14 @@ namespace utility_module
 		 */
 		auto try_parse(int argc, char* argv[]) -> std::tuple<bool, std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Constructs the argument manager with argc and argv.
 		 * @param argc The number of arguments.
 		 * @param argv An array of C-style strings containing the arguments.
 		 */
 		auto try_parse(int argc, wchar_t* argv[]) -> std::tuple<bool, std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Retrieves the value of an argument as a string.
@@ -129,7 +133,7 @@ namespace utility_module
 		 */
 		auto to_uint(const std::string& key) -> std::optional<unsigned int>;
 
-#ifdef _WIN32
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Retrieves the value of an argument as a long long integer (Windows-specific).
 		 * @param key The key of the argument.
@@ -158,6 +162,7 @@ namespace utility_module
 				   char* argv[]) -> std::tuple<std::optional<std::map<std::string, std::string>>,
 											   std::optional<std::string>>;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Parses command-line arguments from argc and argv.
 		 * @param argc The number of arguments.
@@ -167,6 +172,7 @@ namespace utility_module
 		auto parse(int argc,
 				   wchar_t* argv[]) -> std::tuple<std::optional<std::map<std::string, std::string>>,
 												  std::optional<std::string>>;
+#endif
 
 		/**
 		 * @brief Parses command-line arguments from a vector of strings.

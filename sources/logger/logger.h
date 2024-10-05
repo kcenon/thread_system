@@ -186,6 +186,7 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
+#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Writes a log message.
 		 * @param type The type of the log message.
@@ -199,6 +200,7 @@ namespace log_module
 			const std::wstring& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
+#endif
 
 		/**
 		 * @brief Writes a log message.

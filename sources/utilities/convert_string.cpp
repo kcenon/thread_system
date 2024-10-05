@@ -83,54 +83,27 @@ namespace utility_module
 		return { tokens, std::nullopt };
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto convert_string::to_string(const std::wstring& wide_string_message)
 		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
 	{
 		try
 		{
-			std::string result;
-
-#ifdef _WIN32
 			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
 				static_cast<int32_t>(wide_string_message.length()));
+
+			std::string result;
 			unicode_string.toUTF8String(result);
-#else
-			for (wchar_t ch : wide_string_message)
-			{
-				if (ch <= 0x7F)
-				{
-					result.push_back(static_cast<char>(ch));
-				}
-				else if (ch <= 0x7FF)
-				{
-					result.push_back(static_cast<char>(0xC0 | (ch >> 6)));
-					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
-				}
-				else if (ch <= 0xFFFF)
-				{
-					result.push_back(static_cast<char>(0xE0 | (ch >> 12)));
-					result.push_back(static_cast<char>(0x80 | ((ch >> 6) & 0x3F)));
-					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
-				}
-				else
-				{
-					result.push_back(static_cast<char>(0xF0 | (ch >> 18)));
-					result.push_back(static_cast<char>(0x80 | ((ch >> 12) & 0x3F)));
-					result.push_back(static_cast<char>(0x80 | ((ch >> 6) & 0x3F)));
-					result.push_back(static_cast<char>(0x80 | (ch & 0x3F)));
-				}
-			}
-#endif
 
 			return { std::move(result), std::nullopt };
 		}
 		catch (const std::exception& e)
 		{
-			return { std::nullopt,
-					 formatter::format("Error converting wstring to string: {}", e.what()) };
+			return { std::nullopt, formatter::format("Error converting: {}", e.what()) };
 		}
 	}
+#endif
 
 	auto convert_string::to_string(const std::u16string& utf16_string_message)
 		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
@@ -174,25 +147,19 @@ namespace utility_module
 		}
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto convert_string::to_wstring(const std::string& utf8_string_message)
 		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
 	{
 		try
 		{
-			std::wstring result;
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
+			icu::UnicodeString unicode_string(
+				reinterpret_cast<const char*>(utf8_string_message.data()),
+				static_cast<int32_t>(utf8_string_message.length()));
 
-#ifdef _WIN32
-			result.resize(unicode_string.length(), L'\0');
+			std::wstring result(unicode_string.length(), L'\0');
 			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
-#else
-			for (int32_t i = 0; i < unicode_string.length(); ++i)
-			{
-				UChar32 ch = unicode_string.char32At(i);
-				result.push_back(static_cast<wchar_t>(ch));
-			}
-#endif
+								   reinterpret_cast<OldUChar*>(&result[0]));
 
 			return { std::move(result), std::nullopt };
 		}
@@ -214,7 +181,7 @@ namespace utility_module
 
 			std::wstring result(unicode_string.length(), L'\0');
 			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
+								   reinterpret_cast<OldUChar*>(&result[0]));
 
 			return { std::move(result), std::nullopt };
 		}
@@ -236,7 +203,7 @@ namespace utility_module
 
 			std::wstring result(unicode_string.length(), L'\0');
 			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
+								   reinterpret_cast<OldUChar*>(&result[0]));
 
 			return { std::move(result), std::nullopt };
 		}
@@ -246,6 +213,7 @@ namespace utility_module
 					 formatter::format("Error converting u32string to wstring: {}", e.what()) };
 		}
 	}
+#endif
 
 	auto convert_string::to_u16string(const std::string& utf8_string_message)
 		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
@@ -267,13 +235,14 @@ namespace utility_module
 		}
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto convert_string::to_u16string(const std::wstring& wide_string_message)
 		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
 	{
 		try
 		{
 			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
 				static_cast<int32_t>(wide_string_message.length()));
 
 			std::u16string result(unicode_string.length(), u'\0');
@@ -288,6 +257,7 @@ namespace utility_module
 					 formatter::format("Error converting wstring to u16string: {}", e.what()) };
 		}
 	}
+#endif
 
 	auto convert_string::to_u16string(const std::u32string& utf32_string_message)
 		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
@@ -341,13 +311,14 @@ namespace utility_module
 		}
 	}
 
+#ifdef _WIN32_BUT_NOT_TESTED
 	auto convert_string::to_u32string(const std::wstring& wide_string_message)
 		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
 	{
 		try
 		{
 			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(wide_string_message.data()),
+				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
 				static_cast<int32_t>(wide_string_message.length()));
 
 			std::u32string result(unicode_string.length(), U'\0');
@@ -370,6 +341,7 @@ namespace utility_module
 					 formatter::format("Error converting wstring to u32string: {}", e.what()) };
 		}
 	}
+#endif
 
 	auto convert_string::to_u32string(const std::u16string& utf16_string_message)
 		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
