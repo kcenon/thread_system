@@ -56,7 +56,7 @@ enum class test_priority : uint8_t
 	Bottom
 };
 
-namespace detail
+namespace test_detail
 {
 	constexpr std::array test_priority_strings = { "Top", "Middle", "Bottom" };
 
@@ -75,47 +75,42 @@ namespace detail
 constexpr std::string_view to_string(test_priority priority)
 {
 	auto index = static_cast<size_t>(priority);
-	return (index < detail::test_priority_count) ? detail::test_priority_strings[index] : "Unknown";
+	return (index < test_detail::test_priority_count) ? test_detail::test_priority_strings[index]
+													  : "Unknown";
 }
 
 #ifdef USE_STD_FORMAT
-namespace std
+/**
+ * @brief Specialization of std::formatter for test_priority.
+ *
+ * This formatter allows test_priority to be used with std::format.
+ * It converts the test_priority enum values to their string representations.
+ */
+template <> struct std::formatter<test_priority>
 {
-	/**
-	 * @brief Specialization of std::formatter for test_priority.
-	 *
-	 * This formatter allows test_priority to be used with std::format.
-	 * It converts the test_priority enum values to their string representations.
-	 */
-	template <> struct formatter<test_priority>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const test_priority& priority, FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", to_string(priority));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const test_priority& priority, FormatContext& ctx) const
+	{
+		return std::format_to(ctx.out(), "{}", to_string(priority));
+	}
+};
 #else
-namespace fmt
+/**
+ * @brief Specialization of fmt::formatter for test_priority.
+ *
+ * This formatter allows test_priority to be used with fmt::format.
+ * It converts the test_priority enum values to their string representations.
+ */
+template <> struct fmt::formatter<test_priority>
 {
-	/**
-	 * @brief Specialization of fmt::formatter for test_priority.
-	 *
-	 * This formatter allows test_priority to be used with fmt::format.
-	 * It converts the test_priority enum values to their string representations.
-	 */
-	template <> struct formatter<test_priority>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const test_priority& priority, FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", to_string(priority));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const test_priority& priority, FormatContext& ctx) const
+	{
+		return fmt::format_to(ctx.out(), "{}", to_string(priority));
+	}
+};
 #endif
