@@ -58,7 +58,7 @@ namespace priority_thread_pool_module
 		Low		///< Low priority job
 	};
 
-	namespace detail
+	namespace job_detail
 	{
 		/** @brief Array of string representations for job priorities */
 		constexpr std::array job_priority_strings = { "HIGH", "NORMAL", "LOW" };
@@ -79,51 +79,47 @@ namespace priority_thread_pool_module
 	[[nodiscard]] constexpr std::string_view to_string(job_priorities job_priority)
 	{
 		auto index = static_cast<size_t>(job_priority);
-		return (index < detail::job_priority_count) ? detail::job_priority_strings[index]
-													: "UNKNOWN";
+		return (index < job_detail::job_priority_count) ? job_detail::job_priority_strings[index]
+														: "UNKNOWN";
 	}
 } // namespace priority_thread_pool_module
 
 #ifdef USE_STD_FORMAT
-namespace std
+/**
+ * @brief Specialization of std::formatter for priority_thread_pool_module::job_priorities.
+ *
+ * This formatter allows job_priorities to be used with std::format.
+ * It converts the job_priorities enum values to their string representations.
+ */
+template <> struct std::formatter<priority_thread_pool_module::job_priorities>
 {
-	/**
-	 * @brief Specialization of std::formatter for priority_thread_pool_module::job_priorities.
-	 *
-	 * This formatter allows job_priorities to be used with std::format.
-	 * It converts the job_priorities enum values to their string representations.
-	 */
-	template <> struct formatter<priority_thread_pool_module::job_priorities>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const priority_thread_pool_module::job_priorities& job_priority,
-					FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", priority_thread_pool_module::to_string(job_priority));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::job_priorities& job_priority,
+				FormatContext& ctx) const
+	{
+		return std::format_to(ctx.out(), "{}",
+							  priority_thread_pool_module::to_string(job_priority));
+	}
+};
 #else
-namespace fmt
+/**
+ * @brief Specialization of fmt::formatter for priority_thread_pool_module::job_priorities.
+ *
+ * This formatter allows job_priorities to be used with fmt::format.
+ * It converts the job_priorities enum values to their string representations.
+ */
+template <> struct fmt::formatter<priority_thread_pool_module::job_priorities>
 {
-	/**
-	 * @brief Specialization of fmt::formatter for priority_thread_pool_module::job_priorities.
-	 *
-	 * This formatter allows job_priorities to be used with fmt::format.
-	 * It converts the job_priorities enum values to their string representations.
-	 */
-	template <> struct formatter<priority_thread_pool_module::job_priorities>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const priority_thread_pool_module::job_priorities& job_priority,
-					FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", priority_thread_pool_module::to_string(job_priority));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::job_priorities& job_priority,
+				FormatContext& ctx) const
+	{
+		return fmt::format_to(ctx.out(), "{}",
+							  priority_thread_pool_module::to_string(job_priority));
+	}
+};
 #endif

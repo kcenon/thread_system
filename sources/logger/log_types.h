@@ -62,7 +62,7 @@ namespace log_module
 		Parameter	 ///< Parameter log type
 	};
 
-	namespace detail
+	namespace log_detail
 	{
 		/** @brief Array of string representations for log types */
 		constexpr std::array log_type_strings
@@ -84,48 +84,43 @@ namespace log_module
 	[[nodiscard]] constexpr std::string_view to_string(log_types log_type)
 	{
 		auto index = static_cast<size_t>(log_type);
-		return (index < detail::log_type_count) ? detail::log_type_strings[index] : "UNKNOWN";
+		return (index < log_detail::log_type_count) ? log_detail::log_type_strings[index]
+													: "UNKNOWN";
 	}
 } // namespace log_module
 
 #ifdef USE_STD_FORMAT
-namespace std
+/**
+ * @brief Specialization of std::formatter for log_module::log_types.
+ *
+ * This formatter allows log_types to be used with std::format.
+ * It converts the log_types enum values to their string representations.
+ */
+template <> struct std::formatter<log_module::log_types>
 {
-	/**
-	 * @brief Specialization of std::formatter for log_module::log_types.
-	 *
-	 * This formatter allows log_types to be used with std::format.
-	 * It converts the log_types enum values to their string representations.
-	 */
-	template <> struct formatter<log_module::log_types>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const log_module::log_types& log_type, FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", log_module::to_string(log_type));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
+	{
+		return std::format_to(ctx.out(), "{}", log_module::to_string(log_type));
+	}
+};
 #else
-namespace fmt
+/**
+ * @brief Specialization of fmt::formatter for log_module::log_types.
+ *
+ * This formatter allows log_types to be used with fmt::format.
+ * It converts the log_types enum values to their string representations.
+ */
+template <> struct fmt::formatter<log_module::log_types>
 {
-	/**
-	 * @brief Specialization of fmt::formatter for log_module::log_types.
-	 *
-	 * This formatter allows log_types to be used with fmt::format.
-	 * It converts the log_types enum values to their string representations.
-	 */
-	template <> struct formatter<log_module::log_types>
-	{
-		constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
 
-		template <typename FormatContext>
-		auto format(const log_module::log_types& log_type, FormatContext& ctx) const
-		{
-			return format_to(ctx.out(), "{}", log_module::to_string(log_type));
-		}
-	};
-}
+	template <typename FormatContext>
+	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
+	{
+		return fmt::format_to(ctx.out(), "{}", log_module::to_string(log_type));
+	}
+};
 #endif
