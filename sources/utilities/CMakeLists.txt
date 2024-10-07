@@ -20,5 +20,5 @@ if(NOT HAS_STD_FORMAT OR NOT SET_STD_FORMAT)
     target_link_libraries(${LIBRARY_NAME} PUBLIC fmt::fmt-header-only)
 endif()
 
-find_package(ICU REQUIRED COMPONENTS uc i18n)
-target_link_libraries(${LIBRARY_NAME} PUBLIC ICU::uc ICU::i18n)
+find_package(Iconv REQUIRED)
+target_link_libraries(${LIBRARY_NAME} PUBLIC Iconv::Iconv)

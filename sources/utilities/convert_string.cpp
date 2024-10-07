@@ -31,402 +31,364 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "convert_string.h"
-#include "formatter.h"
 
-#include <stdexcept>
-
-#include "unicode/unistr.h"
-#include "unicode/ustream.h"
-#include "unicode/ucnv.h"
-
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+#include <cstdint>
 
 namespace utility_module
 {
-	auto convert_string::split(const std::string& str, const std::string& delimiter)
+
+	auto convert_string::get_encoding_name(encoding_types encoding,
+										   endian_types endian) -> std::string
+	{
+		switch (encoding)
+		{
+		case encoding_types::utf8:
+			return "UTF-8";
+		case encoding_types::utf16:
+			if (endian == endian_types::little)
+				return "UTF-16LE";
+			else if (endian == endian_types::big)
+				return "UTF-16BE";
+			else
+				return "UTF-16";
+		case encoding_types::utf32:
+			if (endian == endian_types::little)
+				return "UTF-32LE";
+			else if (endian == endian_types::big)
+				return "UTF-32BE";
+			else
+				return "UTF-32";
+		default:
+			throw std::runtime_error("Unknown encoding");
+		}
+	}
+
+	auto convert_string::get_wchar_encoding(endian_types endian) -> std::string
+	{
+		if (sizeof(wchar_t) == 2)
+		{
+			return get_encoding_name(encoding_types::utf16, endian);
+		}
+		else if (sizeof(wchar_t) == 4)
+		{
+			return get_encoding_name(encoding_types::utf32, endian);
+		}
+		else
+		{
+			throw std::runtime_error("Unsupported wchar_t size");
+		}
+	}
+
+	auto convert_string::detect_endian(const std::u16string& str) -> endian_types
+	{
+		if (str.empty())
+			return endian_types::unknown;
+
+		if (str[0] == 0xFEFF)
+			return endian_types::big;
+		if (str[0] == 0xFFFE)
+			return endian_types::little;
+
+		size_t sample_size = std::min<size_t>(str.size(), 1000);
+		int le_count = 0, be_count = 0;
+		for (size_t i = 0; i < sample_size; ++i)
+		{
+			uint16_t ch = str[i];
+			if ((ch & 0xFF00) == 0 && (ch & 0x00FF) != 0)
+				++le_count;
+			if ((ch & 0x00FF) == 0 && (ch & 0xFF00) != 0)
+				++be_count;
+		}
+
+		if (le_count > be_count)
+			return endian_types::little;
+		if (be_count > le_count)
+			return endian_types::big;
+
+		return endian_types::unknown;
+	}
+
+	auto convert_string::detect_endian(const std::u32string& str) -> endian_types
+	{
+		if (str.empty())
+			return endian_types::unknown;
+
+		if (str[0] == 0x0000FEFF)
+			return endian_types::big;
+		if (str[0] == 0xFFFE0000)
+			return endian_types::little;
+
+		size_t sample_size = std::min<size_t>(str.size(), 1000);
+		int le_count = 0, be_count = 0;
+		for (size_t i = 0; i < sample_size; ++i)
+		{
+			uint32_t ch = str[i];
+			if ((ch & 0xFFFFFF00) == 0 && (ch & 0x000000FF) != 0)
+				++le_count;
+			if ((ch & 0x00FFFFFF) == 0 && (ch & 0xFF000000) != 0)
+				++be_count;
+		}
+
+		if (le_count > be_count)
+			return endian_types::little;
+		if (be_count > le_count)
+			return endian_types::big;
+
+		return endian_types::unknown;
+	}
+
+	auto convert_string::has_utf8_bom(const std::string& str) -> bool
+	{
+		return str.length() >= 3 && static_cast<unsigned char>(str[0]) == 0xEF
+			   && static_cast<unsigned char>(str[1]) == 0xBB
+			   && static_cast<unsigned char>(str[2]) == 0xBF;
+	}
+
+	auto convert_string::remove_utf8_bom(const std::string& str) -> std::string
+	{
+		return has_utf8_bom(str) ? str.substr(3) : str;
+	}
+
+	auto convert_string::add_utf8_bom(const std::string& str) -> std::string
+	{
+		return has_utf8_bom(str) ? str : std::string("\xEF\xBB\xBF") + str;
+	}
+
+	auto convert_string::remove_utf16_bom(const std::u16string& str) -> std::u16string
+	{
+		if (str.empty())
+			return str;
+
+		if (str[0] == 0xFEFF || str[0] == 0xFFFE)
+		{
+			return std::u16string(str.begin() + 1, str.end());
+		}
+		return str;
+	}
+
+	auto convert_string::add_utf16_bom(const std::u16string& str,
+									   endian_types endian) -> std::u16string
+	{
+		if (str.empty())
+			return str;
+
+		if (str[0] == 0xFEFF || str[0] == 0xFFFE)
+		{
+			return str;
+		}
+
+		std::u16string result;
+		if (endian == endian_types::little)
+		{
+			result.push_back(0xFEFF);
+		}
+		else if (endian == endian_types::big)
+		{
+			result.push_back(0xFFFE);
+		}
+		result.insert(result.end(), str.begin(), str.end());
+		return result;
+	}
+
+	auto convert_string::remove_utf32_bom(const std::u32string& str) -> std::u32string
+	{
+		if (str.empty())
+			return str;
+
+		if (str[0] == 0x0000FEFF || str[0] == 0xFFFE0000)
+		{
+			return std::u32string(str.begin() + 1, str.end());
+		}
+		return str;
+	}
+
+	auto convert_string::add_utf32_bom(const std::u32string& str,
+									   endian_types endian) -> std::u32string
+	{
+		if (str.empty())
+			return str;
+
+		if (str[0] == 0x0000FEFF || str[0] == 0xFFFE0000)
+		{
+			return str;
+		}
+
+		std::u32string result;
+		if (endian == endian_types::little)
+		{
+			result.push_back(0x0000FEFF);
+		}
+		else if (endian == endian_types::big)
+		{
+			result.push_back(0xFFFE0000);
+		}
+		result.insert(result.end(), str.begin(), str.end());
+		return result;
+	}
+
+	auto convert_string::to_string(const std::wstring& value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		endian_types endian = endian_types::little;
+		return convert<std::wstring, std::string>(value, get_wchar_encoding(endian),
+												  get_encoding_name(encoding_types::utf8));
+	}
+
+	auto convert_string::to_string(const std::u16string& value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		std::u16string clean_value = remove_utf16_bom(value);
+		endian_types endian = detect_endian(clean_value);
+		if (endian == endian_types::unknown)
+		{
+			endian = endian_types::little;
+		}
+		return convert<std::u16string, std::string>(
+			clean_value, get_encoding_name(encoding_types::utf16, endian),
+			get_encoding_name(encoding_types::utf8));
+	}
+
+	auto convert_string::to_string(const std::u32string& value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		std::u32string clean_value = remove_utf32_bom(value);
+		endian_types endian = detect_endian(clean_value);
+		if (endian == endian_types::unknown)
+		{
+			endian = endian_types::little;
+		}
+		return convert<std::u32string, std::string>(
+			clean_value, get_encoding_name(encoding_types::utf32, endian),
+			get_encoding_name(encoding_types::utf8));
+	}
+
+	auto convert_string::to_wstring(const std::string& value)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		std::string clean_value = remove_utf8_bom(value);
+		endian_types endian = endian_types::little;
+		return convert<std::string, std::wstring>(
+			clean_value, get_encoding_name(encoding_types::utf8), get_wchar_encoding(endian));
+	}
+
+	auto convert_string::to_wstring(const std::u16string& value)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		endian_types source_endian = detect_endian(value);
+		if (source_endian == endian_types::unknown)
+		{
+			source_endian = endian_types::little;
+		}
+		endian_types target_endian = endian_types::little;
+		return convert<std::u16string, std::wstring>(
+			value, get_encoding_name(encoding_types::utf16, source_endian),
+			get_wchar_encoding(target_endian));
+	}
+
+	auto convert_string::to_wstring(const std::u32string& value)
+		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+	{
+		endian_types source_endian = detect_endian(value);
+		if (source_endian == endian_types::unknown)
+		{
+			source_endian = endian_types::little;
+		}
+		endian_types target_endian = endian_types::little;
+		return convert<std::u32string, std::wstring>(
+			value, get_encoding_name(encoding_types::utf32, source_endian),
+			get_wchar_encoding(target_endian));
+	}
+
+	auto convert_string::to_u16string(const std::string& value)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		std::string clean_value = remove_utf8_bom(value);
+		endian_types endian = endian_types::little;
+		return convert<std::string, std::u16string>(
+			clean_value, get_encoding_name(encoding_types::utf8),
+			get_encoding_name(encoding_types::utf16, endian));
+	}
+
+	auto convert_string::to_u16string(const std::wstring& value)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		endian_types source_endian = endian_types::little;
+		endian_types target_endian = endian_types::little;
+		return convert<std::wstring, std::u16string>(
+			value, get_wchar_encoding(source_endian),
+			get_encoding_name(encoding_types::utf16, target_endian));
+	}
+
+	auto convert_string::to_u16string(const std::u32string& value)
+		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
+	{
+		endian_types source_endian = detect_endian(value);
+		if (source_endian == endian_types::unknown)
+		{
+			source_endian = endian_types::little;
+		}
+		endian_types target_endian = endian_types::little;
+		return convert<std::u32string, std::u16string>(
+			value, get_encoding_name(encoding_types::utf32, source_endian),
+			get_encoding_name(encoding_types::utf16, target_endian));
+	}
+
+	auto convert_string::to_u32string(const std::string& value)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		std::string clean_value = remove_utf8_bom(value);
+		endian_types endian = endian_types::little;
+		return convert<std::string, std::u32string>(
+			clean_value, get_encoding_name(encoding_types::utf8),
+			get_encoding_name(encoding_types::utf32, endian));
+	}
+
+	auto convert_string::to_u32string(const std::wstring& value)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		endian_types source_endian = endian_types::little;
+		endian_types target_endian = endian_types::little;
+		return convert<std::wstring, std::u32string>(
+			value, get_wchar_encoding(source_endian),
+			get_encoding_name(encoding_types::utf32, target_endian));
+	}
+
+	auto convert_string::to_u32string(const std::u16string& value)
+		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
+	{
+		endian_types source_endian = detect_endian(value);
+		if (source_endian == endian_types::unknown)
+		{
+			source_endian = endian_types::little;
+		}
+		endian_types target_endian = endian_types::little;
+		return convert<std::u16string, std::u32string>(
+			value, get_encoding_name(encoding_types::utf16, source_endian),
+			get_encoding_name(encoding_types::utf32, target_endian));
+	}
+
+	auto convert_string::split(const std::string& source, const std::string& token)
 		-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
 	{
-		if (delimiter.empty())
+		if (token.empty())
 		{
-			return { std::nullopt, "Delimiter cannot be empty" };
+			return { std::nullopt, "Token cannot be an empty string" };
 		}
 
-		std::vector<std::string> tokens;
+		std::vector<std::string> result;
 		size_t start = 0;
-		size_t end = 0;
+		size_t endian = source.find(token);
 
-		while ((end = str.find(delimiter, start)) != std::string::npos)
+		while (endian != std::string::npos)
 		{
-			std::string token = str.substr(start, end - start);
-			if (!token.empty())
-			{
-				tokens.push_back(token);
-			}
-			start = end + delimiter.length();
+			result.emplace_back(source.substr(start, endian - start));
+			start = endian + token.length();
+			endian = source.find(token, start);
 		}
 
-		std::string lastToken = str.substr(start);
-		if (!lastToken.empty())
-		{
-			tokens.push_back(lastToken);
-		}
+		result.emplace_back(source.substr(start));
 
-		if (tokens.empty())
-		{
-			return { std::nullopt, "No valid tokens found" };
-		}
-
-		return { tokens, std::nullopt };
+		return { result, std::nullopt };
 	}
 
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto convert_string::to_string(const std::wstring& wide_string_message)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
-				static_cast<int32_t>(wide_string_message.length()));
-
-			std::string result;
-			unicode_string.toUTF8String(result);
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt, formatter::format("Error converting: {}", e.what()) };
-		}
-	}
-#endif
-
-	auto convert_string::to_string(const std::u16string& utf16_string_message)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(utf16_string_message.data()),
-				static_cast<int32_t>(utf16_string_message.length()));
-
-			std::string result;
-			unicode_string.toUTF8String(result);
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u16string to string: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_string(const std::u32string& utf32_string_message)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
-				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
-				static_cast<int32_t>(utf32_string_message.length()));
-
-			std::string result;
-			unicode_string.toUTF8String(result);
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u32string to string: {}", e.what()) };
-		}
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto convert_string::to_wstring(const std::string& utf8_string_message)
-		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const char*>(utf8_string_message.data()),
-				static_cast<int32_t>(utf8_string_message.length()));
-
-			std::wstring result(unicode_string.length(), L'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<OldUChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting string to wstring: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_wstring(const std::u16string& utf16_string_message)
-		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(utf16_string_message.data()),
-				static_cast<int32_t>(utf16_string_message.length()));
-
-			std::wstring result(unicode_string.length(), L'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<OldUChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u16string to wstring: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_wstring(const std::u32string& utf32_string_message)
-		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
-				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
-				static_cast<int32_t>(utf32_string_message.length()));
-
-			std::wstring result(unicode_string.length(), L'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<OldUChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u32string to wstring: {}", e.what()) };
-		}
-	}
-#endif
-
-	auto convert_string::to_u16string(const std::string& utf8_string_message)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
-
-			std::u16string result(unicode_string.length(), u'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting string to u16string: {}", e.what()) };
-		}
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto convert_string::to_u16string(const std::wstring& wide_string_message)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
-				static_cast<int32_t>(wide_string_message.length()));
-
-			std::u16string result(unicode_string.length(), u'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting wstring to u16string: {}", e.what()) };
-		}
-	}
-#endif
-
-	auto convert_string::to_u16string(const std::u32string& utf32_string_message)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF32(
-				reinterpret_cast<const UChar32*>(utf32_string_message.data()),
-				static_cast<int32_t>(utf32_string_message.length()));
-
-			std::u16string result(unicode_string.length(), u'\0');
-			unicode_string.extract(0, unicode_string.length(),
-								   reinterpret_cast<UChar*>(&result[0]));
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u32string to u16string: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_u32string(const std::string& utf8_string_message)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string = icu::UnicodeString::fromUTF8(utf8_string_message);
-
-			std::u32string result(unicode_string.length(), U'\0');
-			UErrorCode error_code = U_ZERO_ERROR;
-			int32_t actual_length
-				= unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
-										 static_cast<int32_t>(result.size()), error_code);
-
-			if (U_FAILURE(error_code))
-			{
-				return { std::nullopt, formatter::format("Error converting string to u32string: {}",
-														 u_errorName(error_code)) };
-			}
-
-			result.resize(actual_length);
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting string to u32string: {}", e.what()) };
-		}
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto convert_string::to_u32string(const std::wstring& wide_string_message)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const OldUChar*>(wide_string_message.data()),
-				static_cast<int32_t>(wide_string_message.length()));
-
-			std::u32string result(unicode_string.length(), U'\0');
-			UErrorCode error_code = U_ZERO_ERROR;
-			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
-								   static_cast<int32_t>(result.capacity()), error_code);
-
-			if (U_FAILURE(error_code))
-			{
-				return { std::nullopt,
-						 formatter::format("Error converting wstring to u32string: {}",
-										   u_errorName(error_code)) };
-			}
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting wstring to u32string: {}", e.what()) };
-		}
-	}
-#endif
-
-	auto convert_string::to_u32string(const std::u16string& utf16_string_message)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		try
-		{
-			icu::UnicodeString unicode_string(
-				reinterpret_cast<const UChar*>(utf16_string_message.data()),
-				static_cast<int32_t>(utf16_string_message.length()));
-
-			std::u32string result(unicode_string.length(), U'\0');
-			UErrorCode error_code = U_ZERO_ERROR;
-			unicode_string.toUTF32(reinterpret_cast<UChar32*>(&result[0]),
-								   static_cast<int32_t>(result.capacity()), error_code);
-
-			if (U_FAILURE(error_code))
-			{
-				return { std::nullopt,
-						 formatter::format("Error converting u16string to u32string: {}",
-										   u_errorName(error_code)) };
-			}
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting u16string to u32string: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_array(const std::string& utf8_string_value)
-		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
-	{
-		try
-		{
-			std::vector<uint8_t> result;
-			if (has_utf8_bom(utf8_string_value))
-			{
-				result.insert(result.end(), utf8_string_value.begin(),
-							  utf8_string_value.begin() + 3);
-				result.insert(result.end(), utf8_string_value.begin() + 3, utf8_string_value.end());
-			}
-			else
-			{
-				result.insert(result.end(), utf8_string_value.begin(), utf8_string_value.end());
-			}
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting string to byte array: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::to_string(const std::vector<uint8_t>& byte_array_value)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		try
-		{
-			std::string result;
-			auto start = has_utf8_bom(byte_array_value) ? byte_array_value.begin() + 3
-														: byte_array_value.begin();
-			result.insert(result.end(), start, byte_array_value.end());
-
-			return { std::move(result), std::nullopt };
-		}
-		catch (const std::exception& e)
-		{
-			return { std::nullopt,
-					 formatter::format("Error converting byte array to string: {}", e.what()) };
-		}
-	}
-
-	auto convert_string::has_utf8_bom(const std::vector<uint8_t>& value) -> bool
-	{
-		constexpr std::array<uint8_t, 3> utf8_bom = { 0xEF, 0xBB, 0xBF };
-		return value.size() >= 3 && std::equal(utf8_bom.begin(), utf8_bom.end(), value.begin());
-	}
-
-	auto convert_string::has_utf8_bom(const std::string& value) -> bool
-	{
-		constexpr std::array<char, 3> utf8_bom = { '\xEF', '\xBB', '\xBF' };
-		return value.size() >= 3 && std::equal(utf8_bom.begin(), utf8_bom.end(), value.begin());
-	}
 } // namespace utility_module
