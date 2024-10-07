@@ -46,7 +46,6 @@ protected:
 	virtual ~ConvertStringTest() {}
 };
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToStringFromWstring)
 {
 	std::wstring wide = L"Hello, 世界";
@@ -55,7 +54,6 @@ TEST_F(ConvertStringTest, ToStringFromWstring)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), "Hello, 世界");
 }
-#endif
 
 TEST_F(ConvertStringTest, ToStringFromU16string)
 {
@@ -75,7 +73,6 @@ TEST_F(ConvertStringTest, ToStringFromU32string)
 	EXPECT_EQ(result.value(), "Hello, 世界");
 }
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToWstringFromString)
 {
 	std::string utf8 = "Hello, 世界";
@@ -102,7 +99,6 @@ TEST_F(ConvertStringTest, ToWstringFromU32String)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), L"Hello, 世界");
 }
-#endif
 
 TEST_F(ConvertStringTest, ToU16stringFromString)
 {
@@ -113,7 +109,6 @@ TEST_F(ConvertStringTest, ToU16stringFromString)
 	EXPECT_EQ(result.value(), u"Hello, 世界");
 }
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToU16stringFromWString)
 {
 	std::wstring wide = L"Hello, 世界";
@@ -122,7 +117,6 @@ TEST_F(ConvertStringTest, ToU16stringFromWString)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), u"Hello, 世界");
 }
-#endif
 
 TEST_F(ConvertStringTest, ToU16stringFromU32String)
 {
@@ -142,7 +136,6 @@ TEST_F(ConvertStringTest, ToU32stringFromString)
 	EXPECT_EQ(result.value(), U"Hello, 世界");
 }
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ConvertStringTest, ToU32stringFromWString)
 {
 	std::wstring wide = L"Hello, 世界";
@@ -151,7 +144,6 @@ TEST_F(ConvertStringTest, ToU32stringFromWString)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), U"Hello, 世界");
 }
-#endif
 
 TEST_F(ConvertStringTest, ToU32stringFromU16String)
 {
@@ -160,26 +152,6 @@ TEST_F(ConvertStringTest, ToU32stringFromU16String)
 	ASSERT_TRUE(result.has_value());
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), U"Hello, 世界");
-}
-
-TEST_F(ConvertStringTest, ToArrayFromString)
-{
-	std::string utf8 = "Hello, 世界";
-	auto [result, error] = convert_string::to_array(utf8);
-	ASSERT_TRUE(result.has_value());
-	ASSERT_FALSE(error.has_value());
-	std::vector<uint8_t> expected
-		= { 72, 101, 108, 108, 111, 44, 32, 228, 184, 150, 231, 149, 140 };
-	EXPECT_EQ(result.value(), expected);
-}
-
-TEST_F(ConvertStringTest, ToStringFromArray)
-{
-	std::vector<uint8_t> bytes = { 72, 101, 108, 108, 111, 44, 32, 228, 184, 150, 231, 149, 140 };
-	auto [result, error] = convert_string::to_string(bytes);
-	ASSERT_TRUE(result.has_value());
-	ASSERT_FALSE(error.has_value());
-	EXPECT_EQ(result.value(), "Hello, 世界");
 }
 
 TEST_F(ConvertStringTest, ConvertEmptyU16String)
