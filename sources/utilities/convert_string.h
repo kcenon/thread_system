@@ -32,21 +32,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <string>
+#include "iconv.h"
+
 #include <tuple>
-#include <optional>
 #include <vector>
-#include <stdexcept>
-#include <iconv.h>
+#include <string>
 #include <cstring>
 #include <errno.h>
+#include <optional>
 #include <algorithm>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 namespace utility_module
 {
 	/**
 	 * @class convert_string
 	 * @brief Provides utility functions for string conversion between different encodings.
+	 *
+	 * This class offers methods to convert between various string types (std::string, std::wstring,
+	 * std::u16string, std::u32string) and handle different encodings, including system-specific
+	 * encodings.
 	 */
 	class convert_string
 	{
@@ -148,6 +156,29 @@ namespace utility_module
 			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
 		/**
+		 * @brief Retrieves the current code page of the Windows system.
+		 * @return The current system code page.
+		 */
+		static int get_system_code_page();
+
+		/**
+		 * @brief Converts a string from the system code page to UTF-8.
+		 * @param value The string to convert.
+		 * @return A tuple containing the converted UTF-8 string or an error message.
+		 */
+		static auto system_to_utf8(const std::string& value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
+		/**
+		 * @brief Converts a UTF-8 string to the system code page.
+		 * @param value The UTF-8 string to convert.
+		 * @return A tuple containing the converted string in the system code page or an error
+		 * message.
+		 */
+		static auto utf8_to_system(const std::string& value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
+		/**
 		 * @brief Splits a string into a vector of strings based on a delimiter.
 		 * @param source The input string to split.
 		 * @param token The delimiter string.
@@ -169,6 +200,13 @@ namespace utility_module
 			utf16,
 			utf32
 		};
+
+		/**
+		 * @brief Returns the name of the code page.
+		 * @param code_page The code page number.
+		 * @return The name of the code page.
+		 */
+		static std::string get_code_page_name(int code_page);
 
 		/**
 		 * @brief Gets the encoding name based on the encoding type and endianness.
