@@ -1,6 +1,8 @@
 project(thread_system_unittest)
 
-add_executable(${PROJECT_NAME} convert_string_test.cpp argument_parser_test.cpp)
+file(GLOB UNIT_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+add_executable(${PROJECT_NAME} ${UNIT_TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME} PUBLIC utilities)
 
 find_package(GTest CONFIG REQUIRED)
