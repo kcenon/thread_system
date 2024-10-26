@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "argument_parser.h"
 
-#include "convert_string.h"
-
 #include <charconv>
 #include <algorithm>
 
@@ -41,97 +39,10 @@ namespace utility_module
 {
 	argument_manager::argument_manager(void) {}
 
-	auto argument_manager::try_parse(const std::string& arguments)
-		-> std::tuple<bool, std::optional<std::string>>
-	{
-		auto [splitted, message] = convert_string::split(arguments, " ");
-		if (!splitted.has_value())
-		{
-			return { false, message };
-		}
-
-		auto [parsed, parse_error] = parse(splitted.value());
-
-		if (!parsed.has_value())
-		{
-			return { false, parse_error };
-		}
-
-		_arguments = parsed.value();
-
-		return { true, std::nullopt };
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto argument_manager::try_parse(const std::wstring& arguments)
-		-> std::tuple<bool, std::optional<std::string>>
-	{
-		auto [converted, convert_error] = convert_string::to_string(arguments);
-		if (!converted.has_value())
-		{
-			return { false, convert_error };
-		}
-
-		auto [splitted, message] = convert_string::split(converted.value(), " ");
-		if (!splitted.has_value())
-		{
-			return { false, message };
-		}
-
-		auto [parsed, parse_error] = parse(splitted.value());
-
-		if (!parsed.has_value())
-		{
-			return { false, parse_error };
-		}
-
-		_arguments = parsed.value();
-
-		return { true, std::nullopt };
-	}
-#endif
-
-	auto argument_manager::try_parse(int argc,
-									 char* argv[]) -> std::tuple<bool, std::optional<std::string>>
-	{
-		auto [parsed, parse_error] = parse(argc, argv);
-
-		if (!parsed.has_value())
-		{
-			return { false, parse_error };
-		}
-
-		_arguments = parsed.value();
-
-		return { true, std::nullopt };
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto argument_manager::try_parse(int argc, wchar_t* argv[])
-		-> std::tuple<bool, std::optional<std::string>>
-	{
-		auto [parsed, parse_error] = parse(argc, argv);
-
-		if (!parsed.has_value())
-		{
-			return { false, parse_error };
-		}
-
-		_arguments = parsed.value();
-
-		return { true, std::nullopt };
-	}
-#endif
-
 	auto argument_manager::to_string(const std::string& key) -> std::optional<std::string>
 	{
-		auto target = _arguments.find(key);
-		if (target == _arguments.end())
-		{
-			return std::nullopt;
-		}
-
-		return target->second;
+		auto target = arguments_.find(key);
+		return target != arguments_.end() ? std::optional(target->second) : std::nullopt;
 	}
 
 	auto argument_manager::to_bool(const std::string& key) -> std::optional<bool>
@@ -143,144 +54,91 @@ namespace utility_module
 		}
 
 		auto temp = target.value();
-		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		if (temp == "true" || temp == "1")
+		{
+			return true;
+		}
 
-		return temp.compare("true") == 0;
+		if (temp == "false" || temp == "0")
+		{
+			return false;
+		}
+
+		return std::nullopt;
 	}
 
 	auto argument_manager::to_short(const std::string& key) -> std::optional<short>
 	{
-		auto target = to_string(key);
-		if (!target.has_value())
-		{
-			return std::nullopt;
-		}
-
-		return to_numeric<short>(target.value());
+		return to_numeric<short>(key);
 	}
 
 	auto argument_manager::to_ushort(const std::string& key) -> std::optional<unsigned short>
 	{
-		auto target = to_string(key);
-		if (!target.has_value())
-		{
-			return std::nullopt;
-		}
-
-		return to_numeric<unsigned short>(target.value());
+		return to_numeric<unsigned short>(key);
 	}
 
 	auto argument_manager::to_int(const std::string& key) -> std::optional<int>
 	{
-		auto target = to_string(key);
-		if (target == std::nullopt)
-		{
-			return std::nullopt;
-		}
-
-		return to_numeric<int>(target.value());
+		return to_numeric<int>(key);
 	}
 
 	auto argument_manager::to_uint(const std::string& key) -> std::optional<unsigned int>
 	{
-		auto target = to_string(key);
-		if (!target.has_value())
-		{
-			return std::nullopt;
-		}
-
-		return to_numeric<unsigned int>(target.value());
+		return to_numeric<unsigned int>(key);
 	}
 
-#ifdef _WIN32_BUT_NOT_TESTED
+#ifdef _WIN32
 	auto argument_manager::to_llong(const std::string& key) -> std::optional<long long>
+	{
+		return to_numeric<long long>(key);
+	}
 #else
 	auto argument_manager::to_long(const std::string& key) -> std::optional<long>
-#endif
 	{
-		auto target = to_string(key);
-		if (!target.has_value())
-		{
-			return std::nullopt;
-		}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-		return to_numeric<long long>(target.value());
-#else
-		return to_numeric<long>(target.value());
-#endif
-	}
-
-	auto argument_manager::parse(int argc, char* argv[])
-		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
-	{
-		std::vector<std::string> arguments;
-		for (int index = 1; index < argc; ++index)
-		{
-			arguments.push_back(argv[index]);
-		}
-
-		return parse(arguments);
-	}
-
-#ifdef _WIN32_BUT_NOT_TESTED
-	auto argument_manager::parse(int argc, wchar_t* argv[])
-		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
-	{
-		std::vector<std::string> arguments;
-		for (int index = 1; index < argc; ++index)
-		{
-			auto [converted, convert_error] = convert_string::to_string(std::wstring(argv[index]));
-			if (!converted.has_value())
-			{
-				continue;
-			}
-
-			arguments.push_back(converted.value());
-		}
-
-		return parse(arguments);
+		return to_numeric<long>(key);
 	}
 #endif
 
 	auto argument_manager::parse(const std::vector<std::string>& arguments)
 		-> std::tuple<std::optional<std::map<std::string, std::string>>, std::optional<std::string>>
 	{
-		std::map<std::string, std::string> result;
+		if (arguments.empty())
+		{
+			return { std::nullopt, "no valid arguments found." };
+		}
 
-		size_t argc = arguments.size();
-		std::string argument_id;
+		std::map<std::string, std::string> result;
 		bool found_valid_argument = false;
 
-		for (size_t index = 0; index < argc; ++index)
+		for (size_t i = 0; i < arguments.size(); ++i)
 		{
-			argument_id = arguments[index];
-			if (argument_id.empty())
+			const auto& arg = arguments[i];
+
+			if (arg.substr(0, 2) != "--")
 			{
-				return { std::nullopt, "empty argument" };
+				return { std::nullopt, "invalid argument: " + arg };
 			}
 
-			if (argument_id.compare("--help") == 0)
+			if (arg == "--help")
 			{
-				result.insert({ argument_id, "display help" });
+				result.insert({ arg, "display help" });
 				found_valid_argument = true;
 				continue;
 			}
 
-			size_t offset = argument_id.find("--", 0);
-			if (offset != 0)
+			if (i + 1 >= arguments.size())
 			{
-				return { std::nullopt, "invalid argument: " + argument_id };
+				return { std::nullopt, "argument '" + arg + "' expects a value." };
 			}
 
-			if (index + 1 >= argc)
+			if (arguments[i + 1].substr(0, 2) == "--")
 			{
-				return { std::nullopt, "argument '" + argument_id + "' expects a value." };
+				return { std::nullopt, "argument '" + arg + "' expects a value." };
 			}
 
-			result.insert({ argument_id, arguments[index + 1] });
+			result[arg] = arguments[++i];
 			found_valid_argument = true;
-			++index;
 		}
 
 		if (!found_valid_argument)
@@ -289,17 +147,5 @@ namespace utility_module
 		}
 
 		return { result, std::nullopt };
-	}
-
-	template <typename T>
-	auto argument_manager::to_numeric(const std::string& value) const -> std::optional<T>
-	{
-		T result;
-		auto [ptr, ec] = std::from_chars(value.data(), value.data() + value.size(), result);
-
-		if (ec == std::errc() && ptr == value.data() + value.size())
-			return result;
-
-		return std::nullopt;
 	}
 } // namespace argument_parser

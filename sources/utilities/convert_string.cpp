@@ -155,78 +155,6 @@ namespace utility_module
 		return has_utf8_bom(str) ? str : std::string("\xEF\xBB\xBF") + str;
 	}
 
-	auto convert_string::remove_utf16_bom(const std::u16string& str) -> std::u16string
-	{
-		if (str.empty())
-			return str;
-
-		if (str[0] == 0xFEFF || str[0] == 0xFFFE)
-		{
-			return std::u16string(str.begin() + 1, str.end());
-		}
-		return str;
-	}
-
-	auto convert_string::add_utf16_bom(const std::u16string& str,
-									   endian_types endian) -> std::u16string
-	{
-		if (str.empty())
-			return str;
-
-		if (str[0] == 0xFEFF || str[0] == 0xFFFE)
-		{
-			return str;
-		}
-
-		std::u16string result;
-		if (endian == endian_types::little)
-		{
-			result.push_back(0xFEFF);
-		}
-		else if (endian == endian_types::big)
-		{
-			result.push_back(0xFFFE);
-		}
-		result.insert(result.end(), str.begin(), str.end());
-		return result;
-	}
-
-	auto convert_string::remove_utf32_bom(const std::u32string& str) -> std::u32string
-	{
-		if (str.empty())
-			return str;
-
-		if (str[0] == 0x0000FEFF || str[0] == 0xFFFE0000)
-		{
-			return std::u32string(str.begin() + 1, str.end());
-		}
-		return str;
-	}
-
-	auto convert_string::add_utf32_bom(const std::u32string& str,
-									   endian_types endian) -> std::u32string
-	{
-		if (str.empty())
-			return str;
-
-		if (str[0] == 0x0000FEFF || str[0] == 0xFFFE0000)
-		{
-			return str;
-		}
-
-		std::u32string result;
-		if (endian == endian_types::little)
-		{
-			result.push_back(0x0000FEFF);
-		}
-		else if (endian == endian_types::big)
-		{
-			result.push_back(0xFFFE0000);
-		}
-		result.insert(result.end(), str.begin(), str.end());
-		return result;
-	}
-
 	int convert_string::get_system_code_page()
 	{
 #ifdef _WIN32
@@ -286,48 +214,6 @@ namespace utility_module
 		return { std::nullopt, error };
 	}
 
-	auto convert_string::to_string(const std::u16string& value)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		std::u16string clean_value = remove_utf16_bom(value);
-		endian_types endian = detect_endian(clean_value);
-		if (endian == endian_types::unknown)
-		{
-			endian = endian_types::little;
-		}
-		auto [result, error] = convert<std::u16string, std::string>(
-			clean_value, get_encoding_name(encoding_types::utf16, endian),
-			get_encoding_name(encoding_types::utf8));
-
-		if (result.has_value())
-		{
-			return utf8_to_system(result.value());
-		}
-
-		return { std::nullopt, error };
-	}
-
-	auto convert_string::to_string(const std::u32string& value)
-		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
-	{
-		std::u32string clean_value = remove_utf32_bom(value);
-		endian_types endian = detect_endian(clean_value);
-		if (endian == endian_types::unknown)
-		{
-			endian = endian_types::little;
-		}
-		auto [result, error] = convert<std::u32string, std::string>(
-			clean_value, get_encoding_name(encoding_types::utf32, endian),
-			get_encoding_name(encoding_types::utf8));
-
-		if (result.has_value())
-		{
-			return utf8_to_system(result.value());
-		}
-
-		return { std::nullopt, error };
-	}
-
 	auto convert_string::to_wstring(const std::string& value)
 		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
 	{
@@ -343,120 +229,12 @@ namespace utility_module
 			clean_value, get_encoding_name(encoding_types::utf8), get_wchar_encoding(endian));
 	}
 
-	auto convert_string::to_wstring(const std::u16string& value)
-		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
-	{
-		endian_types source_endian = detect_endian(value);
-		if (source_endian == endian_types::unknown)
-		{
-			source_endian = endian_types::little;
-		}
-		endian_types target_endian = endian_types::little;
-		return convert<std::u16string, std::wstring>(
-			value, get_encoding_name(encoding_types::utf16, source_endian),
-			get_wchar_encoding(target_endian));
-	}
-
-	auto convert_string::to_wstring(const std::u32string& value)
-		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
-	{
-		endian_types source_endian = detect_endian(value);
-		if (source_endian == endian_types::unknown)
-		{
-			source_endian = endian_types::little;
-		}
-		endian_types target_endian = endian_types::little;
-		return convert<std::u32string, std::wstring>(
-			value, get_encoding_name(encoding_types::utf32, source_endian),
-			get_wchar_encoding(target_endian));
-	}
-
-	auto convert_string::to_u16string(const std::string& value)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		auto [result, error] = system_to_utf8(value);
-		if (!result.has_value())
-		{
-			return { std::nullopt, error };
-		}
-
-		std::string clean_value = remove_utf8_bom(result.value());
-		endian_types endian = endian_types::little;
-		return convert<std::string, std::u16string>(
-			clean_value, get_encoding_name(encoding_types::utf8),
-			get_encoding_name(encoding_types::utf16, endian));
-	}
-
-	auto convert_string::to_u16string(const std::wstring& value)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		endian_types source_endian = endian_types::little;
-		endian_types target_endian = endian_types::little;
-		return convert<std::wstring, std::u16string>(
-			value, get_wchar_encoding(source_endian),
-			get_encoding_name(encoding_types::utf16, target_endian));
-	}
-
-	auto convert_string::to_u16string(const std::u32string& value)
-		-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>
-	{
-		endian_types source_endian = detect_endian(value);
-		if (source_endian == endian_types::unknown)
-		{
-			source_endian = endian_types::little;
-		}
-		endian_types target_endian = endian_types::little;
-		return convert<std::u32string, std::u16string>(
-			value, get_encoding_name(encoding_types::utf32, source_endian),
-			get_encoding_name(encoding_types::utf16, target_endian));
-	}
-
-	auto convert_string::to_u32string(const std::string& value)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		auto [result, error] = system_to_utf8(value);
-		if (!result.has_value())
-		{
-			return { std::nullopt, error };
-		}
-
-		std::string clean_value = remove_utf8_bom(result.value());
-		endian_types endian = endian_types::little;
-		return convert<std::string, std::u32string>(
-			clean_value, get_encoding_name(encoding_types::utf8),
-			get_encoding_name(encoding_types::utf32, endian));
-	}
-
-	auto convert_string::to_u32string(const std::wstring& value)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		endian_types source_endian = endian_types::little;
-		endian_types target_endian = endian_types::little;
-		return convert<std::wstring, std::u32string>(
-			value, get_wchar_encoding(source_endian),
-			get_encoding_name(encoding_types::utf32, target_endian));
-	}
-
-	auto convert_string::to_u32string(const std::u16string& value)
-		-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>
-	{
-		endian_types source_endian = detect_endian(value);
-		if (source_endian == endian_types::unknown)
-		{
-			source_endian = endian_types::little;
-		}
-		endian_types target_endian = endian_types::little;
-		return convert<std::u16string, std::u32string>(
-			value, get_encoding_name(encoding_types::utf16, source_endian),
-			get_encoding_name(encoding_types::utf32, target_endian));
-	}
-
 	auto convert_string::split(const std::string& source, const std::string& token)
 		-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
 	{
 		if (token.empty())
 		{
-			return { std::nullopt, "Token cannot be an empty string" };
+			return { std::vector{ source }, std::nullopt };
 		}
 
 		std::vector<std::string> result;

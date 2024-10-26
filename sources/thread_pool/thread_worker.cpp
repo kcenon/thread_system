@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 
 using namespace log_module;
-using namespace utility_module;
 
 namespace thread_pool_module
 {
@@ -87,11 +86,11 @@ namespace thread_pool_module
 			return { false, "error executing job: nullptr" };
 		}
 
-		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> time_point
-			= std::nullopt;
+		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
+			started_time_point = std::nullopt;
 		if (use_time_tag_)
 		{
-			time_point = std::chrono::high_resolution_clock::now();
+			started_time_point = std::chrono::high_resolution_clock::now();
 		}
 
 		current_job->set_job_queue(job_queue_);
@@ -102,15 +101,9 @@ namespace thread_pool_module
 											  work_error.value_or("unknown error")) };
 		}
 
-		if (logger::handle().get_file_target() >= log_types::Sequence
-			|| logger::handle().get_console_target() >= log_types::Sequence)
-		{
-			logger::handle().write(
-				log_types::Sequence,
-				formatter::format("job executed successfully: {} on thread_worker",
-								  current_job->get_name()),
-				time_point);
-		}
+		logger::handle().write(log_types::Sequence, started_time_point,
+							   "job executed successfully: {} on thread_worker",
+							   current_job->get_name());
 
 		return { true, std::nullopt };
 	}

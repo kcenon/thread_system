@@ -43,100 +43,197 @@ class ArgumentManagerTest : public ::testing::Test
 {
 protected:
 	argument_manager manager;
+
+	void SetUp() override { manager = argument_manager(); }
+
+	void VerifyBasicParsing()
+	{
+		EXPECT_EQ(manager.to_string("--key1"), "value1");
+		EXPECT_EQ(manager.to_string("--key2"), "value2");
+		EXPECT_EQ(manager.to_string("--non-existent"), std::nullopt);
+	}
 };
 
 TEST_F(ArgumentManagerTest, ParseStringArguments)
 {
-	auto [success, error] = manager.try_parse("--key1 value1 --key2 value2");
-	ASSERT_TRUE(success);
-	ASSERT_FALSE(error.has_value());
+	const std::vector<std::string> test_cases
+		= { "--key1 value1 --key2 value2", "program --key1 value1 --key2 value2" };
 
-	EXPECT_EQ(manager.to_string("--key1"), "value1");
-	EXPECT_EQ(manager.to_string("--key2"), "value2");
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing with input: " + test_case);
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+
+		VerifyBasicParsing();
+	}
 }
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ArgumentManagerTest, ParseWStringArguments)
 {
-	auto [success, error] = manager.try_parse(L"--key1 value1 --key2 value2");
-	ASSERT_TRUE(success);
-	ASSERT_FALSE(error.has_value());
+	const std::vector<std::wstring> test_cases
+		= { L"--key1 value1 --key2 value2", L"program --key1 value1 --key2 value2" };
 
-	EXPECT_EQ(manager.to_string("--key1"), "value1");
-	EXPECT_EQ(manager.to_string("--key2"), "value2");
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing with wide string input");
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+
+		VerifyBasicParsing();
+	}
 }
-#endif
 
 TEST_F(ArgumentManagerTest, ParseCharArgv)
 {
-	const char* argv[] = { "program", "--key1", "value1", "--key2", "value2" };
-	int argc = 5;
-	auto [success, error] = manager.try_parse(argc, const_cast<char**>(argv));
-	ASSERT_TRUE(success);
-	ASSERT_FALSE(error.has_value());
+	{
+		const char* argv[] = { "program", "--key1", "value1", "--key2", "value2" };
+		int argc = 5;
+		auto [success, error] = manager.try_parse(argc, const_cast<char**>(argv));
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+		VerifyBasicParsing();
+	}
 
-	EXPECT_EQ(manager.to_string("--key1"), "value1");
-	EXPECT_EQ(manager.to_string("--key2"), "value2");
+	{
+		const char* argv[] = { "--key1", "value1", "--key2", "value2" };
+		int argc = 4;
+		auto [success, error] = manager.try_parse(argc, const_cast<char**>(argv));
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+		VerifyBasicParsing();
+	}
 }
 
-#ifdef _WIN32_BUT_NOT_TESTED
 TEST_F(ArgumentManagerTest, ParseWCharArgv)
 {
-	const wchar_t* argv[] = { L"program", L"--key1", L"value1", L"--key2", L"value2" };
-	int argc = 5;
-	auto [success, error] = manager.try_parse(argc, const_cast<wchar_t**>(argv));
-	ASSERT_TRUE(success);
-	ASSERT_FALSE(error.has_value());
+	{
+		const wchar_t* argv[] = { L"program", L"--key1", L"value1", L"--key2", L"value2" };
+		int argc = 5;
+		auto [success, error] = manager.try_parse(argc, const_cast<wchar_t**>(argv));
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+		VerifyBasicParsing();
+	}
 
-	EXPECT_EQ(manager.to_string("--key1"), "value1");
-	EXPECT_EQ(manager.to_string("--key2"), "value2");
+	{
+		const wchar_t* argv[] = { L"--key1", L"value1", L"--key2", L"value2" };
+		int argc = 4;
+		auto [success, error] = manager.try_parse(argc, const_cast<wchar_t**>(argv));
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+		VerifyBasicParsing();
+	}
 }
-#endif
 
 TEST_F(ArgumentManagerTest, ToBool)
 {
-	manager.try_parse("--flag1 true --flag2 false");
+	const std::vector<std::string> test_cases
+		= { "--flag1 true --flag2 false", "--flag1 1 --flag2 0",
+			"program --flag1 true --flag2 false" };
 
-	EXPECT_EQ(manager.to_bool("--flag1"), true);
-	EXPECT_EQ(manager.to_bool("--flag2"), false);
-	EXPECT_EQ(manager.to_bool("--non-existent"), std::nullopt);
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing bool parsing with: " + test_case);
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+
+		EXPECT_EQ(manager.to_bool("--flag1"), true);
+		EXPECT_EQ(manager.to_bool("--flag2"), false);
+		EXPECT_EQ(manager.to_bool("--non-existent"), std::nullopt);
+	}
 }
 
 TEST_F(ArgumentManagerTest, ToNumericTypes)
 {
-	manager.try_parse("--int 42 --uint 100 --short -30 --ushort 50 --long 1000000");
+	const std::vector<std::string> test_cases
+		= { "--int 42 --uint 100 --short -30 --ushort 50 --long 1000000",
+			"program --int 42 --uint 100 --short -30 --ushort 50 --long 1000000" };
 
-	EXPECT_EQ(manager.to_int("--int"), 42);
-	EXPECT_EQ(manager.to_uint("--uint"), 100u);
-	EXPECT_EQ(manager.to_short("--short"), -30);
-	EXPECT_EQ(manager.to_ushort("--ushort"), 50u);
-#ifdef _WIN32_BUT_NOT_TESTED
-	EXPECT_EQ(manager.to_llong("--long"), 1000000ll);
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing numeric parsing with: " + test_case);
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+
+		EXPECT_EQ(manager.to_int("--int"), 42);
+		EXPECT_EQ(manager.to_uint("--uint"), 100u);
+		EXPECT_EQ(manager.to_short("--short"), static_cast<short>(-30));
+		EXPECT_EQ(manager.to_ushort("--ushort"), static_cast<unsigned short>(50));
+#ifdef _WIN32
+		EXPECT_EQ(manager.to_llong("--long"), 1000000ll);
 #else
-	EXPECT_EQ(manager.to_long("--long"), 1000000l);
+		EXPECT_EQ(manager.to_long("--long"), 1000000l);
 #endif
+	}
 }
 
 TEST_F(ArgumentManagerTest, InvalidArguments)
 {
-	auto [success, error] = manager.try_parse("invalid arguments");
-	ASSERT_FALSE(success);
-	ASSERT_TRUE(error.has_value());
-	EXPECT_EQ(error.value(), "invalid argument: invalid");
+	const std::vector<std::pair<std::string, std::string>> test_cases
+		= { { "program invalid", "invalid argument: invalid" },
+			{ "invalid", "invalid argument: invalid" },
+			{ "program --key", "argument '--key' expects a value." },
+			{ "--key", "argument '--key' expects a value." } };
+
+	for (const auto& [input, expected_error] : test_cases)
+	{
+		SCOPED_TRACE("Testing with input: \"" + input + "\"");
+
+		auto [success, error] = manager.try_parse(input);
+		ASSERT_FALSE(success) << "Expected to fail with input: " << input;
+		ASSERT_TRUE(error.has_value()) << "Expected error message for input: " << input;
+		EXPECT_EQ(error.value(), expected_error) << "Input: \"" << input << "\"\n"
+												 << "Expected: \"" << expected_error << "\"\n"
+												 << "Actual: \"" << error.value() << "\"";
+	}
 }
 
 TEST_F(ArgumentManagerTest, EmptyArguments)
 {
-	auto [success, error] = manager.try_parse("");
-	ASSERT_FALSE(success);
-	ASSERT_TRUE(error.has_value());
+	const std::vector<std::string> test_cases
+		= { "", " ", "  ", "\t", "\n", "\r", " \t\n\r", std::string(1, 0) };
+
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing empty input: '" + test_case + "'");
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_FALSE(success) << "Should fail for empty input";
+		ASSERT_TRUE(error.has_value()) << "Should have error message";
+		EXPECT_EQ(error.value(), "no valid arguments found.")
+			<< "Failed for input: '" << test_case << "'";
+	}
 }
 
 TEST_F(ArgumentManagerTest, HelpArgument)
 {
-	auto [success, error] = manager.try_parse("--help");
-	ASSERT_TRUE(success);
-	ASSERT_FALSE(error.has_value());
+	const std::vector<std::string> test_cases
+		= { "--help", "program --help", "--help --key value", "program --help --key value" };
 
-	EXPECT_EQ(manager.to_string("--help"), "display help");
+	for (const auto& test_case : test_cases)
+	{
+		SCOPED_TRACE("Testing help with: " + test_case);
+
+		auto [success, error] = manager.try_parse(test_case);
+		ASSERT_TRUE(success) << "Failed with error: "
+							 << (error.has_value() ? error.value() : "none");
+		ASSERT_FALSE(error.has_value());
+
+		EXPECT_EQ(manager.to_string("--help"), "display help");
+	}
 }

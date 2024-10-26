@@ -149,9 +149,8 @@ namespace thread_pool_module
 			auto [stopped, stop_error] = worker->stop();
 			if (!stopped)
 			{
-				logger::handle().write(log_types::Error,
-									   formatter::format("error stopping worker: {}",
-														 stop_error.value_or("unknown error")));
+				logger::handle().write(log_types::Error, "error stopping worker: {}",
+									   stop_error.value_or("unknown error"));
 			}
 		}
 

@@ -231,36 +231,8 @@ namespace log_module
 		collector_->write(type, message, start_time);
 	}
 
-#ifdef _WIN32_BUT_NOT_TESTED
 	auto logger::write(log_types type,
 					   const std::wstring& message,
-					   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-						   start_time) -> void
-	{
-		if (collector_ == nullptr)
-		{
-			return;
-		}
-
-		collector_->write(type, message, start_time);
-	}
-#endif
-
-	auto logger::write(log_types type,
-					   const std::u16string& message,
-					   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-						   start_time) -> void
-	{
-		if (collector_ == nullptr)
-		{
-			return;
-		}
-
-		collector_->write(type, message, start_time);
-	}
-
-	auto logger::write(log_types type,
-					   const std::u32string& message,
 					   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
 						   start_time) -> void
 	{
