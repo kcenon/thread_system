@@ -51,25 +51,81 @@ namespace utility_module
 		fmt::format_string<Args...>;
 #endif
 
-	template <typename... Args>
+	template <typename... WideArgs>
 	using wformat_string =
 #ifdef USE_STD_FORMAT
-		std::wformat_string<Args...>;
+		std::wformat_string<WideArgs...>;
 #else
-		fmt::basic_format_string<wchar_t, Args...>;
+		fmt::basic_format_string<wchar_t, WideArgs...>;
 #endif
 
 	class formatter
 	{
+	private:
+		// 값을 복사하고 저장하는 헬퍼 클래스
+		template <typename T> class copyable_value
+		{
+			typename std::remove_reference_t<std::remove_const_t<T>> value;
+
+		public:
+			template <typename U> copyable_value(U&& arg) : value(std::forward<U>(arg)) {}
+
+			auto get() -> std::remove_reference_t<std::remove_const_t<T>>& { return value; }
+			auto get() const -> const std::remove_reference_t<std::remove_const_t<T>>&
+			{
+				return value;
+			}
+		};
+
+		template <typename... Args> static auto make_format_args_helper(Args&&... args)
+		{
+			std::tuple<copyable_value<Args>...> values(
+				copyable_value<Args>(std::forward<Args>(args))...);
+			return std::apply([](auto&... vals) { return std::make_format_args(vals.get()...); },
+							  values);
+		}
+
+		template <typename... Args> static auto make_wformat_args_helper(Args&&... args)
+		{
+			std::tuple<copyable_value<Args>...> values(
+				copyable_value<Args>(std::forward<Args>(args))...);
+			return std::apply([](auto&... vals) { return std::make_wformat_args(vals.get()...); },
+							  values);
+		}
+
 	public:
+		// char 버전
+		template <typename... FormatArgs>
+		static auto format(const char* formats, FormatArgs&&... args) -> std::string
+		{
+#ifdef USE_STD_FORMAT
+			return std::vformat(formats,
+								make_format_args_helper(std::forward<FormatArgs>(args)...));
+#else
+			return fmt::format(fmt::runtime(formats), std::forward<FormatArgs>(args)...);
+#endif
+		}
+
 		template <typename... FormatArgs>
 		static auto format(format_string<FormatArgs...> formats,
 						   FormatArgs&&... args) -> std::string
 		{
 #ifdef USE_STD_FORMAT
-			return std::format(std::move(formats), std::forward<FormatArgs>(args)...);
+			return std::format(formats, std::forward<FormatArgs>(args)...);
 #else
-			return fmt::format(std::move(formats), std::forward<FormatArgs>(args)...);
+			return fmt::format(formats, std::forward<FormatArgs>(args)...);
+#endif
+		}
+
+		// wchar_t 버전
+		template <typename... WideFormatArgs>
+		static auto format(const wchar_t* formats, WideFormatArgs&&... args) -> std::wstring
+		{
+#ifdef USE_STD_FORMAT
+			return std::vformat(formats,
+								make_wformat_args_helper(std::forward<WideFormatArgs>(args)...));
+#else
+			return fmt::format(fmt::runtime(formats), std::forward<WideFormatArgs>(args)...);
 #endif
 		}
 
@@ -78,9 +134,20 @@ namespace utility_module
 						   WideFormatArgs&&... args) -> std::wstring
 		{
 #ifdef USE_STD_FORMAT
-			return std::format(std::move(formats), std::forward<WideFormatArgs>(args)...);
+			return std::format(formats, std::forward<WideFormatArgs>(args)...);
 #else
-			return fmt::format(std::move(formats), std::forward<WideFormatArgs>(args)...);
+			return fmt::format(formats, std::forward<WideFormatArgs>(args)...);
+#endif
+		}
+
+		template <typename OutputIt, typename... FormatArgs>
+		static auto format_to(OutputIt out, const char* formats, FormatArgs&&... args) -> void
+		{
+#ifdef USE_STD_FORMAT
+			std::vformat_to(out, formats,
+							make_format_args_helper(std::forward<FormatArgs>(args)...));
+#else
+			fmt::format_to(out, fmt::runtime(formats), std::forward<FormatArgs>(args)...);
 #endif
 		}
 
@@ -90,9 +157,23 @@ namespace utility_module
 							  FormatArgs&&... args) -> void
 		{
 #ifdef USE_STD_FORMAT
-			std::format_to(out, std::move(formats), std::forward<FormatArgs>(args)...);
+			std::format_to(out, formats, std::forward<FormatArgs>(args)...);
 #else
-			fmt::format_to(out, std::move(formats), std::forward<FormatArgs>(args)...);
+			fmt::format_to(out, formats, std::forward<FormatArgs>(args)...);
+#endif
+		}
+
+		// wchar_t 버전 format_to
+		template <typename OutputIt, typename... WideFormatArgs>
+		static auto format_to(OutputIt out,
+							  const wchar_t* formats,
+							  WideFormatArgs&&... args) -> void
+		{
+#ifdef USE_STD_FORMAT
+			std::vformat_to(out, formats,
+							make_wformat_args_helper(std::forward<WideFormatArgs>(args)...));
+#else
+			fmt::format_to(out, fmt::runtime(formats), std::forward<WideFormatArgs>(args)...);
 #endif
 		}
 
@@ -102,9 +183,9 @@ namespace utility_module
 							  WideFormatArgs&&... args) -> void
 		{
 #ifdef USE_STD_FORMAT
-			std::format_to(out, std::move(formats), std::forward<WideFormatArgs>(args)...);
+			std::format_to(out, formats, std::forward<WideFormatArgs>(args)...);
 #else
-			fmt::format_to(out, std::move(formats), std::forward<WideFormatArgs>(args)...);
+			fmt::format_to(out, formats, std::forward<WideFormatArgs>(args)...);
 #endif
 		}
 	};
