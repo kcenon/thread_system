@@ -72,7 +72,7 @@ auto main() -> int
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		logger::handle().log(log_types::Debug, "Hello, World!: {}", index);
+		logger::handle().wlog(log_types::Debug, L"Hello, World!: {}", index);
 	}
 
 	logger::handle().stop();

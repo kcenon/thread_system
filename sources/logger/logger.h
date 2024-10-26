@@ -220,6 +220,35 @@ namespace log_module
 		}
 
 		/**
+		 * @brief Writes a formatted wide-character log message to the log collector.
+		 *
+		 * Formats and logs a message with a specified log type. Can optionally include a
+		 * timestamp representing the start time of the log event.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param formats A wide character string literal containing the format string with
+		 * placeholders.
+		 * @param args Additional arguments for each placeholder in `formats`.
+		 */
+		template <typename... WideArgs>
+		auto wlog(const log_types& type, const wchar_t* formats, WideArgs&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(formats, std::forward<WideArgs>(args)...));
+		}
+
+		/**
 		 * @brief Writes a formatted log message to the log collector, with optional timestamp.
 		 *
 		 * Formats and logs a message with a specified type and optional start timestamp.
@@ -285,6 +314,40 @@ namespace log_module
 			collector_->write(
 				type, formatter::format(std::move(formats), std::forward<WideArgs>(args)...),
 				start_time);
+		}
+
+		/**
+		 * @brief Writes a formatted wide-character log message with an optional timestamp.
+		 *
+		 * Formats and logs a message with a specified type and optional start timestamp.
+		 * Enables accurate timing for each log entry when a timestamp is provided.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param start_time An optional timestamp marking the start of the log event.
+		 * @param formats A wide character string literal containing the format string with
+		 * placeholders.
+		 * @param args Additional arguments for each placeholder in `formats`.
+		 */
+		template <typename... WideArgs>
+		auto wlog_timestamp(const log_types& type,
+							std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
+							const wchar_t* formats,
+							WideArgs&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(formats, std::forward<WideArgs>(args)...),
+							  start_time);
 		}
 
 	private:
