@@ -75,8 +75,6 @@ namespace utility_module
 		template <typename... Args>
 #ifdef USE_STD_FORMAT
 		using wformat_string = std::wformat_string<Args...>;
-#else
-		using wformat_string = fmt::format_string<Args...>;
 #endif
 
 		/**
@@ -97,6 +95,7 @@ namespace utility_module
 #endif
 		}
 
+#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Formats a string using `wchar_t` type.
 		 *
@@ -108,12 +107,9 @@ namespace utility_module
 		template <typename... Args>
 		static auto format(wformat_string<Args...> format_string, Args&&... args) -> std::wstring
 		{
-#ifdef USE_STD_FORMAT
 			return std::format(format_string, std::forward<Args>(args)...);
-#else
-			return fmt::format(format_string, std::forward<Args>(args)...);
-#endif
 		}
+#endif
 
 		/**
 		 * @brief Formats a string and writes the result to an output iterator, using `char` type.
@@ -136,6 +132,7 @@ namespace utility_module
 #endif
 		}
 
+#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Formats a string and writes the result to an output iterator, using `wchar_t`
 		 * type.
@@ -151,11 +148,8 @@ namespace utility_module
 							  wformat_string<Args...> format_string,
 							  Args&&... args) -> void
 		{
-#ifdef USE_STD_FORMAT
 			std::format_to(out, format_string, std::forward<Args>(args)...);
-#else
-			fmt::format_to(out, format_string, std::forward<Args>(args)...);
-#endif
 		}
+#endif
 	};
 } // namespace utility_module
