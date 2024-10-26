@@ -81,7 +81,12 @@ namespace utility_module
 		{
 			std::tuple<copyable_value<Args>...> values(
 				copyable_value<Args>(std::forward<Args>(args))...);
+
+#ifdef USE_STD_FORMAT
 			return std::apply([](auto&... vals) { return std::make_format_args(vals.get()...); },
+#else
+			return std::apply([](auto&... vals) { return fmt::make_format_args(vals.get()...); },
+#endif
 							  values);
 		}
 
@@ -89,7 +94,12 @@ namespace utility_module
 		{
 			std::tuple<copyable_value<Args>...> values(
 				copyable_value<Args>(std::forward<Args>(args))...);
+
+#ifdef USE_STD_FORMAT
 			return std::apply([](auto&... vals) { return std::make_wformat_args(vals.get()...); },
+#else
+			return std::apply([](auto&... vals) { return fmt::make_wformat_args(vals.get()...); },
+#endif
 							  values);
 		}
 
