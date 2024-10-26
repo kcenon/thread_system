@@ -160,44 +160,6 @@ namespace log_module
 		auto time_point(void) -> std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 		/**
-		 * @brief Writes a log message to the log collector.
-		 *
-		 * This function logs a formatted message of type `std::string` with a specific log type.
-		 * If a `start_time` is provided, it will be used to timestamp the log entry.
-		 *
-		 * @param type The type of log message (e.g., info, warning, error).
-		 * @param message A `std::string` message to log.
-		 * @param start_time Optional parameter representing the start time of the log event.
-		 *                   Useful for accurately tracking when the event occurred.
-		 *                   If no start time is provided, the current time will be used by default.
-		 */
-		auto write(
-			log_types type,
-			const std::string& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
-
-		/**
-		 * @brief Writes a wide-character log message to the log collector.
-		 *
-		 * This function logs a formatted message of type `std::wstring` with a specific log type.
-		 * If a `start_time` is provided, it will be used to timestamp the log entry.
-		 * Wide-character support enables logging messages in UTF-16 or UTF-32 format, typically
-		 * used for languages with non-Latin characters.
-		 *
-		 * @param type The type of log message (e.g., info, warning, error).
-		 * @param message A `std::wstring` message to log.
-		 * @param start_time Optional parameter representing the start time of the log event.
-		 *                   Useful for accurately tracking when the event occurred.
-		 *                   If no start time is provided, the current time will be used by default.
-		 */
-		auto write(
-			log_types type,
-			const std::wstring& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
-
-		/**
 		 * @brief Writes a formatted log message to the log collector.
 		 *
 		 * Formats and logs a message with a specified log type. Can optionally include a
@@ -206,11 +168,11 @@ namespace log_module
 		 * @tparam Args Types of arguments used to fill in placeholders in the format string.
 		 *
 		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
-		 * @param format_string Format string defining the log message structure and placeholders.
-		 * @param args Additional arguments for each placeholder in `format_string`.
+		 * @param formats Format string defining the log message structure and placeholders.
+		 * @param args Additional arguments for each placeholder in `formats`.
 		 */
 		template <typename... Args>
-		auto write(log_types type, format_string<Args...> format_string, Args&&... args) -> void
+		auto log(const log_types& type, format_string<Args...> formats, Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -222,10 +184,10 @@ namespace log_module
 				return;
 			}
 
-			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
+			collector_->write(type,
+							  formatter::format(std::move(formats), std::forward<Args>(args)...));
 		}
 
-#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Writes a formatted wide-character log message to the log collector.
 		 *
@@ -235,11 +197,13 @@ namespace log_module
 		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
 		 *
 		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
-		 * @param format_string A wide-character format string with placeholders.
-		 * @param args Additional arguments for each placeholder in `format_string`.
+		 * @param formats A wide-character format string with placeholders.
+		 * @param args Additional arguments for each placeholder in `formats`.
 		 */
-		template <typename... Args>
-		auto write(log_types type, wformat_string<Args...> format_string, Args&&... args) -> void
+		template <typename... WideArgs>
+		auto wlog(const log_types& type,
+				  wformat_string<WideArgs...> formats,
+				  WideArgs&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -251,9 +215,9 @@ namespace log_module
 				return;
 			}
 
-			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
+			collector_->write(
+				type, formatter::format(std::move(formats), std::forward<WideArgs>(args)...));
 		}
-#endif
 
 		/**
 		 * @brief Writes a formatted log message to the log collector, with optional timestamp.
@@ -265,15 +229,14 @@ namespace log_module
 		 *
 		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
 		 * @param start_time An optional timestamp marking the start of the log event.
-		 * @param format_string Format string defining the log message structure and placeholders.
-		 * @param args Additional arguments matching the placeholders in `format_string`.
+		 * @param formats Format string defining the log message structure and placeholders.
+		 * @param args Additional arguments matching the placeholders in `formats`.
 		 */
 		template <typename... Args>
-		auto write(
-			log_types type,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
-			format_string<Args...> format_string,
-			Args&&... args) -> void
+		auto log_timestamp(const log_types& type,
+						   std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
+						   format_string<Args...> formats,
+						   Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -285,11 +248,11 @@ namespace log_module
 				return;
 			}
 
-			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...),
+			collector_->write(type,
+							  formatter::format(std::move(formats), std::forward<Args>(args)...),
 							  start_time);
 		}
 
-#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Writes a formatted wide-character log message with an optional timestamp.
 		 *
@@ -300,15 +263,14 @@ namespace log_module
 		 *
 		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
 		 * @param start_time An optional timestamp marking the start of the log event.
-		 * @param format_string A wide-character format string with placeholders.
-		 * @param args Additional arguments matching the placeholders in `format_string`.
+		 * @param formats A wide-character format string with placeholders.
+		 * @param args Additional arguments matching the placeholders in `formats`.
 		 */
-		template <typename... Args>
-		auto write(
-			log_types type,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
-			wformat_string<Args...> format_string,
-			Args&&... args) -> void
+		template <typename... WideArgs>
+		auto wlog_timestamp(const log_types& type,
+							std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
+							wformat_string<WideArgs...> formats,
+							WideArgs&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -320,10 +282,10 @@ namespace log_module
 				return;
 			}
 
-			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...),
-							  start_time);
+			collector_->write(
+				type, formatter::format(std::move(formats), std::forward<WideArgs>(args)...),
+				start_time);
 		}
-#endif
 
 	private:
 		/**

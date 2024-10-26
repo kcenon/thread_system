@@ -32,11 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "datetime_tool.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
+#include "formatter.h"
 
 namespace utility_module
 {
@@ -60,13 +56,8 @@ namespace utility_module
 		const auto day = tm->tm_mday;
 #endif
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:04d}{}{:02d}{}{:02d}", year, separator_character, month, separator_character, day);
+		return formatter::format("{:04d}{}{:02d}{}{:02d}", year, separator_character, month,
+								 separator_character, day);
 	}
 
 	auto datetime_tool::time(const std::chrono::system_clock::time_point& time,
@@ -89,14 +80,8 @@ namespace utility_module
 		const auto seconds = tm->tm_sec;
 #endif
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:02d}{}{:02d}{}{:02d}", hours, separator_character, minutes, separator_character,
-			 seconds);
+		return formatter::format("{:02d}{}{:02d}{}{:02d}", hours, separator_character, minutes,
+								 separator_character, seconds);
 	}
 
 	auto datetime_tool::milliseconds(const std::chrono::system_clock::time_point& time)
@@ -106,13 +91,7 @@ namespace utility_module
 		const auto milliseconds
 			= std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000;
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:03d}", milliseconds);
+		return formatter::format("{:03d}", milliseconds);
 	}
 
 	auto datetime_tool::microseconds(const std::chrono::system_clock::time_point& time)
@@ -122,13 +101,7 @@ namespace utility_module
 		const auto microseconds
 			= std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000;
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:03d}", microseconds);
+		return formatter::format("{:03d}", microseconds);
 	}
 
 	auto datetime_tool::nanoseconds(const std::chrono::system_clock::time_point& time)
@@ -138,13 +111,7 @@ namespace utility_module
 		const auto nanoseconds
 			= std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() % 1000;
 
-		return
-#ifdef USE_STD_FORMAT
-			std::format
-#else
-			fmt::format
-#endif
-			("{:03d}", nanoseconds);
+		return formatter::format("{:03d}", nanoseconds);
 	}
 
 	template <typename DurationType, typename ClockType>
