@@ -210,9 +210,7 @@ namespace log_module
 		 * @param args Additional arguments for each placeholder in `format_string`.
 		 */
 		template <typename... Args>
-		auto write(log_types type,
-				   formatter::format_string<Args...> format_string,
-				   Args&&... args) -> void
+		auto write(log_types type, format_string<Args...> format_string, Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -227,6 +225,7 @@ namespace log_module
 			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
 		}
 
+#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Writes a formatted wide-character log message to the log collector.
 		 *
@@ -240,9 +239,7 @@ namespace log_module
 		 * @param args Additional arguments for each placeholder in `format_string`.
 		 */
 		template <typename... Args>
-		auto write(log_types type,
-				   formatter::wformat_string<Args...> format_string,
-				   Args&&... args) -> void
+		auto write(log_types type, wformat_string<Args...> format_string, Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
@@ -256,6 +253,7 @@ namespace log_module
 
 			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
 		}
+#endif
 
 		/**
 		 * @brief Writes a formatted log message to the log collector, with optional timestamp.
@@ -274,7 +272,7 @@ namespace log_module
 		auto write(
 			log_types type,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
-			formatter::format_string<Args...> format_string,
+			format_string<Args...> format_string,
 			Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
@@ -291,6 +289,7 @@ namespace log_module
 							  start_time);
 		}
 
+#ifdef USE_STD_FORMAT
 		/**
 		 * @brief Writes a formatted wide-character log message with an optional timestamp.
 		 *
@@ -308,7 +307,7 @@ namespace log_module
 		auto write(
 			log_types type,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
-			formatter::wformat_string<Args...> format_string,
+			wformat_string<Args...> format_string,
 			Args&&... args) -> void
 		{
 			if (collector_ == nullptr)
@@ -324,6 +323,7 @@ namespace log_module
 			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...),
 							  start_time);
 		}
+#endif
 
 	private:
 		/**
