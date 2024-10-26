@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <format>
 #else
 #include <fmt/format.h>
+#include <fmt/xchar.h>
 #endif
 
 namespace utility_module
@@ -75,7 +76,7 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 		using wformat_string = std::wformat_string<Args...>;
 #else
-		using wformat_string = fmt::wformat_string<Args...>;
+		using wformat_string = fmt::format_string<Args...>;
 #endif
 
 		/**
