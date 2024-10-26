@@ -58,7 +58,6 @@ namespace log_module
 	{
 	}
 
-#ifdef _WIN32_BUT_NOT_TESTED
 	log_job::log_job(
 		const std::wstring& message,
 		std::optional<log_types> type,
@@ -67,35 +66,6 @@ namespace log_module
 		, type_(type)
 		, message_type_(message_types::WString)
 		, wmessage_(message)
-		, timestamp_(std::chrono::system_clock::now())
-		, start_time_(start_time)
-		, log_message_("")
-	{
-	}
-#endif
-
-	log_job::log_job(
-		const std::u16string& message,
-		std::optional<log_types> type,
-		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
-		: job(nullptr, "log_job")
-		, type_(type)
-		, message_type_(message_types::U16String)
-		, u16message_(message)
-		, timestamp_(std::chrono::system_clock::now())
-		, start_time_(start_time)
-		, log_message_("")
-	{
-	}
-
-	log_job::log_job(
-		const std::u32string& message,
-		std::optional<log_types> type,
-		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
-		: job(nullptr, "log_job")
-		, type_(type)
-		, message_type_(message_types::U32String)
-		, u32message_(message)
 		, timestamp_(std::chrono::system_clock::now())
 		, start_time_(start_time)
 		, log_message_("")
@@ -173,31 +143,9 @@ namespace log_module
 			return message_;
 		}
 		break;
-#ifdef _WIN32_BUT_NOT_TESTED
 		case message_types::WString:
 		{
 			auto [converted, convert_error] = convert_string::to_string(wmessage_);
-			if (!converted.has_value())
-			{
-				return std::string();
-			}
-			return converted.value();
-		}
-		break;
-#endif
-		case message_types::U16String:
-		{
-			auto [converted, convert_error] = convert_string::to_string(u16message_);
-			if (!converted.has_value())
-			{
-				return std::string();
-			}
-			return converted.value();
-		}
-		break;
-		case message_types::U32String:
-		{
-			auto [converted, convert_error] = convert_string::to_string(u32message_);
 			if (!converted.has_value())
 			{
 				return std::string();

@@ -68,92 +68,12 @@ namespace utility_module
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a std::u16string to a std::string.
-		 * @param value The input std::u16string.
-		 * @return A tuple containing the converted std::string or an error message.
-		 */
-		static auto to_string(const std::u16string& value)
-			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::u32string to a std::string.
-		 * @param value The input std::u32string.
-		 * @return A tuple containing the converted std::string or an error message.
-		 */
-		static auto to_string(const std::u32string& value)
-			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
-
-		/**
 		 * @brief Converts a std::string to a std::wstring.
 		 * @param value The input std::string.
 		 * @return A tuple containing the converted std::wstring or an error message.
 		 */
 		static auto to_wstring(const std::string& value)
 			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::u16string to a std::wstring.
-		 * @param value The input std::u16string.
-		 * @return A tuple containing the converted std::wstring or an error message.
-		 */
-		static auto to_wstring(const std::u16string& value)
-			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::u32string to a std::wstring.
-		 * @param value The input std::u32string.
-		 * @return A tuple containing the converted std::wstring or an error message.
-		 */
-		static auto to_wstring(const std::u32string& value)
-			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::string to a std::u16string.
-		 * @param value The input std::string.
-		 * @return A tuple containing the converted std::u16string or an error message.
-		 */
-		static auto to_u16string(const std::string& value)
-			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::wstring to a std::u16string.
-		 * @param value The input std::wstring.
-		 * @return A tuple containing the converted std::u16string or an error message.
-		 */
-		static auto to_u16string(const std::wstring& value)
-			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::u32string to a std::u16string.
-		 * @param value The input std::u32string.
-		 * @return A tuple containing the converted std::u16string or an error message.
-		 */
-		static auto to_u16string(const std::u32string& value)
-			-> std::tuple<std::optional<std::u16string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::string to a std::u32string.
-		 * @param value The input std::string.
-		 * @return A tuple containing the converted std::u32string or an error message.
-		 */
-		static auto to_u32string(const std::string& value)
-			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::wstring to a std::u32string.
-		 * @param value The input std::wstring.
-		 * @return A tuple containing the converted std::u32string or an error message.
-		 */
-		static auto to_u32string(const std::wstring& value)
-			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
-
-		/**
-		 * @brief Converts a std::u16string to a std::u32string.
-		 * @param value The input std::u16string.
-		 * @return A tuple containing the converted std::u32string or an error message.
-		 */
-		static auto to_u32string(const std::u16string& value)
-			-> std::tuple<std::optional<std::u32string>, std::optional<std::string>>;
 
 		/**
 		 * @brief Retrieves the current code page of the Windows system.
@@ -327,37 +247,5 @@ namespace utility_module
 		 * @return The string with the UTF-8 BOM.
 		 */
 		static auto add_utf8_bom(const std::string& value) -> std::string;
-
-		/**
-		 * @brief Removes the UTF-16 BOM from a u16string if present.
-		 * @param value The input u16string.
-		 * @return The u16string without the BOM.
-		 */
-		static auto remove_utf16_bom(const std::u16string& value) -> std::u16string;
-
-		/**
-		 * @brief Adds a UTF-16 BOM to a u16string if not already present.
-		 * @param value The input u16string.
-		 * @param endian The desired endianness.
-		 * @return The u16string with the BOM.
-		 */
-		static auto add_utf16_bom(const std::u16string& value,
-								  endian_types endian = endian_types::little) -> std::u16string;
-
-		/**
-		 * @brief Removes the UTF-32 BOM from a u32string if present.
-		 * @param value The input u32string.
-		 * @return The u32string without the BOM.
-		 */
-		static auto remove_utf32_bom(const std::u32string& value) -> std::u32string;
-
-		/**
-		 * @brief Adds a UTF-32 BOM to a u32string if not already present.
-		 * @param value The input u32string.
-		 * @param endian The desired endianness.
-		 * @return The u32string with the BOM.
-		 */
-		static auto add_utf32_bom(const std::u32string& value,
-								  endian_types endian = endian_types::little) -> std::u32string;
 	};
 } // namespace utility_module

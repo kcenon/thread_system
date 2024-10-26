@@ -78,11 +78,7 @@ auto main() -> int
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		if (logger::handle().get_file_target() >= log_types::Debug
-			|| logger::handle().get_console_target() >= log_types::Debug)
-		{
-			logger::handle().write(log_types::Debug, formatter::format("Hello, World!: {}", index));
-		}
+		logger::handle().write(log_types::Debug, L"Hello, World!: {}", index);
 	}
 
 	logger::handle().stop();

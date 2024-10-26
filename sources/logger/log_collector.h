@@ -107,7 +107,6 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
-#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Writes a log message (std::wstring version).
 		 * @param type The type of the log message.
@@ -117,31 +116,6 @@ namespace log_module
 		auto write(
 			log_types type,
 			const std::wstring& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
-#endif
-
-		/**
-		 * @brief Writes a log message (std::u16string version).
-		 * @param type The type of the log message.
-		 * @param message The content of the log message as a UTF-16 string.
-		 * @param start_time An optional start time for the log message.
-		 */
-		auto write(
-			log_types type,
-			const std::u16string& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
-
-		/**
-		 * @brief Writes a log message (std::u32string version).
-		 * @param type The type of the log message.
-		 * @param message The content of the log message as a UTF-32 string.
-		 * @param start_time An optional start time for the log message.
-		 */
-		auto write(
-			log_types type,
-			const std::u32string& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 

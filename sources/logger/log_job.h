@@ -70,7 +70,6 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt);
 
-#ifdef _WIN32_BUT_NOT_TESTED
 		/**
 		 * @brief Constructs a new log_job object with wide string message.
 		 * @param message The log message to be recorded as a wide string.
@@ -80,33 +79,6 @@ namespace log_module
 		 */
 		explicit log_job(
 			const std::wstring& message,
-			std::optional<log_types> type = std::nullopt,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt);
-#endif
-
-		/**
-		 * @brief Constructs a new log_job object with UTF-16 string message.
-		 * @param message The log message to be recorded as a UTF-16 string.
-		 * @param type An optional parameter specifying the type of log entry.
-		 * @param start_time An optional parameter specifying the start time of the log entry.
-		 *        Used for calculating duration of timed operations.
-		 */
-		explicit log_job(
-			const std::u16string& message,
-			std::optional<log_types> type = std::nullopt,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt);
-
-		/**
-		 * @brief Constructs a new log_job object with UTF-32 string message.
-		 * @param message The log message to be recorded as a UTF-32 string.
-		 * @param type An optional parameter specifying the type of log entry.
-		 * @param start_time An optional parameter specifying the start time of the log entry.
-		 *        Used for calculating duration of timed operations.
-		 */
-		explicit log_job(
-			const std::u32string& message,
 			std::optional<log_types> type = std::nullopt,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt);

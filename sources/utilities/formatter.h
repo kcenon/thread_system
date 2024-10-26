@@ -47,67 +47,113 @@ namespace utility_module
 	 * @brief A utility class for string formatting.
 	 *
 	 * This class provides static methods for string formatting using either
-	 * the C++20 std::format or the {fmt} library, depending on the compilation flag.
+	 * the C++20 `std::format` or the `{fmt}` library, depending on the compilation flag.
+	 * Supports formatting for various character types, including `char`, `wchar_t`,
+	 * `char16_t`, and `char32_t`.
 	 */
 	class formatter
 	{
 	public:
 		/**
-		 * @brief Formats a string using the provided format string and arguments.
+		 * @brief Alias for format string type using `char` character type.
+		 * @tparam Args Variadic template for format argument types.
 		 *
-		 * @tparam Args Variadic template parameter for the argument types.
-		 * @param format_str The format string.
-		 * @param args The arguments to be formatted.
-		 * @return std::string The formatted string.
-		 *
-		 * @note This method uses std::format if USE_STD_FORMAT is defined, otherwise it uses
-		 * fmt::format.
+		 * Uses `std::format_string` or `fmt::format_string` depending on compilation.
 		 */
 		template <typename... Args>
-		static auto format(
 #ifdef USE_STD_FORMAT
-			std::format_string<Args...> format_str,
+		using format_string = std::format_string<Args...>;
 #else
-			fmt::format_string<Args...> format_str,
+		using format_string = fmt::format_string<Args...>;
 #endif
-			Args&&... args) -> std::string
+
+		/**
+		 * @brief Alias for format string type using `wchar_t` character type.
+		 * @tparam Args Variadic template for format argument types.
+		 */
+		template <typename... Args>
+#ifdef USE_STD_FORMAT
+		using wformat_string = std::wformat_string<Args...>;
+#else
+		using wformat_string = fmt::wformat_string<Args...>;
+#endif
+
+		/**
+		 * @brief Formats a string using `char` type and the provided format string and arguments.
+		 *
+		 * @tparam Args Variadic template parameter for argument types.
+		 * @param format_string The format string of type `char`.
+		 * @param args The arguments to be formatted according to `format_string`.
+		 * @return std::string The formatted string.
+		 */
+		template <typename... Args>
+		static auto format(format_string<Args...> format_string, Args&&... args) -> std::string
 		{
-			return
 #ifdef USE_STD_FORMAT
-				std::format
+			return std::format(format_string, std::forward<Args>(args)...);
 #else
-				fmt::format
+			return fmt::format(format_string, std::forward<Args>(args)...);
 #endif
-				(format_str, std::forward<Args>(args)...);
 		}
 
 		/**
-		 * @brief Formats a string and writes the result to the provided output iterator.
+		 * @brief Formats a string using `wchar_t` type.
 		 *
-		 * @tparam OutputIt The type of the output iterator.
-		 * @tparam Args Variadic template parameter for the argument types.
-		 * @param out The output iterator to write the formatted string to.
-		 * @param format_str The format string.
-		 * @param args The arguments to be formatted.
-		 *
-		 * @note This method uses std::format_to if USE_STD_FORMAT is defined, otherwise it uses
-		 * fmt::format_to.
+		 * @tparam Args Variadic template parameter for argument types.
+		 * @param format_string The format string of type `wchar_t`.
+		 * @param args The arguments to be formatted according to `format_string`.
+		 * @return std::wstring The formatted wide string.
 		 */
-		template <typename OutputIt, typename... Args>
-		static auto format_to(
-#ifdef USE_STD_FORMAT
-			OutputIt out,
-			std::format_string<Args...> format_str,
-#else
-			OutputIt out,
-			fmt::format_string<Args...> format_str,
-#endif
-			Args&&... args) -> void
+		template <typename... Args>
+		static auto format(wformat_string<Args...> format_string, Args&&... args) -> std::wstring
 		{
 #ifdef USE_STD_FORMAT
-			std::format_to(out, format_str, std::forward<Args>(args)...);
+			return std::format(format_string, std::forward<Args>(args)...);
 #else
-			fmt::format_to(out, format_str, std::forward<Args>(args)...);
+			return fmt::format(format_string, std::forward<Args>(args)...);
+#endif
+		}
+
+		/**
+		 * @brief Formats a string and writes the result to an output iterator, using `char` type.
+		 *
+		 * @tparam OutputIt The type of the output iterator.
+		 * @tparam Args Variadic template parameter for argument types.
+		 * @param out The output iterator to write the formatted string to.
+		 * @param format_string The format string of type `char`.
+		 * @param args The arguments to be formatted.
+		 */
+		template <typename OutputIt, typename... Args>
+		static auto format_to(OutputIt out,
+							  format_string<Args...> format_string,
+							  Args&&... args) -> void
+		{
+#ifdef USE_STD_FORMAT
+			std::format_to(out, format_string, std::forward<Args>(args)...);
+#else
+			fmt::format_to(out, format_string, std::forward<Args>(args)...);
+#endif
+		}
+
+		/**
+		 * @brief Formats a string and writes the result to an output iterator, using `wchar_t`
+		 * type.
+		 *
+		 * @tparam OutputIt The type of the output iterator.
+		 * @tparam Args Variadic template parameter for argument types.
+		 * @param out The output iterator to write the formatted wide string to.
+		 * @param format_string The format string of type `wchar_t`.
+		 * @param args The arguments to be formatted.
+		 */
+		template <typename OutputIt, typename... Args>
+		static auto format_to(OutputIt out,
+							  wformat_string<Args...> format_string,
+							  Args&&... args) -> void
+		{
+#ifdef USE_STD_FORMAT
+			std::format_to(out, format_string, std::forward<Args>(args)...);
+#else
+			fmt::format_to(out, format_string, std::forward<Args>(args)...);
 #endif
 		}
 	};

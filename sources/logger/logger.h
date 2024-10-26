@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "job_queue.h"
 #include "thread_base.h"
 
+#include "formatter.h"
 #include "log_collector.h"
 #include "console_writer.h"
 #include "file_writer.h"
@@ -47,6 +48,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 
 using namespace thread_module;
+using namespace utility_module;
 
 namespace log_module
 {
@@ -54,131 +56,120 @@ namespace log_module
 	 * @class logger
 	 * @brief A singleton class for managing logging operations.
 	 *
-	 * This class provides comprehensive logging functionality with support for both console and
-	 * file output. It manages log collectors, console writers, and file writers to handle various
-	 * logging tasks. The singleton pattern ensures a single point of control for all logging
-	 * operations throughout the application.
+	 * Provides a unified logging mechanism with support for both console and file output.
+	 * Manages log collectors, console writers, and file writers to handle various logging
+	 * tasks, ensuring consistent logging throughout the application.
+	 * Uses a singleton pattern for a single, central logging instance.
 	 */
 	class logger
 	{
 	public:
 		/**
-		 * @brief Virtual destructor for the logger class.
-		 *
-		 * Ensures proper cleanup of derived classes if any.
+		 * @brief Virtual destructor to ensure proper cleanup of the logger instance.
 		 */
 		virtual ~logger(void) = default;
 
 		/**
-		 * @brief Sets the title for the logger.
-		 * @param title The title to set for the logger.
-		 *
-		 * This title may be used in log file names or console output headers.
+		 * @brief Sets a title for the logger, used in log file names or console output.
+		 * @param title A string representing the title for the logger.
 		 */
 		auto set_title(const std::string& title) -> void;
 
 		/**
-		 * @brief Sets the log types that should be written to a file.
-		 * @param type The log types to be written to a file.
-		 *
-		 * This method allows you to specify which types of log messages should be saved to a file.
+		 * @brief Defines the log types that should be written to a file.
+		 * @param type A `log_types` value indicating the types of log messages to save to file.
 		 */
 		auto set_file_target(const log_types& type) -> void;
 
 		/**
-		 * @brief Gets the log types that are written to a file.
-		 * @return The log types that are currently set to be written to a file.
+		 * @brief Retrieves the current log types that are written to a file.
+		 * @return The `log_types` currently set for file output.
 		 */
 		[[nodiscard]] auto get_file_target(void) const -> log_types;
 
 		/**
-		 * @brief Sets the log types that should be written to the console.
-		 * @param type The log types to be written to the console.
-		 *
-		 * This method allows you to specify which types of log messages should be displayed in the
+		 * @brief Defines the log types that should be written to the console.
+		 * @param type A `log_types` value indicating the types of log messages to display in the
 		 * console.
 		 */
 		auto set_console_target(const log_types& type) -> void;
 
 		/**
-		 * @brief Gets the log types that are written to the console.
-		 * @return The log types that are currently set to be written to the console.
+		 * @brief Retrieves the current log types that are written to the console.
+		 * @return The `log_types` currently set for console output.
 		 */
 		[[nodiscard]] auto get_console_target(void) const -> log_types;
 
 		/**
-		 * @brief Sets the maximum number of lines to keep in the log.
-		 * @param max_lines The maximum number of lines to keep in the log.
-		 *
-		 * This helps in managing the size of log files and prevents them from growing indefinitely.
+		 * @brief Sets the maximum number of lines to retain in the log.
+		 * @param max_lines Maximum number of lines to retain, helping manage log size.
 		 */
 		auto set_max_lines(uint32_t max_lines) -> void;
 
 		/**
-		 * @brief Gets the maximum number of lines to keep in the log.
-		 * @return The current maximum number of lines set for the log.
+		 * @brief Retrieves the maximum number of lines configured for the log.
+		 * @return The maximum number of lines to retain in the log.
 		 */
 		[[nodiscard]] auto get_max_lines(void) const -> uint32_t;
 
 		/**
-		 * @brief Sets whether to use a backup log file.
-		 * @param use_backup Flag indicating whether to use a backup log file.
+		 * @brief Configures whether to create a backup log file.
+		 * @param use_backup A boolean indicating if a backup log file should be used.
 		 *
-		 * When enabled, this feature creates a backup of the log file, which can be useful for
-		 * archiving or recovery purposes.
+		 * When enabled, the logger creates a backup of the log file for archiving or recovery
+		 * purposes.
 		 */
 		auto set_use_backup(bool use_backup) -> void;
 
 		/**
-		 * @brief Gets whether a backup log file is being used.
-		 * @return True if a backup log file is being used, false otherwise.
+		 * @brief Checks if backup logging is enabled.
+		 * @return `true` if a backup log file is in use, `false` otherwise.
 		 */
 		[[nodiscard]] auto get_use_backup(void) const -> bool;
 
 		/**
-		 * @brief Sets the wake interval for the logger.
-		 * @param interval The wake interval to set for the logger thread.
-		 *
-		 * This interval determines how often the logger thread wakes up to process queued log
-		 * messages.
+		 * @brief Sets the interval at which the logger checks for new messages to log.
+		 * @param interval A `std::chrono::milliseconds` value defining the wake interval.
 		 */
 		auto set_wake_interval(std::chrono::milliseconds interval) -> void;
 
 		/**
-		 * @brief Starts the logger.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the logger was started successfully (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Starts the logger instance.
+		 * @return A tuple where:
+		 *         - The first element is a boolean indicating whether the logger started
+		 * successfully.
+		 *         - The second element is an optional string with an error description, if
+		 * applicable.
 		 *
-		 * This method initializes and starts the logging process. It should be called before any
-		 * logging operations.
+		 * Call this method to initialize and begin logging. Must be called before any log
+		 * operations.
 		 */
 		auto start(void) -> std::tuple<bool, std::optional<std::string>>;
 
 		/**
-		 * @brief Stops the logger.
+		 * @brief Stops the logger instance.
 		 *
-		 * This method halts all logging operations and performs necessary cleanup.
+		 * Stops all logging operations and performs cleanup as needed.
 		 */
 		auto stop(void) -> void;
 
 		/**
-		 * @brief Gets the current time point.
-		 * @return The current time point using high resolution clock.
-		 *
-		 * This method is useful for precise timing of log events.
+		 * @brief Gets the current time point using a high-resolution clock.
+		 * @return The current time point, useful for precise log timing.
 		 */
 		auto time_point(void) -> std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 		/**
-		 * @brief Writes a log message.
-		 * @param type The type of the log message.
-		 * @param message The content of the log message.
-		 * @param start_time An optional start time for the log message.
+		 * @brief Writes a log message to the log collector.
 		 *
-		 * This overload handles std::string messages.
+		 * This function logs a formatted message of type `std::string` with a specific log type.
+		 * If a `start_time` is provided, it will be used to timestamp the log entry.
+		 *
+		 * @param type The type of log message (e.g., info, warning, error).
+		 * @param message A `std::string` message to log.
+		 * @param start_time Optional parameter representing the start time of the log event.
+		 *                   Useful for accurately tracking when the event occurred.
+		 *                   If no start time is provided, the current time will be used by default.
 		 */
 		auto write(
 			log_types type,
@@ -186,102 +177,199 @@ namespace log_module
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
 
-#ifdef _WIN32_BUT_NOT_TESTED
 		/**
-		 * @brief Writes a log message.
-		 * @param type The type of the log message.
-		 * @param message The content of the log message.
-		 * @param start_time An optional start time for the log message.
+		 * @brief Writes a wide-character log message to the log collector.
 		 *
-		 * This overload handles std::wstring messages.
+		 * This function logs a formatted message of type `std::wstring` with a specific log type.
+		 * If a `start_time` is provided, it will be used to timestamp the log entry.
+		 * Wide-character support enables logging messages in UTF-16 or UTF-32 format, typically
+		 * used for languages with non-Latin characters.
+		 *
+		 * @param type The type of log message (e.g., info, warning, error).
+		 * @param message A `std::wstring` message to log.
+		 * @param start_time Optional parameter representing the start time of the log event.
+		 *                   Useful for accurately tracking when the event occurred.
+		 *                   If no start time is provided, the current time will be used by default.
 		 */
 		auto write(
 			log_types type,
 			const std::wstring& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
-#endif
 
 		/**
-		 * @brief Writes a log message.
-		 * @param type The type of the log message.
-		 * @param message The content of the log message.
-		 * @param start_time An optional start time for the log message.
+		 * @brief Writes a formatted log message to the log collector.
 		 *
-		 * This overload handles std::u16string messages.
+		 * Formats and logs a message with a specified log type. Can optionally include a
+		 * timestamp representing the start time of the log event.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param format_string Format string defining the log message structure and placeholders.
+		 * @param args Additional arguments for each placeholder in `format_string`.
 		 */
-		auto write(
-			log_types type,
-			const std::u16string& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
+		template <typename... Args>
+		auto write(log_types type,
+				   formatter::format_string<Args...> format_string,
+				   Args&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
+		}
 
 		/**
-		 * @brief Writes a log message.
-		 * @param type The type of the log message.
-		 * @param message The content of the log message.
-		 * @param start_time An optional start time for the log message.
+		 * @brief Writes a formatted wide-character log message to the log collector.
 		 *
-		 * This overload handles std::u32string messages.
+		 * Formats and logs a message with a specified log type. Can optionally include a
+		 * timestamp representing the start time of the log event.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param format_string A wide-character format string with placeholders.
+		 * @param args Additional arguments for each placeholder in `format_string`.
 		 */
+		template <typename... Args>
+		auto write(log_types type,
+				   formatter::wformat_string<Args...> format_string,
+				   Args&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...));
+		}
+
+		/**
+		 * @brief Writes a formatted log message to the log collector, with optional timestamp.
+		 *
+		 * Formats and logs a message with a specified type and optional start timestamp.
+		 * Enables accurate timing for each log entry when a timestamp is provided.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param start_time An optional timestamp marking the start of the log event.
+		 * @param format_string Format string defining the log message structure and placeholders.
+		 * @param args Additional arguments matching the placeholders in `format_string`.
+		 */
+		template <typename... Args>
 		auto write(
 			log_types type,
-			const std::u32string& message,
-			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
-			= std::nullopt) -> void;
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
+			formatter::format_string<Args...> format_string,
+			Args&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...),
+							  start_time);
+		}
+
+		/**
+		 * @brief Writes a formatted wide-character log message with an optional timestamp.
+		 *
+		 * Formats and logs a message with a specified type and optional start timestamp.
+		 * Enables accurate timing for each log entry when a timestamp is provided.
+		 *
+		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
+		 *
+		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
+		 * @param start_time An optional timestamp marking the start of the log event.
+		 * @param format_string A wide-character format string with placeholders.
+		 * @param args Additional arguments matching the placeholders in `format_string`.
+		 */
+		template <typename... Args>
+		auto write(
+			log_types type,
+			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time,
+			formatter::wformat_string<Args...> format_string,
+			Args&&... args) -> void
+		{
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			{
+				return;
+			}
+
+			collector_->write(type, formatter::format(format_string, std::forward<Args>(args)...),
+							  start_time);
+		}
 
 	private:
 		/**
-		 * @brief Private constructor for the logger class (singleton pattern).
+		 * @brief Private constructor enforcing singleton pattern.
 		 *
-		 * Initializes the log collector, console writer, and file writer.
+		 * Initializes log collectors, console writer, and file writer.
 		 */
 		logger();
 
-		/**
-		 * @brief Deleted copy constructor to enforce singleton pattern.
-		 */
+		/** @brief Deleted copy constructor to prevent multiple instances. */
 		logger(const logger&) = delete;
 
-		/**
-		 * @brief Deleted assignment operator to enforce singleton pattern.
-		 */
+		/** @brief Deleted assignment operator to enforce singleton pattern. */
 		logger& operator=(const logger&) = delete;
 
 	private:
-		/** @brief Shared pointer to the log collector */
+		/** @brief Shared pointer to the main log collector handling log storage and management. */
 		std::shared_ptr<log_collector> collector_;
 
-		/** @brief Shared pointer to the console writer */
+		/** @brief Shared pointer to the console writer handling console log output. */
 		std::shared_ptr<console_writer> console_writer_;
 
-		/** @brief Shared pointer to the file writer */
+		/** @brief Shared pointer to the file writer handling log file output. */
 		std::shared_ptr<file_writer> file_writer_;
 
 #pragma region singleton
 	public:
 		/**
 		 * @brief Gets the singleton instance of the logger.
-		 * @return Reference to the singleton logger instance.
-		 *
-		 * This method ensures that only one instance of the logger exists throughout the
-		 * application.
+		 * @return A reference to the singleton logger instance.
 		 */
 		static auto handle() -> logger&;
 
 		/**
 		 * @brief Destroys the singleton instance of the logger.
 		 *
-		 * This method should be called when the logger is no longer needed, typically at
+		 * This method should be called when logging is no longer needed, typically at
 		 * application shutdown.
 		 */
 		static auto destroy() -> void;
 
 	private:
-		/** @brief Singleton instance of the logger */
+		/** @brief Singleton instance of the logger. */
 		static std::unique_ptr<logger> handle_;
 
-		/** @brief Flag to ensure singleton is initialized only once */
+		/** @brief Flag to ensure the singleton is initialized only once. */
 		static std::once_flag once_;
 #pragma endregion
 	};

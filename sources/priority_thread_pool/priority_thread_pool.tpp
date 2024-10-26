@@ -168,13 +168,8 @@ namespace priority_thread_pool_module
 			auto [stopped, stop_error] = worker->stop();
 			if (!stopped)
 			{
-				if (logger::handle().get_file_target() >= log_types::Error
-					|| logger::handle().get_console_target() >= log_types::Error)
-				{
-					logger::handle().write(log_types::Error,
-										   formatter::format("error stopping worker: {}",
-															 stop_error.value_or("unknown error")));
-				}
+				logger::handle().write(log_types::Error, "error stopping worker: {}",
+									   stop_error.value_or("unknown error"));
 			}
 		}
 
