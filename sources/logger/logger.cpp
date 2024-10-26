@@ -217,30 +217,4 @@ namespace log_module
 	{
 		return std::chrono::high_resolution_clock::now();
 	}
-
-	auto logger::write(log_types type,
-					   const std::string& message,
-					   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-						   start_time) -> void
-	{
-		if (collector_ == nullptr)
-		{
-			return;
-		}
-
-		collector_->write(type, message, start_time);
-	}
-
-	auto logger::write(log_types type,
-					   const std::wstring& message,
-					   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-						   start_time) -> void
-	{
-		if (collector_ == nullptr)
-		{
-			return;
-		}
-
-		collector_->write(type, message, start_time);
-	}
 } // namespace log_module

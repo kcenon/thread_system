@@ -119,9 +119,19 @@ namespace priority_thread_pool_module
 											  work_error.value_or("unknown error")) };
 		}
 
-		logger::handle().write(log_types::Sequence, started_time_point,
-							   "job executed successfully: {}[{}] on priority_thread_worker",
-							   current_job->get_name(), current_job->priority());
+		if (!started_time_point.has_value())
+		{
+			logger::handle().log(log_types::Sequence,
+								 "job executed successfully: {}[{}] on priority_thread_worker",
+								 current_job->get_name(), current_job->priority());
+
+			return { true, std::nullopt };
+		}
+
+		logger::handle().log_timestamp(
+			log_types::Sequence, started_time_point.value(),
+			"job executed successfully: {}[{}] on priority_thread_worker", current_job->get_name(),
+			current_job->priority());
 
 		return { true, std::nullopt };
 	}

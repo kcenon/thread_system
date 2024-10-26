@@ -35,12 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger.h"
 #include "formatter.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
-
 using namespace log_module;
 using namespace utility_module;
 
@@ -78,7 +72,7 @@ auto main() -> int
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		logger::handle().write(log_types::Debug, L"Hello, World!: {}", index);
+		logger::handle().log(log_types::Debug, "Hello, World!: {}", index);
 	}
 
 	logger::handle().stop();

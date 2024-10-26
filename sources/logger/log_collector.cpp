@@ -32,11 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "log_collector.h"
 
-#include "log_job.h"
-#include "formatter.h"
 #include "message_job.h"
-
-using namespace utility_module;
 
 namespace log_module
 {
@@ -69,7 +65,7 @@ namespace log_module
 	}
 
 	auto log_collector::write(
-		log_types type,
+		const log_types& type,
 		const std::string& message,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
@@ -78,7 +74,7 @@ namespace log_module
 	}
 
 	auto log_collector::write(
-		log_types type,
+		const log_types& type,
 		const std::wstring& message,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		-> void
@@ -226,31 +222,5 @@ namespace log_module
 		}
 
 		return { true, std::nullopt };
-	}
-
-	template <typename StringType>
-	void log_collector::write_string(
-		log_types type,
-		const StringType& message,
-		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
-	{
-		std::unique_ptr<log_job> new_log_job;
-
-		try
-		{
-			new_log_job = std::make_unique<log_job>(message, type, start_time);
-		}
-		catch (const std::bad_alloc& e)
-		{
-			std::cerr << "error allocating log job: " << e.what() << std::endl;
-			return;
-		}
-
-		auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
-		if (!enqueued)
-		{
-			std::cerr << formatter::format("error enqueuing log job: {}\n",
-										   enqueue_error.value_or("unknown error"));
-		}
 	}
 }

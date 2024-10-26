@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "log_job.h"
 #include "log_types.h"
+#include "formatter.h"
 #include "job_queue.h"
 #include "thread_base.h"
 
 using namespace thread_module;
+using namespace utility_module;
 
 namespace log_module
 {
@@ -102,7 +105,7 @@ namespace log_module
 		 * @param start_time An optional start time for the log message.
 		 */
 		auto write(
-			log_types type,
+			const log_types& type,
 			const std::string& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
@@ -114,7 +117,7 @@ namespace log_module
 		 * @param start_time An optional start time for the log message.
 		 */
 		auto write(
-			log_types type,
+			const log_types& type,
 			const std::wstring& message,
 			std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time
 			= std::nullopt) -> void;
@@ -167,10 +170,30 @@ namespace log_module
 		 * regardless of the string type used. It's called by the public write methods.
 		 */
 		template <typename StringType>
-		auto write_string(log_types type,
+		auto write_string(const log_types& type,
 						  const StringType& message,
 						  std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
-							  start_time) -> void;
+							  start_time) -> void
+		{
+			std::unique_ptr<log_job> new_log_job;
+
+			try
+			{
+				new_log_job = std::make_unique<log_job>(message, type, start_time);
+			}
+			catch (const std::bad_alloc& e)
+			{
+				std::cerr << "error allocating log job: " << e.what() << std::endl;
+				return;
+			}
+
+			auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
+			if (!enqueued)
+			{
+				std::cerr << formatter::format("error enqueuing log job: {}\n",
+											   enqueue_error.value_or("unknown error"));
+			}
+		}
 
 	private:
 		log_types file_log_type_;			   ///< Types of logs to write to file

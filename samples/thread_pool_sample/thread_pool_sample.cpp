@@ -36,12 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "thread_pool.h"
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include <fmt/format.h>
-#endif
-
 using namespace log_module;
 using namespace utility_module;
 using namespace thread_pool_module;
@@ -105,19 +99,19 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool)
 		auto [enqueued, enqueue_error] = thread_pool->enqueue(std::make_unique<job>(
 			[index](void) -> std::tuple<bool, std::optional<std::string>>
 			{
-				logger::handle().write(log_types::Debug, "Hello, World!: {}", index);
+				logger::handle().log(log_types::Debug, "Hello, World!: {}", index);
 
 				return { true, std::nullopt };
 			}));
 		if (!enqueued)
 		{
-			logger::handle().write(log_types::Error, "error enqueuing job: {}",
-								   enqueue_error.value_or("unknown error"));
+			logger::handle().log(log_types::Error, "error enqueuing job: {}",
+								 enqueue_error.value_or("unknown error"));
 
 			break;
 		}
 
-		logger::handle().write(log_types::Sequence, "enqueued job: {}", index);
+		logger::handle().log(log_types::Sequence, "enqueued job: {}", index);
 	}
 
 	return { true, std::nullopt };
@@ -136,19 +130,19 @@ auto main() -> int
 	auto [thread_pool, create_error] = create_default(thread_counts_);
 	if (thread_pool == nullptr)
 	{
-		logger::handle().write(log_types::Error, "error creating thread pool: {}",
-							   create_error.value_or("unknown error"));
+		logger::handle().log(log_types::Error, "error creating thread pool: {}",
+							 create_error.value_or("unknown error"));
 
 		return 0;
 	}
 
-	logger::handle().write(log_types::Information, "created thread pool");
+	logger::handle().log(log_types::Information, "created thread pool");
 
 	auto [stored, store_error] = store_job(thread_pool);
 	if (!stored)
 	{
-		logger::handle().write(log_types::Error, "error storing job: {}",
-							   store_error.value_or("unknown error"));
+		logger::handle().log(log_types::Error, "error storing job: {}",
+							 store_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
@@ -158,19 +152,19 @@ auto main() -> int
 	auto [thread_started, thread_start_error] = thread_pool->start();
 	if (!thread_started)
 	{
-		logger::handle().write(log_types::Error, "error starting thread pool: {}",
-							   thread_start_error.value_or("unknown error"));
+		logger::handle().log(log_types::Error, "error starting thread pool: {}",
+							 thread_start_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	logger::handle().write(log_types::Information, "started thread pool");
+	logger::handle().log(log_types::Information, "started thread pool");
 
 	thread_pool->stop();
 
-	logger::handle().write(log_types::Information, "stopped thread pool");
+	logger::handle().log(log_types::Information, "stopped thread pool");
 
 	thread_pool.reset();
 
