@@ -32,15 +32,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/format.h"
-#endif
+#include "formatter.h"
 
 #include <string>
 #include <array>
 #include <cstdint>
+#include <string_view>
+#include <type_traits>
+
+using namespace utility_module;
 
 namespace log_module
 {
@@ -48,8 +48,7 @@ namespace log_module
 	 * @enum log_types
 	 * @brief Enumeration of different log types.
 	 *
-	 * This enum class defines various types of log entries that can be used
-	 * in the logging system. It is based on uint8_t for efficient storage.
+	 * Defines various log categories that can be used within the logging system.
 	 */
 	enum class log_types : uint8_t
 	{
@@ -64,11 +63,11 @@ namespace log_module
 
 	namespace log_detail
 	{
-		/** @brief Array of string representations for log types */
+		/** @brief Array of string representations for each log type. */
 		constexpr std::array log_type_strings
 			= { "NONE", "EXCEPTION", "ERROR", "INFORMATION", "DEBUG", "SEQUENCE", "PARAMETER" };
 
-		/** @brief Number of log types */
+		/** @brief Number of log types available in log_type_strings. */
 		constexpr size_t log_type_count = log_type_strings.size();
 
 		// Compile-time check to ensure log_type_strings and log_types are in sync
@@ -87,40 +86,71 @@ namespace log_module
 		return (index < log_detail::log_type_count) ? log_detail::log_type_strings[index]
 													: "UNKNOWN";
 	}
+
 } // namespace log_module
 
+// Formatter specializations for log_types
 #ifdef USE_STD_FORMAT
 /**
  * @brief Specialization of std::formatter for log_module::log_types.
- *
- * This formatter allows log_types to be used with std::format.
- * It converts the log_types enum values to their string representations.
+ * Enables formatting of log_types enum values as strings in the standard library format.
  */
-template <> struct std::formatter<log_module::log_types>
+template <> struct std::formatter<log_module::log_types> : std::formatter<std::string_view>
 {
-	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a log_type value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param log_type The log_types enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
 	{
-		return std::format_to(ctx.out(), "{}", log_module::to_string(log_type));
+		return std::formatter<std::string_view>::format(log_module::to_string(log_type), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character log_module::log_types.
+ * Allows log_types enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<log_module::log_types, wchar_t> : std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a log_type value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param log_type The log_types enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
+	{
+		auto str = log_module::to_string(log_type);
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
 #else
 /**
  * @brief Specialization of fmt::formatter for log_module::log_types.
- *
- * This formatter allows log_types to be used with fmt::format.
- * It converts the log_types enum values to their string representations.
+ * Enables formatting of log_types enum values using the fmt library.
  */
-template <> struct fmt::formatter<log_module::log_types>
+template <> struct fmt::formatter<log_module::log_types> : fmt::formatter<std::string_view>
 {
-	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a log_type value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param log_type The log_types enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
 	{
-		return fmt::format_to(ctx.out(), "{}", log_module::to_string(log_type));
+		return fmt::formatter<std::string_view>::format(log_module::to_string(log_type), ctx);
 	}
 };
 #endif

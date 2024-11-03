@@ -40,6 +40,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iomanip>
 #include <sstream>
 
+#include <iostream>
+
 using namespace utility_module;
 
 namespace log_module
@@ -82,45 +84,31 @@ namespace log_module
 		return type_.value_or(log_types::None);
 	}
 
+	auto log_job::datetime() const -> std::string { return datetime_; }
+
 	auto log_job::message() const -> std::string { return log_message_; }
 
 	auto log_job::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{
 		try
 		{
-			std::string formatted_time = formatter::format(
+			datetime_ = formatter::format(
 				"{} {}.{}{}", datetime_tool::date(timestamp_), datetime_tool::time(timestamp_),
 				datetime_tool::milliseconds(timestamp_), datetime_tool::microseconds(timestamp_));
+			std::string converted_message = convert_message();
 
-			if (start_time_.has_value())
+			if (!start_time_.has_value())
 			{
-				auto time_gap = datetime_tool::time_difference<std::chrono::milliseconds,
-															   std::chrono::high_resolution_clock>(
-					start_time_.value());
-
-				if (!type_.has_value())
-				{
-					log_message_ = formatter::format("[{}][{}] [{} ms]", formatted_time,
-													 convert_message(), time_gap);
-				}
-				else
-				{
-					log_message_ = formatter::format("[{}][{}]: {} [{} ms]", formatted_time,
-													 type_.value(), convert_message(), time_gap);
-				}
+				log_message_ = formatter::format("[{}]", converted_message);
 
 				return { true, std::nullopt };
 			}
 
-			if (!type_.has_value())
-			{
-				log_message_ = formatter::format("[{}][{}]", formatted_time, convert_message());
-			}
-			else
-			{
-				log_message_ = formatter::format("[{}][{}]: {}", formatted_time, type_.value(),
-												 convert_message());
-			}
+			auto time_gap = datetime_tool::time_difference<std::chrono::milliseconds,
+														   std::chrono::high_resolution_clock>(
+				start_time_.value());
+
+			log_message_ = formatter::format("[{}] [{} ms]", converted_message, time_gap);
 
 			return { true, std::nullopt };
 		}

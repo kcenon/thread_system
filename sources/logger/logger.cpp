@@ -58,6 +58,7 @@ namespace log_module
 		: collector_(std::make_shared<log_collector>())
 		, console_writer_(std::make_shared<console_writer>())
 		, file_writer_(std::make_shared<file_writer>())
+		, callback_writer_(std::make_shared<callback_writer>())
 	{
 	}
 
@@ -71,44 +72,79 @@ namespace log_module
 		file_writer_->set_title(title);
 	}
 
-	auto logger::set_file_target(const log_types& type) -> void
+	auto logger::callback_target(const log_types& type) -> void
 	{
 		if (collector_ == nullptr)
 		{
 			return;
 		}
 
-		collector_->set_file_target(type);
+		collector_->callback_target(type);
 	}
 
-	auto logger::get_file_target() const -> log_types
+	auto logger::callback_target() const -> log_types
 	{
 		if (collector_ == nullptr)
 		{
 			return log_types::None;
 		}
 
-		return collector_->get_file_target();
+		return collector_->callback_target();
 	}
 
-	auto logger::set_console_target(const log_types& type) -> void
+	auto logger::file_target(const log_types& type) -> void
+	{
+		if (collector_ != nullptr)
+		{
+			collector_->file_target(type);
+		}
+
+		if (file_writer_ != nullptr)
+		{
+			file_writer_->file_target(type);
+		}
+	}
+
+	auto logger::file_target() const -> log_types
+	{
+		if (collector_ == nullptr)
+		{
+			return log_types::None;
+		}
+
+		return collector_->file_target();
+	}
+
+	auto logger::console_target(const log_types& type) -> void
 	{
 		if (collector_ == nullptr)
 		{
 			return;
 		}
 
-		collector_->set_console_target(type);
+		collector_->console_target(type);
 	}
 
-	auto logger::get_console_target() const -> log_types
+	auto logger::console_target() const -> log_types
 	{
 		if (collector_ == nullptr)
 		{
 			return log_types::None;
 		}
 
-		return collector_->get_console_target();
+		return collector_->console_target();
+	}
+
+	auto logger::message_callback(
+		const std::function<void(const log_types&, const std::string&, const std::string&)>&
+			callback) -> void
+	{
+		if (callback_writer_ == nullptr)
+		{
+			return;
+		}
+
+		callback_writer_->message_callback(callback);
 	}
 
 	auto logger::set_max_lines(uint32_t max_lines) -> void
@@ -173,23 +209,40 @@ namespace log_module
 
 		collector_->set_console_queue(console_writer_->get_job_queue());
 		collector_->set_file_queue(file_writer_->get_job_queue());
+		collector_->set_callback_queue(callback_writer_->get_job_queue());
 
-		auto [started, start_error] = collector_->start();
-		if (!started)
+		bool started = false;
+		std::optional<std::string> start_error;
+
+		std::tie(started, start_error) = console_writer_->start();
+		if (start_error.has_value())
 		{
-			return { false, start_error };
+			return { false,
+					 formatter::format("cannot start {}: {}", console_writer_->get_thread_title(),
+									   start_error.value_or("unknown error")) };
 		}
 
-		auto [console_started, console_start_error] = console_writer_->start();
-		if (!console_started)
+		std::tie(started, start_error) = file_writer_->start();
+		if (start_error.has_value())
 		{
-			return { false, console_start_error };
+			return { false,
+					 formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
+									   start_error.value_or("unknown error")) };
 		}
 
-		auto [file_started, file_start_error] = file_writer_->start();
-		if (!file_started)
+		std::tie(started, start_error) = callback_writer_->start();
+		if (start_error.has_value())
 		{
-			return { false, file_start_error };
+			return { false,
+					 formatter::format("cannot start {}: {}", callback_writer_->get_thread_title(),
+									   start_error.value_or("unknown error")) };
+		}
+
+		std::tie(started, start_error) = collector_->start();
+		if (start_error.has_value())
+		{
+			return { false, formatter::format("cannot start {}: {}", collector_->get_thread_title(),
+											  start_error.value_or("unknown error")) };
 		}
 
 		return { true, std::nullopt };
@@ -210,6 +263,11 @@ namespace log_module
 		if (file_writer_ != nullptr)
 		{
 			file_writer_->stop();
+		}
+
+		if (callback_writer_ != nullptr)
+		{
+			callback_writer_->stop();
 		}
 	}
 

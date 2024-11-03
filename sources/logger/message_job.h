@@ -56,13 +56,29 @@ namespace log_module
 	{
 	public:
 		/**
-		 * @brief Constructs a new message_job object.
-		 * @param message The log message to be written to the console.
+		 * @brief Constructs a new `message_job` object.
+		 * @param log_type The type of log message, indicating the severity or category.
+		 * @param datetime The timestamp for when the log message was created.
+		 * @param message The actual log message content to be written to the console.
 		 */
-		explicit message_job(const std::string& message);
+		explicit message_job(const log_types& log_type,
+							 const std::string& datetime,
+							 const std::string& message);
 
 		/**
-		 * @brief Retrieves the log message, optionally appending a newline.
+		 * @brief Retrieves the log type for the message.
+		 * @return The log type for the message, indicating its severity or category.
+		 */
+		[[nodiscard]] auto log_type() const -> log_types;
+
+		/**
+		 * @brief Retrieves the timestamp associated with the log message.
+		 * @return The datetime of the log message.
+		 */
+		[[nodiscard]] auto datetime(void) const -> std::string;
+
+		/**
+		 * @brief Retrieves the log message with optional newline.
 		 * @param append_newline If true, a newline character will be appended to the message.
 		 * @return The log message as a string, with an optional newline appended.
 		 */
@@ -70,16 +86,25 @@ namespace log_module
 
 		/**
 		 * @brief Executes the console logging operation.
+		 *
+		 * Handles the output of the log message to the console, ensuring
+		 * that the message format includes the timestamp and log type for clarity.
+		 *
 		 * @return A tuple containing:
-		 *         - bool: Indicates whether the logging operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the logging operation was successful.
+		 *         - std::optional<std::string>: An optional error description if the operation
+		 * failed.
 		 */
 		[[nodiscard]] auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 	private:
-		/** @brief The log message to be written to the console */
+		/** @brief The timestamp for when the log message was created. */
+		std::string datetime_;
+
+		/** @brief The log message content to be written to the console. */
 		std::string message_;
+
+		/** @brief The type of log message, indicating its category or severity. */
+		log_types log_type_;
 	};
 } // namespace log_module

@@ -33,6 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <string>
+#include <string_view>
+#include <type_traits>
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -43,159 +45,185 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace utility_module
 {
-	template <typename... Args>
-	using format_string =
-#ifdef USE_STD_FORMAT
-		std::format_string<Args...>;
-#else
-		fmt::format_string<Args...>;
-#endif
+	// Forward declaration of formatter class
+	class formatter;
 
-	template <typename... WideArgs>
-	using wformat_string =
-#ifdef USE_STD_FORMAT
-		std::wformat_string<WideArgs...>;
-#else
-		fmt::basic_format_string<wchar_t, WideArgs...>;
-#endif
-
-	class formatter
+	/**
+	 * @brief Base formatter implementation for formatting enum types with a custom converter.
+	 * @tparam T Enum type to be formatted.
+	 * @tparam Converter Function object type that converts T to a string representation.
+	 */
+	template <typename T, typename Converter> class enum_formatter
 	{
 	private:
-		// 값을 복사하고 저장하는 헬퍼 클래스
-		template <typename T> class copyable_value
+		/**
+		 * @brief Helper function to format the enum value to a string or wide string.
+		 * @tparam CharT Character type (either char or wchar_t).
+		 * @param out Output iterator for the formatted result.
+		 * @param value Enum value to be formatted.
+		 * @return Output iterator pointing to the end of the formatted output.
+		 */
+		template <typename CharT> static auto do_format(auto& out, const T& value)
 		{
-			typename std::remove_reference_t<std::remove_const_t<T>> value;
-
-		public:
-			template <typename U> copyable_value(U&& arg) : value(std::forward<U>(arg)) {}
-
-			auto get() -> std::remove_reference_t<std::remove_const_t<T>>& { return value; }
-			auto get() const -> const std::remove_reference_t<std::remove_const_t<T>>&
+#ifdef USE_STD_FORMAT
+			if constexpr (std::is_same_v<CharT, wchar_t>)
 			{
-				return value;
+				return std::format_to(out, L"{}", Converter{}(value));
 			}
-		};
-
-		template <typename... Args> static auto make_format_args_helper(Args&&... args)
-		{
-			std::tuple<copyable_value<Args>...> values(
-				copyable_value<Args>(std::forward<Args>(args))...);
-
-#ifdef USE_STD_FORMAT
-			return std::apply([](auto&... vals) { return std::make_format_args(vals.get()...); },
+			else
+			{
+				return std::format_to(out, "{}", Converter{}(value));
+			}
 #else
-			return std::apply([](auto&... vals) { return fmt::make_format_args(vals.get()...); },
+			if constexpr (std::is_same_v<CharT, wchar_t>)
+			{
+				return fmt::format_to(out, L"{}", Converter{}(value));
+			}
+			else
+			{
+				return fmt::format_to(out, "{}", Converter{}(value));
+			}
 #endif
-							  values);
-		}
-
-		template <typename... Args> static auto make_wformat_args_helper(Args&&... args)
-		{
-			std::tuple<copyable_value<Args>...> values(
-				copyable_value<Args>(std::forward<Args>(args))...);
-
-#ifdef USE_STD_FORMAT
-			return std::apply([](auto&... vals) { return std::make_wformat_args(vals.get()...); },
-#else
-			return std::apply([](auto&... vals) { return fmt::make_wformat_args(vals.get()...); },
-#endif
-							  values);
 		}
 
 	public:
-		// char 버전
+		/**
+		 * @brief Parses the format context.
+		 * @param ctx Format context.
+		 * @return Iterator pointing to the end of the parsing context.
+		 */
+		constexpr auto parse(auto& ctx) { return ctx.begin(); }
+
+		/**
+		 * @brief Formats the provided enum value into the given format context.
+		 * @tparam FormatContext Type of the format context.
+		 * @param value Enum value to be formatted.
+		 * @param ctx Format context to output the result.
+		 * @return Output iterator pointing to the end of the formatted output.
+		 */
+		template <typename FormatContext> auto format(const T& value, FormatContext& ctx) const
+		{
+			using char_type =
+				typename std::iterator_traits<typename FormatContext::iterator>::value_type;
+			return do_format<char_type>(ctx.out(), value);
+		}
+	};
+
+	/**
+	 * @class formatter
+	 * @brief Provides utilities for formatting strings and wide strings.
+	 *
+	 * Supports both std::format (when USE_STD_FORMAT is defined) and the fmt library
+	 * as a fallback, ensuring compatibility and flexibility for formatting.
+	 */
+	class formatter
+	{
+	public:
+		/**
+		 * @brief Formats a string using the provided arguments.
+		 * @tparam FormatArgs Types of the format arguments.
+		 * @param formats C-style format string.
+		 * @param args Values to format into the placeholders.
+		 * @return Formatted std::string.
+		 */
 		template <typename... FormatArgs>
-		static auto format(const char* formats, FormatArgs&&... args) -> std::string
+		static auto format(const char* formats, const FormatArgs&... args) -> std::string
 		{
 #ifdef USE_STD_FORMAT
-			return std::vformat(formats,
-								make_format_args_helper(std::forward<FormatArgs>(args)...));
+			try
+			{
+				return std::vformat(formats, std::make_format_args(args...));
+			}
+			catch (...)
+			{
+				return formats;
+			}
 #else
-			return fmt::format(fmt::runtime(formats), std::forward<FormatArgs>(args)...);
+			return fmt::format(fmt::runtime(formats), args...);
 #endif
 		}
 
+		/**
+		 * @brief Formats a wide string using the provided arguments.
+		 * @tparam FormatArgs Types of the format arguments.
+		 * @param formats Wide C-style format string.
+		 * @param args Values to format into the placeholders.
+		 * @return Formatted std::wstring.
+		 */
 		template <typename... FormatArgs>
-		static auto format(format_string<FormatArgs...> formats,
-						   FormatArgs&&... args) -> std::string
+		static auto format(const wchar_t* formats, const FormatArgs&... args) -> std::wstring
 		{
 #ifdef USE_STD_FORMAT
-			return std::format(formats, std::forward<FormatArgs>(args)...);
+			try
+			{
+				return std::vformat(formats, std::make_wformat_args(args...));
+			}
+			catch (...)
+			{
+				return formats;
+			}
 #else
-			return fmt::format(formats, std::forward<FormatArgs>(args)...);
+			return fmt::format(fmt::runtime(formats), args...);
 #endif
 		}
 
-		// wchar_t 버전
-		template <typename... WideFormatArgs>
-		static auto format(const wchar_t* formats, WideFormatArgs&&... args) -> std::wstring
-		{
-#ifdef USE_STD_FORMAT
-			return std::vformat(formats,
-								make_wformat_args_helper(std::forward<WideFormatArgs>(args)...));
-#else
-			return fmt::format(fmt::runtime(formats), std::forward<WideFormatArgs>(args)...);
-#endif
-		}
-
-		template <typename... WideFormatArgs>
-		static auto format(wformat_string<WideFormatArgs...> formats,
-						   WideFormatArgs&&... args) -> std::wstring
-		{
-#ifdef USE_STD_FORMAT
-			return std::format(formats, std::forward<WideFormatArgs>(args)...);
-#else
-			return fmt::format(formats, std::forward<WideFormatArgs>(args)...);
-#endif
-		}
-
-		template <typename OutputIt, typename... FormatArgs>
-		static auto format_to(OutputIt out, const char* formats, FormatArgs&&... args) -> void
-		{
-#ifdef USE_STD_FORMAT
-			std::vformat_to(out, formats,
-							make_format_args_helper(std::forward<FormatArgs>(args)...));
-#else
-			fmt::format_to(out, fmt::runtime(formats), std::forward<FormatArgs>(args)...);
-#endif
-		}
-
+		/**
+		 * @brief Formats a string directly to an output iterator.
+		 * @tparam OutputIt Type of the output iterator.
+		 * @tparam FormatArgs Types of the format arguments.
+		 * @param out Output iterator for the formatted result.
+		 * @param formats C-style format string.
+		 * @param args Values to format into the placeholders.
+		 * @return Output iterator pointing to the end of the formatted output.
+		 */
 		template <typename OutputIt, typename... FormatArgs>
 		static auto format_to(OutputIt out,
-							  format_string<FormatArgs...> formats,
-							  FormatArgs&&... args) -> void
+							  const char* formats,
+							  const FormatArgs&... args) -> OutputIt
 		{
 #ifdef USE_STD_FORMAT
-			std::format_to(out, formats, std::forward<FormatArgs>(args)...);
+			try
+			{
+				std::string result = std::vformat(formats, std::make_format_args(args...));
+				return std::copy(result.begin(), result.end(), out);
+			}
+			catch (...)
+			{
+				std::string str(formats);
+				return std::copy(str.begin(), str.end(), out);
+			}
 #else
-			fmt::format_to(out, formats, std::forward<FormatArgs>(args)...);
+			return fmt::format_to(out, fmt::runtime(formats), args...);
 #endif
 		}
 
-		// wchar_t 버전 format_to
-		template <typename OutputIt, typename... WideFormatArgs>
+		/**
+		 * @brief Formats a wide string directly to an output iterator.
+		 * @tparam OutputIt Type of the output iterator.
+		 * @tparam FormatArgs Types of the format arguments.
+		 * @param out Output iterator for the formatted result.
+		 * @param formats Wide C-style format string.
+		 * @param args Values to format into the placeholders.
+		 * @return Output iterator pointing to the end of the formatted output.
+		 */
+		template <typename OutputIt, typename... FormatArgs>
 		static auto format_to(OutputIt out,
 							  const wchar_t* formats,
-							  WideFormatArgs&&... args) -> void
+							  const FormatArgs&... args) -> OutputIt
 		{
 #ifdef USE_STD_FORMAT
-			std::vformat_to(out, formats,
-							make_wformat_args_helper(std::forward<WideFormatArgs>(args)...));
+			try
+			{
+				std::wstring result = std::vformat(formats, std::make_wformat_args(args...));
+				return std::copy(result.begin(), result.end(), out);
+			}
+			catch (...)
+			{
+				std::wstring str(formats);
+				return std::copy(str.begin(), str.end(), out);
+			}
 #else
-			fmt::format_to(out, fmt::runtime(formats), std::forward<WideFormatArgs>(args)...);
-#endif
-		}
-
-		template <typename OutputIt, typename... WideFormatArgs>
-		static auto format_to(OutputIt out,
-							  wformat_string<WideFormatArgs...> formats,
-							  WideFormatArgs&&... args) -> void
-		{
-#ifdef USE_STD_FORMAT
-			std::format_to(out, formats, std::forward<WideFormatArgs>(args)...);
-#else
-			fmt::format_to(out, formats, std::forward<WideFormatArgs>(args)...);
+			return fmt::format_to(out, fmt::runtime(formats), args...);
 #endif
 		}
 	};

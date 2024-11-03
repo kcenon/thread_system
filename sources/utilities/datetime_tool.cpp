@@ -84,32 +84,38 @@ namespace utility_module
 								 separator_character, seconds);
 	}
 
-	auto datetime_tool::milliseconds(const std::chrono::system_clock::time_point& time)
-		-> std::string
+	auto datetime_tool::milliseconds(const std::chrono::system_clock::time_point& time,
+									 const int& milli_portion) -> std::string
 	{
 		const auto duration = time.time_since_epoch();
-		const auto milliseconds
+		auto milliseconds
 			= std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000;
+
+		milliseconds = (milliseconds + milli_portion) % 1000;
 
 		return formatter::format("{:03d}", milliseconds);
 	}
 
-	auto datetime_tool::microseconds(const std::chrono::system_clock::time_point& time)
-		-> std::string
+	auto datetime_tool::microseconds(const std::chrono::system_clock::time_point& time,
+									 const int& micro_portion) -> std::string
 	{
 		const auto duration = time.time_since_epoch();
-		const auto microseconds
+		auto microseconds
 			= std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000;
+
+		microseconds = (microseconds + micro_portion) % 1000;
 
 		return formatter::format("{:03d}", microseconds);
 	}
 
-	auto datetime_tool::nanoseconds(const std::chrono::system_clock::time_point& time)
-		-> std::string
+	auto datetime_tool::nanoseconds(const std::chrono::system_clock::time_point& time,
+									const int& nano_portion) -> std::string
 	{
 		const auto duration = time.time_since_epoch();
-		const auto nanoseconds
+		auto nanoseconds
 			= std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() % 1000;
+
+		nanoseconds = (nanoseconds + nano_portion) % 1000;
 
 		return formatter::format("{:03d}", nanoseconds);
 	}

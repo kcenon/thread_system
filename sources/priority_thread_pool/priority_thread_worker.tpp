@@ -44,7 +44,10 @@ namespace priority_thread_pool_module
 	template <typename priority_type>
 	priority_thread_worker<priority_type>::priority_thread_worker(
 		std::vector<priority_type> priorities, const bool& use_time_tag)
-		: job_queue_(nullptr), priorities_(priorities), use_time_tag_(use_time_tag)
+		: thread_base("priority_thread_worker")
+		, job_queue_(nullptr)
+		, priorities_(priorities)
+		, use_time_tag_(use_time_tag)
 	{
 	}
 
@@ -121,17 +124,16 @@ namespace priority_thread_pool_module
 
 		if (!started_time_point.has_value())
 		{
-			logger::handle().log(log_types::Sequence,
-								 "job executed successfully: {}[{}] on priority_thread_worker",
-								 current_job->get_name(), current_job->priority());
+			logger::handle().write(log_types::Sequence,
+								   "job executed successfully: {}[{}] on priority_thread_worker",
+								   current_job->get_name(), current_job->priority());
 
 			return { true, std::nullopt };
 		}
 
-		logger::handle().log_timestamp(
-			log_types::Sequence, started_time_point.value(),
-			"job executed successfully: {}[{}] on priority_thread_worker", current_job->get_name(),
-			current_job->priority());
+		logger::handle().write(log_types::Sequence, started_time_point.value(),
+							   "job executed successfully: {}[{}] on priority_thread_worker",
+							   current_job->get_name(), current_job->priority());
 
 		return { true, std::nullopt };
 	}

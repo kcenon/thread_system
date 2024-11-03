@@ -38,10 +38,16 @@ using namespace utility_module;
 
 namespace log_module
 {
-	message_job::message_job(const std::string& message)
-		: job(nullptr, "message_job"), message_(message)
+	message_job::message_job(const log_types& log_type,
+							 const std::string& datetime,
+							 const std::string& message)
+		: job(nullptr, "message_job"), log_type_(log_type), datetime_(datetime), message_(message)
 	{
 	}
+
+	auto message_job::log_type() const -> log_types { return log_type_; }
+
+	auto message_job::datetime() const -> std::string { return datetime_; }
 
 	auto message_job::message(const bool& append_newline) const -> std::string
 	{

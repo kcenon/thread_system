@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "console_writer.h"
+#include "callback_writer.h"
 
 #include "formatter.h"
 #include "message_job.h"
@@ -45,38 +45,42 @@ using namespace utility_module;
 
 namespace log_module
 {
-	console_writer::console_writer(void)
-		: thread_base("console_writer"), job_queue_(std::make_shared<job_queue>())
+	callback_writer::callback_writer(void)
+		: thread_base("callback_writer")
+		, job_queue_(std::make_shared<job_queue>())
+		, callback_(nullptr)
 	{
 	}
 
-	auto console_writer::has_work() const -> bool { return !job_queue_->empty(); }
-
-	auto console_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
+	auto callback_writer::message_callback(
+		const std::function<void(const log_types&, const std::string&, const std::string&)>&
+			callback) -> void
 	{
-		if (job_queue_ == nullptr)
-		{
-			return { false, "error creating job_queue" };
-		}
-
-		job_queue_->set_notify(!wake_interval_.has_value());
-
-		return { true, std::nullopt };
+		callback_ = callback;
 	}
 
-	auto console_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto callback_writer::has_work() const -> bool { return !job_queue_->empty(); }
+
+	auto callback_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{
 		if (job_queue_ == nullptr)
 		{
 			return { false, "there is no job_queue" };
 		}
 
-		std::string console_buffer = "";
+		std::cout << "callback_writer::do_work" << std::endl;
+
 		auto remaining_logs = job_queue_->dequeue_all();
 		while (!remaining_logs.empty())
 		{
 			auto current_job = std::move(remaining_logs.front());
 			remaining_logs.pop();
+
+			if (callback_ == nullptr)
+			{
+				std::cout << "there is no callback function" << std::endl;
+				continue;
+			}
 
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
@@ -84,27 +88,12 @@ namespace log_module
 			auto [worked, work_error] = current_log->do_work();
 			if (work_error.has_value())
 			{
+				std::cout << work_error.value() << std::endl;
 				continue;
 			}
 
-			if (current_log->log_type() == log_types::None)
-			{
-				formatter::format_to(std::back_inserter(console_buffer), "[{}]{}",
-									 current_log->datetime(), current_log->message(true));
-
-				continue;
-			}
-
-			formatter::format_to(std::back_inserter(console_buffer), "[{}][{}] {}",
-								 current_log->datetime(), current_log->log_type(),
-								 current_log->message(true));
+			callback_(current_log->log_type(), current_log->datetime(), current_log->message());
 		}
-
-#ifdef USE_STD_FORMAT
-		std::cout << console_buffer;
-#else
-		fmt::print("{}", console_buffer);
-#endif
 
 		return { true, std::nullopt };
 	}

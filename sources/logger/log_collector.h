@@ -47,18 +47,19 @@ namespace log_module
 	 * @class log_collector
 	 * @brief A class for collecting and managing log messages.
 	 *
-	 * This class inherits from thread_base and provides functionality for collecting,
-	 * processing, and distributing log messages to console and file outputs.
-	 * It manages separate queues for log collection, console output, and file output.
-	 * The class supports various string types for log messages including std::string,
-	 * std::wstring, std::u16string, and std::u32string.
+	 * This class inherits from `thread_base` and provides functionality for collecting,
+	 * processing, and distributing log messages to console, file, and callback outputs.
+	 * It manages separate queues for log collection and output handling. The class supports
+	 * various string types for log messages including `std::string` and `std::wstring`.
 	 */
 	class log_collector : public thread_base
 	{
 	public:
 		/**
-		 * @brief Constructor for the log_collector class.
-		 * Initializes the log queue and sets up default log types for console and file output.
+		 * @brief Constructor for the `log_collector` class.
+		 *
+		 * Initializes the log queue and sets up default log types for console, file, and callback
+		 * outputs.
 		 */
 		log_collector(void);
 
@@ -66,25 +67,38 @@ namespace log_module
 		 * @brief Sets the log types that should be written to the console.
 		 * @param type The log types to be written to the console.
 		 */
-		auto set_console_target(const log_types& type) -> void;
+		auto console_target(const log_types& type) -> void;
 
 		/**
 		 * @brief Gets the log types that are written to the console.
 		 * @return The log types that are currently set to be written to the console.
 		 */
-		[[nodiscard]] auto get_console_target() const -> log_types;
+		[[nodiscard]] auto console_target() const -> log_types;
 
 		/**
 		 * @brief Sets the log types that should be written to a file.
 		 * @param type The log types to be written to a file.
 		 */
-		auto set_file_target(const log_types& type) -> void;
+		auto file_target(const log_types& type) -> void;
 
 		/**
 		 * @brief Gets the log types that are written to a file.
 		 * @return The log types that are currently set to be written to a file.
 		 */
-		[[nodiscard]] auto get_file_target() const -> log_types;
+		[[nodiscard]] auto file_target() const -> log_types;
+
+		/**
+		 * @brief Defines the log types that should be written to a callback.
+		 * @param type A `log_types` value indicating the types of log messages to be sent to a
+		 * callback.
+		 */
+		auto callback_target(const log_types& type) -> void;
+
+		/**
+		 * @brief Retrieves the current log types that are written to a callback.
+		 * @return The `log_types` currently set for callback output.
+		 */
+		[[nodiscard]] auto callback_target(void) const -> log_types;
 
 		/**
 		 * @brief Sets the queue for console output jobs.
@@ -97,6 +111,12 @@ namespace log_module
 		 * @param queue Shared pointer to the job queue for file output.
 		 */
 		auto set_file_queue(std::shared_ptr<job_queue> queue) -> void;
+
+		/**
+		 * @brief Sets the queue for callback output jobs.
+		 * @param queue Shared pointer to the job queue for callback output.
+		 */
+		auto set_callback_queue(std::shared_ptr<job_queue> queue) -> void;
 
 		/**
 		 * @brief Writes a log message (std::string version).
@@ -139,7 +159,7 @@ namespace log_module
 		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
-		 * @brief Processes log messages and distributes them to console and file queues.
+		 * @brief Processes log messages and distributes them to console, file, and callback queues.
 		 * @return A tuple containing:
 		 *         - bool: Indicates whether the processing was successful (true) or not (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
@@ -188,7 +208,7 @@ namespace log_module
 			}
 
 			auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
-			if (!enqueued)
+			if (enqueue_error.has_value())
 			{
 				std::cerr << formatter::format("error enqueuing log job: {}\n",
 											   enqueue_error.value_or("unknown error"));
@@ -198,10 +218,13 @@ namespace log_module
 	private:
 		log_types file_log_type_;			   ///< Types of logs to write to file
 		log_types console_log_type_;		   ///< Types of logs to write to console
+		log_types callback_log_type_;		   ///< Types of logs to write to message callbacks
 
 		std::shared_ptr<job_queue> log_queue_; ///< Queue for incoming log messages
 		std::weak_ptr<job_queue>
 			console_queue_;					  ///< Weak pointer to the queue for console output jobs
 		std::weak_ptr<job_queue> file_queue_; ///< Weak pointer to the queue for file output jobs
+		std::weak_ptr<job_queue>
+			callback_queue_; ///< Weak pointer to the queue for callback output jobs
 	};
-}
+} // namespace log_module
