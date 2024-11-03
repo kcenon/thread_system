@@ -32,15 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/format.h"
-#endif
+#include "formatter.h"
 
 #include <string>
 #include <array>
 #include <cstdint>
+#include <string_view>
 
 namespace priority_thread_pool_module
 {
@@ -48,8 +45,8 @@ namespace priority_thread_pool_module
 	 * @enum job_priorities
 	 * @brief Enumeration of job priority levels.
 	 *
-	 * This enum class defines various priority levels for jobs.
-	 * It is based on uint8_t for efficient storage.
+	 * Defines different levels of job priorities for the thread pool.
+	 * This enum class is based on uint8_t for efficient storage.
 	 */
 	enum class job_priorities : uint8_t
 	{
@@ -60,10 +57,14 @@ namespace priority_thread_pool_module
 
 	namespace job_detail
 	{
-		/** @brief Array of string representations for job priorities */
+		/**
+		 * @brief Array of string representations for each job priority level.
+		 */
 		constexpr std::array job_priority_strings = { "HIGH", "NORMAL", "LOW" };
 
-		/** @brief Number of job priorities */
+		/**
+		 * @brief Total number of job priority levels defined in job_priorities.
+		 */
 		constexpr size_t job_priority_count = job_priority_strings.size();
 
 		// Compile-time check to ensure job_priority_strings and job_priorities are in sync
@@ -74,7 +75,7 @@ namespace priority_thread_pool_module
 	/**
 	 * @brief Converts a job_priorities value to its string representation.
 	 * @param job_priority The job_priorities value to convert.
-	 * @return std::string_view A string representation of the job priority.
+	 * @return std::string_view String representation of the job priority.
 	 */
 	[[nodiscard]] constexpr std::string_view to_string(job_priorities job_priority)
 	{
@@ -84,42 +85,78 @@ namespace priority_thread_pool_module
 	}
 } // namespace priority_thread_pool_module
 
+// Formatter specializations for job_priorities
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for priority_thread_pool_module::job_priorities.
- *
- * This formatter allows job_priorities to be used with std::format.
- * It converts the job_priorities enum values to their string representations.
+ * @brief Specialization of std::formatter for job_priorities.
+ * Enables formatting of job_priorities enum values as strings in the standard library format.
  */
-template <> struct std::formatter<priority_thread_pool_module::job_priorities>
+template <>
+struct std::formatter<priority_thread_pool_module::job_priorities>
+	: std::formatter<std::string_view>
 {
-	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a job_priorities value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param job_priority The job_priorities enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const priority_thread_pool_module::job_priorities& job_priority,
 				FormatContext& ctx) const
 	{
-		return std::format_to(ctx.out(), "{}",
-							  priority_thread_pool_module::to_string(job_priority));
+		return std::formatter<std::string_view>::format(
+			priority_thread_pool_module::to_string(job_priority), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character job_priorities.
+ * Allows job_priorities enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<priority_thread_pool_module::job_priorities, wchar_t>
+	: std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a job_priorities value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param job_priority The job_priorities enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::job_priorities& job_priority,
+				FormatContext& ctx) const
+	{
+		auto str = priority_thread_pool_module::to_string(job_priority);
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
 #else
 /**
- * @brief Specialization of fmt::formatter for priority_thread_pool_module::job_priorities.
- *
- * This formatter allows job_priorities to be used with fmt::format.
- * It converts the job_priorities enum values to their string representations.
+ * @brief Specialization of fmt::formatter for job_priorities.
+ * Enables formatting of job_priorities enum values using the fmt library.
  */
-template <> struct fmt::formatter<priority_thread_pool_module::job_priorities>
+template <>
+struct fmt::formatter<priority_thread_pool_module::job_priorities>
+	: fmt::formatter<std::string_view>
 {
-	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a job_priorities value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param job_priority The job_priorities enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const priority_thread_pool_module::job_priorities& job_priority,
 				FormatContext& ctx) const
 	{
-		return fmt::format_to(ctx.out(), "{}",
-							  priority_thread_pool_module::to_string(job_priority));
+		return fmt::formatter<std::string_view>::format(
+			priority_thread_pool_module::to_string(job_priority), ctx);
 	}
 };
 #endif

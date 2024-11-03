@@ -37,22 +37,28 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace log_module
 {
 	log_collector::log_collector(void)
-		: log_queue_(std::make_shared<job_queue>())
+		: thread_base("log_collector")
+		, log_queue_(std::make_shared<job_queue>())
 		, file_log_type_(log_types::Error)
 		, console_log_type_(log_types::Information)
+		, callback_log_type_(log_types::None)
 	{
 	}
 
-	auto log_collector::set_console_target(const log_types& type) -> void
+	auto log_collector::console_target(const log_types& type) -> void { console_log_type_ = type; }
+
+	auto log_collector::console_target() const -> log_types { return console_log_type_; }
+
+	auto log_collector::file_target(const log_types& type) -> void { file_log_type_ = type; }
+
+	auto log_collector::file_target() const -> log_types { return file_log_type_; }
+
+	auto log_collector::callback_target(const log_types& type) -> void
 	{
-		console_log_type_ = type;
+		callback_log_type_ = type;
 	}
 
-	auto log_collector::get_console_target() const -> log_types { return console_log_type_; }
-
-	auto log_collector::set_file_target(const log_types& type) -> void { file_log_type_ = type; }
-
-	auto log_collector::get_file_target() const -> log_types { return file_log_type_; }
+	auto log_collector::callback_target() const -> log_types { return callback_log_type_; }
 
 	auto log_collector::set_console_queue(std::shared_ptr<job_queue> queue) -> void
 	{
@@ -62,6 +68,11 @@ namespace log_module
 	auto log_collector::set_file_queue(std::shared_ptr<job_queue> queue) -> void
 	{
 		file_queue_ = queue;
+	}
+
+	auto log_collector::set_callback_queue(std::shared_ptr<job_queue> queue) -> void
+	{
+		callback_queue_ = queue;
 	}
 
 	auto log_collector::write(
@@ -93,16 +104,17 @@ namespace log_module
 			return { false, work_error };
 		}
 
-		auto buffer = job.message();
+		auto datetime = job.datetime();
+		auto message = job.message();
 
 		if (console_log_type_ > log_types::None)
 		{
 			auto console_queue = console_queue_.lock();
-			if (console_queue != nullptr && !buffer.empty())
+			if (console_queue != nullptr && !message.empty())
 			{
-				auto [enqueued, enqueue_error]
-					= console_queue->enqueue(std::make_unique<message_job>(buffer));
-				if (!enqueued)
+				auto [enqueued, enqueue_error] = console_queue->enqueue(
+					std::make_unique<message_job>(log_types::None, datetime, message));
+				if (enqueue_error.has_value())
 				{
 					return { false, enqueue_error };
 				}
@@ -112,11 +124,11 @@ namespace log_module
 		if (file_log_type_ > log_types::None)
 		{
 			auto file_queue = file_queue_.lock();
-			if (file_queue != nullptr && !buffer.empty())
+			if (file_queue != nullptr && !message.empty())
 			{
-				auto [enqueued, enqueue_error]
-					= file_queue->enqueue(std::make_unique<message_job>(buffer));
-				if (!enqueued)
+				auto [enqueued, enqueue_error] = file_queue->enqueue(
+					std::make_unique<message_job>(log_types::None, datetime, message));
+				if (enqueue_error.has_value())
 				{
 					return { false, enqueue_error };
 				}
@@ -134,7 +146,7 @@ namespace log_module
 		}
 
 		auto [job_opt, error] = log_queue_->dequeue();
-		if (!job_opt.has_value())
+		if (error.has_value())
 		{
 			if (!log_queue_->is_stopped())
 			{
@@ -154,28 +166,53 @@ namespace log_module
 		auto current_log = std::unique_ptr<log_job>(static_cast<log_job*>(current_job.release()));
 
 		auto [worked, work_error] = current_log->do_work();
-		std::string log = (worked) ? current_log->message()
-								   : work_error.value_or("Unknown error to convert to log message");
-
-		auto console_queue = console_queue_.lock();
-		if (current_log->get_type() <= console_log_type_ && console_queue != nullptr)
+		if (work_error.has_value())
 		{
-			auto [enqueued, enqueue_error]
-				= console_queue->enqueue(std::make_unique<message_job>(log));
-			if (!enqueued)
+			return { true, std::nullopt };
+		}
+
+		auto datetime = current_log->datetime();
+		auto message = current_log->message();
+
+		if (console_log_type_ > log_types::None)
+		{
+			auto console_queue = console_queue_.lock();
+			if (current_log->get_type() <= console_log_type_ && console_queue != nullptr)
 			{
-				return { false, enqueue_error };
+				auto [enqueued, enqueue_error] = console_queue->enqueue(
+					std::make_unique<message_job>(current_log->get_type(), datetime, message));
+				if (enqueue_error.has_value())
+				{
+					return { false, enqueue_error };
+				}
 			}
 		}
 
-		auto file_queue = file_queue_.lock();
-		if (current_log->get_type() <= file_log_type_ && file_queue != nullptr)
+		if (file_log_type_ > log_types::None)
 		{
-			auto [enqueued, enqueue_error]
-				= file_queue->enqueue(std::make_unique<message_job>(log));
-			if (!enqueued)
+			auto file_queue = file_queue_.lock();
+			if (current_log->get_type() <= file_log_type_ && file_queue != nullptr)
 			{
-				return { false, enqueue_error };
+				auto [enqueued, enqueue_error] = file_queue->enqueue(
+					std::make_unique<message_job>(current_log->get_type(), datetime, message));
+				if (enqueue_error.has_value())
+				{
+					return { false, enqueue_error };
+				}
+			}
+		}
+
+		if (callback_log_type_ > log_types::None)
+		{
+			auto callback_queue = callback_queue_.lock();
+			if (current_log->get_type() <= callback_log_type_ && callback_queue != nullptr)
+			{
+				auto [enqueued, enqueue_error] = callback_queue->enqueue(
+					std::make_unique<message_job>(current_log->get_type(), datetime, message));
+				if (enqueue_error.has_value())
+				{
+					return { false, enqueue_error };
+				}
 			}
 		}
 
@@ -191,16 +228,17 @@ namespace log_module
 			return { false, work_error };
 		}
 
-		auto buffer = job.message();
+		auto datetime = job.datetime();
+		auto message = job.message();
 
 		if (console_log_type_ > log_types::None)
 		{
 			auto console_queue = console_queue_.lock();
-			if (console_queue != nullptr && !buffer.empty())
+			if (console_queue != nullptr && !message.empty())
 			{
-				auto [enqueued, enqueue_error]
-					= console_queue->enqueue(std::make_unique<message_job>(buffer));
-				if (!enqueued)
+				auto [enqueued, enqueue_error] = console_queue->enqueue(
+					std::make_unique<message_job>(log_types::None, datetime, message));
+				if (enqueue_error.has_value())
 				{
 					return { false, enqueue_error };
 				}
@@ -210,11 +248,11 @@ namespace log_module
 		if (file_log_type_ > log_types::None)
 		{
 			auto file_queue = file_queue_.lock();
-			if (file_queue != nullptr && !buffer.empty())
+			if (file_queue != nullptr && !message.empty())
 			{
-				auto [enqueued, enqueue_error]
-					= file_queue->enqueue(std::make_unique<message_job>(buffer));
-				if (!enqueued)
+				auto [enqueued, enqueue_error] = file_queue->enqueue(
+					std::make_unique<message_job>(log_types::None, datetime, message));
+				if (enqueue_error.has_value())
 				{
 					return { false, enqueue_error };
 				}

@@ -43,12 +43,14 @@ using namespace utility_module;
 namespace log_module
 {
 	file_writer::file_writer(void)
-		: job_queue_(std::make_shared<job_queue>())
+		: thread_base("file_writer")
+		, job_queue_(std::make_shared<job_queue>())
 		, title_("log")
 		, use_backup_(false)
 		, max_lines_(0)
 		, log_file_(nullptr)
 		, backup_file_(nullptr)
+		, file_target_(log_types::None)
 	{
 	}
 
@@ -64,6 +66,8 @@ namespace log_module
 
 	auto file_writer::get_max_lines() const -> uint32_t { return max_lines_; }
 
+	auto file_writer::file_target(const log_types& type) -> void { file_target_ = type; }
+
 	auto file_writer::has_work() const -> bool { return !job_queue_->empty(); }
 
 	auto file_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
@@ -71,6 +75,11 @@ namespace log_module
 		if (job_queue_ == nullptr)
 		{
 			return { false, "error creating job_queue" };
+		}
+
+		if (file_target_ == log_types::None)
+		{
+			return { true, std::nullopt };
 		}
 
 		job_queue_->set_notify(!wake_interval_.has_value());
@@ -85,6 +94,11 @@ namespace log_module
 		if (job_queue_ == nullptr)
 		{
 			return { false, "there is no job_queue" };
+		}
+
+		if (file_target_ == log_types::None)
+		{
+			return { true, std::nullopt };
 		}
 
 		check_file_handle();
@@ -104,7 +118,17 @@ namespace log_module
 				continue;
 			}
 
-			log_lines_.push_back(current_log->message(true));
+			if (current_log->log_type() == log_types::None)
+			{
+				log_lines_.push_back(formatter::format("[{}]{}", current_log->datetime(),
+													   current_log->message(true)));
+
+				continue;
+			}
+
+			log_lines_.push_back(formatter::format("[{}][{}] {}", current_log->datetime(),
+												   current_log->log_type(),
+												   current_log->message(true)));
 		}
 
 		if (max_lines_ == 0)
@@ -115,30 +139,35 @@ namespace log_module
 			return { true, std::nullopt };
 		}
 
-		if (log_lines_.size() > max_lines_)
+		if (log_lines_.size() <= max_lines_)
 		{
-			size_t index = log_lines_.size() - max_lines_ + 1;
+			log_file_ = write_lines(std::move(log_file_), log_lines_);
+			log_file_->close();
+			log_file_.reset();
 
-			if (use_backup_)
+			return { true, std::nullopt };
+		}
+
+		size_t index = log_lines_.size() - max_lines_ + 1;
+
+		if (use_backup_)
+		{
+			if (backup_file_ == nullptr)
 			{
-				if (backup_file_ == nullptr)
-				{
-					backup_file_ = std::make_unique<std::fstream>(
-						backup_name_, std::ios_base::out | std::ios_base::app);
-				}
-
-				std::deque<std::string> backup_lines(log_lines_.begin(),
-													 log_lines_.begin() + index);
-
-				if (backup_file_ && backup_file_->is_open())
-				{
-					backup_file_->seekp(0, std::ios::end);
-					backup_file_ = write_lines(std::move(backup_file_), backup_lines);
-				}
+				backup_file_ = std::make_unique<std::fstream>(
+					backup_name_, std::ios_base::out | std::ios_base::app);
 			}
 
-			log_lines_.erase(log_lines_.begin(), log_lines_.begin() + index);
+			std::deque<std::string> backup_lines(log_lines_.begin(), log_lines_.begin() + index);
+
+			if (backup_file_ && backup_file_->is_open())
+			{
+				backup_file_->seekp(0, std::ios::end);
+				backup_file_ = write_lines(std::move(backup_file_), backup_lines);
+			}
 		}
+
+		log_lines_.erase(log_lines_.begin(), log_lines_.begin() + index);
 
 		log_file_ = write_lines(std::move(log_file_), log_lines_);
 		log_file_->close();
@@ -152,6 +181,11 @@ namespace log_module
 		if (job_queue_ == nullptr)
 		{
 			return { false, "there is no job_queue" };
+		}
+
+		if (file_target_ == log_types::None)
+		{
+			return { true, std::nullopt };
 		}
 
 		close_file_handle();

@@ -53,15 +53,16 @@ namespace thread_module
 	 *
 	 * This class provides a framework for creating worker threads with customizable
 	 * behavior. It handles thread lifecycle management and provides mechanisms for
-	 * waking the thread and setting wake intervals.
+	 * waking the thread at specified intervals and setting custom thread titles.
 	 */
 	class thread_base : public std::enable_shared_from_this<thread_base>
 	{
 	public:
 		/**
 		 * @brief Constructs a new thread_base object.
+		 * @param thread_title The title for the worker thread, used for identification purposes.
 		 */
-		thread_base(void);
+		thread_base(const std::string& thread_title = "thread_base");
 
 		/**
 		 * @brief Virtual destructor for the thread_base class.
@@ -84,22 +85,24 @@ namespace thread_module
 		/**
 		 * @brief Starts the worker thread.
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the start operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the start operation was successful (true) or not.
+		 *         - std::optional<std::string>: An optional error message if the operation fails.
 		 */
 		auto start(void) -> std::tuple<bool, std::optional<std::string>>;
 
 		/**
 		 * @brief Stops the worker thread.
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the stop operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the stop operation was successful (true) or not.
+		 *         - std::optional<std::string>: An optional error message if the operation fails.
 		 */
 		auto stop(void) -> std::tuple<bool, std::optional<std::string>>;
+
+		/**
+		 * @brief Retrieves the title of the worker thread.
+		 * @return std::string The title of the worker thread, for identification purposes.
+		 */
+		[[nodiscard]] auto get_thread_title() const -> std::string { return thread_title_; }
 
 	protected:
 		/**
@@ -110,12 +113,13 @@ namespace thread_module
 
 		/**
 		 * @brief Called before the worker thread starts.
-		 * Derived classes can override this to perform initialization.
+		 *
+		 * Derived classes can override this method to perform any setup or initialization
+		 * required before the thread begins executing.
+		 *
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the initialization was successful (true) or not.
+		 *         - std::optional<std::string>: An optional error message if initialization fails.
 		 */
 		virtual auto before_start(void) -> std::tuple<bool, std::optional<std::string>>
 		{
@@ -124,11 +128,13 @@ namespace thread_module
 
 		/**
 		 * @brief Performs the actual work of the thread.
-		 * Derived classes should override this to define the thread's behavior.
+		 *
+		 * This method defines the main behavior of the worker thread. Derived classes should
+		 * override this to implement specific functionality.
+		 *
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the work was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the work was successful (true) or not.
+		 *         - std::optional<std::string>: An optional error message if the work fails.
 		 */
 		virtual auto do_work(void) -> std::tuple<bool, std::optional<std::string>>
 		{
@@ -137,11 +143,13 @@ namespace thread_module
 
 		/**
 		 * @brief Called after the worker thread stops.
-		 * Derived classes can override this to perform cleanup.
+		 *
+		 * Derived classes can override this method to perform any necessary cleanup after the
+		 * thread has finished its work and stopped.
+		 *
 		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
-		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 *         - bool: Indicates whether the cleanup was successful (true) or not.
+		 *         - std::optional<std::string>: An optional error message if cleanup fails.
 		 */
 		virtual auto after_stop(void) -> std::tuple<bool, std::optional<std::string>>
 		{
@@ -172,5 +180,8 @@ namespace thread_module
 		/** @brief Flag indicating whether the thread should stop */
 		std::atomic<bool> stop_requested_;
 #endif
+
+		/** @brief The title of the thread for identification purposes */
+		std::string thread_title_;
 	};
 } // namespace thread_module

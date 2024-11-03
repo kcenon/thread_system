@@ -32,34 +32,37 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-#include "fmt/format.h"
-#endif
+#include "formatter.h"
 
 #include <string>
 #include <array>
 #include <cstdint>
+#include <string_view>
 
 /**
  * @enum test_priority
  * @brief Enumeration of test priority levels.
  *
- * This enum class defines various priority levels for tests.
- * It is based on uint8_t for efficient storage.
+ * Defines priority levels for test cases. This enum class is based on uint8_t
+ * to optimize storage, with three priority levels: Top, Middle, and Bottom.
  */
 enum class test_priority : uint8_t
 {
-	Top = 0,
-	Middle,
-	Bottom
+	Top = 0, ///< Top priority
+	Middle,	 ///< Middle priority
+	Bottom	 ///< Bottom priority
 };
 
 namespace test_detail
 {
+	/**
+	 * @brief Array of string representations for each test priority level.
+	 */
 	constexpr std::array test_priority_strings = { "Top", "Middle", "Bottom" };
 
+	/**
+	 * @brief Total number of test priorities available in test_priority_strings.
+	 */
 	constexpr size_t test_priority_count = test_priority_strings.size();
 
 	// Compile-time check to ensure test_priority_strings and test_priority are in sync
@@ -70,47 +73,77 @@ namespace test_detail
 /**
  * @brief Converts a test_priority value to its string representation.
  * @param priority The test_priority value to convert.
- * @return std::string_view A string representation of the test priority.
+ * @return std::string_view String representation of the test priority.
  */
-constexpr std::string_view to_string(test_priority priority)
+[[nodiscard]] constexpr std::string_view to_string(test_priority priority)
 {
 	auto index = static_cast<size_t>(priority);
 	return (index < test_detail::test_priority_count) ? test_detail::test_priority_strings[index]
 													  : "Unknown";
 }
 
+// Formatter specializations for test_priority
 #ifdef USE_STD_FORMAT
 /**
  * @brief Specialization of std::formatter for test_priority.
- *
- * This formatter allows test_priority to be used with std::format.
- * It converts the test_priority enum values to their string representations.
+ * Enables formatting of test_priority enum values as strings in the standard library format.
  */
-template <> struct std::formatter<test_priority>
+template <> struct std::formatter<test_priority> : std::formatter<std::string_view>
 {
-	constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a test_priority value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The test_priority enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const test_priority& priority, FormatContext& ctx) const
 	{
-		return std::format_to(ctx.out(), "{}", to_string(priority));
+		return std::formatter<std::string_view>::format(to_string(priority), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character test_priority.
+ * Allows test_priority enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<test_priority, wchar_t> : std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a test_priority value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The test_priority enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const test_priority& priority, FormatContext& ctx) const
+	{
+		auto str = to_string(priority);
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
 #else
 /**
  * @brief Specialization of fmt::formatter for test_priority.
- *
- * This formatter allows test_priority to be used with fmt::format.
- * It converts the test_priority enum values to their string representations.
+ * Enables formatting of test_priority enum values using the fmt library.
  */
-template <> struct fmt::formatter<test_priority>
+template <> struct fmt::formatter<test_priority> : fmt::formatter<std::string_view>
 {
-	constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
-
+	/**
+	 * @brief Formats a test_priority value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The test_priority enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
 	template <typename FormatContext>
 	auto format(const test_priority& priority, FormatContext& ctx) const
 	{
-		return fmt::format_to(ctx.out(), "{}", to_string(priority));
+		return fmt::formatter<std::string_view>::format(to_string(priority), ctx);
 	}
 };
 #endif

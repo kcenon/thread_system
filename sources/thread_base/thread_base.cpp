@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace thread_module
 {
-	thread_base::thread_base(void)
+	thread_base::thread_base(const std::string& thread_title)
 		: worker_thread_(nullptr)
 #ifdef USE_STD_JTHREAD
 		, stop_source_(std::nullopt)
@@ -42,6 +42,7 @@ namespace thread_module
 		, stop_requested_(false)
 #endif
 		, wake_interval_(std::nullopt)
+		, thread_title_(thread_title)
 	{
 	}
 
@@ -87,11 +88,13 @@ namespace thread_module
 					auto stop_token = stop_source_.value().get_token();
 #endif
 
-					auto [before_started, before_start_error] = before_start();
-					if (!before_started)
+					bool worked = false;
+					std::optional<std::string> work_error;
+					std::tie(worked, work_error) = before_start();
+					if (work_error.has_value())
 					{
-						std::cerr << "error before start: "
-								  << before_start_error.value_or("unknown error") << std::endl;
+						std::cerr << "error before start: " << work_error.value_or("unknown error")
+								  << std::endl;
 					}
 
 #ifdef USE_STD_JTHREAD
@@ -104,7 +107,6 @@ namespace thread_module
 						if (wake_interval_.has_value())
 						{
 #ifdef USE_STD_JTHREAD
-
 							worker_condition_.wait_for(
 								lock, wake_interval_.value(), [this, &stop_token]()
 								{ return stop_token.stop_requested() || has_work(); });
@@ -136,11 +138,11 @@ namespace thread_module
 
 						try
 						{
-							auto [do_worked, do_work_error] = do_work();
-							if (!do_worked)
+							std::tie(worked, work_error) = do_work();
+							if (work_error.has_value())
 							{
-								std::cerr << "error doing work: "
-										  << do_work_error.value_or("unknown error") << std::endl;
+								std::cerr << "error doing work on " << thread_title_ << " : "
+										  << work_error.value_or("unknown error") << std::endl;
 							}
 						}
 						catch (const std::exception& e)
@@ -149,11 +151,11 @@ namespace thread_module
 						}
 					}
 
-					auto [after_stopped, after_stop_error] = after_stop();
-					if (!after_stopped)
+					std::tie(worked, work_error) = after_stop();
+					if (work_error.has_value())
 					{
-						std::cerr << "error after stop: "
-								  << after_stop_error.value_or("unknown error") << std::endl;
+						std::cerr << "error after stop: " << work_error.value_or("unknown error")
+								  << std::endl;
 					}
 				});
 		}

@@ -50,19 +50,18 @@ namespace log_module
 	 *
 	 * This class encapsulates the functionality for creating and executing
 	 * logging operations as jobs within the job system. It supports different
-	 * log types and optional start times for more detailed logging.
-	 * The class handles various string types (std::string, std::wstring, std::u16string,
+	 * log types and optional start times for detailed logging with timing information.
+	 * It handles various string types (std::string, std::wstring, std::u16string,
 	 * std::u32string) to accommodate different character encodings.
 	 */
 	class log_job : public job
 	{
 	public:
 		/**
-		 * @brief Constructs a new log_job object.
+		 * @brief Constructs a new `log_job` object with a standard string message.
 		 * @param message The log message to be recorded.
-		 * @param type An optional parameter specifying the type of log entry.
-		 * @param start_time An optional parameter specifying the start time of the log entry.
-		 *        Used for calculating duration of timed operations.
+		 * @param type Optional log type specifying the category or severity.
+		 * @param start_time Optional start time used to calculate the duration of timed operations.
 		 */
 		explicit log_job(
 			const std::string& message,
@@ -71,11 +70,10 @@ namespace log_module
 			= std::nullopt);
 
 		/**
-		 * @brief Constructs a new log_job object with wide string message.
+		 * @brief Constructs a new `log_job` object with a wide string message.
 		 * @param message The log message to be recorded as a wide string.
-		 * @param type An optional parameter specifying the type of log entry.
-		 * @param start_time An optional parameter specifying the start time of the log entry.
-		 *        Used for calculating duration of timed operations.
+		 * @param type Optional log type specifying the category or severity.
+		 * @param start_time Optional start time used to calculate the duration of timed operations.
 		 */
 		explicit log_job(
 			const std::wstring& message,
@@ -85,21 +83,28 @@ namespace log_module
 
 		/**
 		 * @brief Executes the logging operation.
+		 *
+		 * Processes the log entry according to the specified log type and stores it in the
+		 * designated output.
+		 *
 		 * @return A tuple containing:
-		 *         - bool: Indicates whether the logging operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
-		 * @note This method overrides the base class's do_work() method.
+		 *         - bool: Indicates whether the logging operation was successful.
+		 *         - std::optional<std::string>: Optional error description if the operation failed.
+		 * @note This method overrides the base class's `do_work()` method.
 		 */
 		[[nodiscard]] auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
 
 		/**
 		 * @brief Gets the type of the log entry.
-		 * @return The type of the log entry. If no type was specified during construction,
-		 *         a default type may be returned.
+		 * @return The type of the log entry. Defaults to a generic type if unspecified.
 		 */
 		[[nodiscard]] auto get_type() const -> log_types;
+
+		/**
+		 * @brief Gets the formatted date and time of the log entry.
+		 * @return The formatted date and time as a string.
+		 */
+		[[nodiscard]] auto datetime() const -> std::string;
 
 		/**
 		 * @brief Gets the formatted log message.
@@ -109,8 +114,8 @@ namespace log_module
 
 	protected:
 		/**
-		 * @brief Converts the stored message to a std::string.
-		 * @return The converted message as a std::string.
+		 * @brief Converts the stored message to a `std::string`.
+		 * @return The converted message as a `std::string`.
 		 */
 		[[nodiscard]] auto convert_message() const -> std::string;
 
@@ -120,27 +125,27 @@ namespace log_module
 		 */
 		enum class message_types : uint8_t
 		{
-			String,					 ///< std::string log type
-			WString,				 ///< std::wstring log type
-			U16String,				 ///< std::u16string log type
-			U32String,				 ///< std::u32string log type
+			String,						///< `std::string` message type
+			WString,					///< `std::wstring` message type
+			U16String,					///< `std::u16string` message type
+			U32String,					///< `std::u32string` message type
 		};
 
-		message_types message_type_; ///< The type of the stored message
+		message_types message_type_;	///< Type of the stored message
 
-		std::string message_;		 ///< The original unformatted log message (for std::string)
-		std::wstring wmessage_;		 ///< The original unformatted log message (for std::wstring)
-		std::u16string u16message_;	 ///< The original unformatted log message (for std::u16string)
-		std::u32string u32message_;	 ///< The original unformatted log message (for std::u32string)
+		std::string message_;			///< Unformatted log message (for `std::string`)
+		std::wstring wmessage_;			///< Unformatted log message (for `std::wstring`)
+		std::u16string u16message_;		///< Unformatted log message (for `std::u16string`)
+		std::u32string u32message_;		///< Unformatted log message (for `std::u32string`)
 
-		std::string log_message_;	 ///< The formatted log message ready for output
+		std::string datetime_;			///< Formatted date and time of the log entry
+		std::string log_message_;		///< Formatted log message ready for output
 
-		std::optional<log_types> type_; ///< The type of the log entry (e.g., info, warning, error)
+		std::optional<log_types> type_; ///< Log type (e.g., info, warning, error)
 
-		std::chrono::system_clock::time_point
-			timestamp_;					///< The timestamp of when the log job was created
+		std::chrono::system_clock::time_point timestamp_; ///< Timestamp of log job creation
 
-		/** @brief The optional start time of the log entry for duration calculations */
+		/** @brief Optional start time of the log entry for duration calculations */
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time_;
 	};
 } // namespace log_module

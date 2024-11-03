@@ -72,21 +72,24 @@ namespace utility_module
 		 * @param time The time point to process.
 		 * @return A string representing the milliseconds.
 		 */
-		static auto milliseconds(const std::chrono::system_clock::time_point& time) -> std::string;
+		static auto milliseconds(const std::chrono::system_clock::time_point& time,
+								 const int& milli_portion = 0) -> std::string;
 
 		/**
 		 * @brief Extracts the microseconds part of a time point.
 		 * @param time The time point to process.
 		 * @return A string representing the microseconds.
 		 */
-		static auto microseconds(const std::chrono::system_clock::time_point& time) -> std::string;
+		static auto microseconds(const std::chrono::system_clock::time_point& time,
+								 const int& micro_portion = 0) -> std::string;
 
 		/**
 		 * @brief Extracts the nanoseconds part of a time point.
 		 * @param time The time point to process.
 		 * @return A string representing the nanoseconds.
 		 */
-		static auto nanoseconds(const std::chrono::system_clock::time_point& time) -> std::string;
+		static auto nanoseconds(const std::chrono::system_clock::time_point& time,
+								const int& nano_portion = 0) -> std::string;
 
 		/**
 		 * @brief Calculates the time difference between two time points.

@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "log_collector.h"
 #include "console_writer.h"
 #include "file_writer.h"
+#include "callback_writer.h"
 
 #include <deque>
 #include <mutex>
@@ -76,29 +77,49 @@ namespace log_module
 		auto set_title(const std::string& title) -> void;
 
 		/**
+		 * @brief Defines the log types that should be written to a callback.
+		 * @param type A `log_types` value indicating the types of log messages to save to callback.
+		 */
+		auto callback_target(const log_types& type) -> void;
+
+		/**
+		 * @brief Retrieves the current log types that are written to a callback.
+		 * @return The `log_types` currently set for callback output.
+		 */
+		[[nodiscard]] auto callback_target(void) const -> log_types;
+
+		/**
 		 * @brief Defines the log types that should be written to a file.
 		 * @param type A `log_types` value indicating the types of log messages to save to file.
 		 */
-		auto set_file_target(const log_types& type) -> void;
+		auto file_target(const log_types& type) -> void;
 
 		/**
 		 * @brief Retrieves the current log types that are written to a file.
 		 * @return The `log_types` currently set for file output.
 		 */
-		[[nodiscard]] auto get_file_target(void) const -> log_types;
+		[[nodiscard]] auto file_target(void) const -> log_types;
 
 		/**
 		 * @brief Defines the log types that should be written to the console.
 		 * @param type A `log_types` value indicating the types of log messages to display in the
 		 * console.
 		 */
-		auto set_console_target(const log_types& type) -> void;
+		auto console_target(const log_types& type) -> void;
 
 		/**
 		 * @brief Retrieves the current log types that are written to the console.
 		 * @return The `log_types` currently set for console output.
 		 */
-		[[nodiscard]] auto get_console_target(void) const -> log_types;
+		[[nodiscard]] auto console_target(void) const -> log_types;
+
+		/**
+		 * @brief Sets the message callback function for handling log messages.
+		 * @param callback A function pointer to the message callback function.
+		 */
+		auto message_callback(
+			const std::function<void(const log_types&, const std::string&, const std::string&)>&
+				callback) -> void;
 
 		/**
 		 * @brief Sets the maximum number of lines to retain in the log.
@@ -172,20 +193,20 @@ namespace log_module
 		 * @param args Additional arguments for each placeholder in `formats`.
 		 */
 		template <typename... Args>
-		auto log(const log_types& type, format_string<Args...> formats, Args&&... args) -> void
+		auto write(const log_types& type, const char* formats, const Args&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
 				return;
 			}
 
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			if (collector_->file_target() < type && collector_->console_target() < type
+				&& collector_->callback_target() < type)
 			{
 				return;
 			}
 
-			collector_->write(type,
-							  formatter::format(std::move(formats), std::forward<Args>(args)...));
+			collector_->write(type, utility_module::formatter::format(formats, args...));
 		}
 
 		/**
@@ -201,51 +222,20 @@ namespace log_module
 		 * @param args Additional arguments for each placeholder in `formats`.
 		 */
 		template <typename... WideArgs>
-		auto wlog(const log_types& type,
-				  wformat_string<WideArgs...> formats,
-				  WideArgs&&... args) -> void
+		auto write(const log_types& type, const wchar_t* formats, const WideArgs&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
 				return;
 			}
 
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			if (collector_->file_target() < type && collector_->console_target() < type
+				&& collector_->callback_target() < type)
 			{
 				return;
 			}
 
-			collector_->write(
-				type, formatter::format(std::move(formats), std::forward<WideArgs>(args)...));
-		}
-
-		/**
-		 * @brief Writes a formatted wide-character log message to the log collector.
-		 *
-		 * Formats and logs a message with a specified log type. Can optionally include a
-		 * timestamp representing the start time of the log event.
-		 *
-		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
-		 *
-		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
-		 * @param formats A wide character string literal containing the format string with
-		 * placeholders.
-		 * @param args Additional arguments for each placeholder in `formats`.
-		 */
-		template <typename... WideArgs>
-		auto wlog(const log_types& type, const wchar_t* formats, WideArgs&&... args) -> void
-		{
-			if (collector_ == nullptr)
-			{
-				return;
-			}
-
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
-			{
-				return;
-			}
-
-			collector_->write(type, formatter::format(formats, std::forward<WideArgs>(args)...));
+			collector_->write(type, utility_module::formatter::format(formats, args...));
 		}
 
 		/**
@@ -262,24 +252,24 @@ namespace log_module
 		 * @param args Additional arguments matching the placeholders in `formats`.
 		 */
 		template <typename... Args>
-		auto log_timestamp(const log_types& type,
-						   std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
-						   format_string<Args...> formats,
-						   Args&&... args) -> void
+		auto write(const log_types& type,
+				   const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+				   const char* formats,
+				   const Args&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
 				return;
 			}
 
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			if (collector_->file_target() < type && collector_->console_target() < type
+				&& collector_->callback_target() < type)
 			{
 				return;
 			}
 
-			collector_->write(type,
-							  formatter::format(std::move(formats), std::forward<Args>(args)...),
-							  start_time);
+			collector_->write(type, utility_module::formatter::format(formats, args...),
+							  time_point);
 		}
 
 		/**
@@ -296,58 +286,24 @@ namespace log_module
 		 * @param args Additional arguments matching the placeholders in `formats`.
 		 */
 		template <typename... WideArgs>
-		auto wlog_timestamp(const log_types& type,
-							std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
-							wformat_string<WideArgs...> formats,
-							WideArgs&&... args) -> void
+		auto write(const log_types& type,
+				   const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+				   const wchar_t* formats,
+				   const WideArgs&... args) -> void
 		{
 			if (collector_ == nullptr)
 			{
 				return;
 			}
 
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
+			if (collector_->file_target() < type && collector_->console_target() < type
+				&& collector_->callback_target() < type)
 			{
 				return;
 			}
 
-			collector_->write(
-				type, formatter::format(std::move(formats), std::forward<WideArgs>(args)...),
-				start_time);
-		}
-
-		/**
-		 * @brief Writes a formatted wide-character log message with an optional timestamp.
-		 *
-		 * Formats and logs a message with a specified type and optional start timestamp.
-		 * Enables accurate timing for each log entry when a timestamp is provided.
-		 *
-		 * @tparam Args Types of arguments used to fill in placeholders in the wide format string.
-		 *
-		 * @param type The log type (e.g., info, warning, error) used for categorizing the message.
-		 * @param start_time An optional timestamp marking the start of the log event.
-		 * @param formats A wide character string literal containing the format string with
-		 * placeholders.
-		 * @param args Additional arguments for each placeholder in `formats`.
-		 */
-		template <typename... WideArgs>
-		auto wlog_timestamp(const log_types& type,
-							std::chrono::time_point<std::chrono::high_resolution_clock> start_time,
-							const wchar_t* formats,
-							WideArgs&&... args) -> void
-		{
-			if (collector_ == nullptr)
-			{
-				return;
-			}
-
-			if (collector_->get_file_target() < type && collector_->get_console_target() < type)
-			{
-				return;
-			}
-
-			collector_->write(type, formatter::format(formats, std::forward<WideArgs>(args)...),
-							  start_time);
+			collector_->write(type, utility_module::formatter::format(formats, args...),
+							  time_point);
 		}
 
 	private:
@@ -373,6 +329,9 @@ namespace log_module
 
 		/** @brief Shared pointer to the file writer handling log file output. */
 		std::shared_ptr<file_writer> file_writer_;
+
+		/** @brief Shared pointer to the message handling log callback output. */
+		std::shared_ptr<callback_writer> callback_writer_;
 
 #pragma region singleton
 	public:
