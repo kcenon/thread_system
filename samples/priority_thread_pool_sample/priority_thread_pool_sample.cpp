@@ -67,6 +67,9 @@ auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 	logger::handle().file_target(file_target_);
 	logger::handle().console_target(console_target_);
 	logger::handle().callback_target(callback_target_);
+	logger::handle().message_callback(
+		[](const log_types& type, const std::string& datetime, const std::string& message)
+		{ std::cout << formatter::format("[{}][{}] {}\n", datetime, type, message); });
 	if (wait_interval_ > 0)
 	{
 		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
