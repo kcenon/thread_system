@@ -113,13 +113,14 @@ jobs:
 
       - name: Cache CMake build
         uses: actions/cache@v3
+        id: cmake-cache
         with:
           path: |
             ${{ github.workspace }}/build
-          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
+          key: ${{ runner.os }}-cmake-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
-            ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-
-            ${{ runner.os }}-cmake-
+            ${{ runner.os }}-cmake-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-
+            ${{ runner.os }}-cmake-vs2022-
 
       - name: Build application
         shell: pwsh
@@ -129,6 +130,18 @@ jobs:
           
           Write-Host "Configuring CMake..."
           Push-Location build
+          
+          if (Test-Path "CMakeCache.txt") {
+            $cacheContent = Get-Content "CMakeCache.txt" -Raw
+            if ($cacheContent -match "CMAKE_GENERATOR:INTERNAL=Visual Studio \d+ \d+") {
+              if ($Matches[0] -notmatch "Visual Studio 17 2022") {
+                Write-Host "Removing incompatible CMake cache..."
+                Remove-Item "CMakeCache.txt"
+                Remove-Item -Recurse -Force "CMakeFiles"
+              }
+            }
+          }
+          
           cmake .. -G "Visual Studio 17 2022" -A x64 `
                   -DBUILD_TESTS=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
@@ -144,7 +157,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
+          key: ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
-            ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
-            ${{ runner.os }}-built-libs-
+            ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
+            ${{ runner.os }}-built-libs-vs2022-
