@@ -15,7 +15,7 @@ jobs:
   build_linux:
     permissions:
       contents: write
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,6 @@ jobs:
           sudo apt upgrade -y
           sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar
           sudo apt-get update
-          sudo apt-get install -y doxygen graphviz
           sudo apt-get install -y autoconf automake autoconf-archive
 
       - name: Check architecture and set environment variable if needed
@@ -111,12 +110,3 @@ jobs:
           key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
           restore-keys: |
             ${{ runner.os }}-built-libs-
-
-      - name: Generate Doxygen Documentation
-        run: doxygen Doxyfile
-
-      - name: Deploy Documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./documents/html
