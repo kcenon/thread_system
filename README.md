@@ -1,5 +1,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
 
+[![Linux](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml)
+[![Windows](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml)
+[![OSX](https://github.com/kcenon/thread_system/actions/workflows/build-OSX.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-OSX.yaml)
+
+
 # Thread System Project
 
 ## Purpose

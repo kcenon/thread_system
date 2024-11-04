@@ -13,9 +13,18 @@ on:
 
 jobs:
   build_windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     timeout-minutes: 60
+    env:
+      BUILD_TYPE: Debug
+      VCPKG_DEFAULT_TRIPLET: x64-windows
+    
     steps:
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      
       - uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -38,6 +47,11 @@ jobs:
             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
+      - name: Setup Visual Studio environment
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
       - name: Cache vcpkg
         uses: actions/cache@v3
         id: vcpkg-cache
@@ -48,6 +62,8 @@ jobs:
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
           key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-
 
       - name: Cache vcpkg installed
         uses: actions/cache@v3
@@ -55,44 +71,68 @@ jobs:
         with:
           path: ${{ github.workspace }}/vcpkg_installed
           key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-installed-
 
       - name: Set up vcpkg
+        shell: pwsh
         run: |
           if (!(Test-Path -Path .\vcpkg)) {
+            Write-Host "Cloning vcpkg repository..."
             git clone https://github.com/Microsoft/vcpkg.git
           } else {
+            Write-Host "Updating existing vcpkg repository..."
             Push-Location .\vcpkg
             git pull
             Pop-Location
           }
+          
+          Write-Host "Bootstrapping vcpkg..."
           .\vcpkg\bootstrap-vcpkg.bat
+          
+          Write-Host "Integrating vcpkg..."
           .\vcpkg\vcpkg.exe integrate install
 
       - name: Install dependencies with vcpkg
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
+        shell: pwsh
         run: |
-          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed
+          Write-Host "Installing dependencies..."
+          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $env:VCPKG_DEFAULT_TRIPLET
 
       - name: Cache CMake build
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/build
-          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
+            ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-
             ${{ runner.os }}-cmake-
 
       - name: Build application
+        shell: pwsh
         run: |
-          mkdir -Force build
-          cd build
-          cmake .. -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="..\target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="${env:GITHUB_WORKSPACE}\vcpkg\scripts\buildsystems\vcpkg.cmake"
-          cmake --build .
+          Write-Host "Creating build directory..."
+          New-Item -ItemType Directory -Force -Path build | Out-Null
+          
+          Write-Host "Configuring CMake..."
+          Push-Location build
+          cmake .. -DBUILD_TESTS=ON `
+                  -DCMAKE_INSTALL_PREFIX="..\target" `
+                  -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
+                  -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+                  -DVCPKG_TARGET_TRIPLET=$env:VCPKG_DEFAULT_TRIPLET
+          
+          Write-Host "Building project..."
+          cmake --build . --config $env:BUILD_TYPE --parallel $env:NUMBER_OF_PROCESSORS
+          Pop-Location
 
       - name: Cache built libraries
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
+          key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
+            ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
             ${{ runner.os }}-built-libs-
