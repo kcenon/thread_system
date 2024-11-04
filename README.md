@@ -2,7 +2,6 @@
 
 [![Linux](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml)
 [![Windows](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml)
-[![OSX](https://github.com/kcenon/thread_system/actions/workflows/build-OSX.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-OSX.yaml)
 
 
 # Thread System Project
