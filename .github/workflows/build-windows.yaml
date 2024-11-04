@@ -17,13 +17,23 @@ jobs:
     timeout-minutes: 60
     env:
       BUILD_TYPE: Debug
-      VCPKG_DEFAULT_TRIPLET: x64-windows
     
     steps:
+      - name: Clean workspace
+        run: |
+          if (Test-Path .git) {
+            Remove-Item -Recurse -Force .git
+          }
+          if (Test-Path .github) {
+            Remove-Item -Recurse -Force .github
+          }
+        shell: pwsh
+      
       - name: Configure git
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
+          git config --global core.longpaths true
       
       - uses: actions/checkout@v4
         with:
@@ -47,9 +57,10 @@ jobs:
             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
-      - name: Setup Visual Studio environment
+      - name: Setup Visual Studio
         uses: microsoft/setup-msbuild@v1.1
         with:
+          vs-version: '17.0'
           msbuild-architecture: x64
 
       - name: Cache vcpkg
@@ -98,7 +109,7 @@ jobs:
         shell: pwsh
         run: |
           Write-Host "Installing dependencies..."
-          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $env:VCPKG_DEFAULT_TRIPLET
+          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet x64-windows
 
       - name: Cache CMake build
         uses: actions/cache@v3
@@ -118,11 +129,12 @@ jobs:
           
           Write-Host "Configuring CMake..."
           Push-Location build
-          cmake .. -DBUILD_TESTS=ON `
+          cmake .. -G "Visual Studio 17 2022" -A x64 `
+                  -DBUILD_TESTS=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
                   -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-                  -DVCPKG_TARGET_TRIPLET=$env:VCPKG_DEFAULT_TRIPLET
+                  -DVCPKG_TARGET_TRIPLET=x64-windows
           
           Write-Host "Building project..."
           cmake --build . --config $env:BUILD_TYPE --parallel $env:NUMBER_OF_PROCESSORS
