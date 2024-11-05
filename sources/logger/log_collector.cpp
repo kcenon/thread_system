@@ -93,7 +93,7 @@ namespace log_module
 		write_string(type, message, start_time);
 	}
 
-	auto log_collector::has_work() const -> bool { return !log_queue_->empty(); }
+	auto log_collector::should_continue_work() const -> bool { return !log_queue_->empty(); }
 
 	auto log_collector::before_start() -> std::tuple<bool, std::optional<std::string>>
 	{

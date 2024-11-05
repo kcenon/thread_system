@@ -130,7 +130,7 @@ namespace log_module
 		 * @brief Checks if there is work to be done in the job queue.
 		 * @return True if there are jobs in the queue, false otherwise.
 		 */
-		[[nodiscard]] auto has_work() const -> bool override;
+		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
 		 * @brief Performs initialization before starting the file writer thread.

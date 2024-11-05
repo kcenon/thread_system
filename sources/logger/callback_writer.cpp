@@ -59,7 +59,7 @@ namespace log_module
 		callback_ = callback;
 	}
 
-	auto callback_writer::has_work() const -> bool { return !job_queue_->empty(); }
+	auto callback_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
 	auto callback_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
 	{

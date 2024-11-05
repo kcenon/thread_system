@@ -48,8 +48,6 @@ namespace thread_module
 
 	thread_base::~thread_base(void) { stop(); }
 
-	auto thread_base::get_ptr(void) -> std::shared_ptr<thread_base> { return shared_from_this(); }
-
 	auto thread_base::set_wake_interval(
 		const std::optional<std::chrono::milliseconds>& wake_interval) -> void
 	{
@@ -98,9 +96,9 @@ namespace thread_module
 					}
 
 #ifdef USE_STD_JTHREAD
-					while (!stop_token.stop_requested() || has_work())
+					while (!stop_token.stop_requested() || should_continue_work())
 #else
-					while (!stop_requested_ || has_work())
+					while (!stop_requested_ || should_continue_work())
 #endif
 					{
 						std::unique_lock<std::mutex> lock(cv_mutex_);
@@ -109,10 +107,11 @@ namespace thread_module
 #ifdef USE_STD_JTHREAD
 							worker_condition_.wait_for(
 								lock, wake_interval_.value(), [this, &stop_token]()
-								{ return stop_token.stop_requested() || has_work(); });
+								{ return stop_token.stop_requested() || should_continue_work(); });
 #else
-							worker_condition_.wait_for(lock, wake_interval_.value(), [this]()
-													   { return stop_requested_ || has_work(); });
+							worker_condition_.wait_for(
+								lock, wake_interval_.value(),
+								[this]() { return stop_requested_ || should_continue_work(); });
 #endif
 						}
 						else
@@ -120,17 +119,18 @@ namespace thread_module
 #ifdef USE_STD_JTHREAD
 							worker_condition_.wait(
 								lock, [this, &stop_token]()
-								{ return stop_token.stop_requested() || has_work(); });
+								{ return stop_token.stop_requested() || should_continue_work(); });
 #else
-							worker_condition_.wait(lock, [this]()
-												   { return stop_requested_ || has_work(); });
+							worker_condition_.wait(
+								lock,
+								[this]() { return stop_requested_ || should_continue_work(); });
 #endif
 						}
 
 #ifdef USE_STD_JTHREAD
-						if (stop_token.stop_requested() && !has_work())
+						if (stop_token.stop_requested() && !should_continue_work())
 #else
-						if (stop_requested_ && !has_work())
+						if (stop_requested_ && !should_continue_work())
 #endif
 						{
 							break;

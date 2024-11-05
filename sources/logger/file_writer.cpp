@@ -68,7 +68,7 @@ namespace log_module
 
 	auto file_writer::file_target(const log_types& type) -> void { file_target_ = type; }
 
-	auto file_writer::has_work() const -> bool { return !job_queue_->empty(); }
+	auto file_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
 	auto file_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
 	{

@@ -51,7 +51,7 @@ namespace thread_pool_module
 		job_queue_ = job_queue;
 	}
 
-	auto thread_worker::has_work() const -> bool
+	auto thread_worker::should_continue_work() const -> bool
 	{
 		if (job_queue_ == nullptr)
 		{

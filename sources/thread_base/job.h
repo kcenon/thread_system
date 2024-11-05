@@ -52,7 +52,7 @@ namespace thread_module
 	 * whether the job was executed successfully and an optional string with an
 	 * error message in case the job failed.
 	 */
-	class job : public std::enable_shared_from_this<job>
+	class job
 	{
 	public:
 		/**
@@ -69,12 +69,6 @@ namespace thread_module
 		 * @brief Virtual destructor for the job class.
 		 */
 		virtual ~job(void);
-
-		/**
-		 * @brief Get a shared pointer to this job object.
-		 * @return std::shared_ptr<job> A shared pointer to this job.
-		 */
-		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<job>;
 
 		/**
 		 * @brief Get the name of the job.
