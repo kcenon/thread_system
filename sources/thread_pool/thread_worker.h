@@ -76,7 +76,7 @@ namespace thread_pool_module
 		 * @brief Checks if there is work available in the job queue.
 		 * @return bool True if there is work to be done, false otherwise.
 		 */
-		[[nodiscard]] auto has_work() const -> bool override;
+		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
 		 * @brief Performs the actual work by processing jobs from the queue.

@@ -55,9 +55,14 @@ namespace thread_module
 	 * behavior. It handles thread lifecycle management and provides mechanisms for
 	 * waking the thread at specified intervals and setting custom thread titles.
 	 */
-	class thread_base : public std::enable_shared_from_this<thread_base>
+	class thread_base
 	{
 	public:
+		thread_base(const thread_base&) = delete;
+		thread_base& operator=(const thread_base&) = delete;
+		thread_base(thread_base&&) = delete;
+		thread_base& operator=(thread_base&&) = delete;
+
 		/**
 		 * @brief Constructs a new thread_base object.
 		 * @param thread_title The title for the worker thread, used for identification purposes.
@@ -68,12 +73,6 @@ namespace thread_module
 		 * @brief Virtual destructor for the thread_base class.
 		 */
 		virtual ~thread_base(void);
-
-		/**
-		 * @brief Get a shared pointer to this thread_base object.
-		 * @return std::shared_ptr<thread_base> A shared pointer to this thread_base.
-		 */
-		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_base>;
 
 		/**
 		 * @brief Sets the wake interval for the worker thread.
@@ -109,7 +108,7 @@ namespace thread_module
 		 * @brief Checks if there is work to be done.
 		 * @return bool True if there is work to be done, false otherwise.
 		 */
-		[[nodiscard]] virtual auto has_work(void) const -> bool { return false; }
+		[[nodiscard]] virtual auto should_continue_work(void) const -> bool { return false; }
 
 		/**
 		 * @brief Called before the worker thread starts.

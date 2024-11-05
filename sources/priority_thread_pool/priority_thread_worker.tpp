@@ -70,7 +70,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::has_work() const -> bool
+	auto priority_thread_worker<priority_type>::should_continue_work() const -> bool
 	{
 		if (job_queue_ == nullptr)
 		{

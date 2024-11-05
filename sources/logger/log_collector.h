@@ -146,7 +146,7 @@ namespace log_module
 		 * @brief Checks if there are log messages to be processed.
 		 * @return True if there are log messages in the queue, false otherwise.
 		 */
-		[[nodiscard]] auto has_work() const -> bool override;
+		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
 		 * @brief Performs initialization before starting the log collector thread.

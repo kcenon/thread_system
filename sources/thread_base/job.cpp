@@ -44,8 +44,6 @@ namespace thread_module
 
 	job::~job(void) {}
 
-	auto job::get_ptr(void) -> std::shared_ptr<job> { return shared_from_this(); }
-
 	auto job::get_name(void) const -> std::string { return name_; }
 
 	auto job::do_work(void) -> std::tuple<bool, std::optional<std::string>>

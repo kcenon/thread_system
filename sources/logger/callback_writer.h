@@ -92,7 +92,7 @@ namespace log_module
 		 *
 		 * @return bool True if tasks are available, false otherwise.
 		 */
-		[[nodiscard]] auto has_work() const -> bool override;
+		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
 		 * @brief Processes log messages by executing the callback function.

@@ -50,7 +50,7 @@ namespace log_module
 	{
 	}
 
-	auto console_writer::has_work() const -> bool { return !job_queue_->empty(); }
+	auto console_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
 	auto console_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
 	{
