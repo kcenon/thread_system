@@ -104,35 +104,18 @@ namespace log_module
 			return { false, work_error };
 		}
 
-		auto datetime = job.datetime();
-		auto message = job.message();
-
-		if (console_log_type_ > log_types::None)
+		auto [enqueued, enqueue_error] = enqueue_log(console_log_type_, log_types::None,
+													 console_queue_, job.datetime(), job.message());
+		if (enqueue_error.has_value())
 		{
-			auto console_queue = console_queue_.lock();
-			if (console_queue != nullptr && !message.empty())
-			{
-				auto [enqueued, enqueue_error] = console_queue->enqueue(
-					std::make_unique<message_job>(log_types::None, datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
-		if (file_log_type_ > log_types::None)
+		std::tie(enqueued, enqueue_error) = enqueue_log(file_log_type_, log_types::None,
+														file_queue_, job.datetime(), job.message());
+		if (enqueue_error.has_value())
 		{
-			auto file_queue = file_queue_.lock();
-			if (file_queue != nullptr && !message.empty())
-			{
-				auto [enqueued, enqueue_error] = file_queue->enqueue(
-					std::make_unique<message_job>(log_types::None, datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
 		return { true, std::nullopt };
@@ -171,49 +154,28 @@ namespace log_module
 			return { true, std::nullopt };
 		}
 
-		auto datetime = current_log->datetime();
-		auto message = current_log->message();
-
-		if (console_log_type_ > log_types::None)
+		auto [enqueued, enqueue_error]
+			= enqueue_log(current_log->get_type(), current_log->get_type(), console_queue_,
+						  current_log->datetime(), current_log->message());
+		if (enqueue_error.has_value())
 		{
-			auto console_queue = console_queue_.lock();
-			if (current_log->get_type() <= console_log_type_ && console_queue != nullptr)
-			{
-				auto [enqueued, enqueue_error] = console_queue->enqueue(
-					std::make_unique<message_job>(current_log->get_type(), datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
-		if (file_log_type_ > log_types::None)
+		std::tie(enqueued, enqueue_error)
+			= enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
+						  current_log->datetime(), current_log->message());
+		if (enqueue_error.has_value())
 		{
-			auto file_queue = file_queue_.lock();
-			if (current_log->get_type() <= file_log_type_ && file_queue != nullptr)
-			{
-				auto [enqueued, enqueue_error] = file_queue->enqueue(
-					std::make_unique<message_job>(current_log->get_type(), datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
-		if (callback_log_type_ > log_types::None)
+		std::tie(enqueued, enqueue_error)
+			= enqueue_log(current_log->get_type(), current_log->get_type(), callback_queue_,
+						  current_log->datetime(), current_log->message());
+		if (enqueue_error.has_value())
 		{
-			auto callback_queue = callback_queue_.lock();
-			if (current_log->get_type() <= callback_log_type_ && callback_queue != nullptr)
-			{
-				auto [enqueued, enqueue_error] = callback_queue->enqueue(
-					std::make_unique<message_job>(current_log->get_type(), datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
 		return { true, std::nullopt };
@@ -228,37 +190,46 @@ namespace log_module
 			return { false, work_error };
 		}
 
-		auto datetime = job.datetime();
-		auto message = job.message();
-
-		if (console_log_type_ > log_types::None)
+		auto [enqueued, enqueue_error] = enqueue_log(console_log_type_, log_types::None,
+													 console_queue_, job.datetime(), job.message());
+		if (enqueue_error.has_value())
 		{
-			auto console_queue = console_queue_.lock();
-			if (console_queue != nullptr && !message.empty())
-			{
-				auto [enqueued, enqueue_error] = console_queue->enqueue(
-					std::make_unique<message_job>(log_types::None, datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
-			}
+			return { false, enqueue_error };
 		}
 
-		if (file_log_type_ > log_types::None)
+		std::tie(enqueued, enqueue_error) = enqueue_log(file_log_type_, log_types::None,
+														file_queue_, job.datetime(), job.message());
+		if (enqueue_error.has_value())
 		{
-			auto file_queue = file_queue_.lock();
-			if (file_queue != nullptr && !message.empty())
+			return { false, enqueue_error };
+		}
+
+		return { true, std::nullopt };
+	}
+
+	auto log_collector::enqueue_log(const log_types& current_log_type,
+									const log_types& target_log_type,
+									std::weak_ptr<job_queue> weak_queue,
+									const std::string& datetime,
+									const std::string& message)
+		-> std::tuple<bool, std::optional<std::string>>
+	{
+		if (current_log_type == log_types::None)
+		{
+			return { true, std::nullopt };
+		}
+
+		auto locked_queue = weak_queue.lock();
+		if (locked_queue != nullptr && !message.empty())
+		{
+			auto [enqueued, enqueue_error] = locked_queue->enqueue(
+				std::make_unique<message_job>(target_log_type, datetime, message));
+			if (enqueue_error.has_value())
 			{
-				auto [enqueued, enqueue_error] = file_queue->enqueue(
-					std::make_unique<message_job>(log_types::None, datetime, message));
-				if (enqueue_error.has_value())
-				{
-					return { false, enqueue_error };
-				}
+				return { false, enqueue_error };
 			}
 		}
 
 		return { true, std::nullopt };
 	}
-}
+} // namespace log_module
