@@ -177,6 +177,18 @@ namespace log_module
 		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
 	protected:
+		/**
+		 * @brief Enqueues a log message for processing.
+		 * @param current_log_type The log type of the current message.
+		 * @param target_log_type The log type to be processed.
+		 * @param weak_queue A weak pointer to the job queue.
+		 * @param datetime The timestamp of the log message.
+		 * @param message The content of the log message.
+		 * @return A tuple containing:
+		 *         - bool: Indicates whether the log was successfully enqueued.
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions.
+		 */
 		auto enqueue_log(const log_types& current_log_type,
 						 const log_types& target_log_type,
 						 std::weak_ptr<job_queue> weak_queue,
