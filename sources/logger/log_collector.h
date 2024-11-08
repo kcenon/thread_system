@@ -177,6 +177,13 @@ namespace log_module
 		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
 
 	protected:
+		auto enqueue_log(const log_types& current_log_type,
+						 const log_types& target_log_type,
+						 std::weak_ptr<job_queue> weak_queue,
+						 const std::string& datetime,
+						 const std::string& message)
+			-> std::tuple<bool, std::optional<std::string>>;
+
 		/**
 		 * @brief Template method for writing log messages of various string types.
 		 *
