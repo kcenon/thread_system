@@ -1,0 +1,112 @@
+name: Build-Linux-Clang
+
+on:
+  push:
+    branches:
+      - main
+      - release**
+  pull_request:
+    branches:
+      - main
+      - release**
+  workflow_dispatch:
+
+jobs:
+  build_linux_clang:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          repository: kcenon/thread_system
+          ssh-strict: true
+          ssh-user: git
+          persist-credentials: true
+          clean: true
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+          fetch-tags: false
+          show-progress: true
+          lfs: false
+          set-safe-directory: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt upgrade -y
+          sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar clang
+          sudo apt-get update
+          sudo apt-get install -y autoconf automake autoconf-archive
+
+      - name: Check architecture and set environment variable if needed
+        run: |
+          if [ $(uname -m) == "aarch64" ]; then
+            echo "VCPKG_FORCE_SYSTEM_BINARIES=arm" >> $GITHUB_ENV
+          fi
+      
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        id: vcpkg-cache
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+            !${{ github.workspace }}/vcpkg/buildtrees
+            !${{ github.workspace }}/vcpkg/packages
+            !${{ github.workspace }}/vcpkg/downloads
+          key: ${{ runner.os }}-clang-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+
+      - name: Set up vcpkg
+        run: |
+          if [ ! -d "vcpkg" ]; then
+            git clone https://github.com/Microsoft/vcpkg.git
+          fi
+          cd vcpkg
+          git pull
+          ./bootstrap-vcpkg.sh
+          cd ..
+
+      - name: Cache vcpkg installed
+        uses: actions/cache@v3
+        id: vcpkg-installed
+        with:
+          path: ${{ github.workspace }}/vcpkg_installed
+          key: ${{ runner.os }}-clang-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+
+      - name: Install dependencies with vcpkg
+        if: steps.vcpkg-installed.outputs.cache-hit != 'true'
+        run: |
+          ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed
+
+      - name: Cache CMake build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/build
+          key: ${{ runner.os }}-clang-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-clang-cmake-
+
+      - name: Build application with Clang
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="../target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+          cmake --build .
+
+      - name: Cache built libraries
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/build
+          key: ${{ runner.os }}-clang-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
+          restore-keys: |
+            ${{ runner.os }}-clang-built-libs-
