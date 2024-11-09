@@ -39,240 +39,244 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace log_module
 {
-#pragma region singleton
-	std::unique_ptr<logger> logger::handle_;
-	std::once_flag logger::once_;
-
-	auto logger::handle(void) -> logger&
+	namespace detail
 	{
-		call_once(once_, []() { handle_.reset(new logger); });
+#pragma region singleton
+		std::unique_ptr<logger> logger::handle_;
+		std::once_flag logger::once_;
 
-		return *handle_.get();
-	}
+		auto logger::handle(void) -> logger&
+		{
+			call_once(once_, []() { handle_.reset(new logger); });
 
-	auto logger::destroy() -> void { handle_.reset(); }
+			return *handle_.get();
+		}
+
+		auto logger::destroy() -> void { handle_.reset(); }
 
 #pragma endregion
 
-	logger::logger()
-		: collector_(std::make_shared<log_collector>())
-		, console_writer_(std::make_shared<console_writer>())
-		, file_writer_(std::make_shared<file_writer>())
-		, callback_writer_(std::make_shared<callback_writer>())
-	{
-	}
-
-	auto logger::set_title(const std::string& title) -> void
-	{
-		if (file_writer_ == nullptr)
+		logger::logger()
+			: collector_(std::make_shared<log_collector>())
+			, console_writer_(std::make_shared<console_writer>())
+			, file_writer_(std::make_shared<file_writer>())
+			, callback_writer_(std::make_shared<callback_writer>())
 		{
-			return;
 		}
 
-		file_writer_->set_title(title);
-	}
-
-	auto logger::callback_target(const log_types& type) -> void
-	{
-		if (collector_ == nullptr)
+		auto logger::set_title(const std::string& title) -> void
 		{
-			return;
+			if (file_writer_ == nullptr)
+			{
+				return;
+			}
+
+			file_writer_->set_title(title);
 		}
 
-		collector_->callback_target(type);
-	}
-
-	auto logger::callback_target() const -> log_types
-	{
-		if (collector_ == nullptr)
+		auto logger::callback_target(const log_types& type) -> void
 		{
-			return log_types::None;
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			collector_->callback_target(type);
 		}
 
-		return collector_->callback_target();
-	}
-
-	auto logger::file_target(const log_types& type) -> void
-	{
-		if (collector_ != nullptr)
+		auto logger::callback_target() const -> log_types
 		{
-			collector_->file_target(type);
+			if (collector_ == nullptr)
+			{
+				return log_types::None;
+			}
+
+			return collector_->callback_target();
 		}
 
-		if (file_writer_ != nullptr)
+		auto logger::file_target(const log_types& type) -> void
 		{
-			file_writer_->file_target(type);
-		}
-	}
+			if (collector_ != nullptr)
+			{
+				collector_->file_target(type);
+			}
 
-	auto logger::file_target() const -> log_types
-	{
-		if (collector_ == nullptr)
-		{
-			return log_types::None;
-		}
-
-		return collector_->file_target();
-	}
-
-	auto logger::console_target(const log_types& type) -> void
-	{
-		if (collector_ == nullptr)
-		{
-			return;
+			if (file_writer_ != nullptr)
+			{
+				file_writer_->file_target(type);
+			}
 		}
 
-		collector_->console_target(type);
-	}
-
-	auto logger::console_target() const -> log_types
-	{
-		if (collector_ == nullptr)
+		auto logger::file_target() const -> log_types
 		{
-			return log_types::None;
+			if (collector_ == nullptr)
+			{
+				return log_types::None;
+			}
+
+			return collector_->file_target();
 		}
 
-		return collector_->console_target();
-	}
-
-	auto logger::message_callback(
-		const std::function<void(const log_types&, const std::string&, const std::string&)>&
-			callback) -> void
-	{
-		if (callback_writer_ == nullptr)
+		auto logger::console_target(const log_types& type) -> void
 		{
-			return;
+			if (collector_ == nullptr)
+			{
+				return;
+			}
+
+			collector_->console_target(type);
 		}
 
-		callback_writer_->message_callback(callback);
-	}
-
-	auto logger::set_max_lines(uint32_t max_lines) -> void
-	{
-		if (file_writer_ == nullptr)
+		auto logger::console_target() const -> log_types
 		{
-			return;
+			if (collector_ == nullptr)
+			{
+				return log_types::None;
+			}
+
+			return collector_->console_target();
 		}
 
-		file_writer_->set_max_lines(max_lines);
-	}
-
-	auto logger::get_max_lines() const -> uint32_t
-	{
-		if (file_writer_ == nullptr)
+		auto logger::message_callback(
+			const std::function<void(const log_types&, const std::string&, const std::string&)>&
+				callback) -> void
 		{
-			return 0;
+			if (callback_writer_ == nullptr)
+			{
+				return;
+			}
+
+			callback_writer_->message_callback(callback);
 		}
 
-		return file_writer_->get_max_lines();
-	}
-
-	auto logger::set_use_backup(bool use_backup) -> void
-	{
-		if (file_writer_ == nullptr)
+		auto logger::set_max_lines(uint32_t max_lines) -> void
 		{
-			return;
+			if (file_writer_ == nullptr)
+			{
+				return;
+			}
+
+			file_writer_->set_max_lines(max_lines);
 		}
 
-		file_writer_->set_use_backup(use_backup);
-	}
-
-	auto logger::get_use_backup() const -> bool
-	{
-		if (file_writer_ == nullptr)
+		auto logger::get_max_lines() const -> uint32_t
 		{
-			return false;
+			if (file_writer_ == nullptr)
+			{
+				return 0;
+			}
+
+			return file_writer_->get_max_lines();
 		}
 
-		return file_writer_->get_use_backup();
-	}
-
-	auto logger::set_wake_interval(std::chrono::milliseconds interval) -> void
-	{
-		if (console_writer_ != nullptr)
+		auto logger::set_use_backup(bool use_backup) -> void
 		{
-			console_writer_->set_wake_interval(interval);
+			if (file_writer_ == nullptr)
+			{
+				return;
+			}
+
+			file_writer_->set_use_backup(use_backup);
 		}
 
-		if (file_writer_ != nullptr)
+		auto logger::get_use_backup() const -> bool
 		{
-			file_writer_->set_wake_interval(interval);
-		}
-	}
+			if (file_writer_ == nullptr)
+			{
+				return false;
+			}
 
-	auto logger::start() -> std::tuple<bool, std::optional<std::string>>
-	{
-		if (collector_ == nullptr)
-		{
-			return { false, "there is no collector" };
+			return file_writer_->get_use_backup();
 		}
 
-		collector_->set_console_queue(console_writer_->get_job_queue());
-		collector_->set_file_queue(file_writer_->get_job_queue());
-		collector_->set_callback_queue(callback_writer_->get_job_queue());
-
-		bool started = false;
-		std::optional<std::string> start_error;
-
-		std::tie(started, start_error) = console_writer_->start();
-		if (start_error.has_value())
+		auto logger::set_wake_interval(std::chrono::milliseconds interval) -> void
 		{
-			return { false,
-					 formatter::format("cannot start {}: {}", console_writer_->get_thread_title(),
-									   start_error.value_or("unknown error")) };
+			if (console_writer_ != nullptr)
+			{
+				console_writer_->set_wake_interval(interval);
+			}
+
+			if (file_writer_ != nullptr)
+			{
+				file_writer_->set_wake_interval(interval);
+			}
 		}
 
-		std::tie(started, start_error) = file_writer_->start();
-		if (start_error.has_value())
+		auto logger::start() -> std::tuple<bool, std::optional<std::string>>
 		{
-			return { false,
-					 formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
-									   start_error.value_or("unknown error")) };
+			if (collector_ == nullptr)
+			{
+				return { false, "there is no collector" };
+			}
+
+			collector_->set_console_queue(console_writer_->get_job_queue());
+			collector_->set_file_queue(file_writer_->get_job_queue());
+			collector_->set_callback_queue(callback_writer_->get_job_queue());
+
+			bool started = false;
+			std::optional<std::string> start_error;
+
+			std::tie(started, start_error) = console_writer_->start();
+			if (start_error.has_value())
+			{
+				return { false, formatter::format("cannot start {}: {}",
+												  console_writer_->get_thread_title(),
+												  start_error.value_or("unknown error")) };
+			}
+
+			std::tie(started, start_error) = file_writer_->start();
+			if (start_error.has_value())
+			{
+				return { false,
+						 formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
+										   start_error.value_or("unknown error")) };
+			}
+
+			std::tie(started, start_error) = callback_writer_->start();
+			if (start_error.has_value())
+			{
+				return { false, formatter::format("cannot start {}: {}",
+												  callback_writer_->get_thread_title(),
+												  start_error.value_or("unknown error")) };
+			}
+
+			std::tie(started, start_error) = collector_->start();
+			if (start_error.has_value())
+			{
+				return { false,
+						 formatter::format("cannot start {}: {}", collector_->get_thread_title(),
+										   start_error.value_or("unknown error")) };
+			}
+
+			return { true, std::nullopt };
 		}
 
-		std::tie(started, start_error) = callback_writer_->start();
-		if (start_error.has_value())
+		auto logger::stop() -> void
 		{
-			return { false,
-					 formatter::format("cannot start {}: {}", callback_writer_->get_thread_title(),
-									   start_error.value_or("unknown error")) };
+			if (collector_ != nullptr)
+			{
+				collector_->stop();
+			}
+
+			if (console_writer_ != nullptr)
+			{
+				console_writer_->stop();
+			}
+
+			if (file_writer_ != nullptr)
+			{
+				file_writer_->stop();
+			}
+
+			if (callback_writer_ != nullptr)
+			{
+				callback_writer_->stop();
+			}
 		}
 
-		std::tie(started, start_error) = collector_->start();
-		if (start_error.has_value())
+		auto logger::time_point() -> std::chrono::time_point<std::chrono::high_resolution_clock>
 		{
-			return { false, formatter::format("cannot start {}: {}", collector_->get_thread_title(),
-											  start_error.value_or("unknown error")) };
+			return std::chrono::high_resolution_clock::now();
 		}
-
-		return { true, std::nullopt };
-	}
-
-	auto logger::stop() -> void
-	{
-		if (collector_ != nullptr)
-		{
-			collector_->stop();
-		}
-
-		if (console_writer_ != nullptr)
-		{
-			console_writer_->stop();
-		}
-
-		if (file_writer_ != nullptr)
-		{
-			file_writer_->stop();
-		}
-
-		if (callback_writer_ != nullptr)
-		{
-			callback_writer_->stop();
-		}
-	}
-
-	auto logger::time_point() -> std::chrono::time_point<std::chrono::high_resolution_clock>
-	{
-		return std::chrono::high_resolution_clock::now();
 	}
 } // namespace log_module
