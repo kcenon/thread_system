@@ -61,21 +61,21 @@ uint16_t bottom_priority_workers_ = 1;
 
 auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
-	logger::handle().set_title("priority_thread_pool_sample");
-	logger::handle().set_use_backup(use_backup_);
-	logger::handle().set_max_lines(max_lines_);
-	logger::handle().file_target(file_target_);
-	logger::handle().console_target(console_target_);
-	logger::handle().callback_target(callback_target_);
-	logger::handle().message_callback(
+	log_module::set_title("priority_thread_pool_sample");
+	log_module::set_use_backup(use_backup_);
+	log_module::set_max_lines(max_lines_);
+	log_module::file_target(file_target_);
+	log_module::console_target(console_target_);
+	log_module::callback_target(callback_target_);
+	log_module::message_callback(
 		[](const log_types& type, const std::string& datetime, const std::string& message)
 		{ std::cout << formatter::format("[{}][{}] {}\n", datetime, type, message); });
 	if (wait_interval_ > 0)
 	{
-		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
+		log_module::set_wake_interval(std::chrono::milliseconds(wait_interval_));
 	}
 
-	return logger::handle().start();
+	return log_module::start();
 }
 
 auto create_default(const uint16_t& top_priority_workers,
@@ -141,20 +141,20 @@ auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
 			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
 				[target](void) -> std::tuple<bool, std::optional<std::string>>
 				{
-					logger::handle().write(log_types::Debug, "Hello, World!: {} priority", target);
+					log_module::write(log_types::Debug, "Hello, World!: {} priority", target);
 
 					return { true, std::nullopt };
 				},
 				static_cast<test_priority>(target)));
 		if (!enqueued)
 		{
-			logger::handle().write(log_types::Error, "error enqueuing job: {}",
-								   enqueue_error.value_or("unknown error"));
+			log_module::write(log_types::Error, "error enqueuing job: {}",
+							  enqueue_error.value_or("unknown error"));
 
 			break;
 		}
 
-		logger::handle().write(log_types::Sequence, "enqueued job: {}", index);
+		log_module::write(log_types::Sequence, "enqueued job: {}", index);
 	}
 
 	return { true, std::nullopt };
@@ -174,19 +174,19 @@ auto main() -> int
 		= create_default(top_priority_workers_, middle_priority_workers_, bottom_priority_workers_);
 	if (thread_pool == nullptr)
 	{
-		logger::handle().write(log_types::Error, "error creating thread pool: {}",
-							   create_error.value_or("unknown error"));
+		log_module::write(log_types::Error, "error creating thread pool: {}",
+						  create_error.value_or("unknown error"));
 
 		return 0;
 	}
 
-	logger::handle().write(log_types::Information, "created priority thread pool");
+	log_module::write(log_types::Information, "created priority thread pool");
 
 	auto [stored, store_error] = store_job(thread_pool);
 	if (!stored)
 	{
-		logger::handle().write(log_types::Error, "error storing job: {}",
-							   store_error.value_or("unknown error"));
+		log_module::write(log_types::Error, "error storing job: {}",
+						  store_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
@@ -196,24 +196,24 @@ auto main() -> int
 	auto [thread_started, thread_start_error] = thread_pool->start();
 	if (!thread_started)
 	{
-		logger::handle().write(log_types::Error, "error starting thread pool: {}",
-							   thread_start_error.value_or("unknown error"));
+		log_module::write(log_types::Error, "error starting thread pool: {}",
+						  thread_start_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	logger::handle().write(log_types::Information, "started thread pool");
+	log_module::write(log_types::Information, "started thread pool");
 
 	thread_pool->stop();
 
-	logger::handle().write(log_types::Information, "stopped thread pool");
+	log_module::write(log_types::Information, "stopped thread pool");
 
 	thread_pool.reset();
 
-	logger::handle().stop();
-	logger::destroy();
+	log_module::stop();
+	log_module::destroy();
 
 	return 0;
 }

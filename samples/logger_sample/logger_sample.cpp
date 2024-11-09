@@ -48,21 +48,21 @@ log_types callback_target_ = log_types::None;
 
 auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 {
-	logger::handle().set_title("logger_sample");
-	logger::handle().set_use_backup(use_backup_);
-	logger::handle().set_max_lines(max_lines_);
-	logger::handle().file_target(file_target_);
-	logger::handle().console_target(console_target_);
-	logger::handle().callback_target(callback_target_);
-	logger::handle().message_callback(
+	log_module::set_title("logger_sample");
+	log_module::set_use_backup(use_backup_);
+	log_module::set_max_lines(max_lines_);
+	log_module::file_target(file_target_);
+	log_module::console_target(console_target_);
+	log_module::callback_target(callback_target_);
+	log_module::message_callback(
 		[](const log_types& type, const std::string& datetime, const std::string& message)
 		{ std::cout << formatter::format("[{}][{}] {}\n", datetime, type, message); });
 	if (wait_interval_ > 0)
 	{
-		logger::handle().set_wake_interval(std::chrono::milliseconds(wait_interval_));
+		log_module::set_wake_interval(std::chrono::milliseconds(wait_interval_));
 	}
 
-	return logger::handle().start();
+	return log_module::start();
 }
 
 auto main() -> int
@@ -77,29 +77,28 @@ auto main() -> int
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		logger::handle().write(log_types::Debug, "안녕, World!: {}", index);
-		logger::handle().write(log_types::Debug, "테스트 #{} - Hello, 世界!", index);
-		logger::handle().write(log_types::Debug, "警告 {}: こんにちは", index);
+		log_module::write(log_types::Debug, "안녕, World!: {}", index);
+		log_module::write(log_types::Debug, "테스트 #{} - Hello, 世界!", index);
+		log_module::write(log_types::Debug, "警告 {}: こんにちは", index);
 
-		logger::handle().write(log_types::Sequence, L"안녕, World!: {}", index);
-		logger::handle().write(log_types::Sequence, L"테스트 #{} - Hello, 世界!", index);
-		logger::handle().write(log_types::Sequence, L"警告 {}: こんにちは", index);
+		log_module::write(log_types::Sequence, L"안녕, World!: {}", index);
+		log_module::write(log_types::Sequence, L"테스트 #{} - Hello, 世界!", index);
+		log_module::write(log_types::Sequence, L"警告 {}: こんにちは", index);
 
-		logger::handle().write(log_types::Parameter, "복합 테스트 - 값: {}, 이름: {}", index,
-							   "홍길동");
-		logger::handle().write(log_types::Parameter, L"복합 테스트 - 값: {}, 이름: {}", index,
-							   L"홍길동");
+		log_module::write(log_types::Parameter, "복합 테스트 - 값: {}, 이름: {}", index, "홍길동");
+		log_module::write(log_types::Parameter, L"복합 테스트 - 값: {}, 이름: {}", index,
+						  L"홍길동");
 
-		logger::handle().write(log_types::Information,
-							   "여러 줄 테스트:\n  라인 1: {}\n  라인 2: {}\n  라인 3: {}",
-							   "안녕하세요", "Hello, World", "こんにちは");
-		logger::handle().write(log_types::Information,
-							   L"여러 줄 테스트:\n  라인 1: {}\n  라인 2: {}\n  라인 3: {}",
-							   L"안녕하세요", L"Hello, World", L"こんにちは");
+		log_module::write(log_types::Information,
+						  "여러 줄 테스트:\n  라인 1: {}\n  라인 2: {}\n  라인 3: {}", "안녕하세요",
+						  "Hello, World", "こんにちは");
+		log_module::write(log_types::Information,
+						  L"여러 줄 테스트:\n  라인 1: {}\n  라인 2: {}\n  라인 3: {}",
+						  L"안녕하세요", L"Hello, World", L"こんにちは");
 	}
 
-	logger::handle().stop();
-	logger::destroy();
+	log_module::stop();
+	log_module::destroy();
 
 	return 0;
 }

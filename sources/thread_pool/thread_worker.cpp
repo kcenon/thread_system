@@ -103,14 +103,13 @@ namespace thread_pool_module
 
 		if (!started_time_point.has_value())
 		{
-			logger::handle().write(log_types::Sequence,
-								   "job executed successfully: {} on thread_worker",
-								   current_job->get_name());
+			log_module::write(log_types::Sequence, "job executed successfully: {} on thread_worker",
+							  current_job->get_name());
 		}
 
-		logger::handle().write(log_types::Sequence, started_time_point.value(),
-							   "job executed successfully: {} on thread_worker",
-							   current_job->get_name());
+		log_module::write(log_types::Sequence, started_time_point.value(),
+						  "job executed successfully: {} on thread_worker",
+						  current_job->get_name());
 
 		return { true, std::nullopt };
 	}
