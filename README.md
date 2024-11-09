@@ -1,6 +1,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
 
-[![Linux](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux.yaml)
+[![Linux-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml)
+[![Linux-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml)
 [![Windows](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml)
 
 
@@ -28,6 +29,7 @@ This project proposes a reusable Thread system for programmers who struggle with
 - `message_job` class: Represents a logging message job derived from the base job class
 - `console_writer` class: Handles writing log messages to the console in a separate thread
 - `file_writer` class: Handles writing log messages to files in a separate thread
+- `callback_writer` class: Handles writing log messages to callback in a separate thread
 
 ### 3. [Thread Pool System (thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/thread_pool)
 
