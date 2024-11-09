@@ -1,4 +1,4 @@
-name: Build-Linux
+name: Build-Linux-GCC
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_linux:
+  build_linux_gcc:
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
             !${{ github.workspace }}/vcpkg/buildtrees
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-gcc-vcpkg-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Set up vcpkg
         run: |
@@ -80,7 +80,7 @@ jobs:
         id: vcpkg-installed
         with:
           path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-gcc-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Install dependencies with vcpkg
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
@@ -92,21 +92,21 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/build
-          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          key: ${{ runner.os }}-gcc-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
           restore-keys: |
-            ${{ runner.os }}-cmake-
+            ${{ runner.os }}-gcc-cmake-
 
-      - name: Build application
+      - name: Build application with GCC
         run: |
           mkdir -p build
           cd build
-          cmake .. -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="../target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          cmake .. -DBUILD_TESTS=ON -DCMAKE_INSTALL_PREFIX="../target" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           cmake --build .
 
       - name: Cache built libraries
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
+          key: ${{ runner.os }}-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
           restore-keys: |
-            ${{ runner.os }}-built-libs-
+            ${{ runner.os }}-gcc-built-libs-
