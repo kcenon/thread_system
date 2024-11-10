@@ -1,11 +1,14 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
-
-[![Linux-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml)
-[![Linux-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml)
+---
+[![Ubuntu-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml)
+[![Ubuntu-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml)
+[![Fedora-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-clang.yaml)
+[![Fedora-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-gcc.yaml)
+---
 [![Windows-MinGW](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml)
 [![Windows-MSYS2](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml)
 [![Windows-VisualStudio](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml)
-
+---
 
 # Thread System Project
 
