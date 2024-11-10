@@ -207,7 +207,6 @@ auto main() -> int
 	thread_pool.reset();
 
 	log_module::stop();
-	log_module::destroy();
 
 	return 0;
 }
