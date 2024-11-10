@@ -1,4 +1,4 @@
-name: Build-Linux-GCC
+name: Build-Fedora-GCC
 
 on:
   push:
@@ -12,11 +12,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_linux_gcc:
+  build_fedora_gcc:
     permissions:
       contents: write
-    runs-on: ubuntu-latest
+    runs-on: fedora-latest
     timeout-minutes: 60
+    container:
+      image: fedora:latest
+      options: --privileged
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,11 +45,10 @@ jobs:
       
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt upgrade -y
-          sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar
-          sudo apt-get update
-          sudo apt-get install -y autoconf automake autoconf-archive
+          dnf update -y
+          dnf groupinstall -y "Development Tools"
+          dnf install -y cmake gcc gcc-c++ gdb pkgconfig curl zip unzip tar
+          dnf install -y autoconf automake autoconf-archive git
 
       - name: Check architecture and set environment variable if needed
         run: |
@@ -63,7 +65,7 @@ jobs:
             !${{ github.workspace }}/vcpkg/buildtrees
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-gcc-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          key: fedora-gcc-vcpkg-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Set up vcpkg
         run: |
@@ -80,7 +82,7 @@ jobs:
         id: vcpkg-installed
         with:
           path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-gcc-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+          key: fedora-gcc-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Install dependencies with vcpkg
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
@@ -92,9 +94,9 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/build
-          key: ${{ runner.os }}-gcc-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          key: fedora-gcc-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
           restore-keys: |
-            ${{ runner.os }}-gcc-cmake-
+            fedora-gcc-cmake-
 
       - name: Build application with GCC
         run: |
@@ -107,6 +109,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
+          key: fedora-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}
           restore-keys: |
-            ${{ runner.os }}-gcc-built-libs-
+            fedora-gcc-built-libs-
