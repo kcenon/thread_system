@@ -1,14 +1,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
----
+
 [![Ubuntu-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml)
 [![Ubuntu-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml)
-[![Fedora-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-clang.yaml)
-[![Fedora-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-fedora-gcc.yaml)
----
 [![Windows-MinGW](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml)
 [![Windows-MSYS2](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml)
 [![Windows-VisualStudio](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml)
----
 
 # Thread System Project
 
@@ -58,11 +54,12 @@ This project proposes a reusable Thread system for programmers who struggle with
 - Dynamic thread pool management
 - Error handling and reporting
 - Type safety using templates
-- Support for both `std::format` and `fmt::format`
+- Support for both `std::format` and `fmt::format`, controlled via the `USE_STD_FORMAT` macro
 
 ## Usage Examples
 
 Sample codes included in the project demonstrate the following use cases:
+
 - [Basic logger usage](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample/logger_sample.cpp)
 - [Basic thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample/thread_pool_sample.cpp)
 - [Priority-based thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample/priority_thread_pool_sample.cpp)
