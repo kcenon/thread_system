@@ -92,7 +92,7 @@ namespace log_module
 		 *         - std::optional<std::string>: Optional error description if the operation failed.
 		 * @note This method overrides the base class's `do_work()` method.
 		 */
-		[[nodiscard]] auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		[[nodiscard]] auto do_work() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Gets the type of the log entry.

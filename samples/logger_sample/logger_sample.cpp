@@ -46,7 +46,7 @@ log_types file_target_ = log_types::Sequence;
 log_types console_target_ = log_types::Sequence;
 log_types callback_target_ = log_types::None;
 
-auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
+auto initialize_logger() -> std::optional<std::string>
 {
 	log_module::set_title("logger_sample");
 	log_module::set_use_backup(use_backup_);
@@ -67,7 +67,7 @@ auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
 
 auto main() -> int
 {
-	auto [started, start_error] = initialize_logger();
+	auto start_error = initialize_logger();
 	if (start_error.has_value())
 	{
 		std::cerr << formatter::format("error starting logger: {}\n",

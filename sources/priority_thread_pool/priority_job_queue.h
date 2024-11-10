@@ -67,26 +67,26 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Enqueues a job into the queue.
 		 * @param value A unique pointer to the job to be enqueued.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value)
-			-> std::tuple<bool, std::optional<std::string>> override;
+			-> std::optional<std::string> override;
 
 		/**
 		 * @brief Enqueues a priority job into the queue.
 		 * @param value A unique pointer to the priority job to be enqueued.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job<priority_type>>&& value)
-			-> std::tuple<bool, std::optional<std::string>>;
+			-> std::optional<std::string>;
 
 		/**
 		 * @brief Dequeues a job from the queue.

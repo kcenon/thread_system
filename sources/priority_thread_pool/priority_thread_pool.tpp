@@ -59,27 +59,26 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::start(void)
-		-> std::tuple<bool, std::optional<std::string>>
+	auto priority_thread_pool<priority_type>::start(void) -> std::optional<std::string>
 	{
 		if (workers_.empty())
 		{
-			return { false, "no workers to start" };
+			return "no workers to start";
 		}
 
 		for (auto& worker : workers_)
 		{
-			auto [started, start_error] = worker->start();
-			if (!started)
+			auto start_error = worker->start();
+			if (start_error.has_value())
 			{
 				stop();
-				return { false, start_error };
+				return start_error;
 			}
 		}
 
 		start_pool_.store(true);
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename priority_type>
@@ -91,58 +90,57 @@ namespace priority_thread_pool_module
 
 	template <typename priority_type>
 	auto priority_thread_pool<priority_type>::enqueue(
-		std::unique_ptr<priority_job<priority_type>>&& job)
-		-> std::tuple<bool, std::optional<std::string>>
+		std::unique_ptr<priority_job<priority_type>>&& job) -> std::optional<std::string>
 	{
 		if (job == nullptr)
 		{
-			return { false, "cannot enqueue null job" };
+			return "cannot enqueue null job";
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return { false, "cannot enqueue job to null job queue" };
+			return "cannot enqueue job to null job queue";
 		}
 
-		auto [enqueued, enqueue_error] = job_queue_->enqueue(std::move(job));
-		if (!enqueued)
+		auto enqueue_error = job_queue_->enqueue(std::move(job));
+		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename priority_type>
 	auto priority_thread_pool<priority_type>::enqueue(
 		std::unique_ptr<priority_thread_worker<priority_type>>&& worker)
-		-> std::tuple<bool, std::optional<std::string>>
+		-> std::optional<std::string>
 	{
 		if (worker == nullptr)
 		{
-			return { false, "cannot enqueue null worker" };
+			return "cannot enqueue null worker";
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return { false, "cannot enqueue worker due to null job queue" };
+			return "cannot enqueue worker due to null job queue";
 		}
 
 		worker->set_job_queue(job_queue_);
 
 		if (start_pool_.load())
 		{
-			auto [started, start_error] = worker->start();
-			if (!started)
+			auto start_error = worker->start();
+			if (start_error.has_value())
 			{
 				stop();
-				return { false, start_error };
+				return start_error;
 			}
 		}
 
 		workers_.emplace_back(std::move(worker));
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename priority_type>
@@ -165,8 +163,8 @@ namespace priority_thread_pool_module
 
 		for (auto& worker : workers_)
 		{
-			auto [stopped, stop_error] = worker->stop();
-			if (!stopped)
+			auto stop_error = worker->stop();
+			if (stop_error.has_value())
 			{
 				log_module::write(log_types::Error, "error stopping worker: {}",
 								  stop_error.value_or("unknown error"));

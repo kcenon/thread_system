@@ -59,7 +59,7 @@ uint16_t top_priority_workers_ = 3;
 uint16_t middle_priority_workers_ = 2;
 uint16_t bottom_priority_workers_ = 1;
 
-auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
+auto initialize_logger() -> std::optional<std::string>
 {
 	log_module::set_title("priority_thread_pool_sample");
 	log_module::set_use_backup(use_backup_);
@@ -96,10 +96,9 @@ auto create_default(const uint16_t& top_priority_workers,
 
 	for (uint16_t i = 0; i < top_priority_workers; ++i)
 	{
-		auto [enqueued, enqueue_error]
-			= pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
-				std::vector<test_priority>{ test_priority::Top }, "top priority worker"));
-		if (!enqueued)
+		auto enqueue_error = pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
+			std::vector<test_priority>{ test_priority::Top }, "top priority worker"));
+		if (enqueue_error.has_value())
 		{
 			return { nullptr, formatter::format("cannot enqueue to top priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
@@ -107,10 +106,9 @@ auto create_default(const uint16_t& top_priority_workers,
 	}
 	for (uint16_t i = 0; i < middle_priority_workers; ++i)
 	{
-		auto [enqueued, enqueue_error]
-			= pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
-				std::vector<test_priority>{ test_priority::Middle }, "middle priority worker"));
-		if (!enqueued)
+		auto enqueue_error = pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
+			std::vector<test_priority>{ test_priority::Middle }, "middle priority worker"));
+		if (enqueue_error.has_value())
 		{
 			return { nullptr, formatter::format("cannot enqueue to middle priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
@@ -118,10 +116,9 @@ auto create_default(const uint16_t& top_priority_workers,
 	}
 	for (uint16_t i = 0; i < bottom_priority_workers; ++i)
 	{
-		auto [enqueued, enqueue_error]
-			= pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
-				std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
-		if (!enqueued)
+		auto enqueue_error = pool->enqueue(std::make_unique<priority_thread_worker<test_priority>>(
+			std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
+		if (enqueue_error.has_value())
 		{
 			return { nullptr, formatter::format("cannot enqueue to bottom priority worker: {}",
 												enqueue_error.value_or("unknown error")) };
@@ -132,38 +129,35 @@ auto create_default(const uint16_t& top_priority_workers,
 }
 
 auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
-	-> std::tuple<bool, std::optional<std::string>>
+	-> std::optional<std::string>
 {
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		auto target = index % 3;
-		auto [enqueued, enqueue_error]
-			= thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
-				[target](void) -> std::tuple<bool, std::optional<std::string>>
-				{
-					log_module::write(log_types::Debug, "Hello, World!: {} priority", target);
+		auto enqueue_error = thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
+			[target](void) -> std::optional<std::string>
+			{
+				log_module::write(log_types::Debug, "Hello, World!: {} priority", target);
 
-					return { true, std::nullopt };
-				},
-				static_cast<test_priority>(target)));
-		if (!enqueued)
+				return std::nullopt;
+			},
+			static_cast<test_priority>(target)));
+		if (enqueue_error.has_value())
 		{
-			log_module::write(log_types::Error, "error enqueuing job: {}",
-							  enqueue_error.value_or("unknown error"));
-
-			break;
+			return formatter::format("error enqueuing job: {}",
+									 enqueue_error.value_or("unknown error"));
 		}
 
 		log_module::write(log_types::Sequence, "enqueued job: {}", index);
 	}
 
-	return { true, std::nullopt };
+	return std::nullopt;
 }
 
 auto main() -> int
 {
-	auto [started, start_error] = initialize_logger();
-	if (!started)
+	auto start_error = initialize_logger();
+	if (start_error.has_value())
 	{
 		std::cerr << formatter::format("error starting logger: {}\n",
 									   start_error.value_or("unknown error"));
@@ -182,8 +176,8 @@ auto main() -> int
 
 	log_module::write(log_types::Information, "created priority thread pool");
 
-	auto [stored, store_error] = store_job(thread_pool);
-	if (!stored)
+	auto store_error = store_job(thread_pool);
+	if (store_error.has_value())
 	{
 		log_module::write(log_types::Error, "error storing job: {}",
 						  store_error.value_or("unknown error"));
@@ -193,8 +187,8 @@ auto main() -> int
 		return 0;
 	}
 
-	auto [thread_started, thread_start_error] = thread_pool->start();
-	if (!thread_started)
+	auto thread_start_error = thread_pool->start();
+	if (thread_start_error.has_value())
 	{
 		log_module::write(log_types::Error, "error starting thread pool: {}",
 						  thread_start_error.value_or("unknown error"));

@@ -152,12 +152,11 @@ namespace utility_module
 	}
 
 	template <typename StringType>
-	auto argument_manager::try_parse(const StringType& arguments)
-		-> std::tuple<bool, std::optional<std::string>>
+	auto argument_manager::try_parse(const StringType& arguments) -> std::optional<std::string>
 	{
 		if (arguments.empty())
 		{
-			return { false, "no valid arguments found." };
+			return "no valid arguments found.";
 		}
 
 		std::optional<std::string> converted;
@@ -175,12 +174,12 @@ namespace utility_module
 		}
 		else
 		{
-			return { false, "Unsupported string type" };
+			return "Unsupported string type";
 		}
 
 		if (!converted.has_value())
 		{
-			return { false, convert_error };
+			return convert_error;
 		}
 
 		auto argument_string = converted.value();
@@ -190,10 +189,9 @@ namespace utility_module
 						  [](unsigned char c) { return std::isspace(c) || c == '\0'; });
 		if (only_whitespace)
 		{
-			return { false, "no valid arguments found." };
+			return "no valid arguments found.";
 		}
 
-		// null 문자 처리
 		auto null_pos = argument_string.find('\0');
 		if (null_pos != std::string::npos)
 		{
@@ -201,9 +199,9 @@ namespace utility_module
 		}
 
 		auto [splitted, split_error] = convert_string::split(argument_string, " ");
-		if (!splitted.has_value())
+		if (split_error.has_value())
 		{
-			return { false, split_error };
+			return split_error;
 		}
 
 		auto splitted_vector = splitted.value();
@@ -215,35 +213,45 @@ namespace utility_module
 
 		if (splitted_vector.empty())
 		{
-			return { false, "no valid arguments found." };
+			return "no valid arguments found.";
 		}
 
+		// 여기서 parse 호출하고 결과 처리
 		auto [parsed, parse_error] = parse(splitted_vector);
-		if (!parsed.has_value())
+		if (parse_error.has_value())
 		{
-			return { false, parse_error };
+			return parse_error;
 		}
 
 		arguments_ = parsed.value();
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename CharType>
-	auto argument_manager::try_parse(int argc, CharType* argv[])
-		-> std::tuple<bool, std::optional<std::string>>
+	auto argument_manager::try_parse(int argc, CharType* argv[]) -> std::optional<std::string>
 	{
+		if (argc < 1)
+		{
+			return "Invalid argument count";
+		}
+
 		std::vector<std::string> args;
 		bool found_valid = false;
 
 		for (int i = 0; i < argc; ++i)
 		{
+			if (!argv[i])
+			{
+				return "Null argument pointer encountered";
+			}
+
 			std::string arg;
 			if constexpr (std::is_same_v<CharType, wchar_t>)
 			{
 				auto [converted, error] = convert_string::to_string(std::wstring(argv[i]));
-				if (!converted.has_value())
+				if (error.has_value())
 				{
-					return { false, error };
+					return error;
 				}
 				arg = converted.value();
 			}
@@ -261,17 +269,17 @@ namespace utility_module
 
 		if (!found_valid)
 		{
-			return { false, "no valid arguments found." };
+			return "no valid arguments found.";
 		}
 
 		auto [parsed, error] = parse(args);
-		if (!parsed.has_value())
+		if (error.has_value())
 		{
-			return { false, error };
+			return error;
 		}
 
 		arguments_ = parsed.value();
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	auto argument_manager::parse(const std::vector<std::string>& arguments)
@@ -342,12 +350,11 @@ namespace utility_module
 
 	// Explicit template instantiations
 	template auto argument_manager::try_parse<std::string>(const std::string&)
-		-> std::tuple<bool, std::optional<std::string>>;
+		-> std::optional<std::string>;
 	template auto argument_manager::try_parse<std::wstring>(const std::wstring&)
-		-> std::tuple<bool, std::optional<std::string>>;
-	template auto argument_manager::try_parse<char>(int, char*[])
-		-> std::tuple<bool, std::optional<std::string>>;
-	template auto argument_manager::try_parse<wchar_t>(int, wchar_t*[])
-		-> std::tuple<bool, std::optional<std::string>>;
+		-> std::optional<std::string>;
+	template auto argument_manager::try_parse<char>(int, char*[]) -> std::optional<std::string>;
+	template auto argument_manager::try_parse<wchar_t>(int,
+													   wchar_t*[]) -> std::optional<std::string>;
 
 } // namespace utility_module

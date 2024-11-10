@@ -54,7 +54,7 @@ namespace thread_module
 		wake_interval_ = wake_interval;
 	}
 
-	auto thread_base::start(void) -> std::tuple<bool, std::optional<std::string>>
+	auto thread_base::start(void) -> std::optional<std::string>
 	{
 #ifdef USE_STD_JTHREAD
 		if (stop_source_.has_value())
@@ -62,7 +62,7 @@ namespace thread_module
 		if (worker_thread_ && worker_thread_->joinable())
 #endif
 		{
-			return { false, "thread is already running" };
+			return "thread is already running";
 		}
 
 		stop();
@@ -86,9 +86,8 @@ namespace thread_module
 					auto stop_token = stop_source_.value().get_token();
 #endif
 
-					bool worked = false;
 					std::optional<std::string> work_error;
-					std::tie(worked, work_error) = before_start();
+					work_error = before_start();
 					if (work_error.has_value())
 					{
 						std::cerr << "error before start: " << work_error.value_or("unknown error")
@@ -138,7 +137,7 @@ namespace thread_module
 
 						try
 						{
-							std::tie(worked, work_error) = do_work();
+							work_error = do_work();
 							if (work_error.has_value())
 							{
 								std::cerr << "error doing work on " << thread_title_ << " : "
@@ -151,7 +150,7 @@ namespace thread_module
 						}
 					}
 
-					std::tie(worked, work_error) = after_stop();
+					work_error = after_stop();
 					if (work_error.has_value())
 					{
 						std::cerr << "error after stop: " << work_error.value_or("unknown error")
@@ -169,17 +168,17 @@ namespace thread_module
 
 			worker_thread_.reset();
 
-			return { false, e.what() };
+			return e.what();
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto thread_base::stop(void) -> std::tuple<bool, std::optional<std::string>>
+	auto thread_base::stop(void) -> std::optional<std::string>
 	{
 		if (worker_thread_ == nullptr)
 		{
-			return { false, "thread is not running" };
+			return "thread is not running";
 		}
 
 		if (worker_thread_->joinable())
@@ -206,6 +205,6 @@ namespace thread_module
 #endif
 		worker_thread_.reset();
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 } // namespace thread_module

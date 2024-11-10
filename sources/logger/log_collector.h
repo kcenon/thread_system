@@ -156,7 +156,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
+		auto before_start() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Processes log messages and distributes them to console, file, and callback queues.
@@ -165,7 +165,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		auto do_work() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Performs cleanup after stopping the log collector thread.
@@ -174,7 +174,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
+		auto after_stop() -> std::optional<std::string> override;
 
 	protected:
 		/**
@@ -193,8 +193,7 @@ namespace log_module
 						 const log_types& target_log_type,
 						 std::weak_ptr<job_queue> weak_queue,
 						 const std::string& datetime,
-						 const std::string& message)
-			-> std::tuple<bool, std::optional<std::string>>;
+						 const std::string& message) -> std::optional<std::string>;
 
 		/**
 		 * @brief Template method for writing log messages of various string types.
@@ -226,7 +225,7 @@ namespace log_module
 				return;
 			}
 
-			auto [enqueued, enqueue_error] = log_queue_->enqueue(std::move(new_log_job));
+			auto enqueue_error = log_queue_->enqueue(std::move(new_log_job));
 			if (enqueue_error.has_value())
 			{
 				std::cerr << formatter::format("error enqueuing log job: {}\n",

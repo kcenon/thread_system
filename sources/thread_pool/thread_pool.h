@@ -75,13 +75,13 @@ namespace thread_pool_module
 
 		/**
 		 * @brief Starts the thread pool.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the start operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto start(void) -> std::tuple<bool, std::optional<std::string>>;
+		auto start(void) -> std::optional<std::string>;
 
 		/**
 		 * @brief Gets the job queue associated with this thread pool.
@@ -92,25 +92,24 @@ namespace thread_pool_module
 		/**
 		 * @brief Enqueues a job to the thread pool's job queue.
 		 * @param job A unique pointer to the job to be enqueued.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto enqueue(std::unique_ptr<job>&& job) -> std::tuple<bool, std::optional<std::string>>;
+		auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
 
 		/**
 		 * @brief Enqueues a worker thread to the thread pool.
 		 * @param worker A unique pointer to the worker thread to be enqueued.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto enqueue(std::unique_ptr<thread_worker>&& worker)
-			-> std::tuple<bool, std::optional<std::string>>;
+		auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
 
 		/**
 		 * @brief Stops the thread pool.

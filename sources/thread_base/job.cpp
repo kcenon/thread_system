@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace thread_module
 {
-	job::job(const std::function<std::tuple<bool, std::optional<std::string>>(void)>& callback,
+	job::job(const std::function<std::optional<std::string>(void)>& callback,
 			 const std::string& name)
 		: name_(name), callback_(callback)
 	{
@@ -46,11 +46,11 @@ namespace thread_module
 
 	auto job::get_name(void) const -> std::string { return name_; }
 
-	auto job::do_work(void) -> std::tuple<bool, std::optional<std::string>>
+	auto job::do_work(void) -> std::optional<std::string>
 	{
 		if (callback_ == nullptr)
 		{
-			return { false, "cannot execute job without callback" };
+			return "cannot execute job without callback";
 		}
 
 		try
@@ -59,11 +59,11 @@ namespace thread_module
 		}
 		catch (const std::exception& e)
 		{
-			return { false, std::string(e.what()) };
+			return std::string(e.what());
 		}
 		catch (...)
 		{
-			return { false, "unknown error" };
+			return "unknown error";
 		}
 	}
 

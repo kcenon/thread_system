@@ -79,7 +79,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
+		auto before_start() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Performs the main work of writing log messages to the console.
@@ -88,7 +88,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		auto do_work() -> std::optional<std::string> override;
 
 	private:
 		/** @brief Queue for log jobs to be written to the console */

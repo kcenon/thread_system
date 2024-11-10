@@ -143,7 +143,7 @@ namespace log_module
 		 * (false).
 		 *         - std::optional<std::string>: An optional error message if initialization fails.
 		 */
-		auto before_start() -> std::tuple<bool, std::optional<std::string>> override;
+		auto before_start() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Writes log messages to the file.
@@ -155,7 +155,7 @@ namespace log_module
 		 * (false).
 		 *         - std::optional<std::string>: An optional error message if writing fails.
 		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		auto do_work() -> std::optional<std::string> override;
 
 		/**
 		 * @brief Performs cleanup after stopping the file writer thread.
@@ -166,7 +166,7 @@ namespace log_module
 		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
 		 *         - std::optional<std::string>: An optional error message if cleanup fails.
 		 */
-		auto after_stop() -> std::tuple<bool, std::optional<std::string>> override;
+		auto after_stop() -> std::optional<std::string> override;
 
 	protected:
 		/**

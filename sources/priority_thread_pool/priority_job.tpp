@@ -38,7 +38,7 @@ namespace priority_thread_pool_module
 {
 	template <typename priority_type>
 	priority_job<priority_type>::priority_job(
-		const std::function<std::tuple<bool, std::optional<std::string>>(void)>& callback,
+		const std::function<std::optional<std::string>(void)>& callback,
 		priority_type priority,
 		const std::string& name)
 		: job(callback, name), priority_(priority)

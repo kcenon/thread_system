@@ -61,11 +61,11 @@ namespace log_module
 
 	auto callback_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto callback_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto callback_writer::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		std::cout << "callback_writer::do_work" << std::endl;
@@ -85,7 +85,7 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto [worked, work_error] = current_log->do_work();
+			auto work_error = current_log->do_work();
 			if (work_error.has_value())
 			{
 				std::cout << work_error.value() << std::endl;
@@ -95,6 +95,6 @@ namespace log_module
 			callback_(current_log->log_type(), current_log->datetime(), current_log->message());
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 }

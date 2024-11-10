@@ -63,10 +63,11 @@ TEST_F(ArgumentManagerTest, ParseStringArguments)
 	{
 		SCOPED_TRACE("Testing with input: " + test_case);
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 
 		VerifyBasicParsing();
 	}
@@ -81,10 +82,11 @@ TEST_F(ArgumentManagerTest, ParseWStringArguments)
 	{
 		SCOPED_TRACE("Testing with wide string input");
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 
 		VerifyBasicParsing();
 	}
@@ -95,20 +97,22 @@ TEST_F(ArgumentManagerTest, ParseCharArgv)
 	{
 		const char* argv[] = { "program", "--key1", "value1", "--key2", "value2" };
 		int argc = 5;
-		auto [success, error] = manager.try_parse(argc, const_cast<char**>(argv));
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(argc, const_cast<char**>(argv));
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 		VerifyBasicParsing();
 	}
 
 	{
 		const char* argv[] = { "--key1", "value1", "--key2", "value2" };
 		int argc = 4;
-		auto [success, error] = manager.try_parse(argc, const_cast<char**>(argv));
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(argc, const_cast<char**>(argv));
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 		VerifyBasicParsing();
 	}
 }
@@ -118,20 +122,22 @@ TEST_F(ArgumentManagerTest, ParseWCharArgv)
 	{
 		const wchar_t* argv[] = { L"program", L"--key1", L"value1", L"--key2", L"value2" };
 		int argc = 5;
-		auto [success, error] = manager.try_parse(argc, const_cast<wchar_t**>(argv));
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(argc, const_cast<wchar_t**>(argv));
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 		VerifyBasicParsing();
 	}
 
 	{
 		const wchar_t* argv[] = { L"--key1", L"value1", L"--key2", L"value2" };
 		int argc = 4;
-		auto [success, error] = manager.try_parse(argc, const_cast<wchar_t**>(argv));
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(argc, const_cast<wchar_t**>(argv));
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 		VerifyBasicParsing();
 	}
 }
@@ -146,9 +152,10 @@ TEST_F(ArgumentManagerTest, ToBool)
 	{
 		SCOPED_TRACE("Testing bool parsing with: " + test_case);
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
 
 		EXPECT_EQ(manager.to_bool("--flag1"), true);
 		EXPECT_EQ(manager.to_bool("--flag2"), false);
@@ -166,9 +173,10 @@ TEST_F(ArgumentManagerTest, ToNumericTypes)
 	{
 		SCOPED_TRACE("Testing numeric parsing with: " + test_case);
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
 
 		EXPECT_EQ(manager.to_int("--int"), 42);
 		EXPECT_EQ(manager.to_uint("--uint"), 100u);
@@ -194,12 +202,13 @@ TEST_F(ArgumentManagerTest, InvalidArguments)
 	{
 		SCOPED_TRACE("Testing with input: \"" + input + "\"");
 
-		auto [success, error] = manager.try_parse(input);
-		ASSERT_FALSE(success) << "Expected to fail with input: " << input;
-		ASSERT_TRUE(error.has_value()) << "Expected error message for input: " << input;
-		EXPECT_EQ(error.value(), expected_error) << "Input: \"" << input << "\"\n"
-												 << "Expected: \"" << expected_error << "\"\n"
-												 << "Actual: \"" << error.value() << "\"";
+		auto error_message = manager.try_parse(input);
+		ASSERT_FALSE(!error_message.has_value()) << "Expected to fail with input: " << input;
+		ASSERT_TRUE(error_message.has_value()) << "Expected error message for input: " << input;
+		EXPECT_EQ(error_message.value(), expected_error)
+			<< "Input: \"" << input << "\"\n"
+			<< "Expected: \"" << expected_error << "\"\n"
+			<< "Actual: \"" << error_message.value() << "\"";
 	}
 }
 
@@ -212,10 +221,10 @@ TEST_F(ArgumentManagerTest, EmptyArguments)
 	{
 		SCOPED_TRACE("Testing empty input: '" + test_case + "'");
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_FALSE(success) << "Should fail for empty input";
-		ASSERT_TRUE(error.has_value()) << "Should have error message";
-		EXPECT_EQ(error.value(), "no valid arguments found.")
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_FALSE(!error_message.has_value()) << "Should fail for empty input";
+		ASSERT_TRUE(error_message.has_value()) << "Should have error message";
+		EXPECT_EQ(error_message.value(), "no valid arguments found.")
 			<< "Failed for input: '" << test_case << "'";
 	}
 }
@@ -229,10 +238,11 @@ TEST_F(ArgumentManagerTest, HelpArgument)
 	{
 		SCOPED_TRACE("Testing help with: " + test_case);
 
-		auto [success, error] = manager.try_parse(test_case);
-		ASSERT_TRUE(success) << "Failed with error: "
-							 << (error.has_value() ? error.value() : "none");
-		ASSERT_FALSE(error.has_value());
+		auto error_message = manager.try_parse(test_case);
+		ASSERT_TRUE(!error_message.has_value())
+			<< "Failed with error: "
+			<< (error_message.has_value() ? error_message.value() : "none");
+		ASSERT_FALSE(error_message.has_value());
 
 		EXPECT_EQ(manager.to_string("--help"), "display help");
 	}

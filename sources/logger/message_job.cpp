@@ -59,13 +59,13 @@ namespace log_module
 		return formatter::format("{}\n", message_);
 	}
 
-	auto message_job::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto message_job::do_work() -> std::optional<std::string>
 	{
 		if (message_.empty())
 		{
-			return { false, "empty message" };
+			return "empty message";
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 } // namespace log_module

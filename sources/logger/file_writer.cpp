@@ -70,35 +70,35 @@ namespace log_module
 
 	auto file_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto file_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
+	auto file_writer::before_start() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "error creating job_queue" };
+			return "error creating job_queue";
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		job_queue_->set_notify(!wake_interval_.has_value());
 
 		check_file_handle();
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto file_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto file_writer::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		check_file_handle();
@@ -112,8 +112,8 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto [worked, work_error] = current_log->do_work();
-			if (!worked)
+			auto work_error = current_log->do_work();
+			if (work_error.has_value())
 			{
 				continue;
 			}
@@ -136,7 +136,7 @@ namespace log_module
 			log_file_ = write_lines(std::move(log_file_), log_lines_);
 			log_lines_.clear();
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		if (log_lines_.size() <= max_lines_)
@@ -145,7 +145,7 @@ namespace log_module
 			log_file_->close();
 			log_file_.reset();
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		size_t index = log_lines_.size() - max_lines_ + 1;
@@ -173,24 +173,24 @@ namespace log_module
 		log_file_->close();
 		log_file_.reset();
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto file_writer::after_stop() -> std::tuple<bool, std::optional<std::string>>
+	auto file_writer::after_stop() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		close_file_handle();
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	auto file_writer::generate_file_name() -> std::tuple<std::string, std::string>

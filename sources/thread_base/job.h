@@ -62,7 +62,7 @@ namespace thread_module
 		 * string message.
 		 * @param name The name of the job (default is "job").
 		 */
-		job(const std::function<std::tuple<bool, std::optional<std::string>>(void)>& callback,
+		job(const std::function<std::optional<std::string>(void)>& callback,
 			const std::string& name = "job");
 
 		/**
@@ -78,12 +78,12 @@ namespace thread_module
 
 		/**
 		 * @brief Execute the job's work.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the job was successful (true) or not (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions or additional information.
 		 */
-		[[nodiscard]] virtual auto do_work(void) -> std::tuple<bool, std::optional<std::string>>;
+		[[nodiscard]] virtual auto do_work(void) -> std::optional<std::string>;
 
 		/**
 		 * @brief Set the job queue for this job.
@@ -106,6 +106,6 @@ namespace thread_module
 		std::weak_ptr<job_queue> job_queue_;
 
 		/** @brief The callback function to be executed when the job is processed */
-		std::function<std::tuple<bool, std::optional<std::string>>(void)> callback_;
+		std::function<std::optional<std::string>(void)> callback_;
 	};
 } // namespace thread_module

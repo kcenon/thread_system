@@ -61,7 +61,7 @@ namespace utility_module
 		 * @return Tuple of (success flag, optional error message)
 		 */
 		template <typename StringType>
-		auto try_parse(const StringType& arguments) -> std::tuple<bool, std::optional<std::string>>;
+		auto try_parse(const StringType& arguments) -> std::optional<std::string>;
 
 		/**
 		 * @brief Parse command line arguments from argc/argv style input
@@ -71,7 +71,7 @@ namespace utility_module
 		 * @return Tuple of (success flag, optional error message)
 		 */
 		template <typename CharType>
-		auto try_parse(int argc, CharType* argv[]) -> std::tuple<bool, std::optional<std::string>>;
+		auto try_parse(int argc, CharType* argv[]) -> std::optional<std::string>;
 
 		/**
 		 * @brief Get argument value as string
