@@ -98,7 +98,6 @@ auto main() -> int
 	}
 
 	log_module::stop();
-	log_module::destroy();
 
 	return 0;
 }

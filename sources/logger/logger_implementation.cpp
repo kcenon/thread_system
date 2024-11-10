@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "logger.h"
+#include "logger_implementation.h"
 
 #include <fstream>
 #include <chrono>
@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace log_module
 {
-	namespace detail
+	namespace implementation
 	{
 #pragma region singleton
 		std::unique_ptr<logger> logger::handle_;
