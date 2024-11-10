@@ -95,7 +95,7 @@ namespace log_module
 		 *         - std::optional<std::string>: An optional error description if the operation
 		 * failed.
 		 */
-		[[nodiscard]] auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		[[nodiscard]] auto do_work() -> std::optional<std::string> override;
 
 	private:
 		/** @brief The timestamp for when the log message was created. */

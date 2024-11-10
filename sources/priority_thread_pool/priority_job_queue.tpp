@@ -45,18 +45,18 @@ namespace priority_thread_pool_module
 
 	template <typename priority_type>
 	auto priority_job_queue<priority_type>::enqueue(std::unique_ptr<job>&& value)
-		-> std::tuple<bool, std::optional<std::string>>
+		-> std::optional<std::string>
 	{
 		if (stop_.load())
 		{
-			return { false, "Job queue is stopped" };
+			return "Job queue is stopped";
 		}
 
 		auto priority_job_ptr = dynamic_cast<priority_job<priority_type>*>(value.get());
 
 		if (!priority_job_ptr)
 		{
-			return { false, "Enqueued job is not a priority_job" };
+			return "Enqueued job is not a priority_job";
 		}
 
 		auto job_priority = priority_job_ptr->priority();
@@ -74,7 +74,7 @@ namespace priority_thread_pool_module
 				condition_.notify_one();
 			}
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		iter
@@ -89,22 +89,21 @@ namespace priority_thread_pool_module
 			condition_.notify_one();
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename priority_type>
 	auto priority_job_queue<priority_type>::enqueue(
-		std::unique_ptr<priority_job<priority_type>>&& value)
-		-> std::tuple<bool, std::optional<std::string>>
+		std::unique_ptr<priority_job<priority_type>>&& value) -> std::optional<std::string>
 	{
 		if (stop_.load())
 		{
-			return { false, "Job queue is stopped" };
+			return "Job queue is stopped";
 		}
 
 		if (value == nullptr)
 		{
-			return { false, "cannot enqueue null job" };
+			return "cannot enqueue null job";
 		}
 
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -116,7 +115,7 @@ namespace priority_thread_pool_module
 
 			condition_.notify_one();
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		iter = queues_
@@ -127,17 +126,15 @@ namespace priority_thread_pool_module
 
 		condition_.notify_one();
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	template <typename priority_type>
 	auto priority_job_queue<priority_type>::dequeue()
 		-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>
 	{
-		return {
-			std::nullopt,
-			"Dequeue operation without specified priorities is not supported in priority_job_queue"
-		};
+		return { std::nullopt, "Dequeue operation without specified priorities is "
+							   "not supported in priority_job_queue" };
 	}
 
 	template <typename priority_type>

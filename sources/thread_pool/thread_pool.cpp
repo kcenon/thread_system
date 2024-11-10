@@ -51,80 +51,79 @@ namespace thread_pool_module
 		return this->shared_from_this();
 	}
 
-	auto thread_pool::start(void) -> std::tuple<bool, std::optional<std::string>>
+	auto thread_pool::start(void) -> std::optional<std::string>
 	{
 		if (workers_.empty())
 		{
-			return { false, "No workers to start" };
+			return "No workers to start";
 		}
 
 		for (auto& worker : workers_)
 		{
-			auto [started, start_error] = worker->start();
-			if (!started)
+			auto start_error = worker->start();
+			if (start_error.has_value())
 			{
 				stop();
-				return { false, start_error };
+				return start_error;
 			}
 		}
 
 		start_pool_.store(true);
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	auto thread_pool::get_job_queue(void) -> std::shared_ptr<job_queue> { return job_queue_; }
 
-	auto thread_pool::enqueue(std::unique_ptr<job>&& job)
-		-> std::tuple<bool, std::optional<std::string>>
+	auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>
 	{
 		if (job == nullptr)
 		{
-			return { false, "Job is null" };
+			return "Job is null";
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return { false, "Job queue is null" };
+			return "Job queue is null";
 		}
 
-		auto [enqueued, enqueue_error] = job_queue_->enqueue(std::move(job));
-		if (!enqueued)
+		auto enqueue_error = job_queue_->enqueue(std::move(job));
+		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker)
-		-> std::tuple<bool, std::optional<std::string>>
+	auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>
 	{
 		if (worker == nullptr)
 		{
-			return { false, "Worker is null" };
+			return "Worker is null";
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return { false, "Job queue is null" };
+			return "Job queue is null";
 		}
 
 		worker->set_job_queue(job_queue_);
 
 		if (start_pool_.load())
 		{
-			auto [started, start_error] = worker->start();
-			if (!started)
+			auto start_error = worker->start();
+			if (start_error.has_value())
 			{
 				stop();
-				return { false, start_error };
+
+				return start_error;
 			}
 		}
 
 		workers_.emplace_back(std::move(worker));
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	auto thread_pool::stop(const bool& immediately_stop) -> void
@@ -146,8 +145,8 @@ namespace thread_pool_module
 
 		for (auto& worker : workers_)
 		{
-			auto [stopped, stop_error] = worker->stop();
-			if (!stopped)
+			auto stop_error = worker->stop();
+			if (stop_error.has_value())
 			{
 				log_module::write(log_types::Error, "error stopping worker: {}",
 								  stop_error.value_or("unknown error"));

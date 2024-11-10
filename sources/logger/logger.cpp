@@ -202,53 +202,49 @@ namespace log_module
 			}
 		}
 
-		auto logger::start() -> std::tuple<bool, std::optional<std::string>>
+		auto logger::start() -> std::optional<std::string>
 		{
 			if (collector_ == nullptr)
 			{
-				return { false, "there is no collector" };
+				return "there is no collector";
 			}
 
 			collector_->set_console_queue(console_writer_->get_job_queue());
 			collector_->set_file_queue(file_writer_->get_job_queue());
 			collector_->set_callback_queue(callback_writer_->get_job_queue());
 
-			bool started = false;
 			std::optional<std::string> start_error;
 
-			std::tie(started, start_error) = console_writer_->start();
+			start_error = console_writer_->start();
 			if (start_error.has_value())
 			{
-				return { false, formatter::format("cannot start {}: {}",
-												  console_writer_->get_thread_title(),
-												  start_error.value_or("unknown error")) };
+				return formatter::format("cannot start {}: {}", console_writer_->get_thread_title(),
+										 start_error.value_or("unknown error"));
 			}
 
-			std::tie(started, start_error) = file_writer_->start();
+			start_error = file_writer_->start();
 			if (start_error.has_value())
 			{
-				return { false,
-						 formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
-										   start_error.value_or("unknown error")) };
+				return formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
+										 start_error.value_or("unknown error"));
 			}
 
-			std::tie(started, start_error) = callback_writer_->start();
+			start_error = callback_writer_->start();
 			if (start_error.has_value())
 			{
-				return { false, formatter::format("cannot start {}: {}",
-												  callback_writer_->get_thread_title(),
-												  start_error.value_or("unknown error")) };
+				return formatter::format("cannot start {}: {}",
+										 callback_writer_->get_thread_title(),
+										 start_error.value_or("unknown error"));
 			}
 
-			std::tie(started, start_error) = collector_->start();
+			start_error = collector_->start();
 			if (start_error.has_value())
 			{
-				return { false,
-						 formatter::format("cannot start {}: {}", collector_->get_thread_title(),
-										   start_error.value_or("unknown error")) };
+				return formatter::format("cannot start {}: {}", collector_->get_thread_title(),
+										 start_error.value_or("unknown error"));
 			}
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		auto logger::stop() -> void

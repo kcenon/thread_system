@@ -95,37 +95,37 @@ namespace log_module
 
 	auto log_collector::should_continue_work() const -> bool { return !log_queue_->empty(); }
 
-	auto log_collector::before_start() -> std::tuple<bool, std::optional<std::string>>
+	auto log_collector::before_start() -> std::optional<std::string>
 	{
 		log_job job("START");
-		auto [worked, work_error] = job.do_work();
-		if (!worked)
+		auto work_error = job.do_work();
+		if (work_error.has_value())
 		{
-			return { false, work_error };
+			return work_error;
 		}
 
-		auto [enqueued, enqueue_error] = enqueue_log(console_log_type_, log_types::None,
-													 console_queue_, job.datetime(), job.message());
+		auto enqueue_error = enqueue_log(console_log_type_, log_types::None, console_queue_,
+										 job.datetime(), job.message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		std::tie(enqueued, enqueue_error) = enqueue_log(file_log_type_, log_types::None,
-														file_queue_, job.datetime(), job.message());
+		enqueue_error = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
+									job.message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto log_collector::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto log_collector::do_work() -> std::optional<std::string>
 	{
 		if (log_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		auto [job_opt, error] = log_queue_->dequeue();
@@ -133,103 +133,100 @@ namespace log_module
 		{
 			if (!log_queue_->is_stopped())
 			{
-				return { false, formatter::format("error dequeue job: {}",
-												  error.value_or("unknown error")) };
+				return formatter::format("error dequeue job: {}", error.value_or("unknown error"));
 			}
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		auto current_job = std::move(job_opt.value());
 		if (current_job == nullptr)
 		{
-			return { false, "error executing job: nullptr" };
+			return "error executing job: nullptr";
 		}
 
 		auto current_log = std::unique_ptr<log_job>(static_cast<log_job*>(current_job.release()));
 
-		auto [worked, work_error] = current_log->do_work();
+		auto work_error = current_log->do_work();
 		if (work_error.has_value())
 		{
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
-		auto [enqueued, enqueue_error]
+		auto enqueue_error
 			= enqueue_log(current_log->get_type(), current_log->get_type(), console_queue_,
 						  current_log->datetime(), current_log->message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		std::tie(enqueued, enqueue_error)
-			= enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
-						  current_log->datetime(), current_log->message());
+		enqueue_error = enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
+									current_log->datetime(), current_log->message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		std::tie(enqueued, enqueue_error)
+		enqueue_error
 			= enqueue_log(current_log->get_type(), current_log->get_type(), callback_queue_,
 						  current_log->datetime(), current_log->message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto log_collector::after_stop() -> std::tuple<bool, std::optional<std::string>>
+	auto log_collector::after_stop() -> std::optional<std::string>
 	{
 		log_job job("STOP");
-		auto [worked, work_error] = job.do_work();
-		if (!worked)
+		auto work_error = job.do_work();
+		if (work_error.has_value())
 		{
-			return { false, work_error };
+			return work_error;
 		}
 
-		auto [enqueued, enqueue_error] = enqueue_log(console_log_type_, log_types::None,
-													 console_queue_, job.datetime(), job.message());
+		auto enqueue_error = enqueue_log(console_log_type_, log_types::None, console_queue_,
+										 job.datetime(), job.message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		std::tie(enqueued, enqueue_error) = enqueue_log(file_log_type_, log_types::None,
-														file_queue_, job.datetime(), job.message());
+		enqueue_error = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
+									job.message());
 		if (enqueue_error.has_value())
 		{
-			return { false, enqueue_error };
+			return enqueue_error;
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	auto log_collector::enqueue_log(const log_types& current_log_type,
 									const log_types& target_log_type,
 									std::weak_ptr<job_queue> weak_queue,
 									const std::string& datetime,
-									const std::string& message)
-		-> std::tuple<bool, std::optional<std::string>>
+									const std::string& message) -> std::optional<std::string>
 	{
 		if (current_log_type == log_types::None)
 		{
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		auto locked_queue = weak_queue.lock();
 		if (locked_queue != nullptr && !message.empty())
 		{
-			auto [enqueued, enqueue_error] = locked_queue->enqueue(
+			auto enqueue_error = locked_queue->enqueue(
 				std::make_unique<message_job>(target_log_type, datetime, message));
 			if (enqueue_error.has_value())
 			{
-				return { false, enqueue_error };
+				return enqueue_error;
 			}
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 } // namespace log_module

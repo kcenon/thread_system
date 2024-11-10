@@ -168,7 +168,7 @@ namespace log_module
 			 * Call this method to initialize and begin logging. Must be called before any log
 			 * operations.
 			 */
-			auto start(void) -> std::tuple<bool, std::optional<std::string>>;
+			auto start(void) -> std::optional<std::string>;
 
 			/**
 			 * @brief Stops the logger instance.
@@ -428,10 +428,7 @@ namespace log_module
 		detail::logger::handle().set_wake_interval(interval);
 	}
 
-	inline auto start() -> std::tuple<bool, std::optional<std::string>>
-	{
-		return detail::logger::handle().start();
-	}
+	inline auto start() -> std::optional<std::string> { return detail::logger::handle().start(); }
 
 	inline auto stop() -> void { detail::logger::handle().stop(); }
 

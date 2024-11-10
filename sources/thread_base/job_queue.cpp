@@ -42,17 +42,16 @@ namespace thread_module
 
 	auto job_queue::set_notify(bool notify) -> void { notify_.store(notify); }
 
-	auto job_queue::enqueue(std::unique_ptr<job>&& value)
-		-> std::tuple<bool, std::optional<std::string>>
+	auto job_queue::enqueue(std::unique_ptr<job>&& value) -> std::optional<std::string>
 	{
 		if (stop_.load())
 		{
-			return { false, "Job queue is stopped" };
+			return "Job queue is stopped";
 		}
 
 		if (value == nullptr)
 		{
-			return { false, "cannot enqueue null job" };
+			return "cannot enqueue null job";
 		}
 
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -64,7 +63,7 @@ namespace thread_module
 			condition_.notify_one();
 		}
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
 	std::shared_ptr<job_queue> job_queue::get_ptr(void) { return shared_from_this(); }

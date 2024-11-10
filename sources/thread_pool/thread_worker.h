@@ -80,12 +80,12 @@ namespace thread_pool_module
 
 		/**
 		 * @brief Performs the actual work by processing jobs from the queue.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the work was successful (true) or not (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		auto do_work() -> std::optional<std::string> override;
 
 	private:
 		/** @brief Flag indicating whether to use time tags in job processing */

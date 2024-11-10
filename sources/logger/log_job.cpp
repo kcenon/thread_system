@@ -88,7 +88,7 @@ namespace log_module
 
 	auto log_job::message() const -> std::string { return log_message_; }
 
-	auto log_job::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto log_job::do_work() -> std::optional<std::string>
 	{
 		try
 		{
@@ -101,7 +101,7 @@ namespace log_module
 			{
 				log_message_ = formatter::format("[{}]", converted_message);
 
-				return { true, std::nullopt };
+				return std::nullopt;
 			}
 
 			auto time_gap = datetime_tool::time_difference<std::chrono::milliseconds,
@@ -110,15 +110,15 @@ namespace log_module
 
 			log_message_ = formatter::format("[{}] [{} ms]", converted_message, time_gap);
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 		catch (const std::exception& e)
 		{
-			return { false, std::string(e.what()) };
+			return std::string(e.what());
 		}
 		catch (...)
 		{
-			return { false, "unknown error" };
+			return "unknown error";
 		}
 	}
 

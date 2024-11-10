@@ -61,11 +61,11 @@ namespace thread_pool_module
 		return !job_queue_->empty();
 	}
 
-	auto thread_worker::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto thread_worker::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		auto [job_opt, error] = job_queue_->dequeue();
@@ -73,17 +73,16 @@ namespace thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				return { false, formatter::format("error dequeue job: {}",
-												  error.value_or("unknown error")) };
+				return formatter::format("error dequeue job: {}", error.value_or("unknown error"));
 			}
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		auto current_job = std::move(job_opt.value());
 		if (current_job == nullptr)
 		{
-			return { false, "error executing job: nullptr" };
+			return "error executing job: nullptr";
 		}
 
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
@@ -94,11 +93,11 @@ namespace thread_pool_module
 		}
 
 		current_job->set_job_queue(job_queue_);
-		auto [worked, work_error] = current_job->do_work();
-		if (!worked)
+		auto work_error = current_job->do_work();
+		if (work_error.has_value())
 		{
-			return { false, formatter::format("error executing job: {}",
-											  work_error.value_or("unknown error")) };
+			return formatter::format("error executing job: {}",
+									 work_error.value_or("unknown error"));
 		}
 
 		if (!started_time_point.has_value())
@@ -111,6 +110,6 @@ namespace thread_pool_module
 						  "job executed successfully: {} on thread_worker",
 						  current_job->get_name());
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 } // namespace thread_pool_module

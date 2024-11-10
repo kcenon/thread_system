@@ -100,11 +100,11 @@ namespace log_module
 		 * Retrieves and processes log messages from the queue, invoking the callback function for
 		 * each.
 		 *
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates the success of the operation (true if successful).
 		 *         - std::optional<std::string>: Optional error message if processing fails.
 		 */
-		auto do_work() -> std::tuple<bool, std::optional<std::string>> override;
+		auto do_work() -> std::optional<std::string> override;
 
 	private:
 		std::shared_ptr<job_queue> job_queue_; ///< Queue containing log tasks

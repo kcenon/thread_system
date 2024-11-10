@@ -81,12 +81,11 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::do_work()
-		-> std::tuple<bool, std::optional<std::string>>
+	auto priority_thread_worker<priority_type>::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		auto [job_opt, error] = job_queue_->dequeue(priorities_);
@@ -94,17 +93,16 @@ namespace priority_thread_pool_module
 		{
 			if (!job_queue_->is_stopped())
 			{
-				return { false, formatter::format("cannot dequeue job: {}",
-												  error.value_or("unknown error")) };
+				return formatter::format("cannot dequeue job: {}", error.value_or("unknown error"));
 			}
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		auto current_job = std::move(job_opt.value());
 		if (current_job == nullptr)
 		{
-			return { false, "error executing job: nullptr" };
+			return "error executing job: nullptr";
 		}
 
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
@@ -115,11 +113,11 @@ namespace priority_thread_pool_module
 		}
 
 		current_job->set_job_queue(job_queue_);
-		auto [worked, work_error] = current_job->do_work();
-		if (!worked)
+		auto work_error = current_job->do_work();
+		if (work_error.has_value())
 		{
-			return { false, formatter::format("error executing job: {}",
-											  work_error.value_or("unknown error")) };
+			return formatter::format("error executing job: {}",
+									 work_error.value_or("unknown error"));
 		}
 
 		if (!started_time_point.has_value())
@@ -128,13 +126,13 @@ namespace priority_thread_pool_module
 							  "job executed successfully: {}[{}] on priority_thread_worker",
 							  current_job->get_name(), current_job->priority());
 
-			return { true, std::nullopt };
+			return std::nullopt;
 		}
 
 		log_module::write(log_types::Sequence, started_time_point.value(),
 						  "job executed successfully: {}[{}] on priority_thread_worker",
 						  current_job->get_name(), current_job->priority());
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 } // namespace priority_thread_pool_module

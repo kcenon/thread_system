@@ -84,14 +84,14 @@ namespace thread_module
 		/**
 		 * @brief Enqueues a job into the queue.
 		 * @param value A unique pointer to the job to be enqueued.
-		 * @return std::tuple<bool, std::optional<std::string>> A tuple containing:
+		 * @return std::optional<std::string> A tuple containing:
 		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
 		 * (false).
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
 		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value)
-			-> std::tuple<bool, std::optional<std::string>>;
+			-> std::optional<std::string>;
 
 		/**
 		 * @brief Dequeues a job from the queue.

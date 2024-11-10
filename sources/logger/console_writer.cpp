@@ -52,23 +52,23 @@ namespace log_module
 
 	auto console_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto console_writer::before_start() -> std::tuple<bool, std::optional<std::string>>
+	auto console_writer::before_start() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "error creating job_queue" };
+			return "error creating job_queue";
 		}
 
 		job_queue_->set_notify(!wake_interval_.has_value());
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 
-	auto console_writer::do_work() -> std::tuple<bool, std::optional<std::string>>
+	auto console_writer::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
-			return { false, "there is no job_queue" };
+			return "there is no job_queue";
 		}
 
 		std::string console_buffer = "";
@@ -81,7 +81,7 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto [worked, work_error] = current_log->do_work();
+			auto work_error = current_log->do_work();
 			if (work_error.has_value())
 			{
 				continue;
@@ -106,6 +106,6 @@ namespace log_module
 		fmt::print("{}", console_buffer);
 #endif
 
-		return { true, std::nullopt };
+		return std::nullopt;
 	}
 }

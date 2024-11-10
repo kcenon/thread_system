@@ -50,7 +50,7 @@ log_types callback_target_ = log_types::None;
 
 uint16_t thread_counts_ = 10;
 
-auto initialize_logger() -> std::tuple<bool, std::optional<std::string>>
+auto initialize_logger() -> std::optional<std::string>
 {
 	log_module::set_title("thread_pool_sample");
 	log_module::set_use_backup(use_backup_);
@@ -85,8 +85,8 @@ auto create_default(const uint16_t& worker_counts)
 
 	for (uint16_t i = 0; i < worker_counts; ++i)
 	{
-		auto [enqueued, euqueue_error] = pool->enqueue(std::make_unique<thread_worker>());
-		if (!enqueued)
+		auto euqueue_error = pool->enqueue(std::make_unique<thread_worker>());
+		if (euqueue_error.has_value())
 		{
 			return { nullptr, formatter::format("cannot enqueue to worker: {}",
 												euqueue_error.value_or("unknown error")) };
@@ -96,36 +96,33 @@ auto create_default(const uint16_t& worker_counts)
 	return { pool, std::nullopt };
 }
 
-auto store_job(std::shared_ptr<thread_pool> thread_pool)
-	-> std::tuple<bool, std::optional<std::string>>
+auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::string>
 {
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		auto [enqueued, enqueue_error] = thread_pool->enqueue(std::make_unique<job>(
-			[index](void) -> std::tuple<bool, std::optional<std::string>>
+		auto enqueue_error = thread_pool->enqueue(std::make_unique<job>(
+			[index](void) -> std::optional<std::string>
 			{
 				log_module::write(log_types::Debug, "Hello, World!: {}", index);
 
-				return { true, std::nullopt };
+				return std::nullopt;
 			}));
-		if (!enqueued)
+		if (enqueue_error.has_value())
 		{
-			log_module::write(log_types::Error, "error enqueuing job: {}",
-							  enqueue_error.value_or("unknown error"));
-
-			break;
+			return formatter::format("error enqueuing job: {}",
+									 enqueue_error.value_or("unknown error"));
 		}
 
 		log_module::write(log_types::Sequence, "enqueued job: {}", index);
 	}
 
-	return { true, std::nullopt };
+	return std::nullopt;
 }
 
 auto main() -> int
 {
-	auto [started, start_error] = initialize_logger();
-	if (!started)
+	auto start_error = initialize_logger();
+	if (start_error.has_value())
 	{
 		std::cerr << formatter::format("error starting logger: {}\n",
 									   start_error.value_or("unknown error"));
@@ -143,8 +140,8 @@ auto main() -> int
 
 	log_module::write(log_types::Information, "created thread pool");
 
-	auto [stored, store_error] = store_job(thread_pool);
-	if (!stored)
+	auto store_error = store_job(thread_pool);
+	if (store_error.has_value())
 	{
 		log_module::write(log_types::Error, "error storing job: {}",
 						  store_error.value_or("unknown error"));
@@ -154,8 +151,8 @@ auto main() -> int
 		return 0;
 	}
 
-	auto [thread_started, thread_start_error] = thread_pool->start();
-	if (!thread_started)
+	auto thread_start_error = thread_pool->start();
+	if (thread_start_error.has_value())
 	{
 		log_module::write(log_types::Error, "error starting thread pool: {}",
 						  thread_start_error.value_or("unknown error"));

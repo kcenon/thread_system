@@ -59,10 +59,9 @@ namespace priority_thread_pool_module
 		 * @param priority The priority level of the job.
 		 * @param name The name of the job (default is "priority_job").
 		 */
-		priority_job(
-			const std::function<std::tuple<bool, std::optional<std::string>>(void)>& callback,
-			priority_type priority,
-			const std::string& name = "priority_job");
+		priority_job(const std::function<std::optional<std::string>(void)>& callback,
+					 priority_type priority,
+					 const std::string& name = "priority_job");
 
 		/**
 		 * @brief Virtual destructor for the priority_job class.
