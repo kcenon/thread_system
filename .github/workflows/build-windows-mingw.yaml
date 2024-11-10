@@ -1,4 +1,4 @@
-name: Build-Windows
+name: Build-Windows-MinGW
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_windows:
+  build_windows_mingw:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
@@ -57,11 +57,30 @@ jobs:
             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
-      - name: Setup Visual Studio
-        uses: microsoft/setup-msbuild@v1.1
-        with:
-          vs-version: '17.0'
-          msbuild-architecture: x64
+      - name: Setup MinGW
+        shell: pwsh
+        run: |
+          choco install mingw --version=12.2.0 -y
+          $mingwPath = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
+          echo "$mingwPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "Adding MinGW to system PATH..."
+          $env:PATH = "$mingwPath;$env:PATH"
+          refreshenv
+          
+          # Verify installations
+          Write-Host "Checking gcc version..."
+          gcc --version
+          Write-Host "Checking g++ version..."
+          g++ --version
+          Write-Host "Checking make version..."
+          mingw32-make --version
+
+      - name: Install CMake
+        shell: pwsh
+        run: |
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
+          refreshenv
+          cmake --version
 
       - name: Cache vcpkg
         uses: actions/cache@v3
@@ -72,18 +91,7 @@ jobs:
             !${{ github.workspace }}/vcpkg/buildtrees
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
-          restore-keys: |
-            ${{ runner.os }}-vcpkg-
-
-      - name: Cache vcpkg installed
-        uses: actions/cache@v3
-        id: vcpkg-installed
-        with:
-          path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
-          restore-keys: |
-            ${{ runner.os }}-vcpkg-installed-
+          key: ${{ runner.os }}-mingw-vcpkg-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Set up vcpkg
         shell: pwsh
@@ -99,28 +107,31 @@ jobs:
           }
           
           Write-Host "Bootstrapping vcpkg..."
-          .\vcpkg\bootstrap-vcpkg.bat
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
           
           Write-Host "Integrating vcpkg..."
           .\vcpkg\vcpkg.exe integrate install
+
+      - name: Cache vcpkg installed
+        uses: actions/cache@v3
+        id: vcpkg-installed
+        with:
+          path: ${{ github.workspace }}/vcpkg_installed
+          key: ${{ runner.os }}-mingw-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
 
       - name: Install dependencies with vcpkg
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           Write-Host "Installing dependencies..."
-          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet x64-windows
+          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet x64-mingw-dynamic
 
       - name: Cache CMake build
         uses: actions/cache@v3
-        id: cmake-cache
         with:
           path: |
             ${{ github.workspace }}/build
-          key: ${{ runner.os }}-cmake-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
-          restore-keys: |
-            ${{ runner.os }}-cmake-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-
-            ${{ runner.os }}-cmake-vs2022-
+          key: ${{ runner.os }}-cmake-mingw-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
 
       - name: Build application
         shell: pwsh
@@ -131,33 +142,31 @@ jobs:
           Write-Host "Configuring CMake..."
           Push-Location build
           
-          if (Test-Path "CMakeCache.txt") {
-            $cacheContent = Get-Content "CMakeCache.txt" -Raw
-            if ($cacheContent -match "CMAKE_GENERATOR:INTERNAL=Visual Studio \d+ \d+") {
-              if ($Matches[0] -notmatch "Visual Studio 17 2022") {
-                Write-Host "Removing incompatible CMake cache..."
-                Remove-Item "CMakeCache.txt"
-                Remove-Item -Recurse -Force "CMakeFiles"
-              }
-            }
-          }
+          $env:CC = "gcc"
+          $env:CXX = "g++"
           
-          cmake .. -G "Visual Studio 17 2022" -A x64 `
+          cmake .. -G "MinGW Makefiles" `
+                  -DCMAKE_C_COMPILER=gcc `
+                  -DCMAKE_CXX_COMPILER=g++ `
+                  -DCMAKE_MAKE_PROGRAM=mingw32-make `
                   -DBUILD_TESTS=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
                   -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-                  -DVCPKG_TARGET_TRIPLET=x64-windows
+                  -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic
+          
+          if ($LASTEXITCODE -ne 0) {
+              Write-Error "CMake configuration failed"
+              exit 1
+          }
           
           Write-Host "Building project..."
           cmake --build . --config $env:BUILD_TYPE --parallel $env:NUMBER_OF_PROCESSORS
+          
           Pop-Location
 
       - name: Cache built libraries
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
-          restore-keys: |
-            ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
-            ${{ runner.os }}-built-libs-vs2022-
+          key: ${{ runner.os }}-built-libs-mingw-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
