@@ -2,7 +2,9 @@
 
 [![Linux-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-clang.yaml)
 [![Linux-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-linux-gcc.yaml)
-[![Windows](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows.yaml)
+[![Windows-MinGW](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml)
+[![Windows-MSYS2](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml)
+[![Windows-VisualStudio](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml)
 
 
 # Thread System Project
