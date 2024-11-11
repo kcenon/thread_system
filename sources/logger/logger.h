@@ -109,35 +109,185 @@ namespace log_module
 	}
 
 	template <typename... Args>
-	inline auto write(const log_types& type, const char* formats, const Args&... args) -> void
+	inline auto write_exception(const char* formats, const Args&... args) -> void
 	{
-		implementation::logger::handle().write(type, formats, args...);
-	}
-
-	template <typename... WideArgs>
-	inline auto write(const log_types& type,
-					  const wchar_t* formats,
-					  const WideArgs&... args) -> void
-	{
-		implementation::logger::handle().write(type, formats, args...);
+		implementation::logger::handle().write(log_types::Exception, formats, args...);
 	}
 
 	template <typename... Args>
-	inline auto write(const log_types& type,
-					  const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
-					  const char* formats,
-					  const Args&... args) -> void
+	inline auto write_error(const char* formats, const Args&... args) -> void
 	{
-		implementation::logger::handle().write(type, time_point, formats, args...);
+		implementation::logger::handle().write(log_types::Error, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_information(const char* formats, const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Information, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_debug(const char* formats, const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Debug, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_sequence(const char* formats, const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Sequence, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_parameter(const char* formats, const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Parameter, formats, args...);
 	}
 
 	template <typename... WideArgs>
-	inline auto write(const log_types& type,
-					  const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
-					  const wchar_t* formats,
-					  const WideArgs&... args) -> void
+	inline auto write_exception(const wchar_t* formats, const WideArgs&... args) -> void
 	{
-		implementation::logger::handle().write(type, time_point, formats, args...);
+		implementation::logger::handle().write(log_types::Exception, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_error(const wchar_t* formats, const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Error, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_information(const wchar_t* formats, const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Information, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_debug(const wchar_t* formats, const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Debug, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_sequence(const wchar_t* formats, const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Sequence, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_parameter(const wchar_t* formats, const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Parameter, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_exception(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_error(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Error, time_point, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_information(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Information, time_point, formats,
+											   args...);
+	}
+
+	template <typename... Args>
+	inline auto write_debug(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_sequence(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);
+	}
+
+	template <typename... Args>
+	inline auto write_parameter(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const char* formats,
+		const Args&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_exception(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_error(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Error, time_point, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_information(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Information, time_point, formats,
+											   args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_debug(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_sequence(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);
+	}
+
+	template <typename... WideArgs>
+	inline auto write_parameter(
+		const std::chrono::time_point<std::chrono::high_resolution_clock>& time_point,
+		const wchar_t* formats,
+		const WideArgs&... args) -> void
+	{
+		implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);
 	}
 
 	inline auto start() -> std::optional<std::string>
