@@ -83,13 +83,14 @@ auto create_default(const uint16_t& worker_counts)
 		return { nullptr, std::string(e.what()) };
 	}
 
+	std::optional<std::string> error_message = std::nullopt;
 	for (uint16_t i = 0; i < worker_counts; ++i)
 	{
-		auto euqueue_error = pool->enqueue(std::make_unique<thread_worker>());
-		if (euqueue_error.has_value())
+		error_message = pool->enqueue(std::make_unique<thread_worker>());
+		if (error_message.has_value())
 		{
 			return { nullptr, formatter::format("cannot enqueue to worker: {}",
-												euqueue_error.value_or("unknown error")) };
+												error_message.value_or("unknown error")) };
 		}
 	}
 
@@ -98,19 +99,20 @@ auto create_default(const uint16_t& worker_counts)
 
 auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::string>
 {
+	std::optional<std::string> error_message = std::nullopt;
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		auto enqueue_error = thread_pool->enqueue(std::make_unique<job>(
+		error_message = thread_pool->enqueue(std::make_unique<job>(
 			[index](void) -> std::optional<std::string>
 			{
 				log_module::write_debug("Hello, World!: {}", index);
 
 				return std::nullopt;
 			}));
-		if (enqueue_error.has_value())
+		if (error_message.has_value())
 		{
 			return formatter::format("error enqueuing job: {}",
-									 enqueue_error.value_or("unknown error"));
+									 error_message.value_or("unknown error"));
 		}
 
 		log_module::write_sequence("enqueued job: {}", index);
@@ -121,40 +123,41 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::s
 
 auto main() -> int
 {
-	auto start_error = initialize_logger();
-	if (start_error.has_value())
+	auto error_message = initialize_logger();
+	if (error_message.has_value())
 	{
 		std::cerr << formatter::format("error starting logger: {}\n",
-									   start_error.value_or("unknown error"));
+									   error_message.value_or("unknown error"));
 		return 0;
 	}
 
-	auto [thread_pool, create_error] = create_default(thread_counts_);
-	if (thread_pool == nullptr)
+	std::shared_ptr<thread_pool> thread_pool = nullptr;
+	std::tie(thread_pool, error_message) = create_default(thread_counts_);
+	if (error_message.has_value())
 	{
 		log_module::write_error("error creating thread pool: {}",
-								create_error.value_or("unknown error"));
+								error_message.value_or("unknown error"));
 
 		return 0;
 	}
 
 	log_module::write_information("created thread pool");
 
-	auto store_error = store_job(thread_pool);
-	if (store_error.has_value())
+	error_message = store_job(thread_pool);
+	if (error_message.has_value())
 	{
-		log_module::write_error("error storing job: {}", store_error.value_or("unknown error"));
+		log_module::write_error("error storing job: {}", error_message.value_or("unknown error"));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	auto thread_start_error = thread_pool->start();
-	if (thread_start_error.has_value())
+	error_message = thread_pool->start();
+	if (error_message.has_value())
 	{
 		log_module::write_error("error starting thread pool: {}",
-								thread_start_error.value_or("unknown error"));
+								error_message.value_or("unknown error"));
 
 		thread_pool.reset();
 

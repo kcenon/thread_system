@@ -67,11 +67,11 @@ auto initialize_logger() -> std::optional<std::string>
 
 auto main() -> int
 {
-	auto start_error = initialize_logger();
-	if (start_error.has_value())
+	auto error_message = initialize_logger();
+	if (error_message.has_value())
 	{
 		std::cerr << formatter::format("error starting logger: {}\n",
-									   start_error.value_or("unknown error"));
+									   error_message.value_or("unknown error"));
 		return 0;
 	}
 
