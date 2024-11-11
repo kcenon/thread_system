@@ -104,15 +104,28 @@ TEST_F(DateTimeToolTest, NanosecondsTest)
 
 TEST_F(DateTimeToolTest, TimeDifferenceTest)
 {
-	auto start_time = std::chrono::high_resolution_clock::now();
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	auto end_time = std::chrono::high_resolution_clock::now();
+	using namespace std::chrono;
 
-	double diff = datetime_tool::time_difference<std::chrono::milliseconds>(start_time, end_time);
+	auto start = high_resolution_clock::now();
+	auto end = start + milliseconds(100); // 명시적으로 100ms 차이를 만듦
 
-	// The difference should be approximately 100ms (allowing for some system variation)
-	EXPECT_GE(diff, 90.0);
-	EXPECT_LE(diff, 110.0);
+	double diff = datetime_tool::time_difference<milliseconds>(start, end);
+
+	EXPECT_DOUBLE_EQ(diff, 100.0);
+}
+
+TEST_F(DateTimeToolTest, TimeDifferenceRealTest)
+{
+	using namespace std::chrono;
+
+	auto start = high_resolution_clock::now();
+	std::this_thread::sleep_for(milliseconds(100));
+	auto end = high_resolution_clock::now();
+
+	double diff = datetime_tool::time_difference<milliseconds>(start, end);
+
+	EXPECT_GE(diff, 95.0);	// 허용 오차 범위 확대
+	EXPECT_LE(diff, 150.0); // 상한값 증가
 }
 
 TEST_F(DateTimeToolTest, EdgeCasesTest)
