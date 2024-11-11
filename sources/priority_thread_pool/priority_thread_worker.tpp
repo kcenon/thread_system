@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "priority_job_queue.h"
 
-using namespace log_module;
 using namespace utility_module;
 
 namespace priority_thread_pool_module
@@ -122,16 +121,16 @@ namespace priority_thread_pool_module
 
 		if (!started_time_point.has_value())
 		{
-			log_module::write(log_types::Sequence,
-							  "job executed successfully: {}[{}] on priority_thread_worker",
-							  current_job->get_name(), current_job->priority());
+			log_module::write_sequence(
+				"job executed successfully: {}[{}] on priority_thread_worker",
+				current_job->get_name(), current_job->priority());
 
 			return std::nullopt;
 		}
 
-		log_module::write(log_types::Sequence, started_time_point.value(),
-						  "job executed successfully: {}[{}] on priority_thread_worker",
-						  current_job->get_name(), current_job->priority());
+		log_module::write_sequence(started_time_point.value(),
+								   "job executed successfully: {}[{}] on priority_thread_worker",
+								   current_job->get_name(), current_job->priority());
 
 		return std::nullopt;
 	}

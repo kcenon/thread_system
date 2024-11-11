@@ -43,7 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fmt/format.h>
 #endif
 
-using namespace log_module;
 using namespace utility_module;
 using namespace priority_thread_pool_module;
 
@@ -51,9 +50,9 @@ bool use_backup_ = false;
 uint32_t max_lines_ = 0;
 uint16_t wait_interval_ = 100;
 uint32_t test_line_count_ = 1000000;
-log_types file_target_ = log_types::None;
-log_types console_target_ = log_types::Error;
-log_types callback_target_ = log_types::None;
+log_module::log_types file_target_ = log_module::log_types::None;
+log_module::log_types console_target_ = log_module::log_types::Error;
+log_module::log_types callback_target_ = log_module::log_types::None;
 
 uint16_t top_priority_workers_ = 3;
 uint16_t middle_priority_workers_ = 2;
@@ -68,7 +67,8 @@ auto initialize_logger() -> std::optional<std::string>
 	log_module::console_target(console_target_);
 	log_module::callback_target(callback_target_);
 	log_module::message_callback(
-		[](const log_types& type, const std::string& datetime, const std::string& message)
+		[](const log_module::log_types& type, const std::string& datetime,
+		   const std::string& message)
 		{ std::cout << formatter::format("[{}][{}] {}\n", datetime, type, message); });
 	if (wait_interval_ > 0)
 	{
@@ -137,7 +137,7 @@ auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
 		auto enqueue_error = thread_pool->enqueue(std::make_unique<priority_job<test_priority>>(
 			[target](void) -> std::optional<std::string>
 			{
-				log_module::write(log_types::Debug, "Hello, World!: {} priority", target);
+				log_module::write_debug("Hello, World!: {} priority", target);
 
 				return std::nullopt;
 			},
@@ -148,7 +148,7 @@ auto store_job(std::shared_ptr<priority_thread_pool<test_priority>> thread_pool)
 									 enqueue_error.value_or("unknown error"));
 		}
 
-		log_module::write(log_types::Sequence, "enqueued job: {}", index);
+		log_module::write_sequence("enqueued job: {}", index);
 	}
 
 	return std::nullopt;
@@ -168,19 +168,18 @@ auto main() -> int
 		= create_default(top_priority_workers_, middle_priority_workers_, bottom_priority_workers_);
 	if (thread_pool == nullptr)
 	{
-		log_module::write(log_types::Error, "error creating thread pool: {}",
-						  create_error.value_or("unknown error"));
+		log_module::write_error("error creating thread pool: {}",
+								create_error.value_or("unknown error"));
 
 		return 0;
 	}
 
-	log_module::write(log_types::Information, "created priority thread pool");
+	log_module::write_information("created priority thread pool");
 
 	auto store_error = store_job(thread_pool);
 	if (store_error.has_value())
 	{
-		log_module::write(log_types::Error, "error storing job: {}",
-						  store_error.value_or("unknown error"));
+		log_module::write_error("error storing job: {}", store_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
@@ -190,19 +189,19 @@ auto main() -> int
 	auto thread_start_error = thread_pool->start();
 	if (thread_start_error.has_value())
 	{
-		log_module::write(log_types::Error, "error starting thread pool: {}",
-						  thread_start_error.value_or("unknown error"));
+		log_module::write_error("error starting thread pool: {}",
+								thread_start_error.value_or("unknown error"));
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	log_module::write(log_types::Information, "started thread pool");
+	log_module::write_information("started thread pool");
 
 	thread_pool->stop();
 
-	log_module::write(log_types::Information, "stopped thread pool");
+	log_module::write_information("stopped thread pool");
 
 	thread_pool.reset();
 

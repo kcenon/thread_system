@@ -35,8 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger.h"
 #include "formatter.h"
 
-using namespace log_module;
-
 namespace thread_pool_module
 {
 	thread_worker::thread_worker(const bool& use_time_tag)
@@ -102,13 +100,13 @@ namespace thread_pool_module
 
 		if (!started_time_point.has_value())
 		{
-			log_module::write(log_types::Sequence, "job executed successfully: {} on thread_worker",
-							  current_job->get_name());
+			log_module::write_sequence("job executed successfully: {} on thread_worker",
+									   current_job->get_name());
 		}
 
-		log_module::write(log_types::Sequence, started_time_point.value(),
-						  "job executed successfully: {} on thread_worker",
-						  current_job->get_name());
+		log_module::write_sequence(started_time_point.value(),
+								   "job executed successfully: {} on thread_worker",
+								   current_job->get_name());
 
 		return std::nullopt;
 	}

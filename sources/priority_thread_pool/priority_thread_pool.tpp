@@ -35,7 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger.h"
 #include "formatter.h"
 
-using namespace log_module;
 using namespace utility_module;
 
 namespace priority_thread_pool_module
@@ -166,8 +165,8 @@ namespace priority_thread_pool_module
 			auto stop_error = worker->stop();
 			if (stop_error.has_value())
 			{
-				log_module::write(log_types::Error, "error stopping worker: {}",
-								  stop_error.value_or("unknown error"));
+				log_module::write_error("error stopping worker: {}",
+										stop_error.value_or("unknown error"));
 			}
 		}
 
