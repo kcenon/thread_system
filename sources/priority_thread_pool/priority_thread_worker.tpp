@@ -41,7 +41,7 @@ using namespace utility_module;
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
-	priority_thread_worker<priority_type>::priority_thread_worker(
+	priority_thread_worker_t<priority_type>::priority_thread_worker_t(
 		std::vector<priority_type> priorities, const bool& use_time_tag)
 		: thread_base("priority_thread_worker")
 		, job_queue_(nullptr)
@@ -51,25 +51,26 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	priority_thread_worker<priority_type>::~priority_thread_worker(void)
+	priority_thread_worker_t<priority_type>::~priority_thread_worker_t(void)
 	{
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::set_job_queue(
-		std::shared_ptr<priority_job_queue<priority_type>> job_queue) -> void
+	auto priority_thread_worker_t<priority_type>::set_job_queue(
+		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void
 	{
 		job_queue_ = job_queue;
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::priorities(void) const -> std::vector<priority_type>
+	auto priority_thread_worker_t<priority_type>::priorities(void) const
+		-> std::vector<priority_type>
 	{
 		return priorities_;
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::should_continue_work() const -> bool
+	auto priority_thread_worker_t<priority_type>::should_continue_work() const -> bool
 	{
 		if (job_queue_ == nullptr)
 		{
@@ -80,7 +81,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_worker<priority_type>::do_work() -> std::optional<std::string>
+	auto priority_thread_worker_t<priority_type>::do_work() -> std::optional<std::string>
 	{
 		if (job_queue_ == nullptr)
 		{
