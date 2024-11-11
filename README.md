@@ -63,6 +63,7 @@ Sample codes included in the project demonstrate the following use cases:
 - [Basic logger usage](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample/logger_sample.cpp)
 - [Basic thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample/thread_pool_sample.cpp)
 - [Priority-based thread pool usage](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample/priority_thread_pool_sample.cpp)
+- [Priority-based thread pool with custom priority type usage](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample_2/priority_thread_pool_sample_2.cpp)
 
 ## Areas for Improvement
 

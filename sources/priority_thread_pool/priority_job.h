@@ -33,12 +33,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "job.h"
+#include "job_priorities.h"
 
 using namespace thread_module;
 
 namespace priority_thread_pool_module
 {
-	template <typename priority_type> class priority_job_queue;
+	template <typename priority_type> class priority_job_queue_t;
 
 	/**
 	 * @class priority_job
@@ -50,7 +51,7 @@ namespace priority_thread_pool_module
 	 *
 	 * @tparam priority_type The type used to represent the priority level.
 	 */
-	template <typename priority_type> class priority_job : public job
+	template <typename priority_type> class priority_job_t : public job
 	{
 	public:
 		/**
@@ -59,14 +60,14 @@ namespace priority_thread_pool_module
 		 * @param priority The priority level of the job.
 		 * @param name The name of the job (default is "priority_job").
 		 */
-		priority_job(const std::function<std::optional<std::string>(void)>& callback,
-					 priority_type priority,
-					 const std::string& name = "priority_job");
+		priority_job_t(const std::function<std::optional<std::string>(void)>& callback,
+					   priority_type priority,
+					   const std::string& name = "priority_job");
 
 		/**
 		 * @brief Virtual destructor for the priority_job class.
 		 */
-		~priority_job(void) override;
+		~priority_job_t(void) override;
 
 		/**
 		 * @brief Get the priority level of the job.
@@ -91,8 +92,10 @@ namespace priority_thread_pool_module
 		priority_type priority_;
 
 		/** @brief A weak pointer to the associated priority job queue. */
-		std::weak_ptr<priority_job_queue<priority_type>> job_queue_;
+		std::weak_ptr<priority_job_queue_t<priority_type>> job_queue_;
 	};
+
+	using priority_job = priority_job_t<job_priorities>;
 } // namespace priority_thread_pool_module
 
 #include "priority_job.tpp"

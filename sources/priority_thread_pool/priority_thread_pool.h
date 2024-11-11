@@ -56,27 +56,27 @@ namespace priority_thread_pool_module
 	 *
 	 * @tparam priority_type The type used to represent the priority levels.
 	 */
-	template <typename priority_type>
-	class priority_thread_pool
-		: public std::enable_shared_from_this<priority_thread_pool<priority_type>>
+	template <typename priority_type = job_priorities>
+	class priority_thread_pool_t
+		: public std::enable_shared_from_this<priority_thread_pool_t<priority_type>>
 	{
 	public:
 		/**
 		 * @brief Constructs a new priority_thread_pool object.
 		 */
-		priority_thread_pool(void);
+		priority_thread_pool_t(void);
 
 		/**
 		 * @brief Virtual destructor for the priority_thread_pool class.
 		 */
-		virtual ~priority_thread_pool(void);
+		virtual ~priority_thread_pool_t(void);
 
 		/**
 		 * @brief Get a shared pointer to this priority_thread_pool object.
 		 * @return std::shared_ptr<priority_thread_pool<priority_type>> A shared pointer to this
 		 * priority_thread_pool.
 		 */
-		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<priority_thread_pool<priority_type>>;
+		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<priority_thread_pool_t<priority_type>>;
 
 		/**
 		 * @brief Starts the thread pool.
@@ -90,11 +90,11 @@ namespace priority_thread_pool_module
 
 		/**
 		 * @brief Gets the job queue associated with this thread pool.
-		 * @return std::shared_ptr<priority_job_queue<priority_type>> A shared pointer to the
-		 * priority job queue.
+		 * @return std::shared_ptr<priority_job_queue_t<priority_type>> A shared pointer to
+		 * the priority job queue.
 		 */
 		[[nodiscard]] auto get_job_queue(void)
-			-> std::shared_ptr<priority_job_queue<priority_type>>;
+			-> std::shared_ptr<priority_job_queue_t<priority_type>>;
 
 		/**
 		 * @brief Enqueues a priority job to the thread pool's job queue.
@@ -105,7 +105,7 @@ namespace priority_thread_pool_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto enqueue(std::unique_ptr<priority_job<priority_type>>&& job)
+		auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& job)
 			-> std::optional<std::string>;
 
 		/**
@@ -117,7 +117,7 @@ namespace priority_thread_pool_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		auto enqueue(std::unique_ptr<priority_thread_worker<priority_type>>&& worker)
+		auto enqueue(std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
 			-> std::optional<std::string>;
 
 		/**
@@ -132,11 +132,13 @@ namespace priority_thread_pool_module
 		std::atomic<bool> start_pool_;
 
 		/** @brief The priority job queue for the thread pool */
-		std::shared_ptr<priority_job_queue<priority_type>> job_queue_;
+		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue_;
 
 		/** @brief Collection of priority thread workers */
-		std::vector<std::unique_ptr<priority_thread_worker<priority_type>>> workers_;
+		std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>> workers_;
 	};
+
+	using priority_thread_pool = priority_thread_pool_t<job_priorities>;
 } // namespace priority_thread_pool_module
 
 #include "priority_thread_pool.tpp"

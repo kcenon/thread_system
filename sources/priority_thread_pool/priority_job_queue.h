@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job_queue.h"
 #include "priority_job.h"
+#include "job_priorities.h"
 
 #include <map>
 
@@ -51,18 +52,18 @@ namespace priority_thread_pool_module
 	 *
 	 * @tparam priority_type The type used to represent the priority levels.
 	 */
-	template <typename priority_type> class priority_job_queue : public job_queue
+	template <typename priority_type = job_priorities> class priority_job_queue_t : public job_queue
 	{
 	public:
 		/**
 		 * @brief Constructs a new priority_job_queue object.
 		 */
-		priority_job_queue(void);
+		priority_job_queue_t(void);
 
 		/**
 		 * @brief Virtual destructor for the priority_job_queue class.
 		 */
-		~priority_job_queue(void) override;
+		~priority_job_queue_t(void) override;
 
 		/**
 		 * @brief Enqueues a job into the queue.
@@ -85,7 +86,7 @@ namespace priority_thread_pool_module
 		 *         - std::optional<std::string>: An optional string message, typically used for
 		 * error descriptions.
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job<priority_type>>&& value)
+		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& value)
 			-> std::optional<std::string>;
 
 		/**
@@ -111,7 +112,7 @@ namespace priority_thread_pool_module
 		 * error descriptions.
 		 */
 		[[nodiscard]] auto dequeue(const std::vector<priority_type>& priorities)
-			-> std::tuple<std::optional<std::unique_ptr<priority_job<priority_type>>>,
+			-> std::tuple<std::optional<std::unique_ptr<priority_job_t<priority_type>>>,
 						  std::optional<std::string>>;
 
 		/**
@@ -142,12 +143,14 @@ namespace priority_thread_pool_module
 		 * available, or nullopt if no job is found.
 		 */
 		[[nodiscard]] auto try_dequeue_from_priority(const priority_type& priority)
-			-> std::optional<std::unique_ptr<priority_job<priority_type>>>;
+			-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>;
 
 	private:
 		/** @brief Map of priority queues */
-		std::map<priority_type, std::queue<std::unique_ptr<priority_job<priority_type>>>> queues_;
+		std::map<priority_type, std::queue<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
 	};
+
+	using priority_job_queue = priority_job_queue_t<job_priorities>;
 } // namespace priority_thread_pool_module
 
 #include "priority_job_queue.tpp"

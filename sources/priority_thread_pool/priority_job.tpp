@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
-	priority_job<priority_type>::priority_job(
+	priority_job_t<priority_type>::priority_job_t(
 		const std::function<std::optional<std::string>(void)>& callback,
 		priority_type priority,
 		const std::string& name)
@@ -45,23 +45,23 @@ namespace priority_thread_pool_module
 	{
 	}
 
-	template <typename priority_type> priority_job<priority_type>::~priority_job(void) {}
+	template <typename priority_type> priority_job_t<priority_type>::~priority_job_t(void) {}
 
 	template <typename priority_type>
-	auto priority_job<priority_type>::priority() const -> priority_type
+	auto priority_job_t<priority_type>::priority() const -> priority_type
 	{
 		return priority_;
 	}
 
 	template <typename priority_type>
-	auto priority_job<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
+	auto priority_job_t<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
 		-> void
 	{
-		job_queue_ = std::dynamic_pointer_cast<priority_job_queue<priority_type>>(job_queue);
+		job_queue_ = std::dynamic_pointer_cast<priority_job_queue_t<priority_type>>(job_queue);
 	}
 
 	template <typename priority_type>
-	auto priority_job<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
+	auto priority_job_t<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
 	{
 		return std::dynamic_pointer_cast<job_queue>(job_queue_.lock());
 	}

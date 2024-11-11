@@ -40,25 +40,26 @@ using namespace utility_module;
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
-	priority_thread_pool<priority_type>::priority_thread_pool(void)
-		: job_queue_(std::make_shared<priority_job_queue<priority_type>>()), start_pool_(false)
+	priority_thread_pool_t<priority_type>::priority_thread_pool_t(void)
+		: job_queue_(std::make_shared<priority_job_queue_t<priority_type>>()), start_pool_(false)
 	{
 	}
 
-	template <typename priority_type> priority_thread_pool<priority_type>::~priority_thread_pool()
+	template <typename priority_type>
+	priority_thread_pool_t<priority_type>::~priority_thread_pool_t()
 	{
 		stop();
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::get_ptr(void)
-		-> std::shared_ptr<priority_thread_pool<priority_type>>
+	auto priority_thread_pool_t<priority_type>::get_ptr(void)
+		-> std::shared_ptr<priority_thread_pool_t<priority_type>>
 	{
 		return this->shared_from_this();
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::start(void) -> std::optional<std::string>
+	auto priority_thread_pool_t<priority_type>::start(void) -> std::optional<std::string>
 	{
 		if (workers_.empty())
 		{
@@ -81,15 +82,15 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::get_job_queue(void)
-		-> std::shared_ptr<priority_job_queue<priority_type>>
+	auto priority_thread_pool_t<priority_type>::get_job_queue(void)
+		-> std::shared_ptr<priority_job_queue_t<priority_type>>
 	{
 		return job_queue_;
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::enqueue(
-		std::unique_ptr<priority_job<priority_type>>&& job) -> std::optional<std::string>
+	auto priority_thread_pool_t<priority_type>::enqueue(
+		std::unique_ptr<priority_job_t<priority_type>>&& job) -> std::optional<std::string>
 	{
 		if (job == nullptr)
 		{
@@ -111,8 +112,8 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::enqueue(
-		std::unique_ptr<priority_thread_worker<priority_type>>&& worker)
+	auto priority_thread_pool_t<priority_type>::enqueue(
+		std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
 		-> std::optional<std::string>
 	{
 		if (worker == nullptr)
@@ -143,7 +144,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_thread_pool<priority_type>::stop(const bool& immediately_stop) -> void
+	auto priority_thread_pool_t<priority_type>::stop(const bool& immediately_stop) -> void
 	{
 		if (!start_pool_.load())
 		{

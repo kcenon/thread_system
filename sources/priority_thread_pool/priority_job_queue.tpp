@@ -35,16 +35,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
-	priority_job_queue<priority_type>::priority_job_queue(void) : job_queue(), queues_()
-	{
-	}
-
-	template <typename priority_type> priority_job_queue<priority_type>::~priority_job_queue(void)
+	priority_job_queue_t<priority_type>::priority_job_queue_t(void) : job_queue(), queues_()
 	{
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::enqueue(std::unique_ptr<job>&& value)
+	priority_job_queue_t<priority_type>::~priority_job_queue_t(void)
+	{
+	}
+
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::enqueue(std::unique_ptr<job>&& value)
 		-> std::optional<std::string>
 	{
 		if (stop_.load())
@@ -52,7 +53,7 @@ namespace priority_thread_pool_module
 			return "Job queue is stopped";
 		}
 
-		auto priority_job_ptr = dynamic_cast<priority_job<priority_type>*>(value.get());
+		auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(value.get());
 
 		if (!priority_job_ptr)
 		{
@@ -66,8 +67,8 @@ namespace priority_thread_pool_module
 		auto iter = queues_.find(job_priority);
 		if (iter != queues_.end())
 		{
-			iter->second.push(std::unique_ptr<priority_job<priority_type>>(
-				static_cast<priority_job<priority_type>*>(value.release())));
+			iter->second.push(std::unique_ptr<priority_job_t<priority_type>>(
+				static_cast<priority_job_t<priority_type>*>(value.release())));
 
 			if (notify_)
 			{
@@ -77,12 +78,12 @@ namespace priority_thread_pool_module
 			return std::nullopt;
 		}
 
-		iter
-			= queues_
-				  .emplace(job_priority, std::queue<std::unique_ptr<priority_job<priority_type>>>())
-				  .first;
-		iter->second.push(std::unique_ptr<priority_job<priority_type>>(
-			static_cast<priority_job<priority_type>*>(value.release())));
+		iter = queues_
+				   .emplace(job_priority,
+							std::queue<std::unique_ptr<priority_job_t<priority_type>>>())
+				   .first;
+		iter->second.push(std::unique_ptr<priority_job_t<priority_type>>(
+			static_cast<priority_job_t<priority_type>*>(value.release())));
 
 		if (notify_)
 		{
@@ -93,8 +94,8 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::enqueue(
-		std::unique_ptr<priority_job<priority_type>>&& value) -> std::optional<std::string>
+	auto priority_job_queue_t<priority_type>::enqueue(
+		std::unique_ptr<priority_job_t<priority_type>>&& value) -> std::optional<std::string>
 	{
 		if (stop_.load())
 		{
@@ -120,7 +121,7 @@ namespace priority_thread_pool_module
 
 		iter = queues_
 				   .emplace(value->priority(),
-							std::queue<std::unique_ptr<priority_job<priority_type>>>())
+							std::queue<std::unique_ptr<priority_job_t<priority_type>>>())
 				   .first;
 		iter->second.push(std::move(value));
 
@@ -130,7 +131,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::dequeue()
+	auto priority_job_queue_t<priority_type>::dequeue()
 		-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>
 	{
 		return { std::nullopt, "Dequeue operation without specified priorities is "
@@ -138,14 +139,14 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::dequeue(const std::vector<priority_type>& priorities)
-		-> std::tuple<std::optional<std::unique_ptr<priority_job<priority_type>>>,
+	auto priority_job_queue_t<priority_type>::dequeue(const std::vector<priority_type>& priorities)
+		-> std::tuple<std::optional<std::unique_ptr<priority_job_t<priority_type>>>,
 					  std::optional<std::string>>
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
 		auto dequeue_job
-			= [this, &priorities]() -> std::optional<std::unique_ptr<priority_job<priority_type>>>
+			= [this, &priorities]() -> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
 		{
 			for (const auto& priority : priorities)
 			{
@@ -157,7 +158,7 @@ namespace priority_thread_pool_module
 			return std::nullopt;
 		};
 
-		std::optional<std::unique_ptr<priority_job<priority_type>>> result;
+		std::optional<std::unique_ptr<priority_job_t<priority_type>>> result;
 		condition_.wait(lock,
 						[&]()
 						{
@@ -182,13 +183,13 @@ namespace priority_thread_pool_module
 		return { std::nullopt, "Unexpected error: No job found after waiting" };
 	}
 
-	template <typename priority_type> auto priority_job_queue<priority_type>::clear() -> void
+	template <typename priority_type> auto priority_job_queue_t<priority_type>::clear() -> void
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
 		for (auto& pair : queues_)
 		{
-			std::queue<std::unique_ptr<priority_job<priority_type>>> empty;
+			std::queue<std::unique_ptr<priority_job_t<priority_type>>> empty;
 			std::swap(pair.second, empty);
 		}
 
@@ -198,7 +199,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::empty(
+	auto priority_job_queue_t<priority_type>::empty(
 		const std::vector<priority_type>& priorities) const -> bool
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -207,7 +208,7 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::empty_check_without_lock(
+	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
 		const std::vector<priority_type>& priorities) const -> bool
 	{
 		for (const auto& priority : priorities)
@@ -223,8 +224,9 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue<priority_type>::try_dequeue_from_priority(const priority_type& priority)
-		-> std::optional<std::unique_ptr<priority_job<priority_type>>>
+	auto priority_job_queue_t<priority_type>::try_dequeue_from_priority(
+		const priority_type& priority)
+		-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
 	{
 		auto it = queues_.find(priority);
 		if (it == queues_.end() || it->second.empty())

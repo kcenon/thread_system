@@ -52,7 +52,8 @@ namespace priority_thread_pool_module
 	 *
 	 * @tparam priority_type The type used to represent the priority levels.
 	 */
-	template <typename priority_type> class priority_thread_worker : public thread_base
+	template <typename priority_type = job_priorities>
+	class priority_thread_worker_t : public thread_base
 	{
 	public:
 		/**
@@ -61,19 +62,19 @@ namespace priority_thread_pool_module
 		 * @param use_time_tag A boolean flag indicating whether to use time tags in job processing
 		 * (default is true).
 		 */
-		priority_thread_worker(std::vector<priority_type> priorities,
-							   const bool& use_time_tag = true);
+		priority_thread_worker_t(std::vector<priority_type> priorities,
+								 const bool& use_time_tag = true);
 
 		/**
 		 * @brief Virtual destructor for the priority_thread_worker class.
 		 */
-		virtual ~priority_thread_worker(void);
+		virtual ~priority_thread_worker_t(void);
 
 		/**
 		 * @brief Sets the job queue for this worker to process.
 		 * @param job_queue A shared pointer to the priority job queue.
 		 */
-		auto set_job_queue(std::shared_ptr<priority_job_queue<priority_type>> job_queue) -> void;
+		auto set_job_queue(std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void;
 
 		/**
 		 * @brief Gets the priority levels this worker can process.
@@ -105,8 +106,10 @@ namespace priority_thread_pool_module
 		std::vector<priority_type> priorities_;
 
 		/** @brief The priority job queue to process */
-		std::shared_ptr<priority_job_queue<priority_type>> job_queue_;
+		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue_;
 	};
+
+	using priority_thread_worker = priority_thread_worker_t<job_priorities>;
 } // namespace priority_thread_pool_module
 
 #include "priority_thread_worker.tpp"
