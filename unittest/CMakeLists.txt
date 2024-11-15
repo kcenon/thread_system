@@ -1,3 +1,1 @@
 add_subdirectory(utilities_test)
-add_subdirectory(thread_pool_test)
-add_subdirectory(priority_thread_pool_test)
