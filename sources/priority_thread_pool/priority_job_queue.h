@@ -146,8 +146,8 @@ namespace priority_thread_pool_module
 			-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>;
 
 	private:
-		/** @brief Map of priority queues */
-		std::map<priority_type, std::queue<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
+		/** @brief Map of priority deque */
+		std::map<priority_type, std::deque<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
 	};
 
 	using priority_job_queue = priority_job_queue_t<job_priorities>;

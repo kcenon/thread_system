@@ -74,7 +74,7 @@ namespace log_module
 		while (!remaining_logs.empty())
 		{
 			auto current_job = std::move(remaining_logs.front());
-			remaining_logs.pop();
+			remaining_logs.pop_front();
 
 			if (callback_ == nullptr)
 			{

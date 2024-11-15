@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "job.h"
 
 #include <mutex>
-#include <queue>
+#include <deque>
 #include <tuple>
 #include <atomic>
 #include <optional>
@@ -126,7 +126,7 @@ namespace thread_module
 		 * @return std::queue<std::unique_ptr<job>> A queue containing all the jobs that were in the
 		 * job_queue.
 		 */
-		[[nodiscard]] auto dequeue_all(void) -> std::queue<std::unique_ptr<job>>;
+		[[nodiscard]] auto dequeue_all(void) -> std::deque<std::unique_ptr<job>>;
 
 	protected:
 		/** @brief Flag indicating whether to notify when enqueuing */
@@ -141,7 +141,7 @@ namespace thread_module
 		/** @brief Condition variable for signaling between threads */
 		std::condition_variable condition_;
 
-		/** @brief The underlying queue of jobs */
-		std::queue<std::unique_ptr<job>> queue_;
+		/** @brief The underlying deque of jobs */
+		std::deque<std::unique_ptr<job>> queue_;
 	};
 }

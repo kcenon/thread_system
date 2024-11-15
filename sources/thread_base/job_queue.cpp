@@ -56,7 +56,7 @@ namespace thread_module
 
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		queue_.push(std::move(value));
+		queue_.push_back(std::move(value));
 
 		if (notify_)
 		{
@@ -80,7 +80,7 @@ namespace thread_module
 		}
 
 		auto value = std::move(queue_.front());
-		queue_.pop();
+		queue_.pop_front();
 
 		return { std::move(value), std::nullopt };
 	}
@@ -89,7 +89,7 @@ namespace thread_module
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		std::queue<std::unique_ptr<job>> empty;
+		std::deque<std::unique_ptr<job>> empty;
 		std::swap(queue_, empty);
 
 		condition_.notify_all();
@@ -111,9 +111,9 @@ namespace thread_module
 		condition_.notify_all();
 	}
 
-	auto job_queue::dequeue_all(void) -> std::queue<std::unique_ptr<job>>
+	auto job_queue::dequeue_all(void) -> std::deque<std::unique_ptr<job>>
 	{
-		std::queue<std::unique_ptr<job>> all_items;
+		std::deque<std::unique_ptr<job>> all_items;
 		{
 			std::scoped_lock<std::mutex> lock(mutex_);
 
