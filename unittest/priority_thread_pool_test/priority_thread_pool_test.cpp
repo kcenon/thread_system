@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
+#include "job_priorities.h"
 #include "priority_thread_pool.h"
 
 using namespace priority_thread_pool_module;
@@ -120,4 +121,28 @@ TEST(priority_thread_pool_test, start_and_stop_immediately_no_worker)
 	EXPECT_EQ(start_error, "no workers to start");
 
 	pool->stop(true);
+}
+
+TEST(priority_thread_pool_test, start_and_one_sec_job_and_stop)
+{
+	auto pool = std::make_shared<priority_thread_pool>();
+
+	auto worker = std::make_unique<priority_thread_worker>();
+	auto error = pool->enqueue(std::move(worker));
+	EXPECT_EQ(error, std::nullopt);
+
+	auto start_error = pool->start();
+	EXPECT_EQ(start_error, std::nullopt);
+
+	error = pool->enqueue(std::make_unique<priority_job>(
+		[](void) -> std::optional<std::string>
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+
+			return std::nullopt;
+		},
+		job_priorities::High, "10sec job"));
+	EXPECT_EQ(error, std::nullopt);
+
+	pool->stop(false);
 }

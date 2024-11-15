@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
+#include "job.h"
 #include "thread_pool.h"
 
 using namespace thread_pool_module;
@@ -120,4 +121,28 @@ TEST(thread_pool_test, start_and_stop_immediately_no_worker)
 	EXPECT_EQ(start_error, "No workers to start");
 
 	pool->stop(true);
+}
+
+TEST(thread_pool_test, start_and_one_sec_job_and_stop)
+{
+	auto pool = std::make_shared<thread_pool>();
+
+	auto worker = std::make_unique<thread_worker>();
+	auto error = pool->enqueue(std::move(worker));
+	EXPECT_EQ(error, std::nullopt);
+
+	auto start_error = pool->start();
+	EXPECT_EQ(start_error, std::nullopt);
+
+	error = pool->enqueue(std::make_unique<thread_module::job>(
+		[](void) -> std::optional<std::string>
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+
+			return std::nullopt;
+		},
+		"10sec job"));
+	EXPECT_EQ(error, std::nullopt);
+
+	pool->stop(false);
 }
