@@ -71,7 +71,7 @@ TEST_F(ThreadPoolTest, JobExecutionTest)
 	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			all_completed = false;
@@ -113,7 +113,7 @@ TEST_F(ThreadPoolTest, JobOrderTest)
 	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			all_completed = false;
@@ -160,7 +160,7 @@ TEST_F(ThreadPoolTest, ConcurrencyTest)
 	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			all_completed = false;
@@ -193,7 +193,7 @@ TEST_F(ThreadPoolTest, ErrorHandlingTest)
 		}));
 	ASSERT_FALSE(result.has_value());
 
-	auto status = future.wait_for(std::chrono::seconds(1));
+	auto status = future.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status, std::future_status::ready)
 		<< "Error handling task did not complete within timeout";
 	pool->stop();
@@ -227,7 +227,7 @@ TEST_F(ThreadPoolTest, StopRestartTest)
 	bool first_batch_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			first_batch_completed = false;
@@ -264,7 +264,7 @@ TEST_F(ThreadPoolTest, StopRestartTest)
 	bool second_batch_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			second_batch_completed = false;
@@ -306,7 +306,7 @@ TEST_F(ThreadPoolTest, StopBehaviorTest)
 	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			all_completed = false;

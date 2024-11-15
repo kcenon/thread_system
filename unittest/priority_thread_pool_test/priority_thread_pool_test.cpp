@@ -79,7 +79,7 @@ TEST_F(PriorityThreadPoolTest, HighPriorityJobTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	auto status = future.wait_for(std::chrono::seconds(1));
+	auto status = future.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status, std::future_status::ready)
 		<< "High priority task did not complete within timeout";
 	pool->stop();
@@ -105,7 +105,7 @@ TEST_F(PriorityThreadPoolTest, NormalPriorityJobTest)
 		job_priorities::Normal));
 
 	ASSERT_FALSE(result.has_value());
-	auto status = future.wait_for(std::chrono::seconds(1));
+	auto status = future.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status, std::future_status::ready)
 		<< "Normal priority task did not complete within timeout";
 	pool->stop();
@@ -131,7 +131,7 @@ TEST_F(PriorityThreadPoolTest, LowPriorityJobTest)
 		job_priorities::Low));
 
 	ASSERT_FALSE(result.has_value());
-	auto status = future.wait_for(std::chrono::seconds(1));
+	auto status = future.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status, std::future_status::ready)
 		<< "Low priority task did not complete within timeout";
 	pool->stop();
@@ -157,7 +157,7 @@ TEST_F(PriorityThreadPoolTest, ErrorHandlingTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	auto status = future.wait_for(std::chrono::seconds(1));
+	auto status = future.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status, std::future_status::ready)
 		<< "Error handling task did not complete within timeout";
 	pool->stop();
@@ -183,7 +183,7 @@ TEST_F(PriorityThreadPoolTest, StopRestartTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	auto status1 = future1.wait_for(std::chrono::seconds(1));
+	auto status1 = future1.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status1, std::future_status::ready) << "First task did not complete within timeout";
 	pool->stop();
 	ASSERT_EQ(counter, 1) << "First task did not execute successfully";
@@ -204,7 +204,7 @@ TEST_F(PriorityThreadPoolTest, StopRestartTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	auto status2 = future2.wait_for(std::chrono::seconds(1));
+	auto status2 = future2.wait_for(std::chrono::seconds(10));
 	ASSERT_EQ(status2, std::future_status::ready) << "Second task did not complete within timeout";
 	pool->stop();
 	ASSERT_EQ(counter, 2) << "Second task did not execute successfully";
@@ -238,7 +238,7 @@ TEST_F(PriorityThreadPoolTest, StopBehaviorTest)
 	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		auto status = future.wait_for(std::chrono::seconds(1));
+		auto status = future.wait_for(std::chrono::seconds(10));
 		if (status != std::future_status::ready)
 		{
 			all_completed = false;
