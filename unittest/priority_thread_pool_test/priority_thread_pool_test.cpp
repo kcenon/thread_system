@@ -79,9 +79,11 @@ TEST_F(PriorityThreadPoolTest, HighPriorityJobTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	future.wait();
+	auto status = future.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status, std::future_status::ready)
+		<< "High priority task did not complete within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 1);
+	ASSERT_EQ(counter, 1) << "High priority task did not execute successfully";
 }
 
 TEST_F(PriorityThreadPoolTest, NormalPriorityJobTest)
@@ -103,9 +105,11 @@ TEST_F(PriorityThreadPoolTest, NormalPriorityJobTest)
 		job_priorities::Normal));
 
 	ASSERT_FALSE(result.has_value());
-	future.wait();
+	auto status = future.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status, std::future_status::ready)
+		<< "Normal priority task did not complete within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 1);
+	ASSERT_EQ(counter, 1) << "Normal priority task did not execute successfully";
 }
 
 TEST_F(PriorityThreadPoolTest, LowPriorityJobTest)
@@ -127,9 +131,11 @@ TEST_F(PriorityThreadPoolTest, LowPriorityJobTest)
 		job_priorities::Low));
 
 	ASSERT_FALSE(result.has_value());
-	future.wait();
+	auto status = future.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status, std::future_status::ready)
+		<< "Low priority task did not complete within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 1);
+	ASSERT_EQ(counter, 1) << "Low priority task did not execute successfully";
 }
 
 TEST_F(PriorityThreadPoolTest, ErrorHandlingTest)
@@ -151,9 +157,11 @@ TEST_F(PriorityThreadPoolTest, ErrorHandlingTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	future.wait();
+	auto status = future.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status, std::future_status::ready)
+		<< "Error handling task did not complete within timeout";
 	pool->stop();
-	ASSERT_TRUE(error_occurred);
+	ASSERT_TRUE(error_occurred) << "Error was not properly handled";
 }
 
 TEST_F(PriorityThreadPoolTest, StopRestartTest)
@@ -175,9 +183,10 @@ TEST_F(PriorityThreadPoolTest, StopRestartTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	future1.wait();
+	auto status1 = future1.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status1, std::future_status::ready) << "First task did not complete within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 1);
+	ASSERT_EQ(counter, 1) << "First task did not execute successfully";
 
 	pool = createPool(1, 0, 0);
 	pool->start();
@@ -195,15 +204,55 @@ TEST_F(PriorityThreadPoolTest, StopRestartTest)
 		job_priorities::High));
 
 	ASSERT_FALSE(result.has_value());
-	future2.wait();
+	auto status2 = future2.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status2, std::future_status::ready) << "Second task did not complete within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 2);
+	ASSERT_EQ(counter, 2) << "Second task did not execute successfully";
 }
 
 TEST_F(PriorityThreadPoolTest, StopBehaviorTest)
 {
 	auto pool = createPool(1, 1, 1);
 	std::atomic<int> counter{ 0 };
+	std::vector<std::future<void>> futures;
+
+	pool->start();
+
+	for (int i = 0; i < 50; i++)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		futures.push_back(promise->get_future());
+
+		auto priority = static_cast<job_priorities>(i % 3);
+		pool->enqueue(std::make_unique<priority_job>(
+			[&counter, promise](void) -> std::optional<std::string>
+			{
+				counter++;
+				promise->set_value();
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				return std::nullopt;
+			},
+			priority));
+	}
+
+	bool all_completed = true;
+	for (auto& future : futures)
+	{
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			all_completed = false;
+			break;
+		}
+	}
+
+	ASSERT_TRUE(all_completed) << "Not all tasks completed within timeout";
+	ASSERT_EQ(counter, 50) << "Not all tasks were executed before stop";
+	pool->stop();
+
+	// Test enqueueing jobs while stopped
+	counter.store(0);
+	futures.clear();
 
 	for (int i = 0; i < 30; i++)
 	{
@@ -217,37 +266,5 @@ TEST_F(PriorityThreadPoolTest, StopBehaviorTest)
 			priority));
 	}
 
-	ASSERT_EQ(counter, 0);
-	pool->stop();
-	ASSERT_EQ(counter, 0);
-
-	pool = createPool(1, 1, 1);
-	counter.store(0);
-
-	pool->start();
-	std::vector<std::future<void>> futures;
-
-	for (int i = 0; i < 15; i++)
-	{
-		auto promise = std::make_shared<std::promise<void>>();
-		futures.push_back(promise->get_future());
-
-		auto priority = static_cast<job_priorities>(i % 3);
-		pool->enqueue(std::make_unique<priority_job>(
-			[&counter, promise](void) -> std::optional<std::string>
-			{
-				counter++;
-				promise->set_value();
-				return std::nullopt;
-			},
-			priority));
-	}
-
-	for (auto& future : futures)
-	{
-		future.wait();
-	}
-
-	pool->stop();
-	ASSERT_EQ(counter, 15);
+	ASSERT_EQ(counter, 0) << "Tasks should not execute when pool is stopped";
 }

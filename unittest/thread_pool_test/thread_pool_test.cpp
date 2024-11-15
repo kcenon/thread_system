@@ -68,13 +68,20 @@ TEST_F(ThreadPoolTest, JobExecutionTest)
 		ASSERT_FALSE(result.has_value());
 	}
 
+	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			all_completed = false;
+			break;
+		}
 	}
 
+	ASSERT_TRUE(all_completed) << "Not all tasks completed within timeout";
 	pool->stop();
-	ASSERT_EQ(counter, 100);
+	ASSERT_EQ(counter, 100) << "Not all tasks executed successfully";
 }
 
 TEST_F(ThreadPoolTest, JobOrderTest)
@@ -103,16 +110,23 @@ TEST_F(ThreadPoolTest, JobOrderTest)
 			}));
 	}
 
+	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			all_completed = false;
+			break;
+		}
 	}
 
+	ASSERT_TRUE(all_completed) << "Not all tasks completed within timeout";
 	pool->stop();
 
 	for (size_t i = 0; i < results.size(); i++)
 	{
-		ASSERT_EQ(results[i], i);
+		ASSERT_EQ(results[i], i) << "Tasks were not executed in the correct order";
 	}
 }
 
@@ -143,15 +157,22 @@ TEST_F(ThreadPoolTest, ConcurrencyTest)
 			}));
 	}
 
+	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			all_completed = false;
+			break;
+		}
 	}
 
+	ASSERT_TRUE(all_completed) << "Not all concurrent tasks completed within timeout";
 	pool->stop();
 
-	ASSERT_GT(max_concurrent, 1);
-	ASSERT_LE(max_concurrent, WORKER_COUNT);
+	ASSERT_GT(max_concurrent, 1) << "Tasks were not executed concurrently";
+	ASSERT_LE(max_concurrent, WORKER_COUNT) << "More tasks were concurrent than worker count";
 }
 
 TEST_F(ThreadPoolTest, ErrorHandlingTest)
@@ -172,10 +193,12 @@ TEST_F(ThreadPoolTest, ErrorHandlingTest)
 		}));
 	ASSERT_FALSE(result.has_value());
 
-	future.wait();
+	auto status = future.wait_for(std::chrono::seconds(1));
+	ASSERT_EQ(status, std::future_status::ready)
+		<< "Error handling task did not complete within timeout";
 	pool->stop();
 
-	ASSERT_TRUE(error_occurred);
+	ASSERT_TRUE(error_occurred) << "Error was not properly handled";
 }
 
 TEST_F(ThreadPoolTest, StopRestartTest)
@@ -186,6 +209,7 @@ TEST_F(ThreadPoolTest, StopRestartTest)
 	pool->start();
 	std::vector<std::future<void>> futures;
 
+	// First batch
 	for (int i = 0; i < 25; i++)
 	{
 		auto promise = std::make_shared<std::promise<void>>();
@@ -200,17 +224,25 @@ TEST_F(ThreadPoolTest, StopRestartTest)
 			}));
 	}
 
+	bool first_batch_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			first_batch_completed = false;
+			break;
+		}
 	}
 
+	ASSERT_TRUE(first_batch_completed) << "First batch tasks did not complete within timeout";
 	int first_batch = counter.load();
-	ASSERT_EQ(first_batch, 25);
+	ASSERT_EQ(first_batch, 25) << "First batch did not execute all tasks";
 
 	pool->stop();
 	pool.reset();
 
+	// Second batch
 	pool = createPool(4);
 	pool->start();
 	futures.clear();
@@ -229,16 +261,23 @@ TEST_F(ThreadPoolTest, StopRestartTest)
 			}));
 	}
 
+	bool second_batch_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			second_batch_completed = false;
+			break;
+		}
 	}
 
+	ASSERT_TRUE(second_batch_completed) << "Second batch tasks did not complete within timeout";
 	int second_batch = counter.load() - first_batch;
-	ASSERT_EQ(second_batch, 25);
+	ASSERT_EQ(second_batch, 25) << "Second batch did not execute all tasks";
 
 	pool->stop();
-	ASSERT_EQ(counter, 50);
+	ASSERT_EQ(counter, 50) << "Total number of executed tasks is incorrect";
 }
 
 TEST_F(ThreadPoolTest, StopBehaviorTest)
@@ -264,11 +303,18 @@ TEST_F(ThreadPoolTest, StopBehaviorTest)
 			}));
 	}
 
+	bool all_completed = true;
 	for (auto& future : futures)
 	{
-		future.wait();
+		auto status = future.wait_for(std::chrono::seconds(1));
+		if (status != std::future_status::ready)
+		{
+			all_completed = false;
+			break;
+		}
 	}
 
-	ASSERT_EQ(counter, 50);
+	ASSERT_TRUE(all_completed) << "Not all tasks completed within timeout";
+	ASSERT_EQ(counter, 50) << "Not all tasks were executed before stop";
 	pool->stop();
 }
