@@ -83,6 +83,15 @@ namespace priority_thread_pool_module
 		return (index < job_detail::job_priority_count) ? job_detail::job_priority_strings[index]
 														: "UNKNOWN";
 	}
+
+	/**
+	 * @brief Converts a string to a job_priorities value.
+	 * @return std::vector<job_priorities>
+	 */
+	[[nodiscard]] inline auto all_priorities(void) -> std::vector<job_priorities>
+	{
+		return { job_priorities::High, job_priorities::Normal, job_priorities::Low };
+	}
 } // namespace priority_thread_pool_module
 
 // Formatter specializations for job_priorities

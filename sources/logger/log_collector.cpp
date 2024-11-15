@@ -39,8 +39,8 @@ namespace log_module
 	log_collector::log_collector(void)
 		: thread_base("log_collector")
 		, log_queue_(std::make_shared<job_queue>())
-		, file_log_type_(log_types::Error)
-		, console_log_type_(log_types::Information)
+		, file_log_type_(log_types::None)
+		, console_log_type_(log_types::None)
 		, callback_log_type_(log_types::None)
 	{
 	}

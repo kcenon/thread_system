@@ -76,7 +76,7 @@ namespace log_module
 		while (!remaining_logs.empty())
 		{
 			auto current_job = std::move(remaining_logs.front());
-			remaining_logs.pop();
+			remaining_logs.pop_front();
 
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));

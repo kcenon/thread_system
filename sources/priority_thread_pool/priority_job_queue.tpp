@@ -67,7 +67,7 @@ namespace priority_thread_pool_module
 		auto iter = queues_.find(job_priority);
 		if (iter != queues_.end())
 		{
-			iter->second.push(std::unique_ptr<priority_job_t<priority_type>>(
+			iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
 				static_cast<priority_job_t<priority_type>*>(value.release())));
 
 			if (notify_)
@@ -80,9 +80,9 @@ namespace priority_thread_pool_module
 
 		iter = queues_
 				   .emplace(job_priority,
-							std::queue<std::unique_ptr<priority_job_t<priority_type>>>())
+							std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
 				   .first;
-		iter->second.push(std::unique_ptr<priority_job_t<priority_type>>(
+		iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
 			static_cast<priority_job_t<priority_type>*>(value.release())));
 
 		if (notify_)
@@ -112,7 +112,7 @@ namespace priority_thread_pool_module
 		auto iter = queues_.find(value->priority());
 		if (iter != queues_.end())
 		{
-			iter->second.push(std::move(value));
+			iter->second.push_back(std::move(value));
 
 			condition_.notify_one();
 
@@ -121,9 +121,9 @@ namespace priority_thread_pool_module
 
 		iter = queues_
 				   .emplace(value->priority(),
-							std::queue<std::unique_ptr<priority_job_t<priority_type>>>())
+							std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
 				   .first;
-		iter->second.push(std::move(value));
+		iter->second.push_back(std::move(value));
 
 		condition_.notify_one();
 
@@ -189,7 +189,7 @@ namespace priority_thread_pool_module
 
 		for (auto& pair : queues_)
 		{
-			std::queue<std::unique_ptr<priority_job_t<priority_type>>> empty;
+			std::deque<std::unique_ptr<priority_job_t<priority_type>>> empty;
 			std::swap(pair.second, empty);
 		}
 
@@ -235,7 +235,7 @@ namespace priority_thread_pool_module
 		}
 
 		auto value = std::move(it->second.front());
-		it->second.pop();
+		it->second.pop_front();
 		return value;
 	}
 } // namespace priority_thread_pool_module

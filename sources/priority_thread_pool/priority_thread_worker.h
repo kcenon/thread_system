@@ -62,7 +62,7 @@ namespace priority_thread_pool_module
 		 * @param use_time_tag A boolean flag indicating whether to use time tags in job processing
 		 * (default is true).
 		 */
-		priority_thread_worker_t(std::vector<priority_type> priorities,
+		priority_thread_worker_t(std::vector<priority_type> priorities = all_priorities(),
 								 const bool& use_time_tag = true);
 
 		/**

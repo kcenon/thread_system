@@ -82,6 +82,15 @@ namespace test_detail
 													  : "Unknown";
 }
 
+/**
+ * @brief Converts a string to a job_priorities value.
+ * @return std::vector<test_priority>
+ */
+[[nodiscard]] inline auto all_priorities(void) -> std::vector<test_priority>
+{
+	return { test_priority::Top, test_priority::Middle, test_priority::Bottom };
+}
+
 // Formatter specializations for test_priority
 #ifdef USE_STD_FORMAT
 /**
