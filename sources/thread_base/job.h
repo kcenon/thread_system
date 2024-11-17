@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "formatter.h"
+
 #include <tuple>
 #include <memory>
 #include <string>
 #include <optional>
 #include <functional>
+#include <string_view>
 
 namespace thread_module
 {
@@ -98,6 +101,12 @@ namespace thread_module
 		 */
 		[[nodiscard]] virtual auto get_job_queue(void) const -> std::shared_ptr<job_queue>;
 
+		/**
+		 * @brief Get a string representation of the job.
+		 * @return std::string A string representation of the job.
+		 */
+		[[nodiscard]] virtual auto to_string(void) const -> std::string;
+
 	protected:
 		/** @brief The name of the job */
 		std::string name_;
@@ -109,3 +118,69 @@ namespace thread_module
 		std::function<std::optional<std::string>(void)> callback_;
 	};
 } // namespace thread_module
+
+// Formatter specializations for job
+#ifdef USE_STD_FORMAT
+/**
+ * @brief Specialization of std::formatter for job.
+ * Enables formatting of job enum values as strings in the standard library format.
+ */
+template <> struct std::formatter<thread_module::job> : std::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a job value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param item The job enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_module::job& item, FormatContext& ctx) const
+	{
+		return std::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character job.
+ * Allows job enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<thread_module::job, wchar_t> : std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a job value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param item The job enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_module::job& item, FormatContext& ctx) const
+	{
+		auto str = item.to_string();
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
+#else
+/**
+ * @brief Specialization of fmt::formatter for job.
+ * Enables formatting of job enum values using the fmt library.
+ */
+template <> struct fmt::formatter<thread_module::job> : fmt::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a job value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param item The job enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_module::job& item, FormatContext& ctx) const
+	{
+		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+#endif

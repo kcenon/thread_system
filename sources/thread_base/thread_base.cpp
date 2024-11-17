@@ -207,4 +207,11 @@ namespace thread_module
 
 		return std::nullopt;
 	}
+
+	auto thread_base::is_running(void) const -> bool { return worker_thread_ != nullptr; }
+
+	auto thread_base::to_string(void) const -> std::string
+	{
+		return formatter::format("{} is {}", thread_title_, worker_thread_ ? "running" : "stopped");
+	}
 } // namespace thread_module
