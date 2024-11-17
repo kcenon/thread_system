@@ -68,8 +68,6 @@ namespace log_module
 			return "there is no job_queue";
 		}
 
-		std::cout << "callback_writer::do_work" << std::endl;
-
 		auto remaining_logs = job_queue_->dequeue_all();
 		while (!remaining_logs.empty())
 		{
