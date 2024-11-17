@@ -95,3 +95,72 @@ namespace thread_pool_module
 		std::shared_ptr<job_queue> job_queue_;
 	};
 } // namespace thread_pool_module
+
+// Formatter specializations for thread_worker
+#ifdef USE_STD_FORMAT
+/**
+ * @brief Specialization of std::formatter for thread_worker.
+ * Enables formatting of thread_worker enum values as strings in the standard library format.
+ */
+template <>
+struct std::formatter<thread_pool_module::thread_worker> : std::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a thread_worker value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_worker enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	{
+		return std::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character thread_worker.
+ * Allows thread_worker enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<thread_pool_module::thread_worker, wchar_t>
+	: std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a thread_worker value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_worker enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	{
+		auto str = item.to_string();
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
+#else
+/**
+ * @brief Specialization of fmt::formatter for thread_worker.
+ * Enables formatting of thread_worker enum values using the fmt library.
+ */
+template <>
+struct fmt::formatter<thread_pool_module::thread_worker> : fmt::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a thread_worker value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_worker enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	{
+		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+#endif
