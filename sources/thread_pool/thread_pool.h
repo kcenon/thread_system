@@ -60,7 +60,7 @@ namespace thread_pool_module
 		/**
 		 * @brief Constructs a new thread_pool object.
 		 */
-		thread_pool(void);
+		thread_pool(const std::string& thread_title = "thread_pool");
 
 		/**
 		 * @brief Virtual destructor for the thread_pool class.
@@ -118,7 +118,16 @@ namespace thread_pool_module
 		 */
 		auto stop(const bool& immediately_stop = false) -> void;
 
+		/**
+		 * @brief Converts the thread_pool object to a string representation.
+		 * @return std::string A string representation of the thread_pool object.
+		 */
+		[[nodiscard]] auto to_string(void) const -> std::string;
+
 	private:
+		/** @brief Title for the thread pool */
+		std::string thread_title_;
+
 		/** @brief Flag indicating whether the pool is started */
 		std::atomic<bool> start_pool_;
 
@@ -129,3 +138,72 @@ namespace thread_pool_module
 		std::vector<std::unique_ptr<thread_worker>> workers_;
 	};
 } // namespace thread_pool_module
+
+// Formatter specializations for thread_pool
+#ifdef USE_STD_FORMAT
+/**
+ * @brief Specialization of std::formatter for thread_pool.
+ * Enables formatting of thread_pool enum values as strings in the standard library format.
+ */
+template <>
+struct std::formatter<thread_pool_module::thread_pool> : std::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a thread_pool value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_pool enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	{
+		return std::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character thread_pool.
+ * Allows thread_pool enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct std::formatter<thread_pool_module::thread_pool, wchar_t>
+	: std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a thread_pool value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_pool enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	{
+		auto str = item.to_string();
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
+#else
+/**
+ * @brief Specialization of fmt::formatter for thread_pool.
+ * Enables formatting of thread_pool enum values using the fmt library.
+ */
+template <>
+struct fmt::formatter<thread_pool_module::thread_pool> : fmt::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a thread_pool value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The thread_pool enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	{
+		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+#endif

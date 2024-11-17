@@ -39,7 +39,8 @@ using namespace utility_module;
 
 namespace thread_pool_module
 {
-	thread_pool::thread_pool(void) : job_queue_(std::make_shared<job_queue>()), start_pool_(false)
+	thread_pool::thread_pool(const std::string& thread_title)
+		: thread_title_(thread_title), job_queue_(std::make_shared<job_queue>()), start_pool_(false)
 	{
 	}
 
@@ -153,5 +154,33 @@ namespace thread_pool_module
 		}
 
 		start_pool_.store(false);
+	}
+
+	auto thread_pool::to_string(void) const -> std::string
+	{
+		std::string format_string;
+
+		if (job_queue_ == nullptr)
+		{
+			formatter::format_to(std::back_inserter(format_string),
+								 "{} is {},\n\tjob_queue: nullptr\n", thread_title_,
+								 start_pool_.load() ? "running" : "stopped");
+			for (const auto& worker : workers_)
+			{
+				formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
+			}
+
+			return format_string;
+		}
+
+		formatter::format_to(std::back_inserter(format_string), "{} is {},\n\tjob_queue: {}\n",
+							 thread_title_, start_pool_.load() ? "running" : "stopped",
+							 *job_queue_);
+		for (const auto& worker : workers_)
+		{
+			formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
+		}
+
+		return format_string;
 	}
 } // namespace thread_pool_module
