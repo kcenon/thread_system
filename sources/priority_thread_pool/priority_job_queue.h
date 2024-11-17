@@ -127,6 +127,12 @@ namespace priority_thread_pool_module
 		 */
 		[[nodiscard]] auto empty(const std::vector<priority_type>& priorities) const -> bool;
 
+		/**
+		 * @brief Converts the job queue to a string representation.
+		 * @return std::string A string representation of the job queue.
+		 */
+		[[nodiscard]] auto to_string(void) const -> std::string override;
+
 	protected:
 		/**
 		 * @brief Checks if the queue is empty for the given priorities without locking.
@@ -152,5 +158,81 @@ namespace priority_thread_pool_module
 
 	using priority_job_queue = priority_job_queue_t<job_priorities>;
 } // namespace priority_thread_pool_module
+
+// Formatter specializations for priority_job_queue_t<priority_type>
+#ifdef USE_STD_FORMAT
+/**
+ * @brief Specialization of std::formatter for priority_job_queue_t<priority_type>.
+ * Enables formatting of priority_job_queue_t<priority_type> enum values as strings in the standard
+ * library format.
+ */
+template <typename priority_type>
+struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
+	: std::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a priority_job_queue_t<priority_type> value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		return std::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character priority_job_queue_t<priority_type>.
+ * Allows priority_job_queue_t<priority_type> enum values to be formatted as wide strings in the
+ * standard library format.
+ */
+template <typename priority_type>
+struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>, wchar_t>
+	: std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a priority_job_queue_t<priority_type> value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		auto str = item.to_string();
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
+#else
+/**
+ * @brief Specialization of fmt::formatter for priority_job_queue_t<priority_type>.
+ * Enables formatting of priority_job_queue_t<priority_type> enum values using the fmt library.
+ */
+template <typename priority_type>
+struct fmt::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
+	: fmt::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a priority_job_queue_t<priority_type> value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+#endif
 
 #include "priority_job_queue.tpp"

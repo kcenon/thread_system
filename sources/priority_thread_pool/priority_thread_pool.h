@@ -64,7 +64,7 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Constructs a new priority_thread_pool object.
 		 */
-		priority_thread_pool_t(void);
+		priority_thread_pool_t(const std::string& thread_title = "priority_thread_pool");
 
 		/**
 		 * @brief Virtual destructor for the priority_thread_pool class.
@@ -127,7 +127,16 @@ namespace priority_thread_pool_module
 		 */
 		auto stop(const bool& immediately_stop = false) -> void;
 
+		/**
+		 * @brief Get a string representation of the thread pool.
+		 * @return std::string A string representation of the thread pool.
+		 */
+		[[nodiscard]] auto to_string(void) const -> std::string;
+
 	private:
+		/** @brief Title for the thread pool */
+		std::string thread_title_;
+
 		/** @brief Flag indicating whether the pool is started */
 		std::atomic<bool> start_pool_;
 
@@ -140,5 +149,81 @@ namespace priority_thread_pool_module
 
 	using priority_thread_pool = priority_thread_pool_t<job_priorities>;
 } // namespace priority_thread_pool_module
+
+// Formatter specializations for priority_thread_pool_t<priority_type>
+#ifdef USE_STD_FORMAT
+/**
+ * @brief Specialization of std::formatter for priority_thread_pool_t<priority_type>.
+ * Enables formatting of priority_thread_pool_t<priority_type> enum values as strings in the
+ * standard library format.
+ */
+template <typename priority_type>
+struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>>
+	: std::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a priority_thread_pool_t<priority_type> value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_thread_pool_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		return std::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+
+/**
+ * @brief Specialization of std::formatter for wide-character priority_thread_pool_t<priority_type>.
+ * Allows priority_thread_pool_t<priority_type> enum values to be formatted as wide strings in the
+ * standard library format.
+ */
+template <typename priority_type>
+struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>, wchar_t>
+	: std::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a priority_thread_pool_t<priority_type> value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_thread_pool_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		auto str = item.to_string();
+		std::wstring wstr(str.begin(), str.end());
+		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
+#else
+/**
+ * @brief Specialization of fmt::formatter for priority_thread_pool_t<priority_type>.
+ * Enables formatting of priority_thread_pool_t<priority_type> enum values using the fmt library.
+ */
+template <typename priority_type>
+struct fmt::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>>
+	: fmt::formatter<std::string_view>
+{
+	/**
+	 * @brief Formats a priority_thread_pool_t<priority_type> value as a string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param priority The priority_thread_pool_t<priority_type> enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+				FormatContext& ctx) const
+	{
+		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
+	}
+};
+#endif
 
 #include "priority_thread_pool.tpp"

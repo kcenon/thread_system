@@ -40,8 +40,10 @@ using namespace utility_module;
 namespace priority_thread_pool_module
 {
 	template <typename priority_type>
-	priority_thread_pool_t<priority_type>::priority_thread_pool_t(void)
-		: job_queue_(std::make_shared<priority_job_queue_t<priority_type>>()), start_pool_(false)
+	priority_thread_pool_t<priority_type>::priority_thread_pool_t(const std::string& thread_title)
+		: thread_title_(thread_title)
+		, job_queue_(std::make_shared<priority_job_queue_t<priority_type>>())
+		, start_pool_(false)
 	{
 	}
 
@@ -172,5 +174,37 @@ namespace priority_thread_pool_module
 		}
 
 		start_pool_.store(false);
+	}
+
+	template <typename priority_type>
+	auto priority_thread_pool_t<priority_type>::to_string(void) const -> std::string
+	{
+		std::string format_string;
+
+		if (job_queue_ == nullptr)
+		{
+			formatter::format_to(std::back_inserter(format_string),
+								 "{} is {},\n\tjob_queue: nullptr\n", thread_title_,
+								 start_pool_.load() ? "running" : "stopped");
+			formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n",
+								 workers_.size());
+			for (const auto& worker : workers_)
+			{
+				formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
+			}
+
+			return format_string;
+		}
+
+		formatter::format_to(std::back_inserter(format_string), "{} is {},\n\tjob_queue: {}\n",
+							 thread_title_, start_pool_.load() ? "running" : "stopped",
+							 *job_queue_);
+		formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n", workers_.size());
+		for (const auto& worker : workers_)
+		{
+			formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
+		}
+
+		return format_string;
 	}
 } // namespace priority_thread_pool_module

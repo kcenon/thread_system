@@ -208,6 +208,23 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::to_string(void) const -> std::string
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		std::string format_string;
+
+		formatter::format_to(std::back_inserter(format_string), "Priority job queue:\n");
+		for (const auto& pair : queues_)
+		{
+			formatter::format_to(std::back_inserter(format_string), "\tPriority: {} -> {} jobs\n",
+								 pair.first, pair.second.size());
+		}
+
+		return format_string;
+	}
+
+	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
 		const std::vector<priority_type>& priorities) const -> bool
 	{
