@@ -34,6 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job_queue.h"
 
+using namespace utility_module;
+
 namespace thread_module
 {
 	job::job(const std::function<std::optional<std::string>(void)>& callback,
@@ -73,4 +75,6 @@ namespace thread_module
 	}
 
 	auto job::get_job_queue(void) const -> std::shared_ptr<job_queue> { return job_queue_.lock(); }
+
+	auto job::to_string(void) const -> std::string { return formatter::format("job: {}", name_); }
 } // namespace thread_module

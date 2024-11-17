@@ -124,4 +124,11 @@ namespace thread_module
 
 		return all_items;
 	}
+
+	auto job_queue::to_string(void) const -> std::string
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		return formatter::format("contained {} jobs", queue_.size());
+	}
 } // namespace thread_module
