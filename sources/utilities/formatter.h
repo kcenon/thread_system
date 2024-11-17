@@ -130,14 +130,7 @@ namespace utility_module
 		static auto format(const char* formats, const FormatArgs&... args) -> std::string
 		{
 #ifdef USE_STD_FORMAT
-			try
-			{
-				return std::vformat(formats, std::make_format_args(args...));
-			}
-			catch (...)
-			{
-				return formats;
-			}
+			return std::vformat(formats, std::make_format_args(args...));
 #else
 			return fmt::format(fmt::runtime(formats), args...);
 #endif
@@ -154,14 +147,7 @@ namespace utility_module
 		static auto format(const wchar_t* formats, const FormatArgs&... args) -> std::wstring
 		{
 #ifdef USE_STD_FORMAT
-			try
-			{
-				return std::vformat(formats, std::make_wformat_args(args...));
-			}
-			catch (...)
-			{
-				return formats;
-			}
+			return std::vformat(formats, std::make_wformat_args(args...));
 #else
 			return fmt::format(fmt::runtime(formats), args...);
 #endif
@@ -182,16 +168,7 @@ namespace utility_module
 							  const FormatArgs&... args) -> OutputIt
 		{
 #ifdef USE_STD_FORMAT
-			try
-			{
-				std::string result = std::vformat(formats, std::make_format_args(args...));
-				return std::copy(result.begin(), result.end(), out);
-			}
-			catch (...)
-			{
-				std::string str(formats);
-				return std::copy(str.begin(), str.end(), out);
-			}
+			return std::vformat_to(out, formats, std::make_format_args(args...));
 #else
 			return fmt::format_to(out, fmt::runtime(formats), args...);
 #endif
@@ -212,16 +189,7 @@ namespace utility_module
 							  const FormatArgs&... args) -> OutputIt
 		{
 #ifdef USE_STD_FORMAT
-			try
-			{
-				std::wstring result = std::vformat(formats, std::make_wformat_args(args...));
-				return std::copy(result.begin(), result.end(), out);
-			}
-			catch (...)
-			{
-				std::wstring str(formats);
-				return std::copy(str.begin(), str.end(), out);
-			}
+			return std::vformat_to(out, formats, std::make_wformat_args(args...));
 #else
 			return fmt::format_to(out, fmt::runtime(formats), args...);
 #endif
