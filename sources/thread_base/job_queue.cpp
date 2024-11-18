@@ -57,6 +57,7 @@ namespace thread_module
 		std::scoped_lock<std::mutex> lock(mutex_);
 
 		queue_.push_back(std::move(value));
+		queue_size_.fetch_add(1);
 
 		if (notify_)
 		{
@@ -81,6 +82,7 @@ namespace thread_module
 
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
+		queue_size_.fetch_sub(1);
 
 		return { std::move(value), std::nullopt };
 	}
@@ -127,8 +129,6 @@ namespace thread_module
 
 	auto job_queue::to_string(void) const -> std::string
 	{
-		std::scoped_lock<std::mutex> lock(mutex_);
-
-		return formatter::format("contained {} jobs", queue_.size());
+		return formatter::format("contained {} jobs", queue_size_.load());
 	}
 } // namespace thread_module

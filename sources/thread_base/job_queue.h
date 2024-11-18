@@ -152,8 +152,12 @@ namespace thread_module
 		/** @brief Condition variable for signaling between threads */
 		std::condition_variable condition_;
 
+	private:
 		/** @brief The underlying deque of jobs */
 		std::deque<std::unique_ptr<job>> queue_;
+
+		/** @brief The size of the queue */
+		std::atomic_size_t queue_size_;
 	};
 }
 
