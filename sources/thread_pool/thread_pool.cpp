@@ -167,7 +167,7 @@ namespace thread_pool_module
 		formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n", workers_.size());
 		for (const auto& worker : workers_)
 		{
-			formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
+			formatter::format_to(std::back_inserter(format_string), "\t{}\n", worker->to_string());
 		}
 
 		return format_string;

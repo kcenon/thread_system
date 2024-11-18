@@ -43,6 +43,7 @@ namespace thread_module
 #endif
 		, wake_interval_(std::nullopt)
 		, thread_title_(thread_title)
+		, thread_condition_(thread_conditions::Created)
 	{
 	}
 
@@ -100,6 +101,8 @@ namespace thread_module
 					while (!stop_requested_ || should_continue_work())
 #endif
 					{
+						thread_condition_.store(thread_conditions::Waiting);
+
 						std::unique_lock<std::mutex> lock(cv_mutex_);
 						if (wake_interval_.has_value())
 						{
@@ -132,11 +135,15 @@ namespace thread_module
 						if (stop_requested_ && !should_continue_work())
 #endif
 						{
+							thread_condition_.store(thread_conditions::Stopping);
+
 							break;
 						}
 
 						try
 						{
+							thread_condition_.store(thread_conditions::Working);
+
 							work_error = do_work();
 							if (work_error.has_value())
 							{
@@ -205,6 +212,8 @@ namespace thread_module
 #endif
 		worker_thread_.reset();
 
+		thread_condition_.store(thread_conditions::Stopped);
+
 		return std::nullopt;
 	}
 
@@ -212,6 +221,6 @@ namespace thread_module
 
 	auto thread_base::to_string(void) const -> std::string
 	{
-		return formatter::format("{} is {}", thread_title_, worker_thread_ ? "running" : "stopped");
+		return formatter::format("{} is {}", thread_title_, thread_condition_.load());
 	}
 } // namespace thread_module

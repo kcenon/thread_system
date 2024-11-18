@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "formatter.h"
 #include "convert_string.h"
+#include "thread_conditions.h"
 
 #include <mutex>
 #include <memory>
@@ -191,6 +192,9 @@ namespace thread_module
 
 		/** @brief The title of the thread for identification purposes */
 		std::string thread_title_;
+
+		/** @brief Condition variable for thread synchronization */
+		std::atomic<thread_conditions> thread_condition_;
 	};
 } // namespace thread_module
 
