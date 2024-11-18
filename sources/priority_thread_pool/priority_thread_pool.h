@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "convert_string.h"
 #include "priority_job_queue.h"
 #include "priority_thread_worker.h"
 
@@ -42,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <optional>
 
+using namespace utility_module;
 using namespace thread_module;
 
 namespace priority_thread_pool_module
@@ -197,7 +199,7 @@ struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priori
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

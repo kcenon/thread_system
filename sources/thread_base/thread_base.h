@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <mutex>
 #include <memory>
@@ -234,7 +235,7 @@ struct std::formatter<thread_module::thread_base, wchar_t>
 	auto format(const thread_module::thread_base& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

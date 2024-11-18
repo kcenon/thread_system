@@ -68,11 +68,27 @@ namespace utility_module
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
+		 * @brief Converts a std::wstring_view to a std::string.
+		 * @param value The input std::wstring_view.
+		 * @return A tuple containing the converted std::string or an error message.
+		 */
+		static auto to_string(std::wstring_view value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
+		/**
 		 * @brief Converts a std::string to a std::wstring.
 		 * @param value The input std::string.
 		 * @return A tuple containing the converted std::wstring or an error message.
 		 */
 		static auto to_wstring(const std::string& value)
+			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
+
+		/**
+		 * @brief Converts a std::string_view to a std::wstring.
+		 * @param value The input std::string_view.
+		 * @return A tuple containing the converted std::wstring or an error message.
+		 */
+		static auto to_wstring(std::string_view value)
 			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**

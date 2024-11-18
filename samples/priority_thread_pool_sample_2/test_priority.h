@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <string>
 #include <array>
@@ -131,7 +132,7 @@ struct std::formatter<test_priority, wchar_t> : std::formatter<std::wstring_view
 	auto format(const test_priority& priority, FormatContext& ctx) const
 	{
 		auto str = to_string(priority);
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

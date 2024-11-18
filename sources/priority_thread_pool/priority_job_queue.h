@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job_queue.h"
 #include "priority_job.h"
+#include "convert_string.h"
 #include "job_priorities.h"
 
 #include <map>
@@ -206,7 +207,7 @@ struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

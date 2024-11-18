@@ -33,11 +33,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <string>
 #include <array>
 #include <cstdint>
 #include <string_view>
+
+using namespace utility_module;
 
 namespace priority_thread_pool_module
 {
@@ -140,7 +143,7 @@ struct std::formatter<priority_thread_pool_module::job_priorities, wchar_t>
 				FormatContext& ctx) const
 	{
 		auto str = priority_thread_pool_module::to_string(job_priority);
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
