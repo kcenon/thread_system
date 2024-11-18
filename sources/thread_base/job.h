@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <tuple>
 #include <memory>
@@ -40,6 +41,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 #include <functional>
 #include <string_view>
+
+using namespace utility_module;
 
 namespace thread_module
 {
@@ -159,7 +162,7 @@ struct std::formatter<thread_module::job, wchar_t> : std::formatter<std::wstring
 	auto format(const thread_module::job& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

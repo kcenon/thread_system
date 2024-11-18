@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job_queue.h"
 #include "thread_worker.h"
+#include "convert_string.h"
 
 #include <tuple>
 #include <string>
@@ -42,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <optional>
 
+using namespace utility_module;
 using namespace thread_module;
 
 namespace thread_pool_module
@@ -181,7 +183,7 @@ struct std::formatter<thread_pool_module::thread_pool, wchar_t>
 	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

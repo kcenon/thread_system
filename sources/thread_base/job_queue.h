@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job.h"
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <mutex>
 #include <deque>
@@ -197,7 +198,7 @@ struct std::formatter<thread_module::job_queue, wchar_t>
 	auto format(const thread_module::job_queue& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

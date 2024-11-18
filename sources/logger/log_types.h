@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "formatter.h"
+#include "convert_string.h"
 
 #include <string>
 #include <array>
@@ -129,7 +130,7 @@ struct std::formatter<log_module::log_types, wchar_t> : std::formatter<std::wstr
 	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
 	{
 		auto str = log_module::to_string(log_type);
-		std::wstring wstr(str.begin(), str.end());
+		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
