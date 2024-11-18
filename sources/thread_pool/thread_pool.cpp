@@ -160,24 +160,10 @@ namespace thread_pool_module
 	{
 		std::string format_string;
 
-		if (job_queue_ == nullptr)
-		{
-			formatter::format_to(std::back_inserter(format_string),
-								 "{} is {},\n\tjob_queue: nullptr\n", thread_title_,
-								 start_pool_.load() ? "running" : "stopped");
-			formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n",
-								 workers_.size());
-			for (const auto& worker : workers_)
-			{
-				formatter::format_to(std::back_inserter(format_string), "\t{}\n", *worker);
-			}
-
-			return format_string;
-		}
-
-		formatter::format_to(std::back_inserter(format_string), "{} is {},\n\tjob_queue: {}\n",
-							 thread_title_, start_pool_.load() ? "running" : "stopped",
-							 *job_queue_);
+		formatter::format_to(std::back_inserter(format_string), "{} is {},\n", thread_title_,
+							 start_pool_.load() ? "running" : "stopped");
+		formatter::format_to(std::back_inserter(format_string), "\tjob_queue: {}\n",
+							 (job_queue_ != nullptr ? job_queue_->to_string() : "nullptr"));
 		formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n", workers_.size());
 		for (const auto& worker : workers_)
 		{

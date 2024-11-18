@@ -70,6 +70,8 @@ namespace priority_thread_pool_module
 			iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
 				static_cast<priority_job_t<priority_type>*>(value.release())));
 
+			queue_sizes_[job_priority].fetch_add(1);
+
 			if (notify_)
 			{
 				condition_.notify_one();
@@ -84,6 +86,8 @@ namespace priority_thread_pool_module
 				   .first;
 		iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
 			static_cast<priority_job_t<priority_type>*>(value.release())));
+
+		queue_sizes_.emplace(job_priority, 1);
 
 		if (notify_)
 		{
@@ -107,12 +111,16 @@ namespace priority_thread_pool_module
 			return "cannot enqueue null job";
 		}
 
+		auto job_priority = value->priority();
+
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		auto iter = queues_.find(value->priority());
+		auto iter = queues_.find(job_priority);
 		if (iter != queues_.end())
 		{
 			iter->second.push_back(std::move(value));
+
+			queue_sizes_[job_priority].fetch_add(1);
 
 			condition_.notify_one();
 
@@ -120,10 +128,12 @@ namespace priority_thread_pool_module
 		}
 
 		iter = queues_
-				   .emplace(value->priority(),
+				   .emplace(job_priority,
 							std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
 				   .first;
 		iter->second.push_back(std::move(value));
+
+		queue_sizes_.emplace(job_priority, 1);
 
 		condition_.notify_one();
 
@@ -210,15 +220,13 @@ namespace priority_thread_pool_module
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::to_string(void) const -> std::string
 	{
-		std::scoped_lock<std::mutex> lock(mutex_);
-
 		std::string format_string;
 
 		formatter::format_to(std::back_inserter(format_string), "Priority job queue:\n");
-		for (const auto& pair : queues_)
+		for (const auto& pair : queue_sizes_)
 		{
 			formatter::format_to(std::back_inserter(format_string), "\tPriority: {} -> {} jobs\n",
-								 pair.first, pair.second.size());
+								 pair.first, pair.second.load());
 		}
 
 		return format_string;
@@ -253,6 +261,9 @@ namespace priority_thread_pool_module
 
 		auto value = std::move(it->second.front());
 		it->second.pop_front();
+
+		queue_sizes_[priority].fetch_sub(1);
+
 		return value;
 	}
 } // namespace priority_thread_pool_module

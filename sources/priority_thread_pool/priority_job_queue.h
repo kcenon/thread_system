@@ -155,6 +155,9 @@ namespace priority_thread_pool_module
 	private:
 		/** @brief Map of priority deque */
 		std::map<priority_type, std::deque<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
+
+		/** @brief The size of the queue */
+		std::map<priority_type, std::atomic_size_t> queue_sizes_;
 	};
 
 	using priority_job_queue = priority_job_queue_t<job_priorities>;
