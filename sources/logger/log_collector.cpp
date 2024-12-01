@@ -153,27 +153,39 @@ namespace log_module
 			return std::nullopt;
 		}
 
-		auto enqueue_error
-			= enqueue_log(current_log->get_type(), current_log->get_type(), console_queue_,
-						  current_log->datetime(), current_log->message());
-		if (enqueue_error.has_value())
+		std::optional<std::string> enqueue_error;
+
+		if (current_log->get_type() <= console_log_type_)
 		{
-			return enqueue_error;
+			enqueue_error
+				= enqueue_log(current_log->get_type(), current_log->get_type(), console_queue_,
+							  current_log->datetime(), current_log->message());
+			if (enqueue_error.has_value())
+			{
+				return enqueue_error;
+			}
 		}
 
-		enqueue_error = enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
-									current_log->datetime(), current_log->message());
-		if (enqueue_error.has_value())
+		if (current_log->get_type() <= file_log_type_)
 		{
-			return enqueue_error;
+			enqueue_error
+				= enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
+							  current_log->datetime(), current_log->message());
+			if (enqueue_error.has_value())
+			{
+				return enqueue_error;
+			}
 		}
 
-		enqueue_error
-			= enqueue_log(current_log->get_type(), current_log->get_type(), callback_queue_,
-						  current_log->datetime(), current_log->message());
-		if (enqueue_error.has_value())
+		if (current_log->get_type() <= callback_log_type_)
 		{
-			return enqueue_error;
+			enqueue_error
+				= enqueue_log(current_log->get_type(), current_log->get_type(), callback_queue_,
+							  current_log->datetime(), current_log->message());
+			if (enqueue_error.has_value())
+			{
+				return enqueue_error;
+			}
 		}
 
 		return std::nullopt;

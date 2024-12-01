@@ -50,7 +50,7 @@ uint32_t max_lines_ = 0;
 uint16_t wait_interval_ = 100;
 uint32_t test_line_count_ = 1000000;
 log_module::log_types file_target_ = log_module::log_types::None;
-log_module::log_types console_target_ = log_module::log_types::Error;
+log_module::log_types console_target_ = log_module::log_types::Information;
 log_module::log_types callback_target_ = log_module::log_types::None;
 
 uint16_t high_priority_workers_ = 3;
@@ -176,7 +176,7 @@ auto main() -> int
 		return 0;
 	}
 
-	log_module::write_information("created priority thread pool");
+	log_module::write_information("created {}", thread_pool->to_string());
 
 	error_message = store_job(thread_pool);
 	if (error_message.has_value())
@@ -199,11 +199,11 @@ auto main() -> int
 		return 0;
 	}
 
-	log_module::write_information("started thread pool");
+	log_module::write_information("started {}", thread_pool->to_string());
 
 	thread_pool->stop();
 
-	log_module::write_information("stopped thread pool");
+	log_module::write_information("stopped {}", thread_pool->to_string());
 
 	thread_pool.reset();
 
