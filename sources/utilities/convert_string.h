@@ -156,6 +156,14 @@ namespace utility_module
 		static auto from_base64(const std::string& base64_str)
 			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
+		static auto replace(std::string& source,
+							const std::string& token,
+							const std::string& target) -> std::optional<std::string>;
+		static auto replace2(const std::string& source,
+							 const std::string& token,
+							 const std::string& target)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
 	private:
 		enum class endian_types
 		{

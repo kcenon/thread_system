@@ -32,6 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "convert_string.h"
 
+#include "formatter.h"
+
 #include <cstdint>
 #include <stdexcept>
 
@@ -323,6 +325,51 @@ namespace utility_module
 		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
 	{
 		return base64_decode(base64_str);
+	}
+
+	auto convert_string::replace(std::string& source,
+								 const std::string& token,
+								 const std::string& target) -> std::optional<std::string>
+	{
+		auto [value, value_error] = replace2(source, token, target);
+		if (value_error.has_value())
+		{
+			return value_error;
+		}
+
+		source = value.value();
+
+		return std::nullopt;
+	}
+
+	auto convert_string::replace2(const std::string& source,
+								  const std::string& token,
+								  const std::string& target)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		if (source.empty())
+		{
+			return { std::nullopt, "Source string is empty" };
+		}
+
+		if (token.empty())
+		{
+			return { std::nullopt, "Token string is empty" };
+		}
+
+		std::string result;
+
+		size_t last_offset = 0;
+		for (size_t offset = source.find(token, last_offset); offset != std::string::npos;
+			 last_offset = offset + token.size(), offset = source.find(token, last_offset))
+		{
+			formatter::format_to(std::back_inserter(result), "{}{}",
+								 source.substr(last_offset, offset - last_offset), target);
+		}
+
+		formatter::format_to(std::back_inserter(result), "{}", source.substr(last_offset));
+
+		return { result, std::nullopt };
 	}
 
 	auto convert_string::base64_encode(const std::vector<uint8_t>& data) -> std::string
