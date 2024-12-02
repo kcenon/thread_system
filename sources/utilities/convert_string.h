@@ -133,13 +133,28 @@ namespace utility_module
 			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a vector of bytes to a string.
-		 *
+		 * @brief Converts a vector of bytes to a string.		 *
 		 * @param value
 		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
 		 */
 		static auto to_string(const std::vector<uint8_t>& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
+		/**
+		 * @brief Converts a string to base64.		 *
+		 * @param value
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 */
+		static auto to_base64(const std::vector<uint8_t>& value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
+		/**
+		 * @brief Converts a base64 string to a vector of bytes.
+		 * @param base64_str
+		 * @return std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		 */
+		static auto from_base64(const std::string& base64_str)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
 	private:
 		enum class endian_types
@@ -281,5 +296,20 @@ namespace utility_module
 		 * @return The string with the UTF-8 BOM.
 		 */
 		static auto add_utf8_bom(const std::string& value) -> std::string;
+
+		/**
+		 * @brief Encodes a vector of bytes to a base64 string.
+		 * @param data The input vector of bytes.
+		 * @return The base64-encoded string.
+		 */
+		static auto base64_encode(const std::vector<uint8_t>& data) -> std::string;
+
+		/**
+		 * @brief Decodes a base64 string to a vector of bytes.
+		 * @param base64_str The input base64 string.
+		 * @return A tuple containing the decoded vector of bytes or an error message.
+		 */
+		static auto base64_decode(const std::string& base64_str)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 	};
 } // namespace utility_module

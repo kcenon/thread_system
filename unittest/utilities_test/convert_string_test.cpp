@@ -149,3 +149,154 @@ TEST_F(ConvertStringTest, RoundTripConversion)
 
 	EXPECT_EQ(original, string_result.value());
 }
+
+TEST_F(ConvertStringTest, ToBase64_EmptyInput)
+{
+	std::vector<uint8_t> input = {};
+	auto [encoded, error] = convert_string::to_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(encoded.value(), "");
+}
+
+TEST_F(ConvertStringTest, FromBase64_EmptyInput)
+{
+	std::string input = "";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_TRUE(decoded->empty());
+}
+
+TEST_F(ConvertStringTest, ToBase64_SimpleInput)
+{
+	std::vector<uint8_t> input = { 'f', 'o', 'o' };
+	auto [encoded, error] = convert_string::to_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(encoded.value(), "Zm9v");
+}
+
+TEST_F(ConvertStringTest, FromBase64_SimpleInput)
+{
+	std::string input = "Zm9v";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	std::vector<uint8_t> expected = { 'f', 'o', 'o' };
+	EXPECT_EQ(decoded.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToBase64_PaddingRequired)
+{
+	std::vector<uint8_t> input = { 'f' };
+	auto [encoded, error] = convert_string::to_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(encoded.value(), "Zg==");
+}
+
+TEST_F(ConvertStringTest, FromBase64_PaddingRequired)
+{
+	std::string input = "Zg==";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	std::vector<uint8_t> expected = { 'f' };
+	EXPECT_EQ(decoded.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToBase64_LongInput)
+{
+	std::vector<uint8_t> input = {
+		0x48, 0x65, 0x6C, 0x6C, 0x6F, // "Hello"
+		0x20,						  // " "
+		0x57, 0x6F, 0x72, 0x6C, 0x64  // "World"
+	};
+	auto [encoded, error] = convert_string::to_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(encoded.value(), "SGVsbG8gV29ybGQ=");
+}
+
+TEST_F(ConvertStringTest, FromBase64_LongInput)
+{
+	std::string input = "SGVsbG8gV29ybGQ=";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	std::vector<uint8_t> expected = {
+		0x48, 0x65, 0x6C, 0x6C, 0x6F, // "Hello"
+		0x20,						  // " "
+		0x57, 0x6F, 0x72, 0x6C, 0x64  // "World"
+	};
+	EXPECT_EQ(decoded.value(), expected);
+}
+
+TEST_F(ConvertStringTest, FromBase64_InvalidInput)
+{
+	std::string input = "Invalid base64!";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_TRUE(error.has_value());
+	EXPECT_EQ(error.value(), "Invalid base64 input length");
+	EXPECT_FALSE(decoded.has_value());
+}
+
+TEST_F(ConvertStringTest, ToBase64_BinaryData)
+{
+	std::vector<uint8_t> input = { 0x00, 0xFF, 0x88, 0x77, 0x66 };
+	auto [encoded, error] = convert_string::to_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(encoded.value(), "AP+Id2Y=");
+}
+
+TEST_F(ConvertStringTest, FromBase64_BinaryData)
+{
+	std::string input = "AP+Id2Y=";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_FALSE(error.has_value());
+	std::vector<uint8_t> expected = { 0x00, 0xFF, 0x88, 0x77, 0x66 };
+	EXPECT_EQ(decoded.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToBase64_AllBytes)
+{
+	std::vector<uint8_t> input(256);
+	for (int i = 0; i < 256; ++i)
+	{
+		input[i] = static_cast<uint8_t>(i);
+	}
+
+	auto [encoded, error] = convert_string::to_base64(input);
+	ASSERT_FALSE(error.has_value());
+
+	size_t expected_length = ((input.size() + 2) / 3) * 4;
+	EXPECT_EQ(encoded->length(), expected_length);
+
+	auto [decoded, decode_error] = convert_string::from_base64(encoded.value());
+	ASSERT_FALSE(decode_error.has_value());
+	EXPECT_EQ(decoded.value(), input);
+}
+
+TEST_F(ConvertStringTest, FromBase64_InvalidCharacter)
+{
+	std::string input = "Zm9v@===";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_TRUE(error.has_value());
+	EXPECT_EQ(error.value(), "Invalid character in base64 string");
+	EXPECT_FALSE(decoded.has_value());
+}
+
+TEST_F(ConvertStringTest, FromBase64_InvalidPadding)
+{
+	std::string input = "Zg=";
+	auto [decoded, error] = convert_string::from_base64(input);
+
+	ASSERT_TRUE(error.has_value());
+	EXPECT_EQ(error.value(), "Invalid base64 input length");
+	EXPECT_FALSE(decoded.has_value());
+}
