@@ -63,3 +63,89 @@ TEST_F(ConvertStringTest, ToWstringFromString)
 	ASSERT_FALSE(error.has_value());
 	EXPECT_EQ(result.value(), L"Hello, 世界");
 }
+
+TEST_F(ConvertStringTest, ToArrayBasicConversion)
+{
+	std::string input = "Hello, World!";
+	auto [result, error] = convert_string::to_array(input);
+
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+
+	std::vector<uint8_t> expected(input.begin(), input.end());
+	EXPECT_EQ(result.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToArrayWithUTF8BOM)
+{
+	std::vector<uint8_t> input = { 0xEF, 0xBB, 0xBF, 'H', 'e', 'l', 'l', 'o' };
+	std::string input_str(input.begin(), input.end());
+
+	auto [result, error] = convert_string::to_array(input_str);
+
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+
+	std::vector<uint8_t> expected = { 'H', 'e', 'l', 'l', 'o' };
+	EXPECT_EQ(result.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToArrayWithKoreanCharacters)
+{
+	std::string input = "안녕하세요";
+	auto [result, error] = convert_string::to_array(input);
+
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+
+	std::vector<uint8_t> expected = {
+		0xEC, 0x95, 0x88, // 안
+		0xEB, 0x85, 0x95, // 녕
+		0xED, 0x95, 0x98, // 하
+		0xEC, 0x84, 0xB8, // 세
+		0xEC, 0x9A, 0x94  // 요
+	};
+	EXPECT_EQ(result.value(), expected);
+}
+
+TEST_F(ConvertStringTest, ToStringBasicConversion)
+{
+	std::vector<uint8_t> input = { 'H', 'e', 'l', 'l', 'o' };
+	auto [result, error] = convert_string::to_string(input);
+
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), "Hello");
+}
+
+TEST_F(ConvertStringTest, ToStringWithKoreanCharacters)
+{
+	std::vector<uint8_t> input = {
+		0xEC, 0x95, 0x88, // 안
+		0xEB, 0x85, 0x95, // 녕
+		0xED, 0x95, 0x98, // 하
+		0xEC, 0x84, 0xB8, // 세
+		0xEC, 0x9A, 0x94  // 요
+	};
+
+	auto [result, error] = convert_string::to_string(input);
+
+	ASSERT_TRUE(result.has_value());
+	ASSERT_FALSE(error.has_value());
+	EXPECT_EQ(result.value(), "안녕하세요");
+}
+
+TEST_F(ConvertStringTest, RoundTripConversion)
+{
+	std::string original = "Hello 안녕하세요 World!";
+
+	auto [array_result, array_error] = convert_string::to_array(original);
+	ASSERT_TRUE(array_result.has_value());
+	ASSERT_FALSE(array_error.has_value());
+
+	auto [string_result, string_error] = convert_string::to_string(array_result.value());
+	ASSERT_TRUE(string_result.has_value());
+	ASSERT_FALSE(string_error.has_value());
+
+	EXPECT_EQ(original, string_result.value());
+}

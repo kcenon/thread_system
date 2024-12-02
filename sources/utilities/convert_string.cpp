@@ -281,4 +281,27 @@ namespace utility_module
 
 		return { result, std::nullopt };
 	}
+
+	auto convert_string::to_array(const std::string& value)
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+	{
+		auto [utf8, convert_error] = system_to_utf8(value);
+		if (convert_error.has_value())
+		{
+			return { std::nullopt, convert_error };
+		}
+
+		auto utf8_no_bom = remove_utf8_bom(utf8.value());
+
+		return { std::vector<uint8_t>(utf8_no_bom.begin(), utf8_no_bom.end()), std::nullopt };
+	}
+
+	auto convert_string::to_string(const std::vector<uint8_t>& value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		std::string utf8(value.begin(), value.end());
+		auto utf8_no_bom = remove_utf8_bom(utf8);
+
+		return utf8_to_system(utf8);
+	}
 } // namespace utility_module
