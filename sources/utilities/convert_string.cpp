@@ -304,4 +304,134 @@ namespace utility_module
 
 		return utf8_to_system(utf8);
 	}
+
+	auto convert_string::to_base64(const std::vector<uint8_t>& value)
+		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
+	{
+		try
+		{
+			std::string encoded = base64_encode(value);
+			return { encoded, std::nullopt };
+		}
+		catch (const std::exception& e)
+		{
+			return { std::nullopt, e.what() };
+		}
+	}
+
+	auto convert_string::from_base64(const std::string& base64_str)
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+	{
+		return base64_decode(base64_str);
+	}
+
+	auto convert_string::base64_encode(const std::vector<uint8_t>& data) -> std::string
+	{
+		static const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+										   "abcdefghijklmnopqrstuvwxyz"
+										   "0123456789+/";
+
+		std::string encoded_string;
+		size_t i = 0;
+		uint32_t octet_a, octet_b, octet_c;
+		uint32_t triple;
+
+		while (i < data.size())
+		{
+			octet_a = i < data.size() ? data[i++] : 0;
+			octet_b = i < data.size() ? data[i++] : 0;
+			octet_c = i < data.size() ? data[i++] : 0;
+
+			triple = (octet_a << 16) + (octet_b << 8) + octet_c;
+
+			encoded_string += base64_chars[(triple >> 18) & 0x3F];
+			encoded_string += base64_chars[(triple >> 12) & 0x3F];
+			encoded_string += base64_chars[(triple >> 6) & 0x3F];
+			encoded_string += base64_chars[triple & 0x3F];
+		}
+
+		int mod_table[] = { 0, 2, 1 };
+		for (int j = 0; j < mod_table[data.size() % 3]; j++)
+		{
+			encoded_string[encoded_string.size() - 1 - j] = '=';
+		}
+
+		return encoded_string;
+	}
+
+	auto convert_string::base64_decode(const std::string& base64_str)
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+	{
+		static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+												"abcdefghijklmnopqrstuvwxyz"
+												"0123456789+/";
+
+		if (base64_str.length() % 4 != 0)
+		{
+			return { std::nullopt, "Invalid base64 input length" };
+		}
+
+		size_t padding = 0;
+		if (!base64_str.empty())
+		{
+			if (base64_str[base64_str.length() - 1] == '=')
+				padding++;
+			if (base64_str.length() >= 2 && base64_str[base64_str.length() - 2] == '=')
+				padding++;
+			if (padding > 2)
+			{
+				return { std::nullopt, "Invalid padding in base64 string" };
+			}
+		}
+
+		size_t decoded_length = (base64_str.length() / 4) * 3 - padding;
+		std::vector<uint8_t> decoded_data;
+		decoded_data.reserve(decoded_length);
+
+		std::vector<int> decoding_table(256, -1);
+		for (int i = 0; i < 64; i++)
+		{
+			decoding_table[static_cast<unsigned char>(base64_chars[i])] = i;
+		}
+
+		uint32_t buffer = 0;
+		int bits_collected = 0;
+		size_t i = 0;
+		for (; i < base64_str.length(); ++i)
+		{
+			char c = base64_str[i];
+			if (c == '=')
+			{
+				if (i < base64_str.length() - padding)
+				{
+					return { std::nullopt, "Invalid padding position in base64 string" };
+				}
+				break;
+			}
+
+			if (decoding_table[static_cast<unsigned char>(c)] == -1)
+			{
+				return { std::nullopt, "Invalid character in base64 string" };
+			}
+
+			buffer = (buffer << 6) | decoding_table[static_cast<unsigned char>(c)];
+			bits_collected += 6;
+
+			if (bits_collected >= 8)
+			{
+				bits_collected -= 8;
+				decoded_data.push_back((buffer >> bits_collected) & 0xFF);
+			}
+		}
+
+		for (; i < base64_str.length(); ++i)
+		{
+			if (base64_str[i] != '=')
+			{
+				return { std::nullopt, "Invalid character after padding in base64 string" };
+			}
+		}
+
+		return { decoded_data, std::nullopt };
+	}
 } // namespace utility_module
