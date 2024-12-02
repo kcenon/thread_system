@@ -123,6 +123,23 @@ namespace utility_module
 		static auto split(const std::string& source, const std::string& token)
 			-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>;
 
+		/**
+		 * @brief Converts a string to a vector of bytes.
+		 * @param value
+		 * @return std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		 */
+		static auto to_array(const std::string& value)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
+
+		/**
+		 * @brief Converts a vector of bytes to a string.
+		 *
+		 * @param value
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 */
+		static auto to_string(const std::vector<uint8_t>& value)
+			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
+
 	private:
 		enum class endian_types
 		{
