@@ -51,114 +51,197 @@ namespace utility_module
 {
 	/**
 	 * @class convert_string
-	 * @brief Provides utility functions for string conversion between different encodings.
+	 * @brief Comprehensive string conversion utility supporting multiple encodings and character
+	 * types
 	 *
-	 * This class offers methods to convert between various string types (std::string, std::wstring,
-	 * std::u16string, std::u32string) and handle different encodings, including system-specific
-	 * encodings.
+	 * This class provides a robust set of static methods for:
+	 * - Converting between different string types (std::string, std::wstring, std::u16string,
+	 * std::u32string)
+	 * - Handling system-specific encodings
+	 * - Managing UTF-8, UTF-16, and UTF-32 encodings
+	 * - Processing Base64 encoding/decoding
+	 * - String manipulation (splitting, replacing)
+	 *
+	 * The class uses iconv for encoding conversions and provides comprehensive error handling
+	 * through std::optional and detailed error messages.
 	 */
 	class convert_string
 	{
 	public:
 		/**
-		 * @brief Converts a std::wstring to a std::string.
-		 * @param value The input std::wstring.
-		 * @return A tuple containing the converted std::string or an error message.
+		 * @brief Converts a wide string to a multibyte string
+		 *
+		 * @param value Input wide string to convert
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: The converted string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
+		 *
+		 * @note Uses system default encoding for conversion
+		 * @see get_system_code_page() for determining the system encoding
 		 */
 		static auto to_string(const std::wstring& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a std::wstring_view to a std::string.
-		 * @param value The input std::wstring_view.
-		 * @return A tuple containing the converted std::string or an error message.
+		 * @brief Converts a wide string view to a multibyte string
+		 *
+		 * @param value Input wide string view to convert
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: The converted string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
+		 *
+		 * @note More efficient than std::wstring version as it avoids string copying
 		 */
 		static auto to_string(std::wstring_view value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a std::string to a std::wstring.
-		 * @param value The input std::string.
-		 * @return A tuple containing the converted std::wstring or an error message.
+		 * @brief Converts a multibyte string to a wide string
+		 *
+		 * @param value Input multibyte string to convert
+		 * @return std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+		 *         First element: The converted wide string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
+		 *
+		 * @note Uses system default encoding for conversion
 		 */
 		static auto to_wstring(const std::string& value)
 			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a std::string_view to a std::wstring.
-		 * @param value The input std::string_view.
-		 * @return A tuple containing the converted std::wstring or an error message.
+		 * @brief Converts a string view to a wide string
+		 *
+		 * @param value Input string view to convert
+		 * @return std::tuple<std::optional<std::wstring>, std::optional<std::string>>
+		 *         First element: The converted wide string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
+		 *
+		 * @note More efficient than std::string version as it avoids string copying
 		 */
 		static auto to_wstring(std::string_view value)
 			-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>;
 
 		/**
-		 * @brief Retrieves the current code page of the Windows system.
-		 * @return The current system code page.
+		 * @brief Retrieves the current system code page
+		 *
+		 * @return int Current system code page number
+		 *
+		 * @note Windows-specific implementation returns CP_ACP
+		 * @note On non-Windows platforms, typically returns value representing UTF-8
 		 */
 		static int get_system_code_page();
 
 		/**
-		 * @brief Converts a string from the system code page to UTF-8.
-		 * @param value The string to convert.
-		 * @return A tuple containing the converted UTF-8 string or an error message.
+		 * @brief Converts a string from system encoding to UTF-8
+		 *
+		 * @param value Input string in system encoding
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: UTF-8 encoded string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
 		 */
 		static auto system_to_utf8(const std::string& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a UTF-8 string to the system code page.
-		 * @param value The UTF-8 string to convert.
-		 * @return A tuple containing the converted string in the system code page or an error
-		 * message.
+		 * @brief Converts a UTF-8 string to system encoding
+		 *
+		 * @param value Input UTF-8 encoded string
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: System-encoded string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
 		 */
 		static auto utf8_to_system(const std::string& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Splits a string into a vector of strings based on a delimiter.
-		 * @param source The input string to split.
-		 * @param token The delimiter string.
-		 * @return A tuple containing the vector of split strings or an error message.
+		 * @brief Splits a string into multiple substrings based on a delimiter
+		 *
+		 * @param source String to split
+		 * @param token Delimiter string
+		 * @return std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>
+		 *         First element: Vector of split strings if successful, std::nullopt if failed
+		 *         Second element: Error message if splitting failed, std::nullopt if successful
+		 *
+		 * @note Empty delimiters result in single-element vector containing the original string
+		 * @note Consecutive delimiters produce empty strings in the result
 		 */
 		static auto split(const std::string& source, const std::string& token)
 			-> std::tuple<std::optional<std::vector<std::string>>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a string to a vector of bytes.
-		 * @param value
+		 * @brief Converts a string to a byte array
+		 *
+		 * @param value Input string to convert
 		 * @return std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		 *         First element: Byte array if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
 		 */
 		static auto to_array(const std::string& value)
 			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a vector of bytes to a string.		 *
-		 * @param value
+		 * @brief Converts a byte array to a string
+		 *
+		 * @param value Input byte array to convert
 		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: Converted string if successful, std::nullopt if failed
+		 *         Second element: Error message if conversion failed, std::nullopt if successful
 		 */
 		static auto to_string(const std::vector<uint8_t>& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a string to base64.		 *
-		 * @param value
+		 * @brief Encodes a byte array to Base64 string
+		 *
+		 * @param value Input byte array to encode
 		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: Base64 encoded string if successful, std::nullopt if failed
+		 *         Second element: Error message if encoding failed, std::nullopt if successful
 		 */
 		static auto to_base64(const std::vector<uint8_t>& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
 
 		/**
-		 * @brief Converts a base64 string to a vector of bytes.
-		 * @param base64_str
+		 * @brief Decodes a Base64 string to byte array
+		 *
+		 * @param base64_str Input Base64 encoded string
 		 * @return std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		 *         First element: Decoded byte array if successful, std::nullopt if failed
+		 *         Second element: Error message if decoding failed, std::nullopt if successful
+		 *
+		 * @note Validates input string format before decoding
 		 */
 		static auto from_base64(const std::string& base64_str)
 			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
 
+		/**
+		 * @brief Replaces all occurrences of a substring with another string
+		 *
+		 * @param source String to perform replacements in (modified in-place)
+		 * @param token Substring to replace
+		 * @param target Replacement string
+		 * @return std::optional<std::string> Error message if replacement failed, std::nullopt if
+		 * successful
+		 *
+		 * @note Modifies the input string directly
+		 */
 		static auto replace(std::string& source,
 							const std::string& token,
 							const std::string& target) -> std::optional<std::string>;
+
+		/**
+		 * @brief Replaces all occurrences of a substring with another string (non-modifying
+		 * version)
+		 *
+		 * @param source Input string to perform replacements on
+		 * @param token Substring to replace
+		 * @param target Replacement string
+		 * @return std::tuple<std::optional<std::string>, std::optional<std::string>>
+		 *         First element: Result string with replacements if successful, std::nullopt if
+		 * failed Second element: Error message if replacement failed, std::nullopt if successful
+		 *
+		 * @note Creates a new string instead of modifying the input
+		 */
 		static auto replace2(const std::string& source,
 							 const std::string& token,
 							 const std::string& target)

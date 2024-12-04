@@ -135,4 +135,4 @@ namespace utility_module
 												 std::chrono::high_resolution_clock>(
 		const std::chrono::time_point<std::chrono::high_resolution_clock>&,
 		const std::chrono::time_point<std::chrono::high_resolution_clock>&) -> double;
-} // namespace datetime_module
+} // namespace utility_module
