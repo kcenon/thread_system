@@ -107,4 +107,4 @@ namespace utility_module
 									const std::chrono::time_point<ClockType>& end_time
 									= ClockType::now()) -> double;
 	};
-} // namespace datetime_module
+} // namespace utility_module
