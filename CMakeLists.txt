@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
-project(ThreadSystem)
+
+# Option for building as submodule
+option(BUILD_AS_SUBMODULE "Build as submodule" OFF)
+
+if(NOT BUILD_AS_SUBMODULE)
+   project(ThreadSystem)
+endif()
 
 # Set C++20 as the default standard
 set(CMAKE_CXX_STANDARD 20)
@@ -90,19 +96,36 @@ else()
   message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not have support for std::chrono::current_zone, so will use the time_t instead.")
 endif()
 
-# Set the project output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+if(NOT BUILD_AS_SUBMODULE)
+  # Set the project output directories
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Check if the VCPKG_TOOLCHAIN is provided
-if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  message(FATAL_ERROR "Please provide the path to vcpkg toolchain file using -DCMAKE_TOOLCHAIN_FILE=<path_to_vcpkg_toolchain>")
-endif()
+  # Check if the VCPKG_TOOLCHAIN is provided
+  if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(FATAL_ERROR "Please provide the path to vcpkg toolchain file using -DCMAKE_TOOLCHAIN_FILE=<path_to_vcpkg_toolchain>")
+  endif()
 
-# Add the subdirectories
-add_subdirectory(sources)
-add_subdirectory(samples)
-if(UNIX)
-  add_subdirectory(unittest)
+  # Add the subdirectories
+  add_subdirectory(sources)
+  add_subdirectory(samples)
+  if(UNIX)
+    add_subdirectory(unittest)
+  endif()
+else()
+  # Library target for submodule usage
+  add_library(${PROJECT_NAME} STATIC)
+
+  # Public include paths
+  target_include_directories(${PROJECT_NAME}
+      PUBLIC
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+          $<INSTALL_INTERFACE:include>
+      PRIVATE
+          ${CMAKE_CURRENT_SOURCE_DIR}/sources
+  )
+
+  # Only build core library
+  add_subdirectory(sources)
 endif()
