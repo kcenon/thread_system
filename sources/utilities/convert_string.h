@@ -205,14 +205,14 @@ namespace utility_module
 		 * @brief Decodes a Base64 string to byte array
 		 *
 		 * @param base64_str Input Base64 encoded string
-		 * @return std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
-		 *         First element: Decoded byte array if successful, std::nullopt if failed
+		 * @return std::tuple<std::vector<uint8_t>, std::optional<std::string>>
+		 *         First element: Decoded byte array if successful, empty vector if failed
 		 *         Second element: Error message if decoding failed, std::nullopt if successful
 		 *
 		 * @note Validates input string format before decoding
 		 */
 		static auto from_base64(const std::string& base64_str)
-			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
+			-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>;
 
 		/**
 		 * @brief Replaces all occurrences of a substring with another string
@@ -401,6 +401,6 @@ namespace utility_module
 		 * @return A tuple containing the decoded vector of bytes or an error message.
 		 */
 		static auto base64_decode(const std::string& base64_str)
-			-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>;
+			-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>;
 	};
 } // namespace utility_module

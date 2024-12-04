@@ -322,7 +322,7 @@ namespace utility_module
 	}
 
 	auto convert_string::from_base64(const std::string& base64_str)
-		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>
 	{
 		return base64_decode(base64_str);
 	}
@@ -407,7 +407,7 @@ namespace utility_module
 	}
 
 	auto convert_string::base64_decode(const std::string& base64_str)
-		-> std::tuple<std::optional<std::vector<uint8_t>>, std::optional<std::string>>
+		-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>
 	{
 		static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 												"abcdefghijklmnopqrstuvwxyz"
@@ -415,7 +415,7 @@ namespace utility_module
 
 		if (base64_str.length() % 4 != 0)
 		{
-			return { std::nullopt, "Invalid base64 input length" };
+			return { std::vector<uint8_t>(), "Invalid base64 input length" };
 		}
 
 		size_t padding = 0;
@@ -427,7 +427,7 @@ namespace utility_module
 				padding++;
 			if (padding > 2)
 			{
-				return { std::nullopt, "Invalid padding in base64 string" };
+				return { std::vector<uint8_t>(), "Invalid padding in base64 string" };
 			}
 		}
 
@@ -451,14 +451,14 @@ namespace utility_module
 			{
 				if (i < base64_str.length() - padding)
 				{
-					return { std::nullopt, "Invalid padding position in base64 string" };
+					return { std::vector<uint8_t>(), "Invalid padding position in base64 string" };
 				}
 				break;
 			}
 
 			if (decoding_table[static_cast<unsigned char>(c)] == -1)
 			{
-				return { std::nullopt, "Invalid character in base64 string" };
+				return { std::vector<uint8_t>(), "Invalid character in base64 string" };
 			}
 
 			buffer = (buffer << 6) | decoding_table[static_cast<unsigned char>(c)];
@@ -475,7 +475,8 @@ namespace utility_module
 		{
 			if (base64_str[i] != '=')
 			{
-				return { std::nullopt, "Invalid character after padding in base64 string" };
+				return { std::vector<uint8_t>(),
+						 "Invalid character after padding in base64 string" };
 			}
 		}
 

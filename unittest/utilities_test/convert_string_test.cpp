@@ -165,7 +165,7 @@ TEST_F(ConvertStringTest, FromBase64_EmptyInput)
 	auto [decoded, error] = convert_string::from_base64(input);
 
 	ASSERT_FALSE(error.has_value());
-	EXPECT_TRUE(decoded->empty());
+	EXPECT_TRUE(decoded.size() == 0);
 }
 
 TEST_F(ConvertStringTest, ToBase64_SimpleInput)
@@ -184,7 +184,7 @@ TEST_F(ConvertStringTest, FromBase64_SimpleInput)
 
 	ASSERT_FALSE(error.has_value());
 	std::vector<uint8_t> expected = { 'f', 'o', 'o' };
-	EXPECT_EQ(decoded.value(), expected);
+	EXPECT_EQ(decoded, expected);
 }
 
 TEST_F(ConvertStringTest, ToBase64_PaddingRequired)
@@ -203,7 +203,7 @@ TEST_F(ConvertStringTest, FromBase64_PaddingRequired)
 
 	ASSERT_FALSE(error.has_value());
 	std::vector<uint8_t> expected = { 'f' };
-	EXPECT_EQ(decoded.value(), expected);
+	EXPECT_EQ(decoded, expected);
 }
 
 TEST_F(ConvertStringTest, ToBase64_LongInput)
@@ -230,7 +230,7 @@ TEST_F(ConvertStringTest, FromBase64_LongInput)
 		0x20,						  // " "
 		0x57, 0x6F, 0x72, 0x6C, 0x64  // "World"
 	};
-	EXPECT_EQ(decoded.value(), expected);
+	EXPECT_EQ(decoded, expected);
 }
 
 TEST_F(ConvertStringTest, FromBase64_InvalidInput)
@@ -240,7 +240,7 @@ TEST_F(ConvertStringTest, FromBase64_InvalidInput)
 
 	ASSERT_TRUE(error.has_value());
 	EXPECT_EQ(error.value(), "Invalid base64 input length");
-	EXPECT_FALSE(decoded.has_value());
+	EXPECT_FALSE(decoded.size() > 0);
 }
 
 TEST_F(ConvertStringTest, ToBase64_BinaryData)
@@ -259,7 +259,7 @@ TEST_F(ConvertStringTest, FromBase64_BinaryData)
 
 	ASSERT_FALSE(error.has_value());
 	std::vector<uint8_t> expected = { 0x00, 0xFF, 0x88, 0x77, 0x66 };
-	EXPECT_EQ(decoded.value(), expected);
+	EXPECT_EQ(decoded, expected);
 }
 
 TEST_F(ConvertStringTest, ToBase64_AllBytes)
@@ -278,7 +278,7 @@ TEST_F(ConvertStringTest, ToBase64_AllBytes)
 
 	auto [decoded, decode_error] = convert_string::from_base64(encoded.value());
 	ASSERT_FALSE(decode_error.has_value());
-	EXPECT_EQ(decoded.value(), input);
+	EXPECT_EQ(decoded, input);
 }
 
 TEST_F(ConvertStringTest, FromBase64_InvalidCharacter)
@@ -288,7 +288,7 @@ TEST_F(ConvertStringTest, FromBase64_InvalidCharacter)
 
 	ASSERT_TRUE(error.has_value());
 	EXPECT_EQ(error.value(), "Invalid character in base64 string");
-	EXPECT_FALSE(decoded.has_value());
+	EXPECT_FALSE(decoded.size() > 0);
 }
 
 TEST_F(ConvertStringTest, FromBase64_InvalidPadding)
@@ -298,7 +298,7 @@ TEST_F(ConvertStringTest, FromBase64_InvalidPadding)
 
 	ASSERT_TRUE(error.has_value());
 	EXPECT_EQ(error.value(), "Invalid base64 input length");
-	EXPECT_FALSE(decoded.has_value());
+	EXPECT_FALSE(decoded.size() > 0);
 }
 
 TEST_F(ConvertStringTest, Replace2_EmptySource)
