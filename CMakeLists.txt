@@ -1,11 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
+project(ThreadSystem)
 
 # Option for building as submodule
-option(BUILD_AS_SUBMODULE "Build as submodule" OFF)
-
-if(NOT BUILD_AS_SUBMODULE)
-   project(ThreadSystem)
-endif()
+option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
 
 # Set C++20 as the default standard
 set(CMAKE_CXX_STANDARD 20)
@@ -96,7 +93,7 @@ else()
   message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not have support for std::chrono::current_zone, so will use the time_t instead.")
 endif()
 
-if(NOT BUILD_AS_SUBMODULE)
+if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   # Set the project output directories
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -114,18 +111,6 @@ if(NOT BUILD_AS_SUBMODULE)
     add_subdirectory(unittest)
   endif()
 else()
-  # Library target for submodule usage
-  add_library(${PROJECT_NAME} STATIC)
-
-  # Public include paths
-  target_include_directories(${PROJECT_NAME}
-      PUBLIC
-          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-          $<INSTALL_INTERFACE:include>
-      PRIVATE
-          ${CMAKE_CURRENT_SOURCE_DIR}/sources
-  )
-
   # Only build core library
   add_subdirectory(sources)
 endif()
