@@ -10,8 +10,8 @@ modification, are permitted provided that the following conditions are met:
 1. Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
 
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
+2. Redistributions in binary form must reproduce the above copyright notice, this
+   list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
 
 3. Neither the name of the copyright holder nor the names of its
@@ -33,12 +33,65 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "convert_string.h"
 
 #include "formatter.h"
+#include "iconv.h"
 
-#include <cstdint>
 #include <stdexcept>
+#include <cstdint>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 namespace utility_module
 {
+	template <typename FromType, typename ToType>
+	auto convert_string::convert(const FromType& value,
+								 const std::string& from_encoding,
+								 const std::string& to_encoding)
+		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
+	{
+		iconv_t cd = iconv_open(to_encoding.c_str(), from_encoding.c_str());
+		if (cd == (iconv_t)-1)
+		{
+			return { std::nullopt, "iconv_open failed: " + std::string(strerror(errno)) };
+		}
+
+		std::vector<char> in_buf = string_to_vector(value);
+		char* in_ptr = in_buf.data();
+		size_t in_bytes_left = in_buf.size();
+
+		size_t out_buf_size = in_bytes_left * 2;
+		std::vector<char> out_buf(out_buf_size);
+		char* out_ptr = out_buf.data();
+		size_t out_bytes_left = out_buf.size();
+
+		size_t result = iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left);
+		while (result == (size_t)-1 && errno == E2BIG)
+		{
+			size_t used = out_buf_size - out_bytes_left;
+			out_buf_size *= 2;
+			out_buf.resize(out_buf_size);
+			out_ptr = out_buf.data() + used;
+			out_bytes_left = out_buf_size - used;
+			result = iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left);
+		}
+
+		if (result == (size_t)-1)
+		{
+			std::string error_msg = "iconv failed: " + std::string(strerror(errno));
+			iconv_close(cd);
+			return { std::nullopt, error_msg };
+		}
+
+		iconv_close(cd);
+
+		size_t converted_size = out_buf_size - out_bytes_left;
+		ToType converted_string(reinterpret_cast<typename ToType::value_type*>(out_buf.data()),
+								converted_size / sizeof(typename ToType::value_type));
+
+		return { converted_string, std::nullopt };
+	}
+
 	auto convert_string::to_string(const std::wstring& value)
 		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
 	{
@@ -72,10 +125,10 @@ namespace utility_module
 	auto convert_string::to_wstring(const std::string& value)
 		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
 	{
-		auto [result, error] = system_to_utf8(value);
+		auto [result, err] = system_to_utf8(value);
 		if (!result.has_value())
 		{
-			return { std::nullopt, error };
+			return { std::nullopt, err };
 		}
 
 		std::string clean_value = remove_utf8_bom(result.value());
@@ -87,10 +140,10 @@ namespace utility_module
 	auto convert_string::to_wstring(std::string_view value)
 		-> std::tuple<std::optional<std::wstring>, std::optional<std::string>>
 	{
-		auto [result, error] = system_to_utf8(std::string(value));
+		auto [result, err] = system_to_utf8(std::string(value));
 		if (!result.has_value())
 		{
-			return { std::nullopt, error };
+			return { std::nullopt, err };
 		}
 
 		std::string clean_value = remove_utf8_bom(result.value());
@@ -216,7 +269,7 @@ namespace utility_module
 		return has_utf8_bom(str) ? str : std::string("\xEF\xBB\xBF") + str;
 	}
 
-	int convert_string::get_system_code_page()
+	auto convert_string::get_system_code_page() -> int
 	{
 #ifdef _WIN32
 		return GetACP();
@@ -225,7 +278,7 @@ namespace utility_module
 #endif
 	}
 
-	std::string convert_string::get_code_page_name(int code_page)
+	auto convert_string::get_code_page_name(int code_page) -> std::string
 	{
 		switch (code_page)
 		{
@@ -338,7 +391,6 @@ namespace utility_module
 		}
 
 		source = value.value();
-
 		return std::nullopt;
 	}
 
@@ -482,4 +534,5 @@ namespace utility_module
 
 		return { decoded_data, std::nullopt };
 	}
+
 } // namespace utility_module
