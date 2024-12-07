@@ -45,22 +45,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace utility_module
 {
-	// Forward declaration of formatter class
-	class formatter;
-
 	/**
-	 * @brief Base formatter implementation for formatting enum types with a custom converter.
+	 * @class enum_formatter
+	 * @brief A formatter template for converting enums to strings using a custom converter functor.
 	 * @tparam T Enum type to be formatted.
-	 * @tparam Converter Function object type that converts T to a string representation.
+	 * @tparam Converter A functor type that, when invoked, returns a string representation of the
+	 * enum value.
 	 */
 	template <typename T, typename Converter> class enum_formatter
 	{
 	private:
 		/**
-		 * @brief Helper function to format the enum value to a string or wide string.
-		 * @tparam CharT Character type (either char or wchar_t).
-		 * @param out Output iterator for the formatted result.
-		 * @param value Enum value to be formatted.
+		 * @brief Internal helper function that performs the formatting operation.
+		 * @tparam CharT Character type (char or wchar_t).
+		 * @param out Output iterator where the formatted output will be written.
+		 * @param value The enum value to format.
 		 * @return Output iterator pointing to the end of the formatted output.
 		 */
 		template <typename CharT> static auto do_format(auto& out, const T& value)
@@ -88,17 +87,17 @@ namespace utility_module
 
 	public:
 		/**
-		 * @brief Parses the format context.
-		 * @param ctx Format context.
-		 * @return Iterator pointing to the end of the parsing context.
+		 * @brief Parse function required by formatting library, does nothing here.
+		 * @param ctx The format parse context.
+		 * @return Iterator pointing to the end of the parse context.
 		 */
 		constexpr auto parse(auto& ctx) { return ctx.begin(); }
 
 		/**
-		 * @brief Formats the provided enum value into the given format context.
-		 * @tparam FormatContext Type of the format context.
-		 * @param value Enum value to be formatted.
-		 * @param ctx Format context to output the result.
+		 * @brief Formats the enum value into the provided format context.
+		 * @tparam FormatContext The type of the format context.
+		 * @param value The enum value to be formatted.
+		 * @param ctx The format context.
 		 * @return Output iterator pointing to the end of the formatted output.
 		 */
 		template <typename FormatContext> auto format(const T& value, FormatContext& ctx) const
@@ -111,20 +110,20 @@ namespace utility_module
 
 	/**
 	 * @class formatter
-	 * @brief Provides utilities for formatting strings and wide strings.
+	 * @brief Utility class for formatting strings using either std::format or the fmt library.
 	 *
-	 * Supports both std::format (when USE_STD_FORMAT is defined) and the fmt library
-	 * as a fallback, ensuring compatibility and flexibility for formatting.
+	 * This class provides static methods to format strings and write the result either to a
+	 * returned string or directly to an output iterator.
 	 */
 	class formatter
 	{
 	public:
 		/**
-		 * @brief Formats a string using the provided arguments.
-		 * @tparam FormatArgs Types of the format arguments.
-		 * @param formats C-style format string.
-		 * @param args Values to format into the placeholders.
-		 * @return Formatted std::string.
+		 * @brief Format a string using the provided arguments.
+		 * @tparam FormatArgs Parameter pack of arguments for formatting.
+		 * @param formats The format string (e.g., "Hello {}").
+		 * @param args The arguments to replace the placeholders.
+		 * @return A formatted std::string.
 		 */
 		template <typename... FormatArgs>
 		static auto format(const char* formats, const FormatArgs&... args) -> std::string
@@ -137,11 +136,11 @@ namespace utility_module
 		}
 
 		/**
-		 * @brief Formats a wide string using the provided arguments.
-		 * @tparam FormatArgs Types of the format arguments.
-		 * @param formats Wide C-style format string.
-		 * @param args Values to format into the placeholders.
-		 * @return Formatted std::wstring.
+		 * @brief Format a wide string using the provided arguments.
+		 * @tparam FormatArgs Parameter pack of arguments for formatting.
+		 * @param formats The wide format string.
+		 * @param args The arguments to replace the placeholders.
+		 * @return A formatted std::wstring.
 		 */
 		template <typename... FormatArgs>
 		static auto format(const wchar_t* formats, const FormatArgs&... args) -> std::wstring
@@ -154,13 +153,13 @@ namespace utility_module
 		}
 
 		/**
-		 * @brief Formats a string directly to an output iterator.
-		 * @tparam OutputIt Type of the output iterator.
-		 * @tparam FormatArgs Types of the format arguments.
-		 * @param out Output iterator for the formatted result.
-		 * @param formats C-style format string.
-		 * @param args Values to format into the placeholders.
-		 * @return Output iterator pointing to the end of the formatted output.
+		 * @brief Format a string directly to an output iterator.
+		 * @tparam OutputIt Output iterator type.
+		 * @tparam FormatArgs Parameter pack of arguments for formatting.
+		 * @param out The output iterator.
+		 * @param formats The format string.
+		 * @param args The arguments to replace the placeholders.
+		 * @return OutputIt The output iterator at the end of the formatted output.
 		 */
 		template <typename OutputIt, typename... FormatArgs>
 		static auto format_to(OutputIt out,
@@ -175,13 +174,13 @@ namespace utility_module
 		}
 
 		/**
-		 * @brief Formats a wide string directly to an output iterator.
-		 * @tparam OutputIt Type of the output iterator.
-		 * @tparam FormatArgs Types of the format arguments.
-		 * @param out Output iterator for the formatted result.
-		 * @param formats Wide C-style format string.
-		 * @param args Values to format into the placeholders.
-		 * @return Output iterator pointing to the end of the formatted output.
+		 * @brief Format a wide string directly to an output iterator.
+		 * @tparam OutputIt Output iterator type.
+		 * @tparam FormatArgs Parameter pack of arguments for formatting.
+		 * @param out The output iterator.
+		 * @param formats The wide format string.
+		 * @param args The arguments to replace the placeholders.
+		 * @return OutputIt The output iterator at the end of the formatted output.
 		 */
 		template <typename OutputIt, typename... FormatArgs>
 		static auto format_to(OutputIt out,
