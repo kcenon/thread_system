@@ -31,124 +31,88 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "argument_parser.h"
-
 #include "convert_string.h"
-
-#include <algorithm>
 
 namespace utility_module
 {
-
-	argument_manager::argument_manager() {}
-
-	auto argument_manager::to_string(const std::string& key) -> std::optional<std::string>
+	auto argument_manager::to_lower(std::string_view str) -> std::string
 	{
-		auto it = arguments_.find(key);
-		return it != arguments_.end() ? std::optional(it->second) : std::nullopt;
+		std::string lower_str(str);
+		std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(),
+					   [](unsigned char c) { return static_cast<unsigned char>(std::tolower(c)); });
+		return lower_str;
 	}
 
-	auto argument_manager::to_bool(const std::string& key) -> std::optional<bool>
+	auto argument_manager::to_string(std::string_view key) const -> std::optional<std::string>
+	{
+		auto it = arguments_.find(std::string(key));
+		return (it != arguments_.end()) ? std::optional<std::string>(it->second) : std::nullopt;
+	}
+
+	auto argument_manager::to_bool(std::string_view key) const -> std::optional<bool>
 	{
 		auto value = to_string(key);
 		if (!value.has_value())
-		{
 			return std::nullopt;
-		}
 
-		auto temp = value.value();
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
-		if (temp == "true" || temp == "1")
-		{
+		auto val_lower = to_lower(value.value());
+		if (val_lower == "true" || val_lower == "1")
 			return true;
-		}
-		if (temp == "false" || temp == "0")
-		{
+		if (val_lower == "false" || val_lower == "0")
 			return false;
-		}
+
 		return std::nullopt;
 	}
 
-	auto argument_manager::to_short(const std::string& key) -> std::optional<short>
+	auto argument_manager::to_short(std::string_view key) const -> std::optional<short>
 	{
 		return to_numeric<short>(key);
 	}
 
-	auto argument_manager::to_ushort(const std::string& key) -> std::optional<unsigned short>
+	auto argument_manager::to_ushort(std::string_view key) const -> std::optional<unsigned short>
 	{
 		return to_numeric<unsigned short>(key);
 	}
 
-	auto argument_manager::to_int(const std::string& key) -> std::optional<int>
+	auto argument_manager::to_int(std::string_view key) const -> std::optional<int>
 	{
 		return to_numeric<int>(key);
 	}
 
-	auto argument_manager::to_uint(const std::string& key) -> std::optional<unsigned int>
+	auto argument_manager::to_uint(std::string_view key) const -> std::optional<unsigned int>
 	{
 		return to_numeric<unsigned int>(key);
 	}
 
 #ifdef _WIN32
-	auto argument_manager::to_llong(const std::string& key) -> std::optional<long long>
+	auto argument_manager::to_llong(std::string_view key) const -> std::optional<long long>
 	{
 		return to_numeric<long long>(key);
 	}
 #else
-	auto argument_manager::to_long(const std::string& key) -> std::optional<long>
+	auto argument_manager::to_long(std::string_view key) const -> std::optional<long>
 	{
 		return to_numeric<long>(key);
 	}
 #endif
 
 	template <typename NumericType>
-	auto argument_manager::to_numeric(const std::string& key) -> std::optional<NumericType>
+	auto argument_manager::to_numeric(std::string_view key) const -> std::optional<NumericType>
 	{
-		auto value = to_string(key);
-		if (!value.has_value())
-		{
+		auto val = to_string(key);
+		if (!val)
 			return std::nullopt;
-		}
 
-		try
-		{
-			if constexpr (std::is_same_v<NumericType, int>)
-			{
-				return std::stoi(value.value());
-			}
-			else if constexpr (std::is_same_v<NumericType, long>)
-			{
-				return std::stol(value.value());
-			}
-			else if constexpr (std::is_same_v<NumericType, long long>)
-			{
-				return std::stoll(value.value());
-			}
-			else if constexpr (std::is_same_v<NumericType, unsigned long>)
-			{
-				return std::stoul(value.value());
-			}
-			else if constexpr (std::is_same_v<NumericType, unsigned long long>)
-			{
-				return std::stoull(value.value());
-			}
-			else if constexpr (std::is_same_v<NumericType, short>)
-			{
-				return static_cast<short>(std::stoi(value.value()));
-			}
-			else if constexpr (std::is_same_v<NumericType, unsigned short>)
-			{
-				return static_cast<unsigned short>(std::stoul(value.value()));
-			}
-			else if constexpr (std::is_same_v<NumericType, unsigned int>)
-			{
-				return static_cast<unsigned int>(std::stoul(value.value()));
-			}
-		}
-		catch (...)
-		{
+		const std::string& str_val = val.value();
+		NumericType result{};
+		auto [ptr, ec] = std::from_chars(str_val.data(), str_val.data() + str_val.size(), result);
+
+		if (ec == std::errc::invalid_argument || ec == std::errc::result_out_of_range)
 			return std::nullopt;
-		}
-		return std::nullopt;
+		if (ptr != str_val.data() + str_val.size())
+			return std::nullopt; // Extra characters remain after conversion
+
+		return result;
 	}
 
 	template <typename StringType>
@@ -162,6 +126,7 @@ namespace utility_module
 		std::optional<std::string> converted;
 		std::optional<std::string> convert_error;
 
+		// Handle string conversion
 		if constexpr (std::is_same_v<StringType, std::string>
 					  || std::is_same_v<StringType, const char*>)
 		{
@@ -171,19 +136,20 @@ namespace utility_module
 						   || std::is_same_v<StringType, const wchar_t*>)
 		{
 			std::tie(converted, convert_error) = convert_string::to_string(std::wstring(arguments));
+			if (!converted)
+			{
+				return convert_error ? convert_error
+									 : std::string("Failed to convert wide string to string");
+			}
 		}
 		else
 		{
 			return "Unsupported string type";
 		}
 
-		if (!converted.has_value())
-		{
-			return convert_error;
-		}
-
 		auto argument_string = converted.value();
 
+		// Check if string is only whitespace
 		bool only_whitespace
 			= std::all_of(argument_string.begin(), argument_string.end(),
 						  [](unsigned char c) { return std::isspace(c) || c == '\0'; });
@@ -192,6 +158,7 @@ namespace utility_module
 			return "no valid arguments found.";
 		}
 
+		// Remove null terminators if any
 		auto null_pos = argument_string.find('\0');
 		if (null_pos != std::string::npos)
 		{
@@ -199,12 +166,13 @@ namespace utility_module
 		}
 
 		auto [splitted, split_error] = convert_string::split(argument_string, " ");
-		if (split_error.has_value())
+		if (!splitted)
 		{
 			return split_error;
 		}
 
 		auto splitted_vector = splitted.value();
+		// Remove empty or whitespace-only strings
 		splitted_vector.erase(
 			std::remove_if(
 				splitted_vector.begin(), splitted_vector.end(), [](const std::string& s)
@@ -217,7 +185,7 @@ namespace utility_module
 		}
 
 		auto [parsed, parse_error] = parse(splitted_vector);
-		if (parse_error.has_value())
+		if (parse_error)
 		{
 			return parse_error;
 		}
@@ -248,7 +216,7 @@ namespace utility_module
 			if constexpr (std::is_same_v<CharType, wchar_t>)
 			{
 				auto [converted, error] = convert_string::to_string(std::wstring(argv[i]));
-				if (error.has_value())
+				if (error)
 				{
 					return error;
 				}
@@ -259,11 +227,11 @@ namespace utility_module
 				arg = std::string(argv[i]);
 			}
 
-			if (!arg.empty() && arg.substr(0, 2) == "--")
+			if (!arg.empty() && arg.starts_with("--"))
 			{
 				found_valid = true;
 			}
-			args.push_back(arg);
+			args.push_back(std::move(arg));
 		}
 
 		if (!found_valid)
@@ -272,7 +240,7 @@ namespace utility_module
 		}
 
 		auto [parsed, error] = parse(args);
-		if (error.has_value())
+		if (error)
 		{
 			return error;
 		}
@@ -289,52 +257,47 @@ namespace utility_module
 			return { std::nullopt, "no valid arguments found." };
 		}
 
-		if (arguments[0].substr(0, 2) != "--")
+		// Validate first argument or adjust start index
+		size_t start_index = 0;
+		if (!arguments[0].starts_with("--"))
 		{
 			if (arguments.size() == 1)
 			{
 				return { std::nullopt, "invalid argument: " + arguments[0] };
 			}
-
-			if (arguments[1].substr(0, 2) != "--")
+			if (!arguments[1].starts_with("--"))
 			{
 				return { std::nullopt, "invalid argument: " + arguments[1] };
 			}
+			start_index = 1;
 		}
 
 		std::map<std::string, std::string> result;
 		bool found_valid = false;
 
-		size_t i = (arguments[0].substr(0, 2) != "--") ? 1 : 0;
-
-		for (; i < arguments.size(); ++i)
+		for (size_t i = start_index; i < arguments.size(); ++i)
 		{
 			const auto& arg = arguments[i];
 
-			if (arg.substr(0, 2) != "--")
+			if (!arg.starts_with("--"))
 			{
 				return { std::nullopt, "invalid argument: " + arg };
 			}
 
 			if (arg == "--help")
 			{
+				// Help option: no value required
 				result[arg] = "display help";
 				found_valid = true;
 				continue;
 			}
 
-			if (i + 1 >= arguments.size())
+			if (i + 1 >= arguments.size() || arguments[i + 1].starts_with("--"))
 			{
 				return { std::nullopt, "argument '" + arg + "' expects a value." };
 			}
 
-			const auto& next_arg = arguments[i + 1];
-			if (next_arg.substr(0, 2) == "--")
-			{
-				return { std::nullopt, "argument '" + arg + "' expects a value." };
-			}
-
-			result[arg] = next_arg;
+			result[arg] = arguments[i + 1];
 			found_valid = true;
 			++i;
 		}

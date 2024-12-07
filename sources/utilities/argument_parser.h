@@ -38,97 +38,98 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tuple>
 #include <string_view>
 #include <vector>
+#include <charconv>
+#include <algorithm>
+#include <cctype>
 
 namespace utility_module
 {
 	/**
-	 * @brief Command line argument management class
-	 * @details Provides functionality to parse and manage command line arguments
-	 *          with type-safe access and error handling
+	 * @brief Command line argument manager
+	 * @details
+	 *  - Parses arguments and stores them in a key-value form.
+	 *  - Provides type-safe conversion capabilities.
 	 */
 	class argument_manager
 	{
 	public:
-		/**
-		 * @brief Default constructor
-		 */
-		argument_manager();
+		argument_manager() = default;
 
 		/**
-		 * @brief Parse command line arguments from string types
-		 * @tparam StringType The string type (std::string or std::wstring)
-		 * @param arguments The arguments to parse
-		 * @return Tuple of (success flag, optional error message)
+		 * @brief Parse arguments from a string or wide string
+		 * @tparam StringType std::string or std::wstring
+		 * @param arguments Input argument string
+		 * @return Optional error message, or std::nullopt on success
 		 */
 		template <typename StringType>
 		auto try_parse(const StringType& arguments) -> std::optional<std::string>;
 
 		/**
-		 * @brief Parse command line arguments from argc/argv style input
-		 * @tparam CharType The character type (char or wchar_t)
+		 * @brief Parse arguments from argc/argv
+		 * @tparam CharType char or wchar_t
 		 * @param argc Number of arguments
-		 * @param argv Array of argument strings
-		 * @return Tuple of (success flag, optional error message)
+		 * @param argv Argument array
+		 * @return Optional error message, or std::nullopt on success
 		 */
 		template <typename CharType>
 		auto try_parse(int argc, CharType* argv[]) -> std::optional<std::string>;
 
 		/**
-		 * @brief Get argument value as string
-		 * @param key The argument key to look up (including --)
-		 * @return Optional containing the string value if found
+		 * @brief Get the argument value as a string by key
+		 * @param key The argument key (including "--")
+		 * @return Optional string value if found
 		 */
-		auto to_string(const std::string& key) -> std::optional<std::string>;
+		auto to_string(std::string_view key) const -> std::optional<std::string>;
 
 		/**
-		 * @brief Get argument value as boolean
-		 * @param key The argument key to look up
-		 * @return Optional containing the boolean value if found and convertible
+		 * @brief Get the argument value as a boolean
+		 * @param key The argument key
+		 * @return Optional boolean if found and convertible
 		 */
-		auto to_bool(const std::string& key) -> std::optional<bool>;
+		auto to_bool(std::string_view key) const -> std::optional<bool>;
 
 		/**
-		 * @brief Get argument value as short
-		 * @param key The argument key to look up
-		 * @return Optional containing the short value if found and convertible
+		 * @brief Get the argument value as a short
+		 * @param key The argument key
+		 * @return Optional short if found and convertible
 		 */
-		auto to_short(const std::string& key) -> std::optional<short>;
+		auto to_short(std::string_view key) const -> std::optional<short>;
 
 		/**
-		 * @brief Get argument value as unsigned short
-		 * @param key The argument key to look up
-		 * @return Optional containing the unsigned short value if found and convertible
+		 * @brief Get the argument value as an unsigned short
+		 * @param key The argument key
+		 * @return Optional unsigned short if found and convertible
 		 */
-		auto to_ushort(const std::string& key) -> std::optional<unsigned short>;
+		auto to_ushort(std::string_view key) const -> std::optional<unsigned short>;
 
 		/**
-		 * @brief Get argument value as int
-		 * @param key The argument key to look up
-		 * @return Optional containing the int value if found and convertible
+		 * @brief Get the argument value as an int
+		 * @param key The argument key
+		 * @return Optional int if found and convertible
 		 */
-		auto to_int(const std::string& key) -> std::optional<int>;
+		auto to_int(std::string_view key) const -> std::optional<int>;
 
 		/**
-		 * @brief Get argument value as unsigned int
-		 * @param key The argument key to look up
-		 * @return Optional containing the unsigned int value if found and convertible
+		 * @brief Get the argument value as an unsigned int
+		 * @param key The argument key
+		 * @return Optional unsigned int if found and convertible
 		 */
-		auto to_uint(const std::string& key) -> std::optional<unsigned int>;
+		auto to_uint(std::string_view key) const -> std::optional<unsigned int>;
 
 #ifdef _WIN32
 		/**
-		 * @brief Get argument value as long long (Windows)
-		 * @param key The argument key to look up
-		 * @return Optional containing the long long value if found and convertible
+		 * @brief Get the argument value as a long long (Windows)
+		 * @param key The argument key
+		 * @return Optional long long if found and convertible
 		 */
-		auto to_llong(const std::string& key) -> std::optional<long long>;
+		auto to_llong(std::string_view key) const -> std::optional<long long>;
 #else
 		/**
-		 * @brief Get argument value as long (non-Windows)
-		 * @param key The argument key to look up
-		 * @return Optional containing the long value if found and convertible
+		 * @brief Get the argument value as a long (non-Windows)
+		 * @param key The argument key
+		 * @return Optional long if found and convertible
 		 */
-		auto to_long(const std::string& key) -> std::optional<long>;
+		auto to_long(std::string_view key) const -> std::optional<long>;
 #endif
 
 	private:
@@ -137,19 +138,24 @@ namespace utility_module
 		/**
 		 * @brief Parse a vector of string arguments
 		 * @param arguments Vector of argument strings
-		 * @return Tuple of (parsed arguments map, optional error message)
+		 * @return Tuple of (optional map of arguments, optional error message)
 		 */
 		auto parse(const std::vector<std::string>& arguments)
 			-> std::tuple<std::optional<std::map<std::string, std::string>>,
 						  std::optional<std::string>>;
 
 		/**
-		 * @brief Convert string value to numeric type
+		 * @brief Convert a string value to a numeric type
 		 * @tparam NumericType Target numeric type
-		 * @param key Argument key to convert
-		 * @return Optional containing the converted value if successful
+		 * @param key The argument key
+		 * @return Optional converted value if successful
 		 */
 		template <typename NumericType>
-		auto to_numeric(const std::string& key) -> std::optional<NumericType>;
+		auto to_numeric(std::string_view key) const -> std::optional<NumericType>;
+
+		/**
+		 * @brief Helper function to convert a string_view to lowercase
+		 */
+		static auto to_lower(std::string_view str) -> std::string;
 	};
 } // namespace utility_module
