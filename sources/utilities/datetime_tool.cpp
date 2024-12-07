@@ -34,6 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "formatter.h"
 
+#include <ctime>
+#include <iomanip>
+
 namespace utility_module
 {
 	auto datetime_tool::date(const std::chrono::system_clock::time_point& time,
@@ -127,10 +130,10 @@ namespace utility_module
 	{
 		auto duration
 			= std::chrono::duration<double, typename DurationType::period>(end_time - start_time);
-
 		return duration.count();
 	}
 
+	// Explicit template instantiation
 	template auto datetime_tool::time_difference<std::chrono::milliseconds,
 												 std::chrono::high_resolution_clock>(
 		const std::chrono::time_point<std::chrono::high_resolution_clock>&,

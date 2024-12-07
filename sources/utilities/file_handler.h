@@ -42,52 +42,45 @@ namespace utility_module
 {
 	/**
 	 * @class file
-	 * @brief Provides static utilities for file system operations
+	 * @brief Provides static utilities for file system operations.
 	 *
-	 * Handles basic file operations including reading, writing,
-	 * appending, and deletion with error handling
+	 * This class can remove files, load file contents, save (overwrite) files,
+	 * and append data to existing files. It uses std::filesystem and i/o streams.
 	 */
 	class file
 	{
 	public:
 		/**
-		 * @brief Deletes a file from the file system
-		 *
-		 * @param path Path to the file to delete
-		 * @return std::optional<std::string> Error message if deletion failed, std::nullopt if
-		 * successful
+		 * @brief Remove a file from the filesystem.
+		 * @param path The path to the file to remove.
+		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
 		 */
 		static auto remove(const std::string& path) -> std::optional<std::string>;
 
 		/**
-		 * @brief Reads entire file content into memory
-		 *
-		 * @param path Path to the file to read
+		 * @brief Load the entire contents of a file.
+		 * @param path The path to the file to read.
 		 * @return std::tuple<std::vector<uint8_t>, std::optional<std::string>>
-		 *         First element: File contents as byte array
-		 *         Second element: Error message if read failed, std::nullopt if successful
+		 *         - First: The file contents as a byte vector.
+		 *         - Second: Error message if failed, or std::nullopt on success.
 		 */
 		static auto load(const std::string& path)
 			-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>;
 
 		/**
-		 * @brief Writes data to a file, creating or overwriting it
-		 *
-		 * @param path Target file path
-		 * @param data Byte array to write
-		 * @return std::optional<std::string> Error message if write failed, std::nullopt if
-		 * successful
+		 * @brief Save data to a file (overwrite if it exists, create if not).
+		 * @param path The target file path.
+		 * @param data The byte data to write.
+		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
 		 */
 		static auto save(const std::string& path,
 						 const std::vector<uint8_t>& data) -> std::optional<std::string>;
 
 		/**
-		 * @brief Appends data to end of existing file
-		 *
-		 * @param path Target file path
-		 * @param data Byte array to append
-		 * @return std::optional<std::string> Error message if append failed, std::nullopt if
-		 * successful
+		 * @brief Append data to an existing file.
+		 * @param path The target file path.
+		 * @param data The byte data to append.
+		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
 		 */
 		static auto append(const std::string& path,
 						   const std::vector<uint8_t>& data) -> std::optional<std::string>;
