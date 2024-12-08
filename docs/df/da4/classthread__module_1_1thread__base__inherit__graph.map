@@ -1,0 +1,9 @@
+<map id="thread_module::thread_base" name="thread_module::thread_base">
+<area shape="rect" id="node1" title="Base class for implementing thread&#45;based workers." alt="" coords="536,5,744,391"/>
+<area shape="rect" id="node2" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function." alt="" coords="5,585,197,751"/>
+<area shape="rect" id="node3" href="$d9/de4/classlog__module_1_1console__writer.html" title="A class for writing log messages to the console." alt="" coords="221,593,413,743"/>
+<area shape="rect" id="node4" href="$dc/d2b/classlog__module_1_1file__writer.html" title="A class for writing log messages to a file." alt="" coords="437,439,629,897"/>
+<area shape="rect" id="node5" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="653,497,843,839"/>
+<area shape="rect" id="node6" href="$d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title=" " alt="" coords="867,563,1085,773"/>
+<area shape="rect" id="node7" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue." alt="" coords="1109,585,1301,751"/>
+</map>

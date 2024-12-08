@@ -1,0 +1,4 @@
+<map id="log_module::log_collector::after_stop" name="log_module::log_collector::after_stop">
+<area shape="rect" id="node1" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,47"/>
+<area shape="rect" id="node2" href="$d8/d42/classthread__module_1_1job.html#a7364f59b6777169a5478bf916a4490ef" title="Execute the job&#39;s work." alt="" coords="243,5,391,47"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="thread_pool_module::thread_pool::~thread_pool" name="thread_pool_module::thread_pool::~thread_pool">
+<area shape="rect" id="node1" title="Virtual destructor for the thread_pool class." alt="" coords="5,5,208,47"/>
+<area shape="rect" id="node2" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool." alt="" coords="256,5,411,47"/>
+<area shape="rect" id="node3" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="459,13,636,39"/>
+<area shape="rect" id="node4" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="684,5,895,47"/>
+</map>

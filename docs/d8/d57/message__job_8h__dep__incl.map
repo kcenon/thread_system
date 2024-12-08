@@ -1,0 +1,8 @@
+<map id="sources/logger/message_job.h" name="sources/logger/message_job.h">
+<area shape="rect" id="node1" title=" " alt="" coords="380,5,560,47"/>
+<area shape="rect" id="node2" href="$d5/d76/callback__writer_8cpp.html" title=" " alt="" coords="5,95,180,136"/>
+<area shape="rect" id="node3" href="$d1/d4f/console__writer_8cpp.html" title=" " alt="" coords="205,95,375,136"/>
+<area shape="rect" id="node4" href="$de/d2a/file__writer_8cpp.html" title=" " alt="" coords="399,95,541,136"/>
+<area shape="rect" id="node5" href="$d7/d3c/log__collector_8cpp.html" title=" " alt="" coords="565,95,706,136"/>
+<area shape="rect" id="node6" href="$d1/d69/message__job_8cpp.html" title=" " alt="" coords="731,95,911,136"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="thread_pool_module::thread_worker" name="thread_pool_module::thread_worker">
+<area shape="rect" id="node1" title="A worker thread class that processes jobs from a job queue." alt="" coords="13,439,205,604"/>
+<area shape="rect" id="node2" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="5,5,213,391"/>
+</map>

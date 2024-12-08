@@ -1,0 +1,3 @@
+<map id="utility_module::enum_formatter&lt; T, Converter &gt;" name="utility_module::enum_formatter&lt; T, Converter &gt;">
+<area shape="rect" id="node1" title="A formatter template for converting enums to strings using a custom converter functor." alt="" coords="5,5,207,127"/>
+</map>

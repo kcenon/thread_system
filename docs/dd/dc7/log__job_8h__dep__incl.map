@@ -1,0 +1,11 @@
+<map id="sources/logger/log_job.h" name="sources/logger/log_job.h">
+<area shape="rect" id="node1" title=" " alt="" coords="195,5,337,47"/>
+<area shape="rect" id="node2" href="$d8/d77/log__collector_8h.html" title=" " alt="" coords="87,95,229,136"/>
+<area shape="rect" id="node4" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="185,184,347,225"/>
+<area shape="rect" id="node9" href="$d8/de3/log__job_8cpp.html" title=" " alt="" coords="303,95,445,136"/>
+<area shape="rect" id="node3" href="$d7/d3c/log__collector_8cpp.html" title=" " alt="" coords="19,184,161,225"/>
+<area shape="rect" id="node5" href="$d1/d8c/logger_8h.html" title=" " alt="" coords="83,281,257,307"/>
+<area shape="rect" id="node8" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="281,273,443,315"/>
+<area shape="rect" id="node6" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="5,363,159,404"/>
+<area shape="rect" id="node7" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="183,363,336,404"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="log_module::message_job" name="log_module::message_job">
+<area shape="rect" id="node1" title="Represents a console logging job derived from the base job class." alt="" coords="132,516,324,652"/>
+<area shape="rect" id="node2" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="93,301,241,467"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,147,173,239"/>
+<area shape="rect" id="node4" title=" " alt="" coords="222,154,309,231"/>
+<area shape="rect" id="node5" title=" " alt="" coords="196,5,335,97"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="log_module::log_job::convert_message" name="log_module::log_job::convert_message">
+<area shape="rect" id="node1" title="Converts the stored message to a std::string." alt="" coords="5,5,159,47"/>
+<area shape="rect" id="node2" href="$d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b" title="Converts a log_types value to its string representation." alt="" coords="207,13,369,39"/>
+</map>

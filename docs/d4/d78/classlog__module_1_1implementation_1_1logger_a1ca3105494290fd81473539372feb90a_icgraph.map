@@ -1,0 +1,7 @@
+<map id="log_module::implementation::logger::destroy" name="log_module::implementation::logger::destroy">
+<area shape="rect" id="node1" title="Destroys the singleton instance of the logger." alt="" coords="407,71,617,112"/>
+<area shape="rect" id="node2" href="$d9/de0/namespacelog__module.html#a2a4983f8992953edd30791d5ac0df4d4" title=" " alt="" coords="224,78,359,105"/>
+<area shape="rect" id="node3" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#ac00dc387724d8067f8d5158e4c7f60a3" title="Enqueues a worker thread to the thread pool." alt="" coords="5,5,176,47"/>
+<area shape="rect" id="node4" href="$da/d94/classthread__module_1_1thread__base.html#a83df15275d5a00b484fea85886fc4724" title="Starts the worker thread." alt="" coords="5,71,176,112"/>
+<area shape="rect" id="node5" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f" title="Starts the thread pool." alt="" coords="13,136,168,177"/>
+</map>

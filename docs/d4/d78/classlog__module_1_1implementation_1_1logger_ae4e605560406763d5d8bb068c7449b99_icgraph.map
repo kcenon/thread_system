@@ -1,0 +1,35 @@
+<map id="log_module::implementation::logger::handle" name="log_module::implementation::logger::handle">
+<area shape="rect" id="node1" title="Gets the singleton instance of the logger." alt="" coords="797,567,1008,608"/>
+<area shape="rect" id="node2" href="$d9/de0/namespacelog__module.html#a250c6bab2fe920d1fc947b0b890a490c" title=" " alt="" coords="558,5,718,47"/>
+<area shape="rect" id="node3" href="$d9/de0/namespacelog__module.html#a6fce93efae6970e08516eb8723d642b3" title=" " alt="" coords="560,71,716,112"/>
+<area shape="rect" id="node4" href="$d9/de0/namespacelog__module.html#ac28ae80c49352c25d239e8a1995d4fb0" title=" " alt="" coords="552,137,724,163"/>
+<area shape="rect" id="node5" href="$d9/de0/namespacelog__module.html#aba374e21fedf7866f83cb32046396966" title=" " alt="" coords="557,188,719,229"/>
+<area shape="rect" id="node6" href="$d9/de0/namespacelog__module.html#a6c1f98425c009f6b51fa9bcdb5926791" title=" " alt="" coords="559,253,717,295"/>
+<area shape="rect" id="node7" href="$d9/de0/namespacelog__module.html#a4a6c4a1e9c1dd96ee14b74a742da947e" title=" " alt="" coords="555,319,721,360"/>
+<area shape="rect" id="node8" href="$d9/de0/namespacelog__module.html#a7dba039ed9802c3d55471859e7c2f67b" title=" " alt="" coords="557,384,719,425"/>
+<area shape="rect" id="node9" href="$d9/de0/namespacelog__module.html#ae8dd1c69814a37ac43324d3cc2a9f86f" title=" " alt="" coords="559,450,717,477"/>
+<area shape="rect" id="node10" href="$d9/de0/namespacelog__module.html#a7902b4479a7ff028953d5bd13c20d170" title=" " alt="" coords="560,501,716,543"/>
+<area shape="rect" id="node11" href="$d9/de0/namespacelog__module.html#adaa042b4b47abeb7e8d16e888f17552a" title=" " alt="" coords="555,567,721,608"/>
+<area shape="rect" id="node12" href="$d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f" title=" " alt="" coords="570,633,706,659"/>
+<area shape="rect" id="node13" href="$d9/de0/namespacelog__module.html#a2a4983f8992953edd30791d5ac0df4d4" title=" " alt="" coords="571,683,705,710"/>
+<area shape="rect" id="node17" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="550,734,726,761"/>
+<area shape="rect" id="node25" href="$d9/de0/namespacelog__module.html#afd5af0ad3eaf7f1f2c8d3a8360f673b6" title=" " alt="" coords="545,785,731,811"/>
+<area shape="rect" id="node26" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="549,835,727,862"/>
+<area shape="rect" id="node29" href="$d9/de0/namespacelog__module.html#a733587d24e60bd73f64f5d5c8586d957" title=" " alt="" coords="533,886,743,913"/>
+<area shape="rect" id="node30" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="527,937,749,963"/>
+<area shape="rect" id="node31" href="$d9/de0/namespacelog__module.html#ae1a60bdcad6ca75d6d08d68dde23d524" title=" " alt="" coords="531,987,745,1014"/>
+<area shape="rect" id="node32" href="$d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="534,1043,742,1070"/>
+<area shape="rect" id="node14" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#ac00dc387724d8067f8d5158e4c7f60a3" title="Enqueues a worker thread to the thread pool." alt="" coords="282,415,453,456"/>
+<area shape="rect" id="node15" href="$da/d94/classthread__module_1_1thread__base.html#a83df15275d5a00b484fea85886fc4724" title="Starts the worker thread." alt="" coords="282,480,453,521"/>
+<area shape="rect" id="node16" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f" title="Starts the thread pool." alt="" coords="290,545,445,587"/>
+<area shape="rect" id="node18" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message to the log collector, with optional timestamp." alt="" coords="262,611,473,652"/>
+<area shape="rect" id="node19" href="$d9/de0/namespacelog__module.html#a226550c3a8f3a95f4c7486f126753816" title=" " alt="" coords="274,677,461,703"/>
+<area shape="rect" id="node20" href="$d9/de0/namespacelog__module.html#a8c2b148c0389861c8e6b8dd4efcfadab" title=" " alt="" coords="279,727,456,754"/>
+<area shape="rect" id="node21" href="$d9/de0/namespacelog__module.html#a6fdc1d57939d0e099831bdbaf4f46d99" title=" " alt="" coords="262,778,473,805"/>
+<area shape="rect" id="node22" href="$d9/de0/namespacelog__module.html#a714c1132613bef7da8eb8d559b50df3b" title=" " alt="" coords="256,829,479,855"/>
+<area shape="rect" id="node23" href="$d9/de0/namespacelog__module.html#a4f7f250685f2b6ef94c8a37a284b2715" title=" " alt="" coords="260,879,475,906"/>
+<area shape="rect" id="node24" href="$d9/de0/namespacelog__module.html#ab251ab5234dbf8dc2770d4dbf5240f5d" title=" " alt="" coords="263,930,471,957"/>
+<area shape="rect" id="node27" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool." alt="" coords="290,981,445,1023"/>
+<area shape="rect" id="node28" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor for the thread_pool class." alt="" coords="5,981,208,1023"/>
+<area shape="rect" id="node33" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="274,1047,461,1088"/>
+</map>

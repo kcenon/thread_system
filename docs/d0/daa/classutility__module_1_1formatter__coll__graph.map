@@ -1,0 +1,3 @@
+<map id="utility_module::formatter" name="utility_module::formatter">
+<area shape="rect" id="node1" title="Utility class for formatting strings using either std::format or the fmt library." alt="" coords="5,5,192,127"/>
+</map>

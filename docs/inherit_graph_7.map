@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="5,56,153,83"/>
+<area shape="rect" id="node2" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a logging job derived from the base job class." alt="" coords="221,5,374,32"/>
+<area shape="rect" id="node3" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="201,56,393,83"/>
+<area shape="rect" id="node4" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title=" " alt="" coords="217,107,377,163"/>
+</map>

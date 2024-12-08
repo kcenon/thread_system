@@ -1,0 +1,6 @@
+<map id="log_module::implementation::logger::write" name="log_module::implementation::logger::write">
+<area shape="rect" id="node1" title="Writes a formatted log message to the log collector, with optional timestamp." alt="" coords="5,35,216,76"/>
+<area shape="rect" id="node2" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="264,5,451,47"/>
+<area shape="rect" id="node3" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="269,71,445,98"/>
+<area shape="rect" id="node4" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="499,64,709,105"/>
+</map>

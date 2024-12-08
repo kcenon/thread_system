@@ -1,0 +1,9 @@
+<map id="utility_module::formatter::format" name="utility_module::formatter::format">
+<area shape="rect" id="node1" title="Format a string using the provided arguments." alt="" coords="264,169,451,211"/>
+<area shape="rect" id="node2" href="$db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date part of a time point." alt="" coords="19,5,202,47"/>
+<area shape="rect" id="node3" href="$db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds component of a time point." alt="" coords="19,71,202,112"/>
+<area shape="rect" id="node4" href="$db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds component of a time point." alt="" coords="19,136,202,177"/>
+<area shape="rect" id="node5" href="$db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds component of a time point." alt="" coords="19,201,202,243"/>
+<area shape="rect" id="node6" href="$db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time part (HH:MM:SS) of a time point." alt="" coords="19,267,202,308"/>
+<area shape="rect" id="node7" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="5,332,216,373"/>
+</map>
