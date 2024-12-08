@@ -201,6 +201,7 @@ namespace priority_thread_pool_module
 		{
 			std::deque<std::unique_ptr<priority_job_t<priority_type>>> empty;
 			std::swap(pair.second, empty);
+			queue_sizes_[pair.first].store(0);
 		}
 
 		queues_.clear();
