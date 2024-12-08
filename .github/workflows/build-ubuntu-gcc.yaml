@@ -15,6 +15,8 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      BUILD_TYPE: Debug
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,18 +26,18 @@ jobs:
           clean: true
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar autoconf automake autoconf-archive ninja-build
 
-      - name: Check architecture and set environment variable if needed
+      - name: Check architecture
         run: |
           if [ "$(uname -m)" = "aarch64" ]; then
             echo "VCPKG_FORCE_SYSTEM_BINARIES=arm" >> $GITHUB_ENV
           fi
-      
+
       - name: Cache vcpkg
         uses: actions/cache@v3
         id: vcpkg-cache
@@ -72,30 +74,33 @@ jobs:
       - name: Cache CMake build
         uses: actions/cache@v3
         with:
-          path: |
-            ${{ github.workspace }}/build
-          key: ${{ runner.os }}-gcc-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          path: ${{ github.workspace }}/build
+          key: ${{ runner.os }}-gcc-cmake-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
             ${{ runner.os }}-gcc-cmake-
 
+      - name: Prepare build directory
+        run: |
+          rm -rf build
+          mkdir -p build
+
       - name: Build application with GCC
         run: |
-          mkdir -p build
           cd build
           cmake .. \
+            -G Ninja \
             -DBUILD_TESTS=ON \
             -DCMAKE_INSTALL_PREFIX="../target" \
-            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
             -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake" \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_CXX_COMPILER=g++ \
-            -G Ninja
-          cmake --build .
+            -DCMAKE_CXX_COMPILER=g++
+          cmake --build . --parallel
 
       - name: Cache built libraries
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}
+          key: ${{ runner.os }}-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
             ${{ runner.os }}-gcc-built-libs-
