@@ -45,7 +45,7 @@ jobs:
           clean: true
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -110,21 +110,20 @@ jobs:
             ${{ github.workspace }}/build
           key: ${{ runner.os }}-cmake-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
-            ${{ runner.os }}-cmake-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-
             ${{ runner.os }}-cmake-msys2-
+
+      - name: Prepare build directory
+        run: |
+          rm -rf build
+          mkdir -p build
 
       - name: Build application
         env:
           CC: gcc
           CXX: g++
         run: |
-          echo "Creating build directory..."
-          mkdir -p build
-          cd build
-          
           export PATH="/mingw64/bin:$PATH"
-          
-          echo "Configuring CMake..."
+          cd build
           cmake .. \
             -G "Ninja" \
             -DBUILD_TESTS=ON \
@@ -136,7 +135,6 @@ jobs:
             -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
             -DCMAKE_AR=/mingw64/bin/ar.exe
 
-          echo "Building project..."
           cmake --build . --config $BUILD_TYPE --parallel $(nproc)
 
       - name: Cache built libraries
