@@ -54,7 +54,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./documents/html
-          destination_dir: docs
-          full_commit_message: Update documentation
+          commit_message: "Update documentation via GitHub Actions"
           enable_jekyll: false
-          force_orphan: true
+          # force_orphan: true  # 필요 없다면 제거
