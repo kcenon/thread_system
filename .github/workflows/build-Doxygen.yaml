@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - release**
   pull_request:
     branches:
       - main
-      - release**
   workflow_dispatch:
 
 jobs:
@@ -56,4 +54,3 @@ jobs:
           publish_dir: ./documents/html
           commit_message: "Update documentation via GitHub Actions"
           enable_jekyll: false
-          # force_orphan: true  # 필요 없다면 제거

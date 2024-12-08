@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - release**
   pull_request:
     branches:
       - main
-      - release**
   workflow_dispatch:
 
 jobs:
@@ -20,6 +18,7 @@ jobs:
     
     steps:
       - name: Clean workspace
+        shell: pwsh
         run: |
           if (Test-Path .git) {
             Remove-Item -Recurse -Force .git
@@ -27,9 +26,9 @@ jobs:
           if (Test-Path .github) {
             Remove-Item -Recurse -Force .github
           }
-        shell: pwsh
       
       - name: Configure git
+        shell: pwsh
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
@@ -39,23 +38,10 @@ jobs:
         with:
           submodules: recursive
           repository: kcenon/thread_system
-          ssh-strict: true
-          ssh-user: git
           persist-credentials: true
           clean: true
-          sparse-checkout-cone-mode: true
           fetch-depth: 1
-          fetch-tags: false
-          show-progress: true
-          lfs: false
-          set-safe-directory: true
           token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - name: Setup Visual Studio
         uses: microsoft/setup-msbuild@v1.1
@@ -72,7 +58,7 @@ jobs:
             !${{ github.workspace }}/vcpkg/buildtrees
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-${{ hashFiles('vcpkg.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-
 
@@ -81,7 +67,7 @@ jobs:
         id: vcpkg-installed
         with:
           path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('vcpkg.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-installed-
 
@@ -131,6 +117,7 @@ jobs:
           Write-Host "Configuring CMake..."
           Push-Location build
           
+          # 이전 빌드 캐시와의 호환성 위해 CMakeCache.txt 확인 로직
           if (Test-Path "CMakeCache.txt") {
             $cacheContent = Get-Content "CMakeCache.txt" -Raw
             if ($cacheContent -match "CMAKE_GENERATOR:INTERNAL=Visual Studio \d+ \d+") {
@@ -157,7 +144,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
+          key: ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
-            ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
             ${{ runner.os }}-built-libs-vs2022-
