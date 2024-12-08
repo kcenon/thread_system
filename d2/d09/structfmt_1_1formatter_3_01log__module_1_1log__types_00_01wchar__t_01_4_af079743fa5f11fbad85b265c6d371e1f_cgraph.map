@@ -1,0 +1,5 @@
+<map id="fmt::formatter&lt; log_module::log_types, wchar_t &gt;::format" name="fmt::formatter&lt; log_module::log_types, wchar_t &gt;::format">
+<area shape="rect" id="node1" title="Formats a log_type value as a wide string." alt="" coords="5,20,159,76"/>
+<area shape="rect" id="node2" href="$d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b" title="Converts a log_types value to its string representation." alt="" coords="212,5,375,32"/>
+<area shape="rect" id="node3" href="$d1/d53/classutility__module_1_1convert__string.html#a3052f6112c800af7d56ac5215b5cd1ac" title="Convert a std::string to a std::wstring using system encoding." alt="" coords="207,57,380,98"/>
+</map>
