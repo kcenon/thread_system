@@ -154,4 +154,27 @@ template <> struct fmt::formatter<log_module::log_types> : fmt::formatter<std::s
 		return fmt::formatter<std::string_view>::format(log_module::to_string(log_type), ctx);
 	}
 };
+
+/**
+ * @brief Specialization of fmt::formatter for wide-character log_module::log_types.
+ * Allows log_types enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct fmt::formatter<log_module::log_types, wchar_t> : fmt::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a log_type value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param log_type The log_types enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const log_module::log_types& log_type, FormatContext& ctx) const
+	{
+		auto str = log_module::to_string(log_type);
+		auto wstr = convert_string::to_wstring(str);
+		return fmt::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
 #endif
