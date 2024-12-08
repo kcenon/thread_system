@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - release**
   pull_request:
     branches:
       - main
-      - release**
   workflow_dispatch:
 
 jobs:
@@ -43,24 +41,11 @@ jobs:
         with:
           submodules: recursive
           repository: kcenon/thread_system
-          ssh-strict: true
-          ssh-user: git
           persist-credentials: true
           clean: true
-          sparse-checkout-cone-mode: true
           fetch-depth: 1
-          fetch-tags: false
-          show-progress: true
-          lfs: false
-          set-safe-directory: true
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -83,7 +68,7 @@ jobs:
             !${{ github.workspace }}/vcpkg/buildtrees
             !${{ github.workspace }}/vcpkg/packages
             !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-msys2-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-msys2-vcpkg-${{ hashFiles('vcpkg.json') }}
           restore-keys: |
             ${{ runner.os }}-msys2-vcpkg-
 
@@ -92,7 +77,7 @@ jobs:
         id: vcpkg-installed
         with:
           path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-msys2-vcpkg-installed-${{ hashFiles('**/vcpkg.json') }}
+          key: ${{ runner.os }}-msys2-vcpkg-installed-${{ hashFiles('vcpkg.json') }}
           restore-keys: |
             ${{ runner.os }}-msys2-vcpkg-installed-
 
@@ -141,8 +126,7 @@ jobs:
           
           echo "Configuring CMake..."
           cmake .. \
-            -G "MinGW Makefiles" \
-            -DCMAKE_MAKE_PROGRAM=/mingw64/bin/mingw32-make.exe \
+            -G "Ninja" \
             -DBUILD_TESTS=ON \
             -DCMAKE_INSTALL_PREFIX="../target" \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -151,7 +135,7 @@ jobs:
             -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe \
             -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
             -DCMAKE_AR=/mingw64/bin/ar.exe
-          
+
           echo "Building project..."
           cmake --build . --config $BUILD_TYPE --parallel $(nproc)
 
@@ -159,7 +143,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-${{ env.BUILD_TYPE }}
+          key: ${{ runner.os }}-built-libs-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
           restore-keys: |
-            ${{ runner.os }}-built-libs-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'src/**/*.cpp', 'src/**/*.h') }}-
             ${{ runner.os }}-built-libs-msys2-
