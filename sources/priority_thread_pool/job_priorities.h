@@ -171,4 +171,29 @@ struct fmt::formatter<priority_thread_pool_module::job_priorities>
 			priority_thread_pool_module::to_string(job_priority), ctx);
 	}
 };
+
+/**
+ * @brief Specialization of fmt::formatter for wide-character job_priorities.
+ * Allows job_priorities enum values to be formatted as wide strings in the standard library format.
+ */
+template <>
+struct fmt::formatter<priority_thread_pool_module::job_priorities, wchar_t>
+	: fmt::formatter<std::wstring_view, wchar_t>
+{
+	/**
+	 * @brief Formats a job_priorities value as a wide string.
+	 * @tparam FormatContext Type of the format context.
+	 * @param job_priority The job_priorities enum value to format.
+	 * @param ctx Format context for the output.
+	 * @return Iterator to the end of the formatted output.
+	 */
+	template <typename FormatContext>
+	auto format(const priority_thread_pool_module::job_priorities& job_priority,
+				FormatContext& ctx) const
+	{
+		auto str = priority_thread_pool_module::to_string(job_priority);
+		auto wstr = convert_string::to_wstring(str);
+		return fmt::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
+	}
+};
 #endif
