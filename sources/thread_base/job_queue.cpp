@@ -93,6 +93,7 @@ namespace thread_module
 
 		std::deque<std::unique_ptr<job>> empty;
 		std::swap(queue_, empty);
+		queue_size_.store(0);
 
 		condition_.notify_all();
 	}
@@ -120,6 +121,7 @@ namespace thread_module
 			std::scoped_lock<std::mutex> lock(mutex_);
 
 			std::swap(queue_, all_items);
+			queue_size_.store(0);
 
 			condition_.notify_all();
 		}
