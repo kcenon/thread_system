@@ -134,21 +134,20 @@ jobs:
           Push-Location build
           $env:CC = "gcc"
           $env:CXX = "g++"
-          
-          cmake .. -G "Ninja" `
-                  -DCMAKE_C_COMPILER=gcc `
-                  -DCMAKE_CXX_COMPILER=g++ `
-                  -DCMAKE_MAKE_PROGRAM=ninja `
-                  -DCMAKE_BUILD_TYPE=Debug ` # env 변수 대신 직접 명시
-                  -DCMAKE_INSTALL_PREFIX="..\target" `
-                  -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-                  -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic
+          & cmake .. -G "Ninja" `
+            "-DCMAKE_C_COMPILER=gcc" `
+            "-DCMAKE_CXX_COMPILER=g++" `
+            "-DCMAKE_MAKE_PROGRAM=ninja" `
+            "-DCMAKE_BUILD_TYPE=Debug" `
+            "-DCMAKE_INSTALL_PREFIX=../target" `
+            "-DCMAKE_TOOLCHAIN_FILE=$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+            "-DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic"
 
           if ($LASTEXITCODE -ne 0) {
               Write-Error "CMake configuration failed"
               exit 1
           }
-          
+
           cmake --build . --config Debug --parallel $env:NUMBER_OF_PROCESSORS
           Pop-Location
 
