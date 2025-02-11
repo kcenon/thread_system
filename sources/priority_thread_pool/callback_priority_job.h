@@ -30,36 +30,58 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
+#pragma once
+
 #include "priority_job.h"
 
-#include "priority_job_queue.h"
+using namespace thread_module;
 
 namespace priority_thread_pool_module
 {
+	/**
+	 * @class priority_job
+	 * @brief Represents a job with a priority level.
+	 *
+	 * This template class encapsulates a job with a callback function, a priority level,
+	 * and a name. It inherits from job and std::enable_shared_from_this to allow creating
+	 * shared_ptr from this.
+	 *
+	 * @tparam priority_type The type used to represent the priority level.
+	 */
 	template <typename priority_type>
-	priority_job_t<priority_type>::priority_job_t(priority_type priority, const std::string& name)
-		: job(name), priority_(priority)
+	class callback_priority_job_t : public priority_job_t<priority_type>
 	{
-	}
+	public:
+		/**
+		 * @brief Constructs a new priority_job object.
+		 * @param callback The function to be executed when the job is processed.
+		 * @param priority The priority level of the job.
+		 * @param name The name of the job (default is "priority_job").
+		 */
+		callback_priority_job_t(const std::function<std::optional<std::string>(void)>& callback,
+								priority_type priority,
+								const std::string& name = "priority_job");
 
-	template <typename priority_type> priority_job_t<priority_type>::~priority_job_t(void) {}
+		/**
+		 * @brief Virtual destructor for the priority_job class.
+		 */
+		~callback_priority_job_t(void) override;
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::priority() const -> priority_type
-	{
-		return priority_;
-	}
+		/**
+		 * @brief Execute the job's work.
+		 * @return std::optional<std::string> A tuple containing:
+		 *         - bool: Indicates whether the job was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions or additional information.
+		 */
+		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
-		-> void
-	{
-		job_queue_ = std::dynamic_pointer_cast<priority_job_queue_t<priority_type>>(job_queue);
-	}
+	private:
+		/** @brief The callback function to be executed when the job is processed */
+		std::function<std::optional<std::string>(void)> callback_;
+	};
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
-	{
-		return std::dynamic_pointer_cast<job_queue>(job_queue_.lock());
-	}
+	using callback_priority_job = callback_priority_job_t<job_priorities>;
 } // namespace priority_thread_pool_module
+
+#include "callback_priority_job.tpp"

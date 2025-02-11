@@ -39,7 +39,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <string>
 #include <optional>
-#include <functional>
 #include <string_view>
 
 using namespace utility_module;
@@ -63,13 +62,9 @@ namespace thread_module
 	public:
 		/**
 		 * @brief Constructs a new job object.
-		 * @param callback The function to be executed when the job is processed.
-		 *        It should return a tuple containing a boolean indicating success and an optional
-		 * string message.
 		 * @param name The name of the job (default is "job").
 		 */
-		job(const std::function<std::optional<std::string>(void)>& callback,
-			const std::string& name = "job");
+		job(const std::string& name = "job");
 
 		/**
 		 * @brief Virtual destructor for the job class.
@@ -116,9 +111,6 @@ namespace thread_module
 
 		/** @brief Weak pointer to the associated job queue */
 		std::weak_ptr<job_queue> job_queue_;
-
-		/** @brief The callback function to be executed when the job is processed */
-		std::function<std::optional<std::string>(void)> callback_;
 	};
 } // namespace thread_module
 

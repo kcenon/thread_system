@@ -38,36 +38,13 @@ using namespace utility_module;
 
 namespace thread_module
 {
-	job::job(const std::function<std::optional<std::string>(void)>& callback,
-			 const std::string& name)
-		: name_(name), callback_(callback)
-	{
-	}
+	job::job(const std::string& name) : name_(name) {}
 
 	job::~job(void) {}
 
 	auto job::get_name(void) const -> std::string { return name_; }
 
-	auto job::do_work(void) -> std::optional<std::string>
-	{
-		if (callback_ == nullptr)
-		{
-			return "cannot execute job without callback";
-		}
-
-		try
-		{
-			return callback_();
-		}
-		catch (const std::exception& e)
-		{
-			return std::string(e.what());
-		}
-		catch (...)
-		{
-			return "unknown error";
-		}
-	}
+	auto job::do_work(void) -> std::optional<std::string> { return "not implemented"; }
 
 	auto job::set_job_queue(const std::shared_ptr<job_queue>& job_queue) -> void
 	{

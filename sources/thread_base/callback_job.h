@@ -30,36 +30,53 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_job.h"
+#pragma once
 
-#include "priority_job_queue.h"
+#include "job.h"
 
-namespace priority_thread_pool_module
+#include <functional>
+
+namespace thread_module
 {
-	template <typename priority_type>
-	priority_job_t<priority_type>::priority_job_t(priority_type priority, const std::string& name)
-		: job(name), priority_(priority)
+	/**
+	 * @class job
+	 * @brief Represents a job that can be executed by a job queue.
+	 *
+	 * This class is a base class for all jobs that can be executed by a job queue.
+	 * It provides a callback function that is executed when the job is executed.
+	 * The callback function must return a tuple with a boolean value indicating
+	 * whether the job was executed successfully and an optional string with an
+	 * error message in case the job failed.
+	 */
+	class callback_job : public job
 	{
-	}
+	public:
+		/**
+		 * @brief Constructs a new job object.
+		 * @param callback The function to be executed when the job is processed.
+		 *        It should return a tuple containing a boolean indicating success and an optional
+		 * string message.
+		 * @param name The name of the job (default is "job").
+		 */
+		callback_job(const std::function<std::optional<std::string>(void)>& callback,
+					 const std::string& name = "callback_job");
 
-	template <typename priority_type> priority_job_t<priority_type>::~priority_job_t(void) {}
+		/**
+		 * @brief Virtual destructor for the job class.
+		 */
+		~callback_job(void) override;
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::priority() const -> priority_type
-	{
-		return priority_;
-	}
+		/**
+		 * @brief Execute the job's work.
+		 * @return std::optional<std::string> A tuple containing:
+		 *         - bool: Indicates whether the job was successful (true) or not (false).
+		 *         - std::optional<std::string>: An optional string message, typically used for
+		 * error descriptions or additional information.
+		 */
+		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
-		-> void
-	{
-		job_queue_ = std::dynamic_pointer_cast<priority_job_queue_t<priority_type>>(job_queue);
-	}
-
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
-	{
-		return std::dynamic_pointer_cast<job_queue>(job_queue_.lock());
-	}
-} // namespace priority_thread_pool_module
+	protected:
+		/** @brief The callback function to be executed when the job is processed */
+		std::function<std::optional<std::string>(void)> callback_;
+	};
+} // namespace thread_module

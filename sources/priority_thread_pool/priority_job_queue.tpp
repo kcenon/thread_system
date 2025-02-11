@@ -60,41 +60,7 @@ namespace priority_thread_pool_module
 			return "Enqueued job is not a priority_job";
 		}
 
-		auto job_priority = priority_job_ptr->priority();
-
-		std::unique_lock<std::mutex> lock(mutex_);
-
-		auto iter = queues_.find(job_priority);
-		if (iter != queues_.end())
-		{
-			iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
-				static_cast<priority_job_t<priority_type>*>(value.release())));
-
-			queue_sizes_[job_priority].fetch_add(1);
-
-			if (notify_)
-			{
-				condition_.notify_one();
-			}
-
-			return std::nullopt;
-		}
-
-		iter = queues_
-				   .emplace(job_priority,
-							std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
-				   .first;
-		iter->second.push_back(std::unique_ptr<priority_job_t<priority_type>>(
-			static_cast<priority_job_t<priority_type>*>(value.release())));
-
-		queue_sizes_.emplace(job_priority, 1);
-
-		if (notify_)
-		{
-			condition_.notify_one();
-		}
-
-		return std::nullopt;
+		return enqueue(std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
 	}
 
 	template <typename priority_type>

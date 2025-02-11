@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "priority_job.h"
 #include "convert_string.h"
 #include "job_priorities.h"
+#include "callback_priority_job.h"
 
 #include <map>
 
