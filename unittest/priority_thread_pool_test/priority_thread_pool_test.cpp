@@ -134,7 +134,7 @@ TEST(priority_thread_pool_test, start_and_one_sec_job_and_stop)
 	auto start_error = pool->start();
 	EXPECT_EQ(start_error, std::nullopt);
 
-	error = pool->enqueue(std::make_unique<priority_job>(
+	error = pool->enqueue(std::make_unique<callback_priority_job>(
 		[](void) -> std::optional<std::string>
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));

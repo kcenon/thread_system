@@ -102,7 +102,7 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::s
 	std::optional<std::string> error_message = std::nullopt;
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		error_message = thread_pool->enqueue(std::make_unique<job>(
+		error_message = thread_pool->enqueue(std::make_unique<callback_job>(
 			[index](void) -> std::optional<std::string>
 			{
 				log_module::write_debug("Hello, World!: {}", index);

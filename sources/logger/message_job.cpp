@@ -41,7 +41,7 @@ namespace log_module
 	message_job::message_job(const log_types& log_type,
 							 const std::string& datetime,
 							 const std::string& message)
-		: job(nullptr, "message_job"), log_type_(log_type), datetime_(datetime), message_(message)
+		: job("message_job"), log_type_(log_type), datetime_(datetime), message_(message)
 	{
 	}
 

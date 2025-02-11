@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job.h"
 #include "formatter.h"
+#include "callback_job.h"
 #include "convert_string.h"
 
 #include <mutex>

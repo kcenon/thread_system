@@ -50,7 +50,7 @@ namespace log_module
 		const std::string& message,
 		std::optional<log_types> type,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
-		: job(nullptr, "log_job")
+		: job("log_job")
 		, type_(type)
 		, message_type_(message_types::String)
 		, message_(message)
@@ -64,7 +64,7 @@ namespace log_module
 		const std::wstring& message,
 		std::optional<log_types> type,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
-		: job(nullptr, "log_job")
+		: job("log_job")
 		, type_(type)
 		, message_type_(message_types::WString)
 		, wmessage_(message)

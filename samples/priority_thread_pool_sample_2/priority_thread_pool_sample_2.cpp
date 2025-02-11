@@ -138,14 +138,15 @@ auto store_job(std::shared_ptr<priority_thread_pool_t<test_priority>> thread_poo
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		target = index % 3;
-		error_message = thread_pool->enqueue(std::make_unique<priority_job_t<test_priority>>(
-			[target](void) -> std::optional<std::string>
-			{
-				log_module::write_debug("Hello, World!: {} priority", target);
+		error_message
+			= thread_pool->enqueue(std::make_unique<callback_priority_job_t<test_priority>>(
+				[target](void) -> std::optional<std::string>
+				{
+					log_module::write_debug("Hello, World!: {} priority", target);
 
-				return std::nullopt;
-			},
-			static_cast<test_priority>(target)));
+					return std::nullopt;
+				},
+				static_cast<test_priority>(target)));
 		if (error_message.has_value())
 		{
 			return formatter::format("error enqueuing job: {}",

@@ -135,7 +135,7 @@ auto store_job(std::shared_ptr<priority_thread_pool> thread_pool) -> std::option
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		target = index % 3;
-		error_message = thread_pool->enqueue(std::make_unique<priority_job>(
+		error_message = thread_pool->enqueue(std::make_unique<callback_priority_job>(
 			[target](void) -> std::optional<std::string>
 			{
 				log_module::write_debug("Hello, World!: {} priority", target);

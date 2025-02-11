@@ -30,36 +30,40 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_job.h"
+#include "callback_job.h"
 
-#include "priority_job_queue.h"
+#include "job_queue.h"
 
-namespace priority_thread_pool_module
+using namespace utility_module;
+
+namespace thread_module
 {
-	template <typename priority_type>
-	priority_job_t<priority_type>::priority_job_t(priority_type priority, const std::string& name)
-		: job(name), priority_(priority)
+	callback_job::callback_job(const std::function<std::optional<std::string>(void)>& callback,
+							   const std::string& name)
+		: job(name), callback_(callback)
 	{
 	}
 
-	template <typename priority_type> priority_job_t<priority_type>::~priority_job_t(void) {}
+	callback_job::~callback_job(void) {}
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::priority() const -> priority_type
+	auto callback_job::do_work(void) -> std::optional<std::string>
 	{
-		return priority_;
-	}
+		if (callback_ == nullptr)
+		{
+			return "cannot execute job without callback";
+		}
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
-		-> void
-	{
-		job_queue_ = std::dynamic_pointer_cast<priority_job_queue_t<priority_type>>(job_queue);
+		try
+		{
+			return callback_();
+		}
+		catch (const std::exception& e)
+		{
+			return std::string(e.what());
+		}
+		catch (...)
+		{
+			return "unknown error";
+		}
 	}
-
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
-	{
-		return std::dynamic_pointer_cast<job_queue>(job_queue_.lock());
-	}
-} // namespace priority_thread_pool_module
+} // namespace thread_module
