@@ -1,4 +1,5 @@
 <map id="log_module::write_sequence" name="log_module::write_sequence">
-<area shape="rect" id="node1" title=" " alt="" coords="240,13,448,39"/>
-<area shape="rect" id="node2" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="5,5,192,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="240,13,448,38"/>
+<area shape="rect" id="Node000002" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="5,5,192,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,28,192,28,192,23,226,23"/>
 </map>

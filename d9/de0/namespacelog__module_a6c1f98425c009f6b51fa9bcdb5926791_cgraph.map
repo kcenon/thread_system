@@ -1,4 +1,5 @@
 <map id="log_module::get_use_backup" name="log_module::get_use_backup">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,163,47"/>
-<area shape="rect" id="node2" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="211,5,421,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,163,45"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="211,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,23,197,23,197,28,163,28"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="log_module::write_parameter" name="log_module::write_parameter">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,220,39"/>
-<area shape="rect" id="node2" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="268,5,479,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,220,38"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="268,5,479,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,23,254,23,254,28,220,28"/>
 </map>

@@ -1,6 +1,20 @@
 <map id="thread_module::job" name="thread_module::job">
-<area shape="rect" id="node1" title="Represents a job that can be executed by a job queue." alt="" coords="75,301,223,467"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,147,173,239"/>
-<area shape="rect" id="node3" title=" " alt="" coords="198,154,285,231"/>
-<area shape="rect" id="node4" title=" " alt="" coords="172,5,311,97"/>
+<area shape="rect" id="Node000001" title="Represents a job that can be executed by a job queue." alt="" coords="443,263,583,448"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="363,511,531,591"/>
+<area shape="poly" id="edge9_Node000009_Node000001" title=" " alt="" coords="484,449,468,496,463,494,479,448"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="473,135,552,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="515,200,515,246,510,246,510,200"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="447,5,578,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="515,99,515,134,510,134,510,99"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="421,1219,581,1299"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="516,1217,534,1170,553,1110,568,1044,574,977,574,549,570,506,559,464,564,463,575,506,579,549,579,977,573,1045,558,1112,539,1172,521,1219"/>
+<area shape="rect" id="Node000005" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,796,412,1156"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="414,1119,469,1203,464,1206,410,1122"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,653,185,733"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="137,743,229,857,224,860,133,746"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="209,661,293,726"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="262,726,275,779,269,781,256,727"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="318,653,529,733"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="411,735,394,781,389,779,406,733"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="443,591,435,638,430,637,438,591"/>
 </map>

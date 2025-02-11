@@ -1,5 +1,8 @@
 <map id="sources/priority_thread_pool/priority_job_queue.h" name="sources/priority_thread_pool/priority_job_queue.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,200,47"/>
-<area shape="rect" id="node2" href="$dd/d10/priority__thread__pool_8h.html" title=" " alt="" coords="17,199,189,255"/>
-<area shape="rect" id="node3" href="$db/dc2/priority__thread__worker_8h.html" title=" " alt="" coords="79,95,251,151"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,200,45"/>
+<area shape="rect" id="Node000002" href="$dd/d10/priority__thread__pool_8h.html" title=" " alt="" coords="17,196,189,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,58,69,94,65,121,69,147,78,172,89,195,84,197,73,174,64,149,60,121,64,93,80,56"/>
+<area shape="rect" id="Node000003" href="$db/dc2/priority__thread__worker_8h.html" title=" " alt="" coords="79,93,251,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="125,55,150,92,145,95,121,58"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="144,161,121,197,117,194,139,158"/>
 </map>

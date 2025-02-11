@@ -1,0 +1,5 @@
+<map id="log_module::message_job::message" name="log_module::message_job::message">
+<area shape="rect" id="Node000001" title="Retrieves the log message with optional newline." alt="" coords="5,5,171,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="219,5,405,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
+</map>

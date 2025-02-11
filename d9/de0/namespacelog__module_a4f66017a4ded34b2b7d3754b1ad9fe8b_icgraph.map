@@ -1,9 +1,7 @@
 <map id="log_module::to_string" name="log_module::to_string">
-<area shape="rect" id="node1" title="Converts a log_types value to its string representation." alt="" coords="269,203,432,230"/>
-<area shape="rect" id="node2" href="$df/df4/classlog__module_1_1log__job.html#adcbe6490ed0744089ac7e9cb891488bc" title="Converts the stored message to a std::string." alt="" coords="37,5,190,47"/>
-<area shape="rect" id="node3" href="$d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_type value as a string." alt="" coords="31,71,195,127"/>
-<area shape="rect" id="node4" href="$d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_type value as a wide string." alt="" coords="37,151,190,207"/>
-<area shape="rect" id="node5" href="$d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5" title="Get the code page name string." alt="" coords="5,232,221,273"/>
-<area shape="rect" id="node6" href="$de/d30/classutility__module_1_1argument__manager.html#a1f3111ae550f47f17b949c6ac4a2b9cc" title="Retrieve the value of an argument as a boolean." alt="" coords="20,297,207,339"/>
-<area shape="rect" id="node7" href="$de/d30/classutility__module_1_1argument__manager.html#ad1d5ad6ba53bbad8a17ee2cc8103395a" title="Convert a string argument to a numeric type." alt="" coords="20,363,207,404"/>
+<area shape="rect" id="Node000001" title="Converts a log_types value to its string representation." alt="" coords="217,60,380,85"/>
+<area shape="rect" id="Node000002" href="$d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_type value as a string." alt="" coords="5,5,169,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,60,169,51,170,46,218,55"/>
+<area shape="rect" id="Node000003" href="$d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_type value as a wide string." alt="" coords="11,84,164,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,91,165,100,164,95,215,85"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="thread_module::to_string" name="thread_module::to_string">
-<area shape="rect" id="node1" title="Converts a thread_conditions value to its string representation." alt="" coords="256,20,441,47"/>
-<area shape="rect" id="node2" href="$da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,61"/>
+<area shape="rect" id="Node000001" title="Converts a thread_conditions value to its string representation." alt="" coords="256,20,441,45"/>
+<area shape="rect" id="Node000002" href="$da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,35,208,35,208,30,242,30"/>
 </map>

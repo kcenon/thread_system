@@ -1,6 +1,0 @@
-<map id="thread_module::thread_base::to_string" name="thread_module::thread_base::to_string">
-<area shape="rect" id="node1" title="Converts the thread_base object to a string representation." alt="" coords="271,108,441,149"/>
-<area shape="rect" id="node2" href="$dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; value as a string." alt="" coords="5,5,223,76"/>
-<area shape="rect" id="node3" href="$d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base value as a string." alt="" coords="23,101,205,157"/>
-<area shape="rect" id="node4" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker value as a string." alt="" coords="7,181,221,237"/>
-</map>

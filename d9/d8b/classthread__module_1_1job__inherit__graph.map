@@ -1,6 +1,13 @@
 <map id="thread_module::job" name="thread_module::job">
-<area shape="rect" id="node1" title="Represents a job that can be executed by a job queue." alt="" coords="214,5,362,200"/>
-<area shape="rect" id="node2" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a logging job derived from the base job class." alt="" coords="5,248,168,545"/>
-<area shape="rect" id="node3" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="192,314,384,479"/>
-<area shape="rect" id="node4" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title=" " alt="" coords="408,307,568,487"/>
+<area shape="rect" id="Node000001" title="Represents a job that can be executed by a job queue." alt="" coords="301,5,441,211"/>
+<area shape="rect" id="Node000002" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a logging job derived from the base job class." alt="" coords="5,259,159,624"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,159,230,205,173,260,161,276,157,273,169,257,226,201,288,155"/>
+<area shape="rect" id="Node000003" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="183,349,367,534"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="341,225,305,349,299,348,336,223"/>
+<area shape="rect" id="Node000004" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title=" " alt="" coords="391,344,543,539"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="407,223,442,343,437,345,402,225"/>
+<area shape="rect" id="Node000006" href="$dc/d7f/classthread__module_1_1callback__job.html" title=" " alt="" coords="568,389,769,494"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="454,164,507,207,557,257,607,323,645,387,640,390,602,326,553,260,504,211,451,168"/>
+<area shape="rect" id="Node000005" href="$d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title=" " alt="" coords="374,672,561,821"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="470,553,470,672,465,672,465,553"/>
 </map>

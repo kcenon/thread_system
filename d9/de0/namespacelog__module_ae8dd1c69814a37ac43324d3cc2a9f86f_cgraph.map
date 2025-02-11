@@ -1,4 +1,5 @@
 <map id="log_module::set_title" name="log_module::set_title">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,164,39"/>
-<area shape="rect" id="node2" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="212,5,423,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,164,38"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="212,5,423,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,23,198,23,198,28,165,28"/>
 </map>

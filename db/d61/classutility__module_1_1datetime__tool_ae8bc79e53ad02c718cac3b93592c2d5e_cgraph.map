@@ -1,4 +1,5 @@
 <map id="utility_module::datetime_tool::milliseconds" name="utility_module::datetime_tool::milliseconds">
-<area shape="rect" id="node1" title="Extracts the milliseconds component of a time point." alt="" coords="5,5,188,47"/>
-<area shape="rect" id="node2" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,47"/>
+<area shape="rect" id="Node000001" title="Extracts the milliseconds component of a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>

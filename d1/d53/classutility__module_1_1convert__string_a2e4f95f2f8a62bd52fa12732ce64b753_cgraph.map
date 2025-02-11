@@ -1,4 +1,0 @@
-<map id="utility_module::convert_string::replace2" name="utility_module::convert_string::replace2">
-<area shape="rect" id="node1" title="Replace all occurrences of a token in a string with another string, returning a new string." alt="" coords="5,5,179,47"/>
-<area shape="rect" id="node2" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Format a string directly to an output iterator." alt="" coords="227,5,413,47"/>
-</map>

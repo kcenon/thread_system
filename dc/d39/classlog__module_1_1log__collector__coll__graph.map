@@ -1,12 +1,23 @@
 <map id="log_module::log_collector" name="log_module::log_collector">
-<area shape="rect" id="node1" title="A class for collecting and managing log messages." alt="" coords="482,705,671,988"/>
-<area shape="rect" id="node2" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="267,301,475,613"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,154,159,231"/>
-<area shape="rect" id="node4" title=" " alt="" coords="183,154,275,231"/>
-<area shape="rect" id="node5" title=" " alt="" coords="299,147,451,239"/>
-<area shape="rect" id="node6" title=" " alt="" coords="481,154,568,231"/>
-<area shape="rect" id="node7" title=" " alt="" coords="455,5,594,97"/>
-<area shape="rect" id="node8" title=" " alt="" coords="593,147,747,239"/>
-<area shape="rect" id="node9" title=" " alt="" coords="499,411,654,503"/>
-<area shape="rect" id="node10" title=" " alt="" coords="679,411,824,503"/>
+<area shape="rect" id="Node000001" title="A class for collecting and managing log messages." alt="" coords="461,768,642,1113"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="254,291,454,676"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,688,479,767,474,769,440,690"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,155,89,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="114,148,261,228"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="212,227,248,290,243,293,207,230"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="145,13,229,78"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="190,78,190,132,185,132,185,78"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="285,155,431,221"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="359,221,358,252,358,274,352,274,353,252,354,221"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="460,155,539,221"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="492,222,475,268,464,292,459,290,470,266,487,220"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="434,5,565,85"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="502,100,502,155,497,155,497,100"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="563,148,707,228"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="616,230,599,251,578,269,550,280,524,282,498,283,469,294,467,289,497,278,524,276,549,275,575,264,595,247,612,227"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="478,443,625,523"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="554,523,554,752,549,752,549,523"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="649,443,787,523"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="711,524,683,625,643,745,640,754,635,752,638,743,678,623,706,523"/>
 </map>

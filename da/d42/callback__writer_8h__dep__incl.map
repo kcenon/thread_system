@@ -1,9 +1,15 @@
 <map id="sources/logger/callback_writer.h" name="sources/logger/callback_writer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="101,5,276,47"/>
-<area shape="rect" id="node2" href="$d5/d76/callback__writer_8cpp.html" title=" " alt="" coords="5,95,180,136"/>
-<area shape="rect" id="node3" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="205,95,367,136"/>
-<area shape="rect" id="node4" href="$d1/d8c/logger_8h.html" title=" " alt="" coords="103,191,277,218"/>
-<area shape="rect" id="node7" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="301,184,463,225"/>
-<area shape="rect" id="node5" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="25,273,179,315"/>
-<area shape="rect" id="node6" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="203,273,356,315"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,5,276,45"/>
+<area shape="rect" id="Node000002" href="$d5/d76/callback__writer_8cpp.html" title=" " alt="" coords="5,93,180,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,57,116,95,112,91,155,53"/>
+<area shape="rect" id="Node000003" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="205,93,367,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,52,266,91,263,95,219,56"/>
+<area shape="rect" id="Node000004" href="$d1/d8c/logger_8h.html" title=" " alt="" coords="103,189,277,214"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="256,145,205,190,201,186,253,141"/>
+<area shape="rect" id="Node000007" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="301,181,463,221"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="319,141,363,179,359,183,316,145"/>
+<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="25,269,179,309"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="170,226,123,271,120,267,166,222"/>
+<area shape="rect" id="Node000006" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="203,269,356,309"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="214,222,261,267,258,271,210,225"/>
 </map>

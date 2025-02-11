@@ -1,4 +1,7 @@
 <map id="fmt::formatter&lt; thread_module::job_queue &gt;::format" name="fmt::formatter&lt; thread_module::job_queue &gt;::format">
-<area shape="rect" id="node1" title="Formats a job_queue value as a string." alt="" coords="5,5,181,61"/>
-<area shape="rect" id="node2" href="$df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24" title="Converts the job queue to a string representation." alt="" coords="229,13,377,54"/>
+<area shape="rect" id="Node000001" title="Formats a job_queue value as a string." alt="" coords="5,5,181,60"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Converts the job queue to a string representation." alt="" coords="229,13,377,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,30,215,30,215,35,181,35"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="425,13,612,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="378,30,412,30,412,35,378,35"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="fmt::formatter&lt; thread_pool_module::thread_pool &gt;" name="fmt::formatter&lt; thread_pool_module::thread_pool &gt;">
-<area shape="rect" id="node1" title="Specialization of fmt::formatter for thread_pool. Enables formatting of thread_pool enum values using..." alt="" coords="5,145,219,237"/>
-<area shape="rect" id="node2" title=" " alt="" coords="37,5,187,97"/>
+<area shape="rect" id="Node000001" title="Specialization of fmt::formatter for thread_pool. Enables formatting of thread_pool enum values using..." alt="" coords="5,133,211,213"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="37,5,179,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,99,111,133,105,133,105,99"/>
 </map>

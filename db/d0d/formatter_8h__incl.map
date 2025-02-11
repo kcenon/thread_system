@@ -1,8 +1,13 @@
 <map id="sources/utilities/formatter.h" name="sources/utilities/formatter.h">
-<area shape="rect" id="node1" title=" " alt="" coords="155,5,357,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,64,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="89,80,186,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="210,80,302,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="326,80,431,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="456,80,552,107"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="155,5,357,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,64,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,33,78,79,77,74,220,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="89,79,186,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="238,33,170,74,167,69,236,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="210,79,302,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="259,31,259,65,253,65,253,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="326,79,431,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="277,28,348,69,346,74,274,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="456,79,552,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="297,28,451,72,450,77,295,33"/>
 </map>

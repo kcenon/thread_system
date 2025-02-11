@@ -1,0 +1,5 @@
+<map id="log_module::console_writer::do_work" name="log_module::console_writer::do_work">
+<area shape="rect" id="Node000001" title="Performs the main work of writing log messages to the console." alt="" coords="5,5,161,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Format a string directly to an output iterator." alt="" coords="209,5,396,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,23,196,23,196,28,162,28"/>
+</map>

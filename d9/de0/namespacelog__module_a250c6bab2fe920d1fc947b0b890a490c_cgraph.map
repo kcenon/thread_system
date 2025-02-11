@@ -1,4 +1,5 @@
 <map id="log_module::callback_target" name="log_module::callback_target">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,165,47"/>
-<area shape="rect" id="node2" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="213,5,424,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,165,45"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="213,5,424,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,23,200,23,200,28,165,28"/>
 </map>

@@ -1,7 +1,16 @@
 <map id="sources/priority_thread_pool/job_priorities.h" name="sources/priority_thread_pool/job_priorities.h">
-<area shape="rect" id="node1" title=" " alt="" coords="67,5,239,47"/>
-<area shape="rect" id="node2" href="$da/d1e/priority__job_8h.html" title=" " alt="" coords="5,95,177,136"/>
-<area shape="rect" id="node3" href="$d1/d8b/priority__job__queue_8h.html" title=" " alt="" coords="55,184,250,225"/>
-<area shape="rect" id="node4" href="$dd/d10/priority__thread__pool_8h.html" title=" " alt="" coords="67,377,239,433"/>
-<area shape="rect" id="node5" href="$db/dc2/priority__thread__worker_8h.html" title=" " alt="" coords="129,273,301,329"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="153,5,325,45"/>
+<area shape="rect" id="Node000002" href="$da/d1e/priority__job_8h.html" title=" " alt="" coords="91,93,263,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,58,193,95,189,92,215,55"/>
+<area shape="rect" id="Node000004" href="$d1/d8b/priority__job__queue_8h.html" title=" " alt="" coords="153,269,348,309"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="262,56,277,93,283,142,279,192,270,236,260,270,255,268,265,235,274,191,278,142,272,94,257,58"/>
+<area shape="rect" id="Node000003" href="$d4/d0b/callback__priority__job_8h.html" title=" " alt="" coords="5,181,213,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="156,146,126,183,122,179,152,143"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="205,143,228,180,243,227,251,269,246,270,238,229,223,182,200,146"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="153,226,221,267,218,272,151,231"/>
+<area shape="rect" id="Node000005" href="$dd/d10/priority__thread__pool_8h.html" title=" " alt="" coords="165,460,337,515"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="233,322,217,358,213,385,217,411,226,436,237,459,232,461,221,438,212,413,208,385,212,357,228,320"/>
+<area shape="rect" id="Node000006" href="$db/dc2/priority__thread__worker_8h.html" title=" " alt="" coords="227,357,399,412"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="273,319,298,356,293,359,269,322"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="292,425,269,461,265,458,287,422"/>
 </map>

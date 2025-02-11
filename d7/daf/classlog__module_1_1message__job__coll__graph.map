@@ -1,7 +1,23 @@
 <map id="log_module::message_job" name="log_module::message_job">
-<area shape="rect" id="node1" title="Represents a console logging job derived from the base job class." alt="" coords="132,516,324,652"/>
-<area shape="rect" id="node2" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="93,301,241,467"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,147,173,239"/>
-<area shape="rect" id="node4" title=" " alt="" coords="222,154,309,231"/>
-<area shape="rect" id="node5" title=" " alt="" coords="196,5,335,97"/>
+<area shape="rect" id="Node000001" title="Represents a console logging job derived from the base job class." alt="" coords="155,511,339,656"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="359,263,499,448"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="352,456,307,512,303,509,348,453"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="363,543,531,623"/>
+<area shape="poly" id="edge10_Node000010_Node000002" title=" " alt="" coords="439,448,445,527,440,528,434,449"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="233,135,312,200"/>
+<area shape="poly" id="edge11_Node000001_Node000003" title=" " alt="" coords="273,200,255,495,250,494,268,200"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="301,198,350,256,346,260,297,202"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="207,5,338,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="275,99,275,134,270,134,270,99"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="421,1284,581,1364"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="516,1283,534,1235,553,1176,568,1110,574,1043,574,582,568,541,554,502,532,466,507,434,512,431,537,463,558,500,574,540,579,582,579,1043,573,1111,558,1177,539,1237,521,1285"/>
+<area shape="rect" id="Node000006" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,861,412,1221"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="414,1184,469,1269,464,1272,410,1187"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,719,185,799"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="137,808,229,922,224,926,133,811"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="209,726,293,791"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="262,791,275,845,269,846,256,792"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="318,719,529,799"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="411,800,394,847,389,845,406,798"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="445,624,434,702,428,702,439,623"/>
 </map>

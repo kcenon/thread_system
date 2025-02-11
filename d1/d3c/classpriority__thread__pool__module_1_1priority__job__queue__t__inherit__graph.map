@@ -1,5 +1,7 @@
 <map id="priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;" name="priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;">
-<area shape="rect" id="node1" title=" " alt="" coords="5,520,225,803"/>
-<area shape="rect" id="node2" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="19,145,212,472"/>
-<area shape="rect" id="node3" title=" " alt="" coords="21,5,209,97"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,581,217,911"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="19,133,204,533"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,547,114,581,109,581,109,547"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="21,5,201,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,99,114,133,109,133,109,99"/>
 </map>

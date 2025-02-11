@@ -1,5 +1,7 @@
 <map id="fmt::formatter&lt; priority_thread_pool_module::job_priorities, wchar_t &gt;::format" name="fmt::formatter&lt; priority_thread_pool_module::job_priorities, wchar_t &gt;::format">
-<area shape="rect" id="node1" title="Formats a job_priorities value as a wide string." alt="" coords="5,31,219,87"/>
-<area shape="rect" id="node2" href="$d8/da5/namespacepriority__thread__pool__module.html#aa0d88f2662a7efa64969e6abfc30cef0" title="Converts a job_priorities value to its string representation." alt="" coords="277,5,430,47"/>
-<area shape="rect" id="node3" href="$d1/d53/classutility__module_1_1convert__string.html#a3052f6112c800af7d56ac5215b5cd1ac" title="Convert a std::string to a std::wstring using system encoding." alt="" coords="267,71,440,112"/>
+<area shape="rect" id="Node000001" title="Formats a job_priorities value as a wide string." alt="" coords="5,30,219,85"/>
+<area shape="rect" id="Node000002" href="$d8/da5/namespacepriority__thread__pool__module.html#aa0d88f2662a7efa64969e6abfc30cef0" title="Converts a job_priorities value to its string representation." alt="" coords="277,5,430,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,41,263,35,263,40,219,46"/>
+<area shape="rect" id="Node000003" href="$d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Convert a std::string to a std::wstring using system encoding." alt="" coords="267,69,440,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="219,69,254,73,253,79,218,74"/>
 </map>
