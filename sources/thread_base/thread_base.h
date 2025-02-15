@@ -55,11 +55,20 @@ namespace thread_module
 {
 	/**
 	 * @class thread_base
-	 * @brief Base class for implementing thread-based workers.
+	 * @brief A base class for implementing custom worker threads.
 	 *
-	 * This class provides a framework for creating worker threads with customizable
-	 * behavior. It handles thread lifecycle management and provides mechanisms for
-	 * waking the thread at specified intervals and setting custom thread titles.
+	 * The @c thread_base class provides a framework for managing a single worker thread,
+	 * offering lifecycle methods (start, stop), optional wake intervals, and hooks
+	 * (@c before_start, @c do_work, @c after_stop) for derived classes to customize behavior.
+	 *
+	 * ### Typical Usage
+	 * 1. Inherit from @c thread_base and override @c do_work(), @c before_start(), and/or
+	 *    @c after_stop() as needed.
+	 * 2. Instantiate your derived class, set a wake interval if desired, then call @c start()
+	 *    to launch the thread.
+	 * 3. When shutting down or no longer needing the thread's work, call @c stop().
+	 * 4. The thread can periodically check @c should_continue_work() or internal conditions
+	 *    to determine if it should continue running.
 	 */
 	class thread_base
 	{
@@ -70,146 +79,217 @@ namespace thread_module
 		thread_base& operator=(thread_base&&) = delete;
 
 		/**
-		 * @brief Constructs a new thread_base object.
-		 * @param thread_title The title for the worker thread, used for identification purposes.
+		 * @brief Constructs a new @c thread_base object.
+		 * @param thread_title A human-readable title for this worker thread (default:
+		 * "thread_base").
+		 *
+		 * The @p thread_title can be useful for logging, debugging, or thread naming
+		 * (where the platform supports it).
 		 */
 		thread_base(const std::string& thread_title = "thread_base");
 
 		/**
-		 * @brief Virtual destructor for the thread_base class.
+		 * @brief Virtual destructor. Ensures proper cleanup of derived classes.
+		 *
+		 * If the thread is still running when the destructor is called, @c stop() is
+		 * typically called internally to join the thread before destruction.
 		 */
 		virtual ~thread_base(void);
 
 		/**
-		 * @brief Sets the wake interval for the worker thread.
-		 * @param wake_interval An optional duration specifying how often the thread should wake up.
+		 * @brief Sets the interval at which the worker thread should wake up (if any).
+		 * @param wake_interval Duration in milliseconds for periodic wake-ups, or @c std::nullopt
+		 *                      to disable periodic wake-ups.
+		 *
+		 * If a wake interval is set, the worker thread can periodically perform some action (e.g.,
+		 * housekeeping tasks) even if there's no immediate external signal.
 		 */
 		auto set_wake_interval(const std::optional<std::chrono::milliseconds>& wake_interval)
 			-> void;
 
 		/**
 		 * @brief Starts the worker thread.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the start operation was successful (true) or not.
-		 *         - std::optional<std::string>: An optional error message if the operation fails.
+		 * @return @c std::optional<std::string> containing an error message if the start operation
+		 *         fails, or @c std::nullopt on success.
+		 *
+		 * Internally, this method:
+		 * 1. Calls @c before_start() to allow derived classes to perform setup.
+		 * 2. Spawns a new thread (using either @c std::jthread or @c std::thread).
+		 * 3. Repeatedly calls @c do_work() until the thread is signaled to stop.
 		 */
 		auto start(void) -> std::optional<std::string>;
 
 		/**
-		 * @brief Stops the worker thread.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the stop operation was successful (true) or not.
-		 *         - std::optional<std::string>: An optional error message if the operation fails.
+		 * @brief Requests the worker thread to stop and waits for it to finish.
+		 * @return @c std::optional<std::string> containing an error message if the stop operation
+		 *         fails, or @c std::nullopt on success.
+		 *
+		 * Internally, this method:
+		 * 1. Signals the thread to stop (via @c stop_source_ or @c stop_requested_).
+		 * 2. Joins the thread, ensuring it has fully exited.
+		 * 3. Calls @c after_stop() for post-shutdown cleanup in derived classes.
 		 */
 		auto stop(void) -> std::optional<std::string>;
 
 		/**
-		 * @brief Retrieves the title of the worker thread.
-		 * @return std::string The title of the worker thread, for identification purposes.
+		 * @brief Returns the worker thread's title.
+		 * @return A string representing the thread's title.
 		 */
 		[[nodiscard]] auto get_thread_title() const -> std::string { return thread_title_; }
 
 		/**
-		 * @brief Checks if the worker thread is running.
-		 * @return bool True if the worker thread is running, false otherwise.
+		 * @brief Checks whether the worker thread is currently running.
+		 * @return @c true if the thread is running, @c false otherwise.
+		 *
+		 * This depends on the thread's internal condition state (e.g., @c
+		 * thread_conditions::running).
 		 */
 		[[nodiscard]] auto is_running() const -> bool;
 
 		/**
-		 * @brief Converts the thread_base object to a string representation.
-		 * @return std::string A string representation of the thread_base object.
+		 * @brief Returns a string representation of this @c thread_base object.
+		 * @return A string containing descriptive or diagnostic information about the thread.
+		 *
+		 * Derived classes may override this to include additional details (e.g., current status,
+		 * counters, or other state).
 		 */
-		[[nodiscard]]
-		virtual auto to_string(void) const -> std::string;
+		[[nodiscard]] virtual auto to_string(void) const -> std::string;
 
 	protected:
 		/**
-		 * @brief Checks if there is work to be done.
-		 * @return bool True if there is work to be done, false otherwise.
+		 * @brief Determines whether the thread should continue doing work.
+		 * @return @c true if there is work to do, @c false otherwise.
+		 *
+		 * The default implementation always returns @c false (indicating no ongoing work).
+		 * Override this in derived classes if you wish the thread to perform repeated tasks
+		 * until some condition changes.
 		 */
 		[[nodiscard]] virtual auto should_continue_work(void) const -> bool { return false; }
 
 		/**
-		 * @brief Called before the worker thread starts.
+		 * @brief Called just before the worker thread starts running.
+		 * @return @c std::optional<std::string> containing an error message on failure,
+		 *         or @c std::nullopt on success.
 		 *
-		 * Derived classes can override this method to perform any setup or initialization
-		 * required before the thread begins executing.
-		 *
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not.
-		 *         - std::optional<std::string>: An optional error message if initialization fails.
+		 * Override this method in derived classes to perform any initialization or setup
+		 * required before the worker thread begins its main loop.
 		 */
 		virtual auto before_start(void) -> std::optional<std::string> { return std::nullopt; }
 
 		/**
-		 * @brief Performs the actual work of the thread.
+		 * @brief The main work routine for the worker thread.
+		 * @return @c std::optional<std::string> containing an error message on failure,
+		 *         or @c std::nullopt on success.
 		 *
-		 * This method defines the main behavior of the worker thread. Derived classes should
-		 * override this to implement specific functionality.
-		 *
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the work was successful (true) or not.
-		 *         - std::optional<std::string>: An optional error message if the work fails.
+		 * Derived classes should override this method to implement the actual work the thread
+		 * needs to perform. This method is called repeatedly (in an internal loop) until the
+		 * thread is signaled to stop or @c should_continue_work() returns @c false.
 		 */
 		virtual auto do_work(void) -> std::optional<std::string> { return std::nullopt; }
 
 		/**
-		 * @brief Called after the worker thread stops.
+		 * @brief Called immediately after the worker thread has stopped.
+		 * @return @c std::optional<std::string> containing an error message on failure,
+		 *         or @c std::nullopt on success.
 		 *
-		 * Derived classes can override this method to perform any necessary cleanup after the
-		 * thread has finished its work and stopped.
-		 *
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the cleanup was successful (true) or not.
-		 *         - std::optional<std::string>: An optional error message if cleanup fails.
+		 * Override this method in derived classes to perform any cleanup or finalization tasks
+		 * once the worker thread has fully exited.
 		 */
 		virtual auto after_stop(void) -> std::optional<std::string> { return std::nullopt; }
 
 	protected:
-		/** @brief Interval at which the thread wakes up */
+		/**
+		 * @brief Interval at which the thread is optionally awakened.
+		 *
+		 * If set, the worker thread can wake periodically (in addition to any other wake
+		 * conditions) to perform tasks at regular intervals.
+		 */
 		std::optional<std::chrono::milliseconds> wake_interval_;
 
 	private:
-		/** @brief Mutex for protecting shared data and condition variable */
+		/**
+		 * @brief Mutex for synchronizing access to internal state and condition variables.
+		 *
+		 * @c worker_condition_ is typically waited on by the worker thread, and the main thread
+		 * may notify it to trigger wake-ups or shutdowns.
+		 */
 		std::mutex cv_mutex_;
 
-		/** @brief Condition variable for thread synchronization */
+		/**
+		 * @brief Condition variable used to block or wake the worker thread.
+		 *
+		 * Combined with @c cv_mutex_, this enables the worker thread to sleep until
+		 * a specific event (e.g., a stop request or a timed interval) occurs.
+		 */
 		std::condition_variable worker_condition_;
 
 #ifdef USE_STD_JTHREAD
-		/** @brief The actual worker thread (jthread version) */
+		/**
+		 * @brief A @c std::jthread (if available) for managing the worker thread's lifecycle.
+		 *
+		 * When using jthread, stopping is signaled via @c stop_source_ and @c stop_token.
+		 */
 		std::unique_ptr<std::jthread> worker_thread_;
 
-		/** @brief Source for stopping the thread (jthread version) */
+		/**
+		 * @brief The optional stop source (for jthread) to request stopping the thread.
+		 */
 		std::optional<std::stop_source> stop_source_;
 #else
-		/** @brief The actual worker thread */
+		/**
+		 * @brief A @c std::thread for managing the worker thread's lifecycle (legacy mode).
+		 *
+		 * If @c USE_STD_JTHREAD is not defined, we fall back to a standard thread and an atomic
+		 * stop flag.
+		 */
 		std::unique_ptr<std::thread> worker_thread_;
 
-		/** @brief Flag indicating whether the thread should stop */
+		/**
+		 * @brief An atomic flag to indicate that the thread should stop.
+		 *
+		 * Set to @c true when @c stop() is called, signaling the worker thread to exit its loop.
+		 */
 		std::atomic<bool> stop_requested_;
 #endif
 
-		/** @brief The title of the thread for identification purposes */
+		/**
+		 * @brief A string title for identifying or naming the worker thread.
+		 */
 		std::string thread_title_;
 
-		/** @brief Condition variable for thread synchronization */
+		/**
+		 * @brief The current condition/state of the thread (e.g., running, stopped).
+		 *
+		 * Used internally to track whether the thread is active or if it has been requested to
+		 * stop.
+		 */
 		std::atomic<thread_conditions> thread_condition_;
 	};
 } // namespace thread_module
 
+// ----------------------------------------------------------------------------
 // Formatter specializations for thread_base
+// ----------------------------------------------------------------------------
+
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for thread_base.
- * Enables formatting of thread_base enum values as strings in the standard library format.
+ * @brief Specialization of std::formatter for @c thread_module::thread_base.
+ *
+ * Allows @c thread_base objects to be formatted as strings using the C++20 <format> library
+ * (when @c USE_STD_FORMAT is defined).
+ *
+ * ### Example
+ * @code
+ * auto worker = std::make_shared<my_thread>();
+ * std::string output = std::format("Thread info: {}", *worker);
+ * @endcode
  */
 template <> struct std::formatter<thread_module::thread_base> : std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a thread_base value as a string.
+	 * @brief Formats a @c thread_base object as a string.
 	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_base enum value to format.
+	 * @param item The @c thread_base to format.
 	 * @param ctx Format context for the output.
 	 * @return Iterator to the end of the formatted output.
 	 */
@@ -221,18 +301,19 @@ template <> struct std::formatter<thread_module::thread_base> : std::formatter<s
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character thread_base.
- * Allows thread_base enum values to be formatted as wide strings in the standard library format.
+ * @brief Specialization of std::formatter for wide-character @c thread_module::thread_base.
+ *
+ * Allows @c thread_base objects to be formatted as wide strings using the C++20 <format> library.
  */
 template <>
 struct std::formatter<thread_module::thread_base, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a thread_base value as a wide string.
+	 * @brief Formats a @c thread_base object as a wide string.
 	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_base enum value to format.
-	 * @param ctx Format context for the output.
+	 * @param item The @c thread_base to format.
+	 * @param ctx The wide-character format context for the output.
 	 * @return Iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
@@ -243,18 +324,26 @@ struct std::formatter<thread_module::thread_base, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
+#else // USE_STD_FORMAT
+
 /**
- * @brief Specialization of fmt::formatter for thread_base.
- * Enables formatting of thread_base enum values using the fmt library.
+ * @brief Specialization of fmt::formatter for @c thread_module::thread_base.
+ *
+ * Enables formatting of @c thread_base objects as strings using the {fmt} library.
+ *
+ * ### Example
+ * @code
+ * auto worker = std::make_shared<my_thread>();
+ * std::string output = fmt::format("Thread info: {}", *worker);
+ * @endcode
  */
 template <> struct fmt::formatter<thread_module::thread_base> : fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a thread_base value as a string.
+	 * @brief Formats a @c thread_base object as a string using {fmt}.
 	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_base enum value to format.
-	 * @param ctx Format context for the output.
+	 * @param item The @c thread_base to format.
+	 * @param ctx  The format context for the output.
 	 * @return Iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>

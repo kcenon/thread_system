@@ -35,48 +35,91 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "job.h"
 
 #include <functional>
+#include <optional>
+#include <string>
 
 namespace thread_module
 {
 	/**
-	 * @class job
-	 * @brief Represents a job that can be executed by a job queue.
+	 * @class callback_job
+	 * @brief A specialized job class that encapsulates a user-defined callback.
 	 *
-	 * This class is a base class for all jobs that can be executed by a job queue.
-	 * It provides a callback function that is executed when the job is executed.
-	 * The callback function must return a tuple with a boolean value indicating
-	 * whether the job was executed successfully and an optional string with an
-	 * error message in case the job failed.
+	 * The @c callback_job class provides an interface for executing a user-supplied
+	 * function within a job queue. The callback function returns an @c std::optional<std::string>,
+	 * where a value (string) typically indicates an error message and @c std::nullopt signifies
+	 * a successful operation.
+	 *
+	 * Usage Example:
+	 * @code
+	 * auto job = std::make_shared<callback_job>(
+	 *     []() -> std::optional<std::string> {
+	 *         // Perform some work here...
+	 *         bool success = do_some_work();
+	 *         if (!success) {
+	 *             return std::string{"Work failed due to ..."};
+	 *         }
+	 *         return std::nullopt; // No error => success
+	 *     },
+	 *     "example_callback_job"
+	 * );
+	 * // Submit job to a queue or execute it directly...
+	 * @endcode
 	 */
 	class callback_job : public job
 	{
 	public:
 		/**
-		 * @brief Constructs a new job object.
-		 * @param callback The function to be executed when the job is processed.
-		 *        It should return a tuple containing a boolean indicating success and an optional
-		 * string message.
-		 * @param name The name of the job (default is "job").
+		 * @brief Constructs a new @c callback_job instance.
+		 * @param callback A function object that, when invoked, performs the job's work.
+		 *                 - Returns @c std::nullopt on success.
+		 *                 - Returns a @c std::string on failure (the string can be treated as
+		 *                   an error message or diagnostic detail).
+		 * @param name     An optional name for this job (default is "callback_job").
+		 *
+		 * Example:
+		 * @code
+		 * // A job that reports "Error occurred" if some_condition is true
+		 * callback_job(
+		 *     []() {
+		 *         if (some_condition) {
+		 *             return std::optional<std::string>{"Error occurred"};
+		 *         }
+		 *         return std::nullopt;
+		 *     },
+		 *     "my_named_job"
+		 * );
+		 * @endcode
 		 */
 		callback_job(const std::function<std::optional<std::string>(void)>& callback,
 					 const std::string& name = "callback_job");
 
 		/**
-		 * @brief Virtual destructor for the job class.
+		 * @brief Virtual destructor.
+		 *
+		 * Ensures derived classes can clean up resources properly.
 		 */
 		~callback_job(void) override;
 
 		/**
-		 * @brief Execute the job's work.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the job was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions or additional information.
+		 * @brief Executes the callback function to perform the job's work.
+		 * @return @c std::optional<std::string>
+		 *         - If @c std::nullopt, the job is considered successful.
+		 *         - If a @c std::string is returned, it typically represents an error message or
+		 *           reason for failure.
+		 *
+		 * This method is called internally by the job queue or any mechanism that processes
+		 * @c job instances. In user code, you generally won't call @c do_work directly unless you
+		 * are bypassing a job queue and want to execute the job on demand.
 		 */
 		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
 
 	protected:
-		/** @brief The callback function to be executed when the job is processed */
+		/**
+		 * @brief The user-defined callback that encapsulates the job's core logic.
+		 *
+		 * This function is invoked by @c do_work(). If it returns @c std::nullopt, the job
+		 * is considered successful; otherwise, the returned string is considered an error message.
+		 */
 		std::function<std::optional<std::string>(void)> callback_;
 	};
 } // namespace thread_module

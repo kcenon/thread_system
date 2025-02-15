@@ -50,112 +50,188 @@ namespace thread_pool_module
 {
 	/**
 	 * @class thread_pool
-	 * @brief A thread pool class that manages a collection of worker threads.
+	 * @brief Manages a group of @c thread_worker instances and a shared @c job_queue for concurrent
+	 * job processing.
 	 *
-	 * This class provides functionality to manage a pool of worker threads,
-	 * a job queue, and methods to enqueue jobs and workers. It inherits from
-	 * std::enable_shared_from_this to allow creating shared_ptr from this.
+	 * The @c thread_pool class provides an interface to:
+	 * - Maintain a shared @c job_queue
+	 * - Maintain multiple @c thread_worker objects
+	 * - Enqueue jobs (@c job) into the shared queue
+	 * - Start/stop all worker threads as a group
+	 *
+	 * This class inherits from @c std::enable_shared_from_this, allowing you to safely retrieve
+	 * a @c std::shared_ptr<thread_pool> from member functions via @c get_ptr().
+	 *
+	 * ### Typical Usage
+	 * 1. Create a @c thread_pool (usually with @c std::make_shared).
+	 * 2. Optionally create and enqueue additional @c thread_worker objects (if you want specialized
+	 * behaviors).
+	 * 3. Call @c start() to launch all workers, enabling them to process jobs in the @c job_queue.
+	 * 4. Enqueue @c job objects into the shared queue as needed.
+	 * 5. Eventually call @c stop() to allow all threads to finish current tasks (or stop
+	 * immediately).
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
 	{
 	public:
 		/**
-		 * @brief Constructs a new thread_pool object.
+		 * @brief Constructs a new @c thread_pool instance.
+		 * @param thread_title An optional title or identifier for the thread pool (defaults to
+		 * "thread_pool").
+		 *
+		 * This title can be used for logging or debugging purposes.
 		 */
 		thread_pool(const std::string& thread_title = "thread_pool");
 
 		/**
-		 * @brief Virtual destructor for the thread_pool class.
+		 * @brief Virtual destructor. Cleans up resources used by the thread pool.
+		 *
+		 * If the pool is still running, this typically calls @c stop() internally
+		 * to ensure all worker threads are properly shut down.
 		 */
 		virtual ~thread_pool(void);
 
 		/**
-		 * @brief Get a shared pointer to this thread_pool object.
-		 * @return std::shared_ptr<thread_pool> A shared pointer to this thread_pool.
+		 * @brief Retrieves a @c std::shared_ptr to this @c thread_pool instance.
+		 * @return A shared pointer to the current @c thread_pool object.
+		 *
+		 * By inheriting from @c std::enable_shared_from_this, you can call @c get_ptr()
+		 * within member functions to avoid storing a separate shared pointer.
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
 
 		/**
-		 * @brief Starts the thread pool.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the start operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Starts the thread pool and all associated workers.
+		 * @return @c std::optional<std::string> containing an error message if the start
+		 *         operation fails, or @c std::nullopt on success.
+		 *
+		 * If the pool is already running, a subsequent call to @c start() may return an error.
+		 * On success, each @c thread_worker in @c workers_ is started, enabling them to process
+		 * jobs from the @c job_queue_.
 		 */
 		auto start(void) -> std::optional<std::string>;
 
 		/**
-		 * @brief Gets the job queue associated with this thread pool.
-		 * @return std::shared_ptr<job_queue> A shared pointer to the job queue.
+		 * @brief Returns the shared @c job_queue used by this thread pool.
+		 * @return A @c std::shared_ptr<job_queue> that stores the queued jobs.
+		 *
+		 * The returned queue is shared among all worker threads in the pool, which
+		 * can concurrently dequeue and process jobs.
 		 */
 		[[nodiscard]] auto get_job_queue(void) -> std::shared_ptr<job_queue>;
 
 		/**
-		 * @brief Enqueues a job to the thread pool's job queue.
-		 * @param job A unique pointer to the job to be enqueued.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Enqueues a new job into the shared @c job_queue.
+		 * @param job A @c std::unique_ptr<job> representing the work to be done.
+		 * @return @c std::optional<std::string> containing an error message if the enqueue
+		 *         operation fails, or @c std::nullopt on success.
+		 *
+		 * Example:
+		 * @code
+		 * auto pool = std::make_shared<thread_pool_module::thread_pool>();
+		 * pool->start();
+		 *
+		 * auto my_job = std::make_unique<callback_job>(
+		 * 	   // some callback...
+		 * );
+		 * if (auto err = pool->enqueue(std::move(my_job))) {
+		 *     // handle error
+		 * }
+		 * @endcode
 		 */
 		auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
 
 		/**
-		 * @brief Enqueues a worker thread to the thread pool.
-		 * @param worker A unique pointer to the worker thread to be enqueued.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Adds a @c thread_worker to the thread pool for specialized or additional
+		 * processing.
+		 * @param worker A @c std::unique_ptr<thread_worker> object.
+		 * @return @c std::optional<std::string> containing an error message if the operation
+		 *         fails, or @c std::nullopt on success.
+		 *
+		 * Each worker is stored in @c workers_. When @c start() is called, these workers
+		 * begin running and can process jobs from the @c job_queue.
 		 */
 		auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
 
 		/**
-		 * @brief Stops the thread pool.
-		 * @param immediately_stop If true, stops the pool immediately; if false, allows current
-		 * jobs to finish (default is false).
+		 * @brief Stops the thread pool and all worker threads.
+		 * @param immediately_stop If @c true, any ongoing jobs may be interrupted; if @c false
+		 *        (default), each worker attempts to finish its current job before stopping.
+		 *
+		 * Once stopped, the pool's @c start_pool_ flag is set to false, and no further
+		 * job processing occurs. Behavior of re-starting a stopped pool depends on the
+		 * implementation and may require re-initialization.
 		 */
 		auto stop(const bool& immediately_stop = false) -> void;
 
 		/**
-		 * @brief Converts the thread_pool object to a string representation.
-		 * @return std::string A string representation of the thread_pool object.
+		 * @brief Provides a string representation of this @c thread_pool.
+		 * @return A string describing the pool, including its title and other optional details.
+		 *
+		 * Derived classes may override this to include more diagnostic or state-related info.
 		 */
 		[[nodiscard]] auto to_string(void) const -> std::string;
 
 	private:
-		/** @brief Title for the thread pool */
+		/**
+		 * @brief A title or name for this thread pool, useful for identification and logging.
+		 */
 		std::string thread_title_;
 
-		/** @brief Flag indicating whether the pool is started */
+		/**
+		 * @brief Indicates whether the pool is currently running.
+		 *
+		 * Set to @c true after a successful call to @c start(), and reset to @c false after @c
+		 * stop(). Used internally to prevent multiple active starts or erroneous state transitions.
+		 */
 		std::atomic<bool> start_pool_;
 
-		/** @brief The job queue for the thread pool */
+		/**
+		 * @brief The shared job queue where jobs (@c job objects) are enqueued.
+		 *
+		 * Worker threads dequeue jobs from this queue to perform tasks. The queue persists
+		 * for the lifetime of the pool or until no more references exist.
+		 */
 		std::shared_ptr<job_queue> job_queue_;
 
-		/** @brief Collection of worker threads */
+		/**
+		 * @brief A collection of worker threads associated with this pool.
+		 *
+		 * Each @c thread_worker typically runs in its own thread context, processing jobs
+		 * from @c job_queue_ or performing specialized logic. They are started together
+		 * when @c thread_pool::start() is called.
+		 */
 		std::vector<std::unique_ptr<thread_worker>> workers_;
 	};
 } // namespace thread_pool_module
 
+// ----------------------------------------------------------------------------
 // Formatter specializations for thread_pool
+// ----------------------------------------------------------------------------
+
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for thread_pool.
- * Enables formatting of thread_pool enum values as strings in the standard library format.
+ * @brief Specialization of std::formatter for @c thread_pool_module::thread_pool.
+ *
+ * Enables formatting of @c thread_pool objects as strings using the C++20 <format> library
+ * (when @c USE_STD_FORMAT is defined).
+ *
+ * ### Example
+ * @code
+ * auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
+ * std::string output = std::format("Pool Info: {}", *pool); // e.g. "Pool Info: [thread_pool:
+ * MyPool]"
+ * @endcode
  */
 template <>
 struct std::formatter<thread_pool_module::thread_pool> : std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a thread_pool value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_pool enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c thread_pool object as a string.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c thread_pool to format.
+	 * @param ctx  The format context for the output.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
@@ -165,19 +241,20 @@ struct std::formatter<thread_pool_module::thread_pool> : std::formatter<std::str
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character thread_pool.
- * Allows thread_pool enum values to be formatted as wide strings in the standard library format.
+ * @brief Specialization of std::formatter for wide-character @c thread_pool_module::thread_pool.
+ *
+ * Allows wide-string formatting of @c thread_pool objects using the C++20 <format> library.
  */
 template <>
 struct std::formatter<thread_pool_module::thread_pool, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a thread_pool value as a wide string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_pool enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c thread_pool object as a wide string.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c thread_pool to format.
+	 * @param ctx  The wide-character format context.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
@@ -187,20 +264,30 @@ struct std::formatter<thread_pool_module::thread_pool, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
+
+#else // USE_STD_FORMAT
+
 /**
- * @brief Specialization of fmt::formatter for thread_pool.
- * Enables formatting of thread_pool enum values using the fmt library.
+ * @brief Specialization of fmt::formatter for @c thread_pool_module::thread_pool.
+ *
+ * Allows @c thread_pool objects to be formatted as strings using the {fmt} library.
+ *
+ * ### Example
+ * @code
+ * auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
+ * pool->start();
+ * std::string output = fmt::format("Pool Info: {}", *pool);
+ * @endcode
  */
 template <>
 struct fmt::formatter<thread_pool_module::thread_pool> : fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a thread_pool value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The thread_pool enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c thread_pool object as a string using {fmt}.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c thread_pool to format.
+	 * @param ctx  The format context for output.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const

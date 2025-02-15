@@ -42,58 +42,88 @@ namespace priority_thread_pool_module
 	template <typename priority_type> class priority_job_queue_t;
 
 	/**
-	 * @class priority_job
-	 * @brief Represents a job with a priority level.
+	 * @class priority_job_t
+	 * @brief Represents a job that carries a specific priority level.
 	 *
-	 * This template class encapsulates a job with a callback function, a priority level,
-	 * and a name. It inherits from job and std::enable_shared_from_this to allow creating
-	 * shared_ptr from this.
+	 * This class extends the base @c job interface to include a priority value
+	 * that is used by a priority-based scheduling system. The class also
+	 * keeps a weak reference to a @c priority_job_queue_t, which manages
+	 * this job. By using a weak pointer, the queue avoids circular references
+	 * that could prevent proper resource cleanup.
 	 *
-	 * @tparam priority_type The type used to represent the priority level.
+	 * @tparam priority_type The data type used to represent the priority level.
+	 *         Typically, an enum or an integral type.
 	 */
 	template <typename priority_type> class priority_job_t : public job
 	{
 	public:
 		/**
-		 * @brief Constructs a new priority_job object.
-		 * @param callback The function to be executed when the job is processed.
-		 * @param priority The priority level of the job.
-		 * @param name The name of the job (default is "priority_job").
+		 * @brief Constructs a new @c priority_job_t object with the given priority and name.
+		 *
+		 * @param priority The priority level for this job. Higher values could
+		 *                 indicate higher priority, depending on your scheduling logic.
+		 * @param name     An optional name for the job, useful for debugging or logging.
+		 *                 Defaults to "priority_job".
 		 */
 		priority_job_t(priority_type priority, const std::string& name = "priority_job");
 
 		/**
-		 * @brief Virtual destructor for the priority_job class.
+		 * @brief Destroys the @c priority_job_t object.
+		 *
+		 * The destructor is virtual to ensure proper cleanup in derived classes.
 		 */
 		~priority_job_t(void) override;
 
 		/**
-		 * @brief Get the priority level of the job.
-		 * @return priority_type The priority level of the job.
+		 * @brief Retrieves the priority level of this job.
+		 *
+		 * @return The @c priority_type value that indicates this job's priority.
 		 */
 		[[nodiscard]] auto priority() const -> priority_type;
 
 		/**
-		 * @brief Set the job queue for this job.
-		 * @param job_queue A shared pointer to the priority job queue.
+		 * @brief Associates this job with a particular job queue.
+		 *
+		 * Internally, this method stores the queue reference as a @c std::weak_ptr
+		 * to avoid circular dependencies. Once set, the job can be scheduled and
+		 * managed by the provided queue.
+		 *
+		 * @param job_queue A @c std::shared_ptr to the job queue that will manage
+		 *                  this job.
 		 */
 		auto set_job_queue(const std::shared_ptr<job_queue>& job_queue) -> void override;
 
 		/**
-		 * @brief Get the job queue associated with this job.
-		 * @return std::shared_ptr<job_queue> A shared pointer to the associated priority job queue.
+		 * @brief Gets the job queue that currently manages this job, if any.
+		 *
+		 * Because the queue is stored as a weak pointer, the returned @c shared_ptr
+		 * may be empty if the queue is no longer valid.
+		 *
+		 * @return A @c std::shared_ptr<job_queue> pointing to the job's managing queue,
+		 *         or an empty pointer if the queue has expired or was never set.
 		 */
 		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override;
 
 	private:
-		/** @brief The priority level of the job. */
+		/**
+		 * @brief The priority level assigned to this job.
+		 */
 		priority_type priority_;
 
-		/** @brief A weak pointer to the associated priority job queue. */
+		/**
+		 * @brief A weak pointer to the priority job queue managing this job.
+		 *
+		 * This prevents a cyclic reference between the job and the queue.
+		 */
 		std::weak_ptr<priority_job_queue_t<priority_type>> job_queue_;
 	};
 
+	/**
+	 * @typedef priority_job
+	 * @brief A convenient alias for @c priority_job_t using the @c job_priorities type.
+	 */
 	using priority_job = priority_job_t<job_priorities>;
+
 } // namespace priority_thread_pool_module
 
 #include "priority_job.tpp"

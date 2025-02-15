@@ -43,152 +43,223 @@ namespace utility_module
 {
 	/**
 	 * @class argument_manager
-	 * @brief Manages command line arguments and provides type-safe retrieval of values.
+	 * @brief A utility class for parsing and managing command-line arguments.
 	 *
-	 * This class can parse command line arguments supplied either as a single string or via
-	 * argc/argv. It stores arguments in a key-value map (e.g., "--key" : "value") and provides
-	 * functions to retrieve these values as various data types (string, bool, int, etc.).
+	 * The @c argument_manager class provides functions to:
+	 * - Parse command-line arguments from either a single string (e.g., "--option value")
+	 *   or the traditional @c argc, @c argv approach.
+	 * - Store parsed arguments in a key-value map of type @c std::map<std::string, std::string>.
+	 * - Retrieve values by key in a type-safe manner (e.g., @c bool, @c int).
+	 *
+	 * ### Parsing Conventions
+	 * - Arguments are expected in the form: `--key value`.
+	 * - If an argument has no following value, it may be stored with an empty string (`""`).
+	 * - If a key appears multiple times, the last occurrence typically overrides previous ones.
+	 *
+	 * ### Example Usage
+	 * @code
+	 * int main(int argc, char* argv[])
+	 * {
+	 *     utility_module::argument_manager arg_mgr;
+	 *     if (auto err = arg_mgr.try_parse(argc, argv)) {
+	 *         std::cerr << "Error parsing arguments: " << *err << std::endl;
+	 *         return EXIT_FAILURE;
+	 *     }
+	 *
+	 *     // Retrieve a string option
+	 *     if (auto username = arg_mgr.to_string("--username")) {
+	 *         std::cout << "Username: " << *username << std::endl;
+	 *     }
+	 *
+	 *     // Retrieve a bool option
+	 *     if (auto debug_mode = arg_mgr.to_bool("--debug")) {
+	 *         std::cout << "Debug mode: " << (*debug_mode ? "on" : "off") << std::endl;
+	 *     }
+	 *
+	 *     return 0;
+	 * }
+	 * @endcode
 	 */
 	class argument_manager
 	{
 	public:
 		/**
 		 * @brief Default constructor.
+		 *
+		 * Initializes an empty @c argument_manager with no pre-parsed arguments.
 		 */
 		argument_manager() = default;
 
 		/**
-		 * @brief Parse arguments from a string or wide string.
-		 * @tparam StringType The type of the input argument string (e.g., std::string or
+		 * @brief Parse command-line arguments from a single (possibly wide) string.
+		 * @tparam StringType The type of the input string (e.g., @c std::string or @c
 		 * std::wstring).
-		 * @param arguments The input arguments as a single string.
-		 * @return std::optional<std::string> An error message if parsing fails, or std::nullopt on
-		 * success.
+		 * @param arguments The argument string, which may look like `--option1 value1 --flag
+		 * --option2 value2`.
+		 * @return @c std::optional<std::string> containing an error message on failure,
+		 *         or @c std::nullopt on success.
 		 *
-		 * This function converts the input string to the system encoding if necessary, splits it
-		 * into individual arguments, and stores them as key-value pairs.
+		 * Internally, this method:
+		 * 1. Converts the input string to a UTF-8 or system-encoded narrow string if necessary.
+		 * 2. Splits the string into tokens based on whitespace.
+		 * 3. Calls @c parse() to populate @c arguments_ with key-value pairs.
+		 *
+		 * #### Example
+		 * @code
+		 * argument_manager mgr;
+		 * std::string cmd = "--user alice --debug --count 10";
+		 * if (auto err = mgr.try_parse(cmd)) {
+		 *     std::cerr << "Parse error: " << *err << std::endl;
+		 * }
+		 * @endcode
 		 */
 		template <typename StringType>
 		auto try_parse(const StringType& arguments) -> std::optional<std::string>;
 
 		/**
-		 * @brief Parse arguments from argc/argv.
-		 * @tparam CharType The character type of the argv array (char or wchar_t).
-		 * @param argc Number of arguments.
-		 * @param argv Array of argument strings.
-		 * @return std::optional<std::string> An error message if parsing fails, or std::nullopt on
-		 * success.
+		 * @brief Parse command-line arguments using the traditional @c argc and @c argv.
+		 * @tparam CharType The character type of the @c argv array (usually @c char or @c wchar_t).
+		 * @param argc The number of arguments in @c argv.
+		 * @param argv The array of argument strings (e.g., @c argv[0] is the program name).
+		 * @return @c std::optional<std::string> containing an error message on failure,
+		 *         or @c std::nullopt on success.
 		 *
-		 * Similar to the string-based parsing, but directly uses the conventional argc/argv
-		 * parameters typically passed to main().
+		 * Internally, this method:
+		 * 1. Converts each @c argv[i] to a narrow string if necessary.
+		 * 2. Calls @c parse() to populate @c arguments_ with key-value pairs.
+		 *
+		 * This is typically called at the start of @c main().
+		 *
+		 * #### Example
+		 * @code
+		 * int main(int argc, char* argv[])
+		 * {
+		 *     argument_manager mgr;
+		 *     if (auto err = mgr.try_parse(argc, argv)) {
+		 *         std::cerr << "Error: " << *err << std::endl;
+		 *         return EXIT_FAILURE;
+		 *     }
+		 *     // ...
+		 * }
+		 * @endcode
 		 */
 		template <typename CharType>
 		auto try_parse(int argc, CharType* argv[]) -> std::optional<std::string>;
 
 		/**
-		 * @brief Retrieve the value of an argument as a string.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<std::string> The argument value as a string if found, otherwise
-		 * std::nullopt.
+		 * @brief Retrieves the value of an argument as a string.
+		 * @param key The argument key, including the leading "`--`" (e.g., "`--username`").
+		 * @return @c std::optional<std::string> containing the value if found, or @c std::nullopt
+		 * if not found.
+		 *
+		 * If multiple values were specified for the same @p key, the most recently parsed value
+		 * is returned. If no matching key is present, @c std::nullopt is returned.
 		 */
 		auto to_string(std::string_view key) const -> std::optional<std::string>;
 
 		/**
-		 * @brief Retrieve the value of an argument as a boolean.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<bool> The argument value as a bool if found and convertible,
-		 * otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as a boolean.
+		 * @param key The argument key, including the leading "`--`" (e.g., "`--debug`").
+		 * @return @c std::optional<bool> indicating @c true or @c false, or @c std::nullopt if
+		 *         the key is not found or the value is not recognized.
 		 *
-		 * Acceptable values for true: "true", "1".
-		 * Acceptable values for false: "false", "0".
+		 * Recognized true values: "`true`" or "`1`" (case-insensitive).
+		 * Recognized false values: "`false`" or "`0`" (case-insensitive).
 		 */
 		auto to_bool(std::string_view key) const -> std::optional<bool>;
 
 		/**
-		 * @brief Retrieve the value of an argument as a short integer.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<short> The argument value as a short if found and convertible,
-		 * otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as a @c short integer.
+		 * @param key The argument key (e.g., "`--port`").
+		 * @return @c std::optional<short> if successfully converted, otherwise @c std::nullopt.
+		 *
+		 * Conversion errors or out-of-range values result in @c std::nullopt.
 		 */
 		auto to_short(std::string_view key) const -> std::optional<short>;
 
 		/**
-		 * @brief Retrieve the value of an argument as an unsigned short integer.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<unsigned short> The argument value as an unsigned short if found
-		 * and convertible, otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as an unsigned @c short integer.
+		 * @param key The argument key (e.g., "`--threads`").
+		 * @return @c std::optional<unsigned short> if successfully converted, otherwise @c
+		 * std::nullopt.
 		 */
 		auto to_ushort(std::string_view key) const -> std::optional<unsigned short>;
 
 		/**
-		 * @brief Retrieve the value of an argument as an integer.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<int> The argument value as an int if found and convertible,
-		 * otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as an @c int.
+		 * @param key The argument key (e.g., "`--count`").
+		 * @return @c std::optional<int> if successfully converted, otherwise @c std::nullopt.
 		 */
 		auto to_int(std::string_view key) const -> std::optional<int>;
 
 		/**
-		 * @brief Retrieve the value of an argument as an unsigned integer.
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<unsigned int> The argument value as an unsigned int if found and
-		 * convertible, otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as an unsigned @c int.
+		 * @param key The argument key (e.g., "`--size`").
+		 * @return @c std::optional<unsigned int> if successfully converted, otherwise @c
+		 * std::nullopt.
 		 */
 		auto to_uint(std::string_view key) const -> std::optional<unsigned int>;
 
 #ifdef _WIN32
 		/**
-		 * @brief Retrieve the value of an argument as a long long (Windows only).
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<long long> The argument value as a long long if found and
-		 * convertible, otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as a @c long long (Windows only).
+		 * @param key The argument key (e.g., "`--large-value`").
+		 * @return @c std::optional<long long> if successfully converted, otherwise @c std::nullopt.
 		 */
 		auto to_llong(std::string_view key) const -> std::optional<long long>;
 #else
 		/**
-		 * @brief Retrieve the value of an argument as a long (non-Windows).
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<long> The argument value as a long if found and convertible,
-		 * otherwise std::nullopt.
+		 * @brief Retrieves the value of an argument as a @c long (non-Windows platforms).
+		 * @param key The argument key (e.g., "`--large-value`").
+		 * @return @c std::optional<long> if successfully converted, otherwise @c std::nullopt.
 		 */
 		auto to_long(std::string_view key) const -> std::optional<long>;
 #endif
 
 	private:
 		/**
-		 * @brief Internal storage of parsed arguments.
+		 * @brief Internal map storing parsed argument key-value pairs.
 		 *
-		 * This map holds key-value pairs (e.g., "--option" : "value").
+		 * Keys include their leading "`--`" prefix. If an argument is provided without
+		 * an accompanying value (e.g., "`--flag`"), the value may be an empty string (`""`).
 		 */
 		std::map<std::string, std::string> arguments_;
 
 		/**
-		 * @brief Parse a vector of already split argument strings.
-		 * @param arguments A vector of argument strings (e.g., {"--option", "value"}).
-		 * @return A tuple containing:
-		 *         - std::optional<std::map<std::string, std::string>>: The parsed arguments map if
-		 * successful, otherwise std::nullopt.
-		 *         - std::optional<std::string>: An error message if parsing fails, otherwise
-		 * std::nullopt.
+		 * @brief Parses a pre-split list of argument tokens and populates @c arguments_.
+		 * @param arguments A vector of tokens (e.g., {"--key", "value", "--flag"}).
+		 * @return A tuple of:
+		 *         - @c std::optional<std::map<std::string, std::string>>: The parsed arguments
+		 *           map on success, or @c std::nullopt on failure.
+		 *         - @c std::optional<std::string>: An error message if parsing fails, otherwise
+		 *           @c std::nullopt.
+		 *
+		 * The parser expects tokens in pairs of "`--key`" followed by "value". If a key does
+		 * not have a subsequent value token (or if the format is otherwise invalid), an error
+		 * message is produced. The last occurrence of a key overrides previous ones.
 		 */
 		auto parse(const std::vector<std::string>& arguments)
 			-> std::tuple<std::optional<std::map<std::string, std::string>>,
 						  std::optional<std::string>>;
 
 		/**
-		 * @brief Convert a string argument to a numeric type.
-		 * @tparam NumericType The target numeric type (e.g., int, long, short).
-		 * @param key The argument key (including the leading "--").
-		 * @return std::optional<NumericType> The converted numeric value if successful, otherwise
-		 * std::nullopt.
+		 * @brief Converts the string value for a given key to a numeric type.
+		 * @tparam NumericType The desired numeric type (e.g., @c int, @c long, @c short).
+		 * @param key The argument key.
+		 * @return @c std::optional<NumericType> if conversion succeeds, otherwise @c std::nullopt.
+		 *
+		 * If the key is missing or the value is not a valid decimal number (or out of range for
+		 * @p NumericType), @c std::nullopt is returned.
 		 */
 		template <typename NumericType>
 		auto to_numeric(std::string_view key) const -> std::optional<NumericType>;
 
 		/**
-		 * @brief Convert a string_view to a lowercase std::string.
+		 * @brief Converts the input string_view to a lowercase std::string.
 		 * @param str The input string_view.
-		 * @return A lowercase std::string.
+		 * @return A new std::string with all characters converted to lowercase.
+		 *
+		 * Used internally for case-insensitive comparisons (e.g., checking "TRUE"/"true"/"True").
 		 */
 		static auto to_lower(std::string_view str) -> std::string;
 	};

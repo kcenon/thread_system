@@ -45,79 +45,78 @@ namespace log_module
 {
 	/**
 	 * @class file_writer
-	 * @brief A class for writing log messages to a file.
+	 * @brief Writes log messages to a file in a dedicated thread.
 	 *
-	 * This class inherits from `thread_base` and provides functionality for
-	 * writing log messages to a file in a separate thread. It manages file handles,
-	 * backup files, and limits on the number of log lines, and allows users to set a specific
-	 * log type for filtering messages written to the file.
+	 * This class extends `thread_base` to process and write log messages to a file
+	 * asynchronously. It manages file handles, optional backup files, and enforces
+	 * a maximum line limit. A log type filter can be used to selectively write only
+	 * certain log messages.
 	 */
 	class file_writer : public thread_base
 	{
 	public:
 		/**
-		 * @brief Constructor for the `file_writer` class.
+		 * @brief Constructs a new file_writer.
 		 *
-		 * Initializes the job queue and default settings for file writing.
+		 * Initializes the underlying job queue and default file writing settings.
 		 */
 		file_writer(void);
 
 		/**
-		 * @brief Sets the title for the log file.
-		 * @param title The title to set.
+		 * @brief Sets the log file title.
+		 * @param title The new title for the log file.
 		 */
 		auto set_title(const std::string& title) -> void;
 
 		/**
-		 * @brief Gets the current title of the log file.
-		 * @return The current title of the log file.
+		 * @brief Retrieves the current log file title.
+		 * @return The current title as a string.
 		 */
 		[[nodiscard]] auto get_title() const -> std::string;
 
 		/**
-		 * @brief Sets whether to use a backup log file.
-		 * @param use_backup Flag indicating whether to use a backup log file.
+		 * @brief Enables or disables the use of a backup log file.
+		 * @param use_backup True to enable backup logging, false to disable.
 		 */
 		auto set_use_backup(const bool& use_backup) -> void;
 
 		/**
-		 * @brief Gets whether a backup log file is being used.
-		 * @return True if a backup log file is being used, false otherwise.
+		 * @brief Checks if backup logging is enabled.
+		 * @return True if backup logging is enabled, false otherwise.
 		 */
 		[[nodiscard]] auto get_use_backup() const -> bool;
 
 		/**
-		 * @brief Sets the maximum number of lines to retain in the log.
-		 * @param max_lines The maximum number of lines to keep in the log.
+		 * @brief Specifies the maximum number of lines the log file can hold.
+		 * @param max_lines The line count limit.
 		 */
 		auto set_max_lines(const uint32_t& max_lines) -> void;
 
 		/**
-		 * @brief Gets the maximum number of lines to keep in the log.
-		 * @return The current maximum number of lines set for the log.
+		 * @brief Retrieves the current maximum line limit for the log file.
+		 * @return The maximum number of lines allowed.
 		 */
 		[[nodiscard]] auto get_max_lines() const -> uint32_t;
 
 		/**
-		 * @brief Sets the log type filter for the file writer.
+		 * @brief Sets the filter for log message types.
 		 *
-		 * Defines the type of logs that should be written to the file, allowing for
-		 * selective logging based on log severity or category.
+		 * Only messages matching the specified type will be written to the file.
 		 *
-		 * @param type The log type to set for filtering log messages.
+		 * @param type The log type to filter on.
 		 */
 		auto file_target(const log_types& type) -> void;
 
 		/**
-		 * @brief Gets the current log type filter for the file writer.
-		 * @return The log type currently set for file output filtering.
+		 * @brief Returns the current log type filter.
+		 * @return The log type used to filter output messages.
 		 */
 		[[nodiscard]] auto file_target() const -> log_types { return file_target_; }
 
 		/**
-		 * @brief Retrieves the job queue used by the file writer.
+		 * @brief Provides access to the job queue.
 		 *
-		 * Provides access to the job queue containing tasks for writing log messages to a file.
+		 * The job queue holds tasks that will be written to the log file.
 		 *
 		 * @return A shared pointer to the job queue.
 		 */
@@ -127,99 +126,94 @@ namespace log_module
 		}
 
 		/**
-		 * @brief Checks if there is work to be done in the job queue.
-		 * @return True if there are jobs in the queue, false otherwise.
+		 * @brief Determines if there are pending tasks to process.
+		 * @return True if the job queue is not empty, false otherwise.
 		 */
 		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
-		 * @brief Performs initialization before starting the file writer thread.
+		 * @brief Prepares resources before starting the file writer thread.
 		 *
-		 * Ensures that file resources and configurations are properly set up before
-		 * beginning to write logs.
+		 * Ensures that the necessary file resources and configurations are in place
+		 * before logging can begin.
 		 *
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional error message if initialization fails.
+		 * @return An optional error message. If a string is returned, initialization
+		 *         failed; if it is empty, initialization succeeded.
 		 */
 		auto before_start() -> std::optional<std::string> override;
 
 		/**
-		 * @brief Writes log messages to the file.
+		 * @brief Processes and writes pending log messages to the file.
 		 *
-		 * Processes the log messages in the job queue and writes them to the designated log file.
+		 * Retrieves log tasks from the job queue and writes them to the configured
+		 * log file(s).
 		 *
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the writing operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional error message if writing fails.
+		 * @return An optional error message. If a string is returned, an error occurred;
+		 *         otherwise, the operation succeeded.
 		 */
 		auto do_work() -> std::optional<std::string> override;
 
 		/**
-		 * @brief Performs cleanup after stopping the file writer thread.
+		 * @brief Cleans up resources after stopping the file writer thread.
 		 *
-		 * Closes file handles and releases resources associated with the file writer.
+		 * Closes open file handles and releases resources.
 		 *
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional error message if cleanup fails.
+		 * @return An optional error message. If a string is returned, an error occurred;
+		 *         otherwise, cleanup succeeded.
 		 */
 		auto after_stop() -> std::optional<std::string> override;
 
 	protected:
 		/**
-		 * @brief Generates the primary and backup file names for the log file.
+		 * @brief Generates the primary and backup log file names.
 		 *
-		 * Creates the file names based on the title and backup configuration.
+		 * Uses the current title and backup configuration to create both file names.
 		 *
-		 * @return A tuple containing:
-		 *         - std::string: The generated primary file name.
-		 *         - std::string: The generated backup file name (if `use_backup_` is true).
+		 * @return A tuple: (primary_file_name, backup_file_name).
+		 *         The backup file name is meaningful only if backup is enabled.
 		 */
 		[[nodiscard]] auto generate_file_name() -> std::tuple<std::string, std::string>;
 
 		/**
-		 * @brief Ensures the file handle is ready for writing.
+		 * @brief Ensures the log file handle is open and ready for writing.
 		 *
-		 * Opens or reopens the file handle as needed to prepare for log writing.
+		 * Opens or reopens the file handles if necessary before writing logs.
 		 */
 		auto check_file_handle(void) -> void;
 
 		/**
-		 * @brief Closes the file handle.
+		 * @brief Closes the log file handles.
 		 *
-		 * Ensures proper closure of the file handle after writing is complete.
+		 * Ensures that all log file streams are properly closed.
 		 */
 		auto close_file_handle(void) -> void;
 
 		/**
-		 * @brief Writes lines to the specified file.
+		 * @brief Writes a collection of messages to the given file stream.
 		 *
-		 * Processes a set of log messages and writes them to the provided file stream.
+		 * Processes the specified log messages and appends them to the file.
 		 *
-		 * @param file_handle A unique pointer to the file stream to write to.
-		 * @param messages A deque of strings to be written to the file.
-		 * @return A unique pointer to the file stream after writing.
+		 * @param file_handle Unique pointer to the file stream to write to.
+		 * @param messages A deque of log messages to be written.
+		 * @return The file stream, which remains valid after writing.
 		 */
 		[[nodiscard]] auto write_lines(std::unique_ptr<std::fstream> file_handle,
 									   const std::deque<std::string>& messages)
 			-> std::unique_ptr<std::fstream>;
 
 	private:
-		std::string title_;						 ///< Title used in the log file name
-		std::string file_name_;					 ///< Name of the current log file
-		std::string backup_name_;				 ///< Name of the backup log file (if enabled)
-		std::deque<std::string> log_lines_;		 ///< Queue storing log lines to write
+		std::string title_;						 ///< Title used in the log file name.
+		std::string file_name_;					 ///< Name of the current log file.
+		std::string backup_name_;				 ///< Name of the backup log file (if enabled).
+		std::deque<std::string> log_lines_;		 ///< Queue storing log lines to write.
 
-		bool use_backup_;						 ///< Indicates if a backup log file is in use
-		log_types file_target_;					 ///< Log type filter for writing to file
-		uint32_t max_lines_;					 ///< Maximum number of lines to retain in the log
+		bool use_backup_;						 ///< Indicates if a backup log file is in use.
+		log_types file_target_;					 ///< Log type filter for writing to file.
+		uint32_t max_lines_;					 ///< Maximum number of lines to retain in the log.
 
-		std::unique_ptr<std::fstream> log_file_; ///< File handle for the main log file
-		std::unique_ptr<std::fstream> backup_file_; ///< File handle for the backup log file
+		std::unique_ptr<std::fstream> log_file_; ///< File handle for the main log file.
+		std::unique_ptr<std::fstream> backup_file_; ///< File handle for the backup log file.
 
-		std::shared_ptr<job_queue> job_queue_;		///< Queue for log tasks to write to the file
+		std::shared_ptr<job_queue> job_queue_;		///< Queue for log tasks to write to the file.
 	};
 } // namespace log_module
