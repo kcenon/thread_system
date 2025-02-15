@@ -40,7 +40,15 @@ namespace thread_module
 {
 	callback_job::callback_job(const std::function<std::optional<std::string>(void)>& callback,
 							   const std::string& name)
-		: job(name), callback_(callback)
+		: job(name), callback_(callback), data_callback_(nullptr)
+	{
+	}
+
+	callback_job::callback_job(
+		const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>& data_callback,
+		const std::vector<uint8_t>& data,
+		const std::string& name)
+		: job(data, name), callback_(nullptr), data_callback_(data_callback)
 	{
 	}
 
@@ -48,22 +56,38 @@ namespace thread_module
 
 	auto callback_job::do_work(void) -> std::optional<std::string>
 	{
-		if (callback_ == nullptr)
+		if (callback_ != nullptr)
 		{
-			return "cannot execute job without callback";
+			try
+			{
+				return callback_();
+			}
+			catch (const std::exception& e)
+			{
+				return std::string(e.what());
+			}
+			catch (...)
+			{
+				return "unknown error";
+			}
 		}
 
-		try
+		if (data_callback_ != nullptr)
 		{
-			return callback_();
+			try
+			{
+				return data_callback_(data_);
+			}
+			catch (const std::exception& e)
+			{
+				return std::string(e.what());
+			}
+			catch (...)
+			{
+				return "unknown error";
+			}
 		}
-		catch (const std::exception& e)
-		{
-			return std::string(e.what());
-		}
-		catch (...)
-		{
-			return "unknown error";
-		}
+
+		return "cannot execute job without callback";
 	}
 } // namespace thread_module

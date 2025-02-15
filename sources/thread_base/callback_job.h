@@ -37,54 +37,79 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <functional>
 #include <optional>
 #include <string>
+#include <vector>
 
 namespace thread_module
 {
 	/**
 	 * @class callback_job
-	 * @brief A specialized job class that encapsulates a user-defined callback.
+	 * @brief A specialized job class that encapsulates user-defined callbacks.
 	 *
-	 * The @c callback_job class provides an interface for executing a user-supplied
-	 * function within a job queue. The callback function returns an @c std::optional<std::string>,
-	 * where a value (string) typically indicates an error message and @c std::nullopt signifies
-	 * a successful operation.
+	 * The @c callback_job class provides two main mechanisms for defining job behavior:
+	 * - A callback that takes no parameters (@c callback_), for general-purpose tasks.
+	 * - A callback that takes a @c std::vector<uint8_t> as a parameter (@c data_callback_),
+	 *   allowing you to pass raw data to the job when it is constructed.
 	 *
-	 * Usage Example:
+	 * Both callbacks return an @c std::optional<std::string>:
+	 * - @c std::nullopt on success (indicating no error).
+	 * - A non-empty @c std::string on failure (an error message or reason for failure).
+	 *
+	 * @note Internally, @c do_work() will decide which callback to execute depending on
+	 *       whether a data callback was provided.
+	 *
+	 * Example Usage (parameterless callback):
 	 * @code
 	 * auto job = std::make_shared<callback_job>(
 	 *     []() -> std::optional<std::string> {
-	 *         // Perform some work here...
-	 *         bool success = do_some_work();
+	 *         // Perform some work...
+	 *         bool success = do_something();
 	 *         if (!success) {
-	 *             return std::string{"Work failed due to ..."};
+	 *             return std::string{"Work failed due to XYZ"};
 	 *         }
-	 *         return std::nullopt; // No error => success
+	 *         return std::nullopt; // success
 	 *     },
-	 *     "example_callback_job"
+	 *     "general_callback_job"
 	 * );
-	 * // Submit job to a queue or execute it directly...
+	 * // Submit 'job' to a queue or execute it directly...
+	 * @endcode
+	 *
+	 * Example Usage (data callback):
+	 * @code
+	 * std::vector<uint8_t> my_data = ... // some data
+	 * auto data_job = std::make_shared<callback_job>(
+	 *     [](const std::vector<uint8_t>& data) -> std::optional<std::string> {
+	 *         // Process data...
+	 *         if (data.empty()) {
+	 *             return std::string{"Received empty data"};
+	 *         }
+	 *         // Do something with data...
+	 *         return std::nullopt; // success
+	 *     },
+	 *     my_data,
+	 *     "data_processing_job"
+	 * );
+	 * // Submit 'data_job' to a queue or execute it directly...
 	 * @endcode
 	 */
 	class callback_job : public job
 	{
 	public:
 		/**
-		 * @brief Constructs a new @c callback_job instance.
-		 * @param callback A function object that, when invoked, performs the job's work.
+		 * @brief Constructs a new @c callback_job instance with a parameterless callback.
+		 *
+		 * Use this constructor if your job logic does not require any input data.
+		 *
+		 * @param callback A function object that performs the job's work.
 		 *                 - Returns @c std::nullopt on success.
-		 *                 - Returns a @c std::string on failure (the string can be treated as
-		 *                   an error message or diagnostic detail).
+		 *                 - Returns a @c std::string on failure.
 		 * @param name     An optional name for this job (default is "callback_job").
 		 *
 		 * Example:
 		 * @code
-		 * // A job that reports "Error occurred" if some_condition is true
 		 * callback_job(
 		 *     []() {
-		 *         if (some_condition) {
-		 *             return std::optional<std::string>{"Error occurred"};
-		 *         }
-		 *         return std::nullopt;
+		 *         // Job logic...
+		 *         return std::nullopt; // or std::string("Error message");
 		 *     },
 		 *     "my_named_job"
 		 * );
@@ -94,32 +119,85 @@ namespace thread_module
 					 const std::string& name = "callback_job");
 
 		/**
-		 * @brief Virtual destructor.
+		 * @brief Constructs a new @c callback_job instance with a data-based callback.
 		 *
-		 * Ensures derived classes can clean up resources properly.
+		 * Use this constructor if your job logic requires raw byte data to process.
+		 *
+		 * @param data_callback A function object that performs the job's work, taking a
+		 *                      @c std::vector<uint8_t> as its input.
+		 *                      - Returns @c std::nullopt on success.
+		 *                      - Returns a @c std::string on failure.
+		 * @param data          A vector of bytes that will be passed to @p data_callback
+		 *                      when the job is executed.
+		 * @param name          An optional name for this job (default is "data_callback_job").
+		 *
+		 * Example:
+		 * @code
+		 * std::vector<uint8_t> payload = {0x01, 0x02, 0x03};
+		 *
+		 * // A job that processes the 'payload'
+		 * callback_job(
+		 *     [](const std::vector<uint8_t>& data) -> std::optional<std::string> {
+		 *         if (data.empty()) {
+		 *             return std::string{"No data provided"};
+		 *         }
+		 *         // Process 'data' here...
+		 *         return std::nullopt; // success
+		 *     },
+		 *     payload,
+		 *     "my_data_job"
+		 * );
+		 * @endcode
+		 */
+		callback_job(const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>&
+						 data_callback,
+					 const std::vector<uint8_t>& data,
+					 const std::string& name = "data_callback_job");
+
+		/**
+		 * @brief Virtual destructor for proper cleanup in derived classes.
 		 */
 		~callback_job(void) override;
 
 		/**
-		 * @brief Executes the callback function to perform the job's work.
-		 * @return @c std::optional<std::string>
-		 *         - If @c std::nullopt, the job is considered successful.
-		 *         - If a @c std::string is returned, it typically represents an error message or
-		 *           reason for failure.
+		 * @brief Executes the appropriate callback function to perform the job's work.
 		 *
-		 * This method is called internally by the job queue or any mechanism that processes
-		 * @c job instances. In user code, you generally won't call @c do_work directly unless you
-		 * are bypassing a job queue and want to execute the job on demand.
+		 * @return @c std::optional<std::string>
+		 *         - @c std::nullopt if the job completes successfully.
+		 *         - A non-empty @c std::string indicating an error message if the job fails.
+		 *
+		 * This method is typically called by a job-processing mechanism (e.g., a thread pool)
+		 * rather than directly by user code. However, manual invocation is possible if desired.
+		 *
+		 * The logic internally checks which callback has been provided:
+		 * - If @c data_callback_ is set, @c do_work() invokes it with the associated data.
+		 * - Otherwise, it invokes the parameterless @c callback_.
 		 */
 		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
 
 	protected:
 		/**
-		 * @brief The user-defined callback that encapsulates the job's core logic.
+		 * @brief Stores the user-defined callback that does not take any parameters.
 		 *
-		 * This function is invoked by @c do_work(). If it returns @c std::nullopt, the job
-		 * is considered successful; otherwise, the returned string is considered an error message.
+		 * This callback is only valid if the @c callback_job was constructed via the
+		 * parameterless constructor. If this member is used, @c data_callback_ should be null.
 		 */
 		std::function<std::optional<std::string>(void)> callback_;
+
+		/**
+		 * @brief Stores the user-defined callback that takes a @c std::vector<uint8_t>.
+		 *
+		 * This callback is only valid if the @c callback_job was constructed via the
+		 * data-based constructor. If this member is used, @c callback_ should be null.
+		 */
+		std::function<std::optional<std::string>(const std::vector<uint8_t>&)> data_callback_;
+
+		/**
+		 * @brief Internal storage for any byte data the job needs to process.
+		 *
+		 * Only relevant if the @c callback_job was constructed with the data-based constructor.
+		 * Used by @c data_callback_ during @c do_work().
+		 */
+		std::vector<uint8_t> data_;
 	};
 } // namespace thread_module
