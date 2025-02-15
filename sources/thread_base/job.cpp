@@ -38,7 +38,11 @@ using namespace utility_module;
 
 namespace thread_module
 {
-	job::job(const std::string& name) : name_(name) {}
+	job::job(const std::string& name) : name_(name), data_(std::vector<uint8_t>()) {}
+
+	job::job(const std::vector<uint8_t>& data, const std::string& name) : name_(name), data_(data)
+	{
+	}
 
 	job::~job(void) {}
 
