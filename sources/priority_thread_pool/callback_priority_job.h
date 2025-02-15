@@ -39,48 +39,82 @@ using namespace thread_module;
 namespace priority_thread_pool_module
 {
 	/**
-	 * @class priority_job
-	 * @brief Represents a job with a priority level.
+	 * @class callback_priority_job_t
+	 * @brief A template for creating priority-based jobs that execute a user-defined callback.
 	 *
-	 * This template class encapsulates a job with a callback function, a priority level,
-	 * and a name. It inherits from job and std::enable_shared_from_this to allow creating
-	 * shared_ptr from this.
+	 * This class inherits from @c priority_job_t and stores a callback function along with a
+	 * priority value. When scheduled by a priority-based thread pool or any task scheduler,
+	 * the higher-priority jobs generally take precedence.
 	 *
-	 * @tparam priority_type The type used to represent the priority level.
+	 * @tparam priority_type
+	 *   The type used to represent the priority level.
+	 *   Typically an enum or comparable value to determine job ordering.
 	 */
 	template <typename priority_type>
 	class callback_priority_job_t : public priority_job_t<priority_type>
 	{
 	public:
 		/**
-		 * @brief Constructs a new priority_job object.
-		 * @param callback The function to be executed when the job is processed.
-		 * @param priority The priority level of the job.
-		 * @param name The name of the job (default is "priority_job").
+		 * @brief Constructs a new @c callback_priority_job_t with a callback, priority, and name.
+		 *
+		 * @param callback
+		 *   The function object to be executed when the job is processed. It must return
+		 *   an @c std::optional<std::string>, where the string typically contains additional
+		 *   status or error information.
+		 * @param priority
+		 *   The priority level of the job (e.g., high, normal, low).
+		 * @param name
+		 *   The name of the job, used primarily for logging or debugging. Defaults to
+		 * "priority_job".
+		 *
+		 * Example usage:
+		 * @code
+		 * auto jobCallback = []() -> std::optional<std::string> {
+		 *     // Your job logic here
+		 *     return {};
+		 * };
+		 * auto myJob = std::make_shared<callback_priority_job_t<int>>(jobCallback, 10, "MyJob");
+		 * @endcode
 		 */
 		callback_priority_job_t(const std::function<std::optional<std::string>(void)>& callback,
 								priority_type priority,
 								const std::string& name = "priority_job");
 
 		/**
-		 * @brief Virtual destructor for the priority_job class.
+		 * @brief Virtual destructor for the @c callback_priority_job_t class.
 		 */
 		~callback_priority_job_t(void) override;
 
 		/**
-		 * @brief Execute the job's work.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the job was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions or additional information.
+		 * @brief Executes the stored callback function for this job.
+		 *
+		 * This method overrides @c priority_job_t::do_work. When invoked by the job executor,
+		 * the stored callback will be called and its result will be propagated.
+		 *
+		 * @return std::optional<std::string>
+		 *   - If the callback returns a string, it typically contains an informational or error
+		 * message.
+		 *   - If it returns an empty @c std::optional, the execution completed without additional
+		 * info.
 		 */
 		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
 
 	private:
-		/** @brief The callback function to be executed when the job is processed */
+		/**
+		 * @brief The user-provided callback function to execute when the job is processed.
+		 *
+		 * This function should encapsulate the main logic of the job.
+		 * It must return an @c std::optional<std::string>, often representing
+		 * any error messages or status feedback.
+		 */
 		std::function<std::optional<std::string>(void)> callback_;
 	};
 
+	/**
+	 * @typedef callback_priority_job
+	 * @brief Type alias for a @c callback_priority_job_t that uses @c job_priorities as its
+	 * priority type.
+	 */
 	using callback_priority_job = callback_priority_job_t<job_priorities>;
 } // namespace priority_thread_pool_module
 

@@ -41,24 +41,34 @@ namespace log_module
 {
 	/**
 	 * @class console_writer
-	 * @brief A class for writing log messages to the console.
+	 * @brief A specialized thread class that continuously writes log messages to the console.
 	 *
-	 * This class inherits from thread_base and provides functionality for
-	 * writing log messages to the console in a separate thread. It manages
-	 * its own job queue for console writing tasks.
+	 * The console_writer class inherits from @c thread_base, enabling it to run as a
+	 * background thread. It utilizes a @c job_queue to retrieve pending log messages (or
+	 * other tasks) and handles their output to the console. This design allows for asynchronous
+	 * logging, ensuring that the main thread(s) can remain unblocked while console operations
+	 * happen concurrently.
 	 */
 	class console_writer : public thread_base
 	{
 	public:
 		/**
-		 * @brief Constructor for the console_writer class.
-		 * Initializes the job queue for console writing tasks.
+		 * @brief Constructs a @c console_writer and initializes its @c job_queue.
+		 *
+		 * The constructor sets up a @c job_queue to store incoming logging tasks. Once
+		 * started, the @c console_writer thread will process these tasks in the background,
+		 * directing their output to the console in a safe and orderly manner.
 		 */
 		console_writer(void);
 
 		/**
-		 * @brief Gets the job queue used by the console writer.
-		 * @return A shared pointer to the job queue containing console writing tasks.
+		 * @brief Retrieves the @c job_queue used for console logging.
+		 *
+		 * @return A shared pointer to the @c job_queue instance containing pending log tasks.
+		 *
+		 * This method allows other components to enqueue new logging tasks or inspect
+		 * the current queue state. The returned @c std::shared_ptr<job_queue> ensures
+		 * shared ownership and safe access in a multi-threaded environment.
 		 */
 		[[nodiscard]] auto get_job_queue() const -> std::shared_ptr<job_queue>
 		{
@@ -66,32 +76,55 @@ namespace log_module
 		}
 
 		/**
-		 * @brief Checks if there is work to be done in the job queue.
-		 * @return True if there are jobs in the queue, false otherwise.
+		 * @brief Determines if the thread should continue processing log messages.
+		 *
+		 * @return @c true if there are still tasks in the queue that need to be processed,
+		 *         or if the thread is otherwise signaled to continue running;
+		 *         @c false if no further processing is necessary and the thread should exit.
+		 *
+		 * This method is an override of the @c thread_base::should_continue_work() function.
+		 * It typically checks for pending jobs in the queue or other stop conditions.
+		 * If @c false is returned, the worker thread will end its execution loop.
 		 */
 		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
-		 * @brief Performs initialization before starting the console writer thread.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Performs any necessary initialization before starting the thread.
+		 *
+		 * @return
+		 * - An @c std::optional<std::string> which may contain an error message if
+		 *   initialization fails. If no error occurs, an empty (or disengaged) optional
+		 *   indicates success.
+		 *
+		 * This method runs once before the worker thread enters its main loop. It can be used
+		 * to validate resources, open files, or set up configurations required by the
+		 * @c console_writer.
 		 */
 		auto before_start() -> std::optional<std::string> override;
 
 		/**
-		 * @brief Performs the main work of writing log messages to the console.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the operation was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief The primary work routine that processes and outputs console log messages.
+		 *
+		 * @return
+		 * - An @c std::optional<std::string> which may contain an error message if
+		 *   something goes wrong during task processing. If no error occurs, an empty (or
+		 *   disengaged) optional indicates normal operation.
+		 *
+		 * This method is repeatedly called in a loop while @c should_continue_work() returns
+		 * @c true. Each iteration typically pulls one or more tasks from the @c job_queue
+		 * and writes them to the console. Any errors encountered can be relayed through
+		 * the optional return value.
 		 */
 		auto do_work() -> std::optional<std::string> override;
 
 	private:
-		/** @brief Queue for log jobs to be written to the console */
+		/**
+		 * @brief Internal queue storing console-writing jobs.
+		 *
+		 * The @c console_writer continuously retrieves and processes tasks from this queue
+		 * while running in its own thread. Each task typically encapsulates data and logic
+		 * needed to format and print a message to the console.
+		 */
 		std::shared_ptr<job_queue> job_queue_;
 	};
-}
+} // namespace log_module

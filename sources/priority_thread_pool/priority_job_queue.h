@@ -45,142 +45,178 @@ using namespace thread_module;
 namespace priority_thread_pool_module
 {
 	/**
-	 * @class priority_job_queue
-	 * @brief A queue for managing priority jobs.
+	 * @class priority_job_queue_t
+	 * @brief A template-based queue that manages jobs with distinct priority levels.
 	 *
-	 * This template class implements a queue that manages jobs with different priority levels.
-	 * It inherits from job_queue and std::enable_shared_from_this to allow creating shared_ptr from
-	 * this.
+	 * This class inherits from @c job_queue and provides functionality to enqueue and
+	 * dequeue priority-based jobs. Internally, it maintains multiple queues (one per
+	 * priority level) and tracks their sizes.
 	 *
-	 * @tparam priority_type The type used to represent the priority levels.
+	 * @tparam priority_type The type used to represent job priority levels. Defaults to
+	 *         @c job_priorities.
 	 */
 	template <typename priority_type = job_priorities> class priority_job_queue_t : public job_queue
 	{
 	public:
 		/**
-		 * @brief Constructs a new priority_job_queue object.
+		 * @brief Constructs an empty priority job queue.
 		 */
-		priority_job_queue_t(void);
+		priority_job_queue_t();
 
 		/**
-		 * @brief Virtual destructor for the priority_job_queue class.
+		 * @brief Destroys the priority job queue and all remaining jobs within it.
 		 */
-		~priority_job_queue_t(void) override;
+		~priority_job_queue_t() override;
 
 		/**
-		 * @brief Enqueues a job into the queue.
-		 * @param value A unique pointer to the job to be enqueued.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Enqueues a non-priority (base) job into the queue.
+		 *
+		 * This function accepts a @c std::unique_ptr<job> which does not carry specific
+		 * priority information. Typically, these jobs may be handled in a default or
+		 * low-priority manner, depending on the implementation.
+		 *
+		 * @param value A unique pointer to the base job to enqueue.
+		 * @return @c std::optional<std::string>
+		 *         - If the enqueue operation fails, an error message describing the issue.
+		 *         - Otherwise, @c std::nullopt on success.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value)
 			-> std::optional<std::string> override;
 
 		/**
-		 * @brief Enqueues a priority job into the queue.
-		 * @param value A unique pointer to the priority job to be enqueued.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Enqueues a priority job into the appropriate priority queue.
+		 *
+		 * @param value A unique pointer to the priority job to enqueue.
+		 * @return @c std::optional<std::string>
+		 *         - If the enqueue operation fails, an error message describing the issue.
+		 *         - Otherwise, @c std::nullopt on success.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& value)
 			-> std::optional<std::string>;
 
 		/**
-		 * @brief Dequeues a job from the queue.
-		 * @return std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>> A
-		 * tuple containing:
-		 *         - std::optional<std::unique_ptr<job>>: The dequeued job if available, or nullopt
-		 * if the queue is empty.
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Dequeues the next available job (of any type or priority).
+		 *
+		 * This method attempts to dequeue from the front of any internal priority queue
+		 * that may contain a job, typically checking in an unspecified priority order.
+		 *
+		 * @return A @c std::tuple containing:
+		 *         - @c std::optional<std::unique_ptr<job>>: The dequeued job, or @c std::nullopt
+		 *           if none are available.
+		 *         - @c std::optional<std::string>: If an error occurred, contains an
+		 *           error message; otherwise @c std::nullopt.
 		 */
-		[[nodiscard]] auto dequeue(void)
+		[[nodiscard]] auto dequeue()
 			-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>> override;
 
 		/**
-		 * @brief Dequeues a job from the queue based on the given priorities.
-		 * @param priorities A vector of priority levels to consider when dequeuing.
-		 * @return std::tuple<std::optional<std::unique_ptr<priority_job<priority_type>>>,
-		 * std::optional<std::string>> A tuple containing:
-		 *         - std::optional<std::unique_ptr<priority_job<priority_type>>>: The dequeued job
-		 * if available, or nullopt if no job is found.
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Dequeues a job with one of the specified priorities.
+		 *
+		 * This method checks the queues corresponding to the given priority levels
+		 * in an implementation-defined sequence and removes the first job found.
+		 *
+		 * @param priorities A list of priority levels from which to attempt a dequeue.
+		 * @return A @c std::tuple containing:
+		 *         - @c std::optional<std::unique_ptr<priority_job_t<priority_type>>>: The
+		 *           dequeued job, or @c std::nullopt if none of the specified priority queues
+		 *           contain a job.
+		 *         - @c std::optional<std::string>: If an error occurred, contains an
+		 *           error message; otherwise @c std::nullopt.
 		 */
 		[[nodiscard]] auto dequeue(const std::vector<priority_type>& priorities)
 			-> std::tuple<std::optional<std::unique_ptr<priority_job_t<priority_type>>>,
 						  std::optional<std::string>>;
 
 		/**
-		 * @brief Clears all jobs from the queue.
+		 * @brief Removes all jobs from all priority queues.
+		 *
+		 * After this call, the queue will be empty for every priority level.
 		 */
 		auto clear() -> void override;
 
 		/**
-		 * @brief Checks if the queue is empty for the given priorities.
-		 * @param priorities A vector of priority levels to check.
-		 * @return bool True if the queue is empty for all given priorities, false otherwise.
+		 * @brief Checks if there are no jobs in any of the specified priority queues.
+		 *
+		 * @param priorities A list of priority levels to check.
+		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
 		[[nodiscard]] auto empty(const std::vector<priority_type>& priorities) const -> bool;
 
 		/**
-		 * @brief Converts the job queue to a string representation.
-		 * @return std::string A string representation of the job queue.
+		 * @brief Returns a string representation of the entire priority job queue.
+		 *
+		 * The format of the returned string may vary, but typically includes information
+		 * about the number of jobs and their priorities.
+		 *
+		 * @return A string describing the current state of the queue.
 		 */
-		[[nodiscard]] auto to_string(void) const -> std::string override;
+		[[nodiscard]] auto to_string() const -> std::string override;
 
 	protected:
 		/**
-		 * @brief Checks if the queue is empty for the given priorities without locking.
-		 * @param priorities A vector of priority levels to check.
-		 * @return bool True if the queue is empty for all given priorities, false otherwise.
+		 * @brief Checks if the specified priority queues are empty without acquiring any locks.
+		 *
+		 * This function is intended for internal use, where external locking is expected
+		 * to be handled by the caller.
+		 *
+		 * @param priorities A list of priority levels to check.
+		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
 		[[nodiscard]] auto empty_check_without_lock(
 			const std::vector<priority_type>& priorities) const -> bool;
 
 		/**
-		 * @brief Attempts to dequeue a job from a specific priority level.
-		 * @param priority The priority level to dequeue from.
-		 * @return std::optional<std::unique_ptr<priority_job<priority_type>>> The dequeued job if
-		 * available, or nullopt if no job is found.
+		 * @brief Attempts to dequeue a single job from the queue for a given priority.
+		 *
+		 * This function is intended for internal use to remove a job from one specific
+		 * priority level. If no jobs exist at that priority, returns @c std::nullopt.
+		 *
+		 * @param priority The priority level from which to dequeue.
+		 * @return @c std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+		 *         - The dequeued priority job, or @c std::nullopt if the queue for
+		 *           that priority is empty.
 		 */
 		[[nodiscard]] auto try_dequeue_from_priority(const priority_type& priority)
 			-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>;
 
 	private:
-		/** @brief Map of priority deque */
+		/**
+		 * @brief A map of priority levels to double-ended queues that store jobs of that priority.
+		 */
 		std::map<priority_type, std::deque<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
 
-		/** @brief The size of the queue */
+		/**
+		 * @brief A map that tracks the size of each priority queue in a thread-safe manner.
+		 */
 		std::map<priority_type, std::atomic_size_t> queue_sizes_;
 	};
 
+	/// @brief Alias for a priority_job_queue using default job priorities.
 	using priority_job_queue = priority_job_queue_t<job_priorities>;
 } // namespace priority_thread_pool_module
 
 // Formatter specializations for priority_job_queue_t<priority_type>
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for priority_job_queue_t<priority_type>.
- * Enables formatting of priority_job_queue_t<priority_type> enum values as strings in the standard
- * library format.
+ * @brief Specialization of std::formatter for priority_job_queue_t<priority_type> when using
+ * C++20's <format>.
+ *
+ * This allows a priority_job_queue_t<priority_type> to be formatted using the standard library
+ * @c std::format function. It calls @c to_string() on the object to obtain its string
+ * representation.
+ *
+ * @tparam priority_type The type representing priority levels.
  */
 template <typename priority_type>
 struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
 	: std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a priority_job_queue_t<priority_type> into a string view.
+	 * @tparam FormatContext The formatting context type provided by std::format.
+	 * @param item The priority_job_queue_t instance to format.
+	 * @param ctx The formatting context where the output will be appended.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
@@ -191,20 +227,24 @@ struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character priority_job_queue_t<priority_type>.
- * Allows priority_job_queue_t<priority_type> enum values to be formatted as wide strings in the
- * standard library format.
+ * @brief Specialization of std::formatter for wide-character formatting of
+ * priority_job_queue_t<priority_type>.
+ *
+ * Similar to the above specialization, but uses wide-character strings, allowing the object
+ * to be formatted with @c std::wformat or related wide-character formatting functions.
+ *
+ * @tparam priority_type The type representing priority levels.
  */
 template <typename priority_type>
 struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> value as a wide string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a priority_job_queue_t<priority_type> into a wide string view.
+	 * @tparam FormatContext The wide-character formatting context type.
+	 * @param item The priority_job_queue_t instance to format.
+	 * @param ctx The wide-character formatting context for output.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
@@ -217,19 +257,24 @@ struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 };
 #else
 /**
- * @brief Specialization of fmt::formatter for priority_job_queue_t<priority_type>.
- * Enables formatting of priority_job_queue_t<priority_type> enum values using the fmt library.
+ * @brief Specialization of fmt::formatter for priority_job_queue_t<priority_type> when using the
+ * {fmt} library.
+ *
+ * This allows a priority_job_queue_t<priority_type> to be formatted using the {fmt} library,
+ * by invoking the @c to_string() method on the instance.
+ *
+ * @tparam priority_type The type representing priority levels.
  */
 template <typename priority_type>
 struct fmt::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The priority_job_queue_t<priority_type> enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a priority_job_queue_t<priority_type> into a string view for {fmt}.
+	 * @tparam FormatContext The context type provided by {fmt}.
+	 * @param item The priority_job_queue_t instance to format.
+	 * @param ctx The {fmt} context where the output will be appended.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,

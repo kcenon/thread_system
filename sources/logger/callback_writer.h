@@ -45,28 +45,32 @@ namespace log_module
 {
 	/**
 	 * @class callback_writer
-	 * @brief A class for handling log messages through a callback function.
+	 * @brief A class that processes log messages in a separate thread and delivers logs through a
+	 * user-defined callback.
 	 *
-	 * This class inherits from `thread_base` and provides functionality for processing
-	 * log messages in a separate thread. The `callback_writer` allows setting a custom
-	 * callback function to handle log messages instead of writing them to the console.
+	 * Inherits from `thread_base` to handle log messages in an internal thread.
+	 * Instead of printing logs to the console, this class uses a user-defined callback function to
+	 * allow flexible integration with external systems or custom processing logic.
 	 */
 	class callback_writer : public thread_base
 	{
 	public:
 		/**
-		 * @brief Constructor for the `callback_writer` class.
+		 * @brief Default constructor for the `callback_writer` class.
 		 *
-		 * Initializes the job queue for managing log message tasks.
+		 * Initializes the job queue that stores log messages. After construction, log messages are
+		 * queued and then processed by invoking the registered callback function in sequence.
 		 */
 		callback_writer(void);
 
 		/**
-		 * @brief Retrieves the job queue used by the `callback_writer`.
+		 * @brief Returns the job queue used by this class.
 		 *
-		 * Provides access to the job queue where log message tasks are enqueued.
+		 * When a log message is generated, it is first added to this job queue. The internal thread
+		 * monitors the queue and delivers the message through the callback function.
 		 *
-		 * @return std::shared_ptr<job_queue> Shared pointer to the job queue for log tasks.
+		 * @return std::shared_ptr<job_queue>
+		 *         A shared pointer to the internal job queue.
 		 */
 		[[nodiscard]] auto get_job_queue() const -> std::shared_ptr<job_queue>
 		{
@@ -74,41 +78,48 @@ namespace log_module
 		}
 
 		/**
-		 * @brief Sets the callback function for handling log messages.
+		 * @brief Sets the user-defined callback function that processes log messages.
 		 *
-		 * Allows setting a custom function to process each log message, receiving the log type,
-		 * message, and an optional tag.
+		 * The callback function is invoked whenever a log message is retrieved from the queue,
+		 * receiving the log type (`log_types`), the log message string, and an optional tag string
+		 * as parameters.
 		 *
-		 * @param callback Function pointer to the callback that handles log messages.
+		 * @param callback The log callback function with the signature
+		 *        `(const log_types&, const std::string&, const std::string&)`.
 		 */
 		auto message_callback(
 			const std::function<void(const log_types&, const std::string&, const std::string&)>&
 				callback) -> void;
 
 		/**
-		 * @brief Checks if there are tasks available in the job queue.
+		 * @brief Checks whether there are log messages remaining in the job queue to be processed.
 		 *
-		 * Determines if there are any log tasks waiting to be processed in the queue.
+		 * Internally, this determines if there are any pending jobs (log messages) in the queue.
+		 * If there are, the thread continues to run; otherwise, it may be stopped.
 		 *
-		 * @return bool True if tasks are available, false otherwise.
+		 * @return bool
+		 *         - `true`: There are remaining jobs, so the thread should keep running.
+		 *         - `false`: No pending jobs remain, so the thread can stop.
 		 */
 		[[nodiscard]] auto should_continue_work() const -> bool override;
 
 		/**
-		 * @brief Processes log messages by executing the callback function.
+		 * @brief Retrieves log messages from the queue and invokes the callback function to process
+		 * them.
 		 *
-		 * Retrieves and processes log messages from the queue, invoking the callback function for
-		 * each.
+		 * This method is called periodically by the internal thread loop, delivering each log
+		 * message in the queue to the callback function in turn. If an error occurs during
+		 * processing, an error message is returned.
 		 *
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates the success of the operation (true if successful).
-		 *         - std::optional<std::string>: Optional error message if processing fails.
+		 * @return std::optional<std::string>
+		 *         - An empty optional indicates successful processing.
+		 *         - If it contains a value, the string describes the error that occurred.
 		 */
 		auto do_work() -> std::optional<std::string> override;
 
 	private:
-		std::shared_ptr<job_queue> job_queue_; ///< Queue containing log tasks
+		std::shared_ptr<job_queue> job_queue_; ///< A job queue that manages queued log messages.
 		std::function<void(const log_types&, const std::string&, const std::string&)>
-			callback_;						   ///< Callback function to handle log messages
+			callback_; ///< The user-defined callback function for handling log messages.
 	};
 } // namespace log_module

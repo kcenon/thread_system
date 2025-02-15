@@ -42,47 +42,99 @@ namespace utility_module
 {
 	/**
 	 * @class file
-	 * @brief Provides static utilities for file system operations.
+	 * @brief A utility class for basic file I/O operations.
 	 *
-	 * This class can remove files, load file contents, save (overwrite) files,
-	 * and append data to existing files. It uses std::filesystem and i/o streams.
+	 * The @c file class provides static methods for:
+	 * - Removing files from the filesystem.
+	 * - Reading file contents into a byte buffer.
+	 * - Saving (overwriting) data to a file.
+	 * - Appending data to existing files.
+	 *
+	 * Under the hood, it uses standard C++ file streams (and possibly @c std::filesystem features,
+	 * if available) to manage file paths and I/O operations. Each method returns an optional
+	 * error message:
+	 * - @c std::nullopt indicates success.
+	 * - A non-empty @c std::string indicates the reason why the operation failed.
+	 *
+	 * ### Example Usage
+	 * @code
+	 * // Remove a file
+	 * if (auto err = file::remove("data.bin")) {
+	 *     std::cerr << "Failed to remove file: " << *err << std::endl;
+	 * }
+	 *
+	 * // Load file into memory
+	 * auto [contents, load_err] = file::load("image.png");
+	 * if (load_err) {
+	 *     std::cerr << "Failed to load file: " << *load_err << std::endl;
+	 * } else {
+	 *     // Use contents...
+	 * }
+	 *
+	 * // Save data
+	 * std::vector<uint8_t> data = {0x01, 0x02, 0x03};
+	 * if (auto err = file::save("output.bin", data)) {
+	 *     std::cerr << "Failed to save file: " << *err << std::endl;
+	 * }
+	 * @endcode
 	 */
 	class file
 	{
 	public:
 		/**
-		 * @brief Remove a file from the filesystem.
+		 * @brief Removes a file from the filesystem.
 		 * @param path The path to the file to remove.
-		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
+		 * @return @c std::optional<std::string> containing an error message if the removal
+		 *         operation fails, or @c std::nullopt on success.
+		 *
+		 * This function deletes the file specified by @p path. If the file does not exist,
+		 * some platforms may treat it as an error, while others consider it a success. The
+		 * behavior depends on the underlying C++ library and filesystem.
 		 */
 		static auto remove(const std::string& path) -> std::optional<std::string>;
 
 		/**
-		 * @brief Load the entire contents of a file.
-		 * @param path The path to the file to read.
-		 * @return std::tuple<std::vector<uint8_t>, std::optional<std::string>>
-		 *         - First: The file contents as a byte vector.
-		 *         - Second: Error message if failed, or std::nullopt on success.
+		 * @brief Loads the entire contents of a file into memory.
+		 * @param path The path to the file to be read.
+		 * @return A tuple of:
+		 *         - @c std::vector<uint8_t>: The file contents as a byte vector. If an error
+		 *           occurs, this vector is typically empty.
+		 *         - @c std::optional<std::string>: An error message if reading fails, or
+		 *           @c std::nullopt on success.
+		 *
+		 * The file is opened in binary mode. If the file is very large, be mindful of available
+		 * memory. In case of an error (e.g., file not found or permission denied), the second
+		 * element contains the reason, and the first element will be an empty vector.
 		 */
 		static auto load(const std::string& path)
 			-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>;
 
 		/**
-		 * @brief Save data to a file (overwrite if it exists, create if not).
+		 * @brief Saves data to a file, overwriting it if it already exists.
 		 * @param path The target file path.
-		 * @param data The byte data to write.
-		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
+		 * @param data A byte buffer containing the data to write.
+		 * @return @c std::optional<std::string> with an error message on failure, or
+		 *         @c std::nullopt on success.
+		 *
+		 * The file is opened in binary mode for output. If the file does not exist, it is
+		 * created. If it exists, its contents are replaced by @p data. In case of I/O errors
+		 * (e.g., insufficient permissions, write failure), an error message is returned.
 		 */
-		static auto save(const std::string& path,
-						 const std::vector<uint8_t>& data) -> std::optional<std::string>;
+		static auto save(const std::string& path, const std::vector<uint8_t>& data)
+			-> std::optional<std::string>;
 
 		/**
-		 * @brief Append data to an existing file.
+		 * @brief Appends data to the end of an existing file.
 		 * @param path The target file path.
-		 * @param data The byte data to append.
-		 * @return std::optional<std::string> Error message if failed, or std::nullopt on success.
+		 * @param data A byte buffer containing the data to append.
+		 * @return @c std::optional<std::string> with an error message on failure, or
+		 *         @c std::nullopt on success.
+		 *
+		 * The file is opened in binary append mode. If the file does not exist, behavior may depend
+		 * on your platform or library settings (some may create it, others may fail). If you need
+		 * to ensure creation, consider using @c save() first or verifying the file's existence.
 		 */
-		static auto append(const std::string& path,
-						   const std::vector<uint8_t>& data) -> std::optional<std::string>;
+		static auto append(const std::string& path, const std::vector<uint8_t>& data)
+			-> std::optional<std::string>;
 	};
 } // namespace utility_module

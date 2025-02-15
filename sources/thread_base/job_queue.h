@@ -51,131 +51,216 @@ namespace thread_module
 {
 	/**
 	 * @class job_queue
-	 * @brief Represents a thread-safe queue for managing jobs.
+	 * @brief A thread-safe job queue for managing and dispatching work items.
 	 *
-	 * This class provides a mechanism for enqueueing and dequeueing jobs in a thread-safe manner.
-	 * It inherits from std::enable_shared_from_this to allow creating shared_ptr from this.
+	 * The @c job_queue class provides a synchronized queue for storing and retrieving
+	 * @c job objects (or derived classes). Multiple threads can safely enqueue and
+	 * dequeue jobs, ensuring proper synchronization and preventing data races.
+	 *
+	 * This class inherits from @c std::enable_shared_from_this, which allows it to
+	 * create @c std::shared_ptr instances referring to itself via @c get_ptr(). This
+	 * is often useful when passing a @c job_queue pointer to jobs themselves or other
+	 * components that need a safe, shared reference to the queue.
+	 *
+	 * ### Typical Usage
+	 * 1. Create a @c job_queue instance, typically via @c std::make_shared.
+	 * 2. Enqueue @c job objects (or derived types) using @c enqueue().
+	 * 3. One or more worker threads repeatedly call @c dequeue() to retrieve jobs
+	 *    and process them.
+	 * 4. Call @c stop_waiting_dequeue() and possibly @c clear() to shut down the queue
+	 *    gracefully when all jobs are done or when the system is stopping.
 	 */
 	class job_queue : public std::enable_shared_from_this<job_queue>
 	{
 	public:
 		/**
-		 * @brief Constructs a new job_queue object.
+		 * @brief Constructs a new, empty @c job_queue.
+		 *
+		 * Initializes internal synchronization primitives and sets all flags to
+		 * their default states (e.g., @c notify_ = false, @c stop_ = false).
 		 */
 		job_queue();
 
 		/**
-		 * @brief Virtual destructor for the job_queue class.
+		 * @brief Virtual destructor. Cleans up resources used by the @c job_queue.
 		 */
 		virtual ~job_queue(void);
 
 		/**
-		 * @brief Get a shared pointer to this job_queue object.
-		 * @return std::shared_ptr<job_queue> A shared pointer to this job_queue.
+		 * @brief Obtains a @c std::shared_ptr that points to this queue instance.
+		 * @return A shared pointer to the current @c job_queue object.
+		 *
+		 * Because @c job_queue inherits from @c std::enable_shared_from_this, calling
+		 * @c get_ptr() allows retrieving a @c shared_ptr<job_queue> from within
+		 * member functions of @c job_queue.
 		 */
 		[[nodiscard]] std::shared_ptr<job_queue> get_ptr(void);
 
 		/**
-		 * @brief Checks if the job queue is stopped.
-		 * @return bool True if the job queue is stopped, false otherwise.
+		 * @brief Checks if the queue is in a "stopped" state.
+		 * @return @c true if the queue is stopped, @c false otherwise.
+		 *
+		 * When stopped, worker threads are typically notified to cease waiting for
+		 * new jobs. New jobs may still be enqueued, but it is up to the system design
+		 * how they are handled in a stopped state.
 		 */
 		[[nodiscard]] auto is_stopped() const -> bool;
 
 		/**
-		 * @brief Sets the notify flag for the job queue.
-		 * @param notify The value to set the notify flag to.
+		 * @brief Sets the 'notify' flag for this queue.
+		 * @param notify If @c true, signals that enqueue should notify waiting threads.
+		 *               If @c false, jobs can still be enqueued, but waiting threads
+		 *               won't be automatically notified.
 		 */
 		auto set_notify(bool notify) -> void;
 
 		/**
-		 * @brief Enqueues a job into the queue.
-		 * @param value A unique pointer to the job to be enqueued.
-		 * @return std::optional<std::string> A tuple containing:
-		 *         - bool: Indicates whether the enqueue operation was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Enqueues a new job into the queue.
+		 * @param value A unique pointer to the job being added.
+		 * @return @c std::optional<std::string> containing an error message if the
+		 *         enqueue operation failed; otherwise, @c std::nullopt.
+		 *
+		 * This method is thread-safe. If @c notify_ is set to @c true, a waiting
+		 * thread (if any) will be notified upon successful enqueue.
 		 */
 		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value)
 			-> std::optional<std::string>;
 
 		/**
-		 * @brief Dequeues a job from the queue.
-		 * @return std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>> A
-		 * tuple containing:
-		 *         - std::optional<std::unique_ptr<job>>: The dequeued job if available, or nullopt
-		 * if the queue is empty.
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @brief Dequeues a job from the queue in FIFO order.
+		 * @return A tuple where:
+		 *         - The first element (@c std::optional<std::unique_ptr<job>>) holds
+		 *           a valid job if one is available, or @c std::nullopt if the queue
+		 *           is empty.
+		 *         - The second element (@c std::optional<std::string>) may contain
+		 *           an error message or be @c nullopt if no error occurred.
+		 *
+		 * If the queue is empty, the caller may block depending on the internal
+		 * concurrency model (unless @c stop_ is set, in which case it may return
+		 * immediately).
 		 */
 		[[nodiscard]] virtual auto dequeue(void)
 			-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>;
 
 		/**
-		 * @brief Clears all jobs from the queue.
+		 * @brief Removes all jobs currently in the queue without processing them.
+		 *
+		 * This operation is thread-safe and can be used to discard pending jobs,
+		 * typically during shutdown or error recovery. It does not affect the
+		 * @c stop_ or @c notify_ flags.
 		 */
 		virtual auto clear(void) -> void;
 
 		/**
-		 * @brief Checks if the queue is empty.
-		 * @return bool True if the queue is empty, false otherwise.
+		 * @brief Checks if the queue is currently empty.
+		 * @return @c true if the queue has no pending jobs, @c false otherwise.
 		 */
 		[[nodiscard]] auto empty(void) const -> bool;
 
 		/**
-		 * @brief Stops the job queue from waiting for new jobs.
+		 * @brief Signals the queue to stop waiting for new jobs (e.g., during shutdown).
+		 *
+		 * Sets the @c stop_ flag to @c true and notifies any threads that might be
+		 * blocked in @c dequeue(). This allows worker threads to exit gracefully
+		 * rather than remain blocked indefinitely.
 		 */
 		auto stop_waiting_dequeue(void) -> void;
 
 		/**
-		 * @brief Dequeues all jobs from the queue.
-		 * @return std::queue<std::unique_ptr<job>> A queue containing all the jobs that were in the
-		 * job_queue.
+		 * @brief Dequeues all remaining jobs from the queue without processing them.
+		 * @return A @c std::deque of unique_ptr<job> containing all jobs that were
+		 *         in the queue at the time of the call.
+		 *
+		 * Similar to @c clear(), but returns the dequeued jobs to the caller for
+		 * potential inspection or manual processing.
 		 */
 		[[nodiscard]] auto dequeue_all(void) -> std::deque<std::unique_ptr<job>>;
 
 		/**
-		 * @brief Converts the job queue to a string representation.
-		 * @return std::string A string representation of the job queue.
+		 * @brief Returns a string representation of this job_queue.
+		 * @return A std::string describing the state of the queue (e.g., size, flags).
+		 *
+		 * Primarily used for logging and debugging. Derived classes may override
+		 * this to include additional diagnostic information.
 		 */
 		[[nodiscard]] virtual auto to_string(void) const -> std::string;
 
 	protected:
-		/** @brief Flag indicating whether to notify when enqueuing */
+		/**
+		 * @brief If @c true, threads waiting for new jobs are notified when a new job
+		 *        is enqueued. If @c false, enqueuing does not automatically trigger
+		 *        a notification.
+		 */
 		std::atomic_bool notify_;
 
-		/** @brief Flag indicating whether the queue is stopped */
+		/**
+		 * @brief Indicates whether the queue has been signaled to stop.
+		 *
+		 * Setting @c stop_ to @c true typically causes waiting threads to
+		 * unblock and exit their waiting loop.
+		 */
 		std::atomic_bool stop_;
 
-		/** @brief Mutex for thread-safe operations */
+		/**
+		 * @brief Mutex to protect access to the underlying @c queue_ container and related state.
+		 *
+		 * Any operation that modifies or reads the queue should lock this mutex to
+		 * ensure thread safety.
+		 */
 		mutable std::mutex mutex_;
 
-		/** @brief Condition variable for signaling between threads */
+		/**
+		 * @brief Condition variable used to signal worker threads.
+		 *
+		 * Used in combination with @c mutex_ to block or notify threads waiting
+		 * for new jobs.
+		 */
 		std::condition_variable condition_;
 
 	private:
-		/** @brief The underlying deque of jobs */
+		/**
+		 * @brief The underlying container storing the jobs in FIFO order.
+		 *
+		 * @note This container is guarded by @c mutex_ and should only be modified
+		 *       while holding the lock.
+		 */
 		std::deque<std::unique_ptr<job>> queue_;
 
-		/** @brief The size of the queue */
+		/**
+		 * @brief Tracks the current number of jobs in the queue.
+		 *
+		 * Though @c queue_.size() could be used, maintaining an atomic size counter
+		 * can improve performance in certain scenarios.
+		 */
 		std::atomic_size_t queue_size_;
 	};
 }
 
+// ----------------------------------------------------------------------------
 // Formatter specializations for job_queue
+// ----------------------------------------------------------------------------
+
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for job_queue.
- * Enables formatting of job_queue enum values as strings in the standard library format.
+ * @brief Specialization of std::formatter for @c thread_module::job_queue.
+ *
+ * Enables formatting of @c job_queue objects as strings using the C++20 <format> library,
+ * when @c USE_STD_FORMAT is defined.
+ *
+ * ### Example
+ * @code
+ * auto queue_ptr = std::make_shared<thread_module::job_queue>();
+ * std::string output = std::format("Queue state: {}", *queue_ptr);
+ * @endcode
  */
 template <> struct std::formatter<thread_module::job_queue> : std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a job_queue value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param item The job_queue enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c job_queue object as a string.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c job_queue to format.
+	 * @param ctx  The format context used for output.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_module::job_queue& item, FormatContext& ctx) const
@@ -185,19 +270,20 @@ template <> struct std::formatter<thread_module::job_queue> : std::formatter<std
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character job_queue.
- * Allows job_queue enum values to be formatted as wide strings in the standard library format.
+ * @brief Specialization of std::formatter for wide-character @c thread_module::job_queue.
+ *
+ * Allows @c job_queue objects to be formatted as wide strings using the C++20 <format> library.
  */
 template <>
 struct std::formatter<thread_module::job_queue, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a job_queue value as a wide string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param item The job_queue enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c job_queue object as a wide string.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c job_queue to format.
+	 * @param ctx  The wide-character format context.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_module::job_queue& item, FormatContext& ctx) const
@@ -207,19 +293,27 @@ struct std::formatter<thread_module::job_queue, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
+#else  // USE_STD_FORMAT
+
 /**
- * @brief Specialization of fmt::formatter for job_queue.
- * Enables formatting of job_queue enum values using the fmt library.
+ * @brief Specialization of fmt::formatter for @c thread_module::job_queue.
+ *
+ * Enables formatting of @c job_queue objects as strings using the {fmt} library.
+ *
+ * ### Example
+ * @code
+ * auto queue_ptr = std::make_shared<thread_module::job_queue>();
+ * std::string output = fmt::format("Queue state: {}", *queue_ptr);
+ * @endcode
  */
 template <> struct fmt::formatter<thread_module::job_queue> : fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a job_queue value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param item The job_queue enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
+	 * @brief Formats a @c job_queue object as a string using {fmt}.
+	 * @tparam FormatContext The type of the format context.
+	 * @param item The @c job_queue to format.
+	 * @param ctx  The format context used for output.
+	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
 	auto format(const thread_module::job_queue& item, FormatContext& ctx) const
@@ -227,4 +321,4 @@ template <> struct fmt::formatter<thread_module::job_queue> : fmt::formatter<std
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
-#endif
+#endif // USE_STD_FORMAT
