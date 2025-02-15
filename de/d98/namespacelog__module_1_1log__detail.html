@@ -82,10 +82,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a3c603ab668f8accaf020653b72779105" id="r_a3c603ab668f8accaf020653b72779105"><td class="memItemLeft" align="right" valign="top">constexpr std::array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105">log_type_strings</a> = { &quot;NONE&quot;, &quot;EXCEPTION&quot;, &quot;ERROR&quot;, &quot;INFORMATION&quot;, &quot;DEBUG&quot;, &quot;SEQUENCE&quot;, &quot;PARAMETER&quot; }</td></tr>
-<tr class="memdesc:a3c603ab668f8accaf020653b72779105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of string representations for each log type.  <br /></td></tr>
+<tr class="memdesc:a3c603ab668f8accaf020653b72779105"><td class="mdescLeft">&#160;</td><td class="mdescRight">String representations corresponding to each enumerator in <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a>.  <br /></td></tr>
 <tr class="separator:a3c603ab668f8accaf020653b72779105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fe62eb65ab4da20620746d7cdfb022e" id="r_a5fe62eb65ab4da20620746d7cdfb022e"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d98/namespacelog__module_1_1log__detail.html#a5fe62eb65ab4da20620746d7cdfb022e">log_type_count</a> = log_type_strings.size()</td></tr>
-<tr class="memdesc:a5fe62eb65ab4da20620746d7cdfb022e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of log types available in log_type_strings.  <br /></td></tr>
+<tr class="memdesc:a5fe62eb65ab4da20620746d7cdfb022e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of log types defined in <a class="el" href="../../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105">log_type_strings</a>.  <br /></td></tr>
 <tr class="separator:a5fe62eb65ab4da20620746d7cdfb022e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -109,9 +109,10 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Number of log types available in log_type_strings. </p>
+<p>Total number of log types defined in <a class="el" href="../../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105">log_type_strings</a>. </p>
+<p>Used to validate that the <a class="el" href="../../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105">log_type_strings</a> array remains in sync with the <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> enum. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00072">72</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00084">84</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
 
 </div>
 </div>
@@ -135,17 +136,18 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Array of string representations for each log type. </p>
+<p>String representations corresponding to each enumerator in <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a>. </p>
+<p>The index in this array matches the integer value of each enumerator in <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a>, thus ensuring direct indexing. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00068">68</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>{ <span class="stringliteral">&quot;NONE&quot;</span>, <span class="stringliteral">&quot;EXCEPTION&quot;</span>, <span class="stringliteral">&quot;ERROR&quot;</span>, <span class="stringliteral">&quot;INFORMATION&quot;</span>, <span class="stringliteral">&quot;DEBUG&quot;</span>, <span class="stringliteral">&quot;SEQUENCE&quot;</span>, <span class="stringliteral">&quot;PARAMETER&quot;</span> };</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00075">75</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{ <span class="stringliteral">&quot;NONE&quot;</span>, <span class="stringliteral">&quot;EXCEPTION&quot;</span>, <span class="stringliteral">&quot;ERROR&quot;</span>, <span class="stringliteral">&quot;INFORMATION&quot;</span>, <span class="stringliteral">&quot;DEBUG&quot;</span>, <span class="stringliteral">&quot;SEQUENCE&quot;</span>, <span class="stringliteral">&quot;PARAMETER&quot;</span> };</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

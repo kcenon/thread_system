@@ -1,6 +1,6 @@
 <map id="thread_module::callback_job" name="thread_module::callback_job">
-<area shape="rect" id="Node000001" title=" " alt="" coords="137,511,339,616"/>
-<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="377,263,517,448"/>
+<area shape="rect" id="Node000001" title="A specialized job class that encapsulates a user&#45;defined callback." alt="" coords="137,511,339,616"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="377,263,517,448"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="369,437,292,512,289,509,365,433"/>
 <area shape="rect" id="Node000010" title=" " alt="" coords="363,523,531,603"/>
 <area shape="poly" id="edge10_Node000010_Node000002" title=" " alt="" coords="450,449,450,507,445,507,445,449"/>
@@ -10,7 +10,7 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="450,99,450,134,445,134,445,99"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="421,1244,581,1324"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="516,1243,534,1195,553,1136,568,1070,574,1003,574,562,570,529,560,498,544,468,526,440,530,437,549,465,565,496,575,528,579,562,579,1003,573,1071,558,1137,539,1197,521,1245"/>
-<area shape="rect" id="Node000006" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,821,412,1181"/>
+<area shape="rect" id="Node000006" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,821,412,1181"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="414,1144,469,1229,464,1232,410,1147"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="5,679,185,759"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="137,768,229,882,224,886,133,771"/>

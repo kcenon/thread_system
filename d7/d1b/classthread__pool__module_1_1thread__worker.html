@@ -82,7 +82,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A worker thread class that processes jobs from a job queue.  
+<p>A specialized worker thread that processes jobs from a <code>job_queue</code>.  
  <a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>&gt;</code></p>
@@ -91,8 +91,8 @@ Inheritance diagram for thread_pool_module::thread_worker:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d0a/classthread__pool__module_1_1thread__worker__inherit__graph.png" border="0" usemap="#athread__pool__module_1_1thread__worker_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__pool__module_1_1thread__worker_inherit__map" id="athread__pool__module_1_1thread__worker_inherit__map">
-<area shape="rect" title="A worker thread class that processes jobs from a job queue." alt="" coords="13,539,197,719"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="5,5,205,491"/>
+<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="13,539,197,719"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="5,5,205,491"/>
 <area shape="poly" title=" " alt="" coords="108,504,108,538,103,538,103,504"/>
 </map>
 </div>
@@ -101,8 +101,8 @@ Collaboration diagram for thread_pool_module::thread_worker:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d47/classthread__pool__module_1_1thread__worker__coll__graph.png" border="0" usemap="#athread__pool__module_1_1thread__worker_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__pool__module_1_1thread__worker_coll__map" id="athread__pool__module_1_1thread__worker_coll__map">
-<area shape="rect" title="A worker thread class that processes jobs from a job queue." alt="" coords="361,739,545,899"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="254,291,454,676"/>
+<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="361,739,545,899"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
 <area shape="poly" title=" " alt="" coords="417,689,432,738,427,739,412,690"/>
 <area shape="rect" title=" " alt="" coords="5,155,89,221"/>
 <area shape="poly" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>
@@ -126,13 +126,13 @@ Collaboration diagram for thread_pool_module::thread_worker:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a72dc84ebf79776edb633d05d407c8d4b" id="r_a72dc84ebf79776edb633d05d407c8d4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_worker</a> (const bool &amp;use_time_tag=true)</td></tr>
-<tr class="memdesc:a72dc84ebf79776edb633d05d407c8d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue.">thread_worker</a> object.  <br /></td></tr>
+<tr class="memdesc:a72dc84ebf79776edb633d05d407c8d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code>.  <br /></td></tr>
 <tr class="separator:a72dc84ebf79776edb633d05d407c8d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa59a0a31ba753314c3283828ca21cf97" id="r_aa59a0a31ba753314c3283828ca21cf97"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">~thread_worker</a> (void)</td></tr>
-<tr class="memdesc:aa59a0a31ba753314c3283828ca21cf97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue.">thread_worker</a> class.  <br /></td></tr>
+<tr class="memdesc:aa59a0a31ba753314c3283828ca21cf97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Ensures the worker thread is stopped before destruction.  <br /></td></tr>
 <tr class="separator:aa59a0a31ba753314c3283828ca21cf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced5aa76dbf8bd7221365b750ea5e698" id="r_aced5aa76dbf8bd7221365b750ea5e698"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">set_job_queue</a> (std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; void</td></tr>
-<tr class="memdesc:aced5aa76dbf8bd7221365b750ea5e698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the job queue for this worker to process.  <br /></td></tr>
+<tr class="memdesc:aced5aa76dbf8bd7221365b750ea5e698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <code>job_queue</code> that this worker should process.  <br /></td></tr>
 <tr class="separator:aced5aa76dbf8bd7221365b750ea5e698"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:a0df16877f4bdab741dc5416b5a9b7fc3 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0df16877f4bdab741dc5416b5a9b7fc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base</a> (const <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;)=delete</td></tr>
@@ -144,67 +144,78 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab26ff3e19c859033c44aadd4a279e965 inherit pub_methods_classthread__module_1_1thread__base" id="r_ab26ff3e19c859033c44aadd4a279e965"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab26ff3e19c859033c44aadd4a279e965">operator=</a> (<a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:ab26ff3e19c859033c44aadd4a279e965 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base" id="r_a474a35dca118f83c1c1099eba3eb4748"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a474a35dca118f83c1c1099eba3eb4748">thread_base</a> (const std::string &amp;thread_title=&quot;thread_base&quot;)</td></tr>
-<tr class="memdesc:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> object.  <br /></td></tr>
+<tr class="memdesc:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_base</a></code> object.  <br /></td></tr>
 <tr class="separator:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base" id="r_ac8295fe7ae11d91c9ace8c3774462ff4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ac8295fe7ae11d91c9ace8c3774462ff4">~thread_base</a> (void)</td></tr>
-<tr class="memdesc:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> class.  <br /></td></tr>
+<tr class="memdesc:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Ensures proper cleanup of derived classes.  <br /></td></tr>
 <tr class="separator:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0b52efac73ac776243cac17094a3b3c5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0b52efac73ac776243cac17094a3b3c5">set_wake_interval</a> (const std::optional&lt; std::chrono::milliseconds &gt; &amp;wake_interval) -&gt; void</td></tr>
-<tr class="memdesc:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the wake interval for the worker thread.  <br /></td></tr>
+<tr class="memdesc:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the interval at which the worker thread should wake up (if any).  <br /></td></tr>
 <tr class="separator:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base" id="r_ab23a392279c348d21351d5f4b447ec65"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab23a392279c348d21351d5f4b447ec65">start</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="memdesc:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the worker thread.  <br /></td></tr>
 <tr class="separator:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base" id="r_abac968541edb40cb362d437d9e6fe8e2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#abac968541edb40cb362d437d9e6fe8e2">stop</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the worker thread.  <br /></td></tr>
+<tr class="memdesc:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the worker thread to stop and waits for it to finish.  <br /></td></tr>
 <tr class="separator:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base" id="r_adef149a400f61bf4d9424bcebdc573e0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#adef149a400f61bf4d9424bcebdc573e0">get_thread_title</a> () const -&gt; std::string</td></tr>
-<tr class="memdesc:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the title of the worker thread.  <br /></td></tr>
+<tr class="memdesc:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the worker thread's title.  <br /></td></tr>
 <tr class="separator:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base" id="r_a8b65fa11d19f82a250ac042195f122e3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a8b65fa11d19f82a250ac042195f122e3">is_running</a> () const -&gt; bool</td></tr>
-<tr class="memdesc:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the worker thread is running.  <br /></td></tr>
+<tr class="memdesc:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the worker thread is currently running.  <br /></td></tr>
 <tr class="separator:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0bfb73ba5d38988886db056c46628a09"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> object to a string representation.  <br /></td></tr>
+<tr class="memdesc:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of this <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_base</a></code> object.  <br /></td></tr>
 <tr class="separator:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae38261aaa674556fbff48afd2ca13ab7" id="r_ae38261aaa674556fbff48afd2ca13ab7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">should_continue_work</a> () const -&gt; bool override</td></tr>
-<tr class="memdesc:ae38261aaa674556fbff48afd2ca13ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there is work available in the job queue.  <br /></td></tr>
+<tr class="memdesc:ae38261aaa674556fbff48afd2ca13ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if there are jobs available in the queue to continue working on.  <br /></td></tr>
 <tr class="separator:ae38261aaa674556fbff48afd2ca13ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1bd03c5e5ce80092c3952a90e7488ef" id="r_af1bd03c5e5ce80092c3952a90e7488ef"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef">do_work</a> () -&gt; std::optional&lt; std::string &gt; override</td></tr>
-<tr class="memdesc:af1bd03c5e5ce80092c3952a90e7488ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the actual work by processing jobs from the queue.  <br /></td></tr>
+<tr class="memdesc:af1bd03c5e5ce80092c3952a90e7488ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes one or more jobs from the queue.  <br /></td></tr>
 <tr class="separator:af1bd03c5e5ce80092c3952a90e7488ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base" id="r_ab11ebbfda8f3704f9d20230ef4f96dac"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab11ebbfda8f3704f9d20230ef4f96dac">before_start</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the worker thread starts.  <br /></td></tr>
+<tr class="memdesc:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called just before the worker thread starts running.  <br /></td></tr>
 <tr class="separator:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base" id="r_a9536fc644d617c5060f8b2b6ad8c04ff"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a9536fc644d617c5060f8b2b6ad8c04ff">after_stop</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after the worker thread stops.  <br /></td></tr>
+<tr class="memdesc:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called immediately after the worker thread has stopped.  <br /></td></tr>
 <tr class="separator:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a9d84effb29fed42670e1ab3e0cb2bbe1" id="r_a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a></td></tr>
-<tr class="memdesc:a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating whether to use time tags in job processing.  <br /></td></tr>
+<tr class="memdesc:a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether to use time tags or timestamps for job processing.  <br /></td></tr>
 <tr class="separator:a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff57c34d31b8e5279a00fa23ce54d32a" id="r_aff57c34d31b8e5279a00fa23ce54d32a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a></td></tr>
-<tr class="memdesc:aff57c34d31b8e5279a00fa23ce54d32a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The job queue to process.  <br /></td></tr>
+<tr class="memdesc:aff57c34d31b8e5279a00fa23ce54d32a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A shared pointer to the job queue from which this worker obtains jobs.  <br /></td></tr>
 <tr class="separator:aff57c34d31b8e5279a00fa23ce54d32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base" id="r_a47dad4325d074bf852e643aaf2e8fe95"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::milliseconds &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a47dad4325d074bf852e643aaf2e8fe95">wake_interval_</a></td></tr>
-<tr class="memdesc:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval at which the thread wakes up.  <br /></td></tr>
+<tr class="memdesc:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval at which the thread is optionally awakened.  <br /></td></tr>
 <tr class="separator:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A worker thread class that processes jobs from a job queue. </p>
-<p>This class extends thread_base to create a worker thread that can process jobs from a specified job queue. It provides functionality to set a job queue and override the base class's work-related methods. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00056">56</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<div class="textblock"><p>A specialized worker thread that processes jobs from a <code>job_queue</code>. </p>
+<p>The <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code> class inherits from <code>thread_base</code>, leveraging its life-cycle control methods (<code>start</code>, <code>stop</code>, etc.) and provides an implementation for job processing using a shared <code>job_queue</code>. By overriding <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on.">should_continue_work()</a></code> and <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Processes one or more jobs from the queue.">do_work()</a></code>, it polls the queue for available jobs and executes them.</p>
+<h3><a class="anchor" id="autotoc_md22"></a>
+Typical Usage</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> my_queue = std::make_shared&lt;job_queue&gt;();</div>
+<div class="line"><span class="keyword">auto</span> worker   = std::make_unique&lt;thread_worker&gt;();</div>
+<div class="line">worker-&gt;set_job_queue(my_queue);</div>
+<div class="line">worker-&gt;start(); <span class="comment">// Worker thread begins processing jobs</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Enqueue jobs into my_queue...</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Eventually...</span></div>
+<div class="line">worker-&gt;stop();  <span class="comment">// Waits for current job to finish, then stops</span></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00071">71</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a72dc84ebf79776edb633d05d407c8d4b" name="a72dc84ebf79776edb633d05d407c8d4b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72dc84ebf79776edb633d05d407c8d4b">&#9670;&#160;</a></span>thread_worker()</h2>
@@ -222,21 +233,22 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue.">thread_worker</a> object. </p>
+<p>Constructs a new <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">use_time_tag</td><td>A boolean flag indicating whether to use time tags in job processing (default is true). </td></tr>
+    <tr><td class="paramname">use_time_tag</td><td>If set to <code>true</code> (default), the worker may log or utilize timestamps/tags when processing jobs.</td></tr>
   </table>
   </dd>
 </dl>
+<p>This flag can be used to measure job durations, implement logging with timestamps, or any other time-related features in your job processing. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>(use_time_tag)</div>
 <div class="line"><span class="lineno">   42</span>    {</div>
 <div class="line"><span class="lineno">   43</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">Base class for implementing thread-based workers.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00064">thread_base.h:65</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a9d84effb29fed42670e1ab3e0cb2bbe1"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">thread_pool_module::thread_worker::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdoc">Flag indicating whether to use time tags in job processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00095">thread_worker.h:95</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">The job queue to process.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00098">thread_worker.h:98</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A base class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00073">thread_base.h:74</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a9d84effb29fed42670e1ab3e0cb2bbe1"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">thread_pool_module::thread_worker::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdoc">Indicates whether to use time tags or timestamps for job processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00128">thread_worker.h:128</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A shared pointer to the job queue from which this worker obtains jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00136">thread_worker.h:136</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -264,7 +276,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Virtual destructor for the <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue.">thread_worker</a> class. </p>
+<p>Virtual destructor. Ensures the worker thread is stopped before destruction. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00045">45</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   45</span>{}</div>
@@ -296,12 +308,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Performs the actual work by processing jobs from the queue. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; A tuple containing:<ul>
-<li>bool: Indicates whether the work was successful (true) or not (false).</li>
-<li>std::optional&lt;std::string&gt;: An optional string message, typically used for error descriptions. </li>
-</ul>
-</dd></dl>
+<p>Processes one or more jobs from the queue. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> containing an error message if the work fails, or <code>std::nullopt</code> on success.</dd></dl>
+<p>This method fetches a job from the queue (if available), executes it, and may repeat depending on the implementation. If any job fails, an error message can be returned. Otherwise, return <code>std::nullopt</code> to indicate success. </p>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#af86305f24b3544c9e80138fe2dd87dfa">thread_module::thread_base</a>.</p>
 
@@ -356,19 +365,19 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  110</span> </div>
 <div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line"><span class="lineno">  112</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Format a string using the provided arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00129">formatter.h:129</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00179">formatter.h:179</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_a07ee6e4d0fe0281daff694059ec4d352"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a></div><div class="ttdeci">auto write_sequence(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d8c/logger_8h_source.html#l00136">logger.h:136</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_af1bd03c5e5ce80092c3952a90e7488ef_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_af1bd03c5e5ce80092c3952a90e7488ef_cgraph" alt=""/></div>
 <map name="ad7/d1b/classthread__pool__module_1_1thread__worker_af1bd03c5e5ce80092c3952a90e7488ef_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_af1bd03c5e5ce80092c3952a90e7488ef_cgraph">
-<area shape="rect" title="Performs the actual work by processing jobs from the queue." alt="" coords="5,35,192,75"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="251,5,437,45"/>
+<area shape="rect" title="Processes one or more jobs from the queue." alt="" coords="5,35,192,75"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="251,5,437,45"/>
 <area shape="poly" title=" " alt="" coords="192,41,237,35,237,41,192,46"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,70,448,95"/>
 <area shape="poly" title=" " alt="" coords="192,63,227,67,226,72,192,68"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="496,63,707,103"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,63,707,103"/>
 <area shape="poly" title=" " alt="" coords="448,80,483,80,483,85,448,85"/>
 </map>
 </div>
@@ -391,19 +400,20 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the job queue for this worker to process. </p>
+<p>Sets the <code>job_queue</code> that this worker should process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">job_queue</td><td>A shared pointer to the job queue. </td></tr>
+    <tr><td class="paramname">job_queue</td><td>A shared pointer to the queue containing jobs.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Once the queue is set and <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab23a392279c348d21351d5f4b447ec65" title="Starts the worker thread.">start()</a></code> is called, the worker will repeatedly poll the queue for new jobs and process them. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>    {</div>
 <div class="line"><span class="lineno">   49</span>        <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> = <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>;</div>
 <div class="line"><span class="lineno">   50</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">Represents a thread-safe queue for managing jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00059">job_queue.h:60</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00073">job_queue.h:74</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -431,8 +441,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Checks if there is work available in the job queue. </p>
-<dl class="section return"><dt>Returns</dt><dd>bool True if there is work to be done, false otherwise. </dd></dl>
+<p>Determines if there are jobs available in the queue to continue working on. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is work in the queue, <code>false</code> otherwise.</dd></dl>
+<p>Called in the thread's main loop (defined by <code>thread_base</code>) to decide if <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Processes one or more jobs from the queue.">do_work()</a></code> should be invoked. Returns <code>true</code> if the job queue is not empty; otherwise, <code>false</code>. </p>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base</a>.</p>
 
@@ -450,8 +461,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" alt=""/></div>
 <map name="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph">
-<area shape="rect" title="Checks if there is work available in the job queue." alt="" coords="5,5,180,60"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a" title="Checks if the queue is empty." alt="" coords="228,13,376,53"/>
+<area shape="rect" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
 <area shape="poly" title=" " alt="" coords="180,30,214,30,214,35,180,35"/>
 </map>
 </div>
@@ -479,9 +490,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>The job queue to process. </p>
+<p>A shared pointer to the job queue from which this worker obtains jobs. </p>
+<p>Multiple workers can share the same queue, enabling concurrent processing of queued jobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00098">98</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00136">136</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -505,9 +517,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Flag indicating whether to use time tags in job processing. </p>
+<p>Indicates whether to use time tags or timestamps for job processing. </p>
+<p>When <code>true</code>, the worker might record timestamps (e.g., job start/end times) or log them for debugging/monitoring. The exact usage depends on the job and override details in derived classes. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00095">95</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00128">128</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -518,7 +531,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

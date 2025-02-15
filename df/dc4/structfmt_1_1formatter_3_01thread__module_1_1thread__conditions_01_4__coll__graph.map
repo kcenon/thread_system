@@ -1,5 +1,5 @@
 <map id="fmt::formatter&lt; thread_module::thread_conditions &gt;" name="fmt::formatter&lt; thread_module::thread_conditions &gt;">
-<area shape="rect" id="Node000001" title="Specialization of fmt::formatter for thread_conditions. Enables formatting of thread_conditions enum ..." alt="" coords="5,133,215,213"/>
+<area shape="rect" id="Node000001" title="Specialization of fmt::formatter for thread_module::thread_conditions." alt="" coords="5,133,215,213"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="39,5,181,85"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,99,113,133,107,133,107,99"/>
 </map>

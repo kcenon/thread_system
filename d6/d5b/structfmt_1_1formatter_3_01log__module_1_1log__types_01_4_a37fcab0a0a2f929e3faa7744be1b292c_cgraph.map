@@ -1,5 +1,5 @@
 <map id="fmt::formatter&lt; log_module::log_types &gt;::format" name="fmt::formatter&lt; log_module::log_types &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a log_type value as a string." alt="" coords="5,5,169,60"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b" title="Converts a log_types value to its string representation." alt="" coords="217,20,380,45"/>
+<area shape="rect" id="Node000001" title="Formats a log_module::log_types enumerator as a string." alt="" coords="5,5,169,60"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b" title="Retrieves the string representation of a given log_types value." alt="" coords="217,20,380,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,30,204,30,204,35,169,35"/>
 </map>

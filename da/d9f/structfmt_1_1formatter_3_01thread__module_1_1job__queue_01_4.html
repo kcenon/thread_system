@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Specialization of fmt::formatter for job_queue. Enables formatting of job_queue enum values using the fmt library.  
+<p>Specialization of fmt::formatter for <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">thread_module::job_queue</a></code>.  
  <a href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>&gt;</code></p>
@@ -89,7 +89,7 @@ Inheritance diagram for fmt::formatter&lt; thread_module::job_queue &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d82/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4__inherit__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_inherit__map" id="afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_inherit__map">
-<area shape="rect" title="Specialization of fmt::formatter for job_queue. Enables formatting of job_queue enum values using the..." alt="" coords="5,133,169,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::job_queue." alt="" coords="5,133,169,213"/>
 <area shape="rect" title=" " alt="" coords="16,5,159,85"/>
 <area shape="poly" title=" " alt="" coords="90,99,90,133,85,133,85,99"/>
 </map>
@@ -99,7 +99,7 @@ Collaboration diagram for fmt::formatter&lt; thread_module::job_queue &gt;:</div
 <div class="dyncontent">
 <div class="center"><img src="../../d7/dde/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4__coll__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_coll__map" id="afmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_coll__map">
-<area shape="rect" title="Specialization of fmt::formatter for job_queue. Enables formatting of job_queue enum values using the..." alt="" coords="5,133,169,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::job_queue." alt="" coords="5,133,169,213"/>
 <area shape="rect" title=" " alt="" coords="16,5,159,85"/>
 <area shape="poly" title=" " alt="" coords="90,99,90,133,85,133,85,99"/>
 </map>
@@ -109,13 +109,18 @@ Collaboration diagram for fmt::formatter&lt; thread_module::job_queue &gt;:</div
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abf5af410db80a96817ebabaf78dd4b29" id="r_abf5af410db80a96817ebabaf78dd4b29"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
 <tr class="memitem:abf5af410db80a96817ebabaf78dd4b29"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29">format</a> (const <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a> &amp;item, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:abf5af410db80a96817ebabaf78dd4b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a job_queue value as a string.  <br /></td></tr>
+<tr class="memdesc:abf5af410db80a96817ebabaf78dd4b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a <code>job_queue</code> object as a string using {fmt}.  <br /></td></tr>
 <tr class="separator:abf5af410db80a96817ebabaf78dd4b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Specialization of fmt::formatter for job_queue. Enables formatting of job_queue enum values using the fmt library. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00215">215</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">thread_module::job_queue</a></code>. </p>
+<p>Enables formatting of <code>job_queue</code> objects as strings using the {fmt} library.</p>
+<h3><a class="anchor" id="autotoc_md14"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> queue_ptr = std::make_shared&lt;thread_module::job_queue&gt;();</div>
+<div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Queue state: {}&quot;</span>, *queue_ptr);</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00309">309</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="abf5af410db80a96817ebabaf78dd4b29" name="abf5af410db80a96817ebabaf78dd4b29"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf5af410db80a96817ebabaf78dd4b29">&#9670;&#160;</a></span>format()</h2>
@@ -153,36 +158,36 @@ template&lt;typename FormatContext &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Formats a job_queue value as a string. </p>
+<p>Formats a <code>job_queue</code> object as a string using {fmt}. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">FormatContext</td><td>Type of the format context. </td></tr>
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td>The job_queue enum value to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>Format context for the output. </td></tr>
+    <tr><td class="paramname">item</td><td>The <code>job_queue</code> to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context used for output. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the formatted output. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00225">225</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  226</span>    {</div>
-<div class="line"><span class="lineno">  227</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  228</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a0e00514f9423ff2e33ae9c6bb116943f"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">thread_module::job_queue::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Converts the job queue to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00132">job_queue.cpp:132</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00319">319</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  320</span>    {</div>
+<div class="line"><span class="lineno">  321</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  322</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a0e00514f9423ff2e33ae9c6bb116943f"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">thread_module::job_queue::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this job_queue.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00132">job_queue.cpp:132</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_abf5af410db80a96817ebabaf78dd4b29_cgraph.png" border="0" usemap="#ada/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_abf5af410db80a96817ebabaf78dd4b29_cgraph" alt=""/></div>
 <map name="ada/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_abf5af410db80a96817ebabaf78dd4b29_cgraph" id="ada/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_abf5af410db80a96817ebabaf78dd4b29_cgraph">
-<area shape="rect" title="Formats a job_queue value as a string." alt="" coords="5,5,181,60"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Converts the job queue to a string representation." alt="" coords="229,13,377,53"/>
+<area shape="rect" title="Formats a job_queue object as a string using {fmt}." alt="" coords="5,5,181,60"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Returns a string representation of this job_queue." alt="" coords="229,13,377,53"/>
 <area shape="poly" title=" " alt="" coords="181,30,215,30,215,35,181,35"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="425,13,612,53"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="425,13,612,53"/>
 <area shape="poly" title=" " alt="" coords="378,30,412,30,412,35,378,35"/>
 </map>
 </div>
@@ -195,7 +200,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <map id="log_module::implementation::logger::time_point" name="log_module::implementation::logger::time_point">
-<area shape="rect" id="Node000001" title="Gets the current time point using a high&#45;resolution clock." alt="" coords="264,37,475,77"/>
-<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message to the log collector, with optional timestamp." alt="" coords="5,5,216,45"/>
+<area shape="rect" id="Node000001" title="Retrieves the current time point from a high&#45;resolution clock." alt="" coords="264,37,475,77"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="5,5,216,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,45,216,41,216,36,251,40"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional timestamp." alt="" coords="5,69,216,109"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="5,69,216,109"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,75,216,79,216,74,250,69"/>
 </map>

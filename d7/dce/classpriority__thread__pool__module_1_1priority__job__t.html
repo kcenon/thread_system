@@ -81,16 +81,19 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Represents a job that carries a specific priority level.  
+ <a href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for priority_thread_pool_module::priority_job_t&lt; priority_type &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d90/classpriority__thread__pool__module_1_1priority__job__t__inherit__graph.png" border="0" usemap="#apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_inherit__map" id="apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_inherit__map">
-<area shape="rect" title=" " alt="" coords="23,259,175,453"/>
-<area shape="rect" href="../../d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title=" " alt="" coords="5,501,192,651"/>
+<area shape="rect" title="Represents a job that carries a specific priority level." alt="" coords="23,259,175,453"/>
+<area shape="rect" href="../../d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="5,501,192,651"/>
 <area shape="poly" title=" " alt="" coords="101,467,101,501,96,501,96,467"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="29,5,169,211"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="29,5,169,211"/>
 <area shape="poly" title=" " alt="" coords="101,225,101,258,96,258,96,225"/>
 </map>
 </div>
@@ -99,8 +102,8 @@ Collaboration diagram for priority_thread_pool_module::priority_job_t&lt; priori
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d73/classpriority__thread__pool__module_1_1priority__job__t__coll__graph.png" border="0" usemap="#apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_coll__map" id="apriority__thread__pool__module_1_1priority__job__t_3_01priority__type_01_4_coll__map">
-<area shape="rect" title=" " alt="" coords="647,1141,799,1316"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="463,893,603,1079"/>
+<area shape="rect" title="Represents a job that carries a specific priority level." alt="" coords="647,1141,799,1316"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="463,893,603,1079"/>
 <area shape="poly" title=" " alt="" coords="613,1085,657,1140,653,1143,609,1088"/>
 <area shape="rect" title=" " alt="" coords="363,1189,531,1269"/>
 <area shape="poly" title=" " alt="" coords="503,1080,469,1174,464,1172,498,1078"/>
@@ -110,7 +113,7 @@ Collaboration diagram for priority_thread_pool_module::priority_job_t&lt; priori
 <area shape="poly" title=" " alt="" coords="509,450,511,643,506,643,504,450"/>
 <area shape="rect" title=" " alt="" coords="421,1944,581,2024"/>
 <area shape="poly" title=" " alt="" coords="516,1943,534,1895,553,1836,568,1770,574,1703,574,1227,569,1160,558,1095,564,1094,575,1160,579,1227,579,1703,573,1771,558,1837,539,1897,521,1945"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,1521,412,1881"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,1521,412,1881"/>
 <area shape="poly" title=" " alt="" coords="414,1844,469,1929,464,1932,410,1847"/>
 <area shape="rect" title=" " alt="" coords="5,1379,185,1459"/>
 <area shape="poly" title=" " alt="" coords="137,1468,229,1582,224,1586,133,1471"/>
@@ -139,60 +142,68 @@ Collaboration diagram for priority_thread_pool_module::priority_job_t&lt; priori
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a85200cd44cab22eb8013da64f6a03ebc" id="r_a85200cd44cab22eb8013da64f6a03ebc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a85200cd44cab22eb8013da64f6a03ebc">priority_job_t</a> (priority_type <a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a7c621bc2dace12ddf09dfeb0863243d0">priority</a>, const std::string &amp;name=&quot;priority_job&quot;)</td></tr>
-<tr class="memdesc:a85200cd44cab22eb8013da64f6a03ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="../../d4/d46/classpriority__job.html" title="Represents a job with a priority level.">priority_job</a> object.  <br /></td></tr>
+<tr class="memdesc:a85200cd44cab22eb8013da64f6a03ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a></code> object with the given priority and name.  <br /></td></tr>
 <tr class="separator:a85200cd44cab22eb8013da64f6a03ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a918e97fbcd165adc368306fefed97b07" id="r_a918e97fbcd165adc368306fefed97b07"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a918e97fbcd165adc368306fefed97b07">~priority_job_t</a> (void) override</td></tr>
-<tr class="memdesc:a918e97fbcd165adc368306fefed97b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <a class="el" href="../../d4/d46/classpriority__job.html" title="Represents a job with a priority level.">priority_job</a> class.  <br /></td></tr>
+<tr class="memdesc:a918e97fbcd165adc368306fefed97b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <code><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a></code> object.  <br /></td></tr>
 <tr class="separator:a918e97fbcd165adc368306fefed97b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c621bc2dace12ddf09dfeb0863243d0" id="r_a7c621bc2dace12ddf09dfeb0863243d0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a7c621bc2dace12ddf09dfeb0863243d0">priority</a> () const -&gt; priority_type</td></tr>
-<tr class="memdesc:a7c621bc2dace12ddf09dfeb0863243d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the priority level of the job.  <br /></td></tr>
+<tr class="memdesc:a7c621bc2dace12ddf09dfeb0863243d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the priority level of this job.  <br /></td></tr>
 <tr class="separator:a7c621bc2dace12ddf09dfeb0863243d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd6c0be55d0ad4cba9f3c9d1383f24cc" id="r_afd6c0be55d0ad4cba9f3c9d1383f24cc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#afd6c0be55d0ad4cba9f3c9d1383f24cc">set_job_queue</a> (const std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; &amp;<a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; void override</td></tr>
-<tr class="memdesc:afd6c0be55d0ad4cba9f3c9d1383f24cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the job queue for this job.  <br /></td></tr>
+<tr class="memdesc:afd6c0be55d0ad4cba9f3c9d1383f24cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates this job with a particular job queue.  <br /></td></tr>
 <tr class="separator:afd6c0be55d0ad4cba9f3c9d1383f24cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2469cc3641adc82626413165d5eecb55" id="r_a2469cc3641adc82626413165d5eecb55"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a2469cc3641adc82626413165d5eecb55">get_job_queue</a> (void) const -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; override</td></tr>
-<tr class="memdesc:a2469cc3641adc82626413165d5eecb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the job queue associated with this job.  <br /></td></tr>
+<tr class="memdesc:a2469cc3641adc82626413165d5eecb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the job queue that currently manages this job, if any.  <br /></td></tr>
 <tr class="separator:a2469cc3641adc82626413165d5eecb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1job"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1job')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></td></tr>
 <tr class="memitem:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job" id="r_aa314ee0ab4b682df44690c1e9f26153c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">job</a> (const std::string &amp;name=&quot;job&quot;)</td></tr>
-<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new job object.  <br /></td></tr>
+<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code>job</code> with an optional name.  <br /></td></tr>
 <tr class="separator:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job" id="r_a36ea6e441be4f5806901e147cd0015f5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a36ea6e441be4f5806901e147cd0015f5">~job</a> (void)</td></tr>
-<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the job class.  <br /></td></tr>
+<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <code>job</code> class.  <br /></td></tr>
 <tr class="separator:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job" id="r_a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a0ce9f22db0cfb74ea2f07643a8d3ff99">get_name</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the job.  <br /></td></tr>
+<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of this job.  <br /></td></tr>
 <tr class="separator:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07d8178b7c60d4e6dac22de11b2c9891 inherit pub_methods_classthread__module_1_1job" id="r_a07d8178b7c60d4e6dac22de11b2c9891"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891">do_work</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a07d8178b7c60d4e6dac22de11b2c9891 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the job's work.  <br /></td></tr>
+<tr class="memdesc:a07d8178b7c60d4e6dac22de11b2c9891 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the job's work.  <br /></td></tr>
 <tr class="separator:a07d8178b7c60d4e6dac22de11b2c9891 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job" id="r_a44c5a6eff1846e0a57be106578821ab1"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representation of the job.  <br /></td></tr>
+<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the job.  <br /></td></tr>
 <tr class="separator:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a4523ca3b0d1215f4a6da7e9cdb20a4f7" id="r_a4523ca3b0d1215f4a6da7e9cdb20a4f7"><td class="memItemLeft" align="right" valign="top">priority_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a4523ca3b0d1215f4a6da7e9cdb20a4f7">priority_</a></td></tr>
-<tr class="memdesc:a4523ca3b0d1215f4a6da7e9cdb20a4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The priority level of the job.  <br /></td></tr>
+<tr class="memdesc:a4523ca3b0d1215f4a6da7e9cdb20a4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The priority level assigned to this job.  <br /></td></tr>
 <tr class="separator:a4523ca3b0d1215f4a6da7e9cdb20a4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeee22b12b08e8759444d6e4210b44a18" id="r_aeee22b12b08e8759444d6e4210b44a18"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html">priority_job_queue_t</a>&lt; priority_type &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#aeee22b12b08e8759444d6e4210b44a18">job_queue_</a></td></tr>
-<tr class="memdesc:aeee22b12b08e8759444d6e4210b44a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">A weak pointer to the associated priority job queue.  <br /></td></tr>
+<tr class="memdesc:aeee22b12b08e8759444d6e4210b44a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">A weak pointer to the priority job queue managing this job.  <br /></td></tr>
 <tr class="separator:aeee22b12b08e8759444d6e4210b44a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classthread__module_1_1job"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classthread__module_1_1job')"><img src="../../closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></td></tr>
 <tr class="memitem:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job" id="r_ac01785f3d30005f2ad40f840504c5e6f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a></td></tr>
-<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job.  <br /></td></tr>
+<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job, provided during construction.  <br /></td></tr>
 <tr class="separator:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job" id="r_aed0248a449f4e341057aa29c0369e625"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a></td></tr>
-<tr class="memdesc:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer to the associated job queue.  <br /></td></tr>
+<tr class="memdesc:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">A weak pointer to the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> that manages this job.  <br /></td></tr>
 <tr class="separator:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename priority_type&gt;<br />
-class priority_thread_pool_module::priority_job_t&lt; priority_type &gt;</div>
-<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00054">54</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
+class priority_thread_pool_module::priority_job_t&lt; priority_type &gt;</div><p>Represents a job that carries a specific priority level. </p>
+<p>This class extends the base <code>job</code> interface to include a priority value that is used by a priority-based scheduling system. The class also keeps a weak reference to a <code><a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template-based queue that manages jobs with distinct priority levels.">priority_job_queue_t</a></code>, which manages this job. By using a weak pointer, the queue avoids circular references that could prevent proper resource cleanup.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">priority_type</td><td>The data type used to represent the priority level. Typically, an enum or an integral type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00057">57</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a85200cd44cab22eb8013da64f6a03ebc" name="a85200cd44cab22eb8013da64f6a03ebc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85200cd44cab22eb8013da64f6a03ebc">&#9670;&#160;</a></span>priority_job_t()</h2>
@@ -222,12 +233,11 @@ template&lt;typename priority_type &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="../../d4/d46/classpriority__job.html" title="Represents a job with a priority level.">priority_job</a> object. </p>
+<p>Constructs a new <code><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a></code> object with the given priority and name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">callback</td><td>The function to be executed when the job is processed. </td></tr>
-    <tr><td class="paramname">priority</td><td>The priority level of the job. </td></tr>
-    <tr><td class="paramname">name</td><td>The name of the job (default is "priority_job"). </td></tr>
+    <tr><td class="paramname">priority</td><td>The priority level for this job. Higher values could indicate higher priority, depending on your scheduling logic. </td></tr>
+    <tr><td class="paramname">name</td><td>An optional name for the job, useful for debugging or logging. Defaults to "priority_job". </td></tr>
   </table>
   </dd>
 </dl>
@@ -260,7 +270,8 @@ template&lt;typename priority_type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Virtual destructor for the <a class="el" href="../../d4/d46/classpriority__job.html" title="Represents a job with a priority level.">priority_job</a> class. </p>
+<p>Destroys the <code><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a></code> object. </p>
+<p>The destructor is virtual to ensure proper cleanup in derived classes. </p>
 
 </div>
 </div>
@@ -291,8 +302,9 @@ template&lt;typename priority_type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the job queue associated with this job. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;job_queue&gt; A shared pointer to the associated priority job queue. </dd></dl>
+<p>Gets the job queue that currently manages this job, if any. </p>
+<p>Because the queue is stored as a weak pointer, the returned <code>shared_ptr</code> may be empty if the queue is no longer valid.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr&lt;job_queue&gt;</code> pointing to the job's managing queue, or an empty pointer if the queue has expired or was never set. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../d8/d42/classthread__module_1_1job.html#a6345451335e42ee86e5e020dce2fa7a2">thread_module::job</a>.</p>
 
@@ -315,8 +327,8 @@ template&lt;typename priority_type &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get the priority level of the job. </p>
-<dl class="section return"><dt>Returns</dt><dd>priority_type The priority level of the job. </dd></dl>
+<p>Retrieves the priority level of this job. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <code>priority_type</code> value that indicates this job's priority. </dd></dl>
 
 </div>
 </div>
@@ -346,10 +358,11 @@ template&lt;typename priority_type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the job queue for this job. </p>
+<p>Associates this job with a particular job queue. </p>
+<p>Internally, this method stores the queue reference as a <code>std::weak_ptr</code> to avoid circular dependencies. Once set, the job can be scheduled and managed by the provided queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">job_queue</td><td>A shared pointer to the priority job queue. </td></tr>
+    <tr><td class="paramname">job_queue</td><td>A <code>std::shared_ptr</code> to the job queue that will manage this job. </td></tr>
   </table>
   </dd>
 </dl>
@@ -381,9 +394,10 @@ template&lt;typename priority_type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>A weak pointer to the associated priority job queue. </p>
+<p>A weak pointer to the priority job queue managing this job. </p>
+<p>This prevents a cyclic reference between the job and the queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00093">93</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00118">118</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
 
 </div>
 </div>
@@ -409,9 +423,9 @@ template&lt;typename priority_type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>The priority level of the job. </p>
+<p>The priority level assigned to this job. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00090">90</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d1e/priority__job_8h_source.html#l00111">111</a> of file <a class="el" href="../../da/d1e/priority__job_8h_source.html">priority_job.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +435,7 @@ template&lt;typename priority_type &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

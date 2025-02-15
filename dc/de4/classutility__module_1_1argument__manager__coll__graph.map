@@ -1,5 +1,5 @@
 <map id="utility_module::argument_manager" name="utility_module::argument_manager">
-<area shape="rect" id="Node000001" title="Manages command line arguments and provides type&#45;safe retrieval of values." alt="" coords="5,420,184,740"/>
+<area shape="rect" id="Node000001" title="A utility class for parsing and managing command&#45;line arguments." alt="" coords="5,420,184,740"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="17,277,172,357"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,358,97,403,92,403,92,358"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="55,135,134,200"/>

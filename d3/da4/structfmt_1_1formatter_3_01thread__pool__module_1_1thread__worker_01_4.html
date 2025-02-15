@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Specialization of fmt::formatter for thread_worker. Enables formatting of thread_worker enum values using the fmt library.  
+<p>Specialization of fmt::formatter for <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_pool_module::thread_worker</a></code>.  
  <a href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>&gt;</code></p>
@@ -89,7 +89,7 @@ Inheritance diagram for fmt::formatter&lt; thread_pool_module::thread_worker &gt
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d5d/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4__inherit__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_inherit__map" id="afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_inherit__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_worker. Enables formatting of thread_worker enum values u..." alt="" coords="5,133,227,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_pool_module::thread_worker." alt="" coords="5,133,227,213"/>
 <area shape="rect" title=" " alt="" coords="45,5,187,85"/>
 <area shape="poly" title=" " alt="" coords="119,99,119,133,113,133,113,99"/>
 </map>
@@ -99,7 +99,7 @@ Collaboration diagram for fmt::formatter&lt; thread_pool_module::thread_worker &
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d41/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4__coll__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_coll__map" id="afmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_coll__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_worker. Enables formatting of thread_worker enum values u..." alt="" coords="5,133,227,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_pool_module::thread_worker." alt="" coords="5,133,227,213"/>
 <area shape="rect" title=" " alt="" coords="45,5,187,85"/>
 <area shape="poly" title=" " alt="" coords="119,99,119,133,113,133,113,99"/>
 </map>
@@ -109,13 +109,18 @@ Collaboration diagram for fmt::formatter&lt; thread_pool_module::thread_worker &
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad8a4148b4d82df8d047f84254965eccc" id="r_ad8a4148b4d82df8d047f84254965eccc"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
 <tr class="memitem:ad8a4148b4d82df8d047f84254965eccc"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc">format</a> (const <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html">thread_pool_module::thread_worker</a> &amp;item, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:ad8a4148b4d82df8d047f84254965eccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a thread_worker value as a string.  <br /></td></tr>
+<tr class="memdesc:ad8a4148b4d82df8d047f84254965eccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a <code>thread_worker</code> object as a string.  <br /></td></tr>
 <tr class="separator:ad8a4148b4d82df8d047f84254965eccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Specialization of fmt::formatter for thread_worker. Enables formatting of thread_worker enum values using the fmt library. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00154">154</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_pool_module::thread_worker</a></code>. </p>
+<p>Allows <code>thread_worker</code> objects to be formatted as strings using the {fmt} library.</p>
+<h3><a class="anchor" id="autotoc_md21"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> worker = std::make_unique&lt;thread_pool_module::thread_worker&gt;();</div>
+<div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Worker status: {}&quot;</span>, *worker);</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00213">213</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad8a4148b4d82df8d047f84254965eccc" name="ad8a4148b4d82df8d047f84254965eccc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad8a4148b4d82df8d047f84254965eccc">&#9670;&#160;</a></span>format()</h2>
@@ -153,36 +158,36 @@ template&lt;typename FormatContext &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Formats a thread_worker value as a string. </p>
+<p>Formats a <code>thread_worker</code> object as a string. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">FormatContext</td><td>Type of the format context. </td></tr>
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The thread_worker enum value to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>Format context for the output. </td></tr>
+    <tr><td class="paramname">item</td><td>The <code>thread_worker</code> to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context for output. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the formatted output. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00164">164</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  165</span>    {</div>
-<div class="line"><span class="lineno">  166</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  167</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_a0bfb73ba5d38988886db056c46628a09"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Converts the thread_base object to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00222">thread_base.cpp:222</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00223">223</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  224</span>    {</div>
+<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  226</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html_a0bfb73ba5d38988886db056c46628a09"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this thread_base object.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00222">thread_base.cpp:222</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_ad8a4148b4d82df8d047f84254965eccc_cgraph.png" border="0" usemap="#ad3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_ad8a4148b4d82df8d047f84254965eccc_cgraph" alt=""/></div>
 <map name="ad3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_ad8a4148b4d82df8d047f84254965eccc_cgraph" id="ad3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_ad8a4148b4d82df8d047f84254965eccc_cgraph">
-<area shape="rect" title="Formats a thread_worker value as a string." alt="" coords="5,5,220,60"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Converts the thread_base object to a string representation." alt="" coords="268,13,439,53"/>
+<area shape="rect" title="Formats a thread_worker object as a string." alt="" coords="5,5,220,60"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Returns a string representation of this thread_base object." alt="" coords="268,13,439,53"/>
 <area shape="poly" title=" " alt="" coords="220,30,254,30,254,35,220,35"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="487,13,673,53"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="487,13,673,53"/>
 <area shape="poly" title=" " alt="" coords="439,30,473,30,473,35,439,35"/>
 </map>
 </div>
@@ -195,7 +200,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

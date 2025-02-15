@@ -1,7 +1,7 @@
 <map id="log_module::write_error" name="log_module::write_error">
 <area shape="rect" id="Node000001" title=" " alt="" coords="459,13,636,38"/>
-<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool." alt="" coords="256,5,411,45"/>
+<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,5,411,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,28,411,28,411,23,445,23"/>
-<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor for the thread_pool class." alt="" coords="5,5,208,45"/>
+<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,5,208,45"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,28,208,28,208,23,242,23"/>
 </map>

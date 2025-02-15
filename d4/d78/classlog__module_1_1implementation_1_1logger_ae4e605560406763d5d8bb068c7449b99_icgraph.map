@@ -1,5 +1,5 @@
 <map id="log_module::implementation::logger::handle" name="log_module::implementation::logger::handle">
-<area shape="rect" id="Node000001" title="Gets the singleton instance of the logger." alt="" coords="797,1117,1008,1157"/>
+<area shape="rect" id="Node000001" title="Retrieves the singleton instance of the logger." alt="" coords="797,1117,1008,1157"/>
 <area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#aafba6e347e5de0180d46dc2144317054" title=" " alt="" coords="558,5,718,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="899,1103,894,893,887,743,875,579,856,416,830,266,813,201,794,143,772,95,747,59,734,47,717,38,719,34,737,43,751,56,776,93,799,141,818,199,835,265,861,415,880,579,893,742,900,893,904,1103"/>
 <area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a250c6bab2fe920d1fc947b0b890a490c" title=" " alt="" coords="558,69,718,109"/>
@@ -92,10 +92,10 @@
 <area shape="poly" id="edge26_Node000017_Node000027" title=" " alt="" coords="624,1239,600,1274,567,1315,527,1356,480,1390,448,1404,446,1399,477,1386,523,1352,563,1311,596,1270,619,1236"/>
 <area shape="poly" id="edge27_Node000017_Node000028" title=" " alt="" coords="629,1240,607,1284,575,1339,533,1394,508,1419,480,1441,452,1455,450,1450,477,1436,504,1415,529,1391,571,1336,603,1281,624,1238"/>
 <area shape="poly" id="edge28_Node000017_Node000029" title=" " alt="" coords="632,1240,614,1293,583,1361,539,1432,511,1464,480,1492,454,1506,452,1501,477,1487,508,1460,535,1429,578,1359,609,1291,627,1238"/>
-<area shape="rect" id="Node000033" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool." alt="" coords="290,1647,445,1687"/>
+<area shape="rect" id="Node000033" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="290,1647,445,1687"/>
 <area shape="poly" id="edge34_Node000032_Node000033" title=" " alt="" coords="536,1669,445,1669,445,1664,536,1664"/>
-<area shape="rect" id="Node000034" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor for the thread_pool class." alt="" coords="5,1647,208,1687"/>
+<area shape="rect" id="Node000034" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,1647,208,1687"/>
 <area shape="poly" id="edge35_Node000033_Node000034" title=" " alt="" coords="277,1669,208,1669,208,1664,277,1664"/>
-<area shape="rect" id="Node000043" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="274,2041,461,2081"/>
+<area shape="rect" id="Node000043" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Processes one or more jobs from the queue." alt="" coords="274,2041,461,2081"/>
 <area shape="poly" id="edge52_Node000042_Node000043" title=" " alt="" coords="520,2064,461,2064,461,2059,520,2059"/>
 </map>

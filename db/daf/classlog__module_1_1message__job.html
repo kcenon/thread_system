@@ -91,7 +91,7 @@ Inheritance diagram for log_module::message_job:</div>
 <div class="center"><img src="../../dc/d93/classlog__module_1_1message__job__inherit__graph.png" border="0" usemap="#alog__module_1_1message__job_inherit__map" alt="Inheritance graph"/></div>
 <map name="alog__module_1_1message__job_inherit__map" id="alog__module_1_1message__job_inherit__map">
 <area shape="rect" title="Represents a console logging job derived from the base job class." alt="" coords="5,259,189,444"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="27,5,167,211"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="27,5,167,211"/>
 <area shape="poly" title=" " alt="" coords="100,224,100,258,95,258,95,224"/>
 </map>
 </div>
@@ -101,7 +101,7 @@ Collaboration diagram for log_module::message_job:</div>
 <div class="center"><img src="../../d7/daf/classlog__module_1_1message__job__coll__graph.png" border="0" usemap="#alog__module_1_1message__job_coll__map" alt="Collaboration graph"/></div>
 <map name="alog__module_1_1message__job_coll__map" id="alog__module_1_1message__job_coll__map">
 <area shape="rect" title="Represents a console logging job derived from the base job class." alt="" coords="155,511,339,656"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="359,263,499,448"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="359,263,499,448"/>
 <area shape="poly" title=" " alt="" coords="352,456,307,512,303,509,348,453"/>
 <area shape="rect" title=" " alt="" coords="363,543,531,623"/>
 <area shape="poly" title=" " alt="" coords="439,448,445,527,440,528,434,449"/>
@@ -112,7 +112,7 @@ Collaboration diagram for log_module::message_job:</div>
 <area shape="poly" title=" " alt="" coords="275,99,275,134,270,134,270,99"/>
 <area shape="rect" title=" " alt="" coords="421,1284,581,1364"/>
 <area shape="poly" title=" " alt="" coords="516,1283,534,1235,553,1176,568,1110,574,1043,574,582,568,541,554,502,532,466,507,434,512,431,537,463,558,500,574,540,579,582,579,1043,573,1111,558,1177,539,1237,521,1285"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,861,412,1221"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,861,412,1221"/>
 <area shape="poly" title=" " alt="" coords="414,1184,469,1269,464,1272,410,1187"/>
 <area shape="rect" title=" " alt="" coords="5,719,185,799"/>
 <area shape="poly" title=" " alt="" coords="137,808,229,922,224,926,133,811"/>
@@ -136,29 +136,29 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adab3f496883d8719f045db31096d53bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the timestamp associated with the log message.  <br /></td></tr>
 <tr class="separator:adab3f496883d8719f045db31096d53bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab456b5a13c2e86a7e68e93aa4f8cac6a" id="r_ab456b5a13c2e86a7e68e93aa4f8cac6a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a">message</a> (const bool &amp;append_newline=false) const -&gt; std::string</td></tr>
-<tr class="memdesc:ab456b5a13c2e86a7e68e93aa4f8cac6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the log message with optional newline.  <br /></td></tr>
+<tr class="memdesc:ab456b5a13c2e86a7e68e93aa4f8cac6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the log message with an optional newline appended.  <br /></td></tr>
 <tr class="separator:ab456b5a13c2e86a7e68e93aa4f8cac6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0725c4e289d08a6064496b2b4691c8a5" id="r_a0725c4e289d08a6064496b2b4691c8a5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/daf/classlog__module_1_1message__job.html#a0725c4e289d08a6064496b2b4691c8a5">do_work</a> () -&gt; std::optional&lt; std::string &gt; override</td></tr>
 <tr class="memdesc:a0725c4e289d08a6064496b2b4691c8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the console logging operation.  <br /></td></tr>
 <tr class="separator:a0725c4e289d08a6064496b2b4691c8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1job"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1job')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></td></tr>
 <tr class="memitem:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job" id="r_aa314ee0ab4b682df44690c1e9f26153c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">job</a> (const std::string &amp;name=&quot;job&quot;)</td></tr>
-<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new job object.  <br /></td></tr>
+<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code>job</code> with an optional name.  <br /></td></tr>
 <tr class="separator:aa314ee0ab4b682df44690c1e9f26153c inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job" id="r_a36ea6e441be4f5806901e147cd0015f5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a36ea6e441be4f5806901e147cd0015f5">~job</a> (void)</td></tr>
-<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the job class.  <br /></td></tr>
+<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <code>job</code> class.  <br /></td></tr>
 <tr class="separator:a36ea6e441be4f5806901e147cd0015f5 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job" id="r_a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a0ce9f22db0cfb74ea2f07643a8d3ff99">get_name</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the job.  <br /></td></tr>
+<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of this job.  <br /></td></tr>
 <tr class="separator:a0ce9f22db0cfb74ea2f07643a8d3ff99 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a304723645e6f79ac34b3a2043354cf39 inherit pub_methods_classthread__module_1_1job" id="r_a304723645e6f79ac34b3a2043354cf39"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a304723645e6f79ac34b3a2043354cf39">set_job_queue</a> (const std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; &amp;<a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; void</td></tr>
-<tr class="memdesc:a304723645e6f79ac34b3a2043354cf39 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the job queue for this job.  <br /></td></tr>
+<tr class="memdesc:a304723645e6f79ac34b3a2043354cf39 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates this job with a specific job queue.  <br /></td></tr>
 <tr class="separator:a304723645e6f79ac34b3a2043354cf39 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6345451335e42ee86e5e020dce2fa7a2 inherit pub_methods_classthread__module_1_1job" id="r_a6345451335e42ee86e5e020dce2fa7a2"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a6345451335e42ee86e5e020dce2fa7a2">get_job_queue</a> (void) const -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
-<tr class="memdesc:a6345451335e42ee86e5e020dce2fa7a2 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the job queue associated with this job.  <br /></td></tr>
+<tr class="memdesc:a6345451335e42ee86e5e020dce2fa7a2 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job.  <br /></td></tr>
 <tr class="separator:a6345451335e42ee86e5e020dce2fa7a2 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job" id="r_a44c5a6eff1846e0a57be106578821ab1"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representation of the job.  <br /></td></tr>
+<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the job.  <br /></td></tr>
 <tr class="separator:a44c5a6eff1846e0a57be106578821ab1 inherit pub_methods_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -177,17 +177,26 @@ Private Attributes</h2></td></tr>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classthread__module_1_1job"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classthread__module_1_1job')"><img src="../../closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></td></tr>
 <tr class="memitem:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job" id="r_ac01785f3d30005f2ad40f840504c5e6f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a></td></tr>
-<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job.  <br /></td></tr>
+<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job, provided during construction.  <br /></td></tr>
 <tr class="separator:ac01785f3d30005f2ad40f840504c5e6f inherit pro_attribs_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job" id="r_aed0248a449f4e341057aa29c0369e625"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a></td></tr>
-<tr class="memdesc:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer to the associated job queue.  <br /></td></tr>
+<tr class="memdesc:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="mdescLeft">&#160;</td><td class="mdescRight">A weak pointer to the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> that manages this job.  <br /></td></tr>
 <tr class="separator:aed0248a449f4e341057aa29c0369e625 inherit pro_attribs_classthread__module_1_1job"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a console logging job derived from the base job class. </p>
-<p>This class encapsulates the functionality for creating and executing console logging operations as jobs within the job system. It handles writing log messages to the console output. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00055">55</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
+<p>This class encapsulates the functionality for creating and executing console logging operations as jobs within a job system (e.g., a thread pool). It primarily handles the process of writing log messages to standard output, making it easier to manage logging in a multi-threaded environment.</p>
+<p>Example usage: </p><div class="fragment"><div class="line"><span class="comment">// Create a message_job instance</span></div>
+<div class="line"><span class="keyword">auto</span> my_log_job = std::make_shared&lt;message_job&gt;(</div>
+<div class="line">    log_types::info,</div>
+<div class="line">    <span class="stringliteral">&quot;2025-02-14 10:00:00&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;This is an informational message.&quot;</span></div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Submit the job to a job system or thread pool</span></div>
+<div class="line">job_system.submit(my_log_job);</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00071">71</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a958d4d4b9715b32fead634e624cb6d37" name="a958d4d4b9715b32fead634e624cb6d37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a958d4d4b9715b32fead634e624cb6d37">&#9670;&#160;</a></span>message_job()</h2>
@@ -230,26 +239,29 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructs a new <code><a class="el" href="../../db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class.">message_job</a></code> object. </p>
+<p>Initializes all information needed to process a single log entry. The provided parameters determine the type of the log (severity/category), the timestamp, and the actual message to be written.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">log_type</td><td>The type of log message, indicating the severity or category. </td></tr>
-    <tr><td class="paramname">datetime</td><td>The timestamp for when the log message was created. </td></tr>
-    <tr><td class="paramname">message</td><td>The actual log message content to be written to the console. </td></tr>
+    <tr><td class="paramname">log_type</td><td>The type of log message (e.g., debug, info, warning, error). </td></tr>
+    <tr><td class="paramname">datetime</td><td>A string representing the timestamp at which the log was generated. </td></tr>
+    <tr><td class="paramname">message</td><td>The actual log message content that will be printed to console.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_class" href="../../db/daf/classlog__module_1_1message__job.html">message_job</a> my_job(log_types::warning, <span class="stringliteral">&quot;2025-02-14 10:00:00&quot;</span>, <span class="stringliteral">&quot;Low disk space!&quot;</span>);</div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html">log_module::message_job</a></div><div class="ttdoc">Represents a console logging job derived from the base job class.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00071">message_job.h:72</a></div></div>
+</div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   44</span>        : <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;message_job&quot;</span>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28">log_type_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#a92815d798d6dbffc42dc166e65e5fc78">log_type</a>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a9eebf26e75c7591b6d50e32be154c5d1">datetime_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#adab3f496883d8719f045db31096d53bc">datetime</a>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a466e219e731d30e2b116dd4e8c074ed6">message_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a">message</a>)</div>
 <div class="line"><span class="lineno">   45</span>    {</div>
 <div class="line"><span class="lineno">   46</span>    }</div>
-<div class="ttc" id="aclasslog__module_1_1message__job_html_a1e4f188b475b57d7a1343fb17d6deb28"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28">log_module::message_job::log_type_</a></div><div class="ttdeci">log_types log_type_</div><div class="ttdoc">The type of log message, indicating its category or severity.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00108">message_job.h:108</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1message__job_html_a466e219e731d30e2b116dd4e8c074ed6"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a466e219e731d30e2b116dd4e8c074ed6">log_module::message_job::message_</a></div><div class="ttdeci">std::string message_</div><div class="ttdoc">The log message content to be written to the console.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00105">message_job.h:105</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html_a1e4f188b475b57d7a1343fb17d6deb28"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28">log_module::message_job::log_type_</a></div><div class="ttdeci">log_types log_type_</div><div class="ttdoc">The type of log message, indicating its category or severity.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00180">message_job.h:180</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html_a466e219e731d30e2b116dd4e8c074ed6"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a466e219e731d30e2b116dd4e8c074ed6">log_module::message_job::message_</a></div><div class="ttdeci">std::string message_</div><div class="ttdoc">The log message content to be written to the console.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00172">message_job.h:172</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1message__job_html_a92815d798d6dbffc42dc166e65e5fc78"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a92815d798d6dbffc42dc166e65e5fc78">log_module::message_job::log_type</a></div><div class="ttdeci">auto log_type() const -&gt; log_types</div><div class="ttdoc">Retrieves the log type for the message.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/message__job_8cpp_source.html#l00048">message_job.cpp:48</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1message__job_html_a9eebf26e75c7591b6d50e32be154c5d1"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a9eebf26e75c7591b6d50e32be154c5d1">log_module::message_job::datetime_</a></div><div class="ttdeci">std::string datetime_</div><div class="ttdoc">The timestamp for when the log message was created.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00102">message_job.h:102</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1message__job_html_ab456b5a13c2e86a7e68e93aa4f8cac6a"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a">log_module::message_job::message</a></div><div class="ttdeci">auto message(const bool &amp;append_newline=false) const -&gt; std::string</div><div class="ttdoc">Retrieves the log message with optional newline.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/message__job_8cpp_source.html#l00052">message_job.cpp:52</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html_a9eebf26e75c7591b6d50e32be154c5d1"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#a9eebf26e75c7591b6d50e32be154c5d1">log_module::message_job::datetime_</a></div><div class="ttdeci">std::string datetime_</div><div class="ttdoc">The timestamp for when the log message was created.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00164">message_job.h:164</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html_ab456b5a13c2e86a7e68e93aa4f8cac6a"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a">log_module::message_job::message</a></div><div class="ttdeci">auto message(const bool &amp;append_newline=false) const -&gt; std::string</div><div class="ttdoc">Retrieves the log message with an optional newline appended.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/message__job_8cpp_source.html#l00052">message_job.cpp:52</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1message__job_html_adab3f496883d8719f045db31096d53bc"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#adab3f496883d8719f045db31096d53bc">log_module::message_job::datetime</a></div><div class="ttdeci">auto datetime(void) const -&gt; std::string</div><div class="ttdoc">Retrieves the timestamp associated with the log message.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/message__job_8cpp_source.html#l00050">message_job.cpp:50</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a job that can be executed by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00060">job.h:61</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">A base class representing work items to be executed by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00086">job.h:87</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -271,7 +283,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves the timestamp associated with the log message. </p>
-<dl class="section return"><dt>Returns</dt><dd>The datetime of the log message. </dd></dl>
+<p>This timestamp is generally assigned at the time the log message is generated. It can be useful for tracking when events occurred in the application.</p>
+<dl class="section return"><dt>Returns</dt><dd>A string containing the timestamp (e.g., "2025-02-14 10:00:00"). </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00050">50</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   50</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a9eebf26e75c7591b6d50e32be154c5d1">datetime_</a>; }</div>
@@ -303,13 +316,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Executes the console logging operation. </p>
-<p>Handles the output of the log message to the console, ensuring that the message format includes the timestamp and log type for clarity.</p>
-<dl class="section return"><dt>Returns</dt><dd>A tuple containing:<ul>
-<li>bool: Indicates whether the logging operation was successful.</li>
-<li>std::optional&lt;std::string&gt;: An optional error description if the operation failed. </li>
-</ul>
-</dd></dl>
-
+<p>This method is called (for example, by a job system or thread pool) to perform the actual console output. It typically prints the log message to <code>std::cout</code> or another standard output stream. If the operation fails for any reason (e.g., issues with the output stream), an error message will be returned.</p>
+<dl class="section return"><dt>Returns</dt><dd>An <code>std::optional&lt;std::string&gt;</code> that contains an error description if the operation fails, or <code>std::nullopt</code> if it succeeds.</dd></dl>
+<p>Usage example: </p><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<span class="keyword">auto</span> error_opt = my_job.do_work())</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// If there&#39;s an error, handle it here</span></div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Logging failed: &quot;</span> &lt;&lt; *error_opt &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891">thread_module::job</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
@@ -340,7 +354,9 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves the log type for the message. </p>
-<dl class="section return"><dt>Returns</dt><dd>The log type for the message, indicating its severity or category. </dd></dl>
+<p>This method provides information on the severity or category of the log message, such as debug, info, warning, or error. It can be used to filter or handle log messages differently based on their importance.</p>
+<dl class="section return"><dt>Returns</dt><dd>The log type for this particular message.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709" title="Enumerates different categories of log messages.">log_types</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00048">48</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28">log_type_</a>; }</div>
@@ -363,15 +379,19 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Retrieves the log message with optional newline. </p>
+<p>Retrieves the log message with an optional newline appended. </p>
+<p>Depending on your needs, you may want to keep multiple log messages on a single line, or separate them for readability. Use the parameter <code>append_newline</code> to control whether or not a newline character is included at the end of the message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">append_newline</td><td>If true, a newline character will be appended to the message. </td></tr>
+    <tr><td class="paramname">append_newline</td><td>If true, a newline character ('<br  />
+') is appended to the message. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The log message as a string, with an optional newline appended. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The log message as a string, optionally followed by a newline.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> msg = my_job.message();         <span class="comment">// &quot;This is a log message.&quot;</span></div>
+<div class="line"><span class="keyword">auto</span> msg_nl = my_job.message(<span class="keyword">true</span>);  <span class="comment">// &quot;This is a log message.\n&quot;</span></div>
+</div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   53</span>    {</div>
 <div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (!append_newline)</div>
@@ -381,14 +401,14 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   58</span> </div>
 <div class="line"><span class="lineno">   59</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{}\n&quot;</span>, <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a466e219e731d30e2b116dd4e8c074ed6">message_</a>);</div>
 <div class="line"><span class="lineno">   60</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Format a string using the provided arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00129">formatter.h:129</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00179">formatter.h:179</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/daf/classlog__module_1_1message__job_ab456b5a13c2e86a7e68e93aa4f8cac6a_cgraph.png" border="0" usemap="#adb/daf/classlog__module_1_1message__job_ab456b5a13c2e86a7e68e93aa4f8cac6a_cgraph" alt=""/></div>
 <map name="adb/daf/classlog__module_1_1message__job_ab456b5a13c2e86a7e68e93aa4f8cac6a_cgraph" id="adb/daf/classlog__module_1_1message__job_ab456b5a13c2e86a7e68e93aa4f8cac6a_cgraph">
-<area shape="rect" title="Retrieves the log message with optional newline." alt="" coords="5,5,171,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="219,5,405,45"/>
+<area shape="rect" title="Retrieves the log message with an optional newline appended." alt="" coords="5,5,171,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="219,5,405,45"/>
 <area shape="poly" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
 </map>
 </div>
@@ -417,8 +437,9 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>The timestamp for when the log message was created. </p>
+<p>This is typically formatted as a human-readable string (e.g., "YYYY-MM-DD HH:MM:SS"), but the format can vary based on the application's logging requirements. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00102">102</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00164">164</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
 
 </div>
 </div>
@@ -443,8 +464,9 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>The type of log message, indicating its category or severity. </p>
+<p>Common types might include <code>debug</code>, <code>info</code>, <code>warning</code>, <code>error</code>, etc. The <code>log_type</code> determines how the message might be formatted or filtered. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00108">108</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00180">180</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
 
 </div>
 </div>
@@ -469,8 +491,9 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>The log message content to be written to the console. </p>
+<p>This string is usually a short or descriptive text that provides information about an event, state, or error occurring within the application. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00105">105</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00172">172</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
 
 </div>
 </div>
@@ -481,7 +504,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

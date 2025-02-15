@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A utility class for date and time operations.  
+<p>A utility class offering date/time formatting and time difference calculations.  
  <a href="../../db/d61/classutility__module_1_1datetime__tool.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d9/da1/datetime__tool_8h_source.html">datetime_tool.h</a>&gt;</code></p>
@@ -89,37 +89,54 @@ Collaboration diagram for utility_module::datetime_tool:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/dd6/classutility__module_1_1datetime__tool__coll__graph.png" border="0" usemap="#autility__module_1_1datetime__tool_coll__map" alt="Collaboration graph"/></div>
 <map name="autility__module_1_1datetime__tool_coll__map" id="autility__module_1_1datetime__tool_coll__map">
-<area shape="rect" title="A utility class for date and time operations." alt="" coords="5,5,212,171"/>
+<area shape="rect" title="A utility class offering date/time formatting and time difference calculations." alt="" coords="5,5,212,171"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aace0614bc0081035af24d8458470db85" id="r_aace0614bc0081035af24d8458470db85"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">date</a> (const std::chrono::system_clock::time_point &amp;<a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>, const std::string &amp;separator_character=&quot;-&quot;) -&gt; std::string</td></tr>
-<tr class="memdesc:aace0614bc0081035af24d8458470db85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the date part of a time point.  <br /></td></tr>
+<tr class="memdesc:aace0614bc0081035af24d8458470db85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the date portion (YYYY-MM-DD by default) of a time point.  <br /></td></tr>
 <tr class="separator:aace0614bc0081035af24d8458470db85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a506f9bd4f2527b28f2dcf9ae66e9abf6" id="r_a506f9bd4f2527b28f2dcf9ae66e9abf6"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a> (const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;:&quot;) -&gt; std::string</td></tr>
-<tr class="memdesc:a506f9bd4f2527b28f2dcf9ae66e9abf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the time part (HH:MM:SS) of a time point.  <br /></td></tr>
+<tr class="memdesc:a506f9bd4f2527b28f2dcf9ae66e9abf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the time portion (HH:MM:SS by default) of a time point.  <br /></td></tr>
 <tr class="separator:a506f9bd4f2527b28f2dcf9ae66e9abf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8bc79e53ad02c718cac3b93592c2d5e" id="r_ae8bc79e53ad02c718cac3b93592c2d5e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a> (const std::chrono::system_clock::time_point &amp;<a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>, const int &amp;milli_portion=0) -&gt; std::string</td></tr>
-<tr class="memdesc:ae8bc79e53ad02c718cac3b93592c2d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the milliseconds component of a time point.  <br /></td></tr>
+<tr class="memdesc:ae8bc79e53ad02c718cac3b93592c2d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the milliseconds (0-999) component from a time point.  <br /></td></tr>
 <tr class="separator:ae8bc79e53ad02c718cac3b93592c2d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af24272c85e0cd14d223fb7b736253d77" id="r_af24272c85e0cd14d223fb7b736253d77"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a> (const std::chrono::system_clock::time_point &amp;<a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>, const int &amp;micro_portion=0) -&gt; std::string</td></tr>
-<tr class="memdesc:af24272c85e0cd14d223fb7b736253d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the microseconds component of a time point.  <br /></td></tr>
+<tr class="memdesc:af24272c85e0cd14d223fb7b736253d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the microseconds (0-999) component from a time point.  <br /></td></tr>
 <tr class="separator:af24272c85e0cd14d223fb7b736253d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a715b310f2e28321265f02b39ef334eb6" id="r_a715b310f2e28321265f02b39ef334eb6"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a> (const std::chrono::system_clock::time_point &amp;<a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>, const int &amp;nano_portion=0) -&gt; std::string</td></tr>
-<tr class="memdesc:a715b310f2e28321265f02b39ef334eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the nanoseconds component of a time point.  <br /></td></tr>
+<tr class="memdesc:a715b310f2e28321265f02b39ef334eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the nanoseconds (0-999) component from a time point.  <br /></td></tr>
 <tr class="separator:a715b310f2e28321265f02b39ef334eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8282d0e6a42a1cdf0cbdc0a986d1761" id="r_ac8282d0e6a42a1cdf0cbdc0a986d1761"><td class="memTemplParams" colspan="2">template&lt;typename DurationType  = std::chrono::milliseconds, typename ClockType  = std::chrono::high_resolution_clock&gt; </td></tr>
 <tr class="memitem:ac8282d0e6a42a1cdf0cbdc0a986d1761"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#ac8282d0e6a42a1cdf0cbdc0a986d1761">time_difference</a> (const std::chrono::time_point&lt; ClockType &gt; &amp;start_time, const std::chrono::time_point&lt; ClockType &gt; &amp;end_time=ClockType::now()) -&gt; double</td></tr>
-<tr class="memdesc:ac8282d0e6a42a1cdf0cbdc0a986d1761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the time difference between two time points.  <br /></td></tr>
+<tr class="memdesc:ac8282d0e6a42a1cdf0cbdc0a986d1761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the time difference between two time points in a specified duration type.  <br /></td></tr>
 <tr class="separator:ac8282d0e6a42a1cdf0cbdc0a986d1761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A utility class for date and time operations. </p>
-<p>This class provides static methods for formatting dates and times, as well as calculating time differences. It relies on std::chrono utilities and can format time points to human-readable strings. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/da1/datetime__tool_8h_source.html#l00048">48</a> of file <a class="el" href="../../d9/da1/datetime__tool_8h_source.html">datetime_tool.h</a>.</p>
+<div class="textblock"><p>A utility class offering date/time formatting and time difference calculations. </p>
+<p>The <code><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html" title="A utility class offering date/time formatting and time difference calculations.">datetime_tool</a></code> class provides static methods to:</p><ul>
+<li>Format date and time from <code>std::chrono::system_clock::time_point</code> into human-readable strings.</li>
+<li>Extract sub-second units (milliseconds, microseconds, nanoseconds).</li>
+<li>Compute time differences between two time points in various duration units.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md30"></a>
+Typical Usage</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
+<div class="line">std::string date_str = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">datetime_tool::date</a>(now);        <span class="comment">// e.g. &quot;2025-02-13&quot;</span></div>
+<div class="line">std::string time_str = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">datetime_tool::time</a>(now);        <span class="comment">// e.g. &quot;12:34:56&quot;</span></div>
+<div class="line">std::string ms_str   = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">datetime_tool::milliseconds</a>(now);<span class="comment">// e.g. &quot;123&quot;</span></div>
+<div class="line"><span class="keyword">auto</span> start = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="comment">// ... do some work ...</span></div>
+<div class="line"><span class="keywordtype">double</span> duration_ms = datetime_tool::time_difference&lt;&gt;(start); <span class="comment">// Default = milliseconds</span></div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Elapsed ms: &quot;</span> &lt;&lt; duration_ms &lt;&lt; std::endl;</div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a506f9bd4f2527b28f2dcf9ae66e9abf6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">utility_module::datetime_tool::time</a></div><div class="ttdeci">static auto time(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;:&quot;) -&gt; std::string</div><div class="ttdoc">Formats the time portion (HH:MM:SS by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00066">datetime_tool.cpp:66</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_aace0614bc0081035af24d8458470db85"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">utility_module::datetime_tool::date</a></div><div class="ttdeci">static auto date(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;-&quot;) -&gt; std::string</div><div class="ttdoc">Formats the date portion (YYYY-MM-DD by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00042">datetime_tool.cpp:42</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_ae8bc79e53ad02c718cac3b93592c2d5e"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">utility_module::datetime_tool::milliseconds</a></div><div class="ttdeci">static auto milliseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;milli_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the milliseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">datetime_tool.cpp:90</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d9/da1/datetime__tool_8h_source.html#l00062">62</a> of file <a class="el" href="../../d9/da1/datetime__tool_8h_source.html">datetime_tool.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aace0614bc0081035af24d8458470db85" name="aace0614bc0081035af24d8458470db85"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aace0614bc0081035af24d8458470db85">&#9670;&#160;</a></span>date()</h2>
@@ -155,15 +172,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Formats the date part of a time point. </p>
+<p>Formats the date portion (YYYY-MM-DD by default) of a time point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>The time point to format. </td></tr>
-    <tr><td class="paramname">separator_character</td><td>The character to separate year, month, day (default: "-"). </td></tr>
+    <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> to convert. </td></tr>
+    <tr><td class="paramname">separator_character</td><td>The separator character placed between year, month, and day (default is "-"). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string The formatted date string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string in the format "YYYY&lt;sep&gt;MM&lt;sep&gt;DD".</dd></dl>
+<p>This function uses the local time zone for conversion. To handle time zones explicitly, additional logic may be required. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   44</span>    {</div>
@@ -187,15 +205,14 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   62</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:04d}{}{:02d}{}{:02d}&quot;</span>, year, separator_character, month,</div>
 <div class="line"><span class="lineno">   63</span>                                 separator_character, day);</div>
 <div class="line"><span class="lineno">   64</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a506f9bd4f2527b28f2dcf9ae66e9abf6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">utility_module::datetime_tool::time</a></div><div class="ttdeci">static auto time(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;:&quot;) -&gt; std::string</div><div class="ttdoc">Formats the time part (HH:MM:SS) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00066">datetime_tool.cpp:66</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Format a string using the provided arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00129">formatter.h:129</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00179">formatter.h:179</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_cgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_cgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_cgraph" id="adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_cgraph">
-<area shape="rect" title="Formats the date part of a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="rect" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>
 </div>
@@ -204,10 +221,10 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_icgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_icgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_icgraph" id="adb/d61/classutility__module_1_1datetime__tool_aace0614bc0081035af24d8458470db85_icgraph">
-<area shape="rect" title="Formats the date part of a time point." alt="" coords="224,37,407,77"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="14,5,167,45"/>
+<area shape="rect" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="224,37,407,77"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="14,5,167,45"/>
 <area shape="poly" title=" " alt="" coords="210,45,167,39,168,34,210,40"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup file names for the log file." alt="" coords="5,69,176,109"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="5,69,176,109"/>
 <area shape="poly" title=" " alt="" coords="211,75,177,80,176,75,210,70"/>
 </map>
 </div>
@@ -248,16 +265,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Extracts the microseconds component of a time point. </p>
+<p>Extracts the microseconds (0-999) component from a time point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>The time point. </td></tr>
-    <tr><td class="paramname">micro_portion</td><td>An additional offset to add to the microseconds portion (default: 0). </td></tr>
+    <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
+    <tr><td class="paramname">micro_portion</td><td>An additional offset added to the extracted microsecond value (default 0). If the final value exceeds 999, it may roll over into the next millisecond or second depending on usage. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string The microseconds as a three-digit string.</dd></dl>
-<p>The result is always a zero-padded three-digit number representing microseconds (000-999). </p>
+<dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing microseconds (e.g., "000", "256").</dd></dl>
+<p>Typically used when higher precision than milliseconds is desired (e.g., logging). Formatted to 3 digits, so it represents only the thousandths part of a millisecond. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  104</span>    {</div>
@@ -269,14 +286,14 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  110</span> </div>
 <div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a>);</div>
 <div class="line"><span class="lineno">  112</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_af24272c85e0cd14d223fb7b736253d77"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">utility_module::datetime_tool::microseconds</a></div><div class="ttdeci">static auto microseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;micro_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the microseconds component of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">datetime_tool.cpp:102</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_af24272c85e0cd14d223fb7b736253d77"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">utility_module::datetime_tool::microseconds</a></div><div class="ttdeci">static auto microseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;micro_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the microseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">datetime_tool.cpp:102</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_cgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_cgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_cgraph" id="adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_cgraph">
-<area shape="rect" title="Extracts the microseconds component of a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="rect" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>
 </div>
@@ -285,8 +302,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_icgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_icgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_icgraph" id="adb/d61/classutility__module_1_1datetime__tool_af24272c85e0cd14d223fb7b736253d77_icgraph">
-<area shape="rect" title="Extracts the microseconds component of a time point." alt="" coords="207,5,389,45"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="5,5,159,45"/>
+<area shape="rect" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="207,5,389,45"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="5,5,159,45"/>
 <area shape="poly" title=" " alt="" coords="193,28,159,28,159,23,193,23"/>
 </map>
 </div>
@@ -327,16 +344,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Extracts the milliseconds component of a time point. </p>
+<p>Extracts the milliseconds (0-999) component from a time point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>The time point. </td></tr>
-    <tr><td class="paramname">milli_portion</td><td>An additional offset to add to the milliseconds portion (default: 0). </td></tr>
+    <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
+    <tr><td class="paramname">milli_portion</td><td>An additional offset added to the extracted millisecond value (default 0). If the final value exceeds 999, it may roll over into the next second depending on usage. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string The milliseconds as a three-digit string.</dd></dl>
-<p>The result is always a zero-padded three-digit number representing milliseconds (000-999). </p>
+<dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing milliseconds (e.g., "007", "150").</dd></dl>
+<p>Only the sub-second part of the time point is used; the rest is discarded. The result is formatted to always be 3 digits, enabling easy concatenation into timestamps. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">90</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
@@ -348,14 +365,13 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   98</span> </div>
 <div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a>);</div>
 <div class="line"><span class="lineno">  100</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_ae8bc79e53ad02c718cac3b93592c2d5e"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">utility_module::datetime_tool::milliseconds</a></div><div class="ttdeci">static auto milliseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;milli_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the milliseconds component of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">datetime_tool.cpp:90</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_cgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_cgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_cgraph" id="adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_cgraph">
-<area shape="rect" title="Extracts the milliseconds component of a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="rect" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>
 </div>
@@ -364,8 +380,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_icgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_icgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_icgraph" id="adb/d61/classutility__module_1_1datetime__tool_ae8bc79e53ad02c718cac3b93592c2d5e_icgraph">
-<area shape="rect" title="Extracts the milliseconds component of a time point." alt="" coords="207,5,389,45"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="5,5,159,45"/>
+<area shape="rect" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="207,5,389,45"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="5,5,159,45"/>
 <area shape="poly" title=" " alt="" coords="193,28,159,28,159,23,193,23"/>
 </map>
 </div>
@@ -406,16 +422,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Extracts the nanoseconds component of a time point. </p>
+<p>Extracts the nanoseconds (0-999) component from a time point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>The time point. </td></tr>
-    <tr><td class="paramname">nano_portion</td><td>An additional offset to add to the nanoseconds portion (default: 0). </td></tr>
+    <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
+    <tr><td class="paramname">nano_portion</td><td>An additional offset added to the extracted nanosecond value (default 0). If the final value exceeds 999, it may roll over into the next microsecond or second depending on usage. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string The nanoseconds as a three-digit string.</dd></dl>
-<p>The result is always a zero-padded three-digit number representing nanoseconds (000-999). </p>
+<dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing nanoseconds (e.g., "000", "999").</dd></dl>
+<p>If full nanosecond resolution is required, consider a different approach, as this method only shows the first 3 digits in the nanosecond field. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">114</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  116</span>    {</div>
@@ -427,14 +443,14 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  122</span> </div>
 <div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a>);</div>
 <div class="line"><span class="lineno">  124</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a715b310f2e28321265f02b39ef334eb6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">utility_module::datetime_tool::nanoseconds</a></div><div class="ttdeci">static auto nanoseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;nano_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the nanoseconds component of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">datetime_tool.cpp:114</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a715b310f2e28321265f02b39ef334eb6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">utility_module::datetime_tool::nanoseconds</a></div><div class="ttdeci">static auto nanoseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;nano_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the nanoseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">datetime_tool.cpp:114</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_a715b310f2e28321265f02b39ef334eb6_cgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_a715b310f2e28321265f02b39ef334eb6_cgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_a715b310f2e28321265f02b39ef334eb6_cgraph" id="adb/d61/classutility__module_1_1datetime__tool_a715b310f2e28321265f02b39ef334eb6_cgraph">
-<area shape="rect" title="Extracts the nanoseconds component of a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="rect" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>
 </div>
@@ -475,15 +491,16 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Formats the time part (HH:MM:SS) of a time point. </p>
+<p>Formats the time portion (HH:MM:SS by default) of a time point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>The time point to format. </td></tr>
-    <tr><td class="paramname">separator_character</td><td>The character to separate hours, minutes, seconds (default: ":"). </td></tr>
+    <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> to convert. </td></tr>
+    <tr><td class="paramname">separator_character</td><td>The separator character placed between hours, minutes, and seconds (default is ":"). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string The formatted time string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string in the format "HH&lt;sep&gt;MM&lt;sep&gt;SS".</dd></dl>
+<p>Similar to <code><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY-MM-DD by default) of a time point.">date()</a></code>, this function converts the given time point to local time before extracting hours, minutes, and seconds. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00066">66</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   68</span>    {</div>
@@ -512,8 +529,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_cgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_cgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_cgraph" id="adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_cgraph">
-<area shape="rect" title="Formats the time part (HH:MM:SS) of a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="236,5,423,45"/>
+<area shape="rect" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="5,5,188,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
 </map>
 </div>
@@ -522,8 +539,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_icgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_icgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_icgraph" id="adb/d61/classutility__module_1_1datetime__tool_a506f9bd4f2527b28f2dcf9ae66e9abf6_icgraph">
-<area shape="rect" title="Formats the time part (HH:MM:SS) of a time point." alt="" coords="207,5,389,45"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="5,5,159,45"/>
+<area shape="rect" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="207,5,389,45"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="5,5,159,45"/>
 <area shape="poly" title=" " alt="" coords="193,28,159,28,159,23,193,23"/>
 </map>
 </div>
@@ -566,22 +583,23 @@ template&lt;typename DurationType , typename ClockType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Calculates the time difference between two time points. </p>
+<p>Calculates the time difference between two time points in a specified duration type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">DurationType</td><td>The duration type for the resulting time difference (default: std::chrono::milliseconds). </td></tr>
-    <tr><td class="paramname">ClockType</td><td>The clock type of the time points (default: std::chrono::high_resolution_clock). </td></tr>
+    <tr><td class="paramname">DurationType</td><td>The duration type to compute (e.g. <code>std::chrono::milliseconds</code>, <code>std::chrono::seconds</code>). Defaults to <code>std::chrono::milliseconds</code>. </td></tr>
+    <tr><td class="paramname">ClockType</td><td>The clock type of the time points (e.g. <code>std::chrono::high_resolution_clock</code>). Defaults to <code>std::chrono::high_resolution_clock</code>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">start_time</td><td>The start time point. </td></tr>
-    <tr><td class="paramname">end_time</td><td>The end time point (default: ClockType::now()). </td></tr>
+    <tr><td class="paramname">start_time</td><td>The initial (start) time point. </td></tr>
+    <tr><td class="paramname">end_time</td><td>The final (end) time point. Defaults to <code>ClockType::now()</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>double The time difference in the specified DurationType units. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>double</code> representing the difference in <code>DurationType</code> units.</dd></dl>
+<p>If you wish to measure performance or elapsed time between two operations, store a time point before the operation, then call this function afterwards (or at any later time). The result can be cast to floating-point for fractional values (e.g. 12.34 ms). </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  130</span>    {</div>
@@ -594,8 +612,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d61/classutility__module_1_1datetime__tool_ac8282d0e6a42a1cdf0cbdc0a986d1761_icgraph.png" border="0" usemap="#adb/d61/classutility__module_1_1datetime__tool_ac8282d0e6a42a1cdf0cbdc0a986d1761_icgraph" alt=""/></div>
 <map name="adb/d61/classutility__module_1_1datetime__tool_ac8282d0e6a42a1cdf0cbdc0a986d1761_icgraph" id="adb/d61/classutility__module_1_1datetime__tool_ac8282d0e6a42a1cdf0cbdc0a986d1761_icgraph">
-<area shape="rect" title="Calculates the time difference between two time points." alt="" coords="207,5,389,45"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="5,5,159,45"/>
+<area shape="rect" title="Calculates the time difference between two time points in a specified duration type." alt="" coords="207,5,389,45"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="5,5,159,45"/>
 <area shape="poly" title=" " alt="" coords="193,28,159,28,159,23,193,23"/>
 </map>
 </div>
@@ -609,7 +627,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

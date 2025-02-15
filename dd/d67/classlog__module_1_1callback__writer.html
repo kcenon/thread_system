@@ -81,7 +81,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A class for handling log messages through a callback function.  
+<p>A class that processes log messages in a separate thread and delivers logs through a user-defined callback.  
  <a href="../../dd/d67/classlog__module_1_1callback__writer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>&gt;</code></p>
@@ -90,8 +90,8 @@ Inheritance diagram for log_module::callback_writer:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/db4/classlog__module_1_1callback__writer__inherit__graph.png" border="0" usemap="#alog__module_1_1callback__writer_inherit__map" alt="Inheritance graph"/></div>
 <map name="alog__module_1_1callback__writer_inherit__map" id="alog__module_1_1callback__writer_inherit__map">
-<area shape="rect" title="A class for handling log messages through a callback function." alt="" coords="13,539,197,719"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="5,5,205,491"/>
+<area shape="rect" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="13,539,197,719"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="5,5,205,491"/>
 <area shape="poly" title=" " alt="" coords="108,504,108,538,103,538,103,504"/>
 </map>
 </div>
@@ -100,8 +100,8 @@ Collaboration diagram for log_module::callback_writer:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/d55/classlog__module_1_1callback__writer__coll__graph.png" border="0" usemap="#alog__module_1_1callback__writer_coll__map" alt="Collaboration graph"/></div>
 <map name="alog__module_1_1callback__writer_coll__map" id="alog__module_1_1callback__writer_coll__map">
-<area shape="rect" title="A class for handling log messages through a callback function." alt="" coords="361,739,545,899"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="254,291,454,676"/>
+<area shape="rect" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="361,739,545,899"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
 <area shape="poly" title=" " alt="" coords="417,689,432,738,427,739,412,690"/>
 <area shape="rect" title=" " alt="" coords="5,155,89,221"/>
 <area shape="poly" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>
@@ -125,19 +125,19 @@ Collaboration diagram for log_module::callback_writer:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a66a1c19e03276a535f292dc850294e5a" id="r_a66a1c19e03276a535f292dc850294e5a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a66a1c19e03276a535f292dc850294e5a">callback_writer</a> (void)</td></tr>
-<tr class="memdesc:a66a1c19e03276a535f292dc850294e5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function.">callback_writer</a></code> class.  <br /></td></tr>
+<tr class="memdesc:a66a1c19e03276a535f292dc850294e5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user-defined cal...">callback_writer</a></code> class.  <br /></td></tr>
 <tr class="separator:a66a1c19e03276a535f292dc850294e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73e851487a6313c1cd128e04f42248c9" id="r_a73e851487a6313c1cd128e04f42248c9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a73e851487a6313c1cd128e04f42248c9">get_job_queue</a> () const -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
-<tr class="memdesc:a73e851487a6313c1cd128e04f42248c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the job queue used by the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function.">callback_writer</a></code>.  <br /></td></tr>
+<tr class="memdesc:a73e851487a6313c1cd128e04f42248c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the job queue used by this class.  <br /></td></tr>
 <tr class="separator:a73e851487a6313c1cd128e04f42248c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94c35a6ddac2dfe563fcc01341be439d" id="r_a94c35a6ddac2dfe563fcc01341be439d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a94c35a6ddac2dfe563fcc01341be439d">message_callback</a> (const std::function&lt; void(const <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> &amp;, const std::string &amp;, const std::string &amp;)&gt; &amp;callback) -&gt; void</td></tr>
-<tr class="memdesc:a94c35a6ddac2dfe563fcc01341be439d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the callback function for handling log messages.  <br /></td></tr>
+<tr class="memdesc:a94c35a6ddac2dfe563fcc01341be439d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the user-defined callback function that processes log messages.  <br /></td></tr>
 <tr class="separator:a94c35a6ddac2dfe563fcc01341be439d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bfd71d56ba3640a7d8c2e054e73a917" id="r_a2bfd71d56ba3640a7d8c2e054e73a917"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a2bfd71d56ba3640a7d8c2e054e73a917">should_continue_work</a> () const -&gt; bool override</td></tr>
-<tr class="memdesc:a2bfd71d56ba3640a7d8c2e054e73a917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there are tasks available in the job queue.  <br /></td></tr>
+<tr class="memdesc:a2bfd71d56ba3640a7d8c2e054e73a917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether there are log messages remaining in the job queue to be processed.  <br /></td></tr>
 <tr class="separator:a2bfd71d56ba3640a7d8c2e054e73a917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae57bbe67b6e713ff8eb17f09eadec55f" id="r_ae57bbe67b6e713ff8eb17f09eadec55f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#ae57bbe67b6e713ff8eb17f09eadec55f">do_work</a> () -&gt; std::optional&lt; std::string &gt; override</td></tr>
-<tr class="memdesc:ae57bbe67b6e713ff8eb17f09eadec55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes log messages by executing the callback function.  <br /></td></tr>
+<tr class="memdesc:ae57bbe67b6e713ff8eb17f09eadec55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves log messages from the queue and invokes the callback function to process them.  <br /></td></tr>
 <tr class="separator:ae57bbe67b6e713ff8eb17f09eadec55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:a0df16877f4bdab741dc5416b5a9b7fc3 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0df16877f4bdab741dc5416b5a9b7fc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base</a> (const <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;)=delete</td></tr>
@@ -149,58 +149,58 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab26ff3e19c859033c44aadd4a279e965 inherit pub_methods_classthread__module_1_1thread__base" id="r_ab26ff3e19c859033c44aadd4a279e965"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab26ff3e19c859033c44aadd4a279e965">operator=</a> (<a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:ab26ff3e19c859033c44aadd4a279e965 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base" id="r_a474a35dca118f83c1c1099eba3eb4748"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a474a35dca118f83c1c1099eba3eb4748">thread_base</a> (const std::string &amp;thread_title=&quot;thread_base&quot;)</td></tr>
-<tr class="memdesc:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> object.  <br /></td></tr>
+<tr class="memdesc:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_base</a></code> object.  <br /></td></tr>
 <tr class="separator:a474a35dca118f83c1c1099eba3eb4748 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base" id="r_ac8295fe7ae11d91c9ace8c3774462ff4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ac8295fe7ae11d91c9ace8c3774462ff4">~thread_base</a> (void)</td></tr>
-<tr class="memdesc:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> class.  <br /></td></tr>
+<tr class="memdesc:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Ensures proper cleanup of derived classes.  <br /></td></tr>
 <tr class="separator:ac8295fe7ae11d91c9ace8c3774462ff4 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0b52efac73ac776243cac17094a3b3c5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0b52efac73ac776243cac17094a3b3c5">set_wake_interval</a> (const std::optional&lt; std::chrono::milliseconds &gt; &amp;wake_interval) -&gt; void</td></tr>
-<tr class="memdesc:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the wake interval for the worker thread.  <br /></td></tr>
+<tr class="memdesc:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the interval at which the worker thread should wake up (if any).  <br /></td></tr>
 <tr class="separator:a0b52efac73ac776243cac17094a3b3c5 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base" id="r_ab23a392279c348d21351d5f4b447ec65"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab23a392279c348d21351d5f4b447ec65">start</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="memdesc:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the worker thread.  <br /></td></tr>
 <tr class="separator:ab23a392279c348d21351d5f4b447ec65 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base" id="r_abac968541edb40cb362d437d9e6fe8e2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#abac968541edb40cb362d437d9e6fe8e2">stop</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the worker thread.  <br /></td></tr>
+<tr class="memdesc:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the worker thread to stop and waits for it to finish.  <br /></td></tr>
 <tr class="separator:abac968541edb40cb362d437d9e6fe8e2 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base" id="r_adef149a400f61bf4d9424bcebdc573e0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#adef149a400f61bf4d9424bcebdc573e0">get_thread_title</a> () const -&gt; std::string</td></tr>
-<tr class="memdesc:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the title of the worker thread.  <br /></td></tr>
+<tr class="memdesc:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the worker thread's title.  <br /></td></tr>
 <tr class="separator:adef149a400f61bf4d9424bcebdc573e0 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base" id="r_a8b65fa11d19f82a250ac042195f122e3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a8b65fa11d19f82a250ac042195f122e3">is_running</a> () const -&gt; bool</td></tr>
-<tr class="memdesc:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the worker thread is running.  <br /></td></tr>
+<tr class="memdesc:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the worker thread is currently running.  <br /></td></tr>
 <tr class="separator:a8b65fa11d19f82a250ac042195f122e3 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0bfb73ba5d38988886db056c46628a09"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread-based workers.">thread_base</a> object to a string representation.  <br /></td></tr>
+<tr class="memdesc:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of this <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_base</a></code> object.  <br /></td></tr>
 <tr class="separator:a0bfb73ba5d38988886db056c46628a09 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:afe84900903a814985ff6f823ecbe0aaa" id="r_afe84900903a814985ff6f823ecbe0aaa"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a></td></tr>
-<tr class="memdesc:afe84900903a814985ff6f823ecbe0aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue containing log tasks.  <br /></td></tr>
+<tr class="memdesc:afe84900903a814985ff6f823ecbe0aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">A job queue that manages queued log messages.  <br /></td></tr>
 <tr class="separator:afe84900903a814985ff6f823ecbe0aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea256534a7ca78c739dafd590029c324" id="r_aea256534a7ca78c739dafd590029c324"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(const <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> &amp;, const std::string &amp;, const std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a></td></tr>
-<tr class="memdesc:aea256534a7ca78c739dafd590029c324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to handle log messages.  <br /></td></tr>
+<tr class="memdesc:aea256534a7ca78c739dafd590029c324"><td class="mdescLeft">&#160;</td><td class="mdescRight">The user-defined callback function for handling log messages.  <br /></td></tr>
 <tr class="separator:aea256534a7ca78c739dafd590029c324"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base" id="r_ab11ebbfda8f3704f9d20230ef4f96dac"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ab11ebbfda8f3704f9d20230ef4f96dac">before_start</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the worker thread starts.  <br /></td></tr>
+<tr class="memdesc:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called just before the worker thread starts running.  <br /></td></tr>
 <tr class="separator:ab11ebbfda8f3704f9d20230ef4f96dac inherit pro_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base" id="r_a9536fc644d617c5060f8b2b6ad8c04ff"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a9536fc644d617c5060f8b2b6ad8c04ff">after_stop</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after the worker thread stops.  <br /></td></tr>
+<tr class="memdesc:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called immediately after the worker thread has stopped.  <br /></td></tr>
 <tr class="separator:a9536fc644d617c5060f8b2b6ad8c04ff inherit pro_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base" id="r_a47dad4325d074bf852e643aaf2e8fe95"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::milliseconds &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a47dad4325d074bf852e643aaf2e8fe95">wake_interval_</a></td></tr>
-<tr class="memdesc:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval at which the thread wakes up.  <br /></td></tr>
+<tr class="memdesc:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval at which the thread is optionally awakened.  <br /></td></tr>
 <tr class="separator:a47dad4325d074bf852e643aaf2e8fe95 inherit pro_attribs_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A class for handling log messages through a callback function. </p>
-<p>This class inherits from <code>thread_base</code> and provides functionality for processing log messages in a separate thread. The <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function.">callback_writer</a></code> allows setting a custom callback function to handle log messages instead of writing them to the console. </p>
+<div class="textblock"><p>A class that processes log messages in a separate thread and delivers logs through a user-defined callback. </p>
+<p>Inherits from <code>thread_base</code> to handle log messages in an internal thread. Instead of printing logs to the console, this class uses a user-defined callback function to allow flexible integration with external systems or custom processing logic. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00054">54</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00055">55</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a66a1c19e03276a535f292dc850294e5a" name="a66a1c19e03276a535f292dc850294e5a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a66a1c19e03276a535f292dc850294e5a">&#9670;&#160;</a></span>callback_writer()</h2>
@@ -218,8 +218,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function.">callback_writer</a></code> class. </p>
-<p>Initializes the job queue for managing log message tasks. </p>
+<p>Default constructor for the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user-defined cal...">callback_writer</a></code> class. </p>
+<p>Initializes the job queue that stores log messages. After construction, log messages are queued and then processed by invoking the registered callback function in sequence. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00048">48</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   49</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;callback_writer&quot;</span>)</div>
@@ -227,9 +227,9 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   51</span>        , <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a>(<span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   52</span>    {</div>
 <div class="line"><span class="lineno">   53</span>    }</div>
-<div class="ttc" id="aclasslog__module_1_1callback__writer_html_aea256534a7ca78c739dafd590029c324"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">log_module::callback_writer::callback_</a></div><div class="ttdeci">std::function&lt; void(const log_types &amp;, const std::string &amp;, const std::string &amp;)&gt; callback_</div><div class="ttdoc">Callback function to handle log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00112">callback_writer.h:112</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1callback__writer_html_afe84900903a814985ff6f823ecbe0aaa"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">log_module::callback_writer::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">Queue containing log tasks.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00110">callback_writer.h:110</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">Base class for implementing thread-based workers.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00064">thread_base.h:65</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1callback__writer_html_aea256534a7ca78c739dafd590029c324"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">log_module::callback_writer::callback_</a></div><div class="ttdeci">std::function&lt; void(const log_types &amp;, const std::string &amp;, const std::string &amp;)&gt; callback_</div><div class="ttdoc">The user-defined callback function for handling log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00123">callback_writer.h:123</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1callback__writer_html_afe84900903a814985ff6f823ecbe0aaa"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">log_module::callback_writer::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A job queue that manages queued log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00121">callback_writer.h:121</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A base class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00073">thread_base.h:74</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -258,11 +258,11 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Processes log messages by executing the callback function. </p>
-<p>Retrieves and processes log messages from the queue, invoking the callback function for each.</p>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; A tuple containing:<ul>
-<li>bool: Indicates the success of the operation (true if successful).</li>
-<li>std::optional&lt;std::string&gt;: Optional error message if processing fails. </li>
+<p>Retrieves log messages from the queue and invokes the callback function to process them. </p>
+<p>This method is called periodically by the internal thread loop, delivering each log message in the queue to the callback function in turn. If an error occurs during processing, an error message is returned.</p>
+<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt;<ul>
+<li>An empty optional indicates successful processing.</li>
+<li>If it contains a value, the string describes the error that occurred. </li>
 </ul>
 </dd></dl>
 
@@ -329,14 +329,14 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Retrieves the job queue used by the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function.">callback_writer</a></code>. </p>
-<p>Provides access to the job queue where log message tasks are enqueued.</p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;job_queue&gt; Shared pointer to the job queue for log tasks. </dd></dl>
+<p>Returns the job queue used by this class. </p>
+<p>When a log message is generated, it is first added to this job queue. The internal thread monitors the queue and delivers the message through the callback function.</p>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;job_queue&gt; A shared pointer to the internal job queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00071">71</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>        {</div>
-<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>;</div>
-<div class="line"><span class="lineno">   74</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00075">75</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>        {</div>
+<div class="line"><span class="lineno">   77</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>;</div>
+<div class="line"><span class="lineno">   78</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -356,11 +356,11 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the callback function for handling log messages. </p>
-<p>Allows setting a custom function to process each log message, receiving the log type, message, and an optional tag.</p>
+<p>Sets the user-defined callback function that processes log messages. </p>
+<p>The callback function is invoked whenever a log message is retrieved from the queue, receiving the log type (<code>log_types</code>), the log message string, and an optional tag string as parameters.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">callback</td><td>Function pointer to the callback that handles log messages. </td></tr>
+    <tr><td class="paramname">callback</td><td>The log callback function with the signature <code>(const log_types&amp;, const std::string&amp;, const std::string&amp;)</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -396,9 +396,13 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Checks if there are tasks available in the job queue. </p>
-<p>Determines if there are any log tasks waiting to be processed in the queue.</p>
-<dl class="section return"><dt>Returns</dt><dd>bool True if tasks are available, false otherwise. </dd></dl>
+<p>Checks whether there are log messages remaining in the job queue to be processed. </p>
+<p>Internally, this determines if there are any pending jobs (log messages) in the queue. If there are, the thread continues to run; otherwise, it may be stopped.</p>
+<dl class="section return"><dt>Returns</dt><dd>bool<ul>
+<li><code>true</code>: There are remaining jobs, so the thread should keep running.</li>
+<li><code>false</code>: No pending jobs remain, so the thread can stop. </li>
+</ul>
+</dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base</a>.</p>
 
@@ -428,9 +432,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Callback function to handle log messages. </p>
+<p>The user-defined callback function for handling log messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00112">112</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00123">123</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
 
 </div>
 </div>
@@ -454,9 +458,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Queue containing log tasks. </p>
+<p>A job queue that manages queued log messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00110">110</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d1a/callback__writer_8h_source.html#l00121">121</a> of file <a class="el" href="../../d0/d1a/callback__writer_8h_source.html">callback_writer.h</a>.</p>
 
 </div>
 </div>
@@ -467,7 +471,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

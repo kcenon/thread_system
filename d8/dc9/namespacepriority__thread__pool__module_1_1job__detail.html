@@ -82,10 +82,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ab05b5b5ee97bc2f9f4b191276f633611" id="r_ab05b5b5ee97bc2f9f4b191276f633611"><td class="memItemLeft" align="right" valign="top">constexpr std::array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/dc9/namespacepriority__thread__pool__module_1_1job__detail.html#ab05b5b5ee97bc2f9f4b191276f633611">job_priority_strings</a> = { &quot;HIGH&quot;, &quot;NORMAL&quot;, &quot;LOW&quot; }</td></tr>
-<tr class="memdesc:ab05b5b5ee97bc2f9f4b191276f633611"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of string representations for each job priority level.  <br /></td></tr>
+<tr class="memdesc:ab05b5b5ee97bc2f9f4b191276f633611"><td class="mdescLeft">&#160;</td><td class="mdescRight">String representations corresponding to each <code>job_priorities</code> value.  <br /></td></tr>
 <tr class="separator:ab05b5b5ee97bc2f9f4b191276f633611"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb0ba886f64108827785b7da47698716" id="r_adb0ba886f64108827785b7da47698716"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/dc9/namespacepriority__thread__pool__module_1_1job__detail.html#adb0ba886f64108827785b7da47698716">job_priority_count</a> = job_priority_strings.size()</td></tr>
-<tr class="memdesc:adb0ba886f64108827785b7da47698716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of job priority levels defined in job_priorities.  <br /></td></tr>
+<tr class="memdesc:adb0ba886f64108827785b7da47698716"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of priority levels defined in <code>job_priorities</code>.  <br /></td></tr>
 <tr class="separator:adb0ba886f64108827785b7da47698716"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -109,9 +109,10 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Total number of job priority levels defined in job_priorities. </p>
+<p>The number of priority levels defined in <code>job_priorities</code>. </p>
+<p>Used in boundary checks to prevent out-of-range access into <code>job_priority_strings</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db4/job__priorities_8h_source.html#l00071">71</a> of file <a class="el" href="../../d4/db4/job__priorities_8h_source.html">job_priorities.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/db4/job__priorities_8h_source.html#l00079">79</a> of file <a class="el" href="../../d4/db4/job__priorities_8h_source.html">job_priorities.h</a>.</p>
 
 </div>
 </div>
@@ -135,17 +136,20 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Array of string representations for each job priority level. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d4/db4/job__priorities_8h_source.html#l00066">66</a> of file <a class="el" href="../../d4/db4/job__priorities_8h_source.html">job_priorities.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>{ <span class="stringliteral">&quot;HIGH&quot;</span>, <span class="stringliteral">&quot;NORMAL&quot;</span>, <span class="stringliteral">&quot;LOW&quot;</span> };</div>
+<p>String representations corresponding to each <code>job_priorities</code> value. </p>
+<p>Indexed by casting a <code>job_priorities</code> value to <code>size_t</code>. E.g., </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../d8/dc9/namespacepriority__thread__pool__module_1_1job__detail.html#ab05b5b5ee97bc2f9f4b191276f633611">job_detail::job_priority_strings</a>[<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_enumvalue" href="../../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090a655d20c1ca69519ca647684edbb2db35">job_priorities::High</a>)] <span class="comment">// &quot;HIGH&quot;</span></div>
+<div class="ttc" id="anamespacepriority__thread__pool__module_1_1job__detail_html_ab05b5b5ee97bc2f9f4b191276f633611"><div class="ttname"><a href="../../d8/dc9/namespacepriority__thread__pool__module_1_1job__detail.html#ab05b5b5ee97bc2f9f4b191276f633611">priority_thread_pool_module::job_detail::job_priority_strings</a></div><div class="ttdeci">constexpr std::array job_priority_strings</div><div class="ttdoc">String representations corresponding to each job_priorities value.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db4/job__priorities_8h_source.html#l00072">job_priorities.h:72</a></div></div>
+<div class="ttc" id="anamespacepriority__thread__pool__module_html_ad02023113ce2026fd0599170b3aad090a655d20c1ca69519ca647684edbb2db35"><div class="ttname"><a href="../../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090a655d20c1ca69519ca647684edbb2db35">priority_thread_pool_module::job_priorities::High</a></div><div class="ttdeci">@ High</div><div class="ttdoc">High priority job.</div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d4/db4/job__priorities_8h_source.html#l00072">72</a> of file <a class="el" href="../../d4/db4/job__priorities_8h_source.html">job_priorities.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>{ <span class="stringliteral">&quot;HIGH&quot;</span>, <span class="stringliteral">&quot;NORMAL&quot;</span>, <span class="stringliteral">&quot;LOW&quot;</span> };</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

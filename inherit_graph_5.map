@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d8/d11/classpriority__job__queue.html" title="A queue for managing priority jobs." alt="" coords="5,5,148,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,20,108,45"/>
+<area shape="rect" id="Node000001" href="$d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title=" " alt="" coords="156,5,356,60"/>
+<area shape="poly" id="edge21_Node000000_Node000001" title=" " alt="" coords="122,30,156,30,156,35,122,35"/>
 </map>

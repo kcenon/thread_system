@@ -1,5 +1,5 @@
 <map id="fmt::formatter&lt; priority_thread_pool_module::priority_thread_pool_t&lt; priority_type &gt; &gt;" name="fmt::formatter&lt; priority_thread_pool_module::priority_thread_pool_t&lt; priority_type &gt; &gt;">
-<area shape="rect" id="Node000001" title="Specialization of fmt::formatter for priority_thread_pool_t&lt;priority_type&gt;. Enables formatting of pri..." alt="" coords="5,133,244,228"/>
+<area shape="rect" id="Node000001" title="Specialization of fmt::formatter for priority_thread_pool_t&lt;priority_type&gt;." alt="" coords="5,133,244,228"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="53,5,196,85"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,99,127,133,122,133,122,99"/>
 </map>

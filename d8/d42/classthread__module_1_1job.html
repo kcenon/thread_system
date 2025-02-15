@@ -81,7 +81,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a job that can be executed by a job queue.  
+<p>A base class representing work items to be executed by a job queue.  
  <a href="../../d8/d42/classthread__module_1_1job.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>&gt;</code></p>
@@ -90,16 +90,16 @@ Inheritance diagram for thread_module::job:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d8b/classthread__module_1_1job__inherit__graph.png" border="0" usemap="#athread__module_1_1job_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1job_inherit__map" id="athread__module_1_1job_inherit__map">
-<area shape="rect" title="Represents a job that can be executed by a job queue." alt="" coords="301,5,441,211"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html" title="Represents a logging job derived from the base job class." alt="" coords="5,259,159,624"/>
+<area shape="rect" title="A base class representing work items to be executed by a job queue." alt="" coords="301,5,441,211"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="5,259,159,624"/>
 <area shape="poly" title=" " alt="" coords="291,159,230,205,173,260,161,276,157,273,169,257,226,201,288,155"/>
 <area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="183,349,367,534"/>
 <area shape="poly" title=" " alt="" coords="341,225,305,349,299,348,336,223"/>
-<area shape="rect" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title=" " alt="" coords="391,344,543,539"/>
+<area shape="rect" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="391,344,543,539"/>
 <area shape="poly" title=" " alt="" coords="407,223,442,343,437,345,402,225"/>
-<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html" title=" " alt="" coords="568,389,769,494"/>
+<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates a user&#45;defined callback." alt="" coords="568,389,769,494"/>
 <area shape="poly" title=" " alt="" coords="454,164,507,207,557,257,607,323,645,387,640,390,602,326,553,260,504,211,451,168"/>
-<area shape="rect" href="../../d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title=" " alt="" coords="374,672,561,821"/>
+<area shape="rect" href="../../d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="374,672,561,821"/>
 <area shape="poly" title=" " alt="" coords="470,553,470,672,465,672,465,553"/>
 </map>
 </div>
@@ -108,7 +108,7 @@ Collaboration diagram for thread_module::job:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d57/classthread__module_1_1job__coll__graph.png" border="0" usemap="#athread__module_1_1job_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__module_1_1job_coll__map" id="athread__module_1_1job_coll__map">
-<area shape="rect" title="Represents a job that can be executed by a job queue." alt="" coords="443,263,583,448"/>
+<area shape="rect" title="A base class representing work items to be executed by a job queue." alt="" coords="443,263,583,448"/>
 <area shape="rect" title=" " alt="" coords="363,511,531,591"/>
 <area shape="poly" title=" " alt="" coords="484,449,468,496,463,494,479,448"/>
 <area shape="rect" title=" " alt="" coords="473,135,552,200"/>
@@ -117,7 +117,7 @@ Collaboration diagram for thread_module::job:</div>
 <area shape="poly" title=" " alt="" coords="515,99,515,134,510,134,510,99"/>
 <area shape="rect" title=" " alt="" coords="421,1219,581,1299"/>
 <area shape="poly" title=" " alt="" coords="516,1217,534,1170,553,1110,568,1044,574,977,574,549,570,506,559,464,564,463,575,506,579,549,579,977,573,1045,558,1112,539,1172,521,1219"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,796,412,1156"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,796,412,1156"/>
 <area shape="poly" title=" " alt="" coords="414,1119,469,1203,464,1206,410,1122"/>
 <area shape="rect" title=" " alt="" coords="5,653,185,733"/>
 <area shape="poly" title=" " alt="" coords="137,743,229,857,224,860,133,746"/>
@@ -132,41 +132,67 @@ Collaboration diagram for thread_module::job:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa314ee0ab4b682df44690c1e9f26153c" id="r_aa314ee0ab4b682df44690c1e9f26153c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">job</a> (const std::string &amp;name=&quot;job&quot;)</td></tr>
-<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new job object.  <br /></td></tr>
+<tr class="memdesc:aa314ee0ab4b682df44690c1e9f26153c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code>job</code> with an optional name.  <br /></td></tr>
 <tr class="separator:aa314ee0ab4b682df44690c1e9f26153c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36ea6e441be4f5806901e147cd0015f5" id="r_a36ea6e441be4f5806901e147cd0015f5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a36ea6e441be4f5806901e147cd0015f5">~job</a> (void)</td></tr>
-<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the job class.  <br /></td></tr>
+<tr class="memdesc:a36ea6e441be4f5806901e147cd0015f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for the <code>job</code> class.  <br /></td></tr>
 <tr class="separator:a36ea6e441be4f5806901e147cd0015f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ce9f22db0cfb74ea2f07643a8d3ff99" id="r_a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a0ce9f22db0cfb74ea2f07643a8d3ff99">get_name</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the job.  <br /></td></tr>
+<tr class="memdesc:a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of this job.  <br /></td></tr>
 <tr class="separator:a0ce9f22db0cfb74ea2f07643a8d3ff99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07d8178b7c60d4e6dac22de11b2c9891" id="r_a07d8178b7c60d4e6dac22de11b2c9891"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891">do_work</a> (void) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a07d8178b7c60d4e6dac22de11b2c9891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the job's work.  <br /></td></tr>
+<tr class="memdesc:a07d8178b7c60d4e6dac22de11b2c9891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the job's work.  <br /></td></tr>
 <tr class="separator:a07d8178b7c60d4e6dac22de11b2c9891"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a304723645e6f79ac34b3a2043354cf39" id="r_a304723645e6f79ac34b3a2043354cf39"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a304723645e6f79ac34b3a2043354cf39">set_job_queue</a> (const std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; &amp;<a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; void</td></tr>
-<tr class="memdesc:a304723645e6f79ac34b3a2043354cf39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the job queue for this job.  <br /></td></tr>
+<tr class="memdesc:a304723645e6f79ac34b3a2043354cf39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates this job with a specific job queue.  <br /></td></tr>
 <tr class="separator:a304723645e6f79ac34b3a2043354cf39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6345451335e42ee86e5e020dce2fa7a2" id="r_a6345451335e42ee86e5e020dce2fa7a2"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a6345451335e42ee86e5e020dce2fa7a2">get_job_queue</a> (void) const -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
-<tr class="memdesc:a6345451335e42ee86e5e020dce2fa7a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the job queue associated with this job.  <br /></td></tr>
+<tr class="memdesc:a6345451335e42ee86e5e020dce2fa7a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job.  <br /></td></tr>
 <tr class="separator:a6345451335e42ee86e5e020dce2fa7a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c5a6eff1846e0a57be106578821ab1" id="r_a44c5a6eff1846e0a57be106578821ab1"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representation of the job.  <br /></td></tr>
+<tr class="memdesc:a44c5a6eff1846e0a57be106578821ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the job.  <br /></td></tr>
 <tr class="separator:a44c5a6eff1846e0a57be106578821ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ac01785f3d30005f2ad40f840504c5e6f" id="r_ac01785f3d30005f2ad40f840504c5e6f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a></td></tr>
-<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job.  <br /></td></tr>
+<tr class="memdesc:ac01785f3d30005f2ad40f840504c5e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the job, provided during construction.  <br /></td></tr>
 <tr class="separator:ac01785f3d30005f2ad40f840504c5e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed0248a449f4e341057aa29c0369e625" id="r_aed0248a449f4e341057aa29c0369e625"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a></td></tr>
-<tr class="memdesc:aed0248a449f4e341057aa29c0369e625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer to the associated job queue.  <br /></td></tr>
+<tr class="memdesc:aed0248a449f4e341057aa29c0369e625"><td class="mdescLeft">&#160;</td><td class="mdescRight">A weak pointer to the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> that manages this job.  <br /></td></tr>
 <tr class="separator:aed0248a449f4e341057aa29c0369e625"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a job that can be executed by a job queue. </p>
-<p>This class is a base class for all jobs that can be executed by a job queue. It provides a callback function that is executed when the job is executed. The callback function must return a tuple with a boolean value indicating whether the job was executed successfully and an optional string with an error message in case the job failed. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00060">60</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
+<div class="textblock"><p>A base class representing work items to be executed by a job queue. </p>
+<p>The <code>job</code> class provides a foundation for all work items that can be submitted to a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. Derived classes can override <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="Executes the job&#39;s work.">do_work()</a></code> to implement custom logic. Once submitted to a queue, the queue is responsible for calling <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="Executes the job&#39;s work.">do_work()</a></code> at an appropriate time, typically in a worker thread or similar context.</p>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Usage Example</h3>
+<div class="fragment"><div class="line"><span class="comment">// A custom job derived from thread_module::job</span></div>
+<div class="line"><span class="keyword">class </span>my_job : <span class="keyword">public</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="comment">// Initialize the base job with a descriptive name</span></div>
+<div class="line">    my_job() : <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;my_custom_job&quot;</span>) {}</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Override the do_work method to perform actual work</span></div>
+<div class="line">    std::optional&lt;std::string&gt; do_work()<span class="keyword"> override</span></div>
+<div class="line"><span class="keyword">    </span>{</div>
+<div class="line">        <span class="comment">// Some hypothetical operation</span></div>
+<div class="line">        <span class="keywordtype">bool</span> success = perform_operation();</div>
+<div class="line">        <span class="keywordflow">if</span> (!success)</div>
+<div class="line">            <span class="keywordflow">return</span> std::string{<span class="stringliteral">&quot;Operation failed&quot;</span>};</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> std::nullopt; <span class="comment">// return empty on success</span></div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Submitting the job to a queue</span></div>
+<div class="line"><span class="keyword">auto</span> q = std::make_shared&lt;thread_module::job_queue&gt;();</div>
+<div class="line"><span class="keyword">auto</span> job_ptr = std::make_shared&lt;my_job&gt;();</div>
+<div class="line">q-&gt;enqueue(job_ptr);</div>
+<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">A base class representing work items to be executed by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00086">job.h:87</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00086">86</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa314ee0ab4b682df44690c1e9f26153c" name="aa314ee0ab4b682df44690c1e9f26153c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa314ee0ab4b682df44690c1e9f26153c">&#9670;&#160;</a></span>job()</h2>
@@ -184,17 +210,18 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new job object. </p>
+<p>Constructs a new <code>job</code> with an optional name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the job (default is "job"). </td></tr>
+    <tr><td class="paramname">name</td><td>A human-readable name for the job (default is "job").</td></tr>
   </table>
   </dd>
 </dl>
+<p>The <code>name</code> can be used for logging, debugging, or diagnostic purposes. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>: <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>(name) {}</div>
-<div class="ttc" id="aclassthread__module_1_1job_html_ac01785f3d30005f2ad40f840504c5e6f"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">thread_module::job::name_</a></div><div class="ttdeci">std::string name_</div><div class="ttdoc">The name of the job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00110">job.h:110</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_ac01785f3d30005f2ad40f840504c5e6f"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">thread_module::job::name_</a></div><div class="ttdeci">std::string name_</div><div class="ttdoc">The name of the job, provided during construction.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00150">job.h:150</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -222,7 +249,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Virtual destructor for the job class. </p>
+<p>Virtual destructor for the <code>job</code> class. </p>
+<p>Ensures proper cleanup in derived classes. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   43</span>{}</div>
@@ -254,12 +282,13 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Execute the job's work. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; A tuple containing:<ul>
-<li>bool: Indicates whether the job was successful (true) or not (false).</li>
-<li>std::optional&lt;std::string&gt;: An optional string message, typically used for error descriptions or additional information. </li>
+<p>Executes the job's work. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> <ul>
+<li>If <code>std::nullopt</code>, the job is considered successful.</li>
+<li>If a non-empty string is returned, it is treated as an error message describing why the job failed or what went wrong.</li>
 </ul>
 </dd></dl>
+<p>The default implementation returns <code>std::nullopt</code>, indicating success with no additional logic. Override this in a derived class to perform actual work. </p>
 
 <p>Reimplemented in <a class="el" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070">log_module::log_job</a>, <a class="el" href="../../db/daf/classlog__module_1_1message__job.html#a0725c4e289d08a6064496b2b4691c8a5">log_module::message_job</a>, <a class="el" href="../../d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html#a597956199bd614cd6854e2ce0c317410">priority_thread_pool_module::callback_priority_job_t&lt; priority_type &gt;</a>, and <a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html#a1d0f9d1d1967a5db5a36844f96e5cabc">thread_module::callback_job</a>.</p>
 
@@ -270,7 +299,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d42/classthread__module_1_1job_a07d8178b7c60d4e6dac22de11b2c9891_icgraph.png" border="0" usemap="#ad8/d42/classthread__module_1_1job_a07d8178b7c60d4e6dac22de11b2c9891_icgraph" alt=""/></div>
 <map name="ad8/d42/classthread__module_1_1job_a07d8178b7c60d4e6dac22de11b2c9891_icgraph" id="ad8/d42/classthread__module_1_1job_a07d8178b7c60d4e6dac22de11b2c9891_icgraph">
-<area shape="rect" title="Execute the job&#39;s work." alt="" coords="243,37,391,77"/>
+<area shape="rect" title="Executes the job&#39;s work." alt="" coords="243,37,391,77"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#aa00b46024315b635c750425c2ca1d9e6" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
 <area shape="poly" title=" " alt="" coords="228,47,194,42,195,37,229,42"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#a628ea710b0f38de40ea670415fe2a988" title="Performs initialization before starting the log collector thread." alt="" coords="5,69,195,109"/>
@@ -304,14 +333,14 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the job queue associated with this job. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;job_queue&gt; A shared pointer to the associated job queue. If no job queue is associated, this may return a null shared_ptr. </dd></dl>
+<p>Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job. </p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the associated <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>, or an empty pointer if no association exists or if the queue has been destroyed. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a2469cc3641adc82626413165d5eecb55">priority_thread_pool_module::priority_job_t&lt; priority_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   54</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a>.lock(); }</div>
-<div class="ttc" id="aclassthread__module_1_1job_html_aed0248a449f4e341057aa29c0369e625"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">thread_module::job::job_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">Weak pointer to the associated job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00113">job.h:113</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_aed0248a449f4e341057aa29c0369e625"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">thread_module::job::job_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A weak pointer to the job_queue that manages this job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00157">job.h:157</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -331,8 +360,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Get the name of the job. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::string The name of the job. </dd></dl>
+<p>Retrieves the name of this job. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string containing the name of the job. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00045">45</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   45</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>; }</div>
@@ -363,13 +392,14 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the job queue for this job. </p>
+<p>Associates this job with a specific job queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread-safe queue for managing jobs.">job_queue</a></td><td>A shared pointer to the job queue to be associated with this job. </td></tr>
+    <tr><td class="paramname"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></td><td>A shared pointer to the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance.</td></tr>
   </table>
   </dd>
 </dl>
+<p>This method stores the provided <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> as a <code>std::weak_ptr</code>, meaning the queue may no longer exist if it is destroyed elsewhere. </p>
 
 <p>Reimplemented in <a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#afd6c0be55d0ad4cba9f3c9d1383f24cc">priority_thread_pool_module::priority_job_t&lt; priority_type &gt;</a>.</p>
 
@@ -404,19 +434,20 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Get a string representation of the job. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::string A string representation of the job. </dd></dl>
+<p>Returns a string representation of the job. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string containing diagnostic information about the job (e.g., name).</dd></dl>
+<p>This is used internally by formatting functions but can also be used for logging and debugging. By default, it returns the job's name. Derived classes can provide additional details if needed. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   56</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;job: {}&quot;</span>, <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>); }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Format a string using the provided arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00129">formatter.h:129</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00179">formatter.h:179</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_cgraph.png" border="0" usemap="#ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_cgraph" alt=""/></div>
 <map name="ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_cgraph" id="ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_cgraph">
-<area shape="rect" title="Get a string representation of the job." alt="" coords="5,5,153,45"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="201,5,388,45"/>
+<area shape="rect" title="Returns a string representation of the job." alt="" coords="5,5,153,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="201,5,388,45"/>
 <area shape="poly" title=" " alt="" coords="154,23,188,23,188,28,154,28"/>
 </map>
 </div>
@@ -425,8 +456,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_icgraph.png" border="0" usemap="#ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_icgraph" alt=""/></div>
 <map name="ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_icgraph" id="ad8/d42/classthread__module_1_1job_a44c5a6eff1846e0a57be106578821ab1_icgraph">
-<area shape="rect" title="Get a string representation of the job." alt="" coords="227,5,375,45"/>
-<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job value as a string." alt="" coords="5,5,179,45"/>
+<area shape="rect" title="Returns a string representation of the job." alt="" coords="227,5,375,45"/>
+<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object as a string using {fmt}." alt="" coords="5,5,179,45"/>
 <area shape="poly" title=" " alt="" coords="213,28,179,28,179,23,213,23"/>
 </map>
 </div>
@@ -454,9 +485,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Weak pointer to the associated job queue. </p>
+<p>A weak pointer to the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> that manages this job. </p>
+<p>This pointer may expire if the queue is destroyed, so always check validity before use. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00113">113</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00157">157</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
 
 </div>
 </div>
@@ -480,9 +512,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>The name of the job. </p>
+<p>The name of the job, provided during construction. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00110">110</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00150">150</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
 
 </div>
 </div>
@@ -493,7 +525,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

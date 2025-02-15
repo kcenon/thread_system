@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Provides static utilities for file system operations.  
+<p>A utility class for basic file I/O operations.  
  <a href="../../da/d35/classutility__module_1_1file.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../db/de6/file__handler_8h_source.html">file_handler.h</a>&gt;</code></p>
@@ -89,30 +89,62 @@ Collaboration diagram for utility_module::file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d9c/classutility__module_1_1file__coll__graph.png" border="0" usemap="#autility__module_1_1file_coll__map" alt="Collaboration graph"/></div>
 <map name="autility__module_1_1file_coll__map" id="autility__module_1_1file_coll__map">
-<area shape="rect" title="Provides static utilities for file system operations." alt="" coords="5,5,141,131"/>
+<area shape="rect" title="A utility class for basic file I/O operations." alt="" coords="5,5,141,131"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a58e892ac8d72235f221fafc9d3bed051" id="r_a58e892ac8d72235f221fafc9d3bed051"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d35/classutility__module_1_1file.html#a58e892ac8d72235f221fafc9d3bed051">remove</a> (const std::string &amp;path) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a58e892ac8d72235f221fafc9d3bed051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a file from the filesystem.  <br /></td></tr>
+<tr class="memdesc:a58e892ac8d72235f221fafc9d3bed051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a file from the filesystem.  <br /></td></tr>
 <tr class="separator:a58e892ac8d72235f221fafc9d3bed051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60e0ed8a578316f8e25dda01884c0163" id="r_a60e0ed8a578316f8e25dda01884c0163"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d35/classutility__module_1_1file.html#a60e0ed8a578316f8e25dda01884c0163">load</a> (const std::string &amp;path) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a60e0ed8a578316f8e25dda01884c0163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the entire contents of a file.  <br /></td></tr>
+<tr class="memdesc:a60e0ed8a578316f8e25dda01884c0163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the entire contents of a file into memory.  <br /></td></tr>
 <tr class="separator:a60e0ed8a578316f8e25dda01884c0163"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70e9bfa648f739cca05a8f8734eadc92" id="r_a70e9bfa648f739cca05a8f8734eadc92"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d35/classutility__module_1_1file.html#a70e9bfa648f739cca05a8f8734eadc92">save</a> (const std::string &amp;path, const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a70e9bfa648f739cca05a8f8734eadc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save data to a file (overwrite if it exists, create if not).  <br /></td></tr>
+<tr class="memdesc:a70e9bfa648f739cca05a8f8734eadc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves data to a file, overwriting it if it already exists.  <br /></td></tr>
 <tr class="separator:a70e9bfa648f739cca05a8f8734eadc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5175eed153de179498621fc8a6a68172" id="r_a5175eed153de179498621fc8a6a68172"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d35/classutility__module_1_1file.html#a5175eed153de179498621fc8a6a68172">append</a> (const std::string &amp;path, const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a5175eed153de179498621fc8a6a68172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append data to an existing file.  <br /></td></tr>
+<tr class="memdesc:a5175eed153de179498621fc8a6a68172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends data to the end of an existing file.  <br /></td></tr>
 <tr class="separator:a5175eed153de179498621fc8a6a68172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides static utilities for file system operations. </p>
-<p>This class can remove files, load file contents, save (overwrite) files, and append data to existing files. It uses std::filesystem and i/o streams. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../db/de6/file__handler_8h_source.html#l00050">50</a> of file <a class="el" href="../../db/de6/file__handler_8h_source.html">file_handler.h</a>.</p>
+<div class="textblock"><p>A utility class for basic file I/O operations. </p>
+<p>The <code>file</code> class provides static methods for:</p><ul>
+<li>Removing files from the filesystem.</li>
+<li>Reading file contents into a byte buffer.</li>
+<li>Saving (overwriting) data to a file.</li>
+<li>Appending data to existing files.</li>
+</ul>
+<p>Under the hood, it uses standard C++ file streams (and possibly <code>std::filesystem</code> features, if available) to manage file paths and I/O operations. Each method returns an optional error message:</p><ul>
+<li><code>std::nullopt</code> indicates success.</li>
+<li>A non-empty <code>std::string</code> indicates the reason why the operation failed.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md31"></a>
+Example Usage</h3>
+<div class="fragment"><div class="line"><span class="comment">// Remove a file</span></div>
+<div class="line"><span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="../../da/d35/classutility__module_1_1file.html#a58e892ac8d72235f221fafc9d3bed051">file::remove</a>(<span class="stringliteral">&quot;data.bin&quot;</span>)) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to remove file: &quot;</span> &lt;&lt; *err &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Load file into memory</span></div>
+<div class="line"><span class="keyword">auto</span> [contents, load_err] = <a class="code hl_function" href="../../da/d35/classutility__module_1_1file.html#a60e0ed8a578316f8e25dda01884c0163">file::load</a>(<span class="stringliteral">&quot;image.png&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (load_err) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to load file: &quot;</span> &lt;&lt; *load_err &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    <span class="comment">// Use contents...</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Save data</span></div>
+<div class="line">std::vector&lt;uint8_t&gt; data = {0x01, 0x02, 0x03};</div>
+<div class="line"><span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="../../da/d35/classutility__module_1_1file.html#a70e9bfa648f739cca05a8f8734eadc92">file::save</a>(<span class="stringliteral">&quot;output.bin&quot;</span>, data)) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to save file: &quot;</span> &lt;&lt; *err &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassutility__module_1_1file_html_a58e892ac8d72235f221fafc9d3bed051"><div class="ttname"><a href="../../da/d35/classutility__module_1_1file.html#a58e892ac8d72235f221fafc9d3bed051">utility_module::file::remove</a></div><div class="ttdeci">static auto remove(const std::string &amp;path) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Removes a file from the filesystem.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/de5/file__handler_8cpp_source.html#l00040">file_handler.cpp:40</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1file_html_a60e0ed8a578316f8e25dda01884c0163"><div class="ttname"><a href="../../da/d35/classutility__module_1_1file.html#a60e0ed8a578316f8e25dda01884c0163">utility_module::file::load</a></div><div class="ttdeci">static auto load(const std::string &amp;path) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Loads the entire contents of a file into memory.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/de5/file__handler_8cpp_source.html#l00061">file_handler.cpp:61</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1file_html_a70e9bfa648f739cca05a8f8734eadc92"><div class="ttname"><a href="../../da/d35/classutility__module_1_1file.html#a70e9bfa648f739cca05a8f8734eadc92">utility_module::file::save</a></div><div class="ttdeci">static auto save(const std::string &amp;path, const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Saves data to a file, overwriting it if it already exists.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/de5/file__handler_8cpp_source.html#l00082">file_handler.cpp:82</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../db/de6/file__handler_8h_source.html#l00081">81</a> of file <a class="el" href="../../db/de6/file__handler_8h_source.html">file_handler.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5175eed153de179498621fc8a6a68172" name="a5175eed153de179498621fc8a6a68172"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5175eed153de179498621fc8a6a68172">&#9670;&#160;</a></span>append()</h2>
@@ -148,15 +180,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Append data to an existing file. </p>
+<p>Appends data to the end of an existing file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>The target file path. </td></tr>
-    <tr><td class="paramname">data</td><td>The byte data to append. </td></tr>
+    <tr><td class="paramname">data</td><td>A byte buffer containing the data to append. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; Error message if failed, or std::nullopt on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> with an error message on failure, or <code>std::nullopt</code> on success.</dd></dl>
+<p>The file is opened in binary append mode. If the file does not exist, behavior may depend on your platform or library settings (some may create it, others may fail). If you need to ensure creation, consider using <code><a class="el" href="../../da/d35/classutility__module_1_1file.html#a70e9bfa648f739cca05a8f8734eadc92" title="Saves data to a file, overwriting it if it already exists.">save()</a></code> first or verifying the file's existence. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/de5/file__handler_8cpp_source.html#l00109">109</a> of file <a class="el" href="../../d5/de5/file__handler_8cpp_source.html">file_handler.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  111</span>    {</div>
@@ -199,18 +232,19 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Load the entire contents of a file. </p>
+<p>Loads the entire contents of a file into memory. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>The path to the file to read. </td></tr>
+    <tr><td class="paramname">path</td><td>The path to the file to be read. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::tuple&lt;std::vector&lt;uint8_t&gt;, std::optional&lt;std::string&gt;&gt;<ul>
-<li>First: The file contents as a byte vector.</li>
-<li>Second: Error message if failed, or std::nullopt on success. </li>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::vector&lt;uint8_t&gt;</code>: The file contents as a byte vector. If an error occurs, this vector is typically empty.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message if reading fails, or <code>std::nullopt</code> on success.</li>
 </ul>
 </dd></dl>
+<p>The file is opened in binary mode. If the file is very large, be mindful of available memory. In case of an error (e.g., file not found or permission denied), the second element contains the reason, and the first element will be an empty vector. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/de5/file__handler_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d5/de5/file__handler_8cpp_source.html">file_handler.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   63</span>    {</div>
@@ -258,14 +292,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Remove a file from the filesystem. </p>
+<p>Removes a file from the filesystem. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>The path to the file to remove. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; Error message if failed, or std::nullopt on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> containing an error message if the removal operation fails, or <code>std::nullopt</code> on success.</dd></dl>
+<p>This function deletes the file specified by <code>path</code>. If the file does not exist, some platforms may treat it as an error, while others consider it a success. The behavior depends on the underlying C++ library and filesystem. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/de5/file__handler_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../d5/de5/file__handler_8cpp_source.html">file_handler.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>    {</div>
@@ -324,15 +359,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Save data to a file (overwrite if it exists, create if not). </p>
+<p>Saves data to a file, overwriting it if it already exists. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>The target file path. </td></tr>
-    <tr><td class="paramname">data</td><td>The byte data to write. </td></tr>
+    <tr><td class="paramname">data</td><td>A byte buffer containing the data to write. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; Error message if failed, or std::nullopt on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> with an error message on failure, or <code>std::nullopt</code> on success.</dd></dl>
+<p>The file is opened in binary mode for output. If the file does not exist, it is created. If it exists, its contents are replaced by <code>data</code>. In case of I/O errors (e.g., insufficient permissions, write failure), an error message is returned. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/de5/file__handler_8cpp_source.html#l00082">82</a> of file <a class="el" href="../../d5/de5/file__handler_8cpp_source.html">file_handler.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   84</span>    {</div>
@@ -369,7 +405,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

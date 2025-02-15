@@ -1,3 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d6/d24/classpriority__thread__worker.html" title="A worker thread class that processes jobs from a priority job queue." alt="" coords="5,5,175,31"/>
+<area shape="rect" id="Node000000" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="5,159,213,185"/>
+<area shape="rect" id="Node000001" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="281,5,441,45"/>
+<area shape="poly" id="edge27_Node000000_Node000001" title=" " alt="" coords="132,148,188,102,260,55,287,43,289,48,263,60,192,106,136,152"/>
+<area shape="rect" id="Node000002" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="283,69,439,109"/>
+<area shape="poly" id="edge28_Node000000_Node000002" title=" " alt="" coords="160,152,260,119,297,107,298,112,262,124,162,157"/>
+<area shape="rect" id="Node000003" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="275,134,446,159"/>
+<area shape="poly" id="edge29_Node000000_Node000003" title=" " alt="" coords="227,157,275,153,275,158,227,163"/>
+<area shape="rect" id="Node000004" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="266,183,455,209"/>
+<area shape="poly" id="edge30_Node000000_Node000004" title=" " alt="" coords="227,181,266,184,265,190,227,186"/>
+<area shape="rect" id="Node000005" href="$d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="261,233,460,287"/>
+<area shape="poly" id="edge31_Node000000_Node000005" title=" " alt="" coords="160,187,283,230,281,235,159,192"/>
+<area shape="rect" id="Node000006" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="283,312,438,352"/>
+<area shape="poly" id="edge32_Node000000_Node000006" title=" " alt="" coords="134,193,190,244,225,272,263,296,291,309,288,314,260,301,222,276,186,248,130,197"/>
 </map>

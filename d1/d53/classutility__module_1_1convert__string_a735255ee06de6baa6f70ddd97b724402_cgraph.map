@@ -1,5 +1,5 @@
 <map id="utility_module::convert_string::replace2" name="utility_module::convert_string::replace2">
-<area shape="rect" id="Node000001" title="Replace all occurrences of a token in a string with another string, returning a new string." alt="" coords="5,5,179,45"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Format a string directly to an output iterator." alt="" coords="227,5,413,45"/>
+<area shape="rect" id="Node000001" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="5,5,179,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="227,5,413,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,23,213,23,213,28,179,28"/>
 </map>

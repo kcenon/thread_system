@@ -1,7 +1,7 @@
 <map id="fmt::formatter&lt; thread_pool_module::thread_worker &gt;::format" name="fmt::formatter&lt; thread_pool_module::thread_worker &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a thread_worker value as a string." alt="" coords="5,5,220,60"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Converts the thread_base object to a string representation." alt="" coords="268,13,439,53"/>
+<area shape="rect" id="Node000001" title="Formats a thread_worker object as a string." alt="" coords="5,5,220,60"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Returns a string representation of this thread_base object." alt="" coords="268,13,439,53"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,30,254,30,254,35,220,35"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="487,13,673,53"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="487,13,673,53"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="439,30,473,30,473,35,439,35"/>
 </map>

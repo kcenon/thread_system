@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Specialization of fmt::formatter for thread_conditions. Enables formatting of thread_conditions enum values using the fmt library.  
+<p>Specialization of fmt::formatter for <code><a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd" title="Enumeration of various states in a thread&#39;s lifecycle.">thread_module::thread_conditions</a></code>.  
  <a href="../../da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>&gt;</code></p>
@@ -89,7 +89,7 @@ Inheritance diagram for fmt::formatter&lt; thread_module::thread_conditions &gt;
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d50/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4__inherit__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_inherit__map" id="afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_inherit__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_conditions. Enables formatting of thread_conditions enum ..." alt="" coords="5,133,215,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::thread_conditions." alt="" coords="5,133,215,213"/>
 <area shape="rect" title=" " alt="" coords="39,5,181,85"/>
 <area shape="poly" title=" " alt="" coords="113,99,113,133,107,133,107,99"/>
 </map>
@@ -99,7 +99,7 @@ Collaboration diagram for fmt::formatter&lt; thread_module::thread_conditions &g
 <div class="dyncontent">
 <div class="center"><img src="../../df/dc4/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4__coll__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_coll__map" id="afmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_coll__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_conditions. Enables formatting of thread_conditions enum ..." alt="" coords="5,133,215,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::thread_conditions." alt="" coords="5,133,215,213"/>
 <area shape="rect" title=" " alt="" coords="39,5,181,85"/>
 <area shape="poly" title=" " alt="" coords="113,99,113,133,107,133,107,99"/>
 </map>
@@ -109,13 +109,19 @@ Collaboration diagram for fmt::formatter&lt; thread_module::thread_conditions &g
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7bb2d90c292490c3dbadbf94b3d1f9a3" id="r_a7bb2d90c292490c3dbadbf94b3d1f9a3"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
 <tr class="memitem:a7bb2d90c292490c3dbadbf94b3d1f9a3"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3">format</a> (const <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_module::thread_conditions</a> &amp;thread_condition, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:a7bb2d90c292490c3dbadbf94b3d1f9a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a thread_conditions value as a string.  <br /></td></tr>
+<tr class="memdesc:a7bb2d90c292490c3dbadbf94b3d1f9a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a <code>thread_conditions</code> value as a string.  <br /></td></tr>
 <tr class="separator:a7bb2d90c292490c3dbadbf94b3d1f9a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Specialization of fmt::formatter for thread_conditions. Enables formatting of thread_conditions enum values using the fmt library. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00160">160</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd" title="Enumeration of various states in a thread&#39;s lifecycle.">thread_module::thread_conditions</a></code>. </p>
+<p>Allows <code>thread_conditions</code> enum values to be formatted as strings using the {fmt} library.</p>
+<h3><a class="anchor" id="autotoc_md18"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> cond = <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1">thread_module::thread_conditions::Working</a>;</div>
+<div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Thread state is {}&quot;</span>, cond); <span class="comment">// &quot;Thread state is working&quot;</span></div>
+<div class="ttc" id="anamespacethread__module_html_ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1">thread_module::thread_conditions::Working</a></div><div class="ttdeci">@ Working</div><div class="ttdoc">Thread currently processing a task.</div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00212">212</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7bb2d90c292490c3dbadbf94b3d1f9a3" name="a7bb2d90c292490c3dbadbf94b3d1f9a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7bb2d90c292490c3dbadbf94b3d1f9a3">&#9670;&#160;</a></span>format()</h2>
@@ -153,35 +159,35 @@ template&lt;typename FormatContext &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Formats a thread_conditions value as a string. </p>
+<p>Formats a <code>thread_conditions</code> value as a string. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">FormatContext</td><td>Type of the format context. </td></tr>
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">thread_condition</td><td>The thread_conditions enum value to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>Format context for the output. </td></tr>
+    <tr><td class="paramname">thread_condition</td><td>The <code>thread_conditions</code> enum value to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context for the output. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the formatted output. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00170">170</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  171</span>    {</div>
-<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a75623c7ff32017c7c02a30633a6adf19">thread_module::to_string</a>(thread_condition),</div>
-<div class="line"><span class="lineno">  173</span>                                                        ctx);</div>
-<div class="line"><span class="lineno">  174</span>    }</div>
-<div class="ttc" id="anamespacethread__module_html_a75623c7ff32017c7c02a30633a6adf19"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a75623c7ff32017c7c02a30633a6adf19">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions job_priority)</div><div class="ttdoc">Converts a thread_conditions value to its string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00087">thread_conditions.h:87</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00222">222</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  223</span>    {</div>
+<div class="line"><span class="lineno">  224</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a>(thread_condition),</div>
+<div class="line"><span class="lineno">  225</span>                                                        ctx);</div>
+<div class="line"><span class="lineno">  226</span>    }</div>
+<div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_a7bb2d90c292490c3dbadbf94b3d1f9a3_cgraph.png" border="0" usemap="#ada/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_a7bb2d90c292490c3dbadbf94b3d1f9a3_cgraph" alt=""/></div>
 <map name="ada/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_a7bb2d90c292490c3dbadbf94b3d1f9a3_cgraph" id="ada/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4_a7bb2d90c292490c3dbadbf94b3d1f9a3_cgraph">
 <area shape="rect" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,60"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a75623c7ff32017c7c02a30633a6adf19" title="Converts a thread_conditions value to its string representation." alt="" coords="256,20,441,45"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="256,20,441,45"/>
 <area shape="poly" title=" " alt="" coords="208,30,242,30,242,35,208,35"/>
 </map>
 </div>
@@ -194,7 +200,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

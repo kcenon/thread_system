@@ -1,6 +1,6 @@
 <map id="priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt;" name="priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="283,988,493,1183"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="288,540,488,925"/>
+<area shape="rect" id="Node000001" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="283,988,493,1183"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="288,540,488,925"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="391,939,391,988,385,988,385,939"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="303,290,387,355"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="351,355,369,523,364,524,346,356"/>

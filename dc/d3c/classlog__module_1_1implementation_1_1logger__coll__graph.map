@@ -1,18 +1,18 @@
 <map id="log_module::implementation::logger" name="log_module::implementation::logger">
-<area shape="rect" id="Node000001" title="A singleton class for managing logging operations." alt="" coords="395,1907,597,2287"/>
+<area shape="rect" id="Node000001" title="A singleton class providing a unified logging mechanism for console, file, and callback outputs." alt="" coords="395,1907,597,2287"/>
 <area shape="rect" id="Node000029" title=" " alt="" coords="405,2349,587,2444"/>
 <area shape="poly" id="edge38_Node000029_Node000001" title=" " alt="" coords="457,2287,463,2325,465,2333,460,2335,457,2326,452,2287"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="113,1764,289,1844"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,1843,384,1982,381,1985,239,1846"/>
 <area shape="rect" id="Node000003" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="111,1306,292,1651"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,1652,204,1748,199,1748,199,1652"/>
-<area shape="rect" id="Node000004" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="309,779,509,1164"/>
+<area shape="rect" id="Node000004" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="309,779,509,1164"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="305,1144,284,1189,262,1247,243,1306,238,1305,257,1245,279,1187,300,1142"/>
-<area shape="rect" id="Node000015" href="$d9/de4/classlog__module_1_1console__writer.html" title="A class for writing log messages to the console." alt="" coords="316,1399,500,1559"/>
+<area shape="rect" id="Node000015" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="316,1399,500,1559"/>
 <area shape="poly" id="edge15_Node000015_Node000004" title=" " alt="" coords="306,1145,292,1189,288,1210,292,1231,298,1243,306,1255,376,1397,371,1400,302,1257,293,1246,287,1233,283,1210,287,1187,301,1144"/>
-<area shape="rect" id="Node000017" href="$dc/d2b/classlog__module_1_1file__writer.html" title="A class for writing log messages to a file." alt="" coords="743,1256,927,1701"/>
+<area shape="rect" id="Node000017" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="743,1256,927,1701"/>
 <area shape="poly" id="edge19_Node000017_Node000004" title=" " alt="" coords="520,1157,525,1162,565,1197,607,1230,638,1238,665,1238,692,1240,721,1254,744,1274,741,1278,719,1258,691,1245,665,1243,637,1243,604,1234,561,1202,521,1166,516,1160"/>
-<area shape="rect" id="Node000028" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class for handling log messages through a callback function." alt="" coords="524,1399,708,1559"/>
+<area shape="rect" id="Node000028" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="524,1399,708,1559"/>
 <area shape="poly" id="edge35_Node000028_Node000004" title=" " alt="" coords="481,1176,502,1231,514,1255,582,1397,577,1399,510,1257,498,1233,476,1178"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="523,643,607,709"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="557,710,538,756,520,788,515,785,534,753,552,708"/>

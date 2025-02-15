@@ -1,10 +1,10 @@
 <map id="thread_pool_module::thread_pool" name="thread_pool_module::thread_pool">
-<area shape="rect" id="Node000001" title="A thread pool class that manages a collection of worker threads." alt="" coords="273,1261,419,1501"/>
+<area shape="rect" id="Node000001" title="Manages a group of thread_worker instances and a shared job_queue for concurrent job processing." alt="" coords="273,1261,419,1501"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,1111,196,1191"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,1199,274,1310,270,1314,151,1203"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="215,155,293,221"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="253,221,243,336,237,482,237,1153,239,1181,245,1210,267,1264,262,1266,240,1211,234,1182,231,1153,231,482,237,336,248,221"/>
-<area shape="rect" id="Node000010" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="443,291,643,676"/>
+<area shape="rect" id="Node000010" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="443,291,643,676"/>
 <area shape="poly" id="edge14_Node000010_Node000003" title=" " alt="" coords="274,219,294,244,318,264,345,275,371,276,399,277,430,288,428,293,398,283,371,281,344,280,315,269,290,247,270,223"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="189,5,319,85"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="257,100,257,155,251,155,251,100"/>
@@ -13,7 +13,7 @@
 <area shape="poly" id="edge13_Node000010_Node000005" title=" " alt="" coords="859,223,817,254,658,385,655,381,814,250,856,219"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="273,443,419,523"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="349,524,349,817,349,1153,349,1245,343,1245,343,1153,343,817,343,524"/>
-<area shape="rect" id="Node000009" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A worker thread class that processes jobs from a job queue." alt="" coords="451,739,635,899"/>
+<area shape="rect" id="Node000009" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="451,739,635,899"/>
 <area shape="poly" id="edge16_Node000009_Node000006" title=" " alt="" coords="362,523,399,613,425,664,456,713,464,724,460,727,452,716,421,667,394,615,357,525"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="406,1104,593,1199"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="471,1200,431,1259,427,1256,466,1197"/>

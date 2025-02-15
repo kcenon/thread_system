@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Specialization of fmt::formatter for thread_base. Enables formatting of thread_base enum values using the fmt library.  
+<p>Specialization of fmt::formatter for <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_module::thread_base</a></code>.  
  <a href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>&gt;</code></p>
@@ -89,7 +89,7 @@ Inheritance diagram for fmt::formatter&lt; thread_module::thread_base &gt;:</div
 <div class="dyncontent">
 <div class="center"><img src="../../da/dbd/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4__inherit__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_inherit__map" id="afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_inherit__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_base. Enables formatting of thread_base enum values using..." alt="" coords="5,133,179,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::thread_base." alt="" coords="5,133,179,213"/>
 <area shape="rect" title=" " alt="" coords="21,5,163,85"/>
 <area shape="poly" title=" " alt="" coords="95,99,95,133,89,133,89,99"/>
 </map>
@@ -99,7 +99,7 @@ Collaboration diagram for fmt::formatter&lt; thread_module::thread_base &gt;:</d
 <div class="dyncontent">
 <div class="center"><img src="../../dc/ddb/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4__coll__graph.png" border="0" usemap="#afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_coll__map" id="afmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_coll__map">
-<area shape="rect" title="Specialization of fmt::formatter for thread_base. Enables formatting of thread_base enum values using..." alt="" coords="5,133,179,213"/>
+<area shape="rect" title="Specialization of fmt::formatter for thread_module::thread_base." alt="" coords="5,133,179,213"/>
 <area shape="rect" title=" " alt="" coords="21,5,163,85"/>
 <area shape="poly" title=" " alt="" coords="95,99,95,133,89,133,89,99"/>
 </map>
@@ -109,13 +109,18 @@ Collaboration diagram for fmt::formatter&lt; thread_module::thread_base &gt;:</d
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa9830d8d46858b49f0d29450a5521fde" id="r_aa9830d8d46858b49f0d29450a5521fde"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
 <tr class="memitem:aa9830d8d46858b49f0d29450a5521fde"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde">format</a> (const <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a> &amp;item, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:aa9830d8d46858b49f0d29450a5521fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a thread_base value as a string.  <br /></td></tr>
+<tr class="memdesc:aa9830d8d46858b49f0d29450a5521fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a <code>thread_base</code> object as a string using {fmt}.  <br /></td></tr>
 <tr class="separator:aa9830d8d46858b49f0d29450a5521fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Specialization of fmt::formatter for thread_base. Enables formatting of thread_base enum values using the fmt library. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00251">251</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
+<div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads.">thread_module::thread_base</a></code>. </p>
+<p>Enables formatting of <code>thread_base</code> objects as strings using the {fmt} library.</p>
+<h3><a class="anchor" id="autotoc_md16"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> worker = std::make_shared&lt;my_thread&gt;();</div>
+<div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Thread info: {}&quot;</span>, *worker);</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00340">340</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa9830d8d46858b49f0d29450a5521fde" name="aa9830d8d46858b49f0d29450a5521fde"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa9830d8d46858b49f0d29450a5521fde">&#9670;&#160;</a></span>format()</h2>
@@ -153,7 +158,7 @@ template&lt;typename FormatContext &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Formats a thread_base value as a string. </p>
+<p>Formats a <code>thread_base</code> object as a string using {fmt}. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FormatContext</td><td>Type of the format context. </td></tr>
@@ -162,27 +167,27 @@ template&lt;typename FormatContext &gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The thread_base enum value to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>Format context for the output. </td></tr>
+    <tr><td class="paramname">item</td><td>The <code>thread_base</code> to format. </td></tr>
+    <tr><td class="paramname">ctx</td><td>The format context for the output. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00261">261</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  262</span>    {</div>
-<div class="line"><span class="lineno">  263</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  264</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_a0bfb73ba5d38988886db056c46628a09"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Converts the thread_base object to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00222">thread_base.cpp:222</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00350">350</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span>    {</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  353</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html_a0bfb73ba5d38988886db056c46628a09"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this thread_base object.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00222">thread_base.cpp:222</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_aa9830d8d46858b49f0d29450a5521fde_cgraph.png" border="0" usemap="#ad2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_aa9830d8d46858b49f0d29450a5521fde_cgraph" alt=""/></div>
 <map name="ad2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_aa9830d8d46858b49f0d29450a5521fde_cgraph" id="ad2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4_aa9830d8d46858b49f0d29450a5521fde_cgraph">
-<area shape="rect" title="Formats a thread_base value as a string." alt="" coords="5,5,187,60"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Converts the thread_base object to a string representation." alt="" coords="235,13,405,53"/>
+<area shape="rect" title="Formats a thread_base object as a string using {fmt}." alt="" coords="5,5,187,60"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Returns a string representation of this thread_base object." alt="" coords="235,13,405,53"/>
 <area shape="poly" title=" " alt="" coords="187,30,221,30,221,35,187,35"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="453,13,640,53"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="453,13,640,53"/>
 <area shape="poly" title=" " alt="" coords="405,30,440,30,440,35,405,35"/>
 </map>
 </div>
@@ -195,7 +200,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

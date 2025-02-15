@@ -88,19 +88,19 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html">callback_writer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for handling log messages through a callback function.  <a href="../../dd/d67/classlog__module_1_1callback__writer.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class that processes log messages in a separate thread and delivers logs through a user-defined callback.  <a href="../../dd/d67/classlog__module_1_1callback__writer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html">console_writer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for writing log messages to the console.  <a href="../../d9/de4/classlog__module_1_1console__writer.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A specialized thread class that continuously writes log messages to the console.  <a href="../../d9/de4/classlog__module_1_1console__writer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html">file_writer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for writing log messages to a file.  <a href="../../dc/d2b/classlog__module_1_1file__writer.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes log messages to a file in a dedicated thread.  <a href="../../dc/d2b/classlog__module_1_1file__writer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html">log_collector</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for collecting and managing log messages.  <a href="../../d7/da3/classlog__module_1_1log__collector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/df4/classlog__module_1_1log__job.html">log_job</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a logging job derived from the base job class.  <a href="../../df/df4/classlog__module_1_1log__job.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a discrete logging task that can be scheduled and executed within a concurrent job system.  <a href="../../df/df4/classlog__module_1_1log__job.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/daf/classlog__module_1_1message__job.html">message_job</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a console logging job derived from the base job class.  <a href="../../db/daf/classlog__module_1_1message__job.html#details">More...</a><br /></td></tr>
@@ -119,13 +119,13 @@ Enumerations</h2></td></tr>
 , <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396">Parameter</a>
 <br />
  }</td></tr>
-<tr class="memdesc:ac59af6ec9704b7fd0d73e7becbc54709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of different log types.  <a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">More...</a><br /></td></tr>
+<tr class="memdesc:ac59af6ec9704b7fd0d73e7becbc54709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates different categories of log messages.  <a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">More...</a><br /></td></tr>
 <tr class="separator:ac59af6ec9704b7fd0d73e7becbc54709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4f66017a4ded34b2b7d3754b1ad9fe8b" id="r_a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b">to_string</a> (<a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> log_type)</td></tr>
-<tr class="memdesc:a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a log_types value to its string representation.  <br /></td></tr>
+<tr class="memdesc:a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the string representation of a given <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> value.  <br /></td></tr>
 <tr class="separator:a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8dd1c69814a37ac43324d3cc2a9f86f" id="r_ae8dd1c69814a37ac43324d3cc2a9f86f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#ae8dd1c69814a37ac43324d3cc2a9f86f">set_title</a> (const std::string &amp;title) -&gt; void</td></tr>
 <tr class="separator:ae8dd1c69814a37ac43324d3cc2a9f86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,42 +253,42 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Enumeration of different log types. </p>
-<p>Defines various log categories that can be used within the logging system. </p>
+<p>Enumerates different categories of log messages. </p>
+<p>Each enumerator represents a distinct log category (e.g., error, debug) used within the logging system. These values can be mapped to human-readable strings or used programmatically for filtering and routing log messages. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754" name="ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>No specific log type. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754" name="ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>No specific category for the log message. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32" name="ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32"></a>Exception&#160;</td><td class="fielddoc"><p>Exception log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32" name="ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32"></a>Exception&#160;</td><td class="fielddoc"><p>Indicates an exception-related log message. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd" name="ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"><p>Error log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd" name="ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"><p>Represents an error-level log message. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf" name="ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"></a>Information&#160;</td><td class="fielddoc"><p>Information log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf" name="ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"></a>Information&#160;</td><td class="fielddoc"><p>General informational log message. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba" name="ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba"></a>Debug&#160;</td><td class="fielddoc"><p>Debug log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba" name="ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba"></a>Debug&#160;</td><td class="fielddoc"><p>Diagnostic or debug-level log message. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5" name="ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5"></a>Sequence&#160;</td><td class="fielddoc"><p>Sequence log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5" name="ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5"></a>Sequence&#160;</td><td class="fielddoc"><p>Log message related to a particular sequence or flow. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396" name="ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396"></a>Parameter&#160;</td><td class="fielddoc"><p>Parameter log type. </p>
+<tr><td class="fieldname"><a id="ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396" name="ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396"></a>Parameter&#160;</td><td class="fielddoc"><p>Log message describing parameters or configurations. </p>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00054">54</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>    {</div>
-<div class="line"><span class="lineno">   56</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">None</a>,        </div>
-<div class="line"><span class="lineno">   57</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32">Exception</a>,   </div>
-<div class="line"><span class="lineno">   58</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">Error</a>,       </div>
-<div class="line"><span class="lineno">   59</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">Information</a>, </div>
-<div class="line"><span class="lineno">   60</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba">Debug</a>,       </div>
-<div class="line"><span class="lineno">   61</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5">Sequence</a>,    </div>
-<div class="line"><span class="lineno">   62</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396">Parameter</a>    </div>
-<div class="line"><span class="lineno">   63</span>    };</div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5">log_module::log_types::Sequence</a></div><div class="ttdeci">@ Sequence</div><div class="ttdoc">Sequence log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></div><div class="ttdeci">@ None</div><div class="ttdoc">No specific log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396">log_module::log_types::Parameter</a></div><div class="ttdeci">@ Parameter</div><div class="ttdoc">Parameter log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">log_module::log_types::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdoc">Error log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba">log_module::log_types::Debug</a></div><div class="ttdeci">@ Debug</div><div class="ttdoc">Debug log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">log_module::log_types::Information</a></div><div class="ttdeci">@ Information</div><div class="ttdoc">Information log type.</div></div>
-<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32">log_module::log_types::Exception</a></div><div class="ttdeci">@ Exception</div><div class="ttdoc">Exception log type.</div></div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00056">56</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>    {</div>
+<div class="line"><span class="lineno">   58</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">None</a>,        </div>
+<div class="line"><span class="lineno">   59</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32">Exception</a>,   </div>
+<div class="line"><span class="lineno">   60</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">Error</a>,       </div>
+<div class="line"><span class="lineno">   61</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">Information</a>, </div>
+<div class="line"><span class="lineno">   62</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba">Debug</a>,       </div>
+<div class="line"><span class="lineno">   63</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5">Sequence</a>,    </div>
+<div class="line"><span class="lineno">   64</span>        <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396">Parameter</a>    </div>
+<div class="line"><span class="lineno">   65</span>    };</div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a3ff39d3acb327553070a64ef0cb321d5">log_module::log_types::Sequence</a></div><div class="ttdeci">@ Sequence</div><div class="ttdoc">Log message related to a particular sequence or flow.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></div><div class="ttdeci">@ None</div><div class="ttdoc">No specific category for the log message.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396">log_module::log_types::Parameter</a></div><div class="ttdeci">@ Parameter</div><div class="ttdoc">Log message describing parameters or configurations.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">log_module::log_types::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdoc">Represents an error-level log message.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa603905470e2a5b8c13e96b579ef0dba">log_module::log_types::Debug</a></div><div class="ttdeci">@ Debug</div><div class="ttdoc">Diagnostic or debug-level log message.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">log_module::log_types::Information</a></div><div class="ttdeci">@ Information</div><div class="ttdoc">General informational log message.</div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709ab0d4998a26f5b5742ad38c4af8817e32">log_module::log_types::Exception</a></div><div class="ttdeci">@ Exception</div><div class="ttdoc">Indicates an exception-related log message.</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -327,7 +327,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_aafba6e347e5de0180d46dc2144317054_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_aafba6e347e5de0180d46dc2144317054_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_aafba6e347e5de0180d46dc2144317054_cgraph" id="ad9/de0/namespacelog__module_aafba6e347e5de0180d46dc2144317054_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,165,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="213,5,424,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="213,5,424,45"/>
 <area shape="poly" title=" " alt="" coords="165,23,200,23,200,28,165,28"/>
 </map>
 </div>
@@ -369,7 +369,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph" id="ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,165,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="213,5,424,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="213,5,424,45"/>
 <area shape="poly" title=" " alt="" coords="165,23,200,23,200,28,165,28"/>
 </map>
 </div>
@@ -410,7 +410,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a1c14e4ee217470aba1b092f7a219bbcd_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a1c14e4ee217470aba1b092f7a219bbcd_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a1c14e4ee217470aba1b092f7a219bbcd_cgraph" id="ad9/de0/namespacelog__module_a1c14e4ee217470aba1b092f7a219bbcd_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,161,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="209,5,420,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="209,5,420,45"/>
 <area shape="poly" title=" " alt="" coords="161,23,196,23,196,28,161,28"/>
 </map>
 </div>
@@ -452,7 +452,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a6fce93efae6970e08516eb8723d642b3_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a6fce93efae6970e08516eb8723d642b3_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a6fce93efae6970e08516eb8723d642b3_cgraph" id="ad9/de0/namespacelog__module_a6fce93efae6970e08516eb8723d642b3_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,161,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="209,5,420,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="209,5,420,45"/>
 <area shape="poly" title=" " alt="" coords="161,23,196,23,196,28,161,28"/>
 </map>
 </div>
@@ -493,7 +493,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a6693f3c987bf8b8409e23599bc75ebbd_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a6693f3c987bf8b8409e23599bc75ebbd_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a6693f3c987bf8b8409e23599bc75ebbd_cgraph" id="ad9/de0/namespacelog__module_a6693f3c987bf8b8409e23599bc75ebbd_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,177,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="225,5,436,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="225,5,436,45"/>
 <area shape="poly" title=" " alt="" coords="177,23,212,23,212,28,177,28"/>
 </map>
 </div>
@@ -535,7 +535,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ac28ae80c49352c25d239e8a1995d4fb0_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ac28ae80c49352c25d239e8a1995d4fb0_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ac28ae80c49352c25d239e8a1995d4fb0_cgraph" id="ad9/de0/namespacelog__module_ac28ae80c49352c25d239e8a1995d4fb0_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,177,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="225,5,436,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="225,5,436,45"/>
 <area shape="poly" title=" " alt="" coords="177,23,212,23,212,28,177,28"/>
 </map>
 </div>
@@ -576,7 +576,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_aba374e21fedf7866f83cb32046396966_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_aba374e21fedf7866f83cb32046396966_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_aba374e21fedf7866f83cb32046396966_cgraph" id="ad9/de0/namespacelog__module_aba374e21fedf7866f83cb32046396966_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,168,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="216,5,427,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="216,5,427,45"/>
 <area shape="poly" title=" " alt="" coords="168,23,202,23,202,28,168,28"/>
 </map>
 </div>
@@ -617,7 +617,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a6c1f98425c009f6b51fa9bcdb5926791_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a6c1f98425c009f6b51fa9bcdb5926791_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a6c1f98425c009f6b51fa9bcdb5926791_cgraph" id="ad9/de0/namespacelog__module_a6c1f98425c009f6b51fa9bcdb5926791_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,163,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="211,5,421,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="211,5,421,45"/>
 <area shape="poly" title=" " alt="" coords="163,23,197,23,197,28,163,28"/>
 </map>
 </div>
@@ -659,7 +659,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a4a6c4a1e9c1dd96ee14b74a742da947e_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a4a6c4a1e9c1dd96ee14b74a742da947e_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a4a6c4a1e9c1dd96ee14b74a742da947e_cgraph" id="ad9/de0/namespacelog__module_a4a6c4a1e9c1dd96ee14b74a742da947e_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,171,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="219,5,429,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="219,5,429,45"/>
 <area shape="poly" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
 </map>
 </div>
@@ -701,7 +701,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a7dba039ed9802c3d55471859e7c2f67b_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a7dba039ed9802c3d55471859e7c2f67b_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a7dba039ed9802c3d55471859e7c2f67b_cgraph" id="ad9/de0/namespacelog__module_a7dba039ed9802c3d55471859e7c2f67b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,168,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="216,5,427,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="216,5,427,45"/>
 <area shape="poly" title=" " alt="" coords="168,23,202,23,202,28,168,28"/>
 </map>
 </div>
@@ -743,7 +743,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph" id="ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,164,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="212,5,423,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="212,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="165,23,198,23,198,28,165,28"/>
 </map>
 </div>
@@ -785,7 +785,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a7902b4479a7ff028953d5bd13c20d170_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a7902b4479a7ff028953d5bd13c20d170_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a7902b4479a7ff028953d5bd13c20d170_cgraph" id="ad9/de0/namespacelog__module_a7902b4479a7ff028953d5bd13c20d170_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,161,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="209,5,420,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="209,5,420,45"/>
 <area shape="poly" title=" " alt="" coords="161,23,196,23,196,28,161,28"/>
 </map>
 </div>
@@ -827,7 +827,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_adaa042b4b47abeb7e8d16e888f17552a_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_adaa042b4b47abeb7e8d16e888f17552a_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_adaa042b4b47abeb7e8d16e888f17552a_cgraph" id="ad9/de0/namespacelog__module_adaa042b4b47abeb7e8d16e888f17552a_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,172,45"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="220,5,431,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="220,5,431,45"/>
 <area shape="poly" title=" " alt="" coords="172,23,206,23,206,28,172,28"/>
 </map>
 </div>
@@ -868,7 +868,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ae2cbd9332f2bd47f8293bef8a5d4371f_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ae2cbd9332f2bd47f8293bef8a5d4371f_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ae2cbd9332f2bd47f8293bef8a5d4371f_cgraph" id="ad9/de0/namespacelog__module_ae2cbd9332f2bd47f8293bef8a5d4371f_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,141,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="189,5,400,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="189,5,400,45"/>
 <area shape="poly" title=" " alt="" coords="141,23,175,23,175,28,141,28"/>
 </map>
 </div>
@@ -910,9 +910,9 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a2a4983f8992953edd30791d5ac0df4d4_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a2a4983f8992953edd30791d5ac0df4d4_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a2a4983f8992953edd30791d5ac0df4d4_cgraph" id="ad9/de0/namespacelog__module_a2a4983f8992953edd30791d5ac0df4d4_cgraph">
 <area shape="rect" title=" " alt="" coords="5,45,140,70"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a1ca3105494290fd81473539372feb90a" title="Destroys the singleton instance of the logger." alt="" coords="188,5,399,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a1ca3105494290fd81473539372feb90a" title="Destroys the singleton instance of the logger and releases its resources." alt="" coords="188,5,399,45"/>
 <area shape="poly" title=" " alt="" coords="140,45,174,40,175,45,141,50"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="188,69,399,109"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="188,69,399,109"/>
 <area shape="poly" title=" " alt="" coords="141,64,175,69,174,75,140,70"/>
 </map>
 </div>
@@ -953,7 +953,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a7a0c45fcc8579c21590b6a7a6eb5695c_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a7a0c45fcc8579c21590b6a7a6eb5695c_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a7a0c45fcc8579c21590b6a7a6eb5695c_cgraph" id="ad9/de0/namespacelog__module_a7a0c45fcc8579c21590b6a7a6eb5695c_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,181,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="229,5,440,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="229,5,440,45"/>
 <area shape="poly" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
 </map>
 </div>
@@ -1016,30 +1016,31 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Converts a log_types value to its string representation. </p>
+<p>Retrieves the string representation of a given <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> value. </p>
+<p>Provides a human-readable form of the <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> enum value. If the provided value is out of range, it returns "UNKNOWN".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">log_type</td><td>The log_types value to convert. </td></tr>
+    <tr><td class="paramname">log_type</td><td>A <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> enumerator to be converted. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string_view A string representation of the log type. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::string_view The corresponding string representation of the log type. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00084">84</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   85</span>    {</div>
-<div class="line"><span class="lineno">   86</span>        <span class="keyword">auto</span> index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(log_type);</div>
-<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">return</span> (index &lt; log_detail::log_type_count) ? log_detail::log_type_strings[index]</div>
-<div class="line"><span class="lineno">   88</span>                                                    : <span class="stringliteral">&quot;UNKNOWN&quot;</span>;</div>
-<div class="line"><span class="lineno">   89</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d18/log__types_8h_source.html#l00106">106</a> of file <a class="el" href="../../d1/d18/log__types_8h_source.html">log_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    {</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keyword">auto</span> index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(log_type);</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">return</span> (index &lt; log_detail::log_type_count) ? log_detail::log_type_strings[index]</div>
+<div class="line"><span class="lineno">  110</span>                                                    : <span class="stringliteral">&quot;UNKNOWN&quot;</span>;</div>
+<div class="line"><span class="lineno">  111</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/de0/namespacelog__module_a4f66017a4ded34b2b7d3754b1ad9fe8b_icgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a4f66017a4ded34b2b7d3754b1ad9fe8b_icgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a4f66017a4ded34b2b7d3754b1ad9fe8b_icgraph" id="ad9/de0/namespacelog__module_a4f66017a4ded34b2b7d3754b1ad9fe8b_icgraph">
-<area shape="rect" title="Converts a log_types value to its string representation." alt="" coords="217,60,380,85"/>
-<area shape="rect" href="../../d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_type value as a string." alt="" coords="5,5,169,60"/>
+<area shape="rect" title="Retrieves the string representation of a given log_types value." alt="" coords="217,60,380,85"/>
+<area shape="rect" href="../../d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_module::log_types enumerator as a string." alt="" coords="5,5,169,60"/>
 <area shape="poly" title=" " alt="" coords="217,60,169,51,170,46,218,55"/>
-<area shape="rect" href="../../d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_type value as a wide string." alt="" coords="11,84,164,139"/>
+<area shape="rect" href="../../d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_module::log_types enumerator as a wide string." alt="" coords="11,84,164,139"/>
 <area shape="poly" title=" " alt="" coords="216,91,165,100,164,95,215,85"/>
 </map>
 </div>
@@ -1093,7 +1094,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_afd5af0ad3eaf7f1f2c8d3a8360f673b6_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_afd5af0ad3eaf7f1f2c8d3a8360f673b6_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_afd5af0ad3eaf7f1f2c8d3a8360f673b6_cgraph" id="ad9/de0/namespacelog__module_afd5af0ad3eaf7f1f2c8d3a8360f673b6_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,192,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="240,5,451,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="240,5,451,45"/>
 <area shape="poly" title=" " alt="" coords="192,23,226,23,226,28,192,28"/>
 </map>
 </div>
@@ -1153,7 +1154,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a226550c3a8f3a95f4c7486f126753816_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a226550c3a8f3a95f4c7486f126753816_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a226550c3a8f3a95f4c7486f126753816_cgraph" id="ad9/de0/namespacelog__module_a226550c3a8f3a95f4c7486f126753816_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,192,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="464,5,675,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="464,5,675,45"/>
 <area shape="poly" title=" " alt="" coords="192,23,450,23,450,28,192,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="240,38,416,63"/>
 <area shape="poly" title=" " alt="" coords="192,33,227,37,226,42,192,38"/>
@@ -1216,7 +1217,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_aa572d676cc4f88bca43442aa7aaad4d5_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_aa572d676cc4f88bca43442aa7aaad4d5_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_aa572d676cc4f88bca43442aa7aaad4d5_cgraph" id="ad9/de0/namespacelog__module_aa572d676cc4f88bca43442aa7aaad4d5_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,192,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="464,5,675,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="464,5,675,45"/>
 <area shape="poly" title=" " alt="" coords="192,23,450,23,450,28,192,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="240,38,416,63"/>
 <area shape="poly" title=" " alt="" coords="192,33,227,37,226,42,192,38"/>
@@ -1273,7 +1274,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a650600ce98489c4a9089904393531c71_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a650600ce98489c4a9089904393531c71_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a650600ce98489c4a9089904393531c71_cgraph" id="ad9/de0/namespacelog__module_a650600ce98489c4a9089904393531c71_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,192,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="240,5,451,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="240,5,451,45"/>
 <area shape="poly" title=" " alt="" coords="192,23,226,23,226,28,192,28"/>
 </map>
 </div>
@@ -1327,7 +1328,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_cgraph" id="ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,183,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="231,5,441,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="231,5,441,45"/>
 <area shape="poly" title=" " alt="" coords="183,23,217,23,217,28,183,28"/>
 </map>
 </div>
@@ -1337,9 +1338,9 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_icgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_icgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_icgraph" id="ad9/de0/namespacelog__module_a9e391cb38a5591521322e7f43cb9d8f0_icgraph">
 <area shape="rect" title=" " alt="" coords="459,13,636,38"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool." alt="" coords="256,5,411,45"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,5,411,45"/>
 <area shape="poly" title=" " alt="" coords="445,28,411,28,411,23,445,23"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor for the thread_pool class." alt="" coords="5,5,208,45"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,5,208,45"/>
 <area shape="poly" title=" " alt="" coords="242,28,208,28,208,23,242,23"/>
 </map>
 </div>
@@ -1399,7 +1400,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a8c2b148c0389861c8e6b8dd4efcfadab_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a8c2b148c0389861c8e6b8dd4efcfadab_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a8c2b148c0389861c8e6b8dd4efcfadab_cgraph" id="ad9/de0/namespacelog__module_a8c2b148c0389861c8e6b8dd4efcfadab_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,183,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="455,5,665,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="455,5,665,45"/>
 <area shape="poly" title=" " alt="" coords="183,23,441,23,441,28,183,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="231,38,407,63"/>
 <area shape="poly" title=" " alt="" coords="183,33,218,37,217,42,183,38"/>
@@ -1462,7 +1463,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a40ecfab8bb60bd9a1079dda043e2b165_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a40ecfab8bb60bd9a1079dda043e2b165_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a40ecfab8bb60bd9a1079dda043e2b165_cgraph" id="ad9/de0/namespacelog__module_a40ecfab8bb60bd9a1079dda043e2b165_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,183,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="455,5,665,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="455,5,665,45"/>
 <area shape="poly" title=" " alt="" coords="183,23,441,23,441,28,183,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="231,38,407,63"/>
 <area shape="poly" title=" " alt="" coords="183,33,218,37,217,42,183,38"/>
@@ -1519,7 +1520,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_af8341d418f53a8b248ecb552d1438aa1_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_af8341d418f53a8b248ecb552d1438aa1_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_af8341d418f53a8b248ecb552d1438aa1_cgraph" id="ad9/de0/namespacelog__module_af8341d418f53a8b248ecb552d1438aa1_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,183,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="231,5,441,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="231,5,441,45"/>
 <area shape="poly" title=" " alt="" coords="183,23,217,23,217,28,183,28"/>
 </map>
 </div>
@@ -1573,7 +1574,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a733587d24e60bd73f64f5d5c8586d957_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a733587d24e60bd73f64f5d5c8586d957_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a733587d24e60bd73f64f5d5c8586d957_cgraph" id="ad9/de0/namespacelog__module_a733587d24e60bd73f64f5d5c8586d957_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,216,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="264,5,475,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="264,5,475,45"/>
 <area shape="poly" title=" " alt="" coords="216,23,251,23,251,28,216,28"/>
 </map>
 </div>
@@ -1633,7 +1634,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a6fdc1d57939d0e099831bdbaf4f46d99_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a6fdc1d57939d0e099831bdbaf4f46d99_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a6fdc1d57939d0e099831bdbaf4f46d99_cgraph" id="ad9/de0/namespacelog__module_a6fdc1d57939d0e099831bdbaf4f46d99_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,216,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="488,5,699,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="488,5,699,45"/>
 <area shape="poly" title=" " alt="" coords="216,23,474,23,474,28,216,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="264,38,440,63"/>
 <area shape="poly" title=" " alt="" coords="217,34,250,37,250,43,216,39"/>
@@ -1696,7 +1697,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_add4a83ee71adfc1e1348661c8f5cc57a_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_add4a83ee71adfc1e1348661c8f5cc57a_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_add4a83ee71adfc1e1348661c8f5cc57a_cgraph" id="ad9/de0/namespacelog__module_add4a83ee71adfc1e1348661c8f5cc57a_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,216,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="488,5,699,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="488,5,699,45"/>
 <area shape="poly" title=" " alt="" coords="216,23,474,23,474,28,216,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="264,38,440,63"/>
 <area shape="poly" title=" " alt="" coords="217,34,250,37,250,43,216,39"/>
@@ -1753,7 +1754,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a72b0d79bbad840a56d4c1e08e8fc6d9c_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a72b0d79bbad840a56d4c1e08e8fc6d9c_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a72b0d79bbad840a56d4c1e08e8fc6d9c_cgraph" id="ad9/de0/namespacelog__module_a72b0d79bbad840a56d4c1e08e8fc6d9c_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,216,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="264,5,475,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="264,5,475,45"/>
 <area shape="poly" title=" " alt="" coords="216,23,251,23,251,28,216,28"/>
 </map>
 </div>
@@ -1807,7 +1808,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a143b2d6375ecd7c12e04c0219ab3c6a5_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a143b2d6375ecd7c12e04c0219ab3c6a5_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a143b2d6375ecd7c12e04c0219ab3c6a5_cgraph" id="ad9/de0/namespacelog__module_a143b2d6375ecd7c12e04c0219ab3c6a5_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,228,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="276,5,487,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="276,5,487,45"/>
 <area shape="poly" title=" " alt="" coords="228,23,262,23,262,28,228,28"/>
 </map>
 </div>
@@ -1868,7 +1869,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a714c1132613bef7da8eb8d559b50df3b_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a714c1132613bef7da8eb8d559b50df3b_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a714c1132613bef7da8eb8d559b50df3b_cgraph" id="ad9/de0/namespacelog__module_a714c1132613bef7da8eb8d559b50df3b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,228,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="500,5,711,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="500,5,711,45"/>
 <area shape="poly" title=" " alt="" coords="228,23,487,23,487,28,228,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="276,38,452,63"/>
 <area shape="poly" title=" " alt="" coords="228,34,263,38,262,43,228,39"/>
@@ -1932,7 +1933,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a6eecd9373512608707ecbfdf87318414_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a6eecd9373512608707ecbfdf87318414_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a6eecd9373512608707ecbfdf87318414_cgraph" id="ad9/de0/namespacelog__module_a6eecd9373512608707ecbfdf87318414_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,228,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="500,5,711,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="500,5,711,45"/>
 <area shape="poly" title=" " alt="" coords="228,23,487,23,487,28,228,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="276,38,452,63"/>
 <area shape="poly" title=" " alt="" coords="228,34,263,38,262,43,228,39"/>
@@ -1989,7 +1990,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a9657311f0886d4a8ff47965f4a87393e_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a9657311f0886d4a8ff47965f4a87393e_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a9657311f0886d4a8ff47965f4a87393e_cgraph" id="ad9/de0/namespacelog__module_a9657311f0886d4a8ff47965f4a87393e_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,228,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="276,5,487,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="276,5,487,45"/>
 <area shape="poly" title=" " alt="" coords="228,23,262,23,262,28,228,28"/>
 </map>
 </div>
@@ -2043,7 +2044,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ae1a60bdcad6ca75d6d08d68dde23d524_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ae1a60bdcad6ca75d6d08d68dde23d524_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ae1a60bdcad6ca75d6d08d68dde23d524_cgraph" id="ad9/de0/namespacelog__module_ae1a60bdcad6ca75d6d08d68dde23d524_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,220,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="268,5,479,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="268,5,479,45"/>
 <area shape="poly" title=" " alt="" coords="220,23,254,23,254,28,220,28"/>
 </map>
 </div>
@@ -2103,7 +2104,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a4f7f250685f2b6ef94c8a37a284b2715_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a4f7f250685f2b6ef94c8a37a284b2715_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a4f7f250685f2b6ef94c8a37a284b2715_cgraph" id="ad9/de0/namespacelog__module_a4f7f250685f2b6ef94c8a37a284b2715_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,220,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="492,5,703,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="492,5,703,45"/>
 <area shape="poly" title=" " alt="" coords="220,23,479,23,479,28,220,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="268,38,444,63"/>
 <area shape="poly" title=" " alt="" coords="221,34,254,37,254,43,220,39"/>
@@ -2166,7 +2167,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a4f24b2cf937ab09b2626624421a02e97_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a4f24b2cf937ab09b2626624421a02e97_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a4f24b2cf937ab09b2626624421a02e97_cgraph" id="ad9/de0/namespacelog__module_a4f24b2cf937ab09b2626624421a02e97_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,220,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="492,5,703,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="492,5,703,45"/>
 <area shape="poly" title=" " alt="" coords="220,23,479,23,479,28,220,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="268,38,444,63"/>
 <area shape="poly" title=" " alt="" coords="221,34,254,37,254,43,220,39"/>
@@ -2223,7 +2224,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a099a7b5d1b06b1627a53d1b1d915f8c6_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a099a7b5d1b06b1627a53d1b1d915f8c6_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a099a7b5d1b06b1627a53d1b1d915f8c6_cgraph" id="ad9/de0/namespacelog__module_a099a7b5d1b06b1627a53d1b1d915f8c6_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,220,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="268,5,479,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="268,5,479,45"/>
 <area shape="poly" title=" " alt="" coords="220,23,254,23,254,28,220,28"/>
 </map>
 </div>
@@ -2277,7 +2278,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_cgraph" id="ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,213,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="261,5,472,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="261,5,472,45"/>
 <area shape="poly" title=" " alt="" coords="214,23,248,23,248,28,214,28"/>
 </map>
 </div>
@@ -2287,7 +2288,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_icgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_icgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_icgraph" id="ad9/de0/namespacelog__module_a07ee6e4d0fe0281daff694059ec4d352_icgraph">
 <area shape="rect" title=" " alt="" coords="240,13,448,38"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="5,5,192,45"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Processes one or more jobs from the queue." alt="" coords="5,5,192,45"/>
 <area shape="poly" title=" " alt="" coords="226,28,192,28,192,23,226,23"/>
 </map>
 </div>
@@ -2347,7 +2348,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ab251ab5234dbf8dc2770d4dbf5240f5d_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ab251ab5234dbf8dc2770d4dbf5240f5d_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ab251ab5234dbf8dc2770d4dbf5240f5d_cgraph" id="ad9/de0/namespacelog__module_ab251ab5234dbf8dc2770d4dbf5240f5d_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,213,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="485,5,696,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="485,5,696,45"/>
 <area shape="poly" title=" " alt="" coords="213,23,472,23,472,28,213,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="261,38,437,63"/>
 <area shape="poly" title=" " alt="" coords="214,34,248,37,247,43,213,39"/>
@@ -2410,7 +2411,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_ad0e479625e568a75a83e2c21ec5de7af_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ad0e479625e568a75a83e2c21ec5de7af_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ad0e479625e568a75a83e2c21ec5de7af_cgraph" id="ad9/de0/namespacelog__module_ad0e479625e568a75a83e2c21ec5de7af_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,213,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="485,5,696,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="485,5,696,45"/>
 <area shape="poly" title=" " alt="" coords="213,23,472,23,472,28,213,28"/>
 <area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="261,38,437,63"/>
 <area shape="poly" title=" " alt="" coords="214,34,248,37,247,43,213,39"/>
@@ -2467,7 +2468,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d9/de0/namespacelog__module_a14d63f5c22901d83034b684df90aaff7_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a14d63f5c22901d83034b684df90aaff7_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a14d63f5c22901d83034b684df90aaff7_cgraph" id="ad9/de0/namespacelog__module_a14d63f5c22901d83034b684df90aaff7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,213,38"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="261,5,472,45"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="261,5,472,45"/>
 <area shape="poly" title=" " alt="" coords="214,23,248,23,248,28,214,28"/>
 </map>
 </div>
@@ -2477,7 +2478,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

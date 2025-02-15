@@ -1,8 +1,8 @@
 <map id="priority_thread_pool_module::callback_priority_job_t&lt; priority_type &gt;" name="priority_thread_pool_module::callback_priority_job_t&lt; priority_type &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="697,1379,883,1528"/>
-<area shape="rect" id="Node000002" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title=" " alt="" coords="714,1141,866,1316"/>
+<area shape="rect" id="Node000001" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="697,1379,883,1528"/>
+<area shape="rect" id="Node000002" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="714,1141,866,1316"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="793,1330,793,1378,787,1378,787,1330"/>
-<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="503,893,643,1079"/>
+<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="503,893,643,1079"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="654,1074,716,1141,712,1145,650,1077"/>
 <area shape="rect" id="Node000011" title=" " alt="" coords="363,1189,531,1269"/>
 <area shape="poly" id="edge11_Node000011_Node000003" title=" " alt="" coords="527,1080,478,1175,473,1173,523,1078"/>
@@ -12,7 +12,7 @@
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="549,450,551,643,546,643,544,450"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="421,2013,581,2093"/>
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="516,2012,534,1964,553,1905,568,1839,574,1772,574,1227,573,1095,578,1095,579,1227,579,1772,573,1840,558,1906,539,1966,521,2014"/>
-<area shape="rect" id="Node000007" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="227,1591,412,1951"/>
+<area shape="rect" id="Node000007" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,1591,412,1951"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="414,1914,469,1998,464,2001,410,1917"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="5,1413,185,1493"/>
 <area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="133,1504,229,1637,224,1640,129,1507"/>

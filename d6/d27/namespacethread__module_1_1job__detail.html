@@ -82,10 +82,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a5a837bd19275a4ba819b400cddac5039" id="r_a5a837bd19275a4ba819b400cddac5039"><td class="memItemLeft" align="right" valign="top">constexpr std::array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a5a837bd19275a4ba819b400cddac5039">thread_conditions_strings</a> = { &quot;created&quot;, &quot;waiting&quot;, &quot;working&quot;, &quot;stopping&quot;, &quot;stopped&quot; }</td></tr>
-<tr class="memdesc:a5a837bd19275a4ba819b400cddac5039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of string representations for each job priority level.  <br /></td></tr>
+<tr class="memdesc:a5a837bd19275a4ba819b400cddac5039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of string representations corresponding to each <code>thread_conditions</code> state.  <br /></td></tr>
 <tr class="separator:a5a837bd19275a4ba819b400cddac5039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a823bc17b7677754bb245125cca25cfb5" id="r_a823bc17b7677754bb245125cca25cfb5"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a823bc17b7677754bb245125cca25cfb5">thread_conditions_count</a> = thread_conditions_strings.size()</td></tr>
-<tr class="memdesc:a823bc17b7677754bb245125cca25cfb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of job priority levels defined in thread_conditions.  <br /></td></tr>
+<tr class="memdesc:a823bc17b7677754bb245125cca25cfb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of states defined in <code>thread_conditions</code>.  <br /></td></tr>
 <tr class="separator:a823bc17b7677754bb245125cca25cfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -109,9 +109,9 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Total number of job priority levels defined in thread_conditions. </p>
+<p>Total number of states defined in <code>thread_conditions</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00074">74</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00086">86</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
 
 </div>
 </div>
@@ -135,17 +135,18 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Array of string representations for each job priority level. </p>
+<p>Array of string representations corresponding to each <code>thread_conditions</code> state. </p>
+<p>This array is indexed by the underlying enum value cast to <code>size_t</code>, allowing compile-time string retrieval in <code><a class="el" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222" title="Converts a thread_conditions value to its corresponding string representation.">to_string()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00068">68</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>{ <span class="stringliteral">&quot;created&quot;</span>, <span class="stringliteral">&quot;waiting&quot;</span>, <span class="stringliteral">&quot;working&quot;</span>, <span class="stringliteral">&quot;stopping&quot;</span>, <span class="stringliteral">&quot;stopped&quot;</span> };</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00080">80</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>{ <span class="stringliteral">&quot;created&quot;</span>, <span class="stringliteral">&quot;waiting&quot;</span>, <span class="stringliteral">&quot;working&quot;</span>, <span class="stringliteral">&quot;stopping&quot;</span>, <span class="stringliteral">&quot;stopped&quot;</span> };</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

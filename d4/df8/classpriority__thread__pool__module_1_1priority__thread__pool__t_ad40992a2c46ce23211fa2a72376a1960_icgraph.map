@@ -1,5 +1,5 @@
 <map id="priority_thread_pool_module::priority_thread_pool_t::to_string" name="priority_thread_pool_module::priority_thread_pool_t::to_string">
-<area shape="rect" id="Node000001" title="Get a string representation of the thread pool." alt="" coords="271,13,453,67"/>
-<area shape="rect" id="Node000002" href="$da/dce/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__pool__t_3_01priority__type_01_4_01_4.html#a52c80182aa407534d654d1ad481a73c6" title="Formats a priority_thread_pool_t&lt;priority_type&gt; value as a string." alt="" coords="5,5,223,75"/>
+<area shape="rect" id="Node000001" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="271,13,453,67"/>
+<area shape="rect" id="Node000002" href="$da/dce/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__pool__t_3_01priority__type_01_4_01_4.html#a52c80182aa407534d654d1ad481a73c6" title="Formats a priority_thread_pool_t&lt;priority_type&gt; object as a string." alt="" coords="5,5,223,75"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="257,43,223,43,223,37,257,37"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="log_module::to_string" name="log_module::to_string">
-<area shape="rect" id="Node000001" title="Converts a log_types value to its string representation." alt="" coords="217,60,380,85"/>
-<area shape="rect" id="Node000002" href="$d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_type value as a string." alt="" coords="5,5,169,60"/>
+<area shape="rect" id="Node000001" title="Retrieves the string representation of a given log_types value." alt="" coords="217,60,380,85"/>
+<area shape="rect" id="Node000002" href="$d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html#a37fcab0a0a2f929e3faa7744be1b292c" title="Formats a log_module::log_types enumerator as a string." alt="" coords="5,5,169,60"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,60,169,51,170,46,218,55"/>
-<area shape="rect" id="Node000003" href="$d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_type value as a wide string." alt="" coords="11,84,164,139"/>
+<area shape="rect" id="Node000003" href="$d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html#af079743fa5f11fbad85b265c6d371e1f" title="Formats a log_module::log_types enumerator as a wide string." alt="" coords="11,84,164,139"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,91,165,100,164,95,215,85"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;" name="priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="485,571,697,880"/>
-<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="229,148,414,508"/>
+<area shape="rect" id="Node000001" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="485,571,697,880"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="229,148,414,508"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="424,501,428,506,487,589,482,592,423,510,419,504"/>
 <area shape="rect" id="Node000010" title=" " alt="" coords="135,685,295,765"/>
 <area shape="poly" id="edge10_Node000010_Node000002" title=" " alt="" coords="276,509,232,670,227,669,270,507"/>
@@ -12,7 +12,7 @@
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="299,1434,311,1403,326,1342,329,1279,329,724,326,524,331,524,335,724,335,1279,331,1343,316,1405,304,1436"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="127,1238,295,1318"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="217,1318,225,1359,238,1403,246,1420,242,1422,234,1405,220,1361,212,1319"/>
-<area shape="rect" id="Node000007" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="141,943,281,1128"/>
+<area shape="rect" id="Node000007" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="141,943,281,1128"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="213,1128,213,1221,208,1221,208,1128"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="31,693,110,758"/>
 <area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="82,758,100,815,125,879,149,927,144,929,120,881,95,817,77,759"/>

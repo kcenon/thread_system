@@ -1,9 +1,9 @@
 <map id="thread_pool_module::thread_worker::do_work" name="thread_pool_module::thread_worker::do_work">
-<area shape="rect" id="Node000001" title="Performs the actual work by processing jobs from the queue." alt="" coords="5,35,192,75"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="251,5,437,45"/>
+<area shape="rect" id="Node000001" title="Processes one or more jobs from the queue." alt="" coords="5,35,192,75"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="251,5,437,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,41,237,35,237,41,192,46"/>
 <area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,70,448,95"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,63,227,67,226,72,192,68"/>
-<area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Gets the singleton instance of the logger." alt="" coords="496,63,707,103"/>
+<area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,63,707,103"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,80,483,80,483,85,448,85"/>
 </map>

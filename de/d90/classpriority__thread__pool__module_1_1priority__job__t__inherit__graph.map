@@ -1,7 +1,7 @@
 <map id="priority_thread_pool_module::priority_job_t&lt; priority_type &gt;" name="priority_thread_pool_module::priority_job_t&lt; priority_type &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="23,259,175,453"/>
-<area shape="rect" id="Node000003" href="$d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title=" " alt="" coords="5,501,192,651"/>
+<area shape="rect" id="Node000001" title="Represents a job that carries a specific priority level." alt="" coords="23,259,175,453"/>
+<area shape="rect" id="Node000003" href="$d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="5,501,192,651"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="101,467,101,501,96,501,96,467"/>
-<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="29,5,169,211"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="29,5,169,211"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,225,101,258,96,258,96,225"/>
 </map>

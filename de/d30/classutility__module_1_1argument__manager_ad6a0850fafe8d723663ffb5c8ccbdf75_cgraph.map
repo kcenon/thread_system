@@ -1,5 +1,5 @@
 <map id="utility_module::argument_manager::try_parse" name="utility_module::argument_manager::try_parse">
-<area shape="rect" id="Node000001" title="Parse arguments from argc/argv." alt="" coords="5,5,192,45"/>
-<area shape="rect" id="Node000002" href="$d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Convert a std::wstring to a std::string using system encoding." alt="" coords="240,5,413,45"/>
+<area shape="rect" id="Node000001" title="Parse command&#45;line arguments using the traditional argc and argv." alt="" coords="5,5,192,45"/>
+<area shape="rect" id="Node000002" href="$d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding." alt="" coords="240,5,413,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,23,226,23,226,28,192,28"/>
 </map>

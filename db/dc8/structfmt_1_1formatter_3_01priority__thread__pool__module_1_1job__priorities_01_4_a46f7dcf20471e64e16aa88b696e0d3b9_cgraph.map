@@ -1,5 +1,5 @@
 <map id="fmt::formatter&lt; priority_thread_pool_module::job_priorities &gt;::format" name="fmt::formatter&lt; priority_thread_pool_module::job_priorities &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a job_priorities value as a string." alt="" coords="5,5,196,60"/>
-<area shape="rect" id="Node000002" href="$d8/da5/namespacepriority__thread__pool__module.html#aa0d88f2662a7efa64969e6abfc30cef0" title="Converts a job_priorities value to its string representation." alt="" coords="244,13,397,53"/>
+<area shape="rect" id="Node000001" title="Formats a job_priorities value as a narrow string using {fmt}." alt="" coords="5,5,196,60"/>
+<area shape="rect" id="Node000002" href="$d8/da5/namespacepriority__thread__pool__module.html#aa0d88f2662a7efa64969e6abfc30cef0" title="Converts a job_priorities value to its corresponding string representation." alt="" coords="244,13,397,53"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,30,230,30,230,35,196,35"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="fmt::formatter&lt; priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt; &gt;::format" name="fmt::formatter&lt; priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt; &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a priority_thread_worker_t&lt;priority_type&gt; value as a string." alt="" coords="5,5,223,75"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Converts the thread_base object to a string representation." alt="" coords="271,20,441,60"/>
+<area shape="rect" id="Node000001" title="Formats a priority_thread_worker_t&lt;priority_type&gt; instance as a string." alt="" coords="5,5,223,75"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Returns a string representation of this thread_base object." alt="" coords="271,20,441,60"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,37,257,37,257,43,223,43"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Format a string using the provided arguments." alt="" coords="489,20,676,60"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="489,20,676,60"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="441,37,476,37,476,43,441,43"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="log_module::log_collector" name="log_module::log_collector">
 <area shape="rect" id="Node000001" title="A class for collecting and managing log messages." alt="" coords="461,768,642,1113"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="Base class for implementing thread&#45;based workers." alt="" coords="254,291,454,676"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,688,479,767,474,769,440,690"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,155,89,221"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>

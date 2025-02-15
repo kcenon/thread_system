@@ -1,5 +1,5 @@
 <map id="thread_module::job_queue" name="thread_module::job_queue">
-<area shape="rect" id="Node000001" title="Represents a thread&#45;safe queue for managing jobs." alt="" coords="201,148,386,508"/>
+<area shape="rect" id="Node000001" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="201,148,386,508"/>
 <area shape="rect" id="Node000009" title=" " alt="" coords="135,571,295,651"/>
 <area shape="poly" id="edge9_Node000009_Node000001" title=" " alt="" coords="246,509,233,555,227,554,240,508"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="126,5,306,85"/>
@@ -10,7 +10,7 @@
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="298,1103,311,1079,325,1042,329,1003,329,609,325,524,330,524,335,609,335,1003,331,1043,316,1081,303,1105"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="127,961,295,1041"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="224,1040,238,1079,243,1088,238,1090,234,1081,219,1042"/>
-<area shape="rect" id="Node000006" href="$d8/d42/classthread__module_1_1job.html" title="Represents a job that can be executed by a job queue." alt="" coords="141,713,281,899"/>
+<area shape="rect" id="Node000006" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="141,713,281,899"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="213,899,213,945,208,945,208,899"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="31,578,110,643"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="96,642,136,698,132,701,91,645"/>

@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Utility class for formatting strings using either std::format or the fmt library.  
+<p>Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library.  
  <a href="../../d1/daf/classutility__module_1_1formatter.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>&gt;</code></p>
@@ -89,7 +89,7 @@ Collaboration diagram for utility_module::formatter:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d0/daa/classutility__module_1_1formatter__coll__graph.png" border="0" usemap="#autility__module_1_1formatter_coll__map" alt="Collaboration graph"/></div>
 <map name="autility__module_1_1formatter_coll__map" id="autility__module_1_1formatter_coll__map">
-<area shape="rect" title="Utility class for formatting strings using either std::format or the fmt library." alt="" coords="5,5,184,131"/>
+<area shape="rect" title="Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library." alt="" coords="5,5,184,131"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -97,26 +97,37 @@ Collaboration diagram for utility_module::formatter:</div>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b5ec167f6e47412edd77a4ea658e339" id="r_a1b5ec167f6e47412edd77a4ea658e339"><td class="memTemplParams" colspan="2">template&lt;typename... FormatArgs&gt; </td></tr>
 <tr class="memitem:a1b5ec167f6e47412edd77a4ea658e339"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">format</a> (const char *formats, const FormatArgs &amp;... args) -&gt; std::string</td></tr>
-<tr class="memdesc:a1b5ec167f6e47412edd77a4ea658e339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a string using the provided arguments.  <br /></td></tr>
+<tr class="memdesc:a1b5ec167f6e47412edd77a4ea658e339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a narrow-character string with the given arguments.  <br /></td></tr>
 <tr class="separator:a1b5ec167f6e47412edd77a4ea658e339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0445d6dd1df6d696b149b65d600936cc" id="r_a0445d6dd1df6d696b149b65d600936cc"><td class="memTemplParams" colspan="2">template&lt;typename... FormatArgs&gt; </td></tr>
 <tr class="memitem:a0445d6dd1df6d696b149b65d600936cc"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/daf/classutility__module_1_1formatter.html#a0445d6dd1df6d696b149b65d600936cc">format</a> (const wchar_t *formats, const FormatArgs &amp;... args) -&gt; std::wstring</td></tr>
-<tr class="memdesc:a0445d6dd1df6d696b149b65d600936cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a wide string using the provided arguments.  <br /></td></tr>
+<tr class="memdesc:a0445d6dd1df6d696b149b65d600936cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a wide-character string with the given arguments.  <br /></td></tr>
 <tr class="separator:a0445d6dd1df6d696b149b65d600936cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12d7278310683404a3342631586528b6" id="r_a12d7278310683404a3342631586528b6"><td class="memTemplParams" colspan="2">template&lt;typename OutputIt , typename... FormatArgs&gt; </td></tr>
 <tr class="memitem:a12d7278310683404a3342631586528b6"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">format_to</a> (OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</td></tr>
-<tr class="memdesc:a12d7278310683404a3342631586528b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a string directly to an output iterator.  <br /></td></tr>
+<tr class="memdesc:a12d7278310683404a3342631586528b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a narrow-character string directly to an output iterator.  <br /></td></tr>
 <tr class="separator:a12d7278310683404a3342631586528b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa3abbb06fcbccf4b8ecc43ceebcc453" id="r_aaa3abbb06fcbccf4b8ecc43ceebcc453"><td class="memTemplParams" colspan="2">template&lt;typename OutputIt , typename... FormatArgs&gt; </td></tr>
 <tr class="memitem:aaa3abbb06fcbccf4b8ecc43ceebcc453"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/daf/classutility__module_1_1formatter.html#aaa3abbb06fcbccf4b8ecc43ceebcc453">format_to</a> (OutputIt out, const wchar_t *formats, const FormatArgs &amp;... args) -&gt; OutputIt</td></tr>
-<tr class="memdesc:aaa3abbb06fcbccf4b8ecc43ceebcc453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a wide string directly to an output iterator.  <br /></td></tr>
+<tr class="memdesc:aaa3abbb06fcbccf4b8ecc43ceebcc453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a wide-character string directly to an output iterator.  <br /></td></tr>
 <tr class="separator:aaa3abbb06fcbccf4b8ecc43ceebcc453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utility class for formatting strings using either std::format or the fmt library. </p>
-<p>This class provides static methods to format strings and write the result either to a returned string or directly to an output iterator. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00118">118</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="textblock"><p>Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library. </p>
+<p>The <code>formatter</code> class offers static functions to format strings (both narrow and wide) into a <code>std::string</code> / <code>std::wstring</code>, or directly to an output iterator. Which underlying implementation is used depends on whether <code>USE_STD_FORMAT</code> is defined.</p>
+<h3><a class="anchor" id="autotoc_md33"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="comment">// Basic usage:</span></div>
+<div class="line">std::string result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;Hello, {}&quot;</span>, <span class="stringliteral">&quot;World&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Writing directly to a buffer:</span></div>
+<div class="line">std::array&lt;char, 50&gt; buffer;</div>
+<div class="line"><span class="keyword">auto</span> it = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(buffer.begin(), <span class="stringliteral">&quot;Number: {}&quot;</span>, 42);</div>
+<div class="line"><span class="comment">// &#39;it&#39; now points to the end of the written text</span></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00217">formatter.h:217</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00179">formatter.h:179</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00165">165</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1b5ec167f6e47412edd77a4ea658e339" name="a1b5ec167f6e47412edd77a4ea658e339"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b5ec167f6e47412edd77a4ea658e339">&#9670;&#160;</a></span>format() <span class="overload">[1/2]</span></h2>
@@ -155,71 +166,72 @@ template&lt;typename... FormatArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Format a string using the provided arguments. </p>
+<p>Formats a narrow-character string with the given arguments. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of arguments for formatting. </td></tr>
+    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of argument types. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">formats</td><td>The format string (e.g., "Hello {}"). </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments to replace the placeholders. </td></tr>
+    <tr><td class="paramname">formats</td><td>A format string (e.g. "Name: {}, Age: {}"). </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to substitute into <code>formats</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A formatted std::string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> containing the formatted result.</dd></dl>
+<p>If <code>USE_STD_FORMAT</code> is defined, uses C++20's <code>std::format</code> API. Otherwise, falls back to the {fmt} library. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00129">129</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  130</span>        {</div>
-<div class="line"><span class="lineno">  131</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  132</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_format_args(args...));</div>
-<div class="line"><span class="lineno">  133</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">return</span> fmt::format(fmt::runtime(formats), args...);</div>
-<div class="line"><span class="lineno">  135</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  136</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00179">179</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>        {</div>
+<div class="line"><span class="lineno">  181</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  182</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_format_args(args...));</div>
+<div class="line"><span class="lineno">  183</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> fmt::format(fmt::runtime(formats), args...);</div>
+<div class="line"><span class="lineno">  185</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  186</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph.png" border="0" usemap="#ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph" alt=""/></div>
 <map name="ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph" id="ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph">
-<area shape="rect" title="Format a string using the provided arguments." alt="" coords="529,592,716,632"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date part of a time point." alt="" coords="285,61,467,101"/>
+<area shape="rect" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="529,592,716,632"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="285,61,467,101"/>
 <area shape="poly" title=" " alt="" coords="619,578,614,488,607,430,595,367,577,301,553,237,521,176,479,122,455,103,458,99,483,118,525,173,558,234,582,300,600,365,612,429,619,488,624,578"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation." alt="" coords="37,432,191,472"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#a86b5fda116b6c1f387c3e195feed5070" title="Executes the logging operation within the job system." alt="" coords="37,432,191,472"/>
 <area shape="poly" title=" " alt="" coords="613,579,595,481,566,355,548,293,527,238,504,194,480,166,453,148,427,136,402,129,378,128,353,131,328,138,272,166,237,192,208,225,183,262,163,301,136,376,122,432,116,431,131,374,158,299,179,259,204,222,234,188,269,161,326,133,352,125,378,122,403,124,429,131,455,144,483,162,508,191,532,235,553,291,571,353,601,480,619,578"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup file names for the log file." alt="" coords="29,33,199,73"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="29,33,199,73"/>
 <area shape="poly" title=" " alt="" coords="616,578,602,458,575,297,557,217,535,145,509,88,495,66,480,51,444,30,405,16,364,10,322,8,240,18,172,36,170,30,239,13,322,3,365,4,407,11,447,25,483,47,499,63,514,85,540,143,562,216,580,296,607,457,621,578"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#af26657a63f648db16d0565bf43dd9dcf" title="Writes log messages to the file." alt="" coords="291,176,461,216"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#af26657a63f648db16d0565bf43dd9dcf" title="Processes and writes pending log messages to the file." alt="" coords="291,176,461,216"/>
 <area shape="poly" title=" " alt="" coords="616,579,606,507,583,413,566,363,543,315,514,269,480,230,460,216,463,212,483,226,519,266,547,312,571,361,588,411,611,506,622,578"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#a6786b282b1379b94108de5a19efbb2be" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="281,240,471,280"/>
 <area shape="poly" title=" " alt="" coords="613,579,600,518,575,441,557,401,535,362,510,326,480,294,463,282,466,278,483,290,514,322,540,359,562,398,580,439,605,516,619,578"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Performs the actual work by processing jobs from the queue." alt="" coords="283,304,469,344"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#af1bd03c5e5ce80092c3952a90e7488ef" title="Processes one or more jobs from the queue." alt="" coords="283,304,469,344"/>
 <area shape="poly" title=" " alt="" coords="610,580,593,530,566,471,528,410,505,382,480,358,462,346,464,342,483,354,509,378,533,407,570,468,597,528,615,578"/>
-<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with optional newline." alt="" coords="293,368,459,408"/>
+<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with an optional newline appended." alt="" coords="293,368,459,408"/>
 <area shape="poly" title=" " alt="" coords="604,581,583,544,556,501,521,458,480,422,457,409,460,405,483,418,525,455,560,498,588,541,608,578"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds component of a time point." alt="" coords="285,432,467,472"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="285,432,467,472"/>
 <area shape="poly" title=" " alt="" coords="593,583,544,533,513,508,480,486,455,474,457,469,483,481,516,504,547,529,597,579"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds component of a time point." alt="" coords="285,496,467,536"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="285,496,467,536"/>
 <area shape="poly" title=" " alt="" coords="568,588,480,550,446,538,448,533,482,545,570,583"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds component of a time point." alt="" coords="285,560,467,600"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="285,560,467,600"/>
 <area shape="poly" title=" " alt="" coords="515,601,467,594,468,589,516,595"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts the logger instance." alt="" coords="271,624,481,664"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors." alt="" coords="271,624,481,664"/>
 <area shape="poly" title=" " alt="" coords="516,628,482,633,481,627,516,623"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time part (HH:MM:SS) of a time point." alt="" coords="285,688,467,728"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="285,688,467,728"/>
 <area shape="poly" title=" " alt="" coords="570,640,482,678,448,690,446,685,480,673,568,635"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1" title="Get a string representation of the job." alt="" coords="302,752,450,792"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1" title="Returns a string representation of the job." alt="" coords="302,752,450,792"/>
 <area shape="poly" title=" " alt="" coords="597,644,547,694,516,720,483,742,451,756,449,751,480,737,513,716,544,690,593,641"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Converts the job queue to a string representation." alt="" coords="302,816,450,856"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Returns a string representation of this job_queue." alt="" coords="302,816,450,856"/>
 <area shape="poly" title=" " alt="" coords="608,645,588,683,560,726,525,769,483,806,451,822,449,818,480,802,521,765,556,723,583,680,604,643"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Converts the thread_base object to a string representation." alt="" coords="291,880,461,920"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a0bfb73ba5d38988886db056c46628a09" title="Returns a string representation of this thread_base object." alt="" coords="291,880,461,920"/>
 <area shape="poly" title=" " alt="" coords="615,646,597,695,570,755,533,817,509,845,483,870,463,883,460,878,480,866,505,841,528,814,566,753,593,693,610,644"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="271,944,481,984"/>
 <area shape="poly" title=" " alt="" coords="619,646,605,707,580,785,562,825,540,865,514,901,483,934,466,946,463,941,480,930,510,898,535,862,557,823,575,783,600,706,613,645"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message to the log collector, with optional timestamp." alt="" coords="271,1008,481,1048"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="271,1008,481,1048"/>
 <area shape="poly" title=" " alt="" coords="622,646,611,718,588,812,571,862,547,911,519,957,483,998,467,1010,464,1005,480,994,514,954,543,909,566,860,583,811,606,717,616,645"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional timestamp." alt="" coords="271,1072,481,1112"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="271,1072,481,1112"/>
 <area shape="poly" title=" " alt="" coords="624,646,617,729,609,782,597,840,579,900,555,958,523,1013,483,1062,468,1074,464,1069,479,1058,519,1010,550,956,574,898,592,839,604,782,612,728,618,645"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a62abd0747dc81cbf628b304266fc3f13" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="271,1136,481,1176"/>
 <area shape="poly" title=" " alt="" coords="625,646,622,740,616,801,605,868,587,937,562,1005,528,1069,483,1126,468,1138,465,1134,479,1122,523,1066,557,1003,582,935,600,867,611,800,617,739,620,646"/>
@@ -230,15 +242,15 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="271,454,191,454,191,449,271,449"/>
 <area shape="poly" title=" " alt="" coords="279,495,190,473,192,468,281,490"/>
 <area shape="poly" title=" " alt="" coords="278,684,269,678,241,655,216,628,174,571,142,516,121,473,126,471,146,513,178,568,220,625,245,651,272,674,281,679"/>
-<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job value as a string." alt="" coords="27,721,201,761"/>
+<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object as a string using {fmt}." alt="" coords="27,721,201,761"/>
 <area shape="poly" title=" " alt="" coords="288,764,201,754,201,749,289,759"/>
-<area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue value as a string." alt="" coords="26,786,202,840"/>
+<area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="26,786,202,840"/>
 <area shape="poly" title=" " alt="" coords="288,831,202,823,203,818,289,826"/>
-<area shape="rect" href="../../dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; value as a string." alt="" coords="5,865,223,934"/>
+<area shape="rect" href="../../dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; instance as a string." alt="" coords="5,865,223,934"/>
 <area shape="poly" title=" " alt="" coords="277,902,223,902,223,897,277,897"/>
-<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base value as a string." alt="" coords="23,959,205,1014"/>
+<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="23,959,205,1014"/>
 <area shape="poly" title=" " alt="" coords="296,926,272,934,192,962,191,956,270,929,294,921"/>
-<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker value as a string." alt="" coords="7,1038,221,1092"/>
+<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="7,1038,221,1092"/>
 <area shape="poly" title=" " alt="" coords="280,928,273,934,255,956,249,979,242,1004,225,1028,209,1040,206,1036,221,1025,238,1002,244,978,251,954,269,930,277,924"/>
 </map>
 </div>
@@ -282,30 +294,30 @@ template&lt;typename... FormatArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Format a wide string using the provided arguments. </p>
+<p>Formats a wide-character string with the given arguments. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of arguments for formatting. </td></tr>
+    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of argument types. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">formats</td><td>The wide format string. </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments to replace the placeholders. </td></tr>
+    <tr><td class="paramname">formats</td><td>A wide format string (e.g. L"Count: {}, Value: {}"). </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to substitute into <code>formats</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A formatted std::wstring. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::wstring</code> containing the formatted result. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00146">146</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  147</span>        {</div>
-<div class="line"><span class="lineno">  148</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  149</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_wformat_args(args...));</div>
-<div class="line"><span class="lineno">  150</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  151</span>            <span class="keywordflow">return</span> fmt::format(fmt::runtime(formats), args...);</div>
-<div class="line"><span class="lineno">  152</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  153</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00196">196</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  197</span>        {</div>
+<div class="line"><span class="lineno">  198</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  199</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_wformat_args(args...));</div>
+<div class="line"><span class="lineno">  200</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  201</span>            <span class="keywordflow">return</span> fmt::format(fmt::runtime(formats), args...);</div>
+<div class="line"><span class="lineno">  202</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  203</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -352,45 +364,46 @@ template&lt;typename OutputIt , typename... FormatArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Format a string directly to an output iterator. </p>
+<p>Formats a narrow-character string directly to an output iterator. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">OutputIt</td><td>Output iterator type. </td></tr>
-    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of arguments for formatting. </td></tr>
+    <tr><td class="paramname">OutputIt</td><td>The type of the output iterator (e.g. a back_inserter for a container). </td></tr>
+    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of argument types. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">out</td><td>The output iterator. </td></tr>
-    <tr><td class="paramname">formats</td><td>The format string. </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments to replace the placeholders. </td></tr>
+    <tr><td class="paramname">out</td><td>The output iterator where formatted text will be written. </td></tr>
+    <tr><td class="paramname">formats</td><td>The narrow format string. </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to substitute into <code>formats</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>OutputIt The output iterator at the end of the formatted output. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The output iterator advanced to the end of the written text.</dd></dl>
+<p>This method is useful when writing to a buffer, a container, or custom iterators. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00165">165</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  168</span>        {</div>
-<div class="line"><span class="lineno">  169</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_format_args(args...));</div>
-<div class="line"><span class="lineno">  171</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  172</span>            <span class="keywordflow">return</span> fmt::format_to(out, fmt::runtime(formats), args...);</div>
-<div class="line"><span class="lineno">  173</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  174</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00217">217</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  219</span>        {</div>
+<div class="line"><span class="lineno">  220</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  221</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_format_args(args...));</div>
+<div class="line"><span class="lineno">  222</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">return</span> fmt::format_to(out, fmt::runtime(formats), args...);</div>
+<div class="line"><span class="lineno">  224</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  225</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/daf/classutility__module_1_1formatter_a12d7278310683404a3342631586528b6_icgraph.png" border="0" usemap="#ad1/daf/classutility__module_1_1formatter_a12d7278310683404a3342631586528b6_icgraph" alt=""/></div>
 <map name="ad1/daf/classutility__module_1_1formatter_a12d7278310683404a3342631586528b6_icgraph" id="ad1/daf/classutility__module_1_1formatter_a12d7278310683404a3342631586528b6_icgraph">
-<area shape="rect" title="Format a string directly to an output iterator." alt="" coords="473,69,660,109"/>
-<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#ad3d89fdba31abf1b929030468324de3d" title="Performs the main work of writing log messages to the console." alt="" coords="261,5,417,45"/>
+<area shape="rect" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="473,69,660,109"/>
+<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#ad3d89fdba31abf1b929030468324de3d" title="The primary work routine that processes and outputs console log messages." alt="" coords="261,5,417,45"/>
 <area shape="poly" title=" " alt="" coords="481,68,410,48,411,43,483,63"/>
-<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replace all occurrences of a token in a string with another string, returning a new string." alt="" coords="252,69,425,109"/>
+<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="252,69,425,109"/>
 <area shape="poly" title=" " alt="" coords="459,92,426,92,426,87,459,87"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Converts the thread_pool object to a string representation." alt="" coords="253,133,425,173"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="253,133,425,173"/>
 <area shape="poly" title=" " alt="" coords="483,116,411,136,410,131,481,110"/>
-<area shape="rect" href="../../d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool value as a string." alt="" coords="5,126,204,181"/>
+<area shape="rect" href="../../d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,126,204,181"/>
 <area shape="poly" title=" " alt="" coords="239,156,204,156,204,151,239,151"/>
 </map>
 </div>
@@ -440,32 +453,32 @@ template&lt;typename OutputIt , typename... FormatArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Format a wide string directly to an output iterator. </p>
+<p>Formats a wide-character string directly to an output iterator. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">OutputIt</td><td>Output iterator type. </td></tr>
-    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of arguments for formatting. </td></tr>
+    <tr><td class="paramname">OutputIt</td><td>The type of the output iterator (e.g. a back_inserter for a wstring). </td></tr>
+    <tr><td class="paramname">FormatArgs</td><td>Parameter pack of argument types. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">out</td><td>The output iterator. </td></tr>
+    <tr><td class="paramname">out</td><td>The output iterator where formatted text will be written. </td></tr>
     <tr><td class="paramname">formats</td><td>The wide format string. </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments to replace the placeholders. </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments to substitute into <code>formats</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>OutputIt The output iterator at the end of the formatted output. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The output iterator advanced to the end of the written text. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00186">186</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  189</span>        {</div>
-<div class="line"><span class="lineno">  190</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_wformat_args(args...));</div>
-<div class="line"><span class="lineno">  192</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  193</span>            <span class="keywordflow">return</span> fmt::format_to(out, fmt::runtime(formats), args...);</div>
-<div class="line"><span class="lineno">  194</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  195</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00237">237</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  239</span>        {</div>
+<div class="line"><span class="lineno">  240</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  241</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_wformat_args(args...));</div>
+<div class="line"><span class="lineno">  242</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  243</span>            <span class="keywordflow">return</span> fmt::format_to(out, fmt::runtime(formats), args...);</div>
+<div class="line"><span class="lineno">  244</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  245</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -475,7 +488,7 @@ template&lt;typename OutputIt , typename... FormatArgs&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 11 2025 18:19:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
