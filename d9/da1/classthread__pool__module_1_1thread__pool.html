@@ -187,7 +187,7 @@ Private Attributes</h2></td></tr>
 <li>Start/stop all worker threads as a group</li>
 </ul>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, allowing you to safely retrieve a <code>std::shared_ptr&lt;thread_pool&gt;</code> from member functions via <code><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ad46183ee284743dabbb59b79b868676d" title="Retrieves a std::shared_ptr to this thread_pool instance.">get_ptr()</a></code>.</p>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md30"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html" title="Manages a group of thread_worker instances and a shared job_queue for concurrent job processing.">thread_pool</a></code> (usually with <code>std::make_shared</code>).</li>
@@ -336,7 +336,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   95</span> </div>
 <div class="line"><span class="lineno">   96</span>        <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line"><span class="lineno">   97</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">A base class representing work items to be executed by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00086">job.h:87</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00097">job.h:98</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -750,7 +750,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 18:06:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

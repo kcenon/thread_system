@@ -103,24 +103,26 @@ Collaboration diagram for thread_module::job_queue:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d0b/classthread__module_1_1job__queue__coll__graph.png" border="0" usemap="#athread__module_1_1job__queue_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__module_1_1job__queue_coll__map" id="athread__module_1_1job__queue_coll__map">
-<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="201,148,386,508"/>
-<area shape="rect" title=" " alt="" coords="135,571,295,651"/>
-<area shape="poly" title=" " alt="" coords="246,509,233,555,227,554,240,508"/>
-<area shape="rect" title=" " alt="" coords="126,5,306,85"/>
-<area shape="poly" title=" " alt="" coords="233,98,246,147,241,149,228,100"/>
-<area shape="rect" title=" " alt="" coords="330,13,414,78"/>
-<area shape="poly" title=" " alt="" coords="366,79,351,133,345,131,361,78"/>
-<area shape="rect" title=" " alt="" coords="165,1104,376,1184"/>
-<area shape="poly" title=" " alt="" coords="298,1103,311,1079,325,1042,329,1003,329,609,325,524,330,524,335,609,335,1003,331,1043,316,1081,303,1105"/>
-<area shape="rect" title=" " alt="" coords="127,961,295,1041"/>
-<area shape="poly" title=" " alt="" coords="224,1040,238,1079,243,1088,238,1090,234,1081,219,1042"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="141,713,281,899"/>
-<area shape="poly" title=" " alt="" coords="213,899,213,945,208,945,208,899"/>
+<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="363,148,549,508"/>
+<area shape="rect" title=" " alt="" coords="317,571,477,651"/>
+<area shape="poly" title=" " alt="" coords="421,509,411,555,406,554,416,508"/>
+<area shape="rect" title=" " alt="" coords="289,5,469,85"/>
+<area shape="poly" title=" " alt="" coords="396,98,409,147,404,149,391,100"/>
+<area shape="rect" title=" " alt="" coords="493,13,577,78"/>
+<area shape="poly" title=" " alt="" coords="528,79,513,133,508,131,523,78"/>
+<area shape="rect" title=" " alt="" coords="348,1124,559,1204"/>
+<area shape="poly" title=" " alt="" coords="481,1123,494,1099,508,1062,512,1023,512,609,505,525,510,524,517,609,517,1023,513,1063,498,1101,485,1125"/>
+<area shape="rect" title=" " alt="" coords="287,981,455,1061"/>
+<area shape="poly" title=" " alt="" coords="396,1060,424,1108,420,1111,391,1063"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="166,713,306,919"/>
+<area shape="poly" title=" " alt="" coords="306,918,338,966,334,969,302,921"/>
 <area shape="rect" title=" " alt="" coords="31,578,110,643"/>
-<area shape="poly" title=" " alt="" coords="96,642,136,698,132,701,91,645"/>
+<area shape="poly" title=" " alt="" coords="99,642,158,714,154,718,94,645"/>
 <area shape="rect" title=" " alt="" coords="5,288,136,368"/>
 <area shape="poly" title=" " alt="" coords="73,382,73,578,68,578,68,382"/>
-<area shape="poly" title=" " alt="" coords="217,651,216,697,210,697,211,651"/>
+<area shape="rect" title=" " alt="" coords="134,578,293,643"/>
+<area shape="poly" title=" " alt="" coords="220,643,226,697,220,697,214,644"/>
+<area shape="poly" title=" " alt="" coords="368,653,319,715,314,712,364,649"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -191,7 +193,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a2ff9674850d1ac0d5078109ad883b18f" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
@@ -832,7 +834,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 18:06:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

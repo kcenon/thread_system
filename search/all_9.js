@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['job_0',['job',['../d8/d42/classthread__module_1_1job.html',1,'thread_module::job'],['../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c',1,'thread_module::job::job()']]],
+  ['job_0',['job',['../d8/d42/classthread__module_1_1job.html',1,'thread_module::job'],['../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c',1,'thread_module::job::job(const std::string &amp;name=&quot;job&quot;)'],['../d8/d42/classthread__module_1_1job.html#a12c217dd06dfb0d9f6f00f1d3bd5c2d6',1,'thread_module::job::job(const std::vector&lt; uint8_t &gt; &amp;data, const std::string &amp;name=&quot;data_job&quot;)']]],
   ['job_2ecpp_1',['job.cpp',['../de/d83/job_8cpp.html',1,'']]],
   ['job_2eh_2',['job.h',['../d3/d6a/job_8h.html',1,'']]],
   ['job_5fpriorities_3',['job_priorities',['../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090',1,'priority_thread_pool_module']]],

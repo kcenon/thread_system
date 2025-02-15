@@ -1,5 +1,5 @@
 <map id="thread_module::callback_job" name="thread_module::callback_job">
-<area shape="rect" id="Node000001" title="A specialized job class that encapsulates a user&#45;defined callback." alt="" coords="5,259,207,364"/>
-<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="A base class representing work items to be executed by a job queue." alt="" coords="36,5,176,211"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,224,109,258,103,258,103,224"/>
+<area shape="rect" id="Node000001" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="5,299,207,464"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="36,5,176,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,265,109,298,103,298,103,265"/>
 </map>

@@ -24,7 +24,7 @@
 <area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="516,628,482,633,481,627,516,623"/>
 <area shape="rect" id="Node000013" href="$db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="285,688,467,728"/>
 <area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="570,640,482,678,448,690,446,685,480,673,568,635"/>
-<area shape="rect" id="Node000014" href="$d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1" title="Returns a string representation of the job." alt="" coords="302,752,450,792"/>
+<area shape="rect" id="Node000014" href="$d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1" title="Provides a string representation of the job for logging or debugging." alt="" coords="302,752,450,792"/>
 <area shape="poly" id="edge18_Node000001_Node000014" title=" " alt="" coords="597,644,547,694,516,720,483,742,451,756,449,751,480,737,513,716,544,690,593,641"/>
 <area shape="rect" id="Node000016" href="$df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f" title="Returns a string representation of this job_queue." alt="" coords="302,816,450,856"/>
 <area shape="poly" id="edge20_Node000001_Node000016" title=" " alt="" coords="608,645,588,683,560,726,525,769,483,806,451,822,449,818,480,802,521,765,556,723,583,680,604,643"/>
@@ -45,7 +45,7 @@
 <area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="271,454,191,454,191,449,271,449"/>
 <area shape="poly" id="edge13_Node000010_Node000003" title=" " alt="" coords="279,495,190,473,192,468,281,490"/>
 <area shape="poly" id="edge17_Node000013_Node000003" title=" " alt="" coords="278,684,269,678,241,655,216,628,174,571,142,516,121,473,126,471,146,513,178,568,220,625,245,651,272,674,281,679"/>
-<area shape="rect" id="Node000015" href="$dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object as a string using {fmt}." alt="" coords="27,721,201,761"/>
+<area shape="rect" id="Node000015" href="$dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object into a string using job::to_string()." alt="" coords="27,721,201,761"/>
 <area shape="poly" id="edge19_Node000014_Node000015" title=" " alt="" coords="288,764,201,754,201,749,289,759"/>
 <area shape="rect" id="Node000017" href="$da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="26,786,202,840"/>
 <area shape="poly" id="edge21_Node000016_Node000017" title=" " alt="" coords="288,831,202,823,203,818,289,826"/>

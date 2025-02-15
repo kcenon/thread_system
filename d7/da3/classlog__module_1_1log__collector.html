@@ -354,15 +354,15 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_a65d6d4db6b548ec3c172d91e739e831c"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#a65d6d4db6b548ec3c172d91e739e831c">log_module::log_collector::enqueue_log</a></div><div class="ttdeci">auto enqueue_log(const log_types &amp;current_log_type, const log_types &amp;target_log_type, std::weak_ptr&lt; job_queue &gt; weak_queue, const std::string &amp;datetime, const std::string &amp;message) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Enqueues a log message for processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d3c/log__collector_8cpp_source.html#l00220">log_collector.cpp:220</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_a86ba5e26338ca6d9d48941b26eb5d98c"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">log_module::log_collector::console_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; console_queue_</div><div class="ttdoc">Weak pointer to the queue for console output jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00243">log_collector.h:243</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_ab7fecba14eb03947827db31a46476eb3"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">log_module::log_collector::file_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; file_queue_</div><div class="ttdoc">Weak pointer to the queue for file output jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00244">log_collector.h:244</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">A base class representing work items to be executed by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00086">job.h:87</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job_html_a07d8178b7c60d4e6dac22de11b2c9891"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891">thread_module::job::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Executes the job's work.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00047">job.cpp:47</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00097">job.h:98</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_a07d8178b7c60d4e6dac22de11b2c9891"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891">thread_module::job::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">The core task execution method to be overridden by derived classes.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00051">job.cpp:51</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/da3/classlog__module_1_1log__collector_aa00b46024315b635c750425c2ca1d9e6_cgraph.png" border="0" usemap="#ad7/da3/classlog__module_1_1log__collector_aa00b46024315b635c750425c2ca1d9e6_cgraph" alt=""/></div>
 <map name="ad7/da3/classlog__module_1_1log__collector_aa00b46024315b635c750425c2ca1d9e6_cgraph" id="ad7/da3/classlog__module_1_1log__collector_aa00b46024315b635c750425c2ca1d9e6_cgraph">
 <area shape="rect" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="Executes the job&#39;s work." alt="" coords="243,5,391,45"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="The core task execution method to be overridden by derived classes." alt="" coords="243,5,391,45"/>
 <area shape="poly" title=" " alt="" coords="195,23,228,23,228,28,195,28"/>
 </map>
 </div>
@@ -433,7 +433,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d7/da3/classlog__module_1_1log__collector_a628ea710b0f38de40ea670415fe2a988_cgraph.png" border="0" usemap="#ad7/da3/classlog__module_1_1log__collector_a628ea710b0f38de40ea670415fe2a988_cgraph" alt=""/></div>
 <map name="ad7/da3/classlog__module_1_1log__collector_a628ea710b0f38de40ea670415fe2a988_cgraph" id="ad7/da3/classlog__module_1_1log__collector_a628ea710b0f38de40ea670415fe2a988_cgraph">
 <area shape="rect" title="Performs initialization before starting the log collector thread." alt="" coords="5,5,195,45"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="Executes the job&#39;s work." alt="" coords="243,5,391,45"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a07d8178b7c60d4e6dac22de11b2c9891" title="The core task execution method to be overridden by derived classes." alt="" coords="243,5,391,45"/>
 <area shape="poly" title=" " alt="" coords="195,23,228,23,228,28,195,28"/>
 </map>
 </div>
@@ -1318,7 +1318,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 01:02:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Feb 15 2025 18:06:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
