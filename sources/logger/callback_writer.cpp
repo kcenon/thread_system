@@ -68,7 +68,7 @@ namespace log_module
 			return "there is no job_queue";
 		}
 
-		auto remaining_logs = job_queue_->dequeue_all();
+		auto remaining_logs = job_queue_->dequeue_batch();
 		while (!remaining_logs.empty())
 		{
 			auto current_job = std::move(remaining_logs.front());
