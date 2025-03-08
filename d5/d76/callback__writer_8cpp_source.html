@@ -157,7 +157,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;there is no job_queue&quot;</span>;</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        }</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">auto</span> remaining_logs = job_queue_-&gt;dequeue_all();</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">auto</span> remaining_logs = job_queue_-&gt;dequeue_batch();</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">while</span> (!remaining_logs.empty())</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        {</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keyword">auto</span> current_job = std::move(remaining_logs.front());</div>
@@ -204,7 +204,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 18:06:01 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Mar 8 2025 04:27:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -275,7 +275,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   68</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;there is no job_queue&quot;</span>;</div>
 <div class="line"><span class="lineno">   69</span>        }</div>
 <div class="line"><span class="lineno">   70</span> </div>
-<div class="line"><span class="lineno">   71</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;dequeue_all();</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;dequeue_batch();</div>
 <div class="line"><span class="lineno">   72</span>        <span class="keywordflow">while</span> (!remaining_logs.empty())</div>
 <div class="line"><span class="lineno">   73</span>        {</div>
 <div class="line"><span class="lineno">   74</span>            <span class="keyword">auto</span> current_job = std::move(remaining_logs.front());</div>
@@ -471,7 +471,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 18:06:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Mar 8 2025 04:27:30 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

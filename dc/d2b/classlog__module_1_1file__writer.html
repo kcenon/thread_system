@@ -590,7 +590,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  103</span> </div>
 <div class="line"><span class="lineno">  104</span>        <a class="code hl_function" href="../../dc/d2b/classlog__module_1_1file__writer.html#a20dbfb01f553a8dd67e74f6100166261">check_file_handle</a>();</div>
 <div class="line"><span class="lineno">  105</span> </div>
-<div class="line"><span class="lineno">  106</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#acf13823f9d42b1c6c449f39242b50dcc">job_queue_</a>-&gt;dequeue_all();</div>
+<div class="line"><span class="lineno">  106</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#acf13823f9d42b1c6c449f39242b50dcc">job_queue_</a>-&gt;dequeue_batch();</div>
 <div class="line"><span class="lineno">  107</span>        <span class="keywordflow">while</span> (!remaining_logs.empty())</div>
 <div class="line"><span class="lineno">  108</span>        {</div>
 <div class="line"><span class="lineno">  109</span>            <span class="keyword">auto</span> current_job = std::move(remaining_logs.front());</div>
@@ -1350,7 +1350,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2025 18:06:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Mar 8 2025 04:27:30 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

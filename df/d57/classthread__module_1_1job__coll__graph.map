@@ -8,15 +8,15 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,99,443,134,438,134,438,99"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="504,135,663,200"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="574,201,557,248,552,246,569,199"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="421,1239,581,1319"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="516,1237,534,1190,553,1130,568,1064,574,997,574,569,570,527,560,484,565,483,575,526,579,569,579,997,573,1065,558,1132,539,1192,521,1239"/>
-<area shape="rect" id="Node000006" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,816,412,1176"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="414,1139,469,1223,464,1226,410,1142"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="421,1259,581,1339"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="515,1257,534,1208,553,1146,568,1077,574,1007,574,569,570,527,560,484,565,483,575,526,579,569,579,1007,573,1078,558,1148,539,1210,520,1259"/>
+<area shape="rect" id="Node000006" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="227,816,412,1196"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="414,1154,470,1243,465,1246,410,1157"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="5,673,185,753"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="137,763,229,877,224,880,133,766"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="136,763,228,883,224,886,132,766"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="209,681,293,746"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="262,746,275,799,269,801,256,747"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="261,746,274,799,269,800,256,747"/>
 <area shape="rect" id="Node000009" title=" " alt="" coords="318,673,529,753"/>
-<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="411,755,394,801,389,799,406,753"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="412,755,395,801,390,799,407,753"/>
 <area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="443,611,435,658,430,657,438,611"/>
 </map>
