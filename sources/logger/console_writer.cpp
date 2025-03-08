@@ -72,7 +72,7 @@ namespace log_module
 		}
 
 		std::string console_buffer = "";
-		auto remaining_logs = job_queue_->dequeue_all();
+		auto remaining_logs = job_queue_->dequeue_batch();
 		while (!remaining_logs.empty())
 		{
 			auto current_job = std::move(remaining_logs.front());

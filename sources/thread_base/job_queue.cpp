@@ -38,6 +38,8 @@ namespace thread_module
 
 	job_queue::~job_queue(void) {}
 
+	auto job_queue::get_ptr(void) -> std::shared_ptr<job_queue> { return shared_from_this(); }
+
 	auto job_queue::is_stopped() const -> bool { return stop_.load(); }
 
 	auto job_queue::set_notify(bool notify) -> void { notify_.store(notify); }
@@ -67,7 +69,42 @@ namespace thread_module
 		return std::nullopt;
 	}
 
-	std::shared_ptr<job_queue> job_queue::get_ptr(void) { return shared_from_this(); }
+	auto job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+		-> std::optional<std::string>
+	{
+		if (stop_.load())
+		{
+			return "Job queue is stopped";
+		}
+
+		if (jobs.empty())
+		{
+			return "cannot enqueue empty batch";
+		}
+
+		for (auto& job : jobs)
+		{
+			if (job == nullptr)
+			{
+				return "cannot enqueue null job in batch";
+			}
+		}
+
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		for (auto& job : jobs)
+		{
+			queue_.push_back(std::move(job));
+		}
+		queue_size_.fetch_add(jobs.size());
+
+		if (notify_)
+		{
+			condition_.notify_one();
+		}
+
+		return std::nullopt;
+	}
 
 	auto job_queue::dequeue()
 		-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>
@@ -85,6 +122,21 @@ namespace thread_module
 		queue_size_.fetch_sub(1);
 
 		return { std::move(value), std::nullopt };
+	}
+
+	auto job_queue::dequeue_batch(void) -> std::deque<std::unique_ptr<job>>
+	{
+		std::deque<std::unique_ptr<job>> all_items;
+		{
+			std::scoped_lock<std::mutex> lock(mutex_);
+
+			std::swap(queue_, all_items);
+			queue_size_.store(0);
+
+			condition_.notify_all();
+		}
+
+		return all_items;
 	}
 
 	auto job_queue::clear(void) -> void
@@ -112,21 +164,6 @@ namespace thread_module
 		stop_.store(true);
 
 		condition_.notify_all();
-	}
-
-	auto job_queue::dequeue_all(void) -> std::deque<std::unique_ptr<job>>
-	{
-		std::deque<std::unique_ptr<job>> all_items;
-		{
-			std::scoped_lock<std::mutex> lock(mutex_);
-
-			std::swap(queue_, all_items);
-			queue_size_.store(0);
-
-			condition_.notify_all();
-		}
-
-		return all_items;
 	}
 
 	auto job_queue::to_string(void) const -> std::string

@@ -94,7 +94,7 @@ namespace thread_module
 		 * @c get_ptr() allows retrieving a @c shared_ptr<job_queue> from within
 		 * member functions of @c job_queue.
 		 */
-		[[nodiscard]] std::shared_ptr<job_queue> get_ptr(void);
+		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<job_queue>;
 
 		/**
 		 * @brief Checks if the queue is in a "stopped" state.
@@ -127,6 +127,15 @@ namespace thread_module
 			-> std::optional<std::string>;
 
 		/**
+		 * @brief Enqueues a batch of jobs into the queue.
+		 * @param jobs A vector of unique pointers to the jobs being added.
+		 * @return @c std::optional<std::string> containing an error message if the
+		 *         enqueue operation failed; otherwise, @c std::nullopt.
+		 */
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+			-> std::optional<std::string>;
+
+		/**
 		 * @brief Dequeues a job from the queue in FIFO order.
 		 * @return A tuple where:
 		 *         - The first element (@c std::optional<std::unique_ptr<job>>) holds
@@ -141,6 +150,16 @@ namespace thread_module
 		 */
 		[[nodiscard]] virtual auto dequeue(void)
 			-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>;
+
+		/**
+		 * @brief Dequeues all remaining jobs from the queue without processing them.
+		 * @return A @c std::deque of unique_ptr<job> containing all jobs that were
+		 *         in the queue at the time of the call.
+		 *
+		 * Similar to @c clear(), but returns the dequeued jobs to the caller for
+		 * potential inspection or manual processing.
+		 */
+		[[nodiscard]] auto dequeue_batch(void) -> std::deque<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Removes all jobs currently in the queue without processing them.
@@ -165,16 +184,6 @@ namespace thread_module
 		 * rather than remain blocked indefinitely.
 		 */
 		auto stop_waiting_dequeue(void) -> void;
-
-		/**
-		 * @brief Dequeues all remaining jobs from the queue without processing them.
-		 * @return A @c std::deque of unique_ptr<job> containing all jobs that were
-		 *         in the queue at the time of the call.
-		 *
-		 * Similar to @c clear(), but returns the dequeued jobs to the caller for
-		 * potential inspection or manual processing.
-		 */
-		[[nodiscard]] auto dequeue_all(void) -> std::deque<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Returns a string representation of this job_queue.
