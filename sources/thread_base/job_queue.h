@@ -132,7 +132,7 @@ namespace thread_module
 		 * @return @c std::optional<std::string> containing an error message if the
 		 *         enqueue operation failed; otherwise, @c std::nullopt.
 		 */
-		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
 			-> std::optional<std::string>;
 
 		/**
@@ -159,7 +159,7 @@ namespace thread_module
 		 * Similar to @c clear(), but returns the dequeued jobs to the caller for
 		 * potential inspection or manual processing.
 		 */
-		[[nodiscard]] auto dequeue_batch(void) -> std::deque<std::unique_ptr<job>>;
+		[[nodiscard]] virtual auto dequeue_batch(void) -> std::deque<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Removes all jobs currently in the queue without processing them.

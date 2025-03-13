@@ -84,6 +84,21 @@ namespace priority_thread_pool_module
 			-> std::optional<std::string> override;
 
 		/**
+		 * @brief Enqueues a batch of jobs into the queue.
+		 *
+		 * This function accepts a vector of unique pointers to jobs and enqueues them
+		 * in an unspecified order. The method returns an error message if any job fails
+		 * to enqueue.
+		 *
+		 * @param jobs A vector of unique pointers to jobs to enqueue.
+		 * @return @c std::optional<std::string>
+		 * 	   - If the enqueue operation fails, an error message describing the issue.
+		 * 	   - Otherwise, @c std::nullopt on success.
+		 */
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>& jobs)
+			-> std::optional<std::string>;
+
+		/**
 		 * @brief Enqueues a priority job into the appropriate priority queue.
 		 *
 		 * @param value A unique pointer to the priority job to enqueue.
@@ -92,6 +107,22 @@ namespace priority_thread_pool_module
 		 *         - Otherwise, @c std::nullopt on success.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& value)
+			-> std::optional<std::string>;
+
+		/**
+		 * @brief Enqueues a batch of priority jobs into the appropriate priority queues.
+		 *
+		 * This function accepts a vector of unique pointers to priority jobs and enqueues
+		 * them in an unspecified order. The method returns an error message if any job fails
+		 * to enqueue.
+		 *
+		 * @param jobs A vector of unique pointers to priority jobs to enqueue.
+		 * @return @c std::optional<std::string>
+		 * 	   - If the enqueue operation fails, an error message describing the issue.
+		 * 	   - Otherwise, @c std::nullopt on success.
+		 */
+		[[nodiscard]] auto enqueue_batch(
+			std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
 			-> std::optional<std::string>;
 
 		/**
