@@ -237,7 +237,7 @@ class priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &g
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<h3><a class="anchor" id="autotoc_md14"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"> <span class="keyword">auto</span> worker = std::make_shared&lt;priority_thread_worker_t&lt;job_priorities&gt;&gt;(</div>
 <div class="line">     std::vector&lt;job_priorities&gt;{job_priorities::HIGH, job_priorities::MEDIUM},</div>
@@ -258,7 +258,7 @@ Usage Example</h3>
 <div class="line">  <span class="comment">// Stop and join the worker once done</span></div>
 <div class="line">*worker-&gt;stop();</div>
 <div class="line">*worker-&gt;join();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
 Thread Safety</h3>
 <p>The worker is designed to run its own thread that continuously checks the queue for new jobs. Any shared data structures should be either thread-safe or externally synchronized.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base</a> </dd>
@@ -557,7 +557,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 8 2025 04:27:30 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Mar 13 2025 14:41:12 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -189,99 +189,160 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
 <div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ac00dc387724d8067f8d5158e4c7f60a3">   99</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">thread_pool::enqueue</a>(std::unique_ptr&lt;thread_worker&gt;&amp;&amp; worker) -&gt; std::optional&lt;std::string&gt;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">if</span> (worker == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Worker is null&quot;</span>;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        }</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        {</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Job queue is null&quot;</span>;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        worker-&gt;set_job_queue(job_queue_);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">if</span> (start_pool_.load())</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">   99</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">thread_pool::enqueue_batch</a>(std::vector&lt;std::unique_ptr&lt;job&gt;&gt;&amp;&amp; jobs)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        -&gt; std::optional&lt;std::string&gt;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">if</span> (jobs.empty())</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Jobs are empty&quot;</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        }</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Job queue is null&quot;</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keyword">auto</span> enqueue_error = job_queue_-&gt;enqueue_batch(std::move(jobs));</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">if</span> (enqueue_error.has_value())</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="keyword">auto</span> start_error = worker-&gt;start();</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordflow">if</span> (start_error.has_value())</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            {</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                stop();</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                <span class="keywordflow">return</span> start_error;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        }</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        workers_.emplace_back(std::move(worker));</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="keywordflow">return</span> enqueue_error;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    }</div>
 </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="foldopen" id="foldopen00129" data-start="{" data-end="}">
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">  129</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">thread_pool::stop</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; immediately_stop) -&gt; <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keywordflow">if</span> (!start_pool_.load())</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        {</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        }</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <span class="keywordflow">if</span> (job_queue_ != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        {</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            job_queue_-&gt;stop_waiting_dequeue();</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            <span class="keywordflow">if</span> (immediately_stop)</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                job_queue_-&gt;clear();</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ac00dc387724d8067f8d5158e4c7f60a3">  121</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">thread_pool::enqueue</a>(std::unique_ptr&lt;thread_worker&gt;&amp;&amp; worker) -&gt; std::optional&lt;std::string&gt;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">if</span> (worker == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        {</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Worker is null&quot;</span>;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Job queue is null&quot;</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        }</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        worker-&gt;set_job_queue(job_queue_);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordflow">if</span> (start_pool_.load())</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="keyword">auto</span> start_error = worker-&gt;start();</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            <span class="keywordflow">if</span> (start_error.has_value())</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                stop();</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">return</span> start_error;</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            }</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        }</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; worker : workers_)</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        {</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="keyword">auto</span> stop_error = worker-&gt;stop();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            <span class="keywordflow">if</span> (stop_error.has_value())</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a>(<span class="stringliteral">&quot;error stopping worker: {}&quot;</span>,</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                                        stop_error.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        }</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        start_pool_.store(<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    }</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        workers_.emplace_back(std::move(worker));</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    }</div>
 </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="foldopen" id="foldopen00151" data-start="{" data-end="}">
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a226ace8ddc1c6c812512c68ce64d7b55">  151</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">thread_pool::enqueue_batch</a>(std::vector&lt;std::unique_ptr&lt;thread_worker&gt;&gt;&amp;&amp; workers)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        -&gt; std::optional&lt;std::string&gt;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keywordflow">if</span> (workers.empty())</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        {</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Workers are empty&quot;</span>;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        }</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="foldopen" id="foldopen00159" data-start="{" data-end="}">
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">  159</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">thread_pool::to_string</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span> -&gt; std::string</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        std::string format_string;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;{} is {},\n&quot;</span>, thread_title_,</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                             start_pool_.load() ? <span class="stringliteral">&quot;running&quot;</span> : <span class="stringliteral">&quot;stopped&quot;</span>);</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\tjob_queue: {}\n\n&quot;</span>,</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                             (job_queue_ != <span class="keyword">nullptr</span> ? job_queue_-&gt;to_string() : <span class="stringliteral">&quot;nullptr&quot;</span>));</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\tworkers: {}\n&quot;</span>, workers_.size());</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; worker : workers_)</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        {</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\t{}\n&quot;</span>, worker-&gt;to_string());</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        }</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordflow">return</span> format_string;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    }</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Job queue is null&quot;</span>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; worker : workers)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            worker-&gt;set_job_queue(job_queue_);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <span class="keywordflow">if</span> (start_pool_.load())</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="keyword">auto</span> start_error = worker-&gt;start();</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                <span class="keywordflow">if</span> (start_error.has_value())</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                    stop();</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordflow">return</span> start_error;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            workers_.emplace_back(std::move(worker));</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    }</div>
 </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>} <span class="comment">// namespace thread_pool_module</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="foldopen" id="foldopen00185" data-start="{" data-end="}">
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">  185</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">thread_pool::stop</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; immediately_stop) -&gt; <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">if</span> (!start_pool_.load())</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">if</span> (job_queue_ != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        {</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            job_queue_-&gt;stop_waiting_dequeue();</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keywordflow">if</span> (immediately_stop)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                job_queue_-&gt;clear();</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; worker : workers_)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        {</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            <span class="keyword">auto</span> stop_error = worker-&gt;stop();</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            <span class="keywordflow">if</span> (stop_error.has_value())</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            {</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a>(<span class="stringliteral">&quot;error stopping worker: {}&quot;</span>,</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                                        stop_error.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        start_pool_.store(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    }</div>
+</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="foldopen" id="foldopen00215" data-start="{" data-end="}">
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">  215</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">thread_pool::to_string</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span> -&gt; std::string</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    {</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        std::string format_string;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;{} is {},\n&quot;</span>, thread_title_,</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                             start_pool_.load() ? <span class="stringliteral">&quot;running&quot;</span> : <span class="stringliteral">&quot;stopped&quot;</span>);</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\tjob_queue: {}\n\n&quot;</span>,</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                             (job_queue_ != <span class="keyword">nullptr</span> ? job_queue_-&gt;to_string() : <span class="stringliteral">&quot;nullptr&quot;</span>));</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\tworkers: {}\n&quot;</span>, workers_.size());</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; worker : workers_)</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        {</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(format_string), <span class="stringliteral">&quot;\t{}\n&quot;</span>, worker-&gt;to_string());</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        }</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">return</span> format_string;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    }</div>
+</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>} <span class="comment">// namespace thread_pool_module</span></div>
 </div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00073">job_queue.h:74</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00097">job.h:98</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a04a80e890d56ba5e4deb5ca9a0a93199"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">thread_pool_module::thread_pool::to_string</a></div><div class="ttdeci">auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of this thread_pool.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00159">thread_pool.cpp:159</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a04a80e890d56ba5e4deb5ca9a0a93199"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199">thread_pool_module::thread_pool::to_string</a></div><div class="ttdeci">auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of this thread_pool.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00215">thread_pool.cpp:215</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a0905ffaf9c5741a6c1f3f62d61c0e757"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a0905ffaf9c5741a6c1f3f62d61c0e757">thread_pool_module::thread_pool::thread_pool</a></div><div class="ttdeci">thread_pool(const std::string &amp;thread_title=&quot;thread_pool&quot;)</div><div class="ttdoc">Constructs a new thread_pool instance.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00042">thread_pool.cpp:42</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a0bef86cfd95f66f96fc0257e92e92784"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784">thread_pool_module::thread_pool::~thread_pool</a></div><div class="ttdeci">virtual ~thread_pool(void)</div><div class="ttdoc">Virtual destructor. Cleans up resources used by the thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00047">thread_pool.cpp:47</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a318d67c6132d192ecef1c27f6276bfb0"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">thread_pool_module::thread_pool::enqueue</a></div><div class="ttdeci">auto enqueue(std::unique_ptr&lt; job &gt; &amp;&amp;job) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Enqueues a new job into the shared job_queue.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00078">thread_pool.cpp:78</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a3e4a0c4e6d04eb363517ae6016036fbc"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">thread_pool_module::thread_pool::stop</a></div><div class="ttdeci">auto stop(const bool &amp;immediately_stop=false) -&gt; void</div><div class="ttdoc">Stops the thread pool and all worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00129">thread_pool.cpp:129</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a3e4a0c4e6d04eb363517ae6016036fbc"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc">thread_pool_module::thread_pool::stop</a></div><div class="ttdeci">auto stop(const bool &amp;immediately_stop=false) -&gt; void</div><div class="ttdoc">Stops the thread pool and all worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00185">thread_pool.cpp:185</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a60f3cd30f157cefb2e1fe521e03d6d8f"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f">thread_pool_module::thread_pool::start</a></div><div class="ttdeci">auto start(void) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Starts the thread pool and all associated workers.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00054">thread_pool.cpp:54</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_ad46183ee284743dabbb59b79b868676d"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ad46183ee284743dabbb59b79b868676d">thread_pool_module::thread_pool::get_ptr</a></div><div class="ttdeci">auto get_ptr(void) -&gt; std::shared_ptr&lt; thread_pool &gt;</div><div class="ttdoc">Retrieves a std::shared_ptr to this thread_pool instance.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00049">thread_pool.cpp:49</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_ad4bfb75eb1899973dcc2db13d493eb3f"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ad4bfb75eb1899973dcc2db13d493eb3f">thread_pool_module::thread_pool::get_job_queue</a></div><div class="ttdeci">auto get_job_queue(void) -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Returns the shared job_queue used by this thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00076">thread_pool.cpp:76</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_aebcc6418f9018add94a5ccc407b0437e"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">thread_pool_module::thread_pool::enqueue_batch</a></div><div class="ttdeci">auto enqueue_batch(std::vector&lt; std::unique_ptr&lt; job &gt; &gt; &amp;&amp;jobs) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Enqueues a batch of jobs into the shared job_queue.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d17/thread__pool_8cpp_source.html#l00099">thread_pool.cpp:99</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00217">formatter.h:217</a></div></div>
 <div class="ttc" id="aformatter_8h_html"><div class="ttname"><a href="../../de/d52/formatter_8h.html">formatter.h</a></div></div>
 <div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div></div>
@@ -292,7 +353,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 8 2025 04:27:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Mar 13 2025 14:41:12 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
