@@ -84,14 +84,19 @@ auto create_default(const uint16_t& worker_counts)
 	}
 
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<thread_worker>> workers;
+	workers.reserve(worker_counts);
 	for (uint16_t i = 0; i < worker_counts; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<thread_worker>());
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to worker: {}",
-												error_message.value_or("unknown error")) };
-		}
+		workers.push_back(std::make_unique<thread_worker>());
+	}
+
+	error_message = pool->enqueue_batch(std::move(workers));
+	if (error_message.has_value())
+	{
+		return { nullptr, formatter::format("cannot enqueue to workers: {}",
+											error_message.value_or("unknown error")) };
 	}
 
 	return { pool, std::nullopt };
@@ -100,23 +105,28 @@ auto create_default(const uint16_t& worker_counts)
 auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::string>
 {
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<job>> jobs;
+	jobs.reserve(test_line_count_);
+
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
-		error_message = thread_pool->enqueue(std::make_unique<callback_job>(
+		jobs.push_back(std::make_unique<callback_job>(
 			[index](void) -> std::optional<std::string>
 			{
 				log_module::write_debug("Hello, World!: {}", index);
-
 				return std::nullopt;
 			}));
-		if (error_message.has_value())
-		{
-			return formatter::format("error enqueuing job: {}",
-									 error_message.value_or("unknown error"));
-		}
-
-		log_module::write_sequence("enqueued job: {}", index);
 	}
+
+	error_message = thread_pool->enqueue_batch(std::move(jobs));
+	if (error_message.has_value())
+	{
+		return formatter::format("error enqueuing jobs: {}",
+								 error_message.value_or("unknown error"));
+	}
+
+	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
 
 	return std::nullopt;
 }
