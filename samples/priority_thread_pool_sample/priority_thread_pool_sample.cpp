@@ -94,35 +94,32 @@ auto create_default(const uint16_t& high_priority_workers,
 	}
 
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<priority_thread_worker>> workers;
+	workers.reserve(high_priority_workers + normal_priority_workers + low_priority_workers);
 	for (uint16_t i = 0; i < high_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker>(
+		workers.push_back(std::make_unique<priority_thread_worker>(
 			std::vector<job_priorities>{ job_priorities::High }, "high priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to high priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
 	}
+
 	for (uint16_t i = 0; i < normal_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker>(
+		workers.push_back(std::make_unique<priority_thread_worker>(
 			std::vector<job_priorities>{ job_priorities::Normal }, "normal priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to normal priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
 	}
+
 	for (uint16_t i = 0; i < low_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker>(
+		workers.push_back(std::make_unique<priority_thread_worker>(
 			std::vector<job_priorities>{ job_priorities::Low }, "low priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to low priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
+	}
+
+	error_message = pool->enqueue_batch(std::move(workers));
+	if (error_message.has_value())
+	{
+		return { nullptr, formatter::format("cannot enqueue to workers: {}",
+											error_message.value_or("unknown error")) };
 	}
 
 	return { pool, std::nullopt };
@@ -132,10 +129,14 @@ auto store_job(std::shared_ptr<priority_thread_pool> thread_pool) -> std::option
 {
 	int target = 0;
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<priority_job>> jobs;
+	jobs.reserve(test_line_count_);
+
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		target = index % 3;
-		error_message = thread_pool->enqueue(std::make_unique<callback_priority_job>(
+		jobs.push_back(std::make_unique<callback_priority_job>(
 			[target](void) -> std::optional<std::string>
 			{
 				log_module::write_debug("Hello, World!: {} priority", target);
@@ -143,14 +144,16 @@ auto store_job(std::shared_ptr<priority_thread_pool> thread_pool) -> std::option
 				return std::nullopt;
 			},
 			static_cast<job_priorities>(target)));
-		if (error_message.has_value())
-		{
-			return formatter::format("error enqueuing job: {}",
-									 error_message.value_or("unknown error"));
-		}
-
-		log_module::write_sequence("enqueued job: {}", index);
 	}
+
+	error_message = thread_pool->enqueue_batch(std::move(jobs));
+	if (error_message.has_value())
+	{
+		return formatter::format("error enqueuing jobs: {}",
+								 error_message.value_or("unknown error"));
+	}
+
+	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
 
 	return std::nullopt;
 }

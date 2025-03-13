@@ -96,35 +96,31 @@ auto create_default(const uint16_t& top_priority_workers,
 	}
 
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<priority_thread_worker_t<test_priority>>> workers;
+	workers.reserve(top_priority_workers + middle_priority_workers + bottom_priority_workers);
+
 	for (uint16_t i = 0; i < top_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker_t<test_priority>>(
+		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
 			std::vector<test_priority>{ test_priority::Top }, "top priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to top priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
 	}
 	for (uint16_t i = 0; i < middle_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker_t<test_priority>>(
+		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
 			std::vector<test_priority>{ test_priority::Middle }, "middle priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to middle priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
 	}
 	for (uint16_t i = 0; i < bottom_priority_workers; ++i)
 	{
-		error_message = pool->enqueue(std::make_unique<priority_thread_worker_t<test_priority>>(
+		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
 			std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
-		if (error_message.has_value())
-		{
-			return { nullptr, formatter::format("cannot enqueue to bottom priority worker: {}",
-												error_message.value_or("unknown error")) };
-		}
+	}
+
+	error_message = pool->enqueue_batch(std::move(workers));
+	if (error_message.has_value())
+	{
+		return { nullptr, formatter::format("cannot enqueue to workers: {}",
+											error_message.value_or("unknown error")) };
 	}
 
 	return { pool, std::nullopt };
@@ -135,26 +131,31 @@ auto store_job(std::shared_ptr<priority_thread_pool_t<test_priority>> thread_poo
 {
 	int target = 0;
 	std::optional<std::string> error_message = std::nullopt;
+
+	std::vector<std::unique_ptr<priority_job_t<test_priority>>> jobs;
+	jobs.reserve(test_line_count_);
+
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		target = index % 3;
-		error_message
-			= thread_pool->enqueue(std::make_unique<callback_priority_job_t<test_priority>>(
-				[target](void) -> std::optional<std::string>
-				{
-					log_module::write_debug("Hello, World!: {} priority", target);
+		jobs.push_back(std::make_unique<callback_priority_job_t<test_priority>>(
+			[target](void) -> std::optional<std::string>
+			{
+				log_module::write_debug("Hello, World!: {} priority", target);
 
-					return std::nullopt;
-				},
-				static_cast<test_priority>(target)));
-		if (error_message.has_value())
-		{
-			return formatter::format("error enqueuing job: {}",
-									 error_message.value_or("unknown error"));
-		}
-
-		log_module::write_sequence("enqueued job: {}", index);
+				return std::nullopt;
+			},
+			static_cast<test_priority>(target)));
 	}
+
+	error_message = thread_pool->enqueue_batch(std::move(jobs));
+	if (error_message.has_value())
+	{
+		return formatter::format("error enqueuing jobs: {}",
+								 error_message.value_or("unknown error"));
+	}
+
+	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
 
 	return std::nullopt;
 }
