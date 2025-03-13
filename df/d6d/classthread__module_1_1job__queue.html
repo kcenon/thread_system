@@ -92,7 +92,7 @@ Inheritance diagram for thread_module::job_queue:</div>
 <div class="center"><img src="../../d6/df7/classthread__module_1_1job__queue__inherit__graph.png" border="0" usemap="#athread__module_1_1job__queue_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1job__queue_inherit__map" id="athread__module_1_1job__queue_inherit__map">
 <area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="19,133,204,553"/>
-<area shape="rect" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,217,931"/>
+<area shape="rect" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,217,971"/>
 <area shape="poly" title=" " alt="" coords="114,567,114,601,109,601,109,567"/>
 <area shape="rect" title=" " alt="" coords="21,5,201,85"/>
 <area shape="poly" title=" " alt="" coords="114,99,114,133,109,133,109,99"/>
@@ -146,13 +146,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d7f49e9dd6a01f777f488ca515987b0" id="r_a4d7f49e9dd6a01f777f488ca515987b0"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4d7f49e9dd6a01f777f488ca515987b0">enqueue</a> (std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &amp;&amp;value) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="memdesc:a4d7f49e9dd6a01f777f488ca515987b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a new job into the queue.  <br /></td></tr>
 <tr class="separator:a4d7f49e9dd6a01f777f488ca515987b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a263e825fe4620f41215496c7f12334ba" id="r_a263e825fe4620f41215496c7f12334ba"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a263e825fe4620f41215496c7f12334ba">enqueue_batch</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt; &amp;&amp;jobs) -&gt; std::optional&lt; std::string &gt;</td></tr>
+<tr class="memitem:a263e825fe4620f41215496c7f12334ba" id="r_a263e825fe4620f41215496c7f12334ba"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a263e825fe4620f41215496c7f12334ba">enqueue_batch</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt; &amp;&amp;jobs) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="memdesc:a263e825fe4620f41215496c7f12334ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a batch of jobs into the queue.  <br /></td></tr>
 <tr class="separator:a263e825fe4620f41215496c7f12334ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a549114a51d128240939b0a2773bbd938" id="r_a549114a51d128240939b0a2773bbd938"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a549114a51d128240939b0a2773bbd938">dequeue</a> (void) -&gt; std::tuple&lt; std::optional&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
 <tr class="memdesc:a549114a51d128240939b0a2773bbd938"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues a job from the queue in FIFO order.  <br /></td></tr>
 <tr class="separator:a549114a51d128240939b0a2773bbd938"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21617c4a85349fd768775af77a10df8c" id="r_a21617c4a85349fd768775af77a10df8c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a21617c4a85349fd768775af77a10df8c">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
+<tr class="memitem:a21617c4a85349fd768775af77a10df8c" id="r_a21617c4a85349fd768775af77a10df8c"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a21617c4a85349fd768775af77a10df8c">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
 <tr class="memdesc:a21617c4a85349fd768775af77a10df8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues all remaining jobs from the queue without processing them.  <br /></td></tr>
 <tr class="separator:a21617c4a85349fd768775af77a10df8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af31d9e7f3e21522f4e95ff7d2ed1c73b" id="r_af31d9e7f3e21522f4e95ff7d2ed1c73b"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b">clear</a> (void) -&gt; void</td></tr>
@@ -369,6 +369,9 @@ Typical Usage</h3>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">auto job_queue::dequeue_batch </td>
@@ -378,6 +381,11 @@ Typical Usage</h3>
           <td> -&gt; std::deque&lt;std::unique_ptr&lt;<a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a>&gt;&gt;</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Dequeues all remaining jobs from the queue without processing them. </p>
@@ -507,6 +515,9 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">auto job_queue::enqueue_batch </td>
@@ -516,6 +527,11 @@ Here is the caller graph for this function:</div>
           <td> -&gt; std::optional&lt;std::string&gt;</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Enqueues a batch of jobs into the queue. </p>
@@ -900,7 +916,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 13 2025 14:41:12 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Mar 13 2025 15:18:30 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
