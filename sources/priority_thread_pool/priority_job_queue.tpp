@@ -64,6 +64,33 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::enqueue_batch(std::vector<std::unique_ptr<job>>& jobs)
+		-> std::optional<std::string>
+	{
+		if (stop_.load())
+		{
+			return "Job queue is stopped";
+		}
+
+		std::vector<std::unique_ptr<priority_job_t<priority_type>>> priority_jobs;
+		priority_jobs.reserve(jobs.size());
+
+		for (auto& job : jobs)
+		{
+			auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(job.get());
+			if (!priority_job_ptr)
+			{
+				return "Enqueued job is not a priority_job";
+			}
+
+			priority_jobs.push_back(
+				std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
+		}
+
+		return enqueue_batch(std::move(priority_jobs));
+	}
+
+	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::enqueue(
 		std::unique_ptr<priority_job_t<priority_type>>&& value) -> std::optional<std::string>
 	{
@@ -102,6 +129,51 @@ namespace priority_thread_pool_module
 		queue_sizes_.emplace(job_priority, 1);
 
 		condition_.notify_one();
+
+		return std::nullopt;
+	}
+
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::enqueue_batch(
+		std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+		-> std::optional<std::string>
+	{
+		if (stop_.load())
+		{
+			return "Job queue is stopped";
+		}
+
+		if (jobs.empty())
+		{
+			return "cannot enqueue empty batch";
+		}
+
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		for (auto& job : jobs)
+		{
+			auto job_priority = job->priority();
+
+			auto iter = queues_.find(job_priority);
+			if (iter != queues_.end())
+			{
+				iter->second.push_back(std::move(job));
+
+				queue_sizes_[job_priority].fetch_add(1);
+			}
+			else
+			{
+				iter = queues_
+						   .emplace(job_priority,
+									std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
+						   .first;
+				iter->second.push_back(std::move(job));
+
+				queue_sizes_.emplace(job_priority, 1);
+			}
+		}
+
+		condition_.notify_all();
 
 		return std::nullopt;
 	}
