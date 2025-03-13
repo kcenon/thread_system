@@ -114,6 +114,30 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
+	auto priority_thread_pool_t<priority_type>::enqueue_batch(
+		std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+		-> std::optional<std::string>
+	{
+		if (jobs.empty())
+		{
+			return "cannot enqueue empty batch";
+		}
+
+		if (job_queue_ == nullptr)
+		{
+			return "cannot enqueue batch to null job queue";
+		}
+
+		auto enqueue_error = job_queue_->enqueue_batch(std::move(jobs));
+		if (enqueue_error.has_value())
+		{
+			return enqueue_error;
+		}
+
+		return std::nullopt;
+	}
+
+	template <typename priority_type>
 	auto priority_thread_pool_t<priority_type>::enqueue(
 		std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
 		-> std::optional<std::string>
@@ -141,6 +165,41 @@ namespace priority_thread_pool_module
 		}
 
 		workers_.emplace_back(std::move(worker));
+
+		return std::nullopt;
+	}
+
+	template <typename priority_type>
+	auto priority_thread_pool_t<priority_type>::enqueue_batch(
+		std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>>&& workers)
+		-> std::optional<std::string>
+	{
+		if (workers.empty())
+		{
+			return "cannot enqueue empty batch of workers";
+		}
+
+		if (job_queue_ == nullptr)
+		{
+			return "cannot enqueue batch of workers due to null job queue";
+		}
+
+		for (auto& worker : workers)
+		{
+			worker->set_job_queue(job_queue_);
+
+			if (start_pool_.load())
+			{
+				auto start_error = worker->start();
+				if (start_error.has_value())
+				{
+					stop();
+					return start_error;
+				}
+			}
+
+			workers_.emplace_back(std::move(worker));
+		}
 
 		return std::nullopt;
 	}
