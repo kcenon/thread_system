@@ -96,6 +96,28 @@ namespace thread_pool_module
 		return std::nullopt;
 	}
 
+	auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+		-> std::optional<std::string>
+	{
+		if (jobs.empty())
+		{
+			return "Jobs are empty";
+		}
+
+		if (job_queue_ == nullptr)
+		{
+			return "Job queue is null";
+		}
+
+		auto enqueue_error = job_queue_->enqueue_batch(std::move(jobs));
+		if (enqueue_error.has_value())
+		{
+			return enqueue_error;
+		}
+
+		return std::nullopt;
+	}
+
 	auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>
 	{
 		if (worker == nullptr)
@@ -122,6 +144,40 @@ namespace thread_pool_module
 		}
 
 		workers_.emplace_back(std::move(worker));
+
+		return std::nullopt;
+	}
+
+	auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+		-> std::optional<std::string>
+	{
+		if (workers.empty())
+		{
+			return "Workers are empty";
+		}
+
+		if (job_queue_ == nullptr)
+		{
+			return "Job queue is null";
+		}
+
+		for (auto& worker : workers)
+		{
+			worker->set_job_queue(job_queue_);
+
+			if (start_pool_.load())
+			{
+				auto start_error = worker->start();
+				if (start_error.has_value())
+				{
+					stop();
+
+					return start_error;
+				}
+			}
+
+			workers_.emplace_back(std::move(worker));
+		}
 
 		return std::nullopt;
 	}

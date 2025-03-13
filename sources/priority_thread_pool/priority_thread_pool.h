@@ -163,6 +163,22 @@ namespace priority_thread_pool_module
 			-> std::optional<std::string>;
 
 		/**
+		 * @brief Enqueues a batch of priority jobs into the thread pool's job queue.
+		 *
+		 * @param jobs A vector of unique pointers to priority jobs to be added.
+		 *
+		 * @return std::optional<std::string>
+		 *         - Contains an error message if the enqueue operation fails.
+		 *         - Otherwise, returns std::nullopt on success.
+		 *
+		 * ### Thread Safety
+		 * This method is thread-safe; multiple threads can safely enqueue jobs
+		 * concurrently.
+		 */
+		auto enqueue_batch(std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+			-> std::optional<std::string>;
+
+		/**
 		 * @brief Enqueues a new worker thread for this thread pool.
 		 *
 		 * This allows dynamic addition of worker threads while the pool is running.
@@ -182,6 +198,29 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe.
 		 */
 		auto enqueue(std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
+			-> std::optional<std::string>;
+
+		/**
+		 * @brief Enqueues a batch of new worker threads for this thread pool.
+		 *
+		 * This allows dynamic addition of multiple worker threads while the pool is running.
+		 *
+		 * @param workers A vector of unique pointers to priority thread workers to be added.
+		 *
+		 * @return std::optional<std::string>
+		 *         - Contains an error message if the enqueue operation fails.
+		 *         - Otherwise, returns std::nullopt on success.
+		 *
+		 * ### Note
+		 * Typically, most applications create a fixed number of workers at startup.
+		 * However, if your workload changes significantly, adding more workers at
+		 * runtime can help handle increased job load.
+		 *
+		 * ### Thread Safety
+		 * This method is thread-safe.
+		 */
+		auto enqueue_batch(
+			std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>>&& workers)
 			-> std::optional<std::string>;
 
 		/**

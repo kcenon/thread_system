@@ -142,6 +142,32 @@ namespace thread_pool_module
 		auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
 
 		/**
+		 * @brief Enqueues a batch of jobs into the shared @c job_queue.
+		 * @param jobs A vector of @c std::unique_ptr<job> objects to be added.
+		 * @return @c std::optional<std::string> containing an error message if the enqueue
+		 *         operation fails, or @c std::nullopt on success.
+		 *
+		 * Example:
+		 * @code
+		 * auto pool = std::make_shared<thread_pool_module::thread_pool>();
+		 * pool->start();
+		 *
+		 * std::vector<std::unique_ptr<job>> jobs;
+		 * jobs.push_back(std::make_unique<callback_job>(
+		 *     // some callback...
+		 * ));
+		 * jobs.push_back(std::make_unique<callback_job>(
+		 *     // another callback...
+		 * ));
+		 *
+		 * if (auto err = pool->enqueue_batch(std::move(jobs))) {
+		 *     // handle error
+		 * }
+		 * @endcode
+		 */
+		auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+
+		/**
 		 * @brief Adds a @c thread_worker to the thread pool for specialized or additional
 		 * processing.
 		 * @param worker A @c std::unique_ptr<thread_worker> object.
@@ -152,6 +178,18 @@ namespace thread_pool_module
 		 * begin running and can process jobs from the @c job_queue.
 		 */
 		auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
+
+		/**
+		 * @brief Adds a batch of @c thread_worker objects to the thread pool.
+		 * @param workers A vector of @c std::unique_ptr<thread_worker> objects.
+		 * @return @c std::optional<std::string> containing an error message if the operation
+		 *         fails, or @c std::nullopt on success.
+		 *
+		 * Each worker is stored in @c workers_. When @c start() is called, these workers
+		 * begin running and can process jobs from the @c job_queue.
+		 */
+		auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+			-> std::optional<std::string>;
 
 		/**
 		 * @brief Stops the thread pool and all worker threads.
