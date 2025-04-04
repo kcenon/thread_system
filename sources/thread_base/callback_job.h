@@ -191,13 +191,5 @@ namespace thread_module
 		 * data-based constructor. If this member is used, @c callback_ should be null.
 		 */
 		std::function<std::optional<std::string>(const std::vector<uint8_t>&)> data_callback_;
-
-		/**
-		 * @brief Internal storage for any byte data the job needs to process.
-		 *
-		 * Only relevant if the @c callback_job was constructed with the data-based constructor.
-		 * Used by @c data_callback_ during @c do_work().
-		 */
-		std::vector<uint8_t> data_;
 	};
 } // namespace thread_module
