@@ -120,7 +120,7 @@ Example</h4>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> my_job_ptr = std::make_shared&lt;thread_module::job&gt;(<span class="stringliteral">&quot;example_job&quot;</span>);</div>
 <div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Job info: {}&quot;</span>, *my_job_ptr); <span class="comment">// calls to_string()</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00324">324</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00368">368</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="adf4d0b7cb5296df89cf09b2c971ef5bf" name="adf4d0b7cb5296df89cf09b2c971ef5bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf4d0b7cb5296df89cf09b2c971ef5bf">&#9670;&#160;</a></span>format()</h2>
@@ -174,11 +174,11 @@ template&lt;typename FormatContext &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00335">335</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  336</span>    {</div>
-<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  338</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job_html_a44c5a6eff1846e0a57be106578821ab1"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">thread_module::job::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of the job for logging or debugging.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00060">job.cpp:60</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00379">379</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  380</span>    {</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  382</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1job_html_a44c5a6eff1846e0a57be106578821ab1"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">thread_module::job::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of the job for logging or debugging.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00077">job.cpp:77</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -200,7 +200,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 26 2025 07:35:10 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue May 13 2025 18:15:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['log_5ffile_5f_0',['log_file_',['../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376',1,'log_module::file_writer']]],
-  ['log_5flines_5f_1',['log_lines_',['../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8',1,'log_module::file_writer']]],
-  ['log_5fmessage_5f_2',['log_message_',['../df/df4/classlog__module_1_1log__job.html#a7e330ecf9e2277ead70ed16762f8037f',1,'log_module::log_job']]],
-  ['log_5fqueue_5f_3',['log_queue_',['../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25',1,'log_module::log_collector']]],
-  ['log_5ftype_5f_4',['log_type_',['../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28',1,'log_module::message_job']]],
-  ['log_5ftype_5fcount_5',['log_type_count',['../de/d98/namespacelog__module_1_1log__detail.html#a5fe62eb65ab4da20620746d7cdfb022e',1,'log_module::log_detail']]],
-  ['log_5ftype_5fstrings_6',['log_type_strings',['../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105',1,'log_module::log_detail']]]
+  ['is_5fcancelled_0',['is_cancelled',['../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#acc343236f95dc839b89d9de5b3a15eac',1,'thread_module::cancellation_token::token_state']]],
+  ['is_5fresult_5fv_1',['is_result_v',['../da/d38/namespacethread__pool__module_1_1detail.html#a15e0132a429205b6ff469bf4eeb9d458',1,'thread_pool_module::detail']]]
 ];

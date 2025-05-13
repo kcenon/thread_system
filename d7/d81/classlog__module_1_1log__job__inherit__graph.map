@@ -1,5 +1,5 @@
 <map id="log_module::log_job" name="log_module::log_job">
-<area shape="rect" id="Node000001" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="5,299,159,664"/>
-<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="12,5,152,251"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,265,85,299,79,299,79,265"/>
+<area shape="rect" id="Node000001" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="23,359,177,724"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,195,311"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,324,103,358,97,358,97,324"/>
 </map>

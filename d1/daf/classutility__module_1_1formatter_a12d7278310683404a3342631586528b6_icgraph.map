@@ -1,6 +1,6 @@
 <map id="utility_module::formatter::format_to" name="utility_module::formatter::format_to">
 <area shape="rect" id="Node000001" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="473,69,660,109"/>
-<area shape="rect" id="Node000002" href="$d9/de4/classlog__module_1_1console__writer.html#ad3d89fdba31abf1b929030468324de3d" title="The primary work routine that processes and outputs console log messages." alt="" coords="261,5,417,45"/>
+<area shape="rect" id="Node000002" href="$d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="261,5,417,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="481,68,410,48,411,43,483,63"/>
 <area shape="rect" id="Node000003" href="$d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="252,69,425,109"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="459,92,426,92,426,87,459,87"/>

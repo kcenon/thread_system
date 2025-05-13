@@ -1,0 +1,9 @@
+<map id="thread_module::result&lt; void &gt;" name="thread_module::result&lt; void &gt;">
+<area shape="rect" id="Node000001" title="Specialization of result for void." alt="" coords="8,471,165,751"/>
+<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html" title="Represents an error in the thread system." alt="" coords="5,263,168,408"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,408,89,454,84,454,84,408"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="47,135,126,200"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,200,89,246,84,246,84,200"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="21,5,152,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="89,99,89,134,84,134,84,99"/>
+</map>

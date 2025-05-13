@@ -1,13 +1,13 @@
 <map id="thread_module::job" name="thread_module::job">
-<area shape="rect" id="Node000001" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="301,5,441,251"/>
-<area shape="rect" id="Node000002" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="5,299,159,664"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="292,188,230,239,173,300,161,317,157,314,169,297,227,235,288,184"/>
-<area shape="rect" id="Node000003" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="183,389,367,574"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="337,265,303,389,298,388,332,264"/>
-<area shape="rect" id="Node000004" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="391,384,543,579"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="411,263,444,383,438,385,406,265"/>
-<area shape="rect" id="Node000006" href="$dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="568,409,769,554"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="454,193,507,242,557,297,598,352,632,407,628,410,593,355,553,300,503,246,450,197"/>
-<area shape="rect" id="Node000005" href="$d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="374,712,561,861"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="470,593,470,712,465,712,465,593"/>
+<area shape="rect" id="Node000001" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="277,5,466,311"/>
+<area shape="rect" id="Node000002" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="5,359,159,724"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="269,253,219,304,173,360,161,379,157,376,169,357,215,301,265,249"/>
+<area shape="rect" id="Node000003" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="183,449,367,634"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="332,325,301,449,296,448,327,323"/>
+<area shape="rect" id="Node000004" href="$d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="391,444,543,639"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="415,323,446,443,440,444,410,325"/>
+<area shape="rect" id="Node000006" href="$dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="568,449,769,634"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="478,263,557,357,618,447,614,450,553,360,473,267"/>
+<area shape="rect" id="Node000005" href="$d5/d79/classpriority__thread__pool__module_1_1callback__priority__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="374,772,561,921"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="470,653,470,772,465,772,465,653"/>
 </map>

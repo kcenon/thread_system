@@ -1,0 +1,13 @@
+<map id="sources/thread_base/cancellation_token.h" name="sources/thread_base/cancellation_token.h">
+<area shape="rect" id="Node000001" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="167,5,327,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,48,83,91,81,86,196,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="97,93,183,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,48,169,87,166,83,219,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="208,93,285,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="249,46,249,79,244,79,244,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="309,93,373,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="271,43,318,82,315,86,268,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="398,93,461,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="291,43,391,85,389,90,289,48"/>
+</map>

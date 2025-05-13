@@ -1,6 +1,6 @@
 <map id="thread_module::job_queue" name="thread_module::job_queue">
 <area shape="rect" id="Node000001" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="19,133,204,553"/>
-<area shape="rect" id="Node000003" href="$d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,217,971"/>
+<area shape="rect" id="Node000003" href="$d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,217,1011"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,567,114,601,109,601,109,567"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="21,5,201,85"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,99,114,133,109,133,109,99"/>

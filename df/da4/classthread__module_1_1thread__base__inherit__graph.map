@@ -6,8 +6,8 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="510,386,458,461,412,540,386,593,364,649,330,752,325,750,359,647,381,591,407,537,454,458,505,383"/>
 <area shape="rect" id="Node000004" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="421,539,605,1124"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="574,505,567,539,562,538,568,504"/>
-<area shape="rect" id="Node000005" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="629,619,811,1044"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="664,504,685,618,680,619,659,505"/>
+<area shape="rect" id="Node000005" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="629,609,811,1054"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="664,504,683,608,678,609,659,505"/>
 <area shape="rect" id="Node000006" href="$d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="835,714,1045,949"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="727,385,778,459,825,537,868,625,903,713,898,715,863,628,820,540,773,462,722,388"/>
 <area shape="rect" id="Node000007" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="1069,741,1253,921"/>

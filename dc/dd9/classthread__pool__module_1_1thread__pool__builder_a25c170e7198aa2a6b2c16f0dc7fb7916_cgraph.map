@@ -1,0 +1,9 @@
+<map id="thread_pool_module::thread_pool_builder::build_and_start" name="thread_pool_module::thread_pool_builder::build_and_start">
+<area shape="rect" id="Node000001" title="Builds and starts a thread pool with the configured options." alt="" coords="5,41,164,96"/>
+<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="215,5,374,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,52,201,46,202,51,165,58"/>
+<area shape="rect" id="Node000004" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="212,85,377,125"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,80,199,86,198,91,164,85"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="425,13,591,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="374,30,412,30,412,35,374,35"/>
+</map>

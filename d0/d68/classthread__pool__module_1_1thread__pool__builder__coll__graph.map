@@ -1,0 +1,9 @@
+<map id="thread_pool_module::thread_pool_builder" name="thread_pool_module::thread_pool_builder">
+<area shape="rect" id="Node000001" title="A builder class for creating and configuring thread pools with a fluent interface." alt="" coords="5,525,209,805"/>
+<area shape="rect" id="Node000002" href="$d6/dc0/structthread__pool__module_1_1thread__pool__config.html" title="Configuration options for a thread pool." alt="" coords="24,263,191,463"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,463,110,509,105,509,105,463"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="68,135,147,200"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,200,110,246,105,246,105,200"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="42,5,173,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="110,99,110,134,105,134,105,99"/>
+</map>

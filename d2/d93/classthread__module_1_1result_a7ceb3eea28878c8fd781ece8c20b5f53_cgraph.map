@@ -1,0 +1,7 @@
+<map id="thread_module::result::value_or_throw" name="thread_module::result::value_or_throw">
+<area shape="rect" id="Node000001" title="Gets the value or throws an exception." alt="" coords="5,5,171,45"/>
+<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="219,5,377,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
+<area shape="rect" id="Node000003" href="$de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="425,5,584,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="378,23,412,23,412,28,378,28"/>
+</map>

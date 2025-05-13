@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['queue_5f_0',['queue_',['../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310',1,'thread_module::job_queue']]],
-  ['queue_5fsize_5f_1',['queue_size_',['../df/d6d/classthread__module_1_1job__queue.html#a3c06806fbe961aa879320e021979ebfe',1,'thread_module::job_queue']]],
-  ['queue_5fsizes_5f_2',['queue_sizes_',['../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#aeca119e3890e295f255a0f8480fe5107',1,'priority_thread_pool_module::priority_job_queue_t']]],
-  ['queues_5f_3',['queues_',['../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#aa08ec62af00bc8b84aadd02403d37a23',1,'priority_thread_pool_module::priority_job_queue_t']]]
+  ['old_5fcallback_5f_0',['old_callback_',['../dc/d7f/classthread__module_1_1callback__job.html#a93bf1b70c2bbb6c611be72e8428dbac5',1,'thread_module::callback_job']]],
+  ['old_5fdata_5fcallback_5f_1',['old_data_callback_',['../dc/d7f/classthread__module_1_1callback__job.html#a40f3ba1d4239542f811575423f8599bb',1,'thread_module::callback_job']]],
+  ['once_5f_2',['once_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0366c6e4af0f32db26588b7067c2ef66',1,'log_module::implementation::logger']]]
 ];

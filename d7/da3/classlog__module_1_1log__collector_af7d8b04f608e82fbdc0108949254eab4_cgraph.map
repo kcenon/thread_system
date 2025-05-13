@@ -1,0 +1,5 @@
+<map id="log_module::log_collector::after_stop" name="log_module::log_collector::after_stop">
+<area shape="rect" id="Node000001" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html#a527e750dfccdfaf5070e0df38355c4ce" title="The core task execution method to be overridden by derived classes." alt="" coords="243,5,391,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,23,228,23,228,28,195,28"/>
+</map>

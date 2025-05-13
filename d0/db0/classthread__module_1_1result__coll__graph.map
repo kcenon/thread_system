@@ -1,0 +1,11 @@
+<map id="thread_module::result&lt; T &gt;" name="thread_module::result&lt; T &gt;">
+<area shape="rect" id="Node000001" title="A template class representing either a value or an error." alt="" coords="5,471,200,736"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="50,303,73,368"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,368,82,454,77,455,64,369"/>
+<area shape="rect" id="Node000003" href="$dc/d6c/classthread__module_1_1error.html" title="Represents an error in the thread system." alt="" coords="97,263,260,408"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,409,147,456,142,454,156,407"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="139,135,218,200"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="181,200,181,246,176,246,176,200"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="113,5,244,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="181,99,181,134,176,134,176,99"/>
+</map>

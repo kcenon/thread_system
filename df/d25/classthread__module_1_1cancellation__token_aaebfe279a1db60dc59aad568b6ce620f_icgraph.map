@@ -1,0 +1,7 @@
+<map id="thread_module::cancellation_token::cancellation_token" name="thread_module::cancellation_token::cancellation_token">
+<area shape="rect" id="Node000001" title=" " alt="" coords="515,5,721,45"/>
+<area shape="rect" id="Node000002" href="$df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda" title="Creates a new cancellation token." alt="" coords="260,5,467,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="501,28,467,28,467,23,501,23"/>
+<area shape="rect" id="Node000003" href="$df/d25/classthread__module_1_1cancellation__token.html#a14e368cc4084ccbcaf6ebe049b1b51e9" title="Creates a linked token that is canceled when any of the parent tokens are canceled." alt="" coords="5,5,212,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="247,28,212,28,212,23,247,23"/>
+</map>

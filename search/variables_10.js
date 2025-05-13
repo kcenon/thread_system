@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['wake_5finterval_5f_0',['wake_interval_',['../da/d94/classthread__module_1_1thread__base.html#a47dad4325d074bf852e643aaf2e8fe95',1,'thread_module::thread_base']]],
-  ['wmessage_5f_1',['wmessage_',['../df/df4/classlog__module_1_1log__job.html#adb3dcb395c1dd87ddf0be70e3d214a81',1,'log_module::log_job']]],
-  ['worker_5fcondition_5f_2',['worker_condition_',['../da/d94/classthread__module_1_1thread__base.html#adc1b2dce42e59a25d78761baf4dcf230',1,'thread_module::thread_base']]],
-  ['worker_5fthread_5f_3',['worker_thread_',['../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45',1,'thread_module::thread_base']]],
-  ['workers_5f_4',['workers_',['../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html#a7276eb98228d6098a89acab1130c7659',1,'priority_thread_pool_module::priority_thread_pool_t::workers_'],['../d9/da1/classthread__pool__module_1_1thread__pool.html#a492d443faffcd01b64ab689f08308aec',1,'thread_pool_module::thread_pool::workers_']]]
+  ['start_5fpool_5f_0',['start_pool_',['../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html#a58a3cd44776ad186d87a578256980d0e',1,'priority_thread_pool_module::priority_thread_pool_t::start_pool_'],['../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566',1,'thread_pool_module::thread_pool::start_pool_']]],
+  ['start_5ftime_5f_1',['start_time_',['../df/df4/classlog__module_1_1log__job.html#ade6db1a8efa941e3aa7f035e2426c2a5',1,'log_module::log_job']]],
+  ['state_5f_2',['state_',['../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd',1,'thread_module::cancellation_token']]],
+  ['stop_5f_3',['stop_',['../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b',1,'thread_module::job_queue']]],
+  ['stop_5frequested_5f_4',['stop_requested_',['../da/d94/classthread__module_1_1thread__base.html#a2010dcfce6de6920651eccffebdfde21',1,'thread_module::thread_base']]],
+  ['success_5f_5',['success_',['../de/d5e/classthread__module_1_1result_3_01void_01_4.html#aec1c6186f16150aca1346a8709feced5',1,'thread_module::result&lt; void &gt;']]]
 ];

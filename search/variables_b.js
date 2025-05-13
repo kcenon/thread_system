@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['priorities_5f_0',['priorities_',['../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html#a77ab8ff57249aaed604fbff88040c227',1,'priority_thread_pool_module::priority_thread_worker_t']]],
-  ['priority_5f_1',['priority_',['../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#a4523ca3b0d1215f4a6da7e9cdb20a4f7',1,'priority_thread_pool_module::priority_job_t']]]
+  ['name_5f_0',['name_',['../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f',1,'thread_module::job']]],
+  ['notify_5f_1',['notify_',['../df/d6d/classthread__module_1_1job__queue.html#a3d291457b201a92d3ed9b0761b00c133',1,'thread_module::job_queue']]]
 ];

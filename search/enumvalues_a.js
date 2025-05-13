@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['u16string_0',['U16String',['../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecba6b352ec039f3c13da567703866271fb6',1,'log_module::log_job']]],
-  ['u32string_1',['U32String',['../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecba6260469c9293bbfde2398c6971915ce8',1,'log_module::log_job']]],
-  ['unknown_2',['unknown',['../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cfaad921d60486366258809553a3db49a4a',1,'utility_module::convert_string']]],
-  ['utf16_3',['utf16',['../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a5ab39c2bd546655547f6101ed91e395e',1,'utility_module::convert_string']]],
-  ['utf32_4',['utf32',['../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a1c067a9fa89e2bf1d6dd55a6ca6204ce',1,'utility_module::convert_string']]],
-  ['utf8_5',['utf8',['../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb',1,'utility_module::convert_string']]]
+  ['none_0',['None',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754',1,'log_module']]],
+  ['normal_1',['Normal',['../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090a960b44c579bc2f6818d2daaf9e4c16f0',1,'priority_thread_pool_module']]],
+  ['not_5fimplemented_2',['not_implemented',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae',1,'thread_module']]]
 ];

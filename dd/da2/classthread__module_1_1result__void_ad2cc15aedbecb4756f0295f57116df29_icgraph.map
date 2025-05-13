@@ -1,0 +1,5 @@
+<map id="thread_module::result_void::get_error" name="thread_module::result_void::get_error">
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="243,5,408,45"/>
+<area shape="rect" id="Node000002" href="$d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="5,5,195,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,28,195,28,195,23,229,23"/>
+</map>
