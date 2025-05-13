@@ -111,7 +111,7 @@ Public Member Functions</h2></td></tr>
 struct thread_pool_module::task_promise&lt; T &gt;::final_awaiter</div><p>Awaiter object that is used when the coroutine reaches its end. </p>
 <p>This struct is used to notify any waiters when the coroutine completes execution. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00129">129</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00178">178</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a99ee94d5a811cc07af1463eef38b9f8e" name="a99ee94d5a811cc07af1463eef38b9f8e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99ee94d5a811cc07af1463eef38b9f8e">&#9670;&#160;</a></span>await_ready()</h2>
@@ -141,8 +141,8 @@ template&lt;typename T &gt; </div>
 <p>Determines if the awaiter is ready. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool Always returns false to ensure the coroutine is suspended </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00135">135</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  135</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00184">184</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  184</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -174,8 +174,8 @@ template&lt;typename T &gt; </div>
 <p>Called when the awaiter is resumed. </p>
 <p>This is a no-op since the coroutine is never resumed after final suspension. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00157">157</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  157</span>{}</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00206">206</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  206</span>{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -222,12 +222,12 @@ template&lt;typename Promise &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00146">146</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  146</span>                                                                                  {</div>
-<div class="line"><span class="lineno">  147</span>            <span class="comment">// Notify any waiters when the coroutine completes</span></div>
-<div class="line"><span class="lineno">  148</span>            <span class="keyword">auto</span>&amp; promise = coroutine.promise();</div>
-<div class="line"><span class="lineno">  149</span>            promise.notify_waiters();</div>
-<div class="line"><span class="lineno">  150</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00195">195</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  195</span>                                                                                  {</div>
+<div class="line"><span class="lineno">  196</span>            <span class="comment">// Notify any waiters when the coroutine completes</span></div>
+<div class="line"><span class="lineno">  197</span>            <span class="keyword">auto</span>&amp; promise = coroutine.promise();</div>
+<div class="line"><span class="lineno">  198</span>            promise.notify_waiters();</div>
+<div class="line"><span class="lineno">  199</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -237,7 +237,7 @@ template&lt;typename Promise &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 13 2025 18:15:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue May 13 2025 22:52:18 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -141,25 +141,25 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00609">609</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  609</span>                                                        {</div>
-<div class="line"><span class="lineno">  610</span>    <span class="keyword">struct </span>delay_awaiter {</div>
-<div class="line"><span class="lineno">  611</span>        std::chrono::milliseconds duration;</div>
-<div class="line"><span class="lineno">  612</span>        </div>
-<div class="line"><span class="lineno">  613</span>        <span class="keywordtype">bool</span> await_ready() const noexcept { </div>
-<div class="line"><span class="lineno">  614</span>            <span class="keywordflow">return</span> duration.count() &lt;= 0; </div>
-<div class="line"><span class="lineno">  615</span>        }</div>
-<div class="line"><span class="lineno">  616</span>        </div>
-<div class="line"><span class="lineno">  617</span>        <span class="keywordtype">void</span> await_suspend(std::coroutine_handle&lt;&gt; handle) <span class="keyword">noexcept</span> {</div>
-<div class="line"><span class="lineno">  618</span>            <span class="comment">// Use the helper function to sleep and resume</span></div>
-<div class="line"><span class="lineno">  619</span>            sleep_and_resume(duration, handle);</div>
-<div class="line"><span class="lineno">  620</span>        }</div>
-<div class="line"><span class="lineno">  621</span>        </div>
-<div class="line"><span class="lineno">  622</span>        <span class="keywordtype">void</span> await_resume() noexcept {}</div>
-<div class="line"><span class="lineno">  623</span>    };</div>
-<div class="line"><span class="lineno">  624</span>    </div>
-<div class="line"><span class="lineno">  625</span>    <span class="keyword">co_await</span> delay_awaiter{duration};</div>
-<div class="line"><span class="lineno">  626</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00817">817</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  817</span>                                                        {</div>
+<div class="line"><span class="lineno">  818</span>    <span class="keyword">struct </span>delay_awaiter {</div>
+<div class="line"><span class="lineno">  819</span>        std::chrono::milliseconds duration;</div>
+<div class="line"><span class="lineno">  820</span>        </div>
+<div class="line"><span class="lineno">  821</span>        <span class="keywordtype">bool</span> await_ready() const noexcept { </div>
+<div class="line"><span class="lineno">  822</span>            <span class="keywordflow">return</span> duration.count() &lt;= 0; </div>
+<div class="line"><span class="lineno">  823</span>        }</div>
+<div class="line"><span class="lineno">  824</span>        </div>
+<div class="line"><span class="lineno">  825</span>        <span class="keywordtype">void</span> await_suspend(std::coroutine_handle&lt;&gt; handle) <span class="keyword">noexcept</span> {</div>
+<div class="line"><span class="lineno">  826</span>            <span class="comment">// Use the helper function to sleep and resume</span></div>
+<div class="line"><span class="lineno">  827</span>            sleep_and_resume(duration, handle);</div>
+<div class="line"><span class="lineno">  828</span>        }</div>
+<div class="line"><span class="lineno">  829</span>        </div>
+<div class="line"><span class="lineno">  830</span>        <span class="keywordtype">void</span> await_resume() noexcept {}</div>
+<div class="line"><span class="lineno">  831</span>    };</div>
+<div class="line"><span class="lineno">  832</span>    </div>
+<div class="line"><span class="lineno">  833</span>    <span class="keyword">co_await</span> delay_awaiter{duration};</div>
+<div class="line"><span class="lineno">  834</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -191,44 +191,148 @@ template&lt;typename Func &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00560">560</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  560</span>                                                              {</div>
-<div class="line"><span class="lineno">  561</span>    <span class="keyword">using </span>result_type = std::invoke_result_t&lt;Func&gt;;</div>
-<div class="line"><span class="lineno">  562</span>    </div>
-<div class="line"><span class="lineno">  563</span>    <span class="keywordflow">try</span> {</div>
-<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
-<div class="line"><span class="lineno">  565</span>            std::forward&lt;Func&gt;(func)();</div>
-<div class="line"><span class="lineno">  566</span>            <span class="keyword">co_return</span>;</div>
-<div class="line"><span class="lineno">  567</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  568</span>            <span class="keyword">co_return</span> std::forward&lt;Func&gt;(func)();</div>
-<div class="line"><span class="lineno">  569</span>        }</div>
-<div class="line"><span class="lineno">  570</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><span class="lineno">  571</span>        <span class="comment">// Can&#39;t use co_await in catch block, so create error directly</span></div>
-<div class="line"><span class="lineno">  572</span>        <span class="keyword">auto</span> handle = std::coroutine_handle&lt;task_promise&lt;result_type&gt;&gt;::from_promise(</div>
-<div class="line"><span class="lineno">  573</span>            *<span class="keyword">reinterpret_cast&lt;</span>task_promise&lt;result_type&gt;*<span class="keyword">&gt;</span>(</div>
-<div class="line"><span class="lineno">  574</span>                std::coroutine_handle&lt;&gt;::from_address(</div>
-<div class="line"><span class="lineno">  575</span>                    __builtin_coro_frame()</div>
-<div class="line"><span class="lineno">  576</span>                ).address()</div>
-<div class="line"><span class="lineno">  577</span>            )</div>
-<div class="line"><span class="lineno">  578</span>        );</div>
-<div class="line"><span class="lineno">  579</span>        handle.promise().set_error(error{error_code::job_execution_failed, e.what()});</div>
-<div class="line"><span class="lineno">  580</span>        </div>
-<div class="line"><span class="lineno">  581</span>        <span class="comment">// We need to provide a return value for non-void tasks</span></div>
-<div class="line"><span class="lineno">  582</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
-<div class="line"><span class="lineno">  583</span>            <span class="keyword">co_return</span>;</div>
-<div class="line"><span class="lineno">  584</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;result_type, result_t&lt;void&gt;&gt; ||</div>
-<div class="line"><span class="lineno">  585</span>                            std::is_same_v&lt;result_type, result_void&gt;) {</div>
-<div class="line"><span class="lineno">  586</span>            <span class="comment">// For result-based return types</span></div>
-<div class="line"><span class="lineno">  587</span>            <span class="keyword">co_return</span> result_type(error{error_code::operation_canceled, <span class="stringliteral">&quot;Task was cancelled&quot;</span>});</div>
-<div class="line"><span class="lineno">  588</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
-<div class="line"><span class="lineno">  589</span>            <span class="comment">// For any other result&lt;T&gt; types</span></div>
-<div class="line"><span class="lineno">  590</span>            <span class="keyword">co_return</span> result_type(error{error_code::operation_canceled, <span class="stringliteral">&quot;Task was cancelled&quot;</span>});</div>
-<div class="line"><span class="lineno">  591</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  592</span>            <span class="comment">// For regular return types - return default value of T</span></div>
-<div class="line"><span class="lineno">  593</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
-<div class="line"><span class="lineno">  594</span>        }</div>
-<div class="line"><span class="lineno">  595</span>    }</div>
-<div class="line"><span class="lineno">  596</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00618">618</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  618</span>                                                              {</div>
+<div class="line"><span class="lineno">  619</span>    <span class="keyword">using </span>result_type = std::invoke_result_t&lt;Func&gt;;</div>
+<div class="line"><span class="lineno">  620</span>    </div>
+<div class="line"><span class="lineno">  621</span><span class="preprocessor">#if defined(_MSC_VER)</span></div>
+<div class="line"><span class="lineno">  622</span>    <span class="comment">// MSVC-specific implementation</span></div>
+<div class="line"><span class="lineno">  623</span>    <span class="comment">// MSVC requires different approach for handling errors from coroutines</span></div>
+<div class="line"><span class="lineno">  624</span>    <span class="comment">// We need to handle error conditions by wrapping the entire function</span></div>
+<div class="line"><span class="lineno">  625</span>    <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  626</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  627</span>            std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  628</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  629</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  630</span>            <span class="keyword">co_return</span> std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  631</span>        }</div>
+<div class="line"><span class="lineno">  632</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> error&amp; e) {</div>
+<div class="line"><span class="lineno">  633</span>        <span class="comment">// Special case for our error type - we already have the error information</span></div>
+<div class="line"><span class="lineno">  634</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  635</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  636</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  637</span>            <span class="keyword">co_return</span> result_type(e);</div>
+<div class="line"><span class="lineno">  638</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  639</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  640</span>        }</div>
+<div class="line"><span class="lineno">  641</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><span class="lineno">  642</span>        <span class="comment">// For standard exceptions, convert to our error type</span></div>
+<div class="line"><span class="lineno">  643</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  644</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  645</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;result_type, result_t&lt;void&gt;&gt; ||</div>
+<div class="line"><span class="lineno">  646</span>                           std::is_same_v&lt;result_type, result_void&gt;) {</div>
+<div class="line"><span class="lineno">  647</span>            <span class="keyword">co_return</span> result_type(error{error_code::job_execution_failed, e.what()});</div>
+<div class="line"><span class="lineno">  648</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  649</span>            <span class="keyword">co_return</span> result_type(error{error_code::job_execution_failed, e.what()});</div>
+<div class="line"><span class="lineno">  650</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  651</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  652</span>        }</div>
+<div class="line"><span class="lineno">  653</span>    }</div>
+<div class="line"><span class="lineno">  654</span><span class="preprocessor">#elif defined(THREAD_SYSTEM_MINGW) || defined(THREAD_SYSTEM_MSYS)</span></div>
+<div class="line"><span class="lineno">  655</span>    <span class="comment">// MinGW/MSYS-specific implementation</span></div>
+<div class="line"><span class="lineno">  656</span>    <span class="comment">// These environments need special handling similar to MSVC</span></div>
+<div class="line"><span class="lineno">  657</span>    <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  658</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  659</span>            std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  660</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  661</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  662</span>            <span class="keyword">co_return</span> std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  663</span>        }</div>
+<div class="line"><span class="lineno">  664</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> error&amp; e) {</div>
+<div class="line"><span class="lineno">  665</span>        <span class="comment">// Special case for our error type</span></div>
+<div class="line"><span class="lineno">  666</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  667</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  668</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  669</span>            <span class="keyword">co_return</span> result_type(e);</div>
+<div class="line"><span class="lineno">  670</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  671</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  672</span>        }</div>
+<div class="line"><span class="lineno">  673</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><span class="lineno">  674</span>        <span class="comment">// For standard exceptions</span></div>
+<div class="line"><span class="lineno">  675</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  676</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  677</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;result_type, result_t&lt;void&gt;&gt; ||</div>
+<div class="line"><span class="lineno">  678</span>                           std::is_same_v&lt;result_type, result_void&gt;) {</div>
+<div class="line"><span class="lineno">  679</span>            <span class="keyword">co_return</span> result_type(error{error_code::job_execution_failed, e.what()});</div>
+<div class="line"><span class="lineno">  680</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  681</span>            <span class="keyword">co_return</span> result_type(error{error_code::job_execution_failed, e.what()});</div>
+<div class="line"><span class="lineno">  682</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  683</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  684</span>        }</div>
+<div class="line"><span class="lineno">  685</span>    }</div>
+<div class="line"><span class="lineno">  686</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  687</span>    <span class="comment">// Implementation for Clang, GCC, etc.</span></div>
+<div class="line"><span class="lineno">  688</span>    <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  689</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  690</span>            std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  691</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  692</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  693</span>            <span class="keyword">co_return</span> std::forward&lt;Func&gt;(func)();</div>
+<div class="line"><span class="lineno">  694</span>        }</div>
+<div class="line"><span class="lineno">  695</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> error&amp; e) {</div>
+<div class="line"><span class="lineno">  696</span>        <span class="comment">// Direct handling of our error type</span></div>
+<div class="line"><span class="lineno">  697</span><span class="preprocessor">        #if defined(__clang__) &amp;&amp; defined(__has_builtin) &amp;&amp; __has_builtin(__builtin_coro_frame)</span></div>
+<div class="line"><span class="lineno">  698</span>            <span class="comment">// Clang-specific implementation using __builtin_coro_frame if available</span></div>
+<div class="line"><span class="lineno">  699</span>            <span class="keyword">auto</span> handle = std::coroutine_handle&lt;task_promise&lt;result_type&gt;&gt;::from_promise(</div>
+<div class="line"><span class="lineno">  700</span>                *<span class="keyword">reinterpret_cast&lt;</span>task_promise&lt;result_type&gt;*<span class="keyword">&gt;</span>(</div>
+<div class="line"><span class="lineno">  701</span>                    std::coroutine_handle&lt;&gt;::from_address(</div>
+<div class="line"><span class="lineno">  702</span>                        __builtin_coro_frame()</div>
+<div class="line"><span class="lineno">  703</span>                    ).address()</div>
+<div class="line"><span class="lineno">  704</span>                )</div>
+<div class="line"><span class="lineno">  705</span>            );</div>
+<div class="line"><span class="lineno">  706</span>            handle.promise().set_error(e);</div>
+<div class="line"><span class="lineno">  707</span><span class="preprocessor">        #else</span></div>
+<div class="line"><span class="lineno">  708</span>            <span class="comment">// For other compilers, rethrow and handle in the catch block below</span></div>
+<div class="line"><span class="lineno">  709</span>            <span class="keywordflow">throw</span> e;</div>
+<div class="line"><span class="lineno">  710</span><span class="preprocessor">        #endif</span></div>
+<div class="line"><span class="lineno">  711</span>        </div>
+<div class="line"><span class="lineno">  712</span>        <span class="comment">// Fallback return values</span></div>
+<div class="line"><span class="lineno">  713</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  714</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  715</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  716</span>            <span class="keyword">co_return</span> result_type(e);</div>
+<div class="line"><span class="lineno">  717</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  718</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  719</span>        }</div>
+<div class="line"><span class="lineno">  720</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><span class="lineno">  721</span>        <span class="comment">// Can&#39;t use co_await in catch block, so manually handle the error</span></div>
+<div class="line"><span class="lineno">  722</span>        <span class="comment">// We need a safe, cross-compiler way to access the promise</span></div>
+<div class="line"><span class="lineno">  723</span><span class="preprocessor">        #if defined(__clang__) &amp;&amp; defined(__has_builtin) &amp;&amp; __has_builtin(__builtin_coro_frame)</span></div>
+<div class="line"><span class="lineno">  724</span>            <span class="comment">// Clang-specific implementation using __builtin_coro_frame</span></div>
+<div class="line"><span class="lineno">  725</span>            <span class="keyword">auto</span> handle = std::coroutine_handle&lt;task_promise&lt;result_type&gt;&gt;::from_promise(</div>
+<div class="line"><span class="lineno">  726</span>                *<span class="keyword">reinterpret_cast&lt;</span>task_promise&lt;result_type&gt;*<span class="keyword">&gt;</span>(</div>
+<div class="line"><span class="lineno">  727</span>                    std::coroutine_handle&lt;&gt;::from_address(</div>
+<div class="line"><span class="lineno">  728</span>                        __builtin_coro_frame()</div>
+<div class="line"><span class="lineno">  729</span>                    ).address()</div>
+<div class="line"><span class="lineno">  730</span>                )</div>
+<div class="line"><span class="lineno">  731</span>            );</div>
+<div class="line"><span class="lineno">  732</span>            handle.promise().set_error(error{error_code::job_execution_failed, e.what()});</div>
+<div class="line"><span class="lineno">  733</span><span class="preprocessor">        #elif defined(__GNUC__) || defined(__GNUG__)</span></div>
+<div class="line"><span class="lineno">  734</span>            <span class="comment">// GCC implementation</span></div>
+<div class="line"><span class="lineno">  735</span>            <span class="comment">// Convert to our error type then throw - the promise will catch it</span></div>
+<div class="line"><span class="lineno">  736</span>            <span class="keywordflow">throw</span> error{error_code::job_execution_failed, e.what()};</div>
+<div class="line"><span class="lineno">  737</span><span class="preprocessor">        #else</span></div>
+<div class="line"><span class="lineno">  738</span>            <span class="comment">// Generic fallback for other compilers</span></div>
+<div class="line"><span class="lineno">  739</span>            <span class="keywordflow">throw</span> error{error_code::job_execution_failed, e.what()};</div>
+<div class="line"><span class="lineno">  740</span><span class="preprocessor">        #endif</span></div>
+<div class="line"><span class="lineno">  741</span>        </div>
+<div class="line"><span class="lineno">  742</span>        <span class="comment">// We need to provide a return value for non-void tasks</span></div>
+<div class="line"><span class="lineno">  743</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  744</span>            <span class="keyword">co_return</span>;</div>
+<div class="line"><span class="lineno">  745</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;result_type, result_t&lt;void&gt;&gt; ||</div>
+<div class="line"><span class="lineno">  746</span>                           std::is_same_v&lt;result_type, result_void&gt;) {</div>
+<div class="line"><span class="lineno">  747</span>            <span class="comment">// For result-based return types</span></div>
+<div class="line"><span class="lineno">  748</span>            <span class="keyword">co_return</span> result_type(error{error_code::operation_canceled, <span class="stringliteral">&quot;Task was cancelled&quot;</span>});</div>
+<div class="line"><span class="lineno">  749</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (detail::is_result_v&lt;result_type&gt;) {</div>
+<div class="line"><span class="lineno">  750</span>            <span class="comment">// For any other result&lt;T&gt; types</span></div>
+<div class="line"><span class="lineno">  751</span>            <span class="keyword">co_return</span> result_type(error{error_code::operation_canceled, <span class="stringliteral">&quot;Task was cancelled&quot;</span>});</div>
+<div class="line"><span class="lineno">  752</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  753</span>            <span class="comment">// For regular return types - return default value of T</span></div>
+<div class="line"><span class="lineno">  754</span>            <span class="keyword">co_return</span> <span class="keyword">static_cast&lt;</span>result_type<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><span class="lineno">  755</span>        }</div>
+<div class="line"><span class="lineno">  756</span>    }</div>
+<div class="line"><span class="lineno">  757</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  758</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -266,15 +370,61 @@ template&lt;typename Func &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00599">599</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  599</span>                                                                                           {</div>
-<div class="line"><span class="lineno">  600</span>    <span class="comment">// Create a detached thread to sleep and resume the coroutine</span></div>
-<div class="line"><span class="lineno">  601</span>    std::thread t([duration, handle]() {</div>
-<div class="line"><span class="lineno">  602</span>        std::this_thread::sleep_for(duration);</div>
-<div class="line"><span class="lineno">  603</span>        handle.resume();</div>
-<div class="line"><span class="lineno">  604</span>    });</div>
-<div class="line"><span class="lineno">  605</span>    t.detach();</div>
-<div class="line"><span class="lineno">  606</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00761">761</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  761</span>                                                                                           {</div>
+<div class="line"><span class="lineno">  762</span>    <span class="comment">// Create a shared state to ensure we properly manage thread lifetime</span></div>
+<div class="line"><span class="lineno">  763</span>    <span class="keyword">struct </span>shared_state {</div>
+<div class="line"><span class="lineno">  764</span>        std::thread timer_thread;</div>
+<div class="line"><span class="lineno">  765</span>        std::atomic&lt;bool&gt; completed{<span class="keyword">false</span>};</div>
+<div class="line"><span class="lineno">  766</span>        std::atomic&lt;bool&gt; destroyed{<span class="keyword">false</span>};</div>
+<div class="line"><span class="lineno">  767</span>        </div>
+<div class="line"><span class="lineno">  768</span>        ~shared_state() {</div>
+<div class="line"><span class="lineno">  769</span>            destroyed.store(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  770</span>            <span class="keywordflow">if</span> (timer_thread.joinable()) {</div>
+<div class="line"><span class="lineno">  771</span>                timer_thread.join();</div>
+<div class="line"><span class="lineno">  772</span>            }</div>
+<div class="line"><span class="lineno">  773</span>        }</div>
+<div class="line"><span class="lineno">  774</span>    };</div>
+<div class="line"><span class="lineno">  775</span>    </div>
+<div class="line"><span class="lineno">  776</span>    <span class="comment">// Using shared_ptr for automatic cleanup when all references are gone</span></div>
+<div class="line"><span class="lineno">  777</span>    <span class="keyword">auto</span> state = std::make_shared&lt;shared_state&gt;();</div>
+<div class="line"><span class="lineno">  778</span>    </div>
+<div class="line"><span class="lineno">  779</span>    <span class="comment">// Create the timer thread that will sleep and then resume the coroutine</span></div>
+<div class="line"><span class="lineno">  780</span>    state-&gt;timer_thread = std::thread([state, duration, handle]() {</div>
+<div class="line"><span class="lineno">  781</span>        std::this_thread::sleep_for(duration);</div>
+<div class="line"><span class="lineno">  782</span>        </div>
+<div class="line"><span class="lineno">  783</span>        <span class="comment">// Only resume if we haven&#39;t been destroyed yet</span></div>
+<div class="line"><span class="lineno">  784</span>        <span class="keywordflow">if</span> (!state-&gt;destroyed.load()) {</div>
+<div class="line"><span class="lineno">  785</span>            handle.resume();</div>
+<div class="line"><span class="lineno">  786</span>        }</div>
+<div class="line"><span class="lineno">  787</span>        </div>
+<div class="line"><span class="lineno">  788</span>        state-&gt;completed.store(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  789</span>    });</div>
+<div class="line"><span class="lineno">  790</span>    </div>
+<div class="line"><span class="lineno">  791</span><span class="preprocessor">#if defined(THREAD_SYSTEM_WINDOWS)</span></div>
+<div class="line"><span class="lineno">  792</span>    <span class="comment">// On Windows (including MSVC, MinGW, MSYS), we use a dedicated cleanup approach</span></div>
+<div class="line"><span class="lineno">  793</span>    std::thread cleanup_thread([state]() {</div>
+<div class="line"><span class="lineno">  794</span>        <span class="comment">// This thread&#39;s only job is to hold a reference to the state </span></div>
+<div class="line"><span class="lineno">  795</span>        <span class="comment">// until the timer thread completes to ensure proper cleanup</span></div>
+<div class="line"><span class="lineno">  796</span>        <span class="keywordflow">while</span> (!state-&gt;completed.load()) {</div>
+<div class="line"><span class="lineno">  797</span>            std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
+<div class="line"><span class="lineno">  798</span>        }</div>
+<div class="line"><span class="lineno">  799</span>    });</div>
+<div class="line"><span class="lineno">  800</span>    cleanup_thread.detach();</div>
+<div class="line"><span class="lineno">  801</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  802</span>    <span class="comment">// On non-Windows platforms, we can safely detach the thread</span></div>
+<div class="line"><span class="lineno">  803</span>    <span class="comment">// The shared_ptr will keep the state alive until all references are gone</span></div>
+<div class="line"><span class="lineno">  804</span>    state-&gt;timer_thread.detach();</div>
+<div class="line"><span class="lineno">  805</span>    </div>
+<div class="line"><span class="lineno">  806</span>    <span class="comment">// Create a second detached thread as a safety net that will</span></div>
+<div class="line"><span class="lineno">  807</span>    <span class="comment">// ensure the state lives long enough for the timer thread to finish</span></div>
+<div class="line"><span class="lineno">  808</span>    std::thread([state]() {</div>
+<div class="line"><span class="lineno">  809</span>        <span class="keywordflow">while</span> (!state-&gt;completed.load()) {</div>
+<div class="line"><span class="lineno">  810</span>            std::this_thread::sleep_for(std::chrono::milliseconds(50));</div>
+<div class="line"><span class="lineno">  811</span>        }</div>
+<div class="line"><span class="lineno">  812</span>    }).detach();</div>
+<div class="line"><span class="lineno">  813</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  814</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -291,7 +441,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 13 2025 18:15:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue May 13 2025 22:52:18 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
