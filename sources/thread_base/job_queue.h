@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "callback_job.h"
 #include "convert_string.h"
+#include "error_handling.h"
 
 #include <mutex>
 #include <deque>
@@ -117,39 +118,30 @@ namespace thread_module
 		/**
 		 * @brief Enqueues a new job into the queue.
 		 * @param value A unique pointer to the job being added.
-		 * @return @c std::optional<std::string> containing an error message if the
-		 *         enqueue operation failed; otherwise, @c std::nullopt.
+		 * @return A result_void indicating success or an error message.
 		 *
 		 * This method is thread-safe. If @c notify_ is set to @c true, a waiting
 		 * thread (if any) will be notified upon successful enqueue.
 		 */
-		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value)
-			-> std::optional<std::string>;
+		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value) -> result_void;
 
 		/**
 		 * @brief Enqueues a batch of jobs into the queue.
 		 * @param jobs A vector of unique pointers to the jobs being added.
-		 * @return @c std::optional<std::string> containing an error message if the
-		 *         enqueue operation failed; otherwise, @c std::nullopt.
+		 * @return A result_void indicating success or an error message.
 		 */
-		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
-			-> std::optional<std::string>;
+		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
 
 		/**
 		 * @brief Dequeues a job from the queue in FIFO order.
-		 * @return A tuple where:
-		 *         - The first element (@c std::optional<std::unique_ptr<job>>) holds
-		 *           a valid job if one is available, or @c std::nullopt if the queue
-		 *           is empty.
-		 *         - The second element (@c std::optional<std::string>) may contain
-		 *           an error message or be @c nullopt if no error occurred.
+		 * @return A result<std::unique_ptr<job>> containing either a valid job
+		 *         or an error object.
 		 *
 		 * If the queue is empty, the caller may block depending on the internal
 		 * concurrency model (unless @c stop_ is set, in which case it may return
 		 * immediately).
 		 */
-		[[nodiscard]] virtual auto dequeue(void)
-			-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>;
+		[[nodiscard]] virtual auto dequeue(void) -> result<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Dequeues all remaining jobs from the queue without processing them.

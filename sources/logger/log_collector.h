@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "job_queue.h"
 #include "thread_base.h"
+#include "message_job.h"
 
 using namespace thread_module;
 using namespace utility_module;
@@ -150,31 +151,21 @@ namespace log_module
 
 		/**
 		 * @brief Performs initialization before starting the log collector thread.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the initialization was successful (true) or not
-		 * (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @return A result_void indicating success or an error.
 		 */
-		auto before_start() -> std::optional<std::string> override;
+		auto before_start() -> result_void override;
 
 		/**
 		 * @brief Processes log messages and distributes them to console, file, and callback queues.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the processing was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @return A result_void indicating success or an error.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 		/**
 		 * @brief Performs cleanup after stopping the log collector thread.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the cleanup was successful (true) or not (false).
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @return A result_void indicating success or an error.
 		 */
-		auto after_stop() -> std::optional<std::string> override;
+		auto after_stop() -> result_void override;
 
 	protected:
 		/**
@@ -184,16 +175,13 @@ namespace log_module
 		 * @param weak_queue A weak pointer to the job queue.
 		 * @param datetime The timestamp of the log message.
 		 * @param message The content of the log message.
-		 * @return A tuple containing:
-		 *         - bool: Indicates whether the log was successfully enqueued.
-		 *         - std::optional<std::string>: An optional string message, typically used for
-		 * error descriptions.
+		 * @return A result_void indicating success or an error.
 		 */
 		auto enqueue_log(const log_types& current_log_type,
 						 const log_types& target_log_type,
 						 std::weak_ptr<job_queue> weak_queue,
 						 const std::string& datetime,
-						 const std::string& message) -> std::optional<std::string>;
+						 const std::string& message) -> result_void;
 
 		/**
 		 * @brief Template method for writing log messages of various string types.
@@ -225,11 +213,19 @@ namespace log_module
 				return;
 			}
 
-			auto enqueue_error = log_queue_->enqueue(std::move(new_log_job));
-			if (enqueue_error.has_value())
+			// Add thread safety - lock before accessing shared resource
+			std::lock_guard<std::mutex> lock(queue_mutex_);
+			if (log_queue_ == nullptr)
+			{
+				std::cerr << "Cannot enqueue log: queue is null\n";
+				return;
+			}
+
+			auto enqueue_result = log_queue_->enqueue(std::move(new_log_job));
+			if (enqueue_result.has_error())
 			{
 				std::cerr << formatter::format("error enqueuing log job: {}\n",
-											   enqueue_error.value_or("unknown error"));
+											   enqueue_result.get_error().to_string());
 			}
 		}
 
@@ -244,5 +240,8 @@ namespace log_module
 		std::weak_ptr<job_queue> file_queue_; ///< Weak pointer to the queue for file output jobs
 		std::weak_ptr<job_queue>
 			callback_queue_; ///< Weak pointer to the queue for callback output jobs
+		
+		// Mark the mutex as mutable to allow locking in const methods
+		mutable std::mutex queue_mutex_; ///< Mutex to protect access to log_queue_ and writer queues
 	};
 } // namespace log_module

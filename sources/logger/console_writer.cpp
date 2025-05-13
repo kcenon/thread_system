@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 using namespace utility_module;
+using namespace thread_module;
 
 namespace log_module
 {
@@ -52,23 +53,23 @@ namespace log_module
 
 	auto console_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto console_writer::before_start() -> std::optional<std::string>
+	auto console_writer::before_start() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "error creating job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "error creating job_queue"}};
 		}
 
 		job_queue_->set_notify(!wake_interval_.has_value());
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto console_writer::do_work() -> std::optional<std::string>
+	auto console_writer::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "there is no job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "there is no job_queue"}};
 		}
 
 		std::string console_buffer = "";
@@ -81,8 +82,8 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto work_error = current_log->do_work();
-			if (work_error.has_value())
+			auto work_result = current_log->do_work();
+			if (work_result.has_error())
 			{
 				continue;
 			}
@@ -90,14 +91,14 @@ namespace log_module
 			if (current_log->log_type() == log_types::None)
 			{
 				formatter::format_to(std::back_inserter(console_buffer), "[{}]{}",
-									 current_log->datetime(), current_log->message(true));
+										 current_log->datetime(), current_log->message(true));
 
 				continue;
 			}
 
 			formatter::format_to(std::back_inserter(console_buffer), "[{}][{}] {}",
-								 current_log->datetime(), current_log->log_type(),
-								 current_log->message(true));
+									 current_log->datetime(), current_log->log_type(),
+									 current_log->message(true));
 		}
 
 #ifdef USE_STD_FORMAT
@@ -106,6 +107,6 @@ namespace log_module
 		fmt::print("{}", console_buffer);
 #endif
 
-		return std::nullopt;
+		return {};
 	}
 }

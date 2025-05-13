@@ -32,62 +32,53 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "callback_job.h"
 
-#include "job_queue.h"
-
-using namespace utility_module;
-
 namespace thread_module
 {
+	// Constructor with standard callback
 	callback_job::callback_job(const std::function<std::optional<std::string>(void)>& callback,
 							   const std::string& name)
-		: job(name), callback_(callback), data_callback_(nullptr)
+		: job(name), callback_([callback](void) -> result_void {
+			auto result = callback();
+			if (result.has_value()) {
+				return error{error_code::job_execution_failed, result.value()};
+			}
+			return result_void{};
+		}), data_callback_(nullptr)
 	{
 	}
 
+	// Constructor with data callback
 	callback_job::callback_job(
 		const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>& data_callback,
-		const std::vector<uint8_t>& data,
-		const std::string& name)
-		: job(data, name), callback_(nullptr), data_callback_(data_callback)
+		const std::vector<uint8_t>& data, const std::string& name)
+		: job(data, name), data_callback_([data_callback](const std::vector<uint8_t>& data) -> result_void {
+			auto result = data_callback(data);
+			if (result.has_value()) {
+				return error{error_code::job_execution_failed, result.value()};
+			}
+			return result_void{};
+		}), callback_(nullptr)
 	{
 	}
 
 	callback_job::~callback_job(void) {}
 
-	auto callback_job::do_work(void) -> std::optional<std::string>
+	auto callback_job::do_work(void) -> result_void
 	{
-		if (callback_ != nullptr)
+		// If we have a data callback, use it with the stored data
+		if (data_callback_)
 		{
-			try
-			{
-				return callback_();
-			}
-			catch (const std::exception& e)
-			{
-				return std::string(e.what());
-			}
-			catch (...)
-			{
-				return "unknown error";
-			}
+			return data_callback_(data_);
 		}
-
-		if (data_callback_ != nullptr)
+		// Otherwise use the standard callback
+		else if (callback_)
 		{
-			try
-			{
-				return data_callback_(data_);
-			}
-			catch (const std::exception& e)
-			{
-				return std::string(e.what());
-			}
-			catch (...)
-			{
-				return "unknown error";
-			}
+			return callback_();
 		}
-
-		return "cannot execute job without callback";
+		// If no callbacks are set, delegate to the base class
+		else
+		{
+			return job::do_work();
+		}
 	}
 } // namespace thread_module

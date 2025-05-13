@@ -38,7 +38,7 @@ namespace priority_thread_pool_module
 {
 	template <typename priority_type>
 	callback_priority_job_t<priority_type>::callback_priority_job_t(
-		const std::function<std::optional<std::string>(void)>& callback,
+		const std::function<result_void(void)>& callback,
 		priority_type priority,
 		const std::string& name)
 		: priority_job_t<priority_type>(priority, name), callback_(callback)
@@ -51,11 +51,11 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
-	auto callback_priority_job_t<priority_type>::do_work(void) -> std::optional<std::string>
+	auto callback_priority_job_t<priority_type>::do_work(void) -> result_void
 	{
 		if (callback_ == nullptr)
 		{
-			return "cannot execute job without callback";
+			return error{error_code::job_invalid, "cannot execute job without callback"};
 		}
 
 		try
@@ -64,7 +64,7 @@ namespace priority_thread_pool_module
 		}
 		catch (const std::exception& e)
 		{
-			return e.what();
+			return error{error_code::job_execution_failed, e.what()};
 		}
 	}
 } // namespace priority_thread_pool_module

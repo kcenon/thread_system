@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "console_writer.h"
 #include "file_writer.h"
 #include "callback_writer.h"
+#include "error_handling.h"
 
 #include <deque>
 #include <mutex>
@@ -253,6 +254,7 @@ namespace log_module
 			template <typename... Args>
 			auto write(const log_types& type, const char* formats, const Args&... args) -> void
 			{
+				std::lock_guard<std::mutex> lock(collector_mutex_);
 				if (collector_ == nullptr)
 				{
 					return;
@@ -284,6 +286,7 @@ namespace log_module
 			auto write(const log_types& type, const wchar_t* formats, const WideArgs&... args)
 				-> void
 			{
+				std::lock_guard<std::mutex> lock(collector_mutex_);
 				if (collector_ == nullptr)
 				{
 					return;
@@ -320,6 +323,7 @@ namespace log_module
 				const char* formats,
 				const Args&... args) -> void
 			{
+				std::lock_guard<std::mutex> lock(collector_mutex_);
 				if (collector_ == nullptr)
 				{
 					return;
@@ -359,6 +363,7 @@ namespace log_module
 				const wchar_t* formats,
 				const WideArgs&... args) -> void
 			{
+				std::lock_guard<std::mutex> lock(collector_mutex_);
 				if (collector_ == nullptr)
 				{
 					return;
@@ -403,8 +408,11 @@ namespace log_module
 			/** @brief Shared pointer to the callback writer, managing user-defined callback output.
 			 */
 			std::shared_ptr<callback_writer> callback_writer_;
+			
+			/** @brief Mutex to protect access to the collector and other shared resources */
+			mutable std::mutex collector_mutex_;
 
-#pragma region singleton
+	#pragma region singleton
 		public:
 			/**
 			 * @brief Retrieves the singleton instance of the logger.
@@ -430,7 +438,7 @@ namespace log_module
 			/** @brief Flag ensuring the singleton is lazily and atomically initialized only once.
 			 */
 			static std::once_flag once_;
-#pragma endregion
+	#pragma endregion
 		};
 	} // namespace implementation
 } // namespace log_module

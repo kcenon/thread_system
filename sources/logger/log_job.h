@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job.h"
 #include "log_types.h"
+#include "error_handling.h"
 
 #include <chrono>
 #include <string>
@@ -102,24 +103,23 @@ namespace log_module
 		 *
 		 * In this method, the stored message is converted to a standardized format and
 		 * timestamped. This final, formatted output is typically passed to a logging
-		 * backend (e.g., console, file, or network). The method returns an optional string
-		 * containing error information if the operation fails, or no value (i.e., a
-		 * disengaged optional) if everything succeeds.
+		 * backend (e.g., console, file, or network). The method returns a result_void
+		 * indicating success or failure.
 		 *
 		 * @return
-		 *   - @c std::nullopt if the operation completes successfully,
-		 *   - an @c std::string containing the error description if it fails.
+		 *   - A success result if the operation completes successfully,
+		 *   - An error result containing the error description if it fails.
 		 *
 		 * @note
 		 *   This overrides the base class method @c do_work() from @c job.
 		 */
-		[[nodiscard]] auto do_work() -> std::optional<std::string> override;
+		[[nodiscard]] auto do_work() -> result_void override;
 
 		/**
 		 * @brief Retrieves the log type of this entry.
 		 *
 		 * @return
-		 *   The @c log_types enumeration value representing the entry’s severity or
+		 *   The @c log_types enumeration value representing the entry's severity or
 		 *   category (e.g., info, warning, error). If no log type was specified upon
 		 *   construction, this may return a default or generic type.
 		 */

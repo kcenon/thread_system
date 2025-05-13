@@ -60,11 +60,11 @@ namespace thread_pool_module
 
 		for (auto& worker : workers_)
 		{
-			auto start_error = worker->start();
-			if (start_error.has_value())
+			auto start_result = worker->start();
+			if (start_result.has_error())
 			{
 				stop();
-				return start_error;
+				return start_result.get_error().to_string();
 			}
 		}
 
@@ -87,10 +87,10 @@ namespace thread_pool_module
 			return "Job queue is null";
 		}
 
-		auto enqueue_error = job_queue_->enqueue(std::move(job));
-		if (enqueue_error.has_value())
+		auto enqueue_result = job_queue_->enqueue(std::move(job));
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error().to_string();
 		}
 
 		return std::nullopt;
@@ -109,10 +109,10 @@ namespace thread_pool_module
 			return "Job queue is null";
 		}
 
-		auto enqueue_error = job_queue_->enqueue_batch(std::move(jobs));
-		if (enqueue_error.has_value())
+		auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error().to_string();
 		}
 
 		return std::nullopt;
@@ -134,12 +134,11 @@ namespace thread_pool_module
 
 		if (start_pool_.load())
 		{
-			auto start_error = worker->start();
-			if (start_error.has_value())
+			auto start_result = worker->start();
+			if (start_result.has_error())
 			{
 				stop();
-
-				return start_error;
+				return start_result.get_error().to_string();
 			}
 		}
 
@@ -167,12 +166,11 @@ namespace thread_pool_module
 
 			if (start_pool_.load())
 			{
-				auto start_error = worker->start();
-				if (start_error.has_value())
+				auto start_result = worker->start();
+				if (start_result.has_error())
 				{
 					stop();
-
-					return start_error;
+					return start_result.get_error().to_string();
 				}
 			}
 
@@ -201,11 +199,11 @@ namespace thread_pool_module
 
 		for (auto& worker : workers_)
 		{
-			auto stop_error = worker->stop();
-			if (stop_error.has_value())
+			auto stop_result = worker->stop();
+			if (stop_result.has_error())
 			{
 				log_module::write_error("error stopping worker: {}",
-										stop_error.value_or("unknown error"));
+										stop_result.get_error().to_string());
 			}
 		}
 

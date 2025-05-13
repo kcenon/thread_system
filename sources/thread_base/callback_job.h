@@ -173,7 +173,7 @@ namespace thread_module
 		 * - If @c data_callback_ is set, @c do_work() invokes it with the associated data.
 		 * - Otherwise, it invokes the parameterless @c callback_.
 		 */
-		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
+		[[nodiscard]] auto do_work(void) -> result_void override;
 
 	protected:
 		/**
@@ -182,7 +182,7 @@ namespace thread_module
 		 * This callback is only valid if the @c callback_job was constructed via the
 		 * parameterless constructor. If this member is used, @c data_callback_ should be null.
 		 */
-		std::function<std::optional<std::string>(void)> callback_;
+		std::function<result_void(void)> callback_;
 
 		/**
 		 * @brief Stores the user-defined callback that takes a @c std::vector<uint8_t>.
@@ -190,6 +190,12 @@ namespace thread_module
 		 * This callback is only valid if the @c callback_job was constructed via the
 		 * data-based constructor. If this member is used, @c callback_ should be null.
 		 */
-		std::function<std::optional<std::string>(const std::vector<uint8_t>&)> data_callback_;
+		std::function<result_void(const std::vector<uint8_t>&)> data_callback_;
+    
+    /**
+     * @brief Compatibility layer for the old style callbacks.
+     */
+    std::function<std::optional<std::string>(void)> old_callback_;
+    std::function<std::optional<std::string>(const std::vector<uint8_t>&)> old_data_callback_;
 	};
 } // namespace thread_module

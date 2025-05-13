@@ -45,33 +45,57 @@ namespace log_module
 	{
 	}
 
-	auto log_collector::console_target(const log_types& type) -> void { console_log_type_ = type; }
+	auto log_collector::console_target(const log_types& type) -> void 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		console_log_type_ = type; 
+	}
 
-	auto log_collector::console_target() const -> log_types { return console_log_type_; }
+	auto log_collector::console_target() const -> log_types 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		return console_log_type_; 
+	}
 
-	auto log_collector::file_target(const log_types& type) -> void { file_log_type_ = type; }
+	auto log_collector::file_target(const log_types& type) -> void 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		file_log_type_ = type; 
+	}
 
-	auto log_collector::file_target() const -> log_types { return file_log_type_; }
+	auto log_collector::file_target() const -> log_types 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		return file_log_type_; 
+	}
 
 	auto log_collector::callback_target(const log_types& type) -> void
 	{
+		std::lock_guard<std::mutex> lock(queue_mutex_);
 		callback_log_type_ = type;
 	}
 
-	auto log_collector::callback_target() const -> log_types { return callback_log_type_; }
+	auto log_collector::callback_target() const -> log_types 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		return callback_log_type_; 
+	}
 
 	auto log_collector::set_console_queue(std::shared_ptr<job_queue> queue) -> void
 	{
+		std::lock_guard<std::mutex> lock(queue_mutex_);
 		console_queue_ = queue;
 	}
 
 	auto log_collector::set_file_queue(std::shared_ptr<job_queue> queue) -> void
 	{
+		std::lock_guard<std::mutex> lock(queue_mutex_);
 		file_queue_ = queue;
 	}
 
 	auto log_collector::set_callback_queue(std::shared_ptr<job_queue> queue) -> void
 	{
+		std::lock_guard<std::mutex> lock(queue_mutex_);
 		callback_queue_ = queue;
 	}
 
@@ -93,152 +117,202 @@ namespace log_module
 		write_string(type, message, start_time);
 	}
 
-	auto log_collector::should_continue_work() const -> bool { return !log_queue_->empty(); }
+	auto log_collector::should_continue_work() const -> bool 
+	{ 
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		// Check if log_queue_ is valid before accessing it
+		return log_queue_ && !log_queue_->empty();
+	}
 
-	auto log_collector::before_start() -> std::optional<std::string>
+	auto log_collector::before_start() -> result_void
 	{
 		log_job job("START");
-		auto work_error = job.do_work();
-		if (work_error.has_value())
+		auto work_result = job.do_work();
+		if (work_result.has_error())
 		{
-			return work_error;
+			return work_result.get_error();
 		}
 
-		auto enqueue_error = enqueue_log(console_log_type_, log_types::None, console_queue_,
+		auto enqueue_result = enqueue_log(console_log_type_, log_types::None, console_queue_,
 										 job.datetime(), job.message());
-		if (enqueue_error.has_value())
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error();
 		}
 
-		enqueue_error = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
+		enqueue_result = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
 									job.message());
-		if (enqueue_error.has_value())
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error();
 		}
 
-		return std::nullopt;
+		return result_void{};
 	}
 
-	auto log_collector::do_work() -> std::optional<std::string>
+	auto log_collector::do_work() -> result_void
 	{
-		if (log_queue_ == nullptr)
+		// First get a local copy of the log queue with proper synchronization
+		std::shared_ptr<job_queue> queue_copy;
 		{
-			return "there is no job_queue";
+			std::lock_guard<std::mutex> lock(queue_mutex_);
+			if (log_queue_ == nullptr)
+			{
+				return error{error_code::resource_allocation_failed, "there is no job_queue"};
+			}
+			queue_copy = log_queue_;
 		}
 
-		auto [job_opt, error] = log_queue_->dequeue();
-		if (error.has_value())
+		// Now work with the local copy
+		auto dequeue_result = queue_copy->dequeue();
+		if (!dequeue_result.has_value())
 		{
-			if (!log_queue_->is_stopped())
+			if (!queue_copy->is_stopped())
 			{
-				return formatter::format("error dequeue job: {}", error.value_or("unknown error"));
+				return error{error_code::queue_empty, 
+					formatter::format("error dequeue job: {}", dequeue_result.get_error().to_string())};
 			}
 
-			return std::nullopt;
+			return result_void{};
 		}
 
-		auto current_job = std::move(job_opt.value());
-		if (current_job == nullptr)
+		auto job_ptr = std::move(dequeue_result.value());
+		if (job_ptr == nullptr) 
 		{
-			return "error executing job: nullptr";
+			return error{error_code::job_invalid, "error executing job: received empty job"};
 		}
 
-		auto current_log = std::unique_ptr<log_job>(static_cast<log_job*>(current_job.release()));
+		auto current_log = std::unique_ptr<log_job>(static_cast<log_job*>(job_ptr.release()));
 
-		auto work_error = current_log->do_work();
-		if (work_error.has_value())
+		auto work_result = current_log->do_work();
+		if (work_result.has_error())
 		{
-			return std::nullopt;
+			return work_result.get_error();
 		}
 
-		std::optional<std::string> enqueue_error;
-
-		if (current_log->get_type() <= console_log_type_)
+		// Get thread-safe copies of the targets and queues
+		log_types console_target_copy;
+		log_types file_target_copy;
+		log_types callback_target_copy;
+		std::weak_ptr<job_queue> console_queue_copy;
+		std::weak_ptr<job_queue> file_queue_copy;
+		std::weak_ptr<job_queue> callback_queue_copy;
+		
 		{
-			enqueue_error
-				= enqueue_log(current_log->get_type(), current_log->get_type(), console_queue_,
-							  current_log->datetime(), current_log->message());
-			if (enqueue_error.has_value())
+			std::lock_guard<std::mutex> lock(queue_mutex_);
+			console_target_copy = console_log_type_;
+			file_target_copy = file_log_type_;
+			callback_target_copy = callback_log_type_;
+			console_queue_copy = console_queue_;
+			file_queue_copy = file_queue_;
+			callback_queue_copy = callback_queue_;
+		}
+		
+		result_void enqueue_result;
+
+		if (current_log->get_type() <= console_target_copy)
+		{
+			enqueue_result = enqueue_log(current_log->get_type(), current_log->get_type(), 
+										 console_queue_copy, current_log->datetime(), 
+										 current_log->message());
+			if (enqueue_result.has_error())
 			{
-				return enqueue_error;
+				return enqueue_result.get_error();
 			}
 		}
 
-		if (current_log->get_type() <= file_log_type_)
+		if (current_log->get_type() <= file_target_copy)
 		{
-			enqueue_error
-				= enqueue_log(current_log->get_type(), current_log->get_type(), file_queue_,
-							  current_log->datetime(), current_log->message());
-			if (enqueue_error.has_value())
+			enqueue_result = enqueue_log(current_log->get_type(), current_log->get_type(), 
+										 file_queue_copy, current_log->datetime(), 
+										 current_log->message());
+			if (enqueue_result.has_error())
 			{
-				return enqueue_error;
+				return enqueue_result.get_error();
 			}
 		}
 
-		if (current_log->get_type() <= callback_log_type_)
+		if (current_log->get_type() <= callback_target_copy)
 		{
-			enqueue_error
-				= enqueue_log(current_log->get_type(), current_log->get_type(), callback_queue_,
-							  current_log->datetime(), current_log->message());
-			if (enqueue_error.has_value())
+			enqueue_result = enqueue_log(current_log->get_type(), current_log->get_type(), 
+										 callback_queue_copy, current_log->datetime(), 
+										 current_log->message());
+			if (enqueue_result.has_error())
 			{
-				return enqueue_error;
+				return enqueue_result.get_error();
 			}
 		}
 
-		return std::nullopt;
+		return result_void{};
 	}
 
-	auto log_collector::after_stop() -> std::optional<std::string>
+	auto log_collector::after_stop() -> result_void
 	{
 		log_job job("STOP");
-		auto work_error = job.do_work();
-		if (work_error.has_value())
+		auto work_result = job.do_work();
+		if (work_result.has_error())
 		{
-			return work_error;
+			return work_result.get_error();
 		}
 
-		auto enqueue_error = enqueue_log(console_log_type_, log_types::None, console_queue_,
+		auto enqueue_result = enqueue_log(console_log_type_, log_types::None, console_queue_,
 										 job.datetime(), job.message());
-		if (enqueue_error.has_value())
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error();
 		}
 
-		enqueue_error = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
+		enqueue_result = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
 									job.message());
-		if (enqueue_error.has_value())
+		if (enqueue_result.has_error())
 		{
-			return enqueue_error;
+			return enqueue_result.get_error();
 		}
 
-		return std::nullopt;
+		return result_void{};
 	}
 
 	auto log_collector::enqueue_log(const log_types& current_log_type,
 									const log_types& target_log_type,
 									std::weak_ptr<job_queue> weak_queue,
 									const std::string& datetime,
-									const std::string& message) -> std::optional<std::string>
+									const std::string& message) -> result_void
 	{
 		if (current_log_type == log_types::None)
 		{
-			return std::nullopt;
+			return result_void{};
 		}
 
-		auto locked_queue = weak_queue.lock();
-		if (locked_queue != nullptr && !message.empty())
+		// Safely handle weak pointer - lock and check validity
+		std::shared_ptr<job_queue> locked_queue;
 		{
-			auto enqueue_error = locked_queue->enqueue(
-				std::make_unique<message_job>(target_log_type, datetime, message));
-			if (enqueue_error.has_value())
+			std::lock_guard<std::mutex> lock(queue_mutex_);
+			locked_queue = weak_queue.lock();
+			if (!locked_queue)
 			{
-				return enqueue_error;
+				return error{error_code::resource_allocation_failed, "Queue is no longer available"};
+			}
+		}
+		
+		// Now we have a valid shared_ptr to the queue
+		if (!message.empty())
+		{
+			try 
+			{
+				auto job = std::make_unique<message_job>(target_log_type, datetime, message);
+				auto enqueue_result = locked_queue->enqueue(std::move(job));
+				if (enqueue_result.has_error())
+				{
+					return enqueue_result.get_error();
+				}
+			}
+			catch (const std::exception& e)
+			{
+				return error{error_code::job_creation_failed, 
+					formatter::format("Error creating or enqueuing message job: {}", e.what())};
 			}
 		}
 
-		return std::nullopt;
+		return result_void{};
 	}
 } // namespace log_module

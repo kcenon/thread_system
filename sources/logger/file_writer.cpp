@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <filesystem>
 
 using namespace utility_module;
+using namespace thread_module;
 
 namespace log_module
 {
@@ -70,35 +71,35 @@ namespace log_module
 
 	auto file_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto file_writer::before_start() -> std::optional<std::string>
+	auto file_writer::before_start() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "error creating job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "error creating job_queue"}};
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return std::nullopt;
+			return {};
 		}
 
 		job_queue_->set_notify(!wake_interval_.has_value());
 
 		check_file_handle();
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto file_writer::do_work() -> std::optional<std::string>
+	auto file_writer::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "there is no job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "there is no job_queue"}};
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return std::nullopt;
+			return {};
 		}
 
 		check_file_handle();
@@ -112,8 +113,8 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto work_error = current_log->do_work();
-			if (work_error.has_value())
+			auto work_result = current_log->do_work();
+			if (work_result.has_error())
 			{
 				continue;
 			}
@@ -121,14 +122,14 @@ namespace log_module
 			if (current_log->log_type() == log_types::None)
 			{
 				log_lines_.push_back(formatter::format("[{}]{}", current_log->datetime(),
-													   current_log->message(true)));
+												   current_log->message(true)));
 
 				continue;
 			}
 
 			log_lines_.push_back(formatter::format("[{}][{}] {}", current_log->datetime(),
-												   current_log->log_type(),
-												   current_log->message(true)));
+											   current_log->log_type(),
+											   current_log->message(true)));
 		}
 
 		if (max_lines_ == 0)
@@ -136,7 +137,7 @@ namespace log_module
 			log_file_ = write_lines(std::move(log_file_), log_lines_);
 			log_lines_.clear();
 
-			return std::nullopt;
+			return {};
 		}
 
 		if (log_lines_.size() <= max_lines_)
@@ -145,7 +146,7 @@ namespace log_module
 			log_file_->close();
 			log_file_.reset();
 
-			return std::nullopt;
+			return {};
 		}
 
 		size_t index = log_lines_.size() - max_lines_ + 1;
@@ -173,24 +174,24 @@ namespace log_module
 		log_file_->close();
 		log_file_.reset();
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto file_writer::after_stop() -> std::optional<std::string>
+	auto file_writer::after_stop() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "there is no job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "there is no job_queue"}};
 		}
 
 		if (file_target_ == log_types::None)
 		{
-			return std::nullopt;
+			return {};
 		}
 
 		close_file_handle();
 
-		return std::nullopt;
+		return {};
 	}
 
 	auto file_writer::generate_file_name() -> std::tuple<std::string, std::string>
@@ -218,7 +219,7 @@ namespace log_module
 			if (log_file_ == nullptr)
 			{
 				log_file_ = std::make_unique<std::fstream>(file_name,
-														   std::ios_base::out | std::ios_base::app);
+												   std::ios_base::out | std::ios_base::app);
 			}
 		}
 		else
@@ -226,7 +227,7 @@ namespace log_module
 			if (log_file_ == nullptr)
 			{
 				log_file_ = std::make_unique<std::fstream>(file_name, std::ios_base::out
-																		  | std::ios_base::trunc);
+														  | std::ios_base::trunc);
 			}
 
 			if (use_backup_)

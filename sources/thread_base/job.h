@@ -34,6 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "formatter.h"
 #include "convert_string.h"
+#include "error_handling.h"
+#include "cancellation_token.h"
 
 #include <tuple>
 #include <memory>
@@ -41,6 +43,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <optional>
 #include <string_view>
+#include <atomic>
+#include <chrono>
 
 using namespace utility_module;
 
@@ -64,10 +68,10 @@ namespace thread_module
 	 *   manage lifetimes across multiple threads.
 	 *
 	 * ### Error Handling
-	 * - A job returns a @c std::optional<std::string> from @c do_work().
-	 *   - Returning @c std::nullopt indicates success.
-	 *   - Returning a non-empty string indicates an error message or reason for failure.
-	 * - Error messages can be used for logging, debugging, or to retry a job if desired.
+	 * - A job returns a @c result_void from @c do_work().
+	 *   - Returning @c result_void{} indicates success.
+	 *   - Returning an error indicates failure with a typed error code and message.
+	 * - Error information can be used for logging, debugging, or to retry a job if desired.
 	 *
 	 * ### Usage Example
 	 * @code
@@ -77,14 +81,14 @@ namespace thread_module
 	 * public:
 	 *     my_job() : job("my_custom_job") {}
 	 *
-	 *     std::optional<std::string> do_work() override
+	 *     result_void do_work() override
 	 *     {
 	 *         // Execute custom logic:
 	 *         bool success = perform_operation();
 	 *         if (!success)
-	 *             return std::string{"Operation failed in my_custom_job"};
+	 *             return error{error_code::job_execution_failed, "Operation failed in my_custom_job"};
 	 *
-	 *         return std::nullopt; // success
+	 *         return result_void{}; // success
 	 *     }
 	 * };
 	 *
@@ -162,7 +166,39 @@ namespace thread_module
 		 * - Ensure that any shared data or resources accessed here are protected with
 		 *   appropriate synchronization mechanisms (mutexes, locks, etc.) if needed.
 		 */
-		[[nodiscard]] virtual auto do_work(void) -> std::optional<std::string>;
+		/**
+	 * @brief The core task execution method to be overridden by derived classes.
+	 *
+	 * @return A @c result_void indicating success or error:
+	 * - A success result (constructed with result_void{}) if no error occurred.
+	 * - An error result (constructed with error{error_code, message}) on failure.
+	 *
+	 * #### Default Behavior
+	 * The base class implementation simply returns a success result.
+	 * Override this method in a derived class to perform meaningful work.
+	 *
+	 * #### Concurrency
+	 * - Typically invoked by worker threads in a @c job_queue.
+	 * - Ensure that any shared data or resources accessed here are protected with
+	 *   appropriate synchronization mechanisms (mutexes, locks, etc.) if needed.
+	 * - This method should check the cancellation token if one is set and return
+	 *   an error with code operation_canceled if the token is cancelled.
+	 */
+	[[nodiscard]] virtual auto do_work(void) -> result_void;
+	
+	/**
+	 * @brief Sets a cancellation token that can be used to cancel the job.
+	 * 
+	 * @param token The cancellation token to associate with this job.
+	 */
+	virtual auto set_cancellation_token(const cancellation_token& token) -> void;
+	
+	/**
+	 * @brief Gets the cancellation token associated with this job.
+	 * 
+	 * @return The cancellation token, or a default token if none was set.
+	 */
+	[[nodiscard]] virtual auto get_cancellation_token() const -> cancellation_token;
 
 		/**
 		 * @brief Associates this job with a specific @c job_queue.
@@ -238,6 +274,14 @@ namespace thread_module
 		 * @c std::shared_ptr before use to avoid invalid access.
 		 */
 		std::weak_ptr<job_queue> job_queue_;
+		
+		/**
+		 * @brief The cancellation token associated with this job.
+		 * 
+		 * This token can be used to cancel the job during execution. The job should
+		 * periodically check this token and abort if it is cancelled.
+		 */
+		cancellation_token cancellation_token_;
 	};
 } // namespace thread_module
 

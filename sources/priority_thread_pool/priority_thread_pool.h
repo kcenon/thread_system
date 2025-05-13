@@ -67,11 +67,11 @@ namespace priority_thread_pool_module
 	 * using my_thread_pool = priority_thread_pool_t<my_priority_enum>;
 	 *
 	 * auto pool = std::make_shared<my_thread_pool>("My Thread Pool");
-	 * auto error_message = pool->start();
-	 * if (error_message.has_value())
+	 * auto start_result = pool->start();
+	 * if (start_result.has_error())
 	 * {
 	 *     // Handle error starting the pool
-	 *     std::cerr << error_message.value() << std::endl;
+	 *     std::cerr << start_result.get_error().message() << std::endl;
 	 * }
 	 *
 	 * // Enqueue a job
@@ -121,16 +121,16 @@ namespace priority_thread_pool_module
 		 * @brief Starts the thread pool by creating worker threads and
 		 * initializing internal structures.
 		 *
-		 * @return std::optional<std::string>
-		 *         - If an error occurs during start-up, the returned optional
-		 *           will contain an error message.
-		 *         - If no error occurs, the optional will be empty (std::nullopt).
+		 * @return result_void
+		 *         - If an error occurs during start-up, the returned result
+		 *           will contain an error object.
+		 *         - If no error occurs, the result will be a success value.
 		 *
 		 * ### Thread Safety
 		 * This method is typically called once, before using other methods such as
 		 * enqueue(). Calling start() multiple times without stopping is not recommended.
 		 */
-		auto start(void) -> std::optional<std::string>;
+		auto start(void) -> result_void;
 
 		/**
 		 * @brief Retrieves the underlying priority job queue managed by this thread pool.
@@ -151,32 +151,32 @@ namespace priority_thread_pool_module
 		 *
 		 * @param job A unique pointer to the priority job to be added.
 		 *
-		 * @return std::optional<std::string>
-		 *         - Contains an error message if the enqueue operation fails.
-		 *         - Otherwise, returns std::nullopt on success.
+		 * @return result_void
+		 *         - Contains an error if the enqueue operation fails.
+		 *         - Otherwise, returns a success value.
 		 *
 		 * ### Thread Safety
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
 		auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& job)
-			-> std::optional<std::string>;
+			-> result_void;
 
 		/**
 		 * @brief Enqueues a batch of priority jobs into the thread pool's job queue.
 		 *
 		 * @param jobs A vector of unique pointers to priority jobs to be added.
 		 *
-		 * @return std::optional<std::string>
-		 *         - Contains an error message if the enqueue operation fails.
-		 *         - Otherwise, returns std::nullopt on success.
+		 * @return result_void
+		 *         - Contains an error if the enqueue operation fails.
+		 *         - Otherwise, returns a success value.
 		 *
 		 * ### Thread Safety
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
 		auto enqueue_batch(std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
-			-> std::optional<std::string>;
+			-> result_void;
 
 		/**
 		 * @brief Enqueues a new worker thread for this thread pool.
@@ -185,9 +185,9 @@ namespace priority_thread_pool_module
 		 *
 		 * @param worker A unique pointer to the priority thread worker to be added.
 		 *
-		 * @return std::optional<std::string>
-		 *         - Contains an error message if the enqueue operation fails.
-		 *         - Otherwise, returns std::nullopt on success.
+		 * @return result_void
+		 *         - Contains an error if the enqueue operation fails.
+		 *         - Otherwise, returns a success value.
 		 *
 		 * ### Note
 		 * Typically, most applications create a fixed number of workers at startup.
@@ -198,7 +198,7 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe.
 		 */
 		auto enqueue(std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
-			-> std::optional<std::string>;
+			-> result_void;
 
 		/**
 		 * @brief Enqueues a batch of new worker threads for this thread pool.
@@ -207,9 +207,9 @@ namespace priority_thread_pool_module
 		 *
 		 * @param workers A vector of unique pointers to priority thread workers to be added.
 		 *
-		 * @return std::optional<std::string>
-		 *         - Contains an error message if the enqueue operation fails.
-		 *         - Otherwise, returns std::nullopt on success.
+		 * @return result_void
+		 *         - Contains an error if the enqueue operation fails.
+		 *         - Otherwise, returns a success value.
 		 *
 		 * ### Note
 		 * Typically, most applications create a fixed number of workers at startup.
@@ -221,22 +221,24 @@ namespace priority_thread_pool_module
 		 */
 		auto enqueue_batch(
 			std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>>&& workers)
-			-> std::optional<std::string>;
+			-> result_void;
 
 		/**
 		 * @brief Stops the thread pool and optionally waits for currently running
 		 * jobs to finish.
 		 *
-		 * @param immediately_stop If `true`, any running jobs are stopped (if possible),
-		 *                         and no further jobs in the queue are processed.
-		 *                         If `false` (default), the pool stops accepting new jobs
-		 *                         but allows currently running jobs to complete.
+		 * @param clear_queue If `true`, any queued jobs are removed.
+		 *                   If `false` (default), the pool stops accepting new jobs
+		 *                   but allows currently running jobs to complete.
+		 * @return result_void
+		 *         - Contains an error if the stop operation fails.
+		 *         - Otherwise, returns a success value.
 		 *
 		 * ### Thread Safety
 		 * Calling stop() from multiple threads simultaneously is safe,
 		 * but redundant calls to stop() will have no additional effect after the first.
 		 */
-		auto stop(const bool& immediately_stop = false) -> void;
+		auto stop(bool clear_queue = false) -> result_void;
 
 		/**
 		 * @brief Generates a string representation of the thread pool's internal state.
@@ -253,6 +255,13 @@ namespace priority_thread_pool_module
 		 * @endcode
 		 */
 		[[nodiscard]] auto to_string(void) const -> std::string;
+
+		/**
+		 * @brief Sets the job queue for this thread pool and its workers.
+		 * 
+		 * @param job_queue A shared pointer to the job queue to use.
+		 */
+		auto set_job_queue(std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void;
 
 	private:
 		/** @brief A descriptive name or title for this thread pool, useful for logging. */
