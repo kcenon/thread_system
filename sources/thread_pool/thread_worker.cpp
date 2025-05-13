@@ -59,28 +59,29 @@ namespace thread_pool_module
 		return !job_queue_->empty();
 	}
 
-	auto thread_worker::do_work() -> std::optional<std::string>
+	auto thread_worker::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "there is no job_queue";
+			return error{error_code::resource_allocation_failed, "there is no job_queue"};
 		}
 
-		auto [job_opt, error] = job_queue_->dequeue();
-		if (!job_opt.has_value())
+		auto dequeue_result = job_queue_->dequeue();
+		if (!dequeue_result.has_value())
 		{
 			if (!job_queue_->is_stopped())
 			{
-				return formatter::format("error dequeue job: {}", error.value_or("unknown error"));
+				return error{error_code::queue_empty, 
+					formatter::format("error dequeue job: {}", dequeue_result.get_error().to_string())};
 			}
 
-			return std::nullopt;
+			return result_void{};
 		}
 
-		auto current_job = std::move(job_opt.value());
+		auto current_job = std::move(dequeue_result.value());
 		if (current_job == nullptr)
 		{
-			return "error executing job: nullptr";
+			return error{error_code::job_invalid, "error executing job: nullptr"};
 		}
 
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
@@ -91,11 +92,11 @@ namespace thread_pool_module
 		}
 
 		current_job->set_job_queue(job_queue_);
-		auto work_error = current_job->do_work();
-		if (work_error.has_value())
+		auto work_result = current_job->do_work();
+		if (work_result.has_error())
 		{
-			return formatter::format("error executing job: {}",
-									 work_error.value_or("unknown error"));
+			return error{error_code::job_execution_failed, 
+				formatter::format("error executing job: {}", work_result.get_error().to_string())};
 		}
 
 		if (!started_time_point.has_value())
@@ -108,6 +109,6 @@ namespace thread_pool_module
 								   "job executed successfully: {} on thread_worker",
 								   current_job->get_name());
 
-		return std::nullopt;
+		return result_void{};
 	}
 } // namespace thread_pool_module

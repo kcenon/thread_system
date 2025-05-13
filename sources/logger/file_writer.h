@@ -137,10 +137,10 @@ namespace log_module
 		 * Ensures that the necessary file resources and configurations are in place
 		 * before logging can begin.
 		 *
-		 * @return An optional error message. If a string is returned, initialization
-		 *         failed; if it is empty, initialization succeeded.
+		 * @return A result_void. If it contains an error, initialization failed;
+		 *         otherwise, initialization succeeded.
 		 */
-		auto before_start() -> std::optional<std::string> override;
+		auto before_start() -> result_void override;
 
 		/**
 		 * @brief Processes and writes pending log messages to the file.
@@ -148,20 +148,20 @@ namespace log_module
 		 * Retrieves log tasks from the job queue and writes them to the configured
 		 * log file(s).
 		 *
-		 * @return An optional error message. If a string is returned, an error occurred;
+		 * @return A result_void. If it contains an error, an error occurred;
 		 *         otherwise, the operation succeeded.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 		/**
 		 * @brief Cleans up resources after stopping the file writer thread.
 		 *
 		 * Closes open file handles and releases resources.
 		 *
-		 * @return An optional error message. If a string is returned, an error occurred;
+		 * @return A result_void. If it contains an error, an error occurred;
 		 *         otherwise, cleanup succeeded.
 		 */
-		auto after_stop() -> std::optional<std::string> override;
+		auto after_stop() -> result_void override;
 
 	protected:
 		/**
@@ -198,22 +198,22 @@ namespace log_module
 		 * @return The file stream, which remains valid after writing.
 		 */
 		[[nodiscard]] auto write_lines(std::unique_ptr<std::fstream> file_handle,
-									   const std::deque<std::string>& messages)
+								   const std::deque<std::string>& messages)
 			-> std::unique_ptr<std::fstream>;
 
 	private:
-		std::string title_;						 ///< Title used in the log file name.
-		std::string file_name_;					 ///< Name of the current log file.
-		std::string backup_name_;				 ///< Name of the backup log file (if enabled).
-		std::deque<std::string> log_lines_;		 ///< Queue storing log lines to write.
+		std::string title_;                       ///< Title used in the log file name.
+		std::string file_name_;                   ///< Name of the current log file.
+		std::string backup_name_;                ///< Name of the backup log file (if enabled).
+		std::deque<std::string> log_lines_;       ///< Queue storing log lines to write.
 
-		bool use_backup_;						 ///< Indicates if a backup log file is in use.
-		log_types file_target_;					 ///< Log type filter for writing to file.
-		uint32_t max_lines_;					 ///< Maximum number of lines to retain in the log.
+		bool use_backup_;                       ///< Indicates if a backup log file is in use.
+		log_types file_target_;                   ///< Log type filter for writing to file.
+		uint32_t max_lines_;                    ///< Maximum number of lines to retain in the log.
 
 		std::unique_ptr<std::fstream> log_file_; ///< File handle for the main log file.
 		std::unique_ptr<std::fstream> backup_file_; ///< File handle for the backup log file.
 
-		std::shared_ptr<job_queue> job_queue_;		///< Queue for log tasks to write to the file.
+		std::shared_ptr<job_queue> job_queue_;      ///< Queue for log tasks to write to the file.
 	};
 } // namespace log_module

@@ -45,6 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace utility_module;
 using namespace priority_thread_pool_module;
+using namespace thread_module;
 
 bool use_backup_ = false;
 uint32_t max_lines_ = 0;
@@ -116,11 +117,11 @@ auto create_default(const uint16_t& top_priority_workers,
 			std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
 	}
 
-	error_message = pool->enqueue_batch(std::move(workers));
-	if (error_message.has_value())
+	auto enqueue_result = pool->enqueue_batch(std::move(workers));
+	if (enqueue_result.has_error())
 	{
 		return { nullptr, formatter::format("cannot enqueue to workers: {}",
-											error_message.value_or("unknown error")) };
+											enqueue_result.get_error().message()) };
 	}
 
 	return { pool, std::nullopt };
@@ -130,7 +131,6 @@ auto store_job(std::shared_ptr<priority_thread_pool_t<test_priority>> thread_poo
 	-> std::optional<std::string>
 {
 	int target = 0;
-	std::optional<std::string> error_message = std::nullopt;
 
 	std::vector<std::unique_ptr<priority_job_t<test_priority>>> jobs;
 	jobs.reserve(test_line_count_);
@@ -139,20 +139,19 @@ auto store_job(std::shared_ptr<priority_thread_pool_t<test_priority>> thread_poo
 	{
 		target = index % 3;
 		jobs.push_back(std::make_unique<callback_priority_job_t<test_priority>>(
-			[target](void) -> std::optional<std::string>
+			[target](void) -> result_void
 			{
 				log_module::write_debug("Hello, World!: {} priority", target);
-
-				return std::nullopt;
+				return {};
 			},
 			static_cast<test_priority>(target)));
 	}
 
-	error_message = thread_pool->enqueue_batch(std::move(jobs));
-	if (error_message.has_value())
+	auto enqueue_result = thread_pool->enqueue_batch(std::move(jobs));
+	if (enqueue_result.has_error())
 	{
 		return formatter::format("error enqueuing jobs: {}",
-								 error_message.value_or("unknown error"));
+								 enqueue_result.get_error().message());
 	}
 
 	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
@@ -193,11 +192,11 @@ auto main() -> int
 		return 0;
 	}
 
-	error_message = thread_pool->start();
-	if (error_message.has_value())
+	auto start_result = thread_pool->start();
+	if (start_result.has_error())
 	{
 		log_module::write_error("error starting thread pool: {}",
-								error_message.value_or("unknown error"));
+								start_result.get_error().message());
 
 		thread_pool.reset();
 

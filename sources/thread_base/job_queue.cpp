@@ -44,16 +44,16 @@ namespace thread_module
 
 	auto job_queue::set_notify(bool notify) -> void { notify_.store(notify); }
 
-	auto job_queue::enqueue(std::unique_ptr<job>&& value) -> std::optional<std::string>
+	auto job_queue::enqueue(std::unique_ptr<job>&& value) -> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		if (value == nullptr)
 		{
-			return "cannot enqueue null job";
+			return error{error_code::invalid_argument, "cannot enqueue null job"};
 		}
 
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -66,27 +66,26 @@ namespace thread_module
 			condition_.notify_one();
 		}
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
-		-> std::optional<std::string>
+	auto job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		if (jobs.empty())
 		{
-			return "cannot enqueue empty batch";
+			return error{error_code::invalid_argument, "cannot enqueue empty batch"};
 		}
 
 		for (auto& job : jobs)
 		{
 			if (job == nullptr)
 			{
-				return "cannot enqueue null job in batch";
+				return error{error_code::invalid_argument, "cannot enqueue null job in batch"};
 			}
 		}
 
@@ -103,25 +102,24 @@ namespace thread_module
 			condition_.notify_one();
 		}
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto job_queue::dequeue()
-		-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>
+	auto job_queue::dequeue() -> result<std::unique_ptr<job>>
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 		condition_.wait(lock, [this]() { return !queue_.empty() || stop_.load(); });
 
 		if (queue_.empty())
 		{
-			return { std::nullopt, "there are no jobs to dequeue" };
+			return error{error_code::queue_empty, "there are no jobs to dequeue"};
 		}
 
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
 		queue_size_.fetch_sub(1);
 
-		return { std::move(value), std::nullopt };
+		return value;
 	}
 
 	auto job_queue::dequeue_batch(void) -> std::deque<std::unique_ptr<job>>

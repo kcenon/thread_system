@@ -59,7 +59,7 @@ namespace priority_thread_pool_module
 		 *
 		 * @param callback
 		 *   The function object to be executed when the job is processed. It must return
-		 *   an @c std::optional<std::string>, where the string typically contains additional
+		 *   a @c result_void, where an error typically contains additional
 		 *   status or error information.
 		 * @param priority
 		 *   The priority level of the job (e.g., high, normal, low).
@@ -69,16 +69,16 @@ namespace priority_thread_pool_module
 		 *
 		 * Example usage:
 		 * @code
-		 * auto jobCallback = []() -> std::optional<std::string> {
+		 * auto jobCallback = []() -> result_void {
 		 *     // Your job logic here
 		 *     return {};
 		 * };
 		 * auto myJob = std::make_shared<callback_priority_job_t<int>>(jobCallback, 10, "MyJob");
 		 * @endcode
 		 */
-		callback_priority_job_t(const std::function<std::optional<std::string>(void)>& callback,
-								priority_type priority,
-								const std::string& name = "priority_job");
+		callback_priority_job_t(const std::function<result_void(void)>& callback,
+							priority_type priority,
+							const std::string& name = "priority_job");
 
 		/**
 		 * @brief Virtual destructor for the @c callback_priority_job_t class.
@@ -91,23 +91,23 @@ namespace priority_thread_pool_module
 		 * This method overrides @c priority_job_t::do_work. When invoked by the job executor,
 		 * the stored callback will be called and its result will be propagated.
 		 *
-		 * @return std::optional<std::string>
-		 *   - If the callback returns a string, it typically contains an informational or error
+		 * @return result_void
+		 *   - If the callback returns an error, it typically contains an informational or error
 		 * message.
-		 *   - If it returns an empty @c std::optional, the execution completed without additional
+		 *   - If it returns a success value, the execution completed without additional
 		 * info.
 		 */
-		[[nodiscard]] auto do_work(void) -> std::optional<std::string> override;
+		[[nodiscard]] auto do_work(void) -> result_void override;
 
 	private:
 		/**
 		 * @brief The user-provided callback function to execute when the job is processed.
 		 *
 		 * This function should encapsulate the main logic of the job.
-		 * It must return an @c std::optional<std::string>, often representing
+		 * It must return a @c result_void, often representing
 		 * any error messages or status feedback.
 		 */
-		std::function<std::optional<std::string>(void)> callback_;
+		std::function<result_void(void)> callback_;
 	};
 
 	/**

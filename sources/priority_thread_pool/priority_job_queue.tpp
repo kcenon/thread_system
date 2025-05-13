@@ -46,30 +46,30 @@ namespace priority_thread_pool_module
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::enqueue(std::unique_ptr<job>&& value)
-		-> std::optional<std::string>
+		-> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(value.get());
 
 		if (!priority_job_ptr)
 		{
-			return "Enqueued job is not a priority_job";
+			return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
 		}
 
 		return enqueue(std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
 	}
 
 	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue_batch(std::vector<std::unique_ptr<job>>& jobs)
-		-> std::optional<std::string>
+	auto priority_job_queue_t<priority_type>::enqueue_batch_ref(std::vector<std::unique_ptr<job>>& jobs)
+		-> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		std::vector<std::unique_ptr<priority_job_t<priority_type>>> priority_jobs;
@@ -80,7 +80,34 @@ namespace priority_thread_pool_module
 			auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(job.get());
 			if (!priority_job_ptr)
 			{
-				return "Enqueued job is not a priority_job";
+				return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
+			}
+
+			priority_jobs.push_back(
+				std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
+		}
+
+		return enqueue_batch(std::move(priority_jobs));
+	}
+
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+		-> result_void
+	{
+		if (stop_.load())
+		{
+			return error{error_code::queue_stopped, "Job queue is stopped"};
+		}
+
+		std::vector<std::unique_ptr<priority_job_t<priority_type>>> priority_jobs;
+		priority_jobs.reserve(jobs.size());
+
+		for (auto& job : jobs)
+		{
+			auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(job.release());
+			if (!priority_job_ptr)
+			{
+				return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
 			}
 
 			priority_jobs.push_back(
@@ -92,16 +119,16 @@ namespace priority_thread_pool_module
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::enqueue(
-		std::unique_ptr<priority_job_t<priority_type>>&& value) -> std::optional<std::string>
+		std::unique_ptr<priority_job_t<priority_type>>&& value) -> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		if (value == nullptr)
 		{
-			return "cannot enqueue null job";
+			return error{error_code::job_invalid, "Cannot enqueue null job"};
 		}
 
 		auto job_priority = value->priority();
@@ -117,7 +144,7 @@ namespace priority_thread_pool_module
 
 			condition_.notify_one();
 
-			return std::nullopt;
+			return result_void{};
 		}
 
 		iter = queues_
@@ -130,22 +157,22 @@ namespace priority_thread_pool_module
 
 		condition_.notify_one();
 
-		return std::nullopt;
+		return result_void{};
 	}
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::enqueue_batch(
 		std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
-		-> std::optional<std::string>
+		-> result_void
 	{
 		if (stop_.load())
 		{
-			return "Job queue is stopped";
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
 		if (jobs.empty())
 		{
-			return "cannot enqueue empty batch";
+			return error{error_code::job_invalid, "Cannot enqueue empty batch"};
 		}
 
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -175,21 +202,20 @@ namespace priority_thread_pool_module
 
 		condition_.notify_all();
 
-		return std::nullopt;
+		return result_void{};
 	}
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::dequeue()
-		-> std::tuple<std::optional<std::unique_ptr<job>>, std::optional<std::string>>
+		-> result<std::unique_ptr<job>>
 	{
-		return { std::nullopt, "Dequeue operation without specified priorities is "
-							   "not supported in priority_job_queue" };
+		return error{error_code::queue_empty, "Dequeue operation without specified priorities is "
+								   "not supported in priority_job_queue"};
 	}
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::dequeue(const std::vector<priority_type>& priorities)
-		-> std::tuple<std::optional<std::unique_ptr<priority_job_t<priority_type>>>,
-					  std::optional<std::string>>
+		-> result<std::unique_ptr<priority_job_t<priority_type>>>
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
@@ -218,17 +244,17 @@ namespace priority_thread_pool_module
 		{
 			auto job = std::move(result.value());
 			lock.unlock();
-			return { std::move(job), std::nullopt };
+			return job;
 		}
 
 		lock.unlock();
 
 		if (stop_.load())
 		{
-			return { std::nullopt, "Job queue is stopped" };
+			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
-		return { std::nullopt, "Unexpected error: No job found after waiting" };
+		return error{error_code::queue_empty, "Unexpected error: No job found after waiting"};
 	}
 
 	template <typename priority_type> auto priority_job_queue_t<priority_type>::clear() -> void
@@ -244,6 +270,13 @@ namespace priority_thread_pool_module
 
 		queues_.clear();
 
+		condition_.notify_all();
+	}
+    
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::stop() -> void
+	{
+		stop_.store(true);
 		condition_.notify_all();
 	}
 

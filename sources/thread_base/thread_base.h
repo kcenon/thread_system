@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "convert_string.h"
 #include "thread_conditions.h"
+#include "error_handling.h"
 
 #include <mutex>
 #include <memory>
@@ -109,27 +110,25 @@ namespace thread_module
 
 		/**
 		 * @brief Starts the worker thread.
-		 * @return @c std::optional<std::string> containing an error message if the start operation
-		 *         fails, or @c std::nullopt on success.
+		 * @return @c result_void containing an error on failure, or success value if successful.
 		 *
 		 * Internally, this method:
 		 * 1. Calls @c before_start() to allow derived classes to perform setup.
 		 * 2. Spawns a new thread (using either @c std::jthread or @c std::thread).
 		 * 3. Repeatedly calls @c do_work() until the thread is signaled to stop.
 		 */
-		auto start(void) -> std::optional<std::string>;
+		auto start(void) -> result_void;
 
 		/**
 		 * @brief Requests the worker thread to stop and waits for it to finish.
-		 * @return @c std::optional<std::string> containing an error message if the stop operation
-		 *         fails, or @c std::nullopt on success.
+		 * @return @c result_void containing an error on failure, or success value if successful.
 		 *
 		 * Internally, this method:
 		 * 1. Signals the thread to stop (via @c stop_source_ or @c stop_requested_).
 		 * 2. Joins the thread, ensuring it has fully exited.
 		 * 3. Calls @c after_stop() for post-shutdown cleanup in derived classes.
 		 */
-		auto stop(void) -> std::optional<std::string>;
+		auto stop(void) -> result_void;
 
 		/**
 		 * @brief Returns the worker thread's title.
@@ -168,34 +167,31 @@ namespace thread_module
 
 		/**
 		 * @brief Called just before the worker thread starts running.
-		 * @return @c std::optional<std::string> containing an error message on failure,
-		 *         or @c std::nullopt on success.
+		 * @return @c result_void containing an error on failure, or success value if successful.
 		 *
 		 * Override this method in derived classes to perform any initialization or setup
 		 * required before the worker thread begins its main loop.
 		 */
-		virtual auto before_start(void) -> std::optional<std::string> { return std::nullopt; }
+		virtual auto before_start(void) -> result_void { return {}; }
 
 		/**
 		 * @brief The main work routine for the worker thread.
-		 * @return @c std::optional<std::string> containing an error message on failure,
-		 *         or @c std::nullopt on success.
+		 * @return @c result_void containing an error on failure, or success value if successful.
 		 *
 		 * Derived classes should override this method to implement the actual work the thread
 		 * needs to perform. This method is called repeatedly (in an internal loop) until the
 		 * thread is signaled to stop or @c should_continue_work() returns @c false.
 		 */
-		virtual auto do_work(void) -> std::optional<std::string> { return std::nullopt; }
+		virtual auto do_work(void) -> result_void { return {}; }
 
 		/**
 		 * @brief Called immediately after the worker thread has stopped.
-		 * @return @c std::optional<std::string> containing an error message on failure,
-		 *         or @c std::nullopt on success.
+		 * @return @c result_void containing an error on failure, or success value if successful.
 		 *
 		 * Override this method in derived classes to perform any cleanup or finalization tasks
 		 * once the worker thread has fully exited.
 		 */
-		virtual auto after_stop(void) -> std::optional<std::string> { return std::nullopt; }
+		virtual auto after_stop(void) -> result_void { return {}; }
 
 	protected:
 		/**

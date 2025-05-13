@@ -179,7 +179,7 @@ namespace priority_thread_pool_module
 		 * Derived classes can override this method if custom processing logic
 		 * is needed for job handling or error management.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 	private:
 		/**

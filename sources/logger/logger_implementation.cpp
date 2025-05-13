@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "logger_implementation.h"
+#include "error_handling.h"
 
 #include <fstream>
 #include <chrono>
@@ -76,6 +77,7 @@ namespace log_module
 
 		auto logger::callback_target(const log_types& type) -> void
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return;
@@ -86,6 +88,7 @@ namespace log_module
 
 		auto logger::callback_target() const -> log_types
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return log_types::None;
@@ -96,6 +99,7 @@ namespace log_module
 
 		auto logger::file_target(const log_types& type) -> void
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ != nullptr)
 			{
 				collector_->file_target(type);
@@ -109,6 +113,7 @@ namespace log_module
 
 		auto logger::file_target() const -> log_types
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return log_types::None;
@@ -119,6 +124,7 @@ namespace log_module
 
 		auto logger::console_target(const log_types& type) -> void
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return;
@@ -129,6 +135,7 @@ namespace log_module
 
 		auto logger::console_target() const -> log_types
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return log_types::None;
@@ -204,6 +211,7 @@ namespace log_module
 
 		auto logger::start() -> std::optional<std::string>
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ == nullptr)
 			{
 				return "there is no collector";
@@ -213,35 +221,33 @@ namespace log_module
 			collector_->set_file_queue(file_writer_->get_job_queue());
 			collector_->set_callback_queue(callback_writer_->get_job_queue());
 
-			std::optional<std::string> start_error;
-
-			start_error = console_writer_->start();
-			if (start_error.has_value())
+			auto start_result = console_writer_->start();
+			if (start_result.has_error())
 			{
 				return formatter::format("cannot start {}: {}", console_writer_->get_thread_title(),
-										 start_error.value_or("unknown error"));
+										 start_result.get_error().to_string());
 			}
 
-			start_error = file_writer_->start();
-			if (start_error.has_value())
+			start_result = file_writer_->start();
+			if (start_result.has_error())
 			{
 				return formatter::format("cannot start {}: {}", file_writer_->get_thread_title(),
-										 start_error.value_or("unknown error"));
+										 start_result.get_error().to_string());
 			}
 
-			start_error = callback_writer_->start();
-			if (start_error.has_value())
+			start_result = callback_writer_->start();
+			if (start_result.has_error())
 			{
 				return formatter::format("cannot start {}: {}",
 										 callback_writer_->get_thread_title(),
-										 start_error.value_or("unknown error"));
+										 start_result.get_error().to_string());
 			}
 
-			start_error = collector_->start();
-			if (start_error.has_value())
+			start_result = collector_->start();
+			if (start_result.has_error())
 			{
 				return formatter::format("cannot start {}: {}", collector_->get_thread_title(),
-										 start_error.value_or("unknown error"));
+										 start_result.get_error().to_string());
 			}
 
 			return std::nullopt;
@@ -249,6 +255,7 @@ namespace log_module
 
 		auto logger::stop() -> void
 		{
+			std::lock_guard<std::mutex> lock(collector_mutex_);
 			if (collector_ != nullptr)
 			{
 				collector_->stop();

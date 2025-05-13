@@ -109,13 +109,13 @@ namespace log_module
 		 *
 		 * This method is called periodically by the internal thread loop, delivering each log
 		 * message in the queue to the callback function in turn. If an error occurs during
-		 * processing, an error message is returned.
+		 * processing, an error result is returned.
 		 *
-		 * @return std::optional<std::string>
-		 *         - An empty optional indicates successful processing.
-		 *         - If it contains a value, the string describes the error that occurred.
+		 * @return result_void
+		 *         - A success result indicates successful processing.
+		 *         - An error result contains a description of the error that occurred.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 	private:
 		std::shared_ptr<job_queue> job_queue_; ///< A job queue that manages queued log messages.

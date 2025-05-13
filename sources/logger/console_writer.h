@@ -92,30 +92,27 @@ namespace log_module
 		 * @brief Performs any necessary initialization before starting the thread.
 		 *
 		 * @return
-		 * - An @c std::optional<std::string> which may contain an error message if
-		 *   initialization fails. If no error occurs, an empty (or disengaged) optional
-		 *   indicates success.
+		 * - A result_void indicating success, or an error result with a message if initialization fails.
 		 *
 		 * This method runs once before the worker thread enters its main loop. It can be used
 		 * to validate resources, open files, or set up configurations required by the
 		 * @c console_writer.
 		 */
-		auto before_start() -> std::optional<std::string> override;
+		auto before_start() -> result_void override;
 
 		/**
 		 * @brief The primary work routine that processes and outputs console log messages.
 		 *
 		 * @return
-		 * - An @c std::optional<std::string> which may contain an error message if
-		 *   something goes wrong during task processing. If no error occurs, an empty (or
-		 *   disengaged) optional indicates normal operation.
+		 * - A result_void indicating success, or an error result with a message if something
+		 *   goes wrong during task processing.
 		 *
 		 * This method is repeatedly called in a loop while @c should_continue_work() returns
 		 * @c true. Each iteration typically pulls one or more tasks from the @c job_queue
 		 * and writes them to the console. Any errors encountered can be relayed through
-		 * the optional return value.
+		 * the error result.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 	private:
 		/**

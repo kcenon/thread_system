@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 
 using namespace utility_module;
+using namespace thread_module;
 
 namespace log_module
 {
@@ -88,7 +89,7 @@ namespace log_module
 
 	auto log_job::message() const -> std::string { return log_message_; }
 
-	auto log_job::do_work() -> std::optional<std::string>
+	auto log_job::do_work() -> result_void
 	{
 		try
 		{
@@ -100,8 +101,7 @@ namespace log_module
 			if (!start_time_.has_value())
 			{
 				log_message_ = formatter::format("[{}]", converted_message);
-
-				return std::nullopt;
+				return result_void{};
 			}
 
 			auto time_gap = datetime_tool::time_difference<std::chrono::milliseconds,
@@ -110,15 +110,15 @@ namespace log_module
 
 			log_message_ = formatter::format("[{}] [{} ms]", converted_message, time_gap);
 
-			return std::nullopt;
+			return result_void{};
 		}
 		catch (const std::exception& e)
 		{
-			return std::string(e.what());
+			return error{error_code::job_execution_failed, e.what()};
 		}
 		catch (...)
 		{
-			return "unknown error";
+			return error{error_code::job_execution_failed, "unknown error"};
 		}
 	}
 

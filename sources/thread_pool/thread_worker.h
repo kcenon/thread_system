@@ -108,14 +108,13 @@ namespace thread_pool_module
 
 		/**
 		 * @brief Processes one or more jobs from the queue.
-		 * @return @c std::optional<std::string> containing an error message if the work fails,
-		 *         or @c std::nullopt on success.
+		 * @return @c result_void containing an error if the work fails, or success value otherwise.
 		 *
 		 * This method fetches a job from the queue (if available), executes it, and
 		 * may repeat depending on the implementation. If any job fails, an error
-		 * message can be returned. Otherwise, return @c std::nullopt to indicate success.
+		 * is returned. Otherwise, return a success value.
 		 */
-		auto do_work() -> std::optional<std::string> override;
+		auto do_work() -> result_void override;
 
 	private:
 		/**

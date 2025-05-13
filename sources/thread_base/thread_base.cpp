@@ -52,10 +52,12 @@ namespace thread_module
 	auto thread_base::set_wake_interval(
 		const std::optional<std::chrono::milliseconds>& wake_interval) -> void
 	{
+		// Add thread safety when modifying the wake interval
+		std::scoped_lock<std::mutex> lock(cv_mutex_);
 		wake_interval_ = wake_interval;
 	}
 
-	auto thread_base::start(void) -> std::optional<std::string>
+	auto thread_base::start(void) -> result_void
 	{
 #ifdef USE_STD_JTHREAD
 		if (stop_source_.has_value())
@@ -63,7 +65,7 @@ namespace thread_module
 		if (worker_thread_ && worker_thread_->joinable())
 #endif
 		{
-			return "thread is already running";
+			return result_void{error{error_code::thread_already_running, "thread is already running"}};
 		}
 
 		stop();
@@ -87,11 +89,10 @@ namespace thread_module
 					auto stop_token = stop_source_.value().get_token();
 #endif
 
-					std::optional<std::string> work_error;
-					work_error = before_start();
-					if (work_error.has_value())
+					auto work_result = before_start();
+					if (work_result.has_error())
 					{
-						std::cerr << "error before start: " << work_error.value_or("unknown error")
+						std::cerr << "error before start: " << work_result.get_error().to_string()
 								  << std::endl;
 					}
 
@@ -144,11 +145,11 @@ namespace thread_module
 						{
 							thread_condition_.store(thread_conditions::Working);
 
-							work_error = do_work();
-							if (work_error.has_value())
+							work_result = do_work();
+							if (work_result.has_error())
 							{
 								std::cerr << "error doing work on " << thread_title_ << " : "
-										  << work_error.value_or("unknown error") << std::endl;
+										  << work_result.get_error().to_string() << std::endl;
 							}
 						}
 						catch (const std::exception& e)
@@ -157,10 +158,10 @@ namespace thread_module
 						}
 					}
 
-					work_error = after_stop();
-					if (work_error.has_value())
+					work_result = after_stop();
+					if (work_result.has_error())
 					{
-						std::cerr << "error after stop: " << work_error.value_or("unknown error")
+						std::cerr << "error after stop: " << work_result.get_error().to_string()
 								  << std::endl;
 					}
 				});
@@ -175,17 +176,17 @@ namespace thread_module
 
 			worker_thread_.reset();
 
-			return e.what();
+			return result_void{error{error_code::resource_allocation_failed, e.what()}};
 		}
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto thread_base::stop(void) -> std::optional<std::string>
+	auto thread_base::stop(void) -> result_void
 	{
 		if (worker_thread_ == nullptr)
 		{
-			return "thread is not running";
+			return result_void{error{error_code::thread_not_running, "thread is not running"}};
 		}
 
 		if (worker_thread_->joinable())
@@ -214,10 +215,16 @@ namespace thread_module
 
 		thread_condition_.store(thread_conditions::Stopped);
 
-		return std::nullopt;
+		return {};
 	}
 
-	auto thread_base::is_running(void) const -> bool { return worker_thread_ != nullptr; }
+	auto thread_base::is_running(void) const -> bool
+	{ 
+		// Use the thread_condition_ atomic flag instead of checking the pointer
+		auto condition = thread_condition_.load();
+		return condition == thread_conditions::Working || 
+			   condition == thread_conditions::Waiting;
+	}
 
 	auto thread_base::to_string(void) const -> std::string
 	{

@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 using namespace utility_module;
+using namespace thread_module;
 
 namespace log_module
 {
@@ -61,11 +62,11 @@ namespace log_module
 
 	auto callback_writer::should_continue_work() const -> bool { return !job_queue_->empty(); }
 
-	auto callback_writer::do_work() -> std::optional<std::string>
+	auto callback_writer::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
-			return "there is no job_queue";
+			return result_void{error{error_code::resource_allocation_failed, "there is no job_queue"}};
 		}
 
 		auto remaining_logs = job_queue_->dequeue_batch();
@@ -83,16 +84,16 @@ namespace log_module
 			auto current_log
 				= std::unique_ptr<message_job>(static_cast<message_job*>(current_job.release()));
 
-			auto work_error = current_log->do_work();
-			if (work_error.has_value())
+			auto work_result = current_log->do_work();
+			if (work_result.has_error())
 			{
-				std::cout << work_error.value() << std::endl;
+				std::cout << work_result.get_error().to_string() << std::endl;
 				continue;
 			}
 
 			callback_(current_log->log_type(), current_log->datetime(), current_log->message());
 		}
 
-		return std::nullopt;
+		return {};
 	}
 }

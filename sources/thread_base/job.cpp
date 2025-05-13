@@ -48,7 +48,24 @@ namespace thread_module
 
 	auto job::get_name(void) const -> std::string { return name_; }
 
-	auto job::do_work(void) -> std::optional<std::string> { return "not implemented"; }
+	auto job::do_work(void) -> result_void { 
+    // For backward compatibility, we convert the old string-based error to the new typed error
+    std::optional<std::string> old_result = "not implemented";
+    
+    if (!old_result.has_value()) {
+        return result_void{};
+    } else {
+        return error{error_code::not_implemented, old_result.value()};
+    }
+}
+
+auto job::set_cancellation_token(const cancellation_token& token) -> void {
+    cancellation_token_ = token;
+}
+
+auto job::get_cancellation_token() const -> cancellation_token {
+    return cancellation_token_;
+}
 
 	auto job::set_job_queue(const std::shared_ptr<job_queue>& job_queue) -> void
 	{

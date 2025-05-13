@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job.h"
 #include "log_types.h"
+#include "error_handling.h"
 
 #include <chrono>
 #include <string>
@@ -138,21 +139,12 @@ namespace log_module
 		 * This method is called (for example, by a job system or thread pool) to perform
 		 * the actual console output. It typically prints the log message to `std::cout` or
 		 * another standard output stream. If the operation fails for any reason (e.g., issues
-		 * with the output stream), an error message will be returned.
+		 * with the output stream), an error will be returned.
 		 *
-		 * @return An `std::optional<std::string>` that contains an error description if
-		 *         the operation fails, or `std::nullopt` if it succeeds.
-		 *
-		 * Usage example:
-		 * @code
-		 * if (auto error_opt = my_job.do_work())
-		 * {
-		 *     // If there's an error, handle it here
-		 *     std::cerr << "Logging failed: " << *error_opt << std::endl;
-		 * }
-		 * @endcode
+		 * @return A result_void that contains an error if the operation fails, or a success
+		 *         result if it succeeds.
 		 */
-		[[nodiscard]] auto do_work() -> std::optional<std::string> override;
+		[[nodiscard]] auto do_work() -> result_void override;
 
 	private:
 		/**
