@@ -13,6 +13,7 @@
 #include <type_traits>
 #include <string_view>
 #include <ostream>
+#include <functional>
 #include <stdexcept>
 
 namespace thread_module {
