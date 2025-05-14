@@ -1,15 +1,17 @@
 <map id="sources/thread_base/error_handling.h" name="sources/thread_base/error_handling.h">
-<area shape="rect" id="Node000001" title="Modern error handling for the thread system." alt="" coords="214,5,370,45"/>
+<area shape="rect" id="Node000001" title="Modern error handling for the thread system." alt="" coords="274,5,430,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,64,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,48,78,94,77,89,230,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="275,47,78,96,77,90,273,42"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="88,93,163,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="253,48,163,90,161,85,251,43"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="299,48,172,91,171,86,297,43"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="187,93,279,119"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="280,47,253,84,248,80,276,44"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="325,48,264,88,261,84,322,43"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="303,93,401,119"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="309,44,337,81,333,84,304,47"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="355,46,355,79,349,79,349,46"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="425,93,501,119"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="334,43,426,85,424,90,332,48"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="380,43,437,83,434,87,377,48"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="525,93,611,119"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="359,43,515,87,514,92,357,48"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="405,43,524,86,523,91,403,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="635,93,722,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="431,43,623,89,621,94,430,48"/>
 </map>
