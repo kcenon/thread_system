@@ -1,5 +1,5 @@
 <map id="sources/thread_base/thread_base.cpp" name="sources/thread_base/thread_base.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1153,5,1309,45"/>
+<area shape="rect" id="Node000001" title="Implementation of the core thread base class." alt="" coords="1153,5,1309,45"/>
 <area shape="rect" id="Node000002" href="$df/dbc/thread__base_8h.html" title=" " alt="" coords="1174,93,1289,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1234,46,1234,79,1229,79,1229,46"/>
 <area shape="rect" id="Node000003" href="$de/d52/formatter_8h.html" title=" " alt="" coords="460,240,555,265"/>

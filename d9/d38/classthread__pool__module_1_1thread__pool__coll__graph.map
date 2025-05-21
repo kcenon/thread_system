@@ -1,12 +1,12 @@
 <map id="thread_pool_module::thread_pool" name="thread_pool_module::thread_pool">
-<area shape="rect" id="Node000001" title="Manages a group of thread_worker instances and a shared job_queue for concurrent job processing." alt="" coords="685,2652,831,2932"/>
+<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="685,2652,831,2932"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,2502,196,2582"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,2588,217,2626,341,2679,470,2721,589,2753,685,2774,684,2780,587,2758,468,2727,339,2684,214,2630,155,2593"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="785,565,864,631"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="829,631,838,790,843,1002,843,1514,840,1604,830,1679,802,1806,774,1933,764,2007,761,2097,761,2543,761,2635,755,2635,755,2543,755,2097,759,2007,768,1932,797,1805,825,1678,834,1603,838,1514,838,1002,833,790,824,631"/>
 <area shape="rect" id="Node000012" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="893,881,1082,1126"/>
 <area shape="poly" id="edge12_Node000012_Node000003" title=" " alt="" coords="837,630,879,747,928,864,923,866,874,749,832,632"/>
-<area shape="rect" id="Node000022" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="513,811,713,1196"/>
+<area shape="rect" id="Node000022" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="513,811,713,1196"/>
 <area shape="poly" id="edge30_Node000022_Node000003" title=" " alt="" coords="809,632,732,773,720,797,715,795,728,771,805,630"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="790,298,921,378"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="852,392,831,566,826,565,846,391"/>

@@ -77,6 +77,9 @@ $(function() {
   <div class="headertitle"><div class="title">log_module Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Thread-safe logging system built on the thread system foundation.  
+<a href="../../d9/de0/namespacelog__module.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -128,8 +131,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the string representation of a given <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> value.  <br /></td></tr>
 <tr class="separator:a4f66017a4ded34b2b7d3754b1ad9fe8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8dd1c69814a37ac43324d3cc2a9f86f" id="r_ae8dd1c69814a37ac43324d3cc2a9f86f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#ae8dd1c69814a37ac43324d3cc2a9f86f">set_title</a> (const std::string &amp;title) -&gt; void</td></tr>
+<tr class="memdesc:ae8dd1c69814a37ac43324d3cc2a9f86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the title/name for the logger instance.  <br /></td></tr>
 <tr class="separator:ae8dd1c69814a37ac43324d3cc2a9f86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a250c6bab2fe920d1fc947b0b890a490c" id="r_a250c6bab2fe920d1fc947b0b890a490c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#a250c6bab2fe920d1fc947b0b890a490c">callback_target</a> (const <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> &amp;type) -&gt; void</td></tr>
+<tr class="memdesc:a250c6bab2fe920d1fc947b0b890a490c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures which log levels are sent to the callback target.  <br /></td></tr>
 <tr class="separator:a250c6bab2fe920d1fc947b0b890a490c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafba6e347e5de0180d46dc2144317054" id="r_aafba6e347e5de0180d46dc2144317054"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#aafba6e347e5de0180d46dc2144317054">callback_target</a> () -&gt; <a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a></td></tr>
 <tr class="separator:aafba6e347e5de0180d46dc2144317054"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -232,7 +237,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a2a4983f8992953edd30791d5ac0df4d4" id="r_a2a4983f8992953edd30791d5ac0df4d4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/de0/namespacelog__module.html#a2a4983f8992953edd30791d5ac0df4d4">stop</a> () -&gt; void</td></tr>
 <tr class="separator:a2a4983f8992953edd30791d5ac0df4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Thread-safe logging system built on the thread system foundation. </p>
+<p>The <a class="el" href="../../d9/de0/namespacelog__module.html" title="Thread-safe logging system built on the thread system foundation.">log_module</a> namespace provides a comprehensive, thread-safe logging system that leverages the <a class="el" href="../../de/d48/namespacethread__module.html" title="Core threading foundation of the thread system library.">thread_module</a> infrastructure for asynchronous log processing.</p>
+<p>Key components include:</p><ul>
+<li>Logger interface functions for different log levels</li>
+<li>Log collectors for processing and distributing log messages</li>
+<li>Writers for different output targets (console, file, callback)</li>
+<li>log_types enumeration defining various logging levels</li>
+</ul>
+<p>Features:</p><ul>
+<li>Thread-safe logging with minimal impact on calling threads</li>
+<li>Support for multiple output targets simultaneously</li>
+<li>Filtering by log level for each output target</li>
+<li>Timestamp and type information for each log entry</li>
+<li>Formatted logging with both C-style format strings and modern formatting</li>
+</ul>
+<p>The logging system is designed to be high-performance with minimal overhead by processing log messages asynchronously in dedicated worker threads.</p>
+<p>The <a class="el" href="../../d9/de0/namespacelog__module.html" title="Thread-safe logging system built on the thread system foundation.">log_module</a> namespace provides a comprehensive, thread-safe logging system that leverages the <a class="el" href="../../de/d48/namespacethread__module.html" title="Core threading foundation of the thread system library.">thread_module</a> infrastructure for asynchronous log processing. </p>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ac59af6ec9704b7fd0d73e7becbc54709" name="ac59af6ec9704b7fd0d73e7becbc54709"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac59af6ec9704b7fd0d73e7becbc54709">&#9670;&#160;</a></span>log_types</h2>
 
@@ -317,10 +340,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00049">49</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>    {</div>
-<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">return</span> implementation::logger::handle().callback_target();</div>
-<div class="line"><span class="lineno">   52</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00093">93</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>    {</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">return</span> implementation::logger::handle().callback_target();</div>
+<div class="line"><span class="lineno">   96</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -359,16 +382,30 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00044">44</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>    {</div>
-<div class="line"><span class="lineno">   46</span>        implementation::logger::handle().callback_target(type);</div>
-<div class="line"><span class="lineno">   47</span>    }</div>
+<p>Configures which log levels are sent to the callback target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The log types/levels to be sent to registered callbacks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Use this method to control which message types will trigger callback notifications. Only messages matching the specified types will be forwarded to the callback function registered with <a class="el" href="../../d9/de0/namespacelog__module.html#a4a6c4a1e9c1dd96ee14b74a742da947e">message_callback()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d9/de0/namespacelog__module.html#a4a6c4a1e9c1dd96ee14b74a742da947e">message_callback()</a> To register a callback function </dd>
+<dd>
+<a class="el" href="../../d9/de0/namespacelog__module.html#aafba6e347e5de0180d46dc2144317054">callback_target()</a> (no-arg version) To query current settings </dd>
+<dd>
+<a class="el" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709" title="Enumerates different categories of log messages.">log_types</a> For available log type flags </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00088">88</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    {</div>
+<div class="line"><span class="lineno">   90</span>        implementation::logger::handle().callback_target(type);</div>
+<div class="line"><span class="lineno">   91</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph" id="ad9/de0/namespacelog__module_a250c6bab2fe920d1fc947b0b890a490c_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,165,45"/>
+<area shape="rect" title="Configures which log levels are sent to the callback target." alt="" coords="5,5,165,45"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="213,5,424,45"/>
 <area shape="poly" title=" " alt="" coords="165,23,200,23,200,28,165,28"/>
 </map>
@@ -400,10 +437,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00069">69</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>    {</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">return</span> implementation::logger::handle().console_target();</div>
-<div class="line"><span class="lineno">   72</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00113">113</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>    {</div>
+<div class="line"><span class="lineno">  115</span>        <span class="keywordflow">return</span> implementation::logger::handle().console_target();</div>
+<div class="line"><span class="lineno">  116</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -442,10 +479,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00064">64</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   65</span>    {</div>
-<div class="line"><span class="lineno">   66</span>        implementation::logger::handle().console_target(type);</div>
-<div class="line"><span class="lineno">   67</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00108">108</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>    {</div>
+<div class="line"><span class="lineno">  110</span>        implementation::logger::handle().console_target(type);</div>
+<div class="line"><span class="lineno">  111</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -483,10 +520,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00059">59</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   60</span>    {</div>
-<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">return</span> implementation::logger::handle().file_target();</div>
-<div class="line"><span class="lineno">   62</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00103">103</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>    {</div>
+<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> implementation::logger::handle().file_target();</div>
+<div class="line"><span class="lineno">  106</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -525,10 +562,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00054">54</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>    {</div>
-<div class="line"><span class="lineno">   56</span>        implementation::logger::handle().file_target(type);</div>
-<div class="line"><span class="lineno">   57</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00098">98</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>    {</div>
+<div class="line"><span class="lineno">  100</span>        implementation::logger::handle().file_target(type);</div>
+<div class="line"><span class="lineno">  101</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -566,10 +603,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00086">86</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>    {</div>
-<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">return</span> implementation::logger::handle().get_max_lines();</div>
-<div class="line"><span class="lineno">   89</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00130">130</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>    {</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> implementation::logger::handle().get_max_lines();</div>
+<div class="line"><span class="lineno">  133</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -607,10 +644,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00096">96</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   97</span>    {</div>
-<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">return</span> implementation::logger::handle().get_use_backup();</div>
-<div class="line"><span class="lineno">   99</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00140">140</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  141</span>    {</div>
+<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> implementation::logger::handle().get_use_backup();</div>
+<div class="line"><span class="lineno">  143</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -649,10 +686,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00074">74</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>    {</div>
-<div class="line"><span class="lineno">   78</span>        implementation::logger::handle().message_callback(callback);</div>
-<div class="line"><span class="lineno">   79</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00118">118</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>    {</div>
+<div class="line"><span class="lineno">  122</span>        implementation::logger::handle().message_callback(callback);</div>
+<div class="line"><span class="lineno">  123</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -691,10 +728,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00081">81</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   82</span>    {</div>
-<div class="line"><span class="lineno">   83</span>        implementation::logger::handle().set_max_lines(max_lines);</div>
-<div class="line"><span class="lineno">   84</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00125">125</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>    {</div>
+<div class="line"><span class="lineno">  127</span>        implementation::logger::handle().set_max_lines(max_lines);</div>
+<div class="line"><span class="lineno">  128</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -733,16 +770,26 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00039">39</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>    {</div>
-<div class="line"><span class="lineno">   41</span>        implementation::logger::handle().set_title(title);</div>
-<div class="line"><span class="lineno">   42</span>    }</div>
+<p>Sets the title/name for the logger instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>String identifier for this logger instance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The title is used in log messages to identify the source of the log and may appear in log file names or other output.</p>
+<dl class="section note"><dt>Note</dt><dd>This should typically be called once during application startup. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00071">71</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>    {</div>
+<div class="line"><span class="lineno">   73</span>        implementation::logger::handle().set_title(title);</div>
+<div class="line"><span class="lineno">   74</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph.png" border="0" usemap="#ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph" alt=""/></div>
 <map name="ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph" id="ad9/de0/namespacelog__module_ae8dd1c69814a37ac43324d3cc2a9f86f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,13,164,38"/>
+<area shape="rect" title="Sets the title/name for the logger instance." alt="" coords="5,13,164,38"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="212,5,423,45"/>
 <area shape="poly" title=" " alt="" coords="165,23,198,23,198,28,165,28"/>
 </map>
@@ -775,10 +822,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00091">91</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        implementation::logger::handle().set_use_backup(use_backup);</div>
-<div class="line"><span class="lineno">   94</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00135">135</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  136</span>    {</div>
+<div class="line"><span class="lineno">  137</span>        implementation::logger::handle().set_use_backup(use_backup);</div>
+<div class="line"><span class="lineno">  138</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -817,10 +864,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00101">101</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  102</span>    {</div>
-<div class="line"><span class="lineno">  103</span>        implementation::logger::handle().set_wake_interval(interval);</div>
-<div class="line"><span class="lineno">  104</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00145">145</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>    {</div>
+<div class="line"><span class="lineno">  147</span>        implementation::logger::handle().set_wake_interval(interval);</div>
+<div class="line"><span class="lineno">  148</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -858,10 +905,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00293">293</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  294</span>    {</div>
-<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">return</span> implementation::logger::handle().start();</div>
-<div class="line"><span class="lineno">  296</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00337">337</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  338</span>    {</div>
+<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">return</span> implementation::logger::handle().start();</div>
+<div class="line"><span class="lineno">  340</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -899,11 +946,11 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00298">298</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  299</span>    {</div>
-<div class="line"><span class="lineno">  300</span>        implementation::logger::handle().stop();</div>
-<div class="line"><span class="lineno">  301</span>        implementation::logger::destroy();</div>
-<div class="line"><span class="lineno">  302</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00342">342</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  343</span>    {</div>
+<div class="line"><span class="lineno">  344</span>        implementation::logger::handle().stop();</div>
+<div class="line"><span class="lineno">  345</span>        implementation::logger::destroy();</div>
+<div class="line"><span class="lineno">  346</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -943,10 +990,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00106">106</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  107</span>    {</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">return</span> implementation::logger::handle().time_point();</div>
-<div class="line"><span class="lineno">  109</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00150">150</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    {</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">return</span> implementation::logger::handle().time_point();</div>
+<div class="line"><span class="lineno">  153</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1084,10 +1131,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00130">130</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  131</span>    {</div>
-<div class="line"><span class="lineno">  132</span>        implementation::logger::handle().write(log_types::Debug, formats, args...);</div>
-<div class="line"><span class="lineno">  133</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00174">174</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>    {</div>
+<div class="line"><span class="lineno">  176</span>        implementation::logger::handle().write(log_types::Debug, formats, args...);</div>
+<div class="line"><span class="lineno">  177</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1144,10 +1191,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00212">212</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  216</span>    {</div>
-<div class="line"><span class="lineno">  217</span>        implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  218</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00256">256</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  260</span>    {</div>
+<div class="line"><span class="lineno">  261</span>        implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  262</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1207,10 +1254,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00267">267</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  271</span>    {</div>
-<div class="line"><span class="lineno">  272</span>        implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  273</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00311">311</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  315</span>    {</div>
+<div class="line"><span class="lineno">  316</span>        implementation::logger::handle().write(log_types::Debug, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  317</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1264,10 +1311,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00166">166</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  167</span>    {</div>
-<div class="line"><span class="lineno">  168</span>        implementation::logger::handle().write(log_types::Debug, formats, args...);</div>
-<div class="line"><span class="lineno">  169</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00210">210</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  211</span>    {</div>
+<div class="line"><span class="lineno">  212</span>        implementation::logger::handle().write(log_types::Debug, formats, args...);</div>
+<div class="line"><span class="lineno">  213</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1318,10 +1365,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00118">118</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  119</span>    {</div>
-<div class="line"><span class="lineno">  120</span>        implementation::logger::handle().write(log_types::Error, formats, args...);</div>
-<div class="line"><span class="lineno">  121</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00162">162</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>    {</div>
+<div class="line"><span class="lineno">  164</span>        implementation::logger::handle().write(log_types::Error, formats, args...);</div>
+<div class="line"><span class="lineno">  165</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1390,10 +1437,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00193">193</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  197</span>    {</div>
-<div class="line"><span class="lineno">  198</span>        implementation::logger::handle().write(log_types::Error, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  199</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00237">237</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  241</span>    {</div>
+<div class="line"><span class="lineno">  242</span>        implementation::logger::handle().write(log_types::Error, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  243</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1453,10 +1500,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00248">248</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  252</span>    {</div>
-<div class="line"><span class="lineno">  253</span>        implementation::logger::handle().write(log_types::Error, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  254</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00292">292</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  296</span>    {</div>
+<div class="line"><span class="lineno">  297</span>        implementation::logger::handle().write(log_types::Error, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  298</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1510,10 +1557,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00154">154</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  155</span>    {</div>
-<div class="line"><span class="lineno">  156</span>        implementation::logger::handle().write(log_types::Error, formats, args...);</div>
-<div class="line"><span class="lineno">  157</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00198">198</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  199</span>    {</div>
+<div class="line"><span class="lineno">  200</span>        implementation::logger::handle().write(log_types::Error, formats, args...);</div>
+<div class="line"><span class="lineno">  201</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1564,10 +1611,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00112">112</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  113</span>    {</div>
-<div class="line"><span class="lineno">  114</span>        implementation::logger::handle().write(log_types::Exception, formats, args...);</div>
-<div class="line"><span class="lineno">  115</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00156">156</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>    {</div>
+<div class="line"><span class="lineno">  158</span>        implementation::logger::handle().write(log_types::Exception, formats, args...);</div>
+<div class="line"><span class="lineno">  159</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1624,10 +1671,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00184">184</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  188</span>    {</div>
-<div class="line"><span class="lineno">  189</span>        implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  190</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00228">228</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  232</span>    {</div>
+<div class="line"><span class="lineno">  233</span>        implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  234</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1687,10 +1734,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00239">239</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  243</span>    {</div>
-<div class="line"><span class="lineno">  244</span>        implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  245</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00283">283</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  287</span>    {</div>
+<div class="line"><span class="lineno">  288</span>        implementation::logger::handle().write(log_types::Exception, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  289</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1744,10 +1791,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00148">148</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  149</span>    {</div>
-<div class="line"><span class="lineno">  150</span>        implementation::logger::handle().write(log_types::Exception, formats, args...);</div>
-<div class="line"><span class="lineno">  151</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00192">192</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  193</span>    {</div>
+<div class="line"><span class="lineno">  194</span>        implementation::logger::handle().write(log_types::Exception, formats, args...);</div>
+<div class="line"><span class="lineno">  195</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1798,10 +1845,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00124">124</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  125</span>    {</div>
-<div class="line"><span class="lineno">  126</span>        implementation::logger::handle().write(log_types::Information, formats, args...);</div>
-<div class="line"><span class="lineno">  127</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00168">168</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  169</span>    {</div>
+<div class="line"><span class="lineno">  170</span>        implementation::logger::handle().write(log_types::Information, formats, args...);</div>
+<div class="line"><span class="lineno">  171</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1858,11 +1905,11 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00202">202</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  206</span>    {</div>
-<div class="line"><span class="lineno">  207</span>        implementation::logger::handle().write(log_types::Information, time_point, formats,</div>
-<div class="line"><span class="lineno">  208</span>                                               args...);</div>
-<div class="line"><span class="lineno">  209</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00246">246</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  250</span>    {</div>
+<div class="line"><span class="lineno">  251</span>        implementation::logger::handle().write(log_types::Information, time_point, formats,</div>
+<div class="line"><span class="lineno">  252</span>                                               args...);</div>
+<div class="line"><span class="lineno">  253</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1922,11 +1969,11 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00257">257</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  261</span>    {</div>
-<div class="line"><span class="lineno">  262</span>        implementation::logger::handle().write(log_types::Information, time_point, formats,</div>
-<div class="line"><span class="lineno">  263</span>                                               args...);</div>
-<div class="line"><span class="lineno">  264</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00301">301</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>    {</div>
+<div class="line"><span class="lineno">  306</span>        implementation::logger::handle().write(log_types::Information, time_point, formats,</div>
+<div class="line"><span class="lineno">  307</span>                                               args...);</div>
+<div class="line"><span class="lineno">  308</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1980,10 +2027,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00160">160</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  161</span>    {</div>
-<div class="line"><span class="lineno">  162</span>        implementation::logger::handle().write(log_types::Information, formats, args...);</div>
-<div class="line"><span class="lineno">  163</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00204">204</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>    {</div>
+<div class="line"><span class="lineno">  206</span>        implementation::logger::handle().write(log_types::Information, formats, args...);</div>
+<div class="line"><span class="lineno">  207</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2034,10 +2081,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00142">142</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>    {</div>
-<div class="line"><span class="lineno">  144</span>        implementation::logger::handle().write(log_types::Parameter, formats, args...);</div>
-<div class="line"><span class="lineno">  145</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00186">186</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  187</span>    {</div>
+<div class="line"><span class="lineno">  188</span>        implementation::logger::handle().write(log_types::Parameter, formats, args...);</div>
+<div class="line"><span class="lineno">  189</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2094,10 +2141,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00230">230</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  234</span>    {</div>
-<div class="line"><span class="lineno">  235</span>        implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  236</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00274">274</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  278</span>    {</div>
+<div class="line"><span class="lineno">  279</span>        implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  280</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2157,10 +2204,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00285">285</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  289</span>    {</div>
-<div class="line"><span class="lineno">  290</span>        implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  291</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00329">329</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  333</span>    {</div>
+<div class="line"><span class="lineno">  334</span>        implementation::logger::handle().write(log_types::Parameter, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  335</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2214,10 +2261,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00178">178</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  179</span>    {</div>
-<div class="line"><span class="lineno">  180</span>        implementation::logger::handle().write(log_types::Parameter, formats, args...);</div>
-<div class="line"><span class="lineno">  181</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00222">222</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  223</span>    {</div>
+<div class="line"><span class="lineno">  224</span>        implementation::logger::handle().write(log_types::Parameter, formats, args...);</div>
+<div class="line"><span class="lineno">  225</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2268,10 +2315,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00136">136</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>    {</div>
-<div class="line"><span class="lineno">  138</span>        implementation::logger::handle().write(log_types::Sequence, formats, args...);</div>
-<div class="line"><span class="lineno">  139</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00180">180</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  181</span>    {</div>
+<div class="line"><span class="lineno">  182</span>        implementation::logger::handle().write(log_types::Sequence, formats, args...);</div>
+<div class="line"><span class="lineno">  183</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2338,10 +2385,10 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00221">221</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  225</span>    {</div>
-<div class="line"><span class="lineno">  226</span>        implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  227</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00265">265</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  269</span>    {</div>
+<div class="line"><span class="lineno">  270</span>        implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  271</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2401,10 +2448,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00276">276</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  280</span>    {</div>
-<div class="line"><span class="lineno">  281</span>        implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);</div>
-<div class="line"><span class="lineno">  282</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00320">320</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  324</span>    {</div>
+<div class="line"><span class="lineno">  325</span>        implementation::logger::handle().write(log_types::Sequence, time_point, formats, args...);</div>
+<div class="line"><span class="lineno">  326</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2458,10 +2505,10 @@ template&lt;typename... WideArgs&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00172">172</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  173</span>    {</div>
-<div class="line"><span class="lineno">  174</span>        implementation::logger::handle().write(log_types::Sequence, formats, args...);</div>
-<div class="line"><span class="lineno">  175</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/d8c/logger_8h_source.html#l00216">216</a> of file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  217</span>    {</div>
+<div class="line"><span class="lineno">  218</span>        implementation::logger::handle().write(log_types::Sequence, formats, args...);</div>
+<div class="line"><span class="lineno">  219</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2478,7 +2525,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 09:35:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed May 21 2025 15:39:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

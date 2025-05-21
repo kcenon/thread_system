@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: Threads Documentation</title>
+<title>Thread System: Thread System Documentation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,35 +69,83 @@ $(function() {
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Threads Documentation </div></div>
+  <div class="headertitle"><div class="title">Thread System Documentation </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Threads project provides several systems for convenient thread usage:</p>
-<ol type="1">
-<li>Thread Base<ul>
-<li>A foundational class for creating custom thread-based components.</li>
+<div class="textblock"><p>The Thread System library provides a comprehensive set of thread management components designed to simplify complex multithreading tasks and enable efficient and safe concurrent programming.</p>
+<h1><a class="anchor" id="main_components"></a>
+Main Components</h1>
+<h2><a class="anchor" id="thread_base"></a>
+Thread Base (thread_module)</h2>
+<ul>
+<li>A foundational class for creating custom worker threads</li>
+<li>Provides lifecycle management (start/stop) and worker hooks</li>
+<li>Supports both std::jthread (C++20) and std::thread through conditional compilation</li>
+<li>Thread-safe design with careful synchronization</li>
+<li>See namespace <a class="el" href="de/d48/namespacethread__module.html">thread_module</a> for details</li>
 </ul>
-</li>
-<li>Logger<ul>
-<li>Built upon the reusable thread base, providing efficient logging capabilities.</li>
+<h2><a class="anchor" id="logger"></a>
+Logger System (log_module)</h2>
+<ul>
+<li>High-performance, thread-safe logging system built on Thread Base</li>
+<li>Multiple output targets (console, file, callback)</li>
+<li>Asynchronous processing for minimal impact on calling threads</li>
+<li>Configurable log levels and formatting options</li>
+<li>See namespace <a class="el" href="d9/de0/namespacelog__module.html">log_module</a> for details</li>
 </ul>
-</li>
-<li>Thread Pool<ul>
-<li>Implements a pool of worker threads, also based on the reusable thread base.</li>
+<h2><a class="anchor" id="thread_pool"></a>
+Thread Pool (thread_pool_module)</h2>
+<ul>
+<li>Manages a group of workers that process jobs from a shared queue</li>
+<li>Efficient reuse of threads to reduce creation/destruction overhead</li>
+<li>Simple interface for submitting asynchronous tasks</li>
+<li>Scalable design for various workloads</li>
+<li>See namespace <a class="el" href="d8/d98/namespacethread__pool__module.html">thread_pool_module</a> for details</li>
 </ul>
-</li>
-<li>Priority Thread Pool<ul>
-<li>An advanced thread pool that supports job prioritization, built on the same thread base.</li>
+<h2><a class="anchor" id="priority_thread_pool"></a>
+Priority Thread Pool (priority_thread_pool_module)</h2>
+<ul>
+<li>Advanced thread pool with priority-based job scheduling</li>
+<li>Ensures important tasks are processed ahead of less important ones</li>
+<li>Customizable priority types through templates</li>
+<li>Ideal for applications with mixed-priority workloads</li>
+<li>See namespace <a class="el" href="d8/da5/namespacepriority__thread__pool__module.html">priority_thread_pool_module</a> for details</li>
 </ul>
-</li>
-</ol>
-<p>In addition to these core components, this project includes sample code demonstrating how to effectively utilize these systems in your applications.</p>
-<p>For detailed information on each component and usage examples, please refer to the respective sections in this documentation. </p>
+<h2><a class="anchor" id="utilities"></a>
+Utilities (utility_module)</h2>
+<ul>
+<li>Supporting components for formatting, string conversion, and more</li>
+<li>Error handling utilities with result types</li>
+<li>Date/time helpers and file operations</li>
+<li>See namespace <a class="el" href="dd/d2a/namespaceutility__module.html">utility_module</a> for details</li>
+</ul>
+<h1><a class="anchor" id="design_principles"></a>
+Design Principles</h1>
+<p>The Thread System is designed with the following principles:</p><ul>
+<li><b>Hierarchical Architecture</b>: Components build upon each other in a logical hierarchy</li>
+<li><b>Thread Safety</b>: All public APIs are thread-safe with clear documentation</li>
+<li><b>Flexible Configuration</b>: Customizable behavior through inheritance and templates</li>
+<li><b>Modern C++</b>: Leverages C++20 features where available with fallbacks for compatibility</li>
+<li><b>Performance</b>: Minimizes overhead and maximizes throughput</li>
+</ul>
+<h1><a class="anchor" id="usage_examples"></a>
+Usage Examples</h1>
+<p>The library includes comprehensive sample code demonstrating:</p><ul>
+<li>Basic logger usage</li>
+<li>Thread pool for parallel job processing</li>
+<li>Priority-based thread management</li>
+<li>Custom thread implementations</li>
+<li>Error handling patterns</li>
+</ul>
+<p>For detailed information on each component and usage examples, please refer to the respective sections in this documentation.</p>
+<h1><a class="anchor" id="thread_modules"></a>
+Core Modules</h1>
+<p>Each namespace encapsulates a logical set of components: </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 09:35:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed May 21 2025 15:39:40 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['documentation_0',['Threads Documentation',['../index.html',1,'']]]
+  ['documentation_0',['Thread System Documentation',['../index.html',1,'']]]
 ];

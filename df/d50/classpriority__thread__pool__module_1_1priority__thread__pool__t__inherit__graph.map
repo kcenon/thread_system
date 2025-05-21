@@ -1,5 +1,5 @@
 <map id="priority_thread_pool_module::priority_thread_pool_t&lt; priority_type &gt;" name="priority_thread_pool_module::priority_thread_pool_t&lt; priority_type &gt;">
-<area shape="rect" id="Node000001" title="Manages a pool of threads to execute jobs based on priority levels." alt="" coords="31,148,224,523"/>
+<area shape="rect" id="Node000001" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="31,148,224,523"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,5,249,100"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,114,130,148,125,148,125,114"/>
 </map>

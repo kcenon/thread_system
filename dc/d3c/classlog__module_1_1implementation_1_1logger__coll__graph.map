@@ -6,7 +6,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="467,1842,716,2014,713,2018,464,1846"/>
 <area shape="rect" id="Node000003" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="318,1306,499,1651"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,1652,411,1748,406,1748,406,1652"/>
-<area shape="rect" id="Node000004" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="522,779,722,1164"/>
+<area shape="rect" id="Node000004" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="522,779,722,1164"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="516,1152,505,1166,492,1177,482,1189,456,1246,437,1307,432,1305,451,1244,477,1187,489,1174,501,1162,512,1149"/>
 <area shape="rect" id="Node000015" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="523,1399,707,1559"/>
 <area shape="poly" id="edge16_Node000015_Node000004" title=" " alt="" coords="517,1147,491,1189,487,1210,491,1231,501,1243,513,1254,555,1326,588,1397,583,1399,550,1329,509,1258,497,1246,486,1233,481,1210,486,1187,512,1144"/>

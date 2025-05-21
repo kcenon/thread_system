@@ -1,6 +1,6 @@
 <map id="thread_pool_module::thread_worker" name="thread_pool_module::thread_worker">
 <area shape="rect" id="Node000001" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="299,1174,483,1334"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="684,591,884,976"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="684,591,884,976"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="711,989,675,1040,630,1082,611,1092,594,1097,562,1096,530,1094,514,1098,496,1106,460,1137,432,1175,428,1172,456,1134,493,1102,512,1093,530,1089,562,1090,594,1092,609,1087,626,1078,671,1036,706,986"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="255,13,339,78"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="296,78,284,179,276,313,276,381,280,442,291,492,307,526,341,557,375,571,411,574,448,571,487,566,528,564,571,570,616,588,646,608,673,632,670,636,643,613,613,593,569,575,528,569,487,571,448,576,411,579,374,576,338,561,303,530,285,494,275,443,271,381,271,313,279,179,290,78"/>

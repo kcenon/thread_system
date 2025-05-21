@@ -78,6 +78,9 @@ $(function() {
   <div class="headertitle"><div class="title">priority_thread_pool_module Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Priority-based thread pool implementation for job scheduling with priorities.  
+<a href="../../d8/da5/namespacepriority__thread__pool__module.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -96,7 +99,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a job that carries a specific priority level.  <a href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html">priority_thread_pool_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages a pool of threads to execute jobs based on priority levels.  <a href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A thread pool that schedules and executes jobs based on their priority levels.  <a href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html">priority_thread_worker_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template-based worker thread class that processes jobs from a priority job queue.  <a href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html#details">More...</a><br /></td></tr>
@@ -138,7 +141,24 @@ Functions</h2></td></tr>
 <tr class="memdesc:a07f1cd1c2f47f706770e2987e7d93233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector containing all possible <code>job_priorities</code> values.  <br /></td></tr>
 <tr class="separator:a07f1cd1c2f47f706770e2987e7d93233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Priority-based thread pool implementation for job scheduling with priorities. </p>
+<p>The <a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html" title="Priority-based thread pool implementation for job scheduling with priorities.">priority_thread_pool_module</a> namespace extends the basic thread pool concept with priority-based scheduling of jobs. It allows jobs to be processed according to their importance or urgency rather than just their order of submission.</p>
+<p>Key components include:</p><ul>
+<li><a class="el" href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels.">priority_thread_pool_t</a>: A templated thread pool class supporting prioritized job scheduling</li>
+<li><a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template-based worker thread class that processes jobs from a priority job queue.">priority_thread_worker_t</a>: A worker thread that retrieves jobs based on priority</li>
+<li><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a>: A job with an associated priority level</li>
+<li><a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template-based queue that manages jobs with distinct priority levels.">priority_job_queue_t</a>: A thread-safe job queue that orders jobs by priority</li>
+<li>job_priorities: Default enumeration of priority levels</li>
+</ul>
+<p>This implementation allows for:</p><ul>
+<li>Custom priority types through template parameters</li>
+<li>Higher priority jobs being processed ahead of lower priority ones</li>
+<li>Dynamic adjustment of priorities based on application needs</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d8/d98/namespacethread__pool__module.html" title="Thread pool implementation for managing worker threads.">thread_pool_module</a> for the basic non-prioritized implementation</dd></dl>
+<p>The <a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html" title="Priority-based thread pool implementation for job scheduling with priorities.">priority_thread_pool_module</a> namespace extends the basic thread pool concept with priority-based scheduling of jobs, allowing tasks to be processed according to their importance rather than just their order of submission. </p>
+</div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a3c9f959103e3daa56f96a3b4ec6147c5" name="a3c9f959103e3daa56f96a3b4ec6147c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c9f959103e3daa56f96a3b4ec6147c5">&#9670;&#160;</a></span>callback_priority_job</h2>
 
@@ -207,7 +227,7 @@ Functions</h2></td></tr>
 
 <p>Alias for a priority_thread_pool with the default job_priorities type. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00281">281</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00331">331</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +402,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 09:35:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed May 21 2025 15:39:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

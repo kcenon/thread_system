@@ -1,6 +1,6 @@
 <map id="log_module::file_writer" name="log_module::file_writer">
 <area shape="rect" id="Node000001" title="Writes log messages to a file in a dedicated thread." alt="" coords="789,1241,973,1687"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A base class for implementing custom worker threads." alt="" coords="335,779,535,1164"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="335,779,535,1164"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="547,1091,790,1359,787,1363,543,1095"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,643,89,709"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="88,707,146,753,324,885,320,890,143,757,85,711"/>

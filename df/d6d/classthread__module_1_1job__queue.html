@@ -207,7 +207,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md30"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
@@ -928,7 +928,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 09:35:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed May 21 2025 15:39:40 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

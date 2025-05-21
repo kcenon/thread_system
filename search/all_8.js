@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['implementation_20detail_0',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md26',1,'']]],
+  ['implementation_20detail_0',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md30',1,'']]],
   ['information_1',['Information',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf',1,'log_module']]],
   ['initial_5fsuspend_2',['initial_suspend',['../dd/d46/classthread__pool__module_1_1task__promise.html#a14ef389c80f917002878ff4f643a3690',1,'thread_pool_module::task_promise::initial_suspend()'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a45b14d9c12efaac373c8d8251f135666',1,'thread_pool_module::task_promise&lt; void &gt;::initial_suspend()']]],
   ['invalid_5fargument_3',['invalid_argument',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f',1,'thread_module']]],

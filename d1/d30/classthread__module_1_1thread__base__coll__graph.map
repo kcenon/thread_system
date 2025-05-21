@@ -1,5 +1,5 @@
 <map id="thread_module::thread_base" name="thread_module::thread_base">
-<area shape="rect" id="Node000001" title="A base class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,155,89,221"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="114,148,261,228"/>

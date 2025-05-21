@@ -1,5 +1,5 @@
 <map id="thread_module::thread_base" name="thread_module::thread_base">
-<area shape="rect" id="Node000001" title="A base class for implementing custom worker threads." alt="" coords="516,5,716,491"/>
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="516,5,716,491"/>
 <area shape="rect" id="Node000002" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="5,741,189,921"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="505,305,430,348,349,402,271,466,236,502,203,540,173,588,149,640,130,693,117,742,112,740,125,691,144,638,168,585,199,537,232,499,268,462,346,398,427,343,502,300"/>
 <area shape="rect" id="Node000003" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="213,751,397,911"/>

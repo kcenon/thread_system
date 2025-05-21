@@ -76,6 +76,9 @@ $(function() {
   <div class="headertitle"><div class="title">thread_pool_module Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Thread pool implementation for managing worker threads.  
+<a href="../../d8/d98/namespacethread__pool__module.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -94,7 +97,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <a class="el" href="../../dd/d46/classthread__pool__module_1_1task__promise.html" title="Promise type for coroutine task implementation.">task_promise</a> for void-returning coroutines.  <a href="../../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages a group of <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code> instances and a shared <code>job_queue</code> for concurrent job processing.  <a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A thread pool for concurrent execution of jobs using multiple worker threads.  <a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html">thread_pool_builder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A builder class for creating and configuring thread pools with a fluent interface.  <a href="../../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#details">More...</a><br /></td></tr>
@@ -116,7 +119,23 @@ Functions</h2></td></tr>
 <tr class="memitem:a0c486c1ebe4bcede7004627da8004478" id="r_a0c486c1ebe4bcede7004627da8004478"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d6e/classthread__pool__module_1_1task.html">task</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d98/namespacethread__pool__module.html#a0c486c1ebe4bcede7004627da8004478">delay</a> (std::chrono::milliseconds duration)</td></tr>
 <tr class="separator:a0c486c1ebe4bcede7004627da8004478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Thread pool implementation for managing worker threads. </p>
+<p>The <a class="el" href="../../d8/d98/namespacethread__pool__module.html" title="Thread pool implementation for managing worker threads.">thread_pool_module</a> namespace provides a standard thread pool implementation for processing jobs concurrently using a team of worker threads.</p>
+<p>Key components include:</p><ul>
+<li><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads.">thread_pool</a>: The primary thread pool class managing multiple workers and a shared job queue</li>
+<li><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a>: A specialized worker thread that processes jobs from a shared queue</li>
+<li>task: A template-based convenience wrapper for creating and submitting callable jobs</li>
+</ul>
+<p>The thread pool pattern improves performance by:</p><ul>
+<li>Reusing threads rather than creating new ones for each task</li>
+<li>Reducing thread creation overhead</li>
+<li>Limiting the total number of threads to control resource usage</li>
+<li>Providing a simple interface for async task execution</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html" title="Priority-based thread pool implementation for job scheduling with priorities.">priority_thread_pool_module</a> for a more advanced implementation with job prioritization</dd></dl>
+<p>The <a class="el" href="../../d8/d98/namespacethread__pool__module.html" title="Thread pool implementation for managing worker threads.">thread_pool_module</a> namespace provides a standard thread pool implementation for processing jobs concurrently using a team of worker threads. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a0c486c1ebe4bcede7004627da8004478" name="a0c486c1ebe4bcede7004627da8004478"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c486c1ebe4bcede7004627da8004478">&#9670;&#160;</a></span>delay()</h2>
 
@@ -441,7 +460,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 09:35:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed May 21 2025 15:39:40 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
