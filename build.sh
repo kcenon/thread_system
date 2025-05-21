@@ -69,7 +69,13 @@ pushd build
 
 # Always run cmake
 echo "Configuring project with CMake..."
-cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release
+# On macOS, use our modified GTest config
+if [[ "$(uname)" == "Darwin" ]]; then
+    # Use local modified GTest config
+    cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(pwd)"
+else
+    cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release
+fi
 
 # Build
 echo "Building project..."
