@@ -34,13 +34,57 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "logger_implementation.h"
 
+/**
+ * @namespace log_module
+ * @brief Thread-safe logging system built on the thread system foundation.
+ *
+ * The log_module namespace provides a comprehensive, thread-safe logging system
+ * that leverages the thread_module infrastructure for asynchronous log processing.
+ *
+ * Key components include:
+ * - Logger interface functions for different log levels
+ * - Log collectors for processing and distributing log messages
+ * - Writers for different output targets (console, file, callback)
+ * - log_types enumeration defining various logging levels
+ *
+ * Features:
+ * - Thread-safe logging with minimal impact on calling threads
+ * - Support for multiple output targets simultaneously
+ * - Filtering by log level for each output target
+ * - Timestamp and type information for each log entry
+ * - Formatted logging with both C-style format strings and modern formatting
+ *
+ * The logging system is designed to be high-performance with minimal overhead
+ * by processing log messages asynchronously in dedicated worker threads.
+ */
 namespace log_module
 {
+	/**
+	 * @brief Sets the title/name for the logger instance.
+	 * @param title String identifier for this logger instance.
+	 *
+	 * The title is used in log messages to identify the source of the log and
+	 * may appear in log file names or other output.
+	 *
+	 * @note This should typically be called once during application startup.
+	 */
 	inline auto set_title(const std::string& title) -> void
 	{
 		implementation::logger::handle().set_title(title);
 	}
 
+	/**
+	 * @brief Configures which log levels are sent to the callback target.
+	 * @param type The log types/levels to be sent to registered callbacks.
+	 *
+	 * Use this method to control which message types will trigger callback notifications.
+	 * Only messages matching the specified types will be forwarded to the callback
+	 * function registered with message_callback().
+	 *
+	 * @see message_callback() To register a callback function
+	 * @see callback_target() (no-arg version) To query current settings
+	 * @see log_types For available log type flags
+	 */
 	inline auto callback_target(const log_types& type) -> void
 	{
 		implementation::logger::handle().callback_target(type);

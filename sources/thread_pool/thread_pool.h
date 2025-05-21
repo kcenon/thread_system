@@ -46,30 +46,68 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace utility_module;
 using namespace thread_module;
 
+/**
+ * @namespace thread_pool_module
+ * @brief Thread pool implementation for managing worker threads.
+ *
+ * The thread_pool_module namespace provides a standard thread pool implementation
+ * for processing jobs concurrently using a team of worker threads.
+ *
+ * Key components include:
+ * - thread_pool: The primary thread pool class managing multiple workers and a shared job queue
+ * - thread_worker: A specialized worker thread that processes jobs from a shared queue
+ * - task: A template-based convenience wrapper for creating and submitting callable jobs
+ *
+ * The thread pool pattern improves performance by:
+ * - Reusing threads rather than creating new ones for each task
+ * - Reducing thread creation overhead
+ * - Limiting the total number of threads to control resource usage
+ * - Providing a simple interface for async task execution
+ *
+ * @see priority_thread_pool_module for a more advanced implementation with job prioritization
+ */
 namespace thread_pool_module
 {
 	/**
 	 * @class thread_pool
-	 * @brief Manages a group of @c thread_worker instances and a shared @c job_queue for concurrent
-	 * job processing.
+	 * @brief A thread pool for concurrent execution of jobs using multiple worker threads.
+	 * 
+	 * @ingroup thread_pools
 	 *
-	 * The @c thread_pool class provides an interface to:
-	 * - Maintain a shared @c job_queue
-	 * - Maintain multiple @c thread_worker objects
-	 * - Enqueue jobs (@c job) into the shared queue
-	 * - Start/stop all worker threads as a group
+	 * The @c thread_pool class manages a group of worker threads that process jobs from
+	 * a shared @c job_queue. This implementation provides:
+	 * - Efficient reuse of threads to reduce thread creation/destruction overhead
+	 * - Controlled concurrency through a fixed or dynamic thread count
+	 * - A simple interface for submitting jobs of various types
+	 * - Graceful handling of thread startup, execution, and shutdown
 	 *
-	 * This class inherits from @c std::enable_shared_from_this, allowing you to safely retrieve
-	 * a @c std::shared_ptr<thread_pool> from member functions via @c get_ptr().
+	 * The thread pool is designed for scenarios where many short-lived tasks need to
+	 * be executed asynchronously without creating a new thread for each task.
 	 *
-	 * ### Typical Usage
-	 * 1. Create a @c thread_pool (usually with @c std::make_shared).
-	 * 2. Optionally create and enqueue additional @c thread_worker objects (if you want specialized
-	 * behaviors).
-	 * 3. Call @c start() to launch all workers, enabling them to process jobs in the @c job_queue.
-	 * 4. Enqueue @c job objects into the shared queue as needed.
-	 * 5. Eventually call @c stop() to allow all threads to finish current tasks (or stop
-	 * immediately).
+	 * ### Design Principles
+	 * - **Worker Thread Model**: Each worker runs in its own thread, processing jobs
+	 *   from the shared queue.
+	 * - **Shared Job Queue**: A single, thread-safe queue holds all pending jobs.
+	 * - **Job-Based Work Units**: Jobs encapsulate work to be executed.
+	 * - **Non-Blocking Submission**: Adding jobs to the pool never blocks the caller thread.
+	 * - **Cooperative Shutdown**: Workers can complete current jobs before stopping.
+	 *
+	 * ### Thread Safety
+	 * All public methods of this class are thread-safe and can be called from any thread.
+	 * The underlying @c job_queue is also thread-safe, allowing multiple workers to dequeue
+	 * jobs concurrently.
+	 *
+	 * ### Performance Considerations
+	 * - The number of worker threads should typically be close to the number of available
+	 *   CPU cores for CPU-bound tasks.
+	 * - For I/O-bound tasks, more threads may be beneficial to maximize throughput while
+	 *   some threads are blocked on I/O.
+	 * - Very large thread pools (significantly more threads than cores) may degrade
+	 *   performance due to context switching overhead.
+	 * 
+	 * @see thread_worker The worker thread class used by the pool
+	 * @see job_queue The shared queue for storing pending jobs
+	 * @see priority_thread_pool_module::priority_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
 	{

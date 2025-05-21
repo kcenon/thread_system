@@ -47,21 +47,66 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace utility_module;
 using namespace thread_module;
 
+/**
+ * @namespace priority_thread_pool_module
+ * @brief Priority-based thread pool implementation for job scheduling with priorities.
+ *
+ * The priority_thread_pool_module namespace extends the basic thread pool concept
+ * with priority-based scheduling of jobs. It allows jobs to be processed according
+ * to their importance or urgency rather than just their order of submission.
+ *
+ * Key components include:
+ * - priority_thread_pool_t: A templated thread pool class supporting prioritized job scheduling
+ * - priority_thread_worker_t: A worker thread that retrieves jobs based on priority
+ * - priority_job_t: A job with an associated priority level
+ * - priority_job_queue_t: A thread-safe job queue that orders jobs by priority
+ * - job_priorities: Default enumeration of priority levels
+ *
+ * This implementation allows for:
+ * - Custom priority types through template parameters
+ * - Higher priority jobs being processed ahead of lower priority ones
+ * - Dynamic adjustment of priorities based on application needs
+ *
+ * @see thread_pool_module for the basic non-prioritized implementation
+ */
 namespace priority_thread_pool_module
 {
 	/**
 	 * @class priority_thread_pool_t
-	 * @brief Manages a pool of threads to execute jobs based on priority levels.
+	 * @brief A thread pool that schedules and executes jobs based on their priority levels.
+	 * 
+	 * @tparam priority_type The type representing job priorities (e.g., enum or integral type).
+	 * @ingroup thread_pools
 	 *
-	 * This template class provides a thread pool that schedules and executes jobs
-	 * according to their assigned priorities. The class:
-	 *   - Maintains a thread-safe priority job queue.
-	 *   - Spawns worker threads (priority_thread_worker_t) that continuously
-	 *     process jobs from the queue.
-	 *   - Allows users to enqueue new jobs or new workers dynamically.
+	 * The priority_thread_pool_t template class provides a thread pool implementation that 
+	 * processes jobs according to their assigned priorities rather than just submission order.
+	 * This allows more important work to be processed ahead of less important work, improving
+	 * responsiveness for critical tasks.
 	 *
-	 * @tparam priority_type The type that represents job priority (e.g., an enum or integral type).
+	 * ### Key Features
+	 * - **Priority-Based Scheduling**: Jobs with higher priority are processed first.
+	 * - **Customizable Priority Types**: Supports custom priority types through templates.
+	 * - **Worker Thread Model**: Each worker runs in its own thread, processing jobs.
+	 * - **Priority Job Queue**: Thread-safe queue that orders jobs by priority.
+	 * - **Dynamic Thread Management**: Add/remove workers at runtime.
+	 * - **Graceful Shutdown**: Option to complete current jobs before stopping.
 	 *
+	 * ### Use Cases
+	 * - **Mixed Workloads**: Applications that process both critical and non-critical tasks.
+	 * - **Responsive User Interfaces**: Prioritize UI-related tasks over background work.
+	 * - **Resource Management**: Ensure important work gets resources when contention occurs.
+	 * - **Service Level Guarantees**: Meet varying response time requirements for different request types.
+	 *
+	 * ### Thread Safety
+	 * All public methods of this class are thread-safe and can be called from any thread.
+	 *
+	 * ### Performance Considerations
+	 * - Priority queue operations are more expensive than simple FIFO queues.
+	 * - In high-throughput scenarios with all equal-priority jobs, consider using
+	 *   the non-prioritized thread_pool instead for better performance.
+	 * - For scenarios with mixed priorities, this implementation can significantly
+	 *   improve response time for high-priority tasks.
+	 * 
 	 * ### Example Usage
 	 * @code{.cpp}
 	 * using my_thread_pool = priority_thread_pool_t<my_priority_enum>;
@@ -84,6 +129,11 @@ namespace priority_thread_pool_module
 	 * // Stop the pool
 	 * pool->stop();
 	 * @endcode
+	 * 
+	 * @see priority_thread_worker_t The worker thread class used by the pool
+	 * @see priority_job_t Jobs with priority information
+	 * @see priority_job_queue_t The queue that orders jobs by priority
+	 * @see thread_pool_module::thread_pool The non-prioritized thread pool implementation
 	 */
 	template <typename priority_type = job_priorities>
 	class priority_thread_pool_t

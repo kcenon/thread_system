@@ -1,20 +1,95 @@
-/** \mainpage Threads Documentation
+/** \mainpage Thread System Documentation
 
-The Threads project provides several systems for convenient thread usage:
+The Thread System library provides a comprehensive set of thread management components designed to simplify complex multithreading tasks and enable efficient and safe concurrent programming.
 
-1. Thread Base
-   - A foundational class for creating custom thread-based components.
+\section main_components Main Components
 
-2. Logger
-   - Built upon the reusable thread base, providing efficient logging capabilities.
+\subsection thread_base Thread Base (thread_module)
+   - A foundational class for creating custom worker threads
+   - Provides lifecycle management (start/stop) and worker hooks
+   - Supports both std::jthread (C++20) and std::thread through conditional compilation
+   - Thread-safe design with careful synchronization
+   - See namespace \ref thread_module for details
 
-3. Thread Pool
-   - Implements a pool of worker threads, also based on the reusable thread base.
+\subsection logger Logger System (log_module)
+   - High-performance, thread-safe logging system built on Thread Base
+   - Multiple output targets (console, file, callback)
+   - Asynchronous processing for minimal impact on calling threads
+   - Configurable log levels and formatting options
+   - See namespace \ref log_module for details
 
-4. Priority Thread Pool
-   - An advanced thread pool that supports job prioritization, built on the same thread base.
+\subsection thread_pool Thread Pool (thread_pool_module)
+   - Manages a group of workers that process jobs from a shared queue
+   - Efficient reuse of threads to reduce creation/destruction overhead
+   - Simple interface for submitting asynchronous tasks
+   - Scalable design for various workloads
+   - See namespace \ref thread_pool_module for details
 
-In addition to these core components, this project includes sample code demonstrating how to effectively utilize these systems in your applications.
+\subsection priority_thread_pool Priority Thread Pool (priority_thread_pool_module)
+   - Advanced thread pool with priority-based job scheduling
+   - Ensures important tasks are processed ahead of less important ones
+   - Customizable priority types through templates
+   - Ideal for applications with mixed-priority workloads
+   - See namespace \ref priority_thread_pool_module for details
+
+\subsection utilities Utilities (utility_module)
+   - Supporting components for formatting, string conversion, and more
+   - Error handling utilities with result types
+   - Date/time helpers and file operations
+   - See namespace \ref utility_module for details
+
+\section design_principles Design Principles
+The Thread System is designed with the following principles:
+- **Hierarchical Architecture**: Components build upon each other in a logical hierarchy
+- **Thread Safety**: All public APIs are thread-safe with clear documentation
+- **Flexible Configuration**: Customizable behavior through inheritance and templates
+- **Modern C++**: Leverages C++20 features where available with fallbacks for compatibility
+- **Performance**: Minimizes overhead and maximizes throughput
+
+\section usage_examples Usage Examples
+The library includes comprehensive sample code demonstrating:
+- Basic logger usage
+- Thread pool for parallel job processing
+- Priority-based thread management
+- Custom thread implementations
+- Error handling patterns
 
 For detailed information on each component and usage examples, please refer to the respective sections in this documentation.
+
+\section thread_modules Core Modules
+
+Each namespace encapsulates a logical set of components:
+
+\namespace thread_module
+\brief Core threading foundation of the thread system library.
+
+The thread_module namespace provides fundamental threading primitives 
+including the base thread class, jobs, job queues, and synchronization utilities.
+It serves as the foundation for all thread-related functionality in the library.
+
+\namespace thread_pool_module
+\brief Thread pool implementation for managing worker threads.
+
+The thread_pool_module namespace provides a standard thread pool implementation
+for processing jobs concurrently using a team of worker threads.
+
+\namespace priority_thread_pool_module
+\brief Priority-based thread pool implementation for job scheduling with priorities.
+
+The priority_thread_pool_module namespace extends the basic thread pool concept
+with priority-based scheduling of jobs, allowing tasks to be processed according
+to their importance rather than just their order of submission.
+
+\namespace log_module
+\brief Thread-safe logging system built on the thread system foundation.
+
+The log_module namespace provides a comprehensive, thread-safe logging system
+that leverages the thread_module infrastructure for asynchronous log processing.
+
+\namespace utility_module
+\brief Utility components supporting the thread system library.
+
+The utility_module namespace contains helper classes and functions used
+throughout the thread system library, providing common functionality not
+directly related to threading.
 */
