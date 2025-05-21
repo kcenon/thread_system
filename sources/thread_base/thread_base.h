@@ -52,15 +52,51 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace utility_module;
 
+/**
+ * @namespace thread_module
+ * @brief Core threading foundation of the thread system library.
+ *
+ * The thread_module namespace provides fundamental threading primitives 
+ * including the base thread class, jobs, job queues, and synchronization utilities.
+ * It serves as the foundation for all thread-related functionality in the library.
+ *
+ * Key components include:
+ * - thread_base: The fundamental worker thread class
+ * - job: The base unit of work that can be scheduled and executed
+ * - job_queue: A thread-safe queue for storing and retrieving jobs
+ * - cancellation_token: Mechanism for cancelling ongoing operations
+ *
+ * This namespace implements low-level threading concepts while higher-level
+ * functionality like thread pools are implemented in separate namespaces
+ * that build upon these primitives.
+ */
 namespace thread_module
 {
 	/**
 	 * @class thread_base
-	 * @brief A base class for implementing custom worker threads.
+	 * @brief A foundational class for implementing custom worker threads.
+     * 
+     * @ingroup core_threading
 	 *
 	 * The @c thread_base class provides a framework for managing a single worker thread,
 	 * offering lifecycle methods (start, stop), optional wake intervals, and hooks
 	 * (@c before_start, @c do_work, @c after_stop) for derived classes to customize behavior.
+	 *
+	 * This class abstracts platform-specific thread management details and provides a 
+	 * unified interface for both C++20 @c std::jthread and traditional @c std::thread,
+	 * selected at compile time via the @c USE_STD_JTHREAD macro.
+	 *
+	 * ### Key Features
+	 * - Standardized thread lifecycle management (start/stop)
+	 * - Thread condition monitoring
+	 * - Customizable worker behavior through virtual method overrides
+	 * - Optional periodic wake intervals for recurring tasks
+	 * - Built-in cancellation support (via @c std::jthread or custom mechanism)
+	 * - Thread-safe signaling and state management
+	 *
+	 * ### Thread Safety
+	 * All public methods in @c thread_base are thread-safe. The class uses internal
+	 * synchronization mechanisms to protect its state.
 	 *
 	 * ### Typical Usage
 	 * 1. Inherit from @c thread_base and override @c do_work(), @c before_start(), and/or
@@ -70,6 +106,45 @@ namespace thread_module
 	 * 3. When shutting down or no longer needing the thread's work, call @c stop().
 	 * 4. The thread can periodically check @c should_continue_work() or internal conditions
 	 *    to determine if it should continue running.
+	 *
+	 * ### Example
+	 * @code
+	 * class my_worker : public thread_base {
+	 * public:
+	 *     my_worker() : thread_base("my_worker") {}
+	 *
+	 * protected:
+	 *     result_void before_start() override {
+	 *         // Initialize resources
+	 *         return {};
+	 *     }
+	 *
+	 *     result_void do_work() override {
+	 *         // Perform work
+	 *         return {};
+	 *     }
+	 *
+	 *     result_void after_stop() override {
+	 *         // Clean up resources
+	 *         return {};
+	 *     }
+	 * };
+	 *
+	 * int main() {
+	 *     auto worker = std::make_unique<my_worker>();
+	 *     worker->set_wake_interval(std::chrono::milliseconds(100)); // Wake every 100ms
+	 *     auto result = worker->start();
+	 *     
+	 *     // Do other work...
+	 *     
+	 *     worker->stop();
+	 *     return 0;
+	 * }
+	 * @endcode
+	 *
+	 * @see thread_module::job For the work unit class processed by workers
+	 * @see thread_module::job_queue For the thread-safe queue used with workers
+	 * @see thread_pool_module::thread_worker For a specialized worker implementation
 	 */
 	class thread_base
 	{

@@ -32,8 +32,28 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_base.h"
 
+/**
+ * @file thread_base.cpp
+ * @brief Implementation of the core thread base class.
+ *
+ * This file contains the implementation of the thread_base class, which serves
+ * as the foundation for all worker thread types in the thread system.
+ */
+
 namespace thread_module
 {
+	/**
+	 * @brief Constructs a new thread_base instance with the specified title.
+	 * 
+	 * Implementation details:
+	 * - Initializes the worker_thread_ pointer to nullptr (thread not started)
+	 * - Sets up thread control mechanisms based on configuration:
+	 *   - In C++20 mode (USE_STD_JTHREAD), initializes stop_source_ to std::nullopt
+	 *   - In legacy mode, initializes stop_requested_ to false
+	 * - Sets wake_interval_ to std::nullopt (no periodic wake-ups by default)
+	 * - Sets thread_title_ to the provided title
+	 * - Sets initial thread_condition_ to Created
+	 */
 	thread_base::thread_base(const std::string& thread_title)
 		: worker_thread_(nullptr)
 #ifdef USE_STD_JTHREAD
@@ -47,6 +67,17 @@ namespace thread_module
 	{
 	}
 
+	/**
+	 * @brief Destroys the thread_base instance, stopping the thread if needed.
+	 * 
+	 * Implementation details:
+	 * - Calls stop() to ensure the thread is properly terminated
+	 * - The stop() method handles joining the thread and cleaning up resources
+	 * - This ensures no thread resources are leaked when the object is destroyed
+	 * 
+	 * @note This destructor is virtual, allowing derived classes to perform
+	 * their own cleanup operations in their destructors.
+	 */
 	thread_base::~thread_base(void) { stop(); }
 
 	auto thread_base::set_wake_interval(
