@@ -157,7 +157,13 @@ Functions</h2></td></tr>
 <li>Dynamic adjustment of priorities based on application needs</li>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d8/d98/namespacethread__pool__module.html" title="Thread pool implementation for managing worker threads.">thread_pool_module</a> for the basic non-prioritized implementation</dd></dl>
-<p>The <a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html" title="Priority-based thread pool implementation for job scheduling with priorities.">priority_thread_pool_module</a> namespace extends the basic thread pool concept with priority-based scheduling of jobs, allowing tasks to be processed according to their importance rather than just their order of submission. </p>
+<p>The <a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html" title="Priority-based thread pool implementation for job scheduling with priorities.">priority_thread_pool_module</a> namespace extends the basic thread pool concept with priority-based scheduling of jobs, allowing tasks to be processed according to their importance rather than just their order of submission.</p>
+<p>Key classes:</p><ul>
+<li><a class="el" href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels.">priority_thread_pool_t</a>: Template-based priority pool</li>
+<li><a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template-based worker thread class that processes jobs from a priority job queue.">priority_thread_worker_t</a>: Worker with priority awareness</li>
+<li><a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a>: Jobs with associated priority levels</li>
+<li><a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template-based queue that manages jobs with distinct priority levels.">priority_job_queue_t</a>: Priority-aware job queue </li>
+</ul>
 </div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a3c9f959103e3daa56f96a3b4ec6147c5" name="a3c9f959103e3daa56f96a3b4ec6147c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c9f959103e3daa56f96a3b4ec6147c5">&#9670;&#160;</a></span>callback_priority_job</h2>
@@ -402,7 +408,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 15:39:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu May 22 2025 07:13:44 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

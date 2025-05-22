@@ -1,30 +1,4 @@
 var searchData=
 [
-  ['little_0',['little',['../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cfaaae6635e044ac56046b2893a529b5114',1,'utility_module::convert_string']]],
-  ['load_1',['load',['../da/d35/classutility__module_1_1file.html#a60e0ed8a578316f8e25dda01884c0163',1,'utility_module::file']]],
-  ['log_5fcollector_2',['log_collector',['../d7/da3/classlog__module_1_1log__collector.html',1,'log_module::log_collector'],['../d7/da3/classlog__module_1_1log__collector.html#a3a89be69c8d0e2a9cc02900966626a01',1,'log_module::log_collector::log_collector()']]],
-  ['log_5fcollector_2ecpp_3',['log_collector.cpp',['../d7/d3c/log__collector_8cpp.html',1,'']]],
-  ['log_5fcollector_2eh_4',['log_collector.h',['../d8/d77/log__collector_8h.html',1,'']]],
-  ['log_5ffile_5f_5',['log_file_',['../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376',1,'log_module::file_writer']]],
-  ['log_5fjob_6',['log_job',['../df/df4/classlog__module_1_1log__job.html',1,'log_module::log_job'],['../df/df4/classlog__module_1_1log__job.html#ae2725a451615f26a84270b0035ef2fe3',1,'log_module::log_job::log_job(const std::wstring &amp;message, std::optional&lt; log_types &gt; type=std::nullopt, std::optional&lt; std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; &gt; start_time=std::nullopt)'],['../df/df4/classlog__module_1_1log__job.html#a77a828ed22a8e3d67e00a776cc76edb8',1,'log_module::log_job::log_job(const std::string &amp;message, std::optional&lt; log_types &gt; type=std::nullopt, std::optional&lt; std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; &gt; start_time=std::nullopt)']]],
-  ['log_5fjob_2ecpp_7',['log_job.cpp',['../d8/de3/log__job_8cpp.html',1,'']]],
-  ['log_5fjob_2eh_8',['log_job.h',['../d1/dc2/log__job_8h.html',1,'']]],
-  ['log_5flines_5f_9',['log_lines_',['../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8',1,'log_module::file_writer']]],
-  ['log_5fmessage_5f_10',['log_message_',['../df/df4/classlog__module_1_1log__job.html#a7e330ecf9e2277ead70ed16762f8037f',1,'log_module::log_job']]],
-  ['log_5fmodule_11',['log_module',['../d9/de0/namespacelog__module.html',1,'log_module'],['../index.html#logger',1,'Logger System (log_module)']]],
-  ['log_5fmodule_3a_3aimplementation_12',['implementation',['../de/d3b/namespacelog__module_1_1implementation.html',1,'log_module']]],
-  ['log_5fmodule_3a_3alog_5fdetail_13',['log_detail',['../de/d98/namespacelog__module_1_1log__detail.html',1,'log_module']]],
-  ['log_5fqueue_5f_14',['log_queue_',['../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25',1,'log_module::log_collector']]],
-  ['log_5ftype_15',['log_type',['../db/daf/classlog__module_1_1message__job.html#a92815d798d6dbffc42dc166e65e5fc78',1,'log_module::message_job']]],
-  ['log_5ftype_5f_16',['log_type_',['../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28',1,'log_module::message_job']]],
-  ['log_5ftype_5fcount_17',['log_type_count',['../de/d98/namespacelog__module_1_1log__detail.html#a5fe62eb65ab4da20620746d7cdfb022e',1,'log_module::log_detail']]],
-  ['log_5ftype_5fstrings_18',['log_type_strings',['../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105',1,'log_module::log_detail']]],
-  ['log_5ftypes_19',['log_types',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709',1,'log_module']]],
-  ['log_5ftypes_2eh_20',['log_types.h',['../d1/d18/log__types_8h.html',1,'']]],
-  ['logger_21',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation::logger'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e',1,'log_module::implementation::logger::logger()'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a3b4016b3c77d97e4872af099f9abc265',1,'log_module::implementation::logger::logger(const logger &amp;)=delete']]],
-  ['logger_20system_20log_5fmodule_22',['Logger System (log_module)',['../index.html#logger',1,'']]],
-  ['logger_2eh_23',['logger.h',['../d1/d8c/logger_8h.html',1,'']]],
-  ['logger_5fimplementation_2ecpp_24',['logger_implementation.cpp',['../d9/d7e/logger__implementation_8cpp.html',1,'']]],
-  ['logger_5fimplementation_2eh_25',['logger_implementation.h',['../d5/d14/logger__implementation_8h.html',1,'']]],
-  ['low_26',['Low',['../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090a28d0edd045e05cf5af64e35ae0c4c6ef',1,'priority_thread_pool_module']]]
+  ['key_20features_0',['key features',['../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html#autotoc_md3',1,'Key Features'],['../da/d94/classthread__module_1_1thread__base.html#autotoc_md36',1,'Key Features']]]
 ];

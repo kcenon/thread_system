@@ -202,7 +202,13 @@ Functions</h2></td></tr>
 <li><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations.">cancellation_token</a>: Mechanism for cancelling ongoing operations</li>
 </ul>
 <p>This namespace implements low-level threading concepts while higher-level functionality like thread pools are implemented in separate namespaces that build upon these primitives.</p>
-<p>The <a class="el" href="../../de/d48/namespacethread__module.html" title="Core threading foundation of the thread system library.">thread_module</a> namespace provides fundamental threading primitives including the base thread class, jobs, job queues, and synchronization utilities. It serves as the foundation for all thread-related functionality in the library. </p>
+<p>The <a class="el" href="../../de/d48/namespacethread__module.html" title="Core threading foundation of the thread system library.">thread_module</a> namespace provides fundamental threading primitives including the base thread class, jobs, job queues, and synchronization utilities. It serves as the foundation for all thread-related functionality in the library.</p>
+<p>Key classes:</p><ul>
+<li><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a>: Foundation for all thread operations with lifecycle management</li>
+<li>job: Abstract base for units of work</li>
+<li><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a>: Thread-safe queue for job management</li>
+<li><a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user-defined callbacks.">callback_job</a>: Function-based job implementation </li>
+</ul>
 </div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a3c64c7b7d2496955a519650bce4ce9d6" name="a3c64c7b7d2496955a519650bce4ce9d6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c64c7b7d2496955a519650bce4ce9d6">&#9670;&#160;</a></span>result_t</h2>
@@ -766,7 +772,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 21 2025 15:39:40 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu May 22 2025 07:13:44 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
