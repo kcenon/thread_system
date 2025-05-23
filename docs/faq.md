@@ -1,6 +1,4 @@
-# Thread System: Frequently Asked Questions
-
-This document addresses common questions and issues that developers may encounter when using the Thread System library.
+# Frequently Asked Questions (FAQ)
 
 ## General Questions
 
@@ -30,51 +28,18 @@ This document addresses common questions and issues that developers may encounte
 - Better manageability through state tracking
 
 ### Q: How do I create a custom worker thread?
-**A:** Inherit from `thread_base` and override the virtual methods as needed:
-```cpp
-class MyWorker : public thread_module::thread_base {
-protected:
-    auto before_start() -> result_void override {
-        // Setup code
-        return {};
-    }
-    
-    auto do_work() -> result_void override {
-        // Work logic
-        return {};
-    }
-    
-    auto after_stop() -> result_void override {
-        // Cleanup code
-        return {};
-    }
-};
-```
+**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](patterns.md#worker-thread-pattern).
 
 ### Q: How do I make a worker thread wake up periodically?
-**A:** Use the `set_wake_interval` method:
-```cpp
-my_worker.set_wake_interval(std::chrono::milliseconds(100)); // Wake every 100ms
-```
+**A:** Use the `set_wake_interval` method. See the [patterns documentation](patterns.md#wake-interval-optimization) for optimization guidelines.
 
 ### Q: How do I handle errors in worker thread methods?
-**A:** Return the error using the `result_void` type:
-```cpp
-auto do_work() -> result_void override {
-    // If an error occurs
-    if (error_condition) {
-        return make_error("Error message");
-    }
-    
-    // Success
-    return {};
-}
-```
+**A:** Return the error using the `result_void` type. For comprehensive error handling patterns, see the [patterns documentation](patterns.md#best-practices).
 
 ## Thread Pool Questions
 
 ### Q: How many worker threads should I create in my thread pool?
-**A:** A good rule of thumb is to use the number of hardware threads available on the system, which you can obtain with `std::thread::hardware_concurrency()`. For CPU-bound tasks, this is often optimal. For I/O-bound tasks, you may want more threads to keep the CPU busy during I/O waits.
+**A:** A good rule of thumb is to use the number of hardware threads available on the system. For detailed sizing guidelines for different workload types, see the [patterns documentation](patterns.md#thread-pool-sizing-guidelines).
 
 ### Q: Can I reuse a thread pool for multiple tasks?
 **A:** Yes, thread pools are designed to be reused. You can keep submitting jobs to the pool, and the worker threads will process them as they become available.
@@ -103,14 +68,7 @@ auto do_work() -> result_void override {
 **A:** Yes, `priority_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's priority system.
 
 ### Q: How do I assign workers to specific priority levels?
-**A:** When creating a worker, specify which priority levels it should process:
-```cpp
-// Create a worker that only processes high-priority jobs
-auto worker = std::make_unique<priority_thread_worker>(
-    std::vector<job_priorities>{job_priorities::High},
-    "high-priority worker"
-);
-```
+**A:** When creating a worker, specify which priority levels it should process. For complete priority-based execution patterns, see the [patterns documentation](patterns.md#priority-based-job-execution-pattern).
 
 ### Q: What happens if there are no workers for a specific priority level?
 **A:** Jobs with that priority level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.
@@ -121,28 +79,10 @@ auto worker = std::make_unique<priority_thread_worker>(
 **A:** Yes, all logging operations in `log_module` are thread-safe and can be called from multiple threads simultaneously.
 
 ### Q: How do I configure where logs are written?
-**A:** Use the target methods to specify which log levels go to which outputs:
-```cpp
-// Send errors and warnings to a file
-log_module::file_target(log_module::log_types::Error | log_module::log_types::Warning);
-
-// Send all logs to the console
-log_module::console_target(log_module::log_types::All);
-
-// Send custom logs to a callback
-log_module::callback_target(log_module::log_types::Custom);
-```
+**A:** Use the target methods to specify which log levels go to which outputs. For a complete logger initialization pattern, see the [patterns documentation](patterns.md#logger-initialization-pattern).
 
 ### Q: How do I customize log formatting?
-**A:** Register a custom callback for log processing:
-```cpp
-log_module::message_callback([](const log_module::log_types& type,
-                               const std::string& datetime,
-                               const std::string& message) {
-    // Custom formatting
-    std::cout << "[" << datetime << "][" << type << "] " << message << std::endl;
-});
-```
+**A:** Register a custom callback for log processing. For advanced logging patterns including thread ID tracking, see the [patterns documentation](patterns.md#using-logs-effectively).
 
 ### Q: Does logging affect application performance?
 **A:** The logging system is designed to minimize performance impact by processing logs asynchronously. However, excessive logging in tight loops can still affect performance. Use appropriate log levels and consider reducing log volume in performance-critical sections.
@@ -173,32 +113,13 @@ log_module::set_use_backup(true);
 
 ## Troubleshooting
 
-### Q: My thread pool doesn't seem to be processing jobs. What might be wrong?
-**A:** Common issues include:
-1. Forgetting to call `start()` on the thread pool
-2. Job queues might be empty (check your job submission logic)
-3. Worker threads might be blocked or deadlocked
-4. Jobs might be throwing exceptions internally
+For comprehensive troubleshooting guidance, including solutions to common concurrency issues such as:
+- Thread pool processing problems
+- Deadlocks and race conditions
+- Performance issues
+- Debugging strategies
 
-### Q: I'm seeing "thread already running" errors when starting workers. Why?
-**A:** You cannot start a thread that is already running. Check your application logic to ensure you're not calling `start()` multiple times on the same thread object.
-
-### Q: How do I debug issues in worker threads?
-**A:** Use the logging system to add debug information to your worker thread code. You can also use a debugger to break on worker thread functions, but be aware that some debuggers have limitations when working with multiple threads.
-
-### Q: Why is my application deadlocking when using Thread System?
-**A:** Deadlocks can occur if:
-1. Jobs depend on each other in a circular manner
-2. A job is waiting for a thread pool to complete, but it's being called from within that same thread pool
-3. Improper lock ordering in your application code
-4. A job is waiting for a result that can only be produced by another job in the same thread pool that hasn't started yet
-
-### Q: My performance is worse with Thread System than with a single thread. Why?
-**A:** Possible reasons include:
-1. Thread creation overhead exceeds the benefit of parallelism for very small tasks
-2. Excessive synchronization in your job code
-3. Memory contention or false sharing
-4. The work may not be parallelizable due to data dependencies
+Please refer to the [patterns documentation](patterns.md#troubleshooting-common-issues).
 
 ## Build and Integration
 
