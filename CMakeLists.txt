@@ -184,6 +184,12 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   if(UNIX AND NOT APPLE)
     add_subdirectory(unittest)  # Unit tests
   endif()
+  
+  # Add benchmarks directory if requested
+  option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
+  if(BUILD_BENCHMARKS)
+    add_subdirectory(benchmarks)  # Performance benchmarks
+  endif()
 else()
   # When building as a submodule of another project:
   # Only build the core library (no samples or tests)

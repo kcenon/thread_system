@@ -39,6 +39,31 @@ documents/
 
 # OSX
 .DS_Store
+**/.DS_Store
 
 # test results
 *.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+_backup_*/
+
+# Generated documentation
+documents/html/
+documents/latex/
+
+# Build artifacts
+build/
+cmake-build-*/
+out/
+
+# Package manager
+vcpkg_installed/
