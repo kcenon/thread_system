@@ -64,20 +64,20 @@
 <area shape="poly" id="edge15_Node000011_Node000013" title=" " alt="" coords="535,184,437,211,435,206,534,179"/>
 <area shape="rect" id="Node000014" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="275,80,447,120"/>
 <area shape="poly" id="edge16_Node000011_Node000014" title=" " alt="" coords="517,137,446,122,448,117,518,132"/>
-<area shape="rect" id="Node000015" href="$df/d42/structstd_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a36aa593c4bb589d7a8b508fb217faeb3" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,73,204,128"/>
+<area shape="rect" id="Node000015" href="$d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,73,204,128"/>
 <area shape="poly" id="edge17_Node000014_Node000015" title=" " alt="" coords="261,103,204,103,204,98,261,98"/>
 <area shape="poly" id="edge22_Node000018_Node000003" title=" " alt="" coords="518,774,437,774,437,768,518,768"/>
 <area shape="poly" id="edge24_Node000019_Node000003" title=" " alt="" coords="526,814,437,792,438,787,527,809"/>
 <area shape="poly" id="edge28_Node000022_Node000003" title=" " alt="" coords="522,1002,516,997,496,976,487,955,480,933,467,907,420,844,378,793,382,789,425,840,472,904,485,930,492,953,501,973,519,993,525,998"/>
-<area shape="rect" id="Node000024" href="$d3/ddd/structstd_1_1formatter_3_01thread__module_1_1job_01_4.html#a4bb8c52c795b709b1a8ddafddc78b0ef" title="Formats a job object into a string using job::to_string()." alt="" coords="274,918,447,958"/>
+<area shape="rect" id="Node000024" href="$dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object into a string using job::to_string()." alt="" coords="274,918,447,958"/>
 <area shape="poly" id="edge30_Node000023_Node000024" title=" " alt="" coords="535,1073,516,1061,498,1038,491,1015,484,993,468,972,446,959,449,954,471,968,489,990,496,1014,502,1036,519,1057,537,1069"/>
-<area shape="rect" id="Node000026" href="$d9/dc6/structstd_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#ad8ef53d612c1f92138aa270fc4e612fa" title="Formats a job_queue object as a string using {fmt}." alt="" coords="273,982,449,1037"/>
+<area shape="rect" id="Node000026" href="$da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="273,982,449,1037"/>
 <area shape="poly" id="edge32_Node000025_Node000026" title=" " alt="" coords="534,1136,516,1125,499,1106,491,1087,483,1068,468,1050,448,1038,451,1033,471,1046,488,1066,496,1085,503,1103,519,1121,537,1132"/>
 <area shape="rect" id="Node000028" href="$dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; instance as a string." alt="" coords="252,1140,469,1210"/>
 <area shape="poly" id="edge34_Node000027_Node000028" title=" " alt="" coords="523,1205,469,1196,470,1191,524,1200"/>
-<area shape="rect" id="Node000029" href="$d4/dbd/structstd_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#a4656778a6afb1e27138a476378f51d2e" title="Formats a thread_base object as a string using {fmt}." alt="" coords="270,1234,451,1289"/>
+<area shape="rect" id="Node000029" href="$d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="270,1234,451,1289"/>
 <area shape="poly" id="edge35_Node000027_Node000029" title=" " alt="" coords="524,1238,452,1250,451,1244,523,1233"/>
-<area shape="rect" id="Node000030" href="$db/db2/structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#a40190fa3e4e2e475068f724daedd6d14" title="Formats a thread_worker object as a string." alt="" coords="253,1061,468,1116"/>
+<area shape="rect" id="Node000030" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="253,1061,468,1116"/>
 <area shape="poly" id="edge36_Node000027_Node000030" title=" " alt="" coords="525,1195,516,1189,500,1174,491,1159,482,1145,468,1130,447,1118,450,1114,471,1126,487,1142,495,1157,504,1171,519,1185,528,1191"/>
 <area shape="rect" id="Node000032" href="$d1/daf/classutility__module_1_1formatter.html#a0445d6dd1df6d696b149b65d600936cc" title="Formats a wide&#45;character string with the given arguments." alt="" coords="267,1314,454,1354"/>
 <area shape="poly" id="edge38_Node000031_Node000032" title=" " alt="" coords="516,1306,455,1318,454,1313,515,1301"/>
