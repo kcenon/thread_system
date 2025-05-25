@@ -2,4 +2,7 @@
 <area shape="rect" id="Node000001" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="5,5,216,45"/>
 <area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="264,5,451,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,23,250,23,250,28,216,28"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="499,5,685,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="451,31,485,32,485,37,451,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="498,19,464,19,464,14,498,14"/>
 </map>

@@ -2,8 +2,8 @@
 <area shape="rect" id="Node000001" title="Returns a string representation of this thread_base object." alt="" coords="271,107,441,147"/>
 <area shape="rect" id="Node000002" href="$dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; instance as a string." alt="" coords="5,5,223,75"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="286,105,210,77,212,72,287,99"/>
-<area shape="rect" id="Node000003" href="$d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="23,99,205,154"/>
+<area shape="rect" id="Node000003" href="$d4/dbd/structstd_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#a4656778a6afb1e27138a476378f51d2e" title="Formats a thread_base object as a string using {fmt}." alt="" coords="23,99,205,154"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,129,205,129,205,124,257,124"/>
-<area shape="rect" id="Node000004" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="7,178,221,233"/>
+<area shape="rect" id="Node000004" href="$db/db2/structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#a40190fa3e4e2e475068f724daedd6d14" title="Formats a thread_worker object as a string." alt="" coords="7,178,221,233"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="282,153,200,180,198,175,280,148"/>
 </map>

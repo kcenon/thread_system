@@ -117,9 +117,9 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d6a/job_8h.html">job.h</a>&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;../thread_base/job.h&quot;</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;<a class="code" href="../../d1/d18/log__types_8h.html">log_types.h</a>&quot;</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d11/error__handling_8h.html">error_handling.h</a>&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;../thread_base/error_handling.h&quot;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;string&gt;</span></div>
@@ -165,8 +165,6 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclasslog__module_1_1message__job_html_adab3f496883d8719f045db31096d53bc"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html#adab3f496883d8719f045db31096d53bc">log_module::message_job::datetime</a></div><div class="ttdeci">auto datetime(void) const -&gt; std::string</div><div class="ttdoc">Retrieves the timestamp associated with the log message.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d69/message__job_8cpp_source.html#l00050">message_job.cpp:50</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
-<div class="ttc" id="aerror__handling_8h_html"><div class="ttname"><a href="../../d3/d11/error__handling_8h.html">error_handling.h</a></div><div class="ttdoc">Modern error handling for the thread system.</div></div>
-<div class="ttc" id="ajob_8h_html"><div class="ttname"><a href="../../d3/d6a/job_8h.html">job.h</a></div></div>
 <div class="ttc" id="alog__types_8h_html"><div class="ttname"><a href="../../d1/d18/log__types_8h.html">log_types.h</a></div></div>
 <div class="ttc" id="anamespacelog__module_html"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html">log_module</a></div><div class="ttdoc">Thread-safe logging system built on the thread system foundation.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00047">callback_writer.cpp:48</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_module::log_types</a></div><div class="ttdeci">log_types</div><div class="ttdoc">Enumerates different categories of log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d18/log__types_8h_source.html#l00056">log_types.h:57</a></div></div>
@@ -174,7 +172,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 23 2025 16:27:38 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun May 25 2025 02:53:52 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
