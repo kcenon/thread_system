@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "../utilities/formatter.h"
 #include "thread_base.h"
 #include "convert_string.h"
 #include "priority_job_queue.h"

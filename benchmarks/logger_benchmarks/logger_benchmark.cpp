@@ -9,9 +9,18 @@
 #include <thread>
 #include <atomic>
 #include <iomanip>
+#include <locale>
+#include <codecvt>
 
 #include "logger.h"
 #include "formatter.h"
+
+// Separate logger for test output to avoid interference with benchmark
+namespace test_output {
+    void print_info(const std::string& message) {
+        log_module::information(message);
+    }
+}
 
 using namespace std::chrono;
 using namespace utility_module;
@@ -23,20 +32,20 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Logger Performance Benchmarks ===\n" << std::endl;
+        test_output::print_info("\n=== Logger Performance Benchmarks ===");
         
         benchmark_throughput();
         benchmark_latency();
         benchmark_concurrent_logging();
         benchmark_different_targets();
         
-        std::cout << "\n=== Logger Benchmark Complete ===\n" << std::endl;
+        test_output::print_info("\n=== Logger Benchmark Complete ===");
     }
     
 private:
     void benchmark_throughput() {
-        std::cout << "\n1. Logger Throughput by Log Level\n";
-        std::cout << "---------------------------------\n";
+        test_output::print_info("\n1. Logger Throughput by Log Level");
+        test_output::print_info("---------------------------------");
         
         struct LevelTest {
             log_module::log_types level;
@@ -79,16 +88,16 @@ private:
             double elapsed_ms = duration_cast<milliseconds>(end - start).count();
             double throughput = (num_messages * 1000.0) / elapsed_ms;
             
-            std::wcout << std::setw(8) << level.name << L": "
-                      << std::fixed << std::setprecision(0)
-                      << throughput << L" msg/s"
-                      << std::endl;
+            // Convert wstring to string for logging
+            std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+            std::string level_name = converter.to_bytes(level.name);
+            test_output::print_info(formatter::format("{}: {:.0f} msg/s", level_name, throughput));
         }
     }
     
     void benchmark_latency() {
-        std::cout << "\n2. Logger Latency Analysis\n";
-        std::cout << "--------------------------\n";
+        test_output::print_info("\n2. Logger Latency Analysis");
+        test_output::print_info("--------------------------");
         
         // Configure for latency testing
         log_module::stop();
@@ -129,19 +138,18 @@ private:
         double p99 = latencies[latencies.size() * 99 / 100];
         double p999 = latencies[latencies.size() * 999 / 1000];
         
-        std::cout << "Average: " << std::fixed << std::setprecision(1) 
-                 << avg_latency << " μs\n";
-        std::cout << "P50: " << p50 << " μs\n";
-        std::cout << "P90: " << p90 << " μs\n";
-        std::cout << "P99: " << p99 << " μs\n";
-        std::cout << "P99.9: " << p999 << " μs\n";
+        test_output::print_info(formatter::format("Average: {:.1f} μs", avg_latency));
+        test_output::print_info(formatter::format("P50: {:.1f} μs", p50));
+        test_output::print_info(formatter::format("P90: {:.1f} μs", p90));
+        test_output::print_info(formatter::format("P99: {:.1f} μs", p99));
+        test_output::print_info(formatter::format("P99.9: {:.1f} μs", p999));
         
         log_module::stop();
     }
     
     void benchmark_concurrent_logging() {
-        std::cout << "\n3. Concurrent Logging Performance\n";
-        std::cout << "---------------------------------\n";
+        test_output::print_info("\n3. Concurrent Logging Performance");
+        test_output::print_info("---------------------------------");
         
         std::vector<size_t> thread_counts = {1, 2, 4, 8, 16};
         
@@ -177,16 +185,13 @@ private:
             double elapsed_ms = duration_cast<milliseconds>(end - start).count();
             double throughput = (total_messages.load() * 1000.0) / elapsed_ms;
             
-            std::cout << std::setw(2) << num_threads << " threads: "
-                     << std::fixed << std::setprecision(0)
-                     << throughput << " msg/s"
-                     << std::endl;
+            test_output::print_info(formatter::format("{} threads: {:.0f} msg/s", num_threads, throughput));
         }
     }
     
     void benchmark_different_targets() {
-        std::cout << "\n4. Performance by Output Target\n";
-        std::cout << "-------------------------------\n";
+        test_output::print_info("\n4. Performance by Output Target");
+        test_output::print_info("-------------------------------");
         
         struct TargetTest {
             std::string name;
@@ -241,10 +246,7 @@ private:
             double elapsed_ms = duration_cast<milliseconds>(end - start).count();
             double throughput = (num_messages * 1000.0) / elapsed_ms;
             
-            std::cout << std::setw(20) << target.name << ": "
-                     << std::fixed << std::setprecision(0)
-                     << throughput << " msg/s"
-                     << std::endl;
+            test_output::print_info(formatter::format("{}: {:.0f} msg/s", target.name, throughput));
         }
     }
 };

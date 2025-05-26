@@ -88,6 +88,12 @@ namespace priority_thread_pool_module
 	}
 
 	template <typename priority_type>
+	auto priority_thread_pool_t<priority_type>::get_ptr(void) -> std::shared_ptr<priority_thread_pool_t<priority_type>>
+	{
+		return this->shared_from_this();
+	}
+
+	template <typename priority_type>
 	auto priority_thread_pool_t<priority_type>::start(void) -> result_void
 	{
 		if (workers_.empty())

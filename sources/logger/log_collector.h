@@ -34,9 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "log_job.h"
 #include "log_types.h"
-#include "formatter.h"
-#include "job_queue.h"
-#include "thread_base.h"
+#include "../utilities/formatter.h"
+#include "../thread_base/job_queue.h"
+#include "../thread_base/thread_base.h"
 #include "message_job.h"
 
 using namespace thread_module;

@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "../utilities/formatter.h"
 #include "convert_string.h"
 #include "priority_job_queue.h"
 #include "priority_thread_worker.h"
@@ -74,11 +75,11 @@ namespace priority_thread_pool_module
 	/**
 	 * @class priority_thread_pool_t
 	 * @brief A thread pool that schedules and executes jobs based on their priority levels.
-	 * 
+	 *
 	 * @tparam priority_type The type representing job priorities (e.g., enum or integral type).
 	 * @ingroup thread_pools
 	 *
-	 * The priority_thread_pool_t template class provides a thread pool implementation that 
+	 * The priority_thread_pool_t template class provides a thread pool implementation that
 	 * processes jobs according to their assigned priorities rather than just submission order.
 	 * This allows more important work to be processed ahead of less important work, improving
 	 * responsiveness for critical tasks.
@@ -95,7 +96,8 @@ namespace priority_thread_pool_module
 	 * - **Mixed Workloads**: Applications that process both critical and non-critical tasks.
 	 * - **Responsive User Interfaces**: Prioritize UI-related tasks over background work.
 	 * - **Resource Management**: Ensure important work gets resources when contention occurs.
-	 * - **Service Level Guarantees**: Meet varying response time requirements for different request types.
+	 * - **Service Level Guarantees**: Meet varying response time requirements for different request
+	 * types.
 	 *
 	 * ### Thread Safety
 	 * All public methods of this class are thread-safe and can be called from any thread.
@@ -106,7 +108,7 @@ namespace priority_thread_pool_module
 	 *   the non-prioritized thread_pool instead for better performance.
 	 * - For scenarios with mixed priorities, this implementation can significantly
 	 *   improve response time for high-priority tasks.
-	 * 
+	 *
 	 * ### Example Usage
 	 * @code{.cpp}
 	 * using my_thread_pool = priority_thread_pool_t<my_priority_enum>;
@@ -129,7 +131,7 @@ namespace priority_thread_pool_module
 	 * // Stop the pool
 	 * pool->stop();
 	 * @endcode
-	 * 
+	 *
 	 * @see priority_thread_worker_t The worker thread class used by the pool
 	 * @see priority_job_t Jobs with priority information
 	 * @see priority_job_queue_t The queue that orders jobs by priority
@@ -209,8 +211,7 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
-		auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& job)
-			-> result_void;
+		auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& job) -> result_void;
 
 		/**
 		 * @brief Enqueues a batch of priority jobs into the thread pool's job queue.
@@ -308,7 +309,7 @@ namespace priority_thread_pool_module
 
 		/**
 		 * @brief Sets the job queue for this thread pool and its workers.
-		 * 
+		 *
 		 * @param job_queue A shared pointer to the job queue to use.
 		 */
 		auto set_job_queue(std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void;

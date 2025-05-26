@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "job.h"
+#include "../thread_base/job.h"
 #include "log_types.h"
-#include "error_handling.h"
+#include "../thread_base/error_handling.h"
 
 #include <chrono>
 #include <string>

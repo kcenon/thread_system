@@ -39,8 +39,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
+// Use fmt library as fallback when std::format is not available
 #include <fmt/format.h>
-#include <fmt/xchar.h>
+#include <sstream>
+#include <iomanip>
 #endif
 
 namespace utility_module
@@ -101,14 +103,9 @@ namespace utility_module
 				return std::format_to(out, "{}", Converter{}(value));
 			}
 #else
-			if constexpr (std::is_same_v<CharT, wchar_t>)
-			{
-				return fmt::format_to(out, L"{}", Converter{}(value));
-			}
-			else
-			{
-				return fmt::format_to(out, "{}", Converter{}(value));
-			}
+			// Fallback implementation using std::to_string
+			auto converted = Converter{}(value);
+			return std::copy(converted.begin(), converted.end(), out);
 #endif
 		}
 
@@ -181,9 +178,79 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 			return std::vformat(formats, std::make_format_args(args...));
 #else
-			return fmt::format(fmt::runtime(formats), args...);
+			// Fallback implementation using ostringstream
+			std::ostringstream oss;
+			format_impl(oss, formats, args...);
+			return oss.str();
 #endif
 		}
+
+	private:
+		// Helper to output arguments with proper conversion
+		template <typename Stream, typename T>
+		static void output_arg(Stream& stream, const T& arg) {
+			if constexpr (std::is_same_v<T, std::string> || std::is_same_v<T, std::string_view> ||
+						 std::is_same_v<T, const char*>) {
+				stream << arg;
+			} else if constexpr (std::is_same_v<T, std::wstring> || std::is_same_v<T, std::wstring_view> ||
+							 std::is_same_v<T, const wchar_t*>) {
+				stream << arg;
+			} else if constexpr (std::is_array_v<T> && std::is_same_v<std::remove_extent_t<T>, char>) {
+				// Handle char arrays (string literals)
+				stream << arg;
+			} else if constexpr (std::is_array_v<T> && std::is_same_v<std::remove_extent_t<T>, wchar_t>) {
+				// Handle wchar_t arrays (wide string literals)
+				stream << arg;
+			} else if constexpr (std::is_arithmetic_v<T>) {
+				stream << arg;
+			} else if constexpr (std::is_enum_v<T>) {
+				// For enum types, try to use to_string function
+				stream << to_string(arg);
+			} else {
+				// For other custom types with to_string method
+				stream << arg.to_string();
+			}
+		}
+
+		// Simple fallback formatting implementation
+		template <typename Stream>
+		static void format_impl(Stream& stream, const char* format) {
+			stream << format;
+		}
+
+		template <typename Stream, typename T, typename... Args>
+		static void format_impl(Stream& stream, const char* format, const T& arg, const Args&... args) {
+			while (*format) {
+				if (*format == '{' && *(format + 1) == '}') {
+					output_arg(stream, arg);
+					format += 2;
+					format_impl(stream, format, args...);
+					return;
+				}
+				stream << *format++;
+			}
+		}
+
+		// Wide character version
+		template <typename Stream>
+		static void wformat_impl(Stream& stream, const wchar_t* format) {
+			stream << format;
+		}
+
+		template <typename Stream, typename T, typename... Args>
+		static void wformat_impl(Stream& stream, const wchar_t* format, const T& arg, const Args&... args) {
+			while (*format) {
+				if (*format == L'{' && *(format + 1) == L'}') {
+					output_arg(stream, arg);
+					format += 2;
+					wformat_impl(stream, format, args...);
+					return;
+				}
+				stream << *format++;
+			}
+		}
+
+	public:
 
 		/**
 		 * @brief Formats a wide-character string with the given arguments.
@@ -198,7 +265,10 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 			return std::vformat(formats, std::make_wformat_args(args...));
 #else
-			return fmt::format(fmt::runtime(formats), args...);
+			// Fallback implementation using wostringstream
+			std::wostringstream woss;
+			wformat_impl(woss, formats, args...);
+			return woss.str();
 #endif
 		}
 
@@ -220,7 +290,9 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 			return std::vformat_to(out, formats, std::make_format_args(args...));
 #else
-			return fmt::format_to(out, fmt::runtime(formats), args...);
+			// Fallback implementation
+			std::string result = format(formats, args...);
+			return std::copy(result.begin(), result.end(), out);
 #endif
 		}
 
@@ -240,7 +312,9 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 			return std::vformat_to(out, formats, std::make_wformat_args(args...));
 #else
-			return fmt::format_to(out, fmt::runtime(formats), args...);
+			// Fallback implementation
+			std::wstring result = format(formats, args...);
+			return std::copy(result.begin(), result.end(), out);
 #endif
 		}
 	};

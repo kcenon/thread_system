@@ -1,12 +1,15 @@
-project(thread_pool_unit)
+project(logger_unit)
 
 file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-# Direct linking for macOS
+# Create the test executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # Add GTest include path
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed/arm64-osx/include)
+
+# Include logger headers
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/logger)
 
 # Use vcpkg provided GTest
 find_package(GTest CONFIG REQUIRED)
@@ -14,7 +17,8 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+    logger
+    utilities
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

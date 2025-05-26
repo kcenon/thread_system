@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "job_queue.h"
+#include "../utilities/formatter.h"
+#include "../thread_base/job_queue.h"
 #include "thread_worker.h"
 #include "convert_string.h"
 
@@ -71,7 +72,7 @@ namespace thread_pool_module
 	/**
 	 * @class thread_pool
 	 * @brief A thread pool for concurrent execution of jobs using multiple worker threads.
-	 * 
+	 *
 	 * @ingroup thread_pools
 	 *
 	 * The @c thread_pool class manages a group of worker threads that process jobs from
@@ -104,7 +105,7 @@ namespace thread_pool_module
 	 *   some threads are blocked on I/O.
 	 * - Very large thread pools (significantly more threads than cores) may degrade
 	 *   performance due to context switching overhead.
-	 * 
+	 *
 	 * @see thread_worker The worker thread class used by the pool
 	 * @see job_queue The shared queue for storing pending jobs
 	 * @see priority_thread_pool_module::priority_thread_pool For a priority-based version

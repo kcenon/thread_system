@@ -10,21 +10,21 @@
  * - Memory usage
  */
 
-#include <iostream>
 #include <chrono>
 #include <vector>
 #include <numeric>
-#include <iomanip>
 #include <atomic>
 #include <cmath>
 
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
 #include "logger.h"
+#include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
 using namespace priority_thread_pool_module;
+using namespace utility_module;
 
 class BenchmarkTimer {
 public:
@@ -68,7 +68,7 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Thread System Performance Benchmarks ===\n" << std::endl;
+        log_module::write_information("\n=== Thread System Performance Benchmarks ===\n");
         
         benchmark_pool_creation();
         benchmark_job_submission_latency();
@@ -76,13 +76,13 @@ public:
         benchmark_scaling_efficiency();
         benchmark_priority_scheduling();
         
-        std::cout << "\n=== Benchmark Complete ===\n" << std::endl;
+        log_module::write_information("\n=== Benchmark Complete ===\n");
     }
     
 private:
     void benchmark_pool_creation() {
-        std::cout << "\n1. Thread Pool Creation Overhead\n";
-        std::cout << "--------------------------------\n";
+        log_module::write_information("\n1. Thread Pool Creation Overhead\n");
+        log_module::write_information("--------------------------------\n");
         
         std::vector<size_t> worker_counts = {1, 4, 8, 16, 32};
         
@@ -95,7 +95,7 @@ private:
                 
                 auto [pool, error] = create_default(count);
                 if (error) {
-                    std::cerr << "Error creating pool: " << *error << std::endl;
+                    log_module::write_error("Error creating pool: {}", *error);
                     continue;
                 }
                 
@@ -106,22 +106,18 @@ private:
             }
             
             auto result = calculate_stats(times);
-            std::cout << std::setw(3) << count << " workers: "
-                     << std::fixed << std::setprecision(1)
-                     << "avg=" << result.avg_time << "μs, "
-                     << "min=" << result.min_time << "μs, "
-                     << "max=" << result.max_time << "μs"
-                     << std::endl;
+            log_module::write_information("{:3d} workers: avg={:.1f}μs, min={:.1f}μs, max={:.1f}μs",
+                                        count, result.avg_time, result.min_time, result.max_time);
         }
     }
     
     void benchmark_job_submission_latency() {
-        std::cout << "\n2. Job Submission Latency\n";
-        std::cout << "-------------------------\n";
+        log_module::write_information("\n2. Job Submission Latency\n");
+        log_module::write_information("-------------------------\n");
         
         auto [pool, error] = create_default(8);
         if (error) {
-            std::cerr << "Error creating pool: " << *error << std::endl;
+            log_module::write_error("Error creating pool: {}", *error);
             return;
         }
         
@@ -152,11 +148,8 @@ private:
             }
             
             auto result = calculate_stats(times);
-            std::cout << "Queue size " << std::setw(5) << queue_size << ": "
-                     << std::fixed << std::setprecision(1)
-                     << "avg=" << result.avg_time << "μs, "
-                     << "99%=" << calculate_percentile(times, 99) << "μs"
-                     << std::endl;
+            log_module::write_information("Queue size {:5d}: avg={:.1f}μs, 99%={:.1f}μs",
+                                        queue_size, result.avg_time, calculate_percentile(times, 99));
             
             // Clear queue
             pool->stop();
@@ -167,14 +160,14 @@ private:
     }
     
     void benchmark_job_throughput() {
-        std::cout << "\n3. Job Throughput\n";
-        std::cout << "-----------------\n";
+        log_module::write_information("\n3. Job Throughput\n");
+        log_module::write_information("-----------------\n");
         
         std::vector<size_t> worker_counts = {4, 8, 16};
         std::vector<size_t> job_durations_us = {0, 1, 10, 100, 1000};
         
         for (size_t duration_us : job_durations_us) {
-            std::cout << "\nJob duration: " << duration_us << "μs\n";
+            log_module::write_information("\nJob duration: {}μs", duration_us);
             
             for (size_t workers : worker_counts) {
                 auto [pool, error] = create_default(workers);
@@ -207,17 +200,14 @@ private:
                 double elapsed_ms = timer.elapsed_ms();
                 double throughput = (num_jobs * 1000.0) / elapsed_ms;
                 
-                std::cout << "  " << std::setw(2) << workers << " workers: "
-                         << std::fixed << std::setprecision(0)
-                         << throughput << " jobs/s"
-                         << std::endl;
+                log_module::write_information("  {:2d} workers: {:.0f} jobs/s", workers, throughput);
             }
         }
     }
     
     void benchmark_scaling_efficiency() {
-        std::cout << "\n4. Scaling Efficiency\n";
-        std::cout << "---------------------\n";
+        log_module::write_information("\n4. Scaling Efficiency\n");
+        log_module::write_information("---------------------\n");
         
         // CPU-bound workload
         const size_t work_items = 1000000;
@@ -238,9 +228,7 @@ private:
             baseline_time = timer.elapsed_ms();
         }
         
-        std::cout << "Single thread baseline: " 
-                 << std::fixed << std::setprecision(1) 
-                 << baseline_time << "ms\n\n";
+        log_module::write_information("Single thread baseline: {:.1f}ms\n", baseline_time);
         
         // Test with multiple workers
         std::vector<size_t> worker_counts = {1, 2, 4, 8, 16};
@@ -271,23 +259,20 @@ private:
             double speedup = baseline_time / elapsed;
             double efficiency = (speedup / workers) * 100;
             
-            std::cout << std::setw(2) << workers << " workers: "
-                     << "time=" << std::fixed << std::setprecision(1) << elapsed << "ms, "
-                     << "speedup=" << std::setprecision(2) << speedup << "x, "
-                     << "efficiency=" << std::setprecision(1) << efficiency << "%"
-                     << std::endl;
+            log_module::write_information("{:2d} workers: time={:.1f}ms, speedup={:.2f}x, efficiency={:.1f}%",
+                                         workers, elapsed, speedup, efficiency);
         }
     }
     
     void benchmark_priority_scheduling() {
-        std::cout << "\n5. Priority Scheduling Performance\n";
-        std::cout << "----------------------------------\n";
+        log_module::write_information("\n5. Priority Scheduling Performance\n");
+        log_module::write_information("----------------------------------\n");
         
         enum class Priority { High = 1, Medium = 5, Low = 10 };
         
         auto [pool, error] = create_priority_default<Priority>(8);
         if (error) {
-            std::cerr << "Error creating priority pool: " << *error << std::endl;
+            log_module::write_error("Error creating priority pool: {}", *error);
             return;
         }
         
@@ -338,20 +323,15 @@ private:
         pool->stop();
         
         // Analyze priority ordering
-        std::cout << "Completion order (sampled):\n";
-        std::cout << "Time(ms)  High  Medium  Low\n";
+        log_module::write_information("Completion order (sampled):");
+        log_module::write_information("Time(ms)  High  Medium  Low");
         for (size_t i = 0; i < high_samples.size(); ++i) {
-            std::cout << std::setw(7) << (i + 1) * 50 << "  "
-                     << std::setw(4) << high_samples[i] << "  "
-                     << std::setw(6) << medium_samples[i] << "  "
-                     << std::setw(3) << low_samples[i]
-                     << std::endl;
+            log_module::write_information("{:7d}  {:4d}  {:6d}  {:3d}",
+                                        (i + 1) * 50, high_samples[i], medium_samples[i], low_samples[i]);
         }
         
-        std::cout << "\nFinal: High=" << high_completed.load()
-                 << ", Medium=" << medium_completed.load()
-                 << ", Low=" << low_completed.load()
-                 << std::endl;
+        log_module::write_information("\nFinal: High={}, Medium={}, Low={}",
+                                    high_completed.load(), medium_completed.load(), low_completed.load());
     }
     
     BenchmarkResult calculate_stats(const std::vector<double>& times) {

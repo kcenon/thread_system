@@ -3,7 +3,6 @@
  * @brief Memory usage benchmarks for Thread System
  */
 
-#include <iostream>
 #include <iomanip>
 #include <thread>
 #include <vector>
@@ -23,9 +22,11 @@
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
 #include "logger.h"
+#include "format_string.h"
 
 using namespace thread_pool_module;
 using namespace priority_thread_pool_module;
+using namespace log_module;
 
 class MemoryMonitor {
 public:
@@ -97,7 +98,7 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Thread System Memory Benchmarks ===\n" << std::endl;
+        information(L"\n=== Thread System Memory Benchmarks ===\n");
         
         benchmark_base_memory();
         benchmark_thread_pool_memory();
@@ -105,21 +106,21 @@ public:
         benchmark_job_queue_memory();
         benchmark_logger_memory();
         
-        std::cout << "\n=== Memory Benchmark Complete ===\n" << std::endl;
+        information(L"\n=== Memory Benchmark Complete ===\n");
     }
     
 private:
     void benchmark_base_memory() {
-        std::cout << "\n1. Base Memory Usage\n";
-        std::cout << "-------------------\n";
+        information(L"\n1. Base Memory Usage");
+        information(L"-------------------");
         
         auto initial = MemoryMonitor::get_current_memory();
         print_memory_stats("Initial state", initial);
     }
     
     void benchmark_thread_pool_memory() {
-        std::cout << "\n2. Thread Pool Memory Usage\n";
-        std::cout << "---------------------------\n";
+        information(L"\n2. Thread Pool Memory Usage");
+        information(L"---------------------------");
         
         std::vector<size_t> worker_counts = {1, 4, 8, 16, 32};
         
@@ -128,7 +129,7 @@ private:
             
             auto [pool, error] = create_default(count);
             if (error) {
-                std::cerr << "Error creating pool: " << *error << std::endl;
+                log_module::error(format_string(L"Error creating pool: %s", error->c_str()));
                 continue;
             }
             
@@ -140,19 +141,18 @@ private:
             size_t memory_increase = after.resident_size - before.resident_size;
             double per_worker = static_cast<double>(memory_increase) / count / 1024.0;
             
-            std::cout << std::setw(3) << count << " workers: "
-                     << std::fixed << std::setprecision(2)
-                     << "Total: " << (memory_increase / 1024.0 / 1024.0) << " MB, "
-                     << "Per worker: " << per_worker << " KB"
-                     << std::endl;
+            information(format_string(L"%3zu workers: Total: %.2f MB, Per worker: %.2f KB",
+                                    count, 
+                                    (memory_increase / 1024.0 / 1024.0),
+                                    per_worker));
             
             pool->stop();
         }
     }
     
     void benchmark_priority_pool_memory() {
-        std::cout << "\n3. Priority Thread Pool Memory Usage\n";
-        std::cout << "------------------------------------\n";
+        information(L"\n3. Priority Thread Pool Memory Usage");
+        information(L"------------------------------------");
         
         enum class Priority { High = 1, Medium = 5, Low = 10 };
         
@@ -166,22 +166,20 @@ private:
             auto after = MemoryMonitor::get_current_memory();
             
             size_t memory_increase = after.resident_size - before.resident_size;
-            std::cout << "Priority pool (8 workers): "
-                     << std::fixed << std::setprecision(2)
-                     << (memory_increase / 1024.0 / 1024.0) << " MB"
-                     << std::endl;
+            information(format_string(L"Priority pool (8 workers): %.2f MB",
+                                    (memory_increase / 1024.0 / 1024.0)));
             
             pool->stop();
         }
     }
     
     void benchmark_job_queue_memory() {
-        std::cout << "\n4. Job Queue Memory Usage\n";
-        std::cout << "-------------------------\n";
+        information(L"\n4. Job Queue Memory Usage");
+        information(L"-------------------------");
         
         auto [pool, error] = create_default(4);
         if (error) {
-            std::cerr << "Error creating pool: " << *error << std::endl;
+            log_module::error(format_string(L"Error creating pool: %s", error->c_str()));
             return;
         }
         
@@ -205,11 +203,10 @@ private:
             size_t memory_increase = after.resident_size - before.resident_size;
             double per_job = static_cast<double>(memory_increase) / count;
             
-            std::cout << std::setw(6) << count << " jobs: "
-                     << std::fixed << std::setprecision(2)
-                     << "Total: " << (memory_increase / 1024.0 / 1024.0) << " MB, "
-                     << "Per job: " << per_job << " bytes"
-                     << std::endl;
+            information(format_string(L"%6zu jobs: Total: %.2f MB, Per job: %.2f bytes",
+                                    count,
+                                    (memory_increase / 1024.0 / 1024.0),
+                                    per_job));
             
             // Clear the queue
             pool->stop();
@@ -220,8 +217,8 @@ private:
     }
     
     void benchmark_logger_memory() {
-        std::cout << "\n5. Logger Memory Usage\n";
-        std::cout << "----------------------\n";
+        information(L"\n5. Logger Memory Usage");
+        information(L"----------------------");
         
         // Restart logger with different configurations
         log_module::stop();
@@ -243,18 +240,16 @@ private:
         auto after = MemoryMonitor::get_current_memory();
         
         size_t memory_increase = after.resident_size - before.resident_size;
-        std::cout << "Logger with 10k entries: "
-                 << std::fixed << std::setprecision(2)
-                 << (memory_increase / 1024.0 / 1024.0) << " MB"
-                 << std::endl;
+        information(format_string(L"Logger with 10k entries: %.2f MB",
+                                (memory_increase / 1024.0 / 1024.0)));
     }
     
     void print_memory_stats(const std::string& label, const MemoryMonitor::MemoryStats& stats) {
-        std::cout << label << ": "
-                 << "Virtual=" << (stats.virtual_size / 1024.0 / 1024.0) << " MB, "
-                 << "Resident=" << (stats.resident_size / 1024.0 / 1024.0) << " MB, "
-                 << "Peak=" << (stats.peak_size / 1024.0 / 1024.0) << " MB"
-                 << std::endl;
+        information(format_string(L"%s: Virtual=%.2f MB, Resident=%.2f MB, Peak=%.2f MB",
+                                label.c_str(),
+                                (stats.virtual_size / 1024.0 / 1024.0),
+                                (stats.resident_size / 1024.0 / 1024.0),
+                                (stats.peak_size / 1024.0 / 1024.0)));
     }
 };
 
