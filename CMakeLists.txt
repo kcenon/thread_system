@@ -103,20 +103,177 @@ endfunction()
 # Test for std::format (C++20 feature)
 ##################################################
 
-check_cxx20_feature(std_format "
+# First check basic std::format availability
+check_cxx20_feature(std_format_basic "
   #include <format>
   #include <string>
+  
   int main() {
     std::string s = std::format(\"{} {}\", \"Hello\", \"World\");
     return 0;
   }
-" HAS_STD_FORMAT)
+" HAS_STD_FORMAT_BASIC)
 
-if(HAS_STD_FORMAT AND SET_STD_FORMAT)
-  add_definitions(-DUSE_STD_FORMAT)  # Define macro to use std::format in code
-  message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has support for std::format.")
+# Then check formatter specialization support (more comprehensive test)
+check_cxx20_feature(std_format_specialization "
+  #include <format>
+  #include <string>
+  #include <string_view>
+  
+  // Test custom type formatting
+  struct test_type {
+    std::string to_string() const { return \"test\"; }
+  };
+  
+  template<>
+  struct std::formatter<test_type> : std::formatter<std::string_view> {
+    template<typename FormatContext>
+    auto format(const test_type& t, FormatContext& ctx) const {
+      return std::formatter<std::string_view>::format(t.to_string(), ctx);
+    }
+  };
+  
+  int main() {
+    // Test basic formatting
+    std::string basic = std::format(\"{} {}\", \"Hello\", \"World\");
+    
+    // Test custom formatter
+    test_type t;
+    std::string custom = std::format(\"{}\", t);
+    
+    return 0;
+  }
+" HAS_STD_FORMAT_SPECIALIZATION)
+
+# Windows-specific policy: Force fmt usage for maximum compatibility
+if(WIN32)
+  message(STATUS "🪟 Windows platform detected")
+  message(STATUS "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+  message(STATUS "Compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
+  message(STATUS "Compiler path: ${CMAKE_CXX_COMPILER}")
+  
+  # Force fmt::format on Windows for maximum stability and compatibility
+  set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT FALSE)
+  
+  message(STATUS "🛡️  Windows Policy: Force using fmt::format for maximum compatibility")
+  message(STATUS "   Rationale:")
+  message(STATUS "   - Avoids std::format inconsistencies across different Windows compilers")
+  message(STATUS "   - Ensures consistent behavior between MSVC, MinGW, MSYS2, and Clang")
+  message(STATUS "   - Eliminates runtime compatibility issues with different Windows versions")
+  message(STATUS "   - Provides stable, well-tested formatting across all Windows environments")
+  
+  if(MSVC)
+    message(STATUS "📊 MSVC ${MSVC_VERSION} detected - using fmt::format")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    message(STATUS "🐧 GCC ${CMAKE_CXX_COMPILER_VERSION} detected - using fmt::format")
+    
+    # Identify specific Windows GCC environments
+    if(CMAKE_CXX_COMPILER MATCHES "msys2" OR CMAKE_CXX_COMPILER MATCHES "MSYS2")
+      message(STATUS "🔧 MSYS2 environment confirmed")
+    elseif(CMAKE_CXX_COMPILER MATCHES "mingw" OR CMAKE_CXX_COMPILER MATCHES "MinGW")
+      message(STATUS "🔧 MinGW environment confirmed")
+    else()
+      message(STATUS "🔧 Windows GCC environment detected")
+    endif()
+    
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    message(STATUS "🦙 Clang ${CMAKE_CXX_COMPILER_VERSION} detected - using fmt::format")
+    
+    if(CMAKE_CXX_COMPILER MATCHES "clang-cl")
+      message(STATUS "🔧 clang-cl (MSVC-compatible mode) detected")
+    else()
+      message(STATUS "🔧 Standard Clang on Windows detected")
+    endif()
+    
+  else()
+    message(STATUS "❓ Unknown Windows compiler: ${CMAKE_CXX_COMPILER_ID} - using fmt::format")
+  endif()
+  
+  # Option to override Windows policy (for advanced users)
+  option(WINDOWS_ALLOW_STD_FORMAT "Allow std::format on Windows (not recommended)" OFF)
+  if(WINDOWS_ALLOW_STD_FORMAT)
+    message(STATUS "⚠️  WARNING: WINDOWS_ALLOW_STD_FORMAT enabled!")
+    message(STATUS "   This may cause compatibility issues. Use at your own risk.")
+    set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)
+  endif()
+  
 else()
-  message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not have support for std::format, so will use the fmt::format instead.")
+  # Non-Windows platforms (Linux, macOS, etc.)
+  set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)  # Will be checked by other tests
+  message(STATUS "🐧🍎 Non-Windows platform detected: ${CMAKE_SYSTEM_NAME}")
+  message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+endif()
+
+# Determine if we should use std::format
+set(USE_STD_FORMAT_ENABLED FALSE)
+
+if(HAS_STD_FORMAT_BASIC AND HAS_STD_FORMAT_SPECIALIZATION AND WINDOWS_COMPILER_SUPPORTS_STD_FORMAT)
+  # Final verification: compile a real-world example that matches our usage
+  message(STATUS "All preliminary std::format checks passed - running compile test...")
+  
+  try_compile(STD_FORMAT_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/format_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_format.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  
+  if(STD_FORMAT_COMPILE_TEST)
+    set(USE_STD_FORMAT_ENABLED TRUE)
+    message(STATUS "std::format compile test: PASSED")
+  else()
+    message(STATUS "std::format compile test: FAILED")
+    if(COMPILE_OUTPUT)
+      message(STATUS "Compile error output: ${COMPILE_OUTPUT}")
+    endif()
+  endif()
+else()
+  message(STATUS "Skipping std::format compile test - prerequisite checks failed")
+  message(STATUS "  - Basic format: ${HAS_STD_FORMAT_BASIC}")
+  message(STATUS "  - Specialization: ${HAS_STD_FORMAT_SPECIALIZATION}")  
+  message(STATUS "  - Compiler support: ${WINDOWS_COMPILER_SUPPORTS_STD_FORMAT}")
+endif()
+
+# Windows policy enforcement
+if(WIN32 AND USE_STD_FORMAT_ENABLED)
+  # This should rarely happen due to the Windows policy above
+  message(STATUS "⚠️  Windows with std::format enabled (policy override detected)")
+  message(STATUS "   This configuration is not recommended for production use")
+  message(STATUS "   To disable override: set WINDOWS_ALLOW_STD_FORMAT to OFF")
+endif()
+
+# Global option to force fmt usage (applies to all platforms)
+option(FORCE_FMT_FORMAT "Force use of fmt library instead of std::format on all platforms" OFF)
+if(FORCE_FMT_FORMAT)
+  set(USE_STD_FORMAT_ENABLED FALSE)
+  message(STATUS "🔧 Global override: Forced to use fmt::format on all platforms")
+endif()
+
+# Apply the decision
+if(USE_STD_FORMAT_ENABLED)
+  add_definitions(-DUSE_STD_FORMAT)
+  message(STATUS "✅ Using std::format - all compatibility checks passed")
+  message(STATUS "   - Basic std::format: ${HAS_STD_FORMAT_BASIC}")
+  message(STATUS "   - Formatter specialization: ${HAS_STD_FORMAT_SPECIALIZATION}")
+  message(STATUS "   - Compiler compatibility: ${WINDOWS_COMPILER_SUPPORTS_STD_FORMAT}")
+  message(STATUS "   - Compile test: ${STD_FORMAT_COMPILE_TEST}")
+else()
+  if(WIN32)
+    message(STATUS "🛡️  Using fmt::format (Windows Policy)")
+    message(STATUS "   Windows builds use fmt::format for maximum compatibility")
+    message(STATUS "   - Platform: ${CMAKE_SYSTEM_NAME}")
+    message(STATUS "   - Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+    message(STATUS "   - Policy override available: -DWINDOWS_ALLOW_STD_FORMAT=ON")
+  else()
+    message(STATUS "❌ Using fmt::format fallback - std::format not fully supported")
+    message(STATUS "   - Basic std::format: ${HAS_STD_FORMAT_BASIC}")
+    message(STATUS "   - Formatter specialization: ${HAS_STD_FORMAT_SPECIALIZATION}")
+    message(STATUS "   - Compiler compatibility: ${WINDOWS_COMPILER_SUPPORTS_STD_FORMAT}")
+    message(STATUS "   - Compile test: ${STD_FORMAT_COMPILE_TEST}")
+    message(STATUS "   - Platform: ${CMAKE_SYSTEM_NAME}")
+    message(STATUS "   - Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+  endif()
 endif()
 
 ##################################################
@@ -179,11 +336,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   # Add subdirectories for source code, samples, and unit tests
   add_subdirectory(sources)  # Core library code
   add_subdirectory(samples)  # Example applications
-  
-  # Disable unit tests on macOS due to known pthread/gtest linkage issues
-  if(UNIX AND NOT APPLE)
-    add_subdirectory(unittest)  # Unit tests
-  endif()
+  add_subdirectory(unittest)  # Unit tests
   
   # Add benchmarks directory if requested
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)

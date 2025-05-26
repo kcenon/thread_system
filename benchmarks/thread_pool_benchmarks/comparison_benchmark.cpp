@@ -9,7 +9,6 @@
  * - Custom thread pool implementations
  */
 
-#include <iostream>
 #include <chrono>
 #include <vector>
 #include <thread>
@@ -21,6 +20,7 @@
 #include <functional>
 #include <numeric>
 #include <algorithm>
+#include <iomanip>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -29,6 +29,7 @@
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
 #include "logger.h"
+#include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
@@ -96,7 +97,7 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Comparative Performance Benchmarks ===\n" << std::endl;
+        log_module::information("\n=== Comparative Performance Benchmarks ===\n");
         
         compare_simple_task_execution();
         compare_parallel_computation();
@@ -105,7 +106,7 @@ public:
         compare_task_creation_overhead();
         compare_memory_usage();
         
-        std::cout << "\n=== Comparison Complete ===\n" << std::endl;
+        log_module::information("\n=== Comparison Complete ===\n");
     }
     
 private:
@@ -120,29 +121,21 @@ private:
         // Find baseline (first result)
         double baseline_time = results.empty() ? 1.0 : results[0].time_ms;
         
-        std::cout << "\n";
-        std::cout << std::setw(25) << "Implementation" 
-                 << std::setw(12) << "Time (ms)"
-                 << std::setw(12) << "Speedup"
-                 << std::setw(15) << "Ops/sec"
-                 << std::endl;
-        std::cout << std::string(64, '-') << std::endl;
+        log_module::information("\n");
+        log_module::information(format_string("%*s%*s%*s%*s", 25, "Implementation", 12, "Time (ms)", 12, "Speedup", 15, "Ops/sec"));
+        log_module::information(std::string(64, '-'));
         
         for (const auto& result : results) {
             double speedup = baseline_time / result.time_ms;
             double ops_per_sec = (result.operations * 1000.0) / result.time_ms;
             
-            std::cout << std::setw(25) << result.name
-                     << std::setw(12) << std::fixed << std::setprecision(2) << result.time_ms
-                     << std::setw(12) << std::setprecision(2) << speedup << "x"
-                     << std::setw(15) << std::setprecision(0) << ops_per_sec
-                     << std::endl;
+            log_module::information(format_string("%*s%*.2f%*.2fx%*.0f", 25, result.name.c_str(), 12, result.time_ms, 12, speedup, 15, ops_per_sec));
         }
     }
     
     void compare_simple_task_execution() {
-        std::cout << "\n1. Simple Task Execution Comparison\n";
-        std::cout << "-----------------------------------\n";
+        log_module::information("\n1. Simple Task Execution Comparison\n");
+        log_module::information("-----------------------------------\n");
         
         const size_t num_tasks = 100000;
         std::vector<BenchmarkResult> results;
@@ -260,8 +253,8 @@ private:
     }
     
     void compare_parallel_computation() {
-        std::cout << "\n2. Parallel Computation Comparison\n";
-        std::cout << "----------------------------------\n";
+        log_module::information("\n2. Parallel Computation Comparison\n");
+        log_module::information("----------------------------------\n");
         
         const size_t data_size = 10000000;
         std::vector<double> data(data_size);
@@ -390,8 +383,8 @@ private:
     }
     
     void compare_io_bound_workload() {
-        std::cout << "\n3. I/O Bound Workload Comparison\n";
-        std::cout << "--------------------------------\n";
+        log_module::information("\n3. I/O Bound Workload Comparison\n");
+        log_module::information("--------------------------------\n");
         
         const size_t num_operations = 1000;
         const int io_delay_ms = 10;
@@ -477,8 +470,8 @@ private:
     }
     
     void compare_mixed_workload() {
-        std::cout << "\n4. Mixed CPU/IO Workload Comparison\n";
-        std::cout << "-----------------------------------\n";
+        log_module::information("\n4. Mixed CPU/IO Workload Comparison\n");
+        log_module::information("-----------------------------------\n");
         
         const size_t num_tasks = 1000;
         const int cpu_work_units = 1000;
@@ -576,8 +569,8 @@ private:
     }
     
     void compare_task_creation_overhead() {
-        std::cout << "\n5. Task Creation Overhead Comparison\n";
-        std::cout << "------------------------------------\n";
+        log_module::information("\n5. Task Creation Overhead Comparison\n");
+        log_module::information("------------------------------------\n");
         
         const size_t num_iterations = 100;
         const size_t tasks_per_iteration = 1000;
@@ -610,8 +603,7 @@ private:
                 
                 results.push_back({"Thread System", per_task_ns / 1000.0, 1.0, tasks_per_iteration});
                 
-                std::cout << "Thread System: " << std::fixed << std::setprecision(1) 
-                         << per_task_ns << " ns per task submission\n";
+                log_module::information(format_string("Thread System: %.1f ns per task submission\n", per_task_ns));
             }
         }
         
@@ -640,8 +632,7 @@ private:
             
             results.push_back({"std::async (deferred)", per_task_ns / 1000.0, 1.0, tasks_per_iteration});
             
-            std::cout << "std::async (deferred): " << std::fixed << std::setprecision(1) 
-                     << per_task_ns << " ns per task creation\n";
+            log_module::information(format_string("std::async (deferred): %.1f ns per task creation\n", per_task_ns));
         }
         
         // Raw function object creation
@@ -664,15 +655,14 @@ private:
             double avg_time_us = std::accumulate(times.begin(), times.end(), 0.0) / times.size();
             double per_task_ns = (avg_time_us * 1000.0) / tasks_per_iteration;
             
-            std::cout << "Raw lambda creation: " << std::fixed << std::setprecision(1) 
-                     << per_task_ns << " ns per lambda\n";
+            log_module::information(format_string("Raw lambda creation: %.1f ns per lambda\n", per_task_ns));
         }
     }
     
     void compare_memory_usage() {
-        std::cout << "\n6. Memory Usage Comparison\n";
-        std::cout << "--------------------------\n";
-        std::cout << "(Memory measurements are approximations)\n\n";
+        log_module::information("\n6. Memory Usage Comparison\n");
+        log_module::information("--------------------------\n");
+        log_module::information("(Memory measurements are approximations)\n\n");
         
         const size_t num_queued_tasks = 100000;
         
@@ -682,13 +672,16 @@ private:
                              sizeof(std::promise<void>) * num_queued_tasks;
         size_t simple_pool_memory = sizeof(std::function<void()>) * num_queued_tasks;
         
-        std::cout << "Memory per " << num_queued_tasks << " queued tasks:\n";
-        std::cout << "  Thread System: " << (thread_system_memory / 1024.0 / 1024.0) 
-                 << " MB (" << (thread_system_memory / num_queued_tasks) << " bytes/task)\n";
-        std::cout << "  std::async: " << (async_memory / 1024.0 / 1024.0) 
-                 << " MB (" << (async_memory / num_queued_tasks) << " bytes/task)\n";
-        std::cout << "  Simple Pool: " << (simple_pool_memory / 1024.0 / 1024.0) 
-                 << " MB (" << (simple_pool_memory / num_queued_tasks) << " bytes/task)\n";
+        log_module::information(format_string("Memory per %zu queued tasks:\n", num_queued_tasks));
+        log_module::information(format_string("  Thread System: %.2f MB (%zu bytes/task)\n", 
+                                             (thread_system_memory / 1024.0 / 1024.0), 
+                                             (thread_system_memory / num_queued_tasks)));
+        log_module::information(format_string("  std::async: %.2f MB (%zu bytes/task)\n", 
+                                             (async_memory / 1024.0 / 1024.0), 
+                                             (async_memory / num_queued_tasks)));
+        log_module::information(format_string("  Simple Pool: %.2f MB (%zu bytes/task)\n", 
+                                             (simple_pool_memory / 1024.0 / 1024.0), 
+                                             (simple_pool_memory / num_queued_tasks)));
     }
 };
 

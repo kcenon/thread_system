@@ -11,7 +11,6 @@
  * - Throughput degradation over time
  */
 
-#include <iostream>
 #include <chrono>
 #include <vector>
 #include <atomic>
@@ -27,6 +26,7 @@
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
 #include "logger.h"
+#include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
@@ -65,7 +65,7 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Detailed Job Throughput Analysis ===\n" << std::endl;
+        log_module::information("\n=== Detailed Job Throughput Analysis ===\n");
         
         benchmark_job_complexity_impact();
         benchmark_worker_count_scaling();
@@ -80,7 +80,7 @@ public:
         
         generate_summary_report();
         
-        std::cout << "\n=== Throughput Analysis Complete ===\n" << std::endl;
+        log_module::information("\n=== Throughput Analysis Complete ===\n");
     }
     
 private:
@@ -272,8 +272,8 @@ private:
     }
     
     void benchmark_job_complexity_impact() {
-        std::cout << "\n1. Job Complexity Impact on Throughput\n";
-        std::cout << "--------------------------------------\n";
+        log_module::information("\n1. Job Complexity Impact on Throughput\n");
+        log_module::information("--------------------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         const size_t base_job_count = 100000;
@@ -294,14 +294,9 @@ private:
             {JobComplexity::Mixed, "Mixed", base_job_count}
         };
         
-        std::cout << std::setw(12) << "Complexity"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(12) << "Avg Latency"
-                 << std::setw(12) << "P95 Latency"
-                 << std::setw(12) << "P99 Latency"
-                 << std::setw(12) << "CPU Eff %"
-                 << std::endl;
-        std::cout << std::string(84, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>12} {:>12} {:>12} {:>12} {:>12} {:>12}",
+                                      "Complexity", "Jobs/sec", "Avg Latency", "P95 Latency", "P99 Latency", "CPU Eff %"));
+        log_module::information(std::string(84, '-'));
         
         for (const auto& test : tests) {
             auto result = measure_throughput(
@@ -315,19 +310,15 @@ private:
             
             all_results_["complexity_" + test.name].push_back(result);
             
-            std::cout << std::setw(12) << test.name
-                     << std::setw(12) << std::fixed << std::setprecision(0) << result.jobs_per_second
-                     << std::setw(12) << std::setprecision(1) << result.avg_latency_us << "μs"
-                     << std::setw(12) << result.p95_latency_us << "μs"
-                     << std::setw(12) << result.p99_latency_us << "μs"
-                     << std::setw(12) << std::setprecision(1) << result.cpu_efficiency
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>12} {:>12.0f} {:>12.1f}μs {:>12.1f}μs {:>12.1f}μs {:>12.1f}",
+                                          test.name, result.jobs_per_second, result.avg_latency_us,
+                                          result.p95_latency_us, result.p99_latency_us, result.cpu_efficiency));
         }
     }
     
     void benchmark_worker_count_scaling() {
-        std::cout << "\n2. Worker Count Scaling Analysis\n";
-        std::cout << "--------------------------------\n";
+        log_module::information("\n2. Worker Count Scaling Analysis\n");
+        log_module::information("--------------------------------\n");
         
         std::vector<size_t> worker_counts = {1, 2, 4, 8, 16, 32, 64, 128};
         const size_t num_jobs = 100000;
@@ -340,13 +331,9 @@ private:
         };
         
         for (const auto& [complexity, complexity_name] : complexities) {
-            std::cout << "\n" << complexity_name << " workload:\n";
-            std::cout << std::setw(8) << "Workers"
-                     << std::setw(12) << "Jobs/sec"
-                     << std::setw(12) << "Speedup"
-                     << std::setw(12) << "Efficiency"
-                     << std::setw(12) << "Avg Latency"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("\n{} workload:", complexity_name));
+            log_module::information(utility_module::formatter::format_string("{:>8} {:>12} {:>12} {:>12} {:>12}",
+                                          "Workers", "Jobs/sec", "Speedup", "Efficiency", "Avg Latency"));
             
             double baseline_throughput = 0;
             
@@ -372,19 +359,15 @@ private:
                 
                 all_results_["scaling_" + complexity_name + "_" + std::to_string(workers)].push_back(result);
                 
-                std::cout << std::setw(8) << workers
-                         << std::setw(12) << std::fixed << std::setprecision(0) << result.jobs_per_second
-                         << std::setw(12) << std::setprecision(2) << speedup << "x"
-                         << std::setw(12) << std::setprecision(1) << efficiency << "%"
-                         << std::setw(12) << result.avg_latency_us << "μs"
-                         << std::endl;
+                log_module::information(utility_module::formatter::format_string("{:>8} {:>12.0f} {:>12.2f}x {:>12.1f}% {:>12.1f}μs",
+                                              workers, result.jobs_per_second, speedup, efficiency, result.avg_latency_us));
             }
         }
     }
     
     void benchmark_queue_depth_impact() {
-        std::cout << "\n3. Queue Depth Impact on Throughput\n";
-        std::cout << "-----------------------------------\n";
+        log_module::information("\n3. Queue Depth Impact on Throughput\n");
+        log_module::information("-----------------------------------\n");
         
         const size_t worker_count = 8;
         
@@ -406,13 +389,9 @@ private:
             {1000, 10000, 10, "Controlled rate (100/ms)"}
         };
         
-        std::cout << std::setw(30) << "Queue Pattern"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(12) << "Avg Queue"
-                 << std::setw(12) << "Max Queue"
-                 << std::setw(12) << "Avg Latency"
-                 << std::endl;
-        std::cout << std::string(78, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>30} {:>12} {:>12} {:>12} {:>12}",
+                                      "Queue Pattern", "Jobs/sec", "Avg Queue", "Max Queue", "Avg Latency"));
+        log_module::information(std::string(78, '-'));
         
         for (const auto& test : tests) {
             auto [pool, error] = create_default(worker_count);
@@ -472,18 +451,14 @@ private:
             double avg_queue = static_cast<double>(total_queue_depth.load()) / total_queue_samples.load();
             double avg_latency = total_time_ms / test.total_jobs * 1000.0;  // Convert to microseconds
             
-            std::cout << std::setw(30) << test.description
-                     << std::setw(12) << std::fixed << std::setprecision(0) << throughput
-                     << std::setw(12) << std::setprecision(1) << avg_queue
-                     << std::setw(12) << max_queue_depth.load()
-                     << std::setw(12) << avg_latency << "μs"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>30} {:>12.0f} {:>12.1f} {:>12} {:>12.1f}μs",
+                                          test.description, throughput, avg_queue, max_queue_depth.load(), avg_latency));
         }
     }
     
     void benchmark_memory_allocation_impact() {
-        std::cout << "\n4. Memory Allocation Impact on Throughput\n";
-        std::cout << "-----------------------------------------\n";
+        log_module::information("\n4. Memory Allocation Impact on Throughput\n");
+        log_module::information("-----------------------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         const size_t num_jobs = 50000;
@@ -502,13 +477,9 @@ private:
             {MemoryPattern::Random, "Random size"}
         };
         
-        std::cout << std::setw(20) << "Memory Pattern"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(12) << "vs No Alloc"
-                 << std::setw(12) << "Avg Latency"
-                 << std::setw(12) << "P99 Latency"
-                 << std::endl;
-        std::cout << std::string(68, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12} {:>12} {:>12}",
+                                      "Memory Pattern", "Jobs/sec", "vs No Alloc", "Avg Latency", "P99 Latency"));
+        log_module::information(std::string(68, '-'));
         
         double baseline_throughput = 0;
         
@@ -530,18 +501,15 @@ private:
             
             all_results_["memory_" + test.name].push_back(result);
             
-            std::cout << std::setw(20) << test.name
-                     << std::setw(12) << std::fixed << std::setprecision(0) << result.jobs_per_second
-                     << std::setw(12) << std::setprecision(1) << relative_perf << "%"
-                     << std::setw(12) << result.avg_latency_us << "μs"
-                     << std::setw(12) << result.p99_latency_us << "μs"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>20} {:>12.0f} {:>12.1f}% {:>12.1f}μs {:>12.1f}μs",
+                                          test.name, result.jobs_per_second, relative_perf,
+                                          result.avg_latency_us, result.p99_latency_us));
         }
     }
     
     void benchmark_job_size_distribution() {
-        std::cout << "\n5. Job Size Distribution Impact\n";
-        std::cout << "-------------------------------\n";
+        log_module::information("\n5. Job Size Distribution Impact\n");
+        log_module::information("-------------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         const size_t total_work_units = 1000000;
@@ -615,13 +583,9 @@ private:
             }
         };
         
-        std::cout << std::setw(25) << "Distribution"
-                 << std::setw(12) << "Jobs Count"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(12) << "Units/sec"
-                 << std::setw(12) << "Avg Latency"
-                 << std::endl;
-        std::cout << std::string(73, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>25} {:>12} {:>12} {:>12} {:>12}",
+                                      "Distribution", "Jobs Count", "Jobs/sec", "Units/sec", "Avg Latency"));
+        log_module::information(std::string(73, '-'));
         
         for (const auto& test : tests) {
             auto job_sizes = test.generate_sizes();
@@ -652,18 +616,14 @@ private:
             double units_per_second = (completed_units.load() * 1000.0) / total_time_ms;
             double avg_latency = total_time_ms / job_sizes.size() * 1000.0;
             
-            std::cout << std::setw(25) << test.name
-                     << std::setw(12) << job_sizes.size()
-                     << std::setw(12) << std::fixed << std::setprecision(0) << jobs_per_second
-                     << std::setw(12) << units_per_second
-                     << std::setw(12) << std::setprecision(1) << avg_latency << "μs"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>25} {:>12} {:>12.0f} {:>12.0f} {:>12.1f}μs",
+                                          test.name, job_sizes.size(), jobs_per_second, units_per_second, avg_latency));
         }
     }
     
     void benchmark_sustained_throughput() {
-        std::cout << "\n6. Sustained Throughput Over Time\n";
-        std::cout << "---------------------------------\n";
+        log_module::information("\n6. Sustained Throughput Over Time\n");
+        log_module::information("---------------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         const int duration_seconds = 30;
@@ -694,8 +654,8 @@ private:
             }
         });
         
-        std::cout << "Time(s)  Submitted  Completed  Queue  Submit/s  Complete/s  Efficiency\n";
-        std::cout << std::string(70, '-') << std::endl;
+        log_module::information("Time(s)  Submitted  Completed  Queue  Submit/s  Complete/s  Efficiency");
+        log_module::information(std::string(70, '-'));
         
         auto start = high_resolution_clock::now();
         size_t last_submitted = 0;
@@ -712,14 +672,9 @@ private:
             double complete_rate = (current_completed - last_completed) * (1000.0 / sample_interval_ms);
             double efficiency = (current_completed * 100.0) / current_submitted;
             
-            std::cout << std::setw(7) << seconds
-                     << std::setw(10) << current_submitted
-                     << std::setw(11) << current_completed
-                     << std::setw(7) << queue_depth
-                     << std::setw(10) << std::fixed << std::setprecision(0) << submit_rate
-                     << std::setw(12) << complete_rate
-                     << std::setw(12) << std::setprecision(1) << efficiency << "%"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>7} {:>10} {:>11} {:>7} {:>10.0f} {:>12.0f} {:>12.1f}%",
+                                          seconds, current_submitted, current_completed, queue_depth,
+                                          submit_rate, complete_rate, efficiency));
             
             last_submitted = current_submitted;
             last_completed = current_completed;
@@ -732,14 +687,14 @@ private:
         auto end = high_resolution_clock::now();
         double total_time_s = duration_cast<seconds>(end - start).count();
         
-        std::cout << "\nSummary:\n";
-        std::cout << "Total jobs: " << jobs_completed.load() << "\n";
-        std::cout << "Average throughput: " << (jobs_completed.load() / total_time_s) << " jobs/s\n";
+        log_module::information("\nSummary:");
+        log_module::information(utility_module::formatter::format_string("Total jobs: {}", jobs_completed.load()));
+        log_module::information(utility_module::formatter::format_string("Average throughput: {:.0f} jobs/s", jobs_completed.load() / total_time_s));
     }
     
     void benchmark_burst_patterns() {
-        std::cout << "\n7. Burst Pattern Handling\n";
-        std::cout << "-------------------------\n";
+        log_module::information("\n7. Burst Pattern Handling\n");
+        log_module::information("-------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         
@@ -759,14 +714,9 @@ private:
             {"Oscillating", 5000, 0, 500, 10}
         };
         
-        std::cout << std::setw(20) << "Pattern"
-                 << std::setw(12) << "Total Jobs"
-                 << std::setw(12) << "Total Time"
-                 << std::setw(12) << "Avg Tput"
-                 << std::setw(12) << "Peak Tput"
-                 << std::setw(12) << "Efficiency"
-                 << std::endl;
-        std::cout << std::string(80, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12} {:>12} {:>12} {:>12}",
+                                      "Pattern", "Total Jobs", "Total Time", "Avg Tput", "Peak Tput", "Efficiency"));
+        log_module::information(std::string(80, '-'));
         
         for (const auto& pattern : patterns) {
             auto [pool, error] = create_default(worker_count);
@@ -819,19 +769,15 @@ private:
             double peak_throughput = *std::max_element(throughput_samples.begin(), throughput_samples.end());
             double efficiency = (completed_jobs.load() * 100.0) / total_jobs;
             
-            std::cout << std::setw(20) << pattern.name
-                     << std::setw(12) << total_jobs
-                     << std::setw(12) << std::fixed << std::setprecision(1) << (total_time_ms / 1000.0) << "s"
-                     << std::setw(12) << std::setprecision(0) << avg_throughput
-                     << std::setw(12) << peak_throughput
-                     << std::setw(12) << std::setprecision(1) << efficiency << "%"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12.1f}s {:>12.0f} {:>12.0f} {:>12.1f}%",
+                                          pattern.name, total_jobs, (total_time_ms / 1000.0),
+                                          avg_throughput, peak_throughput, efficiency));
         }
     }
     
     void benchmark_job_dependencies() {
-        std::cout << "\n8. Job Dependencies Impact\n";
-        std::cout << "--------------------------\n";
+        log_module::information("\n8. Job Dependencies Impact\n");
+        log_module::information("--------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         
@@ -851,13 +797,9 @@ private:
             {"Fan-out (1->10)", 10, 1000, true}
         };
         
-        std::cout << std::setw(20) << "Pattern"
-                 << std::setw(12) << "Total Jobs"
-                 << std::setw(12) << "Time (ms)"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(15) << "vs Independent"
-                 << std::endl;
-        std::cout << std::string(71, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12} {:>12} {:>15}",
+                                      "Pattern", "Total Jobs", "Time (ms)", "Jobs/sec", "vs Independent"));
+        log_module::information(std::string(71, '-'));
         
         double baseline_throughput = 0;
         
@@ -945,18 +887,14 @@ private:
             
             double relative_perf = (throughput / baseline_throughput) * 100.0;
             
-            std::cout << std::setw(20) << pattern.name
-                     << std::setw(12) << total_jobs
-                     << std::setw(12) << std::fixed << std::setprecision(0) << elapsed_ms
-                     << std::setw(12) << throughput
-                     << std::setw(15) << std::setprecision(1) << relative_perf << "%"
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12.0f} {:>12.0f} {:>15.1f}%",
+                                          pattern.name, total_jobs, elapsed_ms, throughput, relative_perf));
         }
     }
     
     void benchmark_priority_impact_on_throughput() {
-        std::cout << "\n9. Priority Scheduling Impact on Throughput\n";
-        std::cout << "------------------------------------------\n";
+        log_module::information("\n9. Priority Scheduling Impact on Throughput\n");
+        log_module::information("------------------------------------------\n");
         
         enum class Priority { 
             Critical = 1,
@@ -971,7 +909,7 @@ private:
         
         // Test 1: Equal distribution
         {
-            std::cout << "\nEqual distribution across priorities:\n";
+            log_module::information("\nEqual distribution across priorities:");
             
             auto [pool, error] = create_priority_default<Priority>(worker_count);
             if (!error) {
@@ -995,16 +933,16 @@ private:
                 }
                 
                 // Sample completion rates
-                std::cout << "Time(ms)  Critical  High  Normal  Low  Background\n";
+                log_module::information("Time(ms)  Critical  High  Normal  Low  Background");
                 
                 for (int sample = 1; sample <= 10; ++sample) {
                     std::this_thread::sleep_for(milliseconds(100));
                     
-                    std::cout << std::setw(8) << sample * 100;
+                    std::string row = utility_module::formatter::format("{:>8}", sample * 100);
                     for (auto p : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
-                        std::cout << std::setw(10) << completed[p].load();
+                        row += utility_module::formatter::format("{:>10}", completed[p].load());
                     }
-                    std::cout << std::endl;
+                    log_module::information(row);
                 }
                 
                 pool->stop();
@@ -1013,14 +951,13 @@ private:
                 double total_time_ms = duration_cast<milliseconds>(end - start).count();
                 double total_throughput = (jobs_per_priority * 5 * 1000.0) / total_time_ms;
                 
-                std::cout << "\nTotal throughput: " << std::fixed << std::setprecision(0) 
-                         << total_throughput << " jobs/s\n";
+                log_module::information(utility_module::formatter::format_string("\nTotal throughput: {:.0f} jobs/s", total_throughput));
             }
         }
         
         // Test 2: Compare with non-priority pool
         {
-            std::cout << "\nThroughput comparison:\n";
+            log_module::information("\nThroughput comparison:");
             
             // Non-priority pool
             auto [normal_pool, error1] = create_default(worker_count);
@@ -1041,8 +978,7 @@ private:
                 double normal_time_ms = duration_cast<milliseconds>(end - start).count();
                 double normal_throughput = (jobs_per_priority * 5 * 1000.0) / normal_time_ms;
                 
-                std::cout << "Non-priority pool: " << std::fixed << std::setprecision(0) 
-                         << normal_throughput << " jobs/s\n";
+                log_module::information(utility_module::formatter::format_string("Non-priority pool: {:.0f} jobs/s", normal_throughput));
             }
             
             // Priority pool
@@ -1066,15 +1002,14 @@ private:
                 double priority_time_ms = duration_cast<milliseconds>(end - start).count();
                 double priority_throughput = (jobs_per_priority * 5 * 1000.0) / priority_time_ms;
                 
-                std::cout << "Priority pool: " << std::fixed << std::setprecision(0) 
-                         << priority_throughput << " jobs/s\n";
+                log_module::information(utility_module::formatter::format_string("Priority pool: {:.0f} jobs/s", priority_throughput));
             }
         }
     }
     
     void benchmark_mixed_workload_throughput() {
-        std::cout << "\n10. Mixed Workload Throughput Analysis\n";
-        std::cout << "--------------------------------------\n";
+        log_module::information("\n10. Mixed Workload Throughput Analysis\n");
+        log_module::information("--------------------------------------\n");
         
         const size_t worker_count = std::thread::hardware_concurrency();
         
@@ -1097,13 +1032,9 @@ private:
             {"Microservice", 40.0, 10.0, 40.0, 10.0}
         };
         
-        std::cout << std::setw(20) << "Workload Mix"
-                 << std::setw(12) << "Jobs/sec"
-                 << std::setw(12) << "Avg Latency"
-                 << std::setw(12) << "P95 Latency"
-                 << std::setw(12) << "CPU Util %"
-                 << std::endl;
-        std::cout << std::string(68, '-') << std::endl;
+        log_module::information(utility_module::formatter::format_string("{:>20} {:>12} {:>12} {:>12} {:>12}",
+                                      "Workload Mix", "Jobs/sec", "Avg Latency", "P95 Latency", "CPU Util %"));
+        log_module::information(std::string(68, '-'));
         
         for (const auto& mix : mixes) {
             const size_t total_jobs = 10000;
@@ -1175,18 +1106,14 @@ private:
             double avg_latency = std::accumulate(latencies.begin(), latencies.end(), 0.0) / latencies.size();
             double p95_latency = latencies[latencies.size() * 95 / 100];
             
-            std::cout << std::setw(20) << mix.name
-                     << std::setw(12) << std::fixed << std::setprecision(0) << throughput
-                     << std::setw(12) << std::setprecision(1) << avg_latency << "μs"
-                     << std::setw(12) << p95_latency << "μs"
-                     << std::setw(12) << cpu_utilization
-                     << std::endl;
+            log_module::information(utility_module::formatter::format_string("{:>20} {:>12.0f} {:>12.1f}μs {:>12.1f}μs {:>12.1f}",
+                                          mix.name, throughput, avg_latency, p95_latency, cpu_utilization));
         }
     }
     
     void generate_summary_report() {
-        std::cout << "\n=== Throughput Analysis Summary ===\n";
-        std::cout << "\nKey Findings:\n";
+        log_module::information("\n=== Throughput Analysis Summary ===\n");
+        log_module::information("\nKey Findings:");
         
         // Find best/worst configurations
         double best_throughput = 0;
@@ -1213,20 +1140,21 @@ private:
             }
         }
         
-        std::cout << "\n1. Best throughput configuration: " << best_config 
-                 << " (" << std::fixed << std::setprecision(0) << best_throughput << " jobs/s)\n";
-        std::cout << "2. Worst throughput configuration: " << worst_config 
-                 << " (" << worst_throughput << " jobs/s)\n";
-        std::cout << "3. Throughput ratio (best/worst): " 
-                 << std::setprecision(1) << (best_throughput / worst_throughput) << "x\n";
+        log_module::information(utility_module::formatter::format_string("\n1. Best throughput configuration: {} ({:.0f} jobs/s)",
+                                      best_config, best_throughput));
+        log_module::information(utility_module::formatter::format_string("2. Worst throughput configuration: {} ({:.0f} jobs/s)",
+                                      worst_config, worst_throughput));
+        log_module::information(utility_module::formatter::format_string("3. Throughput ratio (best/worst): {:.1f}x",
+                                      best_throughput / worst_throughput));
         
         // Recommendations
-        std::cout << "\nRecommendations:\n";
-        std::cout << "- For CPU-bound work: Use " << std::thread::hardware_concurrency() << " workers\n";
-        std::cout << "- For I/O-bound work: Use " << (std::thread::hardware_concurrency() * 2) << "-" 
-                 << (std::thread::hardware_concurrency() * 4) << " workers\n";
-        std::cout << "- For memory-intensive work: Consider memory allocation patterns\n";
-        std::cout << "- For mixed workloads: Use priority scheduling to optimize latency\n";
+        log_module::information("\nRecommendations:");
+        log_module::information(utility_module::formatter::format_string("- For CPU-bound work: Use {} workers", std::thread::hardware_concurrency()));
+        log_module::information(utility_module::formatter::format_string("- For I/O-bound work: Use {}-{} workers",
+                                      std::thread::hardware_concurrency() * 2,
+                                      std::thread::hardware_concurrency() * 4));
+        log_module::information("- For memory-intensive work: Consider memory allocation patterns");
+        log_module::information("- For mixed workloads: Use priority scheduling to optimize latency");
         
         // Save detailed results to file
         std::ofstream report("throughput_analysis_report.csv");
@@ -1245,7 +1173,7 @@ private:
             }
             
             report.close();
-            std::cout << "\nDetailed results saved to: throughput_analysis_report.csv\n";
+            log_module::information("\nDetailed results saved to: throughput_analysis_report.csv");
         }
     }
 };

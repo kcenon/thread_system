@@ -34,7 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_base.h"
 
-#include "job_queue.h"
+#include "../utilities/formatter.h"
+#include "../thread_base/job_queue.h"
 #include "convert_string.h"
 
 #include <memory>

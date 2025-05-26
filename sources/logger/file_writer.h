@@ -33,8 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "log_types.h"
-#include "job_queue.h"
-#include "thread_base.h"
+#include "../thread_base/job_queue.h"
+#include "../thread_base/thread_base.h"
 
 #include <deque>
 #include <fstream>

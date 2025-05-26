@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "job_queue.h"
+#include "../utilities/formatter.h"
+#include "../thread_base/job_queue.h"
 #include "priority_job.h"
 #include "convert_string.h"
 #include "job_priorities.h"
@@ -78,8 +79,7 @@ namespace priority_thread_pool_module
 		 * @param value A unique pointer to the base job to enqueue.
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value)
-			-> result_void override;
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override;
 
 		/**
 		 * @brief Enqueues a batch of jobs into the queue.
@@ -91,10 +91,11 @@ namespace priority_thread_pool_module
 		 * @param jobs A vector of unique pointers to jobs to enqueue.
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
-		// This method accepts job references (different from base class which takes rvalue references)
+		// This method accepts job references (different from base class which takes rvalue
+		// references)
 		[[nodiscard]] auto enqueue_batch_ref(std::vector<std::unique_ptr<job>>& jobs)
 			-> result_void;
-				
+
 		// Override from base class
 		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
 			-> result_void override;
@@ -119,8 +120,7 @@ namespace priority_thread_pool_module
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
 		[[nodiscard]] auto enqueue_batch(
-			std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
-			-> result_void;
+			std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs) -> result_void;
 
 		/**
 		 * @brief Dequeues the next available job (of any type or priority).
@@ -130,8 +130,7 @@ namespace priority_thread_pool_module
 		 *
 		 * @return A result<std::unique_ptr<job>> containing either the dequeued job or an error.
 		 */
-		[[nodiscard]] auto dequeue()
-			-> result<std::unique_ptr<job>> override;
+		[[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override;
 
 		/**
 		 * @brief Dequeues a job with one of the specified priorities.
@@ -173,7 +172,7 @@ namespace priority_thread_pool_module
 
 		/**
 		 * @brief Stops accepting new jobs and marks the queue as stopped.
-		 * 
+		 *
 		 * After this method is called, any attempt to enqueue a new job will result in
 		 * an error until the queue is reset or recreated.
 		 */

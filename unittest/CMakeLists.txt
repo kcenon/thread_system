@@ -3,17 +3,37 @@
 # 
 # This script configures and builds the test suite for validating 
 # the ThreadSystem library functionality.
-# Test are organized by component and run automatically during build if enabled.
+# Tests are organized by component and run automatically during build if enabled.
+# 
+# Platform Support: Linux and macOS only
 ##################################################
 
-# Utility component tests
-# Validates core utilities, data structures, and helper functions
-add_subdirectory(utilities_test)
-
-# Thread pool tests
-# Validates standard thread pool operations, task queueing, and execution
-add_subdirectory(thread_pool_test)
-
-# Priority thread pool tests
-# Validates priority-based scheduling, task ordering, and edge cases
-add_subdirectory(priority_thread_pool_test)
+# Check if we're on a supported platform (Linux or macOS)
+if(UNIX AND NOT WIN32)
+  message(STATUS "Building unit tests for ${CMAKE_SYSTEM_NAME}")
+  
+  # Utility component tests
+  # Validates core utilities, data structures, and helper functions
+  add_subdirectory(utilities_test)
+  
+  # Thread base tests
+  # Validates fundamental threading components, job queues, and cancellation mechanisms
+  add_subdirectory(thread_base_test)
+  
+  # Logger tests
+  # Validates logging system functionality, writers, and async message handling
+  add_subdirectory(logger_test)
+  
+  # Thread pool tests
+  # Validates standard thread pool operations, task queueing, and execution
+  add_subdirectory(thread_pool_test)
+  
+  # Priority thread pool tests
+  # Validates priority-based scheduling, task ordering, and edge cases
+  add_subdirectory(priority_thread_pool_test)
+  
+else()
+  message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
+  message(STATUS "Unit tests are only supported on Linux and macOS platforms")
+  message(STATUS "Skipping test suite compilation...")
+endif()

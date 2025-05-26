@@ -17,7 +17,10 @@ file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
 
 # Configure include directory so client code can find headers
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/sources
+)
 
 # Link against dependencies: thread_base for core functionality and logger for logging
 target_link_libraries(${PROJECT_NAME} PUBLIC thread_base logger)

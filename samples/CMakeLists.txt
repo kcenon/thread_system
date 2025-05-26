@@ -13,6 +13,7 @@ add_subdirectory(logger_sample)
 # Shows how to create and use thread pools for parallel task execution
 add_subdirectory(thread_pool_sample)
 
+
 # Priority thread pool sample
 # Demonstrates priority-based task scheduling in thread pools
 add_subdirectory(priority_thread_pool_sample)

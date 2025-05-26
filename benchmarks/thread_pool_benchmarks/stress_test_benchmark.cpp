@@ -9,7 +9,6 @@
  * - Edge cases
  */
 
-#include <iostream>
 #include <chrono>
 #include <vector>
 #include <atomic>
@@ -17,6 +16,9 @@
 #include <thread>
 #include <future>
 #include <limits>
+#include <iomanip>
+#include <algorithm>
+#include <numeric>
 
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
@@ -38,7 +40,7 @@ public:
     }
     
     void run_all_tests() {
-        std::cout << "\n=== Stress Test Benchmarks ===\n" << std::endl;
+        log_module::information("\n=== Stress Test Benchmarks ===\n");
         
         test_maximum_threads();
         test_queue_overflow();
@@ -49,13 +51,13 @@ public:
         test_thundering_herd();
         test_cascading_failures();
         
-        std::cout << "\n=== Stress Tests Complete ===\n" << std::endl;
+        log_module::information("\n=== Stress Tests Complete ===\n");
     }
     
 private:
     void test_maximum_threads() {
-        std::cout << "\n1. Maximum Thread Creation Test\n";
-        std::cout << "-------------------------------\n";
+        log_module::information("\n1. Maximum Thread Creation Test\n");
+        log_module::information("-------------------------------\n");
         
         std::vector<size_t> thread_counts = {100, 500, 1000, 2000, 5000};
         
@@ -65,16 +67,14 @@ private:
             auto [pool, error] = create_default(count);
             
             if (error) {
-                std::cout << std::setw(5) << count << " threads: FAILED - " 
-                         << *error << std::endl;
+                log_module::error(format_string("  {} threads: FAILED - {}", count, *error));
                 break;
             }
             
             auto result = pool->start();
             
             if (!result) {
-                std::cout << std::setw(5) << count << " threads: FAILED - " 
-                         << result.error() << std::endl;
+                log_module::error(format_string("  {} threads: FAILED - {}", count, result.error()));
                 break;
             }
             
@@ -93,17 +93,15 @@ private:
             
             pool->stop();
             
-            std::cout << std::setw(5) << count << " threads: "
-                     << "Created in " << std::fixed << std::setprecision(0) 
-                     << creation_time_ms << "ms, "
-                     << "Completed " << completed.load() << "/" << test_jobs << " jobs"
-                     << std::endl;
+            log_module::information(format_string("  {} threads: Created in {}ms, Completed {}/{} jobs", 
+                                                  count, static_cast<int>(creation_time_ms), 
+                                                  completed.load(), test_jobs));
         }
     }
     
     void test_queue_overflow() {
-        std::cout << "\n2. Queue Overflow Test\n";
-        std::cout << "----------------------\n";
+        log_module::information("\n2. Queue Overflow Test\n");
+        log_module::information("----------------------\n");
         
         auto [pool, error] = create_default(4);
         if (error) return;
@@ -135,15 +133,12 @@ private:
                 double submission_time_ms = duration_cast<milliseconds>(end - start).count();
                 double submission_rate = (flood_size * 1000.0) / submission_time_ms;
                 
-                std::cout << std::setw(8) << flood_size << " jobs: "
-                         << "Submitted in " << std::fixed << std::setprecision(0)
-                         << submission_time_ms << "ms ("
-                         << std::setprecision(0) << submission_rate << " jobs/s)"
-                         << std::endl;
+                log_module::information(format_string("  {} jobs: Submitted in {}ms ({} jobs/s)", 
+                                                      flood_size, static_cast<int>(submission_time_ms), 
+                                                      static_cast<int>(submission_rate)));
                          
             } catch (const std::exception& e) {
-                std::cout << std::setw(8) << flood_size << " jobs: "
-                         << "FAILED - " << e.what() << std::endl;
+                log_module::error(format_string("  {} jobs: FAILED - {}", flood_size, e.what()));
                 break;
             }
         }
@@ -152,8 +147,8 @@ private:
     }
     
     void test_rapid_start_stop() {
-        std::cout << "\n3. Rapid Start/Stop Cycles\n";
-        std::cout << "--------------------------\n";
+        log_module::information("\n3. Rapid Start/Stop Cycles\n");
+        log_module::information("--------------------------\n");
         
         const size_t num_cycles = 1000;
         size_t successful_cycles = 0;
@@ -167,8 +162,7 @@ private:
             
             auto start_result = pool->start();
             if (!start_result) {
-                std::cout << "Start failed at cycle " << i << ": " 
-                         << start_result.error() << std::endl;
+                log_module::error(format_string("Start failed at cycle {}: {}", i, start_result.error()));
                 break;
             }
             
@@ -182,8 +176,7 @@ private:
             
             auto stop_result = pool->stop();
             if (!stop_result) {
-                std::cout << "Stop failed at cycle " << i << ": " 
-                         << stop_result.error() << std::endl;
+                log_module::error(format_string("Stop failed at cycle {}: {}", i, stop_result.error()));
                 break;
             }
             
@@ -199,17 +192,15 @@ private:
                                   / cycle_times.size();
             auto [min_it, max_it] = std::minmax_element(cycle_times.begin(), cycle_times.end());
             
-            std::cout << "Completed " << successful_cycles << "/" << num_cycles << " cycles\n"
-                     << "Average cycle time: " << std::fixed << std::setprecision(1) 
-                     << avg_cycle_time << "μs\n"
-                     << "Min: " << *min_it << "μs, Max: " << *max_it << "μs"
-                     << std::endl;
+            log_module::information(format_string("Completed {}/{} cycles", successful_cycles, num_cycles));
+            log_module::information(format_string("Average cycle time: {:.1f}μs", avg_cycle_time));
+            log_module::information(format_string("Min: {:.1f}μs, Max: {:.1f}μs", *min_it, *max_it));
         }
     }
     
     void test_exception_handling() {
-        std::cout << "\n4. Exception Handling Under Load\n";
-        std::cout << "--------------------------------\n";
+        log_module::information("\n4. Exception Handling Under Load\n");
+        log_module::information("--------------------------------\n");
         
         auto [pool, error] = create_default(8);
         if (error) return;
@@ -252,17 +243,16 @@ private:
         auto end = high_resolution_clock::now();
         double elapsed_ms = duration_cast<milliseconds>(end - start).count();
         
-        std::cout << "Total jobs: " << total_jobs << "\n"
-                 << "Successful: " << successful_jobs.load() << "\n"
-                 << "Failed: " << failed_jobs.load() << "\n"
-                 << "Time: " << std::fixed << std::setprecision(0) << elapsed_ms << "ms\n"
-                 << "Throughput: " << (total_jobs * 1000.0 / elapsed_ms) << " jobs/s"
-                 << std::endl;
+        log_module::information(format_string("Total jobs: {}", total_jobs));
+        log_module::information(format_string("Successful: {}", successful_jobs.load()));
+        log_module::information(format_string("Failed: {}", failed_jobs.load()));
+        log_module::information(format_string("Time: {}ms", static_cast<int>(elapsed_ms)));
+        log_module::information(format_string("Throughput: {:.0f} jobs/s", total_jobs * 1000.0 / elapsed_ms));
     }
     
     void test_memory_pressure() {
-        std::cout << "\n5. Memory Pressure Test\n";
-        std::cout << "-----------------------\n";
+        log_module::information("\n5. Memory Pressure Test\n");
+        log_module::information("-----------------------\n");
         
         auto [pool, error] = create_default(8);
         if (error) return;
@@ -301,16 +291,14 @@ private:
                 auto end = high_resolution_clock::now();
                 double elapsed_ms = duration_cast<milliseconds>(end - start).count();
                 
-                std::cout << std::setw(3) << size_mb << "MB per job: "
-                         << "Completed " << completed.load() << "/" << num_jobs
-                         << " in " << std::fixed << std::setprecision(0) << elapsed_ms << "ms"
-                         << std::endl;
+                log_module::information(format_string("{}MB per job: Completed {}/{} in {}ms", 
+                                                      size_mb, completed.load(), num_jobs, 
+                                                      static_cast<int>(elapsed_ms)));
                          
             } catch (const std::bad_alloc&) {
                 out_of_memory = true;
-                std::cout << std::setw(3) << size_mb << "MB per job: "
-                         << "OUT OF MEMORY after " << completed.load() << " jobs"
-                         << std::endl;
+                log_module::error(format_string("{}MB per job: OUT OF MEMORY after {} jobs", 
+                                                size_mb, completed.load()));
                 break;
             }
         }
@@ -319,8 +307,8 @@ private:
     }
     
     void test_priority_starvation() {
-        std::cout << "\n6. Priority Starvation Test\n";
-        std::cout << "---------------------------\n";
+        log_module::information("\n6. Priority Starvation Test\n");
+        log_module::information("---------------------------\n");
         
         enum class Priority { 
             Highest = 1,
@@ -372,24 +360,21 @@ private:
         }
         
         // Check progress at intervals
-        std::cout << "Time(s)  Highest  High  Medium  Low  Lowest\n";
+        log_module::information("Time(s)  Highest  High  Medium  Low  Lowest");
         
         for (int seconds = 1; seconds <= 10; ++seconds) {
             std::this_thread::sleep_for(seconds(1));
             
-            std::cout << std::setw(7) << seconds << "  "
-                     << std::setw(7) << highest_completed.load() << "  "
-                     << std::setw(4) << high_completed.load() << "  "
-                     << std::setw(6) << medium_completed.load() << "  "
-                     << std::setw(3) << low_completed.load() << "  "
-                     << std::setw(6) << lowest_completed.load()
-                     << std::endl;
+            log_module::information(format_string("{:7}  {:7}  {:4}  {:6}  {:3}  {:6}", 
+                                                  seconds, highest_completed.load(), high_completed.load(),
+                                                  medium_completed.load(), low_completed.load(), 
+                                                  lowest_completed.load()));
                      
             // Check if low priority jobs are starving
             if (highest_completed.load() == jobs_per_priority &&
                 high_completed.load() == jobs_per_priority &&
                 lowest_completed.load() == 0) {
-                std::cout << "WARNING: Lowest priority jobs are starving!" << std::endl;
+                log_module::warning("WARNING: Lowest priority jobs are starving!");
             }
         }
         
@@ -397,8 +382,8 @@ private:
     }
     
     void test_thundering_herd() {
-        std::cout << "\n7. Thundering Herd Test\n";
-        std::cout << "-----------------------\n";
+        log_module::information("\n7. Thundering Herd Test\n");
+        log_module::information("-----------------------\n");
         
         auto [pool, error] = create_default(8);
         if (error) return;
@@ -447,7 +432,7 @@ private:
         pool->stop();
         
         // Analyze the thundering herd behavior
-        std::cout << "Jobs started within:\n";
+        log_module::information("Jobs started within:");
         size_t thresholds[] = {100, 500, 900, 950, 990, 1000};
         
         for (size_t threshold : thresholds) {
@@ -458,15 +443,14 @@ private:
             
             if (it != progress.end()) {
                 size_t time_ms = (it - progress.begin()) * 10;
-                std::cout << "  " << std::setw(4) << threshold << " jobs: " 
-                         << time_ms << "ms\n";
+                log_module::information(format_string("  {:4} jobs: {}ms", threshold, time_ms));
             }
         }
     }
     
     void test_cascading_failures() {
-        std::cout << "\n8. Cascading Failure Test\n";
-        std::cout << "-------------------------\n";
+        log_module::information("\n8. Cascading Failure Test\n");
+        log_module::information("-------------------------\n");
         
         auto [pool, error] = create_default(8);
         if (error) return;
@@ -535,13 +519,11 @@ private:
         
         pool->stop();
         
-        std::cout << "Total chains: " << num_chains << "\n"
-                 << "Successful: " << successful_chains.load() << "\n"
-                 << "Failed: " << failed_chains.load() << "\n"
-                 << "Failure propagation rate: " 
-                 << std::fixed << std::setprecision(1)
-                 << (failed_chains.load() * 100.0 / num_chains) << "%"
-                 << std::endl;
+        log_module::information(format_string("Total chains: {}", num_chains));
+        log_module::information(format_string("Successful: {}", successful_chains.load()));
+        log_module::information(format_string("Failed: {}", failed_chains.load()));
+        log_module::information(format_string("Failure propagation rate: {:.1f}%", 
+                                             failed_chains.load() * 100.0 / num_chains));
     }
 };
 

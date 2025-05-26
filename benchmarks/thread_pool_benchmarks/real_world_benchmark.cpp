@@ -9,7 +9,6 @@
  * - Mixed I/O and CPU tasks
  */
 
-#include <iostream>
 #include <chrono>
 #include <vector>
 #include <random>
@@ -18,10 +17,15 @@
 #include <cmath>
 #include <algorithm>
 #include <numeric>
+#include <atomic>
+#include <future>
+#include <map>
+#include <thread>
 
 #include "thread_pool.h"
 #include "priority_thread_pool.h"
 #include "logger.h"
+#include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
@@ -71,7 +75,7 @@ public:
     }
     
     void run_all_benchmarks() {
-        std::cout << "\n=== Real-World Scenario Benchmarks ===\n" << std::endl;
+        log_module::write_information("\n=== Real-World Scenario Benchmarks ===\n");
         
         benchmark_web_server_simulation();
         benchmark_image_processing_pipeline();
@@ -80,13 +84,13 @@ public:
         benchmark_microservice_communication();
         benchmark_batch_file_processing();
         
-        std::cout << "\n=== Real-World Benchmarks Complete ===\n" << std::endl;
+        log_module::write_information("\n=== Real-World Benchmarks Complete ===\n");
     }
     
 private:
     void benchmark_web_server_simulation() {
-        std::cout << "\n1. Web Server Request Handling Simulation\n";
-        std::cout << "-----------------------------------------\n";
+        log_module::write_information("\n1. Web Server Request Handling Simulation\n");
+        log_module::write_information("-----------------------------------------\n");
         
         // Simulate different request types with varying processing times
         struct RequestType {
@@ -158,16 +162,15 @@ private:
             double requests_per_second = total_requests / total_time_s;
             double avg_response_time = static_cast<double>(total_response_time_ms.load()) / total_requests;
             
-            std::cout << "Workers: " << std::setw(3) << workers 
-                     << " | RPS: " << std::fixed << std::setprecision(0) << requests_per_second
-                     << " | Avg Response: " << std::setprecision(1) << avg_response_time << "ms"
-                     << std::endl;
+            log_module::write_information(utility_module::formatter::format(
+                "Workers: %3zu | RPS: %.0f | Avg Response: %.1fms",
+                workers, requests_per_second, avg_response_time).c_str());
         }
     }
     
     void benchmark_image_processing_pipeline() {
-        std::cout << "\n2. Image Processing Pipeline Simulation\n";
-        std::cout << "---------------------------------------\n";
+        log_module::write_information("\n2. Image Processing Pipeline Simulation\n");
+        log_module::write_information("---------------------------------------\n");
         
         // Simulate image processing stages
         struct ProcessingStage {
@@ -214,19 +217,17 @@ private:
             double elapsed_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
             double images_per_second = num_images / elapsed_s;
             
-            std::cout << std::setw(5) << num_images << " images: "
-                     << std::fixed << std::setprecision(1) 
-                     << images_per_second << " img/s, "
-                     << "Total time: " << elapsed_s << "s"
-                     << std::endl;
+            log_module::write_information(utility_module::formatter::format(
+                "%5zu images: %.1f img/s, Total time: %.1fs",
+                num_images, images_per_second, elapsed_s).c_str());
         }
         
         pool->stop();
     }
     
     void benchmark_data_analysis_workload() {
-        std::cout << "\n3. Data Analysis Workload Simulation\n";
-        std::cout << "------------------------------------\n";
+        log_module::write_information("\n3. Data Analysis Workload Simulation\n");
+        log_module::write_information("------------------------------------\n");
         
         // Simulate MapReduce-style data processing
         const size_t data_size_mb = 100;
@@ -288,17 +289,15 @@ private:
             double elapsed_ms = duration_cast<milliseconds>(end - start).count();
             double throughput_mb_s = (data_size_mb * 1000.0) / elapsed_ms;
             
-            std::cout << std::setw(2) << workers << " workers: "
-                     << std::fixed << std::setprecision(2)
-                     << throughput_mb_s << " MB/s, "
-                     << "Time: " << std::setprecision(0) << elapsed_ms << "ms"
-                     << std::endl;
+            log_module::write_information(utility_module::formatter::format(
+                "%2zu workers: %.2f MB/s, Time: %.0fms",
+                workers, throughput_mb_s, elapsed_ms).c_str());
         }
     }
     
     void benchmark_game_engine_simulation() {
-        std::cout << "\n4. Game Engine Update Loop Simulation\n";
-        std::cout << "-------------------------------------\n";
+        log_module::write_information("\n4. Game Engine Update Loop Simulation\n");
+        log_module::write_information("-------------------------------------\n");
         
         // Simulate game engine subsystems
         enum class Priority { 
@@ -390,15 +389,14 @@ private:
         double actual_fps = completed_frames.load() / total_time_s;
         double frame_miss_rate = (missed_frames.load() * 100.0) / completed_frames.load();
         
-        std::cout << "Target FPS: " << target_fps << "\n"
-                 << "Actual FPS: " << std::fixed << std::setprecision(1) << actual_fps << "\n"
-                 << "Missed frames: " << missed_frames.load() << " (" 
-                 << std::setprecision(1) << frame_miss_rate << "%)\n";
+        log_module::write_information(utility_module::formatter::format(
+            "Target FPS: %d\nActual FPS: %.1f\nMissed frames: %d (%.1f%%)",
+            target_fps, actual_fps, missed_frames.load(), frame_miss_rate).c_str());
     }
     
     void benchmark_microservice_communication() {
-        std::cout << "\n5. Microservice Communication Pattern\n";
-        std::cout << "-------------------------------------\n";
+        log_module::write_information("\n5. Microservice Communication Pattern\n");
+        log_module::write_information("-------------------------------------\n");
         
         // Simulate service-to-service communication
         struct Service {
@@ -477,13 +475,14 @@ private:
         double requests_per_second = num_requests / total_time_s;
         double avg_latency = static_cast<double>(total_latency_ms.load()) / num_requests;
         
-        std::cout << "Requests/second: " << std::fixed << std::setprecision(0) << requests_per_second << "\n"
-                 << "Average latency: " << std::setprecision(1) << avg_latency << "ms\n";
+        log_module::write_information(utility_module::formatter::format(
+            "Requests/second: %.0f\nAverage latency: %.1fms",
+            requests_per_second, avg_latency).c_str());
     }
     
     void benchmark_batch_file_processing() {
-        std::cout << "\n6. Batch File Processing Simulation\n";
-        std::cout << "-----------------------------------\n";
+        log_module::write_information("\n6. Batch File Processing Simulation\n");
+        log_module::write_information("-----------------------------------\n");
         
         // Simulate processing different file types
         struct FileType {
@@ -545,10 +544,9 @@ private:
             double files_per_second = total_files / elapsed_s;
             double mb_per_second = (total_bytes_processed.load() / 1024.0 / 1024.0) / elapsed_s;
             
-            std::cout << "Batch size " << std::setw(3) << batch_size << ": "
-                     << std::fixed << std::setprecision(0) << files_per_second << " files/s, "
-                     << std::setprecision(1) << mb_per_second << " MB/s"
-                     << std::endl;
+            log_module::write_information(utility_module::formatter::format(
+                "Batch size %3zu: %.0f files/s, %.1f MB/s",
+                batch_size, files_per_second, mb_per_second).c_str());
         }
         
         pool->stop();
