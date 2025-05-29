@@ -105,9 +105,52 @@ namespace utility_module
 
 		return std::nullopt;
 	}
+	
+	auto file::save(const std::string& path,
+					span<const uint8_t> data) -> std::optional<std::string>
+	{
+		std::filesystem::path target_path(path);
+		if (!target_path.parent_path().empty())
+		{
+			std::error_code ec;
+			std::filesystem::create_directories(target_path.parent_path(), ec);
+			if (ec)
+			{
+				return "Failed to create directories: " + ec.message();
+			}
+		}
+
+		std::ofstream stream(path, std::ios::binary | std::ios::trunc);
+		if (!stream.is_open())
+		{
+			return "Failed to open file for writing";
+		}
+
+		stream.write(reinterpret_cast<const char*>(data.data()),
+					 static_cast<std::streamsize>(data.size()));
+		stream.close();
+
+		return std::nullopt;
+	}
 
 	auto file::append(const std::string& path,
 					  const std::vector<uint8_t>& data) -> std::optional<std::string>
+	{
+		std::fstream stream(path, std::ios::out | std::ios::binary | std::ios::app);
+		if (!stream.is_open())
+		{
+			return "Failed to open file for appending";
+		}
+
+		stream.write(reinterpret_cast<const char*>(data.data()),
+					 static_cast<std::streamsize>(data.size()));
+		stream.close();
+
+		return std::nullopt;
+	}
+	
+	auto file::append(const std::string& path,
+					  span<const uint8_t> data) -> std::optional<std::string>
 	{
 		std::fstream stream(path, std::ios::out | std::ios::binary | std::ios::app);
 		if (!stream.is_open())

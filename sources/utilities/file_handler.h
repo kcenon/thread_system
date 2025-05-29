@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <cstdint>
 #include <optional>
+#include "span.h"
 
 namespace utility_module
 {
@@ -122,6 +123,22 @@ namespace utility_module
 		 */
 		static auto save(const std::string& path, const std::vector<uint8_t>& data)
 			-> std::optional<std::string>;
+			
+		/**
+		 * @brief Saves data to a file using a span, overwriting it if it already exists.
+		 * @param path The target file path.
+		 * @param data A span pointing to the data to write.
+		 * @return @c std::optional<std::string> with an error message on failure, or
+		 *         @c std::nullopt on success.
+		 *
+		 * The file is opened in binary mode for output. If the file does not exist, it is
+		 * created. If it exists, its contents are replaced by @p data. In case of I/O errors
+		 * (e.g., insufficient permissions, write failure), an error message is returned.
+		 * 
+		 * This overload uses a span to avoid unnecessary copies of the data.
+		 */
+		static auto save(const std::string& path, span<const uint8_t> data)
+			-> std::optional<std::string>;
 
 		/**
 		 * @brief Appends data to the end of an existing file.
@@ -135,6 +152,22 @@ namespace utility_module
 		 * to ensure creation, consider using @c save() first or verifying the file's existence.
 		 */
 		static auto append(const std::string& path, const std::vector<uint8_t>& data)
+			-> std::optional<std::string>;
+			
+		/**
+		 * @brief Appends data to the end of an existing file using a span.
+		 * @param path The target file path.
+		 * @param data A span pointing to the data to append.
+		 * @return @c std::optional<std::string> with an error message on failure, or
+		 *         @c std::nullopt on success.
+		 *
+		 * The file is opened in binary append mode. If the file does not exist, behavior may depend
+		 * on your platform or library settings (some may create it, others may fail). If you need
+		 * to ensure creation, consider using @c save() first or verifying the file's existence.
+		 * 
+		 * This overload uses a span to avoid unnecessary copies of the data.
+		 */
+		static auto append(const std::string& path, span<const uint8_t> data)
 			-> std::optional<std::string>;
 	};
 } // namespace utility_module
