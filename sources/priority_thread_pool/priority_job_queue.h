@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "../utilities/formatter.h"
+#include "../utilities/span.h"
 #include "../thread_base/job_queue.h"
 #include "priority_job.h"
 #include "convert_string.h"
@@ -144,6 +145,20 @@ namespace priority_thread_pool_module
 		 */
 		[[nodiscard]] auto dequeue(const std::vector<priority_type>& priorities)
 			-> result<std::unique_ptr<priority_job_t<priority_type>>>;
+			
+		/**
+		 * @brief Dequeues a job with one of the specified priorities using span.
+		 *
+		 * This method checks the queues corresponding to the given priority levels
+		 * in an implementation-defined sequence and removes the first job found.
+		 * This overload accepts a span to avoid copying the priorities collection.
+		 *
+		 * @param priorities A span of priority levels from which to attempt a dequeue.
+		 * @return A result<std::unique_ptr<priority_job_t<priority_type>>> containing either
+		 *         the dequeued job or an error.
+		 */
+		[[nodiscard]] auto dequeue(utility_module::span<const priority_type> priorities)
+			-> result<std::unique_ptr<priority_job_t<priority_type>>>;
 
 		/**
 		 * @brief Removes all jobs from all priority queues.
@@ -159,6 +174,14 @@ namespace priority_thread_pool_module
 		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
 		[[nodiscard]] auto empty(const std::vector<priority_type>& priorities) const -> bool;
+		
+		/**
+		 * @brief Checks if there are no jobs in any of the specified priority queues using span.
+		 *
+		 * @param priorities A span of priority levels to check.
+		 * @return @c true if all specified priority queues are empty, otherwise @c false.
+		 */
+		[[nodiscard]] auto empty(utility_module::span<const priority_type> priorities) const -> bool;
 
 		/**
 		 * @brief Returns a string representation of the entire priority job queue.
@@ -190,6 +213,18 @@ namespace priority_thread_pool_module
 		 */
 		[[nodiscard]] auto empty_check_without_lock(
 			const std::vector<priority_type>& priorities) const -> bool;
+			
+		/**
+		 * @brief Checks if the specified priority queues are empty without acquiring any locks using span.
+		 *
+		 * This function is intended for internal use, where external locking is expected
+		 * to be handled by the caller.
+		 *
+		 * @param priorities A span of priority levels to check.
+		 * @return @c true if all specified priority queues are empty, otherwise @c false.
+		 */
+		[[nodiscard]] auto empty_check_without_lock(
+			utility_module::span<const priority_type> priorities) const -> bool;
 
 		/**
 		 * @brief Attempts to dequeue a single job from the queue for a given priority.

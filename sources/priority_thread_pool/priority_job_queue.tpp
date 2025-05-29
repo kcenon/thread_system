@@ -256,6 +256,50 @@ namespace priority_thread_pool_module
 
 		return error{error_code::queue_empty, "Unexpected error: No job found after waiting"};
 	}
+	
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::dequeue(utility_module::span<const priority_type> priorities)
+		-> result<std::unique_ptr<priority_job_t<priority_type>>>
+	{
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		auto dequeue_job
+			= [this, &priorities]() -> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+		{
+			for (const auto& priority : priorities)
+			{
+				if (auto value = std::move(try_dequeue_from_priority(priority)))
+				{
+					return value;
+				}
+			}
+			return std::nullopt;
+		};
+
+		std::optional<std::unique_ptr<priority_job_t<priority_type>>> result;
+		condition_.wait(lock,
+						[&]()
+						{
+							result = dequeue_job();
+							return result.has_value() || stop_.load();
+						});
+
+		if (result.has_value())
+		{
+			auto job = std::move(result.value());
+			lock.unlock();
+			return job;
+		}
+
+		lock.unlock();
+
+		if (stop_.load())
+		{
+			return error{error_code::queue_stopped, "Job queue is stopped"};
+		}
+
+		return error{error_code::queue_empty, "Unexpected error: No job found after waiting"};
+	}
 
 	template <typename priority_type> auto priority_job_queue_t<priority_type>::clear() -> void
 	{
@@ -288,6 +332,15 @@ namespace priority_thread_pool_module
 
 		return empty_check_without_lock(priorities);
 	}
+	
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::empty(
+		utility_module::span<const priority_type> priorities) const -> bool
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		return empty_check_without_lock(priorities);
+	}
 
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::to_string(void) const -> std::string
@@ -307,6 +360,22 @@ namespace priority_thread_pool_module
 	template <typename priority_type>
 	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
 		const std::vector<priority_type>& priorities) const -> bool
+	{
+		for (const auto& priority : priorities)
+		{
+			auto it = queues_.find(priority);
+			if (it != queues_.end() && !it->second.empty())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+	template <typename priority_type>
+	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
+		utility_module::span<const priority_type> priorities) const -> bool
 	{
 		for (const auto& priority : priorities)
 		{

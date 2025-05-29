@@ -317,6 +317,81 @@ else()
 endif()
 
 ##################################################
+# Test for std::span (C++20 feature)
+##################################################
+
+# Options to control whether std::span is used
+option(SET_STD_SPAN "Set use std::span if it can use" ON)
+
+check_cxx20_feature(std_span_basic "
+  #include <span>
+  #include <vector>
+  
+  int main() {
+    std::vector<int> vec = {1, 2, 3};
+    std::span<int> s(vec);
+    return s.size();
+  }
+" HAS_STD_SPAN_BASIC)
+
+check_cxx20_feature(std_span_advanced "
+  #include <span>
+  #include <vector>
+  #include <array>
+  
+  int main() {
+    // Test vector constructor
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+    std::span<int> s1(vec);
+    
+    // Test array constructor
+    std::array<int, 3> arr = {1, 2, 3};
+    std::span<int> s2(arr);
+    
+    // Test C-array constructor
+    int raw_array[4] = {1, 2, 3, 4};
+    std::span<int> s3(raw_array, 4);
+    
+    // Test subspan
+    auto subview = s1.subspan(1, 2);
+    
+    return 0;
+  }
+" HAS_STD_SPAN_ADVANCED)
+
+# Final verification: compile a real-world span test
+if(HAS_STD_SPAN_BASIC AND HAS_STD_SPAN_ADVANCED)
+  message(STATUS "All preliminary std::span checks passed - running compile test...")
+  
+  try_compile(STD_SPAN_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/span_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_span.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  
+  if(STD_SPAN_COMPILE_TEST AND SET_STD_SPAN)
+    add_definitions(-DUSE_STD_SPAN)  # Define macro to use std::span in code
+    message(STATUS "✅ Using std::span - all compatibility checks passed")
+    message(STATUS "   - Basic std::span: ${HAS_STD_SPAN_BASIC}")
+    message(STATUS "   - Advanced features: ${HAS_STD_SPAN_ADVANCED}")
+    message(STATUS "   - Compile test: ${STD_SPAN_COMPILE_TEST}")
+  else()
+    message(STATUS "❌ Using fallback span implementation - std::span not fully supported")
+    message(STATUS "   - Basic std::span: ${HAS_STD_SPAN_BASIC}")
+    message(STATUS "   - Advanced features: ${HAS_STD_SPAN_ADVANCED}")
+    message(STATUS "   - Compile test: ${STD_SPAN_COMPILE_TEST}")
+    message(STATUS "   - Platform: ${CMAKE_SYSTEM_NAME}")
+    message(STATUS "   - Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+  endif()
+else()
+  message(STATUS "Skipping std::span compile test - prerequisite checks failed")
+  message(STATUS "  - Basic span: ${HAS_STD_SPAN_BASIC}")
+  message(STATUS "  - Advanced features: ${HAS_STD_SPAN_ADVANCED}")  
+endif()
+
+##################################################
 # Build Configuration
 ##################################################
 
