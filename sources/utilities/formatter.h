@@ -112,30 +112,30 @@ namespace utility_module
 	public:
 		/**
 		 * @brief A no-op parse function required by the formatting library.
-		 * @param ctx The format parse context.
-		 * @return An iterator pointing to the end of @p ctx.
+		 * @param context The format parse context.
+		 * @return An iterator pointing to the end of @p context.
 		 *
 		 * The formatter does not accept any custom formatting specifiers,
-		 * so it simply returns @c ctx.begin().
+		 * so it simply returns @c context.begin().
 		 */
-		constexpr auto parse(auto& ctx) { return ctx.begin(); }
+		constexpr auto parse(auto& context) { return context.begin(); }
 
 		/**
 		 * @brief Formats the enum value into a provided format context.
 		 * @tparam FormatContext The type of the format context (provided by either std::format or
 		 * {fmt}).
 		 * @param value The enum value to format.
-		 * @param ctx The format context, which holds the output iterator and additional state.
+		 * @param context The format context, which holds the output iterator and additional state.
 		 * @return An iterator pointing to the end of the formatted output.
 		 *
 		 * Internally calls the helper @c do_format() to convert the enum to a string using @c
 		 * Converter and then writes it.
 		 */
-		template <typename FormatContext> auto format(const T& value, FormatContext& ctx) const
+		template <typename FormatContext> auto format(const T& value, FormatContext& context) const
 		{
 			using char_type =
 				typename std::iterator_traits<typename FormatContext::iterator>::value_type;
-			return do_format<char_type>(ctx.out(), value);
+			return do_format<char_type>(context.out(), value);
 		}
 	};
 
