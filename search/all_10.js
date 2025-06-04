@@ -1,7 +1,7 @@
 var searchData=
 [
   ['parameter_0',['Parameter',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a83f499a540b1323009c200d6f8cc9396',1,'log_module']]],
-  ['parse_1',['parse',['../d1/dec/classutility__module_1_1enum__formatter.html#a4865828c30d45b4a4ab6270ece0f5404',1,'utility_module::enum_formatter::parse()'],['../de/d30/classutility__module_1_1argument__manager.html#a8c717ac27d873d26ac1b5f741a4d9999',1,'utility_module::argument_manager::parse()']]],
+  ['parse_1',['parse',['../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1',1,'utility_module::enum_formatter::parse()'],['../de/d30/classutility__module_1_1argument__manager.html#a8c717ac27d873d26ac1b5f741a4d9999',1,'utility_module::argument_manager::parse()']]],
   ['parsing_20conventions_2',['Parsing Conventions',['../de/d30/classutility__module_1_1argument__manager.html#autotoc_md47',1,'']]],
   ['performance_20benchmarks_3',['📈 Performance Benchmarks',['../index.html#benchmarks',1,'']]],
   ['performance_20characteristics_4',['Performance Characteristics',['../index.html#performance_characteristics',1,'']]],

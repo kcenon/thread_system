@@ -96,13 +96,13 @@ Collaboration diagram for utility_module::enum_formatter&lt; T, Converter &gt;:<
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4865828c30d45b4a4ab6270ece0f5404" id="r_a4865828c30d45b4a4ab6270ece0f5404"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#a4865828c30d45b4a4ab6270ece0f5404">parse</a> (auto &amp;ctx)</td></tr>
-<tr class="memdesc:a4865828c30d45b4a4ab6270ece0f5404"><td class="mdescLeft">&#160;</td><td class="mdescRight">A no-op parse function required by the formatting library.  <br /></td></tr>
-<tr class="separator:a4865828c30d45b4a4ab6270ece0f5404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7d7cb2e59d77d77bb36d5474473998c" id="r_ae7d7cb2e59d77d77bb36d5474473998c"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
-<tr class="memitem:ae7d7cb2e59d77d77bb36d5474473998c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#ae7d7cb2e59d77d77bb36d5474473998c">format</a> (const T &amp;value, FormatContext &amp;ctx) const</td></tr>
-<tr class="memdesc:ae7d7cb2e59d77d77bb36d5474473998c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the enum value into a provided format context.  <br /></td></tr>
-<tr class="separator:ae7d7cb2e59d77d77bb36d5474473998c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86421b021ba81b03d2e0dc621ca8dfb1" id="r_a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1">parse</a> (auto &amp;context)</td></tr>
+<tr class="memdesc:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A no-op parse function required by the formatting library.  <br /></td></tr>
+<tr class="separator:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4" id="r_ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#ac48cf9e06d61ac58964e78c472d4cae4">format</a> (const T &amp;value, FormatContext &amp;context) const</td></tr>
+<tr class="memdesc:ac48cf9e06d61ac58964e78c472d4cae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the enum value into a provided format context.  <br /></td></tr>
+<tr class="separator:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -217,8 +217,8 @@ template&lt;typename CharT &gt; </div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ae7d7cb2e59d77d77bb36d5474473998c" name="ae7d7cb2e59d77d77bb36d5474473998c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7d7cb2e59d77d77bb36d5474473998c">&#9670;&#160;</a></span>format()</h2>
+<a id="ac48cf9e06d61ac58964e78c472d4cae4" name="ac48cf9e06d61ac58964e78c472d4cae4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48cf9e06d61ac58964e78c472d4cae4">&#9670;&#160;</a></span>format()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +240,7 @@ template&lt;typename FormatContext &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">FormatContext &amp;&#160;</td>
-          <td class="paramname"><em>ctx</em>&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -265,7 +265,7 @@ template&lt;typename FormatContext &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The enum value to format. </td></tr>
-    <tr><td class="paramname">ctx</td><td>The format context, which holds the output iterator and additional state. </td></tr>
+    <tr><td class="paramname">context</td><td>The format context, which holds the output iterator and additional state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -276,13 +276,13 @@ template&lt;typename FormatContext &gt; </div>
 <div class="fragment"><div class="line"><span class="lineno">  135</span>        {</div>
 <div class="line"><span class="lineno">  136</span>            <span class="keyword">using </span>char_type =</div>
 <div class="line"><span class="lineno">  137</span>                <span class="keyword">typename</span> std::iterator_traits&lt;typename FormatContext::iterator&gt;::value_type;</div>
-<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">return</span> do_format&lt;char_type&gt;(ctx.out(), value);</div>
+<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">return</span> do_format&lt;char_type&gt;(context.out(), value);</div>
 <div class="line"><span class="lineno">  139</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a4865828c30d45b4a4ab6270ece0f5404" name="a4865828c30d45b4a4ab6270ece0f5404"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4865828c30d45b4a4ab6270ece0f5404">&#9670;&#160;</a></span>parse()</h2>
+<a id="a86421b021ba81b03d2e0dc621ca8dfb1" name="a86421b021ba81b03d2e0dc621ca8dfb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86421b021ba81b03d2e0dc621ca8dfb1">&#9670;&#160;</a></span>parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,7 +296,7 @@ template&lt;typename T , typename Converter &gt; </div>
           <td class="memname">constexpr auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::parse </td>
           <td>(</td>
           <td class="paramtype">auto &amp;&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td class="paramname"><em>context</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -310,15 +310,15 @@ template&lt;typename T , typename Converter &gt; </div>
 <p>A no-op parse function required by the formatting library. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>The format parse context. </td></tr>
+    <tr><td class="paramname">context</td><td>The format parse context. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>ctx</code>.</dd></dl>
-<p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>ctx.begin()</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>context</code>.</dd></dl>
+<p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>context.begin()</code>. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00121">121</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  121</span>{ <span class="keywordflow">return</span> ctx.begin(); }</div>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>{ <span class="keywordflow">return</span> context.begin(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -328,7 +328,7 @@ template&lt;typename T , typename Converter &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2025 13:28:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 05:40:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
