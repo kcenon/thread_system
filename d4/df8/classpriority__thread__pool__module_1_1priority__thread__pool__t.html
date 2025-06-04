@@ -257,7 +257,7 @@ Example Usage</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Stop the pool</span></div>
 <div class="line">pool-&gt;stop();</div>
-<div class="ttc" id="aclasspriority__thread__pool__module_1_1priority__thread__pool__t_html"><div class="ttname"><a href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html">priority_thread_pool_module::priority_thread_pool_t</a></div><div class="ttdoc">A thread pool that schedules and executes jobs based on their priority levels.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d10/priority__thread__pool_8h_source.html#l00177">priority_thread_pool.h:179</a></div></div>
+<div class="ttc" id="aclasspriority__thread__pool__module_1_1priority__thread__pool__t_html"><div class="ttname"><a href="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html">priority_thread_pool_module::priority_thread_pool_t</a></div><div class="ttdoc">A thread pool that schedules and executes jobs based on their priority levels.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d10/priority__thread__pool_8h_source.html#l00141">priority_thread_pool.h:143</a></div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template-based worker thread class that processes jobs from a priority job queue.">priority_thread_worker_t</a> The worker thread class used by the pool </dd>
 <dd>
 <a class="el" href="../../d7/dce/classpriority__thread__pool__module_1_1priority__job__t.html" title="Represents a job that carries a specific priority level.">priority_job_t</a> Jobs with priority information </dd>
@@ -266,7 +266,7 @@ Example Usage</h3>
 <dd>
 <a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads.">thread_pool_module::thread_pool</a> The non-prioritized thread pool implementation </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00177">177</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00141">141</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a673450d019a2e1e389585a37d0d7c085" name="a673450d019a2e1e389585a37d0d7c085"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a673450d019a2e1e389585a37d0d7c085">&#9670;&#160;</a></span>priority_thread_pool_t()</h2>
@@ -649,7 +649,17 @@ Example</h3>
 <div class="fragment"><div class="line">std::cout &lt;&lt; pool.to_string() &lt;&lt; std::endl;</div>
 <div class="line"><span class="comment">// Output might look like:</span></div>
 <div class="line"><span class="comment">// &quot;priority_thread_pool [Title: priority_thread_pool, Started: true, Workers: 4]&quot;</span></div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t_ad40992a2c46ce23211fa2a72376a1960_icgraph.png" border="0" usemap="#ad4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t_ad40992a2c46ce23211fa2a72376a1960_icgraph" alt=""/></div>
+<map name="ad4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t_ad40992a2c46ce23211fa2a72376a1960_icgraph" id="ad4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t_ad40992a2c46ce23211fa2a72376a1960_icgraph">
+<area shape="rect" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="271,13,453,67"/>
+<area shape="rect" href="../../da/dce/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__pool__t_3_01priority__type_01_4_01_4.html#a52c80182aa407534d654d1ad481a73c6" title="Formats a priority_thread_pool_t&lt;priority_type&gt; object as a string." alt="" coords="5,5,223,75"/>
+<area shape="poly" title=" " alt="" coords="257,43,223,43,223,37,257,37"/>
+</map>
+</div>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -677,7 +687,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 
 <p>The shared priority job queue from which workers fetch jobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00370">370</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00325">325</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -705,7 +715,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 
 <p>Indicates whether the thread pool has been started. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00367">367</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00322">322</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -733,7 +743,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 
 <p>A descriptive name or title for this thread pool, useful for logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00364">364</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00319">319</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -761,7 +771,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 
 <p>The collection of worker threads responsible for processing jobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00373">373</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html#l00328">328</a> of file <a class="el" href="../../dd/d10/priority__thread__pool_8h_source.html">priority_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -771,7 +781,7 @@ template&lt;typename priority_type  = job_priorities&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 05:55:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 06:01:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
