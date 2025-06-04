@@ -1,5 +1,0 @@
-<map id="thread_module::to_string_safe" name="thread_module::to_string_safe">
-<area shape="rect" id="Node000001" title="Type&#45;safe wrapper for to_string that only accepts thread_conditions." alt="" coords="5,5,225,31"/>
-<area shape="rect" id="Node000002" href="$de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="273,5,459,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,15,259,15,259,21,225,21"/>
-</map>

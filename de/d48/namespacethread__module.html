@@ -185,21 +185,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a5d54a128ec1a3c88386e19726ea3faf7" id="r_a5d54a128ec1a3c88386e19726ea3faf7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a5d54a128ec1a3c88386e19726ea3faf7"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; std::optional&lt; T &gt;, std::optional&lt; std::string &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7">result_to_pair</a> (const <a class="el" href="../../d2/d93/classthread__module_1_1result.html">result</a>&lt; T &gt; &amp;res)</td></tr>
 <tr class="separator:a5d54a128ec1a3c88386e19726ea3faf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02fbab329eb99b194f07fd073de59706" id="r_a02fbab329eb99b194f07fd073de59706"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">to_string</a> (<a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> condition) noexcept</td></tr>
-<tr class="memdesc:a02fbab329eb99b194f07fd073de59706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>thread_conditions</code> value to its corresponding string representation.  <br /></td></tr>
-<tr class="separator:a02fbab329eb99b194f07fd073de59706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd38caf8867bfeadc6b0570ff137d126" id="r_abd38caf8867bfeadc6b0570ff137d126"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abd38caf8867bfeadc6b0570ff137d126"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#abd38caf8867bfeadc6b0570ff137d126">to_string_safe</a> (T value) noexcept -&gt; std::enable_if_t&lt; <a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a4132c1378556aaec61db0b9654cee6dc">job_detail::is_thread_condition_v</a>&lt; T &gt;, std::string_view &gt;</td></tr>
-<tr class="memdesc:abd38caf8867bfeadc6b0570ff137d126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-safe wrapper for to_string that only accepts thread_conditions.  <br /></td></tr>
-<tr class="separator:abd38caf8867bfeadc6b0570ff137d126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef6868865289af399b9a054d7e73b37a" id="r_aef6868865289af399b9a054d7e73b37a"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#aef6868865289af399b9a054d7e73b37a">is_valid_condition</a> (<a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> condition) noexcept</td></tr>
-<tr class="memdesc:aef6868865289af399b9a054d7e73b37a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a given thread_conditions value is valid.  <br /></td></tr>
-<tr class="separator:aef6868865289af399b9a054d7e73b37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80265816f0c0ffbbafd30ea9443f0559" id="r_a80265816f0c0ffbbafd30ea9443f0559"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a80265816f0c0ffbbafd30ea9443f0559">all_conditions</a> () noexcept -&gt; std::vector&lt; <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> &gt;</td></tr>
-<tr class="memdesc:a80265816f0c0ffbbafd30ea9443f0559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a vector containing all possible <code>thread_conditions</code> values.  <br /></td></tr>
-<tr class="separator:a80265816f0c0ffbbafd30ea9443f0559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c9b6c5f44b25a1796a30610b19caf3b" id="r_a5c9b6c5f44b25a1796a30610b19caf3b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a5c9b6c5f44b25a1796a30610b19caf3b">all_priorities</a> () -&gt; std::vector&lt; <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> &gt;</td></tr>
-<tr class="separator:a5c9b6c5f44b25a1796a30610b19caf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353c9e3581f9b950570feaa9bd756222" id="r_a353c9e3581f9b950570feaa9bd756222"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a> (<a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> condition)</td></tr>
+<tr class="memdesc:a353c9e3581f9b950570feaa9bd756222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>thread_conditions</code> value to its corresponding string representation.  <br /></td></tr>
+<tr class="separator:a353c9e3581f9b950570feaa9bd756222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8145a260192c258b8b3dbf1385ee03c7" id="r_a8145a260192c258b8b3dbf1385ee03c7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">all_priorities</a> (void) -&gt; std::vector&lt; <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> &gt;</td></tr>
+<tr class="memdesc:a8145a260192c258b8b3dbf1385ee03c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a vector containing all possible <code>thread_conditions</code> values.  <br /></td></tr>
+<tr class="separator:a8145a260192c258b8b3dbf1385ee03c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Core threading foundation of the thread system library. </p>
@@ -399,14 +390,14 @@ template&lt;typename T &gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00072">72</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   73</span>    {</div>
-<div class="line"><span class="lineno">   74</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda0eceeb45861f9585dd7a97a3e36f85c6">Created</a>,  </div>
-<div class="line"><span class="lineno">   75</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda5706de961fb376d701be6e7762d8b09c">Waiting</a>,  </div>
-<div class="line"><span class="lineno">   76</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1">Working</a>,  </div>
-<div class="line"><span class="lineno">   77</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23">Stopping</a>, </div>
-<div class="line"><span class="lineno">   78</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fdac23e2b09ebe6bf4cb5e2a9abe85c0be2">Stopped</a>,  </div>
-<div class="line"><span class="lineno">   79</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00063">63</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>    {</div>
+<div class="line"><span class="lineno">   65</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda0eceeb45861f9585dd7a97a3e36f85c6">Created</a>,  </div>
+<div class="line"><span class="lineno">   66</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda5706de961fb376d701be6e7762d8b09c">Waiting</a>,  </div>
+<div class="line"><span class="lineno">   67</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1">Working</a>,  </div>
+<div class="line"><span class="lineno">   68</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23">Stopping</a>, </div>
+<div class="line"><span class="lineno">   69</span>        <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fdac23e2b09ebe6bf4cb5e2a9abe85c0be2">Stopped</a>,  </div>
+<div class="line"><span class="lineno">   70</span>    };</div>
 <div class="ttc" id="anamespacethread__module_html_ac36545c2cec0c3066226f519c089c5fda0eceeb45861f9585dd7a97a3e36f85c6"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda0eceeb45861f9585dd7a97a3e36f85c6">thread_module::thread_conditions::Created</a></div><div class="ttdeci">@ Created</div><div class="ttdoc">Thread created but not started.</div></div>
 <div class="ttc" id="anamespacethread__module_html_ac36545c2cec0c3066226f519c089c5fda5706de961fb376d701be6e7762d8b09c"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda5706de961fb376d701be6e7762d8b09c">thread_module::thread_conditions::Waiting</a></div><div class="ttdeci">@ Waiting</div><div class="ttdoc">Thread waiting for work or tasks.</div></div>
 <div class="ttc" id="anamespacethread__module_html_ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23">thread_module::thread_conditions::Stopping</a></div><div class="ttdeci">@ Stopping</div><div class="ttdoc">Thread in the process of stopping.</div></div>
@@ -416,58 +407,8 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a80265816f0c0ffbbafd30ea9443f0559" name="a80265816f0c0ffbbafd30ea9443f0559"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80265816f0c0ffbbafd30ea9443f0559">&#9670;&#160;</a></span>all_conditions()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto thread_module::all_conditions </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> -&gt; std::vector&lt;<a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a>&gt;
-	</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieves a vector containing all possible <code>thread_conditions</code> values. </p>
-<dl class="section return"><dt>Returns</dt><dd>A <code>std::vector</code> of all enumerators in <code>thread_conditions</code>, in ascending order.</dd></dl>
-<p>This can be useful for iteration, logging, or building UI elements that list thread states. For example: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> cond : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a80265816f0c0ffbbafd30ea9443f0559">all_conditions</a>()) {</div>
-<div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">to_string</a>(cond) &lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespacethread__module_html_a02fbab329eb99b194f07fd073de59706"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition) noexcept</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00132">thread_conditions.h:132</a></div></div>
-<div class="ttc" id="anamespacethread__module_html_a80265816f0c0ffbbafd30ea9443f0559"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a80265816f0c0ffbbafd30ea9443f0559">thread_module::all_conditions</a></div><div class="ttdeci">auto all_conditions() noexcept -&gt; std::vector&lt; thread_conditions &gt;</div><div class="ttdoc">Retrieves a vector containing all possible thread_conditions values.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00179">thread_conditions.h:179</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00179">179</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  180</span>    {</div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> { thread_conditions::Created, thread_conditions::Waiting, thread_conditions::Working,</div>
-<div class="line"><span class="lineno">  182</span>                 thread_conditions::Stopping, thread_conditions::Stopped };</div>
-<div class="line"><span class="lineno">  183</span>    }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../de/d48/namespacethread__module_a80265816f0c0ffbbafd30ea9443f0559_icgraph.png" border="0" usemap="#ade/d48/namespacethread__module_a80265816f0c0ffbbafd30ea9443f0559_icgraph" alt=""/></div>
-<map name="ade/d48/namespacethread__module_a80265816f0c0ffbbafd30ea9443f0559_icgraph" id="ade/d48/namespacethread__module_a80265816f0c0ffbbafd30ea9443f0559_icgraph">
-<area shape="rect" title="Retrieves a vector containing all possible thread_conditions values." alt="" coords="197,5,341,45"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a5c9b6c5f44b25a1796a30610b19caf3b" title=" " alt="" coords="5,5,149,45"/>
-<area shape="poly" title=" " alt="" coords="183,28,149,28,149,23,183,23"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a5c9b6c5f44b25a1796a30610b19caf3b" name="a5c9b6c5f44b25a1796a30610b19caf3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c9b6c5f44b25a1796a30610b19caf3b">&#9670;&#160;</a></span>all_priorities()</h2>
+<a id="a8145a260192c258b8b3dbf1385ee03c7" name="a8145a260192c258b8b3dbf1385ee03c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8145a260192c258b8b3dbf1385ee03c7">&#9670;&#160;</a></span>all_priorities()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,21 +432,20 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00187">187</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  188</span>    {</div>
-<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a80265816f0c0ffbbafd30ea9443f0559">all_conditions</a>();</div>
-<div class="line"><span class="lineno">  190</span>    }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../de/d48/namespacethread__module_a5c9b6c5f44b25a1796a30610b19caf3b_cgraph.png" border="0" usemap="#ade/d48/namespacethread__module_a5c9b6c5f44b25a1796a30610b19caf3b_cgraph" alt=""/></div>
-<map name="ade/d48/namespacethread__module_a5c9b6c5f44b25a1796a30610b19caf3b_cgraph" id="ade/d48/namespacethread__module_a5c9b6c5f44b25a1796a30610b19caf3b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,149,45"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a80265816f0c0ffbbafd30ea9443f0559" title="Retrieves a vector containing all possible thread_conditions values." alt="" coords="197,5,341,45"/>
-<area shape="poly" title=" " alt="" coords="150,23,184,23,184,28,150,28"/>
-</map>
-</div>
-
+<p>Retrieves a vector containing all possible <code>thread_conditions</code> values. </p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::vector</code> of all enumerators in <code>thread_conditions</code>, in ascending order.</dd></dl>
+<p>This can be useful for iteration, logging, or building UI elements that list thread states. For example: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> cond : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">all_priorities</a>()) {</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(cond) &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_a8145a260192c258b8b3dbf1385ee03c7"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">thread_module::all_priorities</a></div><div class="ttdeci">auto all_priorities(void) -&gt; std::vector&lt; thread_conditions &gt;</div><div class="ttdoc">Retrieves a vector containing all possible thread_conditions values.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00131">thread_conditions.h:131</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00131">131</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>    {</div>
+<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> { thread_conditions::Created, thread_conditions::Waiting, thread_conditions::Working,</div>
+<div class="line"><span class="lineno">  134</span>                 thread_conditions::Stopping, thread_conditions::Stopped };</div>
+<div class="line"><span class="lineno">  135</span>    }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab8102462516a4fb48654ff8a47389306" name="ab8102462516a4fb48654ff8a47389306"></a>
@@ -600,47 +540,6 @@ Here is the caller graph for this function:</div>
 </map>
 </div>
 
-</div>
-</div>
-<a id="aef6868865289af399b9a054d7e73b37a" name="aef6868865289af399b9a054d7e73b37a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef6868865289af399b9a054d7e73b37a">&#9670;&#160;</a></span>is_valid_condition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool thread_module::is_valid_condition </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a>&#160;</td>
-          <td class="paramname"><em>condition</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Checks if a given thread_conditions value is valid. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">condition</td><td>The condition to check </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the condition is a valid enum value, false otherwise </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00161">161</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  162</span>    {</div>
-<div class="line"><span class="lineno">  163</span>        <span class="keyword">auto</span> index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(condition);</div>
-<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">return</span> index &lt; job_detail::thread_conditions_count;</div>
-<div class="line"><span class="lineno">  165</span>    }</div>
-</div><!-- fragment -->
 </div>
 </div>
 <a id="a6c00ede9a4cdda14fbe535e2142eda16" name="a6c00ede9a4cdda14fbe535e2142eda16"></a>
@@ -813,8 +712,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a02fbab329eb99b194f07fd073de59706" name="a02fbab329eb99b194f07fd073de59706"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02fbab329eb99b194f07fd073de59706">&#9670;&#160;</a></span>to_string()</h2>
+<a id="a353c9e3581f9b950570feaa9bd756222" name="a353c9e3581f9b950570feaa9bd756222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a353c9e3581f9b950570feaa9bd756222">&#9670;&#160;</a></span>to_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -832,7 +731,7 @@ Here is the call graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -846,89 +745,25 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> representing the condition name. If the value is out of range, returns "UNKNOWN".</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> state = <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda829eadc8e29caab50cc26bc6a451a1f1">thread_conditions::Working</a>;</div>
-<div class="line"><span class="keyword">auto</span> name = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">to_string</a>(state); <span class="comment">// &quot;working&quot;</span></div>
+<div class="line"><span class="keyword">auto</span> name = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(state); <span class="comment">// &quot;working&quot;</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00132">132</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  133</span>    {</div>
-<div class="line"><span class="lineno">  134</span>        <span class="comment">// Add compile-time bounds checking</span></div>
-<div class="line"><span class="lineno">  135</span>        <span class="keyword">auto</span> index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(condition);</div>
-<div class="line"><span class="lineno">  136</span>        </div>
-<div class="line"><span class="lineno">  137</span>        <span class="comment">// Runtime bounds check for safety</span></div>
-<div class="line"><span class="lineno">  138</span>        <span class="keywordflow">return</span> (index &lt; job_detail::thread_conditions_count)</div>
-<div class="line"><span class="lineno">  139</span>                   ? job_detail::thread_conditions_strings[index]</div>
-<div class="line"><span class="lineno">  140</span>                   : <span class="stringliteral">&quot;UNKNOWN&quot;</span>;</div>
-<div class="line"><span class="lineno">  141</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00111">111</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  112</span>    {</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keyword">auto</span> index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(condition);</div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">return</span> (index &lt; job_detail::thread_conditions_count)</div>
+<div class="line"><span class="lineno">  115</span>                   ? job_detail::thread_conditions_strings[index]</div>
+<div class="line"><span class="lineno">  116</span>                   : <span class="stringliteral">&quot;UNKNOWN&quot;</span>;</div>
+<div class="line"><span class="lineno">  117</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../de/d48/namespacethread__module_a02fbab329eb99b194f07fd073de59706_icgraph.png" border="0" usemap="#ade/d48/namespacethread__module_a02fbab329eb99b194f07fd073de59706_icgraph" alt=""/></div>
-<map name="ade/d48/namespacethread__module_a02fbab329eb99b194f07fd073de59706_icgraph" id="ade/d48/namespacethread__module_a02fbab329eb99b194f07fd073de59706_icgraph">
-<area shape="rect" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="273,99,459,124"/>
-<area shape="rect" href="../../da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="14,5,217,60"/>
-<area shape="poly" title=" " alt="" coords="311,97,203,63,204,58,312,92"/>
-<area shape="rect" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#aef56b6a7c3023835324b4d75f4f6732f" title="Retrieves the result value or propagates exceptions." alt="" coords="38,84,193,139"/>
-<area shape="poly" title=" " alt="" coords="259,114,193,114,193,109,259,109"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#abd38caf8867bfeadc6b0570ff137d126" title="Type&#45;safe wrapper for to_string that only accepts thread_conditions." alt="" coords="5,163,225,188"/>
-<area shape="poly" title=" " alt="" coords="308,130,226,153,174,165,173,160,225,147,307,125"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="abd38caf8867bfeadc6b0570ff137d126" name="abd38caf8867bfeadc6b0570ff137d126"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd38caf8867bfeadc6b0570ff137d126">&#9670;&#160;</a></span>to_string_safe()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr auto thread_module::to_string_safe </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::enable_if_t&lt;<a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a4132c1378556aaec61db0b9654cee6dc">job_detail::is_thread_condition_v</a>&lt;T&gt;, std::string_view&gt;
-	</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Type-safe wrapper for to_string that only accepts thread_conditions. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type to convert (must be thread_conditions) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>The value to convert </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>String representation of the thread condition </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00150">150</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  152</span>    {</div>
-<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">return</span> to_string(value);</div>
-<div class="line"><span class="lineno">  154</span>    }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../de/d48/namespacethread__module_abd38caf8867bfeadc6b0570ff137d126_cgraph.png" border="0" usemap="#ade/d48/namespacethread__module_abd38caf8867bfeadc6b0570ff137d126_cgraph" alt=""/></div>
-<map name="ade/d48/namespacethread__module_abd38caf8867bfeadc6b0570ff137d126_cgraph" id="ade/d48/namespacethread__module_abd38caf8867bfeadc6b0570ff137d126_cgraph">
-<area shape="rect" title="Type&#45;safe wrapper for to_string that only accepts thread_conditions." alt="" coords="5,5,225,31"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="273,5,459,31"/>
-<area shape="poly" title=" " alt="" coords="225,15,259,15,259,21,225,21"/>
+<div class="center"><img src="../../de/d48/namespacethread__module_a353c9e3581f9b950570feaa9bd756222_icgraph.png" border="0" usemap="#ade/d48/namespacethread__module_a353c9e3581f9b950570feaa9bd756222_icgraph" alt=""/></div>
+<map name="ade/d48/namespacethread__module_a353c9e3581f9b950570feaa9bd756222_icgraph" id="ade/d48/namespacethread__module_a353c9e3581f9b950570feaa9bd756222_icgraph">
+<area shape="rect" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="256,60,441,85"/>
+<area shape="rect" href="../../da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,60"/>
+<area shape="poly" title=" " alt="" coords="257,60,208,52,209,47,258,55"/>
+<area shape="rect" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#aef56b6a7c3023835324b4d75f4f6732f" title="Retrieves the result value or propagates exceptions." alt="" coords="29,84,184,139"/>
+<area shape="poly" title=" " alt="" coords="255,90,185,102,184,96,254,85"/>
 </map>
 </div>
 
@@ -937,7 +772,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 07:12:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 07:18:35 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -78,7 +78,6 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="../../d4/d6e/classutility__module_1_1span-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">utility_module::span&lt; T, Extent &gt; Class Template Reference</div></div>
 </div><!--header-->
@@ -128,24 +127,22 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae547153dffcc946a549ac35119e57f5f" id="r_ae547153dffcc946a549ac35119e57f5f"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ae547153dffcc946a549ac35119e57f5f">span</a> () noexcept</td></tr>
 <tr class="separator:ae547153dffcc946a549ac35119e57f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9ae916556c619aa2c2c12bd56b0b0e5" id="r_aa9ae916556c619aa2c2c12bd56b0b0e5"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aa9ae916556c619aa2c2c12bd56b0b0e5">span</a> (std::nullptr_t) noexcept</td></tr>
-<tr class="separator:aa9ae916556c619aa2c2c12bd56b0b0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af679f24cca086dd29495dd67200e931c" id="r_af679f24cca086dd29495dd67200e931c"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af679f24cca086dd29495dd67200e931c">span</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> ptr, <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> count)</td></tr>
-<tr class="separator:af679f24cca086dd29495dd67200e931c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a415d755e849e75e120bb6f4827b1a08d" id="r_a415d755e849e75e120bb6f4827b1a08d"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a415d755e849e75e120bb6f4827b1a08d">span</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>, <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a>)</td></tr>
-<tr class="separator:a415d755e849e75e120bb6f4827b1a08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cf56c5d851f7c2ddf67680f98c85a98" id="r_a5cf56c5d851f7c2ddf67680f98c85a98"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dynamic_extent || Extent == N)        &gt;&gt; </td></tr>
-<tr class="memitem:a5cf56c5d851f7c2ddf67680f98c85a98"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a5cf56c5d851f7c2ddf67680f98c85a98">span</a> (std::array&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, N &gt; &amp;arr) noexcept</td></tr>
-<tr class="separator:a5cf56c5d851f7c2ddf67680f98c85a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3598290f8d6052322389ef24f84faef" id="r_ae3598290f8d6052322389ef24f84faef"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dynamic_extent || Extent == N) &amp;&amp;            std::is_const_v&lt;T&gt;        &gt;&gt; </td></tr>
-<tr class="memitem:ae3598290f8d6052322389ef24f84faef"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ae3598290f8d6052322389ef24f84faef">span</a> (const std::array&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, N &gt; &amp;arr) noexcept</td></tr>
-<tr class="separator:ae3598290f8d6052322389ef24f84faef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7c634ded392dcede6da5046d70344f8" id="r_ac7c634ded392dcede6da5046d70344f8"><td class="memTemplParams" colspan="2">template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Extent == dynamic_extent        &gt;&gt; </td></tr>
-<tr class="memitem:ac7c634ded392dcede6da5046d70344f8"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ac7c634ded392dcede6da5046d70344f8">span</a> (std::vector&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, Allocator &gt; &amp;vec) noexcept</td></tr>
-<tr class="separator:ac7c634ded392dcede6da5046d70344f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abefa77acf3cd19b0ae800a4dc91e547d" id="r_abefa77acf3cd19b0ae800a4dc91e547d"><td class="memTemplParams" colspan="2">template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Extent == dynamic_extent &amp;&amp; std::is_const_v&lt;T&gt;        &gt;&gt; </td></tr>
-<tr class="memitem:abefa77acf3cd19b0ae800a4dc91e547d"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#abefa77acf3cd19b0ae800a4dc91e547d">span</a> (const std::vector&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, Allocator &gt; &amp;vec) noexcept</td></tr>
-<tr class="separator:abefa77acf3cd19b0ae800a4dc91e547d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8225c19c5406c99cd3995f18e87bb8f" id="r_ae8225c19c5406c99cd3995f18e87bb8f"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ae8225c19c5406c99cd3995f18e87bb8f">span</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> ptr, <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> count) noexcept</td></tr>
+<tr class="separator:ae8225c19c5406c99cd3995f18e87bb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c93242d7abade86c0531d09e419d504" id="r_a1c93242d7abade86c0531d09e419d504"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a1c93242d7abade86c0531d09e419d504">span</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>, <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#aaf064a0e467811161c0480be03b3fa40">pointer</a> <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a>) noexcept</td></tr>
+<tr class="separator:a1c93242d7abade86c0531d09e419d504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad56f724dd01049f482980520716d24cd" id="r_ad56f724dd01049f482980520716d24cd"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
+<tr class="memitem:ad56f724dd01049f482980520716d24cd"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ad56f724dd01049f482980520716d24cd">span</a> (std::array&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, N &gt; &amp;arr) noexcept</td></tr>
+<tr class="separator:ad56f724dd01049f482980520716d24cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f328072971feccb020f8c97c4d34c8" id="r_a04f328072971feccb020f8c97c4d34c8"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
+<tr class="memitem:a04f328072971feccb020f8c97c4d34c8"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a04f328072971feccb020f8c97c4d34c8">span</a> (const std::array&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, N &gt; &amp;arr) noexcept</td></tr>
+<tr class="separator:a04f328072971feccb020f8c97c4d34c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e9e134d6cce1a50b29cbfeb3878f5cb" id="r_a7e9e134d6cce1a50b29cbfeb3878f5cb"><td class="memTemplParams" colspan="2">template&lt;typename Allocator &gt; </td></tr>
+<tr class="memitem:a7e9e134d6cce1a50b29cbfeb3878f5cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7e9e134d6cce1a50b29cbfeb3878f5cb">span</a> (std::vector&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, Allocator &gt; &amp;vec) noexcept</td></tr>
+<tr class="separator:a7e9e134d6cce1a50b29cbfeb3878f5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade4f7acb735b76415079c57ffa621214" id="r_ade4f7acb735b76415079c57ffa621214"><td class="memTemplParams" colspan="2">template&lt;typename Allocator &gt; </td></tr>
+<tr class="memitem:ade4f7acb735b76415079c57ffa621214"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ade4f7acb735b76415079c57ffa621214">span</a> (const std::vector&lt; <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af11daa6bd31b86d8e08d6434965fd148">value_type</a>, Allocator &gt; &amp;vec) noexcept</td></tr>
+<tr class="separator:ade4f7acb735b76415079c57ffa621214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0582e9072c117fb8a26b7ac31cdadf0" id="r_af0582e9072c117fb8a26b7ac31cdadf0"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:af0582e9072c117fb8a26b7ac31cdadf0"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af0582e9072c117fb8a26b7ac31cdadf0">span</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af559b35500e41fab28a35e145108fae3">element_type</a>(&amp;arr)[N]) noexcept</td></tr>
 <tr class="separator:af0582e9072c117fb8a26b7ac31cdadf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,8 +156,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a54c1a5e8236df78cf5b84ac7b2d824fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab358749781d1a21dc6c5bfcc165625b8" id="r_ab358749781d1a21dc6c5bfcc165625b8"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7c494f56889b45435b26928b4ac907ad">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ab358749781d1a21dc6c5bfcc165625b8">operator[]</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> idx) const noexcept</td></tr>
 <tr class="separator:ab358749781d1a21dc6c5bfcc165625b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2b3b8e4a8585077499ae5b42cc7f92b" id="r_ad2b3b8e4a8585077499ae5b42cc7f92b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7c494f56889b45435b26928b4ac907ad">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#ad2b3b8e4a8585077499ae5b42cc7f92b">at</a> (<a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> idx) const</td></tr>
-<tr class="separator:ad2b3b8e4a8585077499ae5b42cc7f92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a15a0fcfe4aa2218a0ae91ed2978578" id="r_a2a15a0fcfe4aa2218a0ae91ed2978578"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7c494f56889b45435b26928b4ac907ad">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a2a15a0fcfe4aa2218a0ae91ed2978578">front</a> () const noexcept</td></tr>
 <tr class="separator:a2a15a0fcfe4aa2218a0ae91ed2978578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb6fc0e765904ba16822083eb76dab44" id="r_adb6fc0e765904ba16822083eb76dab44"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7c494f56889b45435b26928b4ac907ad">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#adb6fc0e765904ba16822083eb76dab44">back</a> () const noexcept</td></tr>
@@ -210,12 +205,6 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a3d995d9d710d75e20f15e3b2d393b9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a598ef5e87aa78d9bb6596191853023d8" id="r_a598ef5e87aa78d9bb6596191853023d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a></td></tr>
 <tr class="separator:a598ef5e87aa78d9bb6596191853023d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a5e4124afeb79a9690142c2a3f8b355f4" id="r_a5e4124afeb79a9690142c2a3f8b355f4"><td class="memTemplParams" colspan="2">template&lt;typename U , size_t E&gt; </td></tr>
-<tr class="memitem:a5e4124afeb79a9690142c2a3f8b355f4"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a5e4124afeb79a9690142c2a3f8b355f4">span</a></td></tr>
-<tr class="separator:a5e4124afeb79a9690142c2a3f8b355f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T, size_t Extent = size_t(-1)&gt;<br />
@@ -229,7 +218,7 @@ class utility_module::span&lt; T, Extent &gt;</div><p>A fallback span implementa
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00110">110</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00067">67</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a643d5d9e4c0d8293c45371f3c54e5630" name="a643d5d9e4c0d8293c45371f3c54e5630"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a643d5d9e4c0d8293c45371f3c54e5630">&#9670;&#160;</a></span>const_iterator</h2>
@@ -245,7 +234,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00128">128</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00080">80</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -263,7 +252,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00124">124</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00076">76</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +270,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00126">126</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00078">78</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -299,7 +288,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00130">130</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00082">82</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -317,7 +306,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00122">122</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00074">74</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -335,7 +324,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00119">119</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00071">71</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -353,7 +342,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00127">127</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00079">79</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +360,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00123">123</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00075">75</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -389,7 +378,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00125">125</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00077">77</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -407,7 +396,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00129">129</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00081">81</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -425,7 +414,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00121">121</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00073">73</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -443,13 +432,13 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00120">120</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00072">72</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae547153dffcc946a549ac35119e57f5f" name="ae547153dffcc946a549ac35119e57f5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae547153dffcc946a549ac35119e57f5f">&#9670;&#160;</a></span>span() <span class="overload">[1/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae547153dffcc946a549ac35119e57f5f">&#9670;&#160;</a></span>span() <span class="overload">[1/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -473,55 +462,20 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00136">136</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  136</span>                                  : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(0) </div>
-<div class="line"><span class="lineno">  137</span>        {</div>
-<div class="line"><span class="lineno">  138</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == 0, </div>
-<div class="line"><span class="lineno">  139</span>                        <span class="stringliteral">&quot;Default-constructed span must have dynamic extent or zero extent&quot;</span>);</div>
-<div class="line"><span class="lineno">  140</span>        }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a3d995d9d710d75e20f15e3b2d393b9d9"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">utility_module::span::data_</a></div><div class="ttdeci">pointer data_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00333">span.h:333</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a5145a6c64518a9a6a22be1e30ca045e8"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">utility_module::span::dynamic_extent</a></div><div class="ttdeci">static constexpr size_t dynamic_extent</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00133">span.h:133</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a598ef5e87aa78d9bb6596191853023d8"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">utility_module::span::size_</a></div><div class="ttdeci">size_type size_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00334">span.h:334</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00088">88</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>                                  : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(0) </div>
+<div class="line"><span class="lineno">   89</span>        {</div>
+<div class="line"><span class="lineno">   90</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == 0, </div>
+<div class="line"><span class="lineno">   91</span>                        <span class="stringliteral">&quot;Default-constructed span must have dynamic extent or zero extent&quot;</span>);</div>
+<div class="line"><span class="lineno">   92</span>        }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a3d995d9d710d75e20f15e3b2d393b9d9"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">utility_module::span::data_</a></div><div class="ttdeci">pointer data_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00226">span.h:226</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a5145a6c64518a9a6a22be1e30ca045e8"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">utility_module::span::dynamic_extent</a></div><div class="ttdeci">static constexpr size_t dynamic_extent</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00085">span.h:85</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a598ef5e87aa78d9bb6596191853023d8"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">utility_module::span::size_</a></div><div class="ttdeci">size_type size_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00227">span.h:227</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="aa9ae916556c619aa2c2c12bd56b0b0e5" name="aa9ae916556c619aa2c2c12bd56b0b0e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9ae916556c619aa2c2c12bd56b0b0e5">&#9670;&#160;</a></span>span() <span class="overload">[2/9]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html">utility_module::span</a>&lt; T, Extent &gt;::span </td>
-          <td>(</td>
-          <td class="paramtype">std::nullptr_t&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00143">143</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>                                              : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(0)</div>
-<div class="line"><span class="lineno">  144</span>        {</div>
-<div class="line"><span class="lineno">  145</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == 0,</div>
-<div class="line"><span class="lineno">  146</span>                        <span class="stringliteral">&quot;nullptr-constructed span must have dynamic extent or zero extent&quot;</span>);</div>
-<div class="line"><span class="lineno">  147</span>        }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="af679f24cca086dd29495dd67200e931c" name="af679f24cca086dd29495dd67200e931c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af679f24cca086dd29495dd67200e931c">&#9670;&#160;</a></span>span() <span class="overload">[3/9]</span></h2>
+<a id="ae8225c19c5406c99cd3995f18e87bb8f" name="ae8225c19c5406c99cd3995f18e87bb8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8225c19c5406c99cd3995f18e87bb8f">&#9670;&#160;</a></span>span() <span class="overload">[2/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -551,32 +505,22 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00149">149</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  149</span>                                                     : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(ptr), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(count) </div>
-<div class="line"><span class="lineno">  150</span>        {</div>
-<div class="line"><span class="lineno">  151</span>            <span class="comment">// Runtime check for null pointer with non-zero size</span></div>
-<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">if</span> (ptr == <span class="keyword">nullptr</span> &amp;&amp; count != 0) {</div>
-<div class="line"><span class="lineno">  153</span>                <span class="comment">// In a real implementation, this would throw or be UB</span></div>
-<div class="line"><span class="lineno">  154</span>                <span class="comment">// For compatibility, we&#39;ll just set size to 0</span></div>
-<div class="line"><span class="lineno">  155</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> = 0;</div>
-<div class="line"><span class="lineno">  156</span>            }</div>
-<div class="line"><span class="lineno">  157</span>            </div>
-<div class="line"><span class="lineno">  158</span>            <span class="comment">// Compile-time check for fixed extent</span></div>
-<div class="line"><span class="lineno">  159</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (Extent != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>) {</div>
-<div class="line"><span class="lineno">  160</span>                <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>,</div>
-<div class="line"><span class="lineno">  161</span>                              <span class="stringliteral">&quot;Cannot construct fixed-extent span with runtime size&quot;</span>);</div>
-<div class="line"><span class="lineno">  162</span>            }</div>
-<div class="line"><span class="lineno">  163</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00094">94</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>                                                              : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(ptr), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(count) </div>
+<div class="line"><span class="lineno">   95</span>        {</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == count, </div>
+<div class="line"><span class="lineno">   97</span>                        <span class="stringliteral">&quot;Size mismatch in span construction&quot;</span>);</div>
+<div class="line"><span class="lineno">   98</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a415d755e849e75e120bb6f4827b1a08d" name="a415d755e849e75e120bb6f4827b1a08d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a415d755e849e75e120bb6f4827b1a08d">&#9670;&#160;</a></span>span() <span class="overload">[4/9]</span></h2>
+<a id="a1c93242d7abade86c0531d09e419d504" name="a1c93242d7abade86c0531d09e419d504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c93242d7abade86c0531d09e419d504">&#9670;&#160;</a></span>span() <span class="overload">[3/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -606,58 +550,31 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00165">165</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  165</span>                                                    : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(0) </div>
-<div class="line"><span class="lineno">  166</span>        {</div>
-<div class="line"><span class="lineno">  167</span>            <span class="comment">// Safety check for valid range</span></div>
-<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a> != <span class="keyword">nullptr</span> &amp;&amp; <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a> != <span class="keyword">nullptr</span> &amp;&amp; <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a> &lt;= <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a>) {</div>
-<div class="line"><span class="lineno">  169</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> = <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a> - <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>);</div>
-<div class="line"><span class="lineno">  170</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a> == <span class="keyword">nullptr</span> &amp;&amp; <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a> == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">  171</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> = 0;</div>
-<div class="line"><span class="lineno">  172</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  173</span>                <span class="comment">// Invalid range - set to empty span</span></div>
-<div class="line"><span class="lineno">  174</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">  175</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> = 0;</div>
-<div class="line"><span class="lineno">  176</span>            }</div>
-<div class="line"><span class="lineno">  177</span>            </div>
-<div class="line"><span class="lineno">  178</span>            <span class="comment">// Compile-time check for fixed extent</span></div>
-<div class="line"><span class="lineno">  179</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (Extent != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>) {</div>
-<div class="line"><span class="lineno">  180</span>                <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>,</div>
-<div class="line"><span class="lineno">  181</span>                              <span class="stringliteral">&quot;Cannot construct fixed-extent span with iterator range&quot;</span>);</div>
-<div class="line"><span class="lineno">  182</span>            }</div>
-<div class="line"><span class="lineno">  183</span>        }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a4d945e948030d6f18885ef45f98395fa"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">utility_module::span::last</a></div><div class="ttdeci">constexpr span&lt; element_type, Count &gt; last() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00303">span.h:303</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_af824ced083ab5c1df73ac833871a3f6f"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">utility_module::span::size_type</a></div><div class="ttdeci">size_t size_type</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00121">span.h:121</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_af84da69710c52900f661efd5ea90dd04"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">utility_module::span::first</a></div><div class="ttdeci">constexpr span&lt; element_type, Count &gt; first() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00290">span.h:290</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d8/d4f/classutility__module_1_1span_a415d755e849e75e120bb6f4827b1a08d_cgraph.png" border="0" usemap="#ad8/d4f/classutility__module_1_1span_a415d755e849e75e120bb6f4827b1a08d_cgraph" alt=""/></div>
-<map name="ad8/d4f/classutility__module_1_1span_a415d755e849e75e120bb6f4827b1a08d_cgraph" id="ad8/d4f/classutility__module_1_1span_a415d755e849e75e120bb6f4827b1a08d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,37,160,77"/>
-<area shape="rect" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04" title=" " alt="" coords="208,5,363,45"/>
-<area shape="poly" title=" " alt="" coords="160,43,194,37,195,42,161,48"/>
-<area shape="rect" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa" title=" " alt="" coords="208,69,363,109"/>
-<area shape="poly" title=" " alt="" coords="161,67,195,72,194,78,160,72"/>
-</map>
-</div>
-
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00100">100</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>                                                             : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">last</a> - <a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">first</a>) </div>
+<div class="line"><span class="lineno">  101</span>        {</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>, </div>
+<div class="line"><span class="lineno">  103</span>                        <span class="stringliteral">&quot;Size mismatch in span construction&quot;</span>);</div>
+<div class="line"><span class="lineno">  104</span>        }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a4d945e948030d6f18885ef45f98395fa"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a4d945e948030d6f18885ef45f98395fa">utility_module::span::last</a></div><div class="ttdeci">constexpr span&lt; element_type, Count &gt; last() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00198">span.h:198</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1span_html_af84da69710c52900f661efd5ea90dd04"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af84da69710c52900f661efd5ea90dd04">utility_module::span::first</a></div><div class="ttdeci">constexpr span&lt; element_type, Count &gt; first() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00187">span.h:187</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
-<a id="a5cf56c5d851f7c2ddf67680f98c85a98" name="a5cf56c5d851f7c2ddf67680f98c85a98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cf56c5d851f7c2ddf67680f98c85a98">&#9670;&#160;</a></span>span() <span class="overload">[5/9]</span></h2>
+<a id="ad56f724dd01049f482980520716d24cd" name="ad56f724dd01049f482980520716d24cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad56f724dd01049f482980520716d24cd">&#9670;&#160;</a></span>span() <span class="overload">[4/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 <div class="memtemplate">
-template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dynamic_extent || Extent == N)        &gt;&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -677,24 +594,24 @@ template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dyn
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00189">189</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  190</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
-<div class="line"><span class="lineno">  191</span>        {</div>
-<div class="line"><span class="lineno">  192</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
-<div class="line"><span class="lineno">  193</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from array&quot;</span>);</div>
-<div class="line"><span class="lineno">  194</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00108">108</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
+<div class="line"><span class="lineno">  110</span>        {</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
+<div class="line"><span class="lineno">  112</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from array&quot;</span>);</div>
+<div class="line"><span class="lineno">  113</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ae3598290f8d6052322389ef24f84faef" name="ae3598290f8d6052322389ef24f84faef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3598290f8d6052322389ef24f84faef">&#9670;&#160;</a></span>span() <span class="overload">[6/9]</span></h2>
+<a id="a04f328072971feccb020f8c97c4d34c8" name="a04f328072971feccb020f8c97c4d34c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04f328072971feccb020f8c97c4d34c8">&#9670;&#160;</a></span>span() <span class="overload">[5/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 <div class="memtemplate">
-template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dynamic_extent || Extent == N) &amp;&amp;            std::is_const_v&lt;T&gt;        &gt;&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -714,24 +631,24 @@ template&lt;size_t N, typename  = std::enable_if_t&lt;            (Extent == dyn
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00200">200</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  201</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
-<div class="line"><span class="lineno">  202</span>        {</div>
-<div class="line"><span class="lineno">  203</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
-<div class="line"><span class="lineno">  204</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from const array&quot;</span>);</div>
-<div class="line"><span class="lineno">  205</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00116">116</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
+<div class="line"><span class="lineno">  118</span>        {</div>
+<div class="line"><span class="lineno">  119</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
+<div class="line"><span class="lineno">  120</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from const array&quot;</span>);</div>
+<div class="line"><span class="lineno">  121</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ac7c634ded392dcede6da5046d70344f8" name="ac7c634ded392dcede6da5046d70344f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7c634ded392dcede6da5046d70344f8">&#9670;&#160;</a></span>span() <span class="overload">[7/9]</span></h2>
+<a id="a7e9e134d6cce1a50b29cbfeb3878f5cb" name="a7e9e134d6cce1a50b29cbfeb3878f5cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e9e134d6cce1a50b29cbfeb3878f5cb">&#9670;&#160;</a></span>span() <span class="overload">[6/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 <div class="memtemplate">
-template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Extent == dynamic_extent        &gt;&gt; </div>
+template&lt;typename Allocator &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -751,24 +668,24 @@ template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Ext
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00211">211</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  212</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(vec.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(vec.size())</div>
-<div class="line"><span class="lineno">  213</span>        {</div>
-<div class="line"><span class="lineno">  214</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>, </div>
-<div class="line"><span class="lineno">  215</span>                        <span class="stringliteral">&quot;Fixed extent not supported for std::vector constructor&quot;</span>);</div>
-<div class="line"><span class="lineno">  216</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00125">125</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(vec.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(vec.size())</div>
+<div class="line"><span class="lineno">  127</span>        {</div>
+<div class="line"><span class="lineno">  128</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == 0, </div>
+<div class="line"><span class="lineno">  129</span>                        <span class="stringliteral">&quot;Non-dynamic extent not supported for std::vector constructor&quot;</span>);</div>
+<div class="line"><span class="lineno">  130</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="abefa77acf3cd19b0ae800a4dc91e547d" name="abefa77acf3cd19b0ae800a4dc91e547d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abefa77acf3cd19b0ae800a4dc91e547d">&#9670;&#160;</a></span>span() <span class="overload">[8/9]</span></h2>
+<a id="ade4f7acb735b76415079c57ffa621214" name="ade4f7acb735b76415079c57ffa621214"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade4f7acb735b76415079c57ffa621214">&#9670;&#160;</a></span>span() <span class="overload">[7/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 <div class="memtemplate">
-template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Extent == dynamic_extent &amp;&amp; std::is_const_v&lt;T&gt;        &gt;&gt; </div>
+template&lt;typename Allocator &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -788,17 +705,17 @@ template&lt;typename Allocator , typename  = std::enable_if_t&lt;            Ext
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00221">221</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  222</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(vec.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(vec.size())</div>
-<div class="line"><span class="lineno">  223</span>        {</div>
-<div class="line"><span class="lineno">  224</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>, </div>
-<div class="line"><span class="lineno">  225</span>                        <span class="stringliteral">&quot;Fixed extent not supported for std::vector constructor&quot;</span>);</div>
-<div class="line"><span class="lineno">  226</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00133">133</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(vec.data()), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(vec.size())</div>
+<div class="line"><span class="lineno">  135</span>        {</div>
+<div class="line"><span class="lineno">  136</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == 0, </div>
+<div class="line"><span class="lineno">  137</span>                        <span class="stringliteral">&quot;Non-dynamic extent not supported for std::vector constructor&quot;</span>);</div>
+<div class="line"><span class="lineno">  138</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="af0582e9072c117fb8a26b7ac31cdadf0" name="af0582e9072c117fb8a26b7ac31cdadf0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0582e9072c117fb8a26b7ac31cdadf0">&#9670;&#160;</a></span>span() <span class="overload">[9/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af0582e9072c117fb8a26b7ac31cdadf0">&#9670;&#160;</a></span>span() <span class="overload">[8/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -825,54 +742,16 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00230">230</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  231</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
-<div class="line"><span class="lineno">  232</span>        {</div>
-<div class="line"><span class="lineno">  233</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
-<div class="line"><span class="lineno">  234</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from array&quot;</span>);</div>
-<div class="line"><span class="lineno">  235</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00142">142</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>            : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>(arr), <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>(N)</div>
+<div class="line"><span class="lineno">  144</span>        {</div>
+<div class="line"><span class="lineno">  145</span>            <span class="keyword">static_assert</span>(Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> || Extent == N, </div>
+<div class="line"><span class="lineno">  146</span>                        <span class="stringliteral">&quot;Size mismatch in span construction from array&quot;</span>);</div>
+<div class="line"><span class="lineno">  147</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad2b3b8e4a8585077499ae5b42cc7f92b" name="ad2b3b8e4a8585077499ae5b42cc7f92b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2b3b8e4a8585077499ae5b42cc7f92b">&#9670;&#160;</a></span>at()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="../../d8/d4f/classutility__module_1_1span.html#a7c494f56889b45435b26928b4ac907ad">reference</a> <a class="el" href="../../d8/d4f/classutility__module_1_1span.html">utility_module::span</a>&lt; T, Extent &gt;::at </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a>&#160;</td>
-          <td class="paramname"><em>idx</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00254">254</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  255</span>        {</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">if</span> (idx &gt;= <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>) {</div>
-<div class="line"><span class="lineno">  257</span>                <span class="comment">// In a real implementation, this would throw std::out_of_range</span></div>
-<div class="line"><span class="lineno">  258</span>                <span class="comment">// For now, we&#39;ll use the last element or first if empty</span></div>
-<div class="line"><span class="lineno">  259</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> &gt; 0 ? <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - 1 : 0];</div>
-<div class="line"><span class="lineno">  260</span>            }</div>
-<div class="line"><span class="lineno">  261</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[idx];</div>
-<div class="line"><span class="lineno">  262</span>        }</div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="adb6fc0e765904ba16822083eb76dab44" name="adb6fc0e765904ba16822083eb76dab44"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adb6fc0e765904ba16822083eb76dab44">&#9670;&#160;</a></span>back()</h2>
 
@@ -898,11 +777,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00270">270</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  271</span>        {</div>
-<div class="line"><span class="lineno">  272</span>            <span class="comment">// Undefined behavior if empty, but we&#39;ll return last valid element</span></div>
-<div class="line"><span class="lineno">  273</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> &gt; 0 ? <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - 1 : 0];</div>
-<div class="line"><span class="lineno">  274</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00168">168</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  169</span>        {</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - 1];</div>
+<div class="line"><span class="lineno">  171</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -931,8 +809,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00279">279</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  279</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00176">176</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  176</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -971,8 +849,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00281">281</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  281</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00178">178</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1011,8 +889,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00282">282</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  282</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00179">179</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  179</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1051,10 +929,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00285">285</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  285</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">const_reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a823ab9c665e2642386cae24d75b6466c">cend</a>()); }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a56fdd62475856dd7c01c33be21a866f7"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">utility_module::span::const_reverse_iterator</a></div><div class="ttdeci">std::reverse_iterator&lt; const_iterator &gt; const_reverse_iterator</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00130">span.h:130</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a823ab9c665e2642386cae24d75b6466c"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a823ab9c665e2642386cae24d75b6466c">utility_module::span::cend</a></div><div class="ttdeci">constexpr const_iterator cend() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00282">span.h:282</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00182">182</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">const_reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a823ab9c665e2642386cae24d75b6466c">cend</a>()); }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a56fdd62475856dd7c01c33be21a866f7"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">utility_module::span::const_reverse_iterator</a></div><div class="ttdeci">std::reverse_iterator&lt; const_iterator &gt; const_reverse_iterator</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00082">span.h:82</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a823ab9c665e2642386cae24d75b6466c"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a823ab9c665e2642386cae24d75b6466c">utility_module::span::cend</a></div><div class="ttdeci">constexpr const_iterator cend() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00179">span.h:179</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1093,9 +971,9 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00286">286</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  286</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">const_reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a607bed17842c9fc58d0801ba455adc53">cbegin</a>()); }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a607bed17842c9fc58d0801ba455adc53"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a607bed17842c9fc58d0801ba455adc53">utility_module::span::cbegin</a></div><div class="ttdeci">constexpr const_iterator cbegin() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00281">span.h:281</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00183">183</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  183</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7">const_reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a607bed17842c9fc58d0801ba455adc53">cbegin</a>()); }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a607bed17842c9fc58d0801ba455adc53"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a607bed17842c9fc58d0801ba455adc53">utility_module::span::cbegin</a></div><div class="ttdeci">constexpr const_iterator cbegin() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00178">span.h:178</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1134,8 +1012,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00276">276</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  276</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00173">173</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1164,8 +1042,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00243">243</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  243</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> == 0; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00155">155</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> == 0; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1194,8 +1072,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00280">280</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  280</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00177">177</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1236,23 +1114,11 @@ template&lt;size_t Count&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00290">290</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  291</span>        {</div>
-<div class="line"><span class="lineno">  292</span>            <span class="keyword">static_assert</span>(Count &lt;= Extent || Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>,</div>
-<div class="line"><span class="lineno">  293</span>                        <span class="stringliteral">&quot;Count exceeds span extent&quot;</span>);</div>
-<div class="line"><span class="lineno">  294</span>            <span class="keywordflow">return</span> span&lt;element_type, Count&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>, Count);</div>
-<div class="line"><span class="lineno">  295</span>        }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d8/d4f/classutility__module_1_1span_af84da69710c52900f661efd5ea90dd04_icgraph.png" border="0" usemap="#ad8/d4f/classutility__module_1_1span_af84da69710c52900f661efd5ea90dd04_icgraph" alt=""/></div>
-<map name="ad8/d4f/classutility__module_1_1span_af84da69710c52900f661efd5ea90dd04_icgraph" id="ad8/d4f/classutility__module_1_1span_af84da69710c52900f661efd5ea90dd04_icgraph">
-<area shape="rect" title=" " alt="" coords="208,5,363,45"/>
-<area shape="rect" href="../../d8/d4f/classutility__module_1_1span.html#a415d755e849e75e120bb6f4827b1a08d" title=" " alt="" coords="5,5,160,45"/>
-<area shape="poly" title=" " alt="" coords="194,28,161,28,161,23,194,23"/>
-</map>
-</div>
-
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00187">187</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>        {</div>
+<div class="line"><span class="lineno">  189</span>            <span class="keywordflow">return</span> span&lt;element_type, Count&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>, Count);</div>
+<div class="line"><span class="lineno">  190</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac973b445c6c5d76183585eb1126cf03f" name="ac973b445c6c5d76183585eb1126cf03f"></a>
@@ -1281,10 +1147,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00297">297</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  298</span>        {</div>
-<div class="line"><span class="lineno">  299</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>, count);</div>
-<div class="line"><span class="lineno">  300</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00192">192</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  193</span>        {</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>, count);</div>
+<div class="line"><span class="lineno">  195</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1313,11 +1179,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00264">264</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  265</span>        {</div>
-<div class="line"><span class="lineno">  266</span>            <span class="comment">// Undefined behavior if empty, but we&#39;ll return first element</span></div>
-<div class="line"><span class="lineno">  267</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[0];</div>
-<div class="line"><span class="lineno">  268</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00163">163</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  164</span>        {</div>
+<div class="line"><span class="lineno">  165</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[0];</div>
+<div class="line"><span class="lineno">  166</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1348,23 +1213,11 @@ template&lt;size_t Count&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00303">303</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  304</span>        {</div>
-<div class="line"><span class="lineno">  305</span>            <span class="keyword">static_assert</span>(Count &lt;= Extent || Extent == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>,</div>
-<div class="line"><span class="lineno">  306</span>                        <span class="stringliteral">&quot;Count exceeds span extent&quot;</span>);</div>
-<div class="line"><span class="lineno">  307</span>            <span class="keywordflow">return</span> span&lt;element_type, Count&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - Count), Count);</div>
-<div class="line"><span class="lineno">  308</span>        }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d8/d4f/classutility__module_1_1span_a4d945e948030d6f18885ef45f98395fa_icgraph.png" border="0" usemap="#ad8/d4f/classutility__module_1_1span_a4d945e948030d6f18885ef45f98395fa_icgraph" alt=""/></div>
-<map name="ad8/d4f/classutility__module_1_1span_a4d945e948030d6f18885ef45f98395fa_icgraph" id="ad8/d4f/classutility__module_1_1span_a4d945e948030d6f18885ef45f98395fa_icgraph">
-<area shape="rect" title=" " alt="" coords="208,5,363,45"/>
-<area shape="rect" href="../../d8/d4f/classutility__module_1_1span.html#a415d755e849e75e120bb6f4827b1a08d" title=" " alt="" coords="5,5,160,45"/>
-<area shape="poly" title=" " alt="" coords="194,28,161,28,161,23,194,23"/>
-</map>
-</div>
-
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00198">198</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  199</span>        {</div>
+<div class="line"><span class="lineno">  200</span>            <span class="keywordflow">return</span> span&lt;element_type, Count&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - Count), Count);</div>
+<div class="line"><span class="lineno">  201</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a36b7404a97f80b2301b215e65bc501e8" name="a36b7404a97f80b2301b215e65bc501e8"></a>
@@ -1393,10 +1246,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00310">310</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  311</span>        {</div>
-<div class="line"><span class="lineno">  312</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - count), count);</div>
-<div class="line"><span class="lineno">  313</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00203">203</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  204</span>        {</div>
+<div class="line"><span class="lineno">  205</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - count), count);</div>
+<div class="line"><span class="lineno">  206</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1454,12 +1307,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00246">246</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  247</span>        {</div>
-<div class="line"><span class="lineno">  248</span>            <span class="comment">// Note: No bounds checking in release mode for performance</span></div>
-<div class="line"><span class="lineno">  249</span>            <span class="comment">// In debug mode, an assertion could be added</span></div>
-<div class="line"><span class="lineno">  250</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[idx];</div>
-<div class="line"><span class="lineno">  251</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00158">158</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  159</span>        {</div>
+<div class="line"><span class="lineno">  160</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a>[idx];</div>
+<div class="line"><span class="lineno">  161</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1488,10 +1339,10 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00283">283</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  283</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#ad6169fd13eb9094476f33e1e8fdac050">end</a>()); }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a3ee5d1ec89d72a62fb37a2f73413110f"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">utility_module::span::reverse_iterator</a></div><div class="ttdeci">std::reverse_iterator&lt; iterator &gt; reverse_iterator</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00129">span.h:129</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1span_html_ad6169fd13eb9094476f33e1e8fdac050"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#ad6169fd13eb9094476f33e1e8fdac050">utility_module::span::end</a></div><div class="ttdeci">constexpr iterator end() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00280">span.h:280</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00180">180</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#ad6169fd13eb9094476f33e1e8fdac050">end</a>()); }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a3ee5d1ec89d72a62fb37a2f73413110f"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">utility_module::span::reverse_iterator</a></div><div class="ttdeci">std::reverse_iterator&lt; iterator &gt; reverse_iterator</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00081">span.h:81</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1span_html_ad6169fd13eb9094476f33e1e8fdac050"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#ad6169fd13eb9094476f33e1e8fdac050">utility_module::span::end</a></div><div class="ttdeci">constexpr iterator end() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00177">span.h:177</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1530,9 +1381,9 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00284">284</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  284</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a3c724d01483a11895ac4b555e6960680">begin</a>()); }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_a3c724d01483a11895ac4b555e6960680"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3c724d01483a11895ac4b555e6960680">utility_module::span::begin</a></div><div class="ttdeci">constexpr iterator begin() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00279">span.h:279</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00181">181</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  181</span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#a3ee5d1ec89d72a62fb37a2f73413110f">reverse_iterator</a>(<a class="code hl_function" href="../../d8/d4f/classutility__module_1_1span.html#a3c724d01483a11895ac4b555e6960680">begin</a>()); }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_a3c724d01483a11895ac4b555e6960680"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#a3c724d01483a11895ac4b555e6960680">utility_module::span::begin</a></div><div class="ttdeci">constexpr iterator begin() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00176">span.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1571,8 +1422,8 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00241">241</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  241</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00153">153</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  153</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1601,9 +1452,9 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00242">242</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  242</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> * <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#af559b35500e41fab28a35e145108fae3">element_type</a>); }</div>
-<div class="ttc" id="aclassutility__module_1_1span_html_af559b35500e41fab28a35e145108fae3"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af559b35500e41fab28a35e145108fae3">utility_module::span::element_type</a></div><div class="ttdeci">T element_type</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00119">span.h:119</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00154">154</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  154</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> * <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#af559b35500e41fab28a35e145108fae3">element_type</a>); }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_af559b35500e41fab28a35e145108fae3"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af559b35500e41fab28a35e145108fae3">utility_module::span::element_type</a></div><div class="ttdeci">T element_type</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00071">span.h:71</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1634,14 +1485,14 @@ template&lt;size_t Offset, size_t Count = dynamic_extent&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00316">316</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  317</span>        {</div>
-<div class="line"><span class="lineno">  318</span>            <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> new_extent = Count != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Count : </div>
-<div class="line"><span class="lineno">  319</span>                                        (Extent != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Extent - Offset : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>);</div>
-<div class="line"><span class="lineno">  320</span>            <span class="keywordflow">return</span> span&lt;element_type, new_extent&gt;(</div>
-<div class="line"><span class="lineno">  321</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + Offset, </div>
-<div class="line"><span class="lineno">  322</span>                Count != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Count : (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - Offset));</div>
-<div class="line"><span class="lineno">  323</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00209">209</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  210</span>        {</div>
+<div class="line"><span class="lineno">  211</span>            <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> new_extent = Count != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Count : </div>
+<div class="line"><span class="lineno">  212</span>                                        (Extent != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Extent - Offset : <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a>);</div>
+<div class="line"><span class="lineno">  213</span>            <span class="keywordflow">return</span> span&lt;element_type, new_extent&gt;(</div>
+<div class="line"><span class="lineno">  214</span>                <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + Offset, </div>
+<div class="line"><span class="lineno">  215</span>                Count != <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? Count : (<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - Offset));</div>
+<div class="line"><span class="lineno">  216</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1681,41 +1532,13 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00326">326</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  327</span>        {</div>
-<div class="line"><span class="lineno">  328</span>            <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> new_count = count == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - offset : count;</div>
-<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + offset, new_count);</div>
-<div class="line"><span class="lineno">  330</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00219">219</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>        {</div>
+<div class="line"><span class="lineno">  221</span>            <a class="code hl_typedef" href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">size_type</a> new_count = count == <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8">dynamic_extent</a> ? <a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8">size_</a> - offset : count;</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">return</span> span&lt;element_type, dynamic_extent&gt;(<a class="code hl_variable" href="../../d8/d4f/classutility__module_1_1span.html#a3d995d9d710d75e20f15e3b2d393b9d9">data_</a> + offset, new_count);</div>
+<div class="line"><span class="lineno">  223</span>        }</div>
+<div class="ttc" id="aclassutility__module_1_1span_html_af824ced083ab5c1df73ac833871a3f6f"><div class="ttname"><a href="../../d8/d4f/classutility__module_1_1span.html#af824ced083ab5c1df73ac833871a3f6f">utility_module::span::size_type</a></div><div class="ttdeci">size_t size_type</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7a/span_8h_source.html#l00073">span.h:73</a></div></div>
 </div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
-<a id="a5e4124afeb79a9690142c2a3f8b355f4" name="a5e4124afeb79a9690142c2a3f8b355f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e4124afeb79a9690142c2a3f8b355f4">&#9670;&#160;</a></span>span</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
-<div class="memtemplate">
-template&lt;typename U , size_t E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="../../d8/d4f/classutility__module_1_1span.html">span</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00338">338</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -1741,7 +1564,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00333">333</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00226">226</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -1767,7 +1590,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00133">133</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00085">85</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -1793,7 +1616,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00334">334</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d7a/span_8h_source.html#l00227">227</a> of file <a class="el" href="../../d4/d7a/span_8h_source.html">span.h</a>.</p>
 
 </div>
 </div>
@@ -1803,7 +1626,7 @@ template&lt;typename T , size_t Extent = size_t(-1)&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 07:12:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 07:18:35 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
