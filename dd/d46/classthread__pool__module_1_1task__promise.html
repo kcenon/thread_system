@@ -269,20 +269,20 @@ template&lt;typename T &gt; </div>
 <div class="line"><span class="lineno">  275</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::exception_ptr&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>)) {</div>
 <div class="line"><span class="lineno">  276</span>            std::rethrow_exception(std::get&lt;std::exception_ptr&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>));</div>
 <div class="line"><span class="lineno">  277</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;error&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>)) {</div>
-<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">throw</span> std::runtime_error(std::get&lt;error&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>).<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>());</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">throw</span> std::runtime_error(std::get&lt;error&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>).<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">to_string</a>());</div>
 <div class="line"><span class="lineno">  279</span>        }</div>
 <div class="line"><span class="lineno">  280</span>        </div>
 <div class="line"><span class="lineno">  281</span>        <span class="keywordflow">return</span> std::move(std::get&lt;T&gt;(<a class="code hl_variable" href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">result_</a>));</div>
 <div class="line"><span class="lineno">  282</span>    }</div>
 <div class="ttc" id="aclassthread__pool__module_1_1task__promise_html_a6b4ce8cd723177a259f3963221817192"><div class="ttname"><a href="../../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192">thread_pool_module::task_promise::result_</a></div><div class="ttdeci">std::variant&lt; std::monostate, T, std::exception_ptr, error &gt; result_</div><div class="ttdoc">Storage for the task's result.</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00333">task.h:333</a></div></div>
-<div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_a02fbab329eb99b194f07fd073de59706"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition) noexcept</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00132">thread_conditions.h:132</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d46/classthread__pool__module_1_1task__promise_aef56b6a7c3023835324b4d75f4f6732f_cgraph.png" border="0" usemap="#add/d46/classthread__pool__module_1_1task__promise_aef56b6a7c3023835324b4d75f4f6732f_cgraph" alt=""/></div>
 <map name="add/d46/classthread__pool__module_1_1task__promise_aef56b6a7c3023835324b4d75f4f6732f_cgraph" id="add/d46/classthread__pool__module_1_1task__promise_aef56b6a7c3023835324b4d75f4f6732f_cgraph">
 <area shape="rect" title="Retrieves the result value or propagates exceptions." alt="" coords="5,5,160,60"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="208,20,393,45"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="208,20,393,45"/>
 <area shape="poly" title=" " alt="" coords="161,30,195,30,195,35,161,35"/>
 </map>
 </div>
@@ -682,7 +682,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 06:01:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 06:53:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

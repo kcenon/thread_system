@@ -74,11 +74,20 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">thread_module::job_detail Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d87/structthread__module_1_1job__detail_1_1is__thread__condition.html">is_thread_condition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile-time check to ensure the string array matches the enum count.  <a href="../../dd/d87/structthread__module_1_1job__detail_1_1is__thread__condition.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/dc6/structthread__module_1_1job__detail_1_1is__thread__condition_3_01thread__conditions_01_4.html">is_thread_condition&lt; thread_conditions &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a5a837bd19275a4ba819b400cddac5039" id="r_a5a837bd19275a4ba819b400cddac5039"><td class="memItemLeft" align="right" valign="top">constexpr std::array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a5a837bd19275a4ba819b400cddac5039">thread_conditions_strings</a> = { &quot;created&quot;, &quot;waiting&quot;, &quot;working&quot;, &quot;stopping&quot;, &quot;stopped&quot; }</td></tr>
@@ -87,8 +96,37 @@ Variables</h2></td></tr>
 <tr class="memitem:a823bc17b7677754bb245125cca25cfb5" id="r_a823bc17b7677754bb245125cca25cfb5"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a823bc17b7677754bb245125cca25cfb5">thread_conditions_count</a> = thread_conditions_strings.size()</td></tr>
 <tr class="memdesc:a823bc17b7677754bb245125cca25cfb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of states defined in <code>thread_conditions</code>.  <br /></td></tr>
 <tr class="separator:a823bc17b7677754bb245125cca25cfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4132c1378556aaec61db0b9654cee6dc" id="r_a4132c1378556aaec61db0b9654cee6dc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4132c1378556aaec61db0b9654cee6dc"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d6/d27/namespacethread__module_1_1job__detail.html#a4132c1378556aaec61db0b9654cee6dc">is_thread_condition_v</a> = <a class="el" href="../../dd/d87/structthread__module_1_1job__detail_1_1is__thread__condition.html">is_thread_condition</a>&lt;T&gt;::value</td></tr>
+<tr class="separator:a4132c1378556aaec61db0b9654cee6dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a4132c1378556aaec61db0b9654cee6dc" name="a4132c1378556aaec61db0b9654cee6dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4132c1378556aaec61db0b9654cee6dc">&#9670;&#160;</a></span>is_thread_condition_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool thread_module::job_detail::is_thread_condition_v = <a class="el" href="../../dd/d87/structthread__module_1_1job__detail_1_1is__thread__condition.html">is_thread_condition</a>&lt;T&gt;::value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00117">117</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+
+</div>
+</div>
 <a id="a823bc17b7677754bb245125cca25cfb5" name="a823bc17b7677754bb245125cca25cfb5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a823bc17b7677754bb245125cca25cfb5">&#9670;&#160;</a></span>thread_conditions_count</h2>
 
@@ -111,7 +149,7 @@ Variables</h2></td></tr>
 
 <p>Total number of states defined in <code>thread_conditions</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00086">86</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00095">95</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
 
 </div>
 </div>
@@ -136,17 +174,17 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Array of string representations corresponding to each <code>thread_conditions</code> state. </p>
-<p>This array is indexed by the underlying enum value cast to <code>size_t</code>, allowing compile-time string retrieval in <code><a class="el" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222" title="Converts a thread_conditions value to its corresponding string representation.">to_string()</a></code>. </p>
+<p>This array is indexed by the underlying enum value cast to <code>size_t</code>, allowing compile-time string retrieval in <code><a class="el" href="../../de/d48/namespacethread__module.html#a02fbab329eb99b194f07fd073de59706" title="Converts a thread_conditions value to its corresponding string representation.">to_string()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00080">80</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>{ <span class="stringliteral">&quot;created&quot;</span>, <span class="stringliteral">&quot;waiting&quot;</span>, <span class="stringliteral">&quot;working&quot;</span>, <span class="stringliteral">&quot;stopping&quot;</span>, <span class="stringliteral">&quot;stopped&quot;</span> };</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00089">89</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>{ <span class="stringliteral">&quot;created&quot;</span>, <span class="stringliteral">&quot;waiting&quot;</span>, <span class="stringliteral">&quot;working&quot;</span>, <span class="stringliteral">&quot;stopping&quot;</span>, <span class="stringliteral">&quot;stopped&quot;</span> };</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 06:01:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 06:53:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

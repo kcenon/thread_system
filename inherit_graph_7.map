@@ -1,5 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,20,108,45"/>
-<area shape="rect" id="Node000001" href="$d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title=" " alt="" coords="156,5,356,60"/>
-<area shape="poly" id="edge23_Node000000_Node000001" title=" " alt="" coords="122,30,156,30,156,35,122,35"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,99,117,124"/>
+<area shape="rect" id="Node000001" href="$d5/dc6/structthread__module_1_1job__detail_1_1is__thread__condition_3_01thread__conditions_01_4.html" title=" " alt="" coords="165,5,367,60"/>
+<area shape="poly" id="edge25_Node000000_Node000001" title=" " alt="" coords="107,91,164,69,193,58,195,63,166,74,109,96"/>
+<area shape="rect" id="Node000002" href="$d8/db2/structthread__pool__module_1_1detail_1_1is__result_3_01result_3_01T_01_4_01_4.html" title="Type trait specialization for result&lt;T&gt; types." alt="" coords="189,84,343,139"/>
+<area shape="poly" id="edge26_Node000000_Node000002" title=" " alt="" coords="132,109,188,109,188,114,132,114"/>
+<area shape="rect" id="Node000003" href="$df/dac/structutility__module_1_1is__span_3_01span_3_01T_00_01E_01_4_01_4.html" title=" " alt="" coords="179,163,353,203"/>
+<area shape="poly" id="edge27_Node000000_Node000003" title=" " alt="" coords="109,126,166,147,204,161,203,166,164,153,107,131"/>
 </map>

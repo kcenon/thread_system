@@ -1,5 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,13,124,38"/>
-<area shape="rect" id="Node000001" href="$d9/d63/structthread__pool__module_1_1detail_1_1is__result.html" title="Type trait to detect if a type is a result&lt;T&gt;" alt="" coords="172,5,340,45"/>
-<area shape="poly" id="edge21_Node000000_Node000001" title=" " alt="" coords="138,23,172,23,172,28,138,28"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,85,151,125"/>
+<area shape="rect" id="Node000001" href="$d4/df8/classpriority__thread__pool__module_1_1priority__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="199,5,381,60"/>
+<area shape="poly" id="edge18_Node000000_Node000001" title=" " alt="" coords="150,78,208,57,210,63,151,83"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="216,85,364,125"/>
+<area shape="poly" id="edge19_Node000000_Node000002" title=" " alt="" coords="164,102,216,102,216,107,164,107"/>
+<area shape="rect" id="Node000004" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="213,149,367,189"/>
+<area shape="poly" id="edge21_Node000000_Node000004" title=" " alt="" coords="159,126,224,146,222,151,157,131"/>
+<area shape="rect" id="Node000003" href="$d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="429,77,624,132"/>
+<area shape="poly" id="edge20_Node000002_Node000003" title=" " alt="" coords="378,102,429,102,429,107,378,107"/>
 </map>
