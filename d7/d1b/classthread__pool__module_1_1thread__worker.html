@@ -230,7 +230,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A specialized worker thread that processes jobs from a <code>job_queue</code>. </p>
 <p>The <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code> class inherits from <code>thread_base</code>, leveraging its life-cycle control methods (<code>start</code>, <code>stop</code>, etc.) and provides an implementation for job processing using a shared <code>job_queue</code>. By overriding <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on.">should_continue_work()</a></code> and <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue.">do_work()</a></code>, it polls the queue for available jobs and executes them.</p>
-<h3><a class="anchor" id="autotoc_md46"></a>
+<h3><a class="anchor" id="autotoc_md45"></a>
 Typical Usage</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> my_queue = std::make_shared&lt;job_queue&gt;();</div>
 <div class="line"><span class="keyword">auto</span> worker   = std::make_unique&lt;thread_worker&gt;();</div>
@@ -564,7 +564,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2025 05:40:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jun 4 2025 05:55:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
