@@ -28,9 +28,9 @@ if(UNIX AND NOT WIN32)
   # Validates standard thread pool operations, task queueing, and execution
   add_subdirectory(thread_pool_test)
   
-  # Priority thread pool tests
-  # Validates priority-based scheduling, task ordering, and edge cases
-  add_subdirectory(priority_thread_pool_test)
+  # Typed thread pool tests
+  # Validates type-based scheduling, task routing, and edge cases
+  add_subdirectory(typed_thread_pool_test)
   
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")

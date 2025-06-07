@@ -30,36 +30,36 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_job.h"
+#include "typed_job.h"
 
-#include "priority_job_queue.h"
+#include "typed_job_queue.h"
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
-	template <typename priority_type>
-	priority_job_t<priority_type>::priority_job_t(priority_type priority, const std::string& name)
+	template <typename job_type>
+	typed_job_t<job_type>::typed_job_t(job_type priority, const std::string& name)
 		: job(name), priority_(priority)
 	{
 	}
 
-	template <typename priority_type> priority_job_t<priority_type>::~priority_job_t(void) {}
+	template <typename job_type> typed_job_t<job_type>::~typed_job_t(void) {}
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::priority() const -> priority_type
+	template <typename job_type>
+	auto typed_job_t<job_type>::priority() const -> job_type
 	{
 		return priority_;
 	}
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
+	template <typename job_type>
+	auto typed_job_t<job_type>::set_job_queue(const std::shared_ptr<job_queue>& job_queue)
 		-> void
 	{
-		job_queue_ = std::dynamic_pointer_cast<priority_job_queue_t<priority_type>>(job_queue);
+		job_queue_ = std::dynamic_pointer_cast<typed_job_queue_t<job_type>>(job_queue);
 	}
 
-	template <typename priority_type>
-	auto priority_job_t<priority_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
+	template <typename job_type>
+	auto typed_job_t<job_type>::get_job_queue(void) const -> std::shared_ptr<job_queue>
 	{
 		return std::dynamic_pointer_cast<job_queue>(job_queue_.lock());
 	}
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module

@@ -32,30 +32,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "priority_job.h"
+#include "typed_job.h"
 
 using namespace thread_module;
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
 	/**
-	 * @class callback_priority_job_t
+	 * @class callback_typed_job_t
 	 * @brief A template for creating priority-based jobs that execute a user-defined callback.
 	 *
-	 * This class inherits from @c priority_job_t and stores a callback function along with a
+	 * This class inherits from @c typed_job_t and stores a callback function along with a
 	 * priority value. When scheduled by a priority-based thread pool or any task scheduler,
 	 * the higher-priority jobs generally take precedence.
 	 *
-	 * @tparam priority_type
+	 * @tparam job_type
 	 *   The type used to represent the priority level.
 	 *   Typically an enum or comparable value to determine job ordering.
 	 */
-	template <typename priority_type>
-	class callback_priority_job_t : public priority_job_t<priority_type>
+	template <typename job_type>
+	class callback_typed_job_t : public typed_job_t<job_type>
 	{
 	public:
 		/**
-		 * @brief Constructs a new @c callback_priority_job_t with a callback, priority, and name.
+		 * @brief Constructs a new @c callback_typed_job_t with a callback, priority, and name.
 		 *
 		 * @param callback
 		 *   The function object to be executed when the job is processed. It must return
@@ -65,7 +65,7 @@ namespace priority_thread_pool_module
 		 *   The priority level of the job (e.g., high, normal, low).
 		 * @param name
 		 *   The name of the job, used primarily for logging or debugging. Defaults to
-		 * "priority_job".
+		 * "typed_job".
 		 *
 		 * Example usage:
 		 * @code
@@ -73,22 +73,22 @@ namespace priority_thread_pool_module
 		 *     // Your job logic here
 		 *     return {};
 		 * };
-		 * auto myJob = std::make_shared<callback_priority_job_t<int>>(jobCallback, 10, "MyJob");
+		 * auto myJob = std::make_shared<callback_typed_job_t<int>>(jobCallback, 10, "MyJob");
 		 * @endcode
 		 */
-		callback_priority_job_t(const std::function<result_void(void)>& callback,
-							priority_type priority,
-							const std::string& name = "priority_job");
+		callback_typed_job_t(const std::function<result_void(void)>& callback,
+							job_type priority,
+							const std::string& name = "typed_job");
 
 		/**
-		 * @brief Virtual destructor for the @c callback_priority_job_t class.
+		 * @brief Virtual destructor for the @c callback_typed_job_t class.
 		 */
-		~callback_priority_job_t(void) override;
+		~callback_typed_job_t(void) override;
 
 		/**
 		 * @brief Executes the stored callback function for this job.
 		 *
-		 * This method overrides @c priority_job_t::do_work. When invoked by the job executor,
+		 * This method overrides @c typed_job_t::do_work. When invoked by the job executor,
 		 * the stored callback will be called and its result will be propagated.
 		 *
 		 * @return result_void
@@ -111,11 +111,11 @@ namespace priority_thread_pool_module
 	};
 
 	/**
-	 * @typedef callback_priority_job
-	 * @brief Type alias for a @c callback_priority_job_t that uses @c job_priorities as its
+	 * @typedef callback_typed_job
+	 * @brief Type alias for a @c callback_typed_job_t that uses @c job_types as its
 	 * priority type.
 	 */
-	using callback_priority_job = callback_priority_job_t<job_priorities>;
-} // namespace priority_thread_pool_module
+	using callback_typed_job = callback_typed_job_t<job_types>;
+} // namespace typed_thread_pool_module
 
-#include "callback_priority_job.tpp"
+#include "callback_typed_job.tpp"

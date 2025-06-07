@@ -85,7 +85,7 @@ namespace log_module
 		 *
 		 * Example:
 		 * @code
-		 * message_job my_job(log_types::warning, "2025-02-14 10:00:00", "Low disk space!");
+		 * message_job my_job(log_types::warning, "2025-02-14 10:00:00", "Background disk space!");
 		 * @endcode
 		 */
 		explicit message_job(const log_types& log_type,

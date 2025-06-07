@@ -170,22 +170,22 @@ MyClass obj;
 auto future3 = pool->submit_job(&MyClass::method, &obj, param);
 ```
 
-### 3. Priority Scheduling
+### 3. Type Scheduling
 
-Use priority thread pool for priority-based execution:
+Use type thread pool for type-based execution:
 
 ```cpp
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 
-// Create priority pool
-auto [priority_pool, error] = create_default(4);
+// Create type pool
+auto [type_pool, error] = create_default(4);
 
-// Submit with priority (lower value = higher priority)
-priority_pool->submit_job(1, [] { /* urgent task */ });
-priority_pool->submit_job(5, [] { /* normal task */ });
-priority_pool->submit_job(10, [] { /* background task */ });
+// Submit with type (lower value = higher type)
+type_pool->submit_job(1, [] { /* urgent task */ });
+type_pool->submit_job(5, [] { /* normal task */ });
+type_pool->submit_job(10, [] { /* background task */ });
 ```
 
 ### 4. Asynchronous Logging
@@ -290,7 +290,7 @@ cmake -B build \
 ```bash
 # Run sample applications
 ./build/bin/thread_pool_sample
-./build/bin/priority_thread_pool_sample
+./build/bin/typed_thread_pool_sample
 ./build/bin/logger_sample
 ```
 

@@ -55,8 +55,8 @@ The Thread System framework delivers exceptional performance across various work
 | Thread Base | Thread creation | ~10-15 μs | Per thread initialization |
 | Thread Base | Job scheduling | ~1-2 μs | Per job submission |
 | Thread Pool | Pool creation | ~95 μs | 8 workers |
-| Priority Pool | Priority handling | ~0.5-1 μs | Additional overhead per job |
-| Priority Pool | Queue operations | O(log n) | Priority queue complexity |
+| Type Pool | Type handling | ~0.5-1 μs | Additional overhead per job |
+| Type Pool | Queue operations | O(log n) | Type queue complexity |
 | Logger | Async log call | <1 μs | Single log entry |
 | Logger | Throughput | ~450K logs/s | Sustained logging rate |
 
@@ -95,9 +95,9 @@ The Thread System framework delivers exceptional performance across various work
 | 1 ms work   | 980/s    | 3.8K/s    | 7.6K/s    | 15.2K/s    | 88%        |
 | 10 ms work  | 98/s     | 380/s     | 760/s     | 1.5K/s     | 85%        |
 
-#### Priority Thread Pool Performance
+#### Type Thread Pool Performance
 
-| Priority Mix | Basic Pool | Priority Pool | Overhead | Priority Accuracy |
+| Type Mix | Basic Pool | Type Pool | Overhead | Type Accuracy |
 |-------------|------------|---------------|----------|-------------------|
 | Single (High) | 540K/s    | 525K/s       | +3%      | 100%             |
 | 2 Levels    | 540K/s     | 510K/s       | +6%      | 99.8%            |
@@ -178,7 +178,7 @@ The Thread System framework delivers exceptional performance across various work
 
 | Library                    | Throughput | Relative Performance | Features               |
 |---------------------------|------------|---------------------|------------------------|
-| **Thread System**         | 540K/s     | 100% (baseline)     | Priority, logging, C++20|
+| **Thread System**         | 540K/s     | 100% (baseline)     | Type, logging, C++20|
 | Intel TBB                 | 580K/s     | 107%                | Industry standard      |
 | Boost.Thread Pool        | 510K/s     | 94%                 | Header-only            |
 | std::async                | 125K/s     | 23%                 | Standard library       |
@@ -188,7 +188,7 @@ The Thread System framework delivers exceptional performance across various work
 
 ### Feature Comparison
 
-| Library | Priority Support | Logging | C++20 | Cross-Platform | Memory Pool | Error Handling |
+| Library | Type Support | Logging | C++20 | Cross-Platform | Memory Pool | Error Handling |
 |---------|-----------------|---------|-------|----------------|-------------|----------------|
 | Thread System | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No | ✅ Comprehensive |
 | Intel TBB | ✅ Yes | ❌ No | ⚠️ Partial | ✅ Yes | ✅ Yes | ⚠️ Basic |
@@ -267,17 +267,17 @@ pool->enqueue_batch(std::move(jobs));
 | 1ms-10ms           | Individual jobs | Good granularity |
 | > 10ms             | Consider subdivision | Improve responsiveness |
 
-### 4. Priority Pool Configuration
+### 4. Type Pool Configuration
 
 ```cpp
-void configure_priority_pool(std::shared_ptr<priority_thread_pool> pool,
+void configure_type_pool(std::shared_ptr<typed_thread_pool> pool,
                             const WorkloadProfile& profile) {
     const uint16_t hw_threads = std::thread::hardware_concurrency();
     
-    // Allocate workers based on priority distribution
-    uint16_t high_workers = static_cast<uint16_t>(hw_threads * profile.high_priority_ratio);
-    uint16_t normal_workers = static_cast<uint16_t>(hw_threads * profile.normal_priority_ratio);
-    uint16_t low_workers = static_cast<uint16_t>(hw_threads * profile.low_priority_ratio);
+    // Allocate workers based on type distribution
+    uint16_t high_workers = static_cast<uint16_t>(hw_threads * profile.high_type_ratio);
+    uint16_t normal_workers = static_cast<uint16_t>(hw_threads * profile.normal_type_ratio);
+    uint16_t low_workers = static_cast<uint16_t>(hw_threads * profile.low_type_ratio);
     
     // Ensure minimum coverage
     high_workers = std::max(1u, high_workers);
@@ -285,9 +285,9 @@ void configure_priority_pool(std::shared_ptr<priority_thread_pool> pool,
     low_workers = std::max(1u, low_workers);
     
     // Add specialized workers
-    add_priority_workers(pool, job_priorities::High, high_workers);
-    add_priority_workers(pool, job_priorities::Normal, normal_workers);
-    add_priority_workers(pool, job_priorities::Low, low_workers);
+    add_type_workers(pool, job_types::High, high_workers);
+    add_type_workers(pool, job_types::Normal, normal_workers);
+    add_type_workers(pool, job_types::Low, low_workers);
 }
 ```
 
@@ -387,11 +387,11 @@ void configure_numa_awareness(thread_pool_module::thread_pool& pool) {
 
 ```cpp
 #ifdef _WIN32
-void configure_windows_priority(thread_pool_module::thread_pool& pool) {
+void configure_windows_type(thread_pool_module::thread_pool& pool) {
     auto workers = pool.get_workers();
     
     for (auto& worker : workers) {
-        SetThreadPriority(worker->get_thread_handle(), THREAD_PRIORITY_ABOVE_NORMAL);
+        SetThreadType(worker->get_thread_handle(), THREAD_PRIORITY_ABOVE_NORMAL);
     }
 }
 
@@ -424,14 +424,14 @@ void configure_processor_groups(thread_pool_module::thread_pool& pool) {
 
 #### Thread Pool Configuration
 - [x] Set optimal thread count based on workload type
-- [x] Configure priority-specific workers appropriately
+- [x] Configure type-specific workers appropriately
 - [x] Consider thread affinity for critical applications
 - [x] Adjust for platform-specific characteristics
 
 #### Job Design
 - [x] Batch job submission where possible
 - [x] Ensure appropriate job granularity (>100μs recommended)
-- [x] Balance workload across job priorities
+- [x] Balance workload across job types
 - [x] Minimize memory allocation in job execution
 
 #### Memory Considerations
@@ -451,7 +451,7 @@ void configure_processor_groups(thread_pool_module::thread_pool& pool) {
 #### Web Server Applications
 - **Thread Count**: 2x hardware threads for I/O-heavy workloads
 - **Job Granularity**: Keep request processing > 100μs
-- **Priority Usage**: High for interactive requests, Normal for API calls, Low for analytics
+- **Type Usage**: High for interactive requests, Normal for API calls, Low for analytics
 - **Memory**: Use connection pools and request object pools
 
 #### Data Processing Pipelines
@@ -463,7 +463,7 @@ void configure_processor_groups(thread_pool_module::thread_pool& pool) {
 #### Real-Time Systems
 - **Thread Count**: Reserve 1 core for OS, use remaining cores
 - **Latency**: Target <10μs scheduling latency
-- **Priority**: Strict priority separation with dedicated workers
+- **Type**: Strict type separation with dedicated workers
 - **Memory**: Pre-allocate all memory, avoid runtime allocation
 
 #### Scientific Computing

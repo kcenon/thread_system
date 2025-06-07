@@ -8,7 +8,7 @@
 # Add subdirectories for each component's benchmarks
 add_subdirectory(logger_benchmarks)
 add_subdirectory(thread_pool_benchmarks)
-add_subdirectory(priority_thread_pool_benchmarks)
+add_subdirectory(typed_thread_pool_benchmarks)
 
 # Create a master target that builds all benchmarks
 add_custom_target(benchmarks
@@ -19,7 +19,7 @@ add_custom_target(benchmarks
 add_dependencies(benchmarks
     logger_benchmarks_target
     thread_pool_benchmarks_target
-    priority_thread_pool_benchmarks_target
+    typed_thread_pool_benchmarks_target
 )
 
 # Add convenience target to run all benchmarks

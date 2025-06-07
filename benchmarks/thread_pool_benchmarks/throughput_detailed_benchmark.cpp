@@ -24,13 +24,13 @@
 #include <fstream>
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 
 // Job complexity levels
 enum class JobComplexity {
@@ -528,7 +528,7 @@ private:
                 }
             },
             {
-                "Normal distribution",
+                "Batch distribution",
                 [total_work_units] {
                     std::random_device rd;
                     std::mt19937 gen(rd());
@@ -893,14 +893,14 @@ private:
     }
     
     void benchmark_priority_impact_on_throughput() {
-        log_module::information("\n9. Priority Scheduling Impact on Throughput\n");
+        log_module::information("\n9. Type Scheduling Impact on Throughput\n");
         log_module::information("------------------------------------------\n");
         
-        enum class Priority { 
+        enum class Type { 
             Critical = 1,
-            High = 10,
-            Normal = 50,
-            Low = 100,
+            RealTime = 10,
+            Batch = 50,
+            Background = 100,
             Background = 1000
         };
         
@@ -909,22 +909,22 @@ private:
         
         // Test 1: Equal distribution
         {
-            log_module::information("\nEqual distribution across priorities:");
+            log_module::information("\nEqual distribution across types:");
             
-            auto [pool, error] = create_priority_default<Priority>(worker_count);
+            auto [pool, error] = create_priority_default<Type>(worker_count);
             if (!error) {
                 pool->start();
                 
-                std::map<Priority, std::atomic<size_t>> completed;
-                for (auto p : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
+                std::map<Type, std::atomic<size_t>> completed;
+                for (auto p : {Type::Critical, Type::RealTime, Type::Batch, Type::Background, Type::Background}) {
                     completed[p] = 0;
                 }
                 
                 auto start = high_resolution_clock::now();
                 
-                // Submit jobs with different priorities
+                // Submit jobs with different types
                 for (size_t i = 0; i < jobs_per_priority; ++i) {
-                    for (auto priority : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
+                    for (auto priority : {Type::Critical, Type::RealTime, Type::Batch, Type::Background, Type::Background}) {
                         pool->add_job([&completed, priority] {
                             execute_job_with_complexity(JobComplexity::Light);
                             completed[priority].fetch_add(1);
@@ -933,13 +933,13 @@ private:
                 }
                 
                 // Sample completion rates
-                log_module::information("Time(ms)  Critical  High  Normal  Low  Background");
+                log_module::information("Time(ms)  Critical  RealTime  Batch  Background  Background");
                 
                 for (int sample = 1; sample <= 10; ++sample) {
                     std::this_thread::sleep_for(milliseconds(100));
                     
                     std::string row = utility_module::formatter::format("{:>8}", sample * 100);
-                    for (auto p : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
+                    for (auto p : {Type::Critical, Type::RealTime, Type::Batch, Type::Background, Type::Background}) {
                         row += utility_module::formatter::format("{:>10}", completed[p].load());
                     }
                     log_module::information(row);
@@ -981,15 +981,15 @@ private:
                 log_module::information(utility_module::formatter::format_string("Non-priority pool: {:.0f} jobs/s", normal_throughput));
             }
             
-            // Priority pool
-            auto [priority_pool, error2] = create_priority_default<Priority>(worker_count);
+            // Type pool
+            auto [priority_pool, error2] = create_priority_default<Type>(worker_count);
             if (!error2) {
                 priority_pool->start();
                 
                 auto start = high_resolution_clock::now();
                 
                 for (size_t i = 0; i < jobs_per_priority; ++i) {
-                    for (auto p : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
+                    for (auto p : {Type::Critical, Type::RealTime, Type::Batch, Type::Background, Type::Background}) {
                         priority_pool->add_job([] {
                             execute_job_with_complexity(JobComplexity::Light);
                         }, p);
@@ -1002,7 +1002,7 @@ private:
                 double priority_time_ms = duration_cast<milliseconds>(end - start).count();
                 double priority_throughput = (jobs_per_priority * 5 * 1000.0) / priority_time_ms;
                 
-                log_module::information(utility_module::formatter::format_string("Priority pool: {:.0f} jobs/s", priority_throughput));
+                log_module::information(utility_module::formatter::format_string("Type pool: {:.0f} jobs/s", priority_throughput));
             }
         }
     }

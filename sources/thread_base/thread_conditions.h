@@ -123,12 +123,12 @@ namespace thread_module
 	 * This can be useful for iteration, logging, or building UI elements that
 	 * list thread states. For example:
 	 * @code
-	 * for (auto cond : all_priorities()) {
+	 * for (auto cond : all_types()) {
 	 *     std::cout << to_string(cond) << std::endl;
 	 * }
 	 * @endcode
 	 */
-	[[nodiscard]] inline auto all_priorities(void) -> std::vector<thread_conditions>
+	[[nodiscard]] inline auto all_types(void) -> std::vector<thread_conditions>
 	{
 		return { thread_conditions::Created, thread_conditions::Waiting, thread_conditions::Working,
 				 thread_conditions::Stopping, thread_conditions::Stopped };

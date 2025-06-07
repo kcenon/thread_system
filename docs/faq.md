@@ -3,7 +3,7 @@
 ## General Questions
 
 ### Q: What is Thread System?
-**A:** Thread System is a C++20 library that provides a comprehensive framework for writing concurrent applications. It includes components for thread management, thread pools, priority-based scheduling, and concurrent logging.
+**A:** Thread System is a C++20 library that provides a comprehensive framework for writing concurrent applications. It includes components for thread management, thread pools, type-based scheduling, and concurrent logging.
 
 ### Q: What C++ standard does Thread System require?
 **A:** Thread System is designed for C++20, but includes fallbacks for compilers with partial C++20 support. It can detect and adapt to the availability of features like `std::format`, `std::jthread`, and `std::chrono::current_zone`.
@@ -56,22 +56,22 @@
 2. Use a callback mechanism where jobs report their results to a result collector
 3. Implement a future/promise pattern with a result queue
 
-## Priority Thread Pool Questions
+## Type Thread Pool Questions
 
-### Q: What is the difference between `thread_pool` and `priority_thread_pool`?
-**A:** `priority_thread_pool` extends `thread_pool` by adding support for job priorities. Jobs are processed according to their priority, with higher-priority jobs being processed before lower-priority ones.
+### Q: What is the difference between `thread_pool` and `typed_thread_pool`?
+**A:** `typed_thread_pool` extends `thread_pool` by adding support for job types. Jobs are processed according to their type, with higher-type jobs being processed before lower-type ones.
 
-### Q: How many priority levels should I use?
-**A:** Most applications work well with 3-5 priority levels. More than that can lead to complexity without adding significant benefit. The standard enum provides `High`, `Normal`, and `Low` as a good starting point.
+### Q: How many type levels should I use?
+**A:** Most applications work well with 3-5 type levels. More than that can lead to complexity without adding significant benefit. The standard enum provides `High`, `Normal`, and `Low` as a good starting point.
 
-### Q: Can I create custom priority types?
-**A:** Yes, `priority_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's priority system.
+### Q: Can I create custom type types?
+**A:** Yes, `typed_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's type system.
 
-### Q: How do I assign workers to specific priority levels?
-**A:** When creating a worker, specify which priority levels it should process. For complete priority-based execution patterns, see the [patterns documentation](patterns.md#priority-based-job-execution-pattern).
+### Q: How do I assign workers to specific type levels?
+**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](patterns.md#type-based-job-execution-pattern).
 
-### Q: What happens if there are no workers for a specific priority level?
-**A:** Jobs with that priority level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.
+### Q: What happens if there are no workers for a specific type level?
+**A:** Jobs with that type level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.
 
 ## Logging Questions
 
@@ -138,7 +138,7 @@ Please refer to the [patterns documentation](patterns.md#troubleshooting-common-
 **A:** After building with the default options, run the tests located in the bin directory:
 ```bash
 ./bin/thread_pool_test
-./bin/priority_thread_pool_test
+./bin/typed_thread_pool_test
 ./bin/utilities_test
 ```
 

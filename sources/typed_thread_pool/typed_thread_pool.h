@@ -35,8 +35,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../utilities/formatter.h"
 #include "convert_string.h"
-#include "priority_job_queue.h"
-#include "priority_thread_worker.h"
+#include "typed_job_queue.h"
+#include "typed_thread_worker.h"
 
 #include <tuple>
 #include <string>
@@ -49,46 +49,46 @@ using namespace utility_module;
 using namespace thread_module;
 
 /**
- * @namespace priority_thread_pool_module
- * @brief Priority-based thread pool implementation for job scheduling with priorities.
+ * @namespace typed_thread_pool_module
+ * @brief Type-based thread pool implementation for job scheduling with types.
  *
- * The priority_thread_pool_module namespace extends the basic thread pool concept
+ * The typed_thread_pool_module namespace extends the basic thread pool concept
  * with priority-based scheduling of jobs. It allows jobs to be processed according
  * to their importance or urgency rather than just their order of submission.
  *
  * Key components include:
- * - priority_thread_pool_t: A templated thread pool class supporting prioritized job scheduling
- * - priority_thread_worker_t: A worker thread that retrieves jobs based on priority
- * - priority_job_t: A job with an associated priority level
- * - priority_job_queue_t: A thread-safe job queue that orders jobs by priority
- * - job_priorities: Default enumeration of priority levels
+ * - typed_thread_pool_t: A templated thread pool class supporting prioritized job scheduling
+ * - typed_thread_worker_t: A worker thread that retrieves jobs based on priority
+ * - typed_job_t: A job with an associated priority level
+ * - typed_job_queue_t: A thread-safe job queue that orders jobs by priority
+ * - job_types: Default enumeration of priority levels
  *
  * This implementation allows for:
  * - Custom priority types through template parameters
- * - Higher priority jobs being processed ahead of lower priority ones
- * - Dynamic adjustment of priorities based on application needs
+ * - RealTimeer priority jobs being processed ahead of lower priority ones
+ * - Dynamic adjustment of types based on application needs
  *
  * @see thread_pool_module for the basic non-prioritized implementation
  */
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
 	/**
-	 * @class priority_thread_pool_t
+	 * @class typed_thread_pool_t
 	 * @brief A thread pool that schedules and executes jobs based on their priority levels.
 	 *
-	 * @tparam priority_type The type representing job priorities (e.g., enum or integral type).
+	 * @tparam job_type The type representing job types (e.g., enum or integral type).
 	 * @ingroup thread_pools
 	 *
-	 * The priority_thread_pool_t template class provides a thread pool implementation that
-	 * processes jobs according to their assigned priorities rather than just submission order.
+	 * The typed_thread_pool_t template class provides a thread pool implementation that
+	 * processes jobs according to their assigned types rather than just submission order.
 	 * This allows more important work to be processed ahead of less important work, improving
 	 * responsiveness for critical tasks.
 	 *
 	 * ### Key Features
-	 * - **Priority-Based Scheduling**: Jobs with higher priority are processed first.
-	 * - **Customizable Priority Types**: Supports custom priority types through templates.
+	 * - **Type-Based Scheduling**: Jobs with higher priority are processed first.
+	 * - **Customizable Type Types**: Supports custom priority types through templates.
 	 * - **Worker Thread Model**: Each worker runs in its own thread, processing jobs.
-	 * - **Priority Job Queue**: Thread-safe queue that orders jobs by priority.
+	 * - **Type Job Queue**: Thread-safe queue that orders jobs by priority.
 	 * - **Dynamic Thread Management**: Add/remove workers at runtime.
 	 * - **Graceful Shutdown**: Option to complete current jobs before stopping.
 	 *
@@ -103,15 +103,15 @@ namespace priority_thread_pool_module
 	 * All public methods of this class are thread-safe and can be called from any thread.
 	 *
 	 * ### Performance Considerations
-	 * - Priority queue operations are more expensive than simple FIFO queues.
+	 * - Type queue operations are more expensive than simple FIFO queues.
 	 * - In high-throughput scenarios with all equal-priority jobs, consider using
 	 *   the non-prioritized thread_pool instead for better performance.
-	 * - For scenarios with mixed priorities, this implementation can significantly
+	 * - For scenarios with mixed types, this implementation can significantly
 	 *   improve response time for high-priority tasks.
 	 *
 	 * ### Example Usage
 	 * @code{.cpp}
-	 * using my_thread_pool = priority_thread_pool_t<my_priority_enum>;
+	 * using my_thread_pool = typed_thread_pool_t<my_priority_enum>;
 	 *
 	 * auto pool = std::make_shared<my_thread_pool>("My Thread Pool");
 	 * auto start_result = pool->start();
@@ -122,9 +122,9 @@ namespace priority_thread_pool_module
 	 * }
 	 *
 	 * // Enqueue a job
-	 * auto job = std::make_unique<priority_job_t<my_priority_enum>>(
+	 * auto job = std::make_unique<typed_job_t<my_priority_enum>>(
 	 *     my_priority_enum::HIGH,
-	 *     [](){ std::cout << "High priority job executed\n"; }
+	 *     [](){ std::cout << "RealTime priority job executed\n"; }
 	 * );
 	 * pool->enqueue(std::move(job));
 	 *
@@ -132,42 +132,42 @@ namespace priority_thread_pool_module
 	 * pool->stop();
 	 * @endcode
 	 *
-	 * @see priority_thread_worker_t The worker thread class used by the pool
-	 * @see priority_job_t Jobs with priority information
-	 * @see priority_job_queue_t The queue that orders jobs by priority
+	 * @see typed_thread_worker_t The worker thread class used by the pool
+	 * @see typed_job_t Jobs with priority information
+	 * @see typed_job_queue_t The queue that orders jobs by priority
 	 * @see thread_pool_module::thread_pool The non-prioritized thread pool implementation
 	 */
-	template <typename priority_type = job_priorities>
-	class priority_thread_pool_t
-		: public std::enable_shared_from_this<priority_thread_pool_t<priority_type>>
+	template <typename job_type = job_types>
+	class typed_thread_pool_t
+		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
 	{
 	public:
 		/**
-		 * @brief Constructs a new priority_thread_pool_t instance.
+		 * @brief Constructs a new typed_thread_pool_t instance.
 		 *
 		 * @param thread_title A human-readable title or name for the thread pool.
 		 * This can help in debugging or logging.
 		 */
-		priority_thread_pool_t(const std::string& thread_title = "priority_thread_pool");
+		typed_thread_pool_t(const std::string& thread_title = "typed_thread_pool");
 
 		/**
-		 * @brief Destroys the priority_thread_pool_t object.
+		 * @brief Destroys the typed_thread_pool_t object.
 		 *
 		 * The destructor will invoke stop() if the pool is still running,
 		 * ensuring that all threads are properly terminated before destruction.
 		 */
-		virtual ~priority_thread_pool_t(void);
+		virtual ~typed_thread_pool_t(void);
 
 		/**
-		 * @brief Returns a shared pointer to the current priority_thread_pool_t.
+		 * @brief Returns a shared pointer to the current typed_thread_pool_t.
 		 *
 		 * This is a convenience method when you only have a raw pointer to the
 		 * pool but need a std::shared_ptr.
 		 *
-		 * @return std::shared_ptr<priority_thread_pool_t<priority_type>>
+		 * @return std::shared_ptr<typed_thread_pool_t<job_type>>
 		 * A shared pointer to this thread pool.
 		 */
-		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<priority_thread_pool_t<priority_type>>;
+		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<typed_thread_pool_t<job_type>>;
 
 		/**
 		 * @brief Starts the thread pool by creating worker threads and
@@ -187,7 +187,7 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Retrieves the underlying priority job queue managed by this thread pool.
 		 *
-		 * @return std::shared_ptr<priority_job_queue_t<priority_type>>
+		 * @return std::shared_ptr<typed_job_queue_t<job_type>>
 		 * A shared pointer to the thread-safe priority job queue.
 		 *
 		 * ### Thread Safety
@@ -196,7 +196,7 @@ namespace priority_thread_pool_module
 		 * to enqueue new jobs via enqueue(), rather than directly accessing the queue.
 		 */
 		[[nodiscard]] auto get_job_queue(void)
-			-> std::shared_ptr<priority_job_queue_t<priority_type>>;
+			-> std::shared_ptr<typed_job_queue_t<job_type>>;
 
 		/**
 		 * @brief Enqueues a priority job into the thread pool's job queue.
@@ -211,7 +211,7 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
-		auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& job) -> result_void;
+		auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& job) -> result_void;
 
 		/**
 		 * @brief Enqueues a batch of priority jobs into the thread pool's job queue.
@@ -226,7 +226,7 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
-		auto enqueue_batch(std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+		auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
 			-> result_void;
 
 		/**
@@ -248,7 +248,7 @@ namespace priority_thread_pool_module
 		 * ### Thread Safety
 		 * This method is thread-safe.
 		 */
-		auto enqueue(std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
+		auto enqueue(std::unique_ptr<typed_thread_worker_t<job_type>>&& worker)
 			-> result_void;
 
 		/**
@@ -271,7 +271,7 @@ namespace priority_thread_pool_module
 		 * This method is thread-safe.
 		 */
 		auto enqueue_batch(
-			std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>>&& workers)
+			std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>>&& workers)
 			-> result_void;
 
 		/**
@@ -302,7 +302,7 @@ namespace priority_thread_pool_module
 		 * @code{.cpp}
 		 * std::cout << pool.to_string() << std::endl;
 		 * // Output might look like:
-		 * // "priority_thread_pool [Title: priority_thread_pool, Started: true, Workers: 4]"
+		 * // "typed_thread_pool [Title: typed_thread_pool, Started: true, Workers: 4]"
 		 * @endcode
 		 */
 		[[nodiscard]] auto to_string(void) const -> std::string;
@@ -312,7 +312,7 @@ namespace priority_thread_pool_module
 		 *
 		 * @param job_queue A shared pointer to the job queue to use.
 		 */
-		auto set_job_queue(std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void;
+		auto set_job_queue(std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void;
 
 	private:
 		/** @brief A descriptive name or title for this thread pool, useful for logging. */
@@ -322,39 +322,39 @@ namespace priority_thread_pool_module
 		std::atomic<bool> start_pool_;
 
 		/** @brief The shared priority job queue from which workers fetch jobs. */
-		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue_;
+		std::shared_ptr<typed_job_queue_t<job_type>> job_queue_;
 
 		/** @brief The collection of worker threads responsible for processing jobs. */
-		std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>> workers_;
+		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>> workers_;
 	};
 
-	/// Alias for a priority_thread_pool with the default job_priorities type.
-	using priority_thread_pool = priority_thread_pool_t<job_priorities>;
+	/// Alias for a typed_thread_pool with the default job_types type.
+	using typed_thread_pool = typed_thread_pool_t<job_types>;
 
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module
 
-// Formatter specializations for priority_thread_pool_t<priority_type>
+// Formatter specializations for typed_thread_pool_t<job_type>
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for priority_thread_pool_t<priority_type>.
+ * @brief Specialization of std::formatter for typed_thread_pool_t<job_type>.
  *
- * Allows formatting of priority_thread_pool_t<priority_type> objects as strings
+ * Allows formatting of typed_thread_pool_t<job_type> objects as strings
  * using the standard library's format facilities (C++20 or later).
  */
-template <typename priority_type>
-struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>>
+template <typename job_type>
+struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
 	: std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_thread_pool_t<priority_type> object as a string.
+	 * @brief Formats a typed_thread_pool_t<job_type> object as a string.
 	 *
 	 * @tparam FormatContext Type of the format context.
-	 * @param item The priority_thread_pool_t<priority_type> object to format.
+	 * @param item The typed_thread_pool_t<job_type> object to format.
 	 * @param ctx The format context for the output.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -363,25 +363,25 @@ struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priori
 
 /**
  * @brief Specialization of std::formatter for wide-character
- * priority_thread_pool_t<priority_type>.
+ * typed_thread_pool_t<job_type>.
  *
- * This enables formatting of priority_thread_pool_t<priority_type> objects as
+ * This enables formatting of typed_thread_pool_t<job_type> objects as
  * wide strings using the standard library's format facilities (C++20 or later).
  */
-template <typename priority_type>
-struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>, wchar_t>
+template <typename job_type>
+struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a priority_thread_pool_t<priority_type> object as a wide string.
+	 * @brief Formats a typed_thread_pool_t<job_type> object as a wide string.
 	 *
 	 * @tparam FormatContext Type of the format context.
-	 * @param item The priority_thread_pool_t<priority_type> object to format.
+	 * @param item The typed_thread_pool_t<job_type> object to format.
 	 * @param ctx The format context for the output.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
@@ -391,25 +391,25 @@ struct std::formatter<priority_thread_pool_module::priority_thread_pool_t<priori
 };
 #else
 /**
- * @brief Specialization of fmt::formatter for priority_thread_pool_t<priority_type>.
+ * @brief Specialization of fmt::formatter for typed_thread_pool_t<job_type>.
  *
- * Allows formatting of priority_thread_pool_t<priority_type> objects as strings
+ * Allows formatting of typed_thread_pool_t<job_type> objects as strings
  * using the {fmt} library (https://github.com/fmtlib/fmt).
  */
-template <typename priority_type>
-struct fmt::formatter<priority_thread_pool_module::priority_thread_pool_t<priority_type>>
+template <typename job_type>
+struct fmt::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_thread_pool_t<priority_type> object as a string.
+	 * @brief Formats a typed_thread_pool_t<job_type> object as a string.
 	 *
 	 * @tparam FormatContext Type of the format context.
-	 * @param item The priority_thread_pool_t<priority_type> object to format.
+	 * @param item The typed_thread_pool_t<job_type> object to format.
 	 * @param ctx The format context for the output.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_thread_pool_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -417,4 +417,4 @@ struct fmt::formatter<priority_thread_pool_module::priority_thread_pool_t<priori
 };
 #endif
 
-#include "priority_thread_pool.tpp"
+#include "typed_thread_pool.tpp"

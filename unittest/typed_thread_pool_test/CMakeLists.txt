@@ -1,4 +1,4 @@
-project(priority_thread_pool_unit)
+project(typed_thread_pool_unit)
 
 file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
@@ -14,7 +14,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
-    priority_thread_pool
+    typed_thread_pool
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

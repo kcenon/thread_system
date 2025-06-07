@@ -23,13 +23,13 @@
 #include <thread>
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 
 // Simulate different types of workloads
 class WorkloadSimulator {
@@ -300,30 +300,30 @@ private:
         log_module::write_information("-------------------------------------\n");
         
         // Simulate game engine subsystems
-        enum class Priority { 
-            Physics = 1,      // Highest priority
+        enum class Type { 
+            Physics = 1,      // RealTimeest priority
             AI = 2,
             Rendering = 3,
             Audio = 4,
-            Network = 5       // Lowest priority
+            Network = 5       // Backgroundest priority
         };
         
         struct Subsystem {
             std::string name;
-            Priority priority;
+            Type priority;
             int update_time_us;  // Microseconds per update
             int frequency;       // Updates per frame
         };
         
         std::vector<Subsystem> subsystems = {
-            {"Physics", Priority::Physics, 1000, 2},
-            {"AI", Priority::AI, 500, 1},
-            {"Rendering", Priority::Rendering, 2000, 1},
-            {"Audio", Priority::Audio, 200, 4},
-            {"Network", Priority::Network, 300, 2}
+            {"Physics", Type::Physics, 1000, 2},
+            {"AI", Type::AI, 500, 1},
+            {"Rendering", Type::Rendering, 2000, 1},
+            {"Audio", Type::Audio, 200, 4},
+            {"Network", Type::Network, 300, 2}
         };
         
-        auto [pool, error] = create_priority_default<Priority>(8);
+        auto [pool, error] = create_priority_default<Type>(8);
         if (error) return;
         
         pool->start();

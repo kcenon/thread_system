@@ -27,7 +27,7 @@
 #endif
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "formatter.h"
 
@@ -511,11 +511,11 @@ private:
             }
         }
         
-        // Priority Thread System (with different priorities for CPU vs I/O)
+        // Type Thread System (with different types for CPU vs I/O)
         {
-            enum class TaskPriority { CPU = 1, IO = 10 };
+            enum class TaskType { CPU = 1, IO = 10 };
             
-            auto [pool, error] = create_priority_default<TaskPriority>(std::thread::hardware_concurrency());
+            auto [pool, error] = create_priority_default<TaskType>(std::thread::hardware_concurrency());
             if (!error) {
                 pool->start();
                 
@@ -528,12 +528,12 @@ private:
                         for (int j = 0; j < cpu_work_units * 2; ++j) {
                             result += std::sin(j) * std::cos(j);
                         }
-                    }, TaskPriority::CPU);
+                    }, TaskType::CPU);
                     
                     // I/O-heavy tasks get lower priority
                     pool->add_job([io_delay_ms] {
                         std::this_thread::sleep_for(milliseconds(io_delay_ms * 2));
-                    }, TaskPriority::IO);
+                    }, TaskType::IO);
                 }
                 
                 pool->stop();
@@ -541,7 +541,7 @@ private:
                 auto end = high_resolution_clock::now();
                 double time_ms = duration_cast<milliseconds>(end - start).count();
                 
-                results.push_back({"Priority Thread System", time_ms, 1.0, num_tasks});
+                results.push_back({"Type Thread System", time_ms, 1.0, num_tasks});
             }
         }
         

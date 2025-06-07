@@ -62,7 +62,7 @@ namespace test_detail
 	constexpr std::array test_priority_strings = { "Top", "Middle", "Bottom" };
 
 	/**
-	 * @brief Total number of test priorities available in test_priority_strings.
+	 * @brief Total number of test types available in test_priority_strings.
 	 */
 	constexpr size_t test_priority_count = test_priority_strings.size();
 
@@ -84,10 +84,10 @@ namespace test_detail
 }
 
 /**
- * @brief Converts a string to a job_priorities value.
+ * @brief Converts a string to a job_types value.
  * @return std::vector<test_priority>
  */
-[[nodiscard]] inline auto all_priorities(void) -> std::vector<test_priority>
+[[nodiscard]] inline auto all_types(void) -> std::vector<test_priority>
 {
 	return { test_priority::Top, test_priority::Middle, test_priority::Bottom };
 }

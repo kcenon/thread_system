@@ -30,7 +30,7 @@ struct thread_pool_config {
     bool use_work_stealing = false;
     
     // Whether to use priority-based scheduling
-    bool use_priorities = false;
+    bool use_types = false;
     
     // The interval at which workers will wake to check for work
     std::optional<std::chrono::milliseconds> wake_interval = std::nullopt;
@@ -91,11 +91,11 @@ public:
     
     /**
      * @brief Enables or disables priority-based scheduling.
-     * @param enabled Whether to enable priorities (default is false)
+     * @param enabled Whether to enable types (default is false)
      * @return A reference to this builder for method chaining
      */
-    thread_pool_builder& with_priorities(bool enabled = true) {
-        config_.use_priorities = enabled;
+    thread_pool_builder& with_types(bool enabled = true) {
+        config_.use_types = enabled;
         return *this;
     }
     

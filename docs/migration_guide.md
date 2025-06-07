@@ -9,7 +9,7 @@ Before diving into the migration process, let's review the key benefits of using
 1. **Structured concurrency**: Clear thread lifecycle management and job-based design
 2. **Error handling**: Consistent error reporting using `result_void` and optional return types
 3. **Improved thread safety**: Thread-safe patterns and components
-4. **Priority scheduling**: Built-in support for priority-based execution
+4. **Type scheduling**: Built-in support for type-based execution
 5. **Logging integration**: Thread-safe, asynchronous logging system
 6. **Modern C++**: Leverages C++20 features when available
 7. **Cross-platform**: Works consistently across Windows, Linux, and macOS
@@ -185,7 +185,7 @@ Based on your existing patterns, select the appropriate Thread System components
 | Existing Pattern | Thread System Component | 
 |------------------|--------------------------|
 | Raw threads | `thread_base` |
-| Thread pools | `thread_pool` or `priority_thread_pool` |
+| Thread pools | `thread_pool` or `typed_thread_pool` |
 | Async processing | `callback_job` with thread pool |
 | Producer-consumer | Job queues with thread pool |
 | Worker threads | Custom `thread_base` subclass |
@@ -375,7 +375,7 @@ consumer_pool->stop();
 
 After the basic migration, enhance your code with Thread System's advanced features:
 
-### Adding Priority Support
+### Adding Type Support
 
 ```cpp
 // Before: Regular thread pool jobs
@@ -386,30 +386,30 @@ pool->enqueue(std::make_unique<thread_module::callback_job>(
     }
 ));
 
-// After: Priority-based jobs
-auto [priority_pool, error] = create_priority_pool(2, 2, 2); // High, normal, low
+// After: Type-based jobs
+auto [type_pool, error] = create_type_pool(2, 2, 2); // High, normal, low
 
 // Critical job
-auto critical_job = std::make_unique<priority_thread_pool_module::callback_priority_job>(
+auto critical_job = std::make_unique<typed_thread_pool_module::callback_typed_job>(
     []() -> result_void {
         process_critical_data();
         return {};
     },
-    priority_thread_pool_module::job_priorities::High
+    typed_thread_pool_module::job_types::High
 );
 
 // Background job
-auto background_job = std::make_unique<priority_thread_pool_module::callback_priority_job>(
+auto background_job = std::make_unique<typed_thread_pool_module::callback_typed_job>(
     []() -> result_void {
         process_background_data();
         return {};
     },
-    priority_thread_pool_module::job_priorities::Low
+    typed_thread_pool_module::job_types::Low
 );
 
-priority_pool->enqueue(std::move(critical_job));
-priority_pool->enqueue(std::move(background_job));
-priority_pool->start();
+type_pool->enqueue(std::move(critical_job));
+type_pool->enqueue(std::move(background_job));
+type_pool->start();
 ```
 
 ### Integrating Logging

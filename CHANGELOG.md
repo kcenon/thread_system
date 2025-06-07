@@ -16,12 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FAQ documentation covering common use cases
 
 ### Changed
+- **BREAKING**: Renamed `priority_thread_pool` to `typed_thread_pool` to better reflect the job type-based scheduling paradigm
+- **BREAKING**: Changed `job_priorities` enum to `job_types` with values: RealTime, Batch, Background
+- All `priority_*` classes renamed to `typed_*` for consistency
+- Updated documentation to reflect the type-based approach instead of priority-based
 - Improved error handling with result_void pattern
-- Enhanced priority queue implementation with better performance characteristics
+- Enhanced typed queue implementation with better performance characteristics
 - Updated samples with more realistic use cases
 
 ### Fixed
-- Thread safety improvements in priority job queue
+- Thread safety improvements in typed job queue
 - Memory leak fixes in worker thread destruction
 - Platform-specific compilation issues
 
@@ -40,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Thread Base Module**: Foundation for all threading operations
 - **Logging System**: High-performance asynchronous logging
 - **Thread Pool System**: Efficient worker thread management
-- **Priority Thread Pool System**: Advanced priority-based scheduling
+- **Priority Thread Pool System**: Advanced priority-based scheduling (renamed to Typed Thread Pool in later versions)
 
 ### Supported Platforms
 - Windows (MSVC 2019+, MinGW, MSYS2)

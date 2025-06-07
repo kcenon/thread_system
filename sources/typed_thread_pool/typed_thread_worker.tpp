@@ -30,65 +30,65 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_thread_worker.h"
+#include "typed_thread_worker.h"
 
 #include "logger.h"
 #include "formatter.h"
-#include "priority_job_queue.h"
+#include "typed_job_queue.h"
 
 using namespace utility_module;
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
-	template <typename priority_type>
-	priority_thread_worker_t<priority_type>::priority_thread_worker_t(
-		std::vector<priority_type> priorities, const bool& use_time_tag)
-		: thread_base("priority_thread_worker")
+	template <typename job_type>
+	typed_thread_worker_t<job_type>::typed_thread_worker_t(
+		std::vector<job_type> types, const bool& use_time_tag)
+		: thread_base("typed_thread_worker")
 		, job_queue_(nullptr)
-		, priorities_(priorities)
+		, types_(types)
 		, use_time_tag_(use_time_tag)
 	{
 	}
 
-	template <typename priority_type>
-	priority_thread_worker_t<priority_type>::~priority_thread_worker_t(void)
+	template <typename job_type>
+	typed_thread_worker_t<job_type>::~typed_thread_worker_t(void)
 	{
 	}
 
-	template <typename priority_type>
-	auto priority_thread_worker_t<priority_type>::set_job_queue(
-		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void
+	template <typename job_type>
+	auto typed_thread_worker_t<job_type>::set_job_queue(
+		std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void
 	{
 		job_queue_ = job_queue;
 	}
 
-	template <typename priority_type>
-	auto priority_thread_worker_t<priority_type>::priorities(void) const
-		-> std::vector<priority_type>
+	template <typename job_type>
+	auto typed_thread_worker_t<job_type>::types(void) const
+		-> std::vector<job_type>
 	{
-		return priorities_;
+		return types_;
 	}
 
-	template <typename priority_type>
-	auto priority_thread_worker_t<priority_type>::should_continue_work() const -> bool
+	template <typename job_type>
+	auto typed_thread_worker_t<job_type>::should_continue_work() const -> bool
 	{
 		if (job_queue_ == nullptr)
 		{
 			return false;
 		}
 
-		return !job_queue_->empty(priorities_);
+		return !job_queue_->empty(types_);
 	}
 
-	template <typename priority_type>
-	auto priority_thread_worker_t<priority_type>::do_work() -> result_void
+	template <typename job_type>
+	auto typed_thread_worker_t<job_type>::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
 		{
 			return error{error_code::resource_allocation_failed, "there is no job_queue"};
 		}
 
-		auto dequeue_result = job_queue_->dequeue(priorities_);
+		auto dequeue_result = job_queue_->dequeue(types_);
 		if (!dequeue_result.has_value())
 		{
 			if (!job_queue_->is_stopped())
@@ -126,16 +126,16 @@ namespace priority_thread_pool_module
 		if (!started_time_point.has_value())
 		{
 			log_module::write_sequence(
-				"job executed successfully: {}[{}] on priority_thread_worker",
+				"job executed successfully: {}[{}] on typed_thread_worker",
 				current_job->get_name(), current_job->priority());
 
 			return {}; // Success
 		}
 
 		log_module::write_sequence(started_time_point.value(),
-							   "job executed successfully: {}[{}] on priority_thread_worker",
+							   "job executed successfully: {}[{}] on typed_thread_worker",
 							   current_job->get_name(), current_job->priority());
 
 		return {}; // Success
 	}
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module

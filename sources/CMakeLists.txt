@@ -17,5 +17,5 @@ add_subdirectory(logger)
 # Standard thread pool implementation (depends on thread_base)
 add_subdirectory(thread_pool)
 
-# Priority-based thread pool implementation (depends on thread_pool)
-add_subdirectory(priority_thread_pool)
+# Type-based thread pool implementation (depends on thread_pool)
+add_subdirectory(typed_thread_pool)

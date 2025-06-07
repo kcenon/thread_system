@@ -27,7 +27,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 ### 🚀 **Performance Excellence**
 - **Zero-overhead abstractions**: Modern C++ design ensures minimal runtime cost
 - **Optimized data structures**: Lock-free algorithms and cache-friendly designs
-- **Adaptive scheduling**: Priority-based job processing for optimal resource utilization
+- **Adaptive scheduling**: Type-based job processing for optimal resource utilization
 - **Scalable architecture**: Linear performance scaling with hardware thread count
 
 ### 🛡️ **Production-Grade Reliability**
@@ -49,7 +49,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 - **Architecture independence**: Optimized for both x86 and ARM processors
 
 ### 📈 **Enterprise-Ready Features**
-- **Priority-based scheduling**: Sophisticated job prioritization for real-time systems
+- **Type-based scheduling**: Sophisticated job type specialization for real-time systems
 - **Asynchronous logging**: High-performance, non-blocking logging system
 - **Resource monitoring**: Built-in performance metrics and health checks
 - **Modular design**: Use individual components or the complete framework
@@ -59,7 +59,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 ### 🎯 **Ideal Applications**
 - **High-frequency trading systems**: Microsecond-level latency requirements
 - **Game engines**: Real-time rendering and physics simulation
-- **Web servers**: Concurrent request processing with priority handling
+- **Web servers**: Concurrent request processing with type handling
 - **Scientific computing**: Parallel algorithm execution and data processing
 - **Media processing**: Video encoding, image processing, and audio streaming
 - **IoT systems**: Sensor data collection and real-time response systems
@@ -109,7 +109,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 **Priority Thread Pool Performance**:
 | Priority Levels | Overhead vs Basic | Priority Accuracy | Use Case |
 |----------------|-------------------|-------------------|----------|
-| Single | +3% | 100% | High-priority only |
+| Single | +3% | 100% | High-type only |
 | 2 Levels | +6% | 99.8% | Critical/Normal |
 | 3 Levels | +9% | 99.6% | High/Normal/Low |
 | 5 Levels | +15% | 99.3% | Fine-grained control |
@@ -165,20 +165,20 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 - `thread_worker` class: Worker thread that processes jobs, inherits from `thread_base`
 - `thread_pool` class: Manages thread pool
 
-### 4. [Priority-based Thread Pool System (priority_thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/priority_thread_pool)
+### 4. [Type-based Thread Pool System (typed_thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/typed_thread_pool)
 
-- `job_priorities` enum: Defines job priority levels
-- `priority_job` class: Defines job with priority, inherits from `job`
-- `priority_job_queue` class: Priority-based job queue, inherits from `job_queue`
-- `priority_thread_worker` class: Priority-based worker thread, inherits from `thread_base`
-- `priority_thread_pool` class: Manages priority-based thread pool
+- `job_types` enum: Defines job type levels
+- `type_job` class: Defines job with type, inherits from `job`
+- `type_job_queue` class: Type-based job queue, inherits from `job_queue`
+- `type_thread_worker` class: Type-based worker thread, inherits from `thread_base`
+- `typed_thread_pool` class: Manages type-based thread pool
 
 ## Advanced Features & Capabilities
 
 ### 🎛️ **Intelligent Task Scheduling**
-- **Priority-aware job distribution**: Workers can handle multiple priority levels with configurable responsibility lists
-- **Dynamic priority adaptation**: Runtime adjustment of worker responsibilities based on workload patterns
-- **FIFO guarantee**: Strict first-in-first-out ordering within same priority levels
+- **Priority-aware job distribution**: Workers can handle multiple type levels with configurable responsibility lists
+- **Dynamic type adaptation**: Runtime adjustment of worker responsibilities based on workload patterns
+- **FIFO guarantee**: Strict first-in-first-out ordering within same type levels
 - **Work stealing**: Automatic load balancing across worker threads
 
 ### 🔬 **Advanced Threading Features**
@@ -194,7 +194,7 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 - **Comprehensive logging**: Multi-level, multi-target logging with asynchronous processing
 
 ### ⚙️ **Configuration & Customization**
-- **Template-based flexibility**: Custom priority types and job implementations
+- **Template-based flexibility**: Custom type types and job implementations
 - **Runtime configuration**: JSON-based configuration for deployment flexibility
 - **Compile-time optimization**: Conditional feature compilation for minimal overhead
 - **Builder pattern**: Fluent API for easy thread pool construction
@@ -210,23 +210,23 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 ### 🚀 **Getting Started in 5 Minutes**
 
 ```cpp
-#include "priority_thread_pool.h"
-using namespace priority_thread_pool_module;
+#include "typed_thread_pool.h"
+using namespace typed_thread_pool_module;
 
-// 1. Create a priority thread pool
-auto pool = std::make_shared<priority_thread_pool_t<job_priorities>>();
+// 1. Create a type thread pool
+auto pool = std::make_shared<typed_thread_pool_t<job_types>>();
 
 // 2. Add workers with different responsibilities
-pool->add_worker(job_priorities::High);      // High priority specialist
-pool->add_worker({job_priorities::High, job_priorities::Normal}); // Multi-priority worker
+pool->add_worker(job_types::High);      // High type specialist
+pool->add_worker({job_types::High, job_types::Normal}); // Multi-type worker
 
 // 3. Start processing
 pool->start();
 
-// 4. Submit jobs with priorities
-pool->enqueue(make_priority_job([]() { 
-    // Your high-priority task here
-}, job_priorities::High));
+// 4. Submit jobs with types
+pool->enqueue(make_type_job([]() { 
+    // Your high-type task here
+}, job_types::High));
 
 // 5. Clean shutdown
 pool->stop();
@@ -238,8 +238,8 @@ Our samples demonstrate real-world usage patterns and best practices:
 
 - **[Asynchronous Logging](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample/logger_sample.cpp)**: High-performance, multi-target logging system
 - **[Basic Thread Pool](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample/thread_pool_sample.cpp)**: Simple job processing with automatic load balancing
-- **[Priority Scheduling](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample/priority_thread_pool_sample.cpp)**: Sophisticated priority-based task management
-- **[Custom Priority Types](https://github.com/kcenon/thread_system/tree/main/samples/priority_thread_pool_sample_2/priority_thread_pool_sample_2.cpp)**: Extending the framework with domain-specific priorities
+- **[Priority Scheduling](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample/typed_thread_pool_sample.cpp)**: Sophisticated type-based task management
+- **[Custom Priority Types](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample_2/typed_thread_pool_sample_2.cpp)**: Extending the framework with domain-specific types
 
 ### 🛠️ **Build & Integration**
 
@@ -257,7 +257,7 @@ cd thread_system
 ./build.bat      # Windows
 
 # Run samples
-./build/bin/priority_thread_pool_sample
+./build/bin/typed_thread_pool_sample
 ```
 
 ## License

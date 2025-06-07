@@ -70,7 +70,7 @@ git commit -m "Add feature: Brief description of changes
 ```cpp
 // Classes: snake_case with _t suffix for templates
 class thread_pool;
-template<typename T> class priority_job_queue_t;
+template<typename T> class typed_job_queue_t;
 
 // Functions and variables: snake_case
 auto process_job() -> result_void;

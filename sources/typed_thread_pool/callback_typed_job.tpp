@@ -30,28 +30,28 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "callback_priority_job.h"
+#include "callback_typed_job.h"
 
-#include "priority_job_queue.h"
+#include "typed_job_queue.h"
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
-	template <typename priority_type>
-	callback_priority_job_t<priority_type>::callback_priority_job_t(
+	template <typename job_type>
+	callback_typed_job_t<job_type>::callback_typed_job_t(
 		const std::function<result_void(void)>& callback,
-		priority_type priority,
+		job_type priority,
 		const std::string& name)
-		: priority_job_t<priority_type>(priority, name), callback_(callback)
+		: typed_job_t<job_type>(priority, name), callback_(callback)
 	{
 	}
 
-	template <typename priority_type>
-	callback_priority_job_t<priority_type>::~callback_priority_job_t(void)
+	template <typename job_type>
+	callback_typed_job_t<job_type>::~callback_typed_job_t(void)
 	{
 	}
 
-	template <typename priority_type>
-	auto callback_priority_job_t<priority_type>::do_work(void) -> result_void
+	template <typename job_type>
+	auto callback_typed_job_t<job_type>::do_work(void) -> result_void
 	{
 		if (callback_ == nullptr)
 		{
@@ -67,4 +67,4 @@ namespace priority_thread_pool_module
 			return error{error_code::job_execution_failed, e.what()};
 		}
 	}
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module
