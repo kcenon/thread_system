@@ -1,4 +1,0 @@
-<map id="thread_module::cpu_affinity::get_thread_affinity" name="thread_module::cpu_affinity::get_thread_affinity">
-<area shape="rect" id="Node000001" title="Get CPU affinity for the current thread." alt="" coords="5,29,157,84"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="106,18,97,11,81,8,68,10,60,14,56,21,56,29,51,29,51,19,56,11,67,5,81,3,99,6,109,13"/>
-</map>

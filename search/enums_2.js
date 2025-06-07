@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['job_5fpriorities_0',['job_priorities',['../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090',1,'priority_thread_pool_module']]]
+  ['log_5ftypes_0',['log_types',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709',1,'log_module']]]
 ];

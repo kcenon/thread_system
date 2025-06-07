@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['affinity_5fpolicy_0',['affinity_policy',['../dc/df8/classthread__module_1_1cpu__affinity.html#ad6e1af838b8218bbe807100531929a72',1,'thread_module::cpu_affinity']]]
+  ['encoding_5ftypes_0',['encoding_types',['../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4',1,'utility_module::convert_string']]],
+  ['endian_5ftypes_1',['endian_types',['../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cf',1,'utility_module::convert_string']]],
+  ['error_5fcode_2',['error_code',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c',1,'thread_module']]]
 ];

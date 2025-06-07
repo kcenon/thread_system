@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log_5ftypes_0',['log_types',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709',1,'log_module']]]
+  ['message_5ftypes_0',['message_types',['../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecb',1,'log_module::log_job']]]
 ];
