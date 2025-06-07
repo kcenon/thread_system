@@ -12,7 +12,7 @@ Core performance tests including:
 - Job submission latency
 - Job throughput with varying workloads
 - Scaling efficiency across multiple cores
-- Priority scheduling performance
+- Type-based scheduling performance
 
 #### 2. **memory_benchmark.cpp**
 Memory usage analysis:
@@ -47,7 +47,7 @@ Stress tests and edge cases:
 - Rapid start/stop cycles
 - Exception handling under load
 - Memory pressure scenarios
-- Priority starvation tests
+- Type starvation tests
 - Thundering herd problem
 - Cascading failure simulation
 
@@ -70,7 +70,7 @@ In-depth job throughput analysis:
 - Sustained throughput over time
 - Burst pattern handling
 - Job dependency impact
-- Priority scheduling overhead
+- Type-based scheduling overhead
 - Mixed workload scenarios
 
 ## Building Benchmarks
