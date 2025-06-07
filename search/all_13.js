@@ -47,7 +47,7 @@ var searchData=
   ['supporting_20utilities_20utility_5fmodule_44',['Supporting Utilities (utility_module)',['../index.html#utilities',1,'']]],
   ['system_20documentation_45',['Thread System Documentation',['../index.html',1,'']]],
   ['system_20log_5fmodule_46',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]],
-  ['system_20priority_5fthread_5fpool_5fmodule_47',['Priority Thread Pool System (priority_thread_pool_module)',['../index.html#priority_thread_pool',1,'']]],
-  ['system_20thread_5fpool_5fmodule_48',['Thread Pool System (thread_pool_module)',['../index.html#thread_pool',1,'']]],
+  ['system_20thread_5fpool_5fmodule_47',['Thread Pool System (thread_pool_module)',['../index.html#thread_pool',1,'']]],
+  ['system_20typed_5fthread_5fpool_5fmodule_48',['Type-based Thread Pool System (typed_thread_pool_module)',['../index.html#typed_thread_pool',1,'']]],
   ['system_5fto_5futf8_49',['system_to_utf8',['../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0',1,'utility_module::convert_string']]]
 ];
