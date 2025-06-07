@@ -65,7 +65,7 @@ using namespace thread_module;
  * - Limiting the total number of threads to control resource usage
  * - Providing a simple interface for async task execution
  *
- * @see priority_thread_pool_module for a more advanced implementation with job prioritization
+ * @see typed_thread_pool_module for a more advanced implementation with job prioritization
  */
 namespace thread_pool_module
 {
@@ -108,7 +108,7 @@ namespace thread_pool_module
 	 *
 	 * @see thread_worker The worker thread class used by the pool
 	 * @see job_queue The shared queue for storing pending jobs
-	 * @see priority_thread_pool_module::priority_thread_pool For a priority-based version
+	 * @see typed_thread_pool_module::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
 	{

@@ -14,10 +14,10 @@ add_subdirectory(logger_sample)
 add_subdirectory(thread_pool_sample)
 
 
-# Priority thread pool sample
-# Demonstrates priority-based task scheduling in thread pools
-add_subdirectory(priority_thread_pool_sample)
+# Typed thread pool sample
+# Demonstrates type-based task scheduling in thread pools
+add_subdirectory(typed_thread_pool_sample)
 
-# Advanced priority thread pool sample
-# Shows more complex usage patterns of priority thread pools
-add_subdirectory(priority_thread_pool_sample_2)
+# Advanced typed thread pool sample
+# Shows more complex usage patterns of typed thread pools
+add_subdirectory(typed_thread_pool_sample_2)

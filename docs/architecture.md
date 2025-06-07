@@ -12,11 +12,11 @@ This document provides detailed technical architecture information for the Threa
                  ┌────────────┼────────────┐
                  │            │            │
         ┌────────▼────────┐   │   ┌────────▼─────────┐
-        │  thread_worker  │   │   │priority_thread_worker│
+        │  thread_worker  │   │   │typed_thread_worker│
         └────────┬────────┘   │   └────────┬──────────┘
                  │            │            │
         ┌────────▼────────┐   │   ┌────────▼──────────┐
-        │   thread_pool   │   │   │priority_thread_pool│
+        │   thread_pool   │   │   │typed_thread_pool│
         └─────────────────┘   │   └───────────────────┘
                               │
                      ┌────────▼────────┐
@@ -83,22 +83,22 @@ void enqueue(std::vector<std::shared_ptr<job>>&& jobs) {
 ```
 Batch enqueue reduces lock contention by acquiring the mutex once for multiple jobs.
 
-### Priority Queue Optimization
+### Type Queue Optimization
 
-The `priority_job_queue` uses a bucketed approach for O(1) average-case performance:
+The `typed_job_queue` uses a bucketed approach for O(1) average-case performance:
 
 #### Internal Structure
 ```cpp
-template<typename Priority>
-class priority_job_queue {
+template<typename Type>
+class typed_job_queue {
 private:
-    std::map<Priority, std::queue<std::shared_ptr<priority_job<Priority>>>> _priority_buckets;
+    std::map<Type, std::queue<std::shared_ptr<typed_job<Type>>>> _type_buckets;
     mutable std::mutex _mutex;
 };
 ```
 
 #### Dequeue Strategy
-Jobs are dequeued in priority order (highest first), with FIFO ordering within each priority level. This guarantees fairness while maintaining priority semantics.
+Jobs are dequeued in type order (highest first), with FIFO ordering within each type level. This guarantees fairness while maintaining type semantics.
 
 ### Logger Architecture Internals
 
@@ -112,18 +112,18 @@ Jobs are dequeued in priority order (highest first), with FIFO ordering within e
 - Pre-allocates string buffers for formatting
 - Implements circular buffer for high-frequency logging scenarios
 
-### Priority Worker Specialization
+### Type Worker Specialization
 
 #### Responsibility Lists
-Each `priority_thread_worker` maintains a list of priorities it can handle:
+Each `typed_thread_worker` maintains a list of types it can handle:
 ```cpp
-std::vector<Priority> _responsibilities;
+std::vector<Type> _responsibilities;
 ```
 
 This allows fine-grained control over worker specialization:
-- Dedicated high-priority workers for critical tasks
-- Multi-priority workers for load balancing
-- Priority-exclusive workers for isolation
+- Dedicated high-type workers for critical tasks
+- Multi-type workers for load balancing
+- Type-exclusive workers for isolation
 
 ## Design Patterns and Implementation Rationale
 

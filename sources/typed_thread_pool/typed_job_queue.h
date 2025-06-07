@@ -35,40 +35,40 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../utilities/formatter.h"
 #include "../utilities/span.h"
 #include "../thread_base/job_queue.h"
-#include "priority_job.h"
+#include "typed_job.h"
 #include "convert_string.h"
-#include "job_priorities.h"
-#include "callback_priority_job.h"
+#include "job_types.h"
+#include "callback_typed_job.h"
 
 #include <map>
 
 using namespace thread_module;
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
 	/**
-	 * @class priority_job_queue_t
+	 * @class typed_job_queue_t
 	 * @brief A template-based queue that manages jobs with distinct priority levels.
 	 *
 	 * This class inherits from @c job_queue and provides functionality to enqueue and
 	 * dequeue priority-based jobs. Internally, it maintains multiple queues (one per
 	 * priority level) and tracks their sizes.
 	 *
-	 * @tparam priority_type The type used to represent job priority levels. Defaults to
-	 *         @c job_priorities.
+	 * @tparam job_type The type used to represent job priority levels. Defaults to
+	 *         @c job_types.
 	 */
-	template <typename priority_type = job_priorities> class priority_job_queue_t : public job_queue
+	template <typename job_type = job_types> class typed_job_queue_t : public job_queue
 	{
 	public:
 		/**
 		 * @brief Constructs an empty priority job queue.
 		 */
-		priority_job_queue_t();
+		typed_job_queue_t();
 
 		/**
 		 * @brief Destroys the priority job queue and all remaining jobs within it.
 		 */
-		~priority_job_queue_t() override;
+		~typed_job_queue_t() override;
 
 		/**
 		 * @brief Enqueues a non-priority (base) job into the queue.
@@ -107,7 +107,7 @@ namespace priority_thread_pool_module
 		 * @param value A unique pointer to the priority job to enqueue.
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<priority_job_t<priority_type>>&& value)
+		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
 			-> result_void;
 
 		/**
@@ -121,7 +121,7 @@ namespace priority_thread_pool_module
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
 		[[nodiscard]] auto enqueue_batch(
-			std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs) -> result_void;
+			std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> result_void;
 
 		/**
 		 * @brief Dequeues the next available job (of any type or priority).
@@ -134,31 +134,31 @@ namespace priority_thread_pool_module
 		[[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override;
 
 		/**
-		 * @brief Dequeues a job with one of the specified priorities.
+		 * @brief Dequeues a job with one of the specified types.
 		 *
 		 * This method checks the queues corresponding to the given priority levels
 		 * in an implementation-defined sequence and removes the first job found.
 		 *
-		 * @param priorities A list of priority levels from which to attempt a dequeue.
-		 * @return A result<std::unique_ptr<priority_job_t<priority_type>>> containing either
+		 * @param types A list of priority levels from which to attempt a dequeue.
+		 * @return A result<std::unique_ptr<typed_job_t<job_type>>> containing either
 		 *         the dequeued job or an error.
 		 */
-		[[nodiscard]] auto dequeue(const std::vector<priority_type>& priorities)
-			-> result<std::unique_ptr<priority_job_t<priority_type>>>;
+		[[nodiscard]] auto dequeue(const std::vector<job_type>& types)
+			-> result<std::unique_ptr<typed_job_t<job_type>>>;
 			
 		/**
-		 * @brief Dequeues a job with one of the specified priorities using span.
+		 * @brief Dequeues a job with one of the specified types using span.
 		 *
 		 * This method checks the queues corresponding to the given priority levels
 		 * in an implementation-defined sequence and removes the first job found.
-		 * This overload accepts a span to avoid copying the priorities collection.
+		 * This overload accepts a span to avoid copying the types collection.
 		 *
-		 * @param priorities A span of priority levels from which to attempt a dequeue.
-		 * @return A result<std::unique_ptr<priority_job_t<priority_type>>> containing either
+		 * @param types A span of priority levels from which to attempt a dequeue.
+		 * @return A result<std::unique_ptr<typed_job_t<job_type>>> containing either
 		 *         the dequeued job or an error.
 		 */
-		[[nodiscard]] auto dequeue(utility_module::span<const priority_type> priorities)
-			-> result<std::unique_ptr<priority_job_t<priority_type>>>;
+		[[nodiscard]] auto dequeue(utility_module::span<const job_type> types)
+			-> result<std::unique_ptr<typed_job_t<job_type>>>;
 
 		/**
 		 * @brief Removes all jobs from all priority queues.
@@ -170,24 +170,24 @@ namespace priority_thread_pool_module
 		/**
 		 * @brief Checks if there are no jobs in any of the specified priority queues.
 		 *
-		 * @param priorities A list of priority levels to check.
+		 * @param types A list of priority levels to check.
 		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
-		[[nodiscard]] auto empty(const std::vector<priority_type>& priorities) const -> bool;
+		[[nodiscard]] auto empty(const std::vector<job_type>& types) const -> bool;
 		
 		/**
 		 * @brief Checks if there are no jobs in any of the specified priority queues using span.
 		 *
-		 * @param priorities A span of priority levels to check.
+		 * @param types A span of priority levels to check.
 		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
-		[[nodiscard]] auto empty(utility_module::span<const priority_type> priorities) const -> bool;
+		[[nodiscard]] auto empty(utility_module::span<const job_type> types) const -> bool;
 
 		/**
 		 * @brief Returns a string representation of the entire priority job queue.
 		 *
 		 * The format of the returned string may vary, but typically includes information
-		 * about the number of jobs and their priorities.
+		 * about the number of jobs and their types.
 		 *
 		 * @return A string describing the current state of the queue.
 		 */
@@ -208,11 +208,11 @@ namespace priority_thread_pool_module
 		 * This function is intended for internal use, where external locking is expected
 		 * to be handled by the caller.
 		 *
-		 * @param priorities A list of priority levels to check.
+		 * @param types A list of priority levels to check.
 		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
 		[[nodiscard]] auto empty_check_without_lock(
-			const std::vector<priority_type>& priorities) const -> bool;
+			const std::vector<job_type>& types) const -> bool;
 			
 		/**
 		 * @brief Checks if the specified priority queues are empty without acquiring any locks using span.
@@ -220,11 +220,11 @@ namespace priority_thread_pool_module
 		 * This function is intended for internal use, where external locking is expected
 		 * to be handled by the caller.
 		 *
-		 * @param priorities A span of priority levels to check.
+		 * @param types A span of priority levels to check.
 		 * @return @c true if all specified priority queues are empty, otherwise @c false.
 		 */
 		[[nodiscard]] auto empty_check_without_lock(
-			utility_module::span<const priority_type> priorities) const -> bool;
+			utility_module::span<const job_type> types) const -> bool;
 
 		/**
 		 * @brief Attempts to dequeue a single job from the queue for a given priority.
@@ -233,54 +233,54 @@ namespace priority_thread_pool_module
 		 * priority level. If no jobs exist at that priority, returns @c std::nullopt.
 		 *
 		 * @param priority The priority level from which to dequeue.
-		 * @return @c std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+		 * @return @c std::optional<std::unique_ptr<typed_job_t<job_type>>>
 		 *         - The dequeued priority job, or @c std::nullopt if the queue for
 		 *           that priority is empty.
 		 */
-		[[nodiscard]] auto try_dequeue_from_priority(const priority_type& priority)
-			-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>;
+		[[nodiscard]] auto try_dequeue_from_priority(const job_type& priority)
+			-> std::optional<std::unique_ptr<typed_job_t<job_type>>>;
 
 	private:
 		/**
 		 * @brief A map of priority levels to double-ended queues that store jobs of that priority.
 		 */
-		std::map<priority_type, std::deque<std::unique_ptr<priority_job_t<priority_type>>>> queues_;
+		std::map<job_type, std::deque<std::unique_ptr<typed_job_t<job_type>>>> queues_;
 
 		/**
 		 * @brief A map that tracks the size of each priority queue in a thread-safe manner.
 		 */
-		std::map<priority_type, std::atomic_size_t> queue_sizes_;
+		std::map<job_type, std::atomic_size_t> queue_sizes_;
 	};
 
-	/// @brief Alias for a priority_job_queue using default job priorities.
-	using priority_job_queue = priority_job_queue_t<job_priorities>;
-} // namespace priority_thread_pool_module
+	/// @brief Alias for a typed_job_queue using default job types.
+	using typed_job_queue = typed_job_queue_t<job_types>;
+} // namespace typed_thread_pool_module
 
-// Formatter specializations for priority_job_queue_t<priority_type>
+// Formatter specializations for typed_job_queue_t<job_type>
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for priority_job_queue_t<priority_type> when using
+ * @brief Specialization of std::formatter for typed_job_queue_t<job_type> when using
  * C++20's <format>.
  *
- * This allows a priority_job_queue_t<priority_type> to be formatted using the standard library
+ * This allows a typed_job_queue_t<job_type> to be formatted using the standard library
  * @c std::format function. It calls @c to_string() on the object to obtain its string
  * representation.
  *
- * @tparam priority_type The type representing priority levels.
+ * @tparam job_type The type representing priority levels.
  */
-template <typename priority_type>
-struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
+template <typename job_type>
+struct std::formatter<typed_thread_pool_module::typed_job_queue_t<job_type>>
 	: std::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> into a string view.
+	 * @brief Formats a typed_job_queue_t<job_type> into a string view.
 	 * @tparam FormatContext The formatting context type provided by std::format.
-	 * @param item The priority_job_queue_t instance to format.
+	 * @param item The typed_job_queue_t instance to format.
 	 * @param ctx The formatting context where the output will be appended.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -289,26 +289,26 @@ struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 
 /**
  * @brief Specialization of std::formatter for wide-character formatting of
- * priority_job_queue_t<priority_type>.
+ * typed_job_queue_t<job_type>.
  *
  * Similar to the above specialization, but uses wide-character strings, allowing the object
  * to be formatted with @c std::wformat or related wide-character formatting functions.
  *
- * @tparam priority_type The type representing priority levels.
+ * @tparam job_type The type representing priority levels.
  */
-template <typename priority_type>
-struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>, wchar_t>
+template <typename job_type>
+struct std::formatter<typed_thread_pool_module::typed_job_queue_t<job_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> into a wide string view.
+	 * @brief Formats a typed_job_queue_t<job_type> into a wide string view.
 	 * @tparam FormatContext The wide-character formatting context type.
-	 * @param item The priority_job_queue_t instance to format.
+	 * @param item The typed_job_queue_t instance to format.
 	 * @param ctx The wide-character formatting context for output.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
@@ -318,27 +318,27 @@ struct std::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 };
 #else
 /**
- * @brief Specialization of fmt::formatter for priority_job_queue_t<priority_type> when using the
+ * @brief Specialization of fmt::formatter for typed_job_queue_t<job_type> when using the
  * {fmt} library.
  *
- * This allows a priority_job_queue_t<priority_type> to be formatted using the {fmt} library,
+ * This allows a typed_job_queue_t<job_type> to be formatted using the {fmt} library,
  * by invoking the @c to_string() method on the instance.
  *
- * @tparam priority_type The type representing priority levels.
+ * @tparam job_type The type representing priority levels.
  */
-template <typename priority_type>
-struct fmt::formatter<priority_thread_pool_module::priority_job_queue_t<priority_type>>
+template <typename job_type>
+struct fmt::formatter<typed_thread_pool_module::typed_job_queue_t<job_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
-	 * @brief Formats a priority_job_queue_t<priority_type> into a string view for {fmt}.
+	 * @brief Formats a typed_job_queue_t<job_type> into a string view for {fmt}.
 	 * @tparam FormatContext The context type provided by {fmt}.
-	 * @param item The priority_job_queue_t instance to format.
+	 * @param item The typed_job_queue_t instance to format.
 	 * @param ctx The {fmt} context where the output will be appended.
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const priority_thread_pool_module::priority_job_queue_t<priority_type>& item,
+	auto format(const typed_thread_pool_module::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -346,4 +346,4 @@ struct fmt::formatter<priority_thread_pool_module::priority_job_queue_t<priority
 };
 #endif
 
-#include "priority_job_queue.tpp"
+#include "typed_job_queue.tpp"

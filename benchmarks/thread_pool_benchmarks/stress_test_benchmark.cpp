@@ -21,12 +21,12 @@
 #include <numeric>
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 
 class StressTestBenchmark {
 public:
@@ -307,18 +307,18 @@ private:
     }
     
     void test_priority_starvation() {
-        log_module::information("\n6. Priority Starvation Test\n");
+        log_module::information("\n6. Type Starvation Test\n");
         log_module::information("---------------------------\n");
         
-        enum class Priority { 
-            Highest = 1,
-            High = 10,
+        enum class Type { 
+            RealTimeest = 1,
+            RealTime = 10,
             Medium = 50,
-            Low = 100,
-            Lowest = 1000
+            Background = 100,
+            Backgroundest = 1000
         };
         
-        auto [pool, error] = create_priority_default<Priority>(4);
+        auto [pool, error] = create_priority_default<Type>(4);
         if (error) return;
         
         pool->start();
@@ -336,31 +336,31 @@ private:
             pool->add_job([&highest_completed] {
                 std::this_thread::sleep_for(microseconds(100));
                 highest_completed.fetch_add(1);
-            }, Priority::Highest);
+            }, Type::RealTimeest);
             
             pool->add_job([&high_completed] {
                 std::this_thread::sleep_for(microseconds(100));
                 high_completed.fetch_add(1);
-            }, Priority::High);
+            }, Type::RealTime);
             
             pool->add_job([&medium_completed] {
                 std::this_thread::sleep_for(microseconds(100));
                 medium_completed.fetch_add(1);
-            }, Priority::Medium);
+            }, Type::Medium);
             
             pool->add_job([&low_completed] {
                 std::this_thread::sleep_for(microseconds(100));
                 low_completed.fetch_add(1);
-            }, Priority::Low);
+            }, Type::Background);
             
             pool->add_job([&lowest_completed] {
                 std::this_thread::sleep_for(microseconds(100));
                 lowest_completed.fetch_add(1);
-            }, Priority::Lowest);
+            }, Type::Backgroundest);
         }
         
         // Check progress at intervals
-        log_module::information("Time(s)  Highest  High  Medium  Low  Lowest");
+        log_module::information("Time(s)  RealTimeest  RealTime  Medium  Background  Backgroundest");
         
         for (int seconds = 1; seconds <= 10; ++seconds) {
             std::this_thread::sleep_for(seconds(1));
@@ -374,7 +374,7 @@ private:
             if (highest_completed.load() == jobs_per_priority &&
                 high_completed.load() == jobs_per_priority &&
                 lowest_completed.load() == 0) {
-                log_module::warning("WARNING: Lowest priority jobs are starving!");
+                log_module::warning("WARNING: Backgroundest priority jobs are starving!");
             }
         }
         

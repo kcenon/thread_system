@@ -34,8 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "logger.h"
 #include "formatter.h"
-#include "test_priority.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>
@@ -44,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 using namespace utility_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 using namespace thread_module;
 
 bool use_backup_ = false;
@@ -55,13 +54,13 @@ log_module::log_types file_target_ = log_module::log_types::None;
 log_module::log_types console_target_ = log_module::log_types::Information;
 log_module::log_types callback_target_ = log_module::log_types::None;
 
-uint16_t top_priority_workers_ = 3;
-uint16_t middle_priority_workers_ = 2;
-uint16_t bottom_priority_workers_ = 1;
+uint16_t high_priority_workers_ = 3;
+uint16_t normal_priority_workers_ = 2;
+uint16_t low_priority_workers_ = 1;
 
 auto initialize_logger() -> std::optional<std::string>
 {
-	log_module::set_title("priority_thread_pool_sample_2");
+	log_module::set_title("typed_thread_pool_sample");
 	log_module::set_use_backup(use_backup_);
 	log_module::set_max_lines(max_lines_);
 	log_module::file_target(file_target_);
@@ -79,17 +78,16 @@ auto initialize_logger() -> std::optional<std::string>
 	return log_module::start();
 }
 
-auto create_default(const uint16_t& top_priority_workers,
-					const uint16_t& middle_priority_workers,
-					const uint16_t& bottom_priority_workers)
-	-> std::tuple<std::shared_ptr<priority_thread_pool_t<test_priority>>,
-				  std::optional<std::string>>
+auto create_default(const uint16_t& high_priority_workers,
+					const uint16_t& normal_priority_workers,
+					const uint16_t& low_priority_workers)
+	-> std::tuple<std::shared_ptr<typed_thread_pool>, std::optional<std::string>>
 {
-	std::shared_ptr<priority_thread_pool_t<test_priority>> pool;
+	std::shared_ptr<typed_thread_pool> pool;
 
 	try
 	{
-		pool = std::make_shared<priority_thread_pool_t<test_priority>>();
+		pool = std::make_shared<typed_thread_pool>();
 	}
 	catch (const std::bad_alloc& e)
 	{
@@ -98,23 +96,24 @@ auto create_default(const uint16_t& top_priority_workers,
 
 	std::optional<std::string> error_message = std::nullopt;
 
-	std::vector<std::unique_ptr<priority_thread_worker_t<test_priority>>> workers;
-	workers.reserve(top_priority_workers + middle_priority_workers + bottom_priority_workers);
+	std::vector<std::unique_ptr<typed_thread_worker>> workers;
+	workers.reserve(high_priority_workers + normal_priority_workers + low_priority_workers);
+	for (uint16_t i = 0; i < high_priority_workers; ++i)
+	{
+		workers.push_back(std::make_unique<typed_thread_worker>(
+			std::vector<job_types>{ job_types::RealTime }, "high priority worker"));
+	}
 
-	for (uint16_t i = 0; i < top_priority_workers; ++i)
+	for (uint16_t i = 0; i < normal_priority_workers; ++i)
 	{
-		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
-			std::vector<test_priority>{ test_priority::Top }, "top priority worker"));
+		workers.push_back(std::make_unique<typed_thread_worker>(
+			std::vector<job_types>{ job_types::Batch }, "normal priority worker"));
 	}
-	for (uint16_t i = 0; i < middle_priority_workers; ++i)
+
+	for (uint16_t i = 0; i < low_priority_workers; ++i)
 	{
-		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
-			std::vector<test_priority>{ test_priority::Middle }, "middle priority worker"));
-	}
-	for (uint16_t i = 0; i < bottom_priority_workers; ++i)
-	{
-		workers.push_back(std::make_unique<priority_thread_worker_t<test_priority>>(
-			std::vector<test_priority>{ test_priority::Bottom }, "bottom priority worker"));
+		workers.push_back(std::make_unique<typed_thread_worker>(
+			std::vector<job_types>{ job_types::Background }, "low priority worker"));
 	}
 
 	auto enqueue_result = pool->enqueue_batch(std::move(workers));
@@ -127,24 +126,23 @@ auto create_default(const uint16_t& top_priority_workers,
 	return { pool, std::nullopt };
 }
 
-auto store_job(std::shared_ptr<priority_thread_pool_t<test_priority>> thread_pool)
-	-> std::optional<std::string>
+auto store_job(std::shared_ptr<typed_thread_pool> thread_pool) -> std::optional<std::string>
 {
 	int target = 0;
 
-	std::vector<std::unique_ptr<priority_job_t<test_priority>>> jobs;
+	std::vector<std::unique_ptr<typed_job>> jobs;
 	jobs.reserve(test_line_count_);
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		target = index % 3;
-		jobs.push_back(std::make_unique<callback_priority_job_t<test_priority>>(
+		jobs.push_back(std::make_unique<callback_typed_job>(
 			[target](void) -> result_void
 			{
 				log_module::write_debug("Hello, World!: {} priority", target);
 				return {};
 			},
-			static_cast<test_priority>(target)));
+			static_cast<job_types>(target)));
 	}
 
 	auto enqueue_result = thread_pool->enqueue_batch(std::move(jobs));
@@ -169,9 +167,9 @@ auto main() -> int
 		return 0;
 	}
 
-	std::shared_ptr<priority_thread_pool_t<test_priority>> thread_pool = nullptr;
+	std::shared_ptr<typed_thread_pool> thread_pool = nullptr;
 	std::tie(thread_pool, error_message)
-		= create_default(top_priority_workers_, middle_priority_workers_, bottom_priority_workers_);
+		= create_default(high_priority_workers_, normal_priority_workers_, low_priority_workers_);
 	if (error_message.has_value())
 	{
 		log_module::write_error("error creating thread pool: {}",

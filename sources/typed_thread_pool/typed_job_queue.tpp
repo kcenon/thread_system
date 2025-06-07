@@ -30,22 +30,22 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_job_queue.h"
+#include "typed_job_queue.h"
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
-	template <typename priority_type>
-	priority_job_queue_t<priority_type>::priority_job_queue_t(void) : job_queue(), queues_()
+	template <typename job_type>
+	typed_job_queue_t<job_type>::typed_job_queue_t(void) : job_queue(), queues_()
 	{
 	}
 
-	template <typename priority_type>
-	priority_job_queue_t<priority_type>::~priority_job_queue_t(void)
+	template <typename job_type>
+	typed_job_queue_t<job_type>::~typed_job_queue_t(void)
 	{
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue(std::unique_ptr<job>&& value)
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value)
 		-> result_void
 	{
 		if (stop_.load())
@@ -53,18 +53,18 @@ namespace priority_thread_pool_module
 			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
-		auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(value.get());
+		auto typed_job_ptr = dynamic_cast<typed_job_t<job_type>*>(value.get());
 
-		if (!priority_job_ptr)
+		if (!typed_job_ptr)
 		{
-			return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
+			return error{error_code::job_invalid, "Enqueued job is not a typed_job"};
 		}
 
-		return enqueue(std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
+		return enqueue(std::unique_ptr<typed_job_t<job_type>>(typed_job_ptr));
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue_batch_ref(std::vector<std::unique_ptr<job>>& jobs)
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::enqueue_batch_ref(std::vector<std::unique_ptr<job>>& jobs)
 		-> result_void
 	{
 		if (stop_.load())
@@ -72,26 +72,26 @@ namespace priority_thread_pool_module
 			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
-		std::vector<std::unique_ptr<priority_job_t<priority_type>>> priority_jobs;
-		priority_jobs.reserve(jobs.size());
+		std::vector<std::unique_ptr<typed_job_t<job_type>>> typed_jobs;
+		typed_jobs.reserve(jobs.size());
 
 		for (auto& job : jobs)
 		{
-			auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(job.get());
-			if (!priority_job_ptr)
+			auto typed_job_ptr = dynamic_cast<typed_job_t<job_type>*>(job.get());
+			if (!typed_job_ptr)
 			{
-				return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
+				return error{error_code::job_invalid, "Enqueued job is not a typed_job"};
 			}
 
-			priority_jobs.push_back(
-				std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
+			typed_jobs.push_back(
+				std::unique_ptr<typed_job_t<job_type>>(typed_job_ptr));
 		}
 
-		return enqueue_batch(std::move(priority_jobs));
+		return enqueue_batch(std::move(typed_jobs));
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
 		-> result_void
 	{
 		if (stop_.load())
@@ -99,27 +99,27 @@ namespace priority_thread_pool_module
 			return error{error_code::queue_stopped, "Job queue is stopped"};
 		}
 
-		std::vector<std::unique_ptr<priority_job_t<priority_type>>> priority_jobs;
-		priority_jobs.reserve(jobs.size());
+		std::vector<std::unique_ptr<typed_job_t<job_type>>> typed_jobs;
+		typed_jobs.reserve(jobs.size());
 
 		for (auto& job : jobs)
 		{
-			auto priority_job_ptr = dynamic_cast<priority_job_t<priority_type>*>(job.release());
-			if (!priority_job_ptr)
+			auto typed_job_ptr = dynamic_cast<typed_job_t<job_type>*>(job.release());
+			if (!typed_job_ptr)
 			{
-				return error{error_code::job_invalid, "Enqueued job is not a priority_job"};
+				return error{error_code::job_invalid, "Enqueued job is not a typed_job"};
 			}
 
-			priority_jobs.push_back(
-				std::unique_ptr<priority_job_t<priority_type>>(priority_job_ptr));
+			typed_jobs.push_back(
+				std::unique_ptr<typed_job_t<job_type>>(typed_job_ptr));
 		}
 
-		return enqueue_batch(std::move(priority_jobs));
+		return enqueue_batch(std::move(typed_jobs));
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue(
-		std::unique_ptr<priority_job_t<priority_type>>&& value) -> result_void
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::enqueue(
+		std::unique_ptr<typed_job_t<job_type>>&& value) -> result_void
 	{
 		if (stop_.load())
 		{
@@ -149,7 +149,7 @@ namespace priority_thread_pool_module
 
 		iter = queues_
 				   .emplace(job_priority,
-							std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
+							std::deque<std::unique_ptr<typed_job_t<job_type>>>())
 				   .first;
 		iter->second.push_back(std::move(value));
 
@@ -160,9 +160,9 @@ namespace priority_thread_pool_module
 		return result_void{};
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::enqueue_batch(
-		std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::enqueue_batch(
+		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
 		-> result_void
 	{
 		if (stop_.load())
@@ -192,7 +192,7 @@ namespace priority_thread_pool_module
 			{
 				iter = queues_
 						   .emplace(job_priority,
-									std::deque<std::unique_ptr<priority_job_t<priority_type>>>())
+									std::deque<std::unique_ptr<typed_job_t<job_type>>>())
 						   .first;
 				iter->second.push_back(std::move(job));
 
@@ -205,24 +205,24 @@ namespace priority_thread_pool_module
 		return result_void{};
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::dequeue()
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::dequeue()
 		-> result<std::unique_ptr<job>>
 	{
-		return error{error_code::queue_empty, "Dequeue operation without specified priorities is "
-								   "not supported in priority_job_queue"};
+		return error{error_code::queue_empty, "Dequeue operation without specified types is "
+								   "not supported in typed_job_queue"};
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::dequeue(const std::vector<priority_type>& priorities)
-		-> result<std::unique_ptr<priority_job_t<priority_type>>>
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::dequeue(const std::vector<job_type>& types)
+		-> result<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
 		auto dequeue_job
-			= [this, &priorities]() -> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+			= [this, &types]() -> std::optional<std::unique_ptr<typed_job_t<job_type>>>
 		{
-			for (const auto& priority : priorities)
+			for (const auto& priority : types)
 			{
 				if (auto value = std::move(try_dequeue_from_priority(priority)))
 				{
@@ -232,7 +232,7 @@ namespace priority_thread_pool_module
 			return std::nullopt;
 		};
 
-		std::optional<std::unique_ptr<priority_job_t<priority_type>>> result;
+		std::optional<std::unique_ptr<typed_job_t<job_type>>> result;
 		condition_.wait(lock,
 						[&]()
 						{
@@ -257,16 +257,16 @@ namespace priority_thread_pool_module
 		return error{error_code::queue_empty, "Unexpected error: No job found after waiting"};
 	}
 	
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::dequeue(utility_module::span<const priority_type> priorities)
-		-> result<std::unique_ptr<priority_job_t<priority_type>>>
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::dequeue(utility_module::span<const job_type> types)
+		-> result<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
 		auto dequeue_job
-			= [this, &priorities]() -> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+			= [this, &types]() -> std::optional<std::unique_ptr<typed_job_t<job_type>>>
 		{
-			for (const auto& priority : priorities)
+			for (const auto& priority : types)
 			{
 				if (auto value = std::move(try_dequeue_from_priority(priority)))
 				{
@@ -276,7 +276,7 @@ namespace priority_thread_pool_module
 			return std::nullopt;
 		};
 
-		std::optional<std::unique_ptr<priority_job_t<priority_type>>> result;
+		std::optional<std::unique_ptr<typed_job_t<job_type>>> result;
 		condition_.wait(lock,
 						[&]()
 						{
@@ -301,13 +301,13 @@ namespace priority_thread_pool_module
 		return error{error_code::queue_empty, "Unexpected error: No job found after waiting"};
 	}
 
-	template <typename priority_type> auto priority_job_queue_t<priority_type>::clear() -> void
+	template <typename job_type> auto typed_job_queue_t<job_type>::clear() -> void
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
 		for (auto& pair : queues_)
 		{
-			std::deque<std::unique_ptr<priority_job_t<priority_type>>> empty;
+			std::deque<std::unique_ptr<typed_job_t<job_type>>> empty;
 			std::swap(pair.second, empty);
 			queue_sizes_[pair.first].store(0);
 		}
@@ -317,51 +317,51 @@ namespace priority_thread_pool_module
 		condition_.notify_all();
 	}
     
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::stop() -> void
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::stop() -> void
 	{
 		stop_.store(true);
 		condition_.notify_all();
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::empty(
-		const std::vector<priority_type>& priorities) const -> bool
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::empty(
+		const std::vector<job_type>& types) const -> bool
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		return empty_check_without_lock(priorities);
+		return empty_check_without_lock(types);
 	}
 	
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::empty(
-		utility_module::span<const priority_type> priorities) const -> bool
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::empty(
+		utility_module::span<const job_type> types) const -> bool
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		return empty_check_without_lock(priorities);
+		return empty_check_without_lock(types);
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::to_string(void) const -> std::string
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::to_string(void) const -> std::string
 	{
 		std::string format_string;
 
-		formatter::format_to(std::back_inserter(format_string), "Priority job queue:\n");
+		formatter::format_to(std::back_inserter(format_string), "Type job queue:\n");
 		for (const auto& pair : queue_sizes_)
 		{
-			formatter::format_to(std::back_inserter(format_string), "\tPriority: {} -> {} jobs\n",
+			formatter::format_to(std::back_inserter(format_string), "\tType: {} -> {} jobs\n",
 								 pair.first, pair.second.load());
 		}
 
 		return format_string;
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
-		const std::vector<priority_type>& priorities) const -> bool
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::empty_check_without_lock(
+		const std::vector<job_type>& types) const -> bool
 	{
-		for (const auto& priority : priorities)
+		for (const auto& priority : types)
 		{
 			auto it = queues_.find(priority);
 			if (it != queues_.end() && !it->second.empty())
@@ -373,11 +373,11 @@ namespace priority_thread_pool_module
 		return true;
 	}
 	
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::empty_check_without_lock(
-		utility_module::span<const priority_type> priorities) const -> bool
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::empty_check_without_lock(
+		utility_module::span<const job_type> types) const -> bool
 	{
-		for (const auto& priority : priorities)
+		for (const auto& priority : types)
 		{
 			auto it = queues_.find(priority);
 			if (it != queues_.end() && !it->second.empty())
@@ -389,10 +389,10 @@ namespace priority_thread_pool_module
 		return true;
 	}
 
-	template <typename priority_type>
-	auto priority_job_queue_t<priority_type>::try_dequeue_from_priority(
-		const priority_type& priority)
-		-> std::optional<std::unique_ptr<priority_job_t<priority_type>>>
+	template <typename job_type>
+	auto typed_job_queue_t<job_type>::try_dequeue_from_priority(
+		const job_type& priority)
+		-> std::optional<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		auto it = queues_.find(priority);
 		if (it == queues_.end() || it->second.empty())
@@ -407,4 +407,4 @@ namespace priority_thread_pool_module
 
 		return value;
 	}
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module

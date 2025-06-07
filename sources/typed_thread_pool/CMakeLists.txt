@@ -1,13 +1,13 @@
 ##################################################
-# PriorityThreadPool Component CMakeLists.txt
+# TypedThreadPool Component CMakeLists.txt
 # 
-# Build configuration for the priority-based thread pool library component.
-# This component extends the base thread pool with task prioritization capabilities,
-# allowing higher priority tasks to be processed before lower priority ones.
+# Build configuration for the type-based thread pool library component.
+# This component extends the base thread pool with task type specialization capabilities,
+# allowing different types of tasks to be processed by specialized worker threads.
 ##################################################
 
 # Define the component name as a project
-project(priority_thread_pool)
+project(typed_thread_pool)
 
 # Collect all header and template implementation files in this directory
 file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)

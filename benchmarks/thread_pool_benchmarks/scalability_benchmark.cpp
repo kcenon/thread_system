@@ -21,12 +21,12 @@ All rights reserved.
 #include <algorithm>
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "formatter.h"
 
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 using namespace log_module;
 
 class scalability_benchmark {

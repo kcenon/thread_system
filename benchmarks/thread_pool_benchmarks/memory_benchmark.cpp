@@ -20,12 +20,12 @@
 #endif
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "format_string.h"
 
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 using namespace log_module;
 
 class MemoryMonitor {
@@ -151,14 +151,14 @@ private:
     }
     
     void benchmark_priority_pool_memory() {
-        information(L"\n3. Priority Thread Pool Memory Usage");
+        information(L"\n3. Type Thread Pool Memory Usage");
         information(L"------------------------------------");
         
-        enum class Priority { High = 1, Medium = 5, Low = 10 };
+        enum class Type { RealTime = 1, Medium = 5, Background = 10 };
         
         auto before = MemoryMonitor::get_current_memory();
         
-        auto [pool, error] = create_priority_default<Priority>(8);
+        auto [pool, error] = create_priority_default<Type>(8);
         if (!error) {
             pool->start();
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -166,7 +166,7 @@ private:
             auto after = MemoryMonitor::get_current_memory();
             
             size_t memory_increase = after.resident_size - before.resident_size;
-            information(format_string(L"Priority pool (8 workers): %.2f MB",
+            information(format_string(L"Type pool (8 workers): %.2f MB",
                                     (memory_increase / 1024.0 / 1024.0)));
             
             pool->stop();

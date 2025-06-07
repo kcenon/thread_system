@@ -249,33 +249,33 @@ void producer_consumer_example() {
 }
 ```
 
-### Priority-Based Task Scheduling
+### Type-Based Task Scheduling
 
 ```cpp
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include <iostream>
 
-void priority_example() {
-    auto [pool, error] = priority_thread_pool_module::create_default(4);
+void type_example() {
+    auto [pool, error] = typed_thread_pool_module::create_default(4);
     if (error) return;
     
     pool->start();
     
-    // High priority task (priority 1)
+    // High type task (type 1)
     pool->submit_job(1, [] {
-        std::cout << "High priority task executed" << std::endl;
+        std::cout << "High type task executed" << std::endl;
     });
     
-    // Normal priority tasks (priority 5)
+    // Normal type tasks (type 5)
     for (int i = 0; i < 5; ++i) {
         pool->submit_job(5, [i] {
-            std::cout << "Normal priority task " << i << std::endl;
+            std::cout << "Normal type task " << i << std::endl;
         });
     }
     
-    // Low priority task (priority 10)
+    // Low type task (type 10)
     pool->submit_job(10, [] {
-        std::cout << "Low priority task executed" << std::endl;
+        std::cout << "Low type task executed" << std::endl;
     });
     
     // Wait for completion
@@ -541,7 +541,7 @@ void async_integration_demo() {
 2. **Run sample applications**:
    ```bash
    ./build/bin/thread_pool_sample
-   ./build/bin/priority_thread_pool_sample
+   ./build/bin/typed_thread_pool_sample
    ./build/bin/logger_sample
    ```
 
@@ -558,7 +558,7 @@ void async_integration_demo() {
 3. **Use futures** to get results from jobs
 4. **Handle exceptions** that may be thrown from jobs
 5. **Choose appropriate pool sizes** based on workload
-6. **Use priority pools** when job ordering matters
+6. **Use type pools** when job ordering matters
 7. **Initialize logging** at the start of your application
 
 ## See Also

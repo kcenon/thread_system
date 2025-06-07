@@ -17,13 +17,13 @@
 #include <cmath>
 
 #include "thread_pool.h"
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "logger.h"
 #include "formatter.h"
 
 using namespace std::chrono;
 using namespace thread_pool_module;
-using namespace priority_thread_pool_module;
+using namespace typed_thread_pool_module;
 using namespace utility_module;
 
 class BenchmarkTimer {
@@ -265,12 +265,12 @@ private:
     }
     
     void benchmark_priority_scheduling() {
-        log_module::write_information("\n5. Priority Scheduling Performance\n");
+        log_module::write_information("\n5. Type Scheduling Performance\n");
         log_module::write_information("----------------------------------\n");
         
-        enum class Priority { High = 1, Medium = 5, Low = 10 };
+        enum class Type { RealTime = 1, Medium = 5, Background = 10 };
         
-        auto [pool, error] = create_priority_default<Priority>(8);
+        auto [pool, error] = create_priority_default<Type>(8);
         if (error) {
             log_module::write_error("Error creating priority pool: {}", *error);
             return;
@@ -283,14 +283,14 @@ private:
         std::atomic<size_t> medium_completed{0};
         std::atomic<size_t> low_completed{0};
         
-        // Submit jobs with different priorities
+        // Submit jobs with different types
         for (size_t i = 0; i < jobs_per_priority; ++i) {
             pool->add_job(
                 [&high_completed] { 
                     std::this_thread::sleep_for(microseconds(10));
                     high_completed.fetch_add(1);
                 }, 
-                Priority::High
+                Type::RealTime
             );
             
             pool->add_job(
@@ -298,7 +298,7 @@ private:
                     std::this_thread::sleep_for(microseconds(10));
                     medium_completed.fetch_add(1);
                 }, 
-                Priority::Medium
+                Type::Medium
             );
             
             pool->add_job(
@@ -306,7 +306,7 @@ private:
                     std::this_thread::sleep_for(microseconds(10));
                     low_completed.fetch_add(1);
                 }, 
-                Priority::Low
+                Type::Background
             );
         }
         
@@ -324,13 +324,13 @@ private:
         
         // Analyze priority ordering
         log_module::write_information("Completion order (sampled):");
-        log_module::write_information("Time(ms)  High  Medium  Low");
+        log_module::write_information("Time(ms)  RealTime  Medium  Background");
         for (size_t i = 0; i < high_samples.size(); ++i) {
             log_module::write_information("{:7d}  {:4d}  {:6d}  {:3d}",
                                         (i + 1) * 50, high_samples[i], medium_samples[i], low_samples[i]);
         }
         
-        log_module::write_information("\nFinal: High={}, Medium={}, Low={}",
+        log_module::write_information("\nFinal: RealTime={}, Medium={}, Background={}",
                                     high_completed.load(), medium_completed.load(), low_completed.load());
     }
     

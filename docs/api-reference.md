@@ -32,9 +32,9 @@ The Thread System framework provides a comprehensive set of classes for building
   - `thread_pool` - Fixed-size thread pool
   - `thread_worker` - Worker thread implementation
 
-- **Priority Thread Pool** - Priority-based scheduling
-  - `priority_thread_pool<T>` - Template-based priority pool
-  - `priority_thread_worker<T>` - Priority-aware worker
+- **Type Thread Pool** - Type-based scheduling
+  - `typed_thread_pool<T>` - Template-based type pool
+  - `typed_thread_worker<T>` - Type-aware worker
 
 - **Logger** - Asynchronous logging system
   - `log_module` - Global logging interface
@@ -531,7 +531,7 @@ pool->add_job([]() -> std::optional<std::string> {
 1. **Namespace Organization**:
    - `thread_module` - Core threading functionality
    - `thread_pool_module` - Thread pool implementations
-   - `priority_thread_pool_module` - Priority scheduling
+   - `typed_thread_pool_module` - Type scheduling
    - `log_module` - Logging functionality
    - `utilities` - Utility functions
 
@@ -562,10 +562,10 @@ auto [pool, error] = thread_pool_module::create_default(4);
 pool->add_job([] { /* work */ });
 ```
 
-### Priority Scheduling
+### Type Scheduling
 
 ```cpp
-priority_pool->add_job(task, priority::high);
+type_pool->add_job(task, type::high);
 ```
 
 ### Logging
@@ -583,7 +583,7 @@ log_module::info(L"Message: {}", value);
 
 ## See Also
 
-- [Priority Thread Pool API](./priority-thread-pool.md)
+- [Type Thread Pool API](./type-thread-pool.md)
 - [Logger API](./logger.md)
 - [Utilities](./utilities.md)
 - [Examples](../examples/README.md) - Practical usage examples

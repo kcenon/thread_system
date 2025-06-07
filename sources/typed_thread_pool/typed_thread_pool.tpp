@@ -30,19 +30,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "priority_thread_pool.h"
+#include "typed_thread_pool.h"
 #include "formatter.h"
 
 using namespace utility_module;
 
-namespace priority_thread_pool_module
+namespace typed_thread_pool_module
 {
 	// Template instantiations for commonly used types
-	template class priority_thread_pool_t<job_priorities>;
+	template class typed_thread_pool_t<job_types>;
 	
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::enqueue_batch(
-		std::vector<std::unique_ptr<priority_job_t<priority_type>>>&& jobs)
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enqueue_batch(
+		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
 		-> result_void
 	{
 		if (jobs.empty())
@@ -72,29 +72,29 @@ namespace priority_thread_pool_module
 		return {};
 	}
 	
-	template <typename priority_type>
-	priority_thread_pool_t<priority_type>::priority_thread_pool_t(
+	template <typename job_type>
+	typed_thread_pool_t<job_type>::typed_thread_pool_t(
 		const std::string& thread_title)
 		: thread_title_(thread_title)
-		, job_queue_(std::make_shared<priority_job_queue_t<priority_type>>())
+		, job_queue_(std::make_shared<typed_job_queue_t<job_type>>())
 		, start_pool_(false)
 	{
 	}
 
-	template <typename priority_type>
-	priority_thread_pool_t<priority_type>::~priority_thread_pool_t(void)
+	template <typename job_type>
+	typed_thread_pool_t<job_type>::~typed_thread_pool_t(void)
 	{
 		stop();
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::get_ptr(void) -> std::shared_ptr<priority_thread_pool_t<priority_type>>
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::get_ptr(void) -> std::shared_ptr<typed_thread_pool_t<job_type>>
 	{
 		return this->shared_from_this();
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::start(void) -> result_void
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::start(void) -> result_void
 	{
 		if (workers_.empty())
 		{
@@ -116,16 +116,16 @@ namespace priority_thread_pool_module
 		return {};
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::get_job_queue(void)
-		-> std::shared_ptr<priority_job_queue_t<priority_type>>
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::get_job_queue(void)
+		-> std::shared_ptr<typed_job_queue_t<job_type>>
 	{
 		return job_queue_;
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::enqueue(
-		std::unique_ptr<priority_job_t<priority_type>>&& job) -> result_void
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enqueue(
+		std::unique_ptr<typed_job_t<job_type>>&& job) -> result_void
 	{
 		if (job == nullptr)
 		{
@@ -146,9 +146,9 @@ namespace priority_thread_pool_module
 		return {};
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::enqueue(
-		std::unique_ptr<priority_thread_worker_t<priority_type>>&& worker)
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enqueue(
+		std::unique_ptr<typed_thread_worker_t<job_type>>&& worker)
 		-> result_void
 	{
 		if (worker == nullptr)
@@ -178,9 +178,9 @@ namespace priority_thread_pool_module
 		return {};
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::enqueue_batch(
-		std::vector<std::unique_ptr<priority_thread_worker_t<priority_type>>>&& workers)
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enqueue_batch(
+		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>>&& workers)
 		-> result_void
 	{
 		if (workers.empty())
@@ -219,8 +219,8 @@ namespace priority_thread_pool_module
 		return {};
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::stop(bool clear_queue) -> result_void
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::stop(bool clear_queue) -> result_void
 	{
 		if (job_queue_ != nullptr)
 		{
@@ -246,8 +246,8 @@ namespace priority_thread_pool_module
 		return {};
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::to_string(void) const -> std::string
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::to_string(void) const -> std::string
 	{
 		std::string format_string;
 
@@ -282,9 +282,9 @@ namespace priority_thread_pool_module
 		return format_string;
 	}
 
-	template <typename priority_type>
-	auto priority_thread_pool_t<priority_type>::set_job_queue(
-		std::shared_ptr<priority_job_queue_t<priority_type>> job_queue) -> void
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::set_job_queue(
+		std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void
 	{
 		job_queue_ = job_queue;
 
@@ -293,4 +293,4 @@ namespace priority_thread_pool_module
 			worker->set_job_queue(job_queue_);
 		}
 	}
-} // namespace priority_thread_pool_module
+} // namespace typed_thread_pool_module

@@ -46,21 +46,21 @@ This comprehensive guide covers patterns, best practices, antipatterns to avoid,
 - Submit individual jobs in a tight loop (use batch submission instead)
 - Block worker threads with long-running synchronous operations
 
-### 3. Priority Thread Pool Usage
+### 3. Type Thread Pool Usage
 
 #### ✅ DO:
-- Use distinct priority levels for different types of tasks
-- Create dedicated workers for critical priority levels
-- Use lower priority for background or maintenance tasks
-- Consider custom priority types for domain-specific scheduling
-- Monitor queue sizes per priority to ensure balanced execution
+- Use distinct type levels for different types of tasks
+- Create dedicated workers for critical type levels
+- Use lower type for background or maintenance tasks
+- Consider custom type types for domain-specific scheduling
+- Monitor queue sizes per type to ensure balanced execution
 
 #### ❌ DON'T:
-- Assign high priority to all tasks (defeats the purpose)
-- Create too many priority levels (3-5 levels are typically sufficient)
-- Ignore priority inversion issues
-- Use priorities inconsistently across the application
-- Create priority workers without assigning appropriate jobs
+- Assign high type to all tasks (defeats the purpose)
+- Create too many type levels (3-5 levels are typically sufficient)
+- Ignore type inversion issues
+- Use types inconsistently across the application
+- Create type workers without assigning appropriate jobs
 
 ### 4. Logging Usage
 
@@ -152,45 +152,45 @@ if (error.has_value()) {
 pool->stop();
 ```
 
-### 3. Priority-Based Job Execution Pattern
+### 3. Type-Based Job Execution Pattern
 
 ```cpp
-// Create a priority thread pool with different priority workers
-auto [pool, error] = create_priority_pool(
-    high_priority_workers_,
-    normal_priority_workers_,
-    low_priority_workers_
+// Create a type thread pool with different type workers
+auto [pool, error] = create_type_pool(
+    high_type_workers_,
+    normal_type_workers_,
+    low_type_workers_
 );
 
-// Creating jobs with different priorities
-std::vector<std::unique_ptr<priority_thread_pool_module::priority_job>> jobs;
+// Creating jobs with different types
+std::vector<std::unique_ptr<typed_thread_pool_module::typed_job>> jobs;
 jobs.reserve(job_count);
 
-// High priority critical tasks
-jobs.push_back(std::make_unique<priority_thread_pool_module::callback_priority_job>(
+// High type critical tasks
+jobs.push_back(std::make_unique<typed_thread_pool_module::callback_typed_job>(
     []() -> result_void {
         // Critical operation
         return {};
     },
-    priority_thread_pool_module::job_priorities::High
+    typed_thread_pool_module::job_types::High
 ));
 
-// Normal priority regular tasks
-jobs.push_back(std::make_unique<priority_thread_pool_module::callback_priority_job>(
+// Normal type regular tasks
+jobs.push_back(std::make_unique<typed_thread_pool_module::callback_typed_job>(
     []() -> result_void {
         // Regular operation
         return {};
     },
-    priority_thread_pool_module::job_priorities::Normal
+    typed_thread_pool_module::job_types::Normal
 ));
 
-// Low priority background tasks
-jobs.push_back(std::make_unique<priority_thread_pool_module::callback_priority_job>(
+// Low type background tasks
+jobs.push_back(std::make_unique<typed_thread_pool_module::callback_typed_job>(
     []() -> result_void {
         // Background operation
         return {};
     },
-    priority_thread_pool_module::job_priorities::Low
+    typed_thread_pool_module::job_types::Low
 ));
 ```
 
@@ -355,35 +355,35 @@ auto do_work() -> result_void override {
 }
 ```
 
-### 3. The Priority Abuse Antipattern
+### 3. The Type Abuse Antipattern
 
 ❌ **Problematic Approach**:
 ```cpp
-// Marking all jobs as high priority
+// Marking all jobs as high type
 for (auto i = 0; i < job_count; ++i) {
-    jobs.push_back(std::make_unique<callback_priority_job>(
+    jobs.push_back(std::make_unique<callback_typed_job>(
         [i]() -> result_void {
             // Regular task
             return {};
         },
-        job_priorities::High // All jobs set to high priority
+        job_types::High // All jobs set to high type
     ));
 }
 ```
 
 ✅ **Better Approach**:
 ```cpp
-// Assign appropriate priorities based on task importance
+// Assign appropriate types based on task importance
 for (auto i = 0; i < job_count; ++i) {
-    // Determine appropriate priority based on task characteristics
-    auto priority = determine_appropriate_priority(i);
+    // Determine appropriate type based on task characteristics
+    auto type = determine_appropriate_type(i);
     
-    jobs.push_back(std::make_unique<callback_priority_job>(
+    jobs.push_back(std::make_unique<callback_typed_job>(
         [i]() -> result_void {
             // Regular task
             return {};
         },
-        priority
+        type
     ));
 }
 ```
@@ -527,28 +527,28 @@ log_module::write_information("Processed {} items", 1000000);
    }
    ```
 
-### 3. Priority Inversion
+### 3. Type Inversion
 
 #### Symptoms
-- High-priority tasks experience unexpected delays
+- High-type tasks experience unexpected delays
 - System responsiveness is inconsistent
-- Critical jobs take longer than lower-priority ones
+- Critical jobs take longer than lower-type ones
 
 #### Solution Approaches
-1. **Minimize resource sharing across priority boundaries:**
+1. **Minimize resource sharing across type boundaries:**
    ```cpp
-   // Design your system to minimize cases where high and low priority
+   // Design your system to minimize cases where high and low type
    // threads need to share resources. Use separate resources when possible.
-   auto high_priority_resources = std::make_unique<ResourcePool>("high");
-   auto low_priority_resources = std::make_unique<ResourcePool>("low");
+   auto high_type_resources = std::make_unique<ResourcePool>("high");
+   auto low_type_resources = std::make_unique<ResourcePool>("low");
    ```
 
-2. **Use priority ceilings:**
+2. **Use type ceilings:**
    ```cpp
-   // When a low-priority thread acquires a critical resource,
-   // temporarily boost its priority
-   auto original_priority = get_current_priority();
-   set_current_priority(high_priority);
+   // When a low-type thread acquires a critical resource,
+   // temporarily boost its type
+   auto original_type = get_current_type();
+   set_current_type(high_type);
    
    // Critical section with shared resource
    {
@@ -556,8 +556,8 @@ log_module::write_information("Processed {} items", 1000000);
        // Work with shared resource
    }
    
-   // Restore original priority
-   set_current_priority(original_priority);
+   // Restore original type
+   set_current_type(original_type);
    ```
 
 ### 4. Thread Starvation
@@ -568,33 +568,33 @@ log_module::write_information("Processed {} items", 1000000);
 - System seems to focus on a subset of available work
 
 #### Solution Approaches
-1. **Dedicate workers to each priority level:**
+1. **Dedicate workers to each type level:**
    ```cpp
-   // Create workers specifically for low-priority tasks
-   auto low_worker = std::make_unique<priority_thread_worker>(
-       std::vector<job_priorities>{job_priorities::Low},
-       "low_priority_worker"
+   // Create workers specifically for low-type tasks
+   auto low_worker = std::make_unique<typed_thread_worker>(
+       std::vector<job_types>{job_types::Low},
+       "low_type_worker"
    );
    
-   priority_pool->enqueue(std::move(low_worker));
+   type_pool->enqueue(std::move(low_worker));
    ```
 
-2. **Implement aging for low-priority tasks:**
+2. **Implement aging for low-type tasks:**
    ```cpp
-   class AgingJob : public priority_job {
+   class AgingJob : public typed_job {
    public:
        AgingJob(std::function<result_void()> func)
-           : priority_job(job_priorities::Low), func_(func), 
+           : typed_job(job_types::Low), func_(func), 
              creation_time_(std::chrono::steady_clock::now()) {}
        
-       auto get_priority() const -> job_priorities override {
+       auto get_type() const -> job_types override {
            auto age = std::chrono::steady_clock::now() - creation_time_;
            if (age > std::chrono::minutes(5)) {
-               return job_priorities::High;
+               return job_types::High;
            } else if (age > std::chrono::minutes(1)) {
-               return job_priorities::Normal;
+               return job_types::Normal;
            }
-           return job_priorities::Low;
+           return job_types::Low;
        }
        
    private:
