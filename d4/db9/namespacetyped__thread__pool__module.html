@@ -92,6 +92,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template for creating priority-based jobs that execute a user-defined callback.  <a href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html">monitored_typed_thread_pool_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-based thread pool with integrated metrics collection.  <a href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template-based queue that manages jobs with distinct priority levels.  <a href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,6 +143,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a2c8ae69464a38fdf60ba05576e0c85ad" id="r_a2c8ae69464a38fdf60ba05576e0c85ad"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a2c8ae69464a38fdf60ba05576e0c85ad">all_types</a> (void) -&gt; std::vector&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="memdesc:a2c8ae69464a38fdf60ba05576e0c85ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector containing all possible <code>job_types</code> values.  <br /></td></tr>
 <tr class="separator:a2c8ae69464a38fdf60ba05576e0c85ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe3b6348a7a1dd27a06c4d58fd85bfe" id="r_aabe3b6348a7a1dd27a06c4d58fd85bfe"><td class="memTemplParams" colspan="2">template&lt;typename job_type  = job_types&gt; </td></tr>
+<tr class="memitem:aabe3b6348a7a1dd27a06c4d58fd85bfe"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aabe3b6348a7a1dd27a06c4d58fd85bfe">make_monitored_typed_thread_pool</a> (size_t worker_count, const std::string &amp;thread_title=&quot;monitored_typed_pool&quot;, bool enable_metrics=true) -&gt; std::shared_ptr&lt; <a class="el" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html">monitored_typed_thread_pool_t</a>&lt; job_type &gt; &gt;</td></tr>
+<tr class="memdesc:aabe3b6348a7a1dd27a06c4d58fd85bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function to create a monitored typed thread pool.  <br /></td></tr>
+<tr class="separator:aabe3b6348a7a1dd27a06c4d58fd85bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type-based thread pool implementation for job scheduling with types. </p>
@@ -348,6 +355,103 @@ Example</h3>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="aabe3b6348a7a1dd27a06c4d58fd85bfe" name="aabe3b6348a7a1dd27a06c4d58fd85bfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabe3b6348a7a1dd27a06c4d58fd85bfe">&#9670;&#160;</a></span>make_monitored_typed_thread_pool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename job_type  = job_types&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto typed_thread_pool_module::make_monitored_typed_thread_pool </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>worker_count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>thread_title</em> = <code>&quot;monitored_typed_pool&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable_metrics</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; std::shared_ptr&lt;<a class="el" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html">monitored_typed_thread_pool_t</a>&lt;job_type&gt;&gt;
+    </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Factory function to create a monitored typed thread pool. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">job_type</td><td>The job type enum </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worker_count</td><td>Number of worker threads </td></tr>
+    <tr><td class="paramname">thread_title</td><td>Pool identifier </td></tr>
+    <tr><td class="paramname">enable_metrics</td><td>Whether to enable metrics </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to configured pool </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d32/monitored__typed__thread__pool_8h_source.html#l00466">466</a> of file <a class="el" href="../../de/d32/monitored__typed__thread__pool_8h_source.html">monitored_typed_thread_pool.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  470</span>    {</div>
+<div class="line"><span class="lineno">  471</span>        <span class="keyword">auto</span> pool = std::make_shared&lt;monitored_typed_thread_pool_t&lt;job_type&gt;&gt;(</div>
+<div class="line"><span class="lineno">  472</span>            thread_title, enable_metrics</div>
+<div class="line"><span class="lineno">  473</span>        );</div>
+<div class="line"><span class="lineno">  474</span>        </div>
+<div class="line"><span class="lineno">  475</span>        <span class="comment">// Add workers - typed workers handle all job types by default</span></div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; worker_count; ++i)</div>
+<div class="line"><span class="lineno">  477</span>        {</div>
+<div class="line"><span class="lineno">  478</span>            <span class="keyword">auto</span> worker = std::make_unique&lt;typed_thread_worker_t&lt;job_type&gt;&gt;();</div>
+<div class="line"><span class="lineno">  479</span>            </div>
+<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a> = pool-&gt;enqueue(std::move(worker)); <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.has_error())</div>
+<div class="line"><span class="lineno">  481</span>            {</div>
+<div class="line"><span class="lineno">  482</span>                <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a>(<span class="stringliteral">&quot;Failed to add worker: {}&quot;</span>, </div>
+<div class="line"><span class="lineno">  483</span>                    <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">get_error</a>().<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>());</div>
+<div class="line"><span class="lineno">  484</span>            }</div>
+<div class="line"><span class="lineno">  485</span>        }</div>
+<div class="line"><span class="lineno">  486</span>        </div>
+<div class="line"><span class="lineno">  487</span>        <span class="keywordflow">return</span> pool;</div>
+<div class="line"><span class="lineno">  488</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1error_html_add7860e073cc1262c1b0a6ab442ece06"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">thread_module::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00137">error_handling.h:137</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00210">error_handling.h:210</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result_html_aca4e5ef822c9a7e2bde65e6f6dd8c521"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">thread_module::result::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00284">error_handling.h:284</a></div></div>
+<div class="ttc" id="anamespacelog__module_html_a9e391cb38a5591521322e7f43cb9d8f0"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a></div><div class="ttdeci">auto write_error(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../de/d39/logger_2logger_8h_source.html#l00162">logger.h:162</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/db9/namespacetyped__thread__pool__module_aabe3b6348a7a1dd27a06c4d58fd85bfe_cgraph.png" border="0" usemap="#ad4/db9/namespacetyped__thread__pool__module_aabe3b6348a7a1dd27a06c4d58fd85bfe_cgraph" alt=""/></div>
+<map name="ad4/db9/namespacetyped__thread__pool__module_aabe3b6348a7a1dd27a06c4d58fd85bfe_cgraph" id="ad4/db9/namespacetyped__thread__pool__module_aabe3b6348a7a1dd27a06c4d58fd85bfe_cgraph">
+<area shape="rect" title="Factory function to create a monitored typed thread pool." alt="" coords="5,62,204,117"/>
+<area shape="rect" href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="258,5,423,45"/>
+<area shape="poly" title=" " alt="" coords="204,60,252,46,254,52,205,65"/>
+<area shape="rect" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="261,69,420,109"/>
+<area shape="poly" title=" " alt="" coords="204,87,248,87,248,92,204,92"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="252,135,429,161"/>
+<area shape="poly" title=" " alt="" coords="205,111,276,129,275,135,204,117"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="503,67,662,107"/>
+<area shape="poly" title=" " alt="" coords="420,86,489,85,489,90,420,91"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="477,131,688,171"/>
+<area shape="poly" title=" " alt="" coords="429,146,464,147,464,152,429,152"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="abd49ff02ea4da8eb45ed55b95511f043" name="abd49ff02ea4da8eb45ed55b95511f043"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd49ff02ea4da8eb45ed55b95511f043">&#9670;&#160;</a></span>to_string()</h2>
 
@@ -409,7 +513,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 14:03:45 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

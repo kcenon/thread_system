@@ -1,0 +1,7 @@
+<map id="thread_pool_module::monitored_thread_pool::enqueue_batch" name="thread_pool_module::monitored_thread_pool::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="5,30,187,85"/>
+<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="235,5,449,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,43,221,38,221,44,187,48"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="259,69,425,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,66,246,74,245,79,187,72"/>
+</map>

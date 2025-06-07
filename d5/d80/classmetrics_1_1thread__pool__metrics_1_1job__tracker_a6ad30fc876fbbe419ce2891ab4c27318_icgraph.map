@@ -1,0 +1,5 @@
+<map id="metrics::thread_pool_metrics::job_tracker::on_error" name="metrics::thread_pool_metrics::job_tracker::on_error">
+<area shape="rect" id="Node000001" title="Call when job fails with error." alt="" coords="212,5,371,60"/>
+<area shape="rect" id="Node000002" href="$d5/d80/classmetrics_1_1thread__pool__metrics_1_1job__tracker.html#ac739837b1f025cef994c88196e435720" title=" " alt="" coords="5,5,164,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,35,164,35,164,30,198,30"/>
+</map>

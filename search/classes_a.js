@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['span_0',['span',['../d8/d4f/classutility__module_1_1span.html',1,'utility_module']]]
+  ['log_5fcollector_0',['log_collector',['../d7/da3/classlog__module_1_1log__collector.html',1,'log_module']]],
+  ['log_5fjob_1',['log_job',['../df/df4/classlog__module_1_1log__job.html',1,'log_module']]],
+  ['logger_2',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation']]]
 ];

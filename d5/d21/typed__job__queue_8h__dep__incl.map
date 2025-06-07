@@ -2,7 +2,9 @@
 <area shape="rect" id="Node000001" title=" " alt="" coords="11,5,195,45"/>
 <area shape="rect" id="Node000002" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="5,181,200,221"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,57,60,94,56,113,60,133,72,158,88,180,83,183,67,161,55,134,51,113,55,92,75,55"/>
-<area shape="rect" id="Node000003" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="70,93,279,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,54,161,91,157,95,125,58"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="152,146,121,183,117,179,148,142"/>
+<area shape="rect" id="Node000004" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="70,93,279,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="129,54,161,91,157,95,125,58"/>
+<area shape="rect" id="Node000003" href="$de/d32/monitored__typed__thread__pool_8h.html" title=" " alt="" coords="17,269,189,324"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,235,105,269,100,269,100,235"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="152,146,121,183,117,179,148,142"/>
 </map>

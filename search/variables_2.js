@@ -10,11 +10,14 @@ var searchData=
   ['code_5f_7',['code_',['../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0',1,'thread_module::error']]],
   ['collector_5f_8',['collector_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c',1,'log_module::implementation::logger']]],
   ['collector_5fmutex_5f_9',['collector_mutex_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06',1,'log_module::implementation::logger']]],
-  ['condition_5f_10',['condition_',['../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c',1,'thread_module::job_queue']]],
-  ['config_5f_11',['config_',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a53bb5159a627a0fdd96279d84c5c25c9',1,'thread_pool_module::thread_pool_builder']]],
-  ['console_5flog_5ftype_5f_12',['console_log_type_',['../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d',1,'log_module::log_collector']]],
-  ['console_5fqueue_5f_13',['console_queue_',['../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c',1,'log_module::log_collector']]],
-  ['console_5fwriter_5f_14',['console_writer_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c',1,'log_module::implementation::logger']]],
-  ['continuation_5f_15',['continuation_',['../dd/d46/classthread__pool__module_1_1task__promise.html#a995155cbd018536baf034d694ec499be',1,'thread_pool_module::task_promise::continuation_'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a031994c885ab6ac85977984606583286',1,'thread_pool_module::task_promise&lt; void &gt;::continuation_']]],
-  ['cv_5fmutex_5f_16',['cv_mutex_',['../da/d94/classthread__module_1_1thread__base.html#a68e452ea7136f242b1e1b8e84758cd5c',1,'thread_module::thread_base']]]
+  ['completed_5f_10',['completed_',['../d5/d80/classmetrics_1_1thread__pool__metrics_1_1job__tracker.html#ab3a5990293062b1808afe4f6068883bd',1,'metrics::thread_pool_metrics::job_tracker']]],
+  ['condition_5f_11',['condition_',['../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c',1,'thread_module::job_queue']]],
+  ['config_5f_12',['config_',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a53bb5159a627a0fdd96279d84c5c25c9',1,'thread_pool_module::thread_pool_builder']]],
+  ['console_5flog_5ftype_5f_13',['console_log_type_',['../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d',1,'log_module::log_collector']]],
+  ['console_5fqueue_5f_14',['console_queue_',['../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c',1,'log_module::log_collector']]],
+  ['console_5fwriter_5f_15',['console_writer_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c',1,'log_module::implementation::logger']]],
+  ['continuation_5f_16',['continuation_',['../dd/d46/classthread__pool__module_1_1task__promise.html#a995155cbd018536baf034d694ec499be',1,'thread_pool_module::task_promise::continuation_'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a031994c885ab6ac85977984606583286',1,'thread_pool_module::task_promise&lt; void &gt;::continuation_']]],
+  ['count_17',['count',['../d3/d19/structmetrics_1_1histogram_1_1bucket.html#a8aec125ea09915f1a0dc8b8b06b94dac',1,'metrics::histogram::bucket']]],
+  ['cpu_5fusage_5f_18',['cpu_usage_',['../d7/d01/classmetrics_1_1thread__pool__metrics.html#af8ae4041921974c18bcc5bd1f011a688',1,'metrics::thread_pool_metrics']]],
+  ['cv_5fmutex_5f_19',['cv_mutex_',['../da/d94/classthread__module_1_1thread__base.html#a68e452ea7136f242b1e1b8e84758cd5c',1,'thread_module::thread_base']]]
 ];

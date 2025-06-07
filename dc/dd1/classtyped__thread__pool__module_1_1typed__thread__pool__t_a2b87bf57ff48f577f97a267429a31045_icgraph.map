@@ -1,0 +1,14 @@
+<map id="typed_thread_pool_module::typed_thread_pool_t::get_job_queue" name="typed_thread_pool_module::typed_thread_pool_t::get_job_queue">
+<area shape="rect" id="Node000001" title="Retrieves the underlying priority job queue managed by this thread pool." alt="" coords="1012,45,1211,100"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a65a9ab6c68cab8a44cb72e2bc1f6fa3e" title="Count active workers (approximation)" alt="" coords="745,12,964,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="998,61,964,56,964,51,999,55"/>
+<area shape="rect" id="Node000003" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ade4ddf35377fc26d05a46bb97c9480d3" title="Update worker and queue statistics." alt="" coords="499,45,697,100"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="998,80,964,81,745,81,697,79,698,74,745,75,964,75,998,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="732,58,698,62,697,57,731,53"/>
+<area shape="rect" id="Node000004" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ac1465231092be4c1c728b10f068dfdb6" title="Start the thread pool with metrics tracking." alt="" coords="252,5,451,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="485,57,451,51,451,46,486,52"/>
+<area shape="rect" id="Node000005" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3062532f4e753519520f73a60123ec39" title="Stop the thread pool and finalize metrics." alt="" coords="252,84,451,139"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="486,93,451,98,451,93,485,88"/>
+<area shape="rect" id="Node000006" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8a8db16946c2c1376b72d4bf8097b7a3" title="Destructor ensures clean shutdown." alt="" coords="5,77,204,146"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="238,114,204,114,204,109,238,109"/>
+</map>

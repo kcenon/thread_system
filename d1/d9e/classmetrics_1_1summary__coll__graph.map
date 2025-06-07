@@ -1,0 +1,15 @@
+<map id="metrics::summary&lt; T &gt;" name="metrics::summary&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Summary metric &#45; sliding time window statistics." alt="" coords="260,391,431,556"/>
+<area shape="rect" id="Node000002" href="$dd/d6a/classmetrics_1_1metric__interface.html" title="Base interface for all metric types." alt="" coords="5,168,184,313"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,321,261,391,258,395,181,325"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="209,208,343,273"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="288,273,319,374,314,376,283,274"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="367,201,561,281"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="446,282,397,377,393,374,441,280"/>
+<area shape="rect" id="Node000005" href="$de/dd9/structmetrics_1_1summary_1_1time__window.html" title=" " alt="" coords="385,5,541,105"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="466,106,466,184,461,184,460,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="587,208,666,273"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="608,275,574,315,511,368,446,414,443,410,508,364,570,311,604,272"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="565,15,696,95"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="632,109,630,208,625,208,627,109"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="typed_thread_pool_module::monitored_typed_thread_pool_t::register_job_type_metrics" name="typed_thread_pool_module::monitored_typed_thread_pool_t::register_job_type_metrics">
+<area shape="rect" id="Node000001" title="Register metrics for each job type." alt="" coords="5,46,204,115"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a855814f35633c8d47ce45e80cb73b0f4" title="Convert job type to string name." alt="" coords="252,5,451,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,59,238,52,239,57,205,64"/>
+<area shape="rect" id="Node000003" href="$d9/d3f/classmetrics_1_1metric__registry.html#a31d42d46bab82ed2bf4761b13f8f5f81" title="Get singleton instance." alt="" coords="262,109,441,149"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,97,249,106,248,111,204,103"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="306,109,303,99,310,90,327,84,351,82,380,85,395,92,393,97,378,90,351,87,328,89,313,94,308,100,311,108"/>
+</map>

@@ -383,15 +383,28 @@ Example Usage</h3>
 <div class="line"><span class="lineno">   49</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;Path is not a regular file&quot;</span>;</div>
 <div class="line"><span class="lineno">   50</span>        }</div>
 <div class="line"><span class="lineno">   51</span> </div>
-<div class="line"><span class="lineno">   52</span>        std::error_code error;</div>
-<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">if</span> (!std::filesystem::remove(path, error))</div>
+<div class="line"><span class="lineno">   52</span>        std::error_code <a class="code hl_typedef" href="../../de/d32/monitored__typed__thread__pool_8h.html#ad8f7906d3e8f5190290d354434c9f08c">error</a>;</div>
+<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">if</span> (!std::filesystem::remove(path, <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>))</div>
 <div class="line"><span class="lineno">   54</span>        {</div>
-<div class="line"><span class="lineno">   55</span>            <span class="keywordflow">return</span> error.message();</div>
+<div class="line"><span class="lineno">   55</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>.<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a>();</div>
 <div class="line"><span class="lineno">   56</span>        }</div>
 <div class="line"><span class="lineno">   57</span> </div>
 <div class="line"><span class="lineno">   58</span>        <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line"><span class="lineno">   59</span>    }</div>
-</div><!-- fragment -->
+<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_a84124dcf079f2498f8e954c56472b55f"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">thread_module::error::message</a></div><div class="ttdeci">const std::string &amp; message() const noexcept</div><div class="ttdoc">Gets the error message.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00131">error_handling.h:131</a></div></div>
+<div class="ttc" id="amonitored__typed__thread__pool_8h_html_ad8f7906d3e8f5190290d354434c9f08c"><div class="ttname"><a href="../../de/d32/monitored__typed__thread__pool_8h.html#ad8f7906d3e8f5190290d354434c9f08c">error</a></div><div class="ttdeci">thread_module::error error</div><div class="ttdef"><b>Definition</b> <a href="../../de/d32/monitored__typed__thread__pool_8h_source.html#l00015">monitored_typed_thread_pool.h:15</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d35/classutility__module_1_1file_a58e892ac8d72235f221fafc9d3bed051_cgraph.png" border="0" usemap="#ada/d35/classutility__module_1_1file_a58e892ac8d72235f221fafc9d3bed051_cgraph" alt=""/></div>
+<map name="ada/d35/classutility__module_1_1file_a58e892ac8d72235f221fafc9d3bed051_cgraph" id="ada/d35/classutility__module_1_1file_a58e892ac8d72235f221fafc9d3bed051_cgraph">
+<area shape="rect" title="Removes a file from the filesystem." alt="" coords="5,5,149,45"/>
+<area shape="rect" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="197,5,356,45"/>
+<area shape="poly" title=" " alt="" coords="150,23,184,23,184,28,150,28"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a70e9bfa648f739cca05a8f8734eadc92" name="a70e9bfa648f739cca05a8f8734eadc92"></a>
@@ -548,7 +561,7 @@ Example Usage</h3>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 14:03:45 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

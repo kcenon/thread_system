@@ -1,7 +1,9 @@
 <map id="thread_module::result::get_error" name="thread_module::result::get_error">
-<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="219,37,384,77"/>
-<area shape="rect" id="Node000002" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="5,5,171,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,46,171,40,171,35,206,40"/>
-<area shape="rect" id="Node000003" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="5,69,171,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,74,171,80,171,74,205,69"/>
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="252,85,417,125"/>
+<area shape="rect" id="Node000002" href="$d4/db9/namespacetyped__thread__pool__module.html#aabe3b6348a7a1dd27a06c4d58fd85bfe" title="Factory function to create a monitored typed thread pool." alt="" coords="5,5,204,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,83,192,63,193,57,258,78"/>
+<area shape="rect" id="Node000003" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="22,85,187,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="238,107,188,107,188,102,238,102"/>
+<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="22,149,187,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="250,131,178,151,176,146,248,126"/>
 </map>

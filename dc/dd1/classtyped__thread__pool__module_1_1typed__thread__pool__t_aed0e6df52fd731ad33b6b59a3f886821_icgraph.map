@@ -1,0 +1,7 @@
+<map id="typed_thread_pool_module::typed_thread_pool_t::stop" name="typed_thread_pool_module::typed_thread_pool_t::stop">
+<area shape="rect" id="Node000001" title="Stops the thread pool and optionally waits for currently running jobs to finish." alt="" coords="499,20,697,60"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3062532f4e753519520f73a60123ec39" title="Stop the thread pool and finalize metrics." alt="" coords="252,13,451,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="485,43,451,43,451,37,485,37"/>
+<area shape="rect" id="Node000003" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8a8db16946c2c1376b72d4bf8097b7a3" title="Destructor ensures clean shutdown." alt="" coords="5,5,204,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="238,43,204,43,204,37,238,37"/>
+</map>

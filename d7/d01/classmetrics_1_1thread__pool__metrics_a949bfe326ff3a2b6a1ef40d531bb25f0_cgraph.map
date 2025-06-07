@@ -1,0 +1,6 @@
+<map id="metrics::thread_pool_metrics::thread_pool_metrics" name="metrics::thread_pool_metrics::thread_pool_metrics">
+<area shape="rect" id="Node000001" title="Construct metrics for a named thread pool." alt="" coords="5,22,168,77"/>
+<area shape="rect" id="Node000002" href="$d9/d3f/classmetrics_1_1metric__registry.html#a31d42d46bab82ed2bf4761b13f8f5f81" title="Get singleton instance." alt="" coords="216,29,395,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,47,203,47,203,52,168,52"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="264,30,262,20,268,10,283,5,305,3,331,6,345,13,342,18,329,11,305,8,284,10,272,15,267,21,269,28"/>
+</map>
