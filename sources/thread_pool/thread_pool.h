@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../utilities/formatter.h"
 #include "../thread_base/job_queue.h"
 #include "thread_worker.h"
-#include "convert_string.h"
+#include "../utilities/convert_string.h"
 
 #include <tuple>
 #include <string>

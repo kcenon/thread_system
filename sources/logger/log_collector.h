@@ -39,6 +39,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../thread_base/thread_base.h"
 #include "message_job.h"
 
+#include <memory>
+#include <iostream>
+#include <chrono>
+
 using namespace thread_module;
 using namespace utility_module;
 

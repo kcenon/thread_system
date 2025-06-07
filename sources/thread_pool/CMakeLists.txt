@@ -22,5 +22,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_SOURCE_DIR}/sources
 )
 
-# Link against dependencies: thread_base for core functionality and logger for logging
-target_link_libraries(${PROJECT_NAME} PUBLIC thread_base logger)
+# Link against dependencies: thread_base for core functionality, logger for logging, and metrics for monitoring
+target_link_libraries(${PROJECT_NAME} PUBLIC thread_base logger metrics)

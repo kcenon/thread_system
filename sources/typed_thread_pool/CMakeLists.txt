@@ -28,4 +28,5 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
 # - thread_base: For core threading primitives
 # - thread_pool: This component extends the thread pool implementation
 # - logger: For diagnostic and error logging
-target_link_libraries(${PROJECT_NAME} INTERFACE thread_base thread_pool logger)
+# - metrics: For performance monitoring and statistics
+target_link_libraries(${PROJECT_NAME} INTERFACE thread_base thread_pool logger metrics)

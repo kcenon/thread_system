@@ -14,6 +14,9 @@ add_subdirectory(thread_base)
 # Logging system (depends on utilities)
 add_subdirectory(logger)
 
+# Metrics system (depends on utilities)
+add_subdirectory(metrics)
+
 # Standard thread pool implementation (depends on thread_base)
 add_subdirectory(thread_pool)
 

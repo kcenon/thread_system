@@ -47,6 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <memory>
 #include <string>
+#include <chrono>
 #include <optional>
 
 using namespace thread_module;

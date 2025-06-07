@@ -311,7 +311,7 @@ elif [ "$TARGET" == "lib-only" ]; then
 elif [ "$TARGET" == "samples" ]; then
     BUILD_TARGET="builder_sample thread_pool_sample priority_thread_pool_sample logger_sample"
 elif [ "$TARGET" == "tests" ]; then
-    BUILD_TARGET="thread_base_test thread_pool_test priority_thread_pool_test logger_test utilities_test"
+    BUILD_TARGET="thread_base_unit thread_pool_unit typed_thread_pool_unit logger_unit utilities_unit"
 fi
 
 # Set verbosity level
@@ -339,26 +339,25 @@ fi
 if [ "$TARGET" == "tests" ]; then
     print_status "Running tests..."
     
-    if command_exists ctest; then
-        ctest --output-on-failure
-        if [ $? -ne 0 ]; then
-            print_error "Some tests failed. See the output above for details."
-        else
-            print_success "All tests passed!"
-        fi
-    else
-        print_warning "ctest not found, running tests individually..."
-        for test in ./bin/*_test; do
-            if [ -x "$test" ]; then
-                print_status "Running $test..."
-                $test
-                if [ $? -ne 0 ]; then
-                    print_error "Test $test failed"
-                else
-                    print_success "Test $test passed"
-                fi
+    # Run tests individually
+    test_failed=0
+    for test in ./bin/*_unit; do
+        if [ -x "$test" ]; then
+            print_status "Running $(basename $test)..."
+            $test
+            if [ $? -ne 0 ]; then
+                print_error "Test $(basename $test) failed"
+                test_failed=1
+            else
+                print_success "Test $(basename $test) passed"
             fi
-        done
+        fi
+    done
+    
+    if [ $test_failed -eq 0 ]; then
+        print_success "All tests passed!"
+    else
+        print_error "Some tests failed. See the output above for details."
     fi
 fi
 

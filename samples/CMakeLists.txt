@@ -21,3 +21,7 @@ add_subdirectory(typed_thread_pool_sample)
 # Advanced typed thread pool sample
 # Shows more complex usage patterns of typed thread pools
 add_subdirectory(typed_thread_pool_sample_2)
+
+# Metrics collection sample
+# Demonstrates comprehensive metrics collection and monitoring
+add_subdirectory(metrics_sample)
