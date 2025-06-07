@@ -1,7 +1,7 @@
 var searchData=
 [
   ['ideal_20use_20cases_0',['🎯 Ideal Use Cases',['../index.html#applications',1,'']]],
-  ['implementation_20detail_1',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md30',1,'']]],
+  ['implementation_20detail_1',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md11',1,'']]],
   ['industry_20standards_2',['🏆 Industry Standards',['../index.html#standards',1,'']]],
   ['information_3',['Information',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf',1,'log_module']]],
   ['initial_5fsuspend_4',['initial_suspend',['../dd/d46/classthread__pool__module_1_1task__promise.html#a14ef389c80f917002878ff4f643a3690',1,'thread_pool_module::task_promise::initial_suspend()'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a45b14d9c12efaac373c8d8251f135666',1,'thread_pool_module::task_promise&lt; void &gt;::initial_suspend()']]],

@@ -1,0 +1,7 @@
+<map id="fmt::formatter&lt; typed_thread_pool_module::job_types, wchar_t &gt;::format" name="fmt::formatter&lt; typed_thread_pool_module::job_types, wchar_t &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="5,23,176,92"/>
+<area shape="rect" id="Node000002" href="$d4/db9/namespacetyped__thread__pool__module.html#abd49ff02ea4da8eb45ed55b95511f043" title="Converts a job_types value to its corresponding string representation." alt="" coords="224,5,423,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,43,210,38,211,44,177,48"/>
+<area shape="rect" id="Node000003" href="$d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="237,69,410,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="177,66,223,73,223,78,176,72"/>
+</map>

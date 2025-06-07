@@ -23,10 +23,9 @@ var searchData=
   ['log_5ftype_5fstrings_20',['log_type_strings',['../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105',1,'log_module::log_detail']]],
   ['log_5ftypes_21',['log_types',['../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709',1,'log_module']]],
   ['log_5ftypes_2eh_22',['log_types.h',['../d1/d18/log__types_8h.html',1,'']]],
-  ['logger_23',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e',1,'log_module::implementation::logger::logger()'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a3b4016b3c77d97e4872af099f9abc265',1,'log_module::implementation::logger::logger(const logger &amp;)=delete'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation::logger']]],
-  ['logger_2eh_24',['logger.h',['../de/d39/logger_2logger_8h.html',1,'(Global Namespace)'],['../de/dd3/utilities_2logger_8h.html',1,'(Global Namespace)']]],
+  ['logger_23',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation::logger'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a3b4016b3c77d97e4872af099f9abc265',1,'log_module::implementation::logger::logger(const logger &amp;)=delete'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e',1,'log_module::implementation::logger::logger()']]],
+  ['logger_2eh_24',['logger.h',['../de/dd3/utilities_2logger_8h.html',1,'(Global Namespace)'],['../de/d39/logger_2logger_8h.html',1,'(Global Namespace)']]],
   ['logger_5fimplementation_2ecpp_25',['logger_implementation.cpp',['../d9/d7e/logger__implementation_8cpp.html',1,'']]],
   ['logger_5fimplementation_2eh_26',['logger_implementation.h',['../d5/d14/logger__implementation_8h.html',1,'']]],
-  ['logging_20system_20log_5fmodule_27',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]],
-  ['low_28',['Low',['../d8/da5/namespacepriority__thread__pool__module.html#ad02023113ce2026fd0599170b3aad090a28d0edd045e05cf5af64e35ae0c4c6ef',1,'priority_thread_pool_module']]]
+  ['logging_20system_20log_5fmodule_27',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]]
 ];

@@ -188,9 +188,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a353c9e3581f9b950570feaa9bd756222" id="r_a353c9e3581f9b950570feaa9bd756222"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a> (<a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> condition)</td></tr>
 <tr class="memdesc:a353c9e3581f9b950570feaa9bd756222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>thread_conditions</code> value to its corresponding string representation.  <br /></td></tr>
 <tr class="separator:a353c9e3581f9b950570feaa9bd756222"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8145a260192c258b8b3dbf1385ee03c7" id="r_a8145a260192c258b8b3dbf1385ee03c7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">all_priorities</a> (void) -&gt; std::vector&lt; <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> &gt;</td></tr>
-<tr class="memdesc:a8145a260192c258b8b3dbf1385ee03c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a vector containing all possible <code>thread_conditions</code> values.  <br /></td></tr>
-<tr class="separator:a8145a260192c258b8b3dbf1385ee03c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96671dbdb6d4db6672ac272d5b2fc34c" id="r_a96671dbdb6d4db6672ac272d5b2fc34c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a> (void) -&gt; std::vector&lt; <a class="el" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a> &gt;</td></tr>
+<tr class="memdesc:a96671dbdb6d4db6672ac272d5b2fc34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a vector containing all possible <code>thread_conditions</code> values.  <br /></td></tr>
+<tr class="separator:a96671dbdb6d4db6672ac272d5b2fc34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Core threading foundation of the thread system library. </p>
@@ -407,8 +407,8 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a8145a260192c258b8b3dbf1385ee03c7" name="a8145a260192c258b8b3dbf1385ee03c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8145a260192c258b8b3dbf1385ee03c7">&#9670;&#160;</a></span>all_priorities()</h2>
+<a id="a96671dbdb6d4db6672ac272d5b2fc34c" name="a96671dbdb6d4db6672ac272d5b2fc34c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96671dbdb6d4db6672ac272d5b2fc34c">&#9670;&#160;</a></span>all_types()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -417,7 +417,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto thread_module::all_priorities </td>
+          <td class="memname">auto thread_module::all_types </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -434,11 +434,11 @@ template&lt;typename T &gt; </div>
 
 <p>Retrieves a vector containing all possible <code>thread_conditions</code> values. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::vector</code> of all enumerators in <code>thread_conditions</code>, in ascending order.</dd></dl>
-<p>This can be useful for iteration, logging, or building UI elements that list thread states. For example: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> cond : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">all_priorities</a>()) {</div>
+<p>This can be useful for iteration, logging, or building UI elements that list thread states. For example: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> cond : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(cond) &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
-<div class="ttc" id="anamespacethread__module_html_a8145a260192c258b8b3dbf1385ee03c7"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a8145a260192c258b8b3dbf1385ee03c7">thread_module::all_priorities</a></div><div class="ttdeci">auto all_priorities(void) -&gt; std::vector&lt; thread_conditions &gt;</div><div class="ttdoc">Retrieves a vector containing all possible thread_conditions values.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00131">thread_conditions.h:131</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_a96671dbdb6d4db6672ac272d5b2fc34c"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">thread_module::all_types</a></div><div class="ttdeci">auto all_types(void) -&gt; std::vector&lt; thread_conditions &gt;</div><div class="ttdoc">Retrieves a vector containing all possible thread_conditions values.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00131">thread_conditions.h:131</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00131">131</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  132</span>    {</div>
@@ -772,7 +772,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 10:28:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 13:23:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

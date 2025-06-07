@@ -101,10 +101,10 @@ Inheritance diagram for thread_module::thread_base:</div>
 <area shape="poly" title=" " alt="" coords="574,505,567,539,562,538,568,504"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="629,609,811,1054"/>
 <area shape="poly" title=" " alt="" coords="664,504,683,608,678,609,659,505"/>
-<area shape="rect" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="835,714,1045,949"/>
-<area shape="poly" title=" " alt="" coords="727,385,778,459,825,537,868,625,903,713,898,715,863,628,820,540,773,462,722,388"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="1069,741,1253,921"/>
-<area shape="poly" title=" " alt="" coords="730,295,811,338,899,392,985,459,1024,497,1059,537,1091,585,1116,638,1134,691,1148,740,1143,742,1129,693,1111,640,1086,588,1055,540,1020,500,981,463,896,397,808,342,727,300"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="835,741,1019,921"/>
+<area shape="poly" title=" " alt="" coords="727,383,778,458,825,537,871,641,905,740,900,742,866,643,820,540,774,461,722,386"/>
+<area shape="rect" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="1043,714,1242,949"/>
+<area shape="poly" title=" " alt="" coords="730,301,805,345,885,399,964,463,1000,499,1033,537,1061,578,1084,623,1118,713,1113,715,1079,625,1056,581,1029,540,996,503,960,467,882,403,802,349,727,306"/>
 </map>
 </div>
 <div class="dynheader">
@@ -211,7 +211,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A foundational class for implementing custom worker threads. </p>
 <p>The <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> class provides a framework for managing a single worker thread, offering lifecycle methods (start, stop), optional wake intervals, and hooks (<code>before_start</code>, <code>do_work</code>, <code>after_stop</code>) for derived classes to customize behavior.</p>
 <p>This class abstracts platform-specific thread management details and provides a unified interface for both C++20 <code>std::jthread</code> and traditional <code>std::thread</code>, selected at compile time via the <code>USE_STD_JTHREAD</code> macro.</p>
-<h3><a class="anchor" id="autotoc_md36"></a>
+<h3><a class="anchor" id="autotoc_md17"></a>
 Key Features</h3>
 <ul>
 <li>Standardized thread lifecycle management (start/stop)</li>
@@ -221,10 +221,10 @@ Key Features</h3>
 <li>Built-in cancellation support (via <code>std::jthread</code> or custom mechanism)</li>
 <li>Thread-safe signaling and state management</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md37"></a>
+<h3><a class="anchor" id="autotoc_md18"></a>
 Thread Safety</h3>
 <p>All public methods in <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> are thread-safe. The class uses internal synchronization mechanisms to protect its state.</p>
-<h3><a class="anchor" id="autotoc_md38"></a>
+<h3><a class="anchor" id="autotoc_md19"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Inherit from <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> and override <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5" title="The main work routine for the worker thread.">do_work()</a></code>, <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229" title="Called just before the worker thread starts running.">before_start()</a></code>, and/or <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a8a5b2eb7b63e97711e7bd58da331fc15" title="Called immediately after the worker thread has stopped.">after_stop()</a></code> as needed.</li>
@@ -232,7 +232,7 @@ Typical Usage</h3>
 <li>When shutting down or no longer needing the thread's work, call <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a4569bbde801e3a35240dd402f5895fc0" title="Requests the worker thread to stop and waits for it to finish.">stop()</a></code>.</li>
 <li>The thread can periodically check <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f" title="Determines whether the thread should continue doing work.">should_continue_work()</a></code> or internal conditions to determine if it should continue running.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md39"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>my_worker : <span class="keyword">public</span> <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -534,7 +534,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> containing an error on failure, or success value if successful.</dd></dl>
 <p>Derived classes should override this method to implement the actual work the thread needs to perform. This method is called repeatedly (in an internal loop) until the thread is signaled to stop or <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f" title="Determines whether the thread should continue doing work.">should_continue_work()</a></code> returns <code>false</code>. </p>
 
-<p>Reimplemented in <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a8bac50883ab6860f967ac0e2b11745cc">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5">log_module::file_writer</a>, <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b">log_module::log_collector</a>, <a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html#ab86c31b1354a73c08c8284f93fb888ee">priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt;</a>, and <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker</a>.</p>
+<p>Reimplemented in <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a8bac50883ab6860f967ac0e2b11745cc">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5">log_module::file_writer</a>, <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b">log_module::log_collector</a>, <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#abaed427230a66a01b8e40ed117ae8204">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00260">260</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  260</span>{ <span class="keywordflow">return</span> {}; }</div>
@@ -719,7 +719,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is work to do, <code>false</code> otherwise.</dd></dl>
 <p>The default implementation always returns <code>false</code> (indicating no ongoing work). Override this in derived classes if you wish the thread to perform repeated tasks until some condition changes. </p>
 
-<p>Reimplemented in <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a2bfd71d56ba3640a7d8c2e054e73a917">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#aef095f674cdd5baa968a98e04fcbcbeb">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#acffa230285384fe4720b6bcbbba985aa">log_module::file_writer</a>, <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ad0fec4d6d4707a3551280f947d66d8df">log_module::log_collector</a>, <a class="el" href="../../d5/d22/classpriority__thread__pool__module_1_1priority__thread__worker__t.html#afe7610b2fd58c5bec141ad6c919aefdb">priority_thread_pool_module::priority_thread_worker_t&lt; priority_type &gt;</a>, and <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker</a>.</p>
+<p>Reimplemented in <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a2bfd71d56ba3640a7d8c2e054e73a917">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#aef095f674cdd5baa968a98e04fcbcbeb">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#acffa230285384fe4720b6bcbbba985aa">log_module::file_writer</a>, <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ad0fec4d6d4707a3551280f947d66d8df">log_module::log_collector</a>, <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#aa903598f572540b7d6f2039396e91400">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00241">241</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  241</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
@@ -1010,13 +1010,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d94/classthread__module_1_1thread__base_a0bfb73ba5d38988886db056c46628a09_icgraph.png" border="0" usemap="#ada/d94/classthread__module_1_1thread__base_a0bfb73ba5d38988886db056c46628a09_icgraph" alt=""/></div>
 <map name="ada/d94/classthread__module_1_1thread__base_a0bfb73ba5d38988886db056c46628a09_icgraph" id="ada/d94/classthread__module_1_1thread__base_a0bfb73ba5d38988886db056c46628a09_icgraph">
-<area shape="rect" title="Returns a string representation of this thread_base object." alt="" coords="271,107,441,147"/>
-<area shape="rect" href="../../dd/dfc/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__thread__worker__t_3_01priority__type_01_4_01_4.html#a548507621644e0c29c2ec0e940d0434b" title="Formats a priority_thread_worker_t&lt;priority_type&gt; instance as a string." alt="" coords="5,5,223,75"/>
-<area shape="poly" title=" " alt="" coords="286,105,210,77,212,72,287,99"/>
-<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="23,99,205,154"/>
-<area shape="poly" title=" " alt="" coords="257,129,205,129,205,124,257,124"/>
-<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="7,178,221,233"/>
-<area shape="poly" title=" " alt="" coords="282,153,200,180,198,175,280,148"/>
+<area shape="rect" title="Returns a string representation of this thread_base object." alt="" coords="268,91,439,131"/>
+<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="22,5,203,60"/>
+<area shape="poly" title=" " alt="" coords="278,90,196,63,198,58,279,85"/>
+<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="5,84,220,139"/>
+<area shape="poly" title=" " alt="" coords="254,114,220,114,220,109,254,109"/>
+<area shape="rect" href="../../d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html#a53f30f143dc34e05063d40c9b28a5c4b" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance as a string." alt="" coords="25,163,200,233"/>
+<area shape="poly" title=" " alt="" coords="285,139,201,169,199,164,283,134"/>
 </map>
 </div>
 
@@ -1218,7 +1218,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 10:28:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 13:23:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,0 +1,7 @@
+<map id="typed_thread_pool_module::typed_job_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_job_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="Represents a job that carries a specific priority level." alt="" coords="5,359,196,539"/>
+<area shape="rect" id="Node000003" href="$d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="5,587,196,721"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="103,552,103,586,98,586,98,552"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="6,5,195,311"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,325,103,358,98,358,98,325"/>
+</map>

@@ -91,11 +91,11 @@ Inheritance diagram for thread_module::job_queue:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/df7/classthread__module_1_1job__queue__inherit__graph.png" border="0" usemap="#athread__module_1_1job__queue_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1job__queue_inherit__map" id="athread__module_1_1job__queue_inherit__map">
-<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="19,133,204,553"/>
-<area shape="rect" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,217,1085"/>
-<area shape="poly" title=" " alt="" coords="114,567,114,601,109,601,109,567"/>
-<area shape="rect" title=" " alt="" coords="21,5,201,85"/>
-<area shape="poly" title=" " alt="" coords="114,99,114,133,109,133,109,99"/>
+<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="28,133,213,553"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1071"/>
+<area shape="poly" title=" " alt="" coords="123,567,123,601,118,601,118,567"/>
+<area shape="rect" title=" " alt="" coords="31,5,211,85"/>
+<area shape="poly" title=" " alt="" coords="123,99,123,133,118,133,118,99"/>
 </map>
 </div>
 <div class="dynheader">
@@ -207,7 +207,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md34"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
@@ -305,7 +305,7 @@ Typical Usage</h3>
 <p>Removes all jobs currently in the queue without processing them. </p>
 <p>This operation is thread-safe and can be used to discard pending jobs, typically during shutdown or error recovery. It does not affect the <code>stop_</code> or <code>notify_</code> flags. </p>
 
-<p>Reimplemented in <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#a06a17d5462bbd1367d7c29f3ecbdb939">priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#ab85ca8567a4cfcf14d9f38a5b38405fa">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00140">140</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  141</span>    {</div>
@@ -350,7 +350,7 @@ Typical Usage</h3>
 <dl class="section return"><dt>Returns</dt><dd>A result&lt;std::unique_ptr&lt;job&gt;&gt; containing either a valid job or an error object.</dd></dl>
 <p>If the queue is empty, the caller may block depending on the internal concurrency model (unless <code>stop_</code> is set, in which case it may return immediately). </p>
 
-<p>Reimplemented in <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#ac017b89c619ce4a32843ffaa6320c25a">priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00108">108</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  109</span>    {</div>
@@ -489,7 +489,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message.</dd></dl>
 <p>This method is thread-safe. If <code>notify_</code> is set to <code>true</code>, a waiting thread (if any) will be notified upon successful enqueue. </p>
 
-<p>Reimplemented in <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#ad320d4b52ed9f20be3d80ed56ca5ca19">priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>    {</div>
@@ -553,7 +553,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#ace6ba3fe6c3311f0c1e3c5716ee26674">priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a891dfbd0238efc3b3ce11ca360a2578b">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00072">72</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   73</span>    {</div>
@@ -729,7 +729,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A std::string describing the state of the queue (e.g., size, flags).</dd></dl>
 <p>Primarily used for logging and debugging. Derived classes may override this to include additional diagnostic information. </p>
 
-<p>Reimplemented in <a class="el" href="../../d5/db9/classpriority__thread__pool__module_1_1priority__job__queue__t.html#aebf05d8849fc8cd8c37019f70e690c51">priority_thread_pool_module::priority_job_queue_t&lt; priority_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a7cf695694db1a864899f15df036e8531">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00167">167</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  168</span>    {</div>
@@ -931,7 +931,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 10:28:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 13:23:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

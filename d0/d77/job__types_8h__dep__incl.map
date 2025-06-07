@@ -1,0 +1,16 @@
+<map id="sources/typed_thread_pool/job_types.h" name="sources/typed_thread_pool/job_types.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="150,5,313,45"/>
+<area shape="rect" id="Node000002" href="$db/d03/typed__job_8h.html" title=" " alt="" coords="91,93,254,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,58,188,95,183,92,209,55"/>
+<area shape="rect" id="Node000004" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="149,269,333,309"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="253,56,269,93,274,142,270,192,260,236,250,270,245,268,255,235,265,191,269,143,263,94,249,58"/>
+<area shape="rect" id="Node000003" href="$de/d90/callback__typed__job_8h.html" title=" " alt="" coords="5,181,204,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="151,146,122,183,118,179,147,143"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="197,143,218,180,233,228,241,269,236,270,228,229,213,182,193,146"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="148,227,212,267,209,272,145,231"/>
+<area shape="rect" id="Node000005" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="143,445,338,485"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="217,321,198,358,194,377,198,397,210,422,226,444,221,447,205,425,193,398,189,377,193,356,213,319"/>
+<area shape="rect" id="Node000006" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="208,357,417,397"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="267,318,299,355,295,359,263,322"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="290,410,259,447,255,443,286,406"/>
+</map>

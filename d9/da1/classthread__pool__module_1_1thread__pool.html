@@ -220,7 +220,7 @@ Private Attributes</h2></td></tr>
 <li>Graceful handling of thread startup, execution, and shutdown</li>
 </ul>
 <p>The thread pool is designed for scenarios where many short-lived tasks need to be executed asynchronously without creating a new thread for each task.</p>
-<h3><a class="anchor" id="autotoc_md42"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Design Principles</h3>
 <ul>
 <li><b>Worker Thread Model</b>: Each worker runs in its own thread, processing jobs from the shared queue.</li>
@@ -229,10 +229,10 @@ Design Principles</h3>
 <li><b>Non-Blocking Submission</b>: Adding jobs to the pool never blocks the caller thread.</li>
 <li><b>Cooperative Shutdown</b>: Workers can complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md43"></a>
+<h3><a class="anchor" id="autotoc_md24"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread. The underlying <code>job_queue</code> is also thread-safe, allowing multiple workers to dequeue jobs concurrently.</p>
-<h3><a class="anchor" id="autotoc_md44"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Performance Considerations</h3>
 <ul>
 <li>The number of worker threads should typically be close to the number of available CPU cores for CPU-bound tasks.</li>
@@ -243,7 +243,7 @@ Performance Considerations</h3>
 <dd>
 job_queue The shared queue for storing pending jobs </dd>
 <dd>
-<a class="el" href="../../d8/da5/namespacepriority__thread__pool__module.html#a41ef2e79bef51fd16d3289eb9272118b" title="Alias for a priority_thread_pool with the default job_priorities type.">priority_thread_pool_module::priority_thread_pool</a> For a priority-based version </dd></dl>
+<a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a970a3d65b2de11fe9eecd9c588159c63" title="Alias for a typed_thread_pool with the default job_types type.">typed_thread_pool_module::typed_thread_pool</a> For a priority-based version </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00113">113</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -924,7 +924,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 10:28:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 7 2025 13:23:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
