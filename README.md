@@ -100,15 +100,15 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 **Library Comparison** (540K jobs/sec baseline):
 | Library | Throughput | Relative Performance | Features |
 |---------|------------|---------------------|----------|
-| **Thread System** | 540K/s | 100% (baseline) | Priority, logging, C++20 |
+| **Thread System** | 540K/s | 100% (baseline) | Type-based, logging, C++20 |
 | Intel TBB | 580K/s | 107% | Industry standard |
 | Boost.Thread Pool | 510K/s | 94% | Header-only |
 | std::async | 125K/s | 23% | Standard library |
 | OpenMP | 495K/s | 92% | Compiler directives |
 
-**Priority Thread Pool Performance**:
-| Priority Levels | Overhead vs Basic | Priority Accuracy | Use Case |
-|----------------|-------------------|-------------------|----------|
+**Type-based Thread Pool Performance**:
+| Job Type Levels | Overhead vs Basic | Type Accuracy | Use Case |
+|----------------|-------------------|---------------|----------|
 | Single | +3% | 100% | High-type only |
 | 2 Levels | +6% | 99.8% | Critical/Normal |
 | 3 Levels | +9% | 99.6% | High/Normal/Low |
@@ -168,15 +168,15 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 ### 4. [Type-based Thread Pool System (typed_thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/typed_thread_pool)
 
 - `job_types` enum: Defines job type levels
-- `type_job` class: Defines job with type, inherits from `job`
-- `type_job_queue` class: Type-based job queue, inherits from `job_queue`
-- `type_thread_worker` class: Type-based worker thread, inherits from `thread_base`
-- `typed_thread_pool` class: Manages type-based thread pool
+- `typed_job_t` class: Defines job with type, inherits from `job`
+- `typed_job_queue_t` class: Type-based job queue, inherits from `job_queue`
+- `typed_thread_worker_t` class: Type-based worker thread, inherits from `thread_base`
+- `typed_thread_pool_t` class: Manages type-based thread pool
 
 ## Advanced Features & Capabilities
 
 ### 🎛️ **Intelligent Task Scheduling**
-- **Priority-aware job distribution**: Workers can handle multiple type levels with configurable responsibility lists
+- **Type-aware job distribution**: Workers can handle multiple type levels with configurable responsibility lists
 - **Dynamic type adaptation**: Runtime adjustment of worker responsibilities based on workload patterns
 - **FIFO guarantee**: Strict first-in-first-out ordering within same type levels
 - **Work stealing**: Automatic load balancing across worker threads
@@ -238,8 +238,8 @@ Our samples demonstrate real-world usage patterns and best practices:
 
 - **[Asynchronous Logging](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample/logger_sample.cpp)**: High-performance, multi-target logging system
 - **[Basic Thread Pool](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample/thread_pool_sample.cpp)**: Simple job processing with automatic load balancing
-- **[Priority Scheduling](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample/typed_thread_pool_sample.cpp)**: Sophisticated type-based task management
-- **[Custom Priority Types](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample_2/typed_thread_pool_sample_2.cpp)**: Extending the framework with domain-specific types
+- **[Type-based Scheduling](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample/typed_thread_pool_sample.cpp)**: Sophisticated type-based task management
+- **[Custom Job Types](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample_2/typed_thread_pool_sample_2.cpp)**: Extending the framework with domain-specific types
 
 ### 🛠️ **Build & Integration**
 

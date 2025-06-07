@@ -17,7 +17,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 \subsection performance 🚀 Performance Excellence
 - **Zero-overhead abstractions**: Modern C++ design ensures minimal runtime cost
 - **Optimized data structures**: Lock-free algorithms and cache-friendly designs
-- **Adaptive scheduling**: Priority-based job processing for optimal resource utilization
+- **Adaptive scheduling**: Type-based job processing for optimal resource utilization
 - **Scalable architecture**: Linear performance scaling with hardware thread count
 
 \subsection reliability 🛡️ Production-Grade Reliability
@@ -58,13 +58,13 @@ Efficient worker thread management:
 - **Factory functions**: Simple creation with sensible defaults
 - See namespace \ref thread_pool_module for implementation details
 
-\subsection priority_thread_pool Priority Thread Pool System (priority_thread_pool_module)
-Advanced priority-based task scheduling:
-- **Configurable priorities**: Support for custom priority types and levels
-- **Worker specialization**: Per-worker priority responsibility assignment  
-- **FIFO guarantee**: Strict ordering within same priority levels
-- **O(log n) operations**: Optimized priority queue implementation
-- See namespace \ref priority_thread_pool_module for advanced features
+\subsection typed_thread_pool Type-based Thread Pool System (typed_thread_pool_module)
+Advanced type-based task scheduling:
+- **Configurable job types**: Support for custom job type definitions and levels
+- **Worker specialization**: Per-worker type responsibility assignment  
+- **FIFO guarantee**: Strict ordering within same type levels
+- **O(log n) operations**: Optimized type queue implementation
+- See namespace \ref typed_thread_pool_module for advanced features
 
 \subsection utilities Supporting Utilities (utility_module)
 Essential infrastructure components:
@@ -109,31 +109,29 @@ Additional design considerations:
 \subsection five_minute 🚀 5-Minute Setup
 
 \code{.cpp}
-#include "priority_thread_pool.h"
-using namespace priority_thread_pool_module;
+#include "typed_thread_pool.h"
+using namespace typed_thread_pool_module;
 
 int main() {
     // 1. Initialize logging
     log_module::start();
     
-    // 2. Create priority thread pool
-    auto pool = std::make_shared<priority_thread_pool_t<job_priorities>>();
+    // 2. Create type-based thread pool
+    auto pool = std::make_shared<typed_thread_pool_t<job_types>>();
     
     // 3. Add workers with different responsibilities
-    std::vector<std::unique_ptr<priority_thread_worker_t<job_priorities>>> workers;
-    workers.push_back(std::make_unique<priority_thread_worker_t<job_priorities>>(
-        std::vector<job_priorities>{job_priorities::High}));
-    pool->enqueue_batch(std::move(workers));
+    pool->add_worker(job_types::High);  // High type specialist
+    pool->add_worker({job_types::High, job_types::Normal}); // Multi-type worker
     
     // 4. Start processing
     pool->start();
     
-    // 5. Submit jobs with priorities
-    pool->enqueue(std::make_unique<callback_priority_job_t<job_priorities>>(
+    // 5. Submit jobs with types
+    pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
         []() -> result_void {
-            log_module::write_info("Processing high-priority task");
+            log_module::write_info("Processing high-type task");
             return {};
-        }, job_priorities::High));
+        }, job_types::High));
     
     // 6. Clean shutdown
     pool->stop();
@@ -147,8 +145,8 @@ int main() {
 The library includes comprehensive sample code demonstrating:
 - **Basic logger usage**: High-performance, multi-target logging examples
 - **Thread pool processing**: Simple job processing with automatic load balancing
-- **Priority scheduling**: Sophisticated priority-based task management  
-- **Custom priority types**: Extending framework with domain-specific priorities
+- **Type-based scheduling**: Sophisticated type-based task management  
+- **Custom job types**: Extending framework with domain-specific types
 - **Error handling patterns**: Robust error management and recovery
 - **Performance optimization**: Benchmarking and tuning techniques
 
@@ -277,18 +275,18 @@ Key classes:
 - thread_worker: Individual worker thread implementation
 - Factory functions for easy pool creation
 
-\namespace priority_thread_pool_module
-\brief Priority-based thread pool implementation for job scheduling with priorities.
+\namespace typed_thread_pool_module
+\brief Type-based thread pool implementation for job scheduling with custom types.
 
-The priority_thread_pool_module namespace extends the basic thread pool concept
-with priority-based scheduling of jobs, allowing tasks to be processed according
-to their importance rather than just their order of submission.
+The typed_thread_pool_module namespace extends the basic thread pool concept
+with type-based scheduling of jobs, allowing tasks to be processed according
+to their type classification rather than just their order of submission.
 
 Key classes:
-- priority_thread_pool_t: Template-based priority pool
-- priority_thread_worker_t: Worker with priority awareness
-- priority_job_t: Jobs with associated priority levels
-- priority_job_queue_t: Priority-aware job queue
+- typed_thread_pool_t: Template-based type pool
+- typed_thread_worker_t: Worker with type awareness
+- typed_job_t: Jobs with associated type levels
+- typed_job_queue_t: Type-aware job queue
 
 \namespace log_module
 \brief Thread-safe logging system built on the thread system foundation.
