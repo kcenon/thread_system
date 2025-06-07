@@ -1,0 +1,6 @@
+<map id="thread_module::cpu_affinity::generate_affinity_sets" name="thread_module::cpu_affinity::generate_affinity_sets">
+<area shape="rect" id="Node000001" title="Generate CPU affinity sets based on policy." alt="" coords="5,29,156,84"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="39,29,39,19,47,10,61,5,81,3,105,6,118,14,116,18,103,11,81,8,62,10,50,15,44,21,45,29"/>
+<area shape="rect" id="Node000002" href="$dc/df8/classthread__module_1_1cpu__affinity.html#ad94fa58e3463383f096999439ed7b0a9" title="Get the number of available CPU cores." alt="" coords="204,37,380,77"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="156,54,190,54,190,59,156,59"/>
+</map>

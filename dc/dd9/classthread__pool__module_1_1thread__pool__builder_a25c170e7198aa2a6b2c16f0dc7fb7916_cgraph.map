@@ -1,9 +1,14 @@
 <map id="thread_pool_module::thread_pool_builder::build_and_start" name="thread_pool_module::thread_pool_builder::build_and_start">
-<area shape="rect" id="Node000001" title="Builds and starts a thread pool with the configured options." alt="" coords="5,41,164,96"/>
-<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="215,5,374,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,52,201,46,202,51,165,58"/>
-<area shape="rect" id="Node000004" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="212,85,377,125"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,80,199,86,198,91,164,85"/>
-<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="425,13,591,53"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="374,30,412,30,412,35,374,35"/>
+<area shape="rect" id="Node000001" title="Builds and starts a thread pool with the configured options." alt="" coords="5,101,164,156"/>
+<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="215,65,374,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,112,201,106,202,111,165,118"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="212,145,377,185"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="165,140,199,146,198,151,164,145"/>
+<area shape="rect" id="Node000003" href="$dc/df8/classthread__module_1_1cpu__affinity.html#a715e440506bb80ee34fd2f3d55b63e26" title="Generate CPU affinity sets based on policy." alt="" coords="433,29,583,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="374,77,419,69,419,74,375,82"/>
+<area shape="rect" id="Node000005" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="425,109,591,149"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="375,103,412,110,411,115,374,109"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="466,29,466,19,474,10,488,5,508,3,532,6,546,14,543,18,531,11,508,8,489,10,477,15,471,21,471,29"/>
+<area shape="rect" id="Node000004" href="$dc/df8/classthread__module_1_1cpu__affinity.html#ad94fa58e3463383f096999439ed7b0a9" title="Get the number of available CPU cores." alt="" coords="639,37,815,77"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="584,54,625,54,625,59,584,59"/>
 </map>

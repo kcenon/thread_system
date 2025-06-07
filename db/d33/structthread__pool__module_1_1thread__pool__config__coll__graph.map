@@ -1,7 +1,11 @@
 <map id="thread_pool_module::thread_pool_config" name="thread_pool_module::thread_pool_config">
-<area shape="rect" id="Node000001" title="Configuration options for a thread pool." alt="" coords="5,263,172,463"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="49,135,128,200"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,200,91,246,86,246,86,200"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="23,5,154,85"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,99,91,134,86,134,86,99"/>
+<area shape="rect" id="Node000001" title="Configuration options for a thread pool." alt="" coords="75,305,242,545"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,163,110,228"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,228,70,254,75,281,77,289,72,291,69,282,65,255,65,228"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,136,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,99,73,162,68,162,68,99"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="169,148,324,243"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="234,244,220,282,216,291,211,289,215,280,229,242"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="179,13,314,78"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="249,78,249,131,244,131,244,78"/>
 </map>

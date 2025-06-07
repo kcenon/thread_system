@@ -1,17 +1,17 @@
 <map id="thread_module::thread_base" name="thread_module::thread_base">
-<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="254,291,454,676"/>
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="254,291,454,736"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,155,89,221"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,219,244,373,240,377,79,223"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,219,245,393,241,397,75,223"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="114,148,261,228"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,227,248,290,243,293,207,230"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,227,249,303,244,305,205,229"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="145,13,229,78"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,78,190,132,185,132,185,78"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="285,155,431,221"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="359,221,358,252,358,274,352,274,353,252,354,221"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="460,155,539,221"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="492,222,475,268,464,292,459,290,470,266,487,220"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="492,222,475,268,463,296,458,294,470,266,487,220"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="434,5,565,85"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="502,100,502,155,497,155,497,100"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="563,148,707,228"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="609,230,577,268,468,381,464,377,573,265,605,227"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="608,230,577,268,467,394,463,390,573,265,604,227"/>
 </map>

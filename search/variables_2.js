@@ -16,5 +16,7 @@ var searchData=
   ['console_5fqueue_5f_13',['console_queue_',['../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c',1,'log_module::log_collector']]],
   ['console_5fwriter_5f_14',['console_writer_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c',1,'log_module::implementation::logger']]],
   ['continuation_5f_15',['continuation_',['../dd/d46/classthread__pool__module_1_1task__promise.html#a995155cbd018536baf034d694ec499be',1,'thread_pool_module::task_promise::continuation_'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a031994c885ab6ac85977984606583286',1,'thread_pool_module::task_promise&lt; void &gt;::continuation_']]],
-  ['cv_5fmutex_5f_16',['cv_mutex_',['../da/d94/classthread__module_1_1thread__base.html#a68e452ea7136f242b1e1b8e84758cd5c',1,'thread_module::thread_base']]]
+  ['cpu_5faffinity_5f_16',['cpu_affinity_',['../da/d94/classthread__module_1_1thread__base.html#a199c92fb463fba7a0a9320ed574d2545',1,'thread_module::thread_base']]],
+  ['custom_5fcores_17',['custom_cores',['../d6/dc0/structthread__pool__module_1_1thread__pool__config.html#a7c9bc7fb112c6047faf8ccfbdabffd67',1,'thread_pool_module::thread_pool_config']]],
+  ['cv_5fmutex_5f_18',['cv_mutex_',['../da/d94/classthread__module_1_1thread__base.html#a68e452ea7136f242b1e1b8e84758cd5c',1,'thread_module::thread_base']]]
 ];

@@ -1,9 +1,13 @@
 <map id="thread_pool_module::thread_pool_builder" name="thread_pool_module::thread_pool_builder">
-<area shape="rect" id="Node000001" title="A builder class for creating and configuring thread pools with a fluent interface." alt="" coords="5,525,209,805"/>
-<area shape="rect" id="Node000002" href="$d6/dc0/structthread__pool__module_1_1thread__pool__config.html" title="Configuration options for a thread pool." alt="" coords="24,263,191,463"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,463,110,509,105,509,105,463"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="68,135,147,200"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,200,110,246,105,246,105,200"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="42,5,173,85"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="110,99,110,134,105,134,105,99"/>
+<area shape="rect" id="Node000001" title="A builder class for creating and configuring thread pools with a fluent interface." alt="" coords="56,608,261,948"/>
+<area shape="rect" id="Node000002" href="$d6/dc0/structthread__pool__module_1_1thread__pool__config.html" title="Configuration options for a thread pool." alt="" coords="75,305,242,545"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,546,161,592,156,592,156,546"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,163,110,228"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="70,228,70,254,75,281,77,289,72,291,69,282,65,255,65,228"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,5,136,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="73,99,73,162,68,162,68,99"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="169,148,324,243"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="234,244,220,282,216,291,211,289,215,280,229,242"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="179,13,314,78"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="249,78,249,131,244,131,244,78"/>
 </map>

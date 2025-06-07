@@ -1,5 +1,5 @@
 <map id="log_module::callback_writer" name="log_module::callback_writer">
-<area shape="rect" id="Node000001" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="13,539,197,719"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,491"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,504,108,538,103,538,103,504"/>
+<area shape="rect" id="Node000001" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="13,599,197,779"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,551"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,564,108,598,103,598,103,564"/>
 </map>
