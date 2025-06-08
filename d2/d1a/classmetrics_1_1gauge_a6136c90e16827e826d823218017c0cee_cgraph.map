@@ -1,5 +1,0 @@
-<map id="metrics::gauge::decrement" name="metrics::gauge::decrement">
-<area shape="rect" id="Node000001" title="Decrement gauge by delta." alt="" coords="5,13,203,38"/>
-<area shape="rect" id="Node000002" href="$d2/d1a/classmetrics_1_1gauge.html#a50be9c8f4d3c6b06351c55b8e7d22c09" title=" " alt="" coords="251,5,423,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,23,237,23,237,28,203,28"/>
-</map>

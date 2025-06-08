@@ -1,9 +1,0 @@
-<map id="typed_thread_pool_module::monitored_typed_thread_pool_t::update_stats" name="typed_thread_pool_module::monitored_typed_thread_pool_t::update_stats">
-<area shape="rect" id="Node000001" title="Update worker and queue statistics." alt="" coords="499,45,697,100"/>
-<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ac1465231092be4c1c728b10f068dfdb6" title="Start the thread pool with metrics tracking." alt="" coords="252,5,451,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="485,57,451,51,451,46,486,52"/>
-<area shape="rect" id="Node000003" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3062532f4e753519520f73a60123ec39" title="Stop the thread pool and finalize metrics." alt="" coords="252,84,451,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="486,93,451,98,451,93,485,88"/>
-<area shape="rect" id="Node000004" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8a8db16946c2c1376b72d4bf8097b7a3" title="Destructor ensures clean shutdown." alt="" coords="5,77,204,146"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="238,114,204,114,204,109,238,109"/>
-</map>

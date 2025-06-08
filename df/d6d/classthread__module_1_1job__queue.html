@@ -216,7 +216,7 @@ Typical Usage</h3>
 <li>Call <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ab8a339ad45cb198d07e0a73b005b3d60" title="Signals the queue to stop waiting for new jobs (e.g., during shutdown).">stop_waiting_dequeue()</a></code> and possibly <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b" title="Removes all jobs currently in the queue without processing them.">clear()</a></code> to shut down the queue gracefully when all jobs are done or when the system is stopping. </li>
 </ol>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00075">75</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00074">74</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9d44b5378a8b8db169cc49f56b8d7c24" name="a9d44b5378a8b8db169cc49f56b8d7c24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d44b5378a8b8db169cc49f56b8d7c24">&#9670;&#160;</a></span>job_queue()</h2>
@@ -238,11 +238,11 @@ Typical Usage</h3>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00037">37</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   37</span>: <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a3d291457b201a92d3ed9b0761b00c133">notify_</a>(<span class="keyword">true</span>), <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>(<span class="keyword">false</span>), <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a5655e208476810a1b4437bab0f57045c">mutex_</a>(), <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>(), <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>() {}</div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a092523f285ed29d9e7db6b5f665c984b"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">thread_module::job_queue::stop_</a></div><div class="ttdeci">std::atomic_bool stop_</div><div class="ttdoc">Indicates whether the queue has been signaled to stop.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00204">job_queue.h:204</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a3d291457b201a92d3ed9b0761b00c133"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a3d291457b201a92d3ed9b0761b00c133">thread_module::job_queue::notify_</a></div><div class="ttdeci">std::atomic_bool notify_</div><div class="ttdoc">If true, threads waiting for new jobs are notified when a new job is enqueued. If false,...</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00196">job_queue.h:196</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a55397528ca3262d79d1a8693459af310"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">thread_module::job_queue::queue_</a></div><div class="ttdeci">std::deque&lt; std::unique_ptr&lt; job &gt; &gt; queue_</div><div class="ttdoc">The underlying container storing the jobs in FIFO order.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00229">job_queue.h:229</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a5655e208476810a1b4437bab0f57045c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a5655e208476810a1b4437bab0f57045c">thread_module::job_queue::mutex_</a></div><div class="ttdeci">std::mutex mutex_</div><div class="ttdoc">Mutex to protect access to the underlying queue_ container and related state.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00212">job_queue.h:212</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a862c8cfa56448b7db38792ed3ff56e1c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">thread_module::job_queue::condition_</a></div><div class="ttdeci">std::condition_variable condition_</div><div class="ttdoc">Condition variable used to signal worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00220">job_queue.h:220</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a092523f285ed29d9e7db6b5f665c984b"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">thread_module::job_queue::stop_</a></div><div class="ttdeci">std::atomic_bool stop_</div><div class="ttdoc">Indicates whether the queue has been signaled to stop.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00203">job_queue.h:203</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a3d291457b201a92d3ed9b0761b00c133"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a3d291457b201a92d3ed9b0761b00c133">thread_module::job_queue::notify_</a></div><div class="ttdeci">std::atomic_bool notify_</div><div class="ttdoc">If true, threads waiting for new jobs are notified when a new job is enqueued. If false,...</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00195">job_queue.h:195</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a55397528ca3262d79d1a8693459af310"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">thread_module::job_queue::queue_</a></div><div class="ttdeci">std::deque&lt; std::unique_ptr&lt; job &gt; &gt; queue_</div><div class="ttdoc">The underlying container storing the jobs in FIFO order.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00228">job_queue.h:228</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a5655e208476810a1b4437bab0f57045c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a5655e208476810a1b4437bab0f57045c">thread_module::job_queue::mutex_</a></div><div class="ttdeci">std::mutex mutex_</div><div class="ttdoc">Mutex to protect access to the underlying queue_ container and related state.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00211">job_queue.h:211</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a862c8cfa56448b7db38792ed3ff56e1c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">thread_module::job_queue::condition_</a></div><div class="ttdeci">std::condition_variable condition_</div><div class="ttdoc">Condition variable used to signal worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00219">job_queue.h:219</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,7 +317,7 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  147</span> </div>
 <div class="line"><span class="lineno">  148</span>        <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_all();</div>
 <div class="line"><span class="lineno">  149</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a3c06806fbe961aa879320e021979ebfe"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a3c06806fbe961aa879320e021979ebfe">thread_module::job_queue::queue_size_</a></div><div class="ttdeci">std::atomic_size_t queue_size_</div><div class="ttdoc">Tracks the current number of jobs in the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00237">job_queue.h:237</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a3c06806fbe961aa879320e021979ebfe"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a3c06806fbe961aa879320e021979ebfe">thread_module::job_queue::queue_size_</a></div><div class="ttdeci">std::atomic_size_t queue_size_</div><div class="ttdoc">Tracks the current number of jobs in the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00236">job_queue.h:236</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a98766e5e2f65449e7826203259fbe48a"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a">thread_module::job_queue::empty</a></div><div class="ttdeci">auto empty(void) const -&gt; bool</div><div class="ttdoc">Checks if the queue is currently empty.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00151">job_queue.cpp:151</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -359,7 +359,7 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  112</span> </div>
 <div class="line"><span class="lineno">  113</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>.empty())</div>
 <div class="line"><span class="lineno">  114</span>        {</div>
-<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;there are no jobs to dequeue&quot;</span>};</div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;there are no jobs to dequeue&quot;</span>};</div>
 <div class="line"><span class="lineno">  116</span>        }</div>
 <div class="line"><span class="lineno">  117</span> </div>
 <div class="line"><span class="lineno">  118</span>        <span class="keyword">auto</span> value = std::move(<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>.front());</div>
@@ -368,7 +368,6 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  121</span> </div>
 <div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> value;</div>
 <div class="line"><span class="lineno">  123</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">thread_module::error_code::queue_empty</a></div><div class="ttdeci">@ queue_empty</div></div>
 </div><!-- fragment -->
 </div>
@@ -496,12 +495,12 @@ Here is the caller graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>    {</div>
 <div class="line"><span class="lineno">   49</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load())</div>
 <div class="line"><span class="lineno">   50</span>        {</div>
-<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
 <div class="line"><span class="lineno">   52</span>        }</div>
 <div class="line"><span class="lineno">   53</span> </div>
 <div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (value == <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   55</span>        {</div>
-<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job&quot;</span>};</div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job&quot;</span>};</div>
 <div class="line"><span class="lineno">   57</span>        }</div>
 <div class="line"><span class="lineno">   58</span> </div>
 <div class="line"><span class="lineno">   59</span>        std::scoped_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a5655e208476810a1b4437bab0f57045c">mutex_</a>);</div>
@@ -560,19 +559,19 @@ Here is the caller graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   73</span>    {</div>
 <div class="line"><span class="lineno">   74</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load())</div>
 <div class="line"><span class="lineno">   75</span>        {</div>
-<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
+<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
 <div class="line"><span class="lineno">   77</span>        }</div>
 <div class="line"><span class="lineno">   78</span> </div>
 <div class="line"><span class="lineno">   79</span>        <span class="keywordflow">if</span> (jobs.empty())</div>
 <div class="line"><span class="lineno">   80</span>        {</div>
-<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue empty batch&quot;</span>};</div>
+<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue empty batch&quot;</span>};</div>
 <div class="line"><span class="lineno">   82</span>        }</div>
 <div class="line"><span class="lineno">   83</span> </div>
 <div class="line"><span class="lineno">   84</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; job : jobs)</div>
 <div class="line"><span class="lineno">   85</span>        {</div>
 <div class="line"><span class="lineno">   86</span>            <span class="keywordflow">if</span> (job == <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   87</span>            {</div>
-<div class="line"><span class="lineno">   88</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job in batch&quot;</span>};</div>
+<div class="line"><span class="lineno">   88</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job in batch&quot;</span>};</div>
 <div class="line"><span class="lineno">   89</span>            }</div>
 <div class="line"><span class="lineno">   90</span>        }</div>
 <div class="line"><span class="lineno">   91</span> </div>
@@ -787,7 +786,7 @@ Here is the caller graph for this function:</div>
 <p>Condition variable used to signal worker threads. </p>
 <p>Used in combination with <code>mutex_</code> to block or notify threads waiting for new jobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00220">220</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00219">219</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -814,7 +813,7 @@ Here is the caller graph for this function:</div>
 <p>Mutex to protect access to the underlying <code>queue_</code> container and related state. </p>
 <p>Any operation that modifies or reads the queue should lock this mutex to ensure thread safety. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00212">212</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00211">211</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -840,7 +839,7 @@ Here is the caller graph for this function:</div>
 
 <p>If <code>true</code>, threads waiting for new jobs are notified when a new job is enqueued. If <code>false</code>, enqueuing does not automatically trigger a notification. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00196">196</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00195">195</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -867,7 +866,7 @@ Here is the caller graph for this function:</div>
 <p>The underlying container storing the jobs in FIFO order. </p>
 <dl class="section note"><dt>Note</dt><dd>This container is guarded by <code>mutex_</code> and should only be modified while holding the lock. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00229">229</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00228">228</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -894,7 +893,7 @@ Here is the caller graph for this function:</div>
 <p>Tracks the current number of jobs in the queue. </p>
 <p>Though <code>queue_.size()</code> could be used, maintaining an atomic size counter can improve performance in certain scenarios. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00237">237</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00236">236</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -921,7 +920,7 @@ Here is the caller graph for this function:</div>
 <p>Indicates whether the queue has been signaled to stop. </p>
 <p>Setting <code>stop_</code> to <code>true</code> typically causes waiting threads to unblock and exit their waiting loop. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00204">204</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00203">203</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -932,7 +931,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

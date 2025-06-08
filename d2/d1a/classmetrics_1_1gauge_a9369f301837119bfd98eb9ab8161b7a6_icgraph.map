@@ -1,5 +1,0 @@
-<map id="metrics::gauge::get" name="metrics::gauge::get">
-<area shape="rect" id="Node000001" title="Get current gauge value." alt="" coords="228,5,376,31"/>
-<area shape="rect" id="Node000002" href="$d2/d1a/classmetrics_1_1gauge.html#a0126de78c8bbd83ab3c9cc42d438c0a7" title="Convert metric to JSON representation." alt="" coords="5,5,180,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,21,180,21,180,15,214,15"/>
-</map>

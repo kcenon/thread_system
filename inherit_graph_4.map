@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d3/d19/structmetrics_1_1histogram_1_1bucket.html" title=" " alt="" coords="5,5,164,60"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,69,151,109"/>
+<area shape="rect" id="Node000001" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="224,5,372,45"/>
+<area shape="poly" id="edge17_Node000000_Node000001" title=" " alt="" coords="160,63,228,43,229,48,161,68"/>
+<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="221,69,375,109"/>
+<area shape="poly" id="edge19_Node000000_Node000003" title=" " alt="" coords="165,87,220,87,220,92,165,92"/>
+<area shape="rect" id="Node000004" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="199,134,397,189"/>
+<area shape="poly" id="edge20_Node000000_Node000004" title=" " alt="" coords="153,111,215,131,213,137,152,116"/>
+<area shape="rect" id="Node000002" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="445,5,684,45"/>
+<area shape="poly" id="edge18_Node000001_Node000002" title=" " alt="" coords="386,23,445,23,445,28,386,28"/>
 </map>

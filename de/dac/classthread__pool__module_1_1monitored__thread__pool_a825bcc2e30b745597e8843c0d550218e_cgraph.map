@@ -1,7 +1,0 @@
-<map id="thread_pool_module::monitored_thread_pool::start" name="thread_pool_module::monitored_thread_pool::start">
-<area shape="rect" id="Node000001" title="Start the thread pool with metrics tracking." alt="" coords="5,30,187,85"/>
-<area shape="rect" id="Node000002" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="235,5,400,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,42,221,37,222,42,187,47"/>
-<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f" title="Starts the thread pool and all associated workers." alt="" coords="240,69,395,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,68,227,74,226,79,187,73"/>
-</map>

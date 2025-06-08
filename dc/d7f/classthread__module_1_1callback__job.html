@@ -246,7 +246,7 @@ Protected Attributes</h2></td></tr>
 <div class="line">);</div>
 <div class="line"><span class="comment">// Submit &#39;data_job&#39; to a queue or execute it directly...</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00095">95</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00094">94</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5a334d1a712ee0ff58e23e89e80bd7a3" name="a5a334d1a712ee0ff58e23e89e80bd7a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a334d1a712ee0ff58e23e89e80bd7a3">&#9670;&#160;</a></span>callback_job() <span class="overload">[1/2]</span></h2>
@@ -294,21 +294,20 @@ Protected Attributes</h2></td></tr>
 <div class="line">    },</div>
 <div class="line">    <span class="stringliteral">&quot;my_named_job&quot;</span></div>
 <div class="line">);</div>
-<div class="ttc" id="aclassthread__module_1_1callback__job_html"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html">thread_module::callback_job</a></div><div class="ttdoc">A specialized job class that encapsulates user-defined callbacks.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00095">callback_job.h:96</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1callback__job_html"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html">thread_module::callback_job</a></div><div class="ttdoc">A specialized job class that encapsulates user-defined callbacks.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00094">callback_job.h:95</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../df/d63/callback__job_8cpp_source.html#l00038">38</a> of file <a class="el" href="../../df/d63/callback__job_8cpp_source.html">callback_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   40</span>        : <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">job</a>(name), <a class="code hl_variable" href="../../dc/d7f/classthread__module_1_1callback__job.html#af96aa97ba4758fbb48b1a61543819f50">callback_</a>([callback](<span class="keywordtype">void</span>) -&gt; result_void {</div>
 <div class="line"><span class="lineno">   41</span>            <span class="keyword">auto</span> result = callback();</div>
 <div class="line"><span class="lineno">   42</span>            <span class="keywordflow">if</span> (result.has_value()) {</div>
-<div class="line"><span class="lineno">   43</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
+<div class="line"><span class="lineno">   43</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
 <div class="line"><span class="lineno">   44</span>            }</div>
 <div class="line"><span class="lineno">   45</span>            <span class="keywordflow">return</span> result_void{};</div>
 <div class="line"><span class="lineno">   46</span>        }), <a class="code hl_variable" href="../../dc/d7f/classthread__module_1_1callback__job.html#a93cb87a00d4eeed3bac41dd624b96131">data_callback_</a>(<span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   47</span>    {</div>
 <div class="line"><span class="lineno">   48</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1callback__job_html_a93cb87a00d4eeed3bac41dd624b96131"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html#a93cb87a00d4eeed3bac41dd624b96131">thread_module::callback_job::data_callback_</a></div><div class="ttdeci">std::function&lt; result_void(const std::vector&lt; uint8_t &gt; &amp;)&gt; data_callback_</div><div class="ttdoc">Stores the user-defined callback that takes a std::vector&lt;uint8_t&gt;.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00194">callback_job.h:194</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1callback__job_html_af96aa97ba4758fbb48b1a61543819f50"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html#af96aa97ba4758fbb48b1a61543819f50">thread_module::callback_job::callback_</a></div><div class="ttdeci">std::function&lt; result_void(void)&gt; callback_</div><div class="ttdoc">Stores the user-defined callback that does not take any parameters.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00186">callback_job.h:186</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1callback__job_html_a93cb87a00d4eeed3bac41dd624b96131"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html#a93cb87a00d4eeed3bac41dd624b96131">thread_module::callback_job::data_callback_</a></div><div class="ttdeci">std::function&lt; result_void(const std::vector&lt; uint8_t &gt; &amp;)&gt; data_callback_</div><div class="ttdoc">Stores the user-defined callback that takes a std::vector&lt;uint8_t&gt;.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00193">callback_job.h:193</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1callback__job_html_af96aa97ba4758fbb48b1a61543819f50"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html#af96aa97ba4758fbb48b1a61543819f50">thread_module::callback_job::callback_</a></div><div class="ttdeci">std::function&lt; result_void(void)&gt; callback_</div><div class="ttdoc">Stores the user-defined callback that does not take any parameters.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00185">callback_job.h:185</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_aa314ee0ab4b682df44690c1e9f26153c"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">thread_module::job::job</a></div><div class="ttdeci">job(const std::string &amp;name=&quot;job&quot;)</div><div class="ttdoc">Constructs a new job with an optional human-readable name.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00041">job.cpp:41</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">thread_module::error_code::job_execution_failed</a></div><div class="ttdeci">@ job_execution_failed</div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -389,7 +388,7 @@ Here is the call graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   54</span>        : <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#aa314ee0ab4b682df44690c1e9f26153c">job</a>(data, name), <a class="code hl_variable" href="../../dc/d7f/classthread__module_1_1callback__job.html#a93cb87a00d4eeed3bac41dd624b96131">data_callback_</a>([data_callback](<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; data) -&gt; result_void {</div>
 <div class="line"><span class="lineno">   55</span>            <span class="keyword">auto</span> result = data_callback(data);</div>
 <div class="line"><span class="lineno">   56</span>            <span class="keywordflow">if</span> (result.has_value()) {</div>
-<div class="line"><span class="lineno">   57</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
+<div class="line"><span class="lineno">   57</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
 <div class="line"><span class="lineno">   58</span>            }</div>
 <div class="line"><span class="lineno">   59</span>            <span class="keywordflow">return</span> result_void{};</div>
 <div class="line"><span class="lineno">   60</span>        }), <a class="code hl_variable" href="../../dc/d7f/classthread__module_1_1callback__job.html#af96aa97ba4758fbb48b1a61543819f50">callback_</a>(<span class="keyword">nullptr</span>)</div>
@@ -525,7 +524,7 @@ Here is the call graph for this function:</div>
 <p>Stores the user-defined callback that does not take any parameters. </p>
 <p>This callback is only valid if the <code><a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user-defined callbacks.">callback_job</a></code> was constructed via the parameterless constructor. If this member is used, <code>data_callback_</code> should be null. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00186">186</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00185">185</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +551,7 @@ Here is the call graph for this function:</div>
 <p>Stores the user-defined callback that takes a <code>std::vector&lt;uint8_t&gt;</code>. </p>
 <p>This callback is only valid if the <code><a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user-defined callbacks.">callback_job</a></code> was constructed via the data-based constructor. If this member is used, <code>callback_</code> should be null. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00194">194</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00193">193</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
 
 </div>
 </div>
@@ -578,7 +577,7 @@ Here is the call graph for this function:</div>
 
 <p>Compatibility layer for the old style callbacks. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00199">199</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00198">198</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
 
 </div>
 </div>
@@ -602,7 +601,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00200">200</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/ddd/callback__job_8h_source.html#l00199">199</a> of file <a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>.</p>
 
 </div>
 </div>
@@ -613,7 +612,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

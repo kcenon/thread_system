@@ -1,5 +1,0 @@
-<map id="typed_thread_pool_module::typed_thread_pool_t::enqueue" name="typed_thread_pool_module::typed_thread_pool_t::enqueue">
-<area shape="rect" id="Node000001" title="Enqueues a priority job into the thread pool&#39;s job queue." alt="" coords="252,5,451,60"/>
-<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8f81039a426cc91c40fd79a709915c31" title="Enqueue a job with automatic metrics tracking." alt="" coords="5,5,204,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
-</map>

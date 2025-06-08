@@ -8,7 +8,5 @@ var searchData=
   ['has_5futf8_5fbom_5',['has_utf8_bom',['../d1/d53/classutility__module_1_1convert__string.html#ae78b53cb309a989bbc39ffbbcb73054b',1,'utility_module::convert_string']]],
   ['has_5fvalue_6',['has_value',['../d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a',1,'thread_module::result::has_value()'],['../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a3096085317afb935346b0fb8ad5440a2',1,'thread_module::result&lt; void &gt;::has_value()']]],
   ['has_5fvalue_5f_7',['has_value_',['../d2/d93/classthread__module_1_1result.html#ac4a8added152cb6b99157d966d21871c',1,'thread_module::result']]],
-  ['help_8',['🤝 Getting Help',['../index.html#getting_help',1,'']]],
-  ['histogram_9',['histogram',['../d2/d1f/classmetrics_1_1histogram.html',1,'metrics::histogram&lt; T, BucketCount &gt;'],['../d2/d1f/classmetrics_1_1histogram.html#a028d2605e4ec40cedd49c203e10ac1dc',1,'metrics::histogram::histogram()']]],
-  ['histogram_3c_20double_20_3e_10',['histogram&lt; double &gt;',['../d2/d1f/classmetrics_1_1histogram.html',1,'metrics']]]
+  ['help_8',['🤝 Getting Help',['../index.html#getting_help',1,'']]]
 ];

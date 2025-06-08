@@ -1,7 +1,5 @@
 <map id="thread_pool_module::thread_pool" name="thread_pool_module::thread_pool">
-<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="33,133,179,473"/>
-<area shape="rect" id="Node000003" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html" title="Thread pool with integrated metrics collection." alt="" coords="5,521,207,961"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,487,109,521,103,521,103,487"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="11,5,201,85"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,99,109,133,103,133,103,99"/>
+<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="27,133,174,473"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,196,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,99,103,133,98,133,98,99"/>
 </map>

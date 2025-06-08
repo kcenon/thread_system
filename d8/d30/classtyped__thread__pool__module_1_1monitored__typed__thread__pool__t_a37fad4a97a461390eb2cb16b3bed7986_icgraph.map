@@ -1,5 +1,0 @@
-<map id="typed_thread_pool_module::monitored_typed_thread_pool_t::register_job_type_metrics" name="typed_thread_pool_module::monitored_typed_thread_pool_t::register_job_type_metrics">
-<area shape="rect" id="Node000001" title="Register metrics for each job type." alt="" coords="252,5,451,75"/>
-<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a9b1bd71bc2996f3a6479ffb45e6e5d97" title="Construct a monitored typed thread pool." alt="" coords="5,5,204,75"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,43,204,43,204,37,238,37"/>
-</map>

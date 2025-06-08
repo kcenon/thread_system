@@ -1,5 +1,0 @@
-<map id="metrics::histogram::to_json" name="metrics::histogram::to_json">
-<area shape="rect" id="Node000001" title="Convert metric to JSON representation." alt="" coords="5,5,151,45"/>
-<area shape="rect" id="Node000002" href="$d2/d1f/classmetrics_1_1histogram.html#a7c7cf3b5ba329923c5385726c9951b9f" title="Calculate percentile." alt="" coords="199,5,344,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,23,184,23,184,28,151,28"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="thread_pool_module::monitored_thread_pool::stop" name="thread_pool_module::monitored_thread_pool::stop">
-<area shape="rect" id="Node000001" title="Stop the thread pool and finalize metrics." alt="" coords="5,5,223,45"/>
-<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="271,5,425,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,23,257,23,257,28,223,28"/>
-<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="473,13,651,38"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="426,23,460,23,460,28,426,28"/>
-<area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="699,5,909,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="651,23,685,23,685,28,651,28"/>
-</map>

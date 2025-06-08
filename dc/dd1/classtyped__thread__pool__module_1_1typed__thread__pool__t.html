@@ -90,11 +90,9 @@ Inheritance diagram for typed_thread_pool_module::typed_thread_pool_t&lt; job_ty
 <div class="dyncontent">
 <div class="center"><img src="../../df/d07/classtyped__thread__pool__module_1_1typed__thread__pool__t__inherit__graph.png" border="0" usemap="#atyped__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="atyped__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_inherit__map" id="atyped__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_inherit__map">
-<area shape="rect" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="14,148,205,523"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html" title="Type&#45;based thread pool with integrated metrics collection." alt="" coords="5,571,213,1055"/>
-<area shape="poly" title=" " alt="" coords="112,536,112,570,107,570,107,536"/>
-<area shape="rect" title=" " alt="" coords="17,5,201,100"/>
-<area shape="poly" title=" " alt="" coords="112,114,112,148,107,148,107,114"/>
+<area shape="rect" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="5,148,196,523"/>
+<area shape="rect" title=" " alt="" coords="9,5,193,100"/>
+<area shape="poly" title=" " alt="" coords="103,114,103,148,98,148,98,114"/>
 </map>
 </div>
 <div class="dynheader">
@@ -363,16 +361,6 @@ template&lt;typename job_type  = job_types&gt; </div>
 <h3><a class="anchor" id="autotoc_md37"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_af1e50f01d4b411619b6e3aa67dd6d505_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_af1e50f01d4b411619b6e3aa67dd6d505_icgraph" alt=""/></div>
-<map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_af1e50f01d4b411619b6e3aa67dd6d505_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_af1e50f01d4b411619b6e3aa67dd6d505_icgraph">
-<area shape="rect" title="Enqueues a priority job into the thread pool&#39;s job queue." alt="" coords="252,5,451,60"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8f81039a426cc91c40fd79a709915c31" title="Enqueue a job with automatic metrics tracking." alt="" coords="5,5,204,60"/>
-<area shape="poly" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -449,16 +437,6 @@ template&lt;typename job_type  = job_types&gt; </div>
 <h3><a class="anchor" id="autotoc_md38"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad9a99efe16d557ccc1b0105d512400de_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad9a99efe16d557ccc1b0105d512400de_icgraph" alt=""/></div>
-<map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad9a99efe16d557ccc1b0105d512400de_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad9a99efe16d557ccc1b0105d512400de_icgraph">
-<area shape="rect" title="Enqueues a batch of priority jobs into the thread pool&#39;s job queue." alt="" coords="252,5,451,60"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ae91102077efa671f32ff814c00f62f8d" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="5,5,204,60"/>
-<area shape="poly" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -525,25 +503,6 @@ template&lt;typename job_type  = job_types&gt; </div>
 <h3><a class="anchor" id="autotoc_md36"></a>
 Thread Safety</h3>
 <p>This queue is shared and used by worker threads, so care should be taken if you modify or replace the queue. Typically, external code only needs to enqueue new jobs via <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#af1e50f01d4b411619b6e3aa67dd6d505" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>, rather than directly accessing the queue. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a2b87bf57ff48f577f97a267429a31045_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a2b87bf57ff48f577f97a267429a31045_icgraph" alt=""/></div>
-<map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a2b87bf57ff48f577f97a267429a31045_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a2b87bf57ff48f577f97a267429a31045_icgraph">
-<area shape="rect" title="Retrieves the underlying priority job queue managed by this thread pool." alt="" coords="1012,45,1211,100"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a65a9ab6c68cab8a44cb72e2bc1f6fa3e" title="Count active workers (approximation)" alt="" coords="745,12,964,67"/>
-<area shape="poly" title=" " alt="" coords="998,61,964,56,964,51,999,55"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ade4ddf35377fc26d05a46bb97c9480d3" title="Update worker and queue statistics." alt="" coords="499,45,697,100"/>
-<area shape="poly" title=" " alt="" coords="998,80,964,81,745,81,697,79,698,74,745,75,964,75,998,75"/>
-<area shape="poly" title=" " alt="" coords="732,58,698,62,697,57,731,53"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ac1465231092be4c1c728b10f068dfdb6" title="Start the thread pool with metrics tracking." alt="" coords="252,5,451,60"/>
-<area shape="poly" title=" " alt="" coords="485,57,451,51,451,46,486,52"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3062532f4e753519520f73a60123ec39" title="Stop the thread pool and finalize metrics." alt="" coords="252,84,451,139"/>
-<area shape="poly" title=" " alt="" coords="486,93,451,98,451,93,485,88"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8a8db16946c2c1376b72d4bf8097b7a3" title="Destructor ensures clean shutdown." alt="" coords="5,77,204,146"/>
-<area shape="poly" title=" " alt="" coords="238,114,204,114,204,109,238,109"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -626,16 +585,6 @@ template&lt;typename job_type  = job_types&gt; </div>
 <h3><a class="anchor" id="autotoc_md35"></a>
 Thread Safety</h3>
 <p>This method is typically called once, before using other methods such as <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#af1e50f01d4b411619b6e3aa67dd6d505" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>. Calling <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#ad1c83030818a61aa827fb454aec77202" title="Starts the thread pool by creating worker threads and initializing internal structures.">start()</a> multiple times without stopping is not recommended. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad1c83030818a61aa827fb454aec77202_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad1c83030818a61aa827fb454aec77202_icgraph" alt=""/></div>
-<map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad1c83030818a61aa827fb454aec77202_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_ad1c83030818a61aa827fb454aec77202_icgraph">
-<area shape="rect" title="Starts the thread pool by creating worker threads and initializing internal structures." alt="" coords="252,13,453,53"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ac1465231092be4c1c728b10f068dfdb6" title="Start the thread pool with metrics tracking." alt="" coords="5,5,204,60"/>
-<area shape="poly" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -672,18 +621,6 @@ template&lt;typename job_type  = job_types&gt; </div>
 <h3><a class="anchor" id="autotoc_md43"></a>
 Thread Safety</h3>
 <p>Calling <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#aed0e6df52fd731ad33b6b59a3f886821" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> from multiple threads simultaneously is safe, but redundant calls to <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#aed0e6df52fd731ad33b6b59a3f886821" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> will have no additional effect after the first. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_aed0e6df52fd731ad33b6b59a3f886821_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_aed0e6df52fd731ad33b6b59a3f886821_icgraph" alt=""/></div>
-<map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_aed0e6df52fd731ad33b6b59a3f886821_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_aed0e6df52fd731ad33b6b59a3f886821_icgraph">
-<area shape="rect" title="Stops the thread pool and optionally waits for currently running jobs to finish." alt="" coords="499,20,697,60"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3062532f4e753519520f73a60123ec39" title="Stop the thread pool and finalize metrics." alt="" coords="252,13,451,67"/>
-<area shape="poly" title=" " alt="" coords="485,43,451,43,451,37,485,37"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8a8db16946c2c1376b72d4bf8097b7a3" title="Destructor ensures clean shutdown." alt="" coords="5,5,204,75"/>
-<area shape="poly" title=" " alt="" coords="238,43,204,43,204,37,238,37"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -717,11 +654,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a44080ec87b7429cfeb1f6f98b496ef02_icgraph.png" border="0" usemap="#adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a44080ec87b7429cfeb1f6f98b496ef02_icgraph" alt=""/></div>
 <map name="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a44080ec87b7429cfeb1f6f98b496ef02_icgraph" id="adc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t_a44080ec87b7429cfeb1f6f98b496ef02_icgraph">
-<area shape="rect" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="252,57,451,111"/>
-<area shape="rect" href="../../d3/dc8/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html#a1485f5f6d44d531f8aa95276b7c0349a" title="Formats a typed_thread_pool_t&lt;job_type&gt; object as a string." alt="" coords="9,5,200,75"/>
-<area shape="poly" title=" " alt="" coords="238,67,200,60,201,54,239,61"/>
-<area shape="rect" href="../../d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a3c148dd84d94cff8f75daad9e4f5e5fe" title="Extended string representation including metrics summary." alt="" coords="5,99,204,154"/>
-<area shape="poly" title=" " alt="" coords="239,106,205,112,204,107,238,101"/>
+<area shape="rect" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="244,13,443,67"/>
+<area shape="rect" href="../../d3/dc8/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html#a1485f5f6d44d531f8aa95276b7c0349a" title="Formats a typed_thread_pool_t&lt;job_type&gt; object as a string." alt="" coords="5,5,196,75"/>
+<area shape="poly" title=" " alt="" coords="230,43,196,43,196,37,230,37"/>
 </map>
 </div>
 
@@ -846,7 +781,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 00:10:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

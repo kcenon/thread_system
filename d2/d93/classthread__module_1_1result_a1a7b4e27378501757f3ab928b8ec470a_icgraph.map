@@ -1,13 +1,7 @@
 <map id="thread_module::result::has_value" name="thread_module::result::has_value">
-<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="441,131,607,171"/>
-<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="223,5,382,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="480,126,392,74,369,63,372,58,395,69,483,122"/>
-<area shape="rect" id="Node000004" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html#a2b9e94acc9c1821d6a78ab1783fa4fd8" title="Enqueue a job with automatic metrics tracking." alt="" coords="212,84,393,139"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="427,137,393,130,394,125,428,131"/>
-<area shape="rect" id="Node000005" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html#a418bb3cfb844f44af8483b1912702d26" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="212,163,393,217"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="428,171,394,177,393,172,428,165"/>
-<area shape="rect" id="Node000006" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html#a825bcc2e30b745597e8843c0d550218e" title="Start the thread pool with metrics tracking." alt="" coords="212,241,393,296"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="481,181,395,231,369,244,367,239,392,226,478,176"/>
+<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="419,13,584,53"/>
+<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="212,5,371,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="405,35,371,35,371,30,405,30"/>
 <area shape="rect" id="Node000003" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916" title="Builds and starts a thread pool with the configured options." alt="" coords="5,5,164,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,35,164,35,164,30,209,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,35,164,35,164,30,198,30"/>
 </map>

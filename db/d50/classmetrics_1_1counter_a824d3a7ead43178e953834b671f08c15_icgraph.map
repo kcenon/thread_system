@@ -1,5 +1,0 @@
-<map id="metrics::counter::get" name="metrics::counter::get">
-<area shape="rect" id="Node000001" title="Get current counter value." alt="" coords="236,5,393,31"/>
-<area shape="rect" id="Node000002" href="$db/d50/classmetrics_1_1counter.html#a37fe4f6a60beea6f85a6bf43c3daff11" title="Convert metric to JSON representation." alt="" coords="5,5,188,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,21,188,21,188,15,222,15"/>
-</map>

@@ -10,16 +10,12 @@ var searchData=
   ['base64_5fencode_7',['base64_encode',['../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464',1,'utility_module::convert_string']]],
   ['based_20thread_20pool_20system_20typed_5fthread_5fpool_5fmodule_8',['Type-based Thread Pool System (typed_thread_pool_module)',['../index.html#typed_thread_pool',1,'']]],
   ['batch_9',['Batch',['../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6a51ffe9dd1b1e143c1b9f1144d040e454',1,'typed_thread_pool_module']]],
-  ['before_5fstart_10',['before_start',['../d9/de4/classlog__module_1_1console__writer.html#aea13fa148c30d7b241501434370c3140',1,'log_module::console_writer::before_start()'],['../dc/d2b/classlog__module_1_1file__writer.html#a23e227df609a4a21806afa7c21b683e9',1,'log_module::file_writer::before_start()'],['../d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2',1,'log_module::log_collector::before_start()'],['../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229',1,'thread_module::thread_base::before_start()']]],
+  ['before_5fstart_10',['before_start',['../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229',1,'thread_module::thread_base::before_start()'],['../d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2',1,'log_module::log_collector::before_start()'],['../dc/d2b/classlog__module_1_1file__writer.html#a23e227df609a4a21806afa7c21b683e9',1,'log_module::file_writer::before_start()'],['../d9/de4/classlog__module_1_1console__writer.html#aea13fa148c30d7b241501434370c3140',1,'log_module::console_writer::before_start()']]],
   ['begin_11',['begin',['../d8/d4f/classutility__module_1_1span.html#a3c724d01483a11895ac4b555e6960680',1,'utility_module::span']]],
   ['behavior_12',['behavior',['../d8/d42/classthread__module_1_1job.html#autotoc_md7',1,'Default Behavior'],['../d8/d42/classthread__module_1_1job.html#autotoc_md9',1,'Default Behavior']]],
   ['benchmarks_13',['📈 Performance Benchmarks',['../index.html#benchmarks',1,'']]],
   ['big_14',['big',['../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cfad861877da56b8b4ceb35c8cbfdf65bb4',1,'utility_module::convert_string']]],
-  ['boundaries_5fmutex_5f_15',['boundaries_mutex_',['../d2/d1f/classmetrics_1_1histogram.html#a184567445f76b015df700f951f22c777',1,'metrics::histogram']]],
-  ['bucket_16',['bucket',['../d3/d19/structmetrics_1_1histogram_1_1bucket.html',1,'metrics::histogram']]],
-  ['bucket_5fboundaries_5f_17',['bucket_boundaries_',['../d2/d1f/classmetrics_1_1histogram.html#a1d6e124f4b50dd7197db6a5436a85e8f',1,'metrics::histogram']]],
-  ['buckets_5f_18',['buckets_',['../d2/d1f/classmetrics_1_1histogram.html#ad11d483517148392dcbdaa93c9dd301c',1,'metrics::histogram']]],
-  ['build_19',['build',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9',1,'thread_pool_module::thread_pool_builder']]],
-  ['build_20instructions_20',['🛠️ Build Instructions',['../index.html#build',1,'']]],
-  ['build_5fand_5fstart_21',['build_and_start',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916',1,'thread_pool_module::thread_pool_builder']]]
+  ['build_15',['build',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9',1,'thread_pool_module::thread_pool_builder']]],
+  ['build_20instructions_16',['🛠️ Build Instructions',['../index.html#build',1,'']]],
+  ['build_5fand_5fstart_17',['build_and_start',['../dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916',1,'thread_pool_module::thread_pool_builder']]]
 ];
