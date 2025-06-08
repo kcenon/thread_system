@@ -55,13 +55,13 @@ namespace thread_module
 	 * - Sets initial thread_condition_ to Created
 	 */
 	thread_base::thread_base(const std::string& thread_title)
-		: worker_thread_(nullptr)
+		: wake_interval_(std::nullopt)
+		, worker_thread_(nullptr)
 #ifdef USE_STD_JTHREAD
 		, stop_source_(std::nullopt)
 #else
 		, stop_requested_(false)
 #endif
-		, wake_interval_(std::nullopt)
 		, thread_title_(thread_title)
 		, thread_condition_(thread_conditions::Created)
 	{

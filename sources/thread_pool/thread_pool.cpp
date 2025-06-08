@@ -40,7 +40,7 @@ using namespace utility_module;
 namespace thread_pool_module
 {
 	thread_pool::thread_pool(const std::string& thread_title)
-		: thread_title_(thread_title), job_queue_(std::make_shared<job_queue>()), start_pool_(false)
+		: thread_title_(thread_title), start_pool_(false), job_queue_(std::make_shared<job_queue>())
 	{
 	}
 
