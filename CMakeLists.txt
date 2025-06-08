@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Define the project name and language
-project(ThreadSystem)
+project(ThreadSystem LANGUAGES CXX)
 
 # Option to control whether ThreadSystem is built as a standalone project or as a submodule
 # - OFF (default): Builds as standalone project with samples and tests
@@ -27,9 +27,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)        # Disable compiler-specific extensions
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for tooling
 
 # Output compiler information for debugging purposes
-message(STATUS "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
-message(STATUS "Compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
-message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "========================================")
+message(STATUS "Compiler Configuration:")
+message(STATUS "  ID: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "  Version: ${CMAKE_CXX_COMPILER_VERSION}")
+message(STATUS "  Path: ${CMAKE_CXX_COMPILER}")
+message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "  Platform: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "  Architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "========================================")
 
 ##################################################
 # Compiler-Specific Configuration
@@ -49,6 +55,31 @@ elseif(MSVC)
   # For Microsoft Visual C++ compiler
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest /Zc:__cplusplus")
 endif()
+
+##################################################
+# Include Custom CMake Modules
+##################################################
+
+# Add custom cmake modules path
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+# Include compiler checks module
+include(CompilerChecks)
+
+# Perform compiler version check
+check_compiler_version()
+
+# Configure platform-specific settings
+configure_platform_settings()
+
+# Configure build types
+configure_build_types()
+
+# Check required headers
+check_required_headers()
+
+# Check C++ standard library features
+check_cpp_stdlib_features()
 
 ##################################################
 # Platform-Specific Threading Configuration
@@ -81,6 +112,10 @@ include(CheckCXXSourceCompiles)
 option(SET_STD_FORMAT "Set use std::format if it can use" ON)
 option(SET_STD_JTHREAD "Set use std::jthread if it can use" ON)
 option(SET_STD_CHRONO_CURRENT_ZONE "Set use std::chrono::current_zone if it can use" ON)
+option(SET_STD_FILESYSTEM "Set use std::filesystem if it can use" ON)
+option(SET_STD_RANGES "Set use std::ranges if it can use" ON)
+option(SET_STD_CONCEPTS "Set use std::concepts if it can use" ON)
+
 
 # Function to test for C++20 features at configure time
 # Parameters:
@@ -253,12 +288,14 @@ endif()
 # Apply the decision
 if(USE_STD_FORMAT_ENABLED)
   add_definitions(-DUSE_STD_FORMAT)
+  set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format" FORCE)
   message(STATUS "✅ Using std::format - all compatibility checks passed")
   message(STATUS "   - Basic std::format: ${HAS_STD_FORMAT_BASIC}")
   message(STATUS "   - Formatter specialization: ${HAS_STD_FORMAT_SPECIALIZATION}")
   message(STATUS "   - Compiler compatibility: ${WINDOWS_COMPILER_SUPPORTS_STD_FORMAT}")
   message(STATUS "   - Compile test: ${STD_FORMAT_COMPILE_TEST}")
 else()
+  set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
   if(WIN32)
     message(STATUS "🛡️  Using fmt::format (Windows Policy)")
     message(STATUS "   Windows builds use fmt::format for maximum compatibility")
@@ -389,6 +426,100 @@ else()
   message(STATUS "Skipping std::span compile test - prerequisite checks failed")
   message(STATUS "  - Basic span: ${HAS_STD_SPAN_BASIC}")
   message(STATUS "  - Advanced features: ${HAS_STD_SPAN_ADVANCED}")  
+endif()
+
+##################################################
+# Test for std::filesystem (C++17/20 feature)
+##################################################
+
+# Check for std::filesystem support
+check_cxx_source_compiles("
+  #include <filesystem>
+  int main() {
+    std::filesystem::path p(\"/tmp\");
+    return std::filesystem::exists(p) ? 0 : 1;
+  }
+" HAS_STD_FILESYSTEM)
+
+if(SET_STD_FILESYSTEM AND HAS_STD_FILESYSTEM)
+  try_compile(STD_FILESYSTEM_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/filesystem_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_filesystem.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  
+  if(STD_FILESYSTEM_COMPILE_TEST)
+    add_definitions(-DUSE_STD_FILESYSTEM)
+    message(STATUS "✅ Using std::filesystem - compile test passed")
+  else()
+    message(STATUS "❌ std::filesystem compile test failed")
+  endif()
+endif()
+
+##################################################
+# Test for std::ranges (C++20 feature)
+##################################################
+
+# Check for std::ranges support
+check_cxx_source_compiles("
+  #include <ranges>
+  #include <vector>
+  int main() {
+    std::vector<int> v = {1, 2, 3, 4, 5};
+    auto even = v | std::views::filter([](int i) { return i % 2 == 0; });
+    return 0;
+  }
+" HAS_STD_RANGES)
+
+if(SET_STD_RANGES AND HAS_STD_RANGES)
+  try_compile(STD_RANGES_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/ranges_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_ranges.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  
+  if(STD_RANGES_COMPILE_TEST)
+    add_definitions(-DUSE_STD_RANGES)
+    message(STATUS "✅ Using std::ranges - compile test passed")
+  else()
+    message(STATUS "❌ std::ranges compile test failed")
+  endif()
+endif()
+
+##################################################
+# Test for std::concepts (C++20 feature)
+##################################################
+
+# Check for std::concepts support
+check_cxx_source_compiles("
+  #include <concepts>
+  template<typename T>
+  concept Addable = requires(T a, T b) { a + b; };
+  int main() {
+    static_assert(Addable<int>);
+    return 0;
+  }
+" HAS_STD_CONCEPTS)
+
+if(SET_STD_CONCEPTS AND HAS_STD_CONCEPTS)
+  try_compile(STD_CONCEPTS_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/concepts_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_concepts.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  
+  if(STD_CONCEPTS_COMPILE_TEST)
+    add_definitions(-DUSE_STD_CONCEPTS)
+    message(STATUS "✅ Using std::concepts - compile test passed")
+  else()
+    message(STATUS "❌ std::concepts compile test failed")
+  endif()
 endif()
 
 ##################################################

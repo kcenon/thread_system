@@ -45,6 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 #include <string_view>
 #include <condition_variable>
+#include <memory>
 
 using namespace utility_module;
 
