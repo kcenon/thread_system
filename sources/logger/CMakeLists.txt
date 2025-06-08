@@ -17,7 +17,20 @@ file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
 
 # Configure include directory so client code can find headers
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/sources
+)
+
+# Apply compiler warnings if the function is available
+if(COMMAND set_compiler_warnings)
+    set_compiler_warnings(${PROJECT_NAME})
+endif()
+
+# Setup precompiled headers if supported
+if(COMMAND target_precompile_headers_if_supported)
+    target_precompile_headers_if_supported(${PROJECT_NAME})
+endif()
 
 # Link against dependencies:
 # - thread_base: For thread-safe logging operations
