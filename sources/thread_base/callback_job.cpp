@@ -51,13 +51,13 @@ namespace thread_module
 	callback_job::callback_job(
 		const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>& data_callback,
 		const std::vector<uint8_t>& data, const std::string& name)
-		: job(data, name), data_callback_([data_callback](const std::vector<uint8_t>& data) -> result_void {
+		: job(data, name), callback_(nullptr), data_callback_([data_callback](const std::vector<uint8_t>& data) -> result_void {
 			auto result = data_callback(data);
 			if (result.has_value()) {
 				return error{error_code::job_execution_failed, result.value()};
 			}
 			return result_void{};
-		}), callback_(nullptr)
+		})
 	{
 	}
 

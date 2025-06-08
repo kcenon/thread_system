@@ -52,12 +52,12 @@ namespace log_module
 		std::optional<log_types> type,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		: job("log_job")
-		, type_(type)
 		, message_type_(message_types::String)
 		, message_(message)
+		, log_message_("")
+		, type_(type)
 		, timestamp_(std::chrono::system_clock::now())
 		, start_time_(start_time)
-		, log_message_("")
 	{
 	}
 
@@ -66,12 +66,12 @@ namespace log_module
 		std::optional<log_types> type,
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> start_time)
 		: job("log_job")
-		, type_(type)
 		, message_type_(message_types::WString)
 		, wmessage_(message)
+		, log_message_("")
+		, type_(type)
 		, timestamp_(std::chrono::system_clock::now())
 		, start_time_(start_time)
-		, log_message_("")
 	{
 	}
 

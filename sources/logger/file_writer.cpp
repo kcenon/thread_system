@@ -45,13 +45,13 @@ namespace log_module
 {
 	file_writer::file_writer(void)
 		: thread_base("file_writer")
-		, job_queue_(std::make_shared<job_queue>())
 		, title_("log")
 		, use_backup_(false)
+		, file_target_(log_types::None)
 		, max_lines_(0)
 		, log_file_(nullptr)
 		, backup_file_(nullptr)
-		, file_target_(log_types::None)
+		, job_queue_(std::make_shared<job_queue>())
 	{
 	}
 
@@ -159,7 +159,7 @@ namespace log_module
 					backup_name_, std::ios_base::out | std::ios_base::app);
 			}
 
-			std::deque<std::string> backup_lines(log_lines_.begin(), log_lines_.begin() + index);
+			std::deque<std::string> backup_lines(log_lines_.begin(), log_lines_.begin() + static_cast<std::deque<std::string>::difference_type>(index));
 
 			if (backup_file_ && backup_file_->is_open())
 			{
@@ -168,7 +168,7 @@ namespace log_module
 			}
 		}
 
-		log_lines_.erase(log_lines_.begin(), log_lines_.begin() + index);
+		log_lines_.erase(log_lines_.begin(), log_lines_.begin() + static_cast<std::deque<std::string>::difference_type>(index));
 
 		log_file_ = write_lines(std::move(log_file_), log_lines_);
 		log_file_->close();
@@ -267,16 +267,16 @@ namespace log_module
 	{
 		if (file_handle == nullptr || !file_handle->is_open())
 		{
-			return std::move(file_handle);
+			return file_handle;
 		}
 
 		for (const auto& message : messages)
 		{
-			file_handle->write(message.c_str(), message.size());
+			file_handle->write(message.c_str(), static_cast<std::streamsize>(message.size()));
 		}
 
 		file_handle->flush();
 
-		return std::move(file_handle);
+		return file_handle;
 	}
 }

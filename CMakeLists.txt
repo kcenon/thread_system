@@ -48,8 +48,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   
   # Add additional flags for macOS
   if(APPLE)
-    # Add linker flag to avoid duplicate library warnings on macOS
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-warn_duplicate_libraries")
+    # Suppress duplicate library warnings on macOS (common with vcpkg)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-no_warn_duplicate_libraries")
   endif()
 elseif(MSVC)
   # For Microsoft Visual C++ compiler

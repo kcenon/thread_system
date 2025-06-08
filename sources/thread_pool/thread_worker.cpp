@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace thread_pool_module
 {
 	thread_worker::thread_worker(const bool& use_time_tag)
-		: thread_base("thread_worker"), job_queue_(nullptr), use_time_tag_(use_time_tag)
+		: thread_base("thread_worker"), use_time_tag_(use_time_tag), job_queue_(nullptr)
 	{
 	}
 

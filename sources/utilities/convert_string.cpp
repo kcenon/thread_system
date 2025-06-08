@@ -452,7 +452,7 @@ namespace utility_module
 		int mod_table[] = { 0, 2, 1 };
 		for (int j = 0; j < mod_table[data.size() % 3]; j++)
 		{
-			encoded_string[encoded_string.size() - 1 - j] = '=';
+			encoded_string[encoded_string.size() - 1 - static_cast<size_t>(j)] = '=';
 		}
 
 		return encoded_string;
@@ -490,7 +490,7 @@ namespace utility_module
 		std::vector<int> decoding_table(256, -1);
 		for (int i = 0; i < 64; i++)
 		{
-			decoding_table[static_cast<unsigned char>(base64_chars[i])] = i;
+			decoding_table[static_cast<unsigned char>(base64_chars[static_cast<size_t>(i)])] = i;
 		}
 
 		uint32_t buffer = 0;
@@ -513,7 +513,7 @@ namespace utility_module
 				return { std::vector<uint8_t>(), "Invalid character in base64 string" };
 			}
 
-			buffer = (buffer << 6) | decoding_table[static_cast<unsigned char>(c)];
+			buffer = (buffer << 6) | static_cast<uint32_t>(decoding_table[static_cast<unsigned char>(c)]);
 			bits_collected += 6;
 
 			if (bits_collected >= 8)
