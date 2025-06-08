@@ -304,13 +304,13 @@ Additional Inherited Members</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../de/d2a/file__writer_8cpp_source.html#l00046">46</a> of file <a class="el" href="../../de/d2a/file__writer_8cpp_source.html">file_writer.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   47</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;file_writer&quot;</span>)</div>
-<div class="line"><span class="lineno">   48</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#acf13823f9d42b1c6c449f39242b50dcc">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
-<div class="line"><span class="lineno">   49</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ad8a5d81e4a82a374d7cfab5729bebeb7">title_</a>(<span class="stringliteral">&quot;log&quot;</span>)</div>
-<div class="line"><span class="lineno">   50</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a9ef5ba8707f80d2f246e6f99fbd3cdce">use_backup_</a>(<span class="keyword">false</span>)</div>
+<div class="line"><span class="lineno">   48</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ad8a5d81e4a82a374d7cfab5729bebeb7">title_</a>(<span class="stringliteral">&quot;log&quot;</span>)</div>
+<div class="line"><span class="lineno">   49</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a9ef5ba8707f80d2f246e6f99fbd3cdce">use_backup_</a>(<span class="keyword">false</span>)</div>
+<div class="line"><span class="lineno">   50</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a5cf21150b3eccb2f25a95774a3d57d03">file_target_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
 <div class="line"><span class="lineno">   51</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a5fa8903558a995d4165e7997e8489a5c">max_lines_</a>(0)</div>
 <div class="line"><span class="lineno">   52</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376">log_file_</a>(<span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   53</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a7f456083280cd44cd8886e0e216c39e5">backup_file_</a>(<span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   54</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a5cf21150b3eccb2f25a95774a3d57d03">file_target_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
+<div class="line"><span class="lineno">   54</span>        , <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#acf13823f9d42b1c6c449f39242b50dcc">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
 <div class="line"><span class="lineno">   55</span>    {</div>
 <div class="line"><span class="lineno">   56</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1file__writer_html_a34abffcb9ba4dd7139edf10140fb8376"><div class="ttname"><a href="../../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376">log_module::file_writer::log_file_</a></div><div class="ttdeci">std::unique_ptr&lt; std::fstream &gt; log_file_</div><div class="ttdoc">File handle for the main log file.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d76/file__writer_8h_source.html#l00214">file_writer.h:214</a></div></div>
@@ -647,7 +647,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  159</span>                    <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#aa73a117192d83f77b941b205b34f142c">backup_name_</a>, std::ios_base::out | std::ios_base::app);</div>
 <div class="line"><span class="lineno">  160</span>            }</div>
 <div class="line"><span class="lineno">  161</span> </div>
-<div class="line"><span class="lineno">  162</span>            std::deque&lt;std::string&gt; backup_lines(<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin(), <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin() + index);</div>
+<div class="line"><span class="lineno">  162</span>            std::deque&lt;std::string&gt; backup_lines(<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin(), <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin() + <span class="keyword">static_cast&lt;</span>std::deque&lt;std::string&gt;::difference_type<span class="keyword">&gt;</span>(index));</div>
 <div class="line"><span class="lineno">  163</span> </div>
 <div class="line"><span class="lineno">  164</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a7f456083280cd44cd8886e0e216c39e5">backup_file_</a> &amp;&amp; <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a7f456083280cd44cd8886e0e216c39e5">backup_file_</a>-&gt;is_open())</div>
 <div class="line"><span class="lineno">  165</span>            {</div>
@@ -656,7 +656,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  168</span>            }</div>
 <div class="line"><span class="lineno">  169</span>        }</div>
 <div class="line"><span class="lineno">  170</span> </div>
-<div class="line"><span class="lineno">  171</span>        <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.erase(<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin(), <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin() + index);</div>
+<div class="line"><span class="lineno">  171</span>        <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.erase(<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin(), <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>.begin() + <span class="keyword">static_cast&lt;</span>std::deque&lt;std::string&gt;::difference_type<span class="keyword">&gt;</span>(index));</div>
 <div class="line"><span class="lineno">  172</span> </div>
 <div class="line"><span class="lineno">  173</span>        <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376">log_file_</a> = <a class="code hl_function" href="../../dc/d2b/classlog__module_1_1file__writer.html#a3fd4753d55891423039e3873e83e3774">write_lines</a>(std::move(<a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376">log_file_</a>), <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#ac39be3b21a615e98c294f630a083ddc8">log_lines_</a>);</div>
 <div class="line"><span class="lineno">  174</span>        <a class="code hl_variable" href="../../dc/d2b/classlog__module_1_1file__writer.html#a34abffcb9ba4dd7139edf10140fb8376">log_file_</a>-&gt;close();</div>
@@ -1075,17 +1075,17 @@ Here is the call graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">  267</span>    {</div>
 <div class="line"><span class="lineno">  268</span>        <span class="keywordflow">if</span> (file_handle == <span class="keyword">nullptr</span> || !file_handle-&gt;is_open())</div>
 <div class="line"><span class="lineno">  269</span>        {</div>
-<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">return</span> std::move(file_handle);</div>
+<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">return</span> file_handle;</div>
 <div class="line"><span class="lineno">  271</span>        }</div>
 <div class="line"><span class="lineno">  272</span> </div>
 <div class="line"><span class="lineno">  273</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; message : messages)</div>
 <div class="line"><span class="lineno">  274</span>        {</div>
-<div class="line"><span class="lineno">  275</span>            file_handle-&gt;write(message.c_str(), message.size());</div>
+<div class="line"><span class="lineno">  275</span>            file_handle-&gt;write(message.c_str(), <span class="keyword">static_cast&lt;</span>std::streamsize<span class="keyword">&gt;</span>(message.size()));</div>
 <div class="line"><span class="lineno">  276</span>        }</div>
 <div class="line"><span class="lineno">  277</span> </div>
 <div class="line"><span class="lineno">  278</span>        file_handle-&gt;flush();</div>
 <div class="line"><span class="lineno">  279</span> </div>
-<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">return</span> std::move(file_handle);</div>
+<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">return</span> file_handle;</div>
 <div class="line"><span class="lineno">  281</span>    }</div>
 </div><!-- fragment -->
 </div>
@@ -1358,7 +1358,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

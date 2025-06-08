@@ -1,0 +1,21 @@
+<map id="metrics::metric_interface" name="metrics::metric_interface">
+<area shape="rect" id="Node000001" title="Base interface for all metric types." alt="" coords="855,5,1033,151"/>
+<area shape="rect" id="Node000002" href="$db/d50/classmetrics_1_1counter.html" title=" " alt="" coords="5,253,208,519"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="841,88,685,102,503,124,415,139,335,157,269,178,221,201,193,225,169,255,165,251,189,221,219,196,267,173,334,152,414,134,502,119,684,97,841,83"/>
+<area shape="rect" id="Node000003" href="$d2/d1a/classmetrics_1_1gauge.html" title=" " alt="" coords="232,223,411,549"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="841,95,729,113,607,137,498,167,455,183,424,201,399,225,395,221,421,197,453,178,496,161,606,132,728,108,841,90"/>
+<area shape="rect" id="Node000004" href="$d2/d1a/classmetrics_1_1gauge.html" title=" " alt="" coords="435,223,621,549"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="842,102,790,118,736,139,683,166,635,201,611,225,607,221,632,197,680,162,734,134,789,113,841,97"/>
+<area shape="rect" id="Node000005" href="$d2/d1f/classmetrics_1_1histogram.html" title=" " alt="" coords="645,199,816,573"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="861,163,830,200,818,218,814,214,826,197,857,159"/>
+<area shape="rect" id="Node000006" href="$df/db6/classmetrics_1_1summary.html" title=" " alt="" coords="841,263,1047,509"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="947,165,947,263,941,263,941,165"/>
+<area shape="rect" id="Node000007" href="$db/d50/classmetrics_1_1counter.html" title="Counter metric &#45; monotonically increasing value." alt="" coords="1071,253,1230,519"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1032,160,1062,197,1095,252,1091,254,1058,200,1028,163"/>
+<area shape="rect" id="Node000008" href="$d2/d1a/classmetrics_1_1gauge.html" title="Gauge metric &#45; value that can go up or down." alt="" coords="1255,223,1407,549"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1048,98,1097,113,1149,134,1199,162,1244,197,1267,222,1263,225,1241,201,1197,166,1147,139,1095,118,1046,103"/>
+<area shape="rect" id="Node000009" href="$d2/d1f/classmetrics_1_1histogram.html" title="Histogram metric &#45; distribution of values." alt="" coords="1431,199,1601,573"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1047,79,1134,88,1232,108,1282,124,1331,143,1377,167,1420,197,1432,207,1429,211,1417,201,1375,172,1329,148,1280,129,1231,114,1134,94,1047,84"/>
+<area shape="rect" id="Node000010" href="$df/db6/classmetrics_1_1summary.html" title="Summary metric &#45; sliding time window statistics." alt="" coords="1625,263,1796,509"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1048,84,1193,98,1359,121,1439,136,1512,153,1571,173,1615,197,1646,226,1670,261,1665,264,1642,229,1612,201,1569,178,1510,158,1438,141,1359,126,1193,103,1047,89"/>
+</map>

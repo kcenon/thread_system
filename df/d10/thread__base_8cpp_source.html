@@ -119,13 +119,13 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
 <div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="../../da/d94/classthread__module_1_1thread__base.html#a474a35dca118f83c1c1099eba3eb4748">   57</a></span>    <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base::thread_base</a>(<span class="keyword">const</span> std::string&amp; thread_title)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        : worker_thread_(nullptr)</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>#ifdef USE_STD_JTHREAD</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        , stop_source_(std::nullopt)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>#else</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        , stop_requested_(false)</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>#endif</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        , wake_interval_(std::nullopt)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        : wake_interval_(std::nullopt)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        , worker_thread_(nullptr)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>#ifdef USE_STD_JTHREAD</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        , stop_source_(std::nullopt)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>#else</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        , stop_requested_(false)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>#endif</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        , thread_title_(thread_title)</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        , thread_condition_(<a class="code hl_enumeration" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fd">thread_conditions</a>::<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda0eceeb45861f9585dd7a97a3e36f85c6">Created</a>)</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    {</div>
@@ -350,7 +350,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

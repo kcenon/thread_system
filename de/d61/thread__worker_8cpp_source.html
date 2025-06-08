@@ -122,7 +122,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
 <div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">   40</a></span>    <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_worker::thread_worker</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; use_time_tag)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), job_queue_(nullptr), use_time_tag_(use_time_tag)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), use_time_tag_(use_time_tag), job_queue_(nullptr)</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
 </div>
@@ -204,7 +204,7 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>} <span class="comment">// namespace thread_pool_module</span></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00074">job_queue.h:75</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a98766e5e2f65449e7826203259fbe48a"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a">thread_module::job_queue::empty</a></div><div class="ttdeci">auto empty(void) const -&gt; bool</div><div class="ttdoc">Checks if the queue is currently empty.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00151">job_queue.cpp:151</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00149">thread_base.h:150</a></div></div>
@@ -222,7 +222,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

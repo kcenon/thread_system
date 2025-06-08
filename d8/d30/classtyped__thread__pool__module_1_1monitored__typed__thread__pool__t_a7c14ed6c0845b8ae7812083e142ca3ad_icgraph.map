@@ -1,0 +1,7 @@
+<map id="typed_thread_pool_module::monitored_typed_thread_pool_t::wrap_job_with_metrics" name="typed_thread_pool_module::monitored_typed_thread_pool_t::wrap_job_with_metrics">
+<area shape="rect" id="Node000001" title="Wrap a typed job with metrics tracking." alt="" coords="252,45,479,100"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a8f81039a426cc91c40fd79a709915c31" title="Enqueue a job with automatic metrics tracking." alt="" coords="5,5,204,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,56,204,51,205,45,239,51"/>
+<area shape="rect" id="Node000003" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ae91102077efa671f32ff814c00f62f8d" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="5,84,204,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,94,205,99,204,94,238,89"/>
+</map>

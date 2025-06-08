@@ -1,0 +1,5 @@
+<map id="typed_thread_pool_module::typed_thread_pool_t::enqueue_batch" name="typed_thread_pool_module::typed_thread_pool_t::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueues a batch of priority jobs into the thread pool&#39;s job queue." alt="" coords="252,5,451,60"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ae91102077efa671f32ff814c00f62f8d" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="5,5,204,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
+</map>

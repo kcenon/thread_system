@@ -1,0 +1,5 @@
+<map id="typed_thread_pool_module::typed_thread_pool_t::start" name="typed_thread_pool_module::typed_thread_pool_t::start">
+<area shape="rect" id="Node000001" title="Starts the thread pool by creating worker threads and initializing internal structures." alt="" coords="252,13,453,53"/>
+<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#ac1465231092be4c1c728b10f068dfdb6" title="Start the thread pool with metrics tracking." alt="" coords="5,5,204,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,35,204,35,204,30,238,30"/>
+</map>

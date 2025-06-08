@@ -1,0 +1,14 @@
+<map id="metrics::counter&lt; T &gt;" name="metrics::counter&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Counter metric &#45; monotonically increasing value." alt="" coords="281,485,439,691"/>
+<area shape="rect" id="Node000002" href="$dd/d6a/classmetrics_1_1metric__interface.html" title="Base interface for all metric types." alt="" coords="5,277,184,423"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,430,282,514,279,518,184,434"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="208,317,379,383"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="305,382,329,469,324,470,300,384"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="409,135,487,200"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="444,201,387,470,382,468,439,200"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="540,303,684,397"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="479,198,561,289,557,292,475,202"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="383,5,513,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="451,99,451,134,445,134,445,99"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="564,400,453,503,450,499,560,396"/>
+</map>

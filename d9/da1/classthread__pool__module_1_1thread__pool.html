@@ -273,7 +273,7 @@ job_queue The shared queue for storing pending jobs </dd>
 <p>This title can be used for logging or debugging purposes. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/d17/thread__pool_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../df/d17/thread__pool_8cpp_source.html">thread_pool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>        : <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9eaa9f98d5d2a36ab0323ebe63254af6">thread_title_</a>(thread_title), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">job_queue_</a>(std::make_shared&lt;job_queue&gt;()), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">start_pool_</a>(<span class="keyword">false</span>)</div>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>        : <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9eaa9f98d5d2a36ab0323ebe63254af6">thread_title_</a>(thread_title), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">start_pool_</a>(<span class="keyword">false</span>), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
 <div class="line"><span class="lineno">   44</span>    {</div>
 <div class="line"><span class="lineno">   45</span>    }</div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a44d81103672c602def148381f6191476"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">thread_pool_module::thread_pool::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">The shared job queue where jobs (job objects) are enqueued.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00272">thread_pool.h:272</a></div></div>
@@ -924,7 +924,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

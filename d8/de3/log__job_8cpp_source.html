@@ -136,12 +136,12 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        std::optional&lt;log_types&gt; type,</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt; start_time)</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        : <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;log_job&quot;</span>)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        , type_(type)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        , message_type_(<a class="code hl_enumeration" href="../../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecb">message_types</a>::String)</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        , message_(message)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        , timestamp_(std::chrono::system_clock::now())</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        , start_time_(start_time)</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        , log_message_(<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        , message_type_(<a class="code hl_enumeration" href="../../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecb">message_types</a>::String)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        , message_(message)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        , log_message_(<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        , type_(type)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        , timestamp_(std::chrono::system_clock::now())</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        , start_time_(start_time)</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
 </div>
@@ -152,12 +152,12 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        std::optional&lt;log_types&gt; type,</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt; start_time)</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        : <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;log_job&quot;</span>)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        , type_(type)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        , message_type_(<a class="code hl_enumeration" href="../../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecb">message_types</a>::WString)</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        , wmessage_(message)</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        , timestamp_(std::chrono::system_clock::now())</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        , start_time_(start_time)</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        , log_message_(<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        , message_type_(<a class="code hl_enumeration" href="../../df/df4/classlog__module_1_1log__job.html#a9659665b71a5b0beb2a851fe6fbabecb">message_types</a>::WString)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        , wmessage_(message)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        , log_message_(<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        , type_(type)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        , timestamp_(std::chrono::system_clock::now())</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        , start_time_(start_time)</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    {</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
 </div>
@@ -276,7 +276,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,0 +1,5 @@
+<map id="thread_pool_module::monitored_thread_pool::stop" name="thread_pool_module::monitored_thread_pool::stop">
+<area shape="rect" id="Node000001" title="Stop the thread pool and finalize metrics." alt="" coords="245,13,463,53"/>
+<area shape="rect" id="Node000002" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html#a391f3e820c108612ebaa608f639b93c8" title="Destructor ensures clean shutdown." alt="" coords="5,5,197,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,35,197,35,197,30,232,30"/>
+</map>

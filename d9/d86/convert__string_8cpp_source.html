@@ -582,7 +582,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>        <span class="keywordtype">int</span> mod_table[] = { 0, 2, 1 };</div>
 <div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; mod_table[data.size() % 3]; j++)</div>
 <div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>        {</div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>            encoded_string[encoded_string.size() - 1 - j] = <span class="charliteral">&#39;=&#39;</span>;</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>            encoded_string[encoded_string.size() - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(j)] = <span class="charliteral">&#39;=&#39;</span>;</div>
 <div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>        }</div>
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span> </div>
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>        <span class="keywordflow">return</span> encoded_string;</div>
@@ -622,7 +622,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>        std::vector&lt;int&gt; decoding_table(256, -1);</div>
 <div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 64; i++)</div>
 <div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>        {</div>
-<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>            decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(base64_chars[i])] = i;</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>            decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(base64_chars[<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(i)])] = i;</div>
 <div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>        }</div>
 <div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span> </div>
 <div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>        uint32_t buffer = 0;</div>
@@ -645,7 +645,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid character in base64 string&quot;</span> };</div>
 <div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>            }</div>
 <div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span> </div>
-<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>            buffer = (buffer &lt;&lt; 6) | decoding_table[static_cast&lt;unsigned char&gt;(c)];</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>            buffer = (buffer &lt;&lt; 6) | static_cast&lt;uint32_t&gt;(decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(c)]);</div>
 <div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>            bits_collected += 6;</div>
 <div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span> </div>
 <div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>            <span class="keywordflow">if</span> (bits_collected &gt;= 8)</div>
@@ -699,7 +699,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 00:10:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 8 2025 03:37:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
