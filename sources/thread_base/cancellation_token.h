@@ -58,16 +58,33 @@ public:
      * @brief Creates a linked token that is canceled when any of the parent tokens are canceled
      * @param tokens The parent tokens
      * @return A new token linked to the parents
+     * 
+     * @note Uses weak_ptr to avoid circular references and memory leaks
      */
     static cancellation_token create_linked(std::initializer_list<cancellation_token> tokens) {
         auto new_token = create();
-        auto new_token_ptr = std::make_shared<cancellation_token>(new_token);
+        auto new_state_weak = std::weak_ptr<token_state>(new_token.state_);
         
         for (const auto& token : tokens) {
-            // Use a shared_ptr to capture a mutable copy
             auto token_copy = token;
-            token_copy.register_callback([token_ptr = new_token_ptr]() {
-                token_ptr->cancel();
+            token_copy.register_callback([new_state_weak]() {
+                if (auto state = new_state_weak.lock()) {
+                    // Directly set the cancelled flag and invoke callbacks
+                    std::vector<std::function<void()>> callbacks_to_invoke;
+                    
+                    {
+                        std::lock_guard<std::mutex> lock(state->callback_mutex);
+                        bool was_cancelled = state->is_cancelled.exchange(true);
+                        if (!was_cancelled) {
+                            callbacks_to_invoke = std::move(state->callbacks);
+                            state->callbacks.clear();
+                        }
+                    }
+                    
+                    for (const auto& callback : callbacks_to_invoke) {
+                        callback();
+                    }
+                }
             });
         }
         
@@ -78,14 +95,25 @@ public:
      * @brief Cancels the operation
      *
      * Sets the token to the canceled state and invokes all registered callbacks.
+     * 
+     * @note This method is thread-safe and guarantees callbacks are invoked exactly once.
      */
     void cancel() {
-        bool was_cancelled = state_->is_cancelled.exchange(true);
-        if (!was_cancelled) {
+        std::vector<std::function<void()>> callbacks_to_invoke;
+        
+        {
             std::lock_guard<std::mutex> lock(state_->callback_mutex);
-            for (const auto& callback : state_->callbacks) {
-                callback();
+            bool was_cancelled = state_->is_cancelled.exchange(true);
+            if (!was_cancelled) {
+                // Move callbacks to local vector to avoid holding lock during invocation
+                callbacks_to_invoke = std::move(state_->callbacks);
+                state_->callbacks.clear();
             }
+        }
+        
+        // Invoke callbacks outside the lock to prevent deadlock
+        for (const auto& callback : callbacks_to_invoke) {
+            callback();
         }
     }
     
@@ -112,22 +140,21 @@ public:
      * @param callback The function to call when the token is canceled
      *
      * If the token is already canceled, the callback is invoked immediately.
+     * 
+     * @note This method is thread-safe and guarantees the callback is called exactly once.
      */
     void register_callback(std::function<void()> callback) {
-        if (is_cancelled()) {
+        std::unique_lock<std::mutex> lock(state_->callback_mutex);
+        
+        // Check cancellation state while holding the lock
+        if (state_->is_cancelled.load()) {
+            lock.unlock();
             callback();
             return;
         }
         
-        {
-            std::lock_guard<std::mutex> lock(state_->callback_mutex);
-            state_->callbacks.push_back(std::move(callback));
-        }
-        
-        // Check again in case the token was canceled between the check and adding callback
-        if (is_cancelled()) {
-            callback();
-        }
+        // Add callback while still holding the lock
+        state_->callbacks.push_back(std::move(callback));
     }
 };
 
