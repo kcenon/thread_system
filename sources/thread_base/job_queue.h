@@ -166,8 +166,18 @@ namespace thread_module
 		/**
 		 * @brief Checks if the queue is currently empty.
 		 * @return @c true if the queue has no pending jobs, @c false otherwise.
+		 * 
+		 * @note This method is thread-safe.
 		 */
 		[[nodiscard]] auto empty(void) const -> bool;
+
+		/**
+		 * @brief Returns the current number of jobs in the queue.
+		 * @return The number of pending jobs.
+		 * 
+		 * @note This method is thread-safe.
+		 */
+		[[nodiscard]] auto size(void) const -> std::size_t;
 
 		/**
 		 * @brief Signals the queue to stop waiting for new jobs (e.g., during shutdown).
@@ -224,17 +234,10 @@ namespace thread_module
 		 * @brief The underlying container storing the jobs in FIFO order.
 		 *
 		 * @note This container is guarded by @c mutex_ and should only be modified
-		 *       while holding the lock.
+		 *       while holding the lock. The size of this container should be the only
+		 *       source of truth for the queue size to prevent inconsistencies.
 		 */
 		std::deque<std::unique_ptr<job>> queue_;
-
-		/**
-		 * @brief Tracks the current number of jobs in the queue.
-		 *
-		 * Though @c queue_.size() could be used, maintaining an atomic size counter
-		 * can improve performance in certain scenarios.
-		 */
-		std::atomic_size_t queue_size_;
 	};
 }
 
