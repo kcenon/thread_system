@@ -1,5 +1,5 @@
 <map id="thread_pool_module::thread_worker::should_continue_work" name="thread_pool_module::thread_worker::should_continue_work">
 <area shape="rect" id="Node000001" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
-<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html#ace310cfeec8467bf79908d02d8a434cf" title="Checks if the queue is in a &quot;stopped&quot; state." alt="" coords="228,13,376,53"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,30,214,30,214,35,180,35"/>
 </map>

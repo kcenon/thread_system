@@ -341,77 +341,74 @@ Typical Usage</h3>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>    {</div>
-<div class="line"><span class="lineno">   64</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   65</span>        {</div>
-<div class="line"><span class="lineno">   66</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
-<div class="line"><span class="lineno">   67</span>        }</div>
-<div class="line"><span class="lineno">   68</span> </div>
-<div class="line"><span class="lineno">   69</span>        <span class="keyword">auto</span> dequeue_result = <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;dequeue();</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
-<div class="line"><span class="lineno">   71</span>        {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;is_stopped())</div>
-<div class="line"><span class="lineno">   73</span>            {</div>
-<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
-<div class="line"><span class="lineno">   75</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
-<div class="line"><span class="lineno">   76</span>            }</div>
-<div class="line"><span class="lineno">   77</span> </div>
-<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">   79</span>        }</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   83</span>        {</div>
-<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
-<div class="line"><span class="lineno">   85</span>        }</div>
-<div class="line"><span class="lineno">   86</span> </div>
-<div class="line"><span class="lineno">   87</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
-<div class="line"><span class="lineno">   88</span>            started_time_point = std::nullopt;</div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>)</div>
-<div class="line"><span class="lineno">   90</span>        {</div>
-<div class="line"><span class="lineno">   91</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   92</span>        }</div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>        current_job-&gt;set_job_queue(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>);</div>
-<div class="line"><span class="lineno">   95</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
-<div class="line"><span class="lineno">   96</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">   97</span>        {</div>
-<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
-<div class="line"><span class="lineno">   99</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
-<div class="line"><span class="lineno">  100</span>        }</div>
-<div class="line"><span class="lineno">  101</span> </div>
-<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
-<div class="line"><span class="lineno">  103</span>        {</div>
-<div class="line"><span class="lineno">  104</span>            <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><span class="lineno">  105</span>                                       current_job-&gt;get_name());</div>
-<div class="line"><span class="lineno">  106</span>        }</div>
-<div class="line"><span class="lineno">  107</span> </div>
-<div class="line"><span class="lineno">  108</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(started_time_point.value(),</div>
-<div class="line"><span class="lineno">  109</span>                                   <span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><span class="lineno">  110</span>                                   current_job-&gt;get_name());</div>
-<div class="line"><span class="lineno">  111</span> </div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  113</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00064">64</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>    {</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">   67</span>        {</div>
+<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
+<div class="line"><span class="lineno">   69</span>        }</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>        <span class="keyword">auto</span> dequeue_result = <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;dequeue();</div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
+<div class="line"><span class="lineno">   73</span>        {</div>
+<div class="line"><span class="lineno">   74</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;is_stopped())</div>
+<div class="line"><span class="lineno">   75</span>            {</div>
+<div class="line"><span class="lineno">   76</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
+<div class="line"><span class="lineno">   77</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
+<div class="line"><span class="lineno">   78</span>            }</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">   81</span>        }</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
+<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">   85</span>        {</div>
+<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
+<div class="line"><span class="lineno">   87</span>        }</div>
+<div class="line"><span class="lineno">   88</span> </div>
+<div class="line"><span class="lineno">   89</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
+<div class="line"><span class="lineno">   90</span>            started_time_point = std::nullopt;</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>)</div>
+<div class="line"><span class="lineno">   92</span>        {</div>
+<div class="line"><span class="lineno">   93</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">   94</span>        }</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>        current_job-&gt;set_job_queue(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>);</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
+<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">   99</span>        {</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
+<div class="line"><span class="lineno">  101</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
+<div class="line"><span class="lineno">  102</span>        }</div>
+<div class="line"><span class="lineno">  103</span> </div>
+<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
+<div class="line"><span class="lineno">  105</span>        {</div>
+<div class="line"><span class="lineno">  106</span>            <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
+<div class="line"><span class="lineno">  107</span>                                       current_job-&gt;get_name());</div>
+<div class="line"><span class="lineno">  108</span>        }</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(started_time_point.value(),</div>
+<div class="line"><span class="lineno">  111</span>                                   <span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
+<div class="line"><span class="lineno">  112</span>                                   current_job-&gt;get_name());</div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  115</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00183">formatter.h:183</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_a07ee6e4d0fe0281daff694059ec4d352"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a></div><div class="ttdeci">auto write_sequence(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../de/d39/logger_2logger_8h_source.html#l00180">logger.h:180</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph" alt=""/></div>
 <map name="ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph">
-<area shape="rect" title="Processes one or more jobs from the queue." alt="" coords="5,37,192,77"/>
+<area shape="rect" title="Processes one or more jobs from the queue." alt="" coords="5,35,192,75"/>
 <area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="251,5,437,45"/>
-<area shape="poly" title=" " alt="" coords="192,43,237,37,237,42,192,48"/>
-<area shape="rect" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,73,448,98"/>
-<area shape="poly" title=" " alt="" coords="192,65,227,69,226,75,192,71"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="508,5,695,45"/>
-<area shape="poly" title=" " alt="" coords="438,31,494,32,494,37,438,37"/>
-<area shape="poly" title=" " alt="" coords="508,19,451,19,451,14,508,14"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,69,707,109"/>
-<area shape="poly" title=" " alt="" coords="448,84,483,85,483,90,448,90"/>
+<area shape="poly" title=" " alt="" coords="192,41,237,35,237,41,192,46"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,70,448,95"/>
+<area shape="poly" title=" " alt="" coords="192,63,227,67,226,72,192,68"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,63,707,103"/>
+<area shape="poly" title=" " alt="" coords="448,80,483,80,483,85,448,85"/>
 </map>
 </div>
 
@@ -487,15 +484,17 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><span class="lineno">   57</span>        }</div>
 <div class="line"><span class="lineno">   58</span> </div>
-<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;empty();</div>
-<div class="line"><span class="lineno">   60</span>    }</div>
+<div class="line"><span class="lineno">   59</span>        <span class="comment">// Thread pool workers should continue running until explicitly stopped</span></div>
+<div class="line"><span class="lineno">   60</span>        <span class="comment">// They should wait for new jobs even when the queue is empty</span></div>
+<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;is_stopped();</div>
+<div class="line"><span class="lineno">   62</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" alt=""/></div>
 <map name="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph">
 <area shape="rect" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#ace310cfeec8467bf79908d02d8a434cf" title="Checks if the queue is in a &quot;stopped&quot; state." alt="" coords="228,13,376,53"/>
 <area shape="poly" title=" " alt="" coords="180,30,214,30,214,35,180,35"/>
 </map>
 </div>
@@ -564,7 +563,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 8 2025 06:32:39 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 9 2025 00:06:56 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
