@@ -59,7 +59,6 @@ namespace thread_module
 		std::scoped_lock<std::mutex> lock(mutex_);
 
 		queue_.push_back(std::move(value));
-		queue_size_.fetch_add(1);
 
 		if (notify_)
 		{
@@ -95,7 +94,6 @@ namespace thread_module
 		{
 			queue_.push_back(std::move(job));
 		}
-		queue_size_.fetch_add(jobs.size());
 
 		if (notify_)
 		{
@@ -117,7 +115,6 @@ namespace thread_module
 
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
-		queue_size_.fetch_sub(1);
 
 		return value;
 	}
@@ -129,7 +126,6 @@ namespace thread_module
 			std::scoped_lock<std::mutex> lock(mutex_);
 
 			std::swap(queue_, all_items);
-			queue_size_.store(0);
 
 			condition_.notify_all();
 		}
@@ -141,9 +137,7 @@ namespace thread_module
 	{
 		std::scoped_lock<std::mutex> lock(mutex_);
 
-		std::deque<std::unique_ptr<job>> empty;
-		std::swap(queue_, empty);
-		queue_size_.store(0);
+		queue_.clear();
 
 		condition_.notify_all();
 	}
@@ -164,8 +158,14 @@ namespace thread_module
 		condition_.notify_all();
 	}
 
+	auto job_queue::size(void) const -> std::size_t
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+		return queue_.size();
+	}
+
 	auto job_queue::to_string(void) const -> std::string
 	{
-		return formatter::format("contained {} jobs", queue_size_.load());
+		return formatter::format("contained {} jobs", size());
 	}
 } // namespace thread_module
