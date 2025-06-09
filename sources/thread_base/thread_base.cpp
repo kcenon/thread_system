@@ -83,9 +83,17 @@ namespace thread_module
 	auto thread_base::set_wake_interval(
 		const std::optional<std::chrono::milliseconds>& wake_interval) -> void
 	{
-		// Add thread safety when modifying the wake interval
-		std::scoped_lock<std::mutex> lock(cv_mutex_);
+		// Use dedicated mutex for wake_interval to prevent data races
+		std::scoped_lock<std::mutex> lock(wake_interval_mutex_);
 		wake_interval_ = wake_interval;
+	}
+
+	auto thread_base::get_wake_interval() const 
+		-> std::optional<std::chrono::milliseconds>
+	{
+		// Thread-safe read of wake_interval
+		std::scoped_lock<std::mutex> lock(wake_interval_mutex_);
+		return wake_interval_;
 	}
 
 	auto thread_base::start(void) -> result_void
@@ -135,16 +143,19 @@ namespace thread_module
 					{
 						thread_condition_.store(thread_conditions::Waiting);
 
+						// Get wake interval with thread-safe access
+						auto interval = get_wake_interval();
+						
 						std::unique_lock<std::mutex> lock(cv_mutex_);
-						if (wake_interval_.has_value())
+						if (interval.has_value())
 						{
 #ifdef USE_STD_JTHREAD
 							worker_condition_.wait_for(
-								lock, wake_interval_.value(), [this, &stop_token]()
+								lock, interval.value(), [this, &stop_token]()
 								{ return stop_token.stop_requested() || should_continue_work(); });
 #else
 							worker_condition_.wait_for(
-								lock, wake_interval_.value(),
+								lock, interval.value(),
 								[this]() { return stop_requested_ || should_continue_work(); });
 #endif
 						}

@@ -179,9 +179,20 @@ namespace thread_module
 		 *
 		 * If a wake interval is set, the worker thread can periodically perform some action (e.g.,
 		 * housekeeping tasks) even if there's no immediate external signal.
+		 * 
+		 * @note This method is thread-safe.
 		 */
 		auto set_wake_interval(const std::optional<std::chrono::milliseconds>& wake_interval)
 			-> void;
+
+		/**
+		 * @brief Gets the current wake interval setting.
+		 * @return The wake interval if set, or @c std::nullopt if periodic wake-ups are disabled.
+		 * 
+		 * @note This method is thread-safe.
+		 */
+		[[nodiscard]] auto get_wake_interval() const 
+			-> std::optional<std::chrono::milliseconds>;
 
 		/**
 		 * @brief Starts the worker thread.
@@ -274,10 +285,20 @@ namespace thread_module
 		 *
 		 * If set, the worker thread can wake periodically (in addition to any other wake
 		 * conditions) to perform tasks at regular intervals.
+		 * 
+		 * @note Access to this member must be synchronized using wake_interval_mutex_
 		 */
 		std::optional<std::chrono::milliseconds> wake_interval_;
 
 	private:
+		/**
+		 * @brief Mutex for synchronizing access to the wake_interval_ member.
+		 * 
+		 * This mutex must be acquired when reading or writing wake_interval_ to prevent
+		 * data races between the setter and the worker thread.
+		 */
+		mutable std::mutex wake_interval_mutex_;
+
 		/**
 		 * @brief Mutex for synchronizing access to internal state and condition variables.
 		 *
