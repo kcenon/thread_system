@@ -442,7 +442,17 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  154</span> </div>
 <div class="line"><span class="lineno">  155</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>.empty();</div>
 <div class="line"><span class="lineno">  156</span>    }</div>
-</div><!-- fragment -->
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph" alt=""/></div>
+<map name="adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph">
+<area shape="rect" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
+<area shape="poly" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a60e9a953b327fe2fcaecfbcfdb0229cc" name="a60e9a953b327fe2fcaecfbcfdb0229cc"></a>
@@ -629,17 +639,7 @@ Typical Usage</h3>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   43</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load(); }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_ace310cfeec8467bf79908d02d8a434cf_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_ace310cfeec8467bf79908d02d8a434cf_icgraph" alt=""/></div>
-<map name="adf/d6d/classthread__module_1_1job__queue_ace310cfeec8467bf79908d02d8a434cf_icgraph" id="adf/d6d/classthread__module_1_1job__queue_ace310cfeec8467bf79908d02d8a434cf_icgraph">
-<area shape="rect" title="Checks if the queue is in a &quot;stopped&quot; state." alt="" coords="228,13,376,53"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
-<area shape="poly" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
-</map>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afa579e0071878acf4fe39005dfbcd3a9" name="afa579e0071878acf4fe39005dfbcd3a9"></a>
@@ -735,7 +735,7 @@ Here is the caller graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">  168</span>    {</div>
 <div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;contained {} jobs&quot;</span>, <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a3c06806fbe961aa879320e021979ebfe">queue_size_</a>.load());</div>
 <div class="line"><span class="lineno">  170</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00183">formatter.h:183</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -744,6 +744,9 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Returns a string representation of this job_queue." alt="" coords="5,5,153,45"/>
 <area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="201,5,388,45"/>
 <area shape="poly" title=" " alt="" coords="154,23,188,23,188,28,154,28"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="436,5,623,45"/>
+<area shape="poly" title=" " alt="" coords="388,31,422,32,422,37,388,37"/>
+<area shape="poly" title=" " alt="" coords="436,19,401,19,401,14,436,14"/>
 </map>
 </div>
 <div class="dynheader">
@@ -928,7 +931,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 9 2025 00:06:56 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 9 2025 00:09:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
