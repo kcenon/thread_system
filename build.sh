@@ -80,11 +80,16 @@ check_dependencies() {
     local missing_deps=()
     
     # Check for essential build tools
-    for cmd in cmake make git; do
+    for cmd in cmake git; do
         if ! command_exists "$cmd"; then
             missing_deps+=("$cmd")
         fi
     done
+    
+    # Check for at least one build system (make or ninja)
+    if ! command_exists "make" && ! command_exists "ninja"; then
+        missing_deps+=("make or ninja")
+    fi
     
     if [ ${#missing_deps[@]} -ne 0 ]; then
         print_error "Missing required dependencies: ${missing_deps[*]}"
@@ -314,18 +319,42 @@ elif [ "$TARGET" == "tests" ]; then
     BUILD_TARGET="thread_base_unit thread_pool_unit typed_thread_pool_unit logger_unit utilities_unit"
 fi
 
-# Set verbosity level
-if [ $VERBOSE -eq 1 ]; then
-    MAKE_ARGS="VERBOSE=1"
+# Detect build system (Ninja or Make)
+if [ -f "build.ninja" ]; then
+    BUILD_COMMAND="ninja"
+    if [ $VERBOSE -eq 1 ]; then
+        BUILD_ARGS="-v"
+    else
+        BUILD_ARGS=""
+    fi
+elif [ -f "Makefile" ]; then
+    BUILD_COMMAND="make"
+    if [ $VERBOSE -eq 1 ]; then
+        BUILD_ARGS="VERBOSE=1"
+    else
+        BUILD_ARGS=""
+    fi
 else
-    MAKE_ARGS=""
+    print_error "No build system files found (neither build.ninja nor Makefile)"
+    cd "$ORIGINAL_DIR"
+    exit 1
 fi
 
-# Run make with appropriate target and cores
-if [ -n "$BUILD_TARGET" ]; then
-    make -j$BUILD_CORES $MAKE_ARGS $BUILD_TARGET
-else
-    make -j$BUILD_CORES $MAKE_ARGS
+print_status "Using build system: $BUILD_COMMAND"
+
+# Run build with appropriate target and cores
+if [ "$BUILD_COMMAND" == "ninja" ]; then
+    if [ -n "$BUILD_TARGET" ]; then
+        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS $BUILD_TARGET
+    else
+        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
+    fi
+elif [ "$BUILD_COMMAND" == "make" ]; then
+    if [ -n "$BUILD_TARGET" ]; then
+        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS $BUILD_TARGET
+    else
+        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
+    fi
 fi
 
 # Check if build was successful
