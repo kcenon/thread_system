@@ -7,6 +7,11 @@
 # Define the benchmark group name
 project(thread_pool_benchmarks)
 
+# Google Benchmark based thread pool benchmark
+add_executable(gbench_thread_pool gbench_thread_pool.cpp)
+target_link_libraries(gbench_thread_pool PRIVATE thread_pool thread_base utilities benchmark::benchmark)
+set_target_properties(gbench_thread_pool PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
 # Core thread pool performance benchmark
 add_executable(thread_pool_benchmark
     thread_pool_benchmark.cpp

@@ -4,6 +4,7 @@
   "dependencies": [
     "fmt",
     "libiconv",
-    "gtest"
+    "gtest",
+    "benchmark"
   ]
 }
