@@ -1,5 +1,5 @@
 <map id="log_module::console_writer" name="log_module::console_writer">
-<area shape="rect" id="Node000001" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="13,539,197,699"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,491"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,504,108,538,103,538,103,504"/>
+<area shape="rect" id="Node000001" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="13,579,197,739"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,531"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,544,108,578,103,578,103,544"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="6,539,205,773"/>
-<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,491"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,505,108,538,103,538,103,505"/>
+<area shape="rect" id="Node000001" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="6,579,205,813"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,531"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,544,108,579,103,579,103,544"/>
 </map>
