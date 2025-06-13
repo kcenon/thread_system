@@ -49,9 +49,9 @@ namespace thread_module
 	 * 
 	 * This class provides a thread-safe memory pool optimized for allocating
 	 * and deallocating nodes in lock-free data structures. It uses:
-	 * - Thread-local caching for reduced contention
-	 * - Lock-free free list for global pool
+	 * - Lock-free free list for global pool (no thread-local storage)
 	 * - Chunk-based allocation for better locality
+	 * - Cache-line aligned structures to reduce false sharing
 	 * 
 	 * @tparam T Type of objects to pool (must be default constructible)
 	 */
@@ -103,7 +103,6 @@ namespace thread_module
 			size_t total_nodes;
 			size_t allocated_nodes;
 			size_t free_list_size;
-			size_t thread_local_cache_size;
 		};
 		
 		[[nodiscard]] auto get_statistics() const -> statistics;
@@ -116,7 +115,6 @@ namespace thread_module
 		
 	private:
 		static constexpr size_t CACHE_LINE_SIZE = 64;
-		static constexpr size_t LOCAL_CACHE_SIZE = 32;
 		static constexpr size_t MIN_CHUNK_SIZE = 256;
 		static constexpr size_t MAX_CHUNK_SIZE = 8192;
 		
@@ -156,45 +154,8 @@ namespace thread_module
 		alignas(CACHE_LINE_SIZE) std::atomic<size_t> total_nodes_{0};
 		alignas(CACHE_LINE_SIZE) std::atomic<size_t> allocated_nodes_{0};
 		
-		// Thread-local cache
-		struct ThreadLocalCache
-		{
-			std::vector<T*> nodes;
-			node_pool* owner{nullptr};
-			
-			ThreadLocalCache() { nodes.reserve(LOCAL_CACHE_SIZE); }
-			~ThreadLocalCache();
-			
-			auto push(T* node) -> bool
-			{
-				if (nodes.size() < LOCAL_CACHE_SIZE) {
-					nodes.push_back(node);
-					return true;
-				}
-				return false;
-			}
-			
-			auto pop() -> T*
-			{
-				if (!nodes.empty()) {
-					T* node = nodes.back();
-					nodes.pop_back();
-					return node;
-				}
-				return nullptr;
-			}
-			
-			auto size() const -> size_t { return nodes.size(); }
-			
-			auto set_owner(node_pool* pool) -> void { owner = pool; }
-		};
-		
-		// Temporarily disable thread-local cache to debug segfault
-		// static thread_local ThreadLocalCache local_cache_;
-		
-		// Thread-local cache management
-		mutable std::mutex cache_registry_mutex_;
-		mutable std::unordered_set<ThreadLocalCache*> registered_caches_;
+		// Free list size tracking for statistics
+		alignas(CACHE_LINE_SIZE) std::atomic<size_t> free_list_size_{0};
 		
 		// Internal methods
 		auto allocate_new_chunk() -> PoolChunk*;
@@ -203,13 +164,7 @@ namespace thread_module
 		auto pop_from_free_list() -> T*;
 		auto to_free_node(T* node) -> FreeNode*;
 		auto from_free_node(FreeNode* free_node) -> T*;
-		auto register_cache(ThreadLocalCache* cache) -> void;
-		auto unregister_cache(ThreadLocalCache* cache) -> void;
 	};
-	
-	// Thread-local static member definition
-	// template<typename T>
-	// thread_local typename node_pool<T>::ThreadLocalCache node_pool<T>::local_cache_;
 
 } // namespace thread_module
 

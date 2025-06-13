@@ -203,8 +203,8 @@ namespace thread_module
 		};
 		
 		// Configuration
-		const size_t max_threads_;
-		const size_t pointers_per_thread_;
+		[[maybe_unused]] const size_t max_threads_;
+		[[maybe_unused]] const size_t pointers_per_thread_;
 		static constexpr size_t RETIRED_THRESHOLD = 64;
 		static constexpr auto SCAN_INTERVAL = std::chrono::milliseconds(100);
 		

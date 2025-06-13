@@ -35,25 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace thread_module
 {
 	template<typename T>
-	node_pool<T>::ThreadLocalCache::~ThreadLocalCache()
-	{
-		// Return nodes to the pool if possible
-		if (owner && !nodes.empty()) {
-			for (auto* node : nodes) {
-				if (node) {
-					owner->push_to_free_list(node);
-				}
-			}
-		}
-		nodes.clear();
-		
-		// Unregister from owner
-		if (owner) {
-			owner->unregister_cache(this);
-		}
-	}
-	
-	template<typename T>
 	node_pool<T>::node_pool(size_t initial_chunks, size_t chunk_size)
 		: chunk_size_(std::max(std::min(chunk_size, MAX_CHUNK_SIZE), MIN_CHUNK_SIZE))
 	{
@@ -63,15 +44,6 @@ namespace thread_module
 	template<typename T>
 	node_pool<T>::~node_pool()
 	{
-		// Clean up all registered thread-local caches
-		{
-			std::lock_guard<std::mutex> lock(cache_registry_mutex_);
-			for (auto* cache : registered_caches_) {
-				cache->owner = nullptr;
-			}
-			registered_caches_.clear();
-		}
-		
 		// Clean up all chunks
 		auto* chunk = current_chunk_.load(std::memory_order_acquire);
 		while (chunk) {
@@ -84,19 +56,7 @@ namespace thread_module
 	template<typename T>
 	auto node_pool<T>::allocate() -> T*
 	{
-		// Temporarily skip thread-local cache
-		// Ensure thread-local cache is registered
-		// if (!local_cache_.owner) {
-		// 	local_cache_.set_owner(this);
-		// 	register_cache(&local_cache_);
-		// }
-		
-		// Try thread-local cache first
-		// if (T* node = local_cache_.pop()) {
-		// 	return node;
-		// }
-		
-		// Try global free list
+		// Try global free list first
 		if (T* node = pop_from_free_list()) {
 			return node;
 		}
@@ -134,13 +94,7 @@ namespace thread_module
 	{
 		if (!node) return;
 		
-		// Temporarily skip thread-local cache
-		// Try to cache locally first
-		// if (local_cache_.push(node)) {
-		// 	return;
-		// }
-		
-		// Local cache is full, push to global free list
+		// Push to global free list
 		push_to_free_list(node);
 		allocated_nodes_.fetch_sub(1, std::memory_order_relaxed);
 	}
@@ -152,18 +106,7 @@ namespace thread_module
 		stats.total_chunks = total_chunks_.load(std::memory_order_relaxed);
 		stats.total_nodes = total_nodes_.load(std::memory_order_relaxed);
 		stats.allocated_nodes = allocated_nodes_.load(std::memory_order_relaxed);
-		
-		// Count free list size
-		size_t free_count = 0;
-		auto* node = free_list_.load(std::memory_order_acquire);
-		while (node) {
-			++free_count;
-			node = node->next.load(std::memory_order_acquire);
-		}
-		stats.free_list_size = free_count;
-		
-		// stats.thread_local_cache_size = local_cache_.size();
-		stats.thread_local_cache_size = 0;
+		stats.free_list_size = free_list_size_.load(std::memory_order_relaxed);
 		
 		return stats;
 	}
@@ -214,6 +157,8 @@ namespace thread_module
 		} while (!free_list_.compare_exchange_weak(head, free_node,
 												   std::memory_order_release,
 												   std::memory_order_acquire));
+		
+		free_list_size_.fetch_add(1, std::memory_order_relaxed);
 	}
 	
 	template<typename T>
@@ -226,6 +171,7 @@ namespace thread_module
 			if (free_list_.compare_exchange_weak(head, next,
 												 std::memory_order_release,
 												 std::memory_order_acquire)) {
+				free_list_size_.fetch_sub(1, std::memory_order_relaxed);
 				return from_free_node(head);
 			}
 		}
@@ -246,20 +192,6 @@ namespace thread_module
 	{
 		// Convert back from FreeNode* to T*
 		return reinterpret_cast<T*>(free_node);
-	}
-	
-	template<typename T>
-	auto node_pool<T>::register_cache(ThreadLocalCache* cache) -> void
-	{
-		std::lock_guard<std::mutex> lock(cache_registry_mutex_);
-		registered_caches_.insert(cache);
-	}
-	
-	template<typename T>
-	auto node_pool<T>::unregister_cache(ThreadLocalCache* cache) -> void
-	{
-		std::lock_guard<std::mutex> lock(cache_registry_mutex_);
-		registered_caches_.erase(cache);
 	}
 
 } // namespace thread_module

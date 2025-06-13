@@ -336,8 +336,9 @@ namespace thread_module
 		}
 		
 		size_t retry_count = 0;
+		size_t total_retries = 0;
 		
-		while (true) {
+		while (total_retries < MAX_TOTAL_RETRIES) {
 			Node* tail = tail_.load(std::memory_order_acquire);
 			Node* next = tail->next.load(std::memory_order_acquire);
 			
@@ -373,14 +374,26 @@ namespace thread_module
 				increment_retry_count();
 				retry_count = 0;
 			}
+			
+			++total_retries;
+			
+			// Add small delay to reduce contention
+			if (total_retries % 100 == 0) {
+				std::this_thread::yield();
+			}
 		}
+		
+		// If we reach here, we've exceeded max retries
+		deallocate_node(new_node);
+		return error{error_code::resource_limit_reached, "Enqueue failed after maximum retries"};
 	}
 	
 	auto lockfree_mpmc_queue::dequeue_impl() -> result<job_ptr>
 	{
 		size_t retry_count = 0;
+		size_t total_retries = 0;
 		
-		while (true) {
+		while (total_retries < MAX_TOTAL_RETRIES) {
 			// Use hazard pointers to protect head access
 			auto hp = hp_manager_->acquire();
 			Node* head = hp.protect(head_);
@@ -441,7 +454,17 @@ namespace thread_module
 				increment_retry_count();
 				retry_count = 0;
 			}
+			
+			++total_retries;
+			
+			// Add small delay to reduce contention
+			if (total_retries % 100 == 0) {
+				std::this_thread::yield();
+			}
 		}
+		
+		// If we reach here, we've exceeded max retries
+		return error{error_code::resource_limit_reached, "Dequeue failed after maximum retries"};
 	}
 	
 	auto lockfree_mpmc_queue::record_enqueue_time(std::chrono::nanoseconds duration) -> void

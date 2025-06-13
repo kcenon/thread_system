@@ -247,6 +247,7 @@ namespace thread_module
 		// Configuration
 		static constexpr size_t MAX_BATCH_SIZE = 1024;
 		static constexpr size_t RETRY_THRESHOLD = 16;
+		static constexpr size_t MAX_TOTAL_RETRIES = 1000;  // Maximum total retries before giving up
 		
 		// Internal helper methods
 		auto allocate_node() -> node_ptr;

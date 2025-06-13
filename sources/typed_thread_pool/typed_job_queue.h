@@ -35,12 +35,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../utilities/formatter.h"
 #include "../utilities/span.h"
 #include "../thread_base/job_queue.h"
+#include "../thread_base/lockfree/lockfree_mpmc_queue.h"
 #include "typed_job.h"
 #include "convert_string.h"
 #include "job_types.h"
 #include "callback_typed_job.h"
 
 #include <map>
+#include <unordered_map>
+#include <shared_mutex>
 
 using namespace thread_module;
 
@@ -242,14 +245,19 @@ namespace typed_thread_pool_module
 
 	private:
 		/**
-		 * @brief A map of priority levels to double-ended queues that store jobs of that priority.
+		 * @brief A map of priority levels to lock-free MPMC queues that store jobs of that priority.
 		 */
-		std::map<job_type, std::deque<std::unique_ptr<typed_job_t<job_type>>>> queues_;
+		std::unordered_map<job_type, std::unique_ptr<lockfree_mpmc_queue>> lockfree_queues_;
 
 		/**
-		 * @brief A map that tracks the size of each priority queue in a thread-safe manner.
+		 * @brief Mutex for protecting queue map modifications.
 		 */
-		std::map<job_type, std::atomic_size_t> queue_sizes_;
+		mutable std::shared_mutex queues_mutex_;
+
+		/**
+		 * @brief Get or create a lock-free queue for the specified type.
+		 */
+		auto get_or_create_queue(const job_type& type) -> lockfree_mpmc_queue*;
 	};
 
 	/// @brief Alias for a typed_job_queue using default job types.
