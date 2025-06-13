@@ -13,8 +13,19 @@ project(thread_base)
 file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
+# Collect lock-free implementation files
+file(GLOB LOCKFREE_HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/lockfree/*.h)
+file(GLOB LOCKFREE_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/lockfree/*.cpp)
+file(GLOB LOCKFREE_TEMPLATE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/lockfree/*.tpp)
+
 # Create a static library from the collected source files
-add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC 
+    ${HEADER_FILES} 
+    ${SOURCE_FILES}
+    ${LOCKFREE_HEADER_FILES}
+    ${LOCKFREE_SOURCE_FILES}
+    ${LOCKFREE_TEMPLATE_FILES}
+)
 
 # Configure include directory so client code can find headers
 target_include_directories(${PROJECT_NAME} PUBLIC 
