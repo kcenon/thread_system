@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "../utilities/formatter.h"
-#include "../thread_base/job_queue.h"
+#include "../thread_base/jobs/job_queue.h"
 #include "thread_worker.h"
 #include "../utilities/convert_string.h"
 

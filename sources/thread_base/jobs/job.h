@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../utilities/formatter.h"
-#include "../utilities/convert_string.h"
-#include "error_handling.h"
-#include "cancellation_token.h"
+#include "../../utilities/formatter.h"
+#include "../../utilities/convert_string.h"
+#include "../sync/error_handling.h"
+#include "../sync/cancellation_token.h"
 
 #include <tuple>
 #include <memory>

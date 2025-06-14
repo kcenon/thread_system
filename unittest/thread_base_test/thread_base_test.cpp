@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "job_queue.h"
-#include "callback_job.h"
-#include "thread_base.h"
+#include "jobs/job_queue.h"
+#include "jobs/callback_job.h"
+#include "core/thread_base.h"
 #include <thread>
 #include <chrono>
 #include <atomic>

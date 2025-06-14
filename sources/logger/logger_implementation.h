@@ -33,15 +33,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "log_job.h"
-#include "../thread_base/job_queue.h"
-#include "../thread_base/thread_base.h"
+#include "../thread_base/jobs/job_queue.h"
+#include "../thread_base/core/thread_base.h"
 
 #include "../utilities/formatter.h"
 #include "log_collector.h"
 #include "console_writer.h"
 #include "file_writer.h"
 #include "callback_writer.h"
-#include "../thread_base/error_handling.h"
+#include "../thread_base/sync/error_handling.h"
 
 #include <deque>
 #include <mutex>

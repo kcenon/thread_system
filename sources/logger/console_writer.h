@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../thread_base/job_queue.h"
-#include "../thread_base/thread_base.h"
+#include "../thread_base/jobs/job_queue.h"
+#include "../thread_base/core/thread_base.h"
 
 using namespace thread_module;
 

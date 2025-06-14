@@ -33,8 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "gtest/gtest.h"
-#include "lockfree/lockfree_mpmc_queue.h"
-#include "callback_job.h"
+#include "lockfree/queues/lockfree_mpmc_queue.h"
+#include "jobs/callback_job.h"
 #include <thread>
 
 using namespace thread_module;

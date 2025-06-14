@@ -6,7 +6,7 @@
  */
 
 #include "thread_pool.h"
-#include "../thread_base/error_handling.h"
+#include "../thread_base/sync/error_handling.h"
 
 #include <memory>
 #include <string>

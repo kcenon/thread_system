@@ -32,10 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../utilities/formatter.h"
-#include "../utilities/convert_string.h"
+#include "../../utilities/formatter.h"
+#include "../../utilities/convert_string.h"
 #include "thread_conditions.h"
-#include "error_handling.h"
+#include "../sync/error_handling.h"
+#include "../detail/thread_impl.h"
 
 #include <mutex>
 #include <memory>

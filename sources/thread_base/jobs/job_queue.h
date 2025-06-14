@@ -33,10 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "job.h"
-#include "../utilities/formatter.h"
+#include "../../utilities/formatter.h"
 #include "callback_job.h"
-#include "../utilities/convert_string.h"
-#include "error_handling.h"
+#include "../../utilities/convert_string.h"
+#include "../sync/error_handling.h"
 
 #include <mutex>
 #include <deque>

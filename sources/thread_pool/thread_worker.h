@@ -32,10 +32,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "thread_base.h"
+#include "../thread_base/core/thread_base.h"
 
 #include "../utilities/formatter.h"
-#include "../thread_base/job_queue.h"
+#include "../thread_base/jobs/job_queue.h"
 #include "convert_string.h"
 
 #include <memory>

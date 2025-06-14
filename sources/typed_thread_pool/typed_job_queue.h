@@ -34,8 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../utilities/formatter.h"
 #include "../utilities/span.h"
-#include "../thread_base/job_queue.h"
-#include "../thread_base/lockfree/lockfree_mpmc_queue.h"
+#include "../thread_base/jobs/job_queue.h"
+#include "../thread_base/lockfree/queues/lockfree_mpmc_queue.h"
 #include "typed_job.h"
 #include "convert_string.h"
 #include "job_types.h"
