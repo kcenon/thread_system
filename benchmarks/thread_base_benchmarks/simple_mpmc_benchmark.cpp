@@ -44,9 +44,9 @@ TestResult run_test(const std::string& name, size_t num_producers, size_t num_co
     for (size_t i = 0; i < num_producers; ++i) {
         producers.emplace_back([&]() {
             for (size_t j = 0; j < operations_per_thread; ++j) {
-                auto job = std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+                auto job = std::make_unique<callback_job>([&counter]() -> result_void {
                     counter.fetch_add(1, std::memory_order_relaxed);
-                    return std::nullopt;
+                    return result_void();
                 });
                 queue.enqueue(std::move(job));
                 produced.fetch_add(1, std::memory_order_relaxed);

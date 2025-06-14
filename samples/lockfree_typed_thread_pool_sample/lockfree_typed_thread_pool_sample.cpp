@@ -37,10 +37,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <random>
 #include <iomanip>
 
-#include "logger.h"
-#include "formatter.h"
-#include "typed_thread_pool.h"
-#include "callback_typed_job.h"
+#include "logger/core/logger.h"
+#include "utilities/core/formatter.h"
+#include "typed_thread_pool/pool/typed_thread_pool.h"
+#include "typed_thread_pool/jobs/callback_typed_job.h"
 
 using namespace utility_module;
 using namespace typed_thread_pool_module;
@@ -54,8 +54,8 @@ int main() {
         // Test 1: Basic Type-based Job Processing
         std::cout << "=== Basic Type-based Job Processing ===\n";
         
-        // Create typed thread pool with lock-free queues
-        auto pool = std::make_unique<typed_thread_pool_t<job_types>>(4, true); // true for lock-free
+        // Create typed thread pool
+        auto pool = std::make_unique<typed_thread_pool>("lockfree_typed_pool");
         pool->start();
         std::cout << "Created lock-free typed thread pool with 4 workers\n";
 
@@ -67,15 +67,15 @@ int main() {
 
         // Submit RealTime jobs
         for (int i = 0; i < jobs_per_type; ++i) {
-            auto job = std::make_unique<callback_typed_job<job_types>>(
-                job_types::RealTime,
-                [&realtime_completed, i]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [&realtime_completed, i]() -> result_void {
                     std::this_thread::sleep_for(std::chrono::milliseconds(5));
                     realtime_completed.fetch_add(1);
                     std::cout << "RealTime job " << i << " completed on thread " 
                               << std::this_thread::get_id() << "\n";
-                    return std::nullopt;
-                }
+                    return result_void();
+                },
+                job_types::RealTime
             );
             
             pool->enqueue(std::move(job));
@@ -83,15 +83,15 @@ int main() {
 
         // Submit Batch jobs
         for (int i = 0; i < jobs_per_type; ++i) {
-            auto job = std::make_unique<callback_typed_job<job_types>>(
-                job_types::Batch,
-                [&batch_completed, i]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [&batch_completed, i]() -> result_void {
                     std::this_thread::sleep_for(std::chrono::milliseconds(10));
                     batch_completed.fetch_add(1);
                     std::cout << "Batch job " << i << " completed on thread " 
                               << std::this_thread::get_id() << "\n";
-                    return std::nullopt;
-                }
+                    return result_void();
+                },
+                job_types::Batch
             );
             
             pool->enqueue(std::move(job));
@@ -99,15 +99,15 @@ int main() {
 
         // Submit Background jobs
         for (int i = 0; i < jobs_per_type; ++i) {
-            auto job = std::make_unique<callback_typed_job<job_types>>(
-                job_types::Background,
-                [&background_completed, i]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [&background_completed, i]() -> result_void {
                     std::this_thread::sleep_for(std::chrono::milliseconds(15));
                     background_completed.fetch_add(1);
                     std::cout << "Background job " << i << " completed on thread " 
                               << std::this_thread::get_id() << "\n";
-                    return std::nullopt;
-                }
+                    return result_void();
+                },
+                job_types::Background
             );
             
             pool->enqueue(std::move(job));
@@ -128,7 +128,7 @@ int main() {
         // Test 2: Performance Test with Different Types
         std::cout << "=== Performance Test with Mixed Types ===\n";
         
-        auto perf_pool = std::make_unique<typed_thread_pool_t<job_types>>(4, true);
+        auto perf_pool = std::make_unique<typed_thread_pool>("perf_pool");
         perf_pool->start();
 
         const int perf_jobs = 30000;
@@ -159,16 +159,16 @@ int main() {
                     break;
             }
 
-            auto job = std::make_unique<callback_typed_job<job_types>>(
-                type,
-                [&perf_completed, counter]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [&perf_completed, counter]() -> result_void {
                     perf_completed.fetch_add(1);
                     counter->fetch_add(1);
-                    return std::nullopt;
-                }
+                    return result_void();
+                },
+                type
             );
 
-            perf_pool->add_job(std::move(job));
+            perf_pool->enqueue(std::move(job));
         }
 
         // Wait for completion
@@ -192,7 +192,7 @@ int main() {
         // Test 3: Load Distribution Test
         std::cout << "=== Load Distribution Test ===\n";
         
-        auto load_pool = std::make_unique<typed_thread_pool_t<job_types>>(4, true);
+        auto load_pool = std::make_unique<typed_thread_pool>("load_pool");
         load_pool->start();
 
         const int load_jobs = 15000;
@@ -226,17 +226,17 @@ int main() {
                     break;
             }
 
-            auto job = std::make_unique<callback_typed_job<job_types>>(
-                type,
-                [counter]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [counter]() -> result_void {
                     // Simulate variable work
                     std::this_thread::sleep_for(std::chrono::microseconds(50));
                     counter->fetch_add(1);
-                    return std::nullopt;
-                }
+                    return result_void();
+                },
+                type
             );
 
-            load_pool->add_job(std::move(job));
+            load_pool->enqueue(std::move(job));
         }
 
         // Wait for completion

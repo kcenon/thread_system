@@ -50,8 +50,8 @@ TEST(SimpleMPMCTest, SingleEnqueue)
 {
 	lockfree_mpmc_queue queue;
 	
-	auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-		return std::nullopt;
+	auto job = std::make_unique<callback_job>([]() -> result_void {
+		return result_void();
 	});
 	
 	auto result = queue.enqueue(std::move(job));
@@ -63,8 +63,8 @@ TEST(SimpleMPMCTest, SingleEnqueueDequeue)
 {
 	lockfree_mpmc_queue queue;
 	
-	auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-		return std::nullopt;
+	auto job = std::make_unique<callback_job>([]() -> result_void {
+		return result_void();
 	});
 	
 	auto enqueue_result = queue.enqueue(std::move(job));
@@ -80,8 +80,8 @@ TEST(SimpleMPMCTest, MultipleQueues)
 	for (int i = 0; i < 3; ++i) {
 		lockfree_mpmc_queue queue;
 		
-		auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-			return std::nullopt;
+		auto job = std::make_unique<callback_job>([]() -> result_void {
+			return result_void();
 		});
 		
 		auto enqueue_result = queue.enqueue(std::move(job));
@@ -98,8 +98,8 @@ TEST(SimpleMPMCTest, ThreadAccess)
 	lockfree_mpmc_queue queue;
 	
 	std::thread t([&queue]() {
-		auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-			return std::nullopt;
+		auto job = std::make_unique<callback_job>([]() -> result_void {
+			return result_void();
 		});
 		
 		auto result = queue.enqueue(std::move(job));

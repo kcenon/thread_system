@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/thread_base/lockfree/hazard_pointer.h"
+#include "thread_base/lockfree/memory/hazard_pointer.h"
 #include <iostream>
 #include <thread>
 #include <vector>

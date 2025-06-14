@@ -79,9 +79,9 @@ TEST_F(MPMCQueueTest, BasicEnqueueDequeue)
 	
 	// Test basic enqueue/dequeue
 	std::atomic<int> counter{0};
-	auto job = std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+	auto job = std::make_unique<callback_job>([&counter]() -> result_void {
 		counter.fetch_add(1);
-		return std::nullopt;
+		return result_void();
 	});
 	
 	// Enqueue
@@ -132,8 +132,8 @@ TEST_F(MPMCQueueTest, BatchOperations)
 		lockfree_mpmc_queue queue;
 		
 		// Test single item first
-		auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-			return std::nullopt;
+		auto job = std::make_unique<callback_job>([]() -> result_void {
+			return result_void();
 		});
 		
 		auto enqueue_result = queue.enqueue(std::move(job));
@@ -153,9 +153,9 @@ TEST_F(MPMCQueueTest, BatchOperations)
 		const size_t batch_size = 10;
 		
 		for (size_t i = 0; i < batch_size; ++i) {
-			jobs.push_back(std::make_unique<callback_job>([&counter, i]() -> std::optional<std::string> {
+			jobs.push_back(std::make_unique<callback_job>([&counter, i]() -> result_void {
 				counter.fetch_add(static_cast<int>(i));
-				return std::nullopt;
+				return result_void();
 			}));
 		}
 		
@@ -195,9 +195,9 @@ TEST_F(MPMCQueueTest, ConcurrentEnqueue)
 	for (size_t t = 0; t < num_threads; ++t) {
 		threads.emplace_back([&queue, &counter, jobs_per_thread]() {
 			for (size_t i = 0; i < jobs_per_thread; ++i) {
-				auto job = std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+				auto job = std::make_unique<callback_job>([&counter]() -> result_void {
 					counter.fetch_add(1);
-					return std::nullopt;
+					return result_void();
 				});
 				
 				while (true) {
@@ -241,9 +241,9 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue)
 	
 	// Enqueue jobs
 	for (size_t i = 0; i < num_jobs; ++i) {
-		auto job = std::make_unique<callback_job>([&counter, i]() -> std::optional<std::string> {
+		auto job = std::make_unique<callback_job>([&counter, i]() -> result_void {
 			counter.fetch_add(1);
-			return std::nullopt;
+			return result_void();
 		});
 		auto enqueue_result = queue.enqueue(std::move(job));
 		(void)enqueue_result;
@@ -305,9 +305,9 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress)
 				// Create job with proper scope management
 				std::unique_ptr<callback_job> job;
 				try {
-					job = std::make_unique<callback_job>([&executed]() -> std::optional<std::string> {
+					job = std::make_unique<callback_job>([&executed]() -> result_void {
 						executed.fetch_add(1);
-						return std::nullopt;
+						return result_void();
 					});
 				} catch (const std::exception& e) {
 					std::cout << "Failed to create job: " << e.what() << std::endl;
@@ -425,7 +425,7 @@ TEST_F(MPMCQueueTest, AdaptiveQueueBasicOperation)
 	adaptive_job_queue queue(adaptive_job_queue::queue_strategy::AUTO_DETECT);
 	
 	// Test basic operations
-	auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> { return std::nullopt; });
+	auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 	
 	auto enqueue_result = queue.enqueue(std::move(job));
 	EXPECT_TRUE(enqueue_result);
@@ -458,7 +458,7 @@ TEST_F(MPMCQueueTest, AdaptiveQueueStrategySwitch)
 			
 			// Hammer the queue
 			for (size_t i = 0; i < operations_per_thread; ++i) {
-				auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> { return std::nullopt; });
+				auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 				auto enqueue_result = queue.enqueue(std::move(job));
 		(void)enqueue_result;
 				
@@ -503,7 +503,7 @@ TEST_F(MPMCQueueTest, PerformanceComparison)
 		
 		// Sequential operations
 		for (size_t i = 0; i < 100; ++i) {
-			auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> { return std::nullopt; });
+			auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 			auto enqueue_result = legacy_queue.enqueue(std::move(job));
 			ASSERT_TRUE(enqueue_result);
 			
@@ -525,7 +525,7 @@ TEST_F(MPMCQueueTest, PerformanceComparison)
 		
 		// Sequential operations with just 10 iterations
 		for (size_t i = 0; i < 10; ++i) {
-			auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> { return std::nullopt; });
+			auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 			auto enqueue_result = mpmc_queue.enqueue(std::move(job));
 			if (!enqueue_result) {
 				std::cout << "Enqueue failed at iteration " << i << std::endl;
@@ -562,9 +562,9 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 	// Single producer, single consumer test
 	std::thread producer([&]() {
 		for (size_t i = 0; i < num_jobs; ++i) {
-			auto job = std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+			auto job = std::make_unique<callback_job>([&counter]() -> result_void {
 				counter.fetch_add(1);
-				return std::nullopt;
+				return result_void();
 			});
 			
 			while (!mpmc_queue.enqueue(std::move(job))) {
@@ -612,9 +612,9 @@ TEST_F(MPMCQueueTest, MultipleProducerConsumer)
 	for (size_t p = 0; p < num_producers; ++p) {
 		producers.emplace_back([&]() {
 			for (size_t i = 0; i < jobs_per_producer; ++i) {
-				auto job = std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+				auto job = std::make_unique<callback_job>([&counter]() -> result_void {
 					counter.fetch_add(1);
-					return std::nullopt;
+					return result_void();
 				});
 				
 				while (!queue.enqueue(std::move(job))) {

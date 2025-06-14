@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/thread_base/lockfree/node_pool.h"
+#include "thread_base/lockfree/memory/node_pool.h"
 #include <iostream>
 #include <thread>
 #include <vector>

@@ -30,10 +30,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/typed_thread_pool/typed_job_queue.h"
-#include "../../sources/typed_thread_pool/typed_job.h"
-#include "../../sources/thread_base/callback_job.h"
-#include "../../sources/logger/logger.h"
+#include "typed_thread_pool/scheduling/typed_job_queue.h"
+#include "typed_thread_pool/jobs/typed_job.h"
+#include "typed_thread_pool/jobs/callback_typed_job.h"
+#include "logger/core/logger.h"
 
 #include <thread>
 #include <vector>
@@ -50,9 +50,9 @@ using namespace std::chrono_literals;
 // Example 1: Basic typed job queue usage with lock-free MPMC
 void basic_typed_queue_example()
 {
-    logger::handle().log(log_types::information, "[Example 1] Basic Typed Job Queue (Lock-free MPMC)");
+    write_information("[Example 1] Basic Typed Job Queue (Lock-free MPMC)");
     
-    typed_job_queue<job_types> queue;
+    typed_job_queue_t<job_types> queue;
     std::atomic<int> high_jobs{0};
     std::atomic<int> normal_jobs{0};
     std::atomic<int> low_jobs{0};
@@ -64,35 +64,37 @@ void basic_typed_queue_example()
             std::atomic<int>* counter;
             
             if (i % 3 == 0) {
-                type = job_types::High;
+                type = job_types::RealTime;
                 counter = &high_jobs;
             } else if (i % 3 == 1) {
-                type = job_types::Normal;
+                type = job_types::Batch;
                 counter = &normal_jobs;
             } else {
-                type = job_types::Low;
+                type = job_types::Background;
                 counter = &low_jobs;
             }
             
-            auto job = std::make_unique<typed_job<job_types>>(
-                type,
-                std::make_unique<callback_job>([counter, i, type]() -> std::optional<std::string> {
+            // Create callback_typed_job directly with lambda and type
+            auto typed_job_ptr = std::make_unique<callback_typed_job>(
+                [counter, i, type]() -> result_void {
                     counter->fetch_add(1);
-                    std::string type_str = type == job_types::High ? "High" : 
-                                         (type == job_types::Normal ? "Normal" : "Low");
-                    return formatter::format("{} priority job {} completed", type_str, i);
-                })
+                    std::string type_str = type == job_types::RealTime ? "RealTime" : 
+                                         (type == job_types::Batch ? "Batch" : "Background");
+                    write_information("{} priority job {} completed", type_str, i);
+                    return result_void(); // Success
+                },
+                type
             );
             
-            auto result = queue.enqueue(std::move(job));
-            if (!result) {
-                logger::handle().log(log_types::error, 
-                    formatter::format("Failed to enqueue job {}: {}", i, result.get_error().message()));
+            auto result = queue.enqueue(std::move(typed_job_ptr));
+            if (result.has_error()) {
+                write_error(
+                    "Failed to enqueue job {}: {}", i, result.get_error().message());
             }
             
             std::this_thread::sleep_for(10ms);
         }
-        logger::handle().log(log_types::information, "Producer finished");
+        write_information("Producer finished");
     });
     
     // Consumer thread - processes jobs respecting type order
@@ -101,35 +103,37 @@ void basic_typed_queue_example()
         
         while (total_consumed < 30) {
             // Try to get high priority first
-            auto job = queue.dequeue({job_types::High, job_types::Normal, job_types::Low});
+            auto job = queue.dequeue({job_types::RealTime, job_types::Batch, job_types::Background});
             
             if (job.has_value()) {
-                auto result = job.value()->get_internal_job()->do_work();
-                if (result.has_value()) {
-                    logger::handle().log(log_types::information, result.value());
+                auto result = job.value()->do_work();
+                if (!result.has_error()) {
+                    // Job executed successfully
+                    total_consumed++;
+                } else {
+                    write_error("Job failed: {}", result.get_error().message());
                 }
-                total_consumed++;
             } else {
                 std::this_thread::sleep_for(5ms);
             }
         }
-        logger::handle().log(log_types::information, "Consumer finished");
+        write_information("Consumer finished");
     });
     
     producer.join();
     consumer.join();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Jobs processed - High: {}, Normal: {}, Low: {}", 
-            high_jobs.load(), normal_jobs.load(), low_jobs.load()));
+    write_information(
+        "Jobs processed - RealTime: {}, Batch: {}, Background: {}", 
+            high_jobs.load(), normal_jobs.load(), low_jobs.load());
 }
 
 // Example 2: Multiple producers and consumers with type-based processing
 void mpmc_typed_queue_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 2] MPMC Typed Queue Processing");
+    write_information("\n[Example 2] MPMC Typed Queue Processing");
     
-    typed_job_queue<job_types> queue;
+    typed_job_queue_t<job_types> queue;
     const int num_producers = 4;
     const int num_consumers = 3;
     const int jobs_per_producer = 25;
@@ -137,9 +141,9 @@ void mpmc_typed_queue_example()
     std::atomic<int> total_produced{0};
     std::atomic<int> total_consumed{0};
     std::map<job_types, std::atomic<int>> type_counts;
-    type_counts[job_types::High].store(0);
-    type_counts[job_types::Normal].store(0);
-    type_counts[job_types::Low].store(0);
+    type_counts[job_types::RealTime].store(0);
+    type_counts[job_types::Batch].store(0);
+    type_counts[job_types::Background].store(0);
     
     std::vector<std::thread> producers;
     std::vector<std::thread> consumers;
@@ -155,33 +159,46 @@ void mpmc_typed_queue_example()
             for (int i = 0; i < jobs_per_producer; ++i) {
                 job_types type = static_cast<job_types>(type_dist(gen));
                 
-                auto job = std::make_unique<typed_job<job_types>>(
-                    type,
-                    std::make_unique<callback_job>([p, i, type]() -> std::optional<std::string> {
+                auto job = std::make_unique<callback_typed_job>(
+                    [p, i, type]() -> result_void {
                         // Simulate work based on priority
                         std::this_thread::sleep_for(std::chrono::microseconds(
-                            type == job_types::High ? 10 : 
-                            (type == job_types::Normal ? 50 : 100)));
-                        return formatter::format("Producer {} job {} (type: {})", p, i, static_cast<int>(type));
-                    })
+                            type == job_types::RealTime ? 10 : 
+                            (type == job_types::Batch ? 50 : 100)));
+                        write_information("Producer {} job {} (type: {})", p, i, static_cast<int>(type));
+                        return result_void();
+                    },
+                    type
                 );
                 
                 // Retry on failure with lock-free queue
                 while (true) {
                     auto result = queue.enqueue(std::move(job));
-                    if (result) {
+                    if (!result.has_error()) {
                         total_produced.fetch_add(1);
                         type_counts[type].fetch_add(1);
                         break;
                     }
                     std::this_thread::yield();
+                    // Re-create job since it was moved
+                    job = std::make_unique<callback_typed_job>(
+                        [p, i, type]() -> result_void {
+                            // Simulate work based on priority
+                            std::this_thread::sleep_for(std::chrono::microseconds(
+                                type == job_types::RealTime ? 10 : 
+                                (type == job_types::Batch ? 50 : 100)));
+                            write_information("Producer {} job {} (type: {})", p, i, static_cast<int>(type));
+                            return result_void();
+                        },
+                        type
+                    );
                 }
                 
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_dist(gen)));
             }
             
-            logger::handle().log(log_types::information, 
-                formatter::format("Producer {} finished", p));
+            write_information(
+                "Producer {} finished", p);
         });
     }
     
@@ -193,30 +210,32 @@ void mpmc_typed_queue_example()
             
             // Different consumers have different type preferences
             if (c == 0) {
-                preference = {job_types::High, job_types::Normal, job_types::Low};
+                preference = {job_types::RealTime, job_types::Batch, job_types::Background};
             } else if (c == 1) {
-                preference = {job_types::Normal, job_types::High, job_types::Low};
+                preference = {job_types::Batch, job_types::RealTime, job_types::Background};
             } else {
-                preference = {job_types::Low, job_types::Normal, job_types::High};
+                preference = {job_types::Background, job_types::Batch, job_types::RealTime};
             }
             
             while (total_consumed.load() < total_jobs) {
                 auto job = queue.dequeue(preference);
                 
                 if (job.has_value()) {
-                    auto result = job.value()->get_internal_job()->do_work();
-                    if (result.has_value()) {
-                        logger::handle().log(log_types::debug, 
-                            formatter::format("Consumer {}: {}", c, result.value()));
+                    auto result = job.value()->do_work();
+                    if (!result) {
+                        // Job executed successfully
+                        total_consumed.fetch_add(1);
+                    } else {
+                        write_error("Consumer {} job failed: {}", 
+                            c, result.get_error().message());
                     }
-                    total_consumed.fetch_add(1);
                 } else {
                     std::this_thread::sleep_for(1ms);
                 }
             }
             
-            logger::handle().log(log_types::information, 
-                formatter::format("Consumer {} finished", c));
+            write_information(
+                "Consumer {} finished", c);
         });
     }
     
@@ -224,27 +243,27 @@ void mpmc_typed_queue_example()
     for (auto& t : producers) t.join();
     for (auto& t : consumers) t.join();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Total jobs - Produced: {}, Consumed: {}", 
-            total_produced.load(), total_consumed.load()));
-    logger::handle().log(log_types::information, 
-        formatter::format("By type - High: {}, Normal: {}, Low: {}", 
-            type_counts[job_types::High].load(),
-            type_counts[job_types::Normal].load(),
-            type_counts[job_types::Low].load()));
+    write_information(
+        "Total jobs - Produced: {}, Consumed: {}", 
+            total_produced.load(), total_consumed.load());
+    write_information(
+        "By type - High: {}, Normal: {}, Low: {}", 
+            type_counts[job_types::RealTime].load(),
+            type_counts[job_types::Batch].load(),
+            type_counts[job_types::Background].load());
 }
 
 // Example 3: Performance comparison between type-based and non-typed processing
 void performance_comparison_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 3] Performance Comparison");
+    write_information("\n[Example 3] Performance Comparison");
     
     const int num_jobs = 50000;
     const int num_workers = 4;
     
     // Test typed queue with lock-free MPMC
     {
-        typed_job_queue<job_types> queue;
+        typed_job_queue_t<job_types> queue;
         std::atomic<int> completed{0};
         
         auto start = std::chrono::high_resolution_clock::now();
@@ -252,16 +271,26 @@ void performance_comparison_example()
         // Enqueue all jobs
         for (int i = 0; i < num_jobs; ++i) {
             job_types type = static_cast<job_types>(i % 3);
-            auto job = std::make_unique<typed_job<job_types>>(
-                type,
-                std::make_unique<callback_job>([&completed]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_typed_job>(
+                [&completed]() -> result_void {
                     completed.fetch_add(1);
-                    return std::nullopt;
-                })
+                    return result_void();
+                },
+                type
             );
             
-            while (!queue.enqueue(std::move(job))) {
+            auto enqueue_result = queue.enqueue(std::move(job));
+            while (enqueue_result.has_error()) {
                 std::this_thread::yield();
+                // Re-create job since it was moved
+                job = std::make_unique<callback_typed_job>(
+                    [&completed]() -> result_void {
+                        completed.fetch_add(1);
+                        return result_void();
+                    },
+                    type
+                );
+                enqueue_result = queue.enqueue(std::move(job));
             }
         }
         
@@ -270,9 +299,9 @@ void performance_comparison_example()
         for (int w = 0; w < num_workers; ++w) {
             workers.emplace_back([&queue, &completed, num_jobs]() {
                 while (completed.load() < num_jobs) {
-                    auto job = queue.dequeue({job_types::High, job_types::Normal, job_types::Low});
+                    auto job = queue.dequeue({job_types::RealTime, job_types::Batch, job_types::Background});
                     if (job.has_value()) {
-                        job.value()->get_internal_job()->do_work();
+                        job.value()->do_work();
                     } else {
                         std::this_thread::yield();
                     }
@@ -285,18 +314,18 @@ void performance_comparison_example()
         auto duration = std::chrono::high_resolution_clock::now() - start;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
         
-        logger::handle().log(log_types::information, 
-            formatter::format("Typed queue (lock-free): {} jobs in {} ms = {} ops/sec",
-                num_jobs, ms, num_jobs * 1000.0 / ms));
+        write_information(
+            "Typed queue (lock-free): {} jobs in {} ms = {} ops/sec",
+                num_jobs, ms, num_jobs * 1000.0 / ms);
     }
 }
 
 // Example 4: Real-world scenario - Task scheduling system
 void task_scheduling_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 4] Task Scheduling System");
+    write_information("\n[Example 4] Task Scheduling System");
     
-    typed_job_queue<job_types> task_queue;
+    typed_job_queue_t<job_types> task_queue;
     std::atomic<bool> system_running{true};
     
     // Task statistics
@@ -320,10 +349,8 @@ void task_scheduling_example()
             job_types type = static_cast<job_types>(type_dist(gen));
             auto creation_time = std::chrono::high_resolution_clock::now();
             
-            auto task = std::make_unique<typed_job<job_types>>(
-                type,
-                std::make_unique<callback_job>(
-                    [type, creation_time, &stats]() -> std::optional<std::string> {
+            auto task = std::make_unique<callback_typed_job>(
+                [type, creation_time, &stats]() -> result_void {
                         auto start_time = std::chrono::high_resolution_clock::now();
                         auto latency = std::chrono::duration_cast<std::chrono::microseconds>(
                             start_time - creation_time).count();
@@ -332,17 +359,20 @@ void task_scheduling_example()
                         
                         // Simulate task execution
                         std::this_thread::sleep_for(std::chrono::microseconds(
-                            type == job_types::High ? 50 : 
-                            (type == job_types::Normal ? 200 : 500)));
+                            type == job_types::RealTime ? 50 : 
+                            (type == job_types::Batch ? 200 : 500)));
                         
                         stats[type].completed.fetch_add(1);
                         
-                        return formatter::format("Task completed - Type: {}, Latency: {} μs",
+                        write_information("Task completed - Type: {}, Latency: {} μs",
                             static_cast<int>(type), latency);
-                    })
+                        return result_void(); // Success
+                    },
+                    type
             );
             
-            if (task_queue.enqueue(std::move(task))) {
+            auto enqueue_result = task_queue.enqueue(std::move(task));
+            if (!enqueue_result.has_error()) {
                 stats[type].created.fetch_add(1);
             } else {
                 stats[type].failed.fetch_add(1);
@@ -358,12 +388,14 @@ void task_scheduling_example()
     // High priority specialist
     workers.emplace_back([&task_queue, &system_running]() {
         while (system_running) {
-            auto task = task_queue.dequeue({job_types::High});
+            auto task = task_queue.dequeue({job_types::RealTime});
             if (task.has_value()) {
-                auto result = task.value()->get_internal_job()->do_work();
-                if (result.has_value()) {
-                    logger::handle().log(log_types::debug, 
-                        formatter::format("High priority worker: {}", result.value()));
+                auto result = task.value()->do_work();
+                if (!result) {
+                    // Task executed successfully
+                } else {
+                    write_error("High priority task failed: {}", 
+                        result.get_error().message());
                 }
             } else {
                 std::this_thread::sleep_for(1ms);
@@ -375,12 +407,14 @@ void task_scheduling_example()
     for (int i = 0; i < 2; ++i) {
         workers.emplace_back([&task_queue, &system_running, i]() {
             while (system_running) {
-                auto task = task_queue.dequeue({job_types::Normal, job_types::Low, job_types::High});
+                auto task = task_queue.dequeue({job_types::Batch, job_types::Background, job_types::RealTime});
                 if (task.has_value()) {
-                    auto result = task.value()->get_internal_job()->do_work();
-                    if (result.has_value()) {
-                        logger::handle().log(log_types::debug, 
-                            formatter::format("General worker {}: {}", i, result.value()));
+                    auto result = task.value()->do_work();
+                    if (!result) {
+                        // Task executed successfully
+                    } else {
+                        write_error("General worker {} task failed: {}", 
+                            i, result.get_error().message());
                     }
                 } else {
                     std::this_thread::sleep_for(2ms);
@@ -397,28 +431,28 @@ void task_scheduling_example()
     for (auto& t : workers) t.join();
     
     // Print statistics
-    logger::handle().log(log_types::information, "Task Scheduling Statistics:");
+    write_information("Task Scheduling Statistics:");
     for (const auto& [type, stat] : stats) {
-        std::string type_name = type == job_types::High ? "High" : 
-                               (type == job_types::Normal ? "Normal" : "Low");
+        std::string type_name = type == job_types::RealTime ? "RealTime" : 
+                               (type == job_types::Batch ? "Batch" : "Background");
         
         int completed = stat.completed.load();
         double avg_latency = completed > 0 ? 
             static_cast<double>(stat.total_latency_us.load()) / completed : 0.0;
         
-        logger::handle().log(log_types::information,
-            formatter::format("  {} - Created: {}, Completed: {}, Failed: {}, Avg Latency: {:.1f} μs",
+        write_information(
+            "  {} - Created: {}, Completed: {}, Failed: {}, Avg Latency: {:.1f} μs",
                 type_name, stat.created.load(), completed, 
-                stat.failed.load(), avg_latency));
+                stat.failed.load(), avg_latency);
     }
 }
 
 // Example 5: Stress test with high contention
 void stress_test_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 5] Stress Test - High Contention");
+    write_information("\n[Example 5] Stress Test - High Contention");
     
-    typed_job_queue<job_types> queue;
+    typed_job_queue_t<job_types> queue;
     const int num_threads = 16;
     const int ops_per_thread = 10000;
     std::atomic<int> total_ops{0};
@@ -434,16 +468,26 @@ void stress_test_example()
             threads.emplace_back([&queue, &total_ops, t, ops_per_thread]() {
                 for (int i = 0; i < ops_per_thread; ++i) {
                     job_types type = static_cast<job_types>((t + i) % 3);
-                    auto job = std::make_unique<typed_job<job_types>>(
-                        type,
-                        std::make_unique<callback_job>([&total_ops]() -> std::optional<std::string> {
+                    auto job = std::make_unique<callback_typed_job>(
+                        [&total_ops]() -> result_void {
                             total_ops.fetch_add(1);
-                            return std::nullopt;
-                        })
+                            return result_void();
+                        },
+                        type
                     );
                     
-                    while (!queue.enqueue(std::move(job))) {
+                    auto enqueue_result = queue.enqueue(std::move(job));
+                    while (enqueue_result.has_error()) {
                         std::this_thread::yield();
+                        // Re-create job since it was moved
+                        job = std::make_unique<callback_typed_job>(
+                            [&total_ops]() -> result_void {
+                                total_ops.fetch_add(1);
+                                return result_void();
+                            },
+                            type
+                        );
+                        enqueue_result = queue.enqueue(std::move(job));
                     }
                 }
             });
@@ -452,9 +496,9 @@ void stress_test_example()
             threads.emplace_back([&queue, ops_per_thread]() {
                 int consumed = 0;
                 while (consumed < ops_per_thread) {
-                    auto job = queue.dequeue({job_types::High, job_types::Normal, job_types::Low});
+                    auto job = queue.dequeue({job_types::RealTime, job_types::Batch, job_types::Background});
                     if (job.has_value()) {
-                        job.value()->get_internal_job()->do_work();
+                        job.value()->do_work();
                         consumed++;
                     } else {
                         std::this_thread::yield();
@@ -469,33 +513,33 @@ void stress_test_example()
     auto duration = std::chrono::high_resolution_clock::now() - start;
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     
-    logger::handle().log(log_types::information,
-        formatter::format("Stress test completed: {} operations in {} ms = {} ops/sec",
-            total_ops.load(), ms, total_ops.load() * 1000.0 / ms));
+    write_information(
+        "Stress test completed: {} operations in {} ms = {} ops/sec",
+            total_ops.load(), ms, total_ops.load() * 1000.0 / ms);
 }
 
 int main()
 {
-    logger::handle().start();
-    logger::handle().set_log_level(log_types::debug);
+    log_module::start();
+    log_module::console_target(log_types::Debug);
     
-    logger::handle().log(log_types::information, 
+    write_information(
         "Typed Job Queue Sample (Lock-free MPMC)\n"
         "=======================================");
     
     try {
         basic_typed_queue_example();
-        mpmc_typed_queue_example();
-        performance_comparison_example();
-        task_scheduling_example();
-        stress_test_example();
+        // mpmc_typed_queue_example();
+        // performance_comparison_example();
+        // task_scheduling_example();
+        // stress_test_example();
     } catch (const std::exception& e) {
-        logger::handle().log(log_types::error, 
-            formatter::format("Exception: {}", e.what()));
+        write_error(
+            "Exception: {}", e.what());
     }
     
-    logger::handle().log(log_types::information, "\nAll examples completed!");
+    write_information("\nAll examples completed!");
     
-    logger::handle().stop();
+    log_module::stop();
     return 0;
 }

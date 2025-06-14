@@ -50,9 +50,9 @@ constexpr size_t LARGE_WORKLOAD = 100000;
 
 // Helper function to create a simple job
 std::unique_ptr<job> create_simple_job(std::atomic<size_t>& counter) {
-    return std::make_unique<callback_job>([&counter]() -> std::optional<std::string> {
+    return std::make_unique<callback_job>([&counter]() -> result_void {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return std::nullopt;
+        return result_void();
     });
 }
 

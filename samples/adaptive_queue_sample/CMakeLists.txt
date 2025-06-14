@@ -1,19 +1,17 @@
-cmake_minimum_required(VERSION 3.14)
 project(adaptive_queue_sample)
 
-# Create executable
-add_executable(adaptive_queue_sample adaptive_queue_sample.cpp)
+file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-# Link required libraries
-target_link_libraries(adaptive_queue_sample
-    thread_base
-    thread_pool
-    logger
-    formatter
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+# Explicitly add include directories for Windows compatibility
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/sources
 )
 
-# Set compile features
-target_compile_features(adaptive_queue_sample PRIVATE cxx_std_20)
-
-# Install the executable
-install(TARGETS adaptive_queue_sample DESTINATION bin)
+# Link required libraries - utilities contains formatter
+if(APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE thread_pool logger utilities "-framework CoreFoundation")
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE thread_pool logger utilities)
+endif()

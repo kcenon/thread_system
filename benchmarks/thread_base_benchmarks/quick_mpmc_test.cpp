@@ -36,11 +36,11 @@ double test_producer_consumer(const std::string& name, size_t num_producers, siz
     for (size_t i = 0; i < num_producers; ++i) {
         producers.emplace_back([&queue, &total_produced, ops_per_thread]() {
             for (size_t j = 0; j < ops_per_thread; ++j) {
-                auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
+                auto job = std::make_unique<callback_job>([]() -> result_void {
                     // Simulate minimal work
                     volatile int x = 0;
                     for (int i = 0; i < 10; ++i) x = x + 1;
-                    return std::nullopt;
+                    return result_void();
                 });
                 
                 while (!queue.enqueue(std::move(job))) {

@@ -47,6 +47,14 @@ namespace thread_module
 	{
 	}
 
+	// Constructor with modern parameterless callback
+	callback_job::callback_job(
+		const std::function<result_void(void)>& callback,
+		const std::string& name)
+		: job(name), callback_(callback), data_callback_(nullptr)
+	{
+	}
+
 	// Constructor with data callback
 	callback_job::callback_job(
 		const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>& data_callback,
@@ -58,6 +66,14 @@ namespace thread_module
 			}
 			return result_void{};
 		})
+	{
+	}
+
+	// Constructor with modern data callback
+	callback_job::callback_job(
+		const std::function<result_void(const std::vector<uint8_t>&)>& data_callback,
+		const std::vector<uint8_t>& data, const std::string& name)
+		: job(data, name), callback_(nullptr), data_callback_(data_callback)
 	{
 	}
 

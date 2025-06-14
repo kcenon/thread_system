@@ -120,6 +120,16 @@ namespace thread_module
 					 const std::string& name = "callback_job");
 
 		/**
+		 * @brief Constructs a new @c callback_job instance with a parameterless callback using modern error handling.
+		 *
+		 * @param callback A function object that performs the job's work.
+		 *                 - Returns @c result_void on success or failure.
+		 * @param name     An optional name for this job (default is "callback_job").
+		 */
+		callback_job(const std::function<result_void(void)>& callback,
+					 const std::string& name = "callback_job");
+
+		/**
 		 * @brief Constructs a new @c callback_job instance with a data-based callback.
 		 *
 		 * Use this constructor if your job logic requires raw byte data to process.
@@ -151,6 +161,21 @@ namespace thread_module
 		 * @endcode
 		 */
 		callback_job(const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>&
+						 data_callback,
+					 const std::vector<uint8_t>& data,
+					 const std::string& name = "data_callback_job");
+
+		/**
+		 * @brief Constructs a new @c callback_job instance with a data-based callback using modern error handling.
+		 *
+		 * @param data_callback A function object that performs the job's work, taking a
+		 *                      @c std::vector<uint8_t> as its input.
+		 *                      - Returns @c result_void on success or failure.
+		 * @param data          A vector of bytes that will be passed to @p data_callback
+		 *                      when the job is executed.
+		 * @param name          An optional name for this job (default is "data_callback_job").
+		 */
+		callback_job(const std::function<result_void(const std::vector<uint8_t>&)>&
 						 data_callback,
 					 const std::vector<uint8_t>& data,
 					 const std::string& name = "data_callback_job");

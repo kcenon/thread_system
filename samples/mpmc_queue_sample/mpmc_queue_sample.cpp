@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/thread_base/lockfree/lockfree_mpmc_queue.h"
-#include "../../sources/thread_base/callback_job.h"
-#include "../../sources/logger/logger.h"
+#include "thread_base/lockfree/queues/lockfree_mpmc_queue.h"
+#include "thread_base/jobs/callback_job.h"
+#include "logger/core/logger.h"
 
 #include <thread>
 #include <vector>
@@ -47,7 +47,7 @@ using namespace std::chrono_literals;
 // Example 1: Basic single producer, single consumer
 void basic_spsc_example()
 {
-    logger::handle().log(log_types::information, "[Example 1] Basic SPSC Pattern");
+    write_information("[Example 1] Basic SPSC Pattern");
     
     lockfree_mpmc_queue queue;
     std::atomic<int> counter{0};
@@ -55,20 +55,21 @@ void basic_spsc_example()
     // Producer thread
     std::thread producer([&queue, &counter]() {
         for (int i = 0; i < 10; ++i) {
-            auto job = std::make_unique<callback_job>([&counter, i]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_job>([&counter, i]() -> result_void {
                 counter.fetch_add(1);
-                return formatter::format("Processed job {}", i);
+                write_information("Processed job {}", i);
+                return result_void(); // Success
             });
             
             auto result = queue.enqueue(std::move(job));
             if (!result) {
-                logger::handle().log(log_types::error, 
-                    formatter::format("Failed to enqueue job {}: {}", i, result.get_error().message()));
+                write_error(
+                    "Failed to enqueue job {}: {}", i, result.get_error().message());
             }
             
             std::this_thread::sleep_for(10ms);
         }
-        logger::handle().log(log_types::information, "Producer finished");
+        write_information("Producer finished");
     });
     
     // Consumer thread
@@ -79,28 +80,30 @@ void basic_spsc_example()
             if (result.has_value()) {
                 auto& job = result.value();
                 auto work_result = job->do_work();
-                if (work_result.has_value()) {
-                    logger::handle().log(log_types::information, work_result.value());
+                if (!work_result) {
+                    // Job executed successfully
+                    consumed++;
+                } else {
+                    write_error("Job failed: {}", work_result.get_error().message());
                 }
-                consumed++;
             } else {
                 std::this_thread::sleep_for(5ms);
             }
         }
-        logger::handle().log(log_types::information, "Consumer finished");
+        write_information("Consumer finished");
     });
     
     producer.join();
     consumer.join();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Total jobs processed: {}", counter.load()));
+    write_information(
+        "Total jobs processed: {}", counter.load());
 }
 
 // Example 2: Multiple producers, multiple consumers
 void mpmc_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 2] MPMC Pattern");
+    write_information("\n[Example 2] MPMC Pattern");
     
     lockfree_mpmc_queue queue;
     std::atomic<int> produced{0};
@@ -121,8 +124,9 @@ void mpmc_example()
             
             for (int i = 0; i < jobs_per_producer; ++i) {
                 auto job = std::make_unique<callback_job>(
-                    [p, i]() -> std::optional<std::string> {
-                        return formatter::format("Job from producer {} #{}", p, i);
+                    [p, i]() -> result_void {
+                        write_information("Job from producer {} #{}", p, i);
+                        return result_void();
                     });
                 
                 // Retry on failure (high contention scenario)
@@ -138,8 +142,8 @@ void mpmc_example()
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_dist(gen)));
             }
             
-            logger::handle().log(log_types::information, 
-                formatter::format("Producer {} finished", p));
+            write_information(
+                "Producer {} finished", p);
         });
     }
     
@@ -153,18 +157,19 @@ void mpmc_example()
                 if (result.has_value()) {
                     auto& job = result.value();
                     auto work_result = job->do_work();
-                    if (work_result.has_value()) {
-                        logger::handle().log(log_types::debug, 
-                            formatter::format("Consumer {}: {}", c, work_result.value()));
+                    if (!work_result) {
+                        // Job executed successfully
+                        consumed.fetch_add(1);
+                    } else {
+                        write_error("Consumer {} job failed: {}", c, work_result.get_error().message());
                     }
-                    consumed.fetch_add(1);
                 } else {
                     std::this_thread::sleep_for(1ms);
                 }
             }
             
-            logger::handle().log(log_types::information, 
-                formatter::format("Consumer {} finished", c));
+            write_information(
+                "Consumer {} finished", c);
         });
     }
     
@@ -172,15 +177,15 @@ void mpmc_example()
     for (auto& t : producers) t.join();
     for (auto& t : consumers) t.join();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Total produced: {}, consumed: {}", 
-            produced.load(), consumed.load()));
+    write_information(
+        "Total produced: {}, consumed: {}", 
+            produced.load(), consumed.load());
 }
 
 // Example 3: Batch operations
 void batch_operations_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 3] Batch Operations");
+    write_information("\n[Example 3] Batch Operations");
     
     lockfree_mpmc_queue queue;
     std::atomic<int> processed{0};
@@ -189,43 +194,46 @@ void batch_operations_example()
     std::vector<std::unique_ptr<job>> batch;
     for (int i = 0; i < 50; ++i) {
         batch.push_back(std::make_unique<callback_job>(
-            [&processed, i]() -> std::optional<std::string> {
+            [&processed, i]() -> result_void {
                 processed.fetch_add(1);
-                return formatter::format("Batch job {}", i);
+                write_information("Batch job {}", i);
+                return result_void();
             }));
     }
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Enqueueing {} jobs in batch", batch.size()));
+    write_information(
+        "Enqueueing {} jobs in batch", batch.size());
     
     auto enqueue_result = queue.enqueue_batch(std::move(batch));
     if (!enqueue_result) {
-        logger::handle().log(log_types::error, 
-            formatter::format("Batch enqueue failed: {}", enqueue_result.get_error().message()));
+        write_error(
+            "Batch enqueue failed: {}", enqueue_result.get_error().message());
         return;
     }
     
     // Batch dequeue
     auto dequeued = queue.dequeue_batch();
-    logger::handle().log(log_types::information, 
-        formatter::format("Dequeued {} jobs in batch", dequeued.size()));
+    write_information(
+        "Dequeued {} jobs in batch", dequeued.size());
     
     // Process all dequeued jobs
     for (auto& job : dequeued) {
         auto result = job->do_work();
-        if (result.has_value()) {
-            logger::handle().log(log_types::debug, result.value());
+        if (!result) {
+            // Job executed successfully
+        } else {
+            write_error("Batch job failed: {}", result.get_error().message());
         }
     }
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Total processed: {}", processed.load()));
+    write_information(
+        "Total processed: {}", processed.load());
 }
 
 // Example 4: Performance measurement
 void performance_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 4] Performance Measurement");
+    write_information("\n[Example 4] Performance Measurement");
     
     lockfree_mpmc_queue queue;
     const int num_operations = 100000;
@@ -234,8 +242,8 @@ void performance_example()
     auto start = std::chrono::high_resolution_clock::now();
     
     for (int i = 0; i < num_operations; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-            return std::nullopt;
+        auto job = std::make_unique<callback_job>([]() -> result_void {
+            return result_void();
         });
         
         while (!queue.enqueue(std::move(job))) {
@@ -263,20 +271,20 @@ void performance_example()
     // Get statistics
     auto stats = queue.get_statistics();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Enqueue performance: {} ops in {} ms = {} ops/sec",
+    write_information(
+        "Enqueue performance: {} ops in {} ms = {} ops/sec",
             num_operations,
             std::chrono::duration_cast<std::chrono::milliseconds>(enqueue_time).count(),
-            num_operations * 1000.0 / std::chrono::duration_cast<std::chrono::milliseconds>(enqueue_time).count()));
+            num_operations * 1000.0 / std::chrono::duration_cast<std::chrono::milliseconds>(enqueue_time).count());
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Dequeue performance: {} ops in {} ms = {} ops/sec",
+    write_information(
+        "Dequeue performance: {} ops in {} ms = {} ops/sec",
             num_operations,
             std::chrono::duration_cast<std::chrono::milliseconds>(dequeue_time).count(),
-            num_operations * 1000.0 / std::chrono::duration_cast<std::chrono::milliseconds>(dequeue_time).count()));
+            num_operations * 1000.0 / std::chrono::duration_cast<std::chrono::milliseconds>(dequeue_time).count());
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Queue statistics:\n"
+    write_information(
+        "Queue statistics:\n"
             "  Enqueued: {}\n"
             "  Dequeued: {}\n"
             "  Retries: {}\n"
@@ -286,15 +294,15 @@ void performance_example()
             stats.dequeue_count,
             stats.retry_count,
             stats.get_average_enqueue_latency_ns(),
-            stats.get_average_dequeue_latency_ns()));
+            stats.get_average_dequeue_latency_ns());
 }
 
 int main()
 {
-    logger::handle().start();
-    logger::handle().set_log_level(log_types::debug);
+    log_module::start();
+    log_module::console_target(log_types::Debug);
     
-    logger::handle().log(log_types::information, 
+    write_information(
         "Lock-Free MPMC Queue Sample\n"
         "===========================");
     
@@ -304,12 +312,12 @@ int main()
         batch_operations_example();
         performance_example();
     } catch (const std::exception& e) {
-        logger::handle().log(log_types::error, 
-            formatter::format("Exception: {}", e.what()));
+        write_error(
+            "Exception: {}", e.what());
     }
     
-    logger::handle().log(log_types::information, "\nAll examples completed!");
+    write_information("\nAll examples completed!");
     
-    logger::handle().stop();
+    log_module::stop();
     return 0;
 }

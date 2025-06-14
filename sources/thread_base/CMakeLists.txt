@@ -42,15 +42,20 @@ add_library(${PROJECT_NAME} STATIC
     ${LOCKFREE_TEMPLATE_FILES}
 )
 
-# Configure include directories for the new structure
+# Configure include directories with proper path structure
+# PUBLIC: For both building this library and consuming it
+# Generator expressions ensure correct paths for build and install trees
 target_include_directories(${PROJECT_NAME} PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/core
-    ${CMAKE_CURRENT_SOURCE_DIR}/jobs
-    ${CMAKE_CURRENT_SOURCE_DIR}/sync
-    ${CMAKE_CURRENT_SOURCE_DIR}/lockfree
-    ${CMAKE_CURRENT_SOURCE_DIR}/detail
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/sources>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/jobs>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/sync>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lockfree>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/detail>
+    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:include/thread_system>
+    $<INSTALL_INTERFACE:include/thread_system/thread_base>
 )
 
 # Apply compiler warnings if the function is available

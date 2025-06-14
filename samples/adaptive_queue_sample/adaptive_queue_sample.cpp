@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/thread_base/adaptive_job_queue.h"
-#include "../../sources/thread_base/callback_job.h"
-#include "../../sources/logger/logger.h"
+#include "thread_base/lockfree/queues/adaptive_job_queue.h"
+#include "thread_base/jobs/callback_job.h"
+#include "logger/core/logger.h"
 
 #include <thread>
 #include <vector>
@@ -47,15 +47,15 @@ using namespace std::chrono_literals;
 // Example 1: Basic queue strategies comparison
 void strategy_comparison_example()
 {
-    logger::handle().log(log_types::information, "[Example 1] Queue Strategy Comparison");
+    write_information("[Example 1] Queue Strategy Comparison");
     
     const int num_jobs = 10000;
     const int num_producers = 4;
     const int num_consumers = 4;
     
     // Test each strategy
-    for (auto strategy : {adaptive_job_queue::queue_strategy::MUTEX_BASED,
-                         adaptive_job_queue::queue_strategy::LOCK_FREE,
+    for (auto strategy : {adaptive_job_queue::queue_strategy::FORCE_LEGACY,
+                         adaptive_job_queue::queue_strategy::FORCE_LOCKFREE,
                          adaptive_job_queue::queue_strategy::ADAPTIVE})
     {
         adaptive_job_queue queue(strategy);
@@ -72,8 +72,8 @@ void strategy_comparison_example()
             producers.emplace_back([&queue, &produced, p, num_jobs]() {
                 for (int i = 0; i < num_jobs / num_producers; ++i) {
                     auto job = std::make_unique<callback_job>(
-                        [p, i]() -> std::optional<std::string> {
-                            return std::nullopt;
+                        [p, i]() -> result_void {
+                            return result_void();
                         });
                     
                     while (!queue.enqueue(std::move(job))) {
@@ -109,10 +109,10 @@ void strategy_comparison_example()
         
         std::string strategy_name;
         switch (strategy) {
-            case adaptive_job_queue::queue_strategy::MUTEX_BASED:
+            case adaptive_job_queue::queue_strategy::FORCE_LEGACY:
                 strategy_name = "Mutex-based";
                 break;
-            case adaptive_job_queue::queue_strategy::LOCK_FREE:
+            case adaptive_job_queue::queue_strategy::FORCE_LOCKFREE:
                 strategy_name = "Lock-free";
                 break;
             case adaptive_job_queue::queue_strategy::ADAPTIVE:
@@ -120,22 +120,21 @@ void strategy_comparison_example()
                 break;
         }
         
-        logger::handle().log(log_types::information, 
-            formatter::format("{} strategy: {} jobs in {} ms = {} ops/sec",
+        write_information("{} strategy: {} jobs in {} ms = {} ops/sec",
                 strategy_name, num_jobs, ms, 
-                num_jobs * 1000.0 / ms));
+                num_jobs * 1000.0 / ms);
     }
 }
 
 // Example 2: Adaptive strategy behavior under varying contention
 void adaptive_behavior_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 2] Adaptive Strategy Behavior");
+    write_information("\n[Example 2] Adaptive Strategy Behavior");
     
     adaptive_job_queue queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
     
     // Low contention phase (1 producer, 1 consumer)
-    logger::handle().log(log_types::information, "Phase 1: Low contention (1P-1C)");
+    write_information("Phase 1: Low contention (1P-1C)");
     {
         std::atomic<bool> running{true};
         std::atomic<int> jobs_processed{0};
@@ -143,7 +142,7 @@ void adaptive_behavior_example()
         std::thread producer([&queue, &running]() {
             while (running) {
                 auto job = std::make_unique<callback_job>(
-                    []() -> std::optional<std::string> { return std::nullopt; });
+                    []() -> result_void { return result_void(); });
                 queue.enqueue(std::move(job));
                 std::this_thread::sleep_for(1ms);
             }
@@ -165,15 +164,15 @@ void adaptive_behavior_example()
         producer.join();
         consumer.join();
         
-        auto strategy = queue.get_current_strategy();
-        logger::handle().log(log_types::information, 
-            formatter::format("  Current strategy: {}, Jobs processed: {}",
-                strategy == adaptive_job_queue::queue_strategy::MUTEX_BASED ? "Mutex-based" : "Lock-free",
-                jobs_processed.load()));
+        auto current_type = queue.get_current_type();
+        write_information(
+            "  Current type: {}, Jobs processed: {}",
+                current_type,
+                jobs_processed.load());
     }
     
     // High contention phase (8 producers, 8 consumers)
-    logger::handle().log(log_types::information, "Phase 2: High contention (8P-8C)");
+    write_information("Phase 2: High contention (8P-8C)");
     {
         std::atomic<bool> running{true};
         std::atomic<int> jobs_processed{0};
@@ -188,7 +187,7 @@ void adaptive_behavior_example()
                 
                 while (running) {
                     auto job = std::make_unique<callback_job>(
-                        []() -> std::optional<std::string> { return std::nullopt; });
+                        []() -> result_void { return result_void(); });
                     queue.enqueue(std::move(job));
                     if (dist(gen) < 10) {  // 10% chance of sleep
                         std::this_thread::sleep_for(std::chrono::microseconds(dist(gen)));
@@ -214,59 +213,58 @@ void adaptive_behavior_example()
         running = false;
         for (auto& t : threads) t.join();
         
-        auto strategy = queue.get_current_strategy();
-        logger::handle().log(log_types::information, 
-            formatter::format("  Current strategy: {}, Jobs processed: {}",
-                strategy == adaptive_job_queue::queue_strategy::MUTEX_BASED ? "Mutex-based" : "Lock-free",
-                jobs_processed.load()));
+        auto current_type = queue.get_current_type();
+        write_information(
+            "  Current type: {}, Jobs processed: {}",
+                current_type,
+                jobs_processed.load());
     }
 }
 
-// Example 3: Manual strategy switching
-void manual_switching_example()
+// Example 3: Different queue strategies
+void different_strategies_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 3] Manual Strategy Switching");
+    write_information("\n[Example 3] Different Queue Strategies");
     
-    adaptive_job_queue queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
-    
-    // Force mutex-based strategy
-    queue.set_strategy(adaptive_job_queue::queue_strategy::MUTEX_BASED);
-    logger::handle().log(log_types::information, 
-        formatter::format("Forced strategy: {}",
-            queue.get_current_strategy() == adaptive_job_queue::queue_strategy::MUTEX_BASED ? 
-            "Mutex-based" : "Lock-free"));
+    // Create queue with forced mutex-based strategy
+    adaptive_job_queue mutex_queue(adaptive_job_queue::queue_strategy::FORCE_LEGACY);
+    write_information(
+        "Mutex-based queue type: {}",
+            mutex_queue.get_current_type());
     
     // Perform some operations
     std::vector<std::unique_ptr<job>> jobs;
     for (int i = 0; i < 100; ++i) {
         jobs.push_back(std::make_unique<callback_job>(
-            [i]() -> std::optional<std::string> {
-                return formatter::format("Job {}", i);
+            [i]() -> result_void {
+                write_information("Job {} executed", i);
+                return result_void(); // Success
             }));
     }
     
-    auto enqueue_result = queue.enqueue_batch(std::move(jobs));
+    auto enqueue_result = mutex_queue.enqueue_batch(std::move(jobs));
     if (enqueue_result) {
-        logger::handle().log(log_types::information, "Batch enqueue successful");
+        write_information("Batch enqueue successful");
     }
     
-    // Force lock-free strategy
-    queue.set_strategy(adaptive_job_queue::queue_strategy::LOCK_FREE);
-    logger::handle().log(log_types::information, 
-        formatter::format("Forced strategy: {}",
-            queue.get_current_strategy() == adaptive_job_queue::queue_strategy::MUTEX_BASED ? 
-            "Mutex-based" : "Lock-free"));
+    // Create queue with forced lock-free strategy
+    adaptive_job_queue lockfree_queue(adaptive_job_queue::queue_strategy::FORCE_LOCKFREE);
+    write_information(
+        "Lock-free queue type: {}",
+            lockfree_queue.get_current_type());
     
-    // Dequeue jobs
-    auto dequeued = queue.dequeue_batch();
-    logger::handle().log(log_types::information, 
-        formatter::format("Dequeued {} jobs", dequeued.size()));
+    // Dequeue jobs from mutex queue
+    auto dequeued = mutex_queue.dequeue_batch();
+    write_information(
+        "Dequeued {} jobs from mutex queue", dequeued.size());
     
     // Process dequeued jobs
     for (auto& job : dequeued) {
         auto result = job->do_work();
-        if (result.has_value()) {
-            logger::handle().log(log_types::debug, result.value());
+        if (!result) {
+            // Job executed successfully
+        } else {
+            write_error("Job failed: {}", result.get_error().message());
         }
     }
 }
@@ -274,7 +272,7 @@ void manual_switching_example()
 // Example 4: Performance monitoring
 void performance_monitoring_example()
 {
-    logger::handle().log(log_types::information, "\n[Example 4] Performance Monitoring");
+    write_information("\n[Example 4] Performance Monitoring");
     
     adaptive_job_queue queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
     
@@ -287,7 +285,7 @@ void performance_monitoring_example()
     std::thread producer([&queue, &running, &enqueued, num_operations]() {
         for (int i = 0; i < num_operations; ++i) {
             auto job = std::make_unique<callback_job>(
-                []() -> std::optional<std::string> { return std::nullopt; });
+                []() -> result_void { return result_void(); });
             
             while (!queue.enqueue(std::move(job))) {
                 std::this_thread::yield();
@@ -317,14 +315,12 @@ void performance_monitoring_example()
             auto now = std::chrono::steady_clock::now();
             auto elapsed = std::chrono::duration<double>(now - start).count();
             
-            auto current_strategy = queue.get_current_strategy();
-            std::string strategy_name = current_strategy == adaptive_job_queue::queue_strategy::MUTEX_BASED ?
-                "Mutex-based" : "Lock-free";
+            auto current_type = queue.get_current_type();
             
-            logger::handle().log(log_types::information,
-                formatter::format("Status: {} strategy, Enqueued: {}, Dequeued: {}, Rate: {:.0f} ops/sec",
-                    strategy_name, enqueued.load(), dequeued.load(),
-                    dequeued.load() / elapsed));
+            write_information(
+                "Status: {} type, Enqueued: {}, Dequeued: {}, Rate: {:.0f} ops/sec",
+                    current_type, enqueued.load(), dequeued.load(),
+                    dequeued.load() / elapsed);
         }
     });
     
@@ -333,14 +329,14 @@ void performance_monitoring_example()
     running = false;
     monitor.join();
     
-    logger::handle().log(log_types::information, 
-        formatter::format("Completed {} operations", num_operations));
+    write_information(
+        "Completed {} operations", num_operations);
 }
 
 // Example 5: Real-world scenario - Web server simulation
 void web_server_simulation()
 {
-    logger::handle().log(log_types::information, "\n[Example 5] Web Server Simulation");
+    write_information("\n[Example 5] Web Server Simulation");
     
     adaptive_job_queue request_queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
     std::atomic<bool> server_running{true};
@@ -353,7 +349,7 @@ void web_server_simulation()
     // Simulate incoming requests
     std::vector<std::thread> clients;
     for (int client_id = 0; client_id < 5; ++client_id) {
-        clients.emplace_back([&request_queue, &server_running, client_id]() {
+        clients.emplace_back([&request_queue, &server_running, &requests_failed, client_id]() {
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_int_distribution<> type_dist(0, 3);
@@ -363,7 +359,7 @@ void web_server_simulation()
                 auto type = static_cast<request_type>(type_dist(gen));
                 
                 auto request = std::make_unique<callback_job>(
-                    [client_id, type]() -> std::optional<std::string> {
+                    [client_id, type]() -> result_void {
                         // Simulate request processing
                         std::this_thread::sleep_for(std::chrono::microseconds(
                             type == request_type::GET ? 10 : 50));
@@ -376,8 +372,9 @@ void web_server_simulation()
                             case request_type::DELETE: type_str = "DELETE"; break;
                         }
                         
-                        return formatter::format("Client {} {} request completed", 
+                        write_information("Client {} {} request completed", 
                             client_id, type_str);
+                        return result_void(); // Success
                     });
                 
                 if (!request_queue.enqueue(std::move(request))) {
@@ -397,11 +394,13 @@ void web_server_simulation()
                 auto request = request_queue.dequeue();
                 if (request.has_value()) {
                     auto result = request.value()->do_work();
-                    if (result.has_value()) {
-                        logger::handle().log(log_types::debug, 
-                            formatter::format("Worker {}: {}", worker_id, result.value()));
+                    if (!result) {
+                        // Request processed successfully
+                        requests_handled.fetch_add(1);
+                    } else {
+                        write_error("Worker {} request failed: {}", 
+                            worker_id, result.get_error().message());
                     }
-                    requests_handled.fetch_add(1);
                 } else {
                     std::this_thread::sleep_for(1ms);
                 }
@@ -417,33 +416,33 @@ void web_server_simulation()
     for (auto& t : clients) t.join();
     for (auto& t : workers) t.join();
     
-    logger::handle().log(log_types::information,
-        formatter::format("Server simulation complete: {} requests handled, {} failed",
-            requests_handled.load(), requests_failed.load()));
+    write_information(
+        "Server simulation complete: {} requests handled, {} failed",
+            requests_handled.load(), requests_failed.load());
 }
 
 int main()
 {
-    logger::handle().start();
-    logger::handle().set_log_level(log_types::debug);
+    log_module::start();
+    log_module::console_target(log_types::Debug);
     
-    logger::handle().log(log_types::information, 
+    write_information(
         "Adaptive Job Queue Sample\n"
         "=========================");
     
     try {
         strategy_comparison_example();
         adaptive_behavior_example();
-        manual_switching_example();
+        different_strategies_example();
         performance_monitoring_example();
         web_server_simulation();
     } catch (const std::exception& e) {
-        logger::handle().log(log_types::error, 
-            formatter::format("Exception: {}", e.what()));
+        write_error(
+            "Exception: {}", e.what());
     }
     
-    logger::handle().log(log_types::information, "\nAll examples completed!");
+    write_information("\nAll examples completed!");
     
-    logger::handle().stop();
+    log_module::stop();
     return 0;
 }

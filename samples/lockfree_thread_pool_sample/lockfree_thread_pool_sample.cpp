@@ -37,10 +37,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <random>
 #include <iomanip>
 
-#include "logger.h"
-#include "formatter.h"
-#include "thread_pool.h"
-#include "../../sources/thread_base/lockfree/lockfree_mpmc_queue.h"
+#include "logger/core/logger.h"
+#include "utilities/core/formatter.h"
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/lockfree/queues/lockfree_mpmc_queue.h"
 
 using namespace utility_module;
 using namespace thread_pool_module;
@@ -54,7 +54,7 @@ int main() {
         // Test 1: Basic Thread Pool Usage
         std::cout << "=== Basic Thread Pool Usage ===\n";
         
-        auto pool = std::make_unique<thread_pool>("worker");
+        auto pool = std::make_unique<thread_pool>();
         pool->start();
         std::cout << "Created thread pool\n";
 
@@ -64,13 +64,13 @@ int main() {
         auto start_time = std::chrono::high_resolution_clock::now();
 
         for (int i = 0; i < total_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&completed_jobs, i]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_job>([&completed_jobs, i]() -> result_void {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
                 completed_jobs.fetch_add(1);
                 std::cout << "Completed job " << i << " on thread " 
                           << std::this_thread::get_id() << "\n";
-                return std::nullopt;
+                return result_void();
             });
 
             pool->enqueue(std::move(job));
@@ -98,8 +98,8 @@ int main() {
 
         // Enqueue jobs
         for (int i = 0; i < test_jobs; ++i) {
-            auto test_job = std::make_unique<callback_job>([i]() -> std::optional<std::string> {
-                return std::nullopt;
+            auto test_job = std::make_unique<callback_job>([i]() -> result_void {
+                return result_void();
             });
             
             lockfree_queue->enqueue(std::move(test_job));
@@ -143,9 +143,9 @@ int main() {
         auto perf_start = std::chrono::high_resolution_clock::now();
 
         for (int i = 0; i < perf_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&perf_completed]() -> std::optional<std::string> {
+            auto job = std::make_unique<callback_job>([&perf_completed]() -> result_void {
                 perf_completed.fetch_add(1);
-                return std::nullopt;
+                return result_void();
             });
 
             perf_pool->enqueue(std::move(job));
