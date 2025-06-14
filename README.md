@@ -84,6 +84,11 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 - **Cancellation token**: 3% overhead for proper double-check pattern
 - **Job queue operations**: 4% performance *improvement* after removing redundant atomic counter
 
+#### Impact of Thread Safety Fixes
+- **Wake interval access**: 5% performance impact with mutex protection
+- **Cancellation token**: 3% overhead for proper double-check pattern
+- **Job queue operations**: 4% performance *improvement* after removing redundant atomic counter
+
 #### Detailed Performance Data
 
 **Real-World Performance** (measured with actual workloads):
