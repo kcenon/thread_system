@@ -83,7 +83,7 @@ $(function() {
 <p>Specialization of fmt::formatter for <code>job_types</code> using wide strings.  
  <a href="../../dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d5/dcb/job__types_8h_source.html">job_types.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html">job_types.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for fmt::formatter&lt; typed_thread_pool_module::job_types, wchar_t &gt;:</div>
 <div class="dyncontent">
@@ -116,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Specialization of fmt::formatter for <code>job_types</code> using wide strings. </p>
 <p>Allows code such as: </p><div class="fragment"><div class="line">std::wstring ws = fmt::format(L<span class="stringliteral">&quot;Type is {}&quot;</span>, job_types::Background); <span class="comment">// L&quot;Type is BACKGROUND&quot;</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d5/dcb/job__types_8h_source.html#l00237">237</a> of file <a class="el" href="../../d5/dcb/job__types_8h_source.html">job_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html#l00237">237</a> of file <a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html">job_types.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac6ed7b3b17851d44c12b5e4a5468efe7" name="ac6ed7b3b17851d44c12b5e4a5468efe7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6ed7b3b17851d44c12b5e4a5468efe7">&#9670;&#160;</a></span>format()</h2>
@@ -170,36 +170,36 @@ template&lt;typename FormatContext &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dcb/job__types_8h_source.html#l00248">248</a> of file <a class="el" href="../../d5/dcb/job__types_8h_source.html">job_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html#l00248">248</a> of file <a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html">job_types.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  250</span>    {</div>
-<div class="line"><span class="lineno">  251</span>        <span class="keyword">auto</span> str = <a class="code hl_function" href="../../d4/db9/namespacetyped__thread__pool__module.html#abd49ff02ea4da8eb45ed55b95511f043">typed_thread_pool_module::to_string</a>(job_type);</div>
+<div class="line"><span class="lineno">  251</span>        <span class="keyword">auto</span> str = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">typed_thread_pool_module::to_string</a>(job_type);</div>
 <div class="line"><span class="lineno">  252</span>        <span class="keyword">auto</span> wstr = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4">convert_string::to_wstring</a>(str);</div>
 <div class="line"><span class="lineno">  253</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::wstring_view, wchar_t&gt;::format(wstr, ctx);</div>
 <div class="line"><span class="lineno">  254</span>    }</div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a8b61bbabdc9b7a5118130f5330a928d4"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4">utility_module::convert_string::to_wstring</a></div><div class="ttdeci">static auto to_wstring(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a std::string (system-encoded) to a std::wstring.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00125">convert_string.cpp:125</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_html_abd49ff02ea4da8eb45ed55b95511f043"><div class="ttname"><a href="../../d4/db9/namespacetyped__thread__pool__module.html#abd49ff02ea4da8eb45ed55b95511f043">typed_thread_pool_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(job_types job_type)</div><div class="ttdoc">Converts a job_types value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dcb/job__types_8h_source.html#l00104">job_types.h:104</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4_ac6ed7b3b17851d44c12b5e4a5468efe7_cgraph.png" border="0" usemap="#add/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4_ac6ed7b3b17851d44c12b5e4a5468efe7_cgraph" alt=""/></div>
 <map name="add/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4_ac6ed7b3b17851d44c12b5e4a5468efe7_cgraph" id="add/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4_ac6ed7b3b17851d44c12b5e4a5468efe7_cgraph">
-<area shape="rect" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="5,23,176,92"/>
-<area shape="rect" href="../../d4/db9/namespacetyped__thread__pool__module.html#abd49ff02ea4da8eb45ed55b95511f043" title="Converts a job_types value to its corresponding string representation." alt="" coords="224,5,423,45"/>
-<area shape="poly" title=" " alt="" coords="176,43,210,38,211,44,177,48"/>
-<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="237,69,410,109"/>
-<area shape="poly" title=" " alt="" coords="177,66,223,73,223,78,176,72"/>
+<area shape="rect" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="5,13,176,82"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="224,5,409,31"/>
+<area shape="poly" title=" " alt="" coords="176,34,210,29,211,34,177,39"/>
+<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="230,55,403,95"/>
+<area shape="poly" title=" " alt="" coords="177,55,217,60,216,66,176,61"/>
 </map>
 </div>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>sources/typed_thread_pool/<a class="el" href="../../d5/dcb/job__types_8h_source.html">job_types.h</a></li>
+<li>sources/typed_thread_pool/core/<a class="el" href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html">job_types.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

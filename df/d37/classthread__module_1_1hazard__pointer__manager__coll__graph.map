@@ -1,0 +1,21 @@
+<map id="thread_module::hazard_pointer_manager" name="thread_module::hazard_pointer_manager">
+<area shape="rect" id="Node000001" title="Thread&#45;safe memory reclamation using hazard pointers." alt="" coords="341,488,553,968"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,146,209,241"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,241,95,279,93,322,97,367,110,410,129,447,152,483,207,548,268,605,329,651,326,656,264,609,203,552,147,486,124,450,105,412,92,368,88,322,89,279,94,241"/>
+<area shape="rect" id="Node000003" href="$d8/d35/structthread__module_1_1hazard__pointer__manager_1_1HazardRecord.html" title="Per&#45;thread hazard pointer record." alt="" coords="217,323,448,403"/>
+<area shape="poly" id="edge6_Node000003_Node000002" title=" " alt="" coords="132,240,150,266,172,290,205,313,202,318,168,294,145,270,127,243"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="347,403,369,471,364,473,342,404"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="279,325,181,253,184,248,282,321"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="233,153,405,233"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="325,233,331,306,326,307,320,234"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="430,153,601,233"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="475,235,389,314,386,310,471,232"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="437,5,593,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="518,71,518,137,513,137,513,71"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="472,316,655,411"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="551,412,531,473,526,472,546,410"/>
+<area shape="rect" id="Node000008" href="$dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html" title="Node in the retired list." alt="" coords="625,133,846,253"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="677,256,625,306,621,302,673,252"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="679,331,834,396"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="732,398,566,592,562,588,728,394"/>
+</map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/typed_thread_pool/typed_job.h Source File</title>
+<title>Thread System: sources/typed_thread_pool/jobs/typed_job.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_ea000f00c09a2827791e3cb7870d1327.html">typed_thread_pool</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_ea000f00c09a2827791e3cb7870d1327.html">typed_thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_58b9d56818ec1bbb0c164505dc18605c.html">jobs</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,8 +115,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d6a/job_8h.html">job.h</a>&quot;</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="../../d5/dcb/job__types_8h.html">job_types.h</a>&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../thread_base/jobs/job.h&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../core/job_types.h&quot;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
@@ -152,7 +152,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#include &quot;typed_job.tpp&quot;</span></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__queue__t_html"><div class="ttname"><a href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a></div><div class="ttdoc">A template-based queue that manages jobs with distinct priority levels.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d70/typed__job__queue_8h_source.html#l00060">typed_job_queue.h:61</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__queue__t_html"><div class="ttname"><a href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a></div><div class="ttdoc">A template-based queue that manages jobs with distinct priority levels.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d70/typed__job__queue_8h_source.html#l00063">typed_job_queue.h:64</a></div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_thread_pool_module::typed_job_t</a></div><div class="ttdoc">Represents a job that carries a specific priority level.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d03/typed__job_8h_source.html#l00057">typed_job.h:58</a></div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html_a048fce659e535d0f0cd4e462ec5c62dd"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a048fce659e535d0f0cd4e462ec5c62dd">typed_thread_pool_module::typed_job_t::priority_</a></div><div class="ttdeci">job_type priority_</div><div class="ttdoc">The priority level assigned to this job.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d03/typed__job_8h_source.html#l00111">typed_job.h:111</a></div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html_a0540655804f48f8293623cfa4b7b4d84"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a0540655804f48f8293623cfa4b7b4d84">typed_thread_pool_module::typed_job_t::job_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; typed_job_queue_t&lt; job_type &gt; &gt; job_queue_</div><div class="ttdoc">A weak pointer to the priority job queue managing this job.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d03/typed__job_8h_source.html#l00118">typed_job.h:118</a></div></div>
@@ -161,15 +161,13 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html_a88acbe2410c3ccef635b0e4d686a8914"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a88acbe2410c3ccef635b0e4d686a8914">typed_thread_pool_module::typed_job_t::priority</a></div><div class="ttdeci">auto priority() const -&gt; job_type</div><div class="ttdoc">Retrieves the priority level of this job.</div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html_ab2fafdcdc52f252e04fa073f799a8353"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#ab2fafdcdc52f252e04fa073f799a8353">typed_thread_pool_module::typed_job_t::typed_job_t</a></div><div class="ttdeci">typed_job_t(job_type priority, const std::string &amp;name=&quot;typed_job&quot;)</div><div class="ttdoc">Constructs a new typed_job_t object with the given priority and name.</div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__t_html_ada77cfa3bcdd88ee5e35d5f64ecd1b2f"><div class="ttname"><a href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#ada77cfa3bcdd88ee5e35d5f64ecd1b2f">typed_thread_pool_module::typed_job_t::get_job_queue</a></div><div class="ttdeci">auto get_job_queue(void) const -&gt; std::shared_ptr&lt; job_queue &gt; override</div><div class="ttdoc">Gets the job queue that currently manages this job, if any.</div></div>
-<div class="ttc" id="ajob_8h_html"><div class="ttname"><a href="../../d3/d6a/job_8h.html">job.h</a></div></div>
-<div class="ttc" id="ajob__types_8h_html"><div class="ttname"><a href="../../d5/dcb/job__types_8h.html">job_types.h</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/callback__job_8cpp_source.html#l00035">callback_job.cpp:36</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_html"><div class="ttname"><a href="../../d4/db9/namespacetyped__thread__pool__module.html">typed_thread_pool_module</a></div><div class="ttdoc">Type-based thread pool implementation for job scheduling with types.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d90/callback__typed__job_8h_source.html#l00039">callback_typed_job.h:40</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_html_aeddf7d42d9fc60bebab25fba779ad0b6"><div class="ttname"><a href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">typed_thread_pool_module::job_types</a></div><div class="ttdeci">job_types</div><div class="ttdoc">Defines different types of jobs for a typed thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dcb/job__types_8h_source.html#l00055">job_types.h:56</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00043">thread_base.cpp:44</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_html"><div class="ttname"><a href="../../d4/db9/namespacetyped__thread__pool__module.html">typed_thread_pool_module</a></div><div class="ttdoc">Type-based thread pool implementation for job scheduling with types.</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00014">config.h:14</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_html_aeddf7d42d9fc60bebab25fba779ad0b6"><div class="ttname"><a href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">typed_thread_pool_module::job_types</a></div><div class="ttdeci">job_types</div><div class="ttdoc">Defines different types of jobs for a typed thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../db/db6/typed__thread__pool_2core_2job__types_8h_source.html#l00055">job_types.h:56</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

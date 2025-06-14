@@ -1,0 +1,31 @@
+<map id="sources/logger/writers/base_writer.h" name="sources/logger/writers/base_writer.h">
+<area shape="rect" id="Node000001" title="Abstract base class for all log writers." alt="" coords="497,5,663,45"/>
+<area shape="rect" id="Node000002" href="$d0/d1a/callback__writer_8h.html" title=" " alt="" coords="593,93,759,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="613,53,657,91,653,95,610,57"/>
+<area shape="rect" id="Node000010" href="$dc/d9a/console__writer_8h.html" title=" " alt="" coords="211,93,378,133"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="505,52,358,96,356,91,503,47"/>
+<area shape="rect" id="Node000012" href="$d0/d76/file__writer_8h.html" title=" " alt="" coords="402,93,569,133"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="551,57,508,95,504,91,547,53"/>
+<area shape="rect" id="Node000014" href="$da/dbc/writer__factory_8h.html" title="Factory for creating log writers." alt="" coords="783,93,950,133"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="657,47,805,91,803,96,655,52"/>
+<area shape="rect" id="Node000003" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="295,181,486,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="601,140,454,184,452,179,599,135"/>
+<area shape="rect" id="Node000009" href="$d5/d76/callback__writer_8cpp.html" title=" " alt="" coords="701,181,867,221"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="712,140,762,179,758,183,709,144"/>
+<area shape="rect" id="Node000004" href="$d4/db6/logger_2core_2logger_8h.html" title=" " alt="" coords="115,269,264,309"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="335,229,234,272,232,267,333,224"/>
+<area shape="rect" id="Node000007" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="288,269,493,309"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="393,235,393,269,388,269,388,235"/>
+<area shape="rect" id="Node000008" href="$df/d32/utilities_2interface_2logger_8h.html" title=" " alt="" coords="517,269,704,309"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="452,224,563,267,562,272,450,229"/>
+<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="5,357,168,397"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="158,320,111,359,108,355,154,316"/>
+<area shape="rect" id="Node000006" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="192,357,392,397"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="224,316,271,355,268,359,221,320"/>
+<area shape="poly" id="edge10_Node000010_Node000003" title=" " alt="" coords="328,141,371,179,368,183,325,145"/>
+<area shape="rect" id="Node000011" href="$d1/d4f/console__writer_8cpp.html" title=" " alt="" coords="105,181,271,221"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="262,144,213,183,210,179,259,140"/>
+<area shape="poly" id="edge13_Node000012_Node000003" title=" " alt="" coords="456,145,413,183,410,179,452,141"/>
+<area shape="rect" id="Node000013" href="$de/d2a/file__writer_8cpp.html" title=" " alt="" coords="510,181,677,221"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="522,140,571,179,568,183,518,144"/>
+</map>

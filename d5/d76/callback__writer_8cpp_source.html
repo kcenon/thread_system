@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/logger/callback_writer.cpp Source File</title>
+<title>Thread System: sources/logger/writers/callback_writer.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_8eafc3c8aa7c38e9ae7a32faf8deec41.html">logger</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_8eafc3c8aa7c38e9ae7a32faf8deec41.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_23bf73740d51936c1f86d2a06c48ee6a.html">writers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,8 +115,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;<a class="code" href="../../d0/d1a/callback__writer_8h.html">callback_writer.h</a>&quot;</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="../../de/d52/formatter_8h.html">formatter.h</a>&quot;</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="../../db/dd4/message__job_8h.html">message_job.h</a>&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../utilities/core/formatter.h&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../jobs/message_job.h&quot;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;format&gt;</span></div>
@@ -127,8 +127,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../dd/d2a/namespaceutility__module.html">utility_module</a>;</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="../../d9/de0/namespacelog__module.html">   47</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d9/de0/namespacelog__module.html">log_module</a></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d9/de0/namespacelog__module.html">log_module</a></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>{</div>
 <div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="../../dd/d67/classlog__module_1_1callback__writer.html#a66a1c19e03276a535f292dc850294e5a">   49</a></span>    <a class="code hl_function" href="../../dd/d67/classlog__module_1_1callback__writer.html#a66a1c19e03276a535f292dc850294e5a">callback_writer::callback_writer</a>(<span class="keywordtype">void</span>)</div>
@@ -187,28 +186,25 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
 </div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
-</div>
 <div class="ttc" id="acallback__writer_8h_html"><div class="ttname"><a href="../../d0/d1a/callback__writer_8h.html">callback_writer.h</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_a2bfd71d56ba3640a7d8c2e054e73a917"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#a2bfd71d56ba3640a7d8c2e054e73a917">log_module::callback_writer::should_continue_work</a></div><div class="ttdeci">auto should_continue_work() const -&gt; bool override</div><div class="ttdoc">Checks whether there are log messages remaining in the job queue to be processed.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00063">callback_writer.cpp:63</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_a66a1c19e03276a535f292dc850294e5a"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#a66a1c19e03276a535f292dc850294e5a">log_module::callback_writer::callback_writer</a></div><div class="ttdeci">callback_writer(void)</div><div class="ttdoc">Default constructor for the callback_writer class.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00049">callback_writer.cpp:49</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_a8bac50883ab6860f967ac0e2b11745cc"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#a8bac50883ab6860f967ac0e2b11745cc">log_module::callback_writer::do_work</a></div><div class="ttdeci">auto do_work() -&gt; result_void override</div><div class="ttdoc">Retrieves log messages from the queue and invokes the callback function to process them.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00065">callback_writer.cpp:65</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_a94c35a6ddac2dfe563fcc01341be439d"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#a94c35a6ddac2dfe563fcc01341be439d">log_module::callback_writer::message_callback</a></div><div class="ttdeci">auto message_callback(const std::function&lt; void(const log_types &amp;, const std::string &amp;, const std::string &amp;)&gt; &amp;callback) -&gt; void</div><div class="ttdoc">Sets the user-defined callback function that processes log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00056">callback_writer.cpp:56</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1callback__writer_html_afe84900903a814985ff6f823ecbe0aaa"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">log_module::callback_writer::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A job queue that manages queued log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00121">callback_writer.h:121</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1message__job_html"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html">log_module::message_job</a></div><div class="ttdoc">Represents a console logging job derived from the base job class.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00072">message_job.h:73</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1callback__writer_html_afe84900903a814985ff6f823ecbe0aaa"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">log_module::callback_writer::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A job queue that manages queued log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00123">callback_writer.h:123</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1message__job_html"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html">log_module::message_job</a></div><div class="ttdoc">Represents a console logging job derived from the base job class.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00073">message_job.h:74</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00149">thread_base.h:150</a></div></div>
-<div class="ttc" id="aformatter_8h_html"><div class="ttname"><a href="../../de/d52/formatter_8h.html">formatter.h</a></div></div>
-<div class="ttc" id="amessage__job_8h_html"><div class="ttname"><a href="../../db/dd4/message__job_8h.html">message_job.h</a></div></div>
-<div class="ttc" id="anamespacelog__module_html"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html">log_module</a></div><div class="ttdoc">Thread-safe logging system built on the thread system foundation.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d76/callback__writer_8cpp_source.html#l00047">callback_writer.cpp:48</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
+<div class="ttc" id="anamespacelog__module_html"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html">log_module</a></div><div class="ttdoc">Thread-safe logging system built on the thread system foundation.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d32/logger_2core_2config_8h_source.html#l00016">config.h:16</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_module::log_types</a></div><div class="ttdeci">log_types</div><div class="ttdoc">Enumerates different categories of log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d18/log__types_8h_source.html#l00056">log_types.h:57</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/callback__job_8cpp_source.html#l00035">callback_job.cpp:36</a></div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d2f/argument__parser_8cpp_source.html#l00040">argument_parser.cpp:41</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00043">thread_base.cpp:44</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00045">convert_string.cpp:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

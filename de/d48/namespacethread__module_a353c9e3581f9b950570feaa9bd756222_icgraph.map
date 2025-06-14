@@ -1,7 +1,11 @@
 <map id="thread_module::to_string" name="thread_module::to_string">
-<area shape="rect" id="Node000001" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="256,60,441,85"/>
+<area shape="rect" id="Node000001" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="256,143,441,168"/>
 <area shape="rect" id="Node000002" href="$da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="257,60,208,52,209,47,258,55"/>
-<area shape="rect" id="Node000003" href="$dd/d46/classthread__pool__module_1_1task__promise.html#aef56b6a7c3023835324b4d75f4f6732f" title="Retrieves the result value or propagates exceptions." alt="" coords="29,84,184,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="255,90,185,102,184,96,254,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="316,137,266,106,207,74,182,63,185,58,209,69,268,101,319,133"/>
+<area shape="rect" id="Node000003" href="$da/d34/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html#acf13d59c4d24220012590c4ac5a7210e" title="Formats a job_types value as a narrow string using {fmt}." alt="" coords="21,84,192,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="264,143,192,129,193,124,265,138"/>
+<area shape="rect" id="Node000004" href="$dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html#ac6ed7b3b17851d44c12b5e4a5468efe7" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="21,163,192,233"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="263,173,193,186,192,180,262,168"/>
+<area shape="rect" id="Node000005" href="$dd/d46/classthread__pool__module_1_1task__promise.html#aef56b6a7c3023835324b4d75f4f6732f" title="Retrieves the result value or propagates exceptions." alt="" coords="29,257,184,312"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="320,178,270,212,209,247,182,260,180,255,207,242,267,208,317,174"/>
 </map>

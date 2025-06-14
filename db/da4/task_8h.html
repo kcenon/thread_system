@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_pool/task.h File Reference</title>
+<title>Thread System: sources/thread_pool/async/task.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_719b790bc48e48dfef3093837cbac6c8.html">async</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -84,7 +84,7 @@ $(function() {
 
 <p>Implementation of a coroutine-based task system.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d11/error__handling_8h_source.html">thread_base/error_handling.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d11/error__handling_8h_source.html">../../thread_base/sync/error_handling.h</a>&quot;</code><br />
 <code>#include &lt;exception&gt;</code><br />
 <code>#include &lt;future&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
@@ -96,40 +96,40 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for task.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d1/d08/task_8h__incl.png" border="0" usemap="#asources_2thread__pool_2task_8h" alt=""/></div>
-<map name="asources_2thread__pool_2task_8h" id="asources_2thread__pool_2task_8h">
-<area shape="rect" title="Implementation of a coroutine&#45;based task system." alt="" coords="585,5,739,45"/>
-<area shape="rect" href="../../d3/d11/error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="191,93,403,119"/>
-<area shape="poly" title=" " alt="" coords="586,46,364,93,363,88,584,41"/>
-<area shape="rect" title=" " alt="" coords="5,167,97,192"/>
-<area shape="poly" title=" " alt="" coords="585,30,500,34,397,44,287,64,180,96,123,126,77,160,74,155,120,121,178,91,286,59,396,39,500,28,585,24"/>
-<area shape="rect" title=" " alt="" coords="427,93,513,119"/>
-<area shape="poly" title=" " alt="" coords="617,48,512,91,510,86,615,43"/>
-<area shape="rect" title=" " alt="" coords="538,93,599,119"/>
-<area shape="poly" title=" " alt="" coords="641,48,595,86,592,82,638,44"/>
-<area shape="rect" title=" " alt="" coords="623,93,701,119"/>
-<area shape="poly" title=" " alt="" coords="665,46,665,79,659,79,659,46"/>
-<area shape="rect" title=" " alt="" coords="725,93,785,119"/>
-<area shape="poly" title=" " alt="" coords="686,44,732,82,729,86,683,48"/>
-<area shape="rect" title=" " alt="" coords="810,93,877,119"/>
-<area shape="poly" title=" " alt="" coords="706,43,805,85,803,90,704,48"/>
-<area shape="rect" title=" " alt="" coords="901,93,969,119"/>
-<area shape="poly" title=" " alt="" coords="728,43,889,89,887,94,727,48"/>
-<area shape="rect" title=" " alt="" coords="994,93,1061,119"/>
-<area shape="poly" title=" " alt="" coords="740,39,981,90,980,96,739,44"/>
-<area shape="rect" title=" " alt="" coords="122,167,181,192"/>
-<area shape="poly" title=" " alt="" coords="274,121,188,163,186,158,272,116"/>
-<area shape="rect" title=" " alt="" coords="205,167,279,192"/>
-<area shape="poly" title=" " alt="" coords="290,121,261,157,257,154,286,117"/>
-<area shape="poly" title=" " alt="" coords="258,121,105,165,103,160,257,116"/>
-<area shape="rect" title=" " alt="" coords="304,167,401,192"/>
-<area shape="poly" title=" " alt="" coords="308,117,337,154,333,157,304,121"/>
-<area shape="rect" title=" " alt="" coords="425,167,501,192"/>
-<area shape="poly" title=" " alt="" coords="324,116,425,159,423,164,322,121"/>
-<area shape="rect" title=" " alt="" coords="525,167,612,192"/>
-<area shape="poly" title=" " alt="" coords="341,116,513,161,511,166,340,121"/>
-<area shape="rect" title=" " alt="" coords="636,167,723,192"/>
-<area shape="poly" title=" " alt="" coords="363,116,623,164,622,169,362,121"/>
+<div class="center"><img src="../../d1/d08/task_8h__incl.png" border="0" usemap="#asources_2thread__pool_2async_2task_8h" alt=""/></div>
+<map name="asources_2thread__pool_2async_2task_8h" id="asources_2thread__pool_2async_2task_8h">
+<area shape="rect" title="Implementation of a coroutine&#45;based task system." alt="" coords="560,5,713,45"/>
+<area shape="rect" href="../../d3/d11/error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="217,93,377,133"/>
+<area shape="poly" title=" " alt="" coords="563,48,385,93,383,87,561,43"/>
+<area shape="rect" title=" " alt="" coords="5,181,97,207"/>
+<area shape="poly" title=" " alt="" coords="560,32,484,37,394,49,298,67,206,96,169,113,133,134,77,175,74,170,130,129,166,108,204,91,297,62,393,43,483,32,559,26"/>
+<area shape="rect" title=" " alt="" coords="401,101,488,126"/>
+<area shape="poly" title=" " alt="" coords="596,48,484,98,482,93,593,43"/>
+<area shape="rect" title=" " alt="" coords="513,101,574,126"/>
+<area shape="poly" title=" " alt="" coords="618,48,568,93,565,89,614,44"/>
+<area shape="rect" title=" " alt="" coords="598,101,675,126"/>
+<area shape="poly" title=" " alt="" coords="639,46,639,87,634,87,634,46"/>
+<area shape="rect" title=" " alt="" coords="700,101,760,126"/>
+<area shape="poly" title=" " alt="" coords="659,44,709,89,705,93,656,48"/>
+<area shape="rect" title=" " alt="" coords="785,101,851,126"/>
+<area shape="poly" title=" " alt="" coords="678,43,783,92,781,97,675,48"/>
+<area shape="rect" title=" " alt="" coords="876,101,944,126"/>
+<area shape="poly" title=" " alt="" coords="707,43,864,91,871,93,869,98,862,96,706,48"/>
+<area shape="rect" title=" " alt="" coords="969,101,1035,126"/>
+<area shape="poly" title=" " alt="" coords="714,36,830,58,957,91,964,93,963,98,956,96,829,63,713,41"/>
+<area shape="rect" title=" " alt="" coords="122,181,181,207"/>
+<area shape="poly" title=" " alt="" coords="263,136,186,177,183,172,261,131"/>
+<area shape="rect" title=" " alt="" coords="205,181,279,207"/>
+<area shape="poly" title=" " alt="" coords="286,135,260,172,256,168,281,132"/>
+<area shape="poly" title=" " alt="" coords="239,136,101,180,99,175,237,131"/>
+<area shape="rect" title=" " alt="" coords="304,181,401,207"/>
+<area shape="poly" title=" " alt="" coords="312,132,339,168,334,172,308,135"/>
+<area shape="rect" title=" " alt="" coords="425,181,501,207"/>
+<area shape="poly" title=" " alt="" coords="338,131,428,173,425,178,335,136"/>
+<area shape="rect" title=" " alt="" coords="525,181,612,207"/>
+<area shape="poly" title=" " alt="" coords="363,131,517,175,515,180,361,136"/>
+<area shape="rect" title=" " alt="" coords="636,181,723,207"/>
+<area shape="poly" title=" " alt="" coords="377,128,623,178,622,183,376,133"/>
 </map>
 </div>
 </div>
@@ -199,7 +199,7 @@ Variables</h2></td></tr>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

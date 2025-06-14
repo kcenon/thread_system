@@ -1,15 +1,17 @@
 <map id="thread_module::thread_base" name="thread_module::thread_base">
-<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="516,5,716,531"/>
-<area shape="rect" id="Node000002" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="5,781,189,961"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="506,330,431,377,350,435,271,503,236,541,204,580,174,628,150,680,131,733,117,781,112,780,126,731,145,678,169,626,199,577,232,537,268,499,346,431,428,372,503,326"/>
-<area shape="rect" id="Node000003" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="213,791,397,951"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="510,416,459,496,412,580,365,689,330,792,325,790,360,687,407,577,454,493,506,413"/>
-<area shape="rect" id="Node000004" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="421,579,605,1164"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="572,545,566,579,561,578,566,544"/>
-<area shape="rect" id="Node000005" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="629,649,811,1094"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="666,544,684,648,679,649,661,545"/>
-<area shape="rect" id="Node000006" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="835,781,1019,961"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="726,413,778,493,825,577,870,681,904,780,899,782,865,683,820,580,773,496,722,416"/>
-<area shape="rect" id="Node000007" href="$d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="1043,754,1242,989"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="729,327,804,373,885,432,964,500,1000,537,1033,577,1060,619,1083,663,1117,753,1112,755,1078,665,1055,621,1029,580,996,541,960,504,882,436,801,378,727,331"/>
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="637,5,837,531"/>
+<area shape="rect" id="Node000002" href="$d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title=" " alt="" coords="5,754,204,989"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="625,313,528,357,419,416,365,451,312,490,263,533,219,580,190,620,166,665,147,710,133,755,128,753,142,708,162,662,185,618,215,577,259,530,309,486,362,447,417,411,525,352,623,308"/>
+<area shape="rect" id="Node000003" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="229,781,413,961"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="628,359,576,406,523,459,472,518,427,580,400,629,377,682,344,782,339,780,372,680,395,627,422,577,468,515,519,456,572,402,624,355"/>
+<area shape="rect" id="Node000004" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="437,791,621,951"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="644,545,558,792,553,790,639,543"/>
+<area shape="rect" id="Node000005" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="645,579,829,1164"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="739,545,739,578,734,578,734,545"/>
+<area shape="rect" id="Node000006" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="853,649,1034,1094"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="834,543,870,648,865,649,829,545"/>
+<area shape="rect" id="Node000007" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="1058,781,1242,961"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="849,356,900,403,953,456,1004,515,1048,577,1076,627,1099,680,1132,780,1127,782,1094,682,1071,629,1044,580,999,518,949,460,896,407,845,360"/>
+<area shape="rect" id="Node000008" href="$d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="1267,754,1465,989"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="850,308,947,352,1055,412,1110,447,1163,487,1212,530,1256,577,1285,618,1309,662,1328,708,1343,753,1338,755,1323,710,1304,665,1281,620,1252,580,1208,534,1159,491,1107,452,1053,416,945,357,848,313"/>
 </map>

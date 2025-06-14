@@ -1,6 +1,23 @@
 var searchData=
 [
-  ['log_5fcollector_0',['log_collector',['../d7/da3/classlog__module_1_1log__collector.html',1,'log_module']]],
-  ['log_5fjob_1',['log_job',['../df/df4/classlog__module_1_1log__job.html',1,'log_module']]],
-  ['logger_2',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation']]]
+  ['is_5fcompatible_5fjob_0',['is_compatible_job',['../d2/dcf/structtyped__thread__pool__module_1_1detail_1_1is__compatible__job.html',1,'typed_thread_pool_module::detail']]],
+  ['is_5fcompatible_5fjob_3c_20job_2c_20expectedjobtype_20_3e_1',['is_compatible_job&lt; Job, ExpectedJobType &gt;',['../dd/dbc/structtyped__thread__pool__module_1_1detail_1_1is__compatible__job_3_01Job_00_01ExpectedJobType_01_4.html',1,'typed_thread_pool_module::detail']]],
+  ['is_5fduration_2',['is_duration',['../d6/dec/structlog__module_1_1detail_1_1is__duration.html',1,'log_module::detail::is_duration&lt; T &gt;'],['../d7/d0b/structthread__pool__module_1_1detail_1_1is__duration.html',1,'thread_pool_module::detail::is_duration&lt; T &gt;']]],
+  ['is_5fduration_3c_20std_3a_3achrono_3a_3aduration_3c_20rep_2c_20period_20_3e_20_3e_3',['is_duration&lt; std::chrono::duration&lt; rep, period &gt; &gt;',['../d3/d31/structlog__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html',1,'log_module::detail::is_duration&lt; std::chrono::duration&lt; Rep, Period &gt; &gt;'],['../d2/d92/structthread__pool__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html',1,'thread_pool_module::detail::is_duration&lt; std::chrono::duration&lt; Rep, Period &gt; &gt;']]],
+  ['is_5ffuture_5flike_4',['is_future_like',['../d4/d57/structthread__pool__module_1_1detail_1_1is__future__like.html',1,'thread_pool_module::detail']]],
+  ['is_5fnothrow_5fcallable_5',['is_nothrow_callable',['../d4/d3e/structthread__pool__module_1_1detail_1_1is__nothrow__callable.html',1,'thread_pool_module::detail']]],
+  ['is_5fresult_6',['is_result',['../d9/d63/structthread__pool__module_1_1detail_1_1is__result.html',1,'thread_pool_module::detail']]],
+  ['is_5fresult_3c_20result_3c_20t_20_3e_20_3e_7',['is_result&lt; result&lt; T &gt; &gt;',['../d8/db2/structthread__pool__module_1_1detail_1_1is__result_3_01result_3_01T_01_4_01_4.html',1,'thread_pool_module::detail']]],
+  ['is_5fstreamable_8',['is_streamable',['../df/d8f/structlog__module_1_1detail_1_1is__streamable.html',1,'log_module::detail']]],
+  ['is_5fstreamable_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20std_3a_3aostream_20_26_20_3e_28_29_3c_3c_20std_3a_3adeclval_3c_20t_20_3e_28_29_29_3e_20_3e_9',['is_streamable&lt; T, std::void_t&lt; decltype(std::declval&lt; std::ostream &amp; &gt;()&lt;&lt; std::declval&lt; T &gt;())&gt; &gt;',['../de/dbf/structlog__module_1_1detail_1_1is__streamable_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1de4ceca9624d7db9e77a61f61603d18213.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_10',['is_string_like',['../d8/d59/structlog__module_1_1detail_1_1is__string__like.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_3c_20char_5bn_5d_3e_11',['is_string_like&lt; char[N]&gt;',['../dc/d0e/structlog__module_1_1detail_1_1is__string__like_3_01char_0fN_0e_4.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_3c_20const_20char_20_2a_20_3e_12',['is_string_like&lt; const char * &gt;',['../d4/d89/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_01_5_01_4.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_3c_20const_20char_5bn_5d_3e_13',['is_string_like&lt; const char[N]&gt;',['../d4/dd7/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_0fN_0e_4.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_3c_20std_3a_3astring_20_3e_14',['is_string_like&lt; std::string &gt;',['../d5/df9/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string_01_4.html',1,'log_module::detail']]],
+  ['is_5fstring_5flike_3c_20std_3a_3astring_5fview_20_3e_15',['is_string_like&lt; std::string_view &gt;',['../d2/d28/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string__view_01_4.html',1,'log_module::detail']]],
+  ['is_5ftime_5fpoint_16',['is_time_point',['../dc/dd8/structlog__module_1_1detail_1_1is__time__point.html',1,'log_module::detail']]],
+  ['is_5ftime_5fpoint_3c_20std_3a_3achrono_3a_3atime_5fpoint_3c_20clock_2c_20duration_20_3e_20_3e_17',['is_time_point&lt; std::chrono::time_point&lt; Clock, Duration &gt; &gt;',['../db/d56/structlog__module_1_1detail_1_1is__time__point_3_01std_1_1chrono_1_1time__point_3_01Clock_00_01Duration_01_4_01_4.html',1,'log_module::detail']]],
+  ['is_5fvalid_5fjob_5ftype_18',['is_valid_job_type',['../d2/d81/structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type.html',1,'typed_thread_pool_module::detail']]],
+  ['is_5fvalid_5fjob_5ftype_3c_20t_2c_20std_3a_3avoid_5ft_3c_20std_3a_3aenable_5fif_5ft_3c_20jobtype_3c_20t_20_3e_20_3e_20_3e_20_3e_19',['is_valid_job_type&lt; T, std::void_t&lt; std::enable_if_t&lt; JobType&lt; T &gt; &gt; &gt; &gt;',['../de/d38/structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type_3_01T_00_01std_1_1void__t_3_6c25439dd3b606b635c5ac1f9fed271e.html',1,'typed_thread_pool_module::detail']]]
 ];

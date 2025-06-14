@@ -1,0 +1,7 @@
+<map id="thread_module::hazard_pointer_manager::~hazard_pointer_manager" name="thread_module::hazard_pointer_manager::~hazard_pointer_manager">
+<area shape="rect" id="Node000001" title="Destructor &#45; ensures all retired objects are reclaimed." alt="" coords="5,5,208,60"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af" title="Force a scan and reclaim cycle." alt="" coords="256,5,435,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,30,242,30,242,35,208,35"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7" title=" " alt="" coords="483,5,673,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="435,30,469,30,469,35,435,35"/>
+</map>

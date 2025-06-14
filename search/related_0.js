@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['span_0',['span',['../d8/d4f/classutility__module_1_1span.html#a5e4124afeb79a9690142c2a3f8b355f4',1,'utility_module::span']]]
+  ['hazard_5fpointer_5fmanager_0',['hazard_pointer_manager',['../d5/d31/classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html#a77b50b649b407dc853cf0ce858b331ec',1,'thread_module::hazard_pointer_manager::hazard_pointer']]]
 ];

@@ -1,0 +1,21 @@
+<map id="sources/typed_thread_pool/core/job_types.h" name="sources/typed_thread_pool/core/job_types.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="192,5,360,45"/>
+<area shape="rect" id="Node000002" href="$da/dd5/typed__thread__pool_2core_2config_8h.html" title="Central configuration for typed_thread_pool module." alt="" coords="16,93,179,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,54,138,96,135,91,223,49"/>
+<area shape="rect" id="Node000003" href="$d1/df2/pool__builder_8h.html" title="Builder pattern implementation for typed_thread_pool construction." alt="" coords="5,181,189,221"/>
+<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="258,58,228,96,193,135,161,162,129,183,126,179,158,157,189,131,224,93,253,55"/>
+<area shape="rect" id="Node000004" href="$db/d03/typed__job_8h.html" title=" " alt="" coords="253,93,421,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="300,55,326,92,322,95,295,58"/>
+<area shape="rect" id="Node000006" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="394,269,566,324"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="360,48,399,66,435,91,456,112,469,131,485,181,487,201,485,221,484,269,479,269,480,221,482,201,480,182,464,133,451,115,432,95,397,71,358,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,147,100,181,95,181,95,147"/>
+<area shape="rect" id="Node000005" href="$de/d90/callback__typed__job_8h.html" title=" " alt="" coords="213,181,443,221"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="336,147,333,181,327,181,331,147"/>
+<area shape="poly" id="edge9_Node000004_Node000006" title=" " alt="" coords="404,137,432,155,457,180,469,201,477,225,483,269,477,270,471,226,464,204,453,183,429,160,401,142"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="372,226,439,267,436,272,369,231"/>
+<area shape="rect" id="Node000007" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="391,475,569,529"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="460,337,447,373,443,399,447,426,455,451,466,473,461,476,450,453,441,427,437,399,441,371,455,335"/>
+<area shape="rect" id="Node000008" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="457,372,629,427"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="506,334,529,370,524,373,501,337"/>
+<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="521,440,499,476,494,473,517,437"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="thread_module::hazard_pointer_manager::HazardRecord" name="thread_module::hazard_pointer_manager::HazardRecord">
+<area shape="rect" id="Node000001" title="Per&#45;thread hazard pointer record." alt="" coords="19,276,249,356"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="32,419,236,513"/>
+<area shape="poly" id="edge5_Node000005_Node000001" title=" " alt="" coords="110,357,101,381,100,403,95,403,95,379,105,355"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,133,177,213"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,213,120,259,115,261,101,214"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="202,133,373,213"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="246,216,190,267,187,263,243,212"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="209,5,365,71"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="290,71,290,117,285,117,285,71"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="134,419,134,380,134,372,139,372,139,380,139,419"/>
+</map>

@@ -245,7 +245,7 @@ job_queue The shared queue for storing pending jobs </dd>
 <dd>
 <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a970a3d65b2de11fe9eecd9c588159c63" title="Alias for a typed_thread_pool with the default job_types type.">typed_thread_pool_module::typed_thread_pool</a> For a priority-based version </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00113">113</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00115">115</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0905ffaf9c5741a6c1f3f62d61c0e757" name="a0905ffaf9c5741a6c1f3f62d61c0e757"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0905ffaf9c5741a6c1f3f62d61c0e757">&#9670;&#160;</a></span>thread_pool()</h2>
@@ -276,9 +276,9 @@ job_queue The shared queue for storing pending jobs </dd>
 <div class="fragment"><div class="line"><span class="lineno">   43</span>        : <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9eaa9f98d5d2a36ab0323ebe63254af6">thread_title_</a>(thread_title), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">start_pool_</a>(<span class="keyword">false</span>), <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
 <div class="line"><span class="lineno">   44</span>    {</div>
 <div class="line"><span class="lineno">   45</span>    }</div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a44d81103672c602def148381f6191476"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">thread_pool_module::thread_pool::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">The shared job queue where jobs (job objects) are enqueued.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00272">thread_pool.h:272</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a9df2245aa162e5dde5acb37b5be4c566"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">thread_pool_module::thread_pool::start_pool_</a></div><div class="ttdeci">std::atomic&lt; bool &gt; start_pool_</div><div class="ttdoc">Indicates whether the pool is currently running.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00264">thread_pool.h:264</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a9eaa9f98d5d2a36ab0323ebe63254af6"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9eaa9f98d5d2a36ab0323ebe63254af6">thread_pool_module::thread_pool::thread_title_</a></div><div class="ttdeci">std::string thread_title_</div><div class="ttdoc">A title or name for this thread pool, useful for identification and logging.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00256">thread_pool.h:256</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a44d81103672c602def148381f6191476"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a44d81103672c602def148381f6191476">thread_pool_module::thread_pool::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">The shared job queue where jobs (job objects) are enqueued.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00274">thread_pool.h:274</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a9df2245aa162e5dde5acb37b5be4c566"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">thread_pool_module::thread_pool::start_pool_</a></div><div class="ttdeci">std::atomic&lt; bool &gt; start_pool_</div><div class="ttdoc">Indicates whether the pool is currently running.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00266">thread_pool.h:266</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a9eaa9f98d5d2a36ab0323ebe63254af6"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9eaa9f98d5d2a36ab0323ebe63254af6">thread_pool_module::thread_pool::thread_title_</a></div><div class="ttdeci">std::string thread_title_</div><div class="ttdoc">A title or name for this thread pool, useful for identification and logging.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00258">thread_pool.h:258</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -442,7 +442,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  146</span> </div>
 <div class="line"><span class="lineno">  147</span>        <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line"><span class="lineno">  148</span>    }</div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a492d443faffcd01b64ab689f08308aec"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a492d443faffcd01b64ab689f08308aec">thread_pool_module::thread_pool::workers_</a></div><div class="ttdeci">std::vector&lt; std::unique_ptr&lt; thread_worker &gt; &gt; workers_</div><div class="ttdoc">A collection of worker threads associated with this pool.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00281">thread_pool.h:281</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a492d443faffcd01b64ab689f08308aec"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a492d443faffcd01b64ab689f08308aec">thread_pool_module::thread_pool::workers_</a></div><div class="ttdeci">std::vector&lt; std::unique_ptr&lt; thread_worker &gt; &gt; workers_</div><div class="ttdoc">A collection of worker threads associated with this pool.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dec/thread__pool_8h_source.html#l00283">thread_pool.h:283</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -718,7 +718,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  209</span> </div>
 <div class="line"><span class="lineno">  210</span>        <a class="code hl_variable" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566">start_pool_</a>.store(<span class="keyword">false</span>);</div>
 <div class="line"><span class="lineno">  211</span>    }</div>
-<div class="ttc" id="anamespacelog__module_html_a9e391cb38a5591521322e7f43cb9d8f0"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a></div><div class="ttdeci">auto write_error(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../de/d39/logger_2logger_8h_source.html#l00162">logger.h:162</a></div></div>
+<div class="ttc" id="anamespacelog__module_html_a9e391cb38a5591521322e7f43cb9d8f0"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0">log_module::write_error</a></div><div class="ttdeci">auto write_error(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db6/logger_2core_2logger_8h_source.html#l00164">logger.h:164</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -833,7 +833,7 @@ Here is the caller graph for this function:</div>
 <p>The shared job queue where jobs (<code>job</code> objects) are enqueued. </p>
 <p>Worker threads dequeue jobs from this queue to perform tasks. The queue persists for the lifetime of the pool or until no more references exist. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00272">272</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00274">274</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -860,7 +860,7 @@ Here is the caller graph for this function:</div>
 <p>Indicates whether the pool is currently running. </p>
 <p>Set to <code>true</code> after a successful call to <code><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f" title="Starts the thread pool and all associated workers.">start()</a></code>, and reset to <code>false</code> after <code><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads.">stop()</a></code>. Used internally to prevent multiple active starts or erroneous state transitions. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00264">264</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00266">266</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -886,7 +886,7 @@ Here is the caller graph for this function:</div>
 
 <p>A title or name for this thread pool, useful for identification and logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00256">256</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00258">258</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -913,18 +913,18 @@ Here is the caller graph for this function:</div>
 <p>A collection of worker threads associated with this pool. </p>
 <p>Each <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code> typically runs in its own thread context, processing jobs from <code>job_queue_</code> or performing specialized logic. They are started together when <code><a class="el" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f" title="Starts the thread pool and all associated workers.">thread_pool::start()</a></code> is called. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00281">281</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/dec/thread__pool_8h_source.html#l00283">283</a> of file <a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>sources/thread_pool/<a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a></li>
-<li>sources/thread_pool/<a class="el" href="../../df/d17/thread__pool_8cpp_source.html">thread_pool.cpp</a></li>
+<li>sources/thread_pool/core/<a class="el" href="../../d3/dec/thread__pool_8h_source.html">thread_pool.h</a></li>
+<li>sources/thread_pool/core/<a class="el" href="../../df/d17/thread__pool_8cpp_source.html">thread_pool.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

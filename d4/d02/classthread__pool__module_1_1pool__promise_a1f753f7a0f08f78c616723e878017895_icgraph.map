@@ -1,0 +1,9 @@
+<map id="thread_pool_module::pool_promise::get_future" name="thread_pool_module::pool_promise::get_future">
+<area shape="rect" id="Node000001" title="Get the associated future." alt="" coords="248,62,403,117"/>
+<area shape="rect" id="Node000002" href="$d8/d98/namespacethread__pool__module.html#aef6a0fdf9f3aba228c372989d4eba659" title="Create a future that is already ready with an exception." alt="" coords="5,5,200,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,66,172,48,174,43,235,61"/>
+<area shape="rect" id="Node000003" href="$d8/d98/namespacethread__pool__module.html#a2ab7372dcd09abd745b3978af363b73f" title="Create a future that is already ready with void." alt="" coords="25,69,181,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,92,181,92,181,87,234,87"/>
+<area shape="rect" id="Node000004" href="$d8/d98/namespacethread__pool__module.html#a26cb3767ed00a8ce412b776aa7b7765e" title="Create a future that is already ready with a value." alt="" coords="25,133,181,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="235,118,174,136,172,131,234,113"/>
+</map>

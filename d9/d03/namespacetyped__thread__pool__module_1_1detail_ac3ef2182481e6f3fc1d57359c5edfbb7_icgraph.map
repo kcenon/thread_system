@@ -1,0 +1,6 @@
+<map id="typed_thread_pool_module::detail::higher_priority" name="typed_thread_pool_module::detail::higher_priority">
+<area shape="rect" id="Node000001" title="Compile&#45;time priority comparison." alt="" coords="252,29,451,69"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="393,18,378,11,351,8,328,10,313,15,308,21,311,28,306,30,303,20,310,10,327,5,351,3,380,6,395,13"/>
+<area shape="rect" id="Node000002" href="$d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a1faff9b367ddc2acdbff2329ac1b7041" title="Check if this job has higher priority than another job." alt="" coords="5,22,204,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,52,204,52,204,47,238,47"/>
+</map>

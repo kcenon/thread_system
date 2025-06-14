@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['value_0',['value',['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#add3007dedbc14a06615e8ab2db1b8ccfa2063c1608d6e0baf80249c42e2be5804',1,'thread_pool_module::task_promise&lt; void &gt;']]]
+  ['thread_5falready_5frunning_0',['thread_already_running',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670',1,'thread_module']]],
+  ['thread_5fjoin_5ffailure_1',['thread_join_failure',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca5633932b5838e497d4d281a34aa9b281',1,'thread_module']]],
+  ['thread_5fnot_5frunning_2',['thread_not_running',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447caf2be7360c604a961b720a704f214b53c',1,'thread_module']]],
+  ['thread_5fstart_5ffailure_3',['thread_start_failure',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca2c7f2f4d429f6b2bafc5f45649587300',1,'thread_module']]]
 ];

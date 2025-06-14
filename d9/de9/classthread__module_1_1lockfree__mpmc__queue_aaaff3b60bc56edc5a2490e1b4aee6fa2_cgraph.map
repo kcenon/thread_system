@@ -1,0 +1,11 @@
+<map id="thread_module::lockfree_mpmc_queue::~lockfree_mpmc_queue" name="thread_module::lockfree_mpmc_queue::~lockfree_mpmc_queue">
+<area shape="rect" id="Node000001" title="Destructor." alt="" coords="5,30,195,85"/>
+<area shape="rect" id="Node000002" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae3d7995d0f844b13c60e827f0d5cf06a" title="Clear all jobs from the queue." alt="" coords="268,5,449,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,43,254,36,255,41,195,48"/>
+<area shape="rect" id="Node000004" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a2c9ac1633bf5e37297985deac17323fb" title=" " alt="" coords="243,69,475,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,66,229,71,229,76,195,72"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="557,5,723,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,23,543,23,543,28,450,28"/>
+<area shape="rect" id="Node000005" href="$d9/d61/structthread__module_1_1lockfree__mpmc__queue_1_1Node.html#aefb07466e465d02e607ad5e44d7c9887" title=" " alt="" coords="523,69,757,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="475,87,509,87,509,92,475,92"/>
+</map>

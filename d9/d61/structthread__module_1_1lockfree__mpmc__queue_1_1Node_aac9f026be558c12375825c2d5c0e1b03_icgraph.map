@@ -1,0 +1,7 @@
+<map id="thread_module::lockfree_mpmc_queue::Node::set_data" name="thread_module::lockfree_mpmc_queue::Node::set_data">
+<area shape="rect" id="Node000001" title=" " alt="" coords="277,37,500,77"/>
+<area shape="rect" id="Node000002" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a58fba24522639a541a79fd92a91c9a7b" title="Enqueue multiple jobs as a batch." alt="" coords="5,5,229,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,45,229,41,230,36,264,40"/>
+<area shape="rect" id="Node000003" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a3d7cc5a481818c9157ea4e5aefac943b" title=" " alt="" coords="9,69,226,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="264,75,227,79,226,74,263,69"/>
+</map>

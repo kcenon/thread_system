@@ -1,0 +1,5 @@
+<map id="thread_module::hazard_pointer_manager::scan_and_reclaim" name="thread_module::hazard_pointer_manager::scan_and_reclaim">
+<area shape="rect" id="Node000001" title="Force a scan and reclaim cycle." alt="" coords="5,5,184,60"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7" title=" " alt="" coords="232,5,423,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,30,218,30,218,35,184,35"/>
+</map>

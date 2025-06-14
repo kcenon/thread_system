@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/utilities/argument_parser.cpp File Reference</title>
+<title>Thread System: sources/utilities/parsing/argument_parser.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_3a976ff09299edbd61448c47c674b6c9.html">utilities</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_3a976ff09299edbd61448c47c674b6c9.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_3b27b0486d2fadc36e1c9b42d45641d7.html">parsing</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -80,50 +80,50 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d5/d9d/argument__parser_8h_source.html">argument_parser.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d1/d46/convert__string_8h_source.html">convert_string.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d1/d46/convert__string_8h_source.html">../conversion/convert_string.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cctype&gt;</code><br />
 <code>#include &lt;charconv&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for argument_parser.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d1/d8d/argument__parser_8cpp__incl.png" border="0" usemap="#asources_2utilities_2argument__parser_8cpp" alt=""/></div>
-<map name="asources_2utilities_2argument__parser_8cpp" id="asources_2utilities_2argument__parser_8cpp">
-<area shape="rect" title=" " alt="" coords="501,5,693,45"/>
-<area shape="rect" href="../../d5/d9d/argument__parser_8h.html" title=" " alt="" coords="235,93,379,119"/>
-<area shape="poly" title=" " alt="" coords="528,48,363,92,362,87,527,43"/>
-<area shape="rect" href="../../d1/d46/convert__string_8h.html" title=" " alt="" coords="433,93,559,119"/>
-<area shape="poly" title=" " alt="" coords="574,48,524,87,521,82,571,43"/>
-<area shape="rect" title=" " alt="" coords="824,167,909,192"/>
-<area shape="poly" title=" " alt="" coords="600,45,606,82,614,101,626,116,694,136,811,163,810,168,693,141,622,121,609,103,601,84,595,46"/>
-<area shape="rect" title=" " alt="" coords="635,93,701,119"/>
-<area shape="poly" title=" " alt="" coords="616,44,650,81,646,85,612,47"/>
-<area shape="rect" title=" " alt="" coords="725,93,806,119"/>
-<area shape="poly" title=" " alt="" coords="639,43,729,85,727,90,636,48"/>
-<area shape="rect" title=" " alt="" coords="467,167,525,192"/>
-<area shape="poly" title=" " alt="" coords="338,116,454,160,453,165,336,121"/>
-<area shape="rect" title=" " alt="" coords="5,167,56,192"/>
-<area shape="poly" title=" " alt="" coords="258,121,70,169,69,164,257,116"/>
-<area shape="rect" title=" " alt="" coords="80,167,155,192"/>
-<area shape="poly" title=" " alt="" coords="277,121,162,164,160,159,275,116"/>
-<area shape="rect" title=" " alt="" coords="179,167,234,192"/>
-<area shape="poly" title=" " alt="" coords="292,121,236,161,233,156,289,117"/>
-<area shape="rect" title=" " alt="" coords="258,167,355,192"/>
-<area shape="poly" title=" " alt="" coords="309,119,309,153,304,153,304,119"/>
-<area shape="rect" title=" " alt="" coords="379,167,442,192"/>
-<area shape="poly" title=" " alt="" coords="325,116,384,156,381,161,322,121"/>
-<area shape="poly" title=" " alt="" coords="499,119,499,153,493,153,493,119"/>
-<area shape="poly" title=" " alt="" coords="433,121,169,169,168,164,432,115"/>
-<area shape="poly" title=" " alt="" coords="445,121,248,169,247,164,444,116"/>
-<area shape="poly" title=" " alt="" coords="467,121,351,164,350,159,465,116"/>
-<area shape="poly" title=" " alt="" coords="484,121,437,160,433,156,481,117"/>
-<area shape="rect" title=" " alt="" coords="549,167,616,192"/>
-<area shape="poly" title=" " alt="" coords="512,117,560,156,556,160,508,121"/>
-<area shape="rect" title=" " alt="" coords="640,167,707,192"/>
-<area shape="poly" title=" " alt="" coords="525,116,633,159,631,164,524,121"/>
-<area shape="rect" title=" " alt="" coords="731,167,799,192"/>
-<area shape="poly" title=" " alt="" coords="540,116,718,163,717,168,539,121"/>
-<area shape="poly" title=" " alt="" coords="559,116,811,164,810,169,558,121"/>
+<div class="center"><img src="../../d1/d8d/argument__parser_8cpp__incl.png" border="0" usemap="#asources_2utilities_2parsing_2argument__parser_8cpp" alt=""/></div>
+<map name="asources_2utilities_2parsing_2argument__parser_8cpp" id="asources_2utilities_2parsing_2argument__parser_8cpp">
+<area shape="rect" title=" " alt="" coords="525,5,702,45"/>
+<area shape="rect" href="../../d5/d9d/argument__parser_8h.html" title=" " alt="" coords="235,101,379,126"/>
+<area shape="poly" title=" " alt="" coords="547,48,361,100,360,94,545,43"/>
+<area shape="rect" href="../../d1/d46/convert__string_8h.html" title=" " alt="" coords="417,93,575,133"/>
+<area shape="poly" title=" " alt="" coords="589,48,535,87,531,83,586,43"/>
+<area shape="rect" title=" " alt="" coords="824,181,909,207"/>
+<area shape="poly" title=" " alt="" coords="615,45,620,89,628,112,642,131,704,150,811,177,810,182,702,155,638,135,624,114,615,90,610,46"/>
+<area shape="rect" title=" " alt="" coords="651,101,717,126"/>
+<area shape="poly" title=" " alt="" coords="631,44,668,88,664,91,627,47"/>
+<area shape="rect" title=" " alt="" coords="741,101,822,126"/>
+<area shape="poly" title=" " alt="" coords="651,43,748,92,746,97,649,48"/>
+<area shape="rect" title=" " alt="" coords="467,181,525,207"/>
+<area shape="poly" title=" " alt="" coords="335,124,457,174,455,179,333,128"/>
+<area shape="rect" title=" " alt="" coords="5,181,56,207"/>
+<area shape="poly" title=" " alt="" coords="265,129,70,184,69,178,264,123"/>
+<area shape="rect" title=" " alt="" coords="80,181,155,207"/>
+<area shape="poly" title=" " alt="" coords="280,128,159,179,157,174,278,124"/>
+<area shape="rect" title=" " alt="" coords="179,181,234,207"/>
+<area shape="poly" title=" " alt="" coords="294,128,234,175,231,171,290,124"/>
+<area shape="rect" title=" " alt="" coords="258,181,355,207"/>
+<area shape="poly" title=" " alt="" coords="309,126,309,167,304,167,304,126"/>
+<area shape="rect" title=" " alt="" coords="379,181,442,207"/>
+<area shape="poly" title=" " alt="" coords="324,124,386,171,383,175,320,128"/>
+<area shape="poly" title=" " alt="" coords="499,134,499,167,493,167,493,134"/>
+<area shape="poly" title=" " alt="" coords="417,133,169,184,168,178,416,128"/>
+<area shape="poly" title=" " alt="" coords="424,136,248,184,246,178,423,131"/>
+<area shape="poly" title=" " alt="" coords="452,136,348,178,346,173,450,131"/>
+<area shape="poly" title=" " alt="" coords="477,136,435,174,432,170,474,132"/>
+<area shape="rect" title=" " alt="" coords="549,181,616,207"/>
+<area shape="poly" title=" " alt="" coords="519,132,561,170,558,174,515,136"/>
+<area shape="rect" title=" " alt="" coords="640,181,707,207"/>
+<area shape="poly" title=" " alt="" coords="540,131,636,173,634,178,537,136"/>
+<area shape="rect" title=" " alt="" coords="731,181,799,207"/>
+<area shape="poly" title=" " alt="" coords="561,131,719,177,718,182,560,136"/>
+<area shape="poly" title=" " alt="" coords="576,129,811,178,810,183,575,134"/>
 </map>
 </div>
 </div>
@@ -145,7 +145,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,0 +1,5 @@
+<map id="typed_thread_pool_module::detail::has_do_work_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().do_work())&gt; &gt;" name="typed_thread_pool_module::detail::has_do_work_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().do_work())&gt; &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,119,248,228"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="75,5,179,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,84,129,118,124,118,124,84"/>
+</map>

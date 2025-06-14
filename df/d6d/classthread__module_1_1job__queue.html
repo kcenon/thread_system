@@ -91,11 +91,19 @@ Inheritance diagram for thread_module::job_queue:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/df7/classthread__module_1_1job__queue__inherit__graph.png" border="0" usemap="#athread__module_1_1job__queue_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1job__queue_inherit__map" id="athread__module_1_1job__queue_inherit__map">
-<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="28,133,213,553"/>
-<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1071"/>
-<area shape="poly" title=" " alt="" coords="123,567,123,601,118,601,118,567"/>
-<area shape="rect" title=" " alt="" coords="31,5,211,85"/>
-<area shape="poly" title=" " alt="" coords="123,99,123,133,118,133,118,99"/>
+<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="525,133,711,553"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="5,794,236,1203"/>
+<area shape="poly" title=" " alt="" coords="514,396,447,433,376,481,308,538,277,569,249,603,221,647,197,695,161,795,156,793,192,693,216,645,245,600,273,566,304,534,373,477,445,429,512,391"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="260,787,472,1211"/>
+<area shape="poly" title=" " alt="" coords="522,523,486,602,452,694,423,787,418,786,447,692,481,600,517,521"/>
+<area shape="rect" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="496,601,740,1396"/>
+<area shape="poly" title=" " alt="" coords="621,567,621,601,615,601,615,567"/>
+<area shape="rect" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer queue." alt="" coords="765,709,962,1289"/>
+<area shape="poly" title=" " alt="" coords="719,520,755,600,793,707,788,709,750,602,714,522"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="987,794,1217,1203"/>
+<area shape="poly" title=" " alt="" coords="724,394,788,432,855,480,920,536,976,600,1005,645,1029,693,1065,793,1060,795,1024,695,1000,647,972,603,916,540,852,484,785,437,721,399"/>
+<area shape="rect" title=" " alt="" coords="528,5,708,85"/>
+<area shape="poly" title=" " alt="" coords="621,99,621,133,615,133,615,99"/>
 </map>
 </div>
 <div class="dynheader">
@@ -139,48 +147,48 @@ Collaboration diagram for thread_module::job_queue:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9d44b5378a8b8db169cc49f56b8d7c24" id="r_a9d44b5378a8b8db169cc49f56b8d7c24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a9d44b5378a8b8db169cc49f56b8d7c24">job_queue</a> ()</td></tr>
-<tr class="memdesc:a9d44b5378a8b8db169cc49f56b8d7c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new, empty <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a9d44b5378a8b8db169cc49f56b8d7c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81f0713f7dcefe962fb9e31e0c31595e" id="r_a81f0713f7dcefe962fb9e31e0c31595e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a81f0713f7dcefe962fb9e31e0c31595e">~job_queue</a> (void)</td></tr>
-<tr class="memdesc:a81f0713f7dcefe962fb9e31e0c31595e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Cleans up resources used by the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a81f0713f7dcefe962fb9e31e0c31595e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168cd8b3e641b7685e8e8a3acc5cfe54" id="r_a168cd8b3e641b7685e8e8a3acc5cfe54"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54">get_ptr</a> (void) -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
-<tr class="memdesc:a168cd8b3e641b7685e8e8a3acc5cfe54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a <code>std::shared_ptr</code> that points to this queue instance.  <br /></td></tr>
-<tr class="separator:a168cd8b3e641b7685e8e8a3acc5cfe54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace310cfeec8467bf79908d02d8a434cf" id="r_ace310cfeec8467bf79908d02d8a434cf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ace310cfeec8467bf79908d02d8a434cf">is_stopped</a> () const -&gt; bool</td></tr>
-<tr class="memdesc:ace310cfeec8467bf79908d02d8a434cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is in a "stopped" state.  <br /></td></tr>
-<tr class="separator:ace310cfeec8467bf79908d02d8a434cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa579e0071878acf4fe39005dfbcd3a9" id="r_afa579e0071878acf4fe39005dfbcd3a9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#afa579e0071878acf4fe39005dfbcd3a9">set_notify</a> (bool notify) -&gt; void</td></tr>
-<tr class="memdesc:afa579e0071878acf4fe39005dfbcd3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 'notify' flag for this queue.  <br /></td></tr>
-<tr class="separator:afa579e0071878acf4fe39005dfbcd3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60e9a953b327fe2fcaecfbcfdb0229cc" id="r_a60e9a953b327fe2fcaecfbcfdb0229cc"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a60e9a953b327fe2fcaecfbcfdb0229cc">enqueue</a> (std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &amp;&amp;value) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
-<tr class="memdesc:a60e9a953b327fe2fcaecfbcfdb0229cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a new job into the queue.  <br /></td></tr>
-<tr class="separator:a60e9a953b327fe2fcaecfbcfdb0229cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a764baa79c27ce94a4b1273141c31d754" id="r_a764baa79c27ce94a4b1273141c31d754"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a764baa79c27ce94a4b1273141c31d754">enqueue_batch</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt; &amp;&amp;jobs) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
-<tr class="memdesc:a764baa79c27ce94a4b1273141c31d754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a batch of jobs into the queue.  <br /></td></tr>
-<tr class="separator:a764baa79c27ce94a4b1273141c31d754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f89d748b23cf69b9e88047041209a3" id="r_ad4f89d748b23cf69b9e88047041209a3"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ad4f89d748b23cf69b9e88047041209a3">dequeue</a> (void) -&gt; <a class="el" href="../../d2/d93/classthread__module_1_1result.html">result</a>&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
-<tr class="memdesc:ad4f89d748b23cf69b9e88047041209a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues a job from the queue in FIFO order.  <br /></td></tr>
-<tr class="separator:ad4f89d748b23cf69b9e88047041209a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21617c4a85349fd768775af77a10df8c" id="r_a21617c4a85349fd768775af77a10df8c"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a21617c4a85349fd768775af77a10df8c">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
-<tr class="memdesc:a21617c4a85349fd768775af77a10df8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues all remaining jobs from the queue without processing them.  <br /></td></tr>
-<tr class="separator:a21617c4a85349fd768775af77a10df8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af31d9e7f3e21522f4e95ff7d2ed1c73b" id="r_af31d9e7f3e21522f4e95ff7d2ed1c73b"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b">clear</a> (void) -&gt; void</td></tr>
-<tr class="memdesc:af31d9e7f3e21522f4e95ff7d2ed1c73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all jobs currently in the queue without processing them.  <br /></td></tr>
-<tr class="separator:af31d9e7f3e21522f4e95ff7d2ed1c73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98766e5e2f65449e7826203259fbe48a" id="r_a98766e5e2f65449e7826203259fbe48a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a">empty</a> (void) const -&gt; bool</td></tr>
-<tr class="memdesc:a98766e5e2f65449e7826203259fbe48a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is currently empty.  <br /></td></tr>
-<tr class="separator:a98766e5e2f65449e7826203259fbe48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f15c70d01400df7c92415fca450443d" id="r_a7f15c70d01400df7c92415fca450443d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a7f15c70d01400df7c92415fca450443d">size</a> (void) const -&gt; std::size_t</td></tr>
-<tr class="memdesc:a7f15c70d01400df7c92415fca450443d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current number of jobs in the queue.  <br /></td></tr>
-<tr class="separator:a7f15c70d01400df7c92415fca450443d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8a339ad45cb198d07e0a73b005b3d60" id="r_ab8a339ad45cb198d07e0a73b005b3d60"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ab8a339ad45cb198d07e0a73b005b3d60">stop_waiting_dequeue</a> (void) -&gt; void</td></tr>
-<tr class="memdesc:ab8a339ad45cb198d07e0a73b005b3d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals the queue to stop waiting for new jobs (e.g., during shutdown).  <br /></td></tr>
-<tr class="separator:ab8a339ad45cb198d07e0a73b005b3d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e00514f9423ff2e33ae9c6bb116943f" id="r_a0e00514f9423ff2e33ae9c6bb116943f"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">to_string</a> (void) const -&gt; std::string</td></tr>
-<tr class="memdesc:a0e00514f9423ff2e33ae9c6bb116943f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of this <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a>.  <br /></td></tr>
-<tr class="separator:a0e00514f9423ff2e33ae9c6bb116943f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3002b24a03a4cf43d416d60fe200fe" id="r_a8d3002b24a03a4cf43d416d60fe200fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8d3002b24a03a4cf43d416d60fe200fe">job_queue</a> ()</td></tr>
+<tr class="memdesc:a8d3002b24a03a4cf43d416d60fe200fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new, empty <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
+<tr class="separator:a8d3002b24a03a4cf43d416d60fe200fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb5059d44e3440d9baa19a70ccf6179" id="r_a8cb5059d44e3440d9baa19a70ccf6179"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8cb5059d44e3440d9baa19a70ccf6179">~job_queue</a> (void)</td></tr>
+<tr class="memdesc:a8cb5059d44e3440d9baa19a70ccf6179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Cleans up resources used by the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
+<tr class="separator:a8cb5059d44e3440d9baa19a70ccf6179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa80c0ee832f3fbd837112b2b667bf5a7" id="r_aa80c0ee832f3fbd837112b2b667bf5a7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7">get_ptr</a> (void) -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
+<tr class="memdesc:aa80c0ee832f3fbd837112b2b667bf5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a <code>std::shared_ptr</code> that points to this queue instance.  <br /></td></tr>
+<tr class="separator:aa80c0ee832f3fbd837112b2b667bf5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf67868224f1c07285b6e0ce50b493f" id="r_adcf67868224f1c07285b6e0ce50b493f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#adcf67868224f1c07285b6e0ce50b493f">is_stopped</a> () const -&gt; bool</td></tr>
+<tr class="memdesc:adcf67868224f1c07285b6e0ce50b493f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is in a "stopped" state.  <br /></td></tr>
+<tr class="separator:adcf67868224f1c07285b6e0ce50b493f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4899018b4a42fadf17d66faccac84d92" id="r_a4899018b4a42fadf17d66faccac84d92"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4899018b4a42fadf17d66faccac84d92">set_notify</a> (bool notify) -&gt; void</td></tr>
+<tr class="memdesc:a4899018b4a42fadf17d66faccac84d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 'notify' flag for this queue.  <br /></td></tr>
+<tr class="separator:a4899018b4a42fadf17d66faccac84d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af46f8b8f92a3a55465c043414d6b4748" id="r_af46f8b8f92a3a55465c043414d6b4748"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af46f8b8f92a3a55465c043414d6b4748">enqueue</a> (std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &amp;&amp;value) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
+<tr class="memdesc:af46f8b8f92a3a55465c043414d6b4748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a new job into the queue.  <br /></td></tr>
+<tr class="separator:af46f8b8f92a3a55465c043414d6b4748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f7eea372ce86fdf2ff2aaf52c0008a9" id="r_a4f7eea372ce86fdf2ff2aaf52c0008a9"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4f7eea372ce86fdf2ff2aaf52c0008a9">enqueue_batch</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt; &amp;&amp;jobs) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
+<tr class="memdesc:a4f7eea372ce86fdf2ff2aaf52c0008a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a batch of jobs into the queue.  <br /></td></tr>
+<tr class="separator:a4f7eea372ce86fdf2ff2aaf52c0008a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af289a45a46d0a7852e2c4bf3e1046005" id="r_af289a45a46d0a7852e2c4bf3e1046005"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005">dequeue</a> (void) -&gt; <a class="el" href="../../d2/d93/classthread__module_1_1result.html">result</a>&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
+<tr class="memdesc:af289a45a46d0a7852e2c4bf3e1046005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues a job from the queue in FIFO order.  <br /></td></tr>
+<tr class="separator:af289a45a46d0a7852e2c4bf3e1046005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874dc85e1da329be9005ca68e724332b" id="r_a874dc85e1da329be9005ca68e724332b"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a874dc85e1da329be9005ca68e724332b">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
+<tr class="memdesc:a874dc85e1da329be9005ca68e724332b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues all remaining jobs from the queue without processing them.  <br /></td></tr>
+<tr class="separator:a874dc85e1da329be9005ca68e724332b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f3ac914b567dc7bcc2971eacd4ae37" id="r_a76f3ac914b567dc7bcc2971eacd4ae37"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37">clear</a> (void) -&gt; void</td></tr>
+<tr class="memdesc:a76f3ac914b567dc7bcc2971eacd4ae37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all jobs currently in the queue without processing them.  <br /></td></tr>
+<tr class="separator:a76f3ac914b567dc7bcc2971eacd4ae37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a57bbafa000d3f8515784e1b9e67f5" id="r_a01a57bbafa000d3f8515784e1b9e67f5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">empty</a> (void) const -&gt; bool</td></tr>
+<tr class="memdesc:a01a57bbafa000d3f8515784e1b9e67f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is currently empty.  <br /></td></tr>
+<tr class="separator:a01a57bbafa000d3f8515784e1b9e67f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f1afe112b5ce8f8247d243e7490f706" id="r_a0f1afe112b5ce8f8247d243e7490f706"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">size</a> (void) const -&gt; std::size_t</td></tr>
+<tr class="memdesc:a0f1afe112b5ce8f8247d243e7490f706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current number of jobs in the queue.  <br /></td></tr>
+<tr class="separator:a0f1afe112b5ce8f8247d243e7490f706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8d8368749da1f7444c8107d780ceefb" id="r_af8d8368749da1f7444c8107d780ceefb"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af8d8368749da1f7444c8107d780ceefb">stop_waiting_dequeue</a> (void) -&gt; void</td></tr>
+<tr class="memdesc:af8d8368749da1f7444c8107d780ceefb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals the queue to stop waiting for new jobs (e.g., during shutdown).  <br /></td></tr>
+<tr class="separator:af8d8368749da1f7444c8107d780ceefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5f309bc1114fb8aef6115313b67f24" id="r_a8b5f309bc1114fb8aef6115313b67f24"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">to_string</a> (void) const -&gt; std::string</td></tr>
+<tr class="memdesc:a8b5f309bc1114fb8aef6115313b67f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of this <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a>.  <br /></td></tr>
+<tr class="separator:a8b5f309bc1114fb8aef6115313b67f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -206,26 +214,26 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
-<p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
+<h3><a class="anchor" id="autotoc_md21"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
-<li>Enqueue <code>job</code> objects (or derived types) using <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a60e9a953b327fe2fcaecfbcfdb0229cc" title="Enqueues a new job into the queue.">enqueue()</a></code>.</li>
-<li>One or more worker threads repeatedly call <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ad4f89d748b23cf69b9e88047041209a3" title="Dequeues a job from the queue in FIFO order.">dequeue()</a></code> to retrieve jobs and process them.</li>
-<li>Call <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ab8a339ad45cb198d07e0a73b005b3d60" title="Signals the queue to stop waiting for new jobs (e.g., during shutdown).">stop_waiting_dequeue()</a></code> and possibly <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b" title="Removes all jobs currently in the queue without processing them.">clear()</a></code> to shut down the queue gracefully when all jobs are done or when the system is stopping. </li>
+<li>Enqueue <code>job</code> objects (or derived types) using <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af46f8b8f92a3a55465c043414d6b4748" title="Enqueues a new job into the queue.">enqueue()</a></code>.</li>
+<li>One or more worker threads repeatedly call <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005" title="Dequeues a job from the queue in FIFO order.">dequeue()</a></code> to retrieve jobs and process them.</li>
+<li>Call <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af8d8368749da1f7444c8107d780ceefb" title="Signals the queue to stop waiting for new jobs (e.g., during shutdown).">stop_waiting_dequeue()</a></code> and possibly <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37" title="Removes all jobs currently in the queue without processing them.">clear()</a></code> to shut down the queue gracefully when all jobs are done or when the system is stopping. </li>
 </ol>
 
 <p class="definition">Definition at line <a class="el" href="../../db/d9d/job__queue_8h_source.html#l00075">75</a> of file <a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9d44b5378a8b8db169cc49f56b8d7c24" name="a9d44b5378a8b8db169cc49f56b8d7c24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d44b5378a8b8db169cc49f56b8d7c24">&#9670;&#160;</a></span>job_queue()</h2>
+<a id="a8d3002b24a03a4cf43d416d60fe200fe" name="a8d3002b24a03a4cf43d416d60fe200fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d3002b24a03a4cf43d416d60fe200fe">&#9670;&#160;</a></span>job_queue()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">job_queue::job_queue </td>
+          <td class="memname">thread_module::job_queue::job_queue </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -246,8 +254,8 @@ Typical Usage</h3>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a81f0713f7dcefe962fb9e31e0c31595e" name="a81f0713f7dcefe962fb9e31e0c31595e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81f0713f7dcefe962fb9e31e0c31595e">&#9670;&#160;</a></span>~job_queue()</h2>
+<a id="a8cb5059d44e3440d9baa19a70ccf6179" name="a8cb5059d44e3440d9baa19a70ccf6179"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cb5059d44e3440d9baa19a70ccf6179">&#9670;&#160;</a></span>~job_queue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,7 +264,7 @@ Typical Usage</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">job_queue::~job_queue </td>
+          <td class="memname">thread_module::job_queue::~job_queue </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -278,8 +286,8 @@ Typical Usage</h3>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af31d9e7f3e21522f4e95ff7d2ed1c73b" name="af31d9e7f3e21522f4e95ff7d2ed1c73b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af31d9e7f3e21522f4e95ff7d2ed1c73b">&#9670;&#160;</a></span>clear()</h2>
+<a id="a76f3ac914b567dc7bcc2971eacd4ae37" name="a76f3ac914b567dc7bcc2971eacd4ae37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76f3ac914b567dc7bcc2971eacd4ae37">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -288,7 +296,7 @@ Typical Usage</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::clear </td>
+          <td class="memname">auto thread_module::job_queue::clear </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -305,7 +313,7 @@ Typical Usage</h3>
 <p>Removes all jobs currently in the queue without processing them. </p>
 <p>This operation is thread-safe and can be used to discard pending jobs, typically during shutdown or error recovery. It does not affect the <code>stop_</code> or <code>notify_</code> flags. </p>
 
-<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#ab85ca8567a4cfcf14d9f38a5b38405fa">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a065b0415380028c12e84b84604603a20">thread_module::adaptive_job_queue</a>, <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae3d7995d0f844b13c60e827f0d5cf06a">thread_module::lockfree_mpmc_queue</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#ab85ca8567a4cfcf14d9f38a5b38405fa">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#ab85ca8567a4cfcf14d9f38a5b38405fa">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#ab85ca8567a4cfcf14d9f38a5b38405fa">typed_thread_pool_module::typed_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  137</span>    {</div>
@@ -318,8 +326,8 @@ Typical Usage</h3>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ad4f89d748b23cf69b9e88047041209a3" name="ad4f89d748b23cf69b9e88047041209a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4f89d748b23cf69b9e88047041209a3">&#9670;&#160;</a></span>dequeue()</h2>
+<a id="af289a45a46d0a7852e2c4bf3e1046005" name="af289a45a46d0a7852e2c4bf3e1046005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af289a45a46d0a7852e2c4bf3e1046005">&#9670;&#160;</a></span>dequeue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -328,7 +336,7 @@ Typical Usage</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::dequeue </td>
+          <td class="memname">auto thread_module::job_queue::dequeue </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -346,7 +354,7 @@ Typical Usage</h3>
 <dl class="section return"><dt>Returns</dt><dd>A result&lt;std::unique_ptr&lt;job&gt;&gt; containing either a valid job or an error object.</dd></dl>
 <p>If the queue is empty, the caller may block depending on the internal concurrency model (unless <code>stop_</code> is set, in which case it may return immediately). </p>
 
-<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fccc80e5ae38229e9170a0f09830008">thread_module::adaptive_job_queue</a>, <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a59377d7d12b71c1694d5165e50169fd2">thread_module::lockfree_mpmc_queue</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267">typed_thread_pool_module::typed_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00106">106</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  107</span>    {</div>
@@ -367,8 +375,8 @@ Typical Usage</h3>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a21617c4a85349fd768775af77a10df8c" name="a21617c4a85349fd768775af77a10df8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21617c4a85349fd768775af77a10df8c">&#9670;&#160;</a></span>dequeue_batch()</h2>
+<a id="a874dc85e1da329be9005ca68e724332b" name="a874dc85e1da329be9005ca68e724332b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a874dc85e1da329be9005ca68e724332b">&#9670;&#160;</a></span>dequeue_batch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,7 +385,7 @@ Typical Usage</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::dequeue_batch </td>
+          <td class="memname">auto thread_module::job_queue::dequeue_batch </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -393,7 +401,9 @@ Typical Usage</h3>
 
 <p>Dequeues all remaining jobs from the queue without processing them. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::deque</code> of unique_ptr&lt;job&gt; containing all jobs that were in the queue at the time of the call.</dd></dl>
-<p>Similar to <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b" title="Removes all jobs currently in the queue without processing them.">clear()</a></code>, but returns the dequeued jobs to the caller for potential inspection or manual processing. </p>
+<p>Similar to <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37" title="Removes all jobs currently in the queue without processing them.">clear()</a></code>, but returns the dequeued jobs to the caller for potential inspection or manual processing. </p>
+
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a6a050d5ffd7b23bd0826ffdf48479d81">thread_module::adaptive_job_queue</a>, and <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a42cb532b73ca855e812811eb1cfc6f53">thread_module::lockfree_mpmc_queue</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00122">122</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  123</span>    {</div>
@@ -411,14 +421,14 @@ Typical Usage</h3>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a98766e5e2f65449e7826203259fbe48a" name="a98766e5e2f65449e7826203259fbe48a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98766e5e2f65449e7826203259fbe48a">&#9670;&#160;</a></span>empty()</h2>
+<a id="a01a57bbafa000d3f8515784e1b9e67f5" name="a01a57bbafa000d3f8515784e1b9e67f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a57bbafa000d3f8515784e1b9e67f5">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::empty </td>
+          <td class="memname">auto thread_module::job_queue::empty </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -440,8 +450,8 @@ Typical Usage</h3>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph" alt=""/></div>
-<map name="adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a98766e5e2f65449e7826203259fbe48a_icgraph">
+<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph" alt=""/></div>
+<map name="adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph">
 <area shape="rect" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
 <area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
 <area shape="poly" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
@@ -450,8 +460,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a60e9a953b327fe2fcaecfbcfdb0229cc" name="a60e9a953b327fe2fcaecfbcfdb0229cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60e9a953b327fe2fcaecfbcfdb0229cc">&#9670;&#160;</a></span>enqueue()</h2>
+<a id="af46f8b8f92a3a55465c043414d6b4748" name="af46f8b8f92a3a55465c043414d6b4748"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af46f8b8f92a3a55465c043414d6b4748">&#9670;&#160;</a></span>enqueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,7 +470,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::enqueue </td>
+          <td class="memname">auto thread_module::job_queue::enqueue </td>
           <td>(</td>
           <td class="paramtype">std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -484,7 +494,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message.</dd></dl>
 <p>This method is thread-safe. If <code>notify_</code> is set to <code>true</code>, a waiting thread (if any) will be notified upon successful enqueue. </p>
 
-<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac0c35e20c335c6e244216402bf6ec8bc">thread_module::adaptive_job_queue</a>, <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a51009d74809d3cfa8473fcf731e5aaad">thread_module::lockfree_mpmc_queue</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>    {</div>
@@ -514,8 +524,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a764baa79c27ce94a4b1273141c31d754" name="a764baa79c27ce94a4b1273141c31d754"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a764baa79c27ce94a4b1273141c31d754">&#9670;&#160;</a></span>enqueue_batch()</h2>
+<a id="a4f7eea372ce86fdf2ff2aaf52c0008a9" name="a4f7eea372ce86fdf2ff2aaf52c0008a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f7eea372ce86fdf2ff2aaf52c0008a9">&#9670;&#160;</a></span>enqueue_batch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -524,7 +534,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::enqueue_batch </td>
+          <td class="memname">auto thread_module::job_queue::enqueue_batch </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>jobs</em></td><td>)</td>
@@ -547,7 +557,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a891dfbd0238efc3b3ce11ca360a2578b">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a79ab6ce07de32b07ba50c7075979ad82">thread_module::adaptive_job_queue</a>, <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a58fba24522639a541a79fd92a91c9a7b">thread_module::lockfree_mpmc_queue</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a891dfbd0238efc3b3ce11ca360a2578b">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a891dfbd0238efc3b3ce11ca360a2578b">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a891dfbd0238efc3b3ce11ca360a2578b">typed_thread_pool_module::typed_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00071">71</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   72</span>    {</div>
@@ -586,14 +596,14 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a168cd8b3e641b7685e8e8a3acc5cfe54" name="a168cd8b3e641b7685e8e8a3acc5cfe54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a168cd8b3e641b7685e8e8a3acc5cfe54">&#9670;&#160;</a></span>get_ptr()</h2>
+<a id="aa80c0ee832f3fbd837112b2b667bf5a7" name="aa80c0ee832f3fbd837112b2b667bf5a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa80c0ee832f3fbd837112b2b667bf5a7">&#9670;&#160;</a></span>get_ptr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::get_ptr </td>
+          <td class="memname">auto thread_module::job_queue::get_ptr </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -604,21 +614,21 @@ Here is the caller graph for this function:</div>
 
 <p>Obtains a <code>std::shared_ptr</code> that points to this queue instance. </p>
 <dl class="section return"><dt>Returns</dt><dd>A shared pointer to the current <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> object.</dd></dl>
-<p>Because <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> inherits from <code>std::enable_shared_from_this</code>, calling <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code> allows retrieving a <code>shared_ptr&lt;job_queue&gt;</code> from within member functions of <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. </p>
+<p>Because <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> inherits from <code>std::enable_shared_from_this</code>, calling <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code> allows retrieving a <code>shared_ptr&lt;job_queue&gt;</code> from within member functions of <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>{ <span class="keywordflow">return</span> shared_from_this(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ace310cfeec8467bf79908d02d8a434cf" name="ace310cfeec8467bf79908d02d8a434cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace310cfeec8467bf79908d02d8a434cf">&#9670;&#160;</a></span>is_stopped()</h2>
+<a id="adcf67868224f1c07285b6e0ce50b493f" name="adcf67868224f1c07285b6e0ce50b493f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcf67868224f1c07285b6e0ce50b493f">&#9670;&#160;</a></span>is_stopped()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::is_stopped </td>
+          <td class="memname">auto thread_module::job_queue::is_stopped </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const -&gt; bool</td>
@@ -635,14 +645,14 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="afa579e0071878acf4fe39005dfbcd3a9" name="afa579e0071878acf4fe39005dfbcd3a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa579e0071878acf4fe39005dfbcd3a9">&#9670;&#160;</a></span>set_notify()</h2>
+<a id="a4899018b4a42fadf17d66faccac84d92" name="a4899018b4a42fadf17d66faccac84d92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4899018b4a42fadf17d66faccac84d92">&#9670;&#160;</a></span>set_notify()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::set_notify </td>
+          <td class="memname">auto thread_module::job_queue::set_notify </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>notify</em></td><td>)</td>
@@ -664,14 +674,14 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a7f15c70d01400df7c92415fca450443d" name="a7f15c70d01400df7c92415fca450443d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f15c70d01400df7c92415fca450443d">&#9670;&#160;</a></span>size()</h2>
+<a id="a0f1afe112b5ce8f8247d243e7490f706" name="a0f1afe112b5ce8f8247d243e7490f706"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f1afe112b5ce8f8247d243e7490f706">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::size </td>
+          <td class="memname">auto thread_module::job_queue::size </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -692,14 +702,14 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ab8a339ad45cb198d07e0a73b005b3d60" name="ab8a339ad45cb198d07e0a73b005b3d60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8a339ad45cb198d07e0a73b005b3d60">&#9670;&#160;</a></span>stop_waiting_dequeue()</h2>
+<a id="af8d8368749da1f7444c8107d780ceefb" name="af8d8368749da1f7444c8107d780ceefb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8d8368749da1f7444c8107d780ceefb">&#9670;&#160;</a></span>stop_waiting_dequeue()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::stop_waiting_dequeue </td>
+          <td class="memname">auto thread_module::job_queue::stop_waiting_dequeue </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -709,7 +719,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Signals the queue to stop waiting for new jobs (e.g., during shutdown). </p>
-<p>Sets the <code>stop_</code> flag to <code>true</code> and notifies any threads that might be blocked in <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ad4f89d748b23cf69b9e88047041209a3" title="Dequeues a job from the queue in FIFO order.">dequeue()</a></code>. This allows worker threads to exit gracefully rather than remain blocked indefinitely. </p>
+<p>Sets the <code>stop_</code> flag to <code>true</code> and notifies any threads that might be blocked in <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005" title="Dequeues a job from the queue in FIFO order.">dequeue()</a></code>. This allows worker threads to exit gracefully rather than remain blocked indefinitely. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  153</span>    {</div>
@@ -722,8 +732,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a0e00514f9423ff2e33ae9c6bb116943f" name="a0e00514f9423ff2e33ae9c6bb116943f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e00514f9423ff2e33ae9c6bb116943f">&#9670;&#160;</a></span>to_string()</h2>
+<a id="a8b5f309bc1114fb8aef6115313b67f24" name="a8b5f309bc1114fb8aef6115313b67f24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b5f309bc1114fb8aef6115313b67f24">&#9670;&#160;</a></span>to_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -732,7 +742,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto job_queue::to_string </td>
+          <td class="memname">auto thread_module::job_queue::to_string </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -750,19 +760,19 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A std::string describing the state of the queue (e.g., size, flags).</dd></dl>
 <p>Primarily used for logging and debugging. Derived classes may override this to include additional diagnostic information. </p>
 
-<p>Reimplemented in <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a7cf695694db1a864899f15df036e8531">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1">thread_module::adaptive_job_queue</a>, <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a6681f50b6547abca7d8aaa4a798a1d86">thread_module::lockfree_mpmc_queue</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a7cf695694db1a864899f15df036e8531">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a7cf695694db1a864899f15df036e8531">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a7cf695694db1a864899f15df036e8531">typed_thread_pool_module::typed_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00167">167</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  168</span>    {</div>
-<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;contained {} jobs&quot;</span>, <a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a7f15c70d01400df7c92415fca450443d">size</a>());</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;contained {} jobs&quot;</span>, <a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">size</a>());</div>
 <div class="line"><span class="lineno">  170</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a7f15c70d01400df7c92415fca450443d"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a7f15c70d01400df7c92415fca450443d">thread_module::job_queue::size</a></div><div class="ttdeci">auto size(void) const -&gt; std::size_t</div><div class="ttdoc">Returns the current number of jobs in the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00161">job_queue.cpp:161</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a0f1afe112b5ce8f8247d243e7490f706"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">thread_module::job_queue::size</a></div><div class="ttdeci">auto size(void) const -&gt; std::size_t</div><div class="ttdoc">Returns the current number of jobs in the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00161">job_queue.cpp:161</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_cgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_cgraph" alt=""/></div>
-<map name="adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_cgraph" id="adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_cgraph">
+<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_cgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_cgraph" alt=""/></div>
+<map name="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_cgraph" id="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_cgraph">
 <area shape="rect" title="Returns a string representation of this job_queue." alt="" coords="5,5,153,45"/>
 <area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="201,5,388,45"/>
 <area shape="poly" title=" " alt="" coords="154,23,188,23,188,28,154,28"/>
@@ -774,8 +784,8 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_icgraph" alt=""/></div>
-<map name="adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a0e00514f9423ff2e33ae9c6bb116943f_icgraph">
+<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph" alt=""/></div>
+<map name="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph">
 <area shape="rect" title="Returns a string representation of this job_queue." alt="" coords="229,13,377,53"/>
 <area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="5,5,181,60"/>
 <area shape="poly" title=" " alt="" coords="215,35,182,35,182,30,215,30"/>
@@ -920,13 +930,13 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>sources/thread_base/<a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a></li>
-<li>sources/thread_base/<a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a></li>
+<li>sources/thread_base/jobs/<a class="el" href="../../db/d9d/job__queue_8h_source.html">job_queue.h</a></li>
+<li>sources/thread_base/jobs/<a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

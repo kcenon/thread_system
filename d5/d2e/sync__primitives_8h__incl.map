@@ -1,0 +1,13 @@
+<map id="sources/thread_base/sync/sync_primitives.h" name="sources/thread_base/sync/sync_primitives.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="207,5,382,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,69,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,48,83,94,81,88,232,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="94,93,237,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,48,197,88,195,84,262,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="261,93,328,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="297,46,297,79,292,79,292,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="352,93,419,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="318,44,363,82,360,86,315,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="443,93,520,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="340,43,442,85,440,90,338,48"/>
+</map>

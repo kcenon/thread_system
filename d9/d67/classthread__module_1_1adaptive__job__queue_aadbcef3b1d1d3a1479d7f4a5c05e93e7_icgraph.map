@@ -1,0 +1,5 @@
+<map id="thread_module::adaptive_job_queue::get_current_type" name="thread_module::adaptive_job_queue::get_current_type">
+<area shape="rect" id="Node000001" title="Get current queue type." alt="" coords="239,5,453,45"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="5,5,191,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,28,191,28,191,23,225,23"/>
+</map>

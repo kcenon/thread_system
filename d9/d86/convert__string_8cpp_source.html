@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/utilities/convert_string.cpp Source File</title>
+<title>Thread System: sources/utilities/conversion/convert_string.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_3a976ff09299edbd61448c47c674b6c9.html">utilities</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_3a976ff09299edbd61448c47c674b6c9.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_8fa91a610133cad2895e8fa2234a687e.html">conversion</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,7 +115,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;<a class="code" href="../../d1/d46/convert__string_8h.html">convert_string.h</a>&quot;</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="../../de/d52/formatter_8h.html">formatter.h</a>&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../core/formatter.h&quot;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;iconv.h&quot;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
@@ -125,7 +125,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../dd/d2a/namespaceutility__module.html">   45</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FromType, <span class="keyword">typename</span> ToType&gt;</div>
 <div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
@@ -669,6 +670,7 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span> </div>
 <div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>} <span class="comment">// namespace utility_module</span></div>
+</div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a118786eba66d84cd2a02c911775141ec"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a118786eba66d84cd2a02c911775141ec">utility_module::convert_string::from_base64</a></div><div class="ttdeci">static auto from_base64(const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Decodes a Base64 string into a byte array.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00377">convert_string.cpp:377</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a253963501540b93269546be1be251f6e"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e">utility_module::convert_string::to_string</a></div><div class="ttdeci">static auto to_string(const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a std::wstring to a std::string using the system encoding.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00095">convert_string.cpp:95</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a30592e4ca22ebe9b45f847e7d4eed464"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464">utility_module::convert_string::base64_encode</a></div><div class="ttdeci">static auto base64_encode(const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::string</div><div class="ttdoc">Encodes a byte array into a Base64 string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00427">convert_string.cpp:427</a></div></div>
@@ -694,12 +696,11 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_afbde2f9b7be55d89662baedd43ba63cf"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cf">utility_module::convert_string::endian_types</a></div><div class="ttdeci">endian_types</div><div class="ttdoc">Possible endianness values for UTF-16 or UTF-32 data.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00239">convert_string.h:240</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00287">formatter.h:287</a></div></div>
 <div class="ttc" id="aconvert__string_8h_html"><div class="ttname"><a href="../../d1/d46/convert__string_8h.html">convert_string.h</a></div></div>
-<div class="ttc" id="aformatter_8h_html"><div class="ttname"><a href="../../de/d52/formatter_8h.html">formatter.h</a></div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d2f/argument__parser_8cpp_source.html#l00040">argument_parser.cpp:41</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00045">convert_string.cpp:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

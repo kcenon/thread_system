@@ -1,5 +1,5 @@
 <map id="thread_module::error::message" name="thread_module::error::message">
-<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="197,5,356,45"/>
-<area shape="rect" id="Node000002" href="$da/d35/classutility__module_1_1file.html#a58e892ac8d72235f221fafc9d3bed051" title="Removes a file from the filesystem." alt="" coords="5,5,149,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,28,150,28,150,23,183,23"/>
+<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="296,5,455,45"/>
+<area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="5,5,248,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,28,248,28,248,23,282,23"/>
 </map>

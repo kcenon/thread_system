@@ -1,0 +1,5 @@
+<map id="thread_pool_module::detail::is_nothrow_callable&lt; F &gt;" name="thread_pool_module::detail::is_nothrow_callable&lt; F &gt;">
+<area shape="rect" id="Node000001" title="Type trait to check if a callable is noexcept." alt="" coords="31,148,178,243"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,204,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,114,107,148,102,148,102,114"/>
+</map>

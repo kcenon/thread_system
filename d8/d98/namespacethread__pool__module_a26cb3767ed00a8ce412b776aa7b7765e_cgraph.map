@@ -1,0 +1,7 @@
+<map id="thread_pool_module::make_ready_future" name="thread_pool_module::make_ready_future">
+<area shape="rect" id="Node000001" title="Create a future that is already ready with a value." alt="" coords="5,49,161,89"/>
+<area shape="rect" id="Node000002" href="$d4/d02/classthread__pool__module_1_1pool__promise.html#a1f753f7a0f08f78c616723e878017895" title="Get the associated future." alt="" coords="227,5,381,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,53,213,45,213,50,162,59"/>
+<area shape="rect" id="Node000003" href="$d4/d02/classthread__pool__module_1_1pool__promise.html#a02fb3af59a47f91c9d7900ef6b22dd0b" title="Set the value." alt="" coords="209,85,399,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="162,79,196,84,195,90,161,84"/>
+</map>

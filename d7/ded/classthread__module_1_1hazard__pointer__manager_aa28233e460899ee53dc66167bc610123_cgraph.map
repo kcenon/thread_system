@@ -1,0 +1,9 @@
+<map id="thread_module::hazard_pointer_manager::retire_impl" name="thread_module::hazard_pointer_manager::retire_impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,49,224,89"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af" title="Force a scan and reclaim cycle." alt="" coords="297,5,475,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,52,283,44,284,49,224,57"/>
+<area shape="rect" id="Node000004" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a41135b587f841494919d29b4ecaf38a5" title=" " alt="" coords="272,85,500,125"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="224,81,259,85,258,90,224,86"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7" title=" " alt="" coords="548,5,739,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="476,30,534,30,534,35,476,35"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="thread_pool_module::pool_promise::set_value" name="thread_pool_module::pool_promise::set_value">
+<area shape="rect" id="Node000001" title="Set the value." alt="" coords="209,37,399,77"/>
+<area shape="rect" id="Node000002" href="$d8/d98/namespacethread__pool__module.html#a2ab7372dcd09abd745b3978af363b73f" title="Create a future that is already ready with void." alt="" coords="5,5,161,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,44,161,39,162,34,196,39"/>
+<area shape="rect" id="Node000003" href="$d8/d98/namespacethread__pool__module.html#a26cb3767ed00a8ce412b776aa7b7765e" title="Create a future that is already ready with a value." alt="" coords="5,69,161,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,76,162,81,161,75,195,70"/>
+</map>

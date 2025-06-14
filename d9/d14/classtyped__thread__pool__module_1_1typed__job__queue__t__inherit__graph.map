@@ -1,5 +1,5 @@
 <map id="typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1071"/>
+<area shape="rect" id="Node000001" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1011"/>
 <area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="28,133,213,553"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,567,123,601,118,601,118,567"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="31,5,211,85"/>

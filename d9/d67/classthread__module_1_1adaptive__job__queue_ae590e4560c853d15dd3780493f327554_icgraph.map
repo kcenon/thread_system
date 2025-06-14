@@ -1,0 +1,9 @@
+<map id="thread_module::adaptive_job_queue::get_current_impl" name="thread_module::adaptive_job_queue::get_current_impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="472,37,687,77"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#af5a6a321d31466e65cf5980126ec8309" title=" " alt="" coords="239,5,424,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="458,44,424,40,424,35,459,39"/>
+<area shape="rect" id="Node000003" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af" title=" " alt="" coords="239,69,424,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="459,76,424,80,424,75,458,70"/>
+<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="5,69,191,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="225,92,191,92,191,87,225,87"/>
+</map>

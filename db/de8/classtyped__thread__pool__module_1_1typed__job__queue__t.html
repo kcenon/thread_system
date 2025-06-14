@@ -76,6 +76,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="../../d6/d56/classtyped__thread__pool__module_1_1typed__job__queue__t-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt; Class Template Reference</div></div>
@@ -91,7 +92,7 @@ Inheritance diagram for typed_thread_pool_module::typed_job_queue_t&lt; job_type
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d14/classtyped__thread__pool__module_1_1typed__job__queue__t__inherit__graph.png" border="0" usemap="#atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_inherit__map" id="atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_inherit__map">
-<area shape="rect" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1071"/>
+<area shape="rect" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,601,236,1011"/>
 <area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="28,133,213,553"/>
 <area shape="poly" title=" " alt="" coords="123,567,123,601,118,601,118,567"/>
 <area shape="rect" title=" " alt="" coords="31,5,211,85"/>
@@ -103,59 +104,105 @@ Collaboration diagram for typed_thread_pool_module::typed_job_queue_t&lt; job_ty
 <div class="dyncontent">
 <div class="center"><img src="../../da/d82/classtyped__thread__pool__module_1_1typed__job__queue__t__coll__graph.png" border="0" usemap="#atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_coll__map" id="atyped__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_coll__map">
-<area shape="rect" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="860,741,1091,1190"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="608,291,793,671"/>
-<area shape="poly" title=" " alt="" coords="803,659,808,669,862,764,858,766,804,672,798,662"/>
-<area shape="rect" title=" " alt="" coords="513,925,673,1005"/>
-<area shape="poly" title=" " alt="" coords="661,671,608,910,602,909,656,670"/>
-<area shape="rect" title=" " alt="" coords="521,148,701,228"/>
-<area shape="poly" title=" " alt="" coords="630,240,645,290,640,291,625,242"/>
-<area shape="rect" title=" " alt="" coords="587,13,671,78"/>
-<area shape="poly" title=" " alt="" coords="667,76,694,108,715,147,730,210,735,274,729,275,725,210,710,149,690,111,663,80"/>
-<area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="299,148,497,228"/>
-<area shape="poly" title=" " alt="" coords="588,75,477,142,474,137,585,70"/>
-<area shape="rect" title=" " alt="" coords="550,1798,761,1878"/>
-<area shape="poly" title=" " alt="" coords="676,1797,689,1766,704,1709,707,1649,707,964,704,687,709,687,713,964,713,1649,709,1709,694,1768,681,1799"/>
-<area shape="rect" title=" " alt="" coords="455,1608,623,1688"/>
-<area shape="poly" title=" " alt="" coords="566,1687,625,1783,620,1785,561,1690"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="295,1260,485,1505"/>
-<area shape="poly" title=" " alt="" coords="461,1504,512,1592,507,1595,457,1507"/>
-<area shape="rect" title=" " alt="" coords="188,933,267,998"/>
-<area shape="poly" title=" " alt="" coords="234,998,249,1089,263,1143,280,1196,303,1244,298,1246,276,1198,257,1145,244,1090,228,999"/>
-<area shape="rect" title=" " alt="" coords="159,441,290,521"/>
-<area shape="poly" title=" " alt="" coords="228,534,230,932,224,932,222,534"/>
-<area shape="rect" title=" " alt="" coords="5,933,164,998"/>
-<area shape="poly" title=" " alt="" coords="94,997,124,1091,147,1145,177,1196,228,1254,284,1304,281,1308,224,1258,173,1199,143,1147,119,1092,89,999"/>
-<area shape="poly" title=" " alt="" coords="595,1006,592,1055,584,1114,568,1177,543,1237,523,1269,498,1297,494,1294,518,1265,538,1235,563,1175,578,1113,587,1054,590,1006"/>
-<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="291,815,489,1115"/>
-<area shape="poly" title=" " alt="" coords="393,1116,393,1243,387,1243,387,1116"/>
-<area shape="rect" title=" " alt="" coords="314,433,482,528"/>
-<area shape="poly" title=" " alt="" coords="400,528,395,799,390,799,395,528"/>
-<area shape="poly" title=" " alt="" coords="401,228,401,417,395,417,395,228"/>
-<area shape="rect" title=" " alt="" coords="168,13,313,78"/>
-<area shape="poly" title=" " alt="" coords="269,76,313,122,330,136,326,140,310,126,265,80"/>
-<area shape="rect" title=" " alt="" coords="338,5,517,85"/>
-<area shape="poly" title=" " alt="" coords="422,86,412,133,407,132,417,85"/>
-<area shape="rect" title=" " alt="" coords="818,419,1007,543"/>
-<area shape="poly" title=" " alt="" coords="912,543,907,695,907,709,910,724,904,725,902,710,902,695,907,543"/>
-<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="1115,733,1327,1197"/>
-<area shape="poly" title=" " alt="" coords="954,541,1002,606,1061,669,1080,680,1098,693,1118,718,1114,721,1095,697,1077,684,1058,673,998,609,950,544"/>
-<area shape="rect" title=" " alt="" coords="749,1948,938,2057"/>
-<area shape="poly" title=" " alt="" coords="830,1948,823,1896,819,1839,819,964,826,852,843,742,865,641,887,558,892,559,870,642,848,743,831,853,825,964,825,1839,828,1895,835,1948"/>
-<area shape="rect" title=" " alt="" coords="925,1791,1124,1885"/>
-<area shape="poly" title=" " alt="" coords="974,1888,918,1938,914,1935,971,1884"/>
-<area shape="rect" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title=" " alt="" coords="967,1568,1157,1728"/>
-<area shape="poly" title=" " alt="" coords="1049,1729,1040,1775,1034,1774,1044,1728"/>
-<area shape="rect" title=" " alt="" coords="1045,1350,1079,1415"/>
-<area shape="poly" title=" " alt="" coords="1065,1429,1065,1568,1059,1568,1059,1429"/>
-<area shape="rect" title=" " alt="" coords="1112,1328,1284,1437"/>
-<area shape="poly" title=" " alt="" coords="1173,1439,1113,1554,1108,1552,1168,1437"/>
-<area shape="poly" title=" " alt="" coords="1211,1198,1204,1312,1199,1312,1205,1197"/>
-<area shape="rect" title=" " alt="" coords="1297,448,1379,513"/>
-<area shape="poly" title=" " alt="" coords="1334,527,1320,612,1299,710,1293,734,1288,733,1294,709,1314,611,1329,526"/>
-<area shape="rect" title=" " alt="" coords="1072,431,1225,531"/>
-<area shape="poly" title=" " alt="" coords="1119,532,1021,672,1010,684,1002,696,991,726,986,724,997,693,1006,680,1017,669,1115,529"/>
-<area shape="poly" title=" " alt="" coords="1162,530,1194,694,1197,716,1192,717,1189,695,1157,531"/>
+<area shape="rect" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="835,2813,1065,3203"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="629,1348,815,1728"/>
+<area shape="poly" title=" " alt="" coords="824,1671,870,1749,912,1837,928,1883,941,1931,950,1980,953,2029,953,2697,953,2813,947,2813,947,2697,947,2029,944,1981,936,1933,923,1885,907,1839,866,1751,820,1674"/>
+<area shape="rect" title=" " alt="" coords="518,1991,678,2071"/>
+<area shape="poly" title=" " alt="" coords="672,1729,666,1753,613,1975,608,1974,661,1751,667,1728"/>
+<area shape="rect" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer queue." alt="" coords="1045,1791,1242,2271"/>
+<area shape="poly" title=" " alt="" coords="826,1663,862,1697,901,1726,918,1734,933,1737,949,1740,966,1750,1009,1791,1047,1837,1042,1841,1005,1794,963,1754,947,1745,932,1742,916,1739,898,1730,859,1701,823,1667"/>
+<area shape="rect" title=" " alt="" coords="637,903,817,983"/>
+<area shape="poly" title=" " alt="" coords="730,997,726,1348,721,1348,724,997"/>
+<area shape="rect" title=" " alt="" coords="383,560,467,625"/>
+<area shape="poly" title=" " alt="" coords="467,623,486,638,505,648,520,663,537,710,547,772,551,843,552,919,551,1069,554,1132,562,1182,590,1268,625,1351,620,1353,585,1270,557,1183,549,1133,546,1069,546,919,546,843,542,772,532,711,516,665,502,652,483,642,464,627"/>
+<area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="183,903,381,983"/>
+<area shape="poly" title=" " alt="" coords="414,626,307,888,302,886,409,624"/>
+<area shape="rect" title=" " alt="" coords="555,2968,766,3048"/>
+<area shape="poly" title=" " alt="" coords="669,2967,697,2847,708,2773,713,2697,713,2029,715,1745,721,1745,718,2029,718,2697,713,2773,702,2848,675,2969"/>
+<area shape="rect" title=" " alt="" coords="478,2656,646,2736"/>
+<area shape="poly" title=" " alt="" coords="577,2736,646,2951,641,2953,572,2737"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="369,2333,558,2579"/>
+<area shape="poly" title=" " alt="" coords="516,2578,542,2640,537,2642,511,2580"/>
+<area shape="rect" title=" " alt="" coords="415,1998,493,2063"/>
+<area shape="poly" title=" " alt="" coords="457,2063,463,2316,458,2316,452,2063"/>
+<area shape="rect" title=" " alt="" coords="390,1498,521,1578"/>
+<area shape="poly" title=" " alt="" coords="458,1592,457,1998,451,1998,453,1592"/>
+<area shape="rect" title=" " alt="" coords="5,1998,164,2063"/>
+<area shape="poly" title=" " alt="" coords="93,2063,103,2107,120,2161,144,2217,177,2269,217,2310,262,2346,309,2378,355,2404,353,2408,306,2382,258,2351,213,2314,173,2272,139,2220,115,2163,98,2108,87,2064"/>
+<area shape="poly" title=" " alt="" coords="593,2071,567,2180,529,2310,526,2319,521,2317,523,2309,562,2178,587,2070"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="188,1881,387,2181"/>
+<area shape="poly" title=" " alt="" coords="282,2180,292,2246,300,2278,312,2308,333,2342,359,2372,355,2375,328,2345,308,2311,295,2280,286,2247,277,2181"/>
+<area shape="rect" title=" " alt="" coords="198,1491,366,1585"/>
+<area shape="poly" title=" " alt="" coords="285,1585,288,1864,283,1864,280,1585"/>
+<area shape="poly" title=" " alt="" coords="285,983,285,1474,279,1474,279,983"/>
+<area shape="rect" title=" " alt="" coords="209,560,355,625"/>
+<area shape="poly" title=" " alt="" coords="285,625,285,886,279,886,279,625"/>
+<area shape="rect" title=" " alt="" coords="6,553,185,633"/>
+<area shape="poly" title=" " alt="" coords="119,632,256,887,251,889,114,634"/>
+<area shape="rect" title=" " alt="" coords="1013,2641,1226,2751"/>
+<area shape="poly" title=" " alt="" coords="1092,2752,1066,2800,1061,2798,1088,2750"/>
+<area shape="rect" title=" " alt="" coords="1045,2409,1223,2503"/>
+<area shape="poly" title=" " alt="" coords="1134,2504,1126,2625,1121,2625,1128,2503"/>
+<area shape="poly" title=" " alt="" coords="1141,2271,1138,2392,1133,2392,1135,2271"/>
+<area shape="rect" title=" " alt="" coords="1397,895,1575,990"/>
+<area shape="poly" title=" " alt="" coords="1473,991,1437,1082,1387,1184,1352,1232,1320,1265,1289,1299,1260,1349,1222,1453,1194,1562,1173,1671,1159,1774,1154,1774,1168,1670,1188,1561,1217,1452,1256,1347,1285,1296,1316,1262,1348,1229,1382,1181,1432,1080,1468,989"/>
+<area shape="rect" href="../../d9/d61/structthread__module_1_1lockfree__mpmc__queue_1_1Node.html" title="Node structure for the queue." alt="" coords="1319,1458,1493,1618"/>
+<area shape="poly" title=" " alt="" coords="1469,991,1434,1089,1418,1148,1406,1207,1403,1265,1406,1324,1407,1441,1402,1441,1401,1324,1398,1265,1401,1206,1413,1147,1429,1088,1464,990"/>
+<area shape="poly" title=" " alt="" coords="1424,1457,1451,1324,1471,1152,1481,1006,1486,1007,1476,1152,1457,1324,1429,1458"/>
+<area shape="rect" title=" " alt="" coords="1091,456,1265,521"/>
+<area shape="poly" title=" " alt="" coords="1176,522,1164,633,1156,798,1158,892,1166,990,1182,1088,1206,1182,1228,1232,1254,1266,1283,1300,1315,1347,1365,1442,1360,1444,1310,1349,1279,1303,1250,1270,1223,1234,1201,1184,1176,1089,1161,991,1153,893,1151,798,1158,632,1171,521"/>
+<area shape="rect" title=" " alt="" coords="1126,223,1275,288"/>
+<area shape="poly" title=" " alt="" coords="1200,289,1185,440,1180,439,1195,288"/>
+<area shape="rect" title=" " alt="" coords="1385,5,1408,71"/>
+<area shape="poly" title=" " alt="" coords="1387,54,1242,212,1238,209,1383,50"/>
+<area shape="rect" title=" " alt="" coords="1694,133,1849,199"/>
+<area shape="poly" title=" " alt="" coords="1409,41,1679,131,1678,136,1407,46"/>
+<area shape="rect" title=" " alt="" coords="1599,910,1770,975"/>
+<area shape="poly" title=" " alt="" coords="1675,977,1638,1070,1590,1184,1457,1445,1452,1442,1585,1182,1634,1068,1670,975"/>
+<area shape="rect" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html" title="Internal atomic statistics structure." alt="" coords="1517,1498,1745,1578"/>
+<area shape="poly" title=" " alt="" coords="1684,976,1639,1482,1634,1482,1679,975"/>
+<area shape="rect" title=" " alt="" coords="1770,1483,1997,1593"/>
+<area shape="poly" title=" " alt="" coords="1860,1594,1818,1663,1791,1698,1760,1730,1700,1778,1636,1821,1570,1861,1502,1896,1371,1954,1258,1996,1256,1991,1369,1949,1500,1891,1567,1856,1633,1817,1697,1773,1756,1726,1787,1695,1814,1660,1855,1592"/>
+<area shape="rect" href="../../d8/dad/classthread__module_1_1node__pool.html" title=" " alt="" coords="1795,708,1969,1177"/>
+<area shape="poly" title=" " alt="" coords="1885,1177,1886,1467,1881,1467,1880,1177"/>
+<area shape="rect" title=" " alt="" coords="1281,545,1435,640"/>
+<area shape="poly" title=" " alt="" coords="1420,638,1457,659,1496,676,1523,681,1559,683,1642,681,1724,683,1758,689,1783,700,1784,701,1781,705,1781,705,1757,694,1724,689,1642,687,1558,688,1523,687,1495,681,1454,664,1418,642"/>
+<area shape="rect" href="../../d8/dc5/structthread__module_1_1node__pool_1_1FreeNode.html" title="Node in the free list." alt="" coords="1215,903,1373,983"/>
+<area shape="poly" title=" " alt="" coords="1352,641,1307,887,1301,886,1347,640"/>
+<area shape="poly" title=" " alt="" coords="1283,903,1276,854,1273,793,1277,727,1293,663,1298,653,1302,655,1298,665,1282,728,1278,793,1281,853,1288,902"/>
+<area shape="rect" title=" " alt="" coords="1795,545,1948,640"/>
+<area shape="poly" title=" " alt="" coords="1875,640,1877,691,1872,692,1870,640"/>
+<area shape="rect" href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html" title="A chunk of pre&#45;allocated nodes." alt="" coords="1699,332,1863,412"/>
+<area shape="poly" title=" " alt="" coords="1799,411,1848,529,1843,531,1794,413"/>
+<area shape="poly" title=" " alt="" coords="1864,349,1882,357,1889,372,1887,382,1880,388,1876,385,1882,379,1884,372,1878,361,1862,354"/>
+<area shape="poly" title=" " alt="" coords="1775,199,1781,315,1775,316,1770,199"/>
+<area shape="rect" title=" " alt="" coords="1506,133,1661,199"/>
+<area shape="poly" title=" " alt="" coords="1589,198,1605,287,1640,406,1688,520,1713,572,1736,611,1784,701,1790,714,1785,716,1780,704,1731,614,1709,574,1684,522,1635,408,1599,289,1584,199"/>
+<area shape="poly" title=" " alt="" coords="1597,198,1617,242,1648,286,1689,321,1686,325,1644,290,1613,245,1592,200"/>
+<area shape="rect" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html" title="Thread&#45;safe memory reclamation using hazard pointers." alt="" coords="863,703,1075,1183"/>
+<area shape="poly" title=" " alt="" coords="1556,200,1381,393,1266,526,1155,666,1086,762,1082,759,1151,662,1262,523,1377,389,1552,197"/>
+<area shape="rect" title=" " alt="" coords="911,1491,1085,1585"/>
+<area shape="poly" title=" " alt="" coords="1003,1585,1012,1670,1031,1766,1042,1800,1037,1802,1026,1767,1007,1671,998,1586"/>
+<area shape="poly" title=" " alt="" coords="983,1183,998,1474,992,1475,978,1183"/>
+<area shape="rect" title=" " alt="" coords="752,325,956,419"/>
+<area shape="poly" title=" " alt="" coords="781,421,765,438,752,457,731,506,722,548,727,590,747,639,764,661,785,672,808,682,832,701,855,728,851,732,828,705,805,686,782,676,761,665,742,641,722,591,717,548,726,504,748,455,761,435,777,418"/>
+<area shape="rect" href="../../d8/d35/structthread__module_1_1hazard__pointer__manager_1_1HazardRecord.html" title="Per&#45;thread hazard pointer record." alt="" coords="853,553,1084,633"/>
+<area shape="poly" title=" " alt="" coords="856,419,863,470,870,496,882,520,897,540,893,543,877,523,865,498,858,471,851,420"/>
+<area shape="poly" title=" " alt="" coords="971,633,971,686,966,686,966,633"/>
+<area shape="poly" title=" " alt="" coords="960,553,948,506,928,457,912,434,916,431,932,455,953,504,965,551"/>
+<area shape="rect" title=" " alt="" coords="980,332,1152,412"/>
+<area shape="poly" title=" " alt="" coords="1047,413,1026,457,1000,522,994,538,989,536,996,520,1021,455,1043,411"/>
+<area shape="rect" title=" " alt="" coords="557,332,727,412"/>
+<area shape="poly" title=" " alt="" coords="674,411,723,466,753,494,786,519,841,544,839,549,783,524,750,498,719,470,670,414"/>
+<area shape="rect" title=" " alt="" coords="564,133,720,199"/>
+<area shape="poly" title=" " alt="" coords="645,199,645,316,639,316,639,199"/>
+<area shape="rect" title=" " alt="" coords="497,545,680,640"/>
+<area shape="poly" title=" " alt="" coords="602,639,612,660,628,677,654,691,678,696,702,694,726,690,751,685,776,683,803,687,831,700,852,716,849,720,829,705,802,692,776,688,752,690,727,695,703,700,678,701,652,696,624,681,608,663,597,641"/>
+<area shape="rect" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html" title="Node in the retired list." alt="" coords="311,312,533,432"/>
+<area shape="poly" title=" " alt="" coords="469,431,546,531,541,534,465,434"/>
+<area shape="poly" title=" " alt="" coords="1612,1580,1567,1652,1507,1730,1446,1792,1382,1851,1257,1951,1253,1947,1378,1847,1443,1788,1503,1726,1562,1649,1607,1577"/>
+<area shape="rect" title=" " alt="" coords="753,2663,888,2729"/>
+<area shape="poly" title=" " alt="" coords="818,2729,816,2758,821,2789,831,2819,826,2821,815,2790,811,2759,812,2729"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -179,6 +226,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a62dc0d1fbb6aad56b6597060279ac3fb" id="r_a62dc0d1fbb6aad56b6597060279ac3fb"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a62dc0d1fbb6aad56b6597060279ac3fb">enqueue</a> (std::unique_ptr&lt; <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt; job_type &gt; &gt; &amp;&amp;value) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
 <tr class="memdesc:a62dc0d1fbb6aad56b6597060279ac3fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a priority job into the appropriate priority queue.  <br /></td></tr>
 <tr class="separator:a62dc0d1fbb6aad56b6597060279ac3fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33187418da605b307834646634a68eec" id="r_a33187418da605b307834646634a68eec"><td class="memTemplParams" colspan="2">template&lt;typename DerivedJob &gt; <br />
+requires std::is_base_of_v&lt;<a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt;job_type&gt;, DerivedJob&gt;</td></tr>
+<tr class="memitem:a33187418da605b307834646634a68eec"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a33187418da605b307834646634a68eec">enqueue</a> (std::unique_ptr&lt; DerivedJob &gt; &amp;&amp;value) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
+<tr class="memdesc:a33187418da605b307834646634a68eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a derived typed job (like callback_typed_job) into the appropriate priority queue.  <br /></td></tr>
+<tr class="separator:a33187418da605b307834646634a68eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d838fbb35d52bc0bc5f72d57cfb9432" id="r_a2d838fbb35d52bc0bc5f72d57cfb9432"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a2d838fbb35d52bc0bc5f72d57cfb9432">enqueue_batch</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt; job_type &gt; &gt; &gt; &amp;&amp;jobs) -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></td></tr>
 <tr class="memdesc:a2d838fbb35d52bc0bc5f72d57cfb9432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a batch of priority jobs into the appropriate priority queues.  <br /></td></tr>
 <tr class="separator:a2d838fbb35d52bc0bc5f72d57cfb9432"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,33 +259,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afcfc8f2dfe9e26a247a2bbe17f6484eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops accepting new jobs and marks the queue as stopped.  <br /></td></tr>
 <tr class="separator:afcfc8f2dfe9e26a247a2bbe17f6484eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1job__queue"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1job__queue')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></td></tr>
-<tr class="memitem:a9d44b5378a8b8db169cc49f56b8d7c24 inherit pub_methods_classthread__module_1_1job__queue" id="r_a9d44b5378a8b8db169cc49f56b8d7c24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a9d44b5378a8b8db169cc49f56b8d7c24">job_queue</a> ()</td></tr>
-<tr class="memdesc:a9d44b5378a8b8db169cc49f56b8d7c24 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new, empty <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a9d44b5378a8b8db169cc49f56b8d7c24 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81f0713f7dcefe962fb9e31e0c31595e inherit pub_methods_classthread__module_1_1job__queue" id="r_a81f0713f7dcefe962fb9e31e0c31595e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a81f0713f7dcefe962fb9e31e0c31595e">~job_queue</a> (void)</td></tr>
-<tr class="memdesc:a81f0713f7dcefe962fb9e31e0c31595e inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Cleans up resources used by the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a81f0713f7dcefe962fb9e31e0c31595e inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168cd8b3e641b7685e8e8a3acc5cfe54 inherit pub_methods_classthread__module_1_1job__queue" id="r_a168cd8b3e641b7685e8e8a3acc5cfe54"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a168cd8b3e641b7685e8e8a3acc5cfe54">get_ptr</a> (void) -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
-<tr class="memdesc:a168cd8b3e641b7685e8e8a3acc5cfe54 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a <code>std::shared_ptr</code> that points to this queue instance.  <br /></td></tr>
-<tr class="separator:a168cd8b3e641b7685e8e8a3acc5cfe54 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace310cfeec8467bf79908d02d8a434cf inherit pub_methods_classthread__module_1_1job__queue" id="r_ace310cfeec8467bf79908d02d8a434cf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ace310cfeec8467bf79908d02d8a434cf">is_stopped</a> () const -&gt; bool</td></tr>
-<tr class="memdesc:ace310cfeec8467bf79908d02d8a434cf inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is in a "stopped" state.  <br /></td></tr>
-<tr class="separator:ace310cfeec8467bf79908d02d8a434cf inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa579e0071878acf4fe39005dfbcd3a9 inherit pub_methods_classthread__module_1_1job__queue" id="r_afa579e0071878acf4fe39005dfbcd3a9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#afa579e0071878acf4fe39005dfbcd3a9">set_notify</a> (bool notify) -&gt; void</td></tr>
-<tr class="memdesc:afa579e0071878acf4fe39005dfbcd3a9 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 'notify' flag for this queue.  <br /></td></tr>
-<tr class="separator:afa579e0071878acf4fe39005dfbcd3a9 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21617c4a85349fd768775af77a10df8c inherit pub_methods_classthread__module_1_1job__queue" id="r_a21617c4a85349fd768775af77a10df8c"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a21617c4a85349fd768775af77a10df8c">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
-<tr class="memdesc:a21617c4a85349fd768775af77a10df8c inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues all remaining jobs from the queue without processing them.  <br /></td></tr>
-<tr class="separator:a21617c4a85349fd768775af77a10df8c inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98766e5e2f65449e7826203259fbe48a inherit pub_methods_classthread__module_1_1job__queue" id="r_a98766e5e2f65449e7826203259fbe48a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a98766e5e2f65449e7826203259fbe48a">empty</a> (void) const -&gt; bool</td></tr>
-<tr class="memdesc:a98766e5e2f65449e7826203259fbe48a inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is currently empty.  <br /></td></tr>
-<tr class="separator:a98766e5e2f65449e7826203259fbe48a inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f15c70d01400df7c92415fca450443d inherit pub_methods_classthread__module_1_1job__queue" id="r_a7f15c70d01400df7c92415fca450443d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a7f15c70d01400df7c92415fca450443d">size</a> (void) const -&gt; std::size_t</td></tr>
-<tr class="memdesc:a7f15c70d01400df7c92415fca450443d inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current number of jobs in the queue.  <br /></td></tr>
-<tr class="separator:a7f15c70d01400df7c92415fca450443d inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8a339ad45cb198d07e0a73b005b3d60 inherit pub_methods_classthread__module_1_1job__queue" id="r_ab8a339ad45cb198d07e0a73b005b3d60"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ab8a339ad45cb198d07e0a73b005b3d60">stop_waiting_dequeue</a> (void) -&gt; void</td></tr>
-<tr class="memdesc:ab8a339ad45cb198d07e0a73b005b3d60 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals the queue to stop waiting for new jobs (e.g., during shutdown).  <br /></td></tr>
-<tr class="separator:ab8a339ad45cb198d07e0a73b005b3d60 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3002b24a03a4cf43d416d60fe200fe inherit pub_methods_classthread__module_1_1job__queue" id="r_a8d3002b24a03a4cf43d416d60fe200fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8d3002b24a03a4cf43d416d60fe200fe">job_queue</a> ()</td></tr>
+<tr class="memdesc:a8d3002b24a03a4cf43d416d60fe200fe inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new, empty <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
+<tr class="separator:a8d3002b24a03a4cf43d416d60fe200fe inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb5059d44e3440d9baa19a70ccf6179 inherit pub_methods_classthread__module_1_1job__queue" id="r_a8cb5059d44e3440d9baa19a70ccf6179"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8cb5059d44e3440d9baa19a70ccf6179">~job_queue</a> (void)</td></tr>
+<tr class="memdesc:a8cb5059d44e3440d9baa19a70ccf6179 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Cleans up resources used by the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.  <br /></td></tr>
+<tr class="separator:a8cb5059d44e3440d9baa19a70ccf6179 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa80c0ee832f3fbd837112b2b667bf5a7 inherit pub_methods_classthread__module_1_1job__queue" id="r_aa80c0ee832f3fbd837112b2b667bf5a7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7">get_ptr</a> (void) -&gt; std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;</td></tr>
+<tr class="memdesc:aa80c0ee832f3fbd837112b2b667bf5a7 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a <code>std::shared_ptr</code> that points to this queue instance.  <br /></td></tr>
+<tr class="separator:aa80c0ee832f3fbd837112b2b667bf5a7 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf67868224f1c07285b6e0ce50b493f inherit pub_methods_classthread__module_1_1job__queue" id="r_adcf67868224f1c07285b6e0ce50b493f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#adcf67868224f1c07285b6e0ce50b493f">is_stopped</a> () const -&gt; bool</td></tr>
+<tr class="memdesc:adcf67868224f1c07285b6e0ce50b493f inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is in a "stopped" state.  <br /></td></tr>
+<tr class="separator:adcf67868224f1c07285b6e0ce50b493f inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4899018b4a42fadf17d66faccac84d92 inherit pub_methods_classthread__module_1_1job__queue" id="r_a4899018b4a42fadf17d66faccac84d92"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4899018b4a42fadf17d66faccac84d92">set_notify</a> (bool notify) -&gt; void</td></tr>
+<tr class="memdesc:a4899018b4a42fadf17d66faccac84d92 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 'notify' flag for this queue.  <br /></td></tr>
+<tr class="separator:a4899018b4a42fadf17d66faccac84d92 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874dc85e1da329be9005ca68e724332b inherit pub_methods_classthread__module_1_1job__queue" id="r_a874dc85e1da329be9005ca68e724332b"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a874dc85e1da329be9005ca68e724332b">dequeue_batch</a> (void) -&gt; std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d42/classthread__module_1_1job.html">job</a> &gt; &gt;</td></tr>
+<tr class="memdesc:a874dc85e1da329be9005ca68e724332b inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeues all remaining jobs from the queue without processing them.  <br /></td></tr>
+<tr class="separator:a874dc85e1da329be9005ca68e724332b inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a57bbafa000d3f8515784e1b9e67f5 inherit pub_methods_classthread__module_1_1job__queue" id="r_a01a57bbafa000d3f8515784e1b9e67f5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">empty</a> (void) const -&gt; bool</td></tr>
+<tr class="memdesc:a01a57bbafa000d3f8515784e1b9e67f5 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is currently empty.  <br /></td></tr>
+<tr class="separator:a01a57bbafa000d3f8515784e1b9e67f5 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f1afe112b5ce8f8247d243e7490f706 inherit pub_methods_classthread__module_1_1job__queue" id="r_a0f1afe112b5ce8f8247d243e7490f706"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">size</a> (void) const -&gt; std::size_t</td></tr>
+<tr class="memdesc:a0f1afe112b5ce8f8247d243e7490f706 inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current number of jobs in the queue.  <br /></td></tr>
+<tr class="separator:a0f1afe112b5ce8f8247d243e7490f706 inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8d8368749da1f7444c8107d780ceefb inherit pub_methods_classthread__module_1_1job__queue" id="r_af8d8368749da1f7444c8107d780ceefb"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af8d8368749da1f7444c8107d780ceefb">stop_waiting_dequeue</a> (void) -&gt; void</td></tr>
+<tr class="memdesc:af8d8368749da1f7444c8107d780ceefb inherit pub_methods_classthread__module_1_1job__queue"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals the queue to stop waiting for new jobs (e.g., during shutdown).  <br /></td></tr>
+<tr class="separator:af8d8368749da1f7444c8107d780ceefb inherit pub_methods_classthread__module_1_1job__queue"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -247,14 +299,20 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a0af8123d15e9fe427e0c7ccd8a7fcacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to dequeue a single job from the queue for a given priority.  <br /></td></tr>
 <tr class="separator:a0af8123d15e9fe427e0c7ccd8a7fcacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:abc27b2e909244e18c06d573abd59b8cb" id="r_abc27b2e909244e18c06d573abd59b8cb"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#abc27b2e909244e18c06d573abd59b8cb">get_or_create_queue</a> (const job_type &amp;type) -&gt; <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html">lockfree_mpmc_queue</a> *</td></tr>
+<tr class="memdesc:abc27b2e909244e18c06d573abd59b8cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get or create a lock-free queue for the specified type.  <br /></td></tr>
+<tr class="separator:abc27b2e909244e18c06d573abd59b8cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:abe80e921b0cf73a00ab333dc1621afd7" id="r_abe80e921b0cf73a00ab333dc1621afd7"><td class="memItemLeft" align="right" valign="top">std::map&lt; job_type, std::deque&lt; std::unique_ptr&lt; <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt; job_type &gt; &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#abe80e921b0cf73a00ab333dc1621afd7">queues_</a></td></tr>
-<tr class="memdesc:abe80e921b0cf73a00ab333dc1621afd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A map of priority levels to double-ended queues that store jobs of that priority.  <br /></td></tr>
-<tr class="separator:abe80e921b0cf73a00ab333dc1621afd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04afb2e11c8bec3a5fc7a1e13bf7b070" id="r_a04afb2e11c8bec3a5fc7a1e13bf7b070"><td class="memItemLeft" align="right" valign="top">std::map&lt; job_type, std::atomic_size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a04afb2e11c8bec3a5fc7a1e13bf7b070">queue_sizes_</a></td></tr>
-<tr class="memdesc:a04afb2e11c8bec3a5fc7a1e13bf7b070"><td class="mdescLeft">&#160;</td><td class="mdescRight">A map that tracks the size of each priority queue in a thread-safe manner.  <br /></td></tr>
-<tr class="separator:a04afb2e11c8bec3a5fc7a1e13bf7b070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cbaffc0039fdb850a56a0f80275dec6" id="r_a1cbaffc0039fdb850a56a0f80275dec6"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; job_type, std::unique_ptr&lt; <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html">lockfree_mpmc_queue</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a1cbaffc0039fdb850a56a0f80275dec6">lockfree_queues_</a></td></tr>
+<tr class="memdesc:a1cbaffc0039fdb850a56a0f80275dec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A map of priority levels to lock-free MPMC queues that store jobs of that priority.  <br /></td></tr>
+<tr class="separator:a1cbaffc0039fdb850a56a0f80275dec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5376b0c43df05d1e66ecbaafb34f16f5" id="r_a5376b0c43df05d1e66ecbaafb34f16f5"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a5376b0c43df05d1e66ecbaafb34f16f5">queues_mutex_</a></td></tr>
+<tr class="memdesc:a5376b0c43df05d1e66ecbaafb34f16f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for protecting queue map modifications.  <br /></td></tr>
+<tr class="separator:a5376b0c43df05d1e66ecbaafb34f16f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -283,7 +341,7 @@ class typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;</div><p>A te
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00060">60</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00063">63</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a976f145e2e114f1eb30ccb376aeb5175" name="a976f145e2e114f1eb30ccb376aeb5175"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a976f145e2e114f1eb30ccb376aeb5175">&#9670;&#160;</a></span>typed_job_queue_t()</h2>
@@ -364,7 +422,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <p>Removes all jobs from all priority queues. </p>
 <p>After this call, the queue will be empty for every priority level. </p>
 
-<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af31d9e7f3e21522f4e95ff7d2ed1c73b">thread_module::job_queue</a>.</p>
+<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37">thread_module::job_queue</a>.</p>
 
 </div>
 </div>
@@ -397,7 +455,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <p>This method attempts to dequeue from the front of any internal priority queue that may contain a job, typically checking in an unspecified priority order.</p>
 <dl class="section return"><dt>Returns</dt><dd>A result&lt;std::unique_ptr&lt;job&gt;&gt; containing either the dequeued job or an error. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#ad4f89d748b23cf69b9e88047041209a3">thread_module::job_queue</a>.</p>
+<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005">thread_module::job_queue</a>.</p>
 
 </div>
 </div>
@@ -595,8 +653,71 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 </div>
 </div>
+<a id="a33187418da605b307834646634a68eec" name="a33187418da605b307834646634a68eec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33187418da605b307834646634a68eec">&#9670;&#160;</a></span>enqueue() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename job_type  = job_types&gt; </div>
+<div class="memtemplate">
+template&lt;typename DerivedJob &gt; <br />
+requires std::is_base_of_v&lt;<a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt;job_type&gt;, DerivedJob&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::enqueue </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; DerivedJob &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>
+			</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enqueues a derived typed job (like callback_typed_job) into the appropriate priority queue. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DerivedJob</td><td>A type that derives from typed_job_t&lt;job_type&gt; </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>A unique pointer to the derived job to enqueue. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>result_void</code> containing an error if the operation fails, or a success value. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00124">124</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>        {</div>
+<div class="line"><span class="lineno">  127</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">enqueue</a>(std::unique_ptr&lt;typed_job_t&lt;job_type&gt;&gt;(std::move(value)));</div>
+<div class="line"><span class="lineno">  128</span>        }</div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__queue__t_html_a52afb9ecbbf0a61e3e22913e568b4d38"><div class="ttname"><a href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38">typed_thread_pool_module::typed_job_queue_t::enqueue</a></div><div class="ttdeci">auto enqueue(std::unique_ptr&lt; job &gt; &amp;&amp;value) -&gt; result_void override</div><div class="ttdoc">Enqueues a non-priority (base) job into the queue.</div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a33187418da605b307834646634a68eec_cgraph.png" border="0" usemap="#adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a33187418da605b307834646634a68eec_cgraph" alt=""/></div>
+<map name="adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a33187418da605b307834646634a68eec_cgraph" id="adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a33187418da605b307834646634a68eec_cgraph">
+<area shape="rect" title="Enqueues a derived typed job (like callback_typed_job) into the appropriate priority queue." alt="" coords="5,5,223,45"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38" title="Enqueues a non&#45;priority (base) job into the queue." alt="" coords="271,5,488,45"/>
+<area shape="poly" title=" " alt="" coords="223,23,257,23,257,28,223,28"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a52afb9ecbbf0a61e3e22913e568b4d38" name="a52afb9ecbbf0a61e3e22913e568b4d38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52afb9ecbbf0a61e3e22913e568b4d38">&#9670;&#160;</a></span>enqueue() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a52afb9ecbbf0a61e3e22913e568b4d38">&#9670;&#160;</a></span>enqueue() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -631,12 +752,22 @@ template&lt;typename job_type  = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>result_void</code> containing an error if the operation fails, or a success value. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a60e9a953b327fe2fcaecfbcfdb0229cc">thread_module::job_queue</a>.</p>
+<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af46f8b8f92a3a55465c043414d6b4748">thread_module::job_queue</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a52afb9ecbbf0a61e3e22913e568b4d38_icgraph.png" border="0" usemap="#adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a52afb9ecbbf0a61e3e22913e568b4d38_icgraph" alt=""/></div>
+<map name="adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a52afb9ecbbf0a61e3e22913e568b4d38_icgraph" id="adb/de8/classtyped__thread__pool__module_1_1typed__job__queue__t_a52afb9ecbbf0a61e3e22913e568b4d38_icgraph">
+<area shape="rect" title="Enqueues a non&#45;priority (base) job into the queue." alt="" coords="271,5,488,45"/>
+<area shape="rect" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a33187418da605b307834646634a68eec" title="Enqueues a derived typed job (like callback_typed_job) into the appropriate priority queue." alt="" coords="5,5,223,45"/>
+<area shape="poly" title=" " alt="" coords="257,28,223,28,223,23,257,23"/>
+</map>
+</div>
 
 </div>
 </div>
 <a id="a62dc0d1fbb6aad56b6597060279ac3fb" name="a62dc0d1fbb6aad56b6597060279ac3fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62dc0d1fbb6aad56b6597060279ac3fb">&#9670;&#160;</a></span>enqueue() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a62dc0d1fbb6aad56b6597060279ac3fb">&#9670;&#160;</a></span>enqueue() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -699,7 +830,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error message. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a764baa79c27ce94a4b1273141c31d754">thread_module::job_queue</a>.</p>
+<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4f7eea372ce86fdf2ff2aaf52c0008a9">thread_module::job_queue</a>.</p>
 
 </div>
 </div>
@@ -763,6 +894,36 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 </div>
 </div>
+<a id="abc27b2e909244e18c06d573abd59b8cb" name="abc27b2e909244e18c06d573abd59b8cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc27b2e909244e18c06d573abd59b8cb">&#9670;&#160;</a></span>get_or_create_queue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename job_type  = job_types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::get_or_create_queue </td>
+          <td>(</td>
+          <td class="paramtype">const job_type &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td> -&gt;  <a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html">lockfree_mpmc_queue</a> *</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get or create a lock-free queue for the specified type. </p>
+
+</div>
+</div>
 <a id="afcfc8f2dfe9e26a247a2bbe17f6484eb" name="afcfc8f2dfe9e26a247a2bbe17f6484eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afcfc8f2dfe9e26a247a2bbe17f6484eb">&#9670;&#160;</a></span>stop()</h2>
 
@@ -814,7 +975,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <p>The format of the returned string may vary, but typically includes information about the number of jobs and their types.</p>
 <dl class="section return"><dt>Returns</dt><dd>A string describing the current state of the queue. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a0e00514f9423ff2e33ae9c6bb116943f">thread_module::job_queue</a>.</p>
+<p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">thread_module::job_queue</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -870,8 +1031,8 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a04afb2e11c8bec3a5fc7a1e13bf7b070" name="a04afb2e11c8bec3a5fc7a1e13bf7b070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04afb2e11c8bec3a5fc7a1e13bf7b070">&#9670;&#160;</a></span>queue_sizes_</h2>
+<a id="a1cbaffc0039fdb850a56a0f80275dec6" name="a1cbaffc0039fdb850a56a0f80275dec6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cbaffc0039fdb850a56a0f80275dec6">&#9670;&#160;</a></span>lockfree_queues_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -882,7 +1043,7 @@ template&lt;typename job_type  = job_types&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;job_type, std::atomic_size_t&gt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::queue_sizes_</td>
+          <td class="memname">std::unordered_map&lt;job_type, std::unique_ptr&lt;<a class="el" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html">lockfree_mpmc_queue</a>&gt; &gt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::lockfree_queues_</td>
         </tr>
       </table>
   </td>
@@ -892,14 +1053,14 @@ template&lt;typename job_type  = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>A map that tracks the size of each priority queue in a thread-safe manner. </p>
+<p>A map of priority levels to lock-free MPMC queues that store jobs of that priority. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00252">252</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00264">264</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
 
 </div>
 </div>
-<a id="abe80e921b0cf73a00ab333dc1621afd7" name="abe80e921b0cf73a00ab333dc1621afd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe80e921b0cf73a00ab333dc1621afd7">&#9670;&#160;</a></span>queues_</h2>
+<a id="a5376b0c43df05d1e66ecbaafb34f16f5" name="a5376b0c43df05d1e66ecbaafb34f16f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5376b0c43df05d1e66ecbaafb34f16f5">&#9670;&#160;</a></span>queues_mutex_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -910,30 +1071,30 @@ template&lt;typename job_type  = job_types&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;job_type, std::deque&lt;std::unique_ptr&lt;<a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt;job_type&gt; &gt; &gt; &gt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::queues_</td>
+          <td class="memname">std::shared_mutex <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_thread_pool_module::typed_job_queue_t</a>&lt; job_type &gt;::queues_mutex_</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>A map of priority levels to double-ended queues that store jobs of that priority. </p>
+<p>Mutex for protecting queue map modifications. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00247">247</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00269">269</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>sources/typed_thread_pool/<a class="el" href="../../db/d03/typed__job_8h_source.html">typed_job.h</a></li>
-<li>sources/typed_thread_pool/<a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a></li>
+<li>sources/typed_thread_pool/detail/<a class="el" href="../../df/d41/typed__thread__pool_2detail_2forward__declarations_8h_source.html">forward_declarations.h</a></li>
+<li>sources/typed_thread_pool/scheduling/<a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

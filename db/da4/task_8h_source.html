@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_pool/task.h Source File</title>
+<title>Thread System: sources/thread_pool/async/task.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_719b790bc48e48dfef3093837cbac6c8.html">async</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -83,7 +83,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="contents">
 <a href="../../db/da4/task_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d11/error__handling_8h.html">thread_base/error_handling.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;../../thread_base/sync/error_handling.h&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;exception&gt;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;future&gt;</span></div>
@@ -144,8 +144,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">  #define THREAD_SYSTEM_MSYS</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="../../d8/d98/namespacethread__pool__module.html">   78</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a> {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a> {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
@@ -803,7 +802,6 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span> </div>
 <div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>} <span class="comment">// namespace thread_pool_module</span></div>
-</div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00210">error_handling.h:210</a></div></div>
@@ -856,12 +854,11 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassthread__pool__module_1_1task_html_ac8f5ffe57092ecf69a21a36788c8233e"><div class="ttname"><a href="../../de/d6e/classthread__pool__module_1_1task.html#ac8f5ffe57092ecf69a21a36788c8233e">thread_pool_module::task::task</a></div><div class="ttdeci">task() noexcept</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00440">task.h:440</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1task_html_acecdbc137443e857c7ae833d267923b5"><div class="ttname"><a href="../../de/d6e/classthread__pool__module_1_1task.html#acecdbc137443e857c7ae833d267923b5">thread_pool_module::task::value_type</a></div><div class="ttdeci">T value_type</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00437">task.h:437</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1task_html_af1743c4c265586df8eec5a941a60097b"><div class="ttname"><a href="../../de/d6e/classthread__pool__module_1_1task.html#af1743c4c265586df8eec5a941a60097b">thread_pool_module::task::from_result</a></div><div class="ttdeci">static std::enable_if&lt;!std::is_void&lt; U &gt;::value, task&lt; U &gt; &gt;::type from_result(U value)</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00583">task.h:583</a></div></div>
-<div class="ttc" id="aerror__handling_8h_html"><div class="ttname"><a href="../../d3/d11/error__handling_8h.html">error_handling.h</a></div><div class="ttdoc">Modern error handling for the thread system.</div></div>
 <div class="ttc" id="anamespacedetail_html"><div class="ttname"><a href="../../dd/d39/namespacedetail.html">detail</a></div><div class="ttdoc">Contains internal implementation details for the task system.</div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/callback__job_8cpp_source.html#l00035">callback_job.cpp:36</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00043">thread_base.cpp:44</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a353c9e3581f9b950570feaa9bd756222"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">thread_module::to_string</a></div><div class="ttdeci">constexpr std::string_view to_string(thread_conditions condition)</div><div class="ttdoc">Converts a thread_conditions value to its corresponding string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00111">thread_conditions.h:111</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_1_1detail_html_a15e0132a429205b6ff469bf4eeb9d458"><div class="ttname"><a href="../../da/d38/namespacethread__pool__module_1_1detail.html#a15e0132a429205b6ff469bf4eeb9d458">thread_pool_module::detail::is_result_v</a></div><div class="ttdeci">constexpr bool is_result_v</div><div class="ttdoc">Helper variable template for easy checking if a type is a result&lt;T&gt;</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00116">task.h:116</a></div></div>
-<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00078">task.h:78</a></div></div>
+<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00018">future_extensions.h:18</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_a0c486c1ebe4bcede7004627da8004478"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#a0c486c1ebe4bcede7004627da8004478">thread_pool_module::delay</a></div><div class="ttdeci">task&lt; void &gt; delay(std::chrono::milliseconds duration)</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00817">task.h:817</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_a7b07a23993168217a9ae8536c9ef9e38"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#a7b07a23993168217a9ae8536c9ef9e38">thread_pool_module::sleep_and_resume</a></div><div class="ttdeci">void sleep_and_resume(std::chrono::milliseconds duration, std::coroutine_handle&lt;&gt; handle)</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00761">task.h:761</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_ad350b842e5c8a2409fd4cef589d98f77"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#ad350b842e5c8a2409fd4cef589d98f77">thread_pool_module::make_task</a></div><div class="ttdeci">auto make_task(Func &amp;&amp;func) -&gt; task&lt; std::invoke_result_t&lt; Func &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00618">task.h:618</a></div></div>
@@ -876,7 +873,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

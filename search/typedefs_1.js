@@ -1,4 +1,11 @@
 var searchData=
 [
-  ['difference_5ftype_0',['difference_type',['../d8/d4f/classutility__module_1_1span.html#a7fb21fa5aeef269f0069978583038be9',1,'utility_module::span']]]
+  ['callable_5freturn_5ftype_5ft_0',['callable_return_type_t',['../da/d38/namespacethread__pool__module_1_1detail.html#a48097017dc75225a20d268857902b8e4',1,'thread_pool_module::detail']]],
+  ['callback_5ftyped_5fjob_1',['callback_typed_job',['../d4/db9/namespacetyped__thread__pool__module.html#ab369d5fd77a97c5140881e4595d1670b',1,'typed_thread_pool_module']]],
+  ['cancellable_5fjob_5ffunction_2',['cancellable_job_function',['../d2/dca/namespacethread__module_1_1jobs.html#a9ef6a344a091fb3ccdcd4f958295820b',1,'thread_module::jobs']]],
+  ['class_5ftype_3',['class_type',['../da/db8/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4.html#a672b84983d075a7889977eb5b473cb22',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...)&gt;::class_type'],['../de/d13/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html#a8f2c00fc9c40ec4cd758600702fb1c76',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...) const &gt;::class_type'],['../de/d52/structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4.html#a02812f634e006efcb6a542b313a8c1c4',1,'typed_thread_pool_module::detail::function_traits&lt; R(C::*)(Args...)&gt;::class_type'],['../d8/dee/structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html#ab561d6886cf3d0b687a8dc7c735a651d',1,'typed_thread_pool_module::detail::function_traits&lt; R(C::*)(Args...) const &gt;::class_type']]],
+  ['const_5fiterator_4',['const_iterator',['../d8/d4f/classutility__module_1_1span.html#a643d5d9e4c0d8293c45371f3c54e5630',1,'utility_module::span']]],
+  ['const_5fpointer_5',['const_pointer',['../d8/d4f/classutility__module_1_1span.html#a37307e06ea96b4374baba485d4ec7472',1,'utility_module::span']]],
+  ['const_5freference_6',['const_reference',['../d8/d4f/classutility__module_1_1span.html#a1e2b470913e372c724abc641425f4b78',1,'utility_module::span']]],
+  ['const_5freverse_5fiterator_7',['const_reverse_iterator',['../d8/d4f/classutility__module_1_1span.html#a56fdd62475856dd7c01c33be21a866f7',1,'utility_module::span']]]
 ];

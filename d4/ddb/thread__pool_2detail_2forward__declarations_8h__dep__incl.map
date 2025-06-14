@@ -1,0 +1,24 @@
+<map id="sources/thread_pool/detail/forward_declarations.h" name="sources/thread_pool/detail/forward_declarations.h">
+<area shape="rect" id="Node000001" title="Forward declarations for thread_pool module." alt="" coords="247,5,463,45"/>
+<area shape="rect" id="Node000002" href="$df/dca/future__extensions_8h.html" title="Future and promise utilities for thread pool." alt="" coords="5,93,203,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="288,52,160,96,158,91,286,47"/>
+<area shape="rect" id="Node000003" href="$d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="277,181,451,221"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="335,58,319,94,315,113,319,132,331,158,347,179,343,182,326,161,313,134,310,113,313,93,330,56"/>
+<area shape="rect" id="Node000004" href="$d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="283,357,442,412"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="329,58,303,90,280,130,266,175,264,198,268,221,282,259,302,296,343,355,338,358,297,299,277,261,263,222,259,198,261,174,275,128,299,87,325,54"/>
+<area shape="rect" id="Node000005" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="470,269,623,309"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="464,48,496,66,523,92,537,113,546,137,556,186,556,233,553,269,547,269,551,233,550,187,541,138,532,116,519,95,493,70,461,53"/>
+<area shape="rect" id="Node000007" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="585,181,770,221"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="458,47,513,65,567,91,596,112,623,135,664,179,660,183,619,139,593,116,564,96,511,70,457,52"/>
+<area shape="rect" id="Node000009" href="$d3/d09/worker__policy_8h.html" title="Worker behavior policies and configuration." alt="" coords="328,93,509,133"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="379,55,407,92,402,95,375,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="366,235,366,357,360,357,361,235"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="499,318,416,360,413,355,496,313"/>
+<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="467,365,629,405"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="550,323,550,365,545,365,544,323"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="639,231,577,271,574,267,636,227"/>
+<area shape="rect" id="Node000008" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="648,269,848,309"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="704,230,734,267,730,271,699,234"/>
+<area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="401,146,378,183,374,180,397,144"/>
+<area shape="poly" id="edge13_Node000009_Node000007" title=" " alt="" coords="489,135,622,179,620,184,488,140"/>
+</map>

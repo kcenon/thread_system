@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['queue_5fempty_0',['queue_empty',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02',1,'thread_module']]],
-  ['queue_5ffull_1',['queue_full',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7a254d61c3058375b49dbabd86631b37',1,'thread_module']]],
-  ['queue_5fstopped_2',['queue_stopped',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987',1,'thread_module']]]
+  ['operation_5fcanceled_0',['operation_canceled',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cafd3d0bdcc9eb9e68534b7d055c5fe586',1,'thread_module']]],
+  ['operation_5ftimeout_1',['operation_timeout',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447caa09332d99869fd7d67c72c1e9187f8e1',1,'thread_module']]]
 ];

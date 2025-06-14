@@ -1,0 +1,7 @@
+<map id="thread_module::hazard_pointer_manager::acquire_record" name="thread_module::hazard_pointer_manager::acquire_record">
+<area shape="rect" id="Node000001" title=" " alt="" coords="524,5,720,60"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aca927cce02b6978435047f450366b4f7" title=" " alt="" coords="249,13,476,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="510,35,476,35,476,30,510,30"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="5,13,201,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="236,35,201,35,201,30,236,30"/>
+</map>

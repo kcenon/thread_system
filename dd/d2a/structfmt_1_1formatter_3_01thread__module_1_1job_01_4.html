@@ -115,7 +115,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue.">thread_module::job</a></code>. </p>
 <p>Allows objects of type <code>job</code> to be formatted using the {fmt} library, converting them to a string via <code>job::to_string()</code> internally.</p>
-<h4><a class="anchor" id="autotoc_md1"></a>
+<h4><a class="anchor" id="autotoc_md7"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> my_job_ptr = std::make_shared&lt;thread_module::job&gt;(<span class="stringliteral">&quot;example_job&quot;</span>);</div>
 <div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Job info: {}&quot;</span>, *my_job_ptr); <span class="comment">// calls to_string()</span></div>
@@ -176,16 +176,16 @@ template&lt;typename FormatContext &gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00379">379</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  380</span>    {</div>
-<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b">to_string</a>(), ctx);</div>
 <div class="line"><span class="lineno">  382</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1job_html_a44c5a6eff1846e0a57be106578821ab1"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1">thread_module::job::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of the job for logging or debugging.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00077">job.cpp:77</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_ab11c230165f14290a427f58267ece23b"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b">thread_module::job::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Provides a string representation of the job for logging or debugging.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00077">job.cpp:77</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4_adf4d0b7cb5296df89cf09b2c971ef5bf_cgraph.png" border="0" usemap="#add/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4_adf4d0b7cb5296df89cf09b2c971ef5bf_cgraph" alt=""/></div>
 <map name="add/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4_adf4d0b7cb5296df89cf09b2c971ef5bf_cgraph" id="add/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4_adf4d0b7cb5296df89cf09b2c971ef5bf_cgraph">
 <area shape="rect" title="Formats a job object into a string using job::to_string()." alt="" coords="5,5,179,45"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#a44c5a6eff1846e0a57be106578821ab1" title="Provides a string representation of the job for logging or debugging." alt="" coords="227,5,375,45"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="227,5,375,45"/>
 <area shape="poly" title=" " alt="" coords="179,23,213,23,213,28,179,28"/>
 <area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="423,5,609,45"/>
 <area shape="poly" title=" " alt="" coords="375,23,409,23,409,28,375,28"/>
@@ -198,12 +198,12 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>sources/thread_base/<a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a></li>
+<li>sources/thread_base/jobs/<a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 12 2025 08:50:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

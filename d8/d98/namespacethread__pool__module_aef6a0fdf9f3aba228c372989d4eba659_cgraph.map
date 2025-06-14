@@ -1,0 +1,7 @@
+<map id="thread_pool_module::make_exceptional_future" name="thread_pool_module::make_exceptional_future">
+<area shape="rect" id="Node000001" title="Create a future that is already ready with an exception." alt="" coords="5,53,200,93"/>
+<area shape="rect" id="Node000002" href="$d4/d02/classthread__pool__module_1_1pool__promise.html#a1f753f7a0f08f78c616723e878017895" title="Get the associated future." alt="" coords="248,5,403,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,52,234,46,235,52,201,58"/>
+<area shape="rect" id="Node000003" href="$d4/d02/classthread__pool__module_1_1pool__promise.html#a9a3a08160f4baa3802afbe80fa377261" title="Set an exception." alt="" coords="248,84,403,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,87,235,93,234,98,200,92"/>
+</map>

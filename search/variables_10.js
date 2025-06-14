@@ -1,10 +1,13 @@
 var searchData=
 [
-  ['size_5f_0',['size_',['../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8',1,'utility_module::span']]],
-  ['start_5fpool_5f_1',['start_pool_',['../d9/da1/classthread__pool__module_1_1thread__pool.html#a9df2245aa162e5dde5acb37b5be4c566',1,'thread_pool_module::thread_pool::start_pool_'],['../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#a1ec9006819ed746b89d797f6f98fb7b1',1,'typed_thread_pool_module::typed_thread_pool_t::start_pool_']]],
-  ['start_5ftime_5f_2',['start_time_',['../df/df4/classlog__module_1_1log__job.html#ade6db1a8efa941e3aa7f035e2426c2a5',1,'log_module::log_job']]],
-  ['state_5f_3',['state_',['../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd',1,'thread_module::cancellation_token']]],
-  ['stop_5f_4',['stop_',['../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b',1,'thread_module::job_queue']]],
-  ['stop_5frequested_5f_5',['stop_requested_',['../da/d94/classthread__module_1_1thread__base.html#a2010dcfce6de6920651eccffebdfde21',1,'thread_module::thread_base']]],
-  ['success_5f_6',['success_',['../de/d5e/classthread__module_1_1result_3_01void_01_4.html#aec1c6186f16150aca1346a8709feced5',1,'thread_module::result&lt; void &gt;']]]
+  ['red_0',['red',['../d4/d9e/namespacelog__module_1_1colors.html#ac519d7e4a0895a1a9bbfed783ea21472',1,'log_module::colors']]],
+  ['reset_1',['reset',['../d4/d9e/namespacelog__module_1_1colors.html#aa7ee56962661ae4ad77a0715eadb0bd1',1,'log_module::colors']]],
+  ['result_5f_2',['result_',['../dd/d46/classthread__pool__module_1_1task__promise.html#a6b4ce8cd723177a259f3963221817192',1,'thread_pool_module::task_promise::result_'],['../d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a6e152eaf0193d799b0e1154a8d6e2cf3',1,'thread_pool_module::task_promise&lt; void &gt;::result_']]],
+  ['retire_5ftime_3',['retire_time',['../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ad922850c34cda4915e05cd5b6087cb80',1,'thread_module::hazard_pointer_manager::RetiredNode']]],
+  ['retired_5flist_5f_4',['retired_list_',['../d7/ded/classthread__module_1_1hazard__pointer__manager.html#aea0aa849f1f2b9eb84539f7abcf23644',1,'thread_module::hazard_pointer_manager']]],
+  ['retired_5flist_5fsize_5',['retired_list_size',['../d4/d5c/structthread__module_1_1hazard__pointer__manager_1_1statistics.html#af18a34f1df3721d44f8f5016d9cf767f',1,'thread_module::hazard_pointer_manager::statistics']]],
+  ['retired_5fthreshold_6',['RETIRED_THRESHOLD',['../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a74a8d2d132b74b4d74bde7f89a369241',1,'thread_module::hazard_pointer_manager']]],
+  ['retry_5fcount_7',['retry_count',['../db/d7a/structthread__module_1_1lockfree__mpmc__queue_1_1queue__statistics.html#a532034c2184b4b58058815008ff22ba0',1,'thread_module::lockfree_mpmc_queue::queue_statistics::retry_count'],['../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a6c48150ae50332f1cac0c328b9023e50',1,'thread_module::lockfree_mpmc_queue::atomic_statistics::retry_count']]],
+  ['retry_5fthreshold_8',['RETRY_THRESHOLD',['../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae88c5eba3c4dfe1270f0a168d4426330',1,'thread_module::lockfree_mpmc_queue']]],
+  ['rotation_5fcheck_5finterval_9',['rotation_check_interval',['../d2/d6d/structlog__module_1_1config_1_1file__writer__config.html#af1803cf4345527fda38ad5c569eed6a8',1,'log_module::config::file_writer_config']]]
 ];

@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,80,153,105"/>
+<area shape="rect" id="Node000001" href="$df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="229,5,383,31"/>
+<area shape="poly" id="edge55_Node000000_Node000001" title=" " alt="" coords="119,72,200,39,241,28,243,33,202,45,121,77"/>
+<area shape="rect" id="Node000002" href="$db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="210,55,402,80"/>
+<area shape="poly" id="edge56_Node000000_Node000002" title=" " alt="" coords="166,80,210,75,210,81,167,86"/>
+<area shape="rect" id="Node000003" href="$dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="201,104,411,129"/>
+<area shape="poly" id="edge57_Node000000_Node000003" title=" " alt="" coords="167,99,201,103,201,108,167,105"/>
+<area shape="rect" id="Node000004" href="$d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="207,154,405,194"/>
+<area shape="poly" id="edge58_Node000000_Node000004" title=" " alt="" coords="125,108,202,138,241,151,239,156,200,143,123,113"/>
+<area shape="rect" id="Node000005" href="$d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="459,147,657,201"/>
+<area shape="poly" id="edge59_Node000004_Node000005" title=" " alt="" coords="419,171,459,171,459,177,419,177"/>
+</map>
