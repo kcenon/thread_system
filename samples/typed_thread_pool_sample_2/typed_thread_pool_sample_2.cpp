@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
 
-#include "logger.h"
-#include "formatter.h"
+#include "logger/core/logger.h"
+#include "utilities/core/formatter.h"
 #include "test_type.h"
-#include "typed_thread_pool.h"
+#include "typed_thread_pool/pool/typed_thread_pool.h"
 
 #ifdef USE_STD_FORMAT
 #include <format>

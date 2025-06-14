@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "thread_pool.h"
+#include "core/thread_pool.h"
 
 using namespace thread_pool_module;
 
@@ -134,11 +134,11 @@ TEST(thread_pool_test, start_and_one_sec_job_and_stop)
 	EXPECT_EQ(start_error, std::nullopt);
 
 	error = pool->enqueue(std::make_unique<callback_job>(
-		[](void) -> std::optional<std::string>
+		[](void) -> result_void
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 
-			return std::nullopt;
+			return result_void();
 		},
 		"10sec job"));
 	EXPECT_EQ(error, std::nullopt);

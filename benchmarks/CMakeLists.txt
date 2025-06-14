@@ -12,6 +12,7 @@ find_package(benchmark CONFIG REQUIRED)
 add_subdirectory(logger_benchmarks)
 add_subdirectory(thread_pool_benchmarks)
 add_subdirectory(typed_thread_pool_benchmarks)
+add_subdirectory(thread_base_benchmarks)
 
 # Data race fixes benchmark
 add_executable(data_race_benchmark data_race_benchmark.cpp)
@@ -30,6 +31,7 @@ add_dependencies(benchmarks
     logger_benchmarks_target
     thread_pool_benchmarks_target
     typed_thread_pool_benchmarks_target
+    thread_base_benchmarks_target
 )
 
 # Add convenience target to run all benchmarks

@@ -11,6 +11,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed/arm6
 # Include thread_base headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
 
+# Include lockfree headers
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base/lockfree)
+
 # Use vcpkg provided GTest
 find_package(GTest CONFIG REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -19,6 +22,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     thread_base
     utilities
+    logger
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

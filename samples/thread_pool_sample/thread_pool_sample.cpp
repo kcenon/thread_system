@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
 
-#include "logger.h"
-#include "formatter.h"
-#include "thread_pool.h"
+#include "logger/core/logger.h"
+#include "utilities/core/formatter.h"
+#include "thread_pool/core/thread_pool.h"
 
 using namespace utility_module;
 using namespace thread_pool_module;
@@ -112,10 +112,10 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::s
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		jobs.push_back(std::make_unique<callback_job>(
-			[index](void) -> std::optional<std::string>
+			[index](void) -> result_void
 			{
 				log_module::write_debug("Hello, World!: {}", index);
-				return std::nullopt;
+				return result_void();
 			}));
 	}
 

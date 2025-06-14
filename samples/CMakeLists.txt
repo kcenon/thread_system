@@ -21,3 +21,31 @@ add_subdirectory(typed_thread_pool_sample)
 # Advanced typed thread pool sample
 # Shows more complex usage patterns of typed thread pools
 add_subdirectory(typed_thread_pool_sample_2)
+
+# MPMC queue sample
+# Demonstrates lock-free MPMC queue usage patterns
+add_subdirectory(mpmc_queue_sample)
+
+# Adaptive queue sample
+# Shows adaptive queue strategy selection and usage
+add_subdirectory(adaptive_queue_sample)
+
+# Typed job queue sample
+# Demonstrates typed job queue usage patterns
+add_subdirectory(typed_job_queue_sample)
+
+# Hazard pointer sample
+# Shows hazard pointer usage for thread-safe memory reclamation
+add_subdirectory(hazard_pointer_sample)
+
+# Node pool sample
+# Demonstrates high-performance memory pool usage
+add_subdirectory(node_pool_sample)
+
+# Lock-free thread pool sample
+# Shows lock-free MPMC queue performance in thread pools
+add_subdirectory(lockfree_thread_pool_sample)
+
+# Lock-free typed thread pool sample
+# Demonstrates type-based scheduling with lock-free queues
+add_subdirectory(lockfree_typed_thread_pool_sample)

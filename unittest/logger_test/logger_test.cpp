@@ -31,8 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "logger.h"
-#include "callback_writer.h"
+#include "core/logger.h"
+#include "writers/callback_writer.h"
 #include <filesystem>
 #include <fstream>
 #include <atomic>

@@ -8,8 +8,13 @@
 # Specify minimum required CMake version for this project
 cmake_minimum_required(VERSION 3.16)
 
-# Define the project name and language
-project(ThreadSystem LANGUAGES CXX)
+# Define the project name, version, and language
+project(ThreadSystem 
+    VERSION 1.0.0
+    DESCRIPTION "High-performance C++20 multithreading framework"
+    HOMEPAGE_URL "https://github.com/kcenon/thread_system"
+    LANGUAGES CXX
+)
 
 # Option to control whether ThreadSystem is built as a standalone project or as a submodule
 # - OFF (default): Builds as standalone project with samples and tests
@@ -553,4 +558,68 @@ else()
   # When building as a submodule of another project:
   # Only build the core library (no samples or tests)
   add_subdirectory(sources)
+endif()
+
+##################################################
+# Installation Configuration
+##################################################
+
+# Only configure installation when building as standalone
+if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
+  include(GNUInstallDirs)
+  
+  # Install header files with proper directory structure
+  install(DIRECTORY sources/utilities/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
+          FILES_MATCHING PATTERN "*.h")
+          
+  install(DIRECTORY sources/thread_base/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
+          FILES_MATCHING PATTERN "*.h")
+          
+  install(DIRECTORY sources/logger/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/logger
+          FILES_MATCHING PATTERN "*.h")
+          
+  install(DIRECTORY sources/thread_pool/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_pool
+          FILES_MATCHING PATTERN "*.h")
+          
+  install(DIRECTORY sources/typed_thread_pool/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
+          FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
+  
+  # Install libraries
+  install(TARGETS utilities thread_base logger thread_pool typed_thread_pool
+          EXPORT ThreadSystemTargets
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  
+  # Install export targets
+  install(EXPORT ThreadSystemTargets
+          FILE ThreadSystemTargets.cmake
+          NAMESPACE ThreadSystem::
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem)
+  
+  # Create and install config file
+  include(CMakePackageConfigHelpers)
+  
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThreadSystemConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
+  )
+  
+  write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+  )
+  
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
+  )
 endif()

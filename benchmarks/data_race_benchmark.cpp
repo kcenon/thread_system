@@ -12,7 +12,7 @@
 #include "../sources/thread_base/job_queue.h"
 #include "../sources/thread_base/cancellation_token.h"
 #include "../sources/thread_pool/thread_pool.h"
-#include "../sources/utilities/formatter.h"
+#include "../sources/utilities/core/formatter.h"
 
 #include <benchmark/benchmark.h>
 #include <thread>

@@ -47,8 +47,8 @@ static void BM_EmptyJobSubmission(benchmark::State& state) {
     pool->start();
     
     for (auto _ : state) {
-        auto job = std::make_unique<callback_job>([]() -> std::optional<std::string> {
-            return std::nullopt;
+        auto job = std::make_unique<callback_job>([]() -> result_void {
+            return result_void();
         });
         auto result = pool->enqueue(std::move(job));
         benchmark::DoNotOptimize(result);
@@ -70,7 +70,7 @@ static void BM_JobThroughput(benchmark::State& state) {
     std::atomic<size_t> jobs_completed{0};
     
     for (auto _ : state) {
-        auto job = std::make_unique<callback_job>([&jobs_completed, job_duration_us]() -> std::optional<std::string> {
+        auto job = std::make_unique<callback_job>([&jobs_completed, job_duration_us]() -> result_void {
             if (job_duration_us > 0) {
                 auto start = std::chrono::high_resolution_clock::now();
                 while (std::chrono::duration_cast<std::chrono::microseconds>(
@@ -79,7 +79,7 @@ static void BM_JobThroughput(benchmark::State& state) {
                 }
             }
             jobs_completed.fetch_add(1);
-            return std::nullopt;
+            return result_void();
         });
         pool->enqueue(std::move(job));
     }
@@ -107,8 +107,8 @@ static void BM_BatchJobSubmission(benchmark::State& state) {
         batch.reserve(batch_size);
         
         for (size_t i = 0; i < batch_size; ++i) {
-            batch.push_back(std::make_unique<callback_job>([]() -> std::optional<std::string> {
-                return std::nullopt;
+            batch.push_back(std::make_unique<callback_job>([]() -> result_void {
+                return result_void();
             }));
         }
         
@@ -139,14 +139,14 @@ static void BM_ScalingEfficiency(benchmark::State& state) {
         
         // Submit all jobs
         for (size_t i = 0; i < total_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> std::optional<std::string> {
+            pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> result_void {
                 // Simulate some work
                 volatile int sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j;
                 }
                 jobs_completed.fetch_add(1);
-                return std::nullopt;
+                return result_void();
             }));
         }
         state.ResumeTiming();

@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "job_queue.h"
-#include "callback_job.h"
-#include "thread_base.h"
+#include "jobs/job_queue.h"
+#include "jobs/callback_job.h"
+#include "core/thread_base.h"
 #include <thread>
 #include <chrono>
 #include <atomic>
@@ -65,10 +65,10 @@ TEST_F(ThreadBaseTest, JobQueueBasicOperations)
     
     // Create and enqueue a job
     auto test_job = std::make_unique<callback_job>(
-        [this]() -> std::optional<std::string>
+        [this]() -> result_void
         {
             execution_counter.fetch_add(1);
-            return std::nullopt;
+            return result_void();
         },
         "test_job"
     );
@@ -82,10 +82,10 @@ TEST_F(ThreadBaseTest, JobQueueDequeue)
 {
     // Enqueue a job
     auto test_job = std::make_unique<callback_job>(
-        [this]() -> std::optional<std::string>
+        [this]() -> result_void
         {
             execution_counter.fetch_add(1);
-            return std::nullopt;
+            return result_void();
         },
         "dequeue_test_job"
     );
@@ -115,10 +115,10 @@ TEST_F(ThreadBaseTest, JobQueueMultipleJobs)
     for (int i = 0; i < job_count; ++i)
     {
         auto job = std::make_unique<callback_job>(
-            [this, i]() -> std::optional<std::string>
+            [this, i]() -> result_void
             {
                 execution_counter.fetch_add(i + 1);
-                return std::nullopt;
+                return result_void();
             },
             "job_" + std::to_string(i)
         );
@@ -151,11 +151,11 @@ TEST_F(ThreadBaseTest, CallbackJobExecution)
     std::string job_result;
     
     auto callback_job_instance = std::make_unique<callback_job>(
-        [&job_executed, &job_result]() -> std::optional<std::string>
+        [&job_executed, &job_result]() -> result_void
         {
             job_executed = true;
             job_result = "job completed successfully";
-            return std::nullopt;
+            return result_void();
         },
         "callback_test_job"
     );
@@ -171,9 +171,9 @@ TEST_F(ThreadBaseTest, CallbackJobExecution)
 TEST_F(ThreadBaseTest, CallbackJobWithError)
 {
     auto callback_job_instance = std::make_unique<callback_job>(
-        []() -> std::optional<std::string>
+        []() -> result_void
         {
-            return "job failed with error";
+            return error{error_code::job_execution_failed, "job failed with error"};
         },
         "error_test_job"
     );
@@ -197,10 +197,10 @@ TEST_F(ThreadBaseTest, ClearQueue)
     for (int i = 0; i < 3; ++i)
     {
         auto job = std::make_unique<callback_job>(
-            [this]() -> std::optional<std::string>
+            [this]() -> result_void
             {
                 execution_counter.fetch_add(1);
-                return std::nullopt;
+                return result_void();
             },
             "clear_test_job_" + std::to_string(i)
         );
