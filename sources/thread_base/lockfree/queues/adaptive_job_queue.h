@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../jobs/job_queue.h"
 #include "lockfree_mpmc_queue.h"
-#include "../../logger/logger.h"
+#include "../../logger/core/logger.h"
 #include <thread>
 #include <chrono>
 #include <atomic>

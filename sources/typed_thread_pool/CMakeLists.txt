@@ -9,9 +9,9 @@
 # Define the component name as a project
 project(typed_thread_pool)
 
-# Collect all header and template implementation files in this directory
-file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.tpp)
+# Collect all header and template implementation files recursively
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.tpp)
 
 # Create an interface library (header-only implementation)
 # Interface libraries don't produce any build artifacts themselves

@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-#include "convert_string.h"
+#include "../../sources/utilities/conversion/convert_string.h"
 
 using namespace utility_module;
 

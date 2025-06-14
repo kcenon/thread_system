@@ -9,9 +9,9 @@
 # Define the component name as a project
 project(thread_pool)
 
-# Collect all header and source files in this directory
-file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+# Collect all header and source files recursively
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 # Create a static library from the collected source files
 add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})

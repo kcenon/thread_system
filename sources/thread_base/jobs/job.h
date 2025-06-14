@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/formatter.h"
-#include "../../utilities/convert_string.h"
+#include "../../utilities/core/formatter.h"
+#include "../../utilities/conversion/convert_string.h"
 #include "../sync/error_handling.h"
 #include "../sync/cancellation_token.h"
 
