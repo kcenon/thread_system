@@ -964,7 +964,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
 <p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00272">272</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  273</span>    {</div>
 <div class="line"><span class="lineno">  274</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> GetACP();</div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(GetACP());</div>
 <div class="line"><span class="lineno">  276</span><span class="preprocessor">#else</span></div>
 <div class="line"><span class="lineno">  277</span>        <span class="keywordflow">return</span> 65001;</div>
 <div class="line"><span class="lineno">  278</span><span class="preprocessor">#endif</span></div>
@@ -1902,7 +1902,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 00:50:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -334,8 +334,8 @@ Usage Example</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Destroy the logger instance at application shutdown</span></div>
 <div class="line"><a class="code hl_function" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a1ca3105494290fd81473539372feb90a">log_module::implementation::logger::destroy</a>();</div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a1ca3105494290fd81473539372feb90a"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a1ca3105494290fd81473539372feb90a">log_module::implementation::logger::destroy</a></div><div class="ttdeci">static auto destroy() -&gt; void</div><div class="ttdoc">Destroys the singleton instance of the logger and releases its resources.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00056">logger_implementation.cpp:56</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_ae4e605560406763d5d8bb068c7449b99"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99">log_module::implementation::logger::handle</a></div><div class="ttdeci">static auto handle() -&gt; logger &amp;</div><div class="ttdoc">Retrieves the singleton instance of the logger.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00049">logger_implementation.cpp:49</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a1ca3105494290fd81473539372feb90a"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a1ca3105494290fd81473539372feb90a">log_module::implementation::logger::destroy</a></div><div class="ttdeci">static auto destroy() -&gt; void</div><div class="ttdoc">Destroys the singleton instance of the logger and releases its resources.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00059">logger_implementation.cpp:59</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_ae4e605560406763d5d8bb068c7449b99"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99">log_module::implementation::logger::handle</a></div><div class="ttdeci">static auto handle() -&gt; logger &amp;</div><div class="ttdoc">Retrieves the singleton instance of the logger.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00052">logger_implementation.cpp:52</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">log_module::log_types::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdoc">Represents an error-level log message.</div></div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">log_module::log_types::Information</a></div><div class="ttdeci">@ Information</div><div class="ttdoc">General informational log message.</div></div>
@@ -397,13 +397,13 @@ Usage Example</h3>
 <p>Private constructor enforcing the singleton pattern. </p>
 <p>Initializes core components such as the log collector, console writer, file writer, and callback writer. Use <code><a class="el" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger.">logger::handle()</a></code> to access the singleton instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00060">60</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>            : <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>(std::make_shared&lt;log_collector&gt;())</div>
-<div class="line"><span class="lineno">   62</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>(std::make_shared&lt;console_writer&gt;())</div>
-<div class="line"><span class="lineno">   63</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>(std::make_shared&lt;file_writer&gt;())</div>
-<div class="line"><span class="lineno">   64</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>(std::make_shared&lt;callback_writer&gt;())</div>
-<div class="line"><span class="lineno">   65</span>        {</div>
-<div class="line"><span class="lineno">   66</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00065">65</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>            : <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>(std::make_shared&lt;log_collector&gt;())</div>
+<div class="line"><span class="lineno">   67</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>(std::make_shared&lt;console_writer&gt;())</div>
+<div class="line"><span class="lineno">   68</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>(std::make_shared&lt;file_writer&gt;())</div>
+<div class="line"><span class="lineno">   69</span>            , <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>(std::make_shared&lt;callback_writer&gt;())</div>
+<div class="line"><span class="lineno">   70</span>        {</div>
+<div class="line"><span class="lineno">   71</span>        }</div>
 <div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a56b32e79fb4fe69e778e38ccdfac1e4c"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">log_module::implementation::logger::collector_</a></div><div class="ttdeci">std::shared_ptr&lt; log_collector &gt; collector_</div><div class="ttdoc">Shared pointer to the main log collector, responsible for storing and distributing logs.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00402">logger_implementation.h:402</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a5ab88d3812b7185c741b96b9a3dbe12c"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">log_module::implementation::logger::console_writer_</a></div><div class="ttdeci">std::shared_ptr&lt; console_writer &gt; console_writer_</div><div class="ttdoc">Shared pointer to the console writer, managing console-based output.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00405">logger_implementation.h:405</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_aadcf4f8f2aa48f9d0162cd85c5497960"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">log_module::implementation::logger::file_writer_</a></div><div class="ttdeci">std::shared_ptr&lt; file_writer &gt; file_writer_</div><div class="ttdoc">Shared pointer to the file writer, managing file-based output.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00408">logger_implementation.h:408</a></div></div>
@@ -465,16 +465,16 @@ Usage Example</h3>
 </dl>
 <p>Only messages with a log type that is equal to or greater than this setting (depending on internal comparison logic) will be dispatched to the callback. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00078">78</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>        {</div>
-<div class="line"><span class="lineno">   80</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   82</span>            {</div>
-<div class="line"><span class="lineno">   83</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   84</span>            }</div>
-<div class="line"><span class="lineno">   85</span> </div>
-<div class="line"><span class="lineno">   86</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;callback_target(type);</div>
-<div class="line"><span class="lineno">   87</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00083">83</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>        {</div>
+<div class="line"><span class="lineno">   85</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">   87</span>            {</div>
+<div class="line"><span class="lineno">   88</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   89</span>            }</div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;callback_target(type);</div>
+<div class="line"><span class="lineno">   92</span>        }</div>
 <div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a0926b632460da855a865217508b96e06"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">log_module::implementation::logger::collector_mutex_</a></div><div class="ttdeci">std::mutex collector_mutex_</div><div class="ttdoc">Mutex to protect access to the collector and other shared resources.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00415">logger_implementation.h:415</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -498,16 +498,16 @@ Usage Example</h3>
 <p>Retrieves the current log types that are written to the callback writer. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>log_types</code> value representing the currently configured callback log target. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00089">89</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   90</span>        {</div>
-<div class="line"><span class="lineno">   91</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   93</span>            {</div>
-<div class="line"><span class="lineno">   94</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
-<div class="line"><span class="lineno">   95</span>            }</div>
-<div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;callback_target();</div>
-<div class="line"><span class="lineno">   98</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00094">94</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>        {</div>
+<div class="line"><span class="lineno">   96</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">   97</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">   98</span>            {</div>
+<div class="line"><span class="lineno">   99</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
+<div class="line"><span class="lineno">  100</span>            }</div>
+<div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;callback_target();</div>
+<div class="line"><span class="lineno">  103</span>        }</div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></div><div class="ttdeci">@ None</div><div class="ttdoc">No specific category for the log message.</div></div>
 </div><!-- fragment -->
 </div>
@@ -537,16 +537,16 @@ Usage Example</h3>
 </dl>
 <p>Only messages with a log type that is equal to or greater than this setting (depending on internal comparison logic) will appear in the console output. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00125">125</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  126</span>        {</div>
-<div class="line"><span class="lineno">  127</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  128</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  129</span>            {</div>
-<div class="line"><span class="lineno">  130</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  131</span>            }</div>
-<div class="line"><span class="lineno">  132</span> </div>
-<div class="line"><span class="lineno">  133</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;console_target(type);</div>
-<div class="line"><span class="lineno">  134</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00130">130</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>        {</div>
+<div class="line"><span class="lineno">  132</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  134</span>            {</div>
+<div class="line"><span class="lineno">  135</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  136</span>            }</div>
+<div class="line"><span class="lineno">  137</span> </div>
+<div class="line"><span class="lineno">  138</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;console_target(type);</div>
+<div class="line"><span class="lineno">  139</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -569,16 +569,16 @@ Usage Example</h3>
 <p>Retrieves the current log types that are written to the console writer. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>log_types</code> value representing the currently configured console log target. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>        {</div>
-<div class="line"><span class="lineno">  138</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  139</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  140</span>            {</div>
-<div class="line"><span class="lineno">  141</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
-<div class="line"><span class="lineno">  142</span>            }</div>
-<div class="line"><span class="lineno">  143</span> </div>
-<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;console_target();</div>
-<div class="line"><span class="lineno">  145</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00141">141</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  142</span>        {</div>
+<div class="line"><span class="lineno">  143</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  145</span>            {</div>
+<div class="line"><span class="lineno">  146</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
+<div class="line"><span class="lineno">  147</span>            }</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;console_target();</div>
+<div class="line"><span class="lineno">  150</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -608,9 +608,9 @@ Usage Example</h3>
 <p>Destroys the singleton instance of the logger and releases its resources. </p>
 <p>This method should generally be called at application shutdown to ensure a clean teardown of all logging resources, including any active writers. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>{ <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.reset(); }</div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a2eed17565941aebeee38d372a990808b"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">log_module::implementation::logger::handle_</a></div><div class="ttdeci">static std::unique_ptr&lt; logger &gt; handle_</div><div class="ttdoc">Pointer to the singleton instance of the logger.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00438">logger_implementation.h:438</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{ <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.reset(); }</div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a2eed17565941aebeee38d372a990808b"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">log_module::implementation::logger::handle_</a></div><div class="ttdeci">static std::unique_ptr&lt; logger &gt; handle_</div><div class="ttdoc">Pointer to the singleton instance of the logger.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00441">logger_implementation.h:441</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -649,19 +649,19 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>Only messages with a log type that is equal to or greater than this setting (depending on internal comparison logic) will be dispatched to the file writer. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00100">100</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  101</span>        {</div>
-<div class="line"><span class="lineno">  102</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  104</span>            {</div>
-<div class="line"><span class="lineno">  105</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;file_target(type);</div>
-<div class="line"><span class="lineno">  106</span>            }</div>
-<div class="line"><span class="lineno">  107</span> </div>
-<div class="line"><span class="lineno">  108</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00105">105</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  106</span>        {</div>
+<div class="line"><span class="lineno">  107</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  108</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  109</span>            {</div>
-<div class="line"><span class="lineno">  110</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;file_target(type);</div>
+<div class="line"><span class="lineno">  110</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;file_target(type);</div>
 <div class="line"><span class="lineno">  111</span>            }</div>
-<div class="line"><span class="lineno">  112</span>        }</div>
+<div class="line"><span class="lineno">  112</span> </div>
+<div class="line"><span class="lineno">  113</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  114</span>            {</div>
+<div class="line"><span class="lineno">  115</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;file_target(type);</div>
+<div class="line"><span class="lineno">  116</span>            }</div>
+<div class="line"><span class="lineno">  117</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -684,16 +684,16 @@ Here is the caller graph for this function:</div>
 <p>Retrieves the current log types that are written to the file writer. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>log_types</code> value representing the currently configured file log target. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00114">114</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  115</span>        {</div>
-<div class="line"><span class="lineno">  116</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  118</span>            {</div>
-<div class="line"><span class="lineno">  119</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
-<div class="line"><span class="lineno">  120</span>            }</div>
-<div class="line"><span class="lineno">  121</span> </div>
-<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;file_target();</div>
-<div class="line"><span class="lineno">  123</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00119">119</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  120</span>        {</div>
+<div class="line"><span class="lineno">  121</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  123</span>            {</div>
+<div class="line"><span class="lineno">  124</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>;</div>
+<div class="line"><span class="lineno">  125</span>            }</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;file_target();</div>
+<div class="line"><span class="lineno">  128</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -716,15 +716,15 @@ Here is the caller graph for this function:</div>
 <p>Returns the maximum number of recent log lines retained by the log collector. </p>
 <dl class="section return"><dt>Returns</dt><dd>The configured maximum number of lines to keep in memory. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00169">169</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  170</span>        {</div>
-<div class="line"><span class="lineno">  171</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  172</span>            {</div>
-<div class="line"><span class="lineno">  173</span>                <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  174</span>            }</div>
-<div class="line"><span class="lineno">  175</span> </div>
-<div class="line"><span class="lineno">  176</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_max_lines();</div>
-<div class="line"><span class="lineno">  177</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00174">174</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>        {</div>
+<div class="line"><span class="lineno">  176</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  177</span>            {</div>
+<div class="line"><span class="lineno">  178</span>                <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  179</span>            }</div>
+<div class="line"><span class="lineno">  180</span> </div>
+<div class="line"><span class="lineno">  181</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_max_lines();</div>
+<div class="line"><span class="lineno">  182</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -747,15 +747,15 @@ Here is the caller graph for this function:</div>
 <p>Checks if the logger is configured to create a backup log file. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if a backup file is enabled, otherwise <code>false</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00189">189</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  190</span>        {</div>
-<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  192</span>            {</div>
-<div class="line"><span class="lineno">  193</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  194</span>            }</div>
-<div class="line"><span class="lineno">  195</span> </div>
-<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_use_backup();</div>
-<div class="line"><span class="lineno">  197</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00194">194</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  195</span>        {</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  197</span>            {</div>
+<div class="line"><span class="lineno">  198</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  199</span>            }</div>
+<div class="line"><span class="lineno">  200</span> </div>
+<div class="line"><span class="lineno">  201</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_use_backup();</div>
+<div class="line"><span class="lineno">  202</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -787,14 +787,14 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the singleton <code>logger</code> instance.</dd></dl>
 <p>Use this method to obtain the global logger and configure it before calling <code><a class="el" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors.">start()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>        {</div>
-<div class="line"><span class="lineno">   51</span>            call_once(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0366c6e4af0f32db26588b7067c2ef66">once_</a>, []() { <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.reset(<span class="keyword">new</span> <a class="code hl_function" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e">logger</a>); });</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.get();</div>
-<div class="line"><span class="lineno">   54</span>        }</div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a0366c6e4af0f32db26588b7067c2ef66"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0366c6e4af0f32db26588b7067c2ef66">log_module::implementation::logger::once_</a></div><div class="ttdeci">static std::once_flag once_</div><div class="ttdoc">Flag ensuring the singleton is lazily and atomically initialized only once.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00442">logger_implementation.h:442</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_adfbb8c3e99c59a5a5432a8b7f25c083e"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e">log_module::implementation::logger::logger</a></div><div class="ttdeci">logger()</div><div class="ttdoc">Private constructor enforcing the singleton pattern.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00060">logger_implementation.cpp:60</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>        {</div>
+<div class="line"><span class="lineno">   54</span>            call_once(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0366c6e4af0f32db26588b7067c2ef66">once_</a>, []() { <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.reset(<span class="keyword">new</span> <a class="code hl_function" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e">logger</a>); });</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b">handle_</a>.get();</div>
+<div class="line"><span class="lineno">   57</span>        }</div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a0366c6e4af0f32db26588b7067c2ef66"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0366c6e4af0f32db26588b7067c2ef66">log_module::implementation::logger::once_</a></div><div class="ttdeci">static std::once_flag once_</div><div class="ttdoc">Flag ensuring the singleton is lazily and atomically initialized only once.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d14/logger__implementation_8h_source.html#l00445">logger_implementation.h:445</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_adfbb8c3e99c59a5a5432a8b7f25c083e"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#adfbb8c3e99c59a5a5432a8b7f25c083e">log_module::implementation::logger::logger</a></div><div class="ttdeci">logger()</div><div class="ttdoc">Private constructor enforcing the singleton pattern.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00065">logger_implementation.cpp:65</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -937,15 +937,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>This callback is invoked for every log message that meets the configured callback log target. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00147">147</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  150</span>        {</div>
-<div class="line"><span class="lineno">  151</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  152</span>            {</div>
-<div class="line"><span class="lineno">  153</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  154</span>            }</div>
-<div class="line"><span class="lineno">  155</span> </div>
-<div class="line"><span class="lineno">  156</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;message_callback(callback);</div>
-<div class="line"><span class="lineno">  157</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>        {</div>
+<div class="line"><span class="lineno">  156</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  157</span>            {</div>
+<div class="line"><span class="lineno">  158</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  159</span>            }</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;message_callback(callback);</div>
+<div class="line"><span class="lineno">  162</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1002,15 +1002,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>This helps manage in-memory usage when logs are being collected over a long period. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00159">159</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  160</span>        {</div>
-<div class="line"><span class="lineno">  161</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  162</span>            {</div>
-<div class="line"><span class="lineno">  163</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  164</span>            }</div>
-<div class="line"><span class="lineno">  165</span> </div>
-<div class="line"><span class="lineno">  166</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_max_lines(max_lines);</div>
-<div class="line"><span class="lineno">  167</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00164">164</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  165</span>        {</div>
+<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  167</span>            {</div>
+<div class="line"><span class="lineno">  168</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  169</span>            }</div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_max_lines(max_lines);</div>
+<div class="line"><span class="lineno">  172</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1039,15 +1039,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>Commonly used as a prefix for filenames or as an identifier in console outputs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00068">68</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>        {</div>
-<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   71</span>            {</div>
-<div class="line"><span class="lineno">   72</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   73</span>            }</div>
-<div class="line"><span class="lineno">   74</span> </div>
-<div class="line"><span class="lineno">   75</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_title(title);</div>
-<div class="line"><span class="lineno">   76</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00073">73</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>        {</div>
+<div class="line"><span class="lineno">   75</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">   76</span>            {</div>
+<div class="line"><span class="lineno">   77</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   78</span>            }</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_title(title);</div>
+<div class="line"><span class="lineno">   81</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1076,15 +1076,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>Typically used to retain older log data for archiving or diagnostic purposes. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00179">179</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  180</span>        {</div>
-<div class="line"><span class="lineno">  181</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  182</span>            {</div>
-<div class="line"><span class="lineno">  183</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  184</span>            }</div>
-<div class="line"><span class="lineno">  185</span> </div>
-<div class="line"><span class="lineno">  186</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_use_backup(use_backup);</div>
-<div class="line"><span class="lineno">  187</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00184">184</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  185</span>        {</div>
+<div class="line"><span class="lineno">  186</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  187</span>            {</div>
+<div class="line"><span class="lineno">  188</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  189</span>            }</div>
+<div class="line"><span class="lineno">  190</span> </div>
+<div class="line"><span class="lineno">  191</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_use_backup(use_backup);</div>
+<div class="line"><span class="lineno">  192</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1113,18 +1113,18 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>A smaller interval results in more frequent log processing, but increases CPU usage. A larger interval can reduce CPU usage but can delay log output. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00199">199</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  200</span>        {</div>
-<div class="line"><span class="lineno">  201</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  202</span>            {</div>
-<div class="line"><span class="lineno">  203</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;set_wake_interval(interval);</div>
-<div class="line"><span class="lineno">  204</span>            }</div>
-<div class="line"><span class="lineno">  205</span> </div>
-<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00204">204</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>        {</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a> != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  207</span>            {</div>
-<div class="line"><span class="lineno">  208</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_wake_interval(interval);</div>
+<div class="line"><span class="lineno">  208</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;set_wake_interval(interval);</div>
 <div class="line"><span class="lineno">  209</span>            }</div>
-<div class="line"><span class="lineno">  210</span>        }</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  212</span>            {</div>
+<div class="line"><span class="lineno">  213</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;set_wake_interval(interval);</div>
+<div class="line"><span class="lineno">  214</span>            }</div>
+<div class="line"><span class="lineno">  215</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1148,49 +1148,49 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::string&gt; containing an error message if startup fails, or <code>std::nullopt</code> if the logger starts successfully.</dd></dl>
 <p>Must be called before issuing any log messages. If this returns an error, logging should be considered non-functional. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00212">212</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  213</span>        {</div>
-<div class="line"><span class="lineno">  214</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  215</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  216</span>            {</div>
-<div class="line"><span class="lineno">  217</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;there is no collector&quot;</span>;</div>
-<div class="line"><span class="lineno">  218</span>            }</div>
-<div class="line"><span class="lineno">  219</span> </div>
-<div class="line"><span class="lineno">  220</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_console_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;get_job_queue());</div>
-<div class="line"><span class="lineno">  221</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_file_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_job_queue());</div>
-<div class="line"><span class="lineno">  222</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_callback_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;get_job_queue());</div>
-<div class="line"><span class="lineno">  223</span> </div>
-<div class="line"><span class="lineno">  224</span>            <span class="keyword">auto</span> start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;start();</div>
-<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
-<div class="line"><span class="lineno">  226</span>            {</div>
-<div class="line"><span class="lineno">  227</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;get_thread_title(),</div>
-<div class="line"><span class="lineno">  228</span>                                         start_result.get_error().to_string());</div>
-<div class="line"><span class="lineno">  229</span>            }</div>
-<div class="line"><span class="lineno">  230</span> </div>
-<div class="line"><span class="lineno">  231</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;start();</div>
-<div class="line"><span class="lineno">  232</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
-<div class="line"><span class="lineno">  233</span>            {</div>
-<div class="line"><span class="lineno">  234</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_thread_title(),</div>
-<div class="line"><span class="lineno">  235</span>                                         start_result.get_error().to_string());</div>
-<div class="line"><span class="lineno">  236</span>            }</div>
-<div class="line"><span class="lineno">  237</span> </div>
-<div class="line"><span class="lineno">  238</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;start();</div>
-<div class="line"><span class="lineno">  239</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
-<div class="line"><span class="lineno">  240</span>            {</div>
-<div class="line"><span class="lineno">  241</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>,</div>
-<div class="line"><span class="lineno">  242</span>                                         <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;get_thread_title(),</div>
-<div class="line"><span class="lineno">  243</span>                                         start_result.get_error().to_string());</div>
-<div class="line"><span class="lineno">  244</span>            }</div>
-<div class="line"><span class="lineno">  245</span> </div>
-<div class="line"><span class="lineno">  246</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;start();</div>
-<div class="line"><span class="lineno">  247</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
-<div class="line"><span class="lineno">  248</span>            {</div>
-<div class="line"><span class="lineno">  249</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;get_thread_title(),</div>
-<div class="line"><span class="lineno">  250</span>                                         start_result.get_error().to_string());</div>
-<div class="line"><span class="lineno">  251</span>            }</div>
-<div class="line"><span class="lineno">  252</span> </div>
-<div class="line"><span class="lineno">  253</span>            <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  254</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00217">217</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  218</span>        {</div>
+<div class="line"><span class="lineno">  219</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  220</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  221</span>            {</div>
+<div class="line"><span class="lineno">  222</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;there is no collector&quot;</span>;</div>
+<div class="line"><span class="lineno">  223</span>            }</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_console_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;get_job_queue());</div>
+<div class="line"><span class="lineno">  226</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_file_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_job_queue());</div>
+<div class="line"><span class="lineno">  227</span>            <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;set_callback_queue(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;get_job_queue());</div>
+<div class="line"><span class="lineno">  228</span> </div>
+<div class="line"><span class="lineno">  229</span>            <span class="keyword">auto</span> start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;start();</div>
+<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
+<div class="line"><span class="lineno">  231</span>            {</div>
+<div class="line"><span class="lineno">  232</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;get_thread_title(),</div>
+<div class="line"><span class="lineno">  233</span>                                         start_result.get_error().to_string());</div>
+<div class="line"><span class="lineno">  234</span>            }</div>
+<div class="line"><span class="lineno">  235</span> </div>
+<div class="line"><span class="lineno">  236</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;start();</div>
+<div class="line"><span class="lineno">  237</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
+<div class="line"><span class="lineno">  238</span>            {</div>
+<div class="line"><span class="lineno">  239</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;get_thread_title(),</div>
+<div class="line"><span class="lineno">  240</span>                                         start_result.get_error().to_string());</div>
+<div class="line"><span class="lineno">  241</span>            }</div>
+<div class="line"><span class="lineno">  242</span> </div>
+<div class="line"><span class="lineno">  243</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;start();</div>
+<div class="line"><span class="lineno">  244</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
+<div class="line"><span class="lineno">  245</span>            {</div>
+<div class="line"><span class="lineno">  246</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>,</div>
+<div class="line"><span class="lineno">  247</span>                                         <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;get_thread_title(),</div>
+<div class="line"><span class="lineno">  248</span>                                         start_result.get_error().to_string());</div>
+<div class="line"><span class="lineno">  249</span>            }</div>
+<div class="line"><span class="lineno">  250</span> </div>
+<div class="line"><span class="lineno">  251</span>            start_result = <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;start();</div>
+<div class="line"><span class="lineno">  252</span>            <span class="keywordflow">if</span> (start_result.has_error())</div>
+<div class="line"><span class="lineno">  253</span>            {</div>
+<div class="line"><span class="lineno">  254</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot start {}: {}&quot;</span>, <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;get_thread_title(),</div>
+<div class="line"><span class="lineno">  255</span>                                         start_result.get_error().to_string());</div>
+<div class="line"><span class="lineno">  256</span>            }</div>
+<div class="line"><span class="lineno">  257</span> </div>
+<div class="line"><span class="lineno">  258</span>            <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  259</span>        }</div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1227,29 +1227,29 @@ Here is the call graph for this function:</div>
 <p>Stops all logging operations and performs any required cleanup. </p>
 <p>Once stopped, no further log messages will be processed. Call <code><a class="el" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors.">start()</a></code> again only if the logger supports restarting (implementation dependent). </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00256">256</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  257</span>        {</div>
-<div class="line"><span class="lineno">  258</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
-<div class="line"><span class="lineno">  259</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  260</span>            {</div>
-<div class="line"><span class="lineno">  261</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;stop();</div>
-<div class="line"><span class="lineno">  262</span>            }</div>
-<div class="line"><span class="lineno">  263</span> </div>
-<div class="line"><span class="lineno">  264</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00261">261</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  262</span>        {</div>
+<div class="line"><span class="lineno">  263</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">collector_mutex_</a>);</div>
+<div class="line"><span class="lineno">  264</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a> != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  265</span>            {</div>
-<div class="line"><span class="lineno">  266</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;stop();</div>
+<div class="line"><span class="lineno">  266</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;stop();</div>
 <div class="line"><span class="lineno">  267</span>            }</div>
 <div class="line"><span class="lineno">  268</span> </div>
-<div class="line"><span class="lineno">  269</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  269</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a> != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  270</span>            {</div>
-<div class="line"><span class="lineno">  271</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;stop();</div>
+<div class="line"><span class="lineno">  271</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">console_writer_</a>-&gt;stop();</div>
 <div class="line"><span class="lineno">  272</span>            }</div>
 <div class="line"><span class="lineno">  273</span> </div>
-<div class="line"><span class="lineno">  274</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  274</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a> != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  275</span>            {</div>
-<div class="line"><span class="lineno">  276</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;stop();</div>
+<div class="line"><span class="lineno">  276</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960">file_writer_</a>-&gt;stop();</div>
 <div class="line"><span class="lineno">  277</span>            }</div>
-<div class="line"><span class="lineno">  278</span>        }</div>
+<div class="line"><span class="lineno">  278</span> </div>
+<div class="line"><span class="lineno">  279</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  280</span>            {</div>
+<div class="line"><span class="lineno">  281</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae140469f8c0481a42ea5a450e4c65226">callback_writer_</a>-&gt;stop();</div>
+<div class="line"><span class="lineno">  282</span>            }</div>
+<div class="line"><span class="lineno">  283</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1273,10 +1273,10 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;</code> representing the current time.</dd></dl>
 <p>Typically used to timestamp log messages for performance analysis or chronological ordering. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00280">280</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  281</span>        {</div>
-<div class="line"><span class="lineno">  282</span>            <span class="keywordflow">return</span> std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  283</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html#l00285">285</a> of file <a class="el" href="../../d9/d7e/logger__implementation_8cpp_source.html">logger_implementation.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>        {</div>
+<div class="line"><span class="lineno">  287</span>            <span class="keywordflow">return</span> std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  288</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1469,7 +1469,7 @@ template&lt;typename... Args&gt; </div>
 <div class="line"><span class="lineno">  340</span>                <a class="code hl_variable" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">collector_</a>-&gt;write(type, <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a>(formats, args...),</div>
 <div class="line"><span class="lineno">  341</span>                                  <a class="code hl_function" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0c320d15fd958877dbf908e88a448645">time_point</a>);</div>
 <div class="line"><span class="lineno">  342</span>            }</div>
-<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a0c320d15fd958877dbf908e88a448645"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0c320d15fd958877dbf908e88a448645">log_module::implementation::logger::time_point</a></div><div class="ttdeci">auto time_point(void) -&gt; std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;</div><div class="ttdoc">Retrieves the current time point from a high-resolution clock.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00280">logger_implementation.cpp:280</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1implementation_1_1logger_html_a0c320d15fd958877dbf908e88a448645"><div class="ttname"><a href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a0c320d15fd958877dbf908e88a448645">log_module::implementation::logger::time_point</a></div><div class="ttdeci">auto time_point(void) -&gt; std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;</div><div class="ttdoc">Retrieves the current time point from a high-resolution clock.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d7e/logger__implementation_8cpp_source.html#l00285">logger_implementation.cpp:285</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1835,7 +1835,7 @@ Here is the call graph for this function:</div>
 
 <p>Pointer to the singleton instance of the logger. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d14/logger__implementation_8h_source.html#l00438">438</a> of file <a class="el" href="../../d5/d14/logger__implementation_8h_source.html">logger_implementation.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d14/logger__implementation_8h_source.html#l00441">441</a> of file <a class="el" href="../../d5/d14/logger__implementation_8h_source.html">logger_implementation.h</a>.</p>
 
 </div>
 </div>
@@ -1861,7 +1861,7 @@ Here is the call graph for this function:</div>
 
 <p>Flag ensuring the singleton is lazily and atomically initialized only once. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d14/logger__implementation_8h_source.html#l00442">442</a> of file <a class="el" href="../../d5/d14/logger__implementation_8h_source.html">logger_implementation.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d14/logger__implementation_8h_source.html#l00445">445</a> of file <a class="el" href="../../d5/d14/logger__implementation_8h_source.html">logger_implementation.h</a>.</p>
 
 </div>
 </div>
@@ -1872,7 +1872,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 14 2025 22:33:48 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 00:50:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
