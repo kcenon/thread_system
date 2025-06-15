@@ -300,7 +300,20 @@ build/
 - **`task<T>` template**: Future-based task wrapper for async results
 - **Builder pattern support**: Fluent API for pool configuration
 
-### 4. [Typed Thread Pool System (typed_thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/typed_thread_pool)
+### 4. [Real-time Monitoring System (monitoring_module)](https://github.com/kcenon/thread_system/tree/main/sources/monitoring)
+
+- **`metrics_collector` class**: Real-time performance metrics collection engine
+- **Cross-platform system metrics**: Memory usage, CPU utilization, active threads
+- **Thread pool monitoring**: Job completion rates, queue depths, worker utilization
+- **Lock-free storage**: Memory-efficient ring buffer for time-series data
+- **Easy integration**: Global singleton collector with simple API
+- **Key features**:
+  - Real-time data collection (100ms-1s intervals)
+  - Thread-safe metric registration and updates
+  - Configurable buffer sizes and collection intervals
+  - Zero-overhead when disabled
+
+### 5. [Typed Thread Pool System (typed_thread_pool_module)](https://github.com/kcenon/thread_system/tree/main/sources/typed_thread_pool)
 
 - **`typed_thread_pool_t<T>` template**: Priority/type-based thread pool
 - **`job_types` enum**: Default priority levels (RealTime, High, Normal, Low, Idle)
@@ -459,10 +472,51 @@ log_module::message_callback(
 );
 ```
 
+#### Real-time Performance Monitoring
+```cpp
+#include "monitoring/core/metrics_collector.h"
+#include "thread_pool/core/thread_pool.h"
+
+using namespace monitoring_module;
+using namespace thread_pool_module;
+
+// Start monitoring system
+monitoring_config config;
+config.collection_interval = std::chrono::milliseconds(100);  // 100ms intervals
+metrics::start_global_monitoring(config);
+
+// Create and monitor a thread pool
+auto pool = std::make_shared<thread_pool>();
+pool->start();
+
+// Register thread pool metrics
+auto collector = global_metrics_collector::instance().get_collector();
+auto pool_metrics = std::make_shared<thread_pool_metrics>();
+collector->register_thread_pool_metrics(pool_metrics);
+
+// Submit jobs and monitor in real-time
+for (int i = 0; i < 1000; ++i) {
+    pool->enqueue(std::make_unique<callback_job>([&pool_metrics]() -> result_void {
+        // Update metrics
+        pool_metrics->jobs_completed.fetch_add(1);
+        return {};
+    }));
+}
+
+// Get real-time metrics
+auto snapshot = metrics::get_current_metrics();
+std::cout << "Jobs completed: " << snapshot.thread_pool.jobs_completed.load() << "\n";
+std::cout << "Memory usage: " << snapshot.system.memory_usage_bytes.load() << " bytes\n";
+
+// Stop monitoring
+metrics::stop_global_monitoring();
+```
+
 ### 📚 **Comprehensive Sample Collection**
 
 Our samples demonstrate real-world usage patterns and best practices:
 
+- **[Real-time Monitoring](https://github.com/kcenon/thread_system/tree/main/samples/monitoring_sample)**: Live performance metrics and system monitoring
 - **[Asynchronous Logging](https://github.com/kcenon/thread_system/tree/main/samples/logger_sample)**: High-performance, multi-target logging system
 - **[Basic Thread Pool](https://github.com/kcenon/thread_system/tree/main/samples/thread_pool_sample)**: Simple job processing with automatic load balancing
 - **[Typed Thread Pool](https://github.com/kcenon/thread_system/tree/main/samples/typed_thread_pool_sample)**: Priority-based task scheduling
@@ -554,6 +608,25 @@ namespace typed_thread_pool_module {
         auto stop(bool clear_queue = false) -> result_void;
         auto enqueue(std::unique_ptr<typed_job_t<T>>&& job) -> result_void;
     };
+}
+
+// Monitoring API
+namespace monitoring_module {
+    class metrics_collector {
+        auto start() -> thread_module::result_void;
+        auto stop() -> void;
+        auto get_current_snapshot() const -> metrics_snapshot;
+        auto register_system_metrics(std::shared_ptr<system_metrics> metrics) -> void;
+        auto register_thread_pool_metrics(std::shared_ptr<thread_pool_metrics> metrics) -> void;
+    };
+    
+    // Convenience functions
+    namespace metrics {
+        auto start_global_monitoring(monitoring_config config = {}) -> thread_module::result_void;
+        auto stop_global_monitoring() -> void;
+        auto get_current_metrics() -> metrics_snapshot;
+        auto is_monitoring_active() -> bool;
+    }
 }
 
 // Logger API
