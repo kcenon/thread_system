@@ -1,3 +1,35 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "monitoring/core/metrics_collector.h"
 #include "thread_pool/core/thread_pool.h"
 #include "thread_base/jobs/callback_job.h"
@@ -64,7 +96,7 @@ struct benchmark_result {
     void print_summary() const {
         using namespace utility_module;
         std::cout << formatter::format(
-            "📊 {}\n"
+            "{}\n"
             "   Average Latency: {:.2f} ns\n"
             "   Throughput: {:.2f} jobs/sec\n"
             "   CPU Overhead: {:.2f}%\n"
@@ -104,7 +136,7 @@ public:
     }
     
     auto run_baseline_benchmark(int job_count, std::chrono::nanoseconds work_duration) -> benchmark_result {
-        std::cout << "🔵 Running baseline benchmark (no monitoring)...\n";
+        std::cout << "Running baseline benchmark (no monitoring)...\n";
         
         auto pool = std::make_shared<thread_pool>();
         
@@ -146,7 +178,7 @@ public:
     auto run_monitoring_benchmark(int job_count, std::chrono::nanoseconds work_duration, 
                                  std::chrono::milliseconds collection_interval) -> benchmark_result {
         using namespace utility_module;
-        std::cout << formatter::format("🟢 Running monitoring benchmark ({}ms intervals)...\n", 
+        std::cout << formatter::format("Running monitoring benchmark ({}ms intervals)...\n", 
                                       collection_interval.count());
         
         // Start monitoring
@@ -258,7 +290,7 @@ void print_header() {
 void print_comparison(const benchmark_result& baseline, const std::vector<benchmark_result>& monitoring_results) {
     using namespace utility_module;
     
-    std::cout << "\n📊 PERFORMANCE COMPARISON\n";
+    std::cout << "\nPERFORMANCE COMPARISON\n";
     std::cout << std::string(80, '=') << "\n";
     
     baseline.print_summary();
@@ -309,18 +341,18 @@ int main() {
         print_comparison(baseline, monitoring_results);
         
         // Print recommendations
-        std::cout << "\n💡 RECOMMENDATIONS\n";
+        std::cout << "\nRECOMMENDATIONS\n";
         std::cout << std::string(80, '=') << "\n";
-        std::cout << "• For real-time dashboards: 100-250ms intervals\n";
-        std::cout << "• For general monitoring: 500-1000ms intervals\n";
-        std::cout << "• For low-overhead mode: 1000ms+ intervals\n";
-        std::cout << "• Expected overhead: 2-8% depending on interval\n";
-        std::cout << "• Memory usage: <5MB for typical workloads\n\n";
+        std::cout << "* For real-time dashboards: 100-250ms intervals\n";
+        std::cout << "* For general monitoring: 500-1000ms intervals\n";
+        std::cout << "* For low-overhead mode: 1000ms+ intervals\n";
+        std::cout << "* Expected overhead: 2-8% depending on interval\n";
+        std::cout << "* Memory usage: <5MB for typical workloads\n\n";
         
-        std::cout << "✅ Monitoring overhead benchmark completed!\n";
+        std::cout << "Monitoring overhead benchmark completed!\n";
         
     } catch (const std::exception& e) {
-        std::cerr << "❌ Benchmark failed: " << e.what() << "\n";
+        std::cerr << "Benchmark failed: " << e.what() << "\n";
         return 1;
     }
     

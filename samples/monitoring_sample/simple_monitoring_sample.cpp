@@ -1,8 +1,39 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "monitoring/core/metrics_collector.h"
 #include "logger/core/logger.h"
 #include "utilities/core/formatter.h"
 
-#include <iostream>
 #include <chrono>
 #include <thread>
 
@@ -10,45 +41,45 @@ using namespace monitoring_module;
 using namespace log_module;
 
 void print_header() {
-    std::cout << "\n" << std::string(60, '=') << "\n";
-    std::cout << "         MONITORING MODULE DEMO\n";
-    std::cout << std::string(60, '=') << "\n\n";
+    write_information("\n{}", std::string(60, '='));
+    write_information("         MONITORING MODULE DEMO");
+    write_information("{}\n", std::string(60, '='));
 }
 
 void print_metrics(const metrics_snapshot& snapshot, int iteration) {
     using namespace utility_module;
     
-    std::cout << formatter::format("📊 Snapshot {} at {}s\n", 
-                                  iteration, 
-                                  std::chrono::duration_cast<std::chrono::seconds>(
-                                      snapshot.capture_time.time_since_epoch()).count() % 1000);
+    write_information("Snapshot {} at {}s", 
+                     iteration, 
+                     std::chrono::duration_cast<std::chrono::seconds>(
+                         snapshot.capture_time.time_since_epoch()).count() % 1000);
     
-    std::cout << formatter::format("   Memory: {} bytes | Threads: {}\n",
-                                  snapshot.system.memory_usage_bytes.load(),
-                                  snapshot.system.active_threads.load());
+    write_information("   Memory: {} bytes | Threads: {}",
+                     snapshot.system.memory_usage_bytes.load(),
+                     snapshot.system.active_threads.load());
     
-    std::cout << formatter::format("   Pool Jobs: {} completed | {} pending\n",
-                                  snapshot.thread_pool.jobs_completed.load(),
-                                  snapshot.thread_pool.jobs_pending.load());
+    write_information("   Pool Jobs: {} completed | {} pending",
+                     snapshot.thread_pool.jobs_completed.load(),
+                     snapshot.thread_pool.jobs_pending.load());
     
-    std::cout << std::string(60, '-') << "\n";
+    write_information("{}", std::string(60, '-'));
 }
 
 int main() {
     print_header();
     
     // 1. 로거 시작
-    std::cout << "🚀 Starting logger...\n";
     if (auto result = start(); result) {
         std::cerr << "Failed to start logger: " << *result << "\n";
         return 1;
     }
+    write_information("Starting logger...");
     
     console_target(log_types::Information);
     set_title("Monitoring Demo");
     
     // 2. 모니터링 시작
-    std::cout << "📈 Starting monitoring system...\n";
+    write_information("Starting monitoring system...");
     monitoring_config config;
     config.collection_interval = std::chrono::milliseconds(1000);  // 1초 간격
     config.buffer_size = 60;  // 1분간 데이터
@@ -78,8 +109,8 @@ int main() {
     collector->register_worker_metrics(worker_metrics);
     
     // 4. 시뮬레이션 데이터 생성
-    std::cout << "⚡ Starting simulation...\n";
-    std::cout << "   Monitoring for 10 seconds with 2-second intervals\n\n";
+    write_information("Starting simulation...");
+    write_information("   Monitoring for 10 seconds with 2-second intervals\n");
     
     std::atomic<bool> running{true};
     std::thread simulator([&]() {
@@ -110,7 +141,7 @@ int main() {
     }
     
     // 6. 정리
-    std::cout << "\n🛑 Stopping simulation...\n";
+    write_information("\nStopping simulation...");
     running.store(false);
     
     if (simulator.joinable()) {
@@ -121,24 +152,19 @@ int main() {
     stop();
     
     // 7. 최종 통계
-    std::cout << "\n📋 Final Statistics:\n";
+    write_information("\nFinal Statistics:");
     auto final_snapshot = metrics::get_current_metrics();
-    std::cout << utility_module::formatter::format(
-        "   Total Jobs: {}\n"
-        "   Final Memory: {} bytes\n"
-        "   Processing Time: {} ms\n",
-        final_snapshot.thread_pool.jobs_completed.load(),
-        final_snapshot.system.memory_usage_bytes.load(),
-        final_snapshot.worker.total_processing_time_ns.load() / 1000000
-    );
+    write_information("   Total Jobs: {}", final_snapshot.thread_pool.jobs_completed.load());
+    write_information("   Final Memory: {} bytes", final_snapshot.system.memory_usage_bytes.load());
+    write_information("   Processing Time: {} ms", final_snapshot.worker.total_processing_time_ns.load() / 1000000);
     
-    std::cout << "\n✅ Monitoring demo completed!\n";
-    std::cout << "\nFeatures Demonstrated:\n";
-    std::cout << "  ✓ Real-time metric collection\n";
-    std::cout << "  ✓ Thread-safe metric updates\n";
-    std::cout << "  ✓ Cross-platform compatibility\n";
-    std::cout << "  ✓ Memory-efficient storage\n";
-    std::cout << "  ✓ Easy integration API\n";
+    write_information("\nMonitoring demo completed!");
+    write_information("\nFeatures Demonstrated:");
+    write_information("  * Real-time metric collection");
+    write_information("  * Thread-safe metric updates");
+    write_information("  * Cross-platform compatibility");
+    write_information("  * Memory-efficient storage");
+    write_information("  * Easy integration API");
     
     return 0;
 }

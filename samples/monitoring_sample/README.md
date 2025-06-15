@@ -2,7 +2,7 @@
 
 This directory contains sample applications demonstrating the real-time monitoring capabilities of the Thread System library.
 
-## 📊 Samples Overview
+## Samples Overview
 
 ### 1. `simple_monitoring_sample`
 A basic demonstration of the monitoring system that shows:
@@ -30,7 +30,7 @@ An advanced example showing integration with the thread pool system:
 - Concurrent metric collection and job processing
 - Production-like workload simulation
 
-## 🚀 Building and Running
+## Building and Running
 
 ### Prerequisites
 - CMake 3.16 or later
@@ -56,7 +56,7 @@ ninja simple_monitoring_sample monitoring_sample
 ./bin/monitoring_sample
 ```
 
-## 📈 Sample Output
+## Sample Output
 
 ### Simple Monitoring Sample
 ```
@@ -64,31 +64,31 @@ ninja simple_monitoring_sample monitoring_sample
          MONITORING MODULE DEMO
 ============================================================
 
-🚀 Starting logger...
-📈 Starting monitoring system...
-⚡ Starting simulation...
+Starting logger...
+Starting monitoring system...
+Starting simulation...
    Monitoring for 10 seconds with 2-second intervals
 
-📊 Snapshot 1 at 802s
+Snapshot 1 at 802s
    Memory: 6416449536 bytes | Threads: 8
    Pool Jobs: 40 completed | 10 pending
 ------------------------------------------------------------
-📊 Snapshot 2 at 804s  
+Snapshot 2 at 804s  
    Memory: 6433718272 bytes | Threads: 8
    Pool Jobs: 80 completed | 0 pending
 ------------------------------------------------------------
 
-✅ Monitoring demo completed!
+Monitoring demo completed!
 
 Features Demonstrated:
-  ✓ Real-time metric collection
-  ✓ Thread-safe metric updates
-  ✓ Cross-platform compatibility
-  ✓ Memory-efficient storage
-  ✓ Easy integration API
+  * Real-time metric collection
+  * Thread-safe metric updates
+  * Cross-platform compatibility
+  * Memory-efficient storage
+  * Easy integration API
 ```
 
-## 🔧 Integration Guide
+## Integration Guide
 
 ### Basic Usage
 ```cpp
@@ -126,7 +126,7 @@ config.low_overhead_mode = false;                           // Full feature set
 metrics::start_global_monitoring(config);
 ```
 
-## 📚 Key Concepts
+## Key Concepts
 
 ### Metric Types
 - **System Metrics**: CPU usage, memory consumption, active thread count
@@ -145,7 +145,7 @@ metrics::start_global_monitoring(config);
 - **Thread Safety**: All operations are thread-safe by design
 - **Platform Support**: Windows, Linux, macOS with unified API
 
-## 🛠️ Customization
+## Customization
 
 ### Custom Metrics
 You can extend the monitoring system with your own metrics:
@@ -168,7 +168,7 @@ struct custom_metrics {
 - **Medium Frequency** (500ms-1s): General purpose monitoring, alerts
 - **Low Frequency** (5-10s): Long-term trends, resource planning
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 1. **High CPU Usage**: Increase collection interval or enable low_overhead_mode
@@ -182,7 +182,7 @@ struct custom_metrics {
 - Use the simple sample first to verify basic functionality
 - Check system permissions for reading system metrics
 
-## 📖 Related Documentation
+## Related Documentation
 
 - [Monitoring Module Architecture](../../docs/architecture.md#monitoring-system)
 - [Performance Guide](../../docs/performance.md#monitoring-overhead)

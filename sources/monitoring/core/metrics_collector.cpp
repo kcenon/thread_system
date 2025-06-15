@@ -1,3 +1,35 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "metrics_collector.h"
 #include "../../utilities/core/formatter.h"
 
@@ -129,7 +161,7 @@ namespace monitoring_module {
             stats_.collection_time_ns.store(static_cast<std::uint64_t>(collection_duration), 
                                            std::memory_order_relaxed);
 
-            // 수집 간격만큼 대기
+            // Wait for collection interval
             std::this_thread::sleep_for(config_.collection_interval);
         }
     }
@@ -145,7 +177,7 @@ namespace monitoring_module {
             collect_worker_metrics();
         }
 
-        // 스냅샷 생성 및 저장
+        // Create and save snapshot
         auto snapshot = get_current_snapshot();
         if (!snapshot_buffer_->push(snapshot)) {
             stats_.buffer_overflows.fetch_add(1, std::memory_order_relaxed);
@@ -157,9 +189,9 @@ namespace monitoring_module {
             return;
         }
 
-        // 플랫폼별 시스템 메트릭 수집
+        // Platform-specific system metrics collection
 #ifdef _WIN32
-        // Windows용 구현
+        // Windows implementation
         MEMORYSTATUSEX mem_status;
         mem_status.dwLength = sizeof(mem_status);
         if (GlobalMemoryStatusEx(&mem_status)) {
@@ -169,11 +201,11 @@ namespace monitoring_module {
             );
         }
 
-        // CPU 사용률은 간단한 구현으로 대체 (실제로는 더 복잡한 로직 필요)
+        // CPU usage replaced with simple implementation (more complex logic needed in practice)
         system_metrics_->cpu_usage_percent.store(0, std::memory_order_relaxed);
 
 #elif defined(__linux__)
-        // Linux용 구현
+        // Linux implementation
         std::ifstream meminfo("/proc/meminfo");
         std::string line;
         std::uint64_t total_mem = 0, free_mem = 0;
@@ -192,7 +224,7 @@ namespace monitoring_module {
         }
 
 #elif defined(__APPLE__)
-        // macOS용 구현
+        // macOS implementation
         vm_size_t page_size;
         vm_statistics64_data_t vm_stats;
         mach_msg_type_number_t info_count = HOST_VM_INFO64_COUNT;
@@ -210,7 +242,7 @@ namespace monitoring_module {
         }
 #endif
 
-        // 활성 스레드 수 (간단한 구현)
+        // Active thread count (simple implementation)
         system_metrics_->active_threads.store(
             std::thread::hardware_concurrency(), 
             std::memory_order_relaxed
@@ -224,7 +256,7 @@ namespace monitoring_module {
             return;
         }
 
-        // 스레드 풀 메트릭은 외부에서 업데이트되므로 타임스탬프만 갱신
+        // Thread pool metrics are updated externally, so only update timestamp
         thread_pool_metrics_->timestamp = std::chrono::steady_clock::now();
     }
 
@@ -233,11 +265,11 @@ namespace monitoring_module {
             return;
         }
 
-        // 워커 메트릭도 외부에서 업데이트되므로 타임스탬프만 갱신
+        // Worker metrics are also updated externally, so only update timestamp
         worker_metrics_->timestamp = std::chrono::steady_clock::now();
     }
 
-    // 전역 메트릭 수집기 구현
+    // Global metrics collector implementation
     auto global_metrics_collector::instance() -> global_metrics_collector& {
         static global_metrics_collector instance;
         return instance;
@@ -271,7 +303,7 @@ namespace monitoring_module {
         return collector_;
     }
 
-    // 편의 함수 구현
+    // Convenience function implementation
     namespace metrics {
         auto start_global_monitoring(monitoring_config config) -> thread_module::result_void {
             return global_metrics_collector::instance().initialize(std::move(config));

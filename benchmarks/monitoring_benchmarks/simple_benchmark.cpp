@@ -1,3 +1,35 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "../../sources/monitoring/core/metrics_collector.h"
 #include "../../sources/utilities/core/formatter.h"
 
@@ -11,14 +43,14 @@ using namespace monitoring_module;
 using namespace utility_module;
 
 void benchmark_collection_overhead() {
-    std::cout << "📊 Monitoring Collection Overhead Benchmark\n";
+    std::cout << "Monitoring Collection Overhead Benchmark\n";
     std::cout << std::string(60, '=') << "\n\n";
     
     const int iterations = 1000000;
     
     // Test 1: Baseline - no monitoring
     {
-        std::cout << "🔵 Baseline test (no monitoring)...\n";
+        std::cout << "Baseline test (no monitoring)...\n";
         
         std::atomic<uint64_t> counter{0};
         
@@ -40,7 +72,7 @@ void benchmark_collection_overhead() {
     
     // Test 2: With monitoring
     {
-        std::cout << "🟢 With monitoring test...\n";
+        std::cout << "With monitoring test...\n";
         
         monitoring_config config;
         config.collection_interval = std::chrono::milliseconds(100);
@@ -81,7 +113,7 @@ void benchmark_collection_overhead() {
     
     // Test 3: Memory usage test
     {
-        std::cout << "💾 Memory usage test...\n";
+        std::cout << "Memory usage test...\n";
         
         monitoring_config config;
         config.collection_interval = std::chrono::milliseconds(10);  // High frequency
@@ -138,19 +170,19 @@ void benchmark_collection_overhead() {
         std::cout << "\n";
     }
     
-    std::cout << "✅ Benchmark completed!\n\n";
-    std::cout << "📋 Summary:\n";
-    std::cout << "• Monitoring adds minimal overhead per operation\n";
-    std::cout << "• Collection happens in background thread\n"; 
-    std::cout << "• Memory usage is bounded by buffer size\n";
-    std::cout << "• Suitable for production use with proper configuration\n";
+    std::cout << "Benchmark completed!\n\n";
+    std::cout << "Summary:\n";
+    std::cout << "* Monitoring adds minimal overhead per operation\n";
+    std::cout << "* Collection happens in background thread\n"; 
+    std::cout << "* Memory usage is bounded by buffer size\n";
+    std::cout << "* Suitable for production use with proper configuration\n";
 }
 
 int main() {
     try {
         benchmark_collection_overhead();
     } catch (const std::exception& e) {
-        std::cerr << "❌ Benchmark failed: " << e.what() << "\n";
+        std::cerr << "Benchmark failed: " << e.what() << "\n";
         return 1;
     }
     

@@ -1,10 +1,41 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 #include "monitoring/core/metrics_collector.h"
 #include "thread_pool/core/thread_pool.h"
 #include "thread_base/jobs/callback_job.h"
 #include "logger/core/logger.h"
 #include "utilities/core/formatter.h"
 
-#include <iostream>
 #include <chrono>
 #include <random>
 #include <thread>
@@ -41,64 +72,64 @@ private:
 
 // 메트릭 출력 헬퍼 함수
 void print_metrics_header() {
-    std::cout << "\n" << std::string(80, '=') << "\n";
-    std::cout << "                      REAL-TIME MONITORING DEMO\n";
-    std::cout << std::string(80, '=') << "\n\n";
+    write_information("\n{}\n", std::string(80, '='));
+    write_information("                      REAL-TIME MONITORING DEMO");
+    write_information("{}\n", std::string(80, '='));
 }
 
 void print_metrics_snapshot(const metrics_snapshot& snapshot, int iteration) {
     using namespace utility_module;
     
-    std::cout << formatter::format("📊 Iteration {:<3} | Time: {}\n", 
-                                  iteration, 
-                                  std::chrono::duration_cast<std::chrono::seconds>(
-                                      snapshot.capture_time.time_since_epoch()).count());
+    write_information("Iteration {:<3} | Time: {}", 
+                     iteration, 
+                     std::chrono::duration_cast<std::chrono::seconds>(
+                         snapshot.capture_time.time_since_epoch()).count());
     
     // 시스템 메트릭
-    std::cout << "🖥️  System Metrics:\n";
-    std::cout << formatter::format("   Memory Usage: {:<10} bytes | Active Threads: {}\n",
-                                  snapshot.system.memory_usage_bytes.load(),
-                                  snapshot.system.active_threads.load());
+    write_information("System Metrics:");
+    write_information("   Memory Usage: {:<10} bytes | Active Threads: {}",
+                     snapshot.system.memory_usage_bytes.load(),
+                     snapshot.system.active_threads.load());
     
     // 스레드 풀 메트릭
-    std::cout << "🏭 Thread Pool Metrics:\n";
-    std::cout << formatter::format("   Jobs Completed: {:<8} | Jobs Pending: {:<6} | Worker Threads: {}\n",
-                                  snapshot.thread_pool.jobs_completed.load(),
-                                  snapshot.thread_pool.jobs_pending.load(),
-                                  snapshot.thread_pool.worker_threads.load());
+    write_information("Thread Pool Metrics:");
+    write_information("   Jobs Completed: {:<8} | Jobs Pending: {:<6} | Worker Threads: {}",
+                     snapshot.thread_pool.jobs_completed.load(),
+                     snapshot.thread_pool.jobs_pending.load(),
+                     snapshot.thread_pool.worker_threads.load());
     
     auto avg_latency = snapshot.thread_pool.average_latency_ns.load();
     if (avg_latency > 0) {
-        std::cout << formatter::format("   Avg Latency: {:<8} ns | Idle Threads: {}\n",
-                                      avg_latency,
-                                      snapshot.thread_pool.idle_threads.load());
+        write_information("   Avg Latency: {:<8} ns | Idle Threads: {}",
+                         avg_latency,
+                         snapshot.thread_pool.idle_threads.load());
     }
     
     // 워커 메트릭
-    std::cout << "👷 Worker Metrics:\n";
-    std::cout << formatter::format("   Jobs Processed: {:<6} | Processing Time: {:<10} ns\n",
-                                  snapshot.worker.jobs_processed.load(),
-                                  snapshot.worker.total_processing_time_ns.load());
+    write_information("Worker Metrics:");
+    write_information("   Jobs Processed: {:<6} | Processing Time: {:<10} ns",
+                     snapshot.worker.jobs_processed.load(),
+                     snapshot.worker.total_processing_time_ns.load());
     
-    std::cout << std::string(80, '-') << "\n";
+    write_information("{}", std::string(80, '-'));
 }
 
 int main() {
     print_metrics_header();
     
     // 1. 로거 시작
-    std::cout << "🚀 Starting logger...\n";
     if (auto result = start(); result) {
         std::cerr << "Failed to start logger: " << *result << "\n";
         return 1;
     }
+    write_information("Starting logger...");
     
     // 로그 설정
     console_target(static_cast<log_types>(static_cast<int>(log_types::Information) | static_cast<int>(log_types::Error)));
     set_title("Monitoring Demo");
     
     // 2. 모니터링 시작
-    std::cout << "📈 Starting monitoring system...\n";
+    write_information("Starting monitoring system...");
     monitoring_config config;
     config.collection_interval = std::chrono::milliseconds(500);  // 0.5초 간격
     config.buffer_size = 120;  // 1분간 데이터 보관
@@ -110,7 +141,7 @@ int main() {
     }
     
     // 3. 스레드 풀 생성 및 설정
-    std::cout << "🏭 Creating thread pool...\n";
+    write_information("Creating thread pool...");
     auto pool = std::make_shared<thread_pool>();
     
     // 워커 스레드 추가
@@ -149,10 +180,10 @@ int main() {
     thread_pool_metrics->worker_threads.store(worker_count);
     
     // 5. 작업 부하 시뮬레이션
-    std::cout << "⚡ Starting workload simulation...\n";
-    std::cout << "   - Submitting jobs with varying complexity\n";
-    std::cout << "   - Monitoring metrics every 2 seconds\n";
-    std::cout << "   - Demo will run for 30 seconds\n\n";
+    write_information("Starting workload simulation...");
+    write_information("   - Submitting jobs with varying complexity");
+    write_information("   - Monitoring metrics every 2 seconds");
+    write_information("   - Demo will run for 30 seconds\n");
     
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -221,7 +252,7 @@ int main() {
     }
     
     // 7. 정리
-    std::cout << "\n🛑 Stopping simulation...\n";
+    write_information("\nStopping simulation...");
     keep_submitting.store(false);
     
     if (job_submitter.joinable()) job_submitter.join();
@@ -232,24 +263,19 @@ int main() {
     stop();
     
     // 8. 최종 통계 출력
-    std::cout << "\n📋 Final Statistics:\n";
+    write_information("\nFinal Statistics:");
     auto final_snapshot = metrics::get_current_metrics();
-    std::cout << utility_module::formatter::format(
-        "   Total Jobs Completed: {}\n"
-        "   Final Memory Usage: {} bytes\n"
-        "   Total Processing Time: {} ms\n",
-        final_snapshot.thread_pool.jobs_completed.load(),
-        final_snapshot.system.memory_usage_bytes.load(),
-        final_snapshot.worker.total_processing_time_ns.load() / 1000000
-    );
+    write_information("   Total Jobs Completed: {}", final_snapshot.thread_pool.jobs_completed.load());
+    write_information("   Final Memory Usage: {} bytes", final_snapshot.system.memory_usage_bytes.load());
+    write_information("   Total Processing Time: {} ms", final_snapshot.worker.total_processing_time_ns.load() / 1000000);
     
-    std::cout << "\n✅ Monitoring demo completed successfully!\n";
-    std::cout << "\nKey Features Demonstrated:\n";
-    std::cout << "  ✓ Real-time metric collection every 500ms\n";
-    std::cout << "  ✓ Thread-safe metric updates during high load\n";
-    std::cout << "  ✓ Cross-platform system metric monitoring\n";
-    std::cout << "  ✓ Integration with existing thread pool system\n";
-    std::cout << "  ✓ Memory-efficient ring buffer storage\n";
+    write_information("\nMonitoring demo completed successfully!");
+    write_information("\nKey Features Demonstrated:");
+    write_information("  * Real-time metric collection every 500ms");
+    write_information("  * Thread-safe metric updates during high load");
+    write_information("  * Cross-platform system metric monitoring");
+    write_information("  * Integration with existing thread pool system");
+    write_information("  * Memory-efficient ring buffer storage");
     
     return 0;
 }
