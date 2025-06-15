@@ -19,14 +19,6 @@ function(check_compiler_version)
         endif()
         message(STATUS "GCC ${CMAKE_CXX_COMPILER_VERSION} - C++20 support verified")
         
-        # Special handling for MinGW
-        if(MINGW)
-            message(STATUS "MinGW detected - applying compatibility settings")
-            add_definitions(-D__MINGW32__)
-            # MinGW often needs explicit std library linking
-            set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lstdc++fs")
-        endif()
-        
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS ${MIN_CLANG_VERSION})
             message(FATAL_ERROR "Clang version ${CMAKE_CXX_COMPILER_VERSION} is not supported. Minimum required version is ${MIN_CLANG_VERSION}")
@@ -57,8 +49,7 @@ endfunction()
 
 function(set_compiler_warnings target)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        # Base warning flags for all GNU/Clang compilers
-        set(WARNING_FLAGS
+        target_compile_options(${target} PRIVATE
             -Wall
             -Wextra
             -Wpedantic
@@ -74,17 +65,6 @@ function(set_compiler_warnings target)
             -Wformat=2
             -Wimplicit-fallthrough
         )
-        
-        # MinGW-specific warning adjustments
-        if(MINGW)
-            # Disable warnings that are problematic on MinGW
-            list(APPEND WARNING_FLAGS
-                -Wno-unknown-pragmas  # Ignore unknown pragma warnings
-                -Wno-format           # MinGW has issues with format string warnings
-            )
-        endif()
-        
-        target_compile_options(${target} PRIVATE ${WARNING_FLAGS})
         
         if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
             target_compile_options(${target} PRIVATE
@@ -227,12 +207,6 @@ endfunction()
 
 function(target_precompile_headers_if_supported target)
     if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
-        # MinGW has issues with PCH, so disable it
-        if(MINGW)
-            message(STATUS "Precompiled headers disabled for MinGW")
-            return()
-        endif()
-        
         # Check if PCH is supported
         if(NOT DEFINED CMAKE_CXX_COMPILER_PRECOMPILE_HEADERS)
             # Test PCH support
@@ -242,8 +216,6 @@ function(target_precompile_headers_if_supported target)
         endif()
         
         if(CMAKE_CXX_COMPILER_PRECOMPILE_HEADERS)
-            # Only include standard library headers in PCH
-            # Project headers can cause issues with different build configurations
             target_precompile_headers(${target} PRIVATE
                 # Standard library headers used frequently
                 <algorithm>
@@ -254,8 +226,8 @@ function(target_precompile_headers_if_supported target)
                 <mutex>
                 <string>
                 <vector>
-                <string_view>
-                <type_traits>
+                # Project headers used frequently
+                "${CMAKE_SOURCE_DIR}/sources/utilities/core/formatter.h"
             )
             message(STATUS "Precompiled headers enabled for ${target}")
         endif()
