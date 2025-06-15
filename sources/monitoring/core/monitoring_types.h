@@ -28,12 +28,24 @@ namespace monitoring_module {
         time_point timestamp{std::chrono::steady_clock::now()};
 
         system_metrics() = default;
+        
         system_metrics(const system_metrics& other) 
             : cpu_usage_percent(other.cpu_usage_percent.load())
             , memory_usage_bytes(other.memory_usage_bytes.load())
             , active_threads(other.active_threads.load())
             , total_allocations(other.total_allocations.load())
             , timestamp(other.timestamp) {}
+
+        system_metrics& operator=(const system_metrics& other) {
+            if (this != &other) {
+                cpu_usage_percent.store(other.cpu_usage_percent.load());
+                memory_usage_bytes.store(other.memory_usage_bytes.load());
+                active_threads.store(other.active_threads.load());
+                total_allocations.store(other.total_allocations.load());
+                timestamp = other.timestamp;
+            }
+            return *this;
+        }
     };
 
     // 스레드 풀 메트릭 구조체
@@ -47,6 +59,7 @@ namespace monitoring_module {
         time_point timestamp{std::chrono::steady_clock::now()};
 
         thread_pool_metrics() = default;
+        
         thread_pool_metrics(const thread_pool_metrics& other)
             : jobs_completed(other.jobs_completed.load())
             , jobs_pending(other.jobs_pending.load())
@@ -55,6 +68,19 @@ namespace monitoring_module {
             , worker_threads(other.worker_threads.load())
             , idle_threads(other.idle_threads.load())
             , timestamp(other.timestamp) {}
+
+        thread_pool_metrics& operator=(const thread_pool_metrics& other) {
+            if (this != &other) {
+                jobs_completed.store(other.jobs_completed.load());
+                jobs_pending.store(other.jobs_pending.load());
+                total_execution_time_ns.store(other.total_execution_time_ns.load());
+                average_latency_ns.store(other.average_latency_ns.load());
+                worker_threads.store(other.worker_threads.load());
+                idle_threads.store(other.idle_threads.load());
+                timestamp = other.timestamp;
+            }
+            return *this;
+        }
     };
 
     // 워커 스레드 메트릭 구조체
@@ -66,12 +92,24 @@ namespace monitoring_module {
         time_point timestamp{std::chrono::steady_clock::now()};
 
         worker_metrics() = default;
+        
         worker_metrics(const worker_metrics& other)
             : jobs_processed(other.jobs_processed.load())
             , total_processing_time_ns(other.total_processing_time_ns.load())
             , idle_time_ns(other.idle_time_ns.load())
             , context_switches(other.context_switches.load())
             , timestamp(other.timestamp) {}
+
+        worker_metrics& operator=(const worker_metrics& other) {
+            if (this != &other) {
+                jobs_processed.store(other.jobs_processed.load());
+                total_processing_time_ns.store(other.total_processing_time_ns.load());
+                idle_time_ns.store(other.idle_time_ns.load());
+                context_switches.store(other.context_switches.load());
+                timestamp = other.timestamp;
+            }
+            return *this;
+        }
     };
 
     // 메트릭 스냅샷 (읽기 전용)

@@ -11,6 +11,32 @@
 
 namespace monitoring_module {
 
+    // 수집 통계 구조체
+    struct collection_statistics {
+        std::atomic<std::uint64_t> total_collections{0};
+        std::atomic<std::uint64_t> collection_errors{0};
+        std::atomic<std::uint64_t> buffer_overflows{0};
+        std::atomic<std::uint64_t> collection_time_ns{0};
+
+        collection_statistics() = default;
+
+        collection_statistics(const collection_statistics& other)
+            : total_collections(other.total_collections.load())
+            , collection_errors(other.collection_errors.load())
+            , buffer_overflows(other.buffer_overflows.load())
+            , collection_time_ns(other.collection_time_ns.load()) {}
+
+        collection_statistics& operator=(const collection_statistics& other) {
+            if (this != &other) {
+                total_collections.store(other.total_collections.load());
+                collection_errors.store(other.collection_errors.load());
+                buffer_overflows.store(other.buffer_overflows.load());
+                collection_time_ns.store(other.collection_time_ns.load());
+            }
+            return *this;
+        }
+    };
+
     // 메트릭 수집기 클래스
     class metrics_collector {
     public:
@@ -40,13 +66,6 @@ namespace monitoring_module {
         auto is_running() const -> bool { return running_.load(std::memory_order_acquire); }
 
     private:
-        // 수집 통계
-        struct collection_statistics {
-            std::atomic<std::uint64_t> total_collections{0};
-            std::atomic<std::uint64_t> collection_errors{0};
-            std::atomic<std::uint64_t> buffer_overflows{0};
-            std::atomic<std::uint64_t> collection_time_ns{0};
-        };
 
         // 내부 메서드
         auto collection_loop() -> void;
