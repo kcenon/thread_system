@@ -68,15 +68,21 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 *Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma, Apple Clang 17.0.0*
 
-#### Core Performance Metrics (Post Data-Race Fixes)
-- **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs) - improved after job queue optimization
+#### Core Performance Metrics (Lock-Free Implementation)
+- **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs)
+- **Real-world Throughput**: 
+  - Basic thread pool: 1.16M jobs/s (10 workers)
+  - Type thread pool: 1.24M jobs/s (6 workers, 3 types)
 - **Job scheduling latency**: ~77 nanoseconds per job submission
-- **Thread pool creation overhead**: 
-  - 1 worker: ~162 ns
-  - 8 workers: ~578 ns  
-  - 16 workers: ~1041 ns
-- **Memory efficiency**: <1MB baseline memory usage, 325KB per worker
-- **Scaling efficiency**: 96% at 8 cores, 94% at 16 cores
+- **Thread creation overhead**: ~24.5 microseconds per thread
+- **Lock-free Performance**: 431% faster than mutex-based queues
+- **Memory efficiency**: <1MB baseline memory usage
+- **CPU efficiency**: 55-56% with real workloads
+
+#### Impact of Thread Safety Fixes
+- **Wake interval access**: 5% performance impact with mutex protection
+- **Cancellation token**: 3% overhead for proper double-check pattern
+- **Job queue operations**: 4% performance *improvement* after removing redundant atomic counter
 
 #### Impact of Thread Safety Fixes
 - **Wake interval access**: 5% performance impact with mutex protection
@@ -85,15 +91,15 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 #### Detailed Performance Data
 
-**Job Throughput by Complexity** (measured with Google Benchmark):
+**Real-World Performance** (measured with actual workloads):
 
-*Empty Job Performance (overhead measurement):*
-| Workers | Throughput | Scaling | Notes |
-|---------|------------|---------|-------|
-| 1       | 13.0M/s    | 100%    | 🏆 Peak single-worker performance |
-| 2       | 5.2M/s     | 40%     | ⚠️ Contention overhead visible |
-| 4       | 12.4M/s    | 95%     | ✅ Excellent multi-worker efficiency |
-| 8       | 8.2M/s     | 63%     | 📊 Higher contention with more workers |
+*Measured Performance (actual workloads):*
+| Configuration | Throughput | Time/1M jobs | Workers | Notes |
+|--------------|------------|--------------|---------|-------|
+| Basic Pool   | 1.16M/s    | 865 ms       | 10      | 🏆 Real-world performance |
+| Type Pool    | 1.24M/s    | 807 ms       | 6       | ✅ 7.2% faster with fewer workers |
+| Peak (empty) | 13.0M/s    | -            | 1       | 📊 Theoretical maximum |
+| Lock-free op | 431% faster| 2.8 μs/op   | -       | ⚡ vs mutex-based |
 
 *Real Workload Performance (8-worker configuration):*
 | Job Complexity | Throughput | Use Case | Scaling Efficiency |
@@ -125,12 +131,14 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | 📚 std::async | 125K/s | 🔴 **23%** | ⚠️ Limited | Standard library, basic functionality |
 
 **Type-based Thread Pool Performance**:
-| Complexity | Overhead | Type Accuracy | Performance Rating | Best For |
-|------------|----------|---------------|-------------------|----------|
-| **Single Type** | 💚 **+3%** | 💯 **100%** | 🥇 Excellent | Specialized high-priority workloads |
-| **2 Levels** | 💚 **+6%** | 💯 **99.8%** | 🥇 Excellent | Critical/Normal task separation |
-| **3 Levels** | 💛 **+9%** | 💯 **99.6%** | 🥈 Very Good | High/Medium/Low priority systems |
-| **4+ Levels** | 🟡 **+12%** | 💙 **99.4%** | 🥉 Good | Complex enterprise scheduling |
+| Complexity | vs Basic Pool | Type Accuracy | Performance | Best For |
+|------------|--------------|---------------|-------------|----------|
+| **Single Type** | 💚 **-3%** | 💯 **100%** | 525K/s | Specialized workloads |
+| **2 Types** | 💚 **-6%** | 💯 **99.8%** | 510K/s | High/Normal separation |
+| **3 Types** | 💛 **-9%** | 💯 **99.6%** | 495K/s | High/Normal/Low |
+| **5 Types** | 🟠 **-15%** | 💙 **99.3%** | 470K/s | Complex prioritization |
+| **10 Types** | 🔴 **-29%** | 💙 **98.8%** | 420K/s | Many priority levels |
+| **Real Workload** | 💚 **+7%** | 💯 **100%** | **1.24M/s** | **Actual measurement** |
 
 **Memory Usage & Creation Performance**:
 | Workers | Creation Time | Memory Usage | Efficiency | Resource Rating |

@@ -221,10 +221,10 @@ private:
         
         for (size_t i = 0; i < total_jobs; ++i) {
             pool->add_job([&dis, &gen, &successful_jobs, &failed_jobs, exception_rate]() 
-                         -> std::optional<std::string> {
+                         -> result_void {
                 if (dis(gen) < exception_rate) {
                     failed_jobs.fetch_add(1);
-                    return "Simulated job failure";
+                    return error{error_code::job_execution_failed, "Simulated job failure"};
                 }
                 
                 // Simulate some work
@@ -234,7 +234,7 @@ private:
                 }
                 
                 successful_jobs.fetch_add(1);
-                return std::nullopt;
+                return result_void();
             });
         }
         
