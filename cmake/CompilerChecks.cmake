@@ -227,7 +227,7 @@ function(target_precompile_headers_if_supported target)
                 <string>
                 <vector>
                 # Project headers used frequently
-                "${CMAKE_SOURCE_DIR}/sources/utilities/formatter.h"
+                "${CMAKE_SOURCE_DIR}/sources/utilities/core/formatter.h"
             )
             message(STATUS "Precompiled headers enabled for ${target}")
         endif()
