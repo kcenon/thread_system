@@ -73,6 +73,18 @@ if(APPLE)
     # On macOS, pthread is automatically linked by the system
     # We only need to link our own utilities library
     target_link_libraries(${PROJECT_NAME} PUBLIC utilities)
+elseif(MINGW)
+    # MinGW specific configuration
+    set(THREADS_PREFER_PTHREAD_FLAG ON)
+    find_package(Threads REQUIRED)
+    
+    # Link against utilities, threading library, and Windows libraries
+    target_link_libraries(${PROJECT_NAME} PUBLIC 
+        utilities           # Our utility functions
+        Threads::Threads    # System threading library
+        ws2_32             # Windows sockets
+        winmm              # Windows multimedia (for timeGetTime, etc.)
+    )
 else()
     # On other platforms, we need to explicitly find and link the threading library
     set(THREADS_PREFER_PTHREAD_FLAG ON)  # Prefer -pthread flag if available

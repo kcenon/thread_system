@@ -56,6 +56,18 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     # Suppress duplicate library warnings on macOS (common with vcpkg)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-no_warn_duplicate_libraries")
   endif()
+  
+  # MinGW-specific configuration
+  if(MINGW)
+    message(STATUS "MinGW compiler detected - applying compatibility flags")
+    # MinGW needs special handling for Windows APIs
+    add_definitions(-D_WIN32_WINNT=0x0601)  # Windows 7 minimum
+    add_definitions(-DWINVER=0x0601)
+    # Ensure proper exception handling
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mthreads")
+    # Link required Windows libraries
+    link_libraries(ws2_32 winmm)
+  endif()
 elseif(MSVC)
   # For Microsoft Visual C++ compiler
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest /Zc:__cplusplus")
@@ -100,6 +112,25 @@ if(APPLE)
   set(THREADS_FOUND TRUE)
   set(CMAKE_HAVE_THREADS_LIBRARY 1)
   set(Threads_FOUND TRUE)
+elseif(MINGW)
+  # MinGW specific settings
+  add_definitions(-DMINGW_PLATFORM)
+  add_definitions(-D_WIN32_WINNT=0x0601)   # Windows 7 minimum
+  add_definitions(-DWINVER=0x0601)
+  
+  # MinGW threading flags
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mthreads")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthreads")
+  
+  # MinGW specific warnings
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-format")
+  
+  # Find threading library
+  set(THREADS_PREFER_PTHREAD_FLAG ON)
+  find_package(Threads REQUIRED)
+  
+  # Additional Windows libraries needed by MinGW
+  set(ADDITIONAL_LIBS ws2_32 winmm)
 else()
   # On other platforms, use CMake's thread package finder
   set(THREADS_PREFER_PTHREAD_FLAG ON)       # Prefer using -pthread flag when available
