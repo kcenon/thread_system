@@ -77,45 +77,69 @@ xcode-select --install
 Let's create a simple program that demonstrates the basic features:
 
 ```cpp
-#include "thread_pool.h"
-#include "logger.h"
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/jobs/callback_job.h"
+#include "logger/core/logger.h"
+#include "utilities/core/formatter.h"
 #include <iostream>
 #include <vector>
+#include <memory>
 
 using namespace thread_pool_module;
+using namespace thread_module;
+using namespace utility_module;
 
 int main() {
     // Start the logger
     log_module::start();
     
-    // Create a thread pool with 4 worker threads
-    auto [pool, error] = create_default(4);
-    if (error.has_value()) {
-        std::cerr << "Failed to create pool: " << *error << std::endl;
+    // Create a thread pool
+    auto pool = std::make_shared<thread_pool>();
+    
+    // Add 4 worker threads
+    std::vector<std::unique_ptr<thread_worker>> workers;
+    for (int i = 0; i < 4; ++i) {
+        workers.push_back(std::make_unique<thread_worker>());
+    }
+    pool->enqueue_batch(std::move(workers));
+    
+    // Start the pool
+    auto start_error = pool->start();
+    if (start_error.has_value()) {
+        std::cerr << "Failed to start pool: " << *start_error << std::endl;
         return 1;
     }
     
     // Submit some jobs
-    std::vector<std::future<int>> results;
-    
+    std::vector<std::shared_ptr<int>> results;
     for (int i = 0; i < 10; ++i) {
-        results.emplace_back(
-            pool->submit_job([i] {
+        auto result = std::make_shared<int>(0);
+        results.push_back(result);
+        
+        pool->enqueue(std::make_unique<callback_job>(
+            [i, result]() -> result_void {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                return i * i;
-            })
-        );
+                *result = i * i;
+                return {};
+            }
+        ));
     }
+    
+    // Wait for jobs to complete
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     
     // Collect results
     std::cout << "Results: ";
-    for (auto& future : results) {
-        std::cout << future.get() << " ";
+    for (const auto& result : results) {
+        std::cout << *result << " ";
     }
     std::cout << std::endl;
     
-    // Logger automatically stops on program exit
+    // Stop the pool and logger
+    pool->stop();
+    log_module::stop();
+    
     return 0;
 }
 ```
@@ -145,13 +169,18 @@ Results: 0 1 4 9 16 25 36 49 64 81
 The thread pool manages worker threads that execute submitted jobs:
 
 ```cpp
-// Create with specific thread count
-auto [pool, error] = thread_pool_module::create_default(4);
+// Create thread pool
+auto pool = std::make_shared<thread_pool>();
 
-// Create with hardware concurrency
-auto [pool2, error2] = thread_pool_module::create_default(
-    std::thread::hardware_concurrency()
-);
+// Add specific number of workers
+std::vector<std::unique_ptr<thread_worker>> workers;
+for (size_t i = 0; i < 4; ++i) {
+    workers.push_back(std::make_unique<thread_worker>());
+}
+pool->enqueue_batch(std::move(workers));
+
+// Start the pool
+pool->start();
 ```
 
 ### 2. Job Submission
@@ -159,15 +188,23 @@ auto [pool2, error2] = thread_pool_module::create_default(
 Submit various types of jobs:
 
 ```cpp
-// Lambda function
-auto future1 = pool->submit_job([] { return 42; });
+// Lambda function as callback job
+pool->enqueue(std::make_unique<callback_job>(
+    []() -> result_void { 
+        // Do work
+        return {}; 
+    }
+));
 
-// Function with parameters
-auto future2 = pool->submit_job([](int x, int y) { return x + y; }, 10, 20);
-
-// Member function
-MyClass obj;
-auto future3 = pool->submit_job(&MyClass::method, &obj, param);
+// Job with captured values
+int x = 10, y = 20;
+pool->enqueue(std::make_unique<callback_job>(
+    [x, y]() -> result_void { 
+        int result = x + y;
+        log_module::write_information("Result: {}", result);
+        return {}; 
+    }
+));
 ```
 
 ### 3. Type Scheduling
@@ -175,17 +212,34 @@ auto future3 = pool->submit_job(&MyClass::method, &obj, param);
 Use type thread pool for type-based execution:
 
 ```cpp
-#include "typed_thread_pool.h"
+#include "typed_thread_pool/pool/typed_thread_pool.h"
+#include "typed_thread_pool/jobs/callback_typed_job.h"
 
 using namespace typed_thread_pool_module;
 
-// Create type pool
-auto [type_pool, error] = create_default(4);
+// Create typed thread pool
+auto typed_pool = std::make_shared<typed_thread_pool_t<job_types>>();
 
-// Submit with type (lower value = higher type)
-type_pool->submit_job(1, [] { /* urgent task */ });
-type_pool->submit_job(5, [] { /* normal task */ });
-type_pool->submit_job(10, [] { /* background task */ });
+// Add workers with different type responsibilities
+typed_pool->enqueue(std::make_unique<typed_thread_worker_t<job_types>>(
+    std::initializer_list<job_types>{job_types::High}
+));
+typed_pool->enqueue(std::make_unique<typed_thread_worker_t<job_types>>(
+    std::initializer_list<job_types>{job_types::Normal, job_types::Low}
+));
+
+// Start the pool
+typed_pool->start();
+
+// Submit jobs with different types
+typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
+    job_types::High,
+    []() -> result_void { /* urgent task */ return {}; }
+));
+typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
+    job_types::Normal,
+    []() -> result_void { /* normal task */ return {}; }
+));
 ```
 
 ### 4. Asynchronous Logging
@@ -193,15 +247,19 @@ type_pool->submit_job(10, [] { /* background task */ });
 High-performance thread-safe logging:
 
 ```cpp
-#include "logger.h"
+#include "logger/core/logger.h"
 
 // Start logger (once per application)
 log_module::start();
 
-// Log messages
-log_module::logger()->log(log_types::info, "Application started");
-log_module::logger()->log(log_types::warning, "This is a warning");
-log_module::logger()->log(log_types::error, "Error: {}", error_message);
+// Log messages using convenience functions
+log_module::write_information("Application started");
+log_module::write_debug("Debug message: {}", debug_info);
+log_module::write_error("Error: {}", error_message);
+
+// Configure log targets
+log_module::console_target(log_types::Information | log_types::Error);
+log_module::file_target(log_types::All);
 ```
 
 ## Common Use Cases
@@ -213,26 +271,41 @@ std::vector<int> data(1000000);
 // ... fill data ...
 
 const size_t num_threads = 4;
-auto [pool, error] = thread_pool_module::create_default(num_threads);
+auto pool = std::make_shared<thread_pool>();
+
+// Add workers
+std::vector<std::unique_ptr<thread_worker>> workers;
+for (size_t i = 0; i < num_threads; ++i) {
+    workers.push_back(std::make_unique<thread_worker>());
+}
+pool->enqueue_batch(std::move(workers));
+pool->start();
 
 const size_t chunk_size = data.size() / num_threads;
-std::vector<std::future<double>> futures;
+std::vector<std::shared_ptr<double>> results;
 
 for (size_t i = 0; i < num_threads; ++i) {
     auto start = data.begin() + i * chunk_size;
     auto end = (i == num_threads - 1) ? data.end() : start + chunk_size;
     
-    futures.emplace_back(
-        pool->submit_job([start, end] {
-            return std::accumulate(start, end, 0.0) / 
-                   std::distance(start, end);
-        })
-    );
+    auto result = std::make_shared<double>(0.0);
+    results.push_back(result);
+    
+    pool->enqueue(std::make_unique<callback_job>(
+        [start, end, result]() -> result_void {
+            *result = std::accumulate(start, end, 0.0) / 
+                      std::distance(start, end);
+            return {};
+        }
+    ));
 }
 
+// Wait for completion
+std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
 double total_average = 0;
-for (auto& f : futures) {
-    total_average += f.get();
+for (const auto& result : results) {
+    total_average += *result;
 }
 total_average /= num_threads;
 ```
@@ -241,20 +314,31 @@ total_average /= num_threads;
 
 ```cpp
 // Create dedicated I/O pool
-auto [io_pool, error] = thread_pool_module::create_default(2);
+auto io_pool = std::make_shared<thread_pool>();
+std::vector<std::unique_ptr<thread_worker>> io_workers;
+for (int i = 0; i < 2; ++i) {
+    io_workers.push_back(std::make_unique<thread_worker>());
+}
+io_pool->enqueue_batch(std::move(io_workers));
+io_pool->start();
 
-auto read_future = io_pool->submit_job([] {
-    std::ifstream file("data.txt");
-    std::string content((std::istreambuf_iterator<char>(file)),
-                       std::istreambuf_iterator<char>());
-    return content;
-});
+auto content_ptr = std::make_shared<std::string>();
+
+io_pool->enqueue(std::make_unique<callback_job>(
+    [content_ptr]() -> result_void {
+        std::ifstream file("data.txt");
+        *content_ptr = std::string((std::istreambuf_iterator<char>(file)),
+                                  std::istreambuf_iterator<char>());
+        return {};
+    }
+));
 
 // Do other work while file is being read
 do_other_work();
 
-// Get the file content when needed
-std::string content = read_future.get();
+// Wait and get the file content when needed
+std::this_thread::sleep_for(std::chrono::milliseconds(100));
+std::string content = *content_ptr;
 ```
 
 ## Build Options
