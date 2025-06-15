@@ -13,6 +13,7 @@ add_subdirectory(logger_benchmarks)
 add_subdirectory(thread_pool_benchmarks)
 add_subdirectory(typed_thread_pool_benchmarks)
 add_subdirectory(thread_base_benchmarks)
+add_subdirectory(monitoring_benchmarks)
 
 # Data race fixes benchmark
 add_executable(data_race_benchmark data_race_benchmark.cpp)
