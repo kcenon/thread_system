@@ -133,7 +133,7 @@ Private Attributes</h2></td></tr>
 class thread_module::sync::scoped_lock_guard&lt; Mutex &gt;</div><p>RAII-based scoped lock guard with timeout support. </p>
 <p>This class provides automatic lock management with optional timeout capabilities, ensuring locks are always released even in exceptional situations. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00017">17</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00048">48</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa548c7cac73a8af6fca06568c9baa596" name="aa548c7cac73a8af6fca06568c9baa596"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa548c7cac73a8af6fca06568c9baa596">&#9670;&#160;</a></span>scoped_lock_guard() <span class="overload">[1/4]</span></h2>
@@ -169,12 +169,12 @@ template&lt;typename Mutex &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00023">23</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   24</span>            : <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>(mutex), <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>(<span class="keyword">true</span>) {</div>
-<div class="line"><span class="lineno">   25</span>            <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.lock();</div>
-<div class="line"><span class="lineno">   26</span>        }</div>
-<div class="ttc" id="aclassthread__module_1_1sync_1_1scoped__lock__guard_html_a85c3a642570cc74476891826471a184b"><div class="ttname"><a href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">thread_module::sync::scoped_lock_guard::locked_</a></div><div class="ttdeci">bool locked_</div><div class="ttdef"><b>Definition</b> <a href="../../df/d7d/sync__primitives_8h_source.html#l00080">sync_primitives.h:80</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1sync_1_1scoped__lock__guard_html_aa5f4e4d1e5602d0f01b6c6f30f12a2a4"><div class="ttname"><a href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">thread_module::sync::scoped_lock_guard::mutex_</a></div><div class="ttdeci">Mutex &amp; mutex_</div><div class="ttdef"><b>Definition</b> <a href="../../df/d7d/sync__primitives_8h_source.html#l00079">sync_primitives.h:79</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00054">54</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>            : <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>(mutex), <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>(<span class="keyword">true</span>) {</div>
+<div class="line"><span class="lineno">   56</span>            <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.lock();</div>
+<div class="line"><span class="lineno">   57</span>        }</div>
+<div class="ttc" id="aclassthread__module_1_1sync_1_1scoped__lock__guard_html_a85c3a642570cc74476891826471a184b"><div class="ttname"><a href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">thread_module::sync::scoped_lock_guard::locked_</a></div><div class="ttdeci">bool locked_</div><div class="ttdef"><b>Definition</b> <a href="../../df/d7d/sync__primitives_8h_source.html#l00111">sync_primitives.h:111</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1sync_1_1scoped__lock__guard_html_aa5f4e4d1e5602d0f01b6c6f30f12a2a4"><div class="ttname"><a href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">thread_module::sync::scoped_lock_guard::mutex_</a></div><div class="ttdeci">Mutex &amp; mutex_</div><div class="ttdef"><b>Definition</b> <a href="../../df/d7d/sync__primitives_8h_source.html#l00110">sync_primitives.h:110</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -225,16 +225,16 @@ template&lt;typename Rep , typename Period &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00034">34</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>            : <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>(mutex), <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>(<span class="keyword">false</span>) {</div>
-<div class="line"><span class="lineno">   36</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;Mutex, std::timed_mutex&gt; || </div>
-<div class="line"><span class="lineno">   37</span>                         std::is_same_v&lt;Mutex, std::recursive_timed_mutex&gt;) {</div>
-<div class="line"><span class="lineno">   38</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.try_lock_for(timeout);</div>
-<div class="line"><span class="lineno">   39</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   40</span>                <span class="comment">// Fallback for mutexes without timeout support</span></div>
-<div class="line"><span class="lineno">   41</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.try_lock();</div>
-<div class="line"><span class="lineno">   42</span>            }</div>
-<div class="line"><span class="lineno">   43</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00065">65</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>            : <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>(mutex), <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>(<span class="keyword">false</span>) {</div>
+<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;Mutex, std::timed_mutex&gt; || </div>
+<div class="line"><span class="lineno">   68</span>                         std::is_same_v&lt;Mutex, std::recursive_timed_mutex&gt;) {</div>
+<div class="line"><span class="lineno">   69</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.try_lock_for(timeout);</div>
+<div class="line"><span class="lineno">   70</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   71</span>                <span class="comment">// Fallback for mutexes without timeout support</span></div>
+<div class="line"><span class="lineno">   72</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.try_lock();</div>
+<div class="line"><span class="lineno">   73</span>            }</div>
+<div class="line"><span class="lineno">   74</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -265,12 +265,12 @@ template&lt;typename Mutex &gt; </div>
 
 <p>Destructor - automatically releases the lock if held. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00048">48</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   48</span>                             {</div>
-<div class="line"><span class="lineno">   49</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>) {</div>
-<div class="line"><span class="lineno">   50</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.unlock();</div>
-<div class="line"><span class="lineno">   51</span>            }</div>
-<div class="line"><span class="lineno">   52</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00079">79</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>                             {</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>) {</div>
+<div class="line"><span class="lineno">   81</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.unlock();</div>
+<div class="line"><span class="lineno">   82</span>            }</div>
+<div class="line"><span class="lineno">   83</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -415,10 +415,10 @@ template&lt;typename Mutex &gt; </div>
 <p>Check if the lock was successfully acquired. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if lock is held, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00064">64</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>                                                      {</div>
-<div class="line"><span class="lineno">   65</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>;</div>
-<div class="line"><span class="lineno">   66</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00095">95</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                                                      {</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>;</div>
+<div class="line"><span class="lineno">   97</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -449,13 +449,13 @@ template&lt;typename Mutex &gt; </div>
 
 <p>Explicitly release the lock before destruction. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00071">71</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>                      {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>) {</div>
-<div class="line"><span class="lineno">   73</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.unlock();</div>
-<div class="line"><span class="lineno">   74</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   75</span>            }</div>
-<div class="line"><span class="lineno">   76</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00102">102</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>                      {</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a>) {</div>
+<div class="line"><span class="lineno">  104</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#aa5f4e4d1e5602d0f01b6c6f30f12a2a4">mutex_</a>.unlock();</div>
+<div class="line"><span class="lineno">  105</span>                <a class="code hl_variable" href="../../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html#a85c3a642570cc74476891826471a184b">locked_</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  106</span>            }</div>
+<div class="line"><span class="lineno">  107</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -482,7 +482,7 @@ template&lt;typename Mutex &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00080">80</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00111">111</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
 
 </div>
 </div>
@@ -508,7 +508,7 @@ template&lt;typename Mutex &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00079">79</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7d/sync__primitives_8h_source.html#l00110">110</a> of file <a class="el" href="../../df/d7d/sync__primitives_8h_source.html">sync_primitives.h</a>.</p>
 
 </div>
 </div>
@@ -518,7 +518,7 @@ template&lt;typename Mutex &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -193,13 +193,13 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a unit of work (task) to be executed, typically by a job queue. </p>
 <p>The <code>job</code> class provides a base interface for scheduling and executing discrete tasks within a multi-threaded environment. Derived classes can override the <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> method to implement custom logic for their specific tasks.</p>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<h3><a class="anchor" id="autotoc_md26"></a>
 Thread-Safety</h3>
 <ul>
 <li><code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> will generally be called from a worker thread. If your task accesses shared data or interacts with shared resources, you must ensure your implementation is thread-safe.</li>
 <li>The job itself is meant to be used via <code>std::shared_ptr</code>, making it easier to manage lifetimes across multiple threads.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md9"></a>
+<h3><a class="anchor" id="autotoc_md27"></a>
 Error Handling</h3>
 <ul>
 <li>A job returns a <code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> from <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code>.<ul>
@@ -209,7 +209,7 @@ Error Handling</h3>
 </li>
 <li>Error information can be used for logging, debugging, or to retry a job if desired.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md10"></a>
+<h3><a class="anchor" id="autotoc_md28"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Create a custom job that overrides do_work().</span></div>
 <div class="line"><span class="keyword">class </span>my_job : <span class="keyword">public</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div>
@@ -232,10 +232,10 @@ Usage Example</h3>
 <div class="line"><span class="keyword">auto</span> q = std::make_shared&lt;thread_module::job_queue&gt;();</div>
 <div class="line"><span class="keyword">auto</span> <a class="code hl_typedef" href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">job_ptr</a> = std::make_shared&lt;my_job&gt;();</div>
 <div class="line">q-&gt;enqueue(job_ptr);</div>
-<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00111">error_handling.h:111</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00166">error_handling.h:166</a></div></div>
-<div class="ttc" id="anamespacethread__module_1_1jobs_html_aad65bda06a2be2bfad673d5581d42eaf"><div class="ttname"><a href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">thread_module::jobs::job_ptr</a></div><div class="ttdeci">std::shared_ptr&lt; job_interface &gt; job_ptr</div><div class="ttdoc">Shared pointer type for job objects.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dca/thread__base_2jobs_2job__types_8h_source.html#l00073">job_types.h:73</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
+<div class="ttc" id="anamespacethread__module_1_1jobs_html_aad65bda06a2be2bfad673d5581d42eaf"><div class="ttname"><a href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">thread_module::jobs::job_ptr</a></div><div class="ttdeci">std::shared_ptr&lt; job_interface &gt; job_ptr</div><div class="ttdoc">Shared pointer type for job objects.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/dca/thread__base_2jobs_2job__types_8h_source.html#l00104">job_types.h:104</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca260ca9dd8a4577fc00b7bd5810298076"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca260ca9dd8a4577fc00b7bd5810298076">thread_module::error_code::success</a></div><div class="ttdeci">@ success</div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d3/d6a/job_8h_source.html#l00101">101</a> of file <a class="el" href="../../d3/d6a/job_8h_source.html">job.h</a>.</p>
@@ -264,7 +264,7 @@ Usage Example</h3>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md11"></a>
+<h4><a class="anchor" id="autotoc_md29"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a basic job with a custom name</span></div>
 <div class="line"><span class="keyword">auto</span> my_simple_job = std::make_shared&lt;thread_module::job&gt;(<span class="stringliteral">&quot;simple_job&quot;</span>);</div>
@@ -311,7 +311,7 @@ Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md12"></a>
+<h4><a class="anchor" id="autotoc_md30"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a job that has binary data.</span></div>
 <div class="line">std::vector&lt;uint8_t&gt; my_data = {0xDE, 0xAD, 0xBE, 0xEF};</div>
@@ -386,10 +386,10 @@ Example</h4>
 <li>A non-empty string on failure, providing an error message or explanation.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md13"></a>
+<h4><a class="anchor" id="autotoc_md31"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns <code>std::nullopt</code> (i.e., no error). Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md14"></a>
+<h4><a class="anchor" id="autotoc_md32"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
@@ -401,10 +401,10 @@ Concurrency</h4>
 <li>An error result (constructed with error{error_code, message}) on failure.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md15"></a>
+<h4><a class="anchor" id="autotoc_md33"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns a success result. Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md16"></a>
+<h4><a class="anchor" id="autotoc_md34"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
@@ -503,7 +503,7 @@ Here is the caller graph for this function:</div>
 
 <p>Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job, if any. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the associated <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. Will be empty if no queue was set or if the queue has already been destroyed.</dd></dl>
-<h4><a class="anchor" id="autotoc_md18"></a>
+<h4><a class="anchor" id="autotoc_md36"></a>
 Usage Example</h4>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> jq = <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a5b215be529afbe56e5328747d39779c8">get_job_queue</a>();</div>
 <div class="line"><span class="keywordflow">if</span> (jq)</div>
@@ -620,7 +620,7 @@ Usage Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md17"></a>
+<h4><a class="anchor" id="autotoc_md35"></a>
 Implementation Detail</h4>
 <ul>
 <li>Stored internally as a <code>std::weak_ptr</code>. If the queue is destroyed, the pointer becomes invalid. </li>
@@ -662,7 +662,7 @@ Implementation Detail</h4>
 <p>Provides a string representation of the job for logging or debugging. </p>
 <p>By default, this returns the job's name. Derived classes can override to include extra diagnostic details (e.g., job status, data contents, etc.).</p>
 <dl class="section return"><dt>Returns</dt><dd>A string describing the job (e.g., <code>name_</code>).</dd></dl>
-<h4><a class="anchor" id="autotoc_md19"></a>
+<h4><a class="anchor" id="autotoc_md37"></a>
 Example</h4>
 <div class="fragment"><div class="line">std::shared_ptr&lt;my_job&gt; job_ptr = std::make_shared&lt;my_job&gt;();</div>
 <div class="line"><span class="comment">// ...</span></div>
@@ -812,7 +812,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

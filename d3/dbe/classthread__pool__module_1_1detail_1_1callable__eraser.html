@@ -128,7 +128,7 @@ Static Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type eraser for heterogeneous callable storage. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00192">192</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00223">223</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1ab331ab3ee2cb5900b0138775d5216f" name="a1ab331ab3ee2cb5900b0138775d5216f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ab331ab3ee2cb5900b0138775d5216f">&#9670;&#160;</a></span>callable_eraser()</h2>
@@ -157,12 +157,12 @@ requires Callable&lt;F&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00195">195</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  197</span>            : <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">vtable_</a>(&amp;<a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4">vtable_for</a>&lt;std::decay_t&lt;F&gt;&gt;)</div>
-<div class="line"><span class="lineno">  198</span>            , <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">storage_</a>(std::forward&lt;F&gt;(f)) {}</div>
-<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_ad62a76014e864949e2ded9eb436e223f"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">thread_pool_module::detail::callable_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00216">pool_traits.h:216</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4">thread_pool_module::detail::callable_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00211">pool_traits.h:211</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_aecf7101583fd0176e79bddc3ed012a10"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">thread_pool_module::detail::callable_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00217">pool_traits.h:217</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00226">226</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>            : <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">vtable_</a>(&amp;<a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4">vtable_for</a>&lt;std::decay_t&lt;F&gt;&gt;)</div>
+<div class="line"><span class="lineno">  229</span>            , <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">storage_</a>(std::forward&lt;F&gt;(f)) {}</div>
+<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_ad62a76014e864949e2ded9eb436e223f"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">thread_pool_module::detail::callable_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00247">pool_traits.h:247</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ae0dbe9c5bb8eb7b2dd2d3fcb5a2de9f4">thread_pool_module::detail::callable_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00242">pool_traits.h:242</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1detail_1_1callable__eraser_html_aecf7101583fd0176e79bddc3ed012a10"><div class="ttname"><a href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">thread_pool_module::detail::callable_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00248">pool_traits.h:248</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -190,11 +190,11 @@ requires Callable&lt;F&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00200">200</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  200</span>                          {</div>
-<div class="line"><span class="lineno">  201</span>            <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673">invoke</a>(<a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">storage_</a>);</div>
-<div class="line"><span class="lineno">  202</span>        }</div>
-<div class="ttc" id="astructthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t_html_a2a6177877a748670b1538deddfd4f673"><div class="ttname"><a href="../../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673">thread_pool_module::detail::callable_eraser::vtable_t::invoke</a></div><div class="ttdeci">void(* invoke)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00206">pool_traits.h:206</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00231">231</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  231</span>                          {</div>
+<div class="line"><span class="lineno">  232</span>            <a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#ad62a76014e864949e2ded9eb436e223f">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673">invoke</a>(<a class="code hl_variable" href="../../d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html#aecf7101583fd0176e79bddc3ed012a10">storage_</a>);</div>
+<div class="line"><span class="lineno">  233</span>        }</div>
+<div class="ttc" id="astructthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t_html_a2a6177877a748670b1538deddfd4f673"><div class="ttname"><a href="../../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673">thread_pool_module::detail::callable_eraser::vtable_t::invoke</a></div><div class="ttdeci">void(* invoke)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../da/d62/pool__traits_8h_source.html#l00237">pool_traits.h:237</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -219,7 +219,7 @@ requires Callable&lt;F&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00217">217</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00248">248</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
 
 </div>
 </div>
@@ -243,7 +243,7 @@ requires Callable&lt;F&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00216">216</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00247">247</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
 
 </div>
 </div>
@@ -273,11 +273,11 @@ template&lt;typename F &gt; </div>
 <div class="line">            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>F*<span class="keyword">&gt;</span>(ptr)-&gt;~F(); }</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00211">211</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  211</span>                                               {</div>
-<div class="line"><span class="lineno">  212</span>            [](<span class="keywordtype">void</span>* ptr) { (*<span class="keyword">static_cast&lt;</span>F*<span class="keyword">&gt;</span>(ptr))(); },</div>
-<div class="line"><span class="lineno">  213</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>F*<span class="keyword">&gt;</span>(ptr)-&gt;~F(); }</div>
-<div class="line"><span class="lineno">  214</span>        };</div>
+<p class="definition">Definition at line <a class="el" href="../../da/d62/pool__traits_8h_source.html#l00242">242</a> of file <a class="el" href="../../da/d62/pool__traits_8h_source.html">pool_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  242</span>                                               {</div>
+<div class="line"><span class="lineno">  243</span>            [](<span class="keywordtype">void</span>* ptr) { (*<span class="keyword">static_cast&lt;</span>F*<span class="keyword">&gt;</span>(ptr))(); },</div>
+<div class="line"><span class="lineno">  244</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>F*<span class="keyword">&gt;</span>(ptr)-&gt;~F(); }</div>
+<div class="line"><span class="lineno">  245</span>        };</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -287,7 +287,7 @@ template&lt;typename F &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

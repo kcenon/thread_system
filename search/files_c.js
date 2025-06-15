@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['span_2eh_0',['span.h',['../d4/d7a/span_8h.html',1,'']]],
-  ['sync_5fprimitives_2eh_1',['sync_primitives.h',['../df/d7d/sync__primitives_8h.html',1,'']]]
+  ['ring_5fbuffer_2eh_0',['ring_buffer.h',['../d7/d7b/ring__buffer_8h.html',1,'']]]
 ];

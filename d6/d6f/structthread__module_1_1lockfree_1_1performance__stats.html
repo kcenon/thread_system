@@ -133,7 +133,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Performance statistics for lock-free operations. </p>
 <p>This structure tracks performance metrics that can be used for adaptive behavior in lock-free data structures. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00042">42</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00074">74</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a99fd584eb1e365553341ece4d28aadf0" name="a99fd584eb1e365553341ece4d28aadf0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99fd584eb1e365553341ece4d28aadf0">&#9670;&#160;</a></span>cas_success_ratio()</h2>
@@ -161,16 +161,16 @@ Public Attributes</h2></td></tr>
 <p>Calculate CAS success ratio. </p>
 <dl class="section return"><dt>Returns</dt><dd>Ratio of successful CAS to total CAS operations (0.0 to 1.0) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00075">75</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>                                                                {</div>
-<div class="line"><span class="lineno">   76</span>            <span class="keyword">const</span> <span class="keyword">auto</span> successful = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">successful_cas_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   77</span>            <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284">failed</a> = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">failed_cas_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   78</span>            <span class="keyword">const</span> <span class="keyword">auto</span> total = successful + <a class="code hl_enumvalue" href="../../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284">failed</a>;</div>
-<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">return</span> total &gt; 0 ? <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(successful) / total : 0.0;</div>
-<div class="line"><span class="lineno">   80</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00107">107</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>                                                                {</div>
+<div class="line"><span class="lineno">  108</span>            <span class="keyword">const</span> <span class="keyword">auto</span> successful = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">successful_cas_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  109</span>            <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284">failed</a> = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">failed_cas_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  110</span>            <span class="keyword">const</span> <span class="keyword">auto</span> total = successful + <a class="code hl_enumvalue" href="../../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284">failed</a>;</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">return</span> total &gt; 0 ? <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(successful) / total : 0.0;</div>
+<div class="line"><span class="lineno">  112</span>        }</div>
 <div class="ttc" id="anamespacethread__module_1_1jobs_html_ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284"><div class="ttname"><a href="../../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a26934eb377001f66e37289a5c93fe284">thread_module::jobs::job_state::failed</a></div><div class="ttdeci">@ failed</div><div class="ttdoc">Job execution failed.</div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a27ec28a10583a556ee021850e856e04c"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">thread_module::lockfree::performance_stats::failed_cas_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; failed_cas_count</div><div class="ttdoc">Number of failed CAS operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00056">lockfree_config.h:56</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a54b6768742baebe12c45e5d00eff0bca"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">thread_module::lockfree::performance_stats::successful_cas_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; successful_cas_count</div><div class="ttdoc">Number of successful CAS operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00053">lockfree_config.h:53</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a27ec28a10583a556ee021850e856e04c"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">thread_module::lockfree::performance_stats::failed_cas_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; failed_cas_count</div><div class="ttdoc">Number of failed CAS operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00088">lockfree_config.h:88</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a54b6768742baebe12c45e5d00eff0bca"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">thread_module::lockfree::performance_stats::successful_cas_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; successful_cas_count</div><div class="ttdoc">Number of successful CAS operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00085">lockfree_config.h:85</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -200,14 +200,14 @@ Public Attributes</h2></td></tr>
 <p>Calculate contention ratio. </p>
 <dl class="section return"><dt>Returns</dt><dd>Ratio of contended operations to total operations (0.0 to 1.0) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00065">65</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   65</span>                                                               {</div>
-<div class="line"><span class="lineno">   66</span>            <span class="keyword">const</span> <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">operations_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   67</span>            <span class="keyword">const</span> <span class="keyword">auto</span> contention = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">contention_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">return</span> ops &gt; 0 ? <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(contention) / ops : 0.0;</div>
-<div class="line"><span class="lineno">   69</span>        }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a77cc6567f2aeebbc8da74a7debb397b3"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">thread_module::lockfree::performance_stats::operations_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; operations_count</div><div class="ttdoc">Total number of operations performed.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00044">lockfree_config.h:44</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a8b4bfd88ca6a1e0eb95dc7112d3ef822"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">thread_module::lockfree::performance_stats::contention_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; contention_count</div><div class="ttdoc">Number of times contention was detected.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00047">lockfree_config.h:47</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00097">97</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   97</span>                                                               {</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keyword">const</span> <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">operations_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">   99</span>            <span class="keyword">const</span> <span class="keyword">auto</span> contention = <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">contention_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">return</span> ops &gt; 0 ? <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(contention) / ops : 0.0;</div>
+<div class="line"><span class="lineno">  101</span>        }</div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a77cc6567f2aeebbc8da74a7debb397b3"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">thread_module::lockfree::performance_stats::operations_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; operations_count</div><div class="ttdoc">Total number of operations performed.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00076">lockfree_config.h:76</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a8b4bfd88ca6a1e0eb95dc7112d3ef822"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">thread_module::lockfree::performance_stats::contention_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; contention_count</div><div class="ttdoc">Number of times contention was detected.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00079">lockfree_config.h:79</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -236,17 +236,17 @@ Public Attributes</h2></td></tr>
 
 <p>Reset all statistics to zero. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00085">85</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   85</span>                              {</div>
-<div class="line"><span class="lineno">   86</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">operations_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   87</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">contention_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   88</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a317aabad00ecffbb1577be8ce9010847">adaptation_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   89</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">successful_cas_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   90</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">failed_cas_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   91</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e">backoff_time_ns</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">   92</span>        }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a317aabad00ecffbb1577be8ce9010847"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a317aabad00ecffbb1577be8ce9010847">thread_module::lockfree::performance_stats::adaptation_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; adaptation_count</div><div class="ttdoc">Number of times the algorithm had to adapt/retry.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00050">lockfree_config.h:50</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a4d1d143b316e83d79ff379f032ee464e"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e">thread_module::lockfree::performance_stats::backoff_time_ns</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; backoff_time_ns</div><div class="ttdoc">Total time spent in backoff (nanoseconds)</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00059">lockfree_config.h:59</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00117">117</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>                              {</div>
+<div class="line"><span class="lineno">  118</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a77cc6567f2aeebbc8da74a7debb397b3">operations_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  119</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a8b4bfd88ca6a1e0eb95dc7112d3ef822">contention_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  120</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a317aabad00ecffbb1577be8ce9010847">adaptation_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  121</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a54b6768742baebe12c45e5d00eff0bca">successful_cas_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  122</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a27ec28a10583a556ee021850e856e04c">failed_cas_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  123</span>            <a class="code hl_variable" href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e">backoff_time_ns</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  124</span>        }</div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a317aabad00ecffbb1577be8ce9010847"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a317aabad00ecffbb1577be8ce9010847">thread_module::lockfree::performance_stats::adaptation_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; adaptation_count</div><div class="ttdoc">Number of times the algorithm had to adapt/retry.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00082">lockfree_config.h:82</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree_1_1performance__stats_html_a4d1d143b316e83d79ff379f032ee464e"><div class="ttname"><a href="../../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e">thread_module::lockfree::performance_stats::backoff_time_ns</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; backoff_time_ns</div><div class="ttdoc">Total time spent in backoff (nanoseconds)</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d05/lockfree__config_8h_source.html#l00091">lockfree_config.h:91</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -265,8 +265,8 @@ Public Attributes</h2></td></tr>
 
 <p>Number of times the algorithm had to adapt/retry. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00050">50</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00082">82</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -284,8 +284,8 @@ Public Attributes</h2></td></tr>
 
 <p>Total time spent in backoff (nanoseconds) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00059">59</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00091">91</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -303,8 +303,8 @@ Public Attributes</h2></td></tr>
 
 <p>Number of times contention was detected. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00047">47</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00079">79</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -322,8 +322,8 @@ Public Attributes</h2></td></tr>
 
 <p>Number of failed CAS operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00056">56</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00088">88</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -341,8 +341,8 @@ Public Attributes</h2></td></tr>
 
 <p>Total number of operations performed. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00044">44</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   44</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00076">76</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -360,8 +360,8 @@ Public Attributes</h2></td></tr>
 
 <p>Number of successful CAS operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00053">53</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   53</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/d05/lockfree__config_8h_source.html#l00085">85</a> of file <a class="el" href="../../d6/d05/lockfree__config_8h_source.html">lockfree_config.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -371,7 +371,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

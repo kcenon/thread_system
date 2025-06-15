@@ -127,7 +127,7 @@ Static Public Attributes</h2></td></tr>
 struct typed_thread_pool_module::detail::job_type_traits&lt; T &gt;</div><p>Type traits for job types. </p>
 <p>Provides compile-time information about job type characteristics. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00045">45</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00076">76</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="acfe33db81dc583036af042406f7642bd" name="acfe33db81dc583036af042406f7642bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acfe33db81dc583036af042406f7642bd">&#9670;&#160;</a></span>type</h2>
@@ -143,7 +143,7 @@ template&lt;JobType T&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00046">46</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00077">77</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -161,7 +161,7 @@ template&lt;JobType T&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00047">47</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00078">78</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -194,15 +194,15 @@ template&lt;JobType T&gt; </div>
 
 <p>Creates job type from underlying representation. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00070">70</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>                                                                           {</div>
-<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_variable" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">is_enum</a>) {</div>
-<div class="line"><span class="lineno">   72</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(value);</div>
-<div class="line"><span class="lineno">   73</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">return</span> value;</div>
-<div class="line"><span class="lineno">   75</span>            }</div>
-<div class="line"><span class="lineno">   76</span>        }</div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html_abeb8eeb73c280444654bb80332f500bf"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">typed_thread_pool_module::detail::job_type_traits::is_enum</a></div><div class="ttdeci">static constexpr bool is_enum</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00051">type_traits.h:51</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00101">101</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  101</span>                                                                           {</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_variable" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">is_enum</a>) {</div>
+<div class="line"><span class="lineno">  103</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(value);</div>
+<div class="line"><span class="lineno">  104</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  105</span>                <span class="keywordflow">return</span> value;</div>
+<div class="line"><span class="lineno">  106</span>            }</div>
+<div class="line"><span class="lineno">  107</span>        }</div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html_abeb8eeb73c280444654bb80332f500bf"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">typed_thread_pool_module::detail::job_type_traits::is_enum</a></div><div class="ttdeci">static constexpr bool is_enum</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00082">type_traits.h:82</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -234,15 +234,15 @@ template&lt;JobType T&gt; </div>
 
 <p>Converts job type to its underlying representation. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00059">59</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>                                                                         {</div>
-<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_variable" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">is_enum</a>) {</div>
-<div class="line"><span class="lineno">   61</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a7a232edb1ff6b1bb245acd7b0b28fb22">underlying_type</a><span class="keyword">&gt;</span>(value);</div>
-<div class="line"><span class="lineno">   62</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   63</span>                <span class="keywordflow">return</span> value;</div>
-<div class="line"><span class="lineno">   64</span>            }</div>
-<div class="line"><span class="lineno">   65</span>        }</div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html_a7a232edb1ff6b1bb245acd7b0b28fb22"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a7a232edb1ff6b1bb245acd7b0b28fb22">typed_thread_pool_module::detail::job_type_traits::underlying_type</a></div><div class="ttdeci">std::conditional_t&lt; std::is_enum_v&lt; T &gt;, std::underlying_type_t&lt; T &gt;, T &gt; underlying_type</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00047">type_traits.h:49</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00090">90</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>                                                                         {</div>
+<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_variable" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf">is_enum</a>) {</div>
+<div class="line"><span class="lineno">   92</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a7a232edb1ff6b1bb245acd7b0b28fb22">underlying_type</a><span class="keyword">&gt;</span>(value);</div>
+<div class="line"><span class="lineno">   93</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   94</span>                <span class="keywordflow">return</span> value;</div>
+<div class="line"><span class="lineno">   95</span>            }</div>
+<div class="line"><span class="lineno">   96</span>        }</div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html_a7a232edb1ff6b1bb245acd7b0b28fb22"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a7a232edb1ff6b1bb245acd7b0b28fb22">typed_thread_pool_module::detail::job_type_traits::underlying_type</a></div><div class="ttdeci">std::conditional_t&lt; std::is_enum_v&lt; T &gt;, std::underlying_type_t&lt; T &gt;, T &gt; underlying_type</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00078">type_traits.h:80</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -269,7 +269,7 @@ template&lt;JobType T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00053">53</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00084">84</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -295,7 +295,7 @@ template&lt;JobType T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00051">51</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00082">82</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -321,7 +321,7 @@ template&lt;JobType T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00052">52</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00083">83</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -347,7 +347,7 @@ template&lt;JobType T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00054">54</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00085">85</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -357,7 +357,7 @@ template&lt;JobType T&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

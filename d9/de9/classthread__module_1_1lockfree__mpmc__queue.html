@@ -789,7 +789,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  199</span>        </div>
 <div class="line"><span class="lineno">  200</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a278828cce52b13043e5e09233ca1f8aa">dequeue_impl</a>();</div>
 <div class="line"><span class="lineno">  201</span>        </div>
-<div class="line"><span class="lineno">  202</span>        <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - start_time;</div>
 <div class="line"><span class="lineno">  203</span>        <a class="code hl_function" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a1898a50a5d94ea95f50e42ff2a24ce1c">record_dequeue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
 <div class="line"><span class="lineno">  204</span>        </div>
 <div class="line"><span class="lineno">  205</span>        <span class="keywordflow">if</span> (result.has_value()) {</div>
@@ -801,6 +801,7 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a092523f285ed29d9e7db6b5f665c984b"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">thread_module::job_queue::stop_</a></div><div class="ttdeci">std::atomic_bool stop_</div><div class="ttdoc">Indicates whether the queue has been signaled to stop.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00214">job_queue.h:214</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a1898a50a5d94ea95f50e42ff2a24ce1c"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a1898a50a5d94ea95f50e42ff2a24ce1c">thread_module::lockfree_mpmc_queue::record_dequeue_time</a></div><div class="ttdeci">auto record_dequeue_time(std::chrono::nanoseconds duration) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00475">lockfree_mpmc_queue.cpp:475</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a278828cce52b13043e5e09233ca1f8aa"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a278828cce52b13043e5e09233ca1f8aa">thread_module::lockfree_mpmc_queue::dequeue_impl</a></div><div class="ttdeci">auto dequeue_impl() -&gt; result&lt; job_ptr &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00391">lockfree_mpmc_queue.cpp:391</a></div></div>
+<div class="ttc" id="anamespacemonitoring__module_html_a5288937db3fb31594060a3ae2c801b01"><div class="ttname"><a href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">monitoring_module::duration</a></div><div class="ttdeci">std::chrono::nanoseconds duration</div><div class="ttdoc">Duration type for time measurements.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00079">monitoring_types.h:79</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">thread_module::error_code::queue_stopped</a></div><div class="ttdeci">@ queue_stopped</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1073,7 +1074,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   77</span>        <span class="keywordflow">try</span> {</div>
 <div class="line"><span class="lineno">   78</span>            <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a3d7cc5a481818c9157ea4e5aefac943b">enqueue_impl</a>(data_storage);</div>
 <div class="line"><span class="lineno">   79</span>            </div>
-<div class="line"><span class="lineno">   80</span>            <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - start_time;</div>
 <div class="line"><span class="lineno">   81</span>            <a class="code hl_function" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a7320e41162f6f5274f497e4c8b87d110">record_enqueue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
 <div class="line"><span class="lineno">   82</span>            </div>
 <div class="line"><span class="lineno">   83</span>            <span class="keywordflow">return</span> result;</div>
@@ -1208,7 +1209,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  172</span>            <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#abd0778c58617e61f5d97bea17af71df1">enqueue_count</a>.fetch_add(jobs.size(), std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">  173</span>            <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a86c377a5496c34837b5b9309dcef9f83">current_size</a>.fetch_add(jobs.size(), std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">  174</span>            </div>
-<div class="line"><span class="lineno">  175</span>            <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - start_time;</div>
 <div class="line"><span class="lineno">  176</span>            <a class="code hl_function" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a7320e41162f6f5274f497e4c8b87d110">record_enqueue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
 <div class="line"><span class="lineno">  177</span>            </div>
 <div class="line"><span class="lineno">  178</span>            <span class="keywordflow">return</span> result_void{};</div>
@@ -1491,7 +1492,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00475">475</a> of file <a class="el" href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html">lockfree_mpmc_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  476</span>    {</div>
-<div class="line"><span class="lineno">  477</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a72b97778b7946802fb64e99a59de72cc">total_dequeue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  477</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a72b97778b7946802fb64e99a59de72cc">total_dequeue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count()), std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">  478</span>    }</div>
 </div><!-- fragment -->
 </div>
@@ -1522,7 +1523,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00470">470</a> of file <a class="el" href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html">lockfree_mpmc_queue.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  471</span>    {</div>
-<div class="line"><span class="lineno">  472</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a02ecbdff40e7c082f0bde0c05b78600e">total_enqueue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  472</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a02ecbdff40e7c082f0bde0c05b78600e">total_enqueue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count()), std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">  473</span>    }</div>
 </div><!-- fragment -->
 </div>
@@ -1935,7 +1936,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

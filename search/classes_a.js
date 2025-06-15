@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['message_5fbatch_0',['message_batch',['../d9/da9/structlog__module_1_1message__batch.html',1,'log_module']]],
-  ['message_5feraser_1',['message_eraser',['../de/d3a/classlog__module_1_1detail_1_1message__eraser.html',1,'log_module::detail']]],
-  ['message_5fformatter_2',['message_formatter',['../d0/da6/classlog__module_1_1message__formatter.html',1,'log_module']]],
-  ['message_5fjob_3',['message_job',['../db/daf/classlog__module_1_1message__job.html',1,'log_module']]]
+  ['lockfree_5fmpmc_5fqueue_0',['lockfree_mpmc_queue',['../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html',1,'thread_module']]],
+  ['log_5fcollector_1',['log_collector',['../d7/da3/classlog__module_1_1log__collector.html',1,'log_module']]],
+  ['log_5fjob_2',['log_job',['../df/df4/classlog__module_1_1log__job.html',1,'log_module']]],
+  ['log_5fmessage_3',['log_message',['../d9/d1b/structlog__module_1_1log__message.html',1,'log_module']]],
+  ['logger_4',['logger',['../d4/d78/classlog__module_1_1implementation_1_1logger.html',1,'log_module::implementation']]],
+  ['logger_5fconfig_5',['logger_config',['../d1/d1a/structlog__module_1_1config_1_1logger__config.html',1,'log_module::config']]]
 ];

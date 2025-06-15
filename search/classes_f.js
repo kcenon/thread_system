@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['scoped_5flock_5fguard_0',['scoped_lock_guard',['../dc/d7b/classthread__module_1_1sync_1_1scoped__lock__guard.html',1,'thread_module::sync']]],
-  ['shared_5fmutex_5fwrapper_1',['shared_mutex_wrapper',['../dc/dfb/classthread__module_1_1sync_1_1shared__mutex__wrapper.html',1,'thread_module::sync']]],
-  ['should_5flog_2',['should_log',['../d7/d75/structlog__module_1_1detail_1_1should__log.html',1,'log_module::detail']]],
-  ['span_3',['span',['../d8/d4f/classutility__module_1_1span.html',1,'utility_module']]],
-  ['stack_5fstring_5fbuilder_4',['stack_string_builder',['../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html',1,'log_module::detail::optimization']]],
-  ['statistics_5',['statistics',['../d4/d5c/structthread__module_1_1hazard__pointer__manager_1_1statistics.html',1,'thread_module::hazard_pointer_manager::statistics'],['../d5/db6/structthread__module_1_1node__pool_1_1statistics.html',1,'thread_module::node_pool&lt; T &gt;::statistics']]]
+  ['result_0',['result',['../d2/d93/classthread__module_1_1result.html',1,'thread_module']]],
+  ['result_3c_20void_20_3e_1',['result&lt; void &gt;',['../de/d5e/classthread__module_1_1result_3_01void_01_4.html',1,'thread_module']]],
+  ['result_5fvoid_2',['result_void',['../dd/da2/classthread__module_1_1result__void.html',1,'thread_module']]],
+  ['retirednode_3',['RetiredNode',['../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html',1,'thread_module::hazard_pointer_manager']]],
+  ['ring_5fbuffer_4',['ring_buffer',['../d7/dc0/classmonitoring__module_1_1ring__buffer.html',1,'monitoring_module']]]
 ];

@@ -209,7 +209,7 @@ template&lt;typename Job &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00064">64</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00095">95</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ template&lt;JobType T&gt; </div>
 
 <p>Type alias for job type conversion. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00119">119</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00150">150</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
@@ -261,16 +261,16 @@ template&lt;typename T &gt; </div>
 
 <p>Helper to determine if a type can be used as a job priority. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00096">96</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   96</span>                                          {</div>
-<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="../../da/d8d/concepttyped__thread__pool__module_1_1detail_1_1JobType.html">JobType&lt;T&gt;</a>) {</div>
-<div class="line"><span class="lineno">   98</span>            <span class="keyword">using </span>traits = <a class="code hl_struct" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">job_type_traits&lt;T&gt;</a>;</div>
-<div class="line"><span class="lineno">   99</span>            <span class="keywordflow">return</span> traits::has_ordering;</div>
-<div class="line"><span class="lineno">  100</span>        }</div>
-<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  102</span>    }</div>
-<div class="ttc" id="aconcepttyped__thread__pool__module_1_1detail_1_1JobType_html"><div class="ttname"><a href="../../da/d8d/concepttyped__thread__pool__module_1_1detail_1_1JobType.html">typed_thread_pool_module::detail::JobType</a></div><div class="ttdoc">Concept to validate job type parameters.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00025">type_traits.h:25</a></div></div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">typed_thread_pool_module::detail::job_type_traits</a></div><div class="ttdoc">Type traits for job types.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00045">type_traits.h:45</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00127">127</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>                                          {</div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="../../da/d8d/concepttyped__thread__pool__module_1_1detail_1_1JobType.html">JobType&lt;T&gt;</a>) {</div>
+<div class="line"><span class="lineno">  129</span>            <span class="keyword">using </span>traits = <a class="code hl_struct" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">job_type_traits&lt;T&gt;</a>;</div>
+<div class="line"><span class="lineno">  130</span>            <span class="keywordflow">return</span> traits::has_ordering;</div>
+<div class="line"><span class="lineno">  131</span>        }</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  133</span>    }</div>
+<div class="ttc" id="aconcepttyped__thread__pool__module_1_1detail_1_1JobType_html"><div class="ttname"><a href="../../da/d8d/concepttyped__thread__pool__module_1_1detail_1_1JobType.html">typed_thread_pool_module::detail::JobType</a></div><div class="ttdoc">Concept to validate job type parameters.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00056">type_traits.h:56</a></div></div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__type__traits_html"><div class="ttname"><a href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">typed_thread_pool_module::detail::job_type_traits</a></div><div class="ttdoc">Type traits for job types.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00076">type_traits.h:76</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -319,12 +319,12 @@ template&lt;typename F &gt; </div>
 
 <p>Template for automatic job naming based on function signature. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00140">140</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  140</span>                                       {</div>
-<div class="line"><span class="lineno">  141</span>        <span class="comment">// This would ideally use compile-time type name extraction</span></div>
-<div class="line"><span class="lineno">  142</span>        <span class="comment">// For now, return a generic name</span></div>
-<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;generated_job&quot;</span>;</div>
-<div class="line"><span class="lineno">  144</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00171">171</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  171</span>                                       {</div>
+<div class="line"><span class="lineno">  172</span>        <span class="comment">// This would ideally use compile-time type name extraction</span></div>
+<div class="line"><span class="lineno">  173</span>        <span class="comment">// For now, return a generic name</span></div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;generated_job&quot;</span>;</div>
+<div class="line"><span class="lineno">  175</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -384,13 +384,13 @@ template&lt;JobType T&gt; </div>
 
 <p>Compile-time priority comparison. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00108">108</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  108</span>                                                          {</div>
-<div class="line"><span class="lineno">  109</span>        <span class="keyword">using </span>traits = <a class="code hl_struct" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">job_type_traits&lt;T&gt;</a>;</div>
-<div class="line"><span class="lineno">  110</span>        </div>
-<div class="line"><span class="lineno">  111</span>        <span class="comment">// Assume lower numerical values = higher priority</span></div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> traits::to_underlying(lhs) &lt; traits::to_underlying(rhs);</div>
-<div class="line"><span class="lineno">  113</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00139">139</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>                                                          {</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keyword">using </span>traits = <a class="code hl_struct" href="../../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html">job_type_traits&lt;T&gt;</a>;</div>
+<div class="line"><span class="lineno">  141</span>        </div>
+<div class="line"><span class="lineno">  142</span>        <span class="comment">// Assume lower numerical values = higher priority</span></div>
+<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">return</span> traits::to_underlying(lhs) &lt; traits::to_underlying(rhs);</div>
+<div class="line"><span class="lineno">  144</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -442,10 +442,10 @@ template&lt;typename JobType , typename... Args&gt; </div>
 
 <p>Perfect forwarding helper for job construction. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00221">221</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  221</span>                                                 {</div>
-<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">return</span> std::forward_as_tuple(std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><span class="lineno">  223</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00252">252</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>                                                 {</div>
+<div class="line"><span class="lineno">  253</span>        <span class="keywordflow">return</span> std::forward_as_tuple(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><span class="lineno">  254</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -490,7 +490,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00043">43</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00074">74</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +516,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00030">30</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00061">61</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -542,7 +542,7 @@ template&lt;typename Job , typename ExpectedJobType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00081">81</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00112">112</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -568,14 +568,14 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00090">90</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d63/type__traits_8h_source.html#l00121">121</a> of file <a class="el" href="../../df/d63/type__traits_8h_source.html">type_traits.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

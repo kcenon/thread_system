@@ -152,7 +152,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Structure representing a complete log message. </p>
 <p>This structure contains all the information needed to format and output a log message. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00026">26</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00057">57</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3fbcc2cd8a8c9ecbd21f3461aa76b5b1" name="a3fbcc2cd8a8c9ecbd21f3461aa76b5b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3fbcc2cd8a8c9ecbd21f3461aa76b5b1">&#9670;&#160;</a></span>log_message() <span class="overload">[1/3]</span></h2>
@@ -223,11 +223,11 @@ Public Attributes</h2></td></tr>
 
 <p>Constructor with basic information. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00043">43</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   44</span>            : <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">level</a>(lvl), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">content</a>(std::move(msg)), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">logger_name</a>(std::move(name)) {}</div>
-<div class="ttc" id="astructlog__module_1_1log__message_html_a46cb06e2b5845904912a33172c9895b0"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">log_module::log_message::logger_name</a></div><div class="ttdeci">std::string logger_name</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00031">message_types.h:31</a></div></div>
-<div class="ttc" id="astructlog__module_1_1log__message_html_a7778092ea77360c558bdcfa5f86be921"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">log_module::log_message::content</a></div><div class="ttdeci">std::string content</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00028">message_types.h:28</a></div></div>
-<div class="ttc" id="astructlog__module_1_1log__message_html_a87806776a5450a168dacca86a8bf0cfc"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">log_module::log_message::level</a></div><div class="ttdeci">log_types level</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00027">message_types.h:27</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00074">74</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>            : <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">level</a>(lvl), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">content</a>(std::move(msg)), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">logger_name</a>(std::move(name)) {}</div>
+<div class="ttc" id="astructlog__module_1_1log__message_html_a46cb06e2b5845904912a33172c9895b0"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">log_module::log_message::logger_name</a></div><div class="ttdeci">std::string logger_name</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00062">message_types.h:62</a></div></div>
+<div class="ttc" id="astructlog__module_1_1log__message_html_a7778092ea77360c558bdcfa5f86be921"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">log_module::log_message::content</a></div><div class="ttdeci">std::string content</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00059">message_types.h:59</a></div></div>
+<div class="ttc" id="astructlog__module_1_1log__message_html_a87806776a5450a168dacca86a8bf0cfc"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">log_module::log_message::level</a></div><div class="ttdeci">log_types level</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00058">message_types.h:58</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -279,9 +279,9 @@ Public Attributes</h2></td></tr>
 
 <p>Constructor with timestamp. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00049">49</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>            : <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">level</a>(lvl), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">content</a>(std::move(msg)), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#aeb0274dd07815097b3d394c1c87190aa">timestamp</a>(ts), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">logger_name</a>(std::move(name)) {}</div>
-<div class="ttc" id="astructlog__module_1_1log__message_html_aeb0274dd07815097b3d394c1c87190aa"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#aeb0274dd07815097b3d394c1c87190aa">log_module::log_message::timestamp</a></div><div class="ttdeci">std::chrono::system_clock::time_point timestamp</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00029">message_types.h:29</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00080">80</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   83</span>            : <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a87806776a5450a168dacca86a8bf0cfc">level</a>(lvl), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a7778092ea77360c558bdcfa5f86be921">content</a>(std::move(msg)), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#aeb0274dd07815097b3d394c1c87190aa">timestamp</a>(ts), <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0">logger_name</a>(std::move(name)) {}</div>
+<div class="ttc" id="astructlog__module_1_1log__message_html_aeb0274dd07815097b3d394c1c87190aa"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#aeb0274dd07815097b3d394c1c87190aa">log_module::log_message::timestamp</a></div><div class="ttdeci">std::chrono::system_clock::time_point timestamp</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00060">message_types.h:60</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -322,11 +322,11 @@ Public Attributes</h2></td></tr>
 
 <p>Add a field for structured logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00057">57</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                                     {</div>
-<div class="line"><span class="lineno">   58</span>            <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>[key] = value;</div>
-<div class="line"><span class="lineno">   59</span>        }</div>
-<div class="ttc" id="astructlog__module_1_1log__message_html_a5dcbd0d9d15c441217c3e1f76eb482a9"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">log_module::log_message::fields</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; fields</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00033">message_types.h:33</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00088">88</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>                                                                     {</div>
+<div class="line"><span class="lineno">   89</span>            <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>[key] = value;</div>
+<div class="line"><span class="lineno">   90</span>        }</div>
+<div class="ttc" id="astructlog__module_1_1log__message_html_a5dcbd0d9d15c441217c3e1f76eb482a9"><div class="ttname"><a href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">log_module::log_message::fields</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; fields</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00064">message_types.h:64</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -356,10 +356,10 @@ Public Attributes</h2></td></tr>
 
 <p>Add multiple fields. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00064">64</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>                                                                        {</div>
-<div class="line"><span class="lineno">   65</span>            <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.insert(new_fields.begin(), new_fields.end());</div>
-<div class="line"><span class="lineno">   66</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00095">95</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                                                                        {</div>
+<div class="line"><span class="lineno">   96</span>            <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.insert(new_fields.begin(), new_fields.end());</div>
+<div class="line"><span class="lineno">   97</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -399,11 +399,11 @@ Public Attributes</h2></td></tr>
 
 <p>Get a field value. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00071">71</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>                                                                                             {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keyword">auto</span> it = <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.find(key);</div>
-<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">return</span> it != <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.end() ? it-&gt;second : default_value;</div>
-<div class="line"><span class="lineno">   74</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00102">102</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>                                                                                             {</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keyword">auto</span> it = <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.find(key);</div>
+<div class="line"><span class="lineno">  104</span>            <span class="keywordflow">return</span> it != <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.end() ? it-&gt;second : default_value;</div>
+<div class="line"><span class="lineno">  105</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -433,10 +433,10 @@ Public Attributes</h2></td></tr>
 
 <p>Check if a field exists. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00079">79</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>                                                   {</div>
-<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.find(key) != <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.end();</div>
-<div class="line"><span class="lineno">   81</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00110">110</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>                                                   {</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.find(key) != <a class="code hl_variable" href="../../d9/d1b/structlog__module_1_1log__message.html#a5dcbd0d9d15c441217c3e1f76eb482a9">fields</a>.end();</div>
+<div class="line"><span class="lineno">  112</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -501,7 +501,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00028">28</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00059">59</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -517,7 +517,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00033">33</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00064">64</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -533,7 +533,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00027">27</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">58</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -549,7 +549,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00031">31</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00062">62</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -565,7 +565,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00032">32</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00063">63</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -581,7 +581,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00030">30</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00061">61</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -597,7 +597,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00029">29</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00060">60</a> of file <a class="el" href="../../d5/dd2/message__types_8h_source.html">message_types.h</a>.</p>
 
 </div>
 </div>
@@ -607,7 +607,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:26 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -136,7 +136,7 @@ Private Attributes</h2></td></tr>
 class thread_pool_module::pool_future&lt; T &gt;</div><p>A future that can be scheduled on a thread pool. </p>
 <p>This class extends std::future with thread pool integration and provides additional utilities for async operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00029">29</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00060">60</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a00acf46e1daa9463dd6ba666aa4ac891" name="a00acf46e1daa9463dd6ba666aa4ac891"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00acf46e1daa9463dd6ba666aa4ac891">&#9670;&#160;</a></span>value_type</h2>
@@ -152,7 +152,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00031">31</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00062">62</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 
 </div>
 </div>
@@ -185,9 +185,9 @@ template&lt;typename T &gt; </div>
 
 <p>Construct from a std::future. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00036">36</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>            : <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>(std::move(future)) {}</div>
-<div class="ttc" id="aclassthread__pool__module_1_1pool__future_html_a52415e735fa4a3aefa46478856c954a6"><div class="ttname"><a href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">thread_pool_module::pool_future::future_</a></div><div class="ttdeci">std::future&lt; T &gt; future_</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00082">future_extensions.h:82</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00067">67</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>            : <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>(std::move(future)) {}</div>
+<div class="ttc" id="aclassthread__pool__module_1_1pool__future_html_a52415e735fa4a3aefa46478856c954a6"><div class="ttname"><a href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">thread_pool_module::pool_future::future_</a></div><div class="ttdeci">std::future&lt; T &gt; future_</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00113">future_extensions.h:113</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -219,10 +219,10 @@ template&lt;typename T &gt; </div>
 
 <p>Wait for the result. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00049">49</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>                {</div>
-<div class="line"><span class="lineno">   50</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.get();</div>
-<div class="line"><span class="lineno">   51</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00080">80</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>                {</div>
+<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.get();</div>
+<div class="line"><span class="lineno">   82</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -253,10 +253,10 @@ template&lt;typename T &gt; </div>
 
 <p>Check if the future is ready. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00042">42</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   42</span>                              {</div>
-<div class="line"><span class="lineno">   43</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait_for(std::chrono::seconds(0)) == std::future_status::ready;</div>
-<div class="line"><span class="lineno">   44</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00073">73</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>                              {</div>
+<div class="line"><span class="lineno">   74</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait_for(std::chrono::seconds(0)) == std::future_status::ready;</div>
+<div class="line"><span class="lineno">   75</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -311,10 +311,10 @@ template&lt;typename T &gt; </div>
 
 <p>Check if the future is valid. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00071">71</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>                           {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.valid();</div>
-<div class="line"><span class="lineno">   73</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00102">102</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>                           {</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.valid();</div>
+<div class="line"><span class="lineno">  104</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -345,10 +345,10 @@ template&lt;typename T &gt; </div>
 
 <p>Wait until the result is available. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00064">64</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>                    {</div>
-<div class="line"><span class="lineno">   65</span>            <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait();</div>
-<div class="line"><span class="lineno">   66</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00095">95</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                    {</div>
+<div class="line"><span class="lineno">   96</span>            <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait();</div>
+<div class="line"><span class="lineno">   97</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -382,10 +382,10 @@ template&lt;typename Rep , typename Period &gt; </div>
 
 <p>Wait for the result with timeout. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00057">57</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                                                 {</div>
-<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait_for(timeout);</div>
-<div class="line"><span class="lineno">   59</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00088">88</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>                                                                                 {</div>
+<div class="line"><span class="lineno">   89</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d38/classthread__pool__module_1_1pool__future.html#a52415e735fa4a3aefa46478856c954a6">future_</a>.wait_for(timeout);</div>
+<div class="line"><span class="lineno">   90</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -412,7 +412,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00082">82</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00113">113</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 
 </div>
 </div>
@@ -422,7 +422,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

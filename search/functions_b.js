@@ -11,9 +11,10 @@ var searchData=
   ['message_5feraser_8',['message_eraser',['../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a09f54f8784861babfa312affee1b0ee2',1,'log_module::detail::message_eraser']]],
   ['message_5fformatter_9',['message_formatter',['../d0/da6/classlog__module_1_1message__formatter.html#a63b7df564722b5f1282c881bdf51b59a',1,'log_module::message_formatter']]],
   ['message_5fjob_10',['message_job',['../db/daf/classlog__module_1_1message__job.html#a958d4d4b9715b32fead634e624cb6d37',1,'log_module::message_job']]],
-  ['microseconds_11',['microseconds',['../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77',1,'utility_module::datetime_tool']]],
-  ['migrate_5fto_5flegacy_12',['migrate_to_legacy',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb',1,'thread_module::adaptive_job_queue']]],
-  ['migrate_5fto_5flockfree_13',['migrate_to_lockfree',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912',1,'thread_module::adaptive_job_queue']]],
-  ['milliseconds_14',['milliseconds',['../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e',1,'utility_module::datetime_tool']]],
-  ['monitor_5fperformance_15',['monitor_performance',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1',1,'thread_module::adaptive_job_queue']]]
+  ['metrics_5fcollector_11',['metrics_collector',['../d0/d98/classmonitoring__module_1_1metrics__collector.html#ab6fa6710c1f9a583d9e235cea7e4d4bc',1,'monitoring_module::metrics_collector']]],
+  ['microseconds_12',['microseconds',['../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77',1,'utility_module::datetime_tool']]],
+  ['migrate_5fto_5flegacy_13',['migrate_to_legacy',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb',1,'thread_module::adaptive_job_queue']]],
+  ['migrate_5fto_5flockfree_14',['migrate_to_lockfree',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912',1,'thread_module::adaptive_job_queue']]],
+  ['milliseconds_15',['milliseconds',['../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e',1,'utility_module::datetime_tool']]],
+  ['monitor_5fperformance_16',['monitor_performance',['../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1',1,'thread_module::adaptive_job_queue']]]
 ];

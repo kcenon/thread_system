@@ -9,5 +9,6 @@ var searchData=
   ['retired_5fthreshold_6',['RETIRED_THRESHOLD',['../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a74a8d2d132b74b4d74bde7f89a369241',1,'thread_module::hazard_pointer_manager']]],
   ['retry_5fcount_7',['retry_count',['../db/d7a/structthread__module_1_1lockfree__mpmc__queue_1_1queue__statistics.html#a532034c2184b4b58058815008ff22ba0',1,'thread_module::lockfree_mpmc_queue::queue_statistics::retry_count'],['../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a6c48150ae50332f1cac0c328b9023e50',1,'thread_module::lockfree_mpmc_queue::atomic_statistics::retry_count']]],
   ['retry_5fthreshold_8',['RETRY_THRESHOLD',['../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae88c5eba3c4dfe1270f0a168d4426330',1,'thread_module::lockfree_mpmc_queue']]],
-  ['rotation_5fcheck_5finterval_9',['rotation_check_interval',['../d2/d6d/structlog__module_1_1config_1_1file__writer__config.html#af1803cf4345527fda38ad5c569eed6a8',1,'log_module::config::file_writer_config']]]
+  ['rotation_5fcheck_5finterval_9',['rotation_check_interval',['../d2/d6d/structlog__module_1_1config_1_1file__writer__config.html#af1803cf4345527fda38ad5c569eed6a8',1,'log_module::config::file_writer_config']]],
+  ['running_5f_10',['running_',['../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298',1,'monitoring_module::metrics_collector']]]
 ];

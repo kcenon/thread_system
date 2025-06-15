@@ -110,7 +110,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T = void&gt;<br />
 class thread_pool_module::task&lt; T &gt;::awaiter</div>
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00485">485</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00516">516</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afaca18af0055bfb527fa633dc134892b" name="afaca18af0055bfb527fa633dc134892b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afaca18af0055bfb527fa633dc134892b">&#9670;&#160;</a></span>awaiter()</h2>
@@ -138,9 +138,9 @@ template&lt;typename T  = void&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00487">487</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  488</span>            : <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>(handle) {}</div>
-<div class="ttc" id="aclassthread__pool__module_1_1task_1_1awaiter_html_ae5642e8d9ab13c3e7ef74b70e5fa85f5"><div class="ttname"><a href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">thread_pool_module::task::awaiter::handle_</a></div><div class="ttdeci">std::coroutine_handle&lt; promise_type &gt; handle_</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00507">task.h:507</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00518">518</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  519</span>            : <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>(handle) {}</div>
+<div class="ttc" id="aclassthread__pool__module_1_1task_1_1awaiter_html_ae5642e8d9ab13c3e7ef74b70e5fa85f5"><div class="ttname"><a href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">thread_pool_module::task::awaiter::handle_</a></div><div class="ttdeci">std::coroutine_handle&lt; promise_type &gt; handle_</div><div class="ttdef"><b>Definition</b> <a href="../../db/da4/task_8h_source.html#l00538">task.h:538</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -170,10 +170,10 @@ template&lt;typename T  = void&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00490">490</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  490</span>                                          {</div>
-<div class="line"><span class="lineno">  491</span>            <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a> || <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().is_ready();</div>
-<div class="line"><span class="lineno">  492</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00521">521</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  521</span>                                          {</div>
+<div class="line"><span class="lineno">  522</span>            <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a> || <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().is_ready();</div>
+<div class="line"><span class="lineno">  523</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -202,13 +202,13 @@ template&lt;typename T  = void&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00499">499</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  499</span>                         {</div>
-<div class="line"><span class="lineno">  500</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>) {</div>
-<div class="line"><span class="lineno">  501</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Awaiting an empty task&quot;</span>);</div>
-<div class="line"><span class="lineno">  502</span>            }</div>
-<div class="line"><span class="lineno">  503</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().get_result();</div>
-<div class="line"><span class="lineno">  504</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00530">530</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  530</span>                         {</div>
+<div class="line"><span class="lineno">  531</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>) {</div>
+<div class="line"><span class="lineno">  532</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Awaiting an empty task&quot;</span>);</div>
+<div class="line"><span class="lineno">  533</span>            }</div>
+<div class="line"><span class="lineno">  534</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().get_result();</div>
+<div class="line"><span class="lineno">  535</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -238,11 +238,11 @@ template&lt;typename T  = void&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00494">494</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  494</span>                                                                                         {</div>
-<div class="line"><span class="lineno">  495</span>            <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().set_continuation(continuation);</div>
-<div class="line"><span class="lineno">  496</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>;</div>
-<div class="line"><span class="lineno">  497</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00525">525</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  525</span>                                                                                         {</div>
+<div class="line"><span class="lineno">  526</span>            <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>.promise().set_continuation(continuation);</div>
+<div class="line"><span class="lineno">  527</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5">handle_</a>;</div>
+<div class="line"><span class="lineno">  528</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -269,7 +269,7 @@ template&lt;typename T  = void&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00507">507</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/da4/task_8h_source.html#l00538">538</a> of file <a class="el" href="../../db/da4/task_8h_source.html">task.h</a>.</p>
 
 </div>
 </div>
@@ -279,7 +279,7 @@ template&lt;typename T  = void&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

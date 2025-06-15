@@ -1,3 +1,33 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d6/ddf/classthread__module_1_1jobs_1_1job__interface.html" title="Interface for executable job objects." alt="" coords="5,5,160,45"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,632,117,657"/>
+<area shape="rect" id="Node000001" href="$d5/dab/structlog__module_1_1detail_1_1has__to__string_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1d3990b1d7dc7e69d816107c9a88e04327.html" title=" " alt="" coords="207,5,374,89"/>
+<area shape="poly" id="edge40_Node000000_Node000001" title=" " alt="" coords="62,618,71,508,90,354,104,275,121,203,140,143,163,100,183,82,205,68,208,73,186,86,167,104,145,145,126,204,109,276,96,355,77,508,67,618"/>
+<area shape="rect" id="Node000002" href="$d3/d31/structlog__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html" title=" " alt="" coords="205,114,377,183"/>
+<area shape="poly" id="edge41_Node000000_Node000002" title=" " alt="" coords="63,618,74,525,95,398,125,276,143,227,163,194,182,177,203,166,206,170,185,182,167,197,148,230,130,277,100,399,80,525,68,619"/>
+<area shape="rect" id="Node000003" href="$de/dbf/structlog__module_1_1detail_1_1is__streamable_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1de4ceca9624d7db9e77a61f61603d18213.html" title=" " alt="" coords="170,208,411,292"/>
+<area shape="poly" id="edge42_Node000000_Node000003" title=" " alt="" coords="61,618,66,556,82,473,95,428,113,383,135,341,163,303,176,291,180,294,167,306,140,344,117,385,100,429,87,474,72,557,66,619"/>
+<area shape="rect" id="Node000004" href="$dc/d0e/structlog__module_1_1detail_1_1is__string__like_3_01char_0fN_0e_4.html" title=" " alt="" coords="196,317,385,357"/>
+<area shape="poly" id="edge43_Node000000_Node000004" title=" " alt="" coords="62,618,69,565,86,498,99,462,116,427,138,395,164,367,194,348,197,353,167,371,142,398,121,430,104,464,91,499,75,566,67,619"/>
+<area shape="rect" id="Node000005" href="$d4/d89/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_01_5_01_4.html" title=" " alt="" coords="208,381,373,436"/>
+<area shape="poly" id="edge44_Node000000_Node000005" title=" " alt="" coords="67,618,79,580,99,533,127,486,164,445,184,432,207,422,209,426,187,436,167,449,131,489,103,536,84,582,72,620"/>
+<area shape="rect" id="Node000006" href="$d4/dd7/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_0fN_0e_4.html" title=" " alt="" coords="208,460,373,515"/>
+<area shape="poly" id="edge45_Node000000_Node000006" title=" " alt="" coords="75,619,112,571,136,546,164,524,207,503,209,508,167,528,140,549,116,574,80,622"/>
+<area shape="rect" id="Node000007" href="$d5/df9/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string_01_4.html" title=" " alt="" coords="215,539,366,593"/>
+<area shape="poly" id="edge46_Node000000_Node000007" title=" " alt="" coords="106,624,164,602,214,586,216,591,166,607,107,629"/>
+<area shape="rect" id="Node000008" href="$d2/d28/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string__view_01_4.html" title=" " alt="" coords="215,617,366,672"/>
+<area shape="poly" id="edge47_Node000000_Node000008" title=" " alt="" coords="131,642,215,642,215,647,131,647"/>
+<area shape="rect" id="Node000009" href="$db/d56/structlog__module_1_1detail_1_1is__time__point_3_01std_1_1chrono_1_1time__point_3_01Clock_00_01Duration_01_4_01_4.html" title=" " alt="" coords="207,697,374,766"/>
+<area shape="poly" id="edge48_Node000000_Node000009" title=" " alt="" coords="110,660,208,697,206,702,108,665"/>
+<area shape="rect" id="Node000010" href="$d9/d62/structthread__pool__module_1_1detail_1_1has__get__method_3_01T_00_01std_1_1void__t_3_01decltype_a0465c2793b601c1efa3be7652b795e9.html" title=" " alt="" coords="183,790,399,859"/>
+<area shape="poly" id="edge49_Node000000_Node000010" title=" " alt="" coords="78,668,114,722,139,751,167,776,185,787,182,792,164,780,135,755,110,725,74,671"/>
+<area shape="rect" id="Node000011" href="$d2/d92/structthread__pool__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html" title=" " alt="" coords="205,883,376,953"/>
+<area shape="poly" id="edge50_Node000000_Node000011" title=" " alt="" coords="70,670,81,713,100,766,128,821,146,847,167,869,185,883,206,894,204,899,182,888,164,873,142,850,124,824,95,768,76,714,65,671"/>
+<area shape="rect" id="Node000012" href="$d8/db2/structthread__pool__module_1_1detail_1_1is__result_3_01result_3_01T_01_4_01_4.html" title="Type trait specialization for result&lt;T&gt; types." alt="" coords="213,977,368,1032"/>
+<area shape="poly" id="edge51_Node000000_Node000012" title=" " alt="" coords="66,671,72,731,87,809,100,850,117,891,139,929,167,963,189,979,214,990,212,995,186,983,163,967,135,932,112,894,95,852,82,810,66,731,61,671"/>
+<area shape="rect" id="Node000013" href="$db/df5/structtyped__thread__pool__module_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_326af756acd357eb452243a29392a2b29.html" title=" " alt="" coords="165,1057,416,1126"/>
+<area shape="poly" id="edge52_Node000000_Node000013" title=" " alt="" coords="64,671,66,743,79,842,92,895,110,948,135,997,167,1042,181,1054,178,1058,163,1045,130,1000,105,950,87,896,74,843,61,744,59,671"/>
+<area shape="rect" id="Node000014" href="$de/d9b/structtyped__thread__pool__module_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3e6416fec089501094ca1aa6baa646e2f.html" title=" " alt="" coords="191,1151,390,1235"/>
+<area shape="poly" id="edge53_Node000000_Node000014" title=" " alt="" coords="68,671,79,772,99,911,112,981,128,1046,147,1099,167,1136,193,1158,189,1162,163,1140,142,1102,123,1048,107,983,93,912,73,773,62,671"/>
+<area shape="rect" id="Node000015" href="$de/d38/structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type_3_01T_00_01std_1_1void__t_3_6c25439dd3b606b635c5ac1f9fed271e.html" title=" " alt="" coords="165,1259,416,1329"/>
+<area shape="poly" id="edge54_Node000000_Node000015" title=" " alt="" coords="66,671,74,792,91,964,105,1052,122,1132,142,1199,154,1225,167,1244,181,1257,177,1261,163,1248,150,1227,137,1201,116,1133,99,1053,86,964,69,793,61,672"/>
 </map>

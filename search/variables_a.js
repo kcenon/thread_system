@@ -21,5 +21,6 @@ var searchData=
   ['log_5ftype_5fcount_18',['log_type_count',['../de/d98/namespacelog__module_1_1log__detail.html#a5fe62eb65ab4da20620746d7cdfb022e',1,'log_module::log_detail']]],
   ['log_5ftype_5fstrings_19',['log_type_strings',['../de/d98/namespacelog__module_1_1log__detail.html#a3c603ab668f8accaf020653b72779105',1,'log_module::log_detail']]],
   ['logger_5fname_20',['logger_name',['../d9/d1b/structlog__module_1_1log__message.html#a46cb06e2b5845904912a33172c9895b0',1,'log_module::log_message']]],
-  ['low_5fcontention_5fthreshold_21',['LOW_CONTENTION_THRESHOLD',['../de/d41/namespacethread__module_1_1lockfree.html#a61782dd17ce7ca773b896875418b8c21',1,'thread_module::lockfree']]]
+  ['low_5fcontention_5fthreshold_21',['LOW_CONTENTION_THRESHOLD',['../de/d41/namespacethread__module_1_1lockfree.html#a61782dd17ce7ca773b896875418b8c21',1,'thread_module::lockfree']]],
+  ['low_5foverhead_5fmode_22',['low_overhead_mode',['../db/d71/structmonitoring__module_1_1monitoring__config.html#a5fb334c5c991b11d7efee7c2c29462ab',1,'monitoring_module::monitoring_config']]]
 ];

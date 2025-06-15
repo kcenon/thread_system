@@ -69,160 +69,19 @@ $(function() {
 
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">metrics Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d50/classmetrics_1_1counter.html">counter</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter metric - monotonically increasing value.  <a href="../../db/d50/classmetrics_1_1counter.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d1a/classmetrics_1_1gauge.html">gauge</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gauge metric - value that can go up or down.  <a href="../../d2/d1a/classmetrics_1_1gauge.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d1f/classmetrics_1_1histogram.html">histogram</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Histogram metric - distribution of values.  <a href="../../d2/d1f/classmetrics_1_1histogram.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d6a/classmetrics_1_1metric__interface.html">metric_interface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base interface for all metric types.  <a href="../../dd/d6a/classmetrics_1_1metric__interface.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d3f/classmetrics_1_1metric__registry.html">metric_registry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Central registry for all metrics.  <a href="../../d9/d3f/classmetrics_1_1metric__registry.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/db6/classmetrics_1_1summary.html">summary</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Summary metric - sliding time window statistics.  <a href="../../df/db6/classmetrics_1_1summary.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d01/classmetrics_1_1thread__pool__metrics.html">thread_pool_metrics</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comprehensive metrics collection for thread pools.  <a href="../../d7/d01/classmetrics_1_1thread__pool__metrics.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ac5d924b336106bc45dbacd030f3c4b1a" id="r_ac5d924b336106bc45dbacd030f3c4b1a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/namespacemetrics.html#ac5d924b336106bc45dbacd030f3c4b1a">json</a> = nlohmann::json</td></tr>
-<tr class="separator:ac5d924b336106bc45dbacd030f3c4b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a3fed01bd6499c0288f4f105dbf525e3d" id="r_a3fed01bd6499c0288f4f105dbf525e3d"><td class="memTemplParams" colspan="2">template&lt;typename MetricType , typename... Args&gt; </td></tr>
-<tr class="memitem:a3fed01bd6499c0288f4f105dbf525e3d"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; MetricType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d82/namespacemetrics.html#a3fed01bd6499c0288f4f105dbf525e3d">make_metric</a> (const std::string &amp;name, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:a3fed01bd6499c0288f4f105dbf525e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c093de5f2da9e7ff9e549d02987659d" id="r_a0c093de5f2da9e7ff9e549d02987659d"><td class="memTemplParams" colspan="2">template&lt;typename MetricType &gt; </td></tr>
-<tr class="memitem:a0c093de5f2da9e7ff9e549d02987659d"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; MetricType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d82/namespacemetrics.html#a0c093de5f2da9e7ff9e549d02987659d">get_metric</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a0c093de5f2da9e7ff9e549d02987659d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="ac5d924b336106bc45dbacd030f3c4b1a" name="ac5d924b336106bc45dbacd030f3c4b1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5d924b336106bc45dbacd030f3c4b1a">&#9670;&#160;</a></span>json</h2>
 
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d1/d82/namespacemetrics.html#ac5d924b336106bc45dbacd030f3c4b1a">metrics::json</a> = typedef nlohmann::json</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../df/d4b/metric__types_8h_source.html#l00014">14</a> of file <a class="el" href="../../df/d4b/metric__types_8h_source.html">metric_types.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a0c093de5f2da9e7ff9e549d02987659d" name="a0c093de5f2da9e7ff9e549d02987659d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c093de5f2da9e7ff9e549d02987659d">&#9670;&#160;</a></span>get_metric()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename MetricType &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; MetricType &gt; metrics::get_metric </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../db/d8a/metric__registry_8h_source.html#l00174">174</a> of file <a class="el" href="../../db/d8a/metric__registry_8h_source.html">metric_registry.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  174</span>                                                            {</div>
-<div class="line"><span class="lineno">  175</span>    <span class="keywordflow">return</span> metric_registry::instance().get_metric&lt;MetricType&gt;(name);</div>
-<div class="line"><span class="lineno">  176</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d1/d82/namespacemetrics_a0c093de5f2da9e7ff9e549d02987659d_cgraph.png" border="0" usemap="#ad1/d82/namespacemetrics_a0c093de5f2da9e7ff9e549d02987659d_cgraph" alt=""/></div>
-<map name="ad1/d82/namespacemetrics_a0c093de5f2da9e7ff9e549d02987659d_cgraph" id="ad1/d82/namespacemetrics_a0c093de5f2da9e7ff9e549d02987659d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,57,155,82"/>
-<area shape="rect" href="../../d9/d3f/classmetrics_1_1metric__registry.html#ab8ec7794fb7cb49bc3b135fcd380f24b" title="Get existing metric." alt="" coords="203,5,381,45"/>
-<area shape="poly" title=" " alt="" coords="141,54,189,44,190,49,142,59"/>
-<area shape="rect" href="../../d9/d3f/classmetrics_1_1metric__registry.html#a31d42d46bab82ed2bf4761b13f8f5f81" title="Get singleton instance." alt="" coords="203,93,381,133"/>
-<area shape="poly" title=" " alt="" coords="142,79,190,89,189,95,141,85"/>
-<area shape="poly" title=" " alt="" coords="252,94,250,84,256,74,271,69,292,67,317,70,330,77,328,82,315,75,292,72,272,74,260,79,255,85,258,92"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a3fed01bd6499c0288f4f105dbf525e3d" name="a3fed01bd6499c0288f4f105dbf525e3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fed01bd6499c0288f4f105dbf525e3d">&#9670;&#160;</a></span>make_metric()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename MetricType , typename... Args&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; MetricType &gt; metrics::make_metric </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Args &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../db/d8a/metric__registry_8h_source.html#l00169">169</a> of file <a class="el" href="../../db/d8a/metric__registry_8h_source.html">metric_registry.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span>                                                                             {</div>
-<div class="line"><span class="lineno">  170</span>    <span class="keywordflow">return</span> metric_registry::instance().register_metric&lt;MetricType&gt;(name, std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><span class="lineno">  171</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d1/d82/namespacemetrics_a3fed01bd6499c0288f4f105dbf525e3d_cgraph.png" border="0" usemap="#ad1/d82/namespacemetrics_a3fed01bd6499c0288f4f105dbf525e3d_cgraph" alt=""/></div>
-<map name="ad1/d82/namespacemetrics_a3fed01bd6499c0288f4f105dbf525e3d_cgraph" id="ad1/d82/namespacemetrics_a3fed01bd6499c0288f4f105dbf525e3d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,69,169,94"/>
-<area shape="rect" href="../../d9/d3f/classmetrics_1_1metric__registry.html#a31d42d46bab82ed2bf4761b13f8f5f81" title="Get singleton instance." alt="" coords="217,29,396,69"/>
-<area shape="poly" title=" " alt="" coords="169,67,203,62,204,67,170,72"/>
-<area shape="rect" href="../../d9/d3f/classmetrics_1_1metric__registry.html#ab7546467270406e580d53e2601f93400" title="Register a new metric." alt="" coords="217,93,396,133"/>
-<area shape="poly" title=" " alt="" coords="170,91,204,96,203,101,169,96"/>
-<area shape="poly" title=" " alt="" coords="266,30,263,20,270,10,284,5,307,3,332,6,346,13,344,18,331,11,307,8,286,10,273,15,268,21,271,28"/>
-</map>
-</div>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>Convenience functions for global metrics operations.  
+<a href="../../d1/d82/namespacemetrics.html#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Convenience functions for global metrics operations. </p>
+<p>Provides simplified access to common monitoring operations using the global metrics collector. These functions handle initialization and access to the singleton instance internally. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 7 2025 19:15:29 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

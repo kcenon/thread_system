@@ -113,7 +113,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><div class="compoundTemplParams">template&lt;size_t BufferSize = 256&gt;<br />
 class log_module::detail::optimization::stack_string_builder&lt; BufferSize &gt;</div><p>Stack-based string builder for small messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00254">254</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00285">285</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0f7a33144e23bc5fac15c784ef797b99" name="a0f7a33144e23bc5fac15c784ef797b99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f7a33144e23bc5fac15c784ef797b99">&#9670;&#160;</a></span>append()</h2>
@@ -143,17 +143,17 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00260">260</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  260</span>                                   {</div>
-<div class="line"><span class="lineno">  261</span>                std::string str = <a class="code hl_function" href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">to_log_string</a>(std::forward&lt;T&gt;(value));</div>
-<div class="line"><span class="lineno">  262</span>                <span class="keywordtype">size_t</span> copy_size = std::min(str.size(), BufferSize - <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a> - 1);</div>
-<div class="line"><span class="lineno">  263</span>                std::memcpy(<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a> + <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>, str.data(), copy_size);</div>
-<div class="line"><span class="lineno">  264</span>                <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a> += copy_size;</div>
-<div class="line"><span class="lineno">  265</span>                <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a>[<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>] = <span class="charliteral">&#39;\0&#39;</span>;</div>
-<div class="line"><span class="lineno">  266</span>            }</div>
-<div class="ttc" id="aclasslog__module_1_1detail_1_1optimization_1_1stack__string__builder_html_a4948d41e9629abf2d189095521015a8c"><div class="ttname"><a href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">log_module::detail::optimization::stack_string_builder::buffer_</a></div><div class="ttdeci">char buffer_[BufferSize]</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00255">logger_traits.h:255</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1detail_1_1optimization_1_1stack__string__builder_html_a7ec94a6ca399f46866b11a3553611301"><div class="ttname"><a href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">log_module::detail::optimization::stack_string_builder::pos_</a></div><div class="ttdeci">size_t pos_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00256">logger_traits.h:256</a></div></div>
-<div class="ttc" id="anamespacelog__module_1_1detail_html_ad560c97c46090be32da536677e728de4"><div class="ttname"><a href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">log_module::detail::to_log_string</a></div><div class="ttdeci">std::string to_log_string(T &amp;&amp;value)</div><div class="ttdoc">Helper to convert various types to string.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00127">logger_traits.h:127</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00291">291</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  291</span>                                   {</div>
+<div class="line"><span class="lineno">  292</span>                std::string str = <a class="code hl_function" href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">to_log_string</a>(std::forward&lt;T&gt;(value));</div>
+<div class="line"><span class="lineno">  293</span>                <span class="keywordtype">size_t</span> copy_size = std::min(str.size(), BufferSize - <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a> - 1);</div>
+<div class="line"><span class="lineno">  294</span>                std::memcpy(<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a> + <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>, str.data(), copy_size);</div>
+<div class="line"><span class="lineno">  295</span>                <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a> += copy_size;</div>
+<div class="line"><span class="lineno">  296</span>                <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a>[<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>] = <span class="charliteral">&#39;\0&#39;</span>;</div>
+<div class="line"><span class="lineno">  297</span>            }</div>
+<div class="ttc" id="aclasslog__module_1_1detail_1_1optimization_1_1stack__string__builder_html_a4948d41e9629abf2d189095521015a8c"><div class="ttname"><a href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">log_module::detail::optimization::stack_string_builder::buffer_</a></div><div class="ttdeci">char buffer_[BufferSize]</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00286">logger_traits.h:286</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1detail_1_1optimization_1_1stack__string__builder_html_a7ec94a6ca399f46866b11a3553611301"><div class="ttname"><a href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">log_module::detail::optimization::stack_string_builder::pos_</a></div><div class="ttdeci">size_t pos_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00287">logger_traits.h:287</a></div></div>
+<div class="ttc" id="anamespacelog__module_1_1detail_html_ad560c97c46090be32da536677e728de4"><div class="ttname"><a href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">log_module::detail::to_log_string</a></div><div class="ttdeci">std::string to_log_string(T &amp;&amp;value)</div><div class="ttdoc">Helper to convert various types to string.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00158">logger_traits.h:158</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -192,10 +192,10 @@ template&lt;size_t BufferSize = 256&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00268">268</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  268</span>                                        {</div>
-<div class="line"><span class="lineno">  269</span>                <span class="keywordflow">return</span> std::string(<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a>, <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>);</div>
-<div class="line"><span class="lineno">  270</span>            }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00299">299</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  299</span>                                        {</div>
+<div class="line"><span class="lineno">  300</span>                <span class="keywordflow">return</span> std::string(<a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c">buffer_</a>, <a class="code hl_variable" href="../../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a7ec94a6ca399f46866b11a3553611301">pos_</a>);</div>
+<div class="line"><span class="lineno">  301</span>            }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -222,7 +222,7 @@ template&lt;size_t BufferSize = 256&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00255">255</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00286">286</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 
 </div>
 </div>
@@ -248,7 +248,7 @@ template&lt;size_t BufferSize = 256&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00256">256</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00287">287</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 
 </div>
 </div>
@@ -258,7 +258,7 @@ template&lt;size_t BufferSize = 256&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

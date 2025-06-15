@@ -87,7 +87,9 @@ $(function() {
 <li>cancel()&#160;:&#160;<a class="el" href="df/d25/classthread__module_1_1cancellation__token.html#a78563fae5eda64b88960f6aab07fef38">thread_module::cancellation_token</a>, <a class="el" href="d6/ddf/classthread__module_1_1jobs_1_1job__interface.html#a98688f30e8bee4024bd02fe7edf99838">thread_module::jobs::job_interface</a>, <a class="el" href="d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a596f8db04f68a8096248d14360dd25df">typed_thread_pool_module::typed_job_interface&lt; job_type &gt;</a></li>
 <li>cancellation_token()&#160;:&#160;<a class="el" href="df/d25/classthread__module_1_1cancellation__token.html#a221f6c3e66a74331da9c83d34505ccae">thread_module::cancellation_token</a></li>
 <li>cancellation_token_&#160;:&#160;<a class="el" href="d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">thread_module::job</a></li>
-<li>capacity&#160;:&#160;<a class="el" href="db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">thread_module::node_pool&lt; T &gt;::PoolChunk</a></li>
+<li>capacity()&#160;:&#160;<a class="el" href="d7/dc0/classmonitoring__module_1_1ring__buffer.html#a1679ee905fb87014f4358154ff0b3557">monitoring_module::ring_buffer&lt; T &gt;</a>, <a class="el" href="db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">thread_module::node_pool&lt; T &gt;::PoolChunk</a></li>
+<li>capacity_&#160;:&#160;<a class="el" href="d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">monitoring_module::ring_buffer&lt; T &gt;</a>, <a class="el" href="dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">monitoring_module::thread_safe_ring_buffer&lt; T &gt;</a></li>
+<li>capture_time&#160;:&#160;<a class="el" href="d2/db9/structmonitoring__module_1_1metrics__snapshot.html#a20a80911b3c089b6b035fb972c8c23dc">monitoring_module::metrics_snapshot</a></li>
 <li>cas_success_ratio()&#160;:&#160;<a class="el" href="d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a99fd584eb1e365553341ece4d28aadf0">thread_module::lockfree::performance_stats</a></li>
 <li>cbegin()&#160;:&#160;<a class="el" href="d8/d4f/classutility__module_1_1span.html#a607bed17842c9fc58d0801ba455adc53">utility_module::span&lt; T, Extent &gt;</a></li>
 <li>cend()&#160;:&#160;<a class="el" href="d8/d4f/classutility__module_1_1span.html#a823ab9c665e2642386cae24d75b6466c">utility_module::span&lt; T, Extent &gt;</a></li>
@@ -102,17 +104,27 @@ $(function() {
 <li>code()&#160;:&#160;<a class="el" href="dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">thread_module::error</a></li>
 <li>code_&#160;:&#160;<a class="el" href="dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">thread_module::error</a></li>
 <li>collect_hazard_pointers()&#160;:&#160;<a class="el" href="d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7">thread_module::hazard_pointer_manager</a></li>
-<li>collector_&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">log_module::implementation::logger</a></li>
+<li>collect_metrics()&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#a25d5d910f1718cad711f8a7d89b25312">monitoring_module::metrics_collector</a></li>
+<li>collect_system_metrics()&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#a368275db5a63ee46c3a0469f65579a08">monitoring_module::metrics_collector</a></li>
+<li>collect_thread_pool_metrics()&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#aad46e3493c4e9bdb7b6690fb91ce2fde">monitoring_module::metrics_collector</a></li>
+<li>collect_worker_metrics()&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#a35f27faf72d1d5ba4b3bd4b764a7840c">monitoring_module::metrics_collector</a></li>
+<li>collection_errors&#160;:&#160;<a class="el" href="db/d8a/structmonitoring__module_1_1collection__statistics.html#aa5f2e0a73685a04dd231948c97138cc5">monitoring_module::collection_statistics</a></li>
+<li>collection_interval&#160;:&#160;<a class="el" href="db/d71/structmonitoring__module_1_1monitoring__config.html#a2bd3b48c1131e9248179c4b75b64bbd9">monitoring_module::monitoring_config</a></li>
+<li>collection_loop()&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#a2eaffd2f0ed8d25859f42471777a43c5">monitoring_module::metrics_collector</a></li>
+<li>collection_statistics()&#160;:&#160;<a class="el" href="db/d8a/structmonitoring__module_1_1collection__statistics.html#aae641cd587a780687ca214daecb0194a">monitoring_module::collection_statistics</a></li>
+<li>collection_thread_&#160;:&#160;<a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">monitoring_module::metrics_collector</a></li>
+<li>collection_time_ns&#160;:&#160;<a class="el" href="db/d8a/structmonitoring__module_1_1collection__statistics.html#abdddde6a4e7599bc82bec1df7c0d94c0">monitoring_module::collection_statistics</a></li>
+<li>collector_&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#a56b32e79fb4fe69e778e38ccdfac1e4c">log_module::implementation::logger</a>, <a class="el" href="de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">monitoring_module::global_metrics_collector</a></li>
 <li>collector_mutex_&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#a0926b632460da855a865217508b96e06">log_module::implementation::logger</a></li>
 <li>colored_output&#160;:&#160;<a class="el" href="d5/dd7/structlog__module_1_1config_1_1console__writer__config.html#af0d85b511b5ff9cb7d556f9debb16f94">log_module::config::console_writer_config</a></li>
 <li>comp&#160;:&#160;<a class="el" href="d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">typed_thread_pool_module::detail::priority_comparator&lt; T, Comparator &gt;</a></li>
 <li>compile_string()&#160;:&#160;<a class="el" href="d3/d5e/structlog__module_1_1detail_1_1compile__string.html#abbe92a109f461d6fd6216f60a5815a36">log_module::detail::compile_string&lt; N &gt;</a>, <a class="el" href="d6/dee/structthread__pool__module_1_1detail_1_1compile__string.html#a86ccac520c8354e99e3ee8ec94ec696e">thread_pool_module::detail::compile_string&lt; N &gt;</a></li>
 <li>condition_&#160;:&#160;<a class="el" href="df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">thread_module::job_queue</a></li>
-<li>condition_variable_wrapper()&#160;:&#160;<a class="el" href="da/df8/classthread__module_1_1sync_1_1condition__variable__wrapper.html#a9731fc9a3b5753df0eba1d2d3cca7aae">thread_module::sync::condition_variable_wrapper</a></li>
-<li>config_&#160;:&#160;<a class="el" href="d2/dc4/classlog__module_1_1base__writer.html#a1c260615ffea8c3562834455e0be4b58">log_module::base_writer</a>, <a class="el" href="dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a53bb5159a627a0fdd96279d84c5c25c9">thread_pool_module::thread_pool_builder</a></li>
+<li>condition_variable_wrapper()&#160;:&#160;<a class="el" href="da/df8/classthread__module_1_1sync_1_1condition__variable__wrapper.html#afe44f0a1537ed0bc8cbaf299d0f7d621">thread_module::sync::condition_variable_wrapper</a></li>
+<li>config_&#160;:&#160;<a class="el" href="d2/dc4/classlog__module_1_1base__writer.html#a1c260615ffea8c3562834455e0be4b58">log_module::base_writer</a>, <a class="el" href="d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">monitoring_module::metrics_collector</a>, <a class="el" href="dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a53bb5159a627a0fdd96279d84c5c25c9">thread_pool_module::thread_pool_builder</a></li>
 <li>console_log_type_&#160;:&#160;<a class="el" href="d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">log_module::log_collector</a></li>
 <li>console_queue_&#160;:&#160;<a class="el" href="d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">log_module::log_collector</a></li>
-<li>console_target()&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#a5b68e3f4f3c9485ab3dfec5b1eb8804e">log_module::implementation::logger</a>, <a class="el" href="d7/da3/classlog__module_1_1log__collector.html#a57413f1e807f33b78f60230a67a6fcfd">log_module::log_collector</a></li>
+<li>console_target()&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#ad6387e02f1c3b44a9ef1e0f3b5bcebe2">log_module::implementation::logger</a>, <a class="el" href="d7/da3/classlog__module_1_1log__collector.html#a57413f1e807f33b78f60230a67a6fcfd">log_module::log_collector</a></li>
 <li>console_writer()&#160;:&#160;<a class="el" href="d9/de4/classlog__module_1_1console__writer.html#a61dfd20b0c4f37840102f740bcf62f6d">log_module::console_writer</a></li>
 <li>console_writer_&#160;:&#160;<a class="el" href="d4/d78/classlog__module_1_1implementation_1_1logger.html#a5ab88d3812b7185c741b96b9a3dbe12c">log_module::implementation::logger</a></li>
 <li>const_iterator&#160;:&#160;<a class="el" href="d8/d4f/classutility__module_1_1span.html#a643d5d9e4c0d8293c45371f3c54e5630">utility_module::span&lt; T, Extent &gt;</a></li>
@@ -125,10 +137,12 @@ $(function() {
 <li>contention_ratio()&#160;:&#160;<a class="el" href="d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#acd07056d228c9ad56c881fdcc73ea146">thread_module::lockfree::performance_stats</a></li>
 <li>CONTENTION_THRESHOLD_HIGH&#160;:&#160;<a class="el" href="d9/d67/classthread__module_1_1adaptive__job__queue.html#afc3bebbc72306f42351170ae4de52816">thread_module::adaptive_job_queue</a></li>
 <li>CONTENTION_THRESHOLD_LOW&#160;:&#160;<a class="el" href="d9/d67/classthread__module_1_1adaptive__job__queue.html#adcff00428dd5ff3fbdc32dfb315a91df">thread_module::adaptive_job_queue</a></li>
+<li>context_switches&#160;:&#160;<a class="el" href="de/d48/structmonitoring__module_1_1worker__metrics.html#a6a2f0e8fa8dc24214d0cce7ea5f2c23e">monitoring_module::worker_metrics</a></li>
 <li>continuation_&#160;:&#160;<a class="el" href="dd/d46/classthread__pool__module_1_1task__promise.html#a995155cbd018536baf034d694ec499be">thread_pool_module::task_promise&lt; T &gt;</a>, <a class="el" href="d5/d42/classthread__pool__module_1_1task__promise_3_01void_01_4.html#a031994c885ab6ac85977984606583286">thread_pool_module::task_promise&lt; void &gt;</a></li>
 <li>continue_on_exception&#160;:&#160;<a class="el" href="d4/d53/structthread__pool__module_1_1worker__policy.html#a40befb2e85c1e4e21ebef1297fbbd514">thread_pool_module::worker_policy</a></li>
 <li>convert()&#160;:&#160;<a class="el" href="d1/d53/classutility__module_1_1convert__string.html#abd95bc09617a96479dfb71d15869dd43">utility_module::convert_string</a></li>
 <li>convert_message()&#160;:&#160;<a class="el" href="df/df4/classlog__module_1_1log__job.html#adcbe6490ed0744089ac7e9cb891488bc">log_module::log_job</a></li>
+<li>cpu_usage_percent&#160;:&#160;<a class="el" href="d1/d1b/structmonitoring__module_1_1system__metrics.html#a1827dc6a122f6b5c69fd90df34c97bc2">monitoring_module::system_metrics</a></li>
 <li>crbegin()&#160;:&#160;<a class="el" href="d8/d4f/classutility__module_1_1span.html#aa742ade515971ff8e43bbb44bad4883c">utility_module::span&lt; T, Extent &gt;</a></li>
 <li>create()&#160;:&#160;<a class="el" href="df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">thread_module::cancellation_token</a></li>
 <li>create_background_tasks()&#160;:&#160;<a class="el" href="d4/ddb/classthread__pool__module_1_1pool__factory.html#a8733f3555829b6db6576404a1a5574d2">thread_pool_module::pool_factory</a></li>
@@ -163,6 +177,7 @@ $(function() {
 <li>create_single_threaded()&#160;:&#160;<a class="el" href="d4/ddb/classthread__pool__module_1_1pool__factory.html#a2b048bb126adf0a3c0387bb2e4ff6832">thread_pool_module::pool_factory</a></li>
 <li>create_structured_job()&#160;:&#160;<a class="el" href="d6/dec/classlog__module_1_1job__factory.html#a6fb4072480d709d526d2477efadf5d04">log_module::job_factory</a></li>
 <li>create_syslog_writer()&#160;:&#160;<a class="el" href="df/db2/classlog__module_1_1writer__factory.html#a6f1961fc669b0d4a1205a13d90e9d514">log_module::writer_factory</a></li>
+<li>create_timer()&#160;:&#160;<a class="el" href="d8/d0a/classmonitoring__module_1_1metrics__updater.html#a98b8292453ba7385199a7dcd859633d6">monitoring_module::metrics_updater</a></li>
 <li>create_with_policy()&#160;:&#160;<a class="el" href="d4/ddb/classthread__pool__module_1_1pool__factory.html#aa0fe746f7abcb16bf29801599925140e">thread_pool_module::pool_factory</a></li>
 <li>created_at&#160;:&#160;<a class="el" href="d9/da9/structlog__module_1_1message__batch.html#a0ab029098353f8195580e5b745019923">log_module::message_batch</a></li>
 <li>crend()&#160;:&#160;<a class="el" href="d8/d4f/classutility__module_1_1span.html#acb3a94146ebb90286b977160866d19b4">utility_module::span&lt; T, Extent &gt;</a></li>
@@ -176,7 +191,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

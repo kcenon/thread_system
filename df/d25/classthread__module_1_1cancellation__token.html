@@ -160,7 +160,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>Provides a mechanism for cooperative cancellation of operations. </p>
 <p>Cancellation tokens allow long-running operations to be gracefully canceled. They are particularly useful for worker threads that need to be notified when their work should be aborted. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00024">24</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00055">55</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a221f6c3e66a74331da9c83d34505ccae" name="a221f6c3e66a74331da9c83d34505ccae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a221f6c3e66a74331da9c83d34505ccae">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[1/4]</span></h2>
@@ -186,9 +186,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00036">36</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>        : <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::move(state)) {}</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a3d1fba20e5314fc21bc499bb701e50bd"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">thread_module::cancellation_token::state_</a></div><div class="ttdeci">std::shared_ptr&lt; token_state &gt; state_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00033">cancellation_token.h:33</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00067">67</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>        : <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::move(state)) {}</div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a3d1fba20e5314fc21bc499bb701e50bd"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">thread_module::cancellation_token::state_</a></div><div class="ttdeci">std::shared_ptr&lt; token_state &gt; state_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00064">cancellation_token.h:64</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -215,8 +215,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00041">41</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>: <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::make_shared&lt;token_state&gt;()) {}</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00072">72</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>: <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::make_shared&lt;token_state&gt;()) {}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -312,25 +312,25 @@ Here is the caller graph for this function:</div>
 <p>Sets the token to the canceled state and invokes all registered callbacks.</p>
 <dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees callbacks are invoked exactly once. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00101">101</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  101</span>                  {</div>
-<div class="line"><span class="lineno">  102</span>        std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
-<div class="line"><span class="lineno">  103</span>        </div>
-<div class="line"><span class="lineno">  104</span>        {</div>
-<div class="line"><span class="lineno">  105</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
-<div class="line"><span class="lineno">  106</span>            <span class="keywordtype">bool</span> was_cancelled = <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.exchange(<span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  107</span>            <span class="keywordflow">if</span> (!was_cancelled) {</div>
-<div class="line"><span class="lineno">  108</span>                <span class="comment">// Move callbacks to local vector to avoid holding lock during invocation</span></div>
-<div class="line"><span class="lineno">  109</span>                callbacks_to_invoke = std::move(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks);</div>
-<div class="line"><span class="lineno">  110</span>                <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.clear();</div>
-<div class="line"><span class="lineno">  111</span>            }</div>
-<div class="line"><span class="lineno">  112</span>        }</div>
-<div class="line"><span class="lineno">  113</span>        </div>
-<div class="line"><span class="lineno">  114</span>        <span class="comment">// Invoke callbacks outside the lock to prevent deadlock</span></div>
-<div class="line"><span class="lineno">  115</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
-<div class="line"><span class="lineno">  116</span>            callback();</div>
-<div class="line"><span class="lineno">  117</span>        }</div>
-<div class="line"><span class="lineno">  118</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00132">132</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>                  {</div>
+<div class="line"><span class="lineno">  133</span>        std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
+<div class="line"><span class="lineno">  134</span>        </div>
+<div class="line"><span class="lineno">  135</span>        {</div>
+<div class="line"><span class="lineno">  136</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keywordtype">bool</span> was_cancelled = <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.exchange(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">if</span> (!was_cancelled) {</div>
+<div class="line"><span class="lineno">  139</span>                <span class="comment">// Move callbacks to local vector to avoid holding lock during invocation</span></div>
+<div class="line"><span class="lineno">  140</span>                callbacks_to_invoke = std::move(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks);</div>
+<div class="line"><span class="lineno">  141</span>                <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.clear();</div>
+<div class="line"><span class="lineno">  142</span>            }</div>
+<div class="line"><span class="lineno">  143</span>        }</div>
+<div class="line"><span class="lineno">  144</span>        </div>
+<div class="line"><span class="lineno">  145</span>        <span class="comment">// Invoke callbacks outside the lock to prevent deadlock</span></div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
+<div class="line"><span class="lineno">  147</span>            callback();</div>
+<div class="line"><span class="lineno">  148</span>        }</div>
+<div class="line"><span class="lineno">  149</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -360,11 +360,11 @@ Here is the caller graph for this function:</div>
 <p>Creates a new cancellation token. </p>
 <dl class="section return"><dt>Returns</dt><dd>A new cancellation token </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00053">53</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   53</span>                                       {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">cancellation_token</a>();</div>
-<div class="line"><span class="lineno">   55</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_aaebfe279a1db60dc59aad568b6ce620f"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">thread_module::cancellation_token::cancellation_token</a></div><div class="ttdeci">cancellation_token()</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00041">cancellation_token.h:41</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00084">84</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>                                       {</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">cancellation_token</a>();</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_aaebfe279a1db60dc59aad568b6ce620f"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">thread_module::cancellation_token::cancellation_token</a></div><div class="ttdeci">cancellation_token()</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00072">cancellation_token.h:72</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -422,37 +422,37 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A new token linked to the parents</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Uses weak_ptr to avoid circular references and memory leaks </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00064">64</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>                                                                                            {</div>
-<div class="line"><span class="lineno">   65</span>        <span class="keyword">auto</span> new_token = <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a>();</div>
-<div class="line"><span class="lineno">   66</span>        <span class="keyword">auto</span> new_state_weak = std::weak_ptr&lt;token_state&gt;(new_token.state_);</div>
-<div class="line"><span class="lineno">   67</span>        </div>
-<div class="line"><span class="lineno">   68</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; token : tokens) {</div>
-<div class="line"><span class="lineno">   69</span>            <span class="keyword">auto</span> token_copy = token;</div>
-<div class="line"><span class="lineno">   70</span>            token_copy.register_callback([new_state_weak]() {</div>
-<div class="line"><span class="lineno">   71</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> state = new_state_weak.lock()) {</div>
-<div class="line"><span class="lineno">   72</span>                    <span class="comment">// Directly set the cancelled flag and invoke callbacks</span></div>
-<div class="line"><span class="lineno">   73</span>                    std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
-<div class="line"><span class="lineno">   74</span>                    </div>
-<div class="line"><span class="lineno">   75</span>                    {</div>
-<div class="line"><span class="lineno">   76</span>                        std::lock_guard&lt;std::mutex&gt; lock(state-&gt;callback_mutex);</div>
-<div class="line"><span class="lineno">   77</span>                        bool was_cancelled = state-&gt;is_cancelled.exchange(true);</div>
-<div class="line"><span class="lineno">   78</span>                        if (!was_cancelled) {</div>
-<div class="line"><span class="lineno">   79</span>                            callbacks_to_invoke = std::move(state-&gt;callbacks);</div>
-<div class="line"><span class="lineno">   80</span>                            state-&gt;callbacks.clear();</div>
-<div class="line"><span class="lineno">   81</span>                        }</div>
-<div class="line"><span class="lineno">   82</span>                    }</div>
-<div class="line"><span class="lineno">   83</span>                    </div>
-<div class="line"><span class="lineno">   84</span>                    for (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
-<div class="line"><span class="lineno">   85</span>                        callback();</div>
-<div class="line"><span class="lineno">   86</span>                    }</div>
-<div class="line"><span class="lineno">   87</span>                }</div>
-<div class="line"><span class="lineno">   88</span>            });</div>
-<div class="line"><span class="lineno">   89</span>        }</div>
-<div class="line"><span class="lineno">   90</span>        </div>
-<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">return</span> new_token;</div>
-<div class="line"><span class="lineno">   92</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a66fd6f26d8f31444518a6082d588ceda"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">thread_module::cancellation_token::create</a></div><div class="ttdeci">static cancellation_token create()</div><div class="ttdoc">Creates a new cancellation token.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00053">cancellation_token.h:53</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00095">95</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                                                                                            {</div>
+<div class="line"><span class="lineno">   96</span>        <span class="keyword">auto</span> new_token = <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a>();</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keyword">auto</span> new_state_weak = std::weak_ptr&lt;token_state&gt;(new_token.state_);</div>
+<div class="line"><span class="lineno">   98</span>        </div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; token : tokens) {</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keyword">auto</span> token_copy = token;</div>
+<div class="line"><span class="lineno">  101</span>            token_copy.register_callback([new_state_weak]() {</div>
+<div class="line"><span class="lineno">  102</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> state = new_state_weak.lock()) {</div>
+<div class="line"><span class="lineno">  103</span>                    <span class="comment">// Directly set the cancelled flag and invoke callbacks</span></div>
+<div class="line"><span class="lineno">  104</span>                    std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
+<div class="line"><span class="lineno">  105</span>                    </div>
+<div class="line"><span class="lineno">  106</span>                    {</div>
+<div class="line"><span class="lineno">  107</span>                        std::lock_guard&lt;std::mutex&gt; lock(state-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  108</span>                        bool was_cancelled = state-&gt;is_cancelled.exchange(true);</div>
+<div class="line"><span class="lineno">  109</span>                        if (!was_cancelled) {</div>
+<div class="line"><span class="lineno">  110</span>                            callbacks_to_invoke = std::move(state-&gt;callbacks);</div>
+<div class="line"><span class="lineno">  111</span>                            state-&gt;callbacks.clear();</div>
+<div class="line"><span class="lineno">  112</span>                        }</div>
+<div class="line"><span class="lineno">  113</span>                    }</div>
+<div class="line"><span class="lineno">  114</span>                    </div>
+<div class="line"><span class="lineno">  115</span>                    for (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
+<div class="line"><span class="lineno">  116</span>                        callback();</div>
+<div class="line"><span class="lineno">  117</span>                    }</div>
+<div class="line"><span class="lineno">  118</span>                }</div>
+<div class="line"><span class="lineno">  119</span>            });</div>
+<div class="line"><span class="lineno">  120</span>        }</div>
+<div class="line"><span class="lineno">  121</span>        </div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> new_token;</div>
+<div class="line"><span class="lineno">  123</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a66fd6f26d8f31444518a6082d588ceda"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">thread_module::cancellation_token::create</a></div><div class="ttdeci">static cancellation_token create()</div><div class="ttdoc">Creates a new cancellation token.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00084">cancellation_token.h:84</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -494,10 +494,10 @@ Here is the call graph for this function:</div>
 <p>Checks if the token has been canceled. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the token has been canceled, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00124">124</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  124</span>                                            {</div>
-<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load();</div>
-<div class="line"><span class="lineno">  126</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00155">155</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>                                            {</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load();</div>
+<div class="line"><span class="lineno">  157</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -597,20 +597,20 @@ Here is the caller graph for this function:</div>
 <p>If the token is already canceled, the callback is invoked immediately.</p>
 <dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees the callback is called exactly once. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00146">146</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  146</span>                                                         {</div>
-<div class="line"><span class="lineno">  147</span>        std::unique_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
-<div class="line"><span class="lineno">  148</span>        </div>
-<div class="line"><span class="lineno">  149</span>        <span class="comment">// Check cancellation state while holding the lock</span></div>
-<div class="line"><span class="lineno">  150</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load()) {</div>
-<div class="line"><span class="lineno">  151</span>            lock.unlock();</div>
-<div class="line"><span class="lineno">  152</span>            callback();</div>
-<div class="line"><span class="lineno">  153</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  154</span>        }</div>
-<div class="line"><span class="lineno">  155</span>        </div>
-<div class="line"><span class="lineno">  156</span>        <span class="comment">// Add callback while still holding the lock</span></div>
-<div class="line"><span class="lineno">  157</span>        <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.push_back(std::move(callback));</div>
-<div class="line"><span class="lineno">  158</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00177">177</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>                                                         {</div>
+<div class="line"><span class="lineno">  178</span>        std::unique_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  179</span>        </div>
+<div class="line"><span class="lineno">  180</span>        <span class="comment">// Check cancellation state while holding the lock</span></div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load()) {</div>
+<div class="line"><span class="lineno">  182</span>            lock.unlock();</div>
+<div class="line"><span class="lineno">  183</span>            callback();</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  185</span>        }</div>
+<div class="line"><span class="lineno">  186</span>        </div>
+<div class="line"><span class="lineno">  187</span>        <span class="comment">// Add callback while still holding the lock</span></div>
+<div class="line"><span class="lineno">  188</span>        <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.push_back(std::move(callback));</div>
+<div class="line"><span class="lineno">  189</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -645,13 +645,13 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00132">132</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  132</span>                                    {</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">is_cancelled</a>()) {</div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Operation cancelled&quot;</span>);</div>
-<div class="line"><span class="lineno">  135</span>        }</div>
-<div class="line"><span class="lineno">  136</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a48792bb5006e3661a43e327781a4226a"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">thread_module::cancellation_token::is_cancelled</a></div><div class="ttdeci">bool is_cancelled() const</div><div class="ttdoc">Checks if the token has been canceled.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00124">cancellation_token.h:124</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00163">163</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>                                    {</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">is_cancelled</a>()) {</div>
+<div class="line"><span class="lineno">  165</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Operation cancelled&quot;</span>);</div>
+<div class="line"><span class="lineno">  166</span>        }</div>
+<div class="line"><span class="lineno">  167</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a48792bb5006e3661a43e327781a4226a"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">thread_module::cancellation_token::is_cancelled</a></div><div class="ttdeci">bool is_cancelled() const</div><div class="ttdoc">Checks if the token has been canceled.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00155">cancellation_token.h:155</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -686,7 +686,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00033">33</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00064">64</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 
 </div>
 </div>
@@ -696,7 +696,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

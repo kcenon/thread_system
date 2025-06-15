@@ -132,7 +132,7 @@ Static Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type eraser for heterogeneous message storage. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00164">164</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00195">195</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a09f54f8784861babfa312affee1b0ee2" name="a09f54f8784861babfa312affee1b0ee2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a09f54f8784861babfa312affee1b0ee2">&#9670;&#160;</a></span>message_eraser()</h2>
@@ -161,12 +161,12 @@ requires Formattable&lt;T&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00167">167</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span>            : <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">vtable_</a>(&amp;<a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a1748afa1cef7a7efb14d53e9e191fcb7">vtable_for</a>&lt;std::decay_t&lt;T&gt;&gt;)</div>
-<div class="line"><span class="lineno">  170</span>            , <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">storage_</a>(std::forward&lt;T&gt;(value)) {}</div>
-<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a1748afa1cef7a7efb14d53e9e191fcb7"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a1748afa1cef7a7efb14d53e9e191fcb7">log_module::detail::message_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00183">logger_traits.h:183</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a849f11c6aa99206eebbc3d332d140c86"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">log_module::detail::message_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00189">logger_traits.h:189</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a91433e836c998602de904a1fe47af47b"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">log_module::detail::message_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00188">logger_traits.h:188</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00198">198</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  200</span>            : <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">vtable_</a>(&amp;<a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a1748afa1cef7a7efb14d53e9e191fcb7">vtable_for</a>&lt;std::decay_t&lt;T&gt;&gt;)</div>
+<div class="line"><span class="lineno">  201</span>            , <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">storage_</a>(std::forward&lt;T&gt;(value)) {}</div>
+<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a1748afa1cef7a7efb14d53e9e191fcb7"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a1748afa1cef7a7efb14d53e9e191fcb7">log_module::detail::message_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00214">logger_traits.h:214</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a849f11c6aa99206eebbc3d332d140c86"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">log_module::detail::message_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00220">logger_traits.h:220</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1detail_1_1message__eraser_html_a91433e836c998602de904a1fe47af47b"><div class="ttname"><a href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">log_module::detail::message_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00219">logger_traits.h:219</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -194,11 +194,11 @@ requires Formattable&lt;T&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00172">172</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  172</span>                                    {</div>
-<div class="line"><span class="lineno">  173</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">vtable_</a>-&gt;<a class="code hl_variable" href="../../d9/dd0/structlog__module_1_1detail_1_1message__eraser_1_1vtable__t.html#a5a6059d64dd1a631b6af9734c0fb4db5">to_string</a>(<a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">storage_</a>);</div>
-<div class="line"><span class="lineno">  174</span>        }</div>
-<div class="ttc" id="astructlog__module_1_1detail_1_1message__eraser_1_1vtable__t_html_a5a6059d64dd1a631b6af9734c0fb4db5"><div class="ttname"><a href="../../d9/dd0/structlog__module_1_1detail_1_1message__eraser_1_1vtable__t.html#a5a6059d64dd1a631b6af9734c0fb4db5">log_module::detail::message_eraser::vtable_t::to_string</a></div><div class="ttdeci">std::string(* to_string)(const void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00178">logger_traits.h:178</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00203">203</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  203</span>                                    {</div>
+<div class="line"><span class="lineno">  204</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a91433e836c998602de904a1fe47af47b">vtable_</a>-&gt;<a class="code hl_variable" href="../../d9/dd0/structlog__module_1_1detail_1_1message__eraser_1_1vtable__t.html#a5a6059d64dd1a631b6af9734c0fb4db5">to_string</a>(<a class="code hl_variable" href="../../de/d3a/classlog__module_1_1detail_1_1message__eraser.html#a849f11c6aa99206eebbc3d332d140c86">storage_</a>);</div>
+<div class="line"><span class="lineno">  205</span>        }</div>
+<div class="ttc" id="astructlog__module_1_1detail_1_1message__eraser_1_1vtable__t_html_a5a6059d64dd1a631b6af9734c0fb4db5"><div class="ttname"><a href="../../d9/dd0/structlog__module_1_1detail_1_1message__eraser_1_1vtable__t.html#a5a6059d64dd1a631b6af9734c0fb4db5">log_module::detail::message_eraser::vtable_t::to_string</a></div><div class="ttdeci">std::string(* to_string)(const void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00209">logger_traits.h:209</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -223,7 +223,7 @@ requires Formattable&lt;T&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00189">189</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00220">220</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +247,7 @@ requires Formattable&lt;T&gt;</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00188">188</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00219">219</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
 
 </div>
 </div>
@@ -276,13 +276,13 @@ template&lt;typename T &gt; </div>
 <div class="line">            [](<span class="keyword">const</span> <span class="keywordtype">void</span>* ptr) { <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">detail::to_log_string</a>(*<span class="keyword">static_cast&lt;</span><span class="keyword">const </span>T*<span class="keyword">&gt;</span>(ptr)); },</div>
 <div class="line">            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>T*<span class="keyword">&gt;</span>(ptr)-&gt;~T(); }</div>
 <div class="line">        }</div>
-<div class="ttc" id="anamespacelog__module_1_1detail_html_ad560c97c46090be32da536677e728de4"><div class="ttname"><a href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">log_module::detail::to_log_string</a></div><div class="ttdeci">std::string to_log_string(T &amp;&amp;value)</div><div class="ttdoc">Helper to convert various types to string.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00127">logger_traits.h:127</a></div></div>
+<div class="ttc" id="anamespacelog__module_1_1detail_html_ad560c97c46090be32da536677e728de4"><div class="ttname"><a href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">log_module::detail::to_log_string</a></div><div class="ttdeci">std::string to_log_string(T &amp;&amp;value)</div><div class="ttdoc">Helper to convert various types to string.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d06/logger__traits_8h_source.html#l00158">logger_traits.h:158</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00183">183</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  183</span>                                               {</div>
-<div class="line"><span class="lineno">  184</span>            [](<span class="keyword">const</span> <span class="keywordtype">void</span>* ptr) { <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">detail::to_log_string</a>(*<span class="keyword">static_cast&lt;</span><span class="keyword">const </span>T*<span class="keyword">&gt;</span>(ptr)); },</div>
-<div class="line"><span class="lineno">  185</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>T*<span class="keyword">&gt;</span>(ptr)-&gt;~T(); }</div>
-<div class="line"><span class="lineno">  186</span>        };</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/d06/logger__traits_8h_source.html#l00214">214</a> of file <a class="el" href="../../d4/d06/logger__traits_8h_source.html">logger_traits.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  214</span>                                               {</div>
+<div class="line"><span class="lineno">  215</span>            [](<span class="keyword">const</span> <span class="keywordtype">void</span>* ptr) { <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/dbc/namespacelog__module_1_1detail.html#ad560c97c46090be32da536677e728de4">detail::to_log_string</a>(*<span class="keyword">static_cast&lt;</span><span class="keyword">const </span>T*<span class="keyword">&gt;</span>(ptr)); },</div>
+<div class="line"><span class="lineno">  216</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>T*<span class="keyword">&gt;</span>(ptr)-&gt;~T(); }</div>
+<div class="line"><span class="lineno">  217</span>        };</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -292,7 +292,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

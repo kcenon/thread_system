@@ -1,0 +1,13 @@
+<map id="monitoring_module::metrics_snapshot" name="monitoring_module::metrics_snapshot">
+<area shape="rect" id="Node000001" title="Read&#45;only snapshot of all metrics at a point in time." alt="" coords="191,404,340,484"/>
+<area shape="rect" id="Node000002" href="$d1/d1b/structmonitoring__module_1_1system__metrics.html" title="System&#45;level performance metrics." alt="" coords="5,221,155,341"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,339,210,391,207,395,146,343"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="167,5,366,71"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,57,135,73,107,96,92,121,83,148,76,205,70,204,77,147,87,118,103,93,132,68,166,52"/>
+<area shape="rect" id="Node000004" href="$d8/deb/structmonitoring__module_1_1thread__pool__metrics.html" title="Performance metrics for thread pool operations." alt="" coords="179,221,351,341"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="269,71,268,205,263,205,264,71"/>
+<area shape="rect" id="Node000005" href="$de/d48/structmonitoring__module_1_1worker__metrics.html" title="Performance metrics for individual worker threads." alt="" coords="376,221,525,341"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="368,57,396,72,419,93,436,118,447,146,456,204,451,205,442,148,431,121,415,96,393,76,365,62"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="268,341,268,388,263,388,263,341"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="405,344,366,382,347,397,344,392,362,378,401,340"/>
+</map>

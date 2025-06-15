@@ -153,7 +153,7 @@ Private Attributes</h2></td></tr>
 class typed_thread_pool_module::typed_thread_pool_builder&lt; job_type &gt;</div><p>Builder class for constructing typed thread pools. </p>
 <p>This class provides a fluent interface for building typed thread pools with various configuration options. It ensures consistent construction and validation of pool parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00028">28</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00059">59</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a86336214c9c9f4c792f285e9abdf37e9" name="a86336214c9c9f4c792f285e9abdf37e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a86336214c9c9f4c792f285e9abdf37e9">&#9670;&#160;</a></span>typed_thread_pool_builder()</h2>
@@ -219,38 +219,38 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00111">111</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  111</span>                                                                           {</div>
-<div class="line"><span class="lineno">  112</span>            <span class="keywordflow">if</span> (!<a class="code hl_function" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a6d4ac43c699f89b21a7e48a8d1f4f991">validate</a>()) {</div>
-<div class="line"><span class="lineno">  113</span>                <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Invalid thread pool configuration&quot;</span>);</div>
-<div class="line"><span class="lineno">  114</span>            }</div>
-<div class="line"><span class="lineno">  115</span>            </div>
-<div class="line"><span class="lineno">  116</span>            <span class="keyword">auto</span> pool = std::make_shared&lt;typed_thread_pool_t&lt;job_type&gt;&gt;(<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a>);</div>
-<div class="line"><span class="lineno">  117</span>            </div>
-<div class="line"><span class="lineno">  118</span>            <span class="comment">// Create workers with specified job types</span></div>
-<div class="line"><span class="lineno">  119</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a>; ++i) {</div>
-<div class="line"><span class="lineno">  120</span>                <span class="keyword">auto</span> worker = std::make_unique&lt;typed_thread_worker_t&lt;job_type&gt;&gt;(</div>
-<div class="line"><span class="lineno">  121</span>                    <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a>, <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a></div>
-<div class="line"><span class="lineno">  122</span>                );</div>
-<div class="line"><span class="lineno">  123</span>                pool-&gt;enqueue(std::move(worker));</div>
-<div class="line"><span class="lineno">  124</span>            }</div>
-<div class="line"><span class="lineno">  125</span>            </div>
-<div class="line"><span class="lineno">  126</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a>) {</div>
-<div class="line"><span class="lineno">  127</span>                <span class="keyword">auto</span> result = pool-&gt;start();</div>
-<div class="line"><span class="lineno">  128</span>                <span class="keywordflow">if</span> (result.has_error()) {</div>
-<div class="line"><span class="lineno">  129</span>                    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Failed to start thread pool: &quot;</span> + </div>
-<div class="line"><span class="lineno">  130</span>                                           result.get_error().message());</div>
-<div class="line"><span class="lineno">  131</span>                }</div>
-<div class="line"><span class="lineno">  132</span>            }</div>
-<div class="line"><span class="lineno">  133</span>            </div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">return</span> pool;</div>
-<div class="line"><span class="lineno">  135</span>        }</div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a1fcdf379236f17ef8ca00e4cbca94459"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">typed_thread_pool_module::typed_thread_pool_builder::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00156">pool_builder.h:156</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a3e19ba6ebfc511b831119c85af049916"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">typed_thread_pool_module::typed_thread_pool_builder::worker_count_</a></div><div class="ttdeci">size_t worker_count_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00153">pool_builder.h:153</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a3eb5df5a11b393d53870976374322e33"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">typed_thread_pool_module::typed_thread_pool_builder::title_</a></div><div class="ttdeci">std::string title_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00152">pool_builder.h:152</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a449437f9acb54ec587f32a63777bc58d"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">typed_thread_pool_module::typed_thread_pool_builder::job_types_</a></div><div class="ttdeci">std::vector&lt; job_type &gt; job_types_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00155">pool_builder.h:155</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a6d4ac43c699f89b21a7e48a8d1f4f991"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a6d4ac43c699f89b21a7e48a8d1f4f991">typed_thread_pool_module::typed_thread_pool_builder::validate</a></div><div class="ttdeci">bool validate() const</div><div class="ttdoc">Validate the current configuration.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00099">pool_builder.h:99</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_ab3dee9392c2cd4fadbdd0cf0cf0447ce"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">typed_thread_pool_module::typed_thread_pool_builder::auto_start_</a></div><div class="ttdeci">bool auto_start_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00157">pool_builder.h:157</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00142">142</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  142</span>                                                                           {</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">if</span> (!<a class="code hl_function" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a6d4ac43c699f89b21a7e48a8d1f4f991">validate</a>()) {</div>
+<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Invalid thread pool configuration&quot;</span>);</div>
+<div class="line"><span class="lineno">  145</span>            }</div>
+<div class="line"><span class="lineno">  146</span>            </div>
+<div class="line"><span class="lineno">  147</span>            <span class="keyword">auto</span> pool = std::make_shared&lt;typed_thread_pool_t&lt;job_type&gt;&gt;(<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a>);</div>
+<div class="line"><span class="lineno">  148</span>            </div>
+<div class="line"><span class="lineno">  149</span>            <span class="comment">// Create workers with specified job types</span></div>
+<div class="line"><span class="lineno">  150</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a>; ++i) {</div>
+<div class="line"><span class="lineno">  151</span>                <span class="keyword">auto</span> worker = std::make_unique&lt;typed_thread_worker_t&lt;job_type&gt;&gt;(</div>
+<div class="line"><span class="lineno">  152</span>                    <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a>, <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a></div>
+<div class="line"><span class="lineno">  153</span>                );</div>
+<div class="line"><span class="lineno">  154</span>                pool-&gt;enqueue(std::move(worker));</div>
+<div class="line"><span class="lineno">  155</span>            }</div>
+<div class="line"><span class="lineno">  156</span>            </div>
+<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a>) {</div>
+<div class="line"><span class="lineno">  158</span>                <span class="keyword">auto</span> result = pool-&gt;start();</div>
+<div class="line"><span class="lineno">  159</span>                <span class="keywordflow">if</span> (result.has_error()) {</div>
+<div class="line"><span class="lineno">  160</span>                    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Failed to start thread pool: &quot;</span> + </div>
+<div class="line"><span class="lineno">  161</span>                                           result.get_error().message());</div>
+<div class="line"><span class="lineno">  162</span>                }</div>
+<div class="line"><span class="lineno">  163</span>            }</div>
+<div class="line"><span class="lineno">  164</span>            </div>
+<div class="line"><span class="lineno">  165</span>            <span class="keywordflow">return</span> pool;</div>
+<div class="line"><span class="lineno">  166</span>        }</div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a1fcdf379236f17ef8ca00e4cbca94459"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">typed_thread_pool_module::typed_thread_pool_builder::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00187">pool_builder.h:187</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a3e19ba6ebfc511b831119c85af049916"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">typed_thread_pool_module::typed_thread_pool_builder::worker_count_</a></div><div class="ttdeci">size_t worker_count_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00184">pool_builder.h:184</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a3eb5df5a11b393d53870976374322e33"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">typed_thread_pool_module::typed_thread_pool_builder::title_</a></div><div class="ttdeci">std::string title_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00183">pool_builder.h:183</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a449437f9acb54ec587f32a63777bc58d"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">typed_thread_pool_module::typed_thread_pool_builder::job_types_</a></div><div class="ttdeci">std::vector&lt; job_type &gt; job_types_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00186">pool_builder.h:186</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_a6d4ac43c699f89b21a7e48a8d1f4f991"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a6d4ac43c699f89b21a7e48a8d1f4f991">typed_thread_pool_module::typed_thread_pool_builder::validate</a></div><div class="ttdeci">bool validate() const</div><div class="ttdoc">Validate the current configuration.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00130">pool_builder.h:130</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_ab3dee9392c2cd4fadbdd0cf0cf0447ce"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">typed_thread_pool_module::typed_thread_pool_builder::auto_start_</a></div><div class="ttdeci">bool auto_start_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00188">pool_builder.h:188</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -296,19 +296,19 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 <p>Reset the builder to default values. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00141">141</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  141</span>                                           {</div>
-<div class="line"><span class="lineno">  142</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a> = <span class="stringliteral">&quot;typed_thread_pool&quot;</span>;</div>
-<div class="line"><span class="lineno">  143</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> = <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a1a5709f2c6b732df384d2fdf1253ce21">config::default_worker_count</a>;</div>
-<div class="line"><span class="lineno">  144</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> = <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#abb3f5232d119591492a42e223a552ee3">config::default_queue_size</a>;</div>
-<div class="line"><span class="lineno">  145</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a>.clear();</div>
-<div class="line"><span class="lineno">  146</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  147</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a> = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  148</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">  149</span>        }</div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_acc54047a9b34cc2d0ea2fd128e733efd"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">typed_thread_pool_module::typed_thread_pool_builder::queue_size_</a></div><div class="ttdeci">size_t queue_size_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00154">pool_builder.h:154</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_a1a5709f2c6b732df384d2fdf1253ce21"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a1a5709f2c6b732df384d2fdf1253ce21">typed_thread_pool_module::config::default_worker_count</a></div><div class="ttdeci">constexpr size_t default_worker_count</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00021">config.h:21</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_abb3f5232d119591492a42e223a552ee3"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#abb3f5232d119591492a42e223a552ee3">typed_thread_pool_module::config::default_queue_size</a></div><div class="ttdeci">constexpr size_t default_queue_size</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00020">config.h:20</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00172">172</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>                                           {</div>
+<div class="line"><span class="lineno">  173</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a> = <span class="stringliteral">&quot;typed_thread_pool&quot;</span>;</div>
+<div class="line"><span class="lineno">  174</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> = <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a1a5709f2c6b732df384d2fdf1253ce21">config::default_worker_count</a>;</div>
+<div class="line"><span class="lineno">  175</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> = <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#abb3f5232d119591492a42e223a552ee3">config::default_queue_size</a>;</div>
+<div class="line"><span class="lineno">  176</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a>.clear();</div>
+<div class="line"><span class="lineno">  177</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  178</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  179</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  180</span>        }</div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__builder_html_acc54047a9b34cc2d0ea2fd128e733efd"><div class="ttname"><a href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">typed_thread_pool_module::typed_thread_pool_builder::queue_size_</a></div><div class="ttdeci">size_t queue_size_</div><div class="ttdef"><b>Definition</b> <a href="../../d1/df2/pool__builder_8h_source.html#l00185">pool_builder.h:185</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_a1a5709f2c6b732df384d2fdf1253ce21"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a1a5709f2c6b732df384d2fdf1253ce21">typed_thread_pool_module::config::default_worker_count</a></div><div class="ttdeci">constexpr size_t default_worker_count</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00053">config.h:53</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_abb3f5232d119591492a42e223a552ee3"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#abb3f5232d119591492a42e223a552ee3">typed_thread_pool_module::config::default_queue_size</a></div><div class="ttdeci">constexpr size_t default_queue_size</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00052">config.h:52</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -340,15 +340,15 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 <p>Validate the current configuration. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if configuration is valid, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00099">99</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   99</span>                                            {</div>
-<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> &gt;= <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#adcf1ec70ff88bc68ca55119d0b8e4293">config::min_workers</a> &amp;&amp; </div>
-<div class="line"><span class="lineno">  101</span>                   <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> &lt;= <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a6ccb4cc5291433e6adde8e1d40355902">config::max_workers</a> &amp;&amp;</div>
-<div class="line"><span class="lineno">  102</span>                   <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> &gt; 0 &amp;&amp;</div>
-<div class="line"><span class="lineno">  103</span>                   !<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a>.empty();</div>
-<div class="line"><span class="lineno">  104</span>        }</div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_a6ccb4cc5291433e6adde8e1d40355902"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a6ccb4cc5291433e6adde8e1d40355902">typed_thread_pool_module::config::max_workers</a></div><div class="ttdeci">constexpr size_t max_workers</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00022">config.h:22</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_adcf1ec70ff88bc68ca55119d0b8e4293"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#adcf1ec70ff88bc68ca55119d0b8e4293">typed_thread_pool_module::config::min_workers</a></div><div class="ttdeci">constexpr size_t min_workers</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00023">config.h:23</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00130">130</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span>                                            {</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> &gt;= <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#adcf1ec70ff88bc68ca55119d0b8e4293">config::min_workers</a> &amp;&amp; </div>
+<div class="line"><span class="lineno">  132</span>                   <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> &lt;= <a class="code hl_variable" href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a6ccb4cc5291433e6adde8e1d40355902">config::max_workers</a> &amp;&amp;</div>
+<div class="line"><span class="lineno">  133</span>                   <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> &gt; 0 &amp;&amp;</div>
+<div class="line"><span class="lineno">  134</span>                   !<a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a>.empty();</div>
+<div class="line"><span class="lineno">  135</span>        }</div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_a6ccb4cc5291433e6adde8e1d40355902"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#a6ccb4cc5291433e6adde8e1d40355902">typed_thread_pool_module::config::max_workers</a></div><div class="ttdeci">constexpr size_t max_workers</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00054">config.h:54</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_1_1config_html_adcf1ec70ff88bc68ca55119d0b8e4293"><div class="ttname"><a href="../../dc/dae/namespacetyped__thread__pool__module_1_1config.html#adcf1ec70ff88bc68ca55119d0b8e4293">typed_thread_pool_module::config::min_workers</a></div><div class="ttdeci">constexpr size_t min_workers</div><div class="ttdef"><b>Definition</b> <a href="../../da/dd5/typed__thread__pool_2core_2config_8h_source.html#l00055">config.h:55</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -397,11 +397,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00090">90</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   90</span>                                                                    {</div>
-<div class="line"><span class="lineno">   91</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a> = auto_start;</div>
-<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   93</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00121">121</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>                                                                    {</div>
+<div class="line"><span class="lineno">  122</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#ab3dee9392c2cd4fadbdd0cf0cf0447ce">auto_start_</a> = auto_start;</div>
+<div class="line"><span class="lineno">  123</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  124</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -440,11 +440,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00070">70</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>                                                                                    {</div>
-<div class="line"><span class="lineno">   71</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a> = types;</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   73</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00101">101</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  101</span>                                                                                    {</div>
+<div class="line"><span class="lineno">  102</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a449437f9acb54ec587f32a63777bc58d">job_types_</a> = types;</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  104</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -483,11 +483,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00060">60</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   60</span>                                                                {</div>
-<div class="line"><span class="lineno">   61</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> = size;</div>
-<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   63</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00091">91</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>                                                                {</div>
+<div class="line"><span class="lineno">   92</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#acc54047a9b34cc2d0ea2fd128e733efd">queue_size_</a> = size;</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   94</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -526,11 +526,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00080">80</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>                                                                  {</div>
-<div class="line"><span class="lineno">   81</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a> = enable;</div>
-<div class="line"><span class="lineno">   82</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   83</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00111">111</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>                                                                  {</div>
+<div class="line"><span class="lineno">  112</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1fcdf379236f17ef8ca00e4cbca94459">use_time_tag_</a> = enable;</div>
+<div class="line"><span class="lineno">  113</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  114</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -569,11 +569,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00040">40</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                                      {</div>
-<div class="line"><span class="lineno">   41</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a> = title;</div>
-<div class="line"><span class="lineno">   42</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   43</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00071">71</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>                                                                      {</div>
+<div class="line"><span class="lineno">   72</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3eb5df5a11b393d53870976374322e33">title_</a> = title;</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   74</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -612,11 +612,11 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this builder for chaining </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00050">50</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>                                                                   {</div>
-<div class="line"><span class="lineno">   51</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> = count;</div>
-<div class="line"><span class="lineno">   52</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   53</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00081">81</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>                                                                   {</div>
+<div class="line"><span class="lineno">   82</span>            <a class="code hl_variable" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916">worker_count_</a> = count;</div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   84</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -643,7 +643,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00157">157</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00188">188</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -669,7 +669,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00155">155</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00186">186</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -695,7 +695,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00154">154</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00185">185</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -721,7 +721,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00152">152</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00183">183</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -747,7 +747,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00156">156</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00187">187</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -773,7 +773,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00153">153</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/df2/pool__builder_8h_source.html#l00184">184</a> of file <a class="el" href="../../d1/df2/pool__builder_8h_source.html">pool_builder.h</a>.</p>
 
 </div>
 </div>
@@ -784,7 +784,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

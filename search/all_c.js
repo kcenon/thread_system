@@ -71,5 +71,6 @@ var searchData=
   ['logging_20system_20log_5fmodule_68',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]],
   ['low_69',['low',['../d9/de0/namespacelog__module.html#a5f128311dd61b3a3f5bba6782a2eec67a53cced8d281a1a0ace3cb6594daaa4f7',1,'log_module::low'],['../d2/dca/namespacethread__module_1_1jobs.html#aee9a7b3c53d29c84ac5dbb96077f2e54a53cced8d281a1a0ace3cb6594daaa4f7',1,'thread_module::jobs::low']]],
   ['low_5fcontention_5fthreshold_70',['LOW_CONTENTION_THRESHOLD',['../de/d41/namespacethread__module_1_1lockfree.html#a61782dd17ce7ca773b896875418b8c21',1,'thread_module::lockfree']]],
-  ['low_5flatency_71',['low_latency',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a7e87d11a00edde41d3f2a0d3f555aade',1,'thread_pool_module::worker_policy']]]
+  ['low_5flatency_71',['low_latency',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a7e87d11a00edde41d3f2a0d3f555aade',1,'thread_pool_module::worker_policy']]],
+  ['low_5foverhead_5fmode_72',['low_overhead_mode',['../db/d71/structmonitoring__module_1_1monitoring__config.html#a5fb334c5c991b11d7efee7c2c29462ab',1,'monitoring_module::monitoring_config']]]
 ];

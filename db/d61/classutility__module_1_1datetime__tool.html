@@ -122,7 +122,7 @@ Static Public Member Functions</h2></td></tr>
 <li>Extract sub-second units (milliseconds, microseconds, nanoseconds).</li>
 <li>Compute time differences between two time points in various duration units.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md57"></a>
+<h3><a class="anchor" id="autotoc_md75"></a>
 Typical Usage</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
 <div class="line">std::string date_str = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">datetime_tool::date</a>(now);        <span class="comment">// e.g. &quot;2025-02-13&quot;</span></div>
@@ -281,7 +281,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  104</span>    {</div>
-<div class="line"><span class="lineno">  105</span>        <span class="keyword">const</span> <span class="keyword">auto</span> duration = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">  105</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
 <div class="line"><span class="lineno">  106</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a></div>
 <div class="line"><span class="lineno">  107</span>            = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(duration).count() % 1000;</div>
 <div class="line"><span class="lineno">  108</span> </div>
@@ -290,6 +290,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a>);</div>
 <div class="line"><span class="lineno">  112</span>    }</div>
 <div class="ttc" id="aclassutility__module_1_1datetime__tool_html_af24272c85e0cd14d223fb7b736253d77"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">utility_module::datetime_tool::microseconds</a></div><div class="ttdeci">static auto microseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;micro_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the microseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">datetime_tool.cpp:102</a></div></div>
+<div class="ttc" id="anamespacemonitoring__module_html_a5288937db3fb31594060a3ae2c801b01"><div class="ttname"><a href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">monitoring_module::duration</a></div><div class="ttdeci">std::chrono::nanoseconds duration</div><div class="ttdoc">Duration type for time measurements.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00079">monitoring_types.h:79</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -363,7 +364,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">90</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        <span class="keyword">const</span> <span class="keyword">auto</span> duration = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
 <div class="line"><span class="lineno">   94</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a></div>
 <div class="line"><span class="lineno">   95</span>            = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(duration).count() % 1000;</div>
 <div class="line"><span class="lineno">   96</span> </div>
@@ -444,7 +445,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">114</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  116</span>    {</div>
-<div class="line"><span class="lineno">  117</span>        <span class="keyword">const</span> <span class="keyword">auto</span> duration = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
 <div class="line"><span class="lineno">  118</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a></div>
 <div class="line"><span class="lineno">  119</span>            = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration).count() % 1000;</div>
 <div class="line"><span class="lineno">  120</span> </div>
@@ -618,9 +619,9 @@ template&lt;typename DurationType , typename ClockType &gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  130</span>    {</div>
-<div class="line"><span class="lineno">  131</span>        <span class="keyword">auto</span> duration</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a></div>
 <div class="line"><span class="lineno">  132</span>            = std::chrono::duration&lt;double, typename DurationType::period&gt;(end_time - start_time);</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> duration.count();</div>
+<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count();</div>
 <div class="line"><span class="lineno">  134</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -642,7 +643,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

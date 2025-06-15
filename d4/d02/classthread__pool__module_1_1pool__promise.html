@@ -133,7 +133,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 class thread_pool_module::pool_promise&lt; T &gt;</div><p>A promise that can schedule work on a thread pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00089">89</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00120">120</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="aad180158afe37d0296d0ae0b5e64a763" name="aad180158afe37d0296d0ae0b5e64a763"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aad180158afe37d0296d0ae0b5e64a763">&#9670;&#160;</a></span>value_type</h2>
@@ -149,7 +149,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00091">91</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00122">122</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 
 </div>
 </div>
@@ -211,11 +211,11 @@ template&lt;typename T &gt; </div>
 
 <p>Get the associated future. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00101">101</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  101</span>                                    {</div>
-<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> pool_future&lt;T&gt;{<a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.get_future()};</div>
-<div class="line"><span class="lineno">  103</span>        }</div>
-<div class="ttc" id="aclassthread__pool__module_1_1pool__promise_html_adb8ba4100cf069d773192ac21bc0811c"><div class="ttname"><a href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">thread_pool_module::pool_promise::promise_</a></div><div class="ttdeci">std::promise&lt; T &gt; promise_</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00141">future_extensions.h:141</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00132">132</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>                                    {</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">return</span> pool_future&lt;T&gt;{<a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.get_future()};</div>
+<div class="line"><span class="lineno">  134</span>        }</div>
+<div class="ttc" id="aclassthread__pool__module_1_1pool__promise_html_adb8ba4100cf069d773192ac21bc0811c"><div class="ttname"><a href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">thread_pool_module::pool_promise::promise_</a></div><div class="ttdeci">std::promise&lt; T &gt; promise_</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00172">future_extensions.h:172</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -261,10 +261,10 @@ template&lt;typename T &gt; </div>
 
 <p>Set an exception. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00122">122</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  122</span>                                                       {</div>
-<div class="line"><span class="lineno">  123</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_exception(exception);</div>
-<div class="line"><span class="lineno">  124</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00153">153</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  153</span>                                                       {</div>
+<div class="line"><span class="lineno">  154</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_exception(exception);</div>
+<div class="line"><span class="lineno">  155</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -306,10 +306,10 @@ template&lt;typename T &gt; </div>
 
 <p>Set an exception at thread exit. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00136">136</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  136</span>                                                                      {</div>
-<div class="line"><span class="lineno">  137</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_exception_at_thread_exit(exception);</div>
-<div class="line"><span class="lineno">  138</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00167">167</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>                                                                      {</div>
+<div class="line"><span class="lineno">  168</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_exception_at_thread_exit(exception);</div>
+<div class="line"><span class="lineno">  169</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -341,10 +341,10 @@ template&lt;typename T &gt; </div>
 
 <p>Set the value. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00108">108</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  108</span>                                       {</div>
-<div class="line"><span class="lineno">  109</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value(value);</div>
-<div class="line"><span class="lineno">  110</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00139">139</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>                                       {</div>
+<div class="line"><span class="lineno">  140</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value(value);</div>
+<div class="line"><span class="lineno">  141</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -388,10 +388,10 @@ template&lt;typename T &gt; </div>
 
 <p>Set the value (move) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00115">115</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  115</span>                                  {</div>
-<div class="line"><span class="lineno">  116</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value(std::move(value));</div>
-<div class="line"><span class="lineno">  117</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00146">146</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>                                  {</div>
+<div class="line"><span class="lineno">  147</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value(std::move(value));</div>
+<div class="line"><span class="lineno">  148</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -423,10 +423,10 @@ template&lt;typename T &gt; </div>
 
 <p>Set the value at thread exit. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00129">129</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  129</span>                                                      {</div>
-<div class="line"><span class="lineno">  130</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value_at_thread_exit(value);</div>
-<div class="line"><span class="lineno">  131</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00160">160</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  160</span>                                                      {</div>
+<div class="line"><span class="lineno">  161</span>            <a class="code hl_variable" href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">promise_</a>.set_value_at_thread_exit(value);</div>
+<div class="line"><span class="lineno">  162</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -453,7 +453,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00141">141</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dca/future__extensions_8h_source.html#l00172">172</a> of file <a class="el" href="../../df/dca/future__extensions_8h_source.html">future_extensions.h</a>.</p>
 
 </div>
 </div>
@@ -463,7 +463,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

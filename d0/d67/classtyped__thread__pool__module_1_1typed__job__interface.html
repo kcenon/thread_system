@@ -127,7 +127,7 @@ Public Member Functions</h2></td></tr>
 class typed_thread_pool_module::typed_job_interface&lt; job_type &gt;</div><p>Base interface for all typed jobs. </p>
 <p>This interface defines the contract that all typed jobs must follow. It provides type information and execution capabilities while maintaining type safety through templates. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00029">29</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00060">60</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a95d4dbc12bbffd6f80a25892c54ae870" name="a95d4dbc12bbffd6f80a25892c54ae870"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a95d4dbc12bbffd6f80a25892c54ae870">&#9670;&#160;</a></span>~typed_job_interface()</h2>
@@ -185,10 +185,10 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Cancel this job if possible. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if job was successfully cancelled </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00071">71</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>                                       {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Default implementation - job cannot be cancelled</span></div>
-<div class="line"><span class="lineno">   73</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00102">102</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>                                       {</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Default implementation - job cannot be cancelled</span></div>
+<div class="line"><span class="lineno">  104</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,10 +250,10 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Get the estimated execution time for this job. </p>
 <dl class="section return"><dt>Returns</dt><dd>Estimated execution time in microseconds, 0 if unknown </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00079">79</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>                                                                                    {</div>
-<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">return</span> 0; <span class="comment">// Default implementation - unknown execution time</span></div>
-<div class="line"><span class="lineno">   81</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00110">110</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>                                                                                    {</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">return</span> 0; <span class="comment">// Default implementation - unknown execution time</span></div>
+<div class="line"><span class="lineno">  112</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -322,12 +322,12 @@ template&lt;detail::JobType job_type&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if this job should be executed before the other job </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00088">88</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>                                                                                                        {</div>
-<div class="line"><span class="lineno">   89</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#ac3ef2182481e6f3fc1d57359c5edfbb7">detail::higher_priority</a>(<a class="code hl_function" href="../../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a649866c1e78bb8c4442aa7c77653a50c">type</a>(), other.type());</div>
-<div class="line"><span class="lineno">   90</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00119">119</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>                                                                                                        {</div>
+<div class="line"><span class="lineno">  120</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#ac3ef2182481e6f3fc1d57359c5edfbb7">detail::higher_priority</a>(<a class="code hl_function" href="../../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a649866c1e78bb8c4442aa7c77653a50c">type</a>(), other.type());</div>
+<div class="line"><span class="lineno">  121</span>        }</div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__job__interface_html_a649866c1e78bb8c4442aa7c77653a50c"><div class="ttname"><a href="../../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a649866c1e78bb8c4442aa7c77653a50c">typed_thread_pool_module::typed_job_interface::type</a></div><div class="ttdeci">virtual job_type type() const noexcept=0</div><div class="ttdoc">Get the type/priority of this job.</div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_1_1detail_html_ac3ef2182481e6f3fc1d57359c5edfbb7"><div class="ttname"><a href="../../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#ac3ef2182481e6f3fc1d57359c5edfbb7">typed_thread_pool_module::detail::higher_priority</a></div><div class="ttdeci">constexpr bool higher_priority(T lhs, T rhs) noexcept</div><div class="ttdoc">Compile-time priority comparison.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00108">type_traits.h:108</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_1_1detail_html_ac3ef2182481e6f3fc1d57359c5edfbb7"><div class="ttname"><a href="../../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#ac3ef2182481e6f3fc1d57359c5edfbb7">typed_thread_pool_module::detail::higher_priority</a></div><div class="ttdeci">constexpr bool higher_priority(T lhs, T rhs) noexcept</div><div class="ttdoc">Compile-time priority comparison.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d63/type__traits_8h_source.html#l00139">type_traits.h:139</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -372,10 +372,10 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Check if this job has been cancelled. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if job execution should be skipped </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00063">63</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>                                                                 {</div>
-<div class="line"><span class="lineno">   64</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Default implementation - job is not cancellable</span></div>
-<div class="line"><span class="lineno">   65</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00094">94</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>                                                                 {</div>
+<div class="line"><span class="lineno">   95</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Default implementation - job is not cancellable</span></div>
+<div class="line"><span class="lineno">   96</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -407,10 +407,10 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Check if this job can be executed. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if job is ready for execution </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00055">55</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>                                                             {</div>
-<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>; <span class="comment">// Default implementation - job is always ready</span></div>
-<div class="line"><span class="lineno">   57</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html#l00086">86</a> of file <a class="el" href="../../dc/d3e/typed__job__interface_8h_source.html">typed_job_interface.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>                                                             {</div>
+<div class="line"><span class="lineno">   87</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>; <span class="comment">// Default implementation - job is always ready</span></div>
+<div class="line"><span class="lineno">   88</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -460,7 +460,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

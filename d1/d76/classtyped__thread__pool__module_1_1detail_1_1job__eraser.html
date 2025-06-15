@@ -129,7 +129,7 @@ Static Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type erasure helper for heterogeneous job storage. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00186">186</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00217">217</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a65682471c63024f974546550b3b6fb43" name="a65682471c63024f974546550b3b6fb43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65682471c63024f974546550b3b6fb43">&#9670;&#160;</a></span>job_eraser()</h2>
@@ -157,12 +157,12 @@ template&lt;typename Job &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00189">189</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  190</span>            : <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>(&amp;<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a5a1c751d4b85d79ce30dc37f9c15d5e3">vtable_for</a>&lt;std::decay_t&lt;Job&gt;&gt;)</div>
-<div class="line"><span class="lineno">  191</span>            , <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>(std::forward&lt;Job&gt;(job)) {}</div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_a1980eaf9924a0a3f0538aab992f0a145"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">typed_thread_pool_module::detail::job_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00213">template_helpers.h:213</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_a5a1c751d4b85d79ce30dc37f9c15d5e3"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a5a1c751d4b85d79ce30dc37f9c15d5e3">typed_thread_pool_module::detail::job_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00208">template_helpers.h:208</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_acdb05fe1873fc1c929b0baccfcca2dd2"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">typed_thread_pool_module::detail::job_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00214">template_helpers.h:214</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00220">220</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>            : <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>(&amp;<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a5a1c751d4b85d79ce30dc37f9c15d5e3">vtable_for</a>&lt;std::decay_t&lt;Job&gt;&gt;)</div>
+<div class="line"><span class="lineno">  222</span>            , <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>(std::forward&lt;Job&gt;(job)) {}</div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_a1980eaf9924a0a3f0538aab992f0a145"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">typed_thread_pool_module::detail::job_eraser::vtable_</a></div><div class="ttdeci">const vtable_t * vtable_</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00244">template_helpers.h:244</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_a5a1c751d4b85d79ce30dc37f9c15d5e3"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a5a1c751d4b85d79ce30dc37f9c15d5e3">typed_thread_pool_module::detail::job_eraser::vtable_for</a></div><div class="ttdeci">static constexpr vtable_t vtable_for</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00239">template_helpers.h:239</a></div></div>
+<div class="ttc" id="aclasstyped__thread__pool__module_1_1detail_1_1job__eraser_html_acdb05fe1873fc1c929b0baccfcca2dd2"><div class="ttname"><a href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">typed_thread_pool_module::detail::job_eraser::storage_</a></div><div class="ttdeci">char storage_[64]</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00245">template_helpers.h:245</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -190,11 +190,11 @@ template&lt;typename Job &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00197">197</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  197</span>                       {</div>
-<div class="line"><span class="lineno">  198</span>            <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a88b7d93b2aecfa6f3a77f9f4189eb4a4">destroy</a>(<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>);</div>
-<div class="line"><span class="lineno">  199</span>        }</div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t_html_a88b7d93b2aecfa6f3a77f9f4189eb4a4"><div class="ttname"><a href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a88b7d93b2aecfa6f3a77f9f4189eb4a4">typed_thread_pool_module::detail::job_eraser::vtable_t::destroy</a></div><div class="ttdeci">void(* destroy)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00204">template_helpers.h:204</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00228">228</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>                       {</div>
+<div class="line"><span class="lineno">  229</span>            <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a88b7d93b2aecfa6f3a77f9f4189eb4a4">destroy</a>(<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>);</div>
+<div class="line"><span class="lineno">  230</span>        }</div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t_html_a88b7d93b2aecfa6f3a77f9f4189eb4a4"><div class="ttname"><a href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a88b7d93b2aecfa6f3a77f9f4189eb4a4">typed_thread_pool_module::detail::job_eraser::vtable_t::destroy</a></div><div class="ttdeci">void(* destroy)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00235">template_helpers.h:235</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -221,11 +221,11 @@ template&lt;typename Job &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00193">193</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  193</span>                       {</div>
-<div class="line"><span class="lineno">  194</span>            <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a134fba0ac8032e95115eb3211673e9b9">execute</a>(<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>);</div>
-<div class="line"><span class="lineno">  195</span>        }</div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t_html_a134fba0ac8032e95115eb3211673e9b9"><div class="ttname"><a href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a134fba0ac8032e95115eb3211673e9b9">typed_thread_pool_module::detail::job_eraser::vtable_t::execute</a></div><div class="ttdeci">void(* execute)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00203">template_helpers.h:203</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00224">224</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  224</span>                       {</div>
+<div class="line"><span class="lineno">  225</span>            <a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#a1980eaf9924a0a3f0538aab992f0a145">vtable_</a>-&gt;<a class="code hl_variable" href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a134fba0ac8032e95115eb3211673e9b9">execute</a>(<a class="code hl_variable" href="../../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html#acdb05fe1873fc1c929b0baccfcca2dd2">storage_</a>);</div>
+<div class="line"><span class="lineno">  226</span>        }</div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t_html_a134fba0ac8032e95115eb3211673e9b9"><div class="ttname"><a href="../../da/d13/structtyped__thread__pool__module_1_1detail_1_1job__eraser_1_1vtable__t.html#a134fba0ac8032e95115eb3211673e9b9">typed_thread_pool_module::detail::job_eraser::vtable_t::execute</a></div><div class="ttdeci">void(* execute)(void *)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00234">template_helpers.h:234</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,7 +250,7 @@ template&lt;typename Job &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00214">214</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00245">245</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ template&lt;typename Job &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00213">213</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00244">244</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -304,11 +304,11 @@ template&lt;typename Job &gt; </div>
 <div class="line">            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>Job*<span class="keyword">&gt;</span>(ptr)-&gt;~Job(); }</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00208">208</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  208</span>                                               {</div>
-<div class="line"><span class="lineno">  209</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>Job*<span class="keyword">&gt;</span>(ptr)-&gt;do_work(); },</div>
-<div class="line"><span class="lineno">  210</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>Job*<span class="keyword">&gt;</span>(ptr)-&gt;~Job(); }</div>
-<div class="line"><span class="lineno">  211</span>        };</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00239">239</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  239</span>                                               {</div>
+<div class="line"><span class="lineno">  240</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>Job*<span class="keyword">&gt;</span>(ptr)-&gt;do_work(); },</div>
+<div class="line"><span class="lineno">  241</span>            [](<span class="keywordtype">void</span>* ptr) { <span class="keyword">static_cast&lt;</span>Job*<span class="keyword">&gt;</span>(ptr)-&gt;~Job(); }</div>
+<div class="line"><span class="lineno">  242</span>        };</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -318,7 +318,7 @@ template&lt;typename Job &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

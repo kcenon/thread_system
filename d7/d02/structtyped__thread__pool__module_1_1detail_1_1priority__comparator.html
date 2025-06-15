@@ -110,7 +110,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><div class="compoundTemplParams">template&lt;JobType T, typename Comparator = std::less&lt;&gt;&gt;<br />
 struct typed_thread_pool_module::detail::priority_comparator&lt; T, Comparator &gt;</div><p>Priority comparison helper with custom comparison functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00150">150</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00181">181</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac79224f2591a6eca5fa481f7144ee6ec" name="ac79224f2591a6eca5fa481f7144ee6ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac79224f2591a6eca5fa481f7144ee6ec">&#9670;&#160;</a></span>priority_comparator()</h2>
@@ -138,9 +138,9 @@ template&lt;JobType T, typename Comparator  = std::less&lt;&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00153">153</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  153</span>{}) : <a class="code hl_variable" href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">comp</a>(c) {}</div>
-<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1priority__comparator_html_ab5b06ad99ba7177f234f67e354a0835a"><div class="ttname"><a href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">typed_thread_pool_module::detail::priority_comparator::comp</a></div><div class="ttdeci">Comparator comp</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00151">template_helpers.h:151</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00184">184</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  184</span>{}) : <a class="code hl_variable" href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">comp</a>(c) {}</div>
+<div class="ttc" id="astructtyped__thread__pool__module_1_1detail_1_1priority__comparator_html_ab5b06ad99ba7177f234f67e354a0835a"><div class="ttname"><a href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">typed_thread_pool_module::detail::priority_comparator::comp</a></div><div class="ttdeci">Comparator comp</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d93/template__helpers_8h_source.html#l00182">template_helpers.h:182</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -181,11 +181,11 @@ template&lt;JobType T, typename Comparator  = std::less&lt;&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00155">155</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  155</span>                                                      {</div>
-<div class="line"><span class="lineno">  156</span>            <span class="keyword">using </span>traits = job_type_traits&lt;T&gt;;</div>
-<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">comp</a>(traits::to_underlying(lhs), traits::to_underlying(rhs));</div>
-<div class="line"><span class="lineno">  158</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00186">186</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  186</span>                                                      {</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keyword">using </span>traits = job_type_traits&lt;T&gt;;</div>
+<div class="line"><span class="lineno">  188</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ab5b06ad99ba7177f234f67e354a0835a">comp</a>(traits::to_underlying(lhs), traits::to_underlying(rhs));</div>
+<div class="line"><span class="lineno">  189</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -204,7 +204,7 @@ template&lt;JobType T, typename Comparator  = std::less&lt;&gt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00151">151</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d93/template__helpers_8h_source.html#l00182">182</a> of file <a class="el" href="../../d9/d93/template__helpers_8h_source.html">template_helpers.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +214,7 @@ template&lt;JobType T, typename Comparator  = std::less&lt;&gt;&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 05:17:27 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 15 2025 15:01:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
