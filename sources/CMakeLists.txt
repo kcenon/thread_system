@@ -19,3 +19,6 @@ add_subdirectory(thread_pool)
 
 # Type-based thread pool implementation (depends on thread_pool)
 add_subdirectory(typed_thread_pool)
+
+# Monitoring system (depends on thread_base and utilities)
+add_subdirectory(monitoring)
