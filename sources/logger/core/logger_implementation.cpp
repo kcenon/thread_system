@@ -42,7 +42,10 @@ namespace log_module
 {
 	namespace implementation
 	{
+// Singleton implementation
+#ifdef _MSC_VER
 #pragma region singleton
+#endif
 		std::unique_ptr<logger> logger::handle_;
 		std::once_flag logger::once_;
 
@@ -55,7 +58,9 @@ namespace log_module
 
 		auto logger::destroy() -> void { handle_.reset(); }
 
+#ifdef _MSC_VER
 #pragma endregion
+#endif
 
 		logger::logger()
 			: collector_(std::make_shared<log_collector>())

@@ -414,7 +414,10 @@ namespace log_module
 			/** @brief Mutex to protect access to the collector and other shared resources */
 			mutable std::mutex collector_mutex_;
 
+	// Singleton implementation
+	#ifdef _MSC_VER
 	#pragma region singleton
+	#endif
 		public:
 			/**
 			 * @brief Retrieves the singleton instance of the logger.
@@ -440,7 +443,9 @@ namespace log_module
 			/** @brief Flag ensuring the singleton is lazily and atomically initialized only once.
 			 */
 			static std::once_flag once_;
+	#ifdef _MSC_VER
 	#pragma endregion
+	#endif
 		};
 	} // namespace implementation
 } // namespace log_module

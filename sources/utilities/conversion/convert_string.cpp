@@ -272,7 +272,7 @@ namespace utility_module
 	auto convert_string::get_system_code_page() -> int
 	{
 #ifdef _WIN32
-		return GetACP();
+		return static_cast<int>(GetACP());
 #else
 		return 65001;
 #endif

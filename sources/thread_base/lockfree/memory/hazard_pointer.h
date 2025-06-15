@@ -230,9 +230,12 @@ namespace thread_module
 		auto should_scan() const -> bool;
 	};
 	
-	// Thread-local static member definitions
+	// Thread-local static member declarations
+	// These are defined in hazard_pointer.cpp to avoid multiple definition errors in MinGW
+	#ifndef __MINGW32__
 	inline thread_local hazard_pointer_manager::HazardRecord* hazard_pointer_manager::local_record_ = nullptr;
 	inline thread_local std::vector<hazard_pointer_manager::RetiredNode> hazard_pointer_manager::retired_list_;
 	inline thread_local std::chrono::steady_clock::time_point hazard_pointer_manager::last_scan_;
+	#endif
 
 } // namespace thread_module

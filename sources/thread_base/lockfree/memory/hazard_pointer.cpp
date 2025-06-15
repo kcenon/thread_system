@@ -36,6 +36,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace thread_module
 {
+	// Thread-local static member definitions for MinGW
+	#ifdef __MINGW32__
+	thread_local hazard_pointer_manager::HazardRecord* hazard_pointer_manager::local_record_ = nullptr;
+	thread_local std::vector<hazard_pointer_manager::RetiredNode> hazard_pointer_manager::retired_list_;
+	thread_local std::chrono::steady_clock::time_point hazard_pointer_manager::last_scan_;
+	#endif
+
 	hazard_pointer_manager::hazard_pointer_manager(size_t max_threads, size_t pointers_per_thread)
 		: max_threads_(max_threads)
 		, pointers_per_thread_(pointers_per_thread)
