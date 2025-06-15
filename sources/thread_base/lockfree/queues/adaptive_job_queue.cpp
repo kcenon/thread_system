@@ -279,8 +279,8 @@ namespace thread_module
 		auto ops = metrics_.operation_count.load(std::memory_order_relaxed);
 		if (ops == 0) return false;
 		
-		auto avg_latency = static_cast<double>(metrics_.total_latency_ns.load(std::memory_order_relaxed)) / ops;
-		auto contention_ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_relaxed)) / ops;
+		auto avg_latency = static_cast<double>(metrics_.total_latency_ns.load(std::memory_order_relaxed)) / static_cast<double>(ops);
+		auto contention_ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_relaxed)) / static_cast<double>(ops);
 		
 		return (contention_ratio > CONTENTION_THRESHOLD_HIGH && avg_latency > LATENCY_THRESHOLD_HIGH_NS);
 	}
@@ -290,8 +290,8 @@ namespace thread_module
 		auto ops = metrics_.operation_count.load(std::memory_order_relaxed);
 		if (ops == 0) return false;
 		
-		auto avg_latency = static_cast<double>(metrics_.total_latency_ns.load(std::memory_order_relaxed)) / ops;
-		auto contention_ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_relaxed)) / ops;
+		auto avg_latency = static_cast<double>(metrics_.total_latency_ns.load(std::memory_order_relaxed)) / static_cast<double>(ops);
+		auto contention_ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_relaxed)) / static_cast<double>(ops);
 		
 		// Switch back if contention is low and lock-free overhead isn't worth it
 		return (contention_ratio < CONTENTION_THRESHOLD_LOW && avg_latency > LATENCY_THRESHOLD_LOW_NS * 2);

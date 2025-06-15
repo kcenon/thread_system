@@ -557,13 +557,13 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 {
 	lockfree_mpmc_queue mpmc_queue;
 	const size_t num_jobs = 100;
-	std::atomic<int> counter{0};
+	auto counter = std::make_shared<std::atomic<int>>(0);
 	
 	// Single producer, single consumer test
 	std::thread producer([&]() {
 		for (size_t i = 0; i < num_jobs; ++i) {
-			auto job = std::make_unique<callback_job>([&counter]() -> result_void {
-				counter.fetch_add(1);
+			auto job = std::make_unique<callback_job>([counter]() -> result_void {
+				counter->fetch_add(1);
 				return result_void();
 			});
 			
@@ -577,7 +577,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 		size_t consumed = 0;
 		while (consumed < num_jobs) {
 			auto result = mpmc_queue.dequeue();
-			if (result.has_value()) {
+			if (result.has_value() && result.value()) {
 				auto work_result = result.value()->do_work();
 				(void)work_result;
 				consumed++;
@@ -590,7 +590,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 	producer.join();
 	consumer.join();
 	
-	EXPECT_EQ(counter.load(), num_jobs);
+	EXPECT_EQ(counter->load(), num_jobs);
 	EXPECT_TRUE(mpmc_queue.empty());
 }
 

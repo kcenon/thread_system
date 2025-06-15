@@ -78,13 +78,13 @@ namespace thread_module
 			[[nodiscard]] auto get_average_enqueue_latency_ns() const -> double
 			{
 				if (enqueue_count == 0) return 0.0;
-				return static_cast<double>(total_enqueue_time) / enqueue_count;
+				return static_cast<double>(total_enqueue_time) / static_cast<double>(enqueue_count);
 			}
 			
 			[[nodiscard]] auto get_average_dequeue_latency_ns() const -> double
 			{
 				if (dequeue_count == 0) return 0.0;
-				return static_cast<double>(total_dequeue_time) / dequeue_count;
+				return static_cast<double>(total_dequeue_time) / static_cast<double>(dequeue_count);
 			}
 		};
 		

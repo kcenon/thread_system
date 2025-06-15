@@ -109,13 +109,13 @@ namespace thread_module
 			[[nodiscard]] auto get_average_latency_ns() const -> double
 			{
 				if (operation_count == 0) return 0.0;
-				return static_cast<double>(total_latency_ns) / operation_count;
+				return static_cast<double>(total_latency_ns) / static_cast<double>(operation_count);
 			}
 			
 			[[nodiscard]] auto get_contention_ratio() const -> double
 			{
 				if (operation_count == 0) return 0.0;
-				return static_cast<double>(contention_count) / operation_count;
+				return static_cast<double>(contention_count) / static_cast<double>(operation_count);
 			}
 		};
 		
