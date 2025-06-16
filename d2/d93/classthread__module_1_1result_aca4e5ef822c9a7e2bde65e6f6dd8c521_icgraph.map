@@ -1,5 +1,9 @@
 <map id="thread_module::result::get_error" name="thread_module::result::get_error">
-<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="296,5,461,45"/>
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="296,69,461,109"/>
 <area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="5,5,248,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,28,248,28,248,23,282,23"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="285,68,205,48,207,43,287,63"/>
+<area shape="rect" id="Node000003" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="44,69,209,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="282,92,209,92,209,87,282,87"/>
+<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="44,133,209,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,115,207,136,205,131,285,110"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="thread_module::cancellation_token" name="thread_module::cancellation_token">
-<area shape="rect" id="Node000001" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="165,448,364,848"/>
+<area shape="rect" id="Node000001" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="165,448,364,748"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="181,291,349,385"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="267,385,267,431,262,431,262,385"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="267,385,267,432,262,432,262,385"/>
 <area shape="rect" id="Node000003" href="$d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="165,148,364,228"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="267,228,267,274,262,274,262,228"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="5,13,151,78"/>

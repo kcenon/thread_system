@@ -130,10 +130,10 @@ Collaboration diagram for thread_module::lockfree_mpmc_queue:</div>
 <area shape="rect" title=" " alt="" coords="565,1998,724,2063"/>
 <area shape="poly" title=" " alt="" coords="640,2064,609,2175,586,2243,558,2310,553,2320,548,2317,553,2308,581,2241,604,2173,635,2063"/>
 <area shape="poly" title=" " alt="" coords="463,2071,463,2317,458,2317,458,2071"/>
-<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="159,1831,357,2231"/>
-<area shape="poly" title=" " alt="" coords="282,2230,295,2270,312,2308,332,2339,356,2367,352,2371,328,2342,308,2311,290,2272,277,2232"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="159,1881,357,2181"/>
+<area shape="poly" title=" " alt="" coords="271,2180,287,2246,312,2308,332,2339,356,2367,352,2371,328,2342,308,2311,282,2248,266,2182"/>
 <area shape="rect" title=" " alt="" coords="181,1491,349,1585"/>
-<area shape="poly" title=" " alt="" coords="267,1585,264,1814,258,1814,261,1585"/>
+<area shape="poly" title=" " alt="" coords="267,1585,263,1864,258,1864,261,1585"/>
 <area shape="poly" title=" " alt="" coords="267,983,267,1474,262,1474,262,983"/>
 <area shape="rect" title=" " alt="" coords="5,560,151,625"/>
 <area shape="poly" title=" " alt="" coords="97,624,238,887,234,889,93,627"/>
@@ -363,7 +363,7 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This queue is designed to be a drop-in replacement for <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a> with significantly better performance under high contention. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00061">61</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00062">62</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="aa0fec11f2c95294464db8cc3e89285a0" name="aa0fec11f2c95294464db8cc3e89285a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa0fec11f2c95294464db8cc3e89285a0">&#9670;&#160;</a></span>job_ptr</h2>
@@ -385,7 +385,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00203">203</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00204">204</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +409,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00204">204</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00205">205</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -458,11 +458,11 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   46</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ab338f7becbcb3f5a5ba53767a624c80a">head_</a>.store(dummy, std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">   47</span>        <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a100e3f884e6b6a3027dafaaac59ac5d6">tail_</a>.store(dummy, std::memory_order_relaxed);</div>
 <div class="line"><span class="lineno">   48</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a100e3f884e6b6a3027dafaaac59ac5d6"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a100e3f884e6b6a3027dafaaac59ac5d6">thread_module::lockfree_mpmc_queue::tail_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; tail_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00238">lockfree_mpmc_queue.h:238</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ab338f7becbcb3f5a5ba53767a624c80a"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ab338f7becbcb3f5a5ba53767a624c80a">thread_module::lockfree_mpmc_queue::head_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; head_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00237">lockfree_mpmc_queue.h:237</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a100e3f884e6b6a3027dafaaac59ac5d6"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a100e3f884e6b6a3027dafaaac59ac5d6">thread_module::lockfree_mpmc_queue::tail_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; tail_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00239">lockfree_mpmc_queue.h:239</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ab338f7becbcb3f5a5ba53767a624c80a"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ab338f7becbcb3f5a5ba53767a624c80a">thread_module::lockfree_mpmc_queue::head_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; head_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00238">lockfree_mpmc_queue.h:238</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ab372480ab41239341f128a88a7e698ed"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ab372480ab41239341f128a88a7e698ed">thread_module::lockfree_mpmc_queue::allocate_node</a></div><div class="ttdeci">auto allocate_node() -&gt; node_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00311">lockfree_mpmc_queue.cpp:311</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ad0e293ba62612cb6543b187490d7627f"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ad0e293ba62612cb6543b187490d7627f">thread_module::lockfree_mpmc_queue::node_pool_</a></div><div class="ttdeci">std::unique_ptr&lt; node_pool&lt; Node &gt; &gt; node_pool_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00241">lockfree_mpmc_queue.h:241</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_adf11229345e4cbe360dfc85156c8f2b8"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#adf11229345e4cbe360dfc85156c8f2b8">thread_module::lockfree_mpmc_queue::hp_manager_</a></div><div class="ttdeci">std::unique_ptr&lt; hazard_pointer_manager &gt; hp_manager_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00242">lockfree_mpmc_queue.h:242</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ad0e293ba62612cb6543b187490d7627f"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ad0e293ba62612cb6543b187490d7627f">thread_module::lockfree_mpmc_queue::node_pool_</a></div><div class="ttdeci">std::unique_ptr&lt; node_pool&lt; Node &gt; &gt; node_pool_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00242">lockfree_mpmc_queue.h:242</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_adf11229345e4cbe360dfc85156c8f2b8"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#adf11229345e4cbe360dfc85156c8f2b8">thread_module::lockfree_mpmc_queue::hp_manager_</a></div><div class="ttdeci">std::unique_ptr&lt; hazard_pointer_manager &gt; hp_manager_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00243">lockfree_mpmc_queue.h:243</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -669,8 +669,8 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  255</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a862c8cfa56448b7db38792ed3ff56e1c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">thread_module::job_queue::condition_</a></div><div class="ttdeci">std::condition_variable condition_</div><div class="ttdoc">Condition variable used to signal worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00230">job_queue.h:230</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a1169ec6cebe598a8334284b5858b623b"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a1169ec6cebe598a8334284b5858b623b">thread_module::lockfree_mpmc_queue::try_dequeue</a></div><div class="ttdeci">auto try_dequeue() -&gt; result&lt; std::unique_ptr&lt; job &gt; &gt;</div><div class="ttdoc">Try to dequeue without blocking.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00238">lockfree_mpmc_queue.cpp:238</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ac01d9b10d193b2f4403b809de0d229b5"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">thread_module::lockfree_mpmc_queue::stats_</a></div><div class="ttdeci">atomic_statistics stats_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00245">lockfree_mpmc_queue.h:245</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a86c377a5496c34837b5b9309dcef9f83"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a86c377a5496c34837b5b9309dcef9f83">thread_module::lockfree_mpmc_queue::atomic_statistics::current_size</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; current_size</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00103">lockfree_mpmc_queue.h:103</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ac01d9b10d193b2f4403b809de0d229b5"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">thread_module::lockfree_mpmc_queue::stats_</a></div><div class="ttdeci">atomic_statistics stats_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00246">lockfree_mpmc_queue.h:246</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a86c377a5496c34837b5b9309dcef9f83"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a86c377a5496c34837b5b9309dcef9f83">thread_module::lockfree_mpmc_queue::atomic_statistics::current_size</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; current_size</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00104">lockfree_mpmc_queue.h:104</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -865,8 +865,8 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  229</span>        </div>
 <div class="line"><span class="lineno">  230</span>        <span class="keywordflow">return</span> result;</div>
 <div class="line"><span class="lineno">  231</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_af7fff0ee4129c41d84a6c7409aa6579d"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#af7fff0ee4129c41d84a6c7409aa6579d">thread_module::lockfree_mpmc_queue::MAX_BATCH_SIZE</a></div><div class="ttdeci">static constexpr size_t MAX_BATCH_SIZE</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00248">lockfree_mpmc_queue.h:248</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_ac93613cfcf0cd17c3bf8ccefea1fd45f"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#ac93613cfcf0cd17c3bf8ccefea1fd45f">thread_module::lockfree_mpmc_queue::atomic_statistics::dequeue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; dequeue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00099">lockfree_mpmc_queue.h:99</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_af7fff0ee4129c41d84a6c7409aa6579d"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#af7fff0ee4129c41d84a6c7409aa6579d">thread_module::lockfree_mpmc_queue::MAX_BATCH_SIZE</a></div><div class="ttdeci">static constexpr size_t MAX_BATCH_SIZE</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00249">lockfree_mpmc_queue.h:249</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_ac93613cfcf0cd17c3bf8ccefea1fd45f"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#ac93613cfcf0cd17c3bf8ccefea1fd45f">thread_module::lockfree_mpmc_queue::atomic_statistics::dequeue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; dequeue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00100">lockfree_mpmc_queue.h:100</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -973,13 +973,13 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  468</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a1cd714e4c90937cb53fa8358117f0091"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a1cd714e4c90937cb53fa8358117f0091">thread_module::lockfree_mpmc_queue::increment_retry_count</a></div><div class="ttdeci">auto increment_retry_count() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00480">lockfree_mpmc_queue.cpp:480</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a41258caf5327fd44541c3a841e7d909c"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a41258caf5327fd44541c3a841e7d909c">thread_module::lockfree_mpmc_queue::retire_node</a></div><div class="ttdeci">auto retire_node(node_ptr node) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dff/lockfree__mpmc__queue_8cpp_source.html#l00326">lockfree_mpmc_queue.cpp:326</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a683fdba2c97d59441fc71cda9f5d7ffb"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a683fdba2c97d59441fc71cda9f5d7ffb">thread_module::lockfree_mpmc_queue::MAX_TOTAL_RETRIES</a></div><div class="ttdeci">static constexpr size_t MAX_TOTAL_RETRIES</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00250">lockfree_mpmc_queue.h:250</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_aa0fec11f2c95294464db8cc3e89285a0"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#aa0fec11f2c95294464db8cc3e89285a0">thread_module::lockfree_mpmc_queue::job_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; job &gt; job_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00203">lockfree_mpmc_queue.h:203</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ae88c5eba3c4dfe1270f0a168d4426330"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae88c5eba3c4dfe1270f0a168d4426330">thread_module::lockfree_mpmc_queue::RETRY_THRESHOLD</a></div><div class="ttdeci">static constexpr size_t RETRY_THRESHOLD</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00249">lockfree_mpmc_queue.h:249</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_a683fdba2c97d59441fc71cda9f5d7ffb"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a683fdba2c97d59441fc71cda9f5d7ffb">thread_module::lockfree_mpmc_queue::MAX_TOTAL_RETRIES</a></div><div class="ttdeci">static constexpr size_t MAX_TOTAL_RETRIES</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00251">lockfree_mpmc_queue.h:251</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_aa0fec11f2c95294464db8cc3e89285a0"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#aa0fec11f2c95294464db8cc3e89285a0">thread_module::lockfree_mpmc_queue::job_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; job &gt; job_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00204">lockfree_mpmc_queue.h:204</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__mpmc__queue_html_ae88c5eba3c4dfe1270f0a168d4426330"><div class="ttname"><a href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae88c5eba3c4dfe1270f0a168d4426330">thread_module::lockfree_mpmc_queue::RETRY_THRESHOLD</a></div><div class="ttdeci">static constexpr size_t RETRY_THRESHOLD</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00250">lockfree_mpmc_queue.h:250</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">thread_module::error_code::resource_limit_reached</a></div><div class="ttdeci">@ resource_limit_reached</div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">thread_module::error_code::unknown_error</a></div><div class="ttdeci">@ unknown_error</div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">thread_module::error_code::queue_empty</a></div><div class="ttdeci">@ queue_empty</div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a629daee68080e0abd31535092cf900d9"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a629daee68080e0abd31535092cf900d9">thread_module::lockfree_mpmc_queue::atomic_statistics::dequeue_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; dequeue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00097">lockfree_mpmc_queue.h:97</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a629daee68080e0abd31535092cf900d9"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a629daee68080e0abd31535092cf900d9">thread_module::lockfree_mpmc_queue::atomic_statistics::dequeue_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; dequeue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00098">lockfree_mpmc_queue.h:98</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1225,8 +1225,8 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  188</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Exception during batch enqueue&quot;</span>};</div>
 <div class="line"><span class="lineno">  189</span>        }</div>
 <div class="line"><span class="lineno">  190</span>    }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a3bfd75bf6d85c3577f604fac579d165e"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a3bfd75bf6d85c3577f604fac579d165e">thread_module::lockfree_mpmc_queue::atomic_statistics::enqueue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00098">lockfree_mpmc_queue.h:98</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_abd0778c58617e61f5d97bea17af71df1"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#abd0778c58617e61f5d97bea17af71df1">thread_module::lockfree_mpmc_queue::atomic_statistics::enqueue_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00096">lockfree_mpmc_queue.h:96</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a3bfd75bf6d85c3577f604fac579d165e"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a3bfd75bf6d85c3577f604fac579d165e">thread_module::lockfree_mpmc_queue::atomic_statistics::enqueue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00099">lockfree_mpmc_queue.h:99</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_abd0778c58617e61f5d97bea17af71df1"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#abd0778c58617e61f5d97bea17af71df1">thread_module::lockfree_mpmc_queue::atomic_statistics::enqueue_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00097">lockfree_mpmc_queue.h:97</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1368,9 +1368,9 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  279</span>        stats.current_size = <a class="code hl_variable" href="../../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ac01d9b10d193b2f4403b809de0d229b5">stats_</a>.<a class="code hl_variable" href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a86c377a5496c34837b5b9309dcef9f83">current_size</a>.load();</div>
 <div class="line"><span class="lineno">  280</span>        <span class="keywordflow">return</span> stats;</div>
 <div class="line"><span class="lineno">  281</span>    }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a02ecbdff40e7c082f0bde0c05b78600e"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a02ecbdff40e7c082f0bde0c05b78600e">thread_module::lockfree_mpmc_queue::atomic_statistics::total_enqueue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_enqueue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00100">lockfree_mpmc_queue.h:100</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a6c48150ae50332f1cac0c328b9023e50"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a6c48150ae50332f1cac0c328b9023e50">thread_module::lockfree_mpmc_queue::atomic_statistics::retry_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; retry_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00102">lockfree_mpmc_queue.h:102</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a72b97778b7946802fb64e99a59de72cc"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a72b97778b7946802fb64e99a59de72cc">thread_module::lockfree_mpmc_queue::atomic_statistics::total_dequeue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_dequeue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00101">lockfree_mpmc_queue.h:101</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a02ecbdff40e7c082f0bde0c05b78600e"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a02ecbdff40e7c082f0bde0c05b78600e">thread_module::lockfree_mpmc_queue::atomic_statistics::total_enqueue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_enqueue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00101">lockfree_mpmc_queue.h:101</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a6c48150ae50332f1cac0c328b9023e50"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a6c48150ae50332f1cac0c328b9023e50">thread_module::lockfree_mpmc_queue::atomic_statistics::retry_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; retry_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00103">lockfree_mpmc_queue.h:103</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics_html_a72b97778b7946802fb64e99a59de72cc"><div class="ttname"><a href="../../d1/df3/structthread__module_1_1lockfree__mpmc__queue_1_1atomic__statistics.html#a72b97778b7946802fb64e99a59de72cc">thread_module::lockfree_mpmc_queue::atomic_statistics::total_dequeue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_dequeue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00102">lockfree_mpmc_queue.h:102</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1757,7 +1757,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00237">237</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00238">238</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1781,7 +1781,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00242">242</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00243">243</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1805,7 +1805,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00248">248</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00249">249</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1829,7 +1829,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00250">250</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00251">251</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1853,7 +1853,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00241">241</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00242">242</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1877,7 +1877,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00249">249</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00250">250</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1901,7 +1901,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00245">245</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00246">246</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1925,7 +1925,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00238">238</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html#l00239">239</a> of file <a class="el" href="../../db/d54/lockfree__mpmc__queue_8h_source.html">lockfree_mpmc_queue.h</a>.</p>
 
 </div>
 </div>
@@ -1936,7 +1936,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 04:34:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

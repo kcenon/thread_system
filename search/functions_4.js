@@ -8,7 +8,7 @@ var searchData=
   ['enqueue_5fbatch_5fref_5',['enqueue_batch_ref',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#aa98d50a6570252b64a9975436f2c84b1',1,'typed_thread_pool_module::typed_job_queue_t']]],
   ['enqueue_5fimpl_6',['enqueue_impl',['../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a3d7cc5a481818c9157ea4e5aefac943b',1,'thread_module::lockfree_mpmc_queue']]],
   ['enqueue_5flog_7',['enqueue_log',['../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f',1,'log_module::log_collector']]],
-  ['error_8',['error',['../dc/d6c/classthread__module_1_1error.html#abbfcc23ac8becd5d53febfbfa110331f',1,'thread_module::error::error(error_code code, std::string message={})'],['../dc/d6c/classthread__module_1_1error.html#abbfcc23ac8becd5d53febfbfa110331f',1,'thread_module::error::error(error_code code, std::string message={})']]],
+  ['error_8',['error',['../dc/d6c/classthread__module_1_1error.html#abbfcc23ac8becd5d53febfbfa110331f',1,'thread_module::error']]],
   ['error_5fcode_5fto_5fstring_9',['error_code_to_string',['../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306',1,'thread_module']]],
   ['escape_5fcontent_10',['escape_content',['../dc/d88/namespacelog__module_1_1content.html#a6820600fb8eb2508154b04b683635e11',1,'log_module::content']]],
   ['escape_5fnewlines_11',['escape_newlines',['../dc/d88/namespacelog__module_1_1content.html#abe5098a7858733e1c2c25ad792e8683d',1,'log_module::content']]],

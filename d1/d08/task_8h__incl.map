@@ -1,34 +1,21 @@
 <map id="sources/thread_pool/async/task.h" name="sources/thread_pool/async/task.h">
-<area shape="rect" id="Node000001" title="Implementation of a coroutine&#45;based task system." alt="" coords="596,5,749,45"/>
-<area shape="rect" id="Node000002" href="$da/da2/synchronization_2error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="180,93,413,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="596,47,393,93,392,88,595,42"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="5,181,97,207"/>
-<area shape="poly" id="edge12_Node000001_Node000005" title=" " alt="" coords="596,34,364,56,249,73,203,84,168,96,140,112,113,132,72,173,68,169,110,128,137,107,166,91,202,79,248,68,364,50,596,29"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="437,101,524,126"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="632,48,520,98,518,93,629,43"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="549,101,610,126"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="654,48,604,93,601,89,650,44"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="634,101,711,126"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="675,46,675,87,670,87,670,46"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="736,101,796,126"/>
-<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="695,44,745,89,741,93,692,48"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="821,101,887,126"/>
-<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="714,43,819,92,817,97,711,48"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="912,101,980,126"/>
-<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="743,43,900,91,907,93,905,98,898,96,742,48"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="1005,101,1071,126"/>
-<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="750,36,866,58,993,91,1000,93,999,98,992,96,865,63,749,41"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="122,181,181,207"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,136,186,177,183,172,261,131"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="205,181,279,207"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="286,135,260,172,256,168,281,132"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="239,136,101,180,99,175,237,131"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="304,181,401,207"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="312,132,339,168,334,172,308,135"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="425,181,501,207"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="338,131,428,173,425,178,335,136"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="525,181,612,207"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="363,131,517,175,515,180,361,136"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="636,181,723,207"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="390,131,623,178,622,184,389,136"/>
+<area shape="rect" id="Node000001" title="Implementation of a coroutine&#45;based task system." alt="" coords="531,5,684,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,239,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="531,43,242,94,241,88,530,38"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="263,101,349,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="535,48,363,96,353,99,351,94,361,91,533,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="374,101,435,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="563,48,448,96,444,98,442,93,446,91,561,43"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="459,101,537,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="585,48,526,94,522,90,581,44"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="561,101,653,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="610,46,610,87,605,87,605,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="677,101,737,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="631,44,685,89,681,93,628,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="762,101,829,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="650,43,759,93,757,98,647,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="853,101,921,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="681,43,841,91,848,93,846,98,840,96,679,48"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="946,101,1013,126"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="685,36,803,58,935,91,942,93,940,98,933,96,802,63,684,41"/>
 </map>

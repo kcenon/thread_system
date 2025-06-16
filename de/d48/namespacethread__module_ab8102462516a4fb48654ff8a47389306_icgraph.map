@@ -1,13 +1,17 @@
 <map id="thread_module::error_code_to_string" name="thread_module::error_code_to_string">
-<area shape="rect" id="Node000001" title="Converts an error_code to a string representation." alt="" coords="448,101,607,141"/>
-<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="241,101,400,141"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="434,124,400,124,400,119,434,119"/>
+<area shape="rect" id="Node000001" title="Converts an error_code to a string representation." alt="" coords="448,165,607,205"/>
+<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="241,165,400,205"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="434,188,400,188,400,183,434,183"/>
 <area shape="rect" id="Node000003" href="$dc/d6c/classthread__module_1_1error.html#a6f2719861d5a5674b760ea4a8fdd6a94" title="Implicit conversion to string." alt="" coords="20,5,179,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="270,97,192,60,162,48,164,43,194,55,272,92"/>
-<area shape="rect" id="Node000004" href="$d2/d93/classthread__module_1_1result.html#af91394da7cff202bc8fdfbb34d6ad159" title="Gets the value or throws an exception." alt="" coords="17,69,182,109"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="227,111,182,104,183,99,228,105"/>
-<area shape="rect" id="Node000005" href="$de/d5e/classthread__module_1_1result_3_01void_01_4.html#a5320b3de8695b2a1a12997bde7ef913d" title="Throws an exception if the result contains an error." alt="" coords="5,133,193,173"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="228,137,194,142,193,137,227,132"/>
-<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#a7ceb3eea28878c8fd781ece8c20b5f53" title="Gets the value or throws an exception." alt="" coords="17,197,182,237"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="272,150,194,188,164,200,162,195,192,183,270,146"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="294,156,250,107,222,82,192,60,169,48,172,43,195,55,225,77,253,103,298,153"/>
+<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="17,69,182,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="270,161,192,124,162,112,164,107,194,119,272,156"/>
+<area shape="rect" id="Node000005" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="17,133,182,173"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="227,175,182,168,183,163,228,169"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#af91394da7cff202bc8fdfbb34d6ad159" title="Gets the value or throws an exception." alt="" coords="17,197,182,237"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="228,201,183,208,182,203,227,196"/>
+<area shape="rect" id="Node000007" href="$de/d5e/classthread__module_1_1result_3_01void_01_4.html#a5320b3de8695b2a1a12997bde7ef913d" title="Throws an exception if the result contains an error." alt="" coords="5,261,193,301"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="272,214,194,252,164,264,162,259,192,247,270,210"/>
+<area shape="rect" id="Node000008" href="$d2/d93/classthread__module_1_1result.html#a7ceb3eea28878c8fd781ece8c20b5f53" title="Gets the value or throws an exception." alt="" coords="17,325,182,365"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="298,218,253,268,225,293,195,316,172,327,169,323,192,311,222,289,250,264,294,214"/>
 </map>

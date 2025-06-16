@@ -25,10 +25,10 @@
 <area shape="rect" id="Node000010" title=" " alt="" coords="5,1998,164,2063"/>
 <area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="93,2063,103,2107,120,2161,144,2217,177,2269,217,2310,262,2346,309,2378,355,2404,353,2408,306,2382,258,2351,213,2314,173,2272,139,2220,115,2163,98,2108,87,2064"/>
 <area shape="poly" id="edge10_Node000007_Node000011" title=" " alt="" coords="593,2071,567,2180,529,2310,526,2319,521,2317,523,2309,562,2178,587,2070"/>
-<area shape="rect" id="Node000012" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="188,1831,387,2231"/>
-<area shape="poly" id="edge12_Node000007_Node000012" title=" " alt="" coords="288,2230,298,2270,312,2308,333,2342,359,2372,355,2375,328,2345,308,2311,293,2272,283,2232"/>
+<area shape="rect" id="Node000012" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="188,1881,387,2181"/>
+<area shape="poly" id="edge12_Node000007_Node000012" title=" " alt="" coords="282,2180,292,2246,300,2278,312,2308,333,2342,359,2372,355,2375,328,2345,308,2311,295,2280,286,2247,277,2181"/>
 <area shape="rect" id="Node000013" title=" " alt="" coords="198,1491,366,1585"/>
-<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="285,1585,288,1814,282,1814,280,1585"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="285,1585,288,1864,283,1864,280,1585"/>
 <area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="285,983,285,1474,279,1474,279,983"/>
 <area shape="rect" id="Node000015" title=" " alt="" coords="209,560,355,625"/>
 <area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="285,625,285,886,279,886,279,625"/>

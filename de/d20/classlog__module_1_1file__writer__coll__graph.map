@@ -59,10 +59,10 @@
 <area shape="rect" id="Node000025" title=" " alt="" coords="1003,1822,1162,1887"/>
 <area shape="poly" id="edge29_Node000024_Node000025" title=" " alt="" coords="1082,1888,1074,1934,1058,1991,1032,2049,1014,2076,993,2099,939,2142,880,2178,817,2207,753,2230,688,2248,625,2262,514,2278,514,2272,624,2257,687,2243,751,2225,815,2202,878,2173,936,2138,989,2095,1010,2072,1027,2046,1053,1989,1069,1933,1077,1887"/>
 <area shape="poly" id="edge30_Node000024_Node000026" title=" " alt="" coords="183,1589,167,1683,160,1744,156,1812,157,1883,164,1956,179,2028,204,2096,222,2128,244,2158,297,2209,293,2213,240,2161,217,2131,199,2098,174,2030,159,1957,152,1884,151,1812,155,1744,161,1682,178,1588"/>
-<area shape="rect" id="Node000027" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="303,1655,502,2055"/>
-<area shape="poly" id="edge32_Node000024_Node000027" title=" " alt="" coords="405,2055,405,2143,400,2143,400,2055"/>
+<area shape="rect" id="Node000027" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="303,1705,502,2005"/>
+<area shape="poly" id="edge32_Node000024_Node000027" title=" " alt="" coords="405,2005,405,2144,400,2144,400,2005"/>
 <area shape="rect" id="Node000028" title=" " alt="" coords="209,1234,377,1329"/>
-<area shape="poly" id="edge33_Node000027_Node000028" title=" " alt="" coords="305,1328,364,1638,359,1639,300,1329"/>
+<area shape="poly" id="edge33_Node000027_Node000028" title=" " alt="" coords="305,1328,374,1688,368,1689,300,1329"/>
 <area shape="poly" id="edge34_Node000028_Node000029" title=" " alt="" coords="514,867,498,905,475,946,445,986,407,1018,388,1025,362,1028,302,1027,244,1028,222,1033,207,1042,195,1061,189,1083,189,1106,194,1129,215,1176,243,1219,239,1222,210,1179,189,1131,184,1106,183,1082,190,1059,203,1038,220,1028,243,1023,302,1022,362,1022,387,1020,404,1014,441,982,470,943,493,902,509,865"/>
 <area shape="rect" id="Node000030" title=" " alt="" coords="435,493,613,573"/>
 <area shape="poly" id="edge36_Node000029_Node000030" title=" " alt="" coords="527,574,527,769,521,769,521,574"/>

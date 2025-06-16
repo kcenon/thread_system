@@ -1,9 +1,11 @@
 <map id="thread_module::result::value" name="thread_module::result::value">
-<area shape="rect" id="Node000001" title="Gets the value." alt="" coords="236,85,401,125"/>
+<area shape="rect" id="Node000001" title="Gets the value." alt="" coords="236,117,401,157"/>
 <area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916" title="Builds and starts a thread pool with the configured options." alt="" coords="17,5,176,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,83,175,61,177,56,244,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,113,187,75,159,63,162,58,189,70,267,108"/>
 <area shape="rect" id="Node000003" href="$dc/d7f/classthread__module_1_1callback__job.html#adac1dc1c40f32c01fc2db47508fc5ef6" title="Constructs a new callback_job instance with a data&#45;based callback." alt="" coords="5,85,188,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,107,188,107,188,102,222,102"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,125,188,120,189,115,223,120"/>
 <area shape="rect" id="Node000004" href="$dc/d7f/classthread__module_1_1callback__job.html#a5a334d1a712ee0ff58e23e89e80bd7a3" title="Constructs a new callback_job instance with a parameterless callback." alt="" coords="5,149,188,189"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,131,167,151,166,146,235,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="223,153,189,158,188,153,222,148"/>
+<area shape="rect" id="Node000005" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="14,213,179,253"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="269,165,189,203,158,215,156,210,187,198,266,161"/>
 </map>
