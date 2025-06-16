@@ -87,15 +87,15 @@ $(function() {
 <p>Provides a mechanism for cooperative cancellation of operations.  
  <a href="../../df/d25/classthread__module_1_1cancellation__token.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for thread_module::cancellation_token:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d3d/classthread__module_1_1cancellation__token__coll__graph.png" border="0" usemap="#athread__module_1_1cancellation__token_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__module_1_1cancellation__token_coll__map" id="athread__module_1_1cancellation__token_coll__map">
-<area shape="rect" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="165,448,364,748"/>
+<area shape="rect" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="165,448,364,848"/>
 <area shape="rect" title=" " alt="" coords="181,291,349,385"/>
-<area shape="poly" title=" " alt="" coords="267,385,267,432,262,432,262,385"/>
+<area shape="poly" title=" " alt="" coords="267,385,267,431,262,431,262,385"/>
 <area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="165,148,364,228"/>
 <area shape="poly" title=" " alt="" coords="267,228,267,274,262,274,262,228"/>
 <area shape="rect" title=" " alt="" coords="5,13,151,78"/>
@@ -136,9 +136,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b87167d9105110e1fee763f1bf6c5aa" id="r_a1b87167d9105110e1fee763f1bf6c5aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a1b87167d9105110e1fee763f1bf6c5aa">register_callback</a> (std::function&lt; void()&gt; callback)</td></tr>
 <tr class="memdesc:a1b87167d9105110e1fee763f1bf6c5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a callback to be invoked when the token is canceled.  <br /></td></tr>
 <tr class="separator:a1b87167d9105110e1fee763f1bf6c5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaebfe279a1db60dc59aad568b6ce620f" id="r_aaebfe279a1db60dc59aad568b6ce620f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">cancellation_token</a> ()</td></tr>
+<tr class="separator:aaebfe279a1db60dc59aad568b6ce620f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c5645ee2f72ae033cec8f486e5d565f" id="r_a7c5645ee2f72ae033cec8f486e5d565f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a7c5645ee2f72ae033cec8f486e5d565f">cancellation_token</a> (const <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;)=default</td></tr>
+<tr class="separator:a7c5645ee2f72ae033cec8f486e5d565f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1263c93d77ab3d82a7822b5913ce26b4" id="r_a1263c93d77ab3d82a7822b5913ce26b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a1263c93d77ab3d82a7822b5913ce26b4">operator=</a> (const <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;)=default</td></tr>
+<tr class="separator:a1263c93d77ab3d82a7822b5913ce26b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ea526ce419465753f5fa0eb9ebd13dc" id="r_a5ea526ce419465753f5fa0eb9ebd13dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a5ea526ce419465753f5fa0eb9ebd13dc">cancellation_token</a> (<a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a5ea526ce419465753f5fa0eb9ebd13dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a635644ee79595a54a3e3685e55031508" id="r_a635644ee79595a54a3e3685e55031508"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a635644ee79595a54a3e3685e55031508">operator=</a> (<a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a635644ee79595a54a3e3685e55031508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78563fae5eda64b88960f6aab07fef38" id="r_a78563fae5eda64b88960f6aab07fef38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a78563fae5eda64b88960f6aab07fef38">cancel</a> ()</td></tr>
+<tr class="memdesc:a78563fae5eda64b88960f6aab07fef38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels the operation.  <br /></td></tr>
+<tr class="separator:a78563fae5eda64b88960f6aab07fef38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48792bb5006e3661a43e327781a4226a" id="r_a48792bb5006e3661a43e327781a4226a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">is_cancelled</a> () const</td></tr>
+<tr class="memdesc:a48792bb5006e3661a43e327781a4226a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the token has been canceled.  <br /></td></tr>
+<tr class="separator:a48792bb5006e3661a43e327781a4226a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ae8213e480bad19bb65e1c65dce200a" id="r_a6ae8213e480bad19bb65e1c65dce200a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a6ae8213e480bad19bb65e1c65dce200a">throw_if_cancelled</a> () const</td></tr>
+<tr class="memdesc:a6ae8213e480bad19bb65e1c65dce200a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throws an exception if the token has been canceled.  <br /></td></tr>
+<tr class="separator:a6ae8213e480bad19bb65e1c65dce200a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b87167d9105110e1fee763f1bf6c5aa" id="r_a1b87167d9105110e1fee763f1bf6c5aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a1b87167d9105110e1fee763f1bf6c5aa">register_callback</a> (std::function&lt; void()&gt; callback)</td></tr>
+<tr class="memdesc:a1b87167d9105110e1fee763f1bf6c5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a callback to be invoked when the token is canceled.  <br /></td></tr>
+<tr class="separator:a1b87167d9105110e1fee763f1bf6c5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a66fd6f26d8f31444518a6082d588ceda" id="r_a66fd6f26d8f31444518a6082d588ceda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a> ()</td></tr>
+<tr class="memdesc:a66fd6f26d8f31444518a6082d588ceda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new cancellation token.  <br /></td></tr>
+<tr class="separator:a66fd6f26d8f31444518a6082d588ceda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e368cc4084ccbcaf6ebe049b1b51e9" id="r_a14e368cc4084ccbcaf6ebe049b1b51e9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a14e368cc4084ccbcaf6ebe049b1b51e9">create_linked</a> (std::initializer_list&lt; <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &gt; tokens)</td></tr>
+<tr class="memdesc:a14e368cc4084ccbcaf6ebe049b1b51e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a linked token that is canceled when any of the parent tokens are canceled.  <br /></td></tr>
+<tr class="separator:a14e368cc4084ccbcaf6ebe049b1b51e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66fd6f26d8f31444518a6082d588ceda" id="r_a66fd6f26d8f31444518a6082d588ceda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a> ()</td></tr>
 <tr class="memdesc:a66fd6f26d8f31444518a6082d588ceda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new cancellation token.  <br /></td></tr>
 <tr class="separator:a66fd6f26d8f31444518a6082d588ceda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,20 +178,22 @@ Static Public Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a221f6c3e66a74331da9c83d34505ccae" id="r_a221f6c3e66a74331da9c83d34505ccae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a221f6c3e66a74331da9c83d34505ccae">cancellation_token</a> (std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt; state)</td></tr>
 <tr class="separator:a221f6c3e66a74331da9c83d34505ccae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a221f6c3e66a74331da9c83d34505ccae" id="r_a221f6c3e66a74331da9c83d34505ccae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a221f6c3e66a74331da9c83d34505ccae">cancellation_token</a> (std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt; state)</td></tr>
+<tr class="separator:a221f6c3e66a74331da9c83d34505ccae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a3d1fba20e5314fc21bc499bb701e50bd" id="r_a3d1fba20e5314fc21bc499bb701e50bd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a></td></tr>
-<tr class="separator:a3d1fba20e5314fc21bc499bb701e50bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0eb2dc9799f8d6a2a33ba40edb1a2c1" id="r_ac0eb2dc9799f8d6a2a33ba40edb1a2c1"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a></td></tr>
+<tr class="separator:ac0eb2dc9799f8d6a2a33ba40edb1a2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a mechanism for cooperative cancellation of operations. </p>
 <p>Cancellation tokens allow long-running operations to be gracefully canceled. They are particularly useful for worker threads that need to be notified when their work should be aborted. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00055">55</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00055">55</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a221f6c3e66a74331da9c83d34505ccae" name="a221f6c3e66a74331da9c83d34505ccae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a221f6c3e66a74331da9c83d34505ccae">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a221f6c3e66a74331da9c83d34505ccae">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[1/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,14 +216,14 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00067">67</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>        : <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::move(state)) {}</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a3d1fba20e5314fc21bc499bb701e50bd"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">thread_module::cancellation_token::state_</a></div><div class="ttdeci">std::shared_ptr&lt; token_state &gt; state_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00064">cancellation_token.h:64</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00067">67</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>        : <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>(std::move(state)) {}</div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_ac0eb2dc9799f8d6a2a33ba40edb1a2c1"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">thread_module::cancellation_token::state_</a></div><div class="ttdeci">std::shared_ptr&lt; token_state &gt; state_</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00064">cancellation_token.h:64</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="aaebfe279a1db60dc59aad568b6ce620f" name="aaebfe279a1db60dc59aad568b6ce620f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaebfe279a1db60dc59aad568b6ce620f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaebfe279a1db60dc59aad568b6ce620f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[2/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,8 +245,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00072">72</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>: <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>(std::make_shared&lt;token_state&gt;()) {}</div>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00072">72</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>: <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>(std::make_shared&lt;token_state&gt;()) {}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -233,7 +263,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a7c5645ee2f72ae033cec8f486e5d565f" name="a7c5645ee2f72ae033cec8f486e5d565f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c5645ee2f72ae033cec8f486e5d565f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c5645ee2f72ae033cec8f486e5d565f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[3/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,7 +289,116 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a5ea526ce419465753f5fa0eb9ebd13dc" name="a5ea526ce419465753f5fa0eb9ebd13dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ea526ce419465753f5fa0eb9ebd13dc">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ea526ce419465753f5fa0eb9ebd13dc">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[4/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::cancellation_token::cancellation_token </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a221f6c3e66a74331da9c83d34505ccae" name="a221f6c3e66a74331da9c83d34505ccae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a221f6c3e66a74331da9c83d34505ccae">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[5/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::cancellation_token::cancellation_token </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00067">67</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>        : <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>(std::move(state)) {}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aaebfe279a1db60dc59aad568b6ce620f" name="aaebfe279a1db60dc59aad568b6ce620f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaebfe279a1db60dc59aad568b6ce620f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[6/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::cancellation_token::cancellation_token </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00072">72</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>: <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>(std::make_shared&lt;token_state&gt;()) {}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7c5645ee2f72ae033cec8f486e5d565f" name="a7c5645ee2f72ae033cec8f486e5d565f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c5645ee2f72ae033cec8f486e5d565f">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[7/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::cancellation_token::cancellation_token </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5ea526ce419465753f5fa0eb9ebd13dc" name="a5ea526ce419465753f5fa0eb9ebd13dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ea526ce419465753f5fa0eb9ebd13dc">&#9670;&#160;</a></span>cancellation_token() <span class="overload">[8/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +425,7 @@ Here is the caller graph for this function:</div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a78563fae5eda64b88960f6aab07fef38" name="a78563fae5eda64b88960f6aab07fef38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78563fae5eda64b88960f6aab07fef38">&#9670;&#160;</a></span>cancel()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a78563fae5eda64b88960f6aab07fef38">&#9670;&#160;</a></span>cancel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,17 +451,66 @@ Here is the caller graph for this function:</div>
 <p>Sets the token to the canceled state and invokes all registered callbacks.</p>
 <dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees callbacks are invoked exactly once. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00132">132</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00132">132</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  132</span>                  {</div>
 <div class="line"><span class="lineno">  133</span>        std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
 <div class="line"><span class="lineno">  134</span>        </div>
 <div class="line"><span class="lineno">  135</span>        {</div>
-<div class="line"><span class="lineno">  136</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
-<div class="line"><span class="lineno">  137</span>            <span class="keywordtype">bool</span> was_cancelled = <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.exchange(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  136</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keywordtype">bool</span> was_cancelled = <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.exchange(<span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">  138</span>            <span class="keywordflow">if</span> (!was_cancelled) {</div>
 <div class="line"><span class="lineno">  139</span>                <span class="comment">// Move callbacks to local vector to avoid holding lock during invocation</span></div>
-<div class="line"><span class="lineno">  140</span>                callbacks_to_invoke = std::move(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks);</div>
-<div class="line"><span class="lineno">  141</span>                <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.clear();</div>
+<div class="line"><span class="lineno">  140</span>                callbacks_to_invoke = std::move(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks);</div>
+<div class="line"><span class="lineno">  141</span>                <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks.clear();</div>
+<div class="line"><span class="lineno">  142</span>            }</div>
+<div class="line"><span class="lineno">  143</span>        }</div>
+<div class="line"><span class="lineno">  144</span>        </div>
+<div class="line"><span class="lineno">  145</span>        <span class="comment">// Invoke callbacks outside the lock to prevent deadlock</span></div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
+<div class="line"><span class="lineno">  147</span>            callback();</div>
+<div class="line"><span class="lineno">  148</span>        }</div>
+<div class="line"><span class="lineno">  149</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a78563fae5eda64b88960f6aab07fef38" name="a78563fae5eda64b88960f6aab07fef38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78563fae5eda64b88960f6aab07fef38">&#9670;&#160;</a></span>cancel() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void thread_module::cancellation_token::cancel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cancels the operation. </p>
+<p>Sets the token to the canceled state and invokes all registered callbacks.</p>
+<dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees callbacks are invoked exactly once. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00132">132</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>                  {</div>
+<div class="line"><span class="lineno">  133</span>        std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
+<div class="line"><span class="lineno">  134</span>        </div>
+<div class="line"><span class="lineno">  135</span>        {</div>
+<div class="line"><span class="lineno">  136</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keywordtype">bool</span> was_cancelled = <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.exchange(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">if</span> (!was_cancelled) {</div>
+<div class="line"><span class="lineno">  139</span>                <span class="comment">// Move callbacks to local vector to avoid holding lock during invocation</span></div>
+<div class="line"><span class="lineno">  140</span>                callbacks_to_invoke = std::move(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks);</div>
+<div class="line"><span class="lineno">  141</span>                <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks.clear();</div>
 <div class="line"><span class="lineno">  142</span>            }</div>
 <div class="line"><span class="lineno">  143</span>        }</div>
 <div class="line"><span class="lineno">  144</span>        </div>
@@ -335,7 +523,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a66fd6f26d8f31444518a6082d588ceda" name="a66fd6f26d8f31444518a6082d588ceda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66fd6f26d8f31444518a6082d588ceda">&#9670;&#160;</a></span>create()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a66fd6f26d8f31444518a6082d588ceda">&#9670;&#160;</a></span>create() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,11 +548,11 @@ Here is the caller graph for this function:</div>
 <p>Creates a new cancellation token. </p>
 <dl class="section return"><dt>Returns</dt><dd>A new cancellation token </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00084">84</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00084">84</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   84</span>                                       {</div>
 <div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">cancellation_token</a>();</div>
 <div class="line"><span class="lineno">   86</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_aaebfe279a1db60dc59aad568b6ce620f"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">thread_module::cancellation_token::cancellation_token</a></div><div class="ttdeci">cancellation_token()</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00072">cancellation_token.h:72</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_aaebfe279a1db60dc59aad568b6ce620f"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">thread_module::cancellation_token::cancellation_token</a></div><div class="ttdeci">cancellation_token()</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00072">cancellation_token.h:72</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -388,8 +576,51 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a66fd6f26d8f31444518a6082d588ceda" name="a66fd6f26d8f31444518a6082d588ceda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66fd6f26d8f31444518a6082d588ceda">&#9670;&#160;</a></span>create() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> thread_module::cancellation_token::create </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new cancellation token. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new cancellation token </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00084">84</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>                                       {</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f">cancellation_token</a>();</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d25/classthread__module_1_1cancellation__token_a66fd6f26d8f31444518a6082d588ceda_cgraph.png" border="0" usemap="#adf/d25/classthread__module_1_1cancellation__token_a66fd6f26d8f31444518a6082d588ceda_cgraph" alt=""/></div>
+<map name="adf/d25/classthread__module_1_1cancellation__token_a66fd6f26d8f31444518a6082d588ceda_cgraph" id="adf/d25/classthread__module_1_1cancellation__token_a66fd6f26d8f31444518a6082d588ceda_cgraph">
+<area shape="rect" title="Creates a new cancellation token." alt="" coords="5,5,212,45"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f" title=" " alt="" coords="260,5,467,45"/>
+<area shape="poly" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a14e368cc4084ccbcaf6ebe049b1b51e9" name="a14e368cc4084ccbcaf6ebe049b1b51e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14e368cc4084ccbcaf6ebe049b1b51e9">&#9670;&#160;</a></span>create_linked()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e368cc4084ccbcaf6ebe049b1b51e9">&#9670;&#160;</a></span>create_linked() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -422,7 +653,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A new token linked to the parents</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Uses weak_ptr to avoid circular references and memory leaks </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00095">95</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00095">95</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   95</span>                                                                                            {</div>
 <div class="line"><span class="lineno">   96</span>        <span class="keyword">auto</span> new_token = <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a>();</div>
 <div class="line"><span class="lineno">   97</span>        <span class="keyword">auto</span> new_state_weak = std::weak_ptr&lt;token_state&gt;(new_token.state_);</div>
@@ -452,7 +683,86 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  121</span>        </div>
 <div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> new_token;</div>
 <div class="line"><span class="lineno">  123</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a66fd6f26d8f31444518a6082d588ceda"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">thread_module::cancellation_token::create</a></div><div class="ttdeci">static cancellation_token create()</div><div class="ttdoc">Creates a new cancellation token.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00084">cancellation_token.h:84</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a66fd6f26d8f31444518a6082d588ceda"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">thread_module::cancellation_token::create</a></div><div class="ttdeci">static cancellation_token create()</div><div class="ttdoc">Creates a new cancellation token.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00084">cancellation_token.h:84</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d25/classthread__module_1_1cancellation__token_a14e368cc4084ccbcaf6ebe049b1b51e9_cgraph.png" border="0" usemap="#adf/d25/classthread__module_1_1cancellation__token_a14e368cc4084ccbcaf6ebe049b1b51e9_cgraph" alt=""/></div>
+<map name="adf/d25/classthread__module_1_1cancellation__token_a14e368cc4084ccbcaf6ebe049b1b51e9_cgraph" id="adf/d25/classthread__module_1_1cancellation__token_a14e368cc4084ccbcaf6ebe049b1b51e9_cgraph">
+<area shape="rect" title="Creates a linked token that is canceled when any of the parent tokens are canceled." alt="" coords="5,5,212,45"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda" title="Creates a new cancellation token." alt="" coords="260,5,467,45"/>
+<area shape="poly" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html#aaebfe279a1db60dc59aad568b6ce620f" title=" " alt="" coords="515,5,721,45"/>
+<area shape="poly" title=" " alt="" coords="467,23,501,23,501,28,467,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a14e368cc4084ccbcaf6ebe049b1b51e9" name="a14e368cc4084ccbcaf6ebe049b1b51e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e368cc4084ccbcaf6ebe049b1b51e9">&#9670;&#160;</a></span>create_linked() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> thread_module::cancellation_token::create_linked </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &gt;&#160;</td>
+          <td class="paramname"><em>tokens</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a linked token that is canceled when any of the parent tokens are canceled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The parent tokens </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new token linked to the parents</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Uses weak_ptr to avoid circular references and memory leaks </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00095">95</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                                                                                            {</div>
+<div class="line"><span class="lineno">   96</span>        <span class="keyword">auto</span> new_token = <a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a66fd6f26d8f31444518a6082d588ceda">create</a>();</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keyword">auto</span> new_state_weak = std::weak_ptr&lt;token_state&gt;(new_token.state_);</div>
+<div class="line"><span class="lineno">   98</span>        </div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; token : tokens) {</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keyword">auto</span> token_copy = token;</div>
+<div class="line"><span class="lineno">  101</span>            token_copy.register_callback([new_state_weak]() {</div>
+<div class="line"><span class="lineno">  102</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> state = new_state_weak.lock()) {</div>
+<div class="line"><span class="lineno">  103</span>                    <span class="comment">// Directly set the cancelled flag and invoke callbacks</span></div>
+<div class="line"><span class="lineno">  104</span>                    std::vector&lt;std::function&lt;void()&gt;&gt; callbacks_to_invoke;</div>
+<div class="line"><span class="lineno">  105</span>                    </div>
+<div class="line"><span class="lineno">  106</span>                    {</div>
+<div class="line"><span class="lineno">  107</span>                        std::lock_guard&lt;std::mutex&gt; lock(state-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  108</span>                        bool was_cancelled = state-&gt;is_cancelled.exchange(true);</div>
+<div class="line"><span class="lineno">  109</span>                        if (!was_cancelled) {</div>
+<div class="line"><span class="lineno">  110</span>                            callbacks_to_invoke = std::move(state-&gt;callbacks);</div>
+<div class="line"><span class="lineno">  111</span>                            state-&gt;callbacks.clear();</div>
+<div class="line"><span class="lineno">  112</span>                        }</div>
+<div class="line"><span class="lineno">  113</span>                    }</div>
+<div class="line"><span class="lineno">  114</span>                    </div>
+<div class="line"><span class="lineno">  115</span>                    for (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; callback : callbacks_to_invoke) {</div>
+<div class="line"><span class="lineno">  116</span>                        callback();</div>
+<div class="line"><span class="lineno">  117</span>                    }</div>
+<div class="line"><span class="lineno">  118</span>                }</div>
+<div class="line"><span class="lineno">  119</span>            });</div>
+<div class="line"><span class="lineno">  120</span>        }</div>
+<div class="line"><span class="lineno">  121</span>        </div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> new_token;</div>
+<div class="line"><span class="lineno">  123</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -469,7 +779,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a48792bb5006e3661a43e327781a4226a" name="a48792bb5006e3661a43e327781a4226a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48792bb5006e3661a43e327781a4226a">&#9670;&#160;</a></span>is_cancelled()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a48792bb5006e3661a43e327781a4226a">&#9670;&#160;</a></span>is_cancelled() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -494,9 +804,9 @@ Here is the call graph for this function:</div>
 <p>Checks if the token has been canceled. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the token has been canceled, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00155">155</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00155">155</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  155</span>                                            {</div>
-<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load();</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.load();</div>
 <div class="line"><span class="lineno">  157</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -511,8 +821,67 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a48792bb5006e3661a43e327781a4226a" name="a48792bb5006e3661a43e327781a4226a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48792bb5006e3661a43e327781a4226a">&#9670;&#160;</a></span>is_cancelled() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool thread_module::cancellation_token::is_cancelled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the token has been canceled. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the token has been canceled, false otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00155">155</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>                                            {</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.load();</div>
+<div class="line"><span class="lineno">  157</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a635644ee79595a54a3e3685e55031508" name="a635644ee79595a54a3e3685e55031508"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a635644ee79595a54a3e3685e55031508">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a635644ee79595a54a3e3685e55031508">&#9670;&#160;</a></span>operator=() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp; thread_module::cancellation_token::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a635644ee79595a54a3e3685e55031508" name="a635644ee79595a54a3e3685e55031508"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a635644ee79595a54a3e3685e55031508">&#9670;&#160;</a></span>operator=() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -538,7 +907,33 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a1263c93d77ab3d82a7822b5913ce26b4" name="a1263c93d77ab3d82a7822b5913ce26b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1263c93d77ab3d82a7822b5913ce26b4">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1263c93d77ab3d82a7822b5913ce26b4">&#9670;&#160;</a></span>operator=() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp; thread_module::cancellation_token::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html">cancellation_token</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1263c93d77ab3d82a7822b5913ce26b4" name="a1263c93d77ab3d82a7822b5913ce26b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1263c93d77ab3d82a7822b5913ce26b4">&#9670;&#160;</a></span>operator=() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -564,7 +959,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a1b87167d9105110e1fee763f1bf6c5aa" name="a1b87167d9105110e1fee763f1bf6c5aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b87167d9105110e1fee763f1bf6c5aa">&#9670;&#160;</a></span>register_callback()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b87167d9105110e1fee763f1bf6c5aa">&#9670;&#160;</a></span>register_callback() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -597,25 +992,76 @@ Here is the caller graph for this function:</div>
 <p>If the token is already canceled, the callback is invoked immediately.</p>
 <dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees the callback is called exactly once. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00177">177</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00177">177</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  177</span>                                                         {</div>
-<div class="line"><span class="lineno">  178</span>        std::unique_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  178</span>        std::unique_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callback_mutex);</div>
 <div class="line"><span class="lineno">  179</span>        </div>
 <div class="line"><span class="lineno">  180</span>        <span class="comment">// Check cancellation state while holding the lock</span></div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;is_cancelled.load()) {</div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.load()) {</div>
 <div class="line"><span class="lineno">  182</span>            lock.unlock();</div>
 <div class="line"><span class="lineno">  183</span>            callback();</div>
 <div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span>;</div>
 <div class="line"><span class="lineno">  185</span>        }</div>
 <div class="line"><span class="lineno">  186</span>        </div>
 <div class="line"><span class="lineno">  187</span>        <span class="comment">// Add callback while still holding the lock</span></div>
-<div class="line"><span class="lineno">  188</span>        <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#a3d1fba20e5314fc21bc499bb701e50bd">state_</a>-&gt;callbacks.push_back(std::move(callback));</div>
+<div class="line"><span class="lineno">  188</span>        <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks.push_back(std::move(callback));</div>
+<div class="line"><span class="lineno">  189</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1b87167d9105110e1fee763f1bf6c5aa" name="a1b87167d9105110e1fee763f1bf6c5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b87167d9105110e1fee763f1bf6c5aa">&#9670;&#160;</a></span>register_callback() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void thread_module::cancellation_token::register_callback </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; void()&gt;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers a callback to be invoked when the token is canceled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The function to call when the token is canceled</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>If the token is already canceled, the callback is invoked immediately.</p>
+<dl class="section note"><dt>Note</dt><dd>This method is thread-safe and guarantees the callback is called exactly once. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00177">177</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>                                                         {</div>
+<div class="line"><span class="lineno">  178</span>        std::unique_lock&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callback_mutex);</div>
+<div class="line"><span class="lineno">  179</span>        </div>
+<div class="line"><span class="lineno">  180</span>        <span class="comment">// Check cancellation state while holding the lock</span></div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;is_cancelled.load()) {</div>
+<div class="line"><span class="lineno">  182</span>            lock.unlock();</div>
+<div class="line"><span class="lineno">  183</span>            callback();</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  185</span>        }</div>
+<div class="line"><span class="lineno">  186</span>        </div>
+<div class="line"><span class="lineno">  187</span>        <span class="comment">// Add callback while still holding the lock</span></div>
+<div class="line"><span class="lineno">  188</span>        <a class="code hl_variable" href="../../df/d25/classthread__module_1_1cancellation__token.html#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">state_</a>-&gt;callbacks.push_back(std::move(callback));</div>
 <div class="line"><span class="lineno">  189</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="a6ae8213e480bad19bb65e1c65dce200a" name="a6ae8213e480bad19bb65e1c65dce200a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ae8213e480bad19bb65e1c65dce200a">&#9670;&#160;</a></span>throw_if_cancelled()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae8213e480bad19bb65e1c65dce200a">&#9670;&#160;</a></span>throw_if_cancelled() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -645,13 +1091,63 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00163">163</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00163">163</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  163</span>                                    {</div>
 <div class="line"><span class="lineno">  164</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">is_cancelled</a>()) {</div>
 <div class="line"><span class="lineno">  165</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Operation cancelled&quot;</span>);</div>
 <div class="line"><span class="lineno">  166</span>        }</div>
 <div class="line"><span class="lineno">  167</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a48792bb5006e3661a43e327781a4226a"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">thread_module::cancellation_token::is_cancelled</a></div><div class="ttdeci">bool is_cancelled() const</div><div class="ttdoc">Checks if the token has been canceled.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00155">cancellation_token.h:155</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1cancellation__token_html_a48792bb5006e3661a43e327781a4226a"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">thread_module::cancellation_token::is_cancelled</a></div><div class="ttdeci">bool is_cancelled() const</div><div class="ttdoc">Checks if the token has been canceled.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00155">cancellation_token.h:155</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d25/classthread__module_1_1cancellation__token_a6ae8213e480bad19bb65e1c65dce200a_cgraph.png" border="0" usemap="#adf/d25/classthread__module_1_1cancellation__token_a6ae8213e480bad19bb65e1c65dce200a_cgraph" alt=""/></div>
+<map name="adf/d25/classthread__module_1_1cancellation__token_a6ae8213e480bad19bb65e1c65dce200a_cgraph" id="adf/d25/classthread__module_1_1cancellation__token_a6ae8213e480bad19bb65e1c65dce200a_cgraph">
+<area shape="rect" title="Throws an exception if the token has been canceled." alt="" coords="5,5,212,45"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a" title="Checks if the token has been canceled." alt="" coords="260,5,467,45"/>
+<area shape="poly" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6ae8213e480bad19bb65e1c65dce200a" name="a6ae8213e480bad19bb65e1c65dce200a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae8213e480bad19bb65e1c65dce200a">&#9670;&#160;</a></span>throw_if_cancelled() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void thread_module::cancellation_token::throw_if_cancelled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Throws an exception if the token has been canceled. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the token has been canceled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html#l00163">163</a> of file <a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>                                    {</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../df/d25/classthread__module_1_1cancellation__token.html#a48792bb5006e3661a43e327781a4226a">is_cancelled</a>()) {</div>
+<div class="line"><span class="lineno">  165</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Operation cancelled&quot;</span>);</div>
+<div class="line"><span class="lineno">  166</span>        }</div>
+<div class="line"><span class="lineno">  167</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -666,8 +1162,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3d1fba20e5314fc21bc499bb701e50bd" name="a3d1fba20e5314fc21bc499bb701e50bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d1fba20e5314fc21bc499bb701e50bd">&#9670;&#160;</a></span>state_</h2>
+<a id="ac0eb2dc9799f8d6a2a33ba40edb1a2c1" name="ac0eb2dc9799f8d6a2a33ba40edb1a2c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0eb2dc9799f8d6a2a33ba40edb1a2c1">&#9670;&#160;</a></span>state_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -676,7 +1172,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a>&gt; thread_module::cancellation_token::state_</td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html">token_state</a> &gt; thread_module::cancellation_token::state_</td>
         </tr>
       </table>
   </td>
@@ -686,17 +1182,18 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00064">64</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00064">64</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>sources/thread_base/sync/<a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>sources/thread_base/sync/<a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a></li>
+<li>sources/thread_base/synchronization/<a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 15:19:08 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 04:34:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

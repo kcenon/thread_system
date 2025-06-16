@@ -1,7 +1,7 @@
 <map id="thread_module::result_void" name="thread_module::result_void">
-<area shape="rect" id="Node000001" title="Wrapper for void result." alt="" coords="5,471,197,616"/>
-<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html" title="Represents an error in the thread system." alt="" coords="20,263,183,408"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,408,104,454,99,454,99,408"/>
+<area shape="rect" id="Node000001" title="Wrapper for void result." alt="" coords="5,571,197,816"/>
+<area shape="rect" id="Node000002" href="$dc/d6c/classthread__module_1_1error.html" title="Represents an error in the thread system." alt="" coords="20,263,183,508"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,508,104,554,99,554,99,508"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="62,135,141,200"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,200,104,246,99,246,99,200"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="36,5,167,85"/>

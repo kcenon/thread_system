@@ -96,16 +96,16 @@ Collaboration diagram for thread_module::cancellation_token::token_state:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:acc343236f95dc839b89d9de5b3a15eac" id="r_acc343236f95dc839b89d9de5b3a15eac"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#acc343236f95dc839b89d9de5b3a15eac">is_cancelled</a> {false}</td></tr>
-<tr class="separator:acc343236f95dc839b89d9de5b3a15eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bb62a8b1e77c629c45e8dc30a44b71a" id="r_a9bb62a8b1e77c629c45e8dc30a44b71a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::function&lt; void()&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#a9bb62a8b1e77c629c45e8dc30a44b71a">callbacks</a></td></tr>
-<tr class="separator:a9bb62a8b1e77c629c45e8dc30a44b71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b1331b988002a0a871ed6a68d6f531" id="r_a98b1331b988002a0a871ed6a68d6f531"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#a98b1331b988002a0a871ed6a68d6f531">is_cancelled</a> {false}</td></tr>
+<tr class="separator:a98b1331b988002a0a871ed6a68d6f531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8457aac3af8bd79d7e1a494bb6ba7e82" id="r_a8457aac3af8bd79d7e1a494bb6ba7e82"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::function&lt; void()&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#a8457aac3af8bd79d7e1a494bb6ba7e82">callbacks</a></td></tr>
+<tr class="separator:a8457aac3af8bd79d7e1a494bb6ba7e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ac7a78d446abfdadfa72002c2ce2a70" id="r_a3ac7a78d446abfdadfa72002c2ce2a70"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#a3ac7a78d446abfdadfa72002c2ce2a70">callback_mutex</a></td></tr>
 <tr class="separator:a3ac7a78d446abfdadfa72002c2ce2a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00058">58</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00058">58</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a3ac7a78d446abfdadfa72002c2ce2a70" name="a3ac7a78d446abfdadfa72002c2ce2a70"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ac7a78d446abfdadfa72002c2ce2a70">&#9670;&#160;</a></span>callback_mutex</h2>
@@ -119,50 +119,51 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00061">61</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00061">61</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 
 </div>
 </div>
-<a id="a9bb62a8b1e77c629c45e8dc30a44b71a" name="a9bb62a8b1e77c629c45e8dc30a44b71a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bb62a8b1e77c629c45e8dc30a44b71a">&#9670;&#160;</a></span>callbacks</h2>
+<a id="a8457aac3af8bd79d7e1a494bb6ba7e82" name="a8457aac3af8bd79d7e1a494bb6ba7e82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8457aac3af8bd79d7e1a494bb6ba7e82">&#9670;&#160;</a></span>callbacks</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::function&lt;void()&gt; &gt; thread_module::cancellation_token::token_state::callbacks</td>
+          <td class="memname">std::vector&lt; std::function&lt; void()&gt; &gt; thread_module::cancellation_token::token_state::callbacks</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00060">60</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00060">60</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 
 </div>
 </div>
-<a id="acc343236f95dc839b89d9de5b3a15eac" name="acc343236f95dc839b89d9de5b3a15eac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc343236f95dc839b89d9de5b3a15eac">&#9670;&#160;</a></span>is_cancelled</h2>
+<a id="a98b1331b988002a0a871ed6a68d6f531" name="a98b1331b988002a0a871ed6a68d6f531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98b1331b988002a0a871ed6a68d6f531">&#9670;&#160;</a></span>is_cancelled</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::atomic&lt;bool&gt; thread_module::cancellation_token::token_state::is_cancelled {false}</td>
+          <td class="memname">std::atomic&lt; bool &gt; thread_module::cancellation_token::token_state::is_cancelled {false}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/db5/cancellation__token_8h_source.html#l00059">59</a> of file <a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html#l00059">59</a> of file <a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   59</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>sources/thread_base/sync/<a class="el" href="../../d4/db5/cancellation__token_8h_source.html">cancellation_token.h</a></li>
+<hr/>The documentation for this struct was generated from the following files:<ul>
+<li>sources/thread_base/sync/<a class="el" href="../../d2/d0d/sync_2cancellation__token_8h_source.html">cancellation_token.h</a></li>
+<li>sources/thread_base/synchronization/<a class="el" href="../../d2/d56/synchronization_2cancellation__token_8h_source.html">cancellation_token.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 15:19:08 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 04:34:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -11,7 +11,7 @@ var searchData=
   ['include_5ftimestamp_8',['include_timestamp',['../da/dd8/structlog__module_1_1format__options.html#aaab5c4f0ff967e25e6b29af2f2509f52',1,'log_module::format_options']]],
   ['init_5fmutex_5f_9',['init_mutex_',['../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973',1,'monitoring_module::global_metrics_collector']]],
   ['invoke_10',['invoke',['../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673',1,'thread_pool_module::detail::callable_eraser::vtable_t']]],
-  ['is_5fcancelled_11',['is_cancelled',['../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#acc343236f95dc839b89d9de5b3a15eac',1,'thread_module::cancellation_token::token_state']]],
+  ['is_5fcancelled_11',['is_cancelled',['../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#a98b1331b988002a0a871ed6a68d6f531',1,'thread_module::cancellation_token::token_state']]],
   ['is_5fcompatible_5fjob_5fv_12',['is_compatible_job_v',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#a8f92ebb14d79fe467122698c4a64f6e4',1,'typed_thread_pool_module::detail']]],
   ['is_5fduration_5fv_13',['is_duration_v',['../da/d38/namespacethread__pool__module_1_1detail.html#a3293d08f1dacbfe246f5796c47af560c',1,'thread_pool_module::detail::is_duration_v'],['../df/dbc/namespacelog__module_1_1detail.html#a436430e99f23618d963d691daafaed67',1,'log_module::detail::is_duration_v']]],
   ['is_5fenum_14',['is_enum',['../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf',1,'typed_thread_pool_module::detail::job_type_traits']]],

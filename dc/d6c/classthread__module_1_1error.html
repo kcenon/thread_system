@@ -84,13 +84,13 @@ $(function() {
 <p>Represents an error in the thread system.  
  <a href="../../dc/d6c/classthread__module_1_1error.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for thread_module::error:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/d8e/classthread__module_1_1error__coll__graph.png" border="0" usemap="#athread__module_1_1error_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__module_1_1error_coll__map" id="athread__module_1_1error_coll__map">
-<area shape="rect" title="Represents an error in the thread system." alt="" coords="5,263,168,408"/>
+<area shape="rect" title="Represents an error in the thread system." alt="" coords="5,263,168,508"/>
 <area shape="rect" title=" " alt="" coords="47,135,126,200"/>
 <area shape="poly" title=" " alt="" coords="89,200,89,246,84,246,84,200"/>
 <area shape="rect" title=" " alt="" coords="21,5,152,85"/>
@@ -100,6 +100,21 @@ Collaboration diagram for thread_module::error:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:abbfcc23ac8becd5d53febfbfa110331f" id="r_abbfcc23ac8becd5d53febfbfa110331f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#abbfcc23ac8becd5d53febfbfa110331f">error</a> (<a class="el" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c">error_code</a> <a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">code</a>, std::string <a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a>={})</td></tr>
+<tr class="memdesc:abbfcc23ac8becd5d53febfbfa110331f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error with a code and optional message.  <br /></td></tr>
+<tr class="separator:abbfcc23ac8becd5d53febfbfa110331f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb5e8c783e556adf04561441bcf42e5" id="r_a3bb5e8c783e556adf04561441bcf42e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c">error_code</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">code</a> () const noexcept</td></tr>
+<tr class="memdesc:a3bb5e8c783e556adf04561441bcf42e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the error code.  <br /></td></tr>
+<tr class="separator:a3bb5e8c783e556adf04561441bcf42e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84124dcf079f2498f8e954c56472b55f" id="r_a84124dcf079f2498f8e954c56472b55f"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a> () const noexcept</td></tr>
+<tr class="memdesc:a84124dcf079f2498f8e954c56472b55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the error message.  <br /></td></tr>
+<tr class="separator:a84124dcf079f2498f8e954c56472b55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add7860e073cc1262c1b0a6ab442ece06" id="r_add7860e073cc1262c1b0a6ab442ece06"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a> () const</td></tr>
+<tr class="memdesc:add7860e073cc1262c1b0a6ab442ece06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the error to a string representation.  <br /></td></tr>
+<tr class="separator:add7860e073cc1262c1b0a6ab442ece06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f2719861d5a5674b760ea4a8fdd6a94" id="r_a6f2719861d5a5674b760ea4a8fdd6a94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a6f2719861d5a5674b760ea4a8fdd6a94">operator std::string</a> () const</td></tr>
+<tr class="memdesc:a6f2719861d5a5674b760ea4a8fdd6a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to string.  <br /></td></tr>
+<tr class="separator:a6f2719861d5a5674b760ea4a8fdd6a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbfcc23ac8becd5d53febfbfa110331f" id="r_abbfcc23ac8becd5d53febfbfa110331f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6c/classthread__module_1_1error.html#abbfcc23ac8becd5d53febfbfa110331f">error</a> (<a class="el" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c">error_code</a> <a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">code</a>, std::string <a class="el" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a>={})</td></tr>
 <tr class="memdesc:abbfcc23ac8becd5d53febfbfa110331f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error with a code and optional message.  <br /></td></tr>
 <tr class="separator:abbfcc23ac8becd5d53febfbfa110331f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,10 +142,10 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>Represents an error in the thread system. </p>
 <p>This class encapsulates an error code and an optional message. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00142">142</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00142">142</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abbfcc23ac8becd5d53febfbfa110331f" name="abbfcc23ac8becd5d53febfbfa110331f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbfcc23ac8becd5d53febfbfa110331f">&#9670;&#160;</a></span>error()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abbfcc23ac8becd5d53febfbfa110331f">&#9670;&#160;</a></span>error() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,19 +187,68 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00149">149</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00149">149</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  149</span>                                                        {})</div>
 <div class="line"><span class="lineno">  150</span>        : <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>(<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">code</a>), <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>(std::move(<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a>)) {}</div>
-<div class="ttc" id="aclassthread__module_1_1error_html_a3bb5e8c783e556adf04561441bcf42e5"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">thread_module::error::code</a></div><div class="ttdeci">error_code code() const noexcept</div><div class="ttdoc">Gets the error code.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00156">error_handling.h:156</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1error_html_a780eba92e10558cc4ddd46b4939b97d0"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">thread_module::error::code_</a></div><div class="ttdeci">error_code code_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00183">error_handling.h:183</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1error_html_a7c3767eeafd29704baaebc2159b38b80"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">thread_module::error::message_</a></div><div class="ttdeci">std::string message_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00184">error_handling.h:184</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1error_html_a84124dcf079f2498f8e954c56472b55f"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">thread_module::error::message</a></div><div class="ttdeci">const std::string &amp; message() const noexcept</div><div class="ttdoc">Gets the error message.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00162">error_handling.h:162</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_a3bb5e8c783e556adf04561441bcf42e5"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">thread_module::error::code</a></div><div class="ttdeci">error_code code() const noexcept</div><div class="ttdoc">Gets the error code.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00156">error_handling.h:156</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_a780eba92e10558cc4ddd46b4939b97d0"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">thread_module::error::code_</a></div><div class="ttdeci">error_code code_</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00183">error_handling.h:183</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_a7c3767eeafd29704baaebc2159b38b80"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">thread_module::error::message_</a></div><div class="ttdeci">std::string message_</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00184">error_handling.h:184</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_a84124dcf079f2498f8e954c56472b55f"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">thread_module::error::message</a></div><div class="ttdeci">const std::string &amp; message() const noexcept</div><div class="ttdoc">Gets the error message.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00162">error_handling.h:162</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abbfcc23ac8becd5d53febfbfa110331f" name="abbfcc23ac8becd5d53febfbfa110331f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbfcc23ac8becd5d53febfbfa110331f">&#9670;&#160;</a></span>error() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::error::error </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c">error_code</a>&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>message</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an error with a code and optional message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>The error code </td></tr>
+    <tr><td class="paramname">message</td><td>Optional detailed message about the error </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html#l00149">149</a> of file <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>                                                        {})</div>
+<div class="line"><span class="lineno">  150</span>        : <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>(<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#a3bb5e8c783e556adf04561441bcf42e5">code</a>), <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>(std::move(<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f">message</a>)) {}</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3bb5e8c783e556adf04561441bcf42e5" name="a3bb5e8c783e556adf04561441bcf42e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bb5e8c783e556adf04561441bcf42e5">&#9670;&#160;</a></span>code()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bb5e8c783e556adf04561441bcf42e5">&#9670;&#160;</a></span>code() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,13 +273,44 @@ Private Attributes</h2></td></tr>
 <p>Gets the error code. </p>
 <dl class="section return"><dt>Returns</dt><dd>The error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00156">156</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00156">156</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  156</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3bb5e8c783e556adf04561441bcf42e5" name="a3bb5e8c783e556adf04561441bcf42e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bb5e8c783e556adf04561441bcf42e5">&#9670;&#160;</a></span>code() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447c">error_code</a> thread_module::error::code </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the error code. </p>
+<dl class="section return"><dt>Returns</dt><dd>The error code </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html#l00156">156</a> of file <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  156</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="a84124dcf079f2498f8e954c56472b55f" name="a84124dcf079f2498f8e954c56472b55f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84124dcf079f2498f8e954c56472b55f">&#9670;&#160;</a></span>message()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a84124dcf079f2498f8e954c56472b55f">&#9670;&#160;</a></span>message() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +335,7 @@ Private Attributes</h2></td></tr>
 <p>Gets the error message. </p>
 <dl class="section return"><dt>Returns</dt><dd>The error message </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00162">162</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00162">162</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  162</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -255,8 +350,39 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a84124dcf079f2498f8e954c56472b55f" name="a84124dcf079f2498f8e954c56472b55f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84124dcf079f2498f8e954c56472b55f">&#9670;&#160;</a></span>message() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string &amp; thread_module::error::message </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the error message. </p>
+<dl class="section return"><dt>Returns</dt><dd>The error message </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html#l00162">162</a> of file <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a6f2719861d5a5674b760ea4a8fdd6a94" name="a6f2719861d5a5674b760ea4a8fdd6a94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f2719861d5a5674b760ea4a8fdd6a94">&#9670;&#160;</a></span>operator std::string()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f2719861d5a5674b760ea4a8fdd6a94">&#9670;&#160;</a></span>operator std::string() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,11 +406,55 @@ Here is the caller graph for this function:</div>
 
 <p>Implicit conversion to string. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00178">178</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00178">178</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  178</span>                               {</div>
 <div class="line"><span class="lineno">  179</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>();</div>
 <div class="line"><span class="lineno">  180</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1error_html_add7860e073cc1262c1b0a6ab442ece06"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">thread_module::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00168">error_handling.h:168</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html_add7860e073cc1262c1b0a6ab442ece06"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">thread_module::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00168">error_handling.h:168</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dc/d6c/classthread__module_1_1error_a6f2719861d5a5674b760ea4a8fdd6a94_cgraph.png" border="0" usemap="#adc/d6c/classthread__module_1_1error_a6f2719861d5a5674b760ea4a8fdd6a94_cgraph" alt=""/></div>
+<map name="adc/d6c/classthread__module_1_1error_a6f2719861d5a5674b760ea4a8fdd6a94_cgraph" id="adc/d6c/classthread__module_1_1error_a6f2719861d5a5674b760ea4a8fdd6a94_cgraph">
+<area shape="rect" title="Implicit conversion to string." alt="" coords="5,5,164,45"/>
+<area shape="rect" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="212,5,371,45"/>
+<area shape="poly" title=" " alt="" coords="164,23,198,23,198,28,164,28"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="419,5,577,45"/>
+<area shape="poly" title=" " alt="" coords="371,23,405,23,405,28,371,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6f2719861d5a5674b760ea4a8fdd6a94" name="a6f2719861d5a5674b760ea4a8fdd6a94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f2719861d5a5674b760ea4a8fdd6a94">&#9670;&#160;</a></span>operator std::string() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_module::error::operator std::string </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implicit conversion to string. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html#l00178">178</a> of file <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>                               {</div>
+<div class="line"><span class="lineno">  179</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>();</div>
+<div class="line"><span class="lineno">  180</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -301,7 +471,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="add7860e073cc1262c1b0a6ab442ece06" name="add7860e073cc1262c1b0a6ab442ece06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add7860e073cc1262c1b0a6ab442ece06">&#9670;&#160;</a></span>to_string()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#add7860e073cc1262c1b0a6ab442ece06">&#9670;&#160;</a></span>to_string() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,14 +496,14 @@ Here is the call graph for this function:</div>
 <p>Converts the error to a string representation. </p>
 <dl class="section return"><dt>Returns</dt><dd>A string describing the error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00168">168</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00168">168</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  168</span>                                              {</div>
 <div class="line"><span class="lineno">  169</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>.empty()) {</div>
 <div class="line"><span class="lineno">  170</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">error_code_to_string</a>(<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>);</div>
 <div class="line"><span class="lineno">  171</span>        }</div>
 <div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">error_code_to_string</a>(<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>) + <span class="stringliteral">&quot;: &quot;</span> + <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>;</div>
 <div class="line"><span class="lineno">  173</span>    }</div>
-<div class="ttc" id="anamespacethread__module_html_ab8102462516a4fb48654ff8a47389306"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">thread_module::error_code_to_string</a></div><div class="ttdeci">std::string error_code_to_string(error_code code)</div><div class="ttdoc">Converts an error_code to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00100">error_handling.h:100</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_ab8102462516a4fb48654ff8a47389306"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">thread_module::error_code_to_string</a></div><div class="ttdeci">std::string error_code_to_string(error_code code)</div><div class="ttdoc">Converts an error_code to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/sync_2error__handling_8h_source.html#l00100">error_handling.h:100</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -349,19 +519,61 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_icgraph.png" border="0" usemap="#adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_icgraph" alt=""/></div>
 <map name="adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_icgraph" id="adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_icgraph">
-<area shape="rect" title="Converts the error to a string representation." alt="" coords="241,165,400,205"/>
+<area shape="rect" title="Converts the error to a string representation." alt="" coords="241,101,400,141"/>
 <area shape="rect" href="../../dc/d6c/classthread__module_1_1error.html#a6f2719861d5a5674b760ea4a8fdd6a94" title="Implicit conversion to string." alt="" coords="20,5,179,45"/>
-<area shape="poly" title=" " alt="" coords="294,156,250,107,222,82,192,60,169,48,172,43,195,55,225,77,253,103,298,153"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="17,69,182,109"/>
-<area shape="poly" title=" " alt="" coords="270,161,192,124,162,112,164,107,194,119,272,156"/>
-<area shape="rect" href="../../de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="17,133,182,173"/>
-<area shape="poly" title=" " alt="" coords="227,175,182,168,183,163,228,169"/>
-<area shape="rect" href="../../d2/d93/classthread__module_1_1result.html#af91394da7cff202bc8fdfbb34d6ad159" title="Gets the value or throws an exception." alt="" coords="17,197,182,237"/>
-<area shape="poly" title=" " alt="" coords="228,201,183,208,182,203,227,196"/>
-<area shape="rect" href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a5320b3de8695b2a1a12997bde7ef913d" title="Throws an exception if the result contains an error." alt="" coords="5,261,193,301"/>
-<area shape="poly" title=" " alt="" coords="272,214,194,252,164,264,162,259,192,247,270,210"/>
-<area shape="rect" href="../../d2/d93/classthread__module_1_1result.html#a7ceb3eea28878c8fd781ece8c20b5f53" title="Gets the value or throws an exception." alt="" coords="17,325,182,365"/>
-<area shape="poly" title=" " alt="" coords="298,218,253,268,225,293,195,316,172,327,169,323,192,311,222,289,250,264,294,214"/>
+<area shape="poly" title=" " alt="" coords="270,97,192,60,162,48,164,43,194,55,272,92"/>
+<area shape="rect" href="../../d2/d93/classthread__module_1_1result.html#af91394da7cff202bc8fdfbb34d6ad159" title="Gets the value or throws an exception." alt="" coords="17,69,182,109"/>
+<area shape="poly" title=" " alt="" coords="227,111,182,104,183,99,228,105"/>
+<area shape="rect" href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a5320b3de8695b2a1a12997bde7ef913d" title="Throws an exception if the result contains an error." alt="" coords="5,133,193,173"/>
+<area shape="poly" title=" " alt="" coords="228,137,194,142,193,137,227,132"/>
+<area shape="rect" href="../../d2/d93/classthread__module_1_1result.html#a7ceb3eea28878c8fd781ece8c20b5f53" title="Gets the value or throws an exception." alt="" coords="17,197,182,237"/>
+<area shape="poly" title=" " alt="" coords="272,150,194,188,164,200,162,195,192,183,270,146"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="add7860e073cc1262c1b0a6ab442ece06" name="add7860e073cc1262c1b0a6ab442ece06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7860e073cc1262c1b0a6ab442ece06">&#9670;&#160;</a></span>to_string() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string thread_module::error::to_string </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the error to a string representation. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string describing the error </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html#l00168">168</a> of file <a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  168</span>                                              {</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>.empty()) {</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">error_code_to_string</a>(<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>);</div>
+<div class="line"><span class="lineno">  171</span>        }</div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306">error_code_to_string</a>(<a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a780eba92e10558cc4ddd46b4939b97d0">code_</a>) + <span class="stringliteral">&quot;: &quot;</span> + <a class="code hl_variable" href="../../dc/d6c/classthread__module_1_1error.html#a7c3767eeafd29704baaebc2159b38b80">message_</a>;</div>
+<div class="line"><span class="lineno">  173</span>    }</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_cgraph.png" border="0" usemap="#adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_cgraph" alt=""/></div>
+<map name="adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_cgraph" id="adc/d6c/classthread__module_1_1error_add7860e073cc1262c1b0a6ab442ece06_cgraph">
+<area shape="rect" title="Converts the error to a string representation." alt="" coords="5,5,164,45"/>
+<area shape="rect" href="../../de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="212,5,371,45"/>
+<area shape="poly" title=" " alt="" coords="164,23,198,23,198,28,164,28"/>
 </map>
 </div>
 
@@ -388,7 +600,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00183">183</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00183">183</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
@@ -412,17 +624,18 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00184">184</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html#l00184">184</a> of file <a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>sources/thread_base/sync/<a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>sources/thread_base/sync/<a class="el" href="../../d2/d11/sync_2error__handling_8h_source.html">error_handling.h</a></li>
+<li>sources/thread_base/synchronization/<a class="el" href="../../da/da2/synchronization_2error__handling_8h_source.html">error_handling.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 15:19:08 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 04:34:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

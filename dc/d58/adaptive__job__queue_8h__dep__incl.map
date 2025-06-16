@@ -1,5 +1,31 @@
 <map id="sources/thread_base/lockfree/queues/adaptive_job_queue.h" name="sources/thread_base/lockfree/queues/adaptive_job_queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,196,60"/>
-<area shape="rect" id="Node000002" href="$d8/d45/adaptive__job__queue_8cpp.html" title=" " alt="" coords="5,108,196,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,74,103,108,98,108,98,74"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="481,5,671,60"/>
+<area shape="rect" id="Node000002" href="$d8/d77/log__collector_8h.html" title=" " alt="" coords="224,115,373,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="492,67,352,118,350,113,490,62"/>
+<area shape="rect" id="Node000010" href="$dc/d9a/console__writer_8h.html" title=" " alt="" coords="398,115,565,155"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="544,72,501,117,498,113,540,69"/>
+<area shape="rect" id="Node000012" href="$d0/d76/file__writer_8h.html" title=" " alt="" coords="589,115,755,155"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="612,68,656,113,652,117,609,72"/>
+<area shape="rect" id="Node000014" href="$d8/d45/adaptive__job__queue_8cpp.html" title=" " alt="" coords="779,108,970,163"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="667,62,798,105,796,110,666,67"/>
+<area shape="rect" id="Node000003" href="$d7/d3c/log__collector_8cpp.html" title=" " alt="" coords="121,211,271,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,167,219,213,215,209,266,163"/>
+<area shape="rect" id="Node000004" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="295,211,486,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="329,163,374,209,370,212,325,167"/>
+<area shape="rect" id="Node000005" href="$d4/db6/logger_2core_2logger_8h.html" title=" " alt="" coords="115,299,264,339"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="335,259,234,301,232,296,333,254"/>
+<area shape="rect" id="Node000008" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="288,299,493,339"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="393,265,393,298,388,298,388,265"/>
+<area shape="rect" id="Node000009" href="$df/d32/utilities_2interface_2logger_8h.html" title=" " alt="" coords="517,299,704,339"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="452,253,563,296,562,301,450,258"/>
+<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="5,387,168,427"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="158,350,111,388,108,384,154,346"/>
+<area shape="rect" id="Node000007" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="192,387,392,427"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="224,346,271,384,268,388,221,350"/>
+<area shape="poly" id="edge10_Node000010_Node000004" title=" " alt="" coords="455,167,411,212,407,209,452,163"/>
+<area shape="rect" id="Node000011" href="$d1/d4f/console__writer_8cpp.html" title=" " alt="" coords="510,211,677,251"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="516,162,572,209,569,213,513,166"/>
+<area shape="poly" id="edge13_Node000012_Node000004" title=" " alt="" coords="603,162,448,213,447,208,601,157"/>
+<area shape="rect" id="Node000013" href="$de/d2a/file__writer_8cpp.html" title=" " alt="" coords="701,211,867,251"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="707,162,763,209,760,213,704,166"/>
 </map>

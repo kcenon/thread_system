@@ -117,7 +117,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Performance metrics structure (non-atomic for returning) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00101">101</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00100">100</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae7b1481c509b896b77e5702b88bf5876" name="ae7b1481c509b896b77e5702b88bf5876"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7b1481c509b896b77e5702b88bf5876">&#9670;&#160;</a></span>get_average_latency_ns()</h2>
@@ -143,13 +143,13 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00109">109</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  110</span>            {</div>
-<div class="line"><span class="lineno">  111</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><span class="lineno">  112</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#afbe77b458e52200f035d7c58f0de259f">total_latency_ns</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a>);</div>
-<div class="line"><span class="lineno">  113</span>            }</div>
-<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_a7d31efd3236cbf60e8b6f235d3806a50"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">thread_module::adaptive_job_queue::performance_metrics::operation_count</a></div><div class="ttdeci">uint64_t operation_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00103">adaptive_job_queue.h:103</a></div></div>
-<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_afbe77b458e52200f035d7c58f0de259f"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#afbe77b458e52200f035d7c58f0de259f">thread_module::adaptive_job_queue::performance_metrics::total_latency_ns</a></div><div class="ttdeci">uint64_t total_latency_ns</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00104">adaptive_job_queue.h:104</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00108">108</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>            {</div>
+<div class="line"><span class="lineno">  110</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><span class="lineno">  111</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#afbe77b458e52200f035d7c58f0de259f">total_latency_ns</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a>);</div>
+<div class="line"><span class="lineno">  112</span>            }</div>
+<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_a7d31efd3236cbf60e8b6f235d3806a50"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">thread_module::adaptive_job_queue::performance_metrics::operation_count</a></div><div class="ttdeci">uint64_t operation_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00102">adaptive_job_queue.h:102</a></div></div>
+<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_afbe77b458e52200f035d7c58f0de259f"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#afbe77b458e52200f035d7c58f0de259f">thread_module::adaptive_job_queue::performance_metrics::total_latency_ns</a></div><div class="ttdeci">uint64_t total_latency_ns</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00103">adaptive_job_queue.h:103</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -177,12 +177,12 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00115">115</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  116</span>            {</div>
-<div class="line"><span class="lineno">  117</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><span class="lineno">  118</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a71dd20ad9fb9d6d916bf4132a18e03ea">contention_count</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a>);</div>
-<div class="line"><span class="lineno">  119</span>            }</div>
-<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_a71dd20ad9fb9d6d916bf4132a18e03ea"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a71dd20ad9fb9d6d916bf4132a18e03ea">thread_module::adaptive_job_queue::performance_metrics::contention_count</a></div><div class="ttdeci">uint64_t contention_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00105">adaptive_job_queue.h:105</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00114">114</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>            {</div>
+<div class="line"><span class="lineno">  116</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><span class="lineno">  117</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a71dd20ad9fb9d6d916bf4132a18e03ea">contention_count</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a7d31efd3236cbf60e8b6f235d3806a50">operation_count</a>);</div>
+<div class="line"><span class="lineno">  118</span>            }</div>
+<div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1performance__metrics_html_a71dd20ad9fb9d6d916bf4132a18e03ea"><div class="ttname"><a href="../../d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html#a71dd20ad9fb9d6d916bf4132a18e03ea">thread_module::adaptive_job_queue::performance_metrics::contention_count</a></div><div class="ttdeci">uint64_t contention_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00104">adaptive_job_queue.h:104</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -199,8 +199,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00105">105</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  105</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00104">104</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -216,7 +216,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00107">107</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00106">106</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -232,8 +232,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00103">103</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  103</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00102">102</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -249,8 +249,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00106">106</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00105">105</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  105</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -266,8 +266,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00104">104</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00103">103</a> of file <a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  103</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -277,7 +277,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 15 2025 15:19:08 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 04:34:42 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
