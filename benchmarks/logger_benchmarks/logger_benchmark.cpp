@@ -43,8 +43,8 @@
 #include <locale>
 #include <codecvt>
 
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
 
 // Separate logger for test output to avoid interference with benchmark
 namespace test_output {
