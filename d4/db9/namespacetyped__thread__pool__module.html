@@ -394,7 +394,7 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Returns a vector containing all possible <code>job_types</code> values. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::vector&lt;job_types&gt;</code> with [RealTime, Batch, Background].</dd></dl>
 <p>This function is useful when iterating over all defined types (e.g. for logging, UI selection, or testing).</p>
-<h3><a class="anchor" id="autotoc_md47"></a>
+<h3><a class="anchor" id="autotoc_md46"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> type : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(type) &lt;&lt; std::endl;</div>
@@ -473,7 +473,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> containing one of "REALTIME", "BATCH", "BACKGROUND", or "UNKNOWN" if <code>job_type</code> is out of expected range.</dd></dl>
-<h3><a class="anchor" id="autotoc_md46"></a>
+<h3><a class="anchor" id="autotoc_md45"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> p = <a class="code hl_enumvalue" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216">job_types::RealTime</a>;</div>
 <div class="line">std::string_view sv = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(p); <span class="comment">// &quot;REALTIME&quot;</span></div>
@@ -490,7 +490,7 @@ Example</h3>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

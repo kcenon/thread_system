@@ -122,7 +122,7 @@ class utility_module::enum_formatter&lt; T, Converter &gt;</div><p>A generic for
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md68"></a>
+<h3><a class="anchor" id="autotoc_md67"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1) Define an enum and a corresponding converter functor:</span></div>
 <div class="line"><span class="keyword">enum class</span> color { Red, Green, Blue };</div>
@@ -141,7 +141,7 @@ Example</h3>
 <div class="line"><span class="comment">// 2) Use enum_formatter&lt;Color, color_converter&gt; to format:</span></div>
 <div class="line"><span class="comment">// e.g. std::format(&quot;Color: {}&quot;, color::Green) // -&gt; &quot;Color: Green&quot;</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00083">83</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00089">89</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af9626c0ba91789ff157b7c5d5d216b71" name="af9626c0ba91789ff157b7c5d5d216b71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9626c0ba91789ff157b7c5d5d216b71">&#9670;&#160;</a></span>do_format()</h2>
@@ -197,23 +197,23 @@ template&lt;typename CharT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of the inserted sequence. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00094">94</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   95</span>        {</div>
-<div class="line"><span class="lineno">   96</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">   97</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;CharT, wchar_t&gt;)</div>
-<div class="line"><span class="lineno">   98</span>            {</div>
-<div class="line"><span class="lineno">   99</span>                <span class="keywordflow">return</span> std::format_to(out, L<span class="stringliteral">&quot;{}&quot;</span>, Converter{}(value));</div>
-<div class="line"><span class="lineno">  100</span>            }</div>
-<div class="line"><span class="lineno">  101</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  102</span>            {</div>
-<div class="line"><span class="lineno">  103</span>                <span class="keywordflow">return</span> std::format_to(out, <span class="stringliteral">&quot;{}&quot;</span>, Converter{}(value));</div>
-<div class="line"><span class="lineno">  104</span>            }</div>
-<div class="line"><span class="lineno">  105</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  106</span>            <span class="comment">// Fallback implementation using std::to_string</span></div>
-<div class="line"><span class="lineno">  107</span>            <span class="keyword">auto</span> converted = Converter{}(value);</div>
-<div class="line"><span class="lineno">  108</span>            <span class="keywordflow">return</span> std::copy(converted.begin(), converted.end(), out);</div>
-<div class="line"><span class="lineno">  109</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  110</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00100">100</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  101</span>        {</div>
+<div class="line"><span class="lineno">  102</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;CharT, wchar_t&gt;)</div>
+<div class="line"><span class="lineno">  104</span>            {</div>
+<div class="line"><span class="lineno">  105</span>                <span class="keywordflow">return</span> std::format_to(out, L<span class="stringliteral">&quot;{}&quot;</span>, Converter{}(value));</div>
+<div class="line"><span class="lineno">  106</span>            }</div>
+<div class="line"><span class="lineno">  107</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  108</span>            {</div>
+<div class="line"><span class="lineno">  109</span>                <span class="keywordflow">return</span> std::format_to(out, <span class="stringliteral">&quot;{}&quot;</span>, Converter{}(value));</div>
+<div class="line"><span class="lineno">  110</span>            }</div>
+<div class="line"><span class="lineno">  111</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  112</span>            <span class="comment">// Fallback implementation using std::to_string</span></div>
+<div class="line"><span class="lineno">  113</span>            <span class="keyword">auto</span> converted = Converter{}(value);</div>
+<div class="line"><span class="lineno">  114</span>            <span class="keywordflow">return</span> std::copy(converted.begin(), converted.end(), out);</div>
+<div class="line"><span class="lineno">  115</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  116</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -272,12 +272,12 @@ template&lt;typename FormatContext &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of the formatted output.</dd></dl>
 <p>Internally calls the helper <code><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#af9626c0ba91789ff157b7c5d5d216b71" title="Internal helper that dispatches to std::format or {fmt} based on character type.">do_format()</a></code> to convert the enum to a string using <code>Converter</code> and then writes it. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00134">134</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  135</span>        {</div>
-<div class="line"><span class="lineno">  136</span>            <span class="keyword">using </span>char_type =</div>
-<div class="line"><span class="lineno">  137</span>                <span class="keyword">typename</span> std::iterator_traits&lt;typename FormatContext::iterator&gt;::value_type;</div>
-<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">return</span> do_format&lt;char_type&gt;(context.out(), value);</div>
-<div class="line"><span class="lineno">  139</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00140">140</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  141</span>        {</div>
+<div class="line"><span class="lineno">  142</span>            <span class="keyword">using </span>char_type =</div>
+<div class="line"><span class="lineno">  143</span>                <span class="keyword">typename</span> std::iterator_traits&lt;typename FormatContext::iterator&gt;::value_type;</div>
+<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">return</span> do_format&lt;char_type&gt;(context.out(), value);</div>
+<div class="line"><span class="lineno">  145</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,8 +317,8 @@ template&lt;typename T , typename Converter &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>context</code>.</dd></dl>
 <p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>context.begin()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00121">121</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  121</span>{ <span class="keywordflow">return</span> context.begin(); }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00127">127</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>{ <span class="keywordflow">return</span> context.begin(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -328,7 +328,7 @@ template&lt;typename T , typename Converter &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

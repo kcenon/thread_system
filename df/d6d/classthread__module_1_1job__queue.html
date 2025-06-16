@@ -215,7 +215,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md39"></a>
+<h3><a class="anchor" id="autotoc_md38"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
@@ -767,7 +767,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;contained {} jobs&quot;</span>, <a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">size</a>());</div>
 <div class="line"><span class="lineno">  170</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a0f1afe112b5ce8f8247d243e7490f706"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a0f1afe112b5ce8f8247d243e7490f706">thread_module::job_queue::size</a></div><div class="ttdeci">auto size(void) const -&gt; std::size_t</div><div class="ttdoc">Returns the current number of jobs in the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00161">job_queue.cpp:161</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00182">formatter.h:182</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -779,16 +779,6 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="436,5,623,45"/>
 <area shape="poly" title=" " alt="" coords="388,31,422,32,422,37,388,37"/>
 <area shape="poly" title=" " alt="" coords="436,19,401,19,401,14,436,14"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph" alt=""/></div>
-<map name="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a8b5f309bc1114fb8aef6115313b67f24_icgraph">
-<area shape="rect" title="Returns a string representation of this job_queue." alt="" coords="229,13,377,53"/>
-<area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="5,5,181,60"/>
-<area shape="poly" title=" " alt="" coords="215,35,182,35,182,30,215,30"/>
 </map>
 </div>
 
@@ -936,7 +926,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

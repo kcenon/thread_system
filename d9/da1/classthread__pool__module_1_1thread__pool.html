@@ -220,7 +220,7 @@ Private Attributes</h2></td></tr>
 <li>Graceful handling of thread startup, execution, and shutdown</li>
 </ul>
 <p>The thread pool is designed for scenarios where many short-lived tasks need to be executed asynchronously without creating a new thread for each task.</p>
-<h3><a class="anchor" id="autotoc_md41"></a>
+<h3><a class="anchor" id="autotoc_md40"></a>
 Design Principles</h3>
 <ul>
 <li><b>Worker Thread Model</b>: Each worker runs in its own thread, processing jobs from the shared queue.</li>
@@ -229,10 +229,10 @@ Design Principles</h3>
 <li><b>Non-Blocking Submission</b>: Adding jobs to the pool never blocks the caller thread.</li>
 <li><b>Cooperative Shutdown</b>: Workers can complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md42"></a>
+<h3><a class="anchor" id="autotoc_md41"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread. The underlying <code>job_queue</code> is also thread-safe, allowing multiple workers to dequeue jobs concurrently.</p>
-<h3><a class="anchor" id="autotoc_md43"></a>
+<h3><a class="anchor" id="autotoc_md42"></a>
 Performance Considerations</h3>
 <ul>
 <li>The number of worker threads should typically be close to the number of available CPU cores for CPU-bound tasks.</li>
@@ -780,7 +780,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  226</span> </div>
 <div class="line"><span class="lineno">  227</span>        <span class="keywordflow">return</span> format_string;</div>
 <div class="line"><span class="lineno">  228</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00287">formatter.h:287</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00293">formatter.h:293</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -924,7 +924,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

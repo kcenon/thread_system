@@ -283,7 +283,7 @@ class typed_thread_pool_module::typed_thread_pool_t&lt; job_type &gt;</div><p>A 
   </dd>
 </dl>
 <p>The <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels.">typed_thread_pool_t</a> template class provides a thread pool implementation that processes jobs according to their assigned types rather than just submission order. This allows more important work to be processed ahead of less important work, improving responsiveness for critical tasks.</p>
-<h3><a class="anchor" id="autotoc_md48"></a>
+<h3><a class="anchor" id="autotoc_md47"></a>
 Key Features</h3>
 <ul>
 <li><b>Type-Based Scheduling</b>: Jobs with higher priority are processed first.</li>
@@ -293,7 +293,7 @@ Key Features</h3>
 <li><b>Dynamic Thread Management</b>: Add/remove workers at runtime.</li>
 <li><b>Graceful Shutdown</b>: Option to complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md49"></a>
+<h3><a class="anchor" id="autotoc_md48"></a>
 Use Cases</h3>
 <ul>
 <li><b>Mixed Workloads</b>: Applications that process both critical and non-critical tasks.</li>
@@ -301,17 +301,17 @@ Use Cases</h3>
 <li><b>Resource Management</b>: Ensure important work gets resources when contention occurs.</li>
 <li><b>Service Level Guarantees</b>: Meet varying response time requirements for different request types.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md49"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread.</p>
-<h3><a class="anchor" id="autotoc_md51"></a>
+<h3><a class="anchor" id="autotoc_md50"></a>
 Performance Considerations</h3>
 <ul>
 <li>Type queue operations are more expensive than simple FIFO queues.</li>
 <li>In high-throughput scenarios with all equal-priority jobs, consider using the non-prioritized thread_pool instead for better performance.</li>
 <li>For scenarios with mixed types, this implementation can significantly improve response time for high-priority tasks.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md52"></a>
+<h3><a class="anchor" id="autotoc_md51"></a>
 Example Usage</h3>
 <div class="fragment"><div class="line"><span class="keyword">using </span>my_thread_pool = <a class="code hl_class" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t&lt;my_priority_enum&gt;</a>;</div>
 <div class="line"> </div>
@@ -434,7 +434,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md55"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
 
@@ -471,10 +471,10 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md57"></a>
+<h3><a class="anchor" id="autotoc_md56"></a>
 Note</h3>
 <p>Typically, most applications create a fixed number of workers at startup. However, if your workload changes significantly, adding more workers at runtime can help handle increased job load.</p>
-<h3><a class="anchor" id="autotoc_md58"></a>
+<h3><a class="anchor" id="autotoc_md57"></a>
 Thread Safety</h3>
 <p>This method is thread-safe. </p>
 
@@ -510,7 +510,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md56"></a>
+<h3><a class="anchor" id="autotoc_md55"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
 
@@ -547,10 +547,10 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md59"></a>
+<h3><a class="anchor" id="autotoc_md58"></a>
 Note</h3>
 <p>Typically, most applications create a fixed number of workers at startup. However, if your workload changes significantly, adding more workers at runtime can help handle increased job load.</p>
-<h3><a class="anchor" id="autotoc_md60"></a>
+<h3><a class="anchor" id="autotoc_md59"></a>
 Thread Safety</h3>
 <p>This method is thread-safe. </p>
 
@@ -576,7 +576,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 <p>Retrieves the underlying priority job queue managed by this thread pool. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;typed_job_queue_t&lt;job_type&gt;&gt; A shared pointer to the thread-safe priority job queue.</dd></dl>
-<h3><a class="anchor" id="autotoc_md54"></a>
+<h3><a class="anchor" id="autotoc_md53"></a>
 Thread Safety</h3>
 <p>This queue is shared and used by worker threads, so care should be taken if you modify or replace the queue. Typically, external code only needs to enqueue new jobs via <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#af1e50f01d4b411619b6e3aa67dd6d505" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>, rather than directly accessing the queue. </p>
 
@@ -658,7 +658,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>If no error occurs, the result will be a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md53"></a>
+<h3><a class="anchor" id="autotoc_md52"></a>
 Thread Safety</h3>
 <p>This method is typically called once, before using other methods such as <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#af1e50f01d4b411619b6e3aa67dd6d505" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>. Calling <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#ad1c83030818a61aa827fb454aec77202" title="Starts the thread pool by creating worker threads and initializing internal structures.">start()</a> multiple times without stopping is not recommended. </p>
 
@@ -694,7 +694,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md61"></a>
+<h3><a class="anchor" id="autotoc_md60"></a>
 Thread Safety</h3>
 <p>Calling <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#aed0e6df52fd731ad33b6b59a3f886821" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> from multiple threads simultaneously is safe, but redundant calls to <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#aed0e6df52fd731ad33b6b59a3f886821" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> will have no additional effect after the first. </p>
 
@@ -720,7 +720,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 <p>Generates a string representation of the thread pool's internal state. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string A human-readable string containing pool details, such as whether the pool is running, the thread title, and potentially the number of workers.</dd></dl>
-<h3><a class="anchor" id="autotoc_md62"></a>
+<h3><a class="anchor" id="autotoc_md61"></a>
 Example</h3>
 <div class="fragment"><div class="line">std::cout &lt;&lt; pool.to_string() &lt;&lt; std::endl;</div>
 <div class="line"><span class="comment">// Output might look like:</span></div>
@@ -858,7 +858,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

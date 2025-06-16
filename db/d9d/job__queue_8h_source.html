@@ -119,7 +119,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/core/formatter.h&quot;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="../../db/ddd/callback__job_8h.html">callback_job.h</a>&quot;</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;../../utilities/conversion/convert_string.h&quot;</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;../synchronization/error_handling.h&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;../sync/error_handling.h&quot;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;deque&gt;</span></div>
@@ -209,19 +209,17 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>};</div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="preprocessor">#else  </span><span class="comment">// USE_STD_FORMAT</span></div>
 <div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
-<div class="foldopen" id="foldopen00314" data-start="{" data-end="};">
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html">  314</a></span><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;<a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>::job_queue&gt; : fmt::formatter&lt;std::string_view&gt;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>{</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="foldopen" id="foldopen00324" data-start="{" data-end="}">
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29">  324</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a>&amp; item, FormatContext&amp; ctx)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">to_string</a>(), ctx);</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    }</div>
-</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>};</div>
-</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="preprocessor">#endif </span><span class="comment">// USE_STD_FORMAT</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="preprocessor">#if defined(HAS_FMT_LIBRARY) &amp;&amp; HAS_FMT_LIBRARY</span></div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;<a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>::job_queue&gt; : fmt::formatter&lt;std::string_view&gt;</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>{</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    <span class="keyword">auto</span> format(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a>&amp; item, FormatContext&amp; ctx)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">to_string</a>(), ctx);</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    }</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>};</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="preprocessor">#endif </span><span class="comment">// USE_STD_FORMAT</span></div>
 <div class="ttc" id="acallback__job_8h_html"><div class="ttname"><a href="../../db/ddd/callback__job_8h.html">callback_job.h</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a01a57bbafa000d3f8515784e1b9e67f5"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">thread_module::job_queue::empty</a></div><div class="ttdeci">auto empty(void) const -&gt; bool</div><div class="ttdoc">Checks if the queue is currently empty.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00145">job_queue.cpp:145</a></div></div>
@@ -249,11 +247,10 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="ajob_8h_html"><div class="ttname"><a href="../../d3/d6a/job_8h.html">job.h</a></div></div>
 <div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00043">thread_base.cpp:44</a></div></div>
 <div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00045">convert_string.cpp:46</a></div></div>
-<div class="ttc" id="astructfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4_html_abf5af410db80a96817ebabaf78dd4b29"><div class="ttname"><a href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29">fmt::formatter&lt; thread_module::job_queue &gt;::format</a></div><div class="ttdeci">auto format(const thread_module::job_queue &amp;item, FormatContext &amp;ctx) const</div><div class="ttdoc">Formats a job_queue object as a string using {fmt}.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00324">job_queue.h:324</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:35 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

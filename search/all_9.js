@@ -6,7 +6,7 @@ var searchData=
   ['idle_5fthreads_3',['idle_threads',['../d8/deb/structmonitoring__module_1_1thread__pool__metrics.html#a81f82b7d494a439e51208e68f9899bf2',1,'monitoring_module::thread_pool_metrics']]],
   ['idle_5ftime_5fns_4',['idle_time_ns',['../de/d48/structmonitoring__module_1_1worker__metrics.html#a976c1652e15ed5f477340a01142fb2ef',1,'monitoring_module::worker_metrics']]],
   ['idle_5ftimeout_5',['idle_timeout',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a5c18c5ec0c0421e966726426cf677afd',1,'thread_pool_module::worker_policy']]],
-  ['implementation_20detail_6',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md35',1,'']]],
+  ['implementation_20detail_6',['Implementation Detail',['../d8/d42/classthread__module_1_1job.html#autotoc_md34',1,'']]],
   ['include_5flevel_7',['include_level',['../da/dd8/structlog__module_1_1format__options.html#aed362bd34bc2eabc20ad471786db4c59',1,'log_module::format_options']]],
   ['include_5flogger_5fname_8',['include_logger_name',['../da/dd8/structlog__module_1_1format__options.html#a1ab7a212ba4d7dc5a763970ca07d43ea',1,'log_module::format_options']]],
   ['include_5fsource_5flocation_9',['include_source_location',['../da/dd8/structlog__module_1_1format__options.html#ab539b9038ef2a3c265eeaaf1cf7cb110',1,'log_module::format_options']]],

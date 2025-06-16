@@ -314,7 +314,7 @@ class typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</div><p>
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md63"></a>
+<h3><a class="anchor" id="autotoc_md62"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"> <span class="keyword">auto</span> worker = std::make_shared&lt;typed_thread_worker_t&lt;job_types&gt;&gt;(</div>
 <div class="line">     std::vector&lt;job_types&gt;{job_types::HIGH, job_types::MEDIUM},</div>
@@ -335,7 +335,7 @@ Usage Example</h3>
 <div class="line">  <span class="comment">// Stop and join the worker once done</span></div>
 <div class="line">*worker-&gt;stop();</div>
 <div class="line">*worker-&gt;join();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md64"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md63"></a>
 Thread Safety</h3>
 <p>The worker is designed to run its own thread that continuously checks the queue for new jobs. Any shared data structures should be either thread-safe or externally synchronized.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base</a> </dd>
@@ -635,7 +635,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 05:14:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
