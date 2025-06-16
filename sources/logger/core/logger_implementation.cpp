@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "logger_implementation.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 
 #include <fstream>
 #include <chrono>

@@ -40,9 +40,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../writers/console_writer.h"
 #include "../writers/file_writer.h"
 #include "../writers/callback_writer.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 #include "../detail/forward_declarations.h"
-#include "config.h"
+#include "configuration.h"
 
 #include <deque>
 #include <mutex>

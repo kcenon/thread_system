@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "monitoring_types.h"
 #include "../storage/ring_buffer.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 
 #include <memory>
 #include <thread>

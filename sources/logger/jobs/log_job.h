@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../thread_base/jobs/job.h"
 #include "../types/log_types.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 #include "../detail/forward_declarations.h"
 
 #include <chrono>

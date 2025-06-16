@@ -40,7 +40,7 @@
  */
 
 #include "../detail/forward_declarations.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 #include <future>
 #include <memory>
 #include <chrono>

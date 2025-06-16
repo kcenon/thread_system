@@ -41,8 +41,8 @@
 
 #include "../detail/forward_declarations.h"
 #include "../types/log_types.h"
-#include "../core/config.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../core/configuration.h"
+#include "../../thread_base/synchronization/error_handling.h"
 #include <string>
 #include <memory>
 

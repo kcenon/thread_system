@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "logger_implementation.h"
 #include "../detail/forward_declarations.h"
-#include "config.h"
+#include "configuration.h"
 
 /**
  * @namespace log_module

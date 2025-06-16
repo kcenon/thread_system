@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 /**
- * @file config.h
+ * @file configuration.h
  * @brief Central configuration for logger module
  * 
  * This file contains compile-time configuration constants and default values

@@ -37,7 +37,7 @@
  */
 
 #include "../core/thread_pool.h"
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 #include "../detail/forward_declarations.h"
 #include "pool_factory.h"
 

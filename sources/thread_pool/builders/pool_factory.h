@@ -40,7 +40,7 @@
  */
 
 #include "../detail/forward_declarations.h"
-#include "../core/config.h"
+#include "../core/configuration.h"
 #include "../workers/worker_policy.h"
 #include <memory>
 #include <string>

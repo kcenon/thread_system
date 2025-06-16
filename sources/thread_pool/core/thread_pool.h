@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../workers/thread_worker.h"
 #include "../../utilities/conversion/convert_string.h"
 #include "../detail/forward_declarations.h"
-#include "config.h"
+#include "configuration.h"
 
 #include <tuple>
 #include <string>

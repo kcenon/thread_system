@@ -40,7 +40,7 @@
  */
 
 #include "../detail/forward_declarations.h"
-#include "../core/config.h"
+#include "../core/configuration.h"
 #include "../core/job_types.h"
 #include <memory>
 #include <vector>

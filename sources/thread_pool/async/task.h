@@ -45,7 +45,7 @@
  * @copyright BSD-3-Clause
  */
 
-#include "../../thread_base/sync/error_handling.h"
+#include "../../thread_base/synchronization/error_handling.h"
 
 #include <exception>
 #include <future>

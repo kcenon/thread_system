@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../utilities/core/formatter.h"
 #include "callback_job.h"
 #include "../../utilities/conversion/convert_string.h"
-#include "../sync/error_handling.h"
+#include "../synchronization/error_handling.h"
 
 #include <mutex>
 #include <deque>
