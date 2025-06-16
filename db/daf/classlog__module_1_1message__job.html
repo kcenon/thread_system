@@ -216,13 +216,14 @@ Additional Inherited Members</h2></td></tr>
 <p>This class encapsulates the functionality for creating and executing console logging operations as jobs within a job system (e.g., a thread pool). It primarily handles the process of writing log messages to standard output, making it easier to manage logging in a multi-threaded environment.</p>
 <p>Example usage: </p><div class="fragment"><div class="line"><span class="comment">// Create a message_job instance</span></div>
 <div class="line"><span class="keyword">auto</span> my_log_job = std::make_shared&lt;message_job&gt;(</div>
-<div class="line">    log_types::info,</div>
+<div class="line">    <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">log_types::Information</a>,</div>
 <div class="line">    <span class="stringliteral">&quot;2025-02-14 10:00:00&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;This is an informational message.&quot;</span></div>
 <div class="line">);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Submit the job to a job system or thread pool</span></div>
 <div class="line">job_system.submit(my_log_job);</div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709aa82be0f551b8708bc08eb33cd9ded0cf">log_module::log_types::Information</a></div><div class="ttdeci">@ Information</div><div class="ttdoc">General informational log message.</div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../db/dd4/message__job_8h_source.html#l00073">73</a> of file <a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -276,8 +277,9 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_class" href="../../db/daf/classlog__module_1_1message__job.html">message_job</a> my_job(log_types::warning, <span class="stringliteral">&quot;2025-02-14 10:00:00&quot;</span>, <span class="stringliteral">&quot;Background disk space!&quot;</span>);</div>
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_class" href="../../db/daf/classlog__module_1_1message__job.html">message_job</a> my_job(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">log_types::Error</a>, <span class="stringliteral">&quot;2025-02-14 10:00:00&quot;</span>, <span class="stringliteral">&quot;Background disk space!&quot;</span>);</div>
 <div class="ttc" id="aclasslog__module_1_1message__job_html"><div class="ttname"><a href="../../db/daf/classlog__module_1_1message__job.html">log_module::message_job</a></div><div class="ttdoc">Represents a console logging job derived from the base job class.</div><div class="ttdef"><b>Definition</b> <a href="../../db/dd4/message__job_8h_source.html#l00073">message_job.h:74</a></div></div>
+<div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a902b0d55fddef6f8d651fe1035b7d4bd">log_module::log_types::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdoc">Represents an error-level log message.</div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d1/d69/message__job_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   44</span>        : <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;message_job&quot;</span>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a9eebf26e75c7591b6d50e32be154c5d1">datetime_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#adab3f496883d8719f045db31096d53bc">datetime</a>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a466e219e731d30e2b116dd4e8c074ed6">message_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a">message</a>), <a class="code hl_variable" href="../../db/daf/classlog__module_1_1message__job.html#a1e4f188b475b57d7a1343fb17d6deb28">log_type_</a>(<a class="code hl_function" href="../../db/daf/classlog__module_1_1message__job.html#a92815d798d6dbffc42dc166e65e5fc78">log_type</a>)</div>
@@ -532,7 +534,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 06:34:36 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 16 2025 07:34:04 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
