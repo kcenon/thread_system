@@ -23,8 +23,40 @@ function(check_compiler_version)
         if(MINGW)
             message(STATUS "MinGW detected - applying compatibility settings")
             add_definitions(-D__MINGW32__)
-            # MinGW often needs explicit std library linking
-            set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lstdc++fs")
+            
+            # Check if filesystem library is needed for MinGW
+            include(CheckCXXSourceCompiles)
+            set(CMAKE_REQUIRED_FLAGS "-std=c++17")
+            check_cxx_source_compiles("
+                #include <filesystem>
+                int main() {
+                    std::filesystem::path p(\"/tmp\");
+                    return std::filesystem::exists(p) ? 0 : 1;
+                }
+            " MINGW_HAS_FILESYSTEM_WITHOUT_LINK)
+            
+            if(NOT MINGW_HAS_FILESYSTEM_WITHOUT_LINK)
+                # Try with explicit filesystem library
+                set(CMAKE_REQUIRED_LIBRARIES "stdc++fs")
+                check_cxx_source_compiles("
+                    #include <filesystem>
+                    int main() {
+                        std::filesystem::path p(\"/tmp\");
+                        return std::filesystem::exists(p) ? 0 : 1;
+                    }
+                " MINGW_HAS_FILESYSTEM_WITH_LINK)
+                
+                if(MINGW_HAS_FILESYSTEM_WITH_LINK)
+                    message(STATUS "MinGW requires explicit filesystem library linking")
+                    set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lstdc++fs")
+                else()
+                    message(WARNING "MinGW filesystem support could not be verified")
+                endif()
+                unset(CMAKE_REQUIRED_LIBRARIES)
+            else()
+                message(STATUS "MinGW has built-in filesystem support")
+            endif()
+            unset(CMAKE_REQUIRED_FLAGS)
         endif()
         
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -212,7 +244,12 @@ function(configure_platform_settings)
     
     # Linux-specific settings
     if(UNIX AND NOT APPLE)
-        add_definitions(-D_GNU_SOURCE)  # Enable GNU extensions
+        # Only define _GNU_SOURCE if we need specific GNU extensions
+        # This improves portability by not relying on non-standard features
+        # add_definitions(-D_GNU_SOURCE)  # Commented out for better portability
+        
+        # Add POSIX compliance level for better portability
+        add_definitions(-D_POSIX_C_SOURCE=200809L)
     endif()
     
     # macOS-specific settings

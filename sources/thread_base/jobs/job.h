@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
+// formatter.h removed to avoid dependency on fmt library in basic compilation
 #include "../../utilities/conversion/convert_string.h"
-#include "../synchronization/error_handling.h"
-#include "../synchronization/cancellation_token.h"
+#include "../sync/error_handling.h"
+#include "../sync/cancellation_token.h"
 
 #include <tuple>
 #include <memory>
@@ -351,7 +351,7 @@ struct std::formatter<thread_module::job, wchar_t> : std::formatter<std::wstring
 	}
 };
 
-#else  // USE_STD_FORMAT
+#elif defined(HAS_FMT_LIBRARY) && HAS_FMT_LIBRARY
 
 /**
  * @brief Specialization of fmt::formatter for @c thread_module::job.
@@ -365,6 +365,7 @@ struct std::formatter<thread_module::job, wchar_t> : std::formatter<std::wstring
  * std::string output = fmt::format("Job info: {}", *my_job_ptr); // calls to_string()
  * @endcode
  */
+#if defined(HAS_FMT_LIBRARY) && HAS_FMT_LIBRARY
 template <> struct fmt::formatter<thread_module::job> : fmt::formatter<std::string_view>
 {
 	/**
@@ -381,4 +382,5 @@ template <> struct fmt::formatter<thread_module::job> : fmt::formatter<std::stri
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
+#endif
 #endif // USE_STD_FORMAT

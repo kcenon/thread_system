@@ -94,12 +94,13 @@ namespace log_module {
      */
     constexpr const char* get_level_color(log_types level) {
         switch (level) {
-            case log_types::trace: return colors::dim;
-            case log_types::debug: return colors::cyan;
-            case log_types::info: return colors::green;
-            case log_types::warn: return colors::yellow;
-            case log_types::error: return colors::red;
-            case log_types::fatal: return colors::bright_red;
+            case log_types::Debug: return colors::cyan;
+            case log_types::Information: return colors::green;
+            case log_types::Error: return colors::red;
+            case log_types::Exception: return colors::bright_red;
+            case log_types::Sequence: return colors::blue;
+            case log_types::Parameter: return colors::magenta;
+            case log_types::None: return colors::dim;
             default: return colors::reset;
         }
     }

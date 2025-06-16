@@ -294,16 +294,14 @@ namespace thread_module
 	auto lockfree_mpmc_queue::to_string() const -> std::string
 	{
 		auto stats = get_statistics();
-		return formatter::format(
-			"lockfree_mpmc_queue[size={}, enqueued={}, dequeued={}, "
-			"avg_enqueue_latency={:.1f}ns, avg_dequeue_latency={:.1f}ns, retries={}]",
-			stats.current_size,
-			stats.enqueue_count,
-			stats.dequeue_count,
-			stats.get_average_enqueue_latency_ns(),
-			stats.get_average_dequeue_latency_ns(),
-			stats.retry_count
-		);
+		std::ostringstream oss;
+		oss << "lockfree_mpmc_queue[size=" << stats.current_size 
+			<< ", enqueued=" << stats.enqueue_count 
+			<< ", dequeued=" << stats.dequeue_count 
+			<< ", avg_enqueue_latency=" << std::fixed << std::setprecision(1) << stats.get_average_enqueue_latency_ns() << "ns"
+			<< ", avg_dequeue_latency=" << std::fixed << std::setprecision(1) << stats.get_average_dequeue_latency_ns() << "ns"
+			<< ", retries=" << stats.retry_count << "]";
+		return oss.str();
 	}
 	
 	// Private implementation methods

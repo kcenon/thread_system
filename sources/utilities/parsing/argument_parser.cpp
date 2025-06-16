@@ -88,17 +88,15 @@ namespace utility_module
 		return to_numeric<unsigned int>(key);
 	}
 
-#ifdef _WIN32
-	auto argument_manager::to_llong(std::string_view key) const -> std::optional<long long>
+	auto argument_manager::to_int64(std::string_view key) const -> std::optional<int64_t>
 	{
-		return to_numeric<long long>(key);
+		return to_numeric<int64_t>(key);
 	}
-#else
-	auto argument_manager::to_long(std::string_view key) const -> std::optional<long>
+
+	auto argument_manager::to_uint64(std::string_view key) const -> std::optional<uint64_t>
 	{
-		return to_numeric<long>(key);
+		return to_numeric<uint64_t>(key);
 	}
-#endif
 
 	template <typename NumericType>
 	auto argument_manager::to_numeric(std::string_view key) const -> std::optional<NumericType>
@@ -324,3 +322,4 @@ namespace utility_module
 													   wchar_t*[]) -> std::optional<std::string>;
 
 } // namespace utility_module
+

@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../thread_base/jobs/job.h"
 #include "../types/log_types.h"
-#include "../../thread_base/synchronization/error_handling.h"
+#include "../../thread_base/sync/error_handling.h"
 #include "../detail/forward_declarations.h"
 
 #include <chrono>
@@ -61,7 +61,7 @@ namespace log_module
 	 * @code
 	 * // Create a message_job instance
 	 * auto my_log_job = std::make_shared<message_job>(
-	 *     log_types::info,
+	 *     log_types::Information,
 	 *     "2025-02-14 10:00:00",
 	 *     "This is an informational message."
 	 * );
@@ -86,7 +86,7 @@ namespace log_module
 		 *
 		 * Example:
 		 * @code
-		 * message_job my_job(log_types::warning, "2025-02-14 10:00:00", "Background disk space!");
+		 * message_job my_job(log_types::Error, "2025-02-14 10:00:00", "Background disk space!");
 		 * @endcode
 		 */
 		explicit message_job(const log_types& log_type,

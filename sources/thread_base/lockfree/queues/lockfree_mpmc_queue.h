@@ -35,7 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../jobs/job_queue.h"
 #include "../memory/hazard_pointer.h"
 #include "../memory/node_pool.h"
-#include "../../utilities/core/formatter.h"
+#include "../../sync/error_handling.h"
+#include <sstream>
+#include <iomanip>
 
 #include <atomic>
 #include <memory>

@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../utilities/core/formatter.h"
 #include "callback_job.h"
 #include "../../utilities/conversion/convert_string.h"
-#include "../synchronization/error_handling.h"
+#include "../sync/error_handling.h"
 
 #include <mutex>
 #include <deque>
@@ -311,6 +311,7 @@ struct std::formatter<thread_module::job_queue, wchar_t>
  * std::string output = fmt::format("Queue state: {}", *queue_ptr);
  * @endcode
  */
+#if defined(HAS_FMT_LIBRARY) && HAS_FMT_LIBRARY
 template <> struct fmt::formatter<thread_module::job_queue> : fmt::formatter<std::string_view>
 {
 	/**
@@ -326,4 +327,5 @@ template <> struct fmt::formatter<thread_module::job_queue> : fmt::formatter<std
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
+#endif
 #endif // USE_STD_FORMAT

@@ -39,8 +39,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
-// Use fmt library as fallback when std::format is not available
+// Try to use fmt library as fallback when std::format is not available
+// If fmt is not available either, use basic string stream implementation
+#if __has_include(<fmt/format.h>)
 #include <fmt/format.h>
+#define HAS_FMT_LIBRARY 1
+#else
+#define HAS_FMT_LIBRARY 0
+#endif
 #include <sstream>
 #include <iomanip>
 #endif
@@ -319,3 +325,4 @@ namespace utility_module
 		}
 	};
 } // namespace utility_module
+

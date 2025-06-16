@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <benchmark/benchmark.h>
-#include "job_queue.h"
-#include "lockfree/lockfree_mpmc_queue.h"
-#include "lockfree/adaptive_job_queue.h"
-#include "callback_job.h"
+#include "../../sources/thread_base/jobs/job_queue.h"
+#include "../../sources/thread_base/lockfree/queues/lockfree_mpmc_queue.h"
+#include "../../sources/thread_base/lockfree/queues/adaptive_job_queue.h"
+#include "../../sources/thread_base/jobs/callback_job.h"
 #include <thread>
 #include <vector>
 #include <atomic>

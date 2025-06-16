@@ -166,8 +166,8 @@ TEST_F(ArgumentManagerTest, ToBool)
 TEST_F(ArgumentManagerTest, ToNumericTypes)
 {
 	const std::vector<std::string> test_cases
-		= { "--int 42 --uint 100 --short -30 --ushort 50 --long 1000000",
-			"program --int 42 --uint 100 --short -30 --ushort 50 --long 1000000" };
+		= { "--int 42 --uint 100 --short -30 --ushort 50 --long 1000000 --ulong 18446744073709551615",
+			"program --int 42 --uint 100 --short -30 --ushort 50 --long 1000000 --ulong 18446744073709551615" };
 
 	for (const auto& test_case : test_cases)
 	{
@@ -182,11 +182,8 @@ TEST_F(ArgumentManagerTest, ToNumericTypes)
 		EXPECT_EQ(manager.to_uint("--uint"), 100u);
 		EXPECT_EQ(manager.to_short("--short"), static_cast<short>(-30));
 		EXPECT_EQ(manager.to_ushort("--ushort"), static_cast<unsigned short>(50));
-#ifdef _WIN32
-		EXPECT_EQ(manager.to_llong("--long"), 1000000ll);
-#else
-		EXPECT_EQ(manager.to_long("--long"), 1000000l);
-#endif
+		EXPECT_EQ(manager.to_int64("--long"), static_cast<int64_t>(1000000));
+		EXPECT_EQ(manager.to_uint64("--ulong"), static_cast<uint64_t>(18446744073709551615ULL));
 	}
 }
 

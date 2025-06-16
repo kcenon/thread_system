@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tuple>
 #include <string_view>
 #include <vector>
+#include <cstdint>
 
 namespace utility_module
 {
@@ -200,21 +201,21 @@ namespace utility_module
 		 */
 		auto to_uint(std::string_view key) const -> std::optional<unsigned int>;
 
-#ifdef _WIN32
 		/**
-		 * @brief Retrieves the value of an argument as a @c long long (Windows only).
+		 * @brief Retrieves the value of an argument as a 64-bit signed integer.
 		 * @param key The argument key (e.g., "`--large-value`").
-		 * @return @c std::optional<long long> if successfully converted, otherwise @c std::nullopt.
+		 * @return @c std::optional<int64_t> if successfully converted, otherwise @c std::nullopt.
+		 * @note This provides consistent behavior across all platforms.
 		 */
-		auto to_llong(std::string_view key) const -> std::optional<long long>;
-#else
+		auto to_int64(std::string_view key) const -> std::optional<int64_t>;
+
 		/**
-		 * @brief Retrieves the value of an argument as a @c long (non-Windows platforms).
+		 * @brief Retrieves the value of an argument as a 64-bit unsigned integer.
 		 * @param key The argument key (e.g., "`--large-value`").
-		 * @return @c std::optional<long> if successfully converted, otherwise @c std::nullopt.
+		 * @return @c std::optional<uint64_t> if successfully converted, otherwise @c std::nullopt.
+		 * @note This provides consistent behavior across all platforms.
 		 */
-		auto to_long(std::string_view key) const -> std::optional<long>;
-#endif
+		auto to_uint64(std::string_view key) const -> std::optional<uint64_t>;
 
 	private:
 		/**

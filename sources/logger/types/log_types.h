@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../utilities/core/formatter.h"
-#include "../utilities/conversion/convert_string.h"
+#include "../../utilities/core/formatter.h"
+#include "../../utilities/conversion/convert_string.h"
 
 #include <string>
 #include <array>
@@ -170,6 +170,7 @@ struct std::formatter<log_module::log_types, wchar_t> : std::formatter<std::wstr
  * Allows @ref log_module::log_types values to be formatted as strings using
  * the {fmt} library.
  */
+#if defined(HAS_FMT_LIBRARY) && HAS_FMT_LIBRARY
 template <> struct fmt::formatter<log_module::log_types> : fmt::formatter<std::string_view>
 {
 	/**
@@ -186,6 +187,7 @@ template <> struct fmt::formatter<log_module::log_types> : fmt::formatter<std::s
 		return fmt::formatter<std::string_view>::format(log_module::to_string(log_type), ctx);
 	}
 };
+#endif
 
 /**
  * @brief Specialization of fmt::formatter for wide-character @ref log_module::log_types.

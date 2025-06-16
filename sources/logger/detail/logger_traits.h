@@ -176,7 +176,7 @@ namespace log_module::detail {
      */
     template<log_types Level>
     struct validate_log_level {
-        static_assert(Level >= log_types::trace && Level <= log_types::fatal,
+        static_assert(Level >= log_types::None && Level <= log_types::Parameter,
                      "Invalid log level");
         static constexpr bool value = true;
     };

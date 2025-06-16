@@ -272,8 +272,12 @@ namespace utility_module
 	auto convert_string::get_system_code_page() -> int
 	{
 #ifdef _WIN32
-		return static_cast<int>(GetACP());
+		// On Windows, prefer UTF-8 if available (Windows 10 1903+)
+		// Fall back to system code page if UTF-8 is not the active code page
+		auto acp = static_cast<int>(GetACP());
+		return (acp == 65001) ? 65001 : acp;
 #else
+		// On Unix-like systems, default to UTF-8
 		return 65001;
 #endif
 	}

@@ -90,20 +90,29 @@ check_cpp_stdlib_features()
 # Platform-Specific Threading Configuration
 ##################################################
 
-# Handle threading differently for macOS vs other platforms
+# Handle threading configuration across all platforms
+set(THREADS_PREFER_PTHREAD_FLAG ON)       # Prefer using -pthread flag when available
+find_package(Threads REQUIRED)            # Find threading library
+
+# Platform-specific threading adjustments
 if(APPLE)
-  # On macOS, we handle pthread differently
+  # On macOS, we need special handling
   add_definitions(-DHAVE_PTHREAD)           # Define that we have pthread support
   add_definitions(-DAPPLE_PLATFORM)         # Define that we're on Apple platform
   
-  # Set thread-related variables without adding explicit link flags
-  set(THREADS_FOUND TRUE)
-  set(CMAKE_HAVE_THREADS_LIBRARY 1)
-  set(Threads_FOUND TRUE)
+  # macOS includes pthread in system libraries, no explicit linking needed
+  # But we still use the Threads::Threads target for consistency
+  message(STATUS "macOS platform detected - pthread is part of system libraries")
+elseif(WIN32)
+  # Windows uses different threading model
+  if(THREADS_HAVE_PTHREAD_ARG)
+    add_definitions(-DHAVE_PTHREAD)
+  endif()
 else()
-  # On other platforms, use CMake's thread package finder
-  set(THREADS_PREFER_PTHREAD_FLAG ON)       # Prefer using -pthread flag when available
-  find_package(Threads REQUIRED)            # Find threading library
+  # Linux and other Unix-like systems
+  if(CMAKE_USE_PTHREADS_INIT)
+    add_definitions(-DHAVE_PTHREAD)
+  endif()
 endif()
 
 ##################################################

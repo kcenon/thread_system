@@ -55,7 +55,7 @@ namespace log_module {
      * format and output a log message.
      */
     struct log_message {
-        log_types level = log_types::info;
+        log_types level = log_types::Information;
         std::string content;
         std::chrono::system_clock::time_point timestamp = std::chrono::system_clock::now();
         std::thread::id thread_id = std::this_thread::get_id();
@@ -233,15 +233,16 @@ namespace log_module {
      */
     constexpr message_priority to_priority(log_types level) {
         switch (level) {
-            case log_types::trace:
-            case log_types::debug:
+            case log_types::Debug:
+            case log_types::Sequence:
+            case log_types::Parameter:
                 return message_priority::low;
-            case log_types::info:
-            case log_types::warn:
+            case log_types::Information:
+            case log_types::None:
                 return message_priority::normal;
-            case log_types::error:
+            case log_types::Error:
                 return message_priority::high;
-            case log_types::fatal:
+            case log_types::Exception:
                 return message_priority::critical;
             default:
                 return message_priority::normal;

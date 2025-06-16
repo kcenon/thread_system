@@ -74,5 +74,5 @@ auto job::get_cancellation_token() const -> cancellation_token {
 
 	auto job::get_job_queue(void) const -> std::shared_ptr<job_queue> { return job_queue_.lock(); }
 
-	auto job::to_string(void) const -> std::string { return formatter::format("job: {}", name_); }
+	auto job::to_string(void) const -> std::string { return "job: " + name_; }
 } // namespace thread_module
