@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../types/log_types.h"
 #include "../../utilities/core/formatter.h"
 #include "../../thread_base/jobs/job_queue.h"
+#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 #include "../../thread_base/core/thread_base.h"
 #include "../jobs/message_job.h"
 #include "../detail/forward_declarations.h"

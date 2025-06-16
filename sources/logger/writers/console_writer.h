@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "../../thread_base/jobs/job_queue.h"
+#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 #include "../../thread_base/core/thread_base.h"
 #include "base_writer.h"
 #include "../detail/forward_declarations.h"
@@ -62,6 +63,12 @@ namespace log_module
 		 * directing their output to the console in a safe and orderly manner.
 		 */
 		console_writer(void);
+
+		/**
+		 * @brief Constructs a console_writer with a specific queue strategy.
+		 * @param strategy The queue strategy to use for the adaptive job queue.
+		 */
+		explicit console_writer(adaptive_job_queue::queue_strategy strategy);
 
 		/**
 		 * @brief Retrieves the @c job_queue used for console logging.
@@ -125,5 +132,10 @@ namespace log_module
 		 * needed to format and print a message to the console.
 		 */
 		std::shared_ptr<job_queue> job_queue_;
+
+		/**
+		 * @brief Queue strategy for adaptive job queue.
+		 */
+		adaptive_job_queue::queue_strategy queue_strategy_;
 	};
 } // namespace log_module

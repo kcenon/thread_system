@@ -47,7 +47,16 @@ using namespace thread_module;
 namespace log_module
 {
 	console_writer::console_writer(void)
-		: thread_base("console_writer"), job_queue_(std::make_shared<job_queue>())
+		: thread_base("console_writer")
+		, job_queue_(std::make_shared<adaptive_job_queue>(adaptive_job_queue::queue_strategy::ADAPTIVE))
+		, queue_strategy_(adaptive_job_queue::queue_strategy::ADAPTIVE)
+	{
+	}
+
+	console_writer::console_writer(adaptive_job_queue::queue_strategy strategy)
+		: thread_base("console_writer")
+		, job_queue_(std::make_shared<adaptive_job_queue>(strategy))
+		, queue_strategy_(strategy)
 	{
 	}
 

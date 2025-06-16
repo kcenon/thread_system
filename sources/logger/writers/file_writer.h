@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../types/log_types.h"
 #include "../../thread_base/jobs/job_queue.h"
+#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 #include "../../thread_base/core/thread_base.h"
 #include "base_writer.h"
 #include "../detail/forward_declarations.h"
@@ -63,6 +64,12 @@ namespace log_module
 		 * Initializes the underlying job queue and default file writing settings.
 		 */
 		file_writer(void);
+
+		/**
+		 * @brief Constructs a file_writer with a specific queue strategy.
+		 * @param strategy The queue strategy to use for the adaptive job queue.
+		 */
+		explicit file_writer(adaptive_job_queue::queue_strategy strategy);
 
 		/**
 		 * @brief Sets the log file title.
@@ -217,5 +224,7 @@ namespace log_module
 		std::unique_ptr<std::fstream> backup_file_; ///< File handle for the backup log file.
 
 		std::shared_ptr<job_queue> job_queue_;      ///< Queue for log tasks to write to the file.
+
+		adaptive_job_queue::queue_strategy queue_strategy_; ///< Queue strategy for adaptive job queue.
 	};
 } // namespace log_module

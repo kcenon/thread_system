@@ -41,7 +41,7 @@ namespace log_module
 		, file_log_type_(log_types::None)
 		, console_log_type_(log_types::None)
 		, callback_log_type_(log_types::None)
-		, log_queue_(std::make_shared<job_queue>())
+		, log_queue_(std::make_shared<adaptive_job_queue>(adaptive_job_queue::queue_strategy::ADAPTIVE))
 	{
 	}
 

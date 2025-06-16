@@ -51,7 +51,21 @@ namespace log_module
 		, max_lines_(0)
 		, log_file_(nullptr)
 		, backup_file_(nullptr)
-		, job_queue_(std::make_shared<job_queue>())
+		, job_queue_(std::make_shared<adaptive_job_queue>(adaptive_job_queue::queue_strategy::ADAPTIVE))
+		, queue_strategy_(adaptive_job_queue::queue_strategy::ADAPTIVE)
+	{
+	}
+
+	file_writer::file_writer(adaptive_job_queue::queue_strategy strategy)
+		: thread_base("file_writer")
+		, title_("log")
+		, use_backup_(false)
+		, file_target_(log_types::None)
+		, max_lines_(0)
+		, log_file_(nullptr)
+		, backup_file_(nullptr)
+		, job_queue_(std::make_shared<adaptive_job_queue>(strategy))
+		, queue_strategy_(strategy)
 	{
 	}
 

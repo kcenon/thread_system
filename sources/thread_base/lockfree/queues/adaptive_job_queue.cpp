@@ -244,7 +244,7 @@ namespace thread_module
 			break;
 		}
 		
-		log_module::write_information("Adaptive queue initialized with strategy: %s", get_current_type().c_str());
+		// Adaptive queue initialized with strategy (logging removed to avoid circular dependency)
 	}
 	
 	auto adaptive_job_queue::start_performance_monitor() -> void
@@ -299,7 +299,7 @@ namespace thread_module
 	
 	auto adaptive_job_queue::migrate_to_lockfree() -> void
 	{
-		log_module::write_information("Migrating from mutex-based to lock-free queue");
+		// Migrating from mutex-based to lock-free queue (logging removed to avoid circular dependency)
 		
 		// Drain legacy queue into lock-free queue
 		while (auto job_result = legacy_queue_->dequeue()) {
@@ -317,7 +317,7 @@ namespace thread_module
 	
 	auto adaptive_job_queue::migrate_to_legacy() -> void
 	{
-		log_module::write_information("Migrating from lock-free to mutex-based queue");
+		// Migrating from lock-free to mutex-based queue (logging removed to avoid circular dependency)
 		
 		// Drain lock-free queue into legacy queue
 		auto jobs = mpmc_queue_->dequeue_batch();
