@@ -42,9 +42,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <shared_mutex>
 #include <memory>
 #include <vector>
+#include <optional>
+#include <algorithm>
 
 namespace typed_thread_pool_module
 {
+	/**
+	 * @struct typed_queue_statistics
+	 * @brief Statistics for typed lock-free job queue performance
+	 */
+	template<typename job_type = job_types>
+	struct typed_queue_statistics_t
+	{
+		uint64_t total_enqueues{0};
+		uint64_t total_dequeues{0};
+		uint64_t type_switch_count{0};
+		uint64_t enqueue_latency_ns{0};
+		uint64_t dequeue_latency_ns{0};
+		std::unordered_map<job_type, uint64_t> per_type_enqueues;
+		std::unordered_map<job_type, uint64_t> per_type_dequeues;
+		
+		[[nodiscard]] auto get_average_enqueue_latency_ns() const -> uint64_t
+		{
+			return total_enqueues > 0 ? enqueue_latency_ns / total_enqueues : 0;
+		}
+		
+		[[nodiscard]] auto get_average_dequeue_latency_ns() const -> uint64_t
+		{
+			return total_dequeues > 0 ? dequeue_latency_ns / total_dequeues : 0;
+		}
+		
+		[[nodiscard]] auto get_busiest_type() const -> std::optional<job_type>
+		{
+			if (per_type_dequeues.empty()) return std::nullopt;
+			
+			auto it = std::max_element(per_type_dequeues.begin(), per_type_dequeues.end(),
+				[](const auto& a, const auto& b) { return a.second < b.second; });
+			
+			return it->first;
+		}
+	};
+	
+	// Convenience alias
+	using typed_queue_statistics = typed_queue_statistics_t<job_types>;
 	/**
 	 * @class typed_lockfree_job_queue_t
 	 * @brief High-performance lock-free priority-based job queue
@@ -156,6 +196,13 @@ namespace typed_thread_pool_module
 		[[nodiscard]] auto empty() const -> bool;
 		
 		/**
+		 * @brief Checks if specific types are empty
+		 * @param types Vector of job types to check
+		 * @return True if all specified types have no jobs
+		 */
+		[[nodiscard]] auto empty(const std::vector<job_type>& types) const -> bool;
+		
+		/**
 		 * @brief Gets the total number of jobs across all queues
 		 * @return Total number of jobs
 		 */
@@ -205,12 +252,17 @@ namespace typed_thread_pool_module
 		 * @brief Get detailed statistics including per-type metrics
 		 * @return Extended statistics
 		 */
-		[[nodiscard]] auto get_typed_statistics() const -> typed_queue_statistics;
+		[[nodiscard]] auto get_typed_statistics() const -> typed_queue_statistics_t<job_type>;
 		
 		/**
 		 * @brief Reset all statistics
 		 */
 		auto reset_statistics() -> void;
+		
+		/**
+		 * @brief Stop the queue (for interface compatibility)
+		 */
+		auto stop() -> void;
 		
 	private:
 		// Type aliases

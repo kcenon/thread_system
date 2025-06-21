@@ -54,6 +54,10 @@ add_subdirectory(lockfree_thread_pool_sample)
 # Demonstrates type-based scheduling with lock-free queues
 add_subdirectory(lockfree_typed_thread_pool_sample)
 
+# Typed lock-free thread pool sample
+# Demonstrates lock-free thread pool with typed job queue
+add_subdirectory(typed_lockfree_thread_pool_sample)
+
 # Real-time monitoring sample
 # Shows real-time performance monitoring and metrics collection
 add_subdirectory(monitoring_sample)

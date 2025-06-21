@@ -120,6 +120,13 @@ namespace typed_thread_pool_module
 	}
 	
 	template <typename job_type>
+	auto typed_lockfree_job_queue_t<job_type>::stop() -> void
+	{
+		// Lock-free queues don't need explicit stopping
+		// This is just for interface compatibility
+	}
+	
+	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::should_update_priority_order() const -> bool
 	{
 		std::shared_lock<std::shared_mutex> lock(priority_mutex_);
@@ -429,6 +436,21 @@ namespace typed_thread_pool_module
 	}
 	
 	template <typename job_type>
+	auto typed_lockfree_job_queue_t<job_type>::empty(const std::vector<job_type>& types) const -> bool
+	{
+		std::shared_lock<std::shared_mutex> lock(queues_mutex_);
+		
+		for (const auto& type : types) {
+			auto it = typed_queues_.find(type);
+			if (it != typed_queues_.end() && it->second && !it->second->empty()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::size() const -> std::size_t
 	{
 		std::shared_lock<std::shared_mutex> lock(queues_mutex_);
@@ -484,30 +506,30 @@ namespace typed_thread_pool_module
 	
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::get_typed_statistics() const 
-		-> typed_queue_statistics
+		-> typed_queue_statistics_t<job_type>
 	{
-		typed_queue_statistics stats;
+		typed_queue_statistics_t<job_type> stats;
 		
-		// Get base statistics
 		// Aggregate statistics from all queues
-		thread_module::lockfree_job_queue::queue_statistics base_stats;
-		stats.enqueue_count = base_stats.enqueue_count;
-		stats.dequeue_count = base_stats.dequeue_count;
-		stats.enqueue_batch_count = base_stats.enqueue_batch_count;
-		stats.dequeue_batch_count = base_stats.dequeue_batch_count;
-		stats.total_enqueue_time = base_stats.total_enqueue_time;
-		stats.total_dequeue_time = base_stats.total_dequeue_time;
-		stats.retry_count = base_stats.retry_count;
-		stats.current_size = base_stats.current_size;
+		{
+			std::shared_lock<std::shared_mutex> lock(queues_mutex_);
+			for (const auto& [type, queue] : typed_queues_) {
+				if (queue) {
+					auto queue_stats = queue->get_statistics();
+					stats.total_enqueues += queue_stats.enqueue_count;
+					stats.total_dequeues += queue_stats.dequeue_count;
+					stats.enqueue_latency_ns += queue_stats.total_enqueue_time;
+					stats.dequeue_latency_ns += queue_stats.total_dequeue_time;
+					
+					// Track per-type statistics
+					stats.per_type_enqueues[type] = queue_stats.enqueue_count;
+					stats.per_type_dequeues[type] = queue_stats.dequeue_count;
+				}
+			}
+		}
 		
 		// Add typed-specific stats
 		stats.type_switch_count = type_switch_count_.load(std::memory_order_relaxed);
-		
-		// Get per-type statistics
-		std::shared_lock<std::shared_mutex> lock(queues_mutex_);
-		for (const auto& [type, queue] : typed_queues_) {
-			stats.per_type_stats[type] = queue->get_statistics();
-		}
 		
 		return stats;
 	}
