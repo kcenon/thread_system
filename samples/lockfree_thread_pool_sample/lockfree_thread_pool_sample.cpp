@@ -30,33 +30,37 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <iostream>
 #include <chrono>
 #include <atomic>
 #include <vector>
 #include <random>
 #include <iomanip>
+#include <sstream>
 
 #include "logger/core/logger.h"
 #include "utilities/core/formatter.h"
 #include "thread_pool/core/thread_pool.h"
-#include "thread_base/lockfree/queues/lockfree_mpmc_queue.h"
+#include "thread_base/lockfree/queues/lockfree_job_queue.h"
 
 using namespace utility_module;
 using namespace thread_pool_module;
 using namespace thread_module;
 
 int main() {
-    std::cout << "Lock-Free Thread Pool Sample\n";
-    std::cout << "===========================\n\n";
+    // Initialize logger
+    log_module::start();
+    log_module::console_target(log_module::log_types::Information);
+    
+    log_module::write_information("Lock-Free Thread Pool Sample");
+    log_module::write_information("===========================");
 
     try {
         // Test 1: Basic Thread Pool Usage
-        std::cout << "=== Basic Thread Pool Usage ===\n";
+        log_module::write_information("\n=== Basic Thread Pool Usage ===");
         
         auto pool = std::make_unique<thread_pool>();
         pool->start();
-        std::cout << "Created thread pool\n";
+        log_module::write_information("Created thread pool");
 
         std::atomic<int> completed_jobs{0};
         const int total_jobs = 20;
@@ -68,8 +72,10 @@ int main() {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
                 completed_jobs.fetch_add(1);
-                std::cout << "Completed job " << i << " on thread " 
-                          << std::this_thread::get_id() << "\n";
+                std::ostringstream oss;
+                oss << std::this_thread::get_id();
+                log_module::write_information("Completed job {} on thread {}", 
+                          i, oss.str());
                 return result_void();
             });
 
@@ -84,14 +90,14 @@ int main() {
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
 
-        std::cout << "All " << total_jobs << " jobs completed in " << duration.count() << " ms\n";
+        log_module::write_information("All {} jobs completed in {} ms", total_jobs, duration.count());
         pool->stop();
-        std::cout << "Thread pool stopped gracefully\n\n";
+        log_module::write_information("Thread pool stopped gracefully");
 
         // Test 2: Lock-Free MPMC Queue Direct Usage
-        std::cout << "=== Lock-Free MPMC Queue Direct Usage ===\n";
+        log_module::write_information("\n=== Lock-Free MPMC Queue Direct Usage ===");
         
-        auto lockfree_queue = std::make_unique<lockfree_mpmc_queue>();
+        auto lockfree_queue = std::make_unique<lockfree_job_queue>();
         const int test_jobs = 1000;
 
         auto queue_start = std::chrono::high_resolution_clock::now();
@@ -117,22 +123,20 @@ int main() {
         auto queue_end = std::chrono::high_resolution_clock::now();
         auto queue_duration = std::chrono::duration_cast<std::chrono::microseconds>(queue_end - queue_start);
 
-        std::cout << "Lock-Free Queue Performance:\n";
-        std::cout << "  Jobs processed: " << dequeued_count << "/" << test_jobs << "\n";
-        std::cout << "  Total time: " << queue_duration.count() << " μs\n";
-        std::cout << "  Throughput: " << (test_jobs * 1000000 / queue_duration.count()) << " ops/sec\n";
+        log_module::write_information("Lock-Free Queue Performance:");
+        log_module::write_information("  Jobs processed: {}/{}", dequeued_count, test_jobs);
+        log_module::write_information("  Total time: {} μs", queue_duration.count());
+        log_module::write_information("  Throughput: {} ops/sec", test_jobs * 1000000 / queue_duration.count());
 
         // Display queue statistics
         auto stats = lockfree_queue->get_statistics();
-        std::cout << "  Enqueue count: " << stats.enqueue_count << "\n";
-        std::cout << "  Dequeue count: " << stats.dequeue_count << "\n";
-        std::cout << "  Average enqueue latency: " << std::fixed << std::setprecision(2) 
-                  << stats.get_average_enqueue_latency_ns() << " ns\n";
-        std::cout << "  Average dequeue latency: " << std::fixed << std::setprecision(2)
-                  << stats.get_average_dequeue_latency_ns() << " ns\n\n";
+        log_module::write_information("  Enqueue count: {}", stats.enqueue_count);
+        log_module::write_information("  Dequeue count: {}", stats.dequeue_count);
+        log_module::write_information("  Average enqueue latency: {:.2f} ns", stats.get_average_enqueue_latency_ns());
+        log_module::write_information("  Average dequeue latency: {:.2f} ns", stats.get_average_dequeue_latency_ns());
 
         // Test 3: Performance Test
-        std::cout << "=== Performance Test ===\n";
+        log_module::write_information("\n=== Performance Test ===");
         
         auto perf_pool = std::make_unique<thread_pool>("perf_worker");
         perf_pool->start();
@@ -159,17 +163,19 @@ int main() {
         auto perf_end = std::chrono::high_resolution_clock::now();
         auto perf_duration = std::chrono::duration_cast<std::chrono::milliseconds>(perf_end - perf_start);
 
-        std::cout << "Performance Results:\n";
-        std::cout << "  Jobs: " << perf_jobs << "\n";
-        std::cout << "  Time: " << perf_duration.count() << " ms\n";
-        std::cout << "  Throughput: " << (perf_jobs * 1000 / perf_duration.count()) << " jobs/sec\n";
+        log_module::write_information("Performance Results:");
+        log_module::write_information("  Jobs: {}", perf_jobs);
+        log_module::write_information("  Time: {} ms", perf_duration.count());
+        log_module::write_information("  Throughput: {} jobs/sec", perf_jobs * 1000 / perf_duration.count());
 
         perf_pool->stop();
-        std::cout << "\n=== All demos completed successfully! ===\n";
+        log_module::write_information("\n=== All demos completed successfully! ===");
         
+        log_module::stop();
         return 0;
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        log_module::write_error("Error: {}", e.what());
+        log_module::stop();
         return 1;
     }
 }

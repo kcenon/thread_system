@@ -9,23 +9,18 @@
 # Define the component name as a project
 project(typed_thread_pool)
 
-# Collect all header and template implementation files recursively
-file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.tpp)
+# Collect source files for explicit template instantiations
+set(TYPED_THREAD_POOL_SOURCES
+    scheduling/typed_lockfree_job_queue.cpp
+)
 
-# Create an interface library (header-only implementation)
-# Interface libraries don't produce any build artifacts themselves
-# but propagate compile definitions, include directories, and dependencies
-add_library(${PROJECT_NAME} INTERFACE)
+# Create a static library (now contains template instantiations)
+add_library(${PROJECT_NAME} STATIC ${TYPED_THREAD_POOL_SOURCES})
 
-# INTERFACE libraries should not have source files added directly
-# The headers and templates are included through include directories
-# This avoids INTERFACE_SOURCES path issues on Windows/Visual Studio
-
-# Configure include directories with proper path structure for header-only library
-# INTERFACE: Only for consumers of this library (header-only)
+# Configure include directories with proper path structure
+# PUBLIC: Both for this library and its consumers
 # Generator expressions ensure correct paths for build and install trees
-target_include_directories(${PROJECT_NAME} INTERFACE 
+target_include_directories(${PROJECT_NAME} PUBLIC 
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/sources>
     $<INSTALL_INTERFACE:include>
@@ -37,4 +32,4 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 # - thread_base: For core threading primitives
 # - thread_pool: This component extends the thread pool implementation
 # - logger: For diagnostic and error logging
-target_link_libraries(${PROJECT_NAME} INTERFACE thread_base thread_pool logger)
+target_link_libraries(${PROJECT_NAME} PUBLIC thread_base thread_pool logger)

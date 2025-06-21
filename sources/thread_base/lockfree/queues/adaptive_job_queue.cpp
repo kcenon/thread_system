@@ -36,7 +36,7 @@ namespace thread_module
 {
 	adaptive_job_queue::adaptive_job_queue(queue_strategy initial_strategy)
 		: legacy_queue_(std::make_unique<job_queue>())
-		, mpmc_queue_(std::make_unique<lockfree_mpmc_queue>())
+		, mpmc_queue_(std::make_unique<lockfree_job_queue>())
 		, strategy_(initial_strategy)
 	{
 		initialize_strategy();
@@ -371,7 +371,7 @@ namespace thread_module
 			return std::make_shared<job_queue>();
 			
 		case adaptive_job_queue::queue_strategy::FORCE_LOCKFREE:
-			return std::make_shared<lockfree_mpmc_queue>();
+			return std::make_shared<lockfree_job_queue>();
 			
 		case adaptive_job_queue::queue_strategy::ADAPTIVE:
 			return std::make_shared<adaptive_job_queue>(strategy);

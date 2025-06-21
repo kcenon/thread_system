@@ -34,6 +34,10 @@ add_subdirectory(adaptive_queue_sample)
 # Demonstrates typed job queue usage patterns
 add_subdirectory(typed_job_queue_sample)
 
+# Typed lock-free job queue sample
+# Demonstrates high-performance typed lock-free queue
+add_subdirectory(typed_lockfree_job_queue_sample)
+
 # Hazard pointer sample
 # Shows hazard pointer usage for thread-safe memory reclamation
 add_subdirectory(hazard_pointer_sample)

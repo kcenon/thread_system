@@ -67,6 +67,7 @@ auto initialize_logger() -> std::optional<std::string>
 	log_module::file_target(file_target_);
 	log_module::console_target(console_target_);
 	log_module::callback_target(callback_target_);
+	// Note: This demonstrates the logger callback feature - std::cout is intentionally used here
 	log_module::message_callback(
 		[](const log_module::log_types& type, const std::string& datetime,
 		   const std::string& message)

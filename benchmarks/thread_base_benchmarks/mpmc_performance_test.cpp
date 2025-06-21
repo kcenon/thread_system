@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <benchmark/benchmark.h>
 #include "job_queue.h"
-#include "lockfree/lockfree_mpmc_queue.h"
+#include "lockfree/queues/lockfree_job_queue.h"
 #include "lockfree/adaptive_job_queue.h"
 #include "callback_job.h"
 #include <thread>
@@ -247,22 +247,22 @@ BENCHMARK_TEMPLATE(BM_HighContention, job_queue)
     ->Args({16, 2500});    // 16 threads
 
 // Register benchmarks for lock-free MPMC queue
-BENCHMARK_TEMPLATE(BM_SPSC, lockfree_mpmc_queue)
+BENCHMARK_TEMPLATE(BM_SPSC, lockfree_job_queue)
     ->Arg(SMALL_WORKLOAD)
     ->Arg(MEDIUM_WORKLOAD)
     ->Arg(LARGE_WORKLOAD);
 
-BENCHMARK_TEMPLATE(BM_MPMC, lockfree_mpmc_queue)
+BENCHMARK_TEMPLATE(BM_MPMC, lockfree_job_queue)
     ->Args({2, 2, 5000})   // 2 producers, 2 consumers
     ->Args({4, 4, 2500})   // 4 producers, 4 consumers
     ->Args({8, 8, 1250});  // 8 producers, 8 consumers
 
-BENCHMARK_TEMPLATE(BM_BatchOperations, lockfree_mpmc_queue)
+BENCHMARK_TEMPLATE(BM_BatchOperations, lockfree_job_queue)
     ->Args({10, 1000})     // batch size 10
     ->Args({100, 100})     // batch size 100
     ->Args({1000, 10});    // batch size 1000
 
-BENCHMARK_TEMPLATE(BM_HighContention, lockfree_mpmc_queue)
+BENCHMARK_TEMPLATE(BM_HighContention, lockfree_job_queue)
     ->Args({4, 10000})     // 4 threads
     ->Args({8, 5000})      // 8 threads
     ->Args({16, 2500});    // 16 threads

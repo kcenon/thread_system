@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "gtest/gtest.h"
-#include "lockfree/queues/lockfree_mpmc_queue.h"
+#include "lockfree/queues/lockfree_job_queue.h"
 #include "lockfree/queues/adaptive_job_queue.h"
 #include "jobs/callback_job.h"
 #include <thread>
@@ -75,7 +75,7 @@ protected:
 
 TEST_F(MPMCQueueTest, BasicEnqueueDequeue)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	
 	// Test basic enqueue/dequeue
 	std::atomic<int> counter{0};
@@ -106,7 +106,7 @@ TEST_F(MPMCQueueTest, BasicEnqueueDequeue)
 
 TEST_F(MPMCQueueTest, EmptyQueueDequeue)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	
 	// Try to dequeue from empty queue
 	auto result = queue.dequeue();
@@ -116,7 +116,7 @@ TEST_F(MPMCQueueTest, EmptyQueueDequeue)
 
 TEST_F(MPMCQueueTest, NullJobEnqueue)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	
 	// Try to enqueue null job
 	std::unique_ptr<job> null_job;
@@ -129,7 +129,7 @@ TEST_F(MPMCQueueTest, BatchOperations)
 {
 	// Test with local scope to force destructor calls
 	{
-		lockfree_mpmc_queue queue;
+		lockfree_job_queue queue;
 		
 		// Test single item first
 		auto job = std::make_unique<callback_job>([]() -> result_void {
@@ -145,7 +145,7 @@ TEST_F(MPMCQueueTest, BatchOperations)
 	
 	// Now test batch operations
 	{
-		lockfree_mpmc_queue queue;
+		lockfree_job_queue queue;
 		
 		// Prepare batch of jobs
 		std::vector<std::unique_ptr<job>> jobs;
@@ -184,7 +184,7 @@ TEST_F(MPMCQueueTest, BatchOperations)
 
 TEST_F(MPMCQueueTest, ConcurrentEnqueue)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	const size_t num_threads = 8;
 	const size_t jobs_per_thread = 1000;
 	std::atomic<int> counter{0};
@@ -234,7 +234,7 @@ TEST_F(MPMCQueueTest, ConcurrentEnqueue)
 
 TEST_F(MPMCQueueTest, ConcurrentDequeue)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	const size_t num_jobs = 10000;
 	const size_t num_consumers = 8;
 	std::atomic<int> counter{0};
@@ -284,7 +284,7 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue)
 TEST_F(MPMCQueueTest, ProducerConsumerStress)
 {
 	// Use smaller numbers to reduce memory pressure and race conditions
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	const size_t num_producers = 2;
 	const size_t num_consumers = 2;
 	const size_t jobs_per_producer = 20;  // Reduced from 50
@@ -520,7 +520,7 @@ TEST_F(MPMCQueueTest, PerformanceComparison)
 	
 	// Test lock-free queue with smaller iterations
 	{
-		lockfree_mpmc_queue mpmc_queue;
+		lockfree_job_queue mpmc_queue;
 		auto start_time = std::chrono::high_resolution_clock::now();
 		
 		// Sequential operations with just 10 iterations
@@ -555,7 +555,7 @@ TEST_F(MPMCQueueTest, PerformanceComparison)
 // Simple MPMC performance test - safe alternative
 TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 {
-	lockfree_mpmc_queue mpmc_queue;
+	lockfree_job_queue mpmc_queue;
 	const size_t num_jobs = 100;
 	auto counter = std::make_shared<std::atomic<int>>(0);
 	
@@ -597,7 +597,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 // Multiple producer consumer test - safer version
 TEST_F(MPMCQueueTest, MultipleProducerConsumer)
 {
-	lockfree_mpmc_queue queue;
+	lockfree_job_queue queue;
 	const size_t num_producers = 2;
 	const size_t num_consumers = 2;
 	const size_t jobs_per_producer = 50;
