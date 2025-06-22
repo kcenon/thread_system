@@ -47,7 +47,7 @@ namespace typed_thread_pool_module
 	}
 
 	template <typename job_type>
-	auto typed_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> lockfree_mpmc_queue*
+	auto typed_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> lockfree_job_queue*
 	{
 		{
 			// Try read lock first for better performance
@@ -67,7 +67,7 @@ namespace typed_thread_pool_module
 		}
 		
 		// Create new queue
-		auto queue = std::make_unique<lockfree_mpmc_queue>();
+		auto queue = std::make_unique<lockfree_job_queue>();
 		auto* queue_ptr = queue.get();
 		lockfree_queues_[type] = std::move(queue);
 		return queue_ptr;

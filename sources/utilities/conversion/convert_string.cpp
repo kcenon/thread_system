@@ -180,11 +180,11 @@ namespace utility_module
 
 	auto convert_string::get_wchar_encoding(endian_types endian) -> std::string
 	{
-		if (sizeof(wchar_t) == 2)
+		if constexpr (sizeof(wchar_t) == 2)
 		{
 			return get_encoding_name(encoding_types::utf16, endian);
 		}
-		else if (sizeof(wchar_t) == 4)
+		else if constexpr (sizeof(wchar_t) == 4)
 		{
 			return get_encoding_name(encoding_types::utf32, endian);
 		}

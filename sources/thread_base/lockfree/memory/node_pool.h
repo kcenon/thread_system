@@ -41,6 +41,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <unordered_set>
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4324) // structure was padded due to alignment specifier
+#endif
+
 namespace thread_module
 {
 	/**
@@ -167,6 +172,10 @@ namespace thread_module
 	};
 
 } // namespace thread_module
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 // Include template implementation
 #include "node_pool.tpp"

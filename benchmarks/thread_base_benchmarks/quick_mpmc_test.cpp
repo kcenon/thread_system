@@ -14,7 +14,7 @@ Quick MPMC Performance Test
 #include <atomic>
 #include <iomanip>
 #include "job_queue.h"
-#include "lockfree/lockfree_mpmc_queue.h"
+#include "lockfree/queues/lockfree_job_queue.h"
 #include "callback_job.h"
 
 using namespace thread_module;
@@ -118,7 +118,7 @@ int main() {
             config.ops_per_thread
         );
         
-        double lockfree_time = test_producer_consumer<lockfree_mpmc_queue>(
+        double lockfree_time = test_producer_consumer<lockfree_job_queue>(
             "Lock-free MPMC Queue", 
             config.producers, 
             config.consumers, 

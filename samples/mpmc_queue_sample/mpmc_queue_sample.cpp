@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "thread_base/lockfree/queues/lockfree_mpmc_queue.h"
+#include "thread_base/lockfree/queues/lockfree_job_queue.h"
 #include "thread_base/jobs/callback_job.h"
 #include "logger/core/logger.h"
 
@@ -49,7 +49,7 @@ void basic_spsc_example()
 {
     write_information("[Example 1] Basic SPSC Pattern");
     
-    lockfree_mpmc_queue queue;
+    lockfree_job_queue queue;
     std::atomic<int> counter{0};
     
     // Producer thread
@@ -105,7 +105,7 @@ void mpmc_example()
 {
     write_information("\n[Example 2] MPMC Pattern");
     
-    lockfree_mpmc_queue queue;
+    lockfree_job_queue queue;
     std::atomic<int> produced{0};
     std::atomic<int> consumed{0};
     const int num_producers = 3;
@@ -187,7 +187,7 @@ void batch_operations_example()
 {
     write_information("\n[Example 3] Batch Operations");
     
-    lockfree_mpmc_queue queue;
+    lockfree_job_queue queue;
     std::atomic<int> processed{0};
     
     // Batch enqueue
@@ -235,7 +235,7 @@ void performance_example()
 {
     write_information("\n[Example 4] Performance Measurement");
     
-    lockfree_mpmc_queue queue;
+    lockfree_job_queue queue;
     const int num_operations = 100000;
     
     // Measure enqueue performance

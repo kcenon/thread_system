@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "lockfree_mpmc_queue.h"
+#include "lockfree_job_queue.h"
 
 namespace thread_module
 {
-	lockfree_mpmc_queue::lockfree_mpmc_queue(size_t max_threads)
+	lockfree_job_queue::lockfree_job_queue(size_t max_threads)
 		: node_pool_(std::make_unique<node_pool<Node>>())
 		, hp_manager_(std::make_unique<hazard_pointer_manager>(max_threads))
 	{
@@ -47,7 +47,7 @@ namespace thread_module
 		tail_.store(dummy, std::memory_order_relaxed);
 	}
 	
-	lockfree_mpmc_queue::~lockfree_mpmc_queue()
+	lockfree_job_queue::~lockfree_job_queue()
 	{
 		// Clear all remaining nodes
 		clear();
@@ -59,7 +59,7 @@ namespace thread_module
 		}
 	}
 	
-	auto lockfree_mpmc_queue::enqueue(std::unique_ptr<job>&& value) -> result_void
+	auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& value) -> result_void
 	{
 		if (!value) {
 			return error{error_code::invalid_argument, "Cannot enqueue null job"};
@@ -87,7 +87,7 @@ namespace thread_module
 		}
 	}
 	
-	auto lockfree_mpmc_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+	auto lockfree_job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
 	{
 		if (jobs.empty()) {
 			return error{error_code::invalid_argument, "Cannot enqueue empty batch"};
@@ -189,7 +189,7 @@ namespace thread_module
 		}
 	}
 	
-	auto lockfree_mpmc_queue::dequeue() -> result<std::unique_ptr<job>>
+	auto lockfree_job_queue::dequeue() -> result<std::unique_ptr<job>>
 	{
 		if (stop_.load(std::memory_order_acquire)) {
 			return error{error_code::queue_stopped, "Queue is stopped"};
@@ -209,7 +209,7 @@ namespace thread_module
 		return result;
 	}
 	
-	auto lockfree_mpmc_queue::dequeue_batch() -> std::deque<std::unique_ptr<job>>
+	auto lockfree_job_queue::dequeue_batch() -> std::deque<std::unique_ptr<job>>
 	{
 		std::deque<std::unique_ptr<job>> result;
 		
@@ -230,17 +230,17 @@ namespace thread_module
 		return result;
 	}
 	
-	auto lockfree_mpmc_queue::try_enqueue(std::unique_ptr<job>&& value) -> result_void
+	auto lockfree_job_queue::try_enqueue(std::unique_ptr<job>&& value) -> result_void
 	{
 		return enqueue(std::move(value));
 	}
 	
-	auto lockfree_mpmc_queue::try_dequeue() -> result<std::unique_ptr<job>>
+	auto lockfree_job_queue::try_dequeue() -> result<std::unique_ptr<job>>
 	{
 		return dequeue_impl();
 	}
 	
-	auto lockfree_mpmc_queue::clear() -> void
+	auto lockfree_job_queue::clear() -> void
 	{
 		// Dequeue all items
 		while (true) {
@@ -254,19 +254,19 @@ namespace thread_module
 		condition_.notify_all();
 	}
 	
-	auto lockfree_mpmc_queue::empty() const -> bool
+	auto lockfree_job_queue::empty() const -> bool
 	{
 		Node* head = head_.load(std::memory_order_acquire);
 		Node* tail = tail_.load(std::memory_order_acquire);
 		return (head == tail) && (head->next.load(std::memory_order_acquire) == nullptr);
 	}
 	
-	auto lockfree_mpmc_queue::size() const -> std::size_t
+	auto lockfree_job_queue::size() const -> std::size_t
 	{
 		return stats_.current_size.load(std::memory_order_relaxed);
 	}
 	
-	auto lockfree_mpmc_queue::get_statistics() const -> queue_statistics
+	auto lockfree_job_queue::get_statistics() const -> queue_statistics
 	{
 		queue_statistics stats;
 		stats.enqueue_count = stats_.enqueue_count.load();
@@ -280,7 +280,7 @@ namespace thread_module
 		return stats;
 	}
 	
-	auto lockfree_mpmc_queue::reset_statistics() -> void
+	auto lockfree_job_queue::reset_statistics() -> void
 	{
 		stats_.enqueue_count.store(0, std::memory_order_relaxed);
 		stats_.dequeue_count.store(0, std::memory_order_relaxed);
@@ -291,11 +291,11 @@ namespace thread_module
 		stats_.retry_count.store(0, std::memory_order_relaxed);
 	}
 	
-	auto lockfree_mpmc_queue::to_string() const -> std::string
+	auto lockfree_job_queue::to_string() const -> std::string
 	{
 		auto stats = get_statistics();
 		return formatter::format(
-			"lockfree_mpmc_queue[size={}, enqueued={}, dequeued={}, "
+			"lockfree_job_queue[size={}, enqueued={}, dequeued={}, "
 			"avg_enqueue_latency={:.1f}ns, avg_dequeue_latency={:.1f}ns, retries={}]",
 			stats.current_size,
 			stats.enqueue_count,
@@ -308,12 +308,12 @@ namespace thread_module
 	
 	// Private implementation methods
 	
-	auto lockfree_mpmc_queue::allocate_node() -> node_ptr
+	auto lockfree_job_queue::allocate_node() -> node_ptr
 	{
 		return node_pool_->allocate();
 	}
 	
-	auto lockfree_mpmc_queue::deallocate_node(node_ptr node) -> void
+	auto lockfree_job_queue::deallocate_node(node_ptr node) -> void
 	{
 		if (node) {
 			node->clear_data();
@@ -323,12 +323,12 @@ namespace thread_module
 		}
 	}
 	
-	auto lockfree_mpmc_queue::retire_node(node_ptr node) -> void
+	auto lockfree_job_queue::retire_node(node_ptr node) -> void
 	{
 		hp_manager_->retire(node, std::function<void(Node*)>([this](Node* n) { deallocate_node(n); }));
 	}
 	
-	auto lockfree_mpmc_queue::enqueue_impl(job_ptr* data_storage) -> result_void
+	auto lockfree_job_queue::enqueue_impl(job_ptr* data_storage) -> result_void
 	{
 		Node* new_node = allocate_node();
 		if (!new_node) {
@@ -388,7 +388,7 @@ namespace thread_module
 		return error{error_code::resource_limit_reached, "Enqueue failed after maximum retries"};
 	}
 	
-	auto lockfree_mpmc_queue::dequeue_impl() -> result<job_ptr>
+	auto lockfree_job_queue::dequeue_impl() -> result<job_ptr>
 	{
 		size_t retry_count = 0;
 		size_t total_retries = 0;
@@ -467,17 +467,17 @@ namespace thread_module
 		return error{error_code::resource_limit_reached, "Dequeue failed after maximum retries"};
 	}
 	
-	auto lockfree_mpmc_queue::record_enqueue_time(std::chrono::nanoseconds duration) -> void
+	auto lockfree_job_queue::record_enqueue_time(std::chrono::nanoseconds duration) -> void
 	{
 		stats_.total_enqueue_time.fetch_add(static_cast<uint64_t>(duration.count()), std::memory_order_relaxed);
 	}
 	
-	auto lockfree_mpmc_queue::record_dequeue_time(std::chrono::nanoseconds duration) -> void
+	auto lockfree_job_queue::record_dequeue_time(std::chrono::nanoseconds duration) -> void
 	{
 		stats_.total_dequeue_time.fetch_add(static_cast<uint64_t>(duration.count()), std::memory_order_relaxed);
 	}
 	
-	auto lockfree_mpmc_queue::increment_retry_count() -> void
+	auto lockfree_job_queue::increment_retry_count() -> void
 	{
 		stats_.retry_count.fetch_add(1, std::memory_order_relaxed);
 	}
