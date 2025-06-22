@@ -1,0 +1,5 @@
+<map id="typed_thread_pool_module::typed_lockfree_thread_pool_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_lockfree_thread_pool_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="A lock&#45;free thread pool that schedules and executes jobs based on their priority levels." alt="" coords="19,148,210,572"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,224,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,114,117,148,112,148,112,114"/>
+</map>

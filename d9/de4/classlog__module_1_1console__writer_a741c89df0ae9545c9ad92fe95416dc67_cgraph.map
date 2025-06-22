@@ -1,10 +1,15 @@
 <map id="log_module::console_writer::do_work" name="log_module::console_writer::do_work">
-<area shape="rect" id="Node000001" title="The primary work routine that processes and outputs console log messages." alt="" coords="5,5,161,45"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="209,5,396,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,23,196,23,196,28,162,28"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="444,5,631,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,23,430,23,430,28,396,28"/>
-<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="679,5,865,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="631,31,665,32,665,37,631,37"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="678,19,644,19,644,14,678,14"/>
+<area shape="rect" id="Node000001" title="The primary work routine that processes and outputs console log messages." alt="" coords="5,41,161,81"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="209,9,396,49"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,47,195,42,196,48,162,53"/>
+<area shape="rect" id="Node000005" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="215,77,391,102"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="162,69,202,74,201,79,161,74"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="456,5,643,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,25,442,24,442,30,396,30"/>
+<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="703,5,889,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="643,31,689,32,689,37,643,37"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="702,19,656,19,656,14,702,14"/>
+<area shape="rect" id="Node000006" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="444,69,655,109"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="391,95,430,96,430,101,391,101"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="444,83,404,83,404,78,444,78"/>
 </map>

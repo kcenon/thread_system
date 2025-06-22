@@ -1,14 +1,14 @@
 <map id="sources/thread_pool/workers/worker_policy.h" name="sources/thread_pool/workers/worker_policy.h">
-<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="303,5,484,45"/>
+<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="269,5,451,45"/>
 <area shape="rect" id="Node000002" href="$d5/d51/thread__pool_2detail_2forward__declarations_8h.html" title="Forward declarations for thread_pool module." alt="" coords="5,93,229,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="328,48,172,92,170,87,326,43"/>
-<area shape="rect" id="Node000003" href="$d3/d93/thread__pool_2core_2configuration_8h.html" title="Central configuration for thread_pool module." alt="" coords="253,93,416,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="381,47,354,84,350,80,377,44"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="407,167,473,192"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="408,45,431,93,441,152,436,153,425,94,403,47"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="491,93,549,119"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="425,43,491,84,489,88,423,48"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="299,167,370,192"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="337,119,337,153,332,153,332,119"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="353,116,413,157,410,161,350,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="303,48,167,92,165,86,301,43"/>
+<area shape="rect" id="Node000003" href="$de/d02/thread__pool_2core_2config_8h.html" title="Central configuration for thread_pool module." alt="" coords="253,93,371,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="351,47,329,83,324,80,346,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="373,167,440,192"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="369,45,385,93,403,153,397,154,380,94,364,47"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="445,93,504,119"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="389,43,448,83,445,88,386,48"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="277,167,347,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="315,119,315,153,309,153,309,119"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="329,117,382,156,379,160,326,121"/>
 </map>

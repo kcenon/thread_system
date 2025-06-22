@@ -1,0 +1,14 @@
+<map id="thread_pool_module::lockfree_thread_pool::~lockfree_thread_pool" name="thread_pool_module::lockfree_thread_pool::~lockfree_thread_pool">
+<area shape="rect" id="Node000001" title="Virtual destructor. Ensures proper cleanup of all resources." alt="" coords="5,62,184,117"/>
+<area shape="rect" id="Node000002" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a191e9ac1ccbf901f3d166be1690d4f4a" title="Stops the thread pool and optionally clears pending jobs." alt="" coords="232,69,435,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,87,219,87,219,92,184,92"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="483,5,669,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="409,67,486,46,487,51,411,72"/>
+<area shape="rect" id="Node000005" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="493,69,659,109"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="435,87,480,87,480,92,435,92"/>
+<area shape="rect" id="Node000006" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="497,133,655,173"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="411,107,487,127,486,132,409,112"/>
+<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="717,5,904,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="669,31,704,32,704,37,669,37"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="717,19,683,19,683,14,717,14"/>
+</map>

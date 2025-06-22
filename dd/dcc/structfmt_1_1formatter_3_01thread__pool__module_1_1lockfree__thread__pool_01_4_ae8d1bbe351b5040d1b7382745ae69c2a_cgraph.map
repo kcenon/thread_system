@@ -1,0 +1,10 @@
+<map id="fmt::formatter&lt; thread_pool_module::lockfree_thread_pool &gt;::format" name="fmt::formatter&lt; thread_pool_module::lockfree_thread_pool &gt;::format">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,180,60"/>
+<area shape="rect" id="Node000002" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#afff00cbed87d038e3ae0c8fe5aad5095" title="Returns a string representation of the thread pool&#39;s state." alt="" coords="228,5,395,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,30,214,30,214,35,181,35"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="443,13,629,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="395,30,429,30,429,35,395,35"/>
+<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="677,13,864,53"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="629,39,664,39,664,44,629,44"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="677,27,643,26,643,21,677,21"/>
+</map>

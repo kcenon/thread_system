@@ -1,5 +1,9 @@
 <map id="log_module::message_callback" name="log_module::message_callback">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,171,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,171,75"/>
 <area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="219,5,429,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,42,205,37,205,43,171,47"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="477,13,653,38"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="171,58,293,62,361,60,429,55,508,39,509,44,430,60,362,65,293,67,171,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="430,32,464,32,464,37,430,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="477,19,443,19,443,14,477,14"/>
 </map>

@@ -1,5 +1,9 @@
 <map id="log_module::set_use_backup" name="log_module::set_use_backup">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,161,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,161,75"/>
 <area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="209,5,420,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,23,196,23,196,28,161,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,42,195,38,196,43,162,47"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="468,13,644,38"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="162,58,283,62,352,60,420,55,498,39,499,44,420,60,352,65,283,67,161,63"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,32,454,32,454,37,420,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="468,19,434,19,434,14,468,14"/>
 </map>

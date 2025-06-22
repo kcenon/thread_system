@@ -1,27 +1,27 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,408,124,433"/>
-<area shape="rect" id="Node000001" href="$de/dff/structlog__module_1_1detail_1_1has__to__string.html" title="SFINAE helper to detect if a type has a specific member function." alt="" coords="209,5,353,60"/>
-<area shape="poly" id="edge25_Node000000_Node000001" title=" " alt="" coords="64,394,69,330,85,244,98,198,116,152,140,109,170,71,187,57,207,46,210,51,190,61,174,75,145,112,121,155,103,200,90,245,74,331,69,395"/>
-<area shape="rect" id="Node000002" href="$d6/dec/structlog__module_1_1detail_1_1is__duration.html" title="Type trait to detect duration types." alt="" coords="209,85,352,125"/>
-<area shape="poly" id="edge26_Node000000_Node000002" title=" " alt="" coords="66,394,74,340,91,270,105,234,122,198,144,164,170,135,188,122,208,113,210,118,191,127,174,139,148,167,127,200,110,236,96,272,79,341,71,395"/>
-<area shape="rect" id="Node000003" href="$df/d8f/structlog__module_1_1detail_1_1is__streamable.html" title="SFINAE helper for stream insertion operator." alt="" coords="206,149,355,204"/>
-<area shape="poly" id="edge27_Node000000_Node000003" title=" " alt="" coords="70,393,83,354,104,307,133,258,170,215,205,193,207,198,174,219,137,261,109,309,88,356,75,395"/>
-<area shape="rect" id="Node000004" href="$d8/d59/structlog__module_1_1detail_1_1is__string__like.html" title="Type trait to detect string&#45;like types." alt="" coords="204,229,357,269"/>
-<area shape="poly" id="edge28_Node000000_Node000004" title=" " alt="" coords="76,394,113,336,140,305,171,278,203,262,205,267,173,283,143,309,117,339,81,397"/>
-<area shape="rect" id="Node000005" href="$dc/dd8/structlog__module_1_1detail_1_1is__time__point.html" title="Type trait to detect time point types." alt="" coords="203,293,359,333"/>
-<area shape="poly" id="edge29_Node000000_Node000005" title=" " alt="" coords="89,397,126,369,171,342,201,330,204,335,173,347,129,373,92,401"/>
-<area shape="rect" id="Node000006" href="$df/d64/structthread__pool__module_1_1detail_1_1has__get__method.html" title="SFINAE helper to detect if a type has a specific member." alt="" coords="189,357,372,412"/>
-<area shape="poly" id="edge30_Node000000_Node000006" title=" " alt="" coords="137,406,189,397,189,403,138,411"/>
-<area shape="rect" id="Node000007" href="$d7/d0b/structthread__pool__module_1_1detail_1_1is__duration.html" title="Type trait to detect if a type is a duration." alt="" coords="188,437,373,477"/>
-<area shape="poly" id="edge31_Node000000_Node000007" title=" " alt="" coords="138,430,188,439,187,444,137,435"/>
-<area shape="rect" id="Node000008" href="$d9/d63/structthread__pool__module_1_1detail_1_1is__result.html" title="Type trait to detect if a type is a result&lt;T&gt;" alt="" coords="197,501,365,541"/>
-<area shape="poly" id="edge32_Node000000_Node000008" title=" " alt="" coords="95,439,132,464,173,486,203,498,201,503,171,491,129,468,92,444"/>
-<area shape="rect" id="Node000009" href="$dd/d19/structtyped__thread__pool__module_1_1detail_1_1has__do__work__method.html" title="SFINAE helper to detect if a type has a do_work method." alt="" coords="172,565,389,620"/>
-<area shape="poly" id="edge33_Node000000_Node000009" title=" " alt="" coords="82,444,119,497,145,526,174,551,194,563,191,568,170,555,141,529,115,500,78,447"/>
-<area shape="rect" id="Node000010" href="$d2/d0b/structtyped__thread__pool__module_1_1detail_1_1has__priority__method.html" title="SFINAE helper to detect if a type has a specific member function." alt="" coords="181,644,380,699"/>
-<area shape="poly" id="edge34_Node000000_Node000010" title=" " alt="" coords="75,446,87,486,108,535,136,585,174,629,191,642,187,646,170,633,132,589,103,537,82,488,70,447"/>
-<area shape="rect" id="Node000011" href="$d2/dcf/structtyped__thread__pool__module_1_1detail_1_1is__compatible__job.html" title="Compile&#45;time job validation." alt="" coords="172,723,389,777"/>
-<area shape="poly" id="edge35_Node000000_Node000011" title=" " alt="" coords="71,447,79,501,97,571,128,644,149,678,174,708,189,720,186,724,170,712,144,681,123,646,92,572,74,502,66,447"/>
-<area shape="rect" id="Node000012" href="$d2/d81/structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type.html" title="SFINAE helper for optional job type validation." alt="" coords="181,801,380,856"/>
-<area shape="poly" id="edge36_Node000000_Node000012" title=" " alt="" coords="69,447,73,514,87,604,101,653,119,701,143,747,174,787,188,799,185,803,170,790,139,749,114,703,96,655,82,606,67,514,63,447"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,356,151,396"/>
+<area shape="rect" id="Node000001" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="224,228,372,268"/>
+<area shape="poly" id="edge24_Node000000_Node000001" title=" " alt="" coords="108,345,149,310,197,278,224,266,226,271,200,282,152,314,111,349"/>
+<area shape="rect" id="Node000009" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html" title="A high&#45;performance lock&#45;free thread pool for concurrent job execution." alt="" coords="215,292,381,332"/>
+<area shape="poly" id="edge32_Node000000_Node000009" title=" " alt="" coords="160,350,228,329,229,335,161,355"/>
+<area shape="rect" id="Node000010" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="221,356,375,396"/>
+<area shape="poly" id="edge33_Node000000_Node000010" title=" " alt="" coords="165,373,220,373,220,379,165,379"/>
+<area shape="rect" id="Node000011" href="$d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html" title="A lock&#45;free thread pool that schedules and executes jobs based on their priority levels." alt="" coords="199,421,397,475"/>
+<area shape="poly" id="edge34_Node000000_Node000011" title=" " alt="" coords="153,398,215,418,213,423,152,403"/>
+<area shape="rect" id="Node000012" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="199,499,397,554"/>
+<area shape="poly" id="edge35_Node000000_Node000012" title=" " alt="" coords="107,404,149,446,200,486,220,497,218,501,197,490,145,450,104,408"/>
+<area shape="rect" id="Node000002" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="445,5,684,45"/>
+<area shape="poly" id="edge25_Node000001_Node000002" title=" " alt="" coords="313,214,335,177,364,134,401,91,444,55,466,43,469,48,447,60,404,95,368,137,339,180,318,217"/>
+<area shape="rect" id="Node000003" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="465,70,664,125"/>
+<area shape="poly" id="edge26_Node000001_Node000003" title=" " alt="" coords="329,217,381,174,444,134,468,122,470,127,447,138,384,179,333,221"/>
+<area shape="rect" id="Node000004" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="464,149,665,203"/>
+<area shape="poly" id="edge27_Node000001_Node000004" title=" " alt="" coords="385,222,463,201,464,206,386,227"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="472,228,657,268"/>
+<area shape="poly" id="edge28_Node000001_Node000005" title=" " alt="" coords="386,245,472,245,472,251,386,251"/>
+<area shape="rect" id="Node000006" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer job queue." alt="" coords="474,292,655,332"/>
+<area shape="poly" id="edge29_Node000001_Node000006" title=" " alt="" coords="386,266,481,289,480,295,385,271"/>
+<area shape="rect" id="Node000007" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="445,356,684,396"/>
+<area shape="poly" id="edge30_Node000001_Node000007" title=" " alt="" coords="386,270,399,278,415,294,424,311,432,327,447,342,468,353,466,358,444,346,427,330,419,313,411,297,396,282,383,274"/>
+<area shape="rect" id="Node000008" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="464,421,665,475"/>
+<area shape="poly" id="edge31_Node000001_Node000008" title=" " alt="" coords="385,268,399,278,412,294,420,311,424,344,428,375,435,391,447,406,465,420,462,424,443,410,430,393,423,377,419,344,415,313,408,297,395,282,382,272"/>
 </map>

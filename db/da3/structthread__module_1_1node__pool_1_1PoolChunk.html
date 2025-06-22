@@ -123,7 +123,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 struct thread_module::node_pool&lt; T &gt;::PoolChunk</div><p>A chunk of pre-allocated nodes. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00125">125</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00130">130</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5138c72307c76d76caa54f3463ce5eb3" name="a5138c72307c76d76caa54f3463ce5eb3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5138c72307c76d76caa54f3463ce5eb3">&#9670;&#160;</a></span>PoolChunk()</h2>
@@ -151,10 +151,10 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00132">132</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  133</span>                : <a class="code hl_variable" href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a9118e2ecb764a68847d0dc2035b09322">nodes</a>(std::make_unique&lt;T[]&gt;(size)), <a class="code hl_variable" href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">capacity</a>(size) {}</div>
-<div class="ttc" id="astructthread__module_1_1node__pool_1_1PoolChunk_html_a00cfda014ba5f98abe24c52297cf74ab"><div class="ttname"><a href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">thread_module::node_pool::PoolChunk::capacity</a></div><div class="ttdeci">const size_t capacity</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/node__pool_8h_source.html#l00130">node_pool.h:130</a></div></div>
-<div class="ttc" id="astructthread__module_1_1node__pool_1_1PoolChunk_html_a9118e2ecb764a68847d0dc2035b09322"><div class="ttname"><a href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a9118e2ecb764a68847d0dc2035b09322">thread_module::node_pool::PoolChunk::nodes</a></div><div class="ttdeci">std::unique_ptr&lt; T[]&gt; nodes</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/node__pool_8h_source.html#l00127">node_pool.h:127</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00137">137</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>                : <a class="code hl_variable" href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a9118e2ecb764a68847d0dc2035b09322">nodes</a>(std::make_unique&lt;T[]&gt;(size)), <a class="code hl_variable" href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">capacity</a>(size) {}</div>
+<div class="ttc" id="astructthread__module_1_1node__pool_1_1PoolChunk_html_a00cfda014ba5f98abe24c52297cf74ab"><div class="ttname"><a href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a00cfda014ba5f98abe24c52297cf74ab">thread_module::node_pool::PoolChunk::capacity</a></div><div class="ttdeci">const size_t capacity</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/node__pool_8h_source.html#l00135">node_pool.h:135</a></div></div>
+<div class="ttc" id="astructthread__module_1_1node__pool_1_1PoolChunk_html_a9118e2ecb764a68847d0dc2035b09322"><div class="ttname"><a href="../../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a9118e2ecb764a68847d0dc2035b09322">thread_module::node_pool::PoolChunk::nodes</a></div><div class="ttdeci">std::unique_ptr&lt; T[]&gt; nodes</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/node__pool_8h_source.html#l00132">node_pool.h:132</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -173,8 +173,8 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00128">128</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  128</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00133">133</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  133</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -192,7 +192,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00130">130</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00135">135</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
 
 </div>
 </div>
@@ -210,8 +210,8 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00129">129</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  129</span>{<span class="keyword">nullptr</span>};</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00134">134</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>{<span class="keyword">nullptr</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -229,7 +229,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00127">127</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d28/node__pool_8h_source.html#l00132">132</a> of file <a class="el" href="../../d7/d28/node__pool_8h_source.html">node_pool.h</a>.</p>
 
 </div>
 </div>
@@ -239,7 +239,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:16 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

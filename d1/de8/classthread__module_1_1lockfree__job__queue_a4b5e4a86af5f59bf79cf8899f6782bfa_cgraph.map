@@ -1,0 +1,11 @@
+<map id="thread_module::lockfree_job_queue::~lockfree_job_queue" name="thread_module::lockfree_job_queue::~lockfree_job_queue">
+<area shape="rect" id="Node000001" title="Destructor." alt="" coords="5,30,187,85"/>
+<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca" title="Clear all jobs from the queue." alt="" coords="249,5,431,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,43,235,36,236,42,187,48"/>
+<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0" title=" " alt="" coords="235,69,445,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,67,221,71,221,76,187,72"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="518,5,683,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="431,23,504,23,504,28,431,28"/>
+<area shape="rect" id="Node000005" href="$da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a3dd481f32156a89aceea8a78f69b56a9" title=" " alt="" coords="493,69,708,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="446,87,480,87,480,92,446,92"/>
+</map>

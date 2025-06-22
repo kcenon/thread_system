@@ -20,8 +20,15 @@ var searchData=
   ['typed_5fjob_5fqueue_5ft_3c_20job_5ftype_20_3e_17',['typed_job_queue_t&lt; job_type &gt;',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html',1,'typed_thread_pool_module']]],
   ['typed_5fjob_5fqueue_5ft_3c_20job_5ftypes_20_3e_18',['typed_job_queue_t&lt; job_types &gt;',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html',1,'typed_thread_pool_module']]],
   ['typed_5fjob_5ft_19',['typed_job_t',['../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html',1,'typed_thread_pool_module']]],
-  ['typed_5fthread_5fpool_5fbuilder_20',['typed_thread_pool_builder',['../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html',1,'typed_thread_pool_module']]],
-  ['typed_5fthread_5fpool_5ft_21',['typed_thread_pool_t',['../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html',1,'typed_thread_pool_module']]],
-  ['typed_5fthread_5fworker_5ft_22',['typed_thread_worker_t',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]],
-  ['typed_5fthread_5fworker_5ft_3c_20job_5ftypes_20_3e_23',['typed_thread_worker_t&lt; job_types &gt;',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]]
+  ['typed_5flockfree_5fjob_5fqueue_5ft_20',['typed_lockfree_job_queue_t',['../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fjob_5fqueue_5ft_3c_20job_5ftypes_20_3e_21',['typed_lockfree_job_queue_t&lt; job_types &gt;',['../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fthread_5fpool_5ft_22',['typed_lockfree_thread_pool_t',['../d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fthread_5fworker_5ft_23',['typed_lockfree_thread_worker_t',['../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fthread_5fworker_5ft_3c_20job_5ftypes_20_3e_24',['typed_lockfree_thread_worker_t&lt; job_types &gt;',['../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fqueue_5fstatistics_25',['typed_queue_statistics',['../d8/d18/structtyped__queue__statistics.html',1,'typed_queue_statistics'],['../d3/dbe/structtyped__thread__pool__module_1_1typed__lockfree__job__queue__t_1_1typed__queue__statistics.html',1,'typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics']]],
+  ['typed_5fqueue_5fstatistics_5ft_26',['typed_queue_statistics_t',['../dd/dab/structtyped__thread__pool__module_1_1typed__queue__statistics__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fpool_5fbuilder_27',['typed_thread_pool_builder',['../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fpool_5ft_28',['typed_thread_pool_t',['../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fworker_5ft_29',['typed_thread_worker_t',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fworker_5ft_3c_20job_5ftypes_20_3e_30',['typed_thread_worker_t&lt; job_types &gt;',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]]
 ];

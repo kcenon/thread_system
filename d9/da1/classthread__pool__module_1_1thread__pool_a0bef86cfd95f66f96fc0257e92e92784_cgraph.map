@@ -1,9 +1,13 @@
 <map id="thread_pool_module::thread_pool::~thread_pool" name="thread_pool_module::thread_pool::~thread_pool">
-<area shape="rect" id="Node000001" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,5,208,45"/>
-<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,5,411,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,23,242,23,242,28,208,28"/>
-<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="459,13,636,38"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,23,445,23,445,28,411,28"/>
+<area shape="rect" id="Node000001" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,35,208,75"/>
+<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,35,411,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,52,242,52,242,57,208,57"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="459,42,636,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,52,445,52,445,57,411,57"/>
 <area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="684,5,895,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="636,23,670,23,670,28,636,28"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="636,41,670,37,671,42,636,47"/>
+<area shape="rect" id="Node000005" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="943,13,1119,38"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="636,59,759,62,827,60,894,55,973,39,974,44,895,60,827,65,759,67,636,64"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="895,32,929,32,929,37,895,37"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="942,19,908,19,908,14,942,14"/>
 </map>

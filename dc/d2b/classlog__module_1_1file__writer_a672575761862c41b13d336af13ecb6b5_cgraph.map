@@ -1,8 +1,13 @@
 <map id="log_module::file_writer::do_work" name="log_module::file_writer::do_work">
-<area shape="rect" id="Node000001" title="Processes and writes pending log messages to the file." alt="" coords="5,5,176,45"/>
+<area shape="rect" id="Node000001" title="Processes and writes pending log messages to the file." alt="" coords="5,37,176,77"/>
 <area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="224,5,411,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,23,210,23,210,28,176,28"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="459,5,645,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,31,445,32,445,37,411,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="458,19,424,19,424,14,458,14"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,43,210,38,211,43,176,48"/>
+<area shape="rect" id="Node000004" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="229,77,405,102"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="176,67,216,72,216,78,176,72"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="471,5,657,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,31,457,32,457,37,411,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="470,19,424,19,424,14,470,14"/>
+<area shape="rect" id="Node000005" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="459,69,669,109"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="405,95,445,96,445,101,405,101"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="458,83,419,83,419,78,458,78"/>
 </map>

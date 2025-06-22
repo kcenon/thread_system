@@ -1,0 +1,8 @@
+<map id="log_module::file_writer::set_use_backup" name="log_module::file_writer::set_use_backup">
+<area shape="rect" id="Node000001" title="Enables or disables the use of a backup log file." alt="" coords="5,5,176,45"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="224,13,400,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,23,210,23,210,28,177,28"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="448,5,659,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="400,31,434,32,434,37,400,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="448,19,414,19,414,14,448,14"/>
+</map>

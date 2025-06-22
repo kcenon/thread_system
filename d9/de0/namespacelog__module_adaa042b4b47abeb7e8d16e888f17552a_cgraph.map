@@ -1,5 +1,9 @@
 <map id="log_module::set_wake_interval" name="log_module::set_wake_interval">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,172,75"/>
 <area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="220,5,431,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,23,206,23,206,28,172,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,42,206,37,207,43,173,47"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="479,13,655,38"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="172,58,294,62,363,60,430,55,509,39,510,44,431,60,363,65,294,67,172,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="431,32,465,32,465,37,431,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="478,19,444,19,444,14,478,14"/>
 </map>

@@ -1,11 +1,16 @@
 <map id="log_module::file_writer::generate_file_name" name="log_module::file_writer::generate_file_name">
-<area shape="rect" id="Node000001" title="Generates the primary and backup log file names." alt="" coords="5,35,176,75"/>
+<area shape="rect" id="Node000001" title="Generates the primary and backup log file names." alt="" coords="5,63,176,103"/>
 <area shape="rect" id="Node000002" href="$db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="224,5,407,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,41,210,36,211,42,177,46"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="455,35,641,75"/>
-<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="176,54,224,55,407,55,441,54,441,60,407,60,224,60,176,59"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="407,34,441,39,441,44,407,39"/>
-<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="689,35,876,75"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="641,61,676,61,676,66,641,66"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="689,49,655,48,655,43,689,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,60,222,46,224,51,170,65"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="467,28,653,68"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="176,74,453,53,453,59,177,79"/>
+<area shape="rect" id="Node000005" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="227,121,403,146"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="177,99,246,115,244,120,176,105"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="407,31,453,35,453,41,407,36"/>
+<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="713,28,900,68"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="654,54,700,54,700,60,654,59"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="713,42,667,42,667,36,713,37"/>
+<area shape="rect" id="Node000006" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="455,113,665,153"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="403,139,441,140,441,145,403,145"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="454,127,417,127,417,122,454,122"/>
 </map>

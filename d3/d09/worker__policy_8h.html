@@ -85,7 +85,7 @@ $(function() {
 <p>Worker behavior policies and configuration.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d5/d51/thread__pool_2detail_2forward__declarations_8h_source.html">../detail/forward_declarations.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d93/thread__pool_2core_2configuration_8h_source.html">../core/configuration.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d02/thread__pool_2core_2config_8h_source.html">../core/config.h</a>&quot;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -93,18 +93,18 @@ Include dependency graph for worker_policy.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/dc7/worker__policy_8h__incl.png" border="0" usemap="#asources_2thread__pool_2workers_2worker__policy_8h" alt=""/></div>
 <map name="asources_2thread__pool_2workers_2worker__policy_8h" id="asources_2thread__pool_2workers_2worker__policy_8h">
-<area shape="rect" title="Worker behavior policies and configuration." alt="" coords="303,5,484,45"/>
+<area shape="rect" title="Worker behavior policies and configuration." alt="" coords="269,5,451,45"/>
 <area shape="rect" href="../../d5/d51/thread__pool_2detail_2forward__declarations_8h.html" title="Forward declarations for thread_pool module." alt="" coords="5,93,229,119"/>
-<area shape="poly" title=" " alt="" coords="328,48,172,92,170,87,326,43"/>
-<area shape="rect" href="../../d3/d93/thread__pool_2core_2configuration_8h.html" title="Central configuration for thread_pool module." alt="" coords="253,93,416,119"/>
-<area shape="poly" title=" " alt="" coords="381,47,354,84,350,80,377,44"/>
-<area shape="rect" title=" " alt="" coords="407,167,473,192"/>
-<area shape="poly" title=" " alt="" coords="408,45,431,93,441,152,436,153,425,94,403,47"/>
-<area shape="rect" title=" " alt="" coords="491,93,549,119"/>
-<area shape="poly" title=" " alt="" coords="425,43,491,84,489,88,423,48"/>
-<area shape="rect" title=" " alt="" coords="299,167,370,192"/>
-<area shape="poly" title=" " alt="" coords="337,119,337,153,332,153,332,119"/>
-<area shape="poly" title=" " alt="" coords="353,116,413,157,410,161,350,121"/>
+<area shape="poly" title=" " alt="" coords="303,48,167,92,165,86,301,43"/>
+<area shape="rect" href="../../de/d02/thread__pool_2core_2config_8h.html" title="Central configuration for thread_pool module." alt="" coords="253,93,371,119"/>
+<area shape="poly" title=" " alt="" coords="351,47,329,83,324,80,346,44"/>
+<area shape="rect" title=" " alt="" coords="373,167,440,192"/>
+<area shape="poly" title=" " alt="" coords="369,45,385,93,403,153,397,154,380,94,364,47"/>
+<area shape="rect" title=" " alt="" coords="445,93,504,119"/>
+<area shape="poly" title=" " alt="" coords="389,43,448,83,445,88,386,48"/>
+<area shape="rect" title=" " alt="" coords="277,167,347,192"/>
+<area shape="poly" title=" " alt="" coords="315,119,315,153,309,153,309,119"/>
+<area shape="poly" title=" " alt="" coords="329,117,382,156,379,160,326,121"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -112,20 +112,28 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/dc6/worker__policy_8h__dep__incl.png" border="0" usemap="#asources_2thread__pool_2workers_2worker__policy_8hdep" alt=""/></div>
 <map name="asources_2thread__pool_2workers_2worker__policy_8hdep" id="asources_2thread__pool_2workers_2worker__policy_8hdep">
-<area shape="rect" title="Worker behavior policies and configuration." alt="" coords="103,5,284,45"/>
-<area shape="rect" href="../../d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="5,93,179,133"/>
-<area shape="poly" title=" " alt="" coords="162,56,116,95,113,91,159,52"/>
-<area shape="rect" href="../../d9/de2/thread__worker_8h.html" title=" " alt="" coords="203,93,389,133"/>
-<area shape="poly" title=" " alt="" coords="228,52,275,91,272,95,225,56"/>
-<area shape="rect" href="../../d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="13,269,171,324"/>
-<area shape="poly" title=" " alt="" coords="95,147,95,269,89,269,89,147"/>
-<area shape="rect" href="../../d3/dec/thread__pool_8h.html" title=" " alt="" coords="165,181,318,221"/>
-<area shape="poly" title=" " alt="" coords="279,146,256,183,251,180,274,144"/>
-<area shape="rect" href="../../de/d61/thread__worker_8cpp.html" title=" " alt="" coords="343,181,543,221"/>
-<area shape="poly" title=" " alt="" coords="342,138,412,179,409,184,339,143"/>
-<area shape="poly" title=" " alt="" coords="201,231,135,272,133,267,198,226"/>
-<area shape="rect" href="../../df/d17/thread__pool_8cpp.html" title=" " alt="" coords="196,277,359,317"/>
-<area shape="poly" title=" " alt="" coords="256,233,273,276,268,278,251,235"/>
+<area shape="rect" title="Worker behavior policies and configuration." alt="" coords="356,5,537,45"/>
+<area shape="rect" href="../../d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="360,101,533,141"/>
+<area shape="poly" title=" " alt="" coords="449,59,449,101,444,101,444,59"/>
+<area shape="rect" href="../../dc/dcc/lockfree__thread__worker_8h.html" title=" " alt="" coords="153,93,335,148"/>
+<area shape="poly" title=" " alt="" coords="395,53,302,96,300,91,392,49"/>
+<area shape="rect" href="../../d9/de2/thread__worker_8h.html" title=" " alt="" coords="558,101,743,141"/>
+<area shape="poly" title=" " alt="" coords="502,49,611,98,608,103,499,54"/>
+<area shape="rect" href="../../d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="443,299,602,353"/>
+<area shape="poly" title=" " alt="" coords="452,154,460,200,474,250,488,275,503,297,499,300,483,277,470,252,454,202,447,155"/>
+<area shape="rect" href="../../dc/df3/lockfree__thread__pool_8h.html" title=" " alt="" coords="5,196,165,251"/>
+<area shape="poly" title=" " alt="" coords="193,157,128,198,126,194,190,153"/>
+<area shape="rect" href="../../d4/dd0/lockfree__thread__worker_8cpp.html" title=" " alt="" coords="190,196,373,251"/>
+<area shape="poly" title=" " alt="" coords="261,160,274,195,269,197,256,162"/>
+<area shape="rect" href="../../da/d0b/lockfree__thread__pool_8cpp.html" title=" " alt="" coords="5,299,165,353"/>
+<area shape="poly" title=" " alt="" coords="88,264,88,299,83,299,83,264"/>
+<area shape="rect" href="../../d3/dec/thread__pool_8h.html" title=" " alt="" coords="707,203,861,243"/>
+<area shape="poly" title=" " alt="" coords="688,147,761,201,757,205,685,151"/>
+<area shape="rect" href="../../de/d61/thread__worker_8cpp.html" title=" " alt="" coords="484,203,684,243"/>
+<area shape="poly" title=" " alt="" coords="633,154,599,205,594,202,628,151"/>
+<area shape="poly" title=" " alt="" coords="723,251,592,301,590,296,721,246"/>
+<area shape="rect" href="../../df/d17/thread__pool_8cpp.html" title=" " alt="" coords="703,306,865,346"/>
+<area shape="poly" title=" " alt="" coords="787,257,787,306,781,306,781,257"/>
 </map>
 </div>
 </div>
@@ -182,7 +190,7 @@ Functions</h2></td></tr>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:15 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

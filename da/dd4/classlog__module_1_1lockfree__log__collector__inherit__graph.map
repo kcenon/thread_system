@@ -1,0 +1,7 @@
+<map id="log_module::lockfree_log_collector" name="log_module::lockfree_log_collector">
+<area shape="rect" id="Node000001" title="A high&#45;performance lock&#45;free log collector for concurrent logging." alt="" coords="9,1132,202,1392"/>
+<area shape="rect" id="Node000002" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="15,579,196,1084"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,1097,108,1132,103,1132,103,1097"/>
+<area shape="rect" id="Node000003" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,531"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,544,108,578,103,578,103,544"/>
+</map>

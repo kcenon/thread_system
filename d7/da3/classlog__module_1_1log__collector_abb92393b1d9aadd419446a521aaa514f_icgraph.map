@@ -1,0 +1,5 @@
+<map id="log_module::log_collector::enqueue_log" name="log_module::log_collector::enqueue_log">
+<area shape="rect" id="Node000001" title="Enqueues a log message for processing." alt="" coords="228,5,417,45"/>
+<area shape="rect" id="Node000002" href="$d6/de6/classlog__module_1_1lockfree__log__collector.html#a7c3a818111e17660f5b3d985619162b4" title="Processes log messages using lock&#45;free dequeue operations." alt="" coords="5,5,180,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,28,180,28,180,23,214,23"/>
+</map>

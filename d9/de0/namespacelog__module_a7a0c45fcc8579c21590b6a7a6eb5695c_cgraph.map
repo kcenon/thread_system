@@ -1,5 +1,6 @@
 <map id="log_module::time_point" name="log_module::time_point">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,13,181,38"/>
 <area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="229,5,440,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,31,216,32,216,37,181,37"/>
+<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="229,19,195,19,195,14,229,14"/>
 </map>

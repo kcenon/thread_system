@@ -1,13 +1,13 @@
 <map id="thread_module::result::has_value" name="thread_module::result::has_value">
-<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="472,90,637,130"/>
-<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="254,8,413,63"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="481,88,412,65,414,59,483,83"/>
-<area shape="rect" id="Node000004" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ae3d7995d0f844b13c60e827f0d5cf06a" title="Clear all jobs from the queue." alt="" coords="243,90,424,130"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="458,113,424,113,424,107,458,107"/>
-<area shape="rect" id="Node000006" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#a59377d7d12b71c1694d5165e50169fd2" title="Dequeue a single job." alt="" coords="243,154,424,194"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="472,136,404,157,402,151,471,131"/>
-<area shape="rect" id="Node000003" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916" title="Builds and starts a thread pool with the configured options." alt="" coords="21,5,179,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,37,179,36,179,31,240,32"/>
-<area shape="rect" id="Node000005" href="$d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#aaaff3b60bc56edc5a2490e1b4aee6fa2" title="Destructor." alt="" coords="5,84,195,139"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,113,195,113,195,108,229,108"/>
+<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="464,90,629,130"/>
+<area shape="rect" id="Node000002" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a8e49f0c5c226ecd5aea76ded9c9273d9" title="Builds a thread pool with the configured options." alt="" coords="246,8,405,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="473,88,404,65,406,59,475,83"/>
+<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca" title="Clear all jobs from the queue." alt="" coords="235,90,416,130"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="450,113,416,113,416,107,450,107"/>
+<area shape="rect" id="Node000006" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="235,154,416,194"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="464,136,396,157,394,151,463,131"/>
+<area shape="rect" id="Node000003" href="$dc/dd9/classthread__pool__module_1_1thread__pool__builder.html#a25c170e7198aa2a6b2c16f0dc7fb7916" title="Builds and starts a thread pool with the configured options." alt="" coords="17,5,175,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,37,175,36,176,31,232,32"/>
+<area shape="rect" id="Node000005" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a4b5e4a86af5f59bf79cf8899f6782bfa" title="Destructor." alt="" coords="5,84,187,139"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="221,113,187,113,187,108,221,108"/>
 </map>

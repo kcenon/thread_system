@@ -1,7 +1,7 @@
 <map id="log_module::console_writer" name="log_module::console_writer">
-<area shape="rect" id="Node000001" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="292,1184,476,1364"/>
+<area shape="rect" id="Node000001" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="292,1194,476,1354"/>
 <area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="732,591,932,996"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="726,1009,682,1060,631,1102,611,1112,593,1116,559,1115,526,1113,508,1117,489,1126,458,1153,431,1185,427,1182,454,1149,487,1122,506,1112,525,1108,559,1110,592,1111,609,1107,628,1098,679,1056,722,1006"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="726,1009,682,1060,631,1102,611,1112,593,1116,559,1115,526,1113,508,1117,489,1126,453,1157,425,1195,421,1192,450,1154,487,1122,506,1112,525,1108,559,1110,592,1111,609,1107,628,1098,679,1056,722,1006"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="273,13,357,78"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="313,78,302,179,293,313,293,381,298,442,308,492,325,526,358,556,391,571,426,575,462,572,501,568,541,566,584,571,629,588,678,620,722,657,718,661,674,624,627,593,583,576,541,571,501,573,463,577,426,580,390,576,355,561,321,530,303,494,292,443,288,381,288,313,296,179,308,78"/>
 <area shape="rect" id="Node000011" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="73,148,258,528"/>
@@ -24,7 +24,7 @@
 <area shape="rect" id="Node000009" title=" " alt="" coords="712,298,856,378"/>
 <area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="776,379,762,465,759,516,763,566,764,574,759,575,757,567,754,516,756,464,771,378"/>
 <area shape="rect" id="Node000010" title=" " alt="" coords="233,753,401,833"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="325,833,372,1167,367,1168,320,834"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="325,833,373,1177,368,1178,320,834"/>
 <area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="231,527,302,737,297,739,226,529"/>
 <area shape="rect" id="Node000017" title=" " alt="" coords="109,1020,269,1100"/>
 <area shape="poly" id="edge19_Node000017_Node000011" title=" " alt="" coords="174,528,190,1004,185,1004,169,528"/>

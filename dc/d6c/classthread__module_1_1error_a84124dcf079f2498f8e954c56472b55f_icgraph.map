@@ -1,5 +1,19 @@
 <map id="thread_module::error::message" name="thread_module::error::message">
-<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="296,5,455,45"/>
-<area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="5,5,248,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,28,248,28,248,23,282,23"/>
+<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="523,235,681,275"/>
+<area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="232,5,475,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="586,223,569,185,544,140,512,96,473,59,453,48,456,43,476,55,516,93,549,137,574,182,591,221"/>
+<area shape="rect" id="Node000003" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a1c3ba2ebf75052d6933fed1eca5e9a95" title="Enqueues a single job into the thread pool." alt="" coords="270,70,437,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="574,226,529,181,502,158,473,138,436,121,438,116,476,134,506,154,533,177,577,222"/>
+<area shape="rect" id="Node000004" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#ac3991a2dda0aa7f92be3c6fa951bf003" title="Adds a new worker thread to the pool." alt="" coords="270,149,437,203"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="524,233,436,205,438,200,526,228"/>
+<area shape="rect" id="Node000005" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a22e8ed843c7059ef6cb30faae0f5f37e" title="Enqueues multiple jobs into the thread pool." alt="" coords="270,227,437,282"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="509,257,437,257,437,252,509,252"/>
+<area shape="rect" id="Node000006" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a56d054859656852592773055135f6a77" title="Adds multiple worker threads to the pool." alt="" coords="270,306,437,361"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="526,281,438,310,436,305,524,276"/>
+<area shape="rect" id="Node000007" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a9aec952cef83bb82fa1610c395e52b89" title="Starts the thread pool and all associated workers." alt="" coords="270,385,437,439"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="577,287,532,332,476,374,438,392,436,387,473,370,529,328,573,283"/>
+<area shape="rect" id="Node000008" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a191e9ac1ccbf901f3d166be1690d4f4a" title="Stops the thread pool and optionally clears pending jobs." alt="" coords="252,464,455,504"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="591,288,574,326,549,371,516,415,476,453,453,466,451,462,473,449,512,412,544,368,569,324,586,286"/>
+<area shape="rect" id="Node000009" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a7c55bf3eb6ec3383b1a7eba593d2b02d" title="Virtual destructor. Ensures proper cleanup of all resources." alt="" coords="5,457,184,511"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="238,487,184,487,184,481,238,481"/>
 </map>

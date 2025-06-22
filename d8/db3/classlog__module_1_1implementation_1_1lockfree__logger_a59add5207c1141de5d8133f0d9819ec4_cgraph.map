@@ -1,0 +1,8 @@
+<map id="log_module::implementation::lockfree_logger::set_max_lines" name="log_module::implementation::lockfree_logger::set_max_lines">
+<area shape="rect" id="Node000001" title="Sets the maximum number of recent log lines." alt="" coords="5,5,239,45"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="287,13,463,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,23,273,23,273,28,239,28"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="511,5,721,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,31,497,32,497,37,463,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="510,19,476,19,476,14,510,14"/>
+</map>

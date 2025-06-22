@@ -1,5 +1,10 @@
 <map id="log_module::log_job::convert_message" name="log_module::log_job::convert_message">
-<area shape="rect" id="Node000001" title="Converts the stored message data (in various encodings) to std::string." alt="" coords="5,5,159,45"/>
-<area shape="rect" id="Node000002" href="$d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding." alt="" coords="207,5,380,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,23,193,23,193,28,159,28"/>
+<area shape="rect" id="Node000001" title="Converts the stored message data (in various encodings) to std::string." alt="" coords="5,35,159,75"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="207,13,383,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,41,193,37,194,42,160,47"/>
+<area shape="rect" id="Node000004" href="$d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding." alt="" coords="208,63,381,103"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="160,62,195,67,194,72,159,67"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="431,5,641,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="383,31,417,32,417,37,383,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="430,19,396,19,396,14,430,14"/>
 </map>

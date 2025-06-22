@@ -199,18 +199,18 @@ Static Private Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations like splitting or replacing. </p>
 <p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
-<h3><a class="anchor" id="autotoc_md64"></a>
+<h3><a class="anchor" id="autotoc_md90"></a>
 Encoding Conversions</h3>
 <ul>
 <li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
 <li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md65"></a>
+<h3><a class="anchor" id="autotoc_md91"></a>
 Base64</h3>
 <ul>
 <li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md66"></a>
+<h3><a class="anchor" id="autotoc_md92"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
 <div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e">convert_string::to_string</a>(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
@@ -386,81 +386,81 @@ Usage Example</h3>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00465">465</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  467</span>    {</div>
-<div class="line"><span class="lineno">  468</span>        <span class="keyword">static</span> <span class="keyword">const</span> std::string base64_chars = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></div>
-<div class="line"><span class="lineno">  469</span>                                                <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></div>
-<div class="line"><span class="lineno">  470</span>                                                <span class="stringliteral">&quot;0123456789+/&quot;</span>;</div>
-<div class="line"><span class="lineno">  471</span> </div>
-<div class="line"><span class="lineno">  472</span>        <span class="keywordflow">if</span> (base64_str.length() % 4 != 0)</div>
-<div class="line"><span class="lineno">  473</span>        {</div>
-<div class="line"><span class="lineno">  474</span>            <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid base64 input length&quot;</span> };</div>
-<div class="line"><span class="lineno">  475</span>        }</div>
-<div class="line"><span class="lineno">  476</span> </div>
-<div class="line"><span class="lineno">  477</span>        <span class="keywordtype">size_t</span> padding = 0;</div>
-<div class="line"><span class="lineno">  478</span>        <span class="keywordflow">if</span> (!base64_str.empty())</div>
-<div class="line"><span class="lineno">  479</span>        {</div>
-<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">if</span> (base64_str[base64_str.length() - 1] == <span class="charliteral">&#39;=&#39;</span>)</div>
-<div class="line"><span class="lineno">  481</span>                padding++;</div>
-<div class="line"><span class="lineno">  482</span>            <span class="keywordflow">if</span> (base64_str.length() &gt;= 2 &amp;&amp; base64_str[base64_str.length() - 2] == <span class="charliteral">&#39;=&#39;</span>)</div>
-<div class="line"><span class="lineno">  483</span>                padding++;</div>
-<div class="line"><span class="lineno">  484</span>            <span class="keywordflow">if</span> (padding &gt; 2)</div>
-<div class="line"><span class="lineno">  485</span>            {</div>
-<div class="line"><span class="lineno">  486</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid padding in base64 string&quot;</span> };</div>
-<div class="line"><span class="lineno">  487</span>            }</div>
-<div class="line"><span class="lineno">  488</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00461">461</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  463</span>    {</div>
+<div class="line"><span class="lineno">  464</span>        <span class="keyword">static</span> <span class="keyword">const</span> std::string base64_chars = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></div>
+<div class="line"><span class="lineno">  465</span>                                                <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></div>
+<div class="line"><span class="lineno">  466</span>                                                <span class="stringliteral">&quot;0123456789+/&quot;</span>;</div>
+<div class="line"><span class="lineno">  467</span> </div>
+<div class="line"><span class="lineno">  468</span>        <span class="keywordflow">if</span> (base64_str.length() % 4 != 0)</div>
+<div class="line"><span class="lineno">  469</span>        {</div>
+<div class="line"><span class="lineno">  470</span>            <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid base64 input length&quot;</span> };</div>
+<div class="line"><span class="lineno">  471</span>        }</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>        <span class="keywordtype">size_t</span> padding = 0;</div>
+<div class="line"><span class="lineno">  474</span>        <span class="keywordflow">if</span> (!base64_str.empty())</div>
+<div class="line"><span class="lineno">  475</span>        {</div>
+<div class="line"><span class="lineno">  476</span>            <span class="keywordflow">if</span> (base64_str[base64_str.length() - 1] == <span class="charliteral">&#39;=&#39;</span>)</div>
+<div class="line"><span class="lineno">  477</span>                padding++;</div>
+<div class="line"><span class="lineno">  478</span>            <span class="keywordflow">if</span> (base64_str.length() &gt;= 2 &amp;&amp; base64_str[base64_str.length() - 2] == <span class="charliteral">&#39;=&#39;</span>)</div>
+<div class="line"><span class="lineno">  479</span>                padding++;</div>
+<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">if</span> (padding &gt; 2)</div>
+<div class="line"><span class="lineno">  481</span>            {</div>
+<div class="line"><span class="lineno">  482</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid padding in base64 string&quot;</span> };</div>
+<div class="line"><span class="lineno">  483</span>            }</div>
+<div class="line"><span class="lineno">  484</span>        }</div>
+<div class="line"><span class="lineno">  485</span> </div>
+<div class="line"><span class="lineno">  486</span>        <span class="keywordtype">size_t</span> decoded_length = (base64_str.length() / 4) * 3 - padding;</div>
+<div class="line"><span class="lineno">  487</span>        std::vector&lt;uint8_t&gt; decoded_data;</div>
+<div class="line"><span class="lineno">  488</span>        decoded_data.reserve(decoded_length);</div>
 <div class="line"><span class="lineno">  489</span> </div>
-<div class="line"><span class="lineno">  490</span>        <span class="keywordtype">size_t</span> decoded_length = (base64_str.length() / 4) * 3 - padding;</div>
-<div class="line"><span class="lineno">  491</span>        std::vector&lt;uint8_t&gt; decoded_data;</div>
-<div class="line"><span class="lineno">  492</span>        decoded_data.reserve(decoded_length);</div>
-<div class="line"><span class="lineno">  493</span> </div>
-<div class="line"><span class="lineno">  494</span>        std::vector&lt;int&gt; decoding_table(256, -1);</div>
-<div class="line"><span class="lineno">  495</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 64; i++)</div>
-<div class="line"><span class="lineno">  496</span>        {</div>
-<div class="line"><span class="lineno">  497</span>            decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(base64_chars[<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(i)])] = i;</div>
-<div class="line"><span class="lineno">  498</span>        }</div>
-<div class="line"><span class="lineno">  499</span> </div>
-<div class="line"><span class="lineno">  500</span>        uint32_t buffer = 0;</div>
-<div class="line"><span class="lineno">  501</span>        <span class="keywordtype">int</span> bits_collected = 0;</div>
-<div class="line"><span class="lineno">  502</span>        <span class="keywordtype">size_t</span> i = 0;</div>
-<div class="line"><span class="lineno">  503</span>        <span class="keywordflow">for</span> (; i &lt; base64_str.length(); ++i)</div>
-<div class="line"><span class="lineno">  504</span>        {</div>
-<div class="line"><span class="lineno">  505</span>            <span class="keywordtype">char</span> c = base64_str[i];</div>
-<div class="line"><span class="lineno">  506</span>            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;=&#39;</span>)</div>
-<div class="line"><span class="lineno">  507</span>            {</div>
-<div class="line"><span class="lineno">  508</span>                <span class="keywordflow">if</span> (i &lt; base64_str.length() - padding)</div>
-<div class="line"><span class="lineno">  509</span>                {</div>
-<div class="line"><span class="lineno">  510</span>                    <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid padding position in base64 string&quot;</span> };</div>
-<div class="line"><span class="lineno">  511</span>                }</div>
-<div class="line"><span class="lineno">  512</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  513</span>            }</div>
-<div class="line"><span class="lineno">  514</span> </div>
-<div class="line"><span class="lineno">  515</span>            <span class="keywordflow">if</span> (decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(c)] == -1)</div>
-<div class="line"><span class="lineno">  516</span>            {</div>
-<div class="line"><span class="lineno">  517</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid character in base64 string&quot;</span> };</div>
-<div class="line"><span class="lineno">  518</span>            }</div>
-<div class="line"><span class="lineno">  519</span> </div>
-<div class="line"><span class="lineno">  520</span>            buffer = (buffer &lt;&lt; 6) | static_cast&lt;uint32_t&gt;(decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(c)]);</div>
-<div class="line"><span class="lineno">  521</span>            bits_collected += 6;</div>
-<div class="line"><span class="lineno">  522</span> </div>
-<div class="line"><span class="lineno">  523</span>            <span class="keywordflow">if</span> (bits_collected &gt;= 8)</div>
-<div class="line"><span class="lineno">  524</span>            {</div>
-<div class="line"><span class="lineno">  525</span>                bits_collected -= 8;</div>
-<div class="line"><span class="lineno">  526</span>                decoded_data.push_back((buffer &gt;&gt; bits_collected) &amp; 0xFF);</div>
-<div class="line"><span class="lineno">  527</span>            }</div>
-<div class="line"><span class="lineno">  528</span>        }</div>
-<div class="line"><span class="lineno">  529</span> </div>
-<div class="line"><span class="lineno">  530</span>        <span class="keywordflow">for</span> (; i &lt; base64_str.length(); ++i)</div>
-<div class="line"><span class="lineno">  531</span>        {</div>
-<div class="line"><span class="lineno">  532</span>            <span class="keywordflow">if</span> (base64_str[i] != <span class="charliteral">&#39;=&#39;</span>)</div>
-<div class="line"><span class="lineno">  533</span>            {</div>
-<div class="line"><span class="lineno">  534</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(),</div>
-<div class="line"><span class="lineno">  535</span>                         <span class="stringliteral">&quot;Invalid character after padding in base64 string&quot;</span> };</div>
-<div class="line"><span class="lineno">  536</span>            }</div>
-<div class="line"><span class="lineno">  537</span>        }</div>
-<div class="line"><span class="lineno">  538</span> </div>
-<div class="line"><span class="lineno">  539</span>        <span class="keywordflow">return</span> { decoded_data, std::nullopt };</div>
-<div class="line"><span class="lineno">  540</span>    }</div>
+<div class="line"><span class="lineno">  490</span>        std::vector&lt;int&gt; decoding_table(256, -1);</div>
+<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 64; i++)</div>
+<div class="line"><span class="lineno">  492</span>        {</div>
+<div class="line"><span class="lineno">  493</span>            decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(base64_chars[<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(i)])] = i;</div>
+<div class="line"><span class="lineno">  494</span>        }</div>
+<div class="line"><span class="lineno">  495</span> </div>
+<div class="line"><span class="lineno">  496</span>        uint32_t buffer = 0;</div>
+<div class="line"><span class="lineno">  497</span>        <span class="keywordtype">int</span> bits_collected = 0;</div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordtype">size_t</span> i = 0;</div>
+<div class="line"><span class="lineno">  499</span>        <span class="keywordflow">for</span> (; i &lt; base64_str.length(); ++i)</div>
+<div class="line"><span class="lineno">  500</span>        {</div>
+<div class="line"><span class="lineno">  501</span>            <span class="keywordtype">char</span> c = base64_str[i];</div>
+<div class="line"><span class="lineno">  502</span>            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;=&#39;</span>)</div>
+<div class="line"><span class="lineno">  503</span>            {</div>
+<div class="line"><span class="lineno">  504</span>                <span class="keywordflow">if</span> (i &lt; base64_str.length() - padding)</div>
+<div class="line"><span class="lineno">  505</span>                {</div>
+<div class="line"><span class="lineno">  506</span>                    <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid padding position in base64 string&quot;</span> };</div>
+<div class="line"><span class="lineno">  507</span>                }</div>
+<div class="line"><span class="lineno">  508</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  509</span>            }</div>
+<div class="line"><span class="lineno">  510</span> </div>
+<div class="line"><span class="lineno">  511</span>            <span class="keywordflow">if</span> (decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(c)] == -1)</div>
+<div class="line"><span class="lineno">  512</span>            {</div>
+<div class="line"><span class="lineno">  513</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(), <span class="stringliteral">&quot;Invalid character in base64 string&quot;</span> };</div>
+<div class="line"><span class="lineno">  514</span>            }</div>
+<div class="line"><span class="lineno">  515</span> </div>
+<div class="line"><span class="lineno">  516</span>            buffer = (buffer &lt;&lt; 6) | static_cast&lt;uint32_t&gt;(decoding_table[<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span><span class="keyword">&gt;</span>(c)]);</div>
+<div class="line"><span class="lineno">  517</span>            bits_collected += 6;</div>
+<div class="line"><span class="lineno">  518</span> </div>
+<div class="line"><span class="lineno">  519</span>            <span class="keywordflow">if</span> (bits_collected &gt;= 8)</div>
+<div class="line"><span class="lineno">  520</span>            {</div>
+<div class="line"><span class="lineno">  521</span>                bits_collected -= 8;</div>
+<div class="line"><span class="lineno">  522</span>                decoded_data.push_back((buffer &gt;&gt; bits_collected) &amp; 0xFF);</div>
+<div class="line"><span class="lineno">  523</span>            }</div>
+<div class="line"><span class="lineno">  524</span>        }</div>
+<div class="line"><span class="lineno">  525</span> </div>
+<div class="line"><span class="lineno">  526</span>        <span class="keywordflow">for</span> (; i &lt; base64_str.length(); ++i)</div>
+<div class="line"><span class="lineno">  527</span>        {</div>
+<div class="line"><span class="lineno">  528</span>            <span class="keywordflow">if</span> (base64_str[i] != <span class="charliteral">&#39;=&#39;</span>)</div>
+<div class="line"><span class="lineno">  529</span>            {</div>
+<div class="line"><span class="lineno">  530</span>                <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(),</div>
+<div class="line"><span class="lineno">  531</span>                         <span class="stringliteral">&quot;Invalid character after padding in base64 string&quot;</span> };</div>
+<div class="line"><span class="lineno">  532</span>            }</div>
+<div class="line"><span class="lineno">  533</span>        }</div>
+<div class="line"><span class="lineno">  534</span> </div>
+<div class="line"><span class="lineno">  535</span>        <span class="keywordflow">return</span> { decoded_data, std::nullopt };</div>
+<div class="line"><span class="lineno">  536</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -497,39 +497,39 @@ Usage Example</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The Base64-encoded representation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00431">431</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  432</span>    {</div>
-<div class="line"><span class="lineno">  433</span>        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> base64_chars[] = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></div>
-<div class="line"><span class="lineno">  434</span>                                           <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></div>
-<div class="line"><span class="lineno">  435</span>                                           <span class="stringliteral">&quot;0123456789+/&quot;</span>;</div>
-<div class="line"><span class="lineno">  436</span> </div>
-<div class="line"><span class="lineno">  437</span>        std::string encoded_string;</div>
-<div class="line"><span class="lineno">  438</span>        <span class="keywordtype">size_t</span> i = 0;</div>
-<div class="line"><span class="lineno">  439</span>        uint32_t octet_a, octet_b, octet_c;</div>
-<div class="line"><span class="lineno">  440</span>        uint32_t triple;</div>
-<div class="line"><span class="lineno">  441</span> </div>
-<div class="line"><span class="lineno">  442</span>        <span class="keywordflow">while</span> (i &lt; data.size())</div>
-<div class="line"><span class="lineno">  443</span>        {</div>
-<div class="line"><span class="lineno">  444</span>            octet_a = i &lt; data.size() ? data[i++] : 0;</div>
-<div class="line"><span class="lineno">  445</span>            octet_b = i &lt; data.size() ? data[i++] : 0;</div>
-<div class="line"><span class="lineno">  446</span>            octet_c = i &lt; data.size() ? data[i++] : 0;</div>
-<div class="line"><span class="lineno">  447</span> </div>
-<div class="line"><span class="lineno">  448</span>            triple = (octet_a &lt;&lt; 16) + (octet_b &lt;&lt; 8) + octet_c;</div>
-<div class="line"><span class="lineno">  449</span> </div>
-<div class="line"><span class="lineno">  450</span>            encoded_string += base64_chars[(triple &gt;&gt; 18) &amp; 0x3F];</div>
-<div class="line"><span class="lineno">  451</span>            encoded_string += base64_chars[(triple &gt;&gt; 12) &amp; 0x3F];</div>
-<div class="line"><span class="lineno">  452</span>            encoded_string += base64_chars[(triple &gt;&gt; 6) &amp; 0x3F];</div>
-<div class="line"><span class="lineno">  453</span>            encoded_string += base64_chars[triple &amp; 0x3F];</div>
-<div class="line"><span class="lineno">  454</span>        }</div>
-<div class="line"><span class="lineno">  455</span> </div>
-<div class="line"><span class="lineno">  456</span>        <span class="keywordtype">int</span> mod_table[] = { 0, 2, 1 };</div>
-<div class="line"><span class="lineno">  457</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; mod_table[data.size() % 3]; j++)</div>
-<div class="line"><span class="lineno">  458</span>        {</div>
-<div class="line"><span class="lineno">  459</span>            encoded_string[encoded_string.size() - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(j)] = <span class="charliteral">&#39;=&#39;</span>;</div>
-<div class="line"><span class="lineno">  460</span>        }</div>
-<div class="line"><span class="lineno">  461</span> </div>
-<div class="line"><span class="lineno">  462</span>        <span class="keywordflow">return</span> encoded_string;</div>
-<div class="line"><span class="lineno">  463</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00427">427</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  428</span>    {</div>
+<div class="line"><span class="lineno">  429</span>        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> base64_chars[] = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></div>
+<div class="line"><span class="lineno">  430</span>                                           <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></div>
+<div class="line"><span class="lineno">  431</span>                                           <span class="stringliteral">&quot;0123456789+/&quot;</span>;</div>
+<div class="line"><span class="lineno">  432</span> </div>
+<div class="line"><span class="lineno">  433</span>        std::string encoded_string;</div>
+<div class="line"><span class="lineno">  434</span>        <span class="keywordtype">size_t</span> i = 0;</div>
+<div class="line"><span class="lineno">  435</span>        uint32_t octet_a, octet_b, octet_c;</div>
+<div class="line"><span class="lineno">  436</span>        uint32_t triple;</div>
+<div class="line"><span class="lineno">  437</span> </div>
+<div class="line"><span class="lineno">  438</span>        <span class="keywordflow">while</span> (i &lt; data.size())</div>
+<div class="line"><span class="lineno">  439</span>        {</div>
+<div class="line"><span class="lineno">  440</span>            octet_a = i &lt; data.size() ? data[i++] : 0;</div>
+<div class="line"><span class="lineno">  441</span>            octet_b = i &lt; data.size() ? data[i++] : 0;</div>
+<div class="line"><span class="lineno">  442</span>            octet_c = i &lt; data.size() ? data[i++] : 0;</div>
+<div class="line"><span class="lineno">  443</span> </div>
+<div class="line"><span class="lineno">  444</span>            triple = (octet_a &lt;&lt; 16) + (octet_b &lt;&lt; 8) + octet_c;</div>
+<div class="line"><span class="lineno">  445</span> </div>
+<div class="line"><span class="lineno">  446</span>            encoded_string += base64_chars[(triple &gt;&gt; 18) &amp; 0x3F];</div>
+<div class="line"><span class="lineno">  447</span>            encoded_string += base64_chars[(triple &gt;&gt; 12) &amp; 0x3F];</div>
+<div class="line"><span class="lineno">  448</span>            encoded_string += base64_chars[(triple &gt;&gt; 6) &amp; 0x3F];</div>
+<div class="line"><span class="lineno">  449</span>            encoded_string += base64_chars[triple &amp; 0x3F];</div>
+<div class="line"><span class="lineno">  450</span>        }</div>
+<div class="line"><span class="lineno">  451</span> </div>
+<div class="line"><span class="lineno">  452</span>        <span class="keywordtype">int</span> mod_table[] = { 0, 2, 1 };</div>
+<div class="line"><span class="lineno">  453</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; mod_table[data.size() % 3]; j++)</div>
+<div class="line"><span class="lineno">  454</span>        {</div>
+<div class="line"><span class="lineno">  455</span>            encoded_string[encoded_string.size() - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(j)] = <span class="charliteral">&#39;=&#39;</span>;</div>
+<div class="line"><span class="lineno">  456</span>        }</div>
+<div class="line"><span class="lineno">  457</span> </div>
+<div class="line"><span class="lineno">  458</span>        <span class="keywordflow">return</span> encoded_string;</div>
+<div class="line"><span class="lineno">  459</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -809,11 +809,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00381">381</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  383</span>    {</div>
-<div class="line"><span class="lineno">  384</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a486c32b21f68395d8ecc2f96b49b2fcf">base64_decode</a>(base64_str);</div>
-<div class="line"><span class="lineno">  385</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_a486c32b21f68395d8ecc2f96b49b2fcf"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a486c32b21f68395d8ecc2f96b49b2fcf">utility_module::convert_string::base64_decode</a></div><div class="ttdeci">static auto base64_decode(const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Decodes a Base64 string into a byte array.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00465">convert_string.cpp:465</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00377">377</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  379</span>    {</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a486c32b21f68395d8ecc2f96b49b2fcf">base64_decode</a>(base64_str);</div>
+<div class="line"><span class="lineno">  381</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_a486c32b21f68395d8ecc2f96b49b2fcf"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a486c32b21f68395d8ecc2f96b49b2fcf">utility_module::convert_string::base64_decode</a></div><div class="ttdeci">static auto base64_decode(const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Decodes a Base64 string into a byte array.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00461">convert_string.cpp:461</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -850,16 +850,16 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A string representing the code page name, or an empty string if unknown. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00285">285</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  286</span>    {</div>
-<div class="line"><span class="lineno">  287</span>        <span class="keywordflow">switch</span> (code_page)</div>
-<div class="line"><span class="lineno">  288</span>        {</div>
-<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">case</span> 65001:</div>
-<div class="line"><span class="lineno">  290</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;UTF-8&quot;</span>;</div>
-<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  292</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;CP&quot;</span> + std::to_string(code_page);</div>
-<div class="line"><span class="lineno">  293</span>        }</div>
-<div class="line"><span class="lineno">  294</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00281">281</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  282</span>    {</div>
+<div class="line"><span class="lineno">  283</span>        <span class="keywordflow">switch</span> (code_page)</div>
+<div class="line"><span class="lineno">  284</span>        {</div>
+<div class="line"><span class="lineno">  285</span>        <span class="keywordflow">case</span> 65001:</div>
+<div class="line"><span class="lineno">  286</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;UTF-8&quot;</span>;</div>
+<div class="line"><span class="lineno">  287</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;CP&quot;</span> + std::to_string(code_page);</div>
+<div class="line"><span class="lineno">  289</span>        }</div>
+<div class="line"><span class="lineno">  290</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -964,15 +964,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
 <p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00272">272</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  273</span>    {</div>
 <div class="line"><span class="lineno">  274</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="lineno">  275</span>        <span class="comment">// On Windows, prefer UTF-8 if available (Windows 10 1903+)</span></div>
-<div class="line"><span class="lineno">  276</span>        <span class="comment">// Fall back to system code page if UTF-8 is not the active code page</span></div>
-<div class="line"><span class="lineno">  277</span>        <span class="keyword">auto</span> acp = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(GetACP());</div>
-<div class="line"><span class="lineno">  278</span>        <span class="keywordflow">return</span> (acp == 65001) ? 65001 : acp;</div>
-<div class="line"><span class="lineno">  279</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  280</span>        <span class="comment">// On Unix-like systems, default to UTF-8</span></div>
-<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">return</span> 65001;</div>
-<div class="line"><span class="lineno">  282</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  283</span>    }</div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(GetACP());</div>
+<div class="line"><span class="lineno">  276</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">return</span> 65001;</div>
+<div class="line"><span class="lineno">  278</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  279</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1011,11 +1007,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00181">181</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  182</span>    {</div>
-<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(<span class="keywordtype">wchar_t</span>) == 2)</div>
+<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(wchar_t) == 2)</div>
 <div class="line"><span class="lineno">  184</span>        {</div>
 <div class="line"><span class="lineno">  185</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a5ab39c2bd546655547f6101ed91e395e">encoding_types::utf16</a>, endian);</div>
 <div class="line"><span class="lineno">  186</span>        }</div>
-<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(<span class="keywordtype">wchar_t</span>) == 4)</div>
+<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(wchar_t) == 4)</div>
 <div class="line"><span class="lineno">  188</span>        {</div>
 <div class="line"><span class="lineno">  189</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a1c067a9fa89e2bf1d6dd55a6ca6204ce">encoding_types::utf32</a>, endian);</div>
 <div class="line"><span class="lineno">  190</span>        }</div>
@@ -1162,18 +1158,18 @@ template&lt;typename FromType , typename ToType &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> containing an error message if replacement fails, or <code>std::nullopt</code> on success.</dd></dl>
 <p>This function modifies <code>source</code> directly. If <code>token</code> is empty, it returns an error. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00387">387</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  390</span>    {</div>
-<div class="line"><span class="lineno">  391</span>        <span class="keyword">auto</span> [value, value_error] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402">replace2</a>(source, token, target);</div>
-<div class="line"><span class="lineno">  392</span>        <span class="keywordflow">if</span> (value_error.has_value())</div>
-<div class="line"><span class="lineno">  393</span>        {</div>
-<div class="line"><span class="lineno">  394</span>            <span class="keywordflow">return</span> value_error;</div>
-<div class="line"><span class="lineno">  395</span>        }</div>
-<div class="line"><span class="lineno">  396</span> </div>
-<div class="line"><span class="lineno">  397</span>        source = value.value();</div>
-<div class="line"><span class="lineno">  398</span>        <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  399</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_a735255ee06de6baa6f70ddd97b724402"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402">utility_module::convert_string::replace2</a></div><div class="ttdeci">static auto replace2(const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Replaces all occurrences of token in source with target, returning a new string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00401">convert_string.cpp:401</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00383">383</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  386</span>    {</div>
+<div class="line"><span class="lineno">  387</span>        <span class="keyword">auto</span> [value, value_error] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402">replace2</a>(source, token, target);</div>
+<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">if</span> (value_error.has_value())</div>
+<div class="line"><span class="lineno">  389</span>        {</div>
+<div class="line"><span class="lineno">  390</span>            <span class="keywordflow">return</span> value_error;</div>
+<div class="line"><span class="lineno">  391</span>        }</div>
+<div class="line"><span class="lineno">  392</span> </div>
+<div class="line"><span class="lineno">  393</span>        source = value.value();</div>
+<div class="line"><span class="lineno">  394</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  395</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_a735255ee06de6baa6f70ddd97b724402"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402">utility_module::convert_string::replace2</a></div><div class="ttdeci">static auto replace2(const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Replaces all occurrences of token in source with target, returning a new string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00397">convert_string.cpp:397</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1232,33 +1228,33 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00401">401</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  405</span>    {</div>
-<div class="line"><span class="lineno">  406</span>        <span class="keywordflow">if</span> (source.empty())</div>
-<div class="line"><span class="lineno">  407</span>        {</div>
-<div class="line"><span class="lineno">  408</span>            <span class="keywordflow">return</span> { std::nullopt, <span class="stringliteral">&quot;Source string is empty&quot;</span> };</div>
-<div class="line"><span class="lineno">  409</span>        }</div>
-<div class="line"><span class="lineno">  410</span> </div>
-<div class="line"><span class="lineno">  411</span>        <span class="keywordflow">if</span> (token.empty())</div>
-<div class="line"><span class="lineno">  412</span>        {</div>
-<div class="line"><span class="lineno">  413</span>            <span class="keywordflow">return</span> { std::nullopt, <span class="stringliteral">&quot;Token string is empty&quot;</span> };</div>
-<div class="line"><span class="lineno">  414</span>        }</div>
-<div class="line"><span class="lineno">  415</span> </div>
-<div class="line"><span class="lineno">  416</span>        std::string result;</div>
-<div class="line"><span class="lineno">  417</span> </div>
-<div class="line"><span class="lineno">  418</span>        <span class="keywordtype">size_t</span> last_offset = 0;</div>
-<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> offset = source.find(token, last_offset); offset != std::string::npos;</div>
-<div class="line"><span class="lineno">  420</span>             last_offset = offset + token.size(), offset = source.find(token, last_offset))</div>
-<div class="line"><span class="lineno">  421</span>        {</div>
-<div class="line"><span class="lineno">  422</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(result), <span class="stringliteral">&quot;{}{}&quot;</span>,</div>
-<div class="line"><span class="lineno">  423</span>                                 source.substr(last_offset, offset - last_offset), target);</div>
-<div class="line"><span class="lineno">  424</span>        }</div>
-<div class="line"><span class="lineno">  425</span> </div>
-<div class="line"><span class="lineno">  426</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(result), <span class="stringliteral">&quot;{}&quot;</span>, source.substr(last_offset));</div>
-<div class="line"><span class="lineno">  427</span> </div>
-<div class="line"><span class="lineno">  428</span>        <span class="keywordflow">return</span> { result, std::nullopt };</div>
-<div class="line"><span class="lineno">  429</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00293">formatter.h:293</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00397">397</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  401</span>    {</div>
+<div class="line"><span class="lineno">  402</span>        <span class="keywordflow">if</span> (source.empty())</div>
+<div class="line"><span class="lineno">  403</span>        {</div>
+<div class="line"><span class="lineno">  404</span>            <span class="keywordflow">return</span> { std::nullopt, <span class="stringliteral">&quot;Source string is empty&quot;</span> };</div>
+<div class="line"><span class="lineno">  405</span>        }</div>
+<div class="line"><span class="lineno">  406</span> </div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">if</span> (token.empty())</div>
+<div class="line"><span class="lineno">  408</span>        {</div>
+<div class="line"><span class="lineno">  409</span>            <span class="keywordflow">return</span> { std::nullopt, <span class="stringliteral">&quot;Token string is empty&quot;</span> };</div>
+<div class="line"><span class="lineno">  410</span>        }</div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span>        std::string result;</div>
+<div class="line"><span class="lineno">  413</span> </div>
+<div class="line"><span class="lineno">  414</span>        <span class="keywordtype">size_t</span> last_offset = 0;</div>
+<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> offset = source.find(token, last_offset); offset != std::string::npos;</div>
+<div class="line"><span class="lineno">  416</span>             last_offset = offset + token.size(), offset = source.find(token, last_offset))</div>
+<div class="line"><span class="lineno">  417</span>        {</div>
+<div class="line"><span class="lineno">  418</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(result), <span class="stringliteral">&quot;{}{}&quot;</span>,</div>
+<div class="line"><span class="lineno">  419</span>                                 source.substr(last_offset, offset - last_offset), target);</div>
+<div class="line"><span class="lineno">  420</span>        }</div>
+<div class="line"><span class="lineno">  421</span> </div>
+<div class="line"><span class="lineno">  422</span>        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(std::back_inserter(result), <span class="stringliteral">&quot;{}&quot;</span>, source.substr(last_offset));</div>
+<div class="line"><span class="lineno">  423</span> </div>
+<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">return</span> { result, std::nullopt };</div>
+<div class="line"><span class="lineno">  425</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00287">formatter.h:287</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1326,28 +1322,28 @@ Here is the call graph for this function:</div>
 </dd></dl>
 <p>If <code>token</code> is empty, splitting cannot proceed and an error is returned. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00320">320</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  322</span>    {</div>
-<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">if</span> (token.empty())</div>
-<div class="line"><span class="lineno">  324</span>        {</div>
-<div class="line"><span class="lineno">  325</span>            <span class="keywordflow">return</span> { std::vector{ source }, std::nullopt };</div>
-<div class="line"><span class="lineno">  326</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00316">316</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  318</span>    {</div>
+<div class="line"><span class="lineno">  319</span>        <span class="keywordflow">if</span> (token.empty())</div>
+<div class="line"><span class="lineno">  320</span>        {</div>
+<div class="line"><span class="lineno">  321</span>            <span class="keywordflow">return</span> { std::vector{ source }, std::nullopt };</div>
+<div class="line"><span class="lineno">  322</span>        }</div>
+<div class="line"><span class="lineno">  323</span> </div>
+<div class="line"><span class="lineno">  324</span>        std::vector&lt;std::string&gt; result;</div>
+<div class="line"><span class="lineno">  325</span>        <span class="keywordtype">size_t</span> start_pos = 0;</div>
+<div class="line"><span class="lineno">  326</span>        <span class="keywordtype">size_t</span> end_pos = source.find(token);</div>
 <div class="line"><span class="lineno">  327</span> </div>
-<div class="line"><span class="lineno">  328</span>        std::vector&lt;std::string&gt; result;</div>
-<div class="line"><span class="lineno">  329</span>        <span class="keywordtype">size_t</span> start_pos = 0;</div>
-<div class="line"><span class="lineno">  330</span>        <span class="keywordtype">size_t</span> end_pos = source.find(token);</div>
-<div class="line"><span class="lineno">  331</span> </div>
-<div class="line"><span class="lineno">  332</span>        <span class="keywordflow">while</span> (end_pos != std::string::npos)</div>
-<div class="line"><span class="lineno">  333</span>        {</div>
-<div class="line"><span class="lineno">  334</span>            result.emplace_back(source.substr(start_pos, end_pos - start_pos));</div>
-<div class="line"><span class="lineno">  335</span>            start_pos = end_pos + token.length();</div>
-<div class="line"><span class="lineno">  336</span>            end_pos = source.find(token, start_pos);</div>
-<div class="line"><span class="lineno">  337</span>        }</div>
-<div class="line"><span class="lineno">  338</span> </div>
-<div class="line"><span class="lineno">  339</span>        result.emplace_back(source.substr(start_pos));</div>
-<div class="line"><span class="lineno">  340</span> </div>
-<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">return</span> { result, std::nullopt };</div>
-<div class="line"><span class="lineno">  342</span>    }</div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">while</span> (end_pos != std::string::npos)</div>
+<div class="line"><span class="lineno">  329</span>        {</div>
+<div class="line"><span class="lineno">  330</span>            result.emplace_back(source.substr(start_pos, end_pos - start_pos));</div>
+<div class="line"><span class="lineno">  331</span>            start_pos = end_pos + token.length();</div>
+<div class="line"><span class="lineno">  332</span>            end_pos = source.find(token, start_pos);</div>
+<div class="line"><span class="lineno">  333</span>        }</div>
+<div class="line"><span class="lineno">  334</span> </div>
+<div class="line"><span class="lineno">  335</span>        result.emplace_back(source.substr(start_pos));</div>
+<div class="line"><span class="lineno">  336</span> </div>
+<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">return</span> { result, std::nullopt };</div>
+<div class="line"><span class="lineno">  338</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1448,18 +1444,18 @@ template&lt;typename T &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00296">296</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  298</span>    {</div>
-<div class="line"><span class="lineno">  299</span>        <span class="keywordtype">int</span> code_page = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">get_system_code_page</a>();</div>
-<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">if</span> (code_page == 65001)</div>
-<div class="line"><span class="lineno">  301</span>        {</div>
-<div class="line"><span class="lineno">  302</span>            <span class="keywordflow">return</span> { value, std::nullopt };</div>
-<div class="line"><span class="lineno">  303</span>        }</div>
-<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">return</span> convert&lt;std::string, std::string&gt;(value, <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">get_code_page_name</a>(code_page),</div>
-<div class="line"><span class="lineno">  305</span>                                                 <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">encoding_types::utf8</a>));</div>
-<div class="line"><span class="lineno">  306</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00292">292</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  294</span>    {</div>
+<div class="line"><span class="lineno">  295</span>        <span class="keywordtype">int</span> code_page = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">get_system_code_page</a>();</div>
+<div class="line"><span class="lineno">  296</span>        <span class="keywordflow">if</span> (code_page == 65001)</div>
+<div class="line"><span class="lineno">  297</span>        {</div>
+<div class="line"><span class="lineno">  298</span>            <span class="keywordflow">return</span> { value, std::nullopt };</div>
+<div class="line"><span class="lineno">  299</span>        }</div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">return</span> convert&lt;std::string, std::string&gt;(value, <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">get_code_page_name</a>(code_page),</div>
+<div class="line"><span class="lineno">  301</span>                                                 <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">encoding_types::utf8</a>));</div>
+<div class="line"><span class="lineno">  302</span>    }</div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a72c39f9c977f20e433d4f1ddc13a3eb5"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">utility_module::convert_string::get_system_code_page</a></div><div class="ttdeci">static auto get_system_code_page() -&gt; int</div><div class="ttdoc">Retrieves the system code page used for conversions.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00272">convert_string.cpp:272</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_a8d073801a85c823fefc5f2c00e40a2f5"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">utility_module::convert_string::get_code_page_name</a></div><div class="ttdeci">static auto get_code_page_name(int code_page) -&gt; std::string</div><div class="ttdoc">Retrieves a textual name for a code page (e.g., &quot;CP_ACP&quot; or a locale-based name).</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00285">convert_string.cpp:285</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_a8d073801a85c823fefc5f2c00e40a2f5"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">utility_module::convert_string::get_code_page_name</a></div><div class="ttdeci">static auto get_code_page_name(int code_page) -&gt; std::string</div><div class="ttdoc">Retrieves a textual name for a code page (e.g., &quot;CP_ACP&quot; or a locale-based name).</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00281">convert_string.cpp:281</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1500,19 +1496,19 @@ template&lt;typename T &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00344">344</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  346</span>    {</div>
-<div class="line"><span class="lineno">  347</span>        <span class="keyword">auto</span> [<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>, convert_error] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0">system_to_utf8</a>(value);</div>
-<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">if</span> (convert_error.has_value())</div>
-<div class="line"><span class="lineno">  349</span>        {</div>
-<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">return</span> { std::nullopt, convert_error };</div>
-<div class="line"><span class="lineno">  351</span>        }</div>
-<div class="line"><span class="lineno">  352</span> </div>
-<div class="line"><span class="lineno">  353</span>        <span class="keyword">auto</span> utf8_no_bom = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#adfae97e9adf04f637025406457671f57">remove_utf8_bom</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>.value());</div>
-<div class="line"><span class="lineno">  354</span> </div>
-<div class="line"><span class="lineno">  355</span>        <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(utf8_no_bom.begin(), utf8_no_bom.end()), std::nullopt };</div>
-<div class="line"><span class="lineno">  356</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_ad30f587d85f8caf0bdcfddf109d60ce0"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0">utility_module::convert_string::system_to_utf8</a></div><div class="ttdeci">static auto system_to_utf8(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a system-encoded string to UTF-8.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00296">convert_string.cpp:296</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00340">340</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>    {</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keyword">auto</span> [<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>, convert_error] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0">system_to_utf8</a>(value);</div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">if</span> (convert_error.has_value())</div>
+<div class="line"><span class="lineno">  345</span>        {</div>
+<div class="line"><span class="lineno">  346</span>            <span class="keywordflow">return</span> { std::nullopt, convert_error };</div>
+<div class="line"><span class="lineno">  347</span>        }</div>
+<div class="line"><span class="lineno">  348</span> </div>
+<div class="line"><span class="lineno">  349</span>        <span class="keyword">auto</span> utf8_no_bom = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#adfae97e9adf04f637025406457671f57">remove_utf8_bom</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>.value());</div>
+<div class="line"><span class="lineno">  350</span> </div>
+<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">return</span> { std::vector&lt;uint8_t&gt;(utf8_no_bom.begin(), utf8_no_bom.end()), std::nullopt };</div>
+<div class="line"><span class="lineno">  352</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_ad30f587d85f8caf0bdcfddf109d60ce0"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0">utility_module::convert_string::system_to_utf8</a></div><div class="ttdeci">static auto system_to_utf8(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a system-encoded string to UTF-8.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00292">convert_string.cpp:292</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_adfae97e9adf04f637025406457671f57"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#adfae97e9adf04f637025406457671f57">utility_module::convert_string::remove_utf8_bom</a></div><div class="ttdeci">static auto remove_utf8_bom(const std::string &amp;value) -&gt; std::string</div><div class="ttdoc">Removes a leading UTF-8 BOM from a string, if present.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00262">convert_string.cpp:262</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1555,19 +1551,19 @@ template&lt;typename T &gt; </div>
 </dd></dl>
 <p>Typically, Base64 encoding should not fail unless the input is extremely large and memory allocation fails. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00367">367</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  369</span>    {</div>
-<div class="line"><span class="lineno">  370</span>        <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">  371</span>        {</div>
-<div class="line"><span class="lineno">  372</span>            std::string encoded = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464">base64_encode</a>(value);</div>
-<div class="line"><span class="lineno">  373</span>            <span class="keywordflow">return</span> { encoded, std::nullopt };</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00363">363</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  365</span>    {</div>
+<div class="line"><span class="lineno">  366</span>        <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  367</span>        {</div>
+<div class="line"><span class="lineno">  368</span>            std::string encoded = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464">base64_encode</a>(value);</div>
+<div class="line"><span class="lineno">  369</span>            <span class="keywordflow">return</span> { encoded, std::nullopt };</div>
+<div class="line"><span class="lineno">  370</span>        }</div>
+<div class="line"><span class="lineno">  371</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e)</div>
+<div class="line"><span class="lineno">  372</span>        {</div>
+<div class="line"><span class="lineno">  373</span>            <span class="keywordflow">return</span> { std::nullopt, e.what() };</div>
 <div class="line"><span class="lineno">  374</span>        }</div>
-<div class="line"><span class="lineno">  375</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e)</div>
-<div class="line"><span class="lineno">  376</span>        {</div>
-<div class="line"><span class="lineno">  377</span>            <span class="keywordflow">return</span> { std::nullopt, e.what() };</div>
-<div class="line"><span class="lineno">  378</span>        }</div>
-<div class="line"><span class="lineno">  379</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_a30592e4ca22ebe9b45f847e7d4eed464"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464">utility_module::convert_string::base64_encode</a></div><div class="ttdeci">static auto base64_encode(const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::string</div><div class="ttdoc">Encodes a byte array into a Base64 string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00431">convert_string.cpp:431</a></div></div>
+<div class="line"><span class="lineno">  375</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_a30592e4ca22ebe9b45f847e7d4eed464"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a30592e4ca22ebe9b45f847e7d4eed464">utility_module::convert_string::base64_encode</a></div><div class="ttdeci">static auto base64_encode(const std::vector&lt; uint8_t &gt; &amp;data) -&gt; std::string</div><div class="ttdoc">Encodes a byte array into a Base64 string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00427">convert_string.cpp:427</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1608,14 +1604,14 @@ template&lt;typename T &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00358">358</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  360</span>    {</div>
-<div class="line"><span class="lineno">  361</span>        std::string <a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>(value.begin(), value.end());</div>
-<div class="line"><span class="lineno">  362</span>        <span class="keyword">auto</span> utf8_no_bom = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#adfae97e9adf04f637025406457671f57">remove_utf8_bom</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>);</div>
-<div class="line"><span class="lineno">  363</span> </div>
-<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#ae95c2d5708b124dc8b5ef30588de6975">utf8_to_system</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>);</div>
-<div class="line"><span class="lineno">  365</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1convert__string_html_ae95c2d5708b124dc8b5ef30588de6975"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#ae95c2d5708b124dc8b5ef30588de6975">utility_module::convert_string::utf8_to_system</a></div><div class="ttdeci">static auto utf8_to_system(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a UTF-8 encoded string to the system encoding.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00308">convert_string.cpp:308</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00354">354</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  356</span>    {</div>
+<div class="line"><span class="lineno">  357</span>        std::string <a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>(value.begin(), value.end());</div>
+<div class="line"><span class="lineno">  358</span>        <span class="keyword">auto</span> utf8_no_bom = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#adfae97e9adf04f637025406457671f57">remove_utf8_bom</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>);</div>
+<div class="line"><span class="lineno">  359</span> </div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#ae95c2d5708b124dc8b5ef30588de6975">utf8_to_system</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">utf8</a>);</div>
+<div class="line"><span class="lineno">  361</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_ae95c2d5708b124dc8b5ef30588de6975"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#ae95c2d5708b124dc8b5ef30588de6975">utility_module::convert_string::utf8_to_system</a></div><div class="ttdeci">static auto utf8_to_system(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a UTF-8 encoded string to the system encoding.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00304">convert_string.cpp:304</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1886,16 +1882,16 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0" title="Converts a system-encoded string to UTF-8.">system_to_utf8()</a></code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00308">308</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  310</span>    {</div>
-<div class="line"><span class="lineno">  311</span>        <span class="keywordtype">int</span> code_page = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">get_system_code_page</a>();</div>
-<div class="line"><span class="lineno">  312</span>        <span class="keywordflow">if</span> (code_page == 65001)</div>
-<div class="line"><span class="lineno">  313</span>        {</div>
-<div class="line"><span class="lineno">  314</span>            <span class="keywordflow">return</span> { value, std::nullopt };</div>
-<div class="line"><span class="lineno">  315</span>        }</div>
-<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">return</span> convert&lt;std::string, std::string&gt;(value, <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">encoding_types::utf8</a>),</div>
-<div class="line"><span class="lineno">  317</span>                                                 <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">get_code_page_name</a>(code_page));</div>
-<div class="line"><span class="lineno">  318</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00304">304</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  306</span>    {</div>
+<div class="line"><span class="lineno">  307</span>        <span class="keywordtype">int</span> code_page = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">get_system_code_page</a>();</div>
+<div class="line"><span class="lineno">  308</span>        <span class="keywordflow">if</span> (code_page == 65001)</div>
+<div class="line"><span class="lineno">  309</span>        {</div>
+<div class="line"><span class="lineno">  310</span>            <span class="keywordflow">return</span> { value, std::nullopt };</div>
+<div class="line"><span class="lineno">  311</span>        }</div>
+<div class="line"><span class="lineno">  312</span>        <span class="keywordflow">return</span> convert&lt;std::string, std::string&gt;(value, <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a316651c671cec003dc927423e12d2466">get_encoding_name</a>(<a class="code hl_enumvalue" href="../../d1/d53/classutility__module_1_1convert__string.html#a6ea78e52dff286b9309465a9b0f993a4a30df7f629fcf6b940bcaef5faf2490bb">encoding_types::utf8</a>),</div>
+<div class="line"><span class="lineno">  313</span>                                                 <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a8d073801a85c823fefc5f2c00e40a2f5">get_code_page_name</a>(code_page));</div>
+<div class="line"><span class="lineno">  314</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1906,7 +1902,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:16 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

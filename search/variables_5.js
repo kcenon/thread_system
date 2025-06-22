@@ -6,7 +6,7 @@ var searchData=
   ['file_5fname_5f_3',['file_name_',['../dc/d2b/classlog__module_1_1file__writer.html#aafe3174bfb9d97df493831a4f44c60ef',1,'log_module::file_writer']]],
   ['file_5fqueue_5f_4',['file_queue_',['../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3',1,'log_module::log_collector']]],
   ['file_5ftarget_5f_5',['file_target_',['../dc/d2b/classlog__module_1_1file__writer.html#a5cf21150b3eccb2f25a95774a3d57d03',1,'log_module::file_writer']]],
-  ['file_5fwriter_5f_6',['file_writer_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960',1,'log_module::implementation::logger']]],
+  ['file_5fwriter_5f_6',['file_writer_',['../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#a922e7efcbe086a521f14f2796b9b91a7',1,'log_module::implementation::lockfree_logger::file_writer_'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#aadcf4f8f2aa48f9d0162cd85c5497960',1,'log_module::implementation::logger::file_writer_']]],
   ['filename_7',['filename',['../d2/d6d/structlog__module_1_1config_1_1file__writer__config.html#a400ab5a15cee46d8f8cdff3aaed86c9f',1,'log_module::config::file_writer_config']]],
   ['flag_5f_8',['flag_',['../da/d62/classthread__module_1_1sync_1_1atomic__flag__wrapper.html#a76ae3b94048acad758ef9fce5a135c77',1,'thread_module::sync::atomic_flag_wrapper']]],
   ['flush_5fcount_9',['flush_count',['../da/d01/structlog__module_1_1base__writer_1_1writer__stats.html#a40e6e13632ff5f1406db57d968482edd',1,'log_module::base_writer::writer_stats']]],

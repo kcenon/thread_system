@@ -1,0 +1,8 @@
+<map id="log_module::detail::compile_string::compile_string" name="log_module::detail::compile_string::compile_string">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,192,60"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="240,20,416,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,30,226,30,226,35,192,35"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="464,13,675,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="416,39,450,39,450,44,416,44"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="464,26,430,26,430,21,464,21"/>
+</map>

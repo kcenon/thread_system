@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,13,156,53"/>
-<area shape="rect" id="Node000001" href="$d7/d75/structlog__module_1_1detail_1_1should__log.html" title="Template for log level filtering at compile time." alt="" coords="204,5,383,60"/>
-<area shape="poly" id="edge16_Node000000_Node000001" title=" " alt="" coords="170,30,204,30,204,35,170,35"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,60,147,85"/>
+<area shape="rect" id="Node000001" href="$d4/d57/structthread__pool__module_1_1detail_1_1is__future__like.html" title="SFINAE helper to detect future&#45;like types." alt="" coords="195,5,349,60"/>
+<area shape="poly" id="edge21_Node000000_Node000001" title=" " alt="" coords="152,55,194,46,195,51,153,60"/>
+<area shape="rect" id="Node000002" href="$d4/d3e/structthread__pool__module_1_1detail_1_1is__nothrow__callable.html" title="Type trait to check if a callable is noexcept." alt="" coords="195,84,349,139"/>
+<area shape="poly" id="edge22_Node000000_Node000002" title=" " alt="" coords="155,86,195,93,194,99,154,91"/>
 </map>

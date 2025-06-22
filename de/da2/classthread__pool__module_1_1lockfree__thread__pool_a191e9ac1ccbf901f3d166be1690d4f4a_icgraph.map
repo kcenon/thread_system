@@ -1,0 +1,5 @@
+<map id="thread_pool_module::lockfree_thread_pool::stop" name="thread_pool_module::lockfree_thread_pool::stop">
+<area shape="rect" id="Node000001" title="Stops the thread pool and optionally clears pending jobs." alt="" coords="232,13,435,53"/>
+<area shape="rect" id="Node000002" href="$de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a7c55bf3eb6ec3383b1a7eba593d2b02d" title="Virtual destructor. Ensures proper cleanup of all resources." alt="" coords="5,5,184,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,35,184,35,184,30,218,30"/>
+</map>

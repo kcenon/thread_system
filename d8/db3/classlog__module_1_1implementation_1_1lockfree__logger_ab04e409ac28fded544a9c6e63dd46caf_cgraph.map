@@ -1,0 +1,10 @@
+<map id="log_module::implementation::lockfree_logger::write" name="log_module::implementation::lockfree_logger::write">
+<area shape="rect" id="Node000001" title="Writes a formatted log message with timestamp." alt="" coords="5,37,216,77"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="276,5,463,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,42,262,36,263,41,216,47"/>
+<area shape="rect" id="Node000004" href="$d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#abca087e3015951a58fde9b5427c0ce5c" title="Retrieves the current time point." alt="" coords="264,69,475,109"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="216,68,251,72,250,77,216,73"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="523,5,709,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,31,509,32,509,37,463,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="522,19,476,19,476,14,522,14"/>
+</map>

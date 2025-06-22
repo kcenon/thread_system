@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['handle_0',['handle',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99',1,'log_module::implementation::logger']]],
+  ['handle_0',['handle',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99',1,'log_module::implementation::logger::handle()'],['../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#a26027433c7ebe282abd45bb974427ca4',1,'log_module::implementation::lockfree_logger::handle()']]],
   ['has_5ferror_1',['has_error',['../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838',1,'thread_module::result_void']]],
   ['has_5ffield_2',['has_field',['../d9/d1b/structlog__module_1_1log__message.html#a2312ca4a880418371cec37e003adb309',1,'log_module::log_message']]],
   ['has_5fhigher_5fpriority_3',['has_higher_priority',['../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html#a1faff9b367ddc2acdbff2329ac1b7041',1,'typed_thread_pool_module::typed_job_interface']]],

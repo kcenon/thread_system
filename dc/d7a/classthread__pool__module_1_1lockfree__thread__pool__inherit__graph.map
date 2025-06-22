@@ -1,0 +1,5 @@
+<map id="thread_pool_module::lockfree_thread_pool" name="thread_pool_module::lockfree_thread_pool">
+<area shape="rect" id="Node000001" title="A high&#45;performance lock&#45;free thread pool for concurrent job execution." alt="" coords="5,148,192,588"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="23,5,174,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,113,101,148,96,148,96,113"/>
+</map>

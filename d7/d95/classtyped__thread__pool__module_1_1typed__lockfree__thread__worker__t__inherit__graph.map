@@ -1,0 +1,5 @@
+<map id="typed_thread_pool_module::typed_lockfree_thread_worker_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_lockfree_thread_worker_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="A lock&#45;free worker thread class that processes jobs from a typed lockfree job queue." alt="" coords="10,579,201,823"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,531"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,545,108,579,103,579,103,545"/>
+</map>

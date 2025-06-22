@@ -220,7 +220,7 @@ Private Attributes</h2></td></tr>
 <li>Graceful handling of thread startup, execution, and shutdown</li>
 </ul>
 <p>The thread pool is designed for scenarios where many short-lived tasks need to be executed asynchronously without creating a new thread for each task.</p>
-<h3><a class="anchor" id="autotoc_md40"></a>
+<h3><a class="anchor" id="autotoc_md52"></a>
 Design Principles</h3>
 <ul>
 <li><b>Worker Thread Model</b>: Each worker runs in its own thread, processing jobs from the shared queue.</li>
@@ -229,10 +229,10 @@ Design Principles</h3>
 <li><b>Non-Blocking Submission</b>: Adding jobs to the pool never blocks the caller thread.</li>
 <li><b>Cooperative Shutdown</b>: Workers can complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md41"></a>
+<h3><a class="anchor" id="autotoc_md53"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread. The underlying <code>job_queue</code> is also thread-safe, allowing multiple workers to dequeue jobs concurrently.</p>
-<h3><a class="anchor" id="autotoc_md42"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 Performance Considerations</h3>
 <ul>
 <li>The number of worker threads should typically be close to the number of available CPU cores for CPU-bound tasks.</li>
@@ -317,13 +317,17 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/da1/classthread__pool__module_1_1thread__pool_a0bef86cfd95f66f96fc0257e92e92784_cgraph.png" border="0" usemap="#ad9/da1/classthread__pool__module_1_1thread__pool_a0bef86cfd95f66f96fc0257e92e92784_cgraph" alt=""/></div>
 <map name="ad9/da1/classthread__pool__module_1_1thread__pool_a0bef86cfd95f66f96fc0257e92e92784_cgraph" id="ad9/da1/classthread__pool__module_1_1thread__pool_a0bef86cfd95f66f96fc0257e92e92784_cgraph">
-<area shape="rect" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,5,208,45"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,5,411,45"/>
-<area shape="poly" title=" " alt="" coords="208,23,242,23,242,28,208,28"/>
-<area shape="rect" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="459,13,636,38"/>
-<area shape="poly" title=" " alt="" coords="411,23,445,23,445,28,411,28"/>
+<area shape="rect" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,35,208,75"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a3e4a0c4e6d04eb363517ae6016036fbc" title="Stops the thread pool and all worker threads." alt="" coords="256,35,411,75"/>
+<area shape="poly" title=" " alt="" coords="208,52,242,52,242,57,208,57"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="459,42,636,67"/>
+<area shape="poly" title=" " alt="" coords="411,52,445,52,445,57,411,57"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="684,5,895,45"/>
-<area shape="poly" title=" " alt="" coords="636,23,670,23,670,28,636,28"/>
+<area shape="poly" title=" " alt="" coords="636,41,670,37,671,42,636,47"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="943,13,1119,38"/>
+<area shape="poly" title=" " alt="" coords="636,59,759,62,827,60,894,55,973,39,974,44,895,60,827,65,759,67,636,64"/>
+<area shape="poly" title=" " alt="" coords="895,32,929,32,929,37,895,37"/>
+<area shape="poly" title=" " alt="" coords="942,19,908,19,908,14,942,14"/>
 </map>
 </div>
 
@@ -724,11 +728,15 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/da1/classthread__pool__module_1_1thread__pool_a3e4a0c4e6d04eb363517ae6016036fbc_cgraph.png" border="0" usemap="#ad9/da1/classthread__pool__module_1_1thread__pool_a3e4a0c4e6d04eb363517ae6016036fbc_cgraph" alt=""/></div>
 <map name="ad9/da1/classthread__pool__module_1_1thread__pool_a3e4a0c4e6d04eb363517ae6016036fbc_cgraph" id="ad9/da1/classthread__pool__module_1_1thread__pool_a3e4a0c4e6d04eb363517ae6016036fbc_cgraph">
-<area shape="rect" title="Stops the thread pool and all worker threads." alt="" coords="5,5,160,45"/>
-<area shape="rect" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="208,13,385,38"/>
-<area shape="poly" title=" " alt="" coords="160,23,194,23,194,28,160,28"/>
+<area shape="rect" title="Stops the thread pool and all worker threads." alt="" coords="5,35,160,75"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="208,42,385,67"/>
+<area shape="poly" title=" " alt="" coords="160,52,194,52,194,57,160,57"/>
 <area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="433,5,644,45"/>
-<area shape="poly" title=" " alt="" coords="385,23,420,23,420,28,385,28"/>
+<area shape="poly" title=" " alt="" coords="385,41,419,37,420,42,386,47"/>
+<area shape="rect" href="../../d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="692,13,868,38"/>
+<area shape="poly" title=" " alt="" coords="385,59,508,62,576,60,644,55,722,39,723,44,644,60,577,65,508,67,385,64"/>
+<area shape="poly" title=" " alt="" coords="644,32,678,32,678,37,644,37"/>
+<area shape="poly" title=" " alt="" coords="692,19,658,19,658,14,692,14"/>
 </map>
 </div>
 <div class="dynheader">
@@ -780,7 +788,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  226</span> </div>
 <div class="line"><span class="lineno">  227</span>        <span class="keywordflow">return</span> format_string;</div>
 <div class="line"><span class="lineno">  228</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00293">formatter.h:293</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00287">formatter.h:287</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -924,7 +932,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:16 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

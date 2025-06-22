@@ -109,7 +109,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Node in the retired list. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00195">195</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00200">200</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa97af984b4344926a1a1e598166627d9" name="aa97af984b4344926a1a1e598166627d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa97af984b4344926a1a1e598166627d9">&#9670;&#160;</a></span>RetiredNode()</h2>
@@ -145,11 +145,11 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00201">201</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  202</span>                : <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ab22e578081a0f6c8d2af150c34584213">ptr</a>(p), <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#a93e54ae0d0a01ecb6bfad66de6f5ba22">deleter</a>(std::move(d)), <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ad922850c34cda4915e05cd5b6087cb80">retire_time</a>(std::chrono::steady_clock::now()) {}</div>
-<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_a93e54ae0d0a01ecb6bfad66de6f5ba22"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#a93e54ae0d0a01ecb6bfad66de6f5ba22">thread_module::hazard_pointer_manager::RetiredNode::deleter</a></div><div class="ttdeci">std::function&lt; void(void *)&gt; deleter</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00198">hazard_pointer.h:198</a></div></div>
-<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_ab22e578081a0f6c8d2af150c34584213"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ab22e578081a0f6c8d2af150c34584213">thread_module::hazard_pointer_manager::RetiredNode::ptr</a></div><div class="ttdeci">void * ptr</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00197">hazard_pointer.h:197</a></div></div>
-<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_ad922850c34cda4915e05cd5b6087cb80"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ad922850c34cda4915e05cd5b6087cb80">thread_module::hazard_pointer_manager::RetiredNode::retire_time</a></div><div class="ttdeci">std::chrono::steady_clock::time_point retire_time</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00199">hazard_pointer.h:199</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00206">206</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  207</span>                : <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ab22e578081a0f6c8d2af150c34584213">ptr</a>(p), <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#a93e54ae0d0a01ecb6bfad66de6f5ba22">deleter</a>(std::move(d)), <a class="code hl_variable" href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ad922850c34cda4915e05cd5b6087cb80">retire_time</a>(std::chrono::steady_clock::now()) {}</div>
+<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_a93e54ae0d0a01ecb6bfad66de6f5ba22"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#a93e54ae0d0a01ecb6bfad66de6f5ba22">thread_module::hazard_pointer_manager::RetiredNode::deleter</a></div><div class="ttdeci">std::function&lt; void(void *)&gt; deleter</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00203">hazard_pointer.h:203</a></div></div>
+<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_ab22e578081a0f6c8d2af150c34584213"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ab22e578081a0f6c8d2af150c34584213">thread_module::hazard_pointer_manager::RetiredNode::ptr</a></div><div class="ttdeci">void * ptr</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00202">hazard_pointer.h:202</a></div></div>
+<div class="ttc" id="astructthread__module_1_1hazard__pointer__manager_1_1RetiredNode_html_ad922850c34cda4915e05cd5b6087cb80"><div class="ttname"><a href="../../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html#ad922850c34cda4915e05cd5b6087cb80">thread_module::hazard_pointer_manager::RetiredNode::retire_time</a></div><div class="ttdeci">std::chrono::steady_clock::time_point retire_time</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d54/hazard__pointer_8h_source.html#l00204">hazard_pointer.h:204</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -166,7 +166,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00198">198</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00203">203</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -182,7 +182,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00197">197</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00202">202</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -198,7 +198,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00199">199</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html#l00204">204</a> of file <a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -208,7 +208,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:16 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['node_5fptr_0',['node_ptr',['../d9/de9/classthread__module_1_1lockfree__mpmc__queue.html#ab7314339203104f570a2cf7c2d075b50',1,'thread_module::lockfree_mpmc_queue']]]
+  ['lockfree_5fqueue_5fptr_0',['lockfree_queue_ptr',['../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html#a597e81723a388c497e0c182f187f971a',1,'typed_thread_pool_module::typed_lockfree_job_queue_t']]]
 ];

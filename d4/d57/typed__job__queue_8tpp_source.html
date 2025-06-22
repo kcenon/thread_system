@@ -130,7 +130,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    }</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    template &lt;typename job_type&gt;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    auto typed_job_queue_t&lt;job_type&gt;::get_or_create_queue(const job_type&amp; type) -&gt; lockfree_mpmc_queue*</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    auto typed_job_queue_t&lt;job_type&gt;::get_or_create_queue(const job_type&amp; type) -&gt; lockfree_job_queue*</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            // Try read lock first for better performance</div>
@@ -150,7 +150,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        // Create new queue</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        auto queue = std::make_unique&lt;lockfree_mpmc_queue&gt;();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        auto queue = std::make_unique&lt;lockfree_job_queue&gt;();</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        auto* queue_ptr = queue.get();</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        lockfree_queues_[type] = std::move(queue);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        return queue_ptr;</div>
@@ -504,7 +504,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 16 2025 09:22:54 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 22 2025 15:58:15 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

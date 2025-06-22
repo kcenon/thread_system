@@ -1,3 +1,25 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d3/dbe/classthread__pool__module_1_1detail_1_1callable__eraser.html" title="Type eraser for heterogeneous callable storage." alt="" coords="5,5,180,45"/>
+<area shape="rect" id="Node000000" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,317,213,343"/>
+<area shape="rect" id="Node000001" href="$d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html" title=" " alt="" coords="261,5,460,60"/>
+<area shape="poly" id="edge69_Node000000_Node000001" title=" " alt="" coords="117,303,136,254,166,192,207,127,232,96,260,69,276,58,279,62,263,73,236,100,211,130,171,194,141,256,122,305"/>
+<area shape="rect" id="Node000002" href="$d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title=" " alt="" coords="261,84,460,139"/>
+<area shape="poly" id="edge70_Node000000_Node000002" title=" " alt="" coords="124,304,178,229,216,187,260,149,281,136,283,141,263,153,220,190,182,232,128,307"/>
+<area shape="rect" id="Node000003" href="$dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="281,163,441,203"/>
+<area shape="poly" id="edge71_Node000000_Node000003" title=" " alt="" coords="132,306,188,260,260,213,287,201,289,206,263,218,192,264,136,310"/>
+<area shape="rect" id="Node000004" href="$d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="283,227,439,267"/>
+<area shape="poly" id="edge72_Node000000_Node000004" title=" " alt="" coords="160,310,260,277,297,265,298,270,262,282,162,315"/>
+<area shape="rect" id="Node000005" href="$dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="275,292,446,317"/>
+<area shape="poly" id="edge73_Node000000_Node000005" title=" " alt="" coords="227,315,275,311,275,316,227,321"/>
+<area shape="rect" id="Node000006" href="$d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="266,341,455,367"/>
+<area shape="poly" id="edge74_Node000000_Node000006" title=" " alt="" coords="227,339,266,342,265,348,227,344"/>
+<area shape="rect" id="Node000008" href="$dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html" title="A specialized worker thread optimized for lock&#45;free job processing." alt="" coords="269,391,452,431"/>
+<area shape="poly" id="edge76_Node000000_Node000008" title=" " alt="" coords="163,344,299,389,297,394,161,349"/>
+<area shape="rect" id="Node000009" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="283,455,438,495"/>
+<area shape="poly" id="edge77_Node000000_Node000009" title=" " alt="" coords="136,350,192,395,263,441,289,453,287,458,260,446,189,400,133,354"/>
+<area shape="rect" id="Node000010" href="$d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html" title="A lock&#45;free worker thread class that processes jobs from a typed lockfree job queue." alt="" coords="261,520,460,575"/>
+<area shape="poly" id="edge78_Node000000_Node000010" title=" " alt="" coords="128,353,182,427,220,468,263,505,283,518,281,522,260,509,216,472,178,430,124,356"/>
+<area shape="rect" id="Node000011" href="$d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="261,599,460,653"/>
+<area shape="poly" id="edge79_Node000000_Node000011" title=" " alt="" coords="122,355,141,404,171,464,212,528,236,558,263,584,281,596,278,601,260,588,232,561,208,531,167,467,137,406,117,357"/>
+<area shape="rect" id="Node000007" href="$d6/de6/classlog__module_1_1lockfree__log__collector.html" title="A high&#45;performance lock&#45;free log collector for concurrent logging." alt="" coords="508,334,667,374"/>
+<area shape="poly" id="edge75_Node000006_Node000007" title=" " alt="" coords="469,351,508,351,508,357,469,357"/>
 </map>

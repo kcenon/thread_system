@@ -1,0 +1,8 @@
+<map id="log_module::config::logger_config::high_performance" name="log_module::config::logger_config::high_performance">
+<area shape="rect" id="Node000001" title="Create high&#45;performance configuration." alt="" coords="5,5,159,60"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="207,20,383,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,30,193,30,193,35,159,35"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="431,13,641,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="383,39,417,39,417,44,383,44"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="430,26,396,26,396,21,430,21"/>
+</map>

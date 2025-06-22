@@ -1,0 +1,5 @@
+<map id="thread_module::lockfree_job_queue::enqueue_batch" name="thread_module::lockfree_job_queue::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueue multiple jobs as a batch." alt="" coords="5,5,208,45"/>
+<area shape="rect" id="Node000002" href="$da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#ac26e0613a9a8f7c8da52ea02734d53d1" title=" " alt="" coords="256,5,459,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,23,242,23,242,28,208,28"/>
+</map>
