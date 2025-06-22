@@ -174,6 +174,23 @@ namespace log_module
 
 	protected:
 		/**
+		 * @brief Gets the console queue weak pointer.
+		 * @return Weak pointer to the console queue.
+		 */
+		[[nodiscard]] auto get_console_queue() const -> std::weak_ptr<job_queue> { return console_queue_; }
+
+		/**
+		 * @brief Gets the file queue weak pointer.
+		 * @return Weak pointer to the file queue.
+		 */
+		[[nodiscard]] auto get_file_queue() const -> std::weak_ptr<job_queue> { return file_queue_; }
+
+		/**
+		 * @brief Gets the callback queue weak pointer.
+		 * @return Weak pointer to the callback queue.
+		 */
+		[[nodiscard]] auto get_callback_queue() const -> std::weak_ptr<job_queue> { return callback_queue_; }
+		/**
 		 * @brief Enqueues a log message for processing.
 		 * @param current_log_type The log type of the current message.
 		 * @param target_log_type The log type to be processed.

@@ -5,6 +5,7 @@
     "fmt",
     "libiconv",
     "gtest",
-    "benchmark"
+    "benchmark",
+    "spdlog"
   ]
 }
