@@ -14,7 +14,7 @@ Simple MPMC Performance Comparison
 #include <atomic>
 #include <iomanip>
 #include "job_queue.h"
-#include "lockfree/lockfree_mpmc_queue.h"
+#include "lockfree/queues/lockfree_job_queue.h"
 #include "lockfree/adaptive_job_queue.h"
 #include "callback_job.h"
 
@@ -141,7 +141,7 @@ int main() {
         ));
         
         // Test lock-free MPMC queue
-        results.push_back(run_test<lockfree_mpmc_queue>(
+        results.push_back(run_test<lockfree_job_queue>(
             "Lock-free MPMC Queue", 
             config.producers, 
             config.consumers, 

@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "../../jobs/job_queue.h"
-#include "lockfree_mpmc_queue.h"
+#include "lockfree_job_queue.h"
 #include "../../logger/core/logger.h"
 #include <thread>
 #include <chrono>
@@ -155,7 +155,7 @@ namespace thread_module
 		
 		// Queue implementations
 		std::unique_ptr<job_queue> legacy_queue_;
-		std::unique_ptr<lockfree_mpmc_queue> mpmc_queue_;
+		std::unique_ptr<lockfree_job_queue> mpmc_queue_;
 		
 		// Current state
 		std::atomic<queue_type> current_type_;

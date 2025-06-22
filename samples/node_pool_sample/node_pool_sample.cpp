@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "thread_base/lockfree/memory/node_pool.h"
-#include <iostream>
+#include "logger/core/logger.h"
 #include <thread>
 #include <vector>
 #include <chrono>
@@ -52,24 +52,24 @@ struct TestData {
 };
 
 void demonstrate_basic_usage() {
-    std::cout << "\n=== Basic Node Pool Usage Demo ===\n";
+    log_module::write_information("\n=== Basic Node Pool Usage Demo ===");
     
     // Create a node pool with 2 initial chunks, 512 nodes per chunk
     node_pool<TestData> pool(2, 512);
     
     // Show initial statistics
     auto stats = pool.get_statistics();
-    std::cout << "Initial pool statistics:\n";
-    std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-    std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("Initial pool statistics:");
+    log_module::write_information("  Total chunks: {}", stats.total_chunks);
+    log_module::write_information("  Total nodes: {}", stats.total_nodes);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Allocate some nodes
     std::vector<TestData*> allocated_nodes;
     const int NUM_ALLOCATIONS = 100;
     
-    std::cout << "\nAllocating " << NUM_ALLOCATIONS << " nodes...\n";
+    log_module::write_information("\nAllocating {} nodes...", NUM_ALLOCATIONS);
     for (int i = 0; i < NUM_ALLOCATIONS; ++i) {
         auto* node = pool.allocate();
         node->value = i;
@@ -79,14 +79,14 @@ void demonstrate_basic_usage() {
     
     // Show statistics after allocation
     stats = pool.get_statistics();
-    std::cout << "After allocation:\n";
-    std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-    std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("After allocation:");
+    log_module::write_information("  Total chunks: {}", stats.total_chunks);
+    log_module::write_information("  Total nodes: {}", stats.total_nodes);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Verify data integrity
-    std::cout << "\nVerifying data integrity...\n";
+    log_module::write_information("\nVerifying data integrity...");
     bool integrity_ok = true;
     for (int i = 0; i < NUM_ALLOCATIONS; ++i) {
         if (allocated_nodes[i]->value != i || 
@@ -95,10 +95,10 @@ void demonstrate_basic_usage() {
             break;
         }
     }
-    std::cout << "Data integrity: " << (integrity_ok ? "OK" : "FAILED") << "\n";
+    log_module::write_information("Data integrity: {}", integrity_ok ? "OK" : "FAILED");
     
     // Deallocate half the nodes
-    std::cout << "\nDeallocating half the nodes...\n";
+    log_module::write_information("\nDeallocating half the nodes...");
     for (int i = 0; i < NUM_ALLOCATIONS / 2; ++i) {
         pool.deallocate(allocated_nodes[i]);
         allocated_nodes[i] = nullptr;
@@ -106,11 +106,11 @@ void demonstrate_basic_usage() {
     
     // Show statistics after partial deallocation
     stats = pool.get_statistics();
-    std::cout << "After partial deallocation:\n";
-    std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-    std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("After partial deallocation:");
+    log_module::write_information("  Total chunks: {}", stats.total_chunks);
+    log_module::write_information("  Total nodes: {}", stats.total_nodes);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Deallocate remaining nodes
     for (int i = NUM_ALLOCATIONS / 2; i < NUM_ALLOCATIONS; ++i) {
@@ -119,15 +119,15 @@ void demonstrate_basic_usage() {
     
     // Final statistics
     stats = pool.get_statistics();
-    std::cout << "After full deallocation:\n";
-    std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-    std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("After full deallocation:");
+    log_module::write_information("  Total chunks: {}", stats.total_chunks);
+    log_module::write_information("  Total nodes: {}", stats.total_nodes);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
 }
 
 void demonstrate_concurrent_usage() {
-    std::cout << "\n=== Concurrent Usage Demo ===\n";
+    log_module::write_information("\n=== Concurrent Usage Demo ===");
     
     constexpr int NUM_THREADS = 4;
     constexpr int OPERATIONS_PER_THREAD = 1000;
@@ -194,33 +194,33 @@ void demonstrate_concurrent_usage() {
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     
-    std::cout << "Concurrent operations completed in " << duration.count() << " ms\n";
-    std::cout << "Total allocations: " << total_allocations.load() << "\n";
-    std::cout << "Total deallocations: " << total_deallocations.load() << "\n";
-    std::cout << "Allocation failures: " << allocation_failures.load() << "\n";
+    log_module::write_information("Concurrent operations completed in {} ms", duration.count());
+    log_module::write_information("Total allocations: {}", total_allocations.load());
+    log_module::write_information("Total deallocations: {}", total_deallocations.load());
+    log_module::write_information("Allocation failures: {}", allocation_failures.load());
     
     // Final pool statistics
     auto stats = pool.get_statistics();
-    std::cout << "Final pool statistics:\n";
-    std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-    std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("Final pool statistics:");
+    log_module::write_information("  Total chunks: {}", stats.total_chunks);
+    log_module::write_information("  Total nodes: {}", stats.total_nodes);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Calculate performance
     int total_ops = total_allocations.load() + total_deallocations.load();
     double ops_per_second = (double)total_ops / (duration.count() / 1000.0);
-    std::cout << "Performance: " << static_cast<int>(ops_per_second) << " ops/second\n";
+    log_module::write_information("Performance: {} ops/second", static_cast<int>(ops_per_second));
 }
 
 void demonstrate_performance_comparison() {
-    std::cout << "\n=== Performance Comparison Demo ===\n";
+    log_module::write_information("\n=== Performance Comparison Demo ===");
     
     constexpr int NUM_OPERATIONS = 100000;
     constexpr int WARMUP_OPERATIONS = 10000;
     
     // Test with node pool
-    std::cout << "Testing node pool performance...\n";
+    log_module::write_information("Testing node pool performance...");
     node_pool<TestData> pool(4, 1024);
     
     // Warmup
@@ -251,7 +251,7 @@ void demonstrate_performance_comparison() {
     auto pool_duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
     
     // Test with standard allocation
-    std::cout << "Testing standard allocation performance...\n";
+    log_module::write_information("Testing standard allocation performance...");
     
     start_time = std::chrono::high_resolution_clock::now();
     
@@ -269,25 +269,25 @@ void demonstrate_performance_comparison() {
     end_time = std::chrono::high_resolution_clock::now();
     auto std_duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
     
-    std::cout << "Results:\n";
-    std::cout << "  Node pool: " << pool_duration.count() << " μs\n";
-    std::cout << "  Standard allocation: " << std_duration.count() << " μs\n";
+    log_module::write_information("Results:");
+    log_module::write_information("  Node pool: {} μs", pool_duration.count());
+    log_module::write_information("  Standard allocation: {} μs", std_duration.count());
     
     if (std_duration.count() > 0) {
         double speedup = (double)std_duration.count() / pool_duration.count();
-        std::cout << "  Speedup: " << std::fixed << std::setprecision(2) << speedup << "x\n";
+        log_module::write_information("  Speedup: {:.2f}x", speedup);
     }
     
     // Calculate operations per second
     double pool_ops_per_sec = (2.0 * NUM_OPERATIONS) / (pool_duration.count() / 1000000.0);
     double std_ops_per_sec = (2.0 * NUM_OPERATIONS) / (std_duration.count() / 1000000.0);
     
-    std::cout << "  Node pool ops/sec: " << static_cast<int>(pool_ops_per_sec) << "\n";
-    std::cout << "  Standard ops/sec: " << static_cast<int>(std_ops_per_sec) << "\n";
+    log_module::write_information("  Node pool ops/sec: {}", static_cast<int>(pool_ops_per_sec));
+    log_module::write_information("  Standard ops/sec: {}", static_cast<int>(std_ops_per_sec));
 }
 
 void demonstrate_memory_efficiency() {
-    std::cout << "\n=== Memory Efficiency Demo ===\n";
+    log_module::write_information("\n=== Memory Efficiency Demo ===");
     
     // Small pool for testing
     node_pool<TestData> small_pool(1, 256);
@@ -297,12 +297,11 @@ void demonstrate_memory_efficiency() {
     auto show_pool_info = [](const auto& pool, const char* name) {
         auto stats = pool.get_statistics();
         size_t memory_usage = stats.total_nodes * sizeof(TestData);
-        std::cout << name << ":\n";
-        std::cout << "  Total chunks: " << stats.total_chunks << "\n";
-        std::cout << "  Total nodes: " << stats.total_nodes << "\n";
-        std::cout << "  Memory usage: " << memory_usage << " bytes (" 
-                  << (memory_usage / 1024.0) << " KB)\n";
-        std::cout << "  Node size: " << sizeof(TestData) << " bytes\n\n";
+        log_module::write_information("{}:", name);
+        log_module::write_information("  Total chunks: {}", stats.total_chunks);
+        log_module::write_information("  Total nodes: {}", stats.total_nodes);
+        log_module::write_information("  Memory usage: {} bytes ({:.1f} KB)", memory_usage, memory_usage / 1024.0);
+        log_module::write_information("  Node size: {} bytes\n", sizeof(TestData));
     };
     
     show_pool_info(small_pool, "Small pool (1x256)");
@@ -310,7 +309,7 @@ void demonstrate_memory_efficiency() {
     show_pool_info(large_pool, "Large pool (4x1024)");
     
     // Test fragmentation
-    std::cout << "Testing fragmentation scenario...\n";
+    log_module::write_information("Testing fragmentation scenario...");
     std::vector<TestData*> nodes;
     
     // Allocate many nodes
@@ -325,9 +324,9 @@ void demonstrate_memory_efficiency() {
     }
     
     auto stats = medium_pool.get_statistics();
-    std::cout << "After fragmentation:\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("After fragmentation:");
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Allocate new nodes (should reuse freed nodes)
     int reused_count = 0;
@@ -339,9 +338,9 @@ void demonstrate_memory_efficiency() {
     }
     
     stats = medium_pool.get_statistics();
-    std::cout << "After reuse (" << reused_count << " nodes):\n";
-    std::cout << "  Allocated nodes: " << stats.allocated_nodes << "\n";
-    std::cout << "  Free list size: " << stats.free_list_size << "\n";
+    log_module::write_information("After reuse ({} nodes):", reused_count);
+    log_module::write_information("  Allocated nodes: {}", stats.allocated_nodes);
+    log_module::write_information("  Free list size: {}", stats.free_list_size);
     
     // Clean up
     for (auto* node : nodes) {
@@ -352,8 +351,12 @@ void demonstrate_memory_efficiency() {
 }
 
 int main() {
-    std::cout << "Node Pool Sample\n";
-    std::cout << "================\n";
+    // Initialize logger
+    log_module::start();
+    log_module::console_target(log_module::log_types::Information);
+    
+    log_module::write_information("Node Pool Sample");
+    log_module::write_information("================");
     
     try {
         demonstrate_basic_usage();
@@ -361,12 +364,15 @@ int main() {
         demonstrate_performance_comparison();
         demonstrate_memory_efficiency();
         
-        std::cout << "\n=== All demos completed successfully! ===\n";
+        log_module::write_information("\n=== All demos completed successfully! ===");
         
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        log_module::write_error("Error: {}", e.what());
+        log_module::stop();
         return 1;
     }
     
+    // Cleanup logger
+    log_module::stop();
     return 0;
 }

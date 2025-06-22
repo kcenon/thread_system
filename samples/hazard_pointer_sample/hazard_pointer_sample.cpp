@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "thread_base/lockfree/memory/hazard_pointer.h"
-#include <iostream>
+#include "logger/core/logger.h"
 #include <thread>
 #include <vector>
 #include <random>
@@ -93,17 +93,17 @@ public:
 };
 
 void demonstrate_basic_usage() {
-    std::cout << "\n=== Basic Hazard Pointer Usage Demo ===\n";
+    log_module::write_information("\n=== Basic Hazard Pointer Usage Demo ===");
     
     hazard_pointer_manager hp_manager(4, 2); // 4 threads, 2 pointers per thread
     
     // Show initial statistics
     auto stats = hp_manager.get_statistics();
-    std::cout << "Initial statistics:\n";
-    std::cout << "  Active hazard pointers: " << stats.active_hazard_pointers << "\n";
-    std::cout << "  Retired list size: " << stats.retired_list_size << "\n";
-    std::cout << "  Total retired: " << stats.total_retired << "\n";
-    std::cout << "  Total reclaimed: " << stats.total_reclaimed << "\n";
+    log_module::write_information("Initial statistics:");
+    log_module::write_information("  Active hazard pointers: {}", stats.active_hazard_pointers);
+    log_module::write_information("  Retired list size: {}", stats.retired_list_size);
+    log_module::write_information("  Total retired: {}", stats.total_retired);
+    log_module::write_information("  Total reclaimed: {}", stats.total_reclaimed);
     
     // Create a simple atomic pointer
     std::atomic<TestNode*> test_ptr{new TestNode(42)};
@@ -113,7 +113,7 @@ void demonstrate_basic_usage() {
         auto hp = hp_manager.acquire();
         auto* protected_ptr = hp.protect(test_ptr);
         
-        std::cout << "Protected pointer value: " << protected_ptr->data.load() << "\n";
+        log_module::write_information("Protected pointer value: {}", protected_ptr->data.load());
         
         // The hazard pointer automatically clears when going out of scope
     }
@@ -127,15 +127,15 @@ void demonstrate_basic_usage() {
     
     // Show final statistics
     stats = hp_manager.get_statistics();
-    std::cout << "Final statistics:\n";
-    std::cout << "  Active hazard pointers: " << stats.active_hazard_pointers << "\n";
-    std::cout << "  Retired list size: " << stats.retired_list_size << "\n";
-    std::cout << "  Total retired: " << stats.total_retired << "\n";
-    std::cout << "  Total reclaimed: " << stats.total_reclaimed << "\n";
+    log_module::write_information("Final statistics:");
+    log_module::write_information("  Active hazard pointers: {}", stats.active_hazard_pointers);
+    log_module::write_information("  Retired list size: {}", stats.retired_list_size);
+    log_module::write_information("  Total retired: {}", stats.total_retired);
+    log_module::write_information("  Total reclaimed: {}", stats.total_reclaimed);
 }
 
 void demonstrate_concurrent_access() {
-    std::cout << "\n=== Concurrent Access Demo ===\n";
+    log_module::write_information("\n=== Concurrent Access Demo ===");
     
     constexpr int NUM_THREADS = 4;
     constexpr int OPERATIONS_PER_THREAD = 1000;
@@ -191,22 +191,22 @@ void demonstrate_concurrent_access() {
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     
-    std::cout << "Concurrent operations completed in " << duration.count() << " ms\n";
-    std::cout << "Push operations: " << push_count.load() << "\n";
-    std::cout << "Successful pop operations: " << pop_count.load() << "\n";
-    std::cout << "Failed pop operations: " << failed_pops.load() << "\n";
+    log_module::write_information("Concurrent operations completed in {} ms", duration.count());
+    log_module::write_information("Push operations: {}", push_count.load());
+    log_module::write_information("Successful pop operations: {}", pop_count.load());
+    log_module::write_information("Failed pop operations: {}", failed_pops.load());
     
     // Final statistics
     auto stats = hp_manager.get_statistics();
-    std::cout << "Final hazard pointer statistics:\n";
-    std::cout << "  Active hazard pointers: " << stats.active_hazard_pointers << "\n";
-    std::cout << "  Retired list size: " << stats.retired_list_size << "\n";
-    std::cout << "  Total retired: " << stats.total_retired << "\n";
-    std::cout << "  Total reclaimed: " << stats.total_reclaimed << "\n";
+    log_module::write_information("Final hazard pointer statistics:");
+    log_module::write_information("  Active hazard pointers: {}", stats.active_hazard_pointers);
+    log_module::write_information("  Retired list size: {}", stats.retired_list_size);
+    log_module::write_information("  Total retired: {}", stats.total_retired);
+    log_module::write_information("  Total reclaimed: {}", stats.total_reclaimed);
 }
 
 void demonstrate_memory_safety() {
-    std::cout << "\n=== Memory Safety Demo ===\n";
+    log_module::write_information("\n=== Memory Safety Demo ===");
     
     hazard_pointer_manager hp_manager(2, 1);
     std::atomic<TestNode*> shared_ptr{new TestNode(123)};
@@ -261,27 +261,34 @@ void demonstrate_memory_safety() {
     hp_manager.scan_and_reclaim();
     
     auto stats = hp_manager.get_statistics();
-    std::cout << "Memory safety test completed safely!\n";
-    std::cout << "Final statistics:\n";
-    std::cout << "  Total retired: " << stats.total_retired << "\n";
-    std::cout << "  Total reclaimed: " << stats.total_reclaimed << "\n";
+    log_module::write_information("Memory safety test completed safely!");
+    log_module::write_information("Final statistics:");
+    log_module::write_information("  Total retired: {}", stats.total_retired);
+    log_module::write_information("  Total reclaimed: {}", stats.total_reclaimed);
 }
 
 int main() {
-    std::cout << "Hazard Pointer Manager Sample\n";
-    std::cout << "=============================\n";
+    // Initialize logger
+    log_module::start();
+    log_module::console_target(log_module::log_types::Information);
+    
+    log_module::write_information("Hazard Pointer Manager Sample");
+    log_module::write_information("=============================");
     
     try {
         demonstrate_basic_usage();
         demonstrate_concurrent_access();
         demonstrate_memory_safety();
         
-        std::cout << "\n=== All demos completed successfully! ===\n";
+        log_module::write_information("\n=== All demos completed successfully! ===");
         
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        log_module::write_error("Error: {}", e.what());
+        log_module::stop();
         return 1;
     }
     
+    // Cleanup logger
+    log_module::stop();
     return 0;
 }

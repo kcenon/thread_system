@@ -42,11 +42,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <thread>
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4324) // structure was padded due to alignment specifier
+#endif
+
 namespace thread_module
 {
 	/**
-	 * @class lockfree_mpmc_queue
-	 * @brief High-performance lock-free Multiple Producer Multiple Consumer queue
+	 * @class lockfree_job_queue
+	 * @brief High-performance lock-free Multiple Producer Multiple Consumer job queue
 	 * 
 	 * This implementation is based on the Michael & Scott algorithm with
 	 * optimizations for the Thread System including:
@@ -58,7 +63,7 @@ namespace thread_module
 	 * @note This queue is designed to be a drop-in replacement for job_queue
 	 *       with significantly better performance under high contention.
 	 */
-	class lockfree_mpmc_queue : public job_queue
+	class lockfree_job_queue : public job_queue
 	{
 	public:
 		/**
@@ -107,20 +112,20 @@ namespace thread_module
 		 * @brief Constructor
 		 * @param max_threads Maximum number of threads that will access the queue
 		 */
-		explicit lockfree_mpmc_queue(size_t max_threads = 128);
+		explicit lockfree_job_queue(size_t max_threads = 128);
 		
 		/**
 		 * @brief Destructor
 		 */
-		virtual ~lockfree_mpmc_queue();
+		virtual ~lockfree_job_queue();
 
 		// Delete copy operations
-		lockfree_mpmc_queue(const lockfree_mpmc_queue&) = delete;
-		lockfree_mpmc_queue& operator=(const lockfree_mpmc_queue&) = delete;
+		lockfree_job_queue(const lockfree_job_queue&) = delete;
+		lockfree_job_queue& operator=(const lockfree_job_queue&) = delete;
 		
 		// Delete move operations for now (can be implemented later if needed)
-		lockfree_mpmc_queue(lockfree_mpmc_queue&&) = delete;
-		lockfree_mpmc_queue& operator=(lockfree_mpmc_queue&&) = delete;
+		lockfree_job_queue(lockfree_job_queue&&) = delete;
+		lockfree_job_queue& operator=(lockfree_job_queue&&) = delete;
 
 		/**
 		 * @brief Enqueue a single job
@@ -265,3 +270,7 @@ namespace thread_module
 	};
 
 } // namespace thread_module
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif

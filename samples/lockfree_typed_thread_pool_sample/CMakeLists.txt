@@ -11,7 +11,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # Link required libraries
 if(APPLE)
-    target_link_libraries(${PROJECT_NAME} PRIVATE typed_thread_pool utilities "-framework CoreFoundation")
+    target_link_libraries(${PROJECT_NAME} PRIVATE typed_thread_pool utilities logger "-framework CoreFoundation")
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE typed_thread_pool utilities)
+    target_link_libraries(${PROJECT_NAME} PRIVATE typed_thread_pool utilities logger)
 endif()
