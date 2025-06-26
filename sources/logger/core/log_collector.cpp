@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "log_collector.h"
+#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 
 #include "../jobs/message_job.h"
 
@@ -41,7 +42,7 @@ namespace log_module
 		, file_log_type_(log_types::None)
 		, console_log_type_(log_types::None)
 		, callback_log_type_(log_types::None)
-		, log_queue_(std::make_shared<job_queue>())
+		, log_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::FORCE_LEGACY))
 	{
 	}
 
