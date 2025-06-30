@@ -1,5 +1,0 @@
-<map id="metrics::gauge::increment" name="metrics::gauge::increment">
-<area shape="rect" id="Node000001" title="Increment gauge by delta." alt="" coords="5,13,199,38"/>
-<area shape="rect" id="Node000002" href="$d2/d1a/classmetrics_1_1gauge.html#a50be9c8f4d3c6b06351c55b8e7d22c09" title=" " alt="" coords="247,5,419,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,23,233,23,233,28,199,28"/>
-</map>

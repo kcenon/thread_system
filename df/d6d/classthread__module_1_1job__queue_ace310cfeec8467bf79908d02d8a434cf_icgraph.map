@@ -1,5 +1,0 @@
-<map id="thread_module::job_queue::is_stopped" name="thread_module::job_queue::is_stopped">
-<area shape="rect" id="Node000001" title="Checks if the queue is in a &quot;stopped&quot; state." alt="" coords="228,13,376,53"/>
-<area shape="rect" id="Node000002" href="$d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="fmt::formatter&lt; typed_thread_pool_module::typed_lockfree_thread_pool_t&lt; job_type &gt; &gt;::format" name="fmt::formatter&lt; typed_thread_pool_module::typed_lockfree_thread_pool_t&lt; job_type &gt; &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a typed_lockfree_thread_pool_t&lt;job_type&gt; object as a string." alt="" coords="5,5,228,75"/>
-<area shape="rect" id="Node000002" href="$d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html#a9634e4e6789cf51a29f2e7bd7afcdb0c" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="276,13,475,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,37,262,37,262,43,228,43"/>
-</map>

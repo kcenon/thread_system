@@ -1,8 +1,0 @@
-<map id="sources/typed_thread_pool/scheduling/typed_job_queue.h" name="sources/typed_thread_pool/scheduling/typed_job_queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="9,5,181,60"/>
-<area shape="rect" id="Node000002" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="5,211,184,265"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,73,61,109,57,135,61,162,70,187,81,209,76,212,65,189,56,163,52,135,56,107,69,71"/>
-<area shape="rect" id="Node000003" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="71,108,243,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,70,143,106,139,109,116,73"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="136,176,113,212,109,209,131,173"/>
-</map>

@@ -1,27 +1,17 @@
 <map id="sources/logger/core/log_collector.h" name="sources/logger/core/log_collector.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="352,5,501,45"/>
-<area shape="rect" id="Node000002" href="$d2/da9/lockfree__log__collector_8h.html" title=" " alt="" coords="147,93,327,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="374,53,280,96,278,91,372,49"/>
-<area shape="rect" id="Node000006" href="$d7/d3c/log__collector_8cpp.html" title=" " alt="" coords="352,93,501,133"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="429,59,429,93,424,93,424,59"/>
-<area shape="rect" id="Node000007" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="526,93,717,133"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="483,48,580,91,578,96,481,53"/>
-<area shape="rect" id="Node000003" href="$d8/d1d/lockfree__log__collector_8cpp.html" title=" " alt="" coords="5,181,200,221"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="197,143,134,183,131,179,194,139"/>
-<area shape="rect" id="Node000004" href="$dc/dca/lockfree__logger_8cpp.html" title=" " alt="" coords="211,269,365,309"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="246,146,265,221,283,268,278,270,260,222,241,147"/>
-<area shape="rect" id="Node000005" href="$db/da7/lockfree__logger_8h.html" title=" " alt="" coords="275,181,424,221"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="275,140,326,179,323,183,272,144"/>
-<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="330,234,304,271,299,268,326,231"/>
-<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="549,140,410,184,408,179,548,135"/>
-<area shape="rect" id="Node000008" href="$d4/db6/logger_2core_2logger_8h.html" title=" " alt="" coords="448,181,597,221"/>
-<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="591,144,546,183,543,179,588,140"/>
-<area shape="rect" id="Node000011" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="621,181,827,221"/>
-<area shape="poly" id="edge12_Node000007_Node000011" title=" " alt="" coords="656,140,703,179,700,183,653,144"/>
-<area shape="rect" id="Node000012" href="$df/d32/utilities_2interface_2logger_8h.html" title=" " alt="" coords="851,181,1037,221"/>
-<area shape="poly" id="edge13_Node000007_Node000012" title=" " alt="" coords="706,134,874,179,873,184,704,139"/>
-<area shape="rect" id="Node000009" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="415,269,577,309"/>
-<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="515,235,504,270,499,268,510,234"/>
-<area shape="rect" id="Node000010" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="601,269,801,309"/>
-<area shape="poly" id="edge11_Node000008_Node000010" title=" " alt="" coords="575,225,663,267,661,272,573,230"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="219,5,368,45"/>
+<area shape="rect" id="Node000002" href="$d7/d3c/log__collector_8cpp.html" title=" " alt="" coords="121,93,271,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,56,219,95,216,91,260,52"/>
+<area shape="rect" id="Node000003" href="$d5/d14/logger__implementation_8h.html" title=" " alt="" coords="295,93,486,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="327,52,371,91,367,95,323,56"/>
+<area shape="rect" id="Node000004" href="$d4/db6/logger_2core_2logger_8h.html" title=" " alt="" coords="115,181,264,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="335,141,234,184,232,179,333,136"/>
+<area shape="rect" id="Node000007" href="$d9/d7e/logger__implementation_8cpp.html" title=" " alt="" coords="288,181,493,221"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="393,147,393,181,388,181,388,147"/>
+<area shape="rect" id="Node000008" href="$df/d32/utilities_2interface_2logger_8h.html" title=" " alt="" coords="517,181,704,221"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="452,136,563,179,562,184,450,141"/>
+<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="5,269,168,309"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="158,232,111,271,108,267,154,228"/>
+<area shape="rect" id="Node000006" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="192,269,392,309"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="224,228,271,267,268,271,221,232"/>
 </map>

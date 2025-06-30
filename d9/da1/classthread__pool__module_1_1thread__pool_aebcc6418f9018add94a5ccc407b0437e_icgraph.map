@@ -1,5 +1,0 @@
-<map id="thread_pool_module::thread_pool::enqueue_batch" name="thread_pool_module::thread_pool::enqueue_batch">
-<area shape="rect" id="Node000001" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="235,13,449,53"/>
-<area shape="rect" id="Node000002" href="$de/dac/classthread__pool__module_1_1monitored__thread__pool.html#a418bb3cfb844f44af8483b1912702d26" title="Enqueue multiple jobs with batch metrics tracking." alt="" coords="5,5,187,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,35,187,35,187,30,221,30"/>
-</map>

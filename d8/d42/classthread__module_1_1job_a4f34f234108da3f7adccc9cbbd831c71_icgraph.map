@@ -1,11 +1,9 @@
 <map id="thread_module::job::do_work" name="thread_module::job::do_work">
-<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="243,101,391,141"/>
+<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="243,69,391,109"/>
 <area shape="rect" id="Node000002" href="$d7/da3/classlog__module_1_1log__collector.html#af7d8b04f608e82fbdc0108949254eab4" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="268,97,194,60,163,48,165,43,196,55,270,92"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,68,167,48,169,43,236,63"/>
 <area shape="rect" id="Node000003" href="$d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2" title="Performs initialization before starting the log collector thread." alt="" coords="5,69,195,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,111,194,106,195,101,229,106"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,92,195,92,195,87,229,87"/>
 <area shape="rect" id="Node000004" href="$dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="9,133,191,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="229,137,192,142,191,137,229,132"/>
-<area shape="rect" id="Node000005" href="$dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a04eeb39e4467156cdccf660cb693d273" title="Processes a single job." alt="" coords="9,198,191,253"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="268,151,196,188,169,200,166,195,194,183,266,146"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,116,169,136,167,131,235,111"/>
 </map>

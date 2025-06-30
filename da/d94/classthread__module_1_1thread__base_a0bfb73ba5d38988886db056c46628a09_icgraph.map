@@ -1,9 +1,0 @@
-<map id="thread_module::thread_base::to_string" name="thread_module::thread_base::to_string">
-<area shape="rect" id="Node000001" title="Returns a string representation of this thread_base object." alt="" coords="268,91,439,131"/>
-<area shape="rect" id="Node000002" href="$d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="22,5,203,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="278,90,196,63,198,58,279,85"/>
-<area shape="rect" id="Node000003" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="5,84,220,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,114,220,114,220,109,254,109"/>
-<area shape="rect" id="Node000004" href="$d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html#a53f30f143dc34e05063d40c9b28a5c4b" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance as a string." alt="" coords="25,163,200,233"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,139,201,169,199,164,283,134"/>
-</map>

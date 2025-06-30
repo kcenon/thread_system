@@ -1,9 +1,5 @@
 <map id="log_module::write_information" name="log_module::write_information">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,42,228,67"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,228,38"/>
 <area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="276,5,487,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,40,262,36,262,41,229,45"/>
-<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="535,13,711,38"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="228,60,352,62,486,55,565,39,566,44,487,60,353,68,228,65"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="487,32,521,32,521,37,487,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="534,19,500,19,500,14,534,14"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,23,262,23,262,28,228,28"/>
 </map>

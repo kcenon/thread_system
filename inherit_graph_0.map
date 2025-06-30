@@ -1,39 +1,31 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,599,120,625"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,445,120,470"/>
 <area shape="rect" id="Node000001" href="$d1/de1/structfmt_1_1formatter_3_01log__module_1_1log__message_01_4.html" title=" " alt="" coords="189,5,376,45"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="63,585,71,472,89,313,103,232,120,158,141,98,166,56,187,39,190,44,170,59,145,100,125,160,108,233,94,314,76,472,68,585"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="65,431,78,346,99,234,129,127,146,84,166,55,188,40,191,44,170,59,151,87,134,128,104,235,83,347,70,432"/>
 <area shape="rect" id="Node000002" href="$d6/d5b/structfmt_1_1formatter_3_01log__module_1_1log__types_01_4.html" title="Specialization of fmt::formatter for log_module::log_types." alt="" coords="201,69,365,109"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="63,585,74,483,93,344,107,274,123,209,143,156,166,120,181,107,199,98,201,103,184,111,170,123,148,158,129,211,112,275,98,345,79,484,69,586"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="61,431,66,368,81,284,94,240,112,196,136,155,166,119,182,108,199,99,202,104,184,112,170,123,140,158,117,199,99,242,86,286,71,369,67,431"/>
 <area shape="rect" id="Node000003" href="$d2/d09/structfmt_1_1formatter_3_01log__module_1_1log__types_00_01wchar__t_01_4.html" title="Specialization of fmt::formatter for wide&#45;character log_module::log_types." alt="" coords="206,134,359,189"/>
-<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="65,585,78,498,100,384,129,273,147,230,166,200,184,185,204,174,207,179,187,189,170,203,151,232,134,275,105,385,83,499,70,586"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="65,430,75,382,93,320,123,256,143,226,166,199,184,186,204,176,207,180,187,190,170,203,147,229,127,258,98,322,80,383,70,431"/>
 <area shape="rect" id="Node000004" href="$dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html" title="Specialization of fmt::formatter for thread_module::job." alt="" coords="197,213,369,253"/>
-<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="61,586,65,521,79,434,93,388,111,343,135,301,166,263,195,245,198,249,170,267,140,304,116,345,98,390,85,436,70,521,66,586"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="68,431,81,393,101,348,129,302,166,263,195,247,198,251,170,267,134,306,106,351,86,395,73,432"/>
 <area shape="rect" id="Node000005" href="$da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html" title="Specialization of fmt::formatter for thread_module::job_queue." alt="" coords="197,277,369,317"/>
-<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="63,585,71,532,88,462,101,426,118,390,140,357,166,327,195,309,198,314,170,331,144,360,123,393,106,428,93,464,76,533,69,586"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="75,431,112,379,137,351,167,327,195,313,198,317,169,332,141,355,116,382,80,434"/>
 <area shape="rect" id="Node000006" href="$d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html" title="Specialization of fmt::formatter for thread_module::thread_base." alt="" coords="192,341,373,381"/>
-<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="67,585,78,543,97,490,126,437,145,413,166,391,190,376,193,381,170,395,149,416,131,440,102,493,83,544,72,586"/>
+<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="91,434,127,412,167,391,199,379,201,384,169,396,129,417,94,439"/>
 <area shape="rect" id="Node000007" href="$da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html" title="Specialization of fmt::formatter for thread_module::thread_conditions." alt="" coords="174,405,391,445"/>
-<area shape="poly" id="edge7_Node000000_Node000007" title=" " alt="" coords="72,585,107,520,134,485,166,455,187,443,190,448,170,459,138,489,112,523,77,588"/>
-<area shape="rect" id="Node000008" href="$dd/dcc/structfmt_1_1formatter_3_01thread__pool__module_1_1lockfree__thread__pool_01_4.html" title="Specialization of fmt::formatter for lockfree_thread_pool." alt="" coords="195,470,370,525"/>
-<area shape="poly" id="edge8_Node000000_Node000008" title=" " alt="" coords="88,588,124,560,167,534,194,521,196,526,169,538,127,565,91,592"/>
-<area shape="rect" id="Node000009" href="$d2/d6c/structfmt_1_1formatter_3_01thread__pool__module_1_1lockfree__thread__worker_01_4.html" title="Specialization of fmt::formatter for lockfree_thread_worker." alt="" coords="195,549,370,603"/>
-<area shape="poly" id="edge9_Node000000_Node000009" title=" " alt="" coords="133,598,195,588,196,593,134,603"/>
-<area shape="rect" id="Node000010" href="$d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html" title="Specialization of fmt::formatter for thread_pool_module::thread_pool." alt="" coords="176,628,389,668"/>
-<area shape="poly" id="edge10_Node000000_Node000010" title=" " alt="" coords="135,621,176,628,175,633,134,626"/>
-<area shape="rect" id="Node000011" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html" title="Specialization of fmt::formatter for thread_pool_module::thread_worker." alt="" coords="168,692,397,732"/>
-<area shape="poly" id="edge11_Node000000_Node000011" title=" " alt="" coords="92,631,128,655,169,678,200,689,198,694,167,682,125,660,89,635"/>
-<area shape="rect" id="Node000012" href="$da/d34/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html" title="Specialization of fmt::formatter for job_types using narrow strings." alt="" coords="197,757,368,811"/>
-<area shape="poly" id="edge12_Node000000_Node000012" title=" " alt="" coords="80,635,116,689,141,717,170,742,198,758,196,763,166,746,137,721,112,692,75,638"/>
-<area shape="rect" id="Node000013" href="$dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html" title="Specialization of fmt::formatter for job_types using wide strings." alt="" coords="197,835,368,890"/>
-<area shape="poly" id="edge13_Node000000_Node000013" title=" " alt="" coords="73,637,85,678,104,727,132,777,170,821,199,839,196,844,166,825,128,780,99,729,80,679,67,639"/>
-<area shape="rect" id="Node000014" href="$da/d41/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_job_queue_t&lt;job_type&gt; when using the {fmt} library." alt="" coords="193,915,373,984"/>
-<area shape="poly" id="edge14_Node000000_Node000014" title=" " alt="" coords="69,638,77,691,95,761,125,834,145,869,170,899,194,918,191,923,166,903,141,872,120,837,90,763,72,692,64,639"/>
-<area shape="rect" id="Node000015" href="$d7/d6c/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__lockfree__thread__pool__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_lockfree_thread_pool_t&lt;job_type&gt;." alt="" coords="197,1008,368,1077"/>
-<area shape="poly" id="edge15_Node000000_Node000015" title=" " alt="" coords="66,638,70,708,83,802,96,853,115,904,139,951,170,994,199,1016,195,1021,166,998,134,954,110,906,91,855,78,803,64,708,61,639"/>
-<area shape="rect" id="Node000016" href="$d5/d6a/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__lockfree__thread__worker__t_3_01job__type_01_4_01_4.html" title=" " alt="" coords="189,1101,376,1171"/>
-<area shape="poly" id="edge16_Node000000_Node000016" title=" " alt="" coords="69,638,81,736,101,870,131,1001,150,1052,170,1088,191,1106,188,1110,166,1091,145,1055,126,1003,96,871,75,737,64,638"/>
-<area shape="rect" id="Node000017" href="$d3/dc8/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_pool_t&lt;job_type&gt;." alt="" coords="187,1195,378,1264"/>
-<area shape="poly" id="edge17_Node000000_Node000017" title=" " alt="" coords="68,638,77,754,96,916,109,999,126,1075,146,1138,170,1181,189,1198,185,1202,166,1184,141,1140,121,1076,104,1000,90,917,72,754,63,639"/>
-<area shape="rect" id="Node000018" href="$d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_worker_t&lt;job_type&gt;." alt="" coords="197,1288,368,1357"/>
-<area shape="poly" id="edge18_Node000000_Node000018" title=" " alt="" coords="67,638,74,770,90,960,104,1058,121,1148,143,1223,156,1252,170,1274,183,1287,199,1298,196,1302,180,1291,166,1278,151,1255,138,1225,116,1150,98,1059,85,961,69,771,62,639"/>
+<area shape="poly" id="edge7_Node000000_Node000007" title=" " alt="" coords="134,444,173,439,174,444,134,450"/>
+<area shape="rect" id="Node000008" href="$d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html" title="Specialization of fmt::formatter for thread_pool_module::thread_pool." alt="" coords="176,469,389,509"/>
+<area shape="poly" id="edge8_Node000000_Node000008" title=" " alt="" coords="134,465,176,471,175,476,134,470"/>
+<area shape="rect" id="Node000009" href="$d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html" title="Specialization of fmt::formatter for thread_pool_module::thread_worker." alt="" coords="168,533,397,573"/>
+<area shape="poly" id="edge9_Node000000_Node000009" title=" " alt="" coords="94,476,129,498,169,519,201,531,199,536,167,524,127,503,91,480"/>
+<area shape="rect" id="Node000010" href="$da/d34/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html" title="Specialization of fmt::formatter for job_types using narrow strings." alt="" coords="197,598,368,653"/>
+<area shape="poly" id="edge10_Node000000_Node000010" title=" " alt="" coords="80,480,117,532,142,560,170,583,198,599,196,604,166,588,138,563,113,536,76,483"/>
+<area shape="rect" id="Node000011" href="$dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html" title="Specialization of fmt::formatter for job_types using wide strings." alt="" coords="197,677,368,731"/>
+<area shape="poly" id="edge11_Node000000_Node000011" title=" " alt="" coords="73,483,85,522,105,570,133,619,170,662,198,680,195,685,166,666,128,623,100,573,80,524,68,484"/>
+<area shape="rect" id="Node000012" href="$da/d41/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_job_queue_t&lt;job_type&gt; when using the {fmt} library." alt="" coords="193,756,373,825"/>
+<area shape="poly" id="edge12_Node000000_Node000012" title=" " alt="" coords="69,483,78,536,95,605,125,677,146,711,170,741,194,760,191,764,166,745,141,714,120,679,90,606,73,537,64,484"/>
+<area shape="rect" id="Node000013" href="$d3/dc8/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_pool_t&lt;job_type&gt;." alt="" coords="187,849,378,919"/>
+<area shape="poly" id="edge13_Node000000_Node000013" title=" " alt="" coords="66,484,70,553,84,646,97,696,115,746,139,793,170,836,189,852,185,856,166,839,135,796,110,748,92,698,79,647,65,553,61,484"/>
+<area shape="rect" id="Node000014" href="$d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_worker_t&lt;job_type&gt;." alt="" coords="197,943,368,1012"/>
+<area shape="poly" id="edge14_Node000000_Node000014" title=" " alt="" coords="69,484,81,581,102,714,131,843,150,894,170,929,199,952,195,956,166,932,145,896,126,845,96,715,76,582,64,484"/>
 </map>

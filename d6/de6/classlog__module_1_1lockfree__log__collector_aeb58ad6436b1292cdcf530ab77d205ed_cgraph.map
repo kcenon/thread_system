@@ -1,5 +1,0 @@
-<map id="log_module::lockfree_log_collector::get_queue_statistics" name="log_module::lockfree_log_collector::get_queue_statistics">
-<area shape="rect" id="Node000001" title="Gets performance statistics from the lock&#45;free queue." alt="" coords="5,5,193,60"/>
-<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589" title="Get performance statistics." alt="" coords="241,13,432,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,30,227,30,227,35,193,35"/>
-</map>

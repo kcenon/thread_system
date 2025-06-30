@@ -11,9 +11,7 @@ var searchData=
   ['power_5fefficient_8',['power_efficient',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a6326704c791468e1cbed2d477907ceef',1,'thread_pool_module::worker_policy']]],
   ['priority_9',['priority',['../d6/ddf/classthread__module_1_1jobs_1_1job__interface.html#ab1ede8912e6405da3c8d6961d76287bd',1,'thread_module::jobs::job_interface::priority()'],['../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a88acbe2410c3ccef635b0e4d686a8914',1,'typed_thread_pool_module::typed_job_t::priority()']]],
   ['priority_5fcomparator_10',['priority_comparator',['../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ac79224f2591a6eca5fa481f7144ee6ec',1,'typed_thread_pool_module::detail::priority_comparator']]],
-  ['process_5fbatch_11',['process_batch',['../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a533ca9312ca56f5873175773b8cb12c9',1,'thread_pool_module::lockfree_thread_worker']]],
-  ['process_5fjob_12',['process_job',['../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a04eeb39e4467156cdccf660cb693d273',1,'thread_pool_module::lockfree_thread_worker']]],
-  ['protect_13',['protect',['../d5/d31/classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html#a1b9cd40dd0159aaafdaee7c681dffef0',1,'thread_module::hazard_pointer_manager::hazard_pointer']]],
-  ['push_14',['push',['../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a39ebc9f9a6f7238685ed0a5610582abb',1,'monitoring_module::ring_buffer::push()'],['../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abd0795e88499f0bb6d4931d234033e27',1,'monitoring_module::thread_safe_ring_buffer::push()']]],
-  ['push_5fto_5ffree_5flist_15',['push_to_free_list',['../d8/dad/classthread__module_1_1node__pool.html#a5114460242d5680d18f19bf16285d169',1,'thread_module::node_pool']]]
+  ['protect_11',['protect',['../d5/d31/classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html#a1b9cd40dd0159aaafdaee7c681dffef0',1,'thread_module::hazard_pointer_manager::hazard_pointer']]],
+  ['push_12',['push',['../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a39ebc9f9a6f7238685ed0a5610582abb',1,'monitoring_module::ring_buffer::push()'],['../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abd0795e88499f0bb6d4931d234033e27',1,'monitoring_module::thread_safe_ring_buffer::push()']]],
+  ['push_5fto_5ffree_5flist_13',['push_to_free_list',['../d8/dad/classthread__module_1_1node__pool.html#a5114460242d5680d18f19bf16285d169',1,'thread_module::node_pool']]]
 ];

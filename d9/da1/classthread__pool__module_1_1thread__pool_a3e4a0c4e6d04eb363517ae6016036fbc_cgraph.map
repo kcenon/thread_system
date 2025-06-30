@@ -1,11 +1,7 @@
 <map id="thread_pool_module::thread_pool::stop" name="thread_pool_module::thread_pool::stop">
-<area shape="rect" id="Node000001" title="Stops the thread pool and all worker threads." alt="" coords="5,35,160,75"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="208,42,385,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,52,194,52,194,57,160,57"/>
+<area shape="rect" id="Node000001" title="Stops the thread pool and all worker threads." alt="" coords="5,5,160,45"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a9e391cb38a5591521322e7f43cb9d8f0" title=" " alt="" coords="208,13,385,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,23,194,23,194,28,160,28"/>
 <area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="433,5,644,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="385,41,419,37,420,42,386,47"/>
-<area shape="rect" id="Node000004" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="692,13,868,38"/>
-<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="385,59,508,62,576,60,644,55,722,39,723,44,644,60,577,65,508,67,385,64"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="644,32,678,32,678,37,644,37"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="692,19,658,19,658,14,692,14"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="385,23,420,23,420,28,385,28"/>
 </map>

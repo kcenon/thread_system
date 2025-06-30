@@ -1,5 +1,0 @@
-<map id="metrics::gauge&lt; T &gt;" name="metrics::gauge&lt; T &gt;">
-<area shape="rect" id="Node000001" title="Gauge metric &#45; value that can go up or down." alt="" coords="19,199,171,524"/>
-<area shape="rect" id="Node000002" href="$dd/d6a/classmetrics_1_1metric__interface.html" title="Base interface for all metric types." alt="" coords="5,5,184,151"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,164,97,198,92,198,92,164"/>
-</map>

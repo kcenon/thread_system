@@ -1,7 +1,5 @@
 <map id="thread_module::thread_base::stop" name="thread_module::thread_base::stop">
-<area shape="rect" id="Node000001" title="Requests the worker thread to stop and waits for it to finish." alt="" coords="248,49,419,89"/>
-<area shape="rect" id="Node000002" href="$dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#ac8fad9579e46fd2db89eca6171fbff16" title="Virtual destructor. Ensures proper cleanup." alt="" coords="5,5,200,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,56,200,50,201,45,235,51"/>
-<area shape="rect" id="Node000003" href="$da/d94/classthread__module_1_1thread__base.html#a32f96f73af7e93a9ed8595b5921f0d08" title="Virtual destructor. Ensures proper cleanup of derived classes." alt="" coords="17,85,188,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,87,189,94,188,89,234,81"/>
+<area shape="rect" id="Node000001" title="Requests the worker thread to stop and waits for it to finish." alt="" coords="224,5,395,45"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html#a32f96f73af7e93a9ed8595b5921f0d08" title="Virtual destructor. Ensures proper cleanup of derived classes." alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,28,176,28,176,23,210,23"/>
 </map>

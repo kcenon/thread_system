@@ -1,11 +1,7 @@
 <map id="thread_module::adaptive_job_queue::migrate_to_legacy" name="thread_module::adaptive_job_queue::migrate_to_legacy">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,27,191,82"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="239,42,461,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,52,225,52,225,57,191,57"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="509,5,720,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="461,40,495,36,496,41,462,45"/>
-<area shape="rect" id="Node000004" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="768,13,944,38"/>
-<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="461,60,586,62,720,55,798,39,799,44,720,60,586,68,461,65"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="720,32,754,32,754,37,720,37"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="768,19,734,19,734,14,768,14"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,191,60"/>
+<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="239,20,461,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,30,225,30,225,35,191,35"/>
+<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="509,13,720,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="462,30,495,30,495,35,462,35"/>
 </map>

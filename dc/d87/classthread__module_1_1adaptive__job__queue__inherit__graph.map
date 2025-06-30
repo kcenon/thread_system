@@ -1,7 +1,8 @@
 <map id="thread_module::adaptive_job_queue" name="thread_module::adaptive_job_queue">
-<area shape="rect" id="Node000001" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="5,601,249,1396"/>
-<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="35,133,220,553"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,567,130,601,125,601,125,567"/>
+<area shape="rect" id="Node000001" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="5,541,249,1336"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="57,133,197,493"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,507,130,541,125,541,125,507"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="37,5,217,85"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,99,130,133,125,133,125,99"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,99,122,133,116,133,117,99"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="137,99,138,133,133,133,132,99"/>
 </map>

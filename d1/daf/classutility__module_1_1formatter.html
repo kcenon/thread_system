@@ -134,7 +134,7 @@ Static Private Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library. </p>
 <p>The <code>formatter</code> class offers static functions to format strings (both narrow and wide) into a <code>std::string</code> / <code>std::wstring</code>, or directly to an output iterator. Which underlying implementation is used depends on whether <code>USE_STD_FORMAT</code> is defined.</p>
-<h3><a class="anchor" id="autotoc_md94"></a>
+<h3><a class="anchor" id="autotoc_md71"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Basic usage:</span></div>
 <div class="line">std::string result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;Hello, {}&quot;</span>, <span class="stringliteral">&quot;World&quot;</span>);</div>
@@ -230,113 +230,97 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph.png" border="0" usemap="#ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph" alt=""/></div>
 <map name="ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph" id="ad1/daf/classutility__module_1_1formatter_a1b5ec167f6e47412edd77a4ea658e339_icgraph">
-<area shape="rect" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="499,1414,685,1454"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="254,245,437,285"/>
-<area shape="poly" title=" " alt="" coords="588,1400,587,1183,581,1026,571,855,554,684,529,526,513,456,494,395,473,344,449,305,427,287,430,283,453,302,478,342,499,393,518,455,534,525,559,683,576,854,587,1025,592,1183,594,1400"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="22,117,175,157"/>
-<area shape="poly" title=" " alt="" coords="587,1400,578,1115,555,679,537,459,513,265,499,184,484,119,467,71,449,43,424,24,400,13,377,9,353,9,302,23,241,43,206,58,173,78,122,119,119,114,170,73,204,53,239,38,300,18,352,4,377,3,402,8,427,19,453,39,472,68,489,117,504,183,518,264,542,458,560,679,583,1115,593,1400"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="13,274,184,314"/>
-<area shape="poly" title=" " alt="" coords="586,1401,571,1173,542,838,522,669,500,521,475,408,462,371,449,349,431,337,406,327,338,312,259,303,184,298,184,293,260,297,339,306,408,322,434,332,453,346,467,369,480,407,505,520,528,668,547,837,576,1173,591,1400"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="251,359,440,399"/>
-<area shape="poly" title=" " alt="" coords="588,1401,584,1201,578,1058,567,904,550,750,525,609,510,547,492,493,471,447,449,413,435,401,439,397,453,410,476,445,497,491,515,546,530,608,555,750,572,904,583,1058,590,1200,593,1400"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5" title="Processes and writes pending log messages to the file." alt="" coords="260,423,431,463"/>
-<area shape="poly" title=" " alt="" coords="588,1400,582,1211,575,1078,563,934,546,791,521,659,506,602,489,551,470,509,449,477,429,462,433,458,453,474,475,506,494,549,512,600,527,658,551,790,569,934,580,1078,588,1211,593,1400"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue." alt="" coords="252,487,439,527"/>
-<area shape="poly" title=" " alt="" coords="587,1401,580,1223,572,1099,559,965,542,832,518,710,487,609,469,571,449,541,435,530,439,526,453,538,473,568,492,608,523,709,547,831,565,965,577,1099,586,1223,593,1400"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a1c3ba2ebf75052d6933fed1eca5e9a95" title="Enqueues a single job into the thread pool." alt="" coords="262,552,429,607"/>
-<area shape="poly" title=" " alt="" coords="587,1400,577,1237,553,1003,535,883,512,773,483,682,467,647,449,620,427,602,431,598,453,616,471,644,488,680,517,772,540,882,558,1003,582,1237,592,1400"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#ac3991a2dda0aa7f92be3c6fa951bf003" title="Adds a new worker thread to the pool." alt="" coords="262,631,429,685"/>
-<area shape="poly" title=" " alt="" coords="586,1401,574,1252,548,1042,530,934,507,835,480,754,465,723,449,699,427,681,430,677,453,695,470,720,485,752,513,834,535,933,554,1041,579,1251,591,1400"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a22e8ed843c7059ef6cb30faae0f5f37e" title="Enqueues multiple jobs into the thread pool." alt="" coords="262,709,429,764"/>
-<area shape="poly" title=" " alt="" coords="585,1401,571,1266,544,1079,525,984,503,897,477,826,463,798,449,777,427,760,431,756,453,774,468,796,482,824,508,896,530,983,549,1078,576,1265,590,1400"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a56d054859656852592773055135f6a77" title="Adds multiple worker threads to the pool." alt="" coords="262,788,429,843"/>
-<area shape="poly" title=" " alt="" coords="584,1401,567,1281,538,1118,520,1036,498,961,475,899,449,857,427,840,431,836,453,854,479,897,503,959,525,1035,544,1117,573,1280,589,1400"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f" title="Enqueues a log message for processing." alt="" coords="251,867,440,907"/>
-<area shape="poly" title=" " alt="" coords="589,1401,585,1309,578,1249,566,1183,549,1115,524,1048,491,984,449,928,425,910,428,905,453,924,496,981,529,1046,554,1113,572,1182,583,1248,590,1308,594,1401"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="252,982,439,1022"/>
-<area shape="poly" title=" " alt="" coords="586,1401,576,1328,553,1233,535,1183,512,1134,484,1088,449,1048,429,1034,406,1025,408,1020,432,1029,452,1044,488,1085,517,1132,540,1181,558,1232,581,1327,591,1400"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a25f40e9ea9544c4c802a19a88d00214a" title=" " alt="" coords="5,929,192,969"/>
-<area shape="poly" title=" " alt="" coords="583,1401,565,1300,536,1170,517,1105,496,1048,473,1002,449,972,420,953,388,940,354,930,319,925,250,924,186,931,186,926,250,919,320,920,355,925,390,935,422,949,452,968,478,999,501,1046,522,1104,541,1168,570,1299,588,1400"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="252,1046,439,1086"/>
-<area shape="poly" title=" " alt="" coords="584,1401,571,1337,546,1256,529,1214,507,1172,480,1134,449,1100,432,1088,435,1084,452,1096,484,1131,511,1170,533,1212,551,1254,576,1336,589,1400"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#aaa3abbb06fcbccf4b8ecc43ceebcc453" title="Formats a wide&#45;character string directly to an output iterator." alt="" coords="252,1110,439,1150"/>
-<area shape="poly" title=" " alt="" coords="580,1402,564,1349,537,1285,499,1220,476,1190,449,1164,431,1152,434,1148,452,1160,480,1187,504,1217,542,1283,569,1347,585,1400"/>
-<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with an optional newline appended." alt="" coords="263,1174,428,1214"/>
-<area shape="poly" title=" " alt="" coords="575,1402,555,1362,527,1315,492,1268,449,1228,427,1215,430,1211,452,1224,496,1265,532,1312,560,1360,579,1400"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="254,53,437,93"/>
-<area shape="poly" title=" " alt="" coords="587,1400,573,1129,546,717,527,508,504,323,478,183,464,135,449,106,435,94,439,90,453,103,469,133,483,181,510,323,532,508,551,717,579,1129,592,1400"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="254,117,437,157"/>
-<area shape="poly" title=" " alt="" coords="586,1401,572,1142,544,750,525,552,503,376,477,243,463,198,449,170,435,158,439,154,453,167,468,196,482,241,508,375,530,551,550,750,578,1141,592,1401"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="254,1238,437,1278"/>
-<area shape="poly" title=" " alt="" coords="566,1405,516,1347,484,1318,449,1292,426,1281,428,1276,452,1288,488,1314,520,1344,570,1401"/>
-<area shape="rect" href="../../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a04eeb39e4467156cdccf660cb693d273" title="Processes a single job." alt="" coords="254,1303,437,1357"/>
-<area shape="poly" title=" " alt="" coords="535,1411,450,1373,419,1360,421,1355,452,1368,538,1406"/>
-<area shape="rect" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread." alt="" coords="259,1382,431,1422"/>
-<area shape="poly" title=" " alt="" coords="485,1423,431,1416,432,1411,485,1418"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#abaf56e3f06818ca33f853eeac25e4202" title="Starts all underlying lock&#45;free logging operations." alt="" coords="240,1446,451,1486"/>
-<area shape="poly" title=" " alt="" coords="486,1451,451,1455,451,1450,485,1445"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors." alt="" coords="240,1510,451,1550"/>
-<area shape="poly" title=" " alt="" coords="539,1463,452,1501,417,1513,416,1507,450,1496,537,1458"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a9aec952cef83bb82fa1610c395e52b89" title="Starts the thread pool and all associated workers." alt="" coords="262,1575,429,1629"/>
-<area shape="poly" title=" " alt="" coords="566,1466,516,1516,452,1564,428,1577,426,1572,449,1560,512,1512,562,1463"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a191e9ac1ccbf901f3d166be1690d4f4a" title="Stops the thread pool and optionally clears pending jobs." alt="" coords="244,1654,447,1694"/>
-<area shape="poly" title=" " alt="" coords="579,1468,559,1508,531,1555,496,1602,452,1643,430,1656,427,1652,449,1639,492,1599,527,1552,555,1505,575,1466"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="254,181,437,221"/>
-<area shape="poly" title=" " alt="" coords="586,1401,571,1153,542,782,523,595,501,429,476,303,462,260,449,234,435,222,439,218,453,231,467,258,481,301,506,428,528,594,548,782,577,1153,592,1400"/>
-<area shape="rect" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="253,1718,438,1758"/>
-<area shape="poly" title=" " alt="" coords="585,1468,569,1521,542,1585,504,1651,480,1682,452,1708,434,1720,431,1716,449,1704,476,1678,499,1648,537,1583,564,1519,580,1467"/>
-<area shape="rect" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="255,1782,436,1822"/>
-<area shape="poly" title=" " alt="" coords="589,1468,576,1532,551,1614,533,1657,511,1699,484,1738,452,1772,435,1784,432,1780,449,1768,480,1734,507,1696,529,1654,546,1612,571,1531,584,1467"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e" title="Returns a string representation of this thread_base object." alt="" coords="260,1846,431,1886"/>
-<area shape="poly" title=" " alt="" coords="591,1468,582,1543,560,1642,542,1694,519,1746,489,1794,452,1836,432,1850,429,1846,449,1832,485,1791,514,1743,537,1692,555,1641,577,1542,586,1468"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="271,1910,419,1950"/>
-<area shape="poly" title=" " alt="" coords="593,1468,588,1554,580,1609,568,1670,550,1731,526,1792,494,1850,453,1900,438,1912,421,1920,418,1915,435,1907,449,1896,489,1847,521,1790,545,1730,563,1668,575,1609,582,1553,588,1468"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24" title="Returns a string representation of this job_queue." alt="" coords="271,1974,419,2014"/>
-<area shape="poly" title=" " alt="" coords="589,1468,571,1579,542,1727,523,1802,502,1870,478,1926,453,1964,438,1976,421,1984,419,1980,435,1971,449,1960,474,1923,497,1868,518,1800,536,1726,566,1578,583,1467"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#afff00cbed87d038e3ae0c8fe5aad5095" title="Returns a string representation of the thread pool&#39;s state." alt="" coords="262,2039,429,2093"/>
-<area shape="poly" title=" " alt="" coords="589,1468,573,1591,544,1757,526,1842,504,1919,480,1983,453,2028,431,2046,427,2042,449,2024,475,1981,499,1918,521,1841,539,1756,568,1590,584,1467"/>
-<area shape="rect" href="../../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a83889211f43273404cb12eb7ff9ed901" title="Returns a string representation of the worker&#39;s state." alt="" coords="254,2117,437,2172"/>
-<area shape="poly" title=" " alt="" coords="591,1468,576,1605,549,1795,531,1893,509,1981,483,2055,468,2084,453,2107,439,2119,435,2115,449,2103,464,2081,478,2053,503,1980,526,1891,544,1794,571,1604,585,1467"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f" title=" " alt="" coords="252,2247,439,2287"/>
-<area shape="poly" title=" " alt="" coords="592,1468,581,1628,557,1855,539,1972,516,2080,487,2168,471,2203,453,2231,430,2249,426,2245,449,2227,466,2201,482,2167,511,2078,534,1971,552,1855,576,1627,586,1468"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a3c6f6166799f31c21c3934d287957ff5" title=" " alt="" coords="5,2218,192,2258"/>
-<area shape="poly" title=" " alt="" coords="592,1468,583,1621,560,1838,542,1949,518,2049,489,2131,472,2163,452,2187,434,2199,409,2209,343,2224,266,2234,192,2239,192,2233,266,2228,342,2219,407,2204,432,2194,449,2183,467,2160,484,2129,513,2048,537,1948,555,1837,577,1621,587,1467"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ae0060d13fd50f09bf407dfbe345191e5" title="Writes a formatted log message." alt="" coords="240,2311,451,2351"/>
-<area shape="poly" title=" " alt="" coords="592,1468,585,1641,563,1890,545,2019,521,2136,491,2234,473,2272,453,2301,439,2313,435,2309,449,2298,468,2269,486,2232,516,2135,540,2018,558,1889,579,1640,587,1468"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="240,2375,451,2415"/>
-<area shape="poly" title=" " alt="" coords="593,1468,587,1652,579,1781,567,1921,549,2059,525,2187,510,2243,493,2292,474,2334,453,2365,439,2377,435,2373,449,2362,470,2331,488,2290,505,2242,520,2186,544,2059,561,1920,574,1781,581,1652,588,1468"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ab04e409ac28fded544a9c6e63dd46caf" title="Writes a formatted log message with timestamp." alt="" coords="240,2439,451,2479"/>
-<area shape="poly" title=" " alt="" coords="593,1468,589,1663,582,1801,571,1951,553,2100,529,2237,513,2298,496,2351,476,2395,453,2429,439,2441,435,2437,449,2426,471,2393,491,2349,508,2296,523,2236,548,2099,565,1950,577,1801,584,1663,588,1468"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="240,2503,451,2543"/>
-<area shape="poly" title=" " alt="" coords="594,1468,591,1674,585,1821,574,1981,557,2141,532,2287,516,2352,498,2409,477,2457,453,2493,439,2505,435,2501,449,2490,472,2454,493,2407,511,2351,527,2286,552,2140,569,1980,580,1821,586,1674,588,1468"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#a8df474eb4dd18bcacb66dc4df9db1b3e" title="Writes a formatted wide&#45;character log message with timestamp." alt="" coords="240,2567,451,2607"/>
-<area shape="poly" title=" " alt="" coords="594,1468,593,1686,588,1842,578,2012,561,2182,536,2338,519,2407,500,2468,478,2518,453,2557,440,2569,436,2565,449,2554,473,2516,495,2466,514,2406,531,2337,556,2181,573,2011,583,1842,588,1685,589,1468"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="240,2631,451,2671"/>
-<area shape="poly" title=" " alt="" coords="592,1468,576,1713,547,2079,528,2264,506,2427,481,2552,467,2595,453,2621,440,2633,436,2629,449,2618,462,2592,475,2551,500,2426,522,2263,542,2078,571,1712,586,1468"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ae80e91f7b1a840aaefdb1c69d2020503" title="Writes a formatted wide&#45;character log message." alt="" coords="240,2695,451,2735"/>
-<area shape="poly" title=" " alt="" coords="592,1468,577,1725,549,2111,530,2307,507,2480,482,2612,468,2657,453,2685,440,2697,436,2693,449,2682,463,2655,477,2611,502,2479,524,2307,544,2111,572,1725,586,1468"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a62abd0747dc81cbf628b304266fc3f13" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="240,2759,451,2799"/>
-<area shape="poly" title=" " alt="" coords="592,1468,579,1737,551,2143,532,2350,509,2533,483,2672,468,2719,453,2749,440,2761,436,2757,449,2746,463,2717,478,2671,504,2532,527,2349,546,2143,573,1736,587,1468"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb" title="Template method for writing log messages of various string types." alt="" coords="251,2823,440,2863"/>
-<area shape="poly" title=" " alt="" coords="592,1468,580,1748,553,2175,534,2393,511,2585,484,2732,469,2782,453,2813,440,2825,436,2821,449,2810,464,2780,479,2731,506,2584,529,2392,548,2175,574,1748,587,1468"/>
-<area shape="rect" href="../../d6/de6/classlog__module_1_1lockfree__log__collector.html#a5a99c1f08f37fef284c1abf5542d74c9" title="Template method for writing log messages using lock&#45;free operations." alt="" coords="266,2888,425,2943"/>
-<area shape="poly" title=" " alt="" coords="592,1468,580,1759,553,2206,534,2434,511,2636,484,2791,469,2844,453,2877,427,2899,423,2895,449,2874,464,2842,479,2790,506,2635,529,2434,548,2206,574,1759,587,1468"/>
-<area shape="poly" title=" " alt="" coords="255,242,239,235,174,197,123,159,126,155,177,193,241,230,258,238"/>
-<area shape="poly" title=" " alt="" coords="241,280,184,287,184,281,240,275"/>
-<area shape="rect" href="../../d6/de6/classlog__module_1_1lockfree__log__collector.html#a7c3a818111e17660f5b3d985619162b4" title="Processes log messages using lock&#45;free dequeue operations." alt="" coords="11,865,186,905"/>
-<area shape="poly" title=" " alt="" coords="237,889,186,888,186,883,237,884"/>
-<area shape="poly" title=" " alt="" coords="451,1019,453,1020,492,1067,523,1120,547,1177,565,1234,586,1340,593,1414,587,1414,581,1341,560,1236,542,1178,519,1122,488,1070,449,1024,448,1023"/>
-<area shape="poly" title=" " alt="" coords="239,982,191,971,192,966,240,977"/>
-<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="21,993,177,1033"/>
-<area shape="poly" title=" " alt="" coords="238,1046,176,1032,177,1027,239,1041"/>
-<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="12,1057,185,1097"/>
-<area shape="poly" title=" " alt="" coords="238,1073,186,1076,185,1070,238,1068"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="13,1121,185,1161"/>
-<area shape="poly" title=" " alt="" coords="266,1093,166,1123,165,1118,265,1088"/>
-<area shape="poly" title=" " alt="" coords="255,99,176,120,175,114,254,94"/>
-<area shape="poly" title=" " alt="" coords="240,139,175,139,175,134,240,134"/>
-<area shape="poly" title=" " alt="" coords="254,180,175,159,176,154,255,175"/>
-<area shape="poly" title=" " alt="" coords="238,2257,192,2252,193,2247,239,2252"/>
+<area shape="rect" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="773,875,960,915"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="529,491,711,531"/>
+<area shape="poly" title=" " alt="" coords="859,862,847,795,823,710,805,665,783,621,756,580,724,545,707,533,710,529,727,541,760,577,788,618,810,663,828,708,852,794,864,861"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="283,747,436,787"/>
+<area shape="poly" title=" " alt="" coords="851,928,830,961,802,997,767,1031,727,1057,668,1080,618,1090,594,1089,569,1083,513,1057,369,788,374,786,517,1053,570,1078,594,1083,618,1085,667,1075,724,1052,764,1027,798,994,826,958,846,925"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="274,463,445,503"/>
+<area shape="poly" title=" " alt="" coords="863,861,859,779,852,728,840,673,823,619,798,566,765,519,724,481,688,461,650,448,609,442,568,440,488,449,420,465,419,460,487,444,568,435,610,436,651,443,691,456,727,477,769,516,803,564,827,617,845,672,857,727,864,779,869,860"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="525,184,715,224"/>
+<area shape="poly" title=" " alt="" coords="860,861,846,725,820,538,801,443,779,357,753,286,739,259,723,238,709,226,713,222,727,234,743,256,758,284,784,355,806,442,825,538,851,725,865,860"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5" title="Processes and writes pending log messages to the file." alt="" coords="535,248,705,288"/>
+<area shape="poly" title=" " alt="" coords="859,861,844,738,816,570,797,485,775,408,751,345,723,302,704,287,707,283,727,298,755,342,780,406,802,484,821,569,849,737,864,861"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue." alt="" coords="527,312,713,352"/>
+<area shape="poly" title=" " alt="" coords="858,861,841,750,811,601,793,526,772,459,748,403,723,366,709,354,712,350,727,362,753,401,777,457,798,525,816,600,846,749,863,861"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f" title="Enqueues a log message for processing." alt="" coords="525,376,715,416"/>
+<area shape="poly" title=" " alt="" coords="862,861,855,777,835,664,817,603,794,543,763,487,723,437,699,418,702,414,727,433,767,484,798,541,823,601,840,663,861,776,867,861"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="527,5,713,45"/>
+<area shape="poly" title=" " alt="" coords="861,861,851,697,828,463,810,343,787,232,758,141,741,105,723,78,701,60,675,48,677,43,704,55,727,74,746,102,763,139,792,231,815,342,833,462,857,697,867,861"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a25f40e9ea9544c4c802a19a88d00214a" title=" " alt="" coords="266,5,453,45"/>
+<area shape="poly" title=" " alt="" coords="861,861,852,701,830,475,812,359,788,254,759,168,742,135,724,110,627,86,452,48,454,42,628,81,727,106,747,132,764,166,793,253,817,358,835,474,858,701,867,861"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="527,120,713,160"/>
+<area shape="poly" title=" " alt="" coords="861,861,849,714,824,508,805,402,783,306,755,227,740,197,723,174,710,162,713,158,727,170,745,194,760,225,788,305,811,401,829,507,854,713,866,861"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#aaa3abbb06fcbccf4b8ecc43ceebcc453" title="Formats a wide&#45;character string directly to an output iterator." alt="" coords="527,619,713,659"/>
+<area shape="poly" title=" " alt="" coords="851,863,832,820,805,768,769,717,724,673,704,661,707,656,727,669,773,713,809,766,837,817,856,861"/>
+<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with an optional newline appended." alt="" coords="537,683,703,723"/>
+<area shape="poly" title=" " alt="" coords="843,865,794,800,761,766,724,737,702,725,704,720,727,732,764,762,798,796,848,861"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="529,555,711,595"/>
+<area shape="poly" title=" " alt="" coords="856,862,840,807,814,739,776,669,752,637,724,609,706,597,709,593,727,605,756,633,780,666,819,736,845,805,861,861"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="529,747,711,787"/>
+<area shape="poly" title=" " alt="" coords="829,868,781,834,724,801,695,789,697,784,727,796,783,829,832,864"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="529,875,711,915"/>
+<area shape="poly" title=" " alt="" coords="760,897,712,897,712,892,760,892"/>
+<area shape="rect" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread." alt="" coords="534,939,706,979"/>
+<area shape="poly" title=" " alt="" coords="776,921,698,941,697,936,775,916"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors." alt="" coords="515,1003,725,1043"/>
+<area shape="poly" title=" " alt="" coords="832,925,783,960,727,993,697,1005,695,1000,724,988,781,956,829,921"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="529,811,711,851"/>
+<area shape="poly" title=" " alt="" coords="775,874,697,853,698,848,776,869"/>
+<area shape="rect" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="527,1117,713,1157"/>
+<area shape="poly" title=" " alt="" coords="853,928,833,968,805,1014,769,1060,727,1101,695,1120,692,1115,724,1097,765,1057,800,1011,828,965,848,926"/>
+<area shape="rect" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="529,1181,711,1221"/>
+<area shape="poly" title=" " alt="" coords="860,929,844,982,817,1047,779,1114,755,1144,727,1171,709,1184,706,1179,724,1167,751,1141,774,1111,812,1045,839,980,855,927"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e" title="Returns a string representation of this thread_base object." alt="" coords="535,1245,705,1285"/>
+<area shape="poly" title=" " alt="" coords="864,929,851,993,826,1076,808,1119,786,1161,759,1201,727,1235,707,1249,704,1245,724,1231,755,1197,782,1158,804,1117,821,1074,846,992,858,928"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24" title="Returns a string representation of this job_queue." alt="" coords="546,1309,694,1349"/>
+<area shape="poly" title=" " alt="" coords="866,928,857,1004,835,1103,817,1156,794,1208,764,1257,727,1299,696,1319,693,1314,724,1295,760,1253,789,1206,812,1154,830,1102,852,1003,861,928"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="546,1373,694,1413"/>
+<area shape="poly" title=" " alt="" coords="868,929,863,1015,855,1071,843,1131,825,1194,801,1255,769,1312,727,1363,712,1375,695,1383,693,1379,709,1370,723,1359,764,1309,796,1253,820,1192,838,1130,850,1070,857,1015,863,928"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f" title=" " alt="" coords="527,1437,713,1477"/>
+<area shape="poly" title=" " alt="" coords="863,929,846,1041,816,1189,798,1264,777,1332,753,1389,727,1427,712,1439,709,1435,723,1424,748,1386,772,1331,793,1263,811,1188,841,1040,858,928"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a3c6f6166799f31c21c3934d287957ff5" title=" " alt="" coords="266,1501,453,1541"/>
+<area shape="poly" title=" " alt="" coords="865,929,851,1055,825,1225,806,1310,784,1387,758,1450,743,1474,727,1491,707,1503,680,1512,610,1523,530,1528,453,1528,453,1522,530,1522,609,1518,679,1507,705,1498,724,1487,739,1470,753,1447,779,1386,801,1309,820,1224,846,1054,860,929"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="515,1552,725,1592"/>
+<area shape="poly" title=" " alt="" coords="865,929,850,1060,822,1241,804,1333,782,1417,756,1487,742,1514,727,1535,703,1554,700,1550,723,1531,738,1511,751,1484,777,1415,798,1332,817,1240,845,1059,860,928"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="515,1616,725,1656"/>
+<area shape="poly" title=" " alt="" coords="866,929,854,1073,828,1276,810,1379,787,1474,760,1552,744,1582,727,1606,713,1618,709,1614,723,1602,740,1580,755,1550,782,1472,804,1378,823,1275,848,1073,861,928"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="515,1680,725,1720"/>
+<area shape="poly" title=" " alt="" coords="866,928,856,1085,832,1306,814,1420,791,1524,762,1610,746,1644,727,1670,713,1682,710,1678,723,1666,741,1641,757,1608,786,1523,809,1419,827,1306,851,1084,861,928"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a62abd0747dc81cbf628b304266fc3f13" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="515,1744,725,1784"/>
+<area shape="poly" title=" " alt="" coords="867,928,858,1096,836,1337,818,1461,794,1575,765,1669,747,1706,727,1734,713,1746,710,1742,723,1730,742,1703,760,1667,789,1574,813,1460,831,1336,853,1096,862,928"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb" title="Template method for writing log messages of various string types." alt="" coords="525,1808,715,1848"/>
+<area shape="poly" title=" " alt="" coords="867,929,860,1108,852,1233,840,1368,822,1502,798,1625,767,1727,748,1767,727,1798,714,1810,710,1806,723,1794,744,1765,762,1725,793,1624,817,1501,835,1367,847,1232,855,1107,862,928"/>
+<area shape="poly" title=" " alt="" coords="525,539,516,545,489,568,465,594,423,650,391,705,371,748,367,745,387,703,418,648,461,590,486,564,513,541,522,535"/>
+<area shape="poly" title=" " alt="" coords="515,502,445,494,445,489,515,497"/>
+<area shape="poly" title=" " alt="" coords="726,48,727,50,747,80,765,119,795,219,818,339,837,469,859,715,867,874,862,875,854,716,831,469,813,340,790,220,760,121,742,83,723,54,722,52"/>
+<area shape="poly" title=" " alt="" coords="513,28,453,28,453,23,513,23"/>
+<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="281,197,437,237"/>
+<area shape="poly" title=" " alt="" coords="540,166,428,200,427,195,538,161"/>
+<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="273,69,446,109"/>
+<area shape="poly" title=" " alt="" coords="512,122,446,109,447,104,513,117"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="273,133,445,173"/>
+<area shape="poly" title=" " alt="" coords="513,148,446,152,445,146,513,143"/>
+<area shape="rect" href="../../d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,126,204,181"/>
+<area shape="poly" title=" " alt="" coords="259,156,204,156,204,151,259,151"/>
+<area shape="poly" title=" " alt="" coords="528,603,516,609,472,642,433,680,377,748,373,745,429,676,469,638,513,604,525,598"/>
+<area shape="poly" title=" " alt="" coords="515,769,436,769,436,764,515,764"/>
+<area shape="poly" title=" " alt="" coords="524,810,435,788,437,783,525,805"/>
+<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="269,1151,450,1206"/>
+<area shape="poly" title=" " alt="" coords="538,1244,514,1236,435,1209,437,1203,516,1231,540,1239"/>
+<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="252,978,467,1033"/>
+<area shape="poly" title=" " alt="" coords="521,1243,513,1235,496,1211,488,1187,486,1163,487,1140,487,1093,480,1070,465,1047,451,1035,454,1031,469,1044,485,1068,493,1093,493,1140,491,1163,493,1186,500,1209,517,1232,525,1239"/>
+<area shape="rect" href="../../d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html#a53f30f143dc34e05063d40c9b28a5c4b" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance as a string." alt="" coords="272,1057,447,1127"/>
+<area shape="poly" title=" " alt="" coords="521,1241,513,1235,494,1211,487,1187,481,1164,465,1141,445,1126,448,1121,469,1137,486,1162,493,1186,499,1209,517,1231,524,1237"/>
+<area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="271,1230,447,1285"/>
+<area shape="poly" title=" " alt="" coords="533,1308,447,1284,448,1279,535,1303"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#ae800183f7578e54052ab809d4436354f" title="Returns a string representation of this job_queue." alt="" coords="285,1309,433,1349"/>
+<area shape="poly" title=" " alt="" coords="532,1332,433,1332,433,1327,532,1327"/>
+<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object into a string using job::to_string()." alt="" coords="273,1373,446,1413"/>
+<area shape="poly" title=" " alt="" coords="532,1396,446,1396,446,1391,532,1391"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0445d6dd1df6d696b149b65d600936cc" title="Formats a wide&#45;character string with the given arguments." alt="" coords="266,1437,453,1477"/>
+<area shape="poly" title=" " alt="" coords="513,1460,453,1460,453,1455,513,1455"/>
+<area shape="poly" title=" " alt="" coords="525,1483,442,1504,441,1499,524,1478"/>
 </map>
 </div>
 
@@ -481,113 +465,97 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/daf/classutility__module_1_1formatter_a0e0cfc83510413df54bdf125abddbfbf_icgraph.png" border="0" usemap="#ad1/daf/classutility__module_1_1formatter_a0e0cfc83510413df54bdf125abddbfbf_icgraph" alt=""/></div>
 <map name="ad1/daf/classutility__module_1_1formatter_a0e0cfc83510413df54bdf125abddbfbf_icgraph" id="ad1/daf/classutility__module_1_1formatter_a0e0cfc83510413df54bdf125abddbfbf_icgraph">
-<area shape="rect" title=" " alt="" coords="733,1399,920,1439"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="499,1399,685,1439"/>
-<area shape="poly" title=" " alt="" coords="720,1430,686,1430,686,1425,720,1425"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a25f40e9ea9544c4c802a19a88d00214a" title=" " alt="" coords="252,5,439,45"/>
-<area shape="poly" title=" " alt="" coords="823,1385,822,1298,815,1169,799,1007,770,823,749,726,724,628,694,529,658,431,616,335,567,242,512,155,449,74,432,59,413,48,416,43,436,55,453,70,516,152,572,240,621,332,663,429,699,527,729,626,755,725,775,822,804,1007,820,1169,827,1298,828,1385"/>
-<area shape="poly" title=" " alt="" coords="699,1407,733,1407,733,1413,699,1412"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="254,312,437,352"/>
-<area shape="poly" title=" " alt="" coords="584,1385,509,813,448,372,427,354,430,350,453,369,514,812,589,1384"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="22,184,175,224"/>
-<area shape="poly" title=" " alt="" coords="583,1385,544,1108,496,712,488,402,483,302,475,213,464,145,457,123,449,110,424,91,400,80,377,75,353,76,302,90,241,110,206,125,173,145,122,186,119,182,170,140,204,120,239,106,300,85,353,71,378,70,402,75,427,86,453,106,462,120,469,144,481,212,488,301,493,402,501,712,549,1108,588,1385"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="13,341,184,381"/>
-<area shape="poly" title=" " alt="" coords="584,1385,511,838,470,546,448,416,431,404,406,394,338,379,259,370,184,366,184,360,260,365,339,374,407,389,434,400,453,413,475,545,516,837,589,1384"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="251,427,440,467"/>
-<area shape="poly" title=" " alt="" coords="584,1386,520,884,479,613,462,522,448,480,435,469,439,465,453,477,467,520,485,612,525,884,589,1385"/>
-<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5" title="Processes and writes pending log messages to the file." alt="" coords="260,491,431,531"/>
-<area shape="poly" title=" " alt="" coords="584,1385,519,917,478,666,461,582,448,544,429,529,432,525,453,541,466,581,484,665,524,916,589,1384"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue." alt="" coords="252,555,439,595"/>
-<area shape="poly" title=" " alt="" coords="584,1385,563,1210,530,964,489,734,468,652,458,625,449,608,435,597,439,593,453,605,463,623,474,651,494,732,535,963,569,1210,590,1385"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a1c3ba2ebf75052d6933fed1eca5e9a95" title="Enqueues a single job into the thread pool." alt="" coords="262,619,429,674"/>
-<area shape="poly" title=" " alt="" coords="586,1386,574,1237,548,1028,530,921,507,823,480,742,465,711,449,687,427,670,430,665,453,684,470,708,485,740,512,822,535,920,553,1027,579,1237,591,1385"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#ac3991a2dda0aa7f92be3c6fa951bf003" title="Adds a new worker thread to the pool." alt="" coords="262,698,429,753"/>
-<area shape="poly" title=" " alt="" coords="585,1385,571,1251,543,1066,525,971,503,885,477,814,463,787,449,766,427,749,431,745,453,762,468,784,482,812,508,884,530,970,549,1065,576,1251,590,1385"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a22e8ed843c7059ef6cb30faae0f5f37e" title="Enqueues multiple jobs into the thread pool." alt="" coords="262,777,429,831"/>
-<area shape="poly" title=" " alt="" coords="584,1386,567,1266,538,1104,520,1022,498,948,475,886,449,844,427,828,431,823,453,841,479,884,503,946,525,1021,544,1103,573,1265,589,1385"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a56d054859656852592773055135f6a77" title="Adds multiple worker threads to the pool." alt="" coords="262,855,429,910"/>
-<area shape="poly" title=" " alt="" coords="588,1385,583,1295,576,1236,564,1173,547,1106,522,1041,490,979,449,925,427,907,430,903,453,921,495,977,527,1039,552,1105,570,1171,581,1236,589,1295,594,1385"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f" title="Enqueues a log message for processing." alt="" coords="251,935,440,975"/>
-<area shape="poly" title=" " alt="" coords="587,1385,580,1305,559,1198,541,1142,518,1086,487,1034,449,989,434,977,437,973,453,985,491,1031,522,1084,546,1140,564,1197,585,1304,592,1385"/>
-<area shape="poly" title=" " alt="" coords="583,1385,544,1108,496,712,486,383,473,180,462,106,456,81,449,66,428,47,431,43,453,62,461,79,467,105,478,179,491,383,501,712,549,1108,588,1385"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="252,999,439,1039"/>
-<area shape="poly" title=" " alt="" coords="585,1386,574,1316,551,1227,533,1179,510,1133,482,1090,449,1053,433,1041,436,1037,452,1049,487,1087,515,1131,538,1177,556,1225,579,1315,590,1385"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#aaa3abbb06fcbccf4b8ecc43ceebcc453" title="Formats a wide&#45;character string directly to an output iterator." alt="" coords="252,1063,439,1103"/>
-<area shape="poly" title=" " alt="" coords="582,1386,567,1328,542,1255,524,1218,503,1181,478,1147,449,1117,432,1105,435,1101,452,1113,482,1143,508,1178,529,1215,547,1253,573,1326,587,1385"/>
-<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with an optional newline appended." alt="" coords="263,1127,428,1167"/>
-<area shape="poly" title=" " alt="" coords="578,1386,560,1340,532,1284,496,1228,474,1203,449,1181,427,1167,429,1163,452,1177,477,1199,500,1225,537,1282,564,1338,583,1384"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="254,120,437,160"/>
-<area shape="poly" title=" " alt="" coords="583,1385,545,1108,496,712,493,658,494,590,496,432,493,353,486,279,471,218,461,193,449,174,435,161,439,158,453,170,466,191,476,216,491,279,498,352,501,432,499,590,499,658,501,712,550,1108,588,1385"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="254,184,437,224"/>
-<area shape="poly" title=" " alt="" coords="583,1385,546,1108,496,712,493,605,493,465,490,395,482,331,469,277,449,238,435,226,439,222,453,234,474,275,488,330,495,395,498,465,498,605,501,712,551,1107,589,1385"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="254,1191,437,1231"/>
-<area shape="poly" title=" " alt="" coords="571,1388,522,1316,488,1278,449,1245,428,1233,430,1228,452,1240,492,1274,526,1312,576,1385"/>
-<area shape="rect" href="../../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a04eeb39e4467156cdccf660cb693d273" title="Processes a single job." alt="" coords="254,1255,437,1310"/>
-<area shape="poly" title=" " alt="" coords="553,1392,505,1358,449,1325,423,1313,425,1308,452,1320,508,1354,556,1388"/>
-<area shape="rect" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread." alt="" coords="259,1335,431,1375"/>
-<area shape="poly" title=" " alt="" coords="500,1398,422,1377,424,1372,502,1393"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#abaf56e3f06818ca33f853eeac25e4202" title="Starts all underlying lock&#45;free logging operations." alt="" coords="240,1399,451,1439"/>
-<area shape="poly" title=" " alt="" coords="485,1421,451,1421,451,1416,485,1416"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors." alt="" coords="240,1463,451,1503"/>
-<area shape="poly" title=" " alt="" coords="502,1445,424,1465,422,1460,500,1440"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a9aec952cef83bb82fa1610c395e52b89" title="Starts the thread pool and all associated workers." alt="" coords="262,1527,429,1582"/>
-<area shape="poly" title=" " alt="" coords="556,1449,508,1483,452,1517,425,1530,423,1525,449,1512,505,1479,553,1445"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#a191e9ac1ccbf901f3d166be1690d4f4a" title="Stops the thread pool and optionally clears pending jobs." alt="" coords="244,1607,447,1647"/>
-<area shape="poly" title=" " alt="" coords="575,1452,526,1524,492,1563,452,1596,427,1609,425,1604,449,1591,488,1559,522,1521,571,1449"/>
-<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="254,248,437,288"/>
-<area shape="poly" title=" " alt="" coords="583,1385,496,712,492,619,490,498,486,438,479,382,467,335,449,302,435,290,439,286,453,298,472,333,484,381,491,437,495,498,497,619,501,712,589,1385"/>
-<area shape="rect" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="253,1671,438,1711"/>
-<area shape="poly" title=" " alt="" coords="583,1453,564,1500,537,1555,500,1612,477,1638,452,1661,433,1673,430,1668,449,1657,474,1634,496,1609,532,1553,560,1497,578,1451"/>
-<area shape="rect" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="255,1735,436,1775"/>
-<area shape="poly" title=" " alt="" coords="587,1453,573,1511,547,1584,529,1622,508,1660,482,1694,452,1725,435,1737,432,1732,449,1721,478,1691,503,1657,524,1620,542,1582,567,1509,582,1451"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e" title="Returns a string representation of this thread_base object." alt="" coords="260,1799,431,1839"/>
-<area shape="poly" title=" " alt="" coords="590,1453,579,1522,556,1612,538,1660,515,1707,487,1750,452,1789,433,1803,430,1798,449,1785,482,1747,510,1704,533,1658,551,1611,574,1521,585,1452"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="271,1863,419,1903"/>
-<area shape="poly" title=" " alt="" coords="592,1453,585,1533,564,1640,546,1697,522,1754,491,1806,453,1853,437,1864,421,1873,418,1868,435,1860,449,1849,487,1803,518,1751,541,1696,559,1639,580,1532,587,1452"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24" title="Returns a string representation of this job_queue." alt="" coords="271,1927,419,1967"/>
-<area shape="poly" title=" " alt="" coords="594,1453,590,1544,584,1604,572,1668,554,1735,529,1800,496,1862,453,1917,438,1928,421,1937,418,1932,435,1924,449,1913,491,1859,525,1798,549,1733,567,1667,578,1603,585,1544,589,1453"/>
-<area shape="rect" href="../../de/da2/classthread__pool__module_1_1lockfree__thread__pool.html#afff00cbed87d038e3ae0c8fe5aad5095" title="Returns a string representation of the thread pool&#39;s state." alt="" coords="262,1991,429,2046"/>
-<area shape="poly" title=" " alt="" coords="589,1453,572,1570,542,1727,524,1806,502,1879,479,1939,453,1980,431,1998,427,1994,449,1977,474,1936,497,1877,518,1805,537,1726,566,1569,584,1452"/>
-<area shape="rect" href="../../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a83889211f43273404cb12eb7ff9ed901" title="Returns a string representation of the worker&#39;s state." alt="" coords="254,2070,437,2125"/>
-<area shape="poly" title=" " alt="" coords="590,1452,575,1584,547,1764,529,1857,507,1941,482,2010,468,2038,453,2059,439,2072,435,2068,449,2056,463,2035,477,2008,502,1939,524,1855,542,1764,570,1583,585,1452"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f" title=" " alt="" coords="252,2200,439,2240"/>
-<area shape="poly" title=" " alt="" coords="591,1452,580,1606,555,1824,537,1936,514,2039,486,2124,470,2157,453,2183,429,2202,426,2198,449,2180,466,2155,481,2122,509,2037,532,1935,550,1823,575,1605,586,1452"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a3c6f6166799f31c21c3934d287957ff5" title=" " alt="" coords="5,2171,192,2211"/>
-<area shape="poly" title=" " alt="" coords="592,1453,581,1600,558,1807,540,1913,516,2008,488,2087,471,2117,452,2139,434,2152,409,2162,343,2177,266,2186,192,2191,192,2186,266,2181,342,2172,407,2157,432,2147,449,2135,467,2114,483,2084,511,2007,534,1912,552,1807,576,1600,586,1452"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ae0060d13fd50f09bf407dfbe345191e5" title="Writes a formatted log message." alt="" coords="240,2264,451,2304"/>
-<area shape="poly" title=" " alt="" coords="592,1452,583,1619,561,1859,543,1982,520,2096,490,2189,472,2226,453,2254,439,2266,435,2262,449,2250,468,2223,485,2187,514,2094,538,1981,556,1858,578,1619,587,1452"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="240,2328,451,2368"/>
-<area shape="poly" title=" " alt="" coords="593,1452,586,1631,577,1755,565,1890,547,2023,523,2146,492,2248,474,2287,453,2318,439,2330,435,2326,449,2314,469,2285,487,2246,518,2145,542,2022,560,1889,572,1755,580,1630,587,1452"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ab04e409ac28fded544a9c6e63dd46caf" title="Writes a formatted log message with timestamp." alt="" coords="240,2392,451,2432"/>
-<area shape="poly" title=" " alt="" coords="593,1453,588,1642,581,1776,569,1920,551,2064,527,2197,512,2255,494,2306,475,2349,453,2382,439,2394,435,2390,449,2378,470,2346,489,2304,507,2254,522,2196,546,2064,563,1920,575,1776,582,1642,588,1453"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="240,2456,451,2496"/>
-<area shape="poly" title=" " alt="" coords="593,1452,590,1653,584,1796,572,1950,555,2105,530,2247,515,2310,497,2365,476,2410,453,2446,439,2458,435,2454,449,2442,472,2408,492,2363,510,2308,525,2246,550,2104,567,1950,578,1795,585,1653,588,1452"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#a8df474eb4dd18bcacb66dc4df9db1b3e" title="Writes a formatted wide&#45;character log message with timestamp." alt="" coords="240,2520,451,2560"/>
-<area shape="poly" title=" " alt="" coords="594,1452,592,1664,587,1816,576,1981,559,2145,534,2297,518,2364,499,2423,478,2472,453,2510,439,2522,435,2518,449,2506,473,2469,494,2421,513,2363,529,2296,554,2145,571,1980,581,1815,587,1664,588,1452"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="240,2584,451,2624"/>
-<area shape="poly" title=" " alt="" coords="591,1453,576,1692,546,2047,527,2227,505,2386,480,2507,467,2548,453,2574,440,2586,436,2582,449,2570,462,2546,475,2505,499,2385,521,2226,541,2047,570,1691,586,1452"/>
-<area shape="rect" href="../../d8/db3/classlog__module_1_1implementation_1_1lockfree__logger.html#ae80e91f7b1a840aaefdb1c69d2020503" title="Writes a formatted wide&#45;character log message." alt="" coords="240,2648,451,2688"/>
-<area shape="poly" title=" " alt="" coords="592,1453,577,1703,548,2080,529,2270,506,2438,481,2567,467,2610,453,2638,440,2650,436,2646,449,2634,462,2608,476,2565,501,2437,523,2269,543,2079,572,1703,586,1452"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a62abd0747dc81cbf628b304266fc3f13" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="240,2712,451,2752"/>
-<area shape="poly" title=" " alt="" coords="592,1453,578,1715,550,2112,531,2313,508,2491,482,2626,468,2673,453,2702,440,2714,436,2710,449,2698,463,2671,477,2625,503,2490,526,2312,545,2111,573,1715,587,1452"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb" title="Template method for writing log messages of various string types." alt="" coords="251,2776,440,2816"/>
-<area shape="poly" title=" " alt="" coords="592,1452,579,1726,552,2143,533,2356,510,2543,484,2686,469,2735,453,2766,440,2778,436,2774,449,2762,464,2733,478,2685,505,2542,528,2355,547,2143,574,1726,587,1452"/>
-<area shape="rect" href="../../d6/de6/classlog__module_1_1lockfree__log__collector.html#a5a99c1f08f37fef284c1abf5542d74c9" title="Template method for writing log messages using lock&#45;free operations." alt="" coords="266,2841,425,2895"/>
-<area shape="poly" title=" " alt="" coords="592,1453,579,1738,552,2175,533,2397,510,2594,484,2745,469,2797,453,2830,427,2851,423,2847,449,2826,464,2795,478,2744,505,2594,528,2397,547,2174,574,1737,587,1452"/>
-<area shape="poly" title=" " alt="" coords="255,310,239,302,174,264,123,226,126,222,177,260,241,298,258,305"/>
-<area shape="poly" title=" " alt="" coords="241,347,184,354,184,349,240,342"/>
-<area shape="rect" href="../../d6/de6/classlog__module_1_1lockfree__log__collector.html#a7c3a818111e17660f5b3d985619162b4" title="Processes log messages using lock&#45;free dequeue operations." alt="" coords="11,903,186,943"/>
-<area shape="poly" title=" " alt="" coords="237,943,186,937,187,931,237,938"/>
-<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="21,967,177,1007"/>
-<area shape="poly" title=" " alt="" coords="238,1007,177,999,177,994,239,1002"/>
-<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="12,1031,185,1071"/>
-<area shape="poly" title=" " alt="" coords="239,1035,186,1042,185,1037,238,1030"/>
-<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="13,1095,185,1135"/>
-<area shape="poly" title=" " alt="" coords="258,1046,241,1053,217,1069,193,1085,166,1097,164,1092,191,1080,214,1064,239,1048,256,1041"/>
-<area shape="poly" title=" " alt="" coords="255,166,176,187,175,182,254,161"/>
-<area shape="poly" title=" " alt="" coords="240,207,175,207,175,201,240,201"/>
-<area shape="poly" title=" " alt="" coords="254,247,175,226,176,221,255,242"/>
-<area shape="poly" title=" " alt="" coords="238,2210,192,2204,193,2199,239,2205"/>
+<area shape="rect" title=" " alt="" coords="1008,843,1195,883"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="773,843,960,883"/>
+<area shape="poly" title=" " alt="" coords="995,874,960,874,960,869,995,869"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a25f40e9ea9544c4c802a19a88d00214a" title=" " alt="" coords="527,5,713,45"/>
+<area shape="poly" title=" " alt="" coords="1090,830,1054,695,1024,600,984,495,935,384,875,274,805,169,766,120,724,75,704,60,682,48,685,43,707,56,727,71,770,117,809,166,880,271,940,382,989,493,1029,598,1059,693,1095,829"/>
+<area shape="poly" title=" " alt="" coords="974,851,1008,851,1008,857,974,856"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="529,312,711,352"/>
+<area shape="poly" title=" " alt="" coords="863,829,858,739,851,681,839,618,821,552,797,488,765,427,723,373,699,354,702,350,727,369,769,424,802,485,826,551,844,616,856,680,863,739,868,828"/>
+<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="283,184,436,224"/>
+<area shape="poly" title=" " alt="" coords="855,829,816,661,771,435,765,360,763,262,759,214,752,170,740,134,723,110,704,96,683,87,638,79,591,83,542,97,496,118,453,141,387,186,384,182,450,137,493,113,541,92,590,78,638,73,685,81,707,92,727,106,745,132,757,169,764,213,768,262,771,360,776,434,822,660,860,828"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="274,341,445,381"/>
+<area shape="poly" title=" " alt="" coords="863,829,859,744,852,690,841,631,823,572,798,514,766,462,724,417,704,405,677,395,605,380,523,371,445,366,445,361,523,366,606,375,678,390,707,400,727,413,770,458,803,512,828,570,846,630,857,689,864,744,869,829"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b" title="Processes log messages and distributes them to console, file, and callback queues." alt="" coords="525,427,715,467"/>
+<area shape="poly" title=" " alt="" coords="860,830,850,757,827,664,810,614,787,565,758,520,724,481,708,469,711,465,727,477,763,517,791,563,815,612,832,662,855,756,866,829"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5" title="Processes and writes pending log messages to the file." alt="" coords="535,491,705,531"/>
+<area shape="poly" title=" " alt="" coords="857,830,844,769,819,692,801,652,779,613,754,576,724,545,704,532,707,527,727,541,758,573,784,610,806,649,824,690,849,767,863,828"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue." alt="" coords="527,555,713,595"/>
+<area shape="poly" title=" " alt="" coords="854,831,837,781,810,721,772,661,749,633,724,609,706,597,708,593,727,605,753,629,777,658,814,719,841,779,859,829"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f" title="Enqueues a log message for processing." alt="" coords="525,619,715,659"/>
+<area shape="poly" title=" " alt="" coords="848,832,827,795,800,752,765,709,724,673,703,661,706,656,727,668,769,706,804,749,832,792,852,829"/>
+<area shape="poly" title=" " alt="" coords="854,829,816,661,771,435,765,352,761,243,750,138,739,96,723,66,702,48,705,43,727,62,744,94,755,137,766,243,770,351,776,434,821,660,860,828"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="527,683,713,723"/>
+<area shape="poly" title=" " alt="" coords="837,834,788,784,757,759,724,737,699,725,701,720,727,732,760,755,791,780,841,830"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#aaa3abbb06fcbccf4b8ecc43ceebcc453" title="Formats a wide&#45;character string directly to an output iterator." alt="" coords="527,747,713,787"/>
+<area shape="poly" title=" " alt="" coords="812,839,724,801,690,789,692,784,726,796,814,834"/>
+<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html#ab456b5a13c2e86a7e68e93aa4f8cac6a" title="Retrieves the log message with an optional newline appended." alt="" coords="537,811,703,851"/>
+<area shape="poly" title=" " alt="" coords="759,851,703,844,703,839,760,846"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77" title="Extracts the microseconds (0&#45;999) component from a time point." alt="" coords="529,120,711,160"/>
+<area shape="poly" title=" " alt="" coords="855,830,771,435,765,394,764,357,768,293,766,264,760,235,747,205,723,174,710,162,713,158,727,170,751,203,765,233,772,263,773,293,770,357,771,393,776,434,860,829"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="529,184,711,224"/>
+<area shape="poly" title=" " alt="" coords="856,830,781,487,723,237,709,226,713,222,728,235,786,486,861,829"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="529,875,711,915"/>
+<area shape="poly" title=" " alt="" coords="760,879,712,885,711,880,759,874"/>
+<area shape="rect" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread." alt="" coords="534,939,706,979"/>
+<area shape="poly" title=" " alt="" coords="814,891,726,929,692,941,690,936,724,924,812,886"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad71c93d633d1fff792e205da3d3ada7e" title="Starts all underlying logging operations, including writers and collectors." alt="" coords="515,1003,725,1043"/>
+<area shape="poly" title=" " alt="" coords="841,895,791,945,760,971,727,993,701,1005,699,1000,724,988,757,966,788,941,837,891"/>
+<area shape="rect" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6" title="Formats the time portion (HH:MM:SS by default) of a time point." alt="" coords="529,248,711,288"/>
+<area shape="poly" title=" " alt="" coords="856,830,795,537,756,384,738,330,723,302,709,290,713,286,727,298,743,328,761,382,800,536,862,828"/>
+<area shape="rect" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="527,1067,713,1107"/>
+<area shape="poly" title=" " alt="" coords="852,896,832,933,804,977,769,1020,727,1057,706,1069,703,1064,724,1052,765,1016,800,973,827,931,848,894"/>
+<area shape="rect" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="529,1131,711,1171"/>
+<area shape="poly" title=" " alt="" coords="859,896,841,946,814,1006,777,1068,753,1096,727,1121,708,1133,706,1128,724,1117,749,1092,772,1065,810,1004,837,944,854,895"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e" title="Returns a string representation of this thread_base object." alt="" coords="535,1195,705,1235"/>
+<area shape="poly" title=" " alt="" coords="863,897,849,958,824,1035,806,1076,784,1115,758,1152,727,1185,707,1198,704,1194,724,1181,754,1149,779,1113,801,1074,819,1034,844,957,857,896"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24" title="Returns a string representation of this job_queue." alt="" coords="546,1259,694,1299"/>
+<area shape="poly" title=" " alt="" coords="866,896,855,969,832,1063,815,1113,791,1162,763,1208,727,1249,696,1268,693,1263,724,1245,758,1205,787,1160,810,1111,827,1062,850,968,860,896"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="546,1323,694,1363"/>
+<area shape="poly" title=" " alt="" coords="868,897,861,980,853,1033,841,1091,823,1151,799,1209,767,1264,727,1313,712,1324,695,1333,693,1328,709,1320,723,1309,763,1261,794,1207,818,1149,836,1090,848,1032,856,979,862,896"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f" title=" " alt="" coords="527,1387,713,1427"/>
+<area shape="poly" title=" " alt="" coords="869,897,866,991,860,1052,849,1119,831,1188,806,1256,772,1320,727,1377,712,1389,709,1385,723,1373,767,1317,801,1254,826,1186,844,1118,855,1051,861,990,864,897"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a3c6f6166799f31c21c3934d287957ff5" title=" " alt="" coords="266,1451,453,1491"/>
+<area shape="poly" title=" " alt="" coords="865,897,851,1019,824,1183,805,1266,783,1340,757,1401,743,1424,727,1441,707,1452,680,1461,610,1473,530,1477,453,1477,453,1472,530,1472,609,1467,679,1456,705,1448,724,1437,738,1420,752,1398,778,1338,800,1264,818,1182,845,1018,860,896"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a6e61af7b5d0b25f2179890f4249725df" title="Writes a formatted log message to the log collector." alt="" coords="515,1501,725,1541"/>
+<area shape="poly" title=" " alt="" coords="865,897,849,1025,821,1200,802,1289,781,1370,756,1438,727,1484,703,1503,700,1499,723,1481,751,1435,776,1369,797,1288,816,1199,844,1024,859,896"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#add27a0888c3472eae4f4baf91bb58ed6" title="Writes a formatted log message with an optional high&#45;resolution timestamp." alt="" coords="515,1565,725,1605"/>
+<area shape="poly" title=" " alt="" coords="866,896,853,1038,827,1235,808,1335,786,1427,759,1503,744,1532,727,1555,713,1567,709,1563,723,1552,739,1530,754,1501,781,1426,803,1334,822,1234,848,1037,860,896"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ad29dba9c30aadac3e785d4f4762c2dbd" title="Writes a formatted wide&#45;character log message with an optional high&#45;resolution timestamp." alt="" coords="515,1629,725,1669"/>
+<area shape="poly" title=" " alt="" coords="866,897,855,1049,831,1266,813,1376,790,1478,761,1561,745,1594,727,1619,713,1631,710,1627,723,1616,741,1591,757,1559,785,1476,807,1375,826,1265,850,1049,861,896"/>
+<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#a62abd0747dc81cbf628b304266fc3f13" title="Writes a formatted wide&#45;character log message to the log collector." alt="" coords="515,1693,725,1733"/>
+<area shape="poly" title=" " alt="" coords="867,897,858,1061,835,1296,817,1417,793,1528,764,1620,747,1656,727,1683,713,1695,710,1691,723,1680,742,1653,759,1618,788,1527,812,1416,830,1296,852,1061,861,896"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb" title="Template method for writing log messages of various string types." alt="" coords="525,1757,715,1797"/>
+<area shape="poly" title=" " alt="" coords="867,896,860,1072,851,1194,839,1327,821,1458,797,1579,766,1678,748,1717,727,1747,714,1759,710,1755,723,1744,743,1715,761,1676,792,1577,816,1457,833,1326,846,1194,855,1072,862,896"/>
+<area shape="poly" title=" " alt="" coords="531,310,514,302,444,264,387,227,390,222,447,260,516,298,533,305"/>
+<area shape="poly" title=" " alt="" coords="515,346,445,354,444,349,515,341"/>
+<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="281,619,437,659"/>
+<area shape="poly" title=" " alt="" coords="524,682,437,660,438,655,525,677"/>
+<area shape="rect" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="273,683,446,723"/>
+<area shape="poly" title=" " alt="" coords="513,705,446,705,446,700,513,700"/>
+<area shape="rect" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="273,747,445,787"/>
+<area shape="poly" title=" " alt="" coords="525,729,442,749,441,744,524,723"/>
+<area shape="rect" href="../../d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,739,204,794"/>
+<area shape="poly" title=" " alt="" coords="259,769,204,769,204,764,259,764"/>
+<area shape="poly" title=" " alt="" coords="525,166,437,188,435,183,524,161"/>
+<area shape="poly" title=" " alt="" coords="515,207,436,207,436,201,515,201"/>
+<area shape="poly" title=" " alt="" coords="524,247,435,225,437,220,525,242"/>
+<area shape="rect" href="../../d2/d7f/structfmt_1_1formatter_3_01thread__module_1_1thread__base_01_4.html#aa9830d8d46858b49f0d29450a5521fde" title="Formats a thread_base object as a string using {fmt}." alt="" coords="269,927,450,982"/>
+<area shape="poly" title=" " alt="" coords="521,1192,513,1184,495,1160,487,1136,486,1112,487,1088,488,1042,481,1019,465,995,449,982,452,978,469,992,485,1016,493,1041,493,1089,491,1112,493,1135,500,1158,517,1181,525,1188"/>
+<area shape="rect" href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc" title="Formats a thread_worker object as a string." alt="" coords="252,1006,467,1061"/>
+<area shape="poly" title=" " alt="" coords="521,1191,513,1185,501,1171,493,1157,488,1129,482,1102,476,1089,465,1075,448,1063,452,1059,469,1071,480,1086,487,1100,493,1128,498,1155,505,1168,516,1181,525,1187"/>
+<area shape="rect" href="../../d3/dca/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html#a53f30f143dc34e05063d40c9b28a5c4b" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance as a string." alt="" coords="272,1085,447,1155"/>
+<area shape="poly" title=" " alt="" coords="536,1193,514,1185,441,1157,443,1152,516,1180,538,1188"/>
+<area shape="rect" href="../../da/d9f/structfmt_1_1formatter_3_01thread__module_1_1job__queue_01_4.html#abf5af410db80a96817ebabaf78dd4b29" title="Formats a job_queue object as a string using {fmt}." alt="" coords="271,1179,447,1234"/>
+<area shape="poly" title=" " alt="" coords="533,1258,447,1234,448,1228,535,1252"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#ae800183f7578e54052ab809d4436354f" title="Returns a string representation of this job_queue." alt="" coords="285,1259,433,1299"/>
+<area shape="poly" title=" " alt="" coords="532,1281,433,1281,433,1276,532,1276"/>
+<area shape="rect" href="../../dd/d2a/structfmt_1_1formatter_3_01thread__module_1_1job_01_4.html#adf4d0b7cb5296df89cf09b2c971ef5bf" title="Formats a job object into a string using job::to_string()." alt="" coords="273,1323,446,1363"/>
+<area shape="poly" title=" " alt="" coords="532,1345,446,1345,446,1340,532,1340"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0445d6dd1df6d696b149b65d600936cc" title="Formats a wide&#45;character string with the given arguments." alt="" coords="266,1387,453,1427"/>
+<area shape="poly" title=" " alt="" coords="513,1409,453,1409,453,1404,513,1404"/>
+<area shape="poly" title=" " alt="" coords="525,1433,442,1453,441,1448,524,1427"/>
 </map>
 </div>
 
@@ -1095,7 +1063,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 22 2025 16:56:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 30 2025 11:50:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -166,14 +166,14 @@ Private Attributes</h2></td></tr>
 <li>Store parsed arguments in a key-value map of type <code>std::map&lt;std::string, std::string&gt;</code>.</li>
 <li>Retrieve values by key in a type-safe manner (e.g., <code>bool</code>, <code>int</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md96"></a>
+<h3><a class="anchor" id="autotoc_md73"></a>
 Parsing Conventions</h3>
 <ul>
 <li>Arguments are expected in the form: <code>--key value</code>.</li>
 <li>If an argument has no following value, it may be stored with an empty string (<code>""</code>).</li>
 <li>If a key appears multiple times, the last occurrence typically overrides previous ones.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md97"></a>
+<h3><a class="anchor" id="autotoc_md74"></a>
 Example Usage</h3>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
 <div class="line">{</div>
@@ -715,7 +715,7 @@ template&lt;typename StringType &gt; </div>
 <li>Splits the string into tokens based on whitespace.</li>
 <li>Calls <code><a class="el" href="../../de/d30/classutility__module_1_1argument__manager.html#a8c717ac27d873d26ac1b5f741a4d9999" title="Parses a pre-split list of argument tokens and populates arguments_.">parse()</a></code> to populate <code>arguments_</code> with key-value pairs.</li>
 </ol>
-<h4><a class="anchor" id="autotoc_md98"></a>
+<h4><a class="anchor" id="autotoc_md75"></a>
 Example</h4>
 <div class="fragment"><div class="line"><a class="code hl_class" href="../../de/d30/classutility__module_1_1argument__manager.html">argument_manager</a> mgr;</div>
 <div class="line">std::string cmd = <span class="stringliteral">&quot;--user alice --debug --count 10&quot;</span>;</div>
@@ -866,7 +866,7 @@ template&lt;typename CharType &gt; </div>
 <li>Calls <code><a class="el" href="../../de/d30/classutility__module_1_1argument__manager.html#a8c717ac27d873d26ac1b5f741a4d9999" title="Parses a pre-split list of argument tokens and populates arguments_.">parse()</a></code> to populate <code>arguments_</code> with key-value pairs.</li>
 </ol>
 <p>This is typically called at the start of <code>main()</code>.</p>
-<h4><a class="anchor" id="autotoc_md99"></a>
+<h4><a class="anchor" id="autotoc_md76"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
 <div class="line">{</div>
@@ -979,7 +979,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 22 2025 16:56:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 30 2025 11:50:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

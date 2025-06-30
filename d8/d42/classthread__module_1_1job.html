@@ -117,18 +117,19 @@ Collaboration diagram for thread_module::job:</div>
 <area shape="poly" title=" " alt="" coords="565,392,565,565,559,565,559,392"/>
 <area shape="rect" title=" " alt="" coords="625,565,784,631"/>
 <area shape="poly" title=" " alt="" coords="691,632,607,788,602,798,597,795,602,785,686,629"/>
-<area shape="rect" title=" " alt="" coords="338,1847,498,1927"/>
-<area shape="poly" title=" " alt="" coords="439,1845,463,1797,489,1735,509,1666,517,1595,517,1157,517,1072,522,1072,522,1157,522,1595,514,1667,494,1737,468,1799,443,1848"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="177,1404,363,1784"/>
-<area shape="poly" title=" " alt="" coords="365,1776,393,1830,388,1833,360,1778"/>
+<area shape="rect" title=" " alt="" coords="291,1787,451,1867"/>
+<area shape="poly" title=" " alt="" coords="409,1785,444,1743,479,1690,506,1629,514,1598,517,1565,517,1157,517,1072,522,1072,522,1157,522,1565,519,1599,511,1631,484,1692,448,1746,413,1788"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="153,1404,293,1724"/>
+<area shape="poly" title=" " alt="" coords="296,1687,343,1771,339,1774,291,1690"/>
 <area shape="rect" title=" " alt="" coords="5,1261,185,1341"/>
-<area shape="poly" title=" " alt="" coords="128,1352,179,1437,175,1440,124,1355"/>
+<area shape="poly" title=" " alt="" coords="116,1353,155,1437,151,1439,111,1355"/>
+<area shape="poly" title=" " alt="" coords="130,1352,156,1403,152,1405,125,1355"/>
 <area shape="rect" title=" " alt="" coords="204,13,288,78"/>
-<area shape="poly" title=" " alt="" coords="241,79,231,129,226,187,226,1303,231,1387,226,1388,221,1303,221,187,226,128,235,78"/>
+<area shape="poly" title=" " alt="" coords="241,79,231,129,226,187,226,1303,226,1388,221,1388,221,1303,221,187,226,128,235,78"/>
 <area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="311,148,509,228"/>
 <area shape="poly" title=" " alt="" coords="261,77,274,100,292,122,309,136,305,140,288,126,270,103,256,79"/>
 <area shape="rect" title=" " alt="" coords="261,1261,471,1341"/>
-<area shape="poly" title=" " alt="" coords="356,1343,340,1389,335,1387,351,1341"/>
+<area shape="poly" title=" " alt="" coords="347,1343,304,1422,299,1419,342,1340"/>
 <area shape="poly" title=" " alt="" coords="380,1199,375,1245,370,1245,375,1199"/>
 <area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="288,448,487,748"/>
 <area shape="poly" title=" " alt="" coords="380,748,390,786,417,834,412,836,385,788,375,749"/>
@@ -193,13 +194,13 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a unit of work (task) to be executed, typically by a job queue. </p>
 <p>The <code>job</code> class provides a base interface for scheduling and executing discrete tasks within a multi-threaded environment. Derived classes can override the <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> method to implement custom logic for their specific tasks.</p>
-<h3><a class="anchor" id="autotoc_md32"></a>
+<h3><a class="anchor" id="autotoc_md28"></a>
 Thread-Safety</h3>
 <ul>
 <li><code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> will generally be called from a worker thread. If your task accesses shared data or interacts with shared resources, you must ensure your implementation is thread-safe.</li>
 <li>The job itself is meant to be used via <code>std::shared_ptr</code>, making it easier to manage lifetimes across multiple threads.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md33"></a>
+<h3><a class="anchor" id="autotoc_md29"></a>
 Error Handling</h3>
 <ul>
 <li>A job returns a <code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> from <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code>.<ul>
@@ -209,7 +210,7 @@ Error Handling</h3>
 </li>
 <li>Error information can be used for logging, debugging, or to retry a job if desired.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md34"></a>
+<h3><a class="anchor" id="autotoc_md30"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Create a custom job that overrides do_work().</span></div>
 <div class="line"><span class="keyword">class </span>my_job : <span class="keyword">public</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div>
@@ -264,7 +265,7 @@ Usage Example</h3>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md35"></a>
+<h4><a class="anchor" id="autotoc_md31"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a basic job with a custom name</span></div>
 <div class="line"><span class="keyword">auto</span> my_simple_job = std::make_shared&lt;thread_module::job&gt;(<span class="stringliteral">&quot;simple_job&quot;</span>);</div>
@@ -311,7 +312,7 @@ Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md36"></a>
+<h4><a class="anchor" id="autotoc_md32"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a job that has binary data.</span></div>
 <div class="line">std::vector&lt;uint8_t&gt; my_data = {0xDE, 0xAD, 0xBE, 0xEF};</div>
@@ -386,10 +387,10 @@ Example</h4>
 <li>A non-empty string on failure, providing an error message or explanation.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md37"></a>
+<h4><a class="anchor" id="autotoc_md33"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns <code>std::nullopt</code> (i.e., no error). Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md38"></a>
+<h4><a class="anchor" id="autotoc_md34"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
@@ -401,10 +402,10 @@ Concurrency</h4>
 <li>An error result (constructed with error{error_code, message}) on failure.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md39"></a>
+<h4><a class="anchor" id="autotoc_md35"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns a success result. Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md40"></a>
+<h4><a class="anchor" id="autotoc_md36"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
@@ -431,15 +432,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph.png" border="0" usemap="#ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph" alt=""/></div>
 <map name="ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph" id="ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph">
-<area shape="rect" title="The core task execution method to be overridden by derived classes." alt="" coords="243,101,391,141"/>
+<area shape="rect" title="The core task execution method to be overridden by derived classes." alt="" coords="243,69,391,109"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#af7d8b04f608e82fbdc0108949254eab4" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
-<area shape="poly" title=" " alt="" coords="268,97,194,60,163,48,165,43,196,55,270,92"/>
+<area shape="poly" title=" " alt="" coords="235,68,167,48,169,43,236,63"/>
 <area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2" title="Performs initialization before starting the log collector thread." alt="" coords="5,69,195,109"/>
-<area shape="poly" title=" " alt="" coords="228,111,194,106,195,101,229,106"/>
+<area shape="poly" title=" " alt="" coords="229,92,195,92,195,87,229,87"/>
 <area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="9,133,191,173"/>
-<area shape="poly" title=" " alt="" coords="229,137,192,142,191,137,229,132"/>
-<area shape="rect" href="../../dd/dae/classthread__pool__module_1_1lockfree__thread__worker.html#a04eeb39e4467156cdccf660cb693d273" title="Processes a single job." alt="" coords="9,198,191,253"/>
-<area shape="poly" title=" " alt="" coords="268,151,196,188,169,200,166,195,194,183,266,146"/>
+<area shape="poly" title=" " alt="" coords="236,116,169,136,167,131,235,111"/>
 </map>
 </div>
 
@@ -505,7 +504,7 @@ Here is the caller graph for this function:</div>
 
 <p>Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job, if any. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the associated <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. Will be empty if no queue was set or if the queue has already been destroyed.</dd></dl>
-<h4><a class="anchor" id="autotoc_md42"></a>
+<h4><a class="anchor" id="autotoc_md38"></a>
 Usage Example</h4>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> jq = <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a5b215be529afbe56e5328747d39779c8">get_job_queue</a>();</div>
 <div class="line"><span class="keywordflow">if</span> (jq)</div>
@@ -622,7 +621,7 @@ Usage Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md41"></a>
+<h4><a class="anchor" id="autotoc_md37"></a>
 Implementation Detail</h4>
 <ul>
 <li>Stored internally as a <code>std::weak_ptr</code>. If the queue is destroyed, the pointer becomes invalid. </li>
@@ -664,7 +663,7 @@ Implementation Detail</h4>
 <p>Provides a string representation of the job for logging or debugging. </p>
 <p>By default, this returns the job's name. Derived classes can override to include extra diagnostic details (e.g., job status, data contents, etc.).</p>
 <dl class="section return"><dt>Returns</dt><dd>A string describing the job (e.g., <code>name_</code>).</dd></dl>
-<h4><a class="anchor" id="autotoc_md43"></a>
+<h4><a class="anchor" id="autotoc_md39"></a>
 Example</h4>
 <div class="fragment"><div class="line">std::shared_ptr&lt;my_job&gt; job_ptr = std::make_shared&lt;my_job&gt;();</div>
 <div class="line"><span class="comment">// ...</span></div>
@@ -814,7 +813,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 22 2025 16:56:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 30 2025 11:50:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

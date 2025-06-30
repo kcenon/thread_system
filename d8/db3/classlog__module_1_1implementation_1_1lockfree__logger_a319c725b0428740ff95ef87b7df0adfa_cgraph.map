@@ -1,8 +1,0 @@
-<map id="log_module::implementation::lockfree_logger::message_callback" name="log_module::implementation::lockfree_logger::message_callback">
-<area shape="rect" id="Node000001" title="Sets the user&#45;defined callback function." alt="" coords="5,5,216,60"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="264,20,440,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,30,250,30,250,35,216,35"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="488,13,699,53"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,39,474,39,474,44,440,44"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="488,26,454,26,454,21,488,21"/>
-</map>

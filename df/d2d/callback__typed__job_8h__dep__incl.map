@@ -1,10 +1,16 @@
 <map id="sources/typed_thread_pool/jobs/callback_typed_job.h" name="sources/typed_thread_pool/jobs/callback_typed_job.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,235,45"/>
-<area shape="rect" id="Node000002" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="34,93,206,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,59,123,93,117,93,117,59"/>
-<area shape="rect" id="Node000003" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="31,299,209,353"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,161,87,197,83,223,87,250,95,275,106,297,101,300,90,277,81,251,77,223,81,195,95,159"/>
-<area shape="rect" id="Node000004" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="97,196,269,251"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="146,158,169,194,164,197,141,161"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="161,264,139,300,134,297,157,261"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="85,5,314,45"/>
+<area shape="rect" id="Node000002" href="$da/df6/internal_2scheduling_2typed__job__queue_8h.html" title=" " alt="" coords="5,93,191,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,57,128,95,125,91,167,53"/>
+<area shape="rect" id="Node000003" href="$d7/dfd/scheduling_2typed__job__queue_8h.html" title=" " alt="" coords="215,93,387,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,53,274,91,270,95,228,57"/>
+<area shape="rect" id="Node000004" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="149,299,327,353"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="239,158,219,176,204,197,198,223,201,249,210,275,222,297,218,300,206,277,196,250,193,222,200,195,215,172,235,154"/>
+<area shape="rect" id="Node000005" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="411,196,603,251"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="368,151,455,194,452,198,365,156"/>
+<area shape="rect" id="Node000007" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="215,196,387,251"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="303,162,303,196,298,196,298,162"/>
+<area shape="rect" id="Node000006" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title=" " alt="" coords="411,299,603,353"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="510,264,510,299,505,299,505,264"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="279,264,257,300,252,297,275,261"/>
 </map>

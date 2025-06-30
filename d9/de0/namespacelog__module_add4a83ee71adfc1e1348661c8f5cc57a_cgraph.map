@@ -1,9 +1,8 @@
 <map id="log_module::write_exception" name="log_module::write_exception">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,42,216,67"/>
-<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="264,5,475,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,40,250,36,251,41,216,45"/>
-<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="523,13,699,38"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="216,60,340,62,474,55,553,39,554,44,475,60,340,68,216,65"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="475,32,509,32,509,37,475,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="522,19,488,19,488,14,522,14"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,216,38"/>
+<area shape="rect" id="Node000002" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="488,5,699,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,23,474,23,474,28,216,28"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="264,38,440,63"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,34,250,37,250,43,216,39"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="440,39,474,35,475,40,440,44"/>
 </map>

@@ -1,8 +1,0 @@
-<map id="log_module::log_collector::write" name="log_module::log_collector::write">
-<area shape="rect" id="Node000001" title="Writes a log message (std::wstring version)." alt="" coords="5,5,195,45"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="243,13,419,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,23,229,23,229,28,195,28"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="467,5,677,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="419,31,453,32,453,37,419,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="466,19,432,19,432,14,466,14"/>
-</map>

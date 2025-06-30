@@ -1,23 +1,23 @@
 <map id="sources/utilities/core/span.h" name="sources/utilities/core/span.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="321,5,479,45"/>
-<area shape="rect" id="Node000002" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="61,93,233,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="337,53,219,96,217,91,335,48"/>
-<area shape="rect" id="Node000005" href="$dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="314,93,486,148"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="403,59,403,93,397,93,397,59"/>
-<area shape="rect" id="Node000009" href="$db/de6/file__handler_8h.html" title=" " alt="" coords="621,101,763,141"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="473,47,634,98,632,103,471,52"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="340,5,497,45"/>
+<area shape="rect" id="Node000002" href="$d7/dfd/scheduling_2typed__job__queue_8h.html" title=" " alt="" coords="131,93,303,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="367,54,275,96,273,91,364,49"/>
+<area shape="rect" id="Node000007" href="$dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="333,93,505,148"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="421,59,421,93,416,93,416,59"/>
+<area shape="rect" id="Node000009" href="$db/de6/file__handler_8h.html" title=" " alt="" coords="637,101,779,141"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="491,47,650,98,649,103,489,52"/>
 <area shape="rect" id="Node000003" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="5,299,184,353"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,158,65,176,50,197,45,223,49,249,61,275,75,297,70,300,56,277,44,251,39,223,46,195,61,172,81,154"/>
-<area shape="rect" id="Node000004" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="61,196,233,251"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="149,162,149,196,144,196,144,162"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="129,264,111,300,106,297,124,262"/>
-<area shape="rect" id="Node000006" href="$d1/d4f/typed__lockfree__thread__pool_8h.html" title=" " alt="" coords="227,299,418,353"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="334,158,314,176,298,197,291,222,293,249,300,275,310,298,305,300,295,277,288,250,286,222,294,195,310,172,331,154"/>
-<area shape="rect" id="Node000007" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title=" " alt="" coords="309,196,491,251"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="403,162,403,196,397,196,397,162"/>
-<area shape="rect" id="Node000008" href="$d9/d34/typed__lockfree__thread__worker_8h.html" title=" " alt="" coords="515,196,709,251"/>
-<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="468,151,558,194,556,198,466,156"/>
-<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="525,258,399,301,397,296,523,253"/>
-<area shape="rect" id="Node000010" href="$d5/de5/file__handler_8cpp.html" title=" " alt="" coords="733,203,875,243"/>
-<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="725,148,785,201,781,205,721,152"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,150,87,170,61,197,53,222,56,248,65,274,78,297,73,299,60,276,50,249,48,221,56,195,83,166,117,145"/>
+<area shape="rect" id="Node000004" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="268,196,460,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="269,154,327,194,324,198,266,158"/>
+<area shape="rect" id="Node000006" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="71,196,243,251"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="197,161,175,197,171,195,192,158"/>
+<area shape="rect" id="Node000005" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title=" " alt="" coords="268,299,460,353"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="367,264,367,299,361,299,361,264"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="136,264,113,300,109,297,131,261"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="400,162,381,197,376,195,395,159"/>
+<area shape="rect" id="Node000008" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title=" " alt="" coords="485,196,667,251"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="473,153,536,194,533,198,470,158"/>
+<area shape="rect" id="Node000010" href="$d5/de5/file__handler_8cpp.html" title=" " alt="" coords="692,203,833,243"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="727,151,755,202,750,205,722,154"/>
 </map>

@@ -1,7 +1,8 @@
 <map id="thread_module::lockfree_job_queue" name="thread_module::lockfree_job_queue">
-<area shape="rect" id="Node000001" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer job queue." alt="" coords="5,601,191,1181"/>
-<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="5,133,191,553"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,567,101,601,95,601,95,567"/>
+<area shape="rect" id="Node000001" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer job queue." alt="" coords="5,541,191,1121"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="28,133,168,493"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,507,101,541,95,541,95,507"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="8,5,188,85"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,99,101,133,95,133,95,99"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,99,92,133,87,133,88,99"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="108,99,109,133,104,133,103,99"/>
 </map>

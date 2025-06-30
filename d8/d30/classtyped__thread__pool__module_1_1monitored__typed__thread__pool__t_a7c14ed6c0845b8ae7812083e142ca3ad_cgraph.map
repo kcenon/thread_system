@@ -1,5 +1,0 @@
-<map id="typed_thread_pool_module::monitored_typed_thread_pool_t::wrap_job_with_metrics" name="typed_thread_pool_module::monitored_typed_thread_pool_t::wrap_job_with_metrics">
-<area shape="rect" id="Node000001" title="Wrap a typed job with metrics tracking." alt="" coords="5,5,232,60"/>
-<area shape="rect" id="Node000002" href="$d8/d30/classtyped__thread__pool__module_1_1monitored__typed__thread__pool__t.html#a855814f35633c8d47ce45e80cb73b0f4" title="Convert job type to string name." alt="" coords="280,5,479,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,30,266,30,266,35,232,35"/>
-</map>

@@ -93,6 +93,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adaptive priority queue that switches between mutex-based and lock-free implementations.  <a href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template for creating priority-based jobs that execute a user-defined callback.  <a href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,12 +113,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html">typed_lockfree_job_queue_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">High-performance lock-free priority-based job queue.  <a href="../../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html">typed_lockfree_thread_pool_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lock-free thread pool that schedules and executes jobs based on their priority levels.  <a href="../../d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html">typed_lockfree_thread_worker_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lock-free worker thread class that processes jobs from a typed lockfree job queue.  <a href="../../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dab/structtyped__thread__pool__module_1_1typed__queue__statistics__t.html">typed_queue_statistics_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,28 +136,22 @@ Typedefs</h2></td></tr>
 <tr class="memitem:aa2cfdcc3ba841430cc2bb241e77ef8ec"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aa2cfdcc3ba841430cc2bb241e77ef8ec">typed_job_weak_ptr</a> = std::weak_ptr&lt; <a class="el" href="../../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html">typed_job_interface</a>&lt; job_type &gt; &gt;</td></tr>
 <tr class="memdesc:aa2cfdcc3ba841430cc2bb241e77ef8ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer type for typed job interfaces.  <br /></td></tr>
 <tr class="separator:aa2cfdcc3ba841430cc2bb241e77ef8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e87c6f3fdf3b3a0c175af148054bab2" id="r_a8e87c6f3fdf3b3a0c175af148054bab2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a8e87c6f3fdf3b3a0c175af148054bab2">typed_job_queue</a> = <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
+<tr class="memdesc:a8e87c6f3fdf3b3a0c175af148054bab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a typed_job_queue using default job types.  <br /></td></tr>
+<tr class="separator:a8e87c6f3fdf3b3a0c175af148054bab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab369d5fd77a97c5140881e4595d1670b" id="r_ab369d5fd77a97c5140881e4595d1670b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ab369d5fd77a97c5140881e4595d1670b">callback_typed_job</a> = <a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="memdesc:ab369d5fd77a97c5140881e4595d1670b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for a <code><a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html" title="A template for creating priority-based jobs that execute a user-defined callback.">callback_typed_job_t</a></code> that uses <code>job_types</code> as its priority type.  <br /></td></tr>
 <tr class="separator:ab369d5fd77a97c5140881e4595d1670b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9276d2960ba979c47fa6764c50111689" id="r_a9276d2960ba979c47fa6764c50111689"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a9276d2960ba979c47fa6764c50111689">typed_job</a> = <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html">typed_job_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="memdesc:a9276d2960ba979c47fa6764c50111689"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenient alias for <code><a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title="Represents a job that carries a specific priority level.">typed_job_t</a></code> using the <code>job_types</code> type.  <br /></td></tr>
 <tr class="separator:a9276d2960ba979c47fa6764c50111689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab98103c1e3998beec97d4bbda6abf95" id="r_aab98103c1e3998beec97d4bbda6abf95"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aab98103c1e3998beec97d4bbda6abf95">typed_lockfree_thread_pool</a> = <a class="el" href="../../d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html">typed_lockfree_thread_pool_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
-<tr class="memdesc:aab98103c1e3998beec97d4bbda6abf95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a typed_lockfree_thread_pool with the default job_types type.  <br /></td></tr>
-<tr class="separator:aab98103c1e3998beec97d4bbda6abf95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a970a3d65b2de11fe9eecd9c588159c63" id="r_a970a3d65b2de11fe9eecd9c588159c63"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a970a3d65b2de11fe9eecd9c588159c63">typed_thread_pool</a> = <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="memdesc:a970a3d65b2de11fe9eecd9c588159c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a typed_thread_pool with the default job_types type.  <br /></td></tr>
 <tr class="separator:a970a3d65b2de11fe9eecd9c588159c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3da39bb993d9f5053019dbe8bb2e1ffb" id="r_a3da39bb993d9f5053019dbe8bb2e1ffb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a3da39bb993d9f5053019dbe8bb2e1ffb">typed_job_queue</a> = <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
-<tr class="memdesc:a3da39bb993d9f5053019dbe8bb2e1ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a typed_job_queue using default job types.  <br /></td></tr>
-<tr class="separator:a3da39bb993d9f5053019dbe8bb2e1ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a2554a4eda94f60f1b752846213dd57" id="r_a5a2554a4eda94f60f1b752846213dd57"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a5a2554a4eda94f60f1b752846213dd57">typed_queue_statistics</a> = <a class="el" href="../../dd/dab/structtyped__thread__pool__module_1_1typed__queue__statistics__t.html">typed_queue_statistics_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="separator:a5a2554a4eda94f60f1b752846213dd57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846ec234b6670614d096a2c7493d44fc" id="r_a846ec234b6670614d096a2c7493d44fc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a846ec234b6670614d096a2c7493d44fc">typed_lockfree_job_queue</a> = <a class="el" href="../../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html">typed_lockfree_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="separator:a846ec234b6670614d096a2c7493d44fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21ca7d087abf15f04258ea5f9814134a" id="r_a21ca7d087abf15f04258ea5f9814134a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a21ca7d087abf15f04258ea5f9814134a">typed_lockfree_thread_worker</a> = <a class="el" href="../../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html">typed_lockfree_thread_worker_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
-<tr class="memdesc:a21ca7d087abf15f04258ea5f9814134a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience typedef for a worker configured with default job_types.  <br /></td></tr>
-<tr class="separator:a21ca7d087abf15f04258ea5f9814134a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae29cbeff14562615cc9e00ad276fc61c" id="r_ae29cbeff14562615cc9e00ad276fc61c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ae29cbeff14562615cc9e00ad276fc61c">typed_thread_worker</a> = <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;</td></tr>
 <tr class="memdesc:ae29cbeff14562615cc9e00ad276fc61c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience typedef for a worker configured with default job_types.  <br /></td></tr>
 <tr class="separator:ae29cbeff14562615cc9e00ad276fc61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +177,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ac328b7b9124685e02d46f6dd13ac6e09"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="../../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html">typed_thread_pool_builder</a>&lt; job_type &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ac328b7b9124685e02d46f6dd13ac6e09">create_pool_builder</a> ()</td></tr>
 <tr class="memdesc:ac328b7b9124685e02d46f6dd13ac6e09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to create a builder.  <br /></td></tr>
 <tr class="separator:ac328b7b9124685e02d46f6dd13ac6e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6471112cdc4e66bf0b675a1b93dcda00" id="r_a6471112cdc4e66bf0b675a1b93dcda00"><td class="memItemLeft" align="right" valign="top">template auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a6471112cdc4e66bf0b675a1b93dcda00">create_typed_job_queue&lt; job_types &gt;</a> (<a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;::queue_strategy, size_t) -&gt; std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt; &gt;</td></tr>
+<tr class="separator:a6471112cdc4e66bf0b675a1b93dcda00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6724193b1b67a70e4609fe4aad69332" id="r_ae6724193b1b67a70e4609fe4aad69332"><td class="memTemplParams" colspan="2">template&lt;typename job_type  = job_types&gt; </td></tr>
+<tr class="memitem:ae6724193b1b67a70e4609fe4aad69332"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ae6724193b1b67a70e4609fe4aad69332">create_typed_job_queue</a> (typename <a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; job_type &gt;::queue_strategy strategy=<a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; job_type &gt;::queue_strategy::AUTO_DETECT, size_t max_threads=128) -&gt; std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; job_type &gt; &gt;</td></tr>
+<tr class="memdesc:ae6724193b1b67a70e4609fe4aad69332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function to create appropriate typed job queue.  <br /></td></tr>
+<tr class="separator:ae6724193b1b67a70e4609fe4aad69332"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type-based thread pool implementation for job scheduling with types. </p>
@@ -268,21 +265,21 @@ template&lt;detail::JobType job_type&gt; </div>
 
 </div>
 </div>
-<a id="a3da39bb993d9f5053019dbe8bb2e1ffb" name="a3da39bb993d9f5053019dbe8bb2e1ffb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3da39bb993d9f5053019dbe8bb2e1ffb">&#9670;&#160;</a></span>typed_job_queue</h2>
+<a id="a8e87c6f3fdf3b3a0c175af148054bab2" name="a8e87c6f3fdf3b3a0c175af148054bab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e87c6f3fdf3b3a0c175af148054bab2">&#9670;&#160;</a></span>typed_job_queue</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a3da39bb993d9f5053019dbe8bb2e1ffb">typed_thread_pool_module::typed_job_queue</a> = typedef <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt;<a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a>&gt;</td>
+          <td class="memname">typedef <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a8e87c6f3fdf3b3a0c175af148054bab2">typed_thread_pool_module::typed_job_queue</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Alias for a typed_job_queue using default job types. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html#l00278">278</a> of file <a class="el" href="../../d5/d70/typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/df6/internal_2scheduling_2typed__job__queue_8h_source.html#l00278">278</a> of file <a class="el" href="../../da/df6/internal_2scheduling_2typed__job__queue_8h_source.html">typed_job_queue.h</a>.</p>
 
 </div>
 </div>
@@ -319,42 +316,6 @@ template&lt;detail::JobType job_type&gt; </div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../dc/d68/typed__lockfree__job__queue_8h_source.html#l00295">295</a> of file <a class="el" href="../../dc/d68/typed__lockfree__job__queue_8h_source.html">typed_lockfree_job_queue.h</a>.</p>
-
-</div>
-</div>
-<a id="aab98103c1e3998beec97d4bbda6abf95" name="aab98103c1e3998beec97d4bbda6abf95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab98103c1e3998beec97d4bbda6abf95">&#9670;&#160;</a></span>typed_lockfree_thread_pool</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aab98103c1e3998beec97d4bbda6abf95">typed_thread_pool_module::typed_lockfree_thread_pool</a> = typedef <a class="el" href="../../d0/dc6/classtyped__thread__pool__module_1_1typed__lockfree__thread__pool__t.html">typed_lockfree_thread_pool_t</a>&lt;<a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Alias for a typed_lockfree_thread_pool with the default job_types type. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d1/d4f/typed__lockfree__thread__pool_8h_source.html#l00277">277</a> of file <a class="el" href="../../d1/d4f/typed__lockfree__thread__pool_8h_source.html">typed_lockfree_thread_pool.h</a>.</p>
-
-</div>
-</div>
-<a id="a21ca7d087abf15f04258ea5f9814134a" name="a21ca7d087abf15f04258ea5f9814134a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21ca7d087abf15f04258ea5f9814134a">&#9670;&#160;</a></span>typed_lockfree_thread_worker</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a21ca7d087abf15f04258ea5f9814134a">typed_thread_pool_module::typed_lockfree_thread_worker</a> = typedef <a class="el" href="../../d0/d90/classtyped__thread__pool__module_1_1typed__lockfree__thread__worker__t.html">typed_lockfree_thread_worker_t</a>&lt;<a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convenience typedef for a worker configured with default job_types. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d34/typed__lockfree__thread__worker_8h_source.html#l00134">134</a> of file <a class="el" href="../../d9/d34/typed__lockfree__thread__worker_8h_source.html">typed_lockfree_thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -483,7 +444,7 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Returns a vector containing all possible <code>job_types</code> values. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::vector&lt;job_types&gt;</code> with [RealTime, Batch, Background].</dd></dl>
 <p>This function is useful when iterating over all defined types (e.g. for logging, UI selection, or testing).</p>
-<h3><a class="anchor" id="autotoc_md60"></a>
+<h3><a class="anchor" id="autotoc_md49"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> type : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(type) &lt;&lt; std::endl;</div>
@@ -530,6 +491,74 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="ae6724193b1b67a70e4609fe4aad69332" name="ae6724193b1b67a70e4609fe4aad69332"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6724193b1b67a70e4609fe4aad69332">&#9670;&#160;</a></span>create_typed_job_queue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename job_type  = job_types&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto typed_thread_pool_module::create_typed_job_queue </td>
+          <td>(</td>
+          <td class="paramtype">typename <a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; job_type &gt;::queue_strategy&#160;</td>
+          <td class="paramname"><em>strategy</em> = <code><a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt;&#160;job_type&#160;&gt;::queue_strategy::AUTO_DETECT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_threads</em> = <code>128</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; job_type &gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Factory function to create appropriate typed job queue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strategy</td><td>Queue selection strategy </td></tr>
+    <tr><td class="paramname">max_threads</td><td>Maximum number of threads (for lockfree queue) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to created queue </dd></dl>
+
+</div>
+</div>
+<a id="a6471112cdc4e66bf0b675a1b93dcda00" name="a6471112cdc4e66bf0b675a1b93dcda00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6471112cdc4e66bf0b675a1b93dcda00">&#9670;&#160;</a></span>create_typed_job_queue&lt; job_types &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template auto <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ae6724193b1b67a70e4609fe4aad69332">typed_thread_pool_module::create_typed_job_queue</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;::queue_strategy&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="abd49ff02ea4da8eb45ed55b95511f043" name="abd49ff02ea4da8eb45ed55b95511f043"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd49ff02ea4da8eb45ed55b95511f043">&#9670;&#160;</a></span>to_string()</h2>
 
@@ -562,7 +591,7 @@ template&lt;detail::JobType job_type = job_types&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> containing one of "REALTIME", "BATCH", "BACKGROUND", or "UNKNOWN" if <code>job_type</code> is out of expected range.</dd></dl>
-<h3><a class="anchor" id="autotoc_md59"></a>
+<h3><a class="anchor" id="autotoc_md48"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> p = <a class="code hl_enumvalue" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216">job_types::RealTime</a>;</div>
 <div class="line">std::string_view sv = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(p); <span class="comment">// &quot;REALTIME&quot;</span></div>
@@ -579,7 +608,7 @@ Example</h3>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 22 2025 16:56:02 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jun 30 2025 11:50:33 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

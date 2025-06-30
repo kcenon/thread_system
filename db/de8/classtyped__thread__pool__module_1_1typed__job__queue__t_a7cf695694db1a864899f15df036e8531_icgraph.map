@@ -1,5 +1,7 @@
 <map id="typed_thread_pool_module::typed_job_queue_t::to_string" name="typed_thread_pool_module::typed_job_queue_t::to_string">
-<area shape="rect" id="Node000001" title="Returns a string representation of the entire priority job queue." alt="" coords="233,20,452,60"/>
-<area shape="rect" id="Node000002" href="$da/d41/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html#a4c2a3a744a44dd421ea9f6c11b3e09b6" title="Formats a typed_job_queue_t&lt;job_type&gt; into a string view for {fmt}." alt="" coords="5,5,185,75"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,43,185,43,185,37,220,37"/>
+<area shape="rect" id="Node000001" title="Returns a string representation of the entire priority job queue." alt="" coords="252,64,471,104"/>
+<area shape="rect" id="Node000002" href="$da/d41/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html#a4c2a3a744a44dd421ea9f6c11b3e09b6" title="Formats a typed_job_queue_t&lt;job_type&gt; into a string view for {fmt}." alt="" coords="15,5,195,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,66,194,58,195,53,239,60"/>
+<area shape="rect" id="Node000003" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#aad1d36032107dd83875a8592feca0abc" title="Get or create a lock&#45;free queue for the specified type." alt="" coords="5,99,204,154"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,107,205,113,204,108,238,102"/>
 </map>

@@ -1,8 +1,0 @@
-<map id="log_module::implementation::logger::set_wake_interval" name="log_module::implementation::logger::set_wake_interval">
-<area shape="rect" id="Node000001" title="Sets the interval at which the logger checks for new messages in its queue." alt="" coords="5,5,216,45"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="264,13,440,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,23,250,23,250,28,216,28"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="488,5,699,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,31,474,32,474,37,440,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="488,19,454,19,454,14,488,14"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="log_module::callback_writer::do_work" name="log_module::callback_writer::do_work">
-<area shape="rect" id="Node000001" title="Retrieves log messages from the queue and invokes the callback function to process them." alt="" coords="5,5,165,45"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="213,13,389,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,23,200,23,200,28,165,28"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="437,5,648,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="390,31,424,32,424,37,389,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="437,19,403,19,403,14,437,14"/>
-</map>

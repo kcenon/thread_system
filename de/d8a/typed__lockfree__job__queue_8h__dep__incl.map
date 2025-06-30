@@ -1,10 +1,9 @@
 <map id="sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h" name="sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="32,5,204,60"/>
-<area shape="rect" id="Node000002" href="$d1/d4f/typed__lockfree__thread__pool_8h.html" title=" " alt="" coords="64,211,255,265"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,70,32,88,17,109,8,136,10,148,17,161,41,188,73,208,70,213,38,192,12,164,5,149,3,135,12,107,28,84,49,66"/>
-<area shape="rect" id="Node000003" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title=" " alt="" coords="27,108,210,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,74,121,108,116,108,116,74"/>
-<area shape="rect" id="Node000004" href="$d9/d34/typed__lockfree__thread__worker_8h.html" title=" " alt="" coords="234,108,427,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,63,276,106,274,110,184,68"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="276,172,206,213,203,208,273,167"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="121,5,293,60"/>
+<area shape="rect" id="Node000002" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="5,108,197,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,72,131,110,127,106,167,68"/>
+<area shape="rect" id="Node000004" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title=" " alt="" coords="222,108,405,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,68,287,106,284,110,243,72"/>
+<area shape="rect" id="Node000003" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title=" " alt="" coords="5,211,197,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,176,104,211,99,211,99,176"/>
 </map>

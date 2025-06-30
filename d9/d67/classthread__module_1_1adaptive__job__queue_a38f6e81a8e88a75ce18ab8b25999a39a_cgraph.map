@@ -1,17 +1,13 @@
 <map id="thread_module::adaptive_job_queue::adaptive_job_queue" name="thread_module::adaptive_job_queue::adaptive_job_queue">
-<area shape="rect" id="Node000001" title="Constructor." alt="" coords="5,113,240,153"/>
-<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7" title=" " alt="" coords="315,27,500,82"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,111,301,81,302,86,197,116"/>
-<area shape="rect" id="Node000006" href="$d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3" title=" " alt="" coords="288,106,527,161"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="240,131,274,131,274,136,240,136"/>
-<area shape="rect" id="Node000007" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6" title=" " alt="" coords="295,185,519,239"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="197,151,295,178,294,183,195,156"/>
-<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="575,42,797,67"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="500,52,561,52,561,57,500,57"/>
-<area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="845,5,1056,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="797,40,831,36,832,41,798,45"/>
-<area shape="rect" id="Node000005" href="$d9/de0/namespacelog__module.html#a7a0c45fcc8579c21590b6a7a6eb5695c" title=" " alt="" coords="1104,13,1280,38"/>
-<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="797,60,922,62,1056,55,1134,39,1135,44,1056,60,922,68,797,65"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="1056,32,1090,32,1090,37,1056,37"/>
-<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="1104,19,1070,19,1070,14,1104,14"/>
+<area shape="rect" id="Node000001" title="Constructor." alt="" coords="5,91,240,131"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7" title=" " alt="" coords="315,5,500,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,89,301,59,302,64,197,94"/>
+<area shape="rect" id="Node000005" href="$d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3" title=" " alt="" coords="288,84,527,139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="240,109,274,109,274,114,240,114"/>
+<area shape="rect" id="Node000006" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6" title=" " alt="" coords="295,163,519,217"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="197,129,295,156,294,161,195,134"/>
+<area shape="rect" id="Node000003" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="575,20,797,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="500,30,561,30,561,35,500,35"/>
+<area shape="rect" id="Node000004" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="845,13,1056,53"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="798,30,831,30,831,35,798,35"/>
 </map>

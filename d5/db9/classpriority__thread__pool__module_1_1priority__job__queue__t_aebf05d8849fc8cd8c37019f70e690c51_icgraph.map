@@ -1,5 +1,0 @@
-<map id="priority_thread_pool_module::priority_job_queue_t::to_string" name="priority_thread_pool_module::priority_job_queue_t::to_string">
-<area shape="rect" id="Node000001" title="Returns a string representation of the entire priority job queue." alt="" coords="271,13,431,67"/>
-<area shape="rect" id="Node000002" href="$d7/d82/structfmt_1_1formatter_3_01priority__thread__pool__module_1_1priority__job__queue__t_3_01priority__type_01_4_01_4.html#a67668c3f4f619e92aad14f40f009b176" title="Formats a priority_job_queue_t&lt;priority_type&gt; into a string view for {fmt}." alt="" coords="5,5,223,75"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="257,43,223,43,223,37,257,37"/>
-</map>

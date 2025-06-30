@@ -1,5 +1,0 @@
-<map id="thread_module::lockfree_mpmc_queue::dequeue" name="thread_module::lockfree_mpmc_queue::dequeue">
-<area shape="rect" id="Node000001" title="Dequeue a single job." alt="" coords="5,5,187,45"/>
-<area shape="rect" id="Node000002" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="235,5,400,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,23,221,23,221,28,187,28"/>
-</map>

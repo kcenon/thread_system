@@ -1,24 +1,16 @@
 <map id="sources/thread_pool/workers/worker_policy.h" name="sources/thread_pool/workers/worker_policy.h">
-<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="356,5,537,45"/>
-<area shape="rect" id="Node000002" href="$d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="360,101,533,141"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="449,59,449,101,444,101,444,59"/>
-<area shape="rect" id="Node000004" href="$dc/dcc/lockfree__thread__worker_8h.html" title=" " alt="" coords="153,93,335,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="395,53,302,96,300,91,392,49"/>
-<area shape="rect" id="Node000008" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="558,101,743,141"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="502,49,611,98,608,103,499,54"/>
-<area shape="rect" id="Node000003" href="$d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="443,299,602,353"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="452,154,460,200,474,250,488,275,503,297,499,300,483,277,470,252,454,202,447,155"/>
-<area shape="rect" id="Node000005" href="$dc/df3/lockfree__thread__pool_8h.html" title=" " alt="" coords="5,196,165,251"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="193,157,128,198,126,194,190,153"/>
-<area shape="rect" id="Node000007" href="$d4/dd0/lockfree__thread__worker_8cpp.html" title=" " alt="" coords="190,196,373,251"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="261,160,274,195,269,197,256,162"/>
-<area shape="rect" id="Node000006" href="$da/d0b/lockfree__thread__pool_8cpp.html" title=" " alt="" coords="5,299,165,353"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="88,264,88,299,83,299,83,264"/>
-<area shape="rect" id="Node000009" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="707,203,861,243"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="688,147,761,201,757,205,685,151"/>
-<area shape="rect" id="Node000011" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="484,203,684,243"/>
-<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="633,154,599,205,594,202,628,151"/>
-<area shape="poly" id="edge9_Node000009_Node000003" title=" " alt="" coords="723,251,592,301,590,296,721,246"/>
-<area shape="rect" id="Node000010" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="703,306,865,346"/>
-<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="787,257,787,306,781,306,781,257"/>
+<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="103,5,284,45"/>
+<area shape="rect" id="Node000002" href="$d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="5,93,179,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,56,116,95,113,91,159,52"/>
+<area shape="rect" id="Node000004" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="203,93,389,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="228,52,275,91,272,95,225,56"/>
+<area shape="rect" id="Node000003" href="$d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="13,269,171,324"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,147,95,269,89,269,89,147"/>
+<area shape="rect" id="Node000005" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="165,181,318,221"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="279,146,256,183,251,180,274,144"/>
+<area shape="rect" id="Node000007" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="343,181,543,221"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="342,138,412,179,409,184,339,143"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="201,231,135,272,133,267,198,226"/>
+<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="196,277,359,317"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="256,233,273,276,268,278,251,235"/>
 </map>

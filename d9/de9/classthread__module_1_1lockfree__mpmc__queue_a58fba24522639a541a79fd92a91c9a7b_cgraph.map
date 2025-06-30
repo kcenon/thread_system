@@ -1,5 +1,0 @@
-<map id="thread_module::lockfree_mpmc_queue::enqueue_batch" name="thread_module::lockfree_mpmc_queue::enqueue_batch">
-<area shape="rect" id="Node000001" title="Enqueue multiple jobs as a batch." alt="" coords="5,5,229,45"/>
-<area shape="rect" id="Node000002" href="$d9/d61/structthread__module_1_1lockfree__mpmc__queue_1_1Node.html#aac9f026be558c12375825c2d5c0e1b03" title=" " alt="" coords="277,5,500,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,23,264,23,264,28,229,28"/>
-</map>
