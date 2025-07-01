@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "typed_thread_pool.h"
+#include "../scheduling/adaptive_typed_job_queue.h"
 #include "../../utilities/core/formatter.h"
 
 using namespace utility_module;
@@ -76,7 +77,8 @@ namespace typed_thread_pool_module
 	typed_thread_pool_t<job_type>::typed_thread_pool_t(
 		const std::string& thread_title)
 		: thread_title_(thread_title)
-		, job_queue_(std::make_shared<typed_job_queue_t<job_type>>())
+		, job_queue_(create_typed_job_queue<job_type>(
+			adaptive_typed_job_queue_t<job_type>::queue_strategy::ADAPTIVE))
 		, start_pool_(false)
 	{
 	}

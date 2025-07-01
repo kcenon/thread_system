@@ -11,9 +11,6 @@ add_subdirectory(utilities)
 # Core thread foundation classes 
 add_subdirectory(thread_base)
 
-# Lock-free components (depends on thread_base)
-add_subdirectory(lockfree)
-
 # Logging system (depends on utilities)
 add_subdirectory(logger)
 

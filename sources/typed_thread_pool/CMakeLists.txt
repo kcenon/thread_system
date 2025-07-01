@@ -11,6 +11,7 @@ project(typed_thread_pool)
 
 # Collect source files for explicit template instantiations
 set(TYPED_THREAD_POOL_SOURCES
+    scheduling/adaptive_typed_job_queue.cpp
     scheduling/typed_lockfree_job_queue.cpp
 )
 
