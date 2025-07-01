@@ -23,6 +23,9 @@ set DISABLE_STD_JTHREAD=0
 set DISABLE_STD_SPAN=0
 set BUILD_CORES=0
 set VERBOSE=0
+set SELECTED_COMPILER=
+set LIST_COMPILERS_ONLY=0
+set INTERACTIVE_COMPILER_SELECTION=0
 
 :: Parse command line arguments
 :parse_args
@@ -99,6 +102,22 @@ if "%~1"=="--verbose" (
     shift
     goto :parse_args
 )
+if "%~1"=="--compiler" (
+    set SELECTED_COMPILER=%~2
+    shift
+    shift
+    goto :parse_args
+)
+if "%~1"=="--list-compilers" (
+    set LIST_COMPILERS_ONLY=1
+    shift
+    goto :parse_args
+)
+if "%~1"=="--select-compiler" (
+    set INTERACTIVE_COMPILER_SELECTION=1
+    shift
+    goto :parse_args
+)
 if "%~1"=="--help" (
     goto :show_help
 )
@@ -109,6 +128,25 @@ echo Unknown option: %~1
 goto :show_help
 
 :end_parse
+
+:: Function to detect available compilers
+call :detect_compilers
+
+:: Handle compiler-related options
+if %LIST_COMPILERS_ONLY%==1 (
+    call :show_compilers
+    exit /b 0
+)
+
+if %INTERACTIVE_COMPILER_SELECTION%==1 (
+    call :select_compiler_interactive
+) else if not "%SELECTED_COMPILER%"=="" (
+    call :select_compiler_by_name "%SELECTED_COMPILER%"
+    if errorlevel 1 exit /b 1
+) else (
+    :: Use the first available compiler as default
+    call :use_default_compiler
+)
 
 :: Check for dependencies
 echo [STATUS] Checking build dependencies...
@@ -184,6 +222,9 @@ if not exist build (
 
 :: Prepare CMake arguments
 set CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=..\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=%BUILD_TYPE%
+if not "%SELECTED_COMPILER_PATH%"=="" (
+    set CMAKE_ARGS=%CMAKE_ARGS% -DCMAKE_CXX_COMPILER="%SELECTED_COMPILER_PATH%"
+)
 
 :: Add feature flags based on options
 if %DISABLE_STD_FORMAT%==1 (
@@ -370,4 +411,154 @@ echo   --cores N         Use N cores for compilation (default: auto-detect)
 echo   --verbose         Show detailed build output
 echo   --help            Display this help and exit
 echo.
+echo Compiler Options:
+echo   --compiler NAME   Use specific compiler (e.g., cl, clang++, g++)
+echo   --list-compilers  List all available compilers and exit
+echo   --select-compiler Interactively select compiler
+echo.
 exit /b 0
+
+:: Function to detect available compilers
+:detect_compilers
+echo [STATUS] Detecting available compilers...
+
+set COMPILER_COUNT=0
+set AVAILABLE_COMPILERS=
+set COMPILER_DETAILS=
+
+:: Check for MSVC (Visual Studio)
+where cl >nul 2>nul
+if not errorlevel 1 (
+    set /a COMPILER_COUNT+=1
+    set AVAILABLE_COMPILERS=%AVAILABLE_COMPILERS% cl
+    for /f "tokens=*" %%i in ('cl 2^>^&1 ^| findstr /C:"Microsoft"') do (
+        set COMPILER_DETAILS=%COMPILER_DETAILS%; MSVC: %%i
+    )
+)
+
+:: Check for Clang
+where clang++ >nul 2>nul
+if not errorlevel 1 (
+    set /a COMPILER_COUNT+=1
+    set AVAILABLE_COMPILERS=%AVAILABLE_COMPILERS% clang++
+    for /f "tokens=1-3" %%i in ('clang++ --version 2^>nul ^| findstr /C:"clang"') do (
+        set COMPILER_DETAILS=%COMPILER_DETAILS%; Clang: %%i %%j %%k
+        goto :clang_done
+    )
+    :clang_done
+)
+
+:: Check for GCC (MinGW/MSYS2)
+where g++ >nul 2>nul
+if not errorlevel 1 (
+    set /a COMPILER_COUNT+=1
+    set AVAILABLE_COMPILERS=%AVAILABLE_COMPILERS% g++
+    for /f "tokens=1-3" %%i in ('g++ --version 2^>nul ^| findstr /C:"g++"') do (
+        set COMPILER_DETAILS=%COMPILER_DETAILS%; GCC: %%i %%j %%k
+        goto :gcc_done
+    )
+    :gcc_done
+)
+
+:: Check for specific versions
+for %%v in (13 12 11 10 9) do (
+    where g++-%%v >nul 2>nul
+    if not errorlevel 1 (
+        set /a COMPILER_COUNT+=1
+        set AVAILABLE_COMPILERS=%AVAILABLE_COMPILERS% g++-%%v
+        set COMPILER_DETAILS=%COMPILER_DETAILS%; GCC-%%v: found
+    )
+)
+
+for %%v in (17 16 15 14 13 12 11 10) do (
+    where clang++-%%v >nul 2>nul
+    if not errorlevel 1 (
+        set /a COMPILER_COUNT+=1
+        set AVAILABLE_COMPILERS=%AVAILABLE_COMPILERS% clang++-%%v
+        set COMPILER_DETAILS=%COMPILER_DETAILS%; Clang-%%v: found
+    )
+)
+
+if %COMPILER_COUNT%==0 (
+    echo [ERROR] No C++ compilers found!
+    echo [WARNING] Please install a C++ compiler (MSVC, Clang, or GCC/MinGW)
+    exit /b 1
+)
+
+echo [STATUS] Found %COMPILER_COUNT% compiler(s)
+goto :eof
+
+:: Function to show available compilers
+:show_compilers
+echo Available Compilers:
+set INDEX=1
+for %%c in (%AVAILABLE_COMPILERS%) do (
+    echo   !INDEX!^) %%c
+    set /a INDEX+=1
+)
+echo.
+goto :eof
+
+:: Function to select compiler interactively
+:select_compiler_interactive
+call :show_compilers
+
+:select_loop
+set /p "choice=Select compiler (1-%COMPILER_COUNT%) or 'q' to quit: "
+
+if /i "%choice%"=="q" (
+    echo [WARNING] Build cancelled by user
+    exit /b 0
+)
+
+:: Validate choice
+set /a "valid_choice=0"
+if "%choice%" geq "1" if "%choice%" leq "%COMPILER_COUNT%" set valid_choice=1
+
+if %valid_choice%==0 (
+    echo [ERROR] Invalid choice. Please enter a number between 1 and %COMPILER_COUNT%
+    goto :select_loop
+)
+
+:: Get selected compiler
+set INDEX=1
+for %%c in (%AVAILABLE_COMPILERS%) do (
+    if !INDEX!==!choice! (
+        set SELECTED_COMPILER_PATH=%%c
+        echo [SUCCESS] Selected: %%c
+        goto :eof
+    )
+    set /a INDEX+=1
+)
+goto :eof
+
+:: Function to select compiler by name
+:select_compiler_by_name
+set COMPILER_NAME=%~1
+set FOUND=0
+
+for %%c in (%AVAILABLE_COMPILERS%) do (
+    if /i "%%c"=="%COMPILER_NAME%" (
+        set SELECTED_COMPILER_PATH=%%c
+        set FOUND=1
+        echo [SUCCESS] Selected: %%c
+        goto :found_compiler
+    )
+)
+
+:found_compiler
+if %FOUND%==0 (
+    echo [ERROR] Compiler '%COMPILER_NAME%' not found in available compilers
+    call :show_compilers
+    exit /b 1
+)
+goto :eof
+
+:: Function to use default compiler
+:use_default_compiler
+for %%c in (%AVAILABLE_COMPILERS%) do (
+    set SELECTED_COMPILER_PATH=%%c
+    echo [STATUS] Using default compiler: %%c
+    goto :eof
+)
+goto :eof

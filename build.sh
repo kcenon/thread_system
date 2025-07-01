@@ -46,6 +46,11 @@ show_help() {
     echo "  --verbose         Show detailed build output"
     echo "  --help            Display this help and exit"
     echo ""
+    echo -e "${BOLD}Compiler Options:${NC}"
+    echo "  --compiler NAME   Use specific compiler (e.g., g++, clang++, g++-12)"
+    echo "  --list-compilers  List all available compilers and exit"
+    echo "  --select-compiler Interactively select compiler"
+    echo ""
 }
 
 # Function to print status messages
@@ -71,6 +76,118 @@ print_warning() {
 # Function to check if a command exists
 command_exists() {
     command -v "$1" &> /dev/null
+}
+
+# Function to detect available compilers
+detect_compilers() {
+    print_status "Detecting available compilers..."
+    
+    local available_compilers=()
+    local compiler_details=()
+    
+    # Check for various C++ compilers
+    if command_exists g++; then
+        local gcc_version=$(g++ --version 2>/dev/null | head -n1)
+        available_compilers+=("g++")
+        compiler_details+=("GCC: $gcc_version")
+    fi
+    
+    if command_exists clang++; then
+        local clang_version=$(clang++ --version 2>/dev/null | head -n1)
+        available_compilers+=("clang++")
+        compiler_details+=("Clang: $clang_version")
+    fi
+    
+    # Check for additional GCC versions
+    for version in 13 12 11 10 9; do
+        if command_exists "g++-$version"; then
+            local gcc_ver=$(g++-$version --version 2>/dev/null | head -n1)
+            available_compilers+=("g++-$version")
+            compiler_details+=("GCC-$version: $gcc_ver")
+        fi
+    done
+    
+    # Check for additional Clang versions
+    for version in 17 16 15 14 13 12 11 10; do
+        if command_exists "clang++-$version"; then
+            local clang_ver=$(clang++-$version --version 2>/dev/null | head -n1)
+            available_compilers+=("clang++-$version")
+            compiler_details+=("Clang-$version: $clang_ver")
+        fi
+    done
+    
+    # Check for platform-specific compilers
+    if [ "$(uname)" == "Darwin" ]; then
+        # macOS specific compilers
+        if command_exists /usr/bin/clang++; then
+            local apple_clang_version=$(/usr/bin/clang++ --version 2>/dev/null | head -n1)
+            available_compilers+=("/usr/bin/clang++")
+            compiler_details+=("Apple Clang: $apple_clang_version")
+        fi
+    fi
+    
+    if [ ${#available_compilers[@]} -eq 0 ]; then
+        print_error "No C++ compilers found!"
+        print_warning "Please install a C++ compiler (GCC or Clang)"
+        return 1
+    fi
+    
+    # Export arrays for use in other functions
+    AVAILABLE_COMPILERS=("${available_compilers[@]}")
+    COMPILER_DETAILS=("${compiler_details[@]}")
+    
+    return 0
+}
+
+# Function to display available compilers
+show_compilers() {
+    echo -e "${BOLD}${CYAN}Available Compilers:${NC}"
+    for i in "${!AVAILABLE_COMPILERS[@]}"; do
+        printf "  %d) %s\n" $((i + 1)) "${COMPILER_DETAILS[i]}"
+    done
+    echo ""
+}
+
+# Function to select compiler interactively
+select_compiler_interactive() {
+    show_compilers
+    
+    while true; do
+        echo -e "${BOLD}Select compiler (1-${#AVAILABLE_COMPILERS[@]}) or 'q' to quit:${NC}"
+        read -p "> " choice
+        
+        if [ "$choice" = "q" ] || [ "$choice" = "Q" ]; then
+            print_warning "Build cancelled by user"
+            exit 0
+        fi
+        
+        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#AVAILABLE_COMPILERS[@]}" ]; then
+            SELECTED_COMPILER="${AVAILABLE_COMPILERS[$((choice - 1))]}"
+            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[$((choice - 1))]}"
+            print_success "Selected: $SELECTED_COMPILER_DETAIL"
+            return 0
+        else
+            print_error "Invalid choice. Please enter a number between 1 and ${#AVAILABLE_COMPILERS[@]}"
+        fi
+    done
+}
+
+# Function to select compiler by name
+select_compiler_by_name() {
+    local compiler_name="$1"
+    
+    for i in "${!AVAILABLE_COMPILERS[@]}"; do
+        if [ "${AVAILABLE_COMPILERS[i]}" = "$compiler_name" ]; then
+            SELECTED_COMPILER="$compiler_name"
+            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[i]}"
+            print_success "Selected: $SELECTED_COMPILER_DETAIL"
+            return 0
+        fi
+    done
+    
+    print_error "Compiler '$compiler_name' not found in available compilers"
+    show_compilers
+    return 1
 }
 
 # Function to check and install dependencies
@@ -138,6 +255,9 @@ DISABLE_STD_JTHREAD=0
 DISABLE_STD_SPAN=0
 BUILD_CORES=0
 VERBOSE=0
+SELECTED_COMPILER=""
+LIST_COMPILERS_ONLY=0
+INTERACTIVE_COMPILER_SELECTION=0
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -203,6 +323,23 @@ while [[ $# -gt 0 ]]; do
             VERBOSE=1
             shift
             ;;
+        --compiler)
+            if [ -n "$2" ]; then
+                SELECTED_COMPILER="$2"
+                shift 2
+            else
+                print_error "Option --compiler requires a compiler name"
+                exit 1
+            fi
+            ;;
+        --list-compilers)
+            LIST_COMPILERS_ONLY=1
+            shift
+            ;;
+        --select-compiler)
+            INTERACTIVE_COMPILER_SELECTION=1
+            shift
+            ;;
         --help)
             show_help
             exit 0
@@ -240,6 +377,32 @@ if [ "$(uname)" == "Linux" ]; then
     fi
 fi
 
+# Detect available compilers
+detect_compilers
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+# Handle compiler-related options
+if [ $LIST_COMPILERS_ONLY -eq 1 ]; then
+    show_compilers
+    exit 0
+fi
+
+if [ $INTERACTIVE_COMPILER_SELECTION -eq 1 ]; then
+    select_compiler_interactive
+elif [ -n "$SELECTED_COMPILER" ]; then
+    select_compiler_by_name "$SELECTED_COMPILER"
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+else
+    # Use the first available compiler as default
+    SELECTED_COMPILER="${AVAILABLE_COMPILERS[0]}"
+    SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[0]}"
+    print_status "Using default compiler: $SELECTED_COMPILER_DETAIL"
+fi
+
 # Check dependencies before proceeding
 check_dependencies
 if [ $? -ne 0 ]; then
@@ -262,6 +425,7 @@ fi
 # Prepare CMake arguments
 CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
 CMAKE_ARGS+=" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
+CMAKE_ARGS+=" -DCMAKE_CXX_COMPILER=$SELECTED_COMPILER"
 
 # Add feature flags based on options
 if [ $DISABLE_STD_FORMAT -eq 1 ]; then
