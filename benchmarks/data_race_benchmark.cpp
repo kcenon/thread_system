@@ -40,10 +40,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 3. job_queue consistency improvements
  */
 
-#include "../sources/thread_base/thread_base.h"
-#include "../sources/thread_base/job_queue.h"
-#include "../sources/thread_base/cancellation_token.h"
-#include "../sources/thread_pool/thread_pool.h"
+#include "../sources/thread_base/core/thread_base.h"
+#include "../sources/thread_base/jobs/job_queue.h"
+#include "../sources/thread_base/sync/cancellation_token.h"
+#include "../sources/thread_pool/core/thread_pool.h"
 #include "../sources/utilities/core/formatter.h"
 
 #include <benchmark/benchmark.h>
@@ -157,8 +157,10 @@ static void BM_JobQueueConsistency(benchmark::State& state) {
             threads.emplace_back([&queue, &enqueue_count]() {
                 for (int j = 0; j < 1000; ++j) {
                     auto job = std::make_unique<callback_job>([]() { return result_void{}; });
-                    queue->enqueue(std::move(job));
-                    enqueue_count++;
+                    auto result = queue->enqueue(std::move(job));
+                    if (!result) {
+                        enqueue_count++;
+                    }
                 }
             });
         }
@@ -202,7 +204,7 @@ static void BM_JobQueueConsistency(benchmark::State& state) {
 // Thread pool stress test with data races
 static void BM_ThreadPoolStress(benchmark::State& state) {
     for (auto _ : state) {
-        auto pool = thread_pool::create(state.range(0));
+        auto pool = std::make_shared<thread_pool>();
         pool->start();
         
         std::atomic<size_t> completed_jobs{0};

@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "thread_pool.h"
+#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 
 #include "../../logger/core/logger.h"
 #include "../../utilities/core/formatter.h"
@@ -40,7 +41,7 @@ using namespace utility_module;
 namespace thread_pool_module
 {
 	thread_pool::thread_pool(const std::string& thread_title)
-		: thread_title_(thread_title), start_pool_(false), job_queue_(std::make_shared<job_queue>())
+		: thread_title_(thread_title), start_pool_(false), job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE))
 	{
 	}
 

@@ -17,10 +17,10 @@ add_executable(logging_throughput_benchmark
     logging_throughput_benchmark.cpp
 )
 
-# NEW: Lock-free logger performance benchmark
-add_executable(lockfree_logger_benchmark
-    lockfree_logger_benchmark.cpp
-)
+# NEW: Lock-free logger performance benchmark (disabled - lockfree logger removed)
+#add_executable(lockfree_logger_benchmark
+#    lockfree_logger_benchmark.cpp
+#)
 
 # NEW: Logger comparison benchmark (Thread System vs spdlog)
 add_executable(logger_comparison_benchmark
@@ -31,7 +31,6 @@ add_executable(logger_comparison_benchmark
 set(LOGGER_BENCHMARK_TARGETS
     logger_benchmark
     logging_throughput_benchmark
-    lockfree_logger_benchmark
     logger_comparison_benchmark
 )
 
@@ -78,7 +77,7 @@ add_custom_target(logger_benchmarks_target
 add_custom_target(run_logger_benchmarks
     COMMAND logger_benchmark
     COMMAND logging_throughput_benchmark
-    COMMAND lockfree_logger_benchmark
+    COMMAND logger_comparison_benchmark
     DEPENDS logger_benchmarks_target
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
     COMMENT "Running logger benchmarks..."

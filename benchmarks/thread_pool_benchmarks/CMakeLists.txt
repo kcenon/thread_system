@@ -12,15 +12,15 @@ add_executable(gbench_thread_pool gbench_thread_pool.cpp)
 target_link_libraries(gbench_thread_pool PRIVATE thread_pool thread_base utilities benchmark::benchmark)
 set_target_properties(gbench_thread_pool PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-# NEW: Lockfree comparison benchmark using Google Benchmark
-add_executable(lockfree_comparison_benchmark lockfree_comparison_benchmark.cpp)
-target_link_libraries(lockfree_comparison_benchmark PRIVATE thread_pool thread_base utilities benchmark::benchmark)
-set_target_properties(lockfree_comparison_benchmark PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# NEW: Lockfree comparison benchmark using Google Benchmark (disabled - lockfree removed)
+#add_executable(lockfree_comparison_benchmark lockfree_comparison_benchmark.cpp)
+#target_link_libraries(lockfree_comparison_benchmark PRIVATE thread_pool thread_base utilities benchmark::benchmark)
+#set_target_properties(lockfree_comparison_benchmark PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-# NEW: Lockfree performance benchmark
-add_executable(lockfree_performance_benchmark lockfree_performance_benchmark.cpp)
-target_link_libraries(lockfree_performance_benchmark PRIVATE thread_pool thread_base utilities benchmark::benchmark)
-set_target_properties(lockfree_performance_benchmark PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# NEW: Lockfree performance benchmark (disabled - lockfree removed)
+#add_executable(lockfree_performance_benchmark lockfree_performance_benchmark.cpp)
+#target_link_libraries(lockfree_performance_benchmark PRIVATE thread_pool thread_base utilities benchmark::benchmark)
+#set_target_properties(lockfree_performance_benchmark PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # Core thread pool performance benchmark
 add_executable(thread_pool_benchmark
