@@ -5,7 +5,34 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-06-30
+## [Unreleased] - 2025-07-09
+
+### Changed
+- **Major Code Cleanup** 🧹
+  - Removed ~2,800 lines of duplicate code across the codebase
+  - Eliminated duplicate job_queue files from internal directories
+  - Removed duplicate typed_job_queue implementations
+  - Removed unused builder pattern (thread_pool_builder, pool_factory)
+  - Removed unused C++20 coroutine implementation (task.h - 867 lines)
+  - Created formatter_macros.h to eliminate formatter duplication
+  - Simplified architecture while maintaining all performance capabilities
+
+### Added
+- **Code Quality Improvements** ✨
+  - Added formatter_macros.h for reducing boilerplate code
+  - Improved code maintainability with cleaner architecture
+  - Updated all documentation to reflect simplified structure
+
+### Documentation
+- **Complete Documentation Update** 📚
+  - Updated README.md to reflect removed components
+  - Rewrote api-reference.md to match current codebase
+  - Updated architecture.md with cleaner structure
+  - Updated getting-started.md examples
+  - Updated performance.md to focus on adaptive queues
+  - All references to removed components cleaned up
+
+## [Previous Release] - 2025-06-30
 
 ### Fixed
 - **Test Stability Improvements** 🔧

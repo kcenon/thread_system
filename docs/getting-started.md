@@ -78,16 +78,15 @@ Let's create a simple program that demonstrates the basic features:
 
 ```cpp
 #include "thread_pool/core/thread_pool.h"
+#include "thread_pool/workers/thread_worker.h"
 #include "thread_base/jobs/callback_job.h"
 #include "logger/core/logger.h"
-#include "utilities/core/formatter.h"
 #include <iostream>
 #include <vector>
 #include <memory>
 
 using namespace thread_pool_module;
 using namespace thread_module;
-using namespace utility_module;
 
 int main() {
     // Start the logger
@@ -224,20 +223,15 @@ int main() {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     
-    // Get performance statistics
-    auto stats = pool->get_queue_statistics();
+    // Print performance results
     std::cout << "Performance Results:" << std::endl;
     std::cout << "- Jobs processed: " << completed.load() << std::endl;
-    std::cout << "- Average enqueue latency: " 
-              << stats.get_average_enqueue_latency_ns() << " ns" << std::endl;
-    std::cout << "- Average dequeue latency: " 
-              << stats.get_average_dequeue_latency_ns() << " ns" << std::endl;
     
     // Get worker statistics
     auto workers_list = pool->get_workers();
     for (size_t i = 0; i < workers_list.size(); ++i) {
-        auto worker_stats = static_cast<thread_worker*>(
-            workers_list[i].get())->get_statistics();
+        auto* worker = static_cast<thread_worker*>(workers_list[i].get());
+        auto worker_stats = worker->get_statistics();
         std::cout << "Worker " << i << ": " << worker_stats.jobs_processed 
                   << " jobs, " << worker_stats.batch_operations 
                   << " batch operations" << std::endl;
@@ -325,23 +319,24 @@ using namespace typed_thread_pool_module;
 auto typed_pool = std::make_shared<typed_thread_pool_t<job_types>>();
 
 // Add workers with different type responsibilities
-typed_pool->enqueue(std::make_unique<typed_thread_worker_t<job_types>>(
-    std::initializer_list<job_types>{job_types::High}
-));
-typed_pool->enqueue(std::make_unique<typed_thread_worker_t<job_types>>(
-    std::initializer_list<job_types>{job_types::Normal, job_types::Low}
-));
+auto high_priority_worker = std::make_unique<typed_thread_worker_t<job_types>>();
+high_priority_worker->set_responsibilities({job_types::RealTime});
+typed_pool->add_worker(std::move(high_priority_worker));
+
+auto normal_worker = std::make_unique<typed_thread_worker_t<job_types>>();
+normal_worker->set_responsibilities({job_types::Batch, job_types::Background});
+typed_pool->add_worker(std::move(normal_worker));
 
 // Start the pool
 typed_pool->start();
 
 // Submit jobs with different types
 typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
-    job_types::High,
+    job_types::RealTime,
     []() -> result_void { /* urgent task */ return {}; }
 ));
 typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
-    job_types::Normal,
+    job_types::Batch,
     []() -> result_void { /* normal task */ return {}; }
 ));
 ```
@@ -357,15 +352,16 @@ For priority-critical applications, use the adaptive typed thread pool:
 using namespace typed_thread_pool_module;
 
 // Create adaptive typed thread pool
-auto adaptive_typed_pool = std::make_shared<typed_thread_pool>();
+auto adaptive_typed_pool = std::make_shared<typed_thread_pool_t<job_types>>();
 
 // Add workers with adaptive queue configurations
-adaptive_typed_pool->enqueue(std::make_unique<typed_thread_worker>(
-    std::initializer_list<job_types>{job_types::RealTime}
-));
-adaptive_typed_pool->enqueue(std::make_unique<typed_thread_worker>(
-    std::initializer_list<job_types>{job_types::Batch, job_types::Background}
-));
+auto realtime_worker = std::make_unique<typed_thread_worker_t<job_types>>();
+realtime_worker->set_responsibilities({job_types::RealTime});
+adaptive_typed_pool->add_worker(std::move(realtime_worker));
+
+auto batch_worker = std::make_unique<typed_thread_worker_t<job_types>>();
+batch_worker->set_responsibilities({job_types::Batch, job_types::Background});
+adaptive_typed_pool->add_worker(std::move(batch_worker));
 
 // Start the pool
 adaptive_typed_pool->start();
@@ -389,11 +385,9 @@ adaptive_typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
     }
 ));
 
-// Get detailed statistics
-auto queue_stats = adaptive_typed_pool->get_queue_statistics();
-auto busiest_type = queue_stats.get_busiest_type();
-if (busiest_type.has_value()) {
-    log_module::write_information("Busiest job type: {}", static_cast<int>(*busiest_type));
+// Get pool status
+if (adaptive_typed_pool->is_running()) {
+    log_module::write_information("Adaptive typed pool is running successfully");
 }
 ```
 
@@ -421,8 +415,8 @@ log_module::write_debug("Debug message: {}", debug_info);
 log_module::write_error("Error: {}", error_message);
 
 // Configure log targets
-log_module::console_target(log_types::Information | log_types::Error);
-log_module::file_target(log_types::All);
+log_module::console_target(log_module::log_types::Information | log_module::log_types::Error);
+log_module::file_target(log_module::log_types::All);
 ```
 
 ## Common Use Cases
