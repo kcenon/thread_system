@@ -902,16 +902,16 @@ class thread_pool_builder {
 };
 ```
 
-#### Duplicate Implementations
-The analysis revealed systematic duplication:
+#### Duplicate Implementations (Resolved)
+The analysis revealed systematic duplication that has been addressed:
 
 1. **job_queue**: 
    - `thread_base/jobs/job_queue.h` (active)
-   - `thread_base/internal/queues/job_queue.h` (duplicate)
+   - ~~`thread_base/internal/queues/job_queue.h`~~ (removed - duplicate)
 
 2. **typed_job_queue**:
    - `typed_thread_pool/scheduling/typed_job_queue.h` (active)
-   - `typed_thread_pool/internal/scheduling/typed_job_queue.h` (duplicate)
+   - ~~`typed_thread_pool/internal/scheduling/typed_job_queue.h`~~ (removed - duplicate)
 
 ### Build System Robustness
 
