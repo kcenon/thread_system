@@ -154,7 +154,7 @@ select_compiler_interactive() {
     
     while true; do
         echo -e "${BOLD}Select compiler (1-${#AVAILABLE_COMPILERS[@]}) or 'q' to quit:${NC}"
-        read -p "> " choice
+        read -r -p "> " choice
         
         if [ "$choice" = "q" ] || [ "$choice" = "Q" ]; then
             print_warning "Build cancelled by user"
@@ -221,8 +221,7 @@ check_dependencies() {
         print_warning "Running dependency script to set up vcpkg..."
         
         if [ -f "./dependency.sh" ]; then
-            bash ./dependency.sh
-            if [ $? -ne 0 ]; then
+            if ! bash ./dependency.sh; then
                 print_error "Failed to run dependency.sh"
                 return 1
             fi
@@ -537,8 +536,7 @@ if [ "$TARGET" == "tests" ]; then
     for test in ./bin/*_unit; do
         if [ -x "$test" ]; then
             print_status "Running $(basename $test)..."
-            $test
-            if [ $? -ne 0 ]; then
+            if ! $test; then
                 print_error "Test $(basename $test) failed"
                 test_failed=1
             else
@@ -581,11 +579,8 @@ if [ $BUILD_DOCS -eq 1 ]; then
         exit 1
     fi
     
-    # Run doxygen
-    doxygen Doxyfile
-    
-    # Check if documentation generation was successful
-    if [ $? -ne 0 ]; then
+    # Run doxygen and check if documentation generation was successful
+    if ! doxygen Doxyfile; then
         print_error "Documentation generation failed. See the output above for details."
     else
         print_success "Documentation generated successfully in the docs directory!"
