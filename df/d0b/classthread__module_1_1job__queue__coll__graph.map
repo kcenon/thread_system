@@ -1,34 +1,33 @@
 <map id="thread_module::job_queue" name="thread_module::job_queue">
-<area shape="rect" id="Node000001" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="544,291,684,611"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="517,783,677,863"/>
-<area shape="poly" id="edge11_Node000010_Node000001" title=" " alt="" coords="609,611,602,767,597,767,604,611"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="501,148,681,228"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="591,241,594,290,589,291,586,242"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="606,241,612,290,606,291,601,242"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="567,13,651,78"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="648,77,675,108,696,147,706,185,707,225,702,264,692,302,687,301,696,263,702,225,700,186,692,149,671,111,644,80"/>
-<area shape="rect" id="Node000013" href="$d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="271,148,469,228"/>
-<area shape="poly" id="edge17_Node000013_Node000003" title=" " alt="" coords="568,74,451,142,449,137,565,69"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="547,1487,758,1567"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="678,1485,701,1438,708,1412,711,1385,711,822,709,773,702,723,679,627,684,625,707,722,714,772,717,822,717,1385,714,1413,706,1440,682,1487"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="477,1344,645,1424"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="589,1423,620,1471,616,1474,584,1426"/>
-<area shape="rect" id="Node000006" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="369,1036,558,1281"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="519,1281,540,1328,535,1330,514,1283"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="413,791,492,856"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="456,856,462,1019,456,1020,451,857"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="389,411,519,491"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="456,505,455,791,450,791,451,505"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="5,791,164,856"/>
-<area shape="poly" id="edge9_Node000006_Node000009" title=" " alt="" coords="101,855,132,913,153,943,177,971,219,1009,264,1044,356,1101,353,1106,261,1048,215,1013,173,975,149,947,128,915,96,858"/>
-<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="585,865,527,1013,524,1022,519,1020,522,1011,580,863"/>
-<area shape="rect" id="Node000011" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="188,673,387,973"/>
-<area shape="poly" id="edge12_Node000006_Node000011" title=" " alt="" coords="297,973,311,1011,332,1044,359,1075,355,1078,328,1048,306,1013,292,975"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="197,403,365,498"/>
-<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="284,498,287,657,282,657,279,498"/>
-<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="359,229,304,389,299,387,354,227"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="148,13,293,78"/>
-<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="247,76,289,122,304,136,301,140,285,126,243,80"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="318,5,497,85"/>
-<area shape="poly" id="edge16_Node000013_Node000015" title=" " alt="" coords="400,86,387,133,382,132,394,85"/>
+<area shape="rect" id="Node000001" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="544,291,729,671"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="517,843,677,923"/>
+<area shape="poly" id="edge10_Node000010_Node000001" title=" " alt="" coords="620,671,605,827,600,827,615,671"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="408,148,588,228"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="525,240,549,289,544,291,520,242"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="473,13,557,78"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="553,77,580,109,603,147,624,209,636,274,631,275,619,210,598,149,576,112,549,80"/>
+<area shape="rect" id="Node000013" href="$d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="184,148,383,228"/>
+<area shape="poly" id="edge16_Node000013_Node000003" title=" " alt="" coords="475,74,363,142,360,137,472,70"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="547,1547,758,1627"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="678,1545,701,1498,708,1472,711,1445,711,882,705,784,689,687,694,686,710,783,717,882,717,1445,714,1473,706,1500,682,1547"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="477,1404,645,1484"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="589,1483,620,1531,616,1534,584,1486"/>
+<area shape="rect" id="Node000006" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="369,1096,558,1341"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="519,1341,540,1388,535,1390,514,1343"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="413,851,492,916"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="456,916,462,1079,456,1080,451,917"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="389,441,519,521"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="456,535,455,851,450,851,451,535"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="5,851,164,916"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="101,915,132,973,153,1003,177,1031,219,1069,264,1104,356,1161,353,1166,261,1108,215,1073,173,1035,149,1007,128,975,96,918"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="585,925,527,1073,524,1082,519,1080,522,1071,580,923"/>
+<area shape="rect" id="Node000011" href="$df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="188,733,387,1033"/>
+<area shape="poly" id="edge11_Node000006_Node000011" title=" " alt="" coords="297,1033,311,1071,332,1104,359,1135,355,1138,328,1108,306,1073,292,1035"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="197,433,365,528"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="284,528,287,717,282,717,279,528"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="286,228,284,417,279,417,280,228"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="55,13,200,78"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="155,76,198,122,215,136,212,140,195,126,151,80"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="225,5,403,85"/>
+<area shape="poly" id="edge15_Node000013_Node000015" title=" " alt="" coords="308,86,298,133,293,132,303,85"/>
 </map>

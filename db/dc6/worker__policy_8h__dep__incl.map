@@ -1,16 +1,11 @@
 <map id="sources/thread_pool/workers/worker_policy.h" name="sources/thread_pool/workers/worker_policy.h">
-<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="103,5,284,45"/>
-<area shape="rect" id="Node000002" href="$d7/d34/pool__factory_8h.html" title="Factory for creating common thread pool configurations." alt="" coords="5,93,179,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,56,116,95,113,91,159,52"/>
-<area shape="rect" id="Node000004" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="203,93,389,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="228,52,275,91,272,95,225,56"/>
-<area shape="rect" id="Node000003" href="$d2/df3/thread__pool__builder_8h.html" title="A builder class for creating and configuring thread pools." alt="" coords="13,269,171,324"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,147,95,269,89,269,89,147"/>
-<area shape="rect" id="Node000005" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="165,181,318,221"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="279,146,256,183,251,180,274,144"/>
-<area shape="rect" id="Node000007" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="343,181,543,221"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="342,138,412,179,409,184,339,143"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="201,231,135,272,133,267,198,226"/>
-<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="196,277,359,317"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="256,233,273,276,268,278,251,235"/>
+<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="96,5,277,45"/>
+<area shape="rect" id="Node000002" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="94,93,279,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,59,189,93,184,93,184,59"/>
+<area shape="rect" id="Node000003" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="10,181,163,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="156,144,111,183,107,179,152,140"/>
+<area shape="rect" id="Node000005" href="$de/d61/thread__worker_8cpp.html" title=" " alt="" coords="188,181,388,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="221,140,267,179,264,183,218,144"/>
+<area shape="rect" id="Node000004" href="$df/d17/thread__pool_8cpp.html" title=" " alt="" coords="5,269,168,309"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="89,235,89,269,84,269,84,235"/>
 </map>

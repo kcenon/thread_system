@@ -6,6 +6,5 @@ var searchData=
   ['argument_5fmanager_3',['argument_manager',['../de/d30/classutility__module_1_1argument__manager.html',1,'utility_module']]],
   ['atomic_5fflag_5fwrapper_4',['atomic_flag_wrapper',['../da/d62/classthread__module_1_1sync_1_1atomic__flag__wrapper.html',1,'thread_module::sync']]],
   ['atomic_5fperformance_5fmetrics_5',['atomic_performance_metrics',['../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html',1,'thread_module::adaptive_job_queue']]],
-  ['atomic_5fstatistics_6',['atomic_statistics',['../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html',1,'thread_module::lockfree_job_queue']]],
-  ['awaiter_7',['awaiter',['../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html',1,'thread_pool_module::task']]]
+  ['atomic_5fstatistics_6',['atomic_statistics',['../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html',1,'thread_module::lockfree_job_queue']]]
 ];

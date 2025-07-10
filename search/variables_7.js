@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['handle_5f_0',['handle_',['../de/d6d/classthread__pool__module_1_1task_1_1awaiter.html#ae5642e8d9ab13c3e7ef74b70e5fa85f5',1,'thread_pool_module::task::awaiter::handle_'],['../de/d6e/classthread__pool__module_1_1task.html#a6410b99fcd955352690a737404976d48',1,'thread_pool_module::task::handle_'],['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b',1,'log_module::implementation::logger::handle_']]],
+  ['handle_5f_0',['handle_',['../d4/d78/classlog__module_1_1implementation_1_1logger.html#a2eed17565941aebeee38d372a990808b',1,'log_module::implementation::logger']]],
   ['has_5fdo_5fwork_5fmethod_5fv_1',['has_do_work_method_v',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#a1a4c9693026f34291a9d44b1bea6470b',1,'typed_thread_pool_module::detail']]],
   ['has_5ferror_5f_2',['has_error_',['../dd/da2/classthread__module_1_1result__void.html#a74b9c48b69fbeda06a319de9931b2663',1,'thread_module::result_void']]],
   ['has_5fget_5fmethod_5fv_3',['has_get_method_v',['../da/d38/namespacethread__pool__module_1_1detail.html#a814789e67c7855456aeef0377925c355',1,'thread_pool_module::detail']]],

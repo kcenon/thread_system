@@ -1,13 +1,13 @@
 <map id="sources/monitoring/core" name="sources/monitoring/core">
 <area shape="rect" id="node1" href="dir_ff7c97c3b608335bb473d5e2fb61e87a.html" title="storage" alt="" coords="27,125,98,151"/>
 <area shape="rect" id="node2" href="dir_755286cb3100b49a5d399c5294494021.html" title="core" alt="" coords="48,52,99,77"/>
-<area shape="poly" id="edge3" href="dir_000004_000031.html" alt="" coords="74,78,69,112,64,111,69,77"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000004_000031.html" title="1" alt="" coords="71,101,80,116"/>
+<area shape="poly" id="edge3" href="dir_000003_000026.html" alt="" coords="74,78,69,112,64,111,69,77"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000003_000026.html" title="1" alt="" coords="71,101,80,116"/>
 <area shape="rect" id="node3" href="dir_3a976ff09299edbd61448c47c674b6c9.html" title="utilities" alt="" coords="122,125,193,151"/>
-<area shape="poly" id="edge1" href="dir_000004_000038.html" alt="" coords="89,75,135,114,131,118,85,79"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000004_000038.html" title="1" alt="" coords="130,100,140,114"/>
+<area shape="poly" id="edge1" href="dir_000003_000033.html" alt="" coords="89,75,135,114,131,118,85,79"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000003_000033.html" title="1" alt="" coords="130,100,140,114"/>
 <area shape="rect" id="node4" href="dir_f275034da0fe94e1f46793c3d061397d.html" title="thread_base" alt="" coords="217,125,319,151"/>
-<area shape="poly" id="edge2" href="dir_000004_000033.html" alt="" coords="100,73,225,118,223,123,98,78"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000004_000033.html" title="1" alt="" coords="218,104,227,119"/>
+<area shape="poly" id="edge2" href="dir_000003_000028.html" alt="" coords="100,73,225,118,223,123,98,78"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000003_000028.html" title="1" alt="" coords="218,104,227,119"/>
 <area shape="rect" id="clust1" href="dir_395f2ea42d1d47416cf738681815e59b.html" title="monitoring" alt="" coords="16,16,109,161"/>
 </map>
