@@ -35,6 +35,45 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../jobs/message_job.h"
 
+/**
+ * @file log_collector.cpp
+ * @brief Implementation of central log collection and distribution system.
+ *
+ * This file contains the implementation of the log_collector class, which serves
+ * as the central hub for the logging system. It collects log entries from various
+ * sources and distributes them to different output writers (console, file, callback)
+ * based on configured log levels and filtering rules.
+ * 
+ * Key Features:
+ * - Central log collection and distribution hub
+ * - Multiple output targets with independent filtering
+ * - Thread-safe queue management for high-concurrency scenarios
+ * - Adaptive job queue for optimal performance under load
+ * - Log level filtering for each output target
+ * - Asynchronous processing to minimize caller blocking
+ * 
+ * Architecture Design:
+ * - Single collector processes all incoming log messages
+ * - Distributes to multiple output queues based on log levels
+ * - Each output writer has independent configuration
+ * - Lock-free queue operations for maximum throughput
+ * - Thread-safe target configuration changes
+ * 
+ * Log Flow:
+ * 1. Application creates log_job with message and level
+ * 2. log_collector receives job in its queue
+ * 3. Job is processed and formatted
+ * 4. Formatted message_job is created for each eligible target
+ * 5. message_job is enqueued to target-specific queues
+ * 6. Output writers process their respective queues
+ * 
+ * Performance Characteristics:
+ * - High throughput with adaptive queue strategy
+ * - Minimal lock contention through thread-local operations
+ * - Efficient message distribution with level-based filtering
+ * - Scalable design supporting thousands of log messages per second
+ */
+
 namespace log_module
 {
 	log_collector::log_collector(void)
@@ -125,8 +164,33 @@ namespace log_module
 		return log_queue_ && !log_queue_->empty();
 	}
 
+	/**
+	 * @brief Initializes log collector and sends startup notification.
+	 * 
+	 * Implementation details:
+	 * - Creates startup log message to indicate collector activation
+	 * - Distributes startup message to all configured output targets
+	 * - Validates that startup message is properly formatted
+	 * - Ensures all output queues are ready for message processing
+	 * 
+	 * Startup Message Processing:
+	 * 1. Creates log_job with "START" message
+	 * 2. Processes job to generate formatted timestamp and message
+	 * 3. Enqueues startup message to console output (if configured)
+	 * 4. Enqueues startup message to file output (if configured)
+	 * 5. Returns error if any step fails
+	 * 
+	 * Error Handling:
+	 * - Job formatting failure: Returns formatting error
+	 * - Console enqueue failure: Returns queue operation error
+	 * - File enqueue failure: Returns queue operation error
+	 * - All errors prevent collector startup
+	 * 
+	 * @return result_void indicating successful initialization or error
+	 */
 	auto log_collector::before_start() -> result_void
 	{
+		// Create and process startup log message
 		log_job job("START");
 		auto work_result = job.do_work();
 		if (work_result.has_error())
@@ -134,6 +198,7 @@ namespace log_module
 			return work_result.get_error();
 		}
 
+		// Send startup notification to console output
 		auto enqueue_result = enqueue_log(console_log_type_, log_types::None, console_queue_,
 										 job.datetime(), job.message());
 		if (enqueue_result.has_error())
@@ -141,6 +206,7 @@ namespace log_module
 			return enqueue_result.get_error();
 		}
 
+		// Send startup notification to file output
 		enqueue_result = enqueue_log(file_log_type_, log_types::None, file_queue_, job.datetime(),
 									job.message());
 		if (enqueue_result.has_error())

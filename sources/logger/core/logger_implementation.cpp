@@ -38,15 +38,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iomanip>
 #include <sstream>
 
+/**
+ * @file logger_implementation.cpp
+ * @brief Implementation of the high-performance asynchronous logging system.
+ *
+ * This file contains the implementation of the logger class, which provides
+ * thread-safe, asynchronous logging with multiple output targets (console, file, callback).
+ * The logger uses an adaptive job queue for optimal performance under varying load conditions.
+ * 
+ * Key Features:
+ * - Asynchronous logging to minimize caller thread impact
+ * - Multiple simultaneous output targets with independent filtering
+ * - High-performance adaptive queue system (up to 4.34M log/s)
+ * - Thread-safe operation with minimal contention
+ * - Automatic file rotation and backup management
+ * - Flexible formatting supporting both C++ and C-style format strings
+ */
+
 namespace log_module
 {
 	namespace implementation
 	{
-// Singleton implementation
+		// Singleton implementation using Meyer's singleton pattern
 #ifdef _MSC_VER
 #pragma region singleton
 #endif
+		/**
+		 * @brief Static instance pointer for singleton pattern.
+		 * 
+		 * Implementation details:
+		 * - Uses unique_ptr for automatic cleanup
+		 * - Initialized to nullptr by default
+		 * - Created on first access via handle() method
+		 */
 		std::unique_ptr<logger> logger::handle_;
+		
+		/**
+		 * @brief One-time initialization flag for thread-safe singleton creation.
+		 * 
+		 * Implementation details:
+		 * - Ensures logger is created exactly once even in multi-threaded environment
+		 * - Used with std::call_once for thread safety
+		 * - Prevents race conditions during initial logger creation
+		 */
 		std::once_flag logger::once_;
 
 		auto logger::handle(void) -> logger&

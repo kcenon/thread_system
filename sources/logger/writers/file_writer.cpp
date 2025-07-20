@@ -38,6 +38,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <filesystem>
 
+/**
+ * @file file_writer.cpp
+ * @brief Implementation of asynchronous file-based log writer with rotation and backup support.
+ *
+ * This file contains the implementation of the file_writer class, which provides
+ * asynchronous file-based logging with advanced features including log rotation,
+ * backup file management, and configurable line limits. The writer processes
+ * message jobs in a dedicated thread and writes formatted log entries to disk.
+ * 
+ * Key Features:
+ * - Asynchronous file writing using dedicated worker thread
+ * - Automatic log rotation based on date changes
+ * - Configurable maximum lines per log file
+ * - Optional backup file creation for overflow content
+ * - Batch processing for efficient disk I/O operations
+ * - Thread-safe message queue for job submission
+ * 
+ * File Management:
+ * - Date-based file naming (e.g., "log_2024-01-15.log")
+ * - Automatic file handle management and cleanup
+ * - Graceful handling of file system errors
+ * - Support for both append and truncate modes
+ * 
+ * Performance Optimizations:
+ * - Message batching reduces file I/O system calls
+ * - Efficient deque-based line buffer management
+ * - Strategic file handle caching and reuse
+ * - Minimal disk operations through batched writes
+ * 
+ * Log Format:
+ * - With log type: "[timestamp][log_type] message"
+ * - Without log type: "[timestamp] message"
+ * - Configurable formatting through message_job processing
+ * 
+ * Thread Safety:
+ * - File operations serialized through single writer thread
+ * - Message queue provides thread-safe job submission
+ * - Atomic file handle management prevents race conditions
+ */
+
 using namespace utility_module;
 using namespace thread_module;
 
@@ -90,6 +130,34 @@ namespace log_module
 		return {};
 	}
 
+	/**
+	 * @brief Main work function that processes message jobs and writes to files.
+	 * 
+	 * Implementation details:
+	 * - Processes all available message jobs in batches for efficiency
+	 * - Formats log messages with timestamps and log type information
+	 * - Handles line limit enforcement with backup file overflow
+	 * - Manages file rotation when date changes occur
+	 * 
+	 * Processing Flow:
+	 * 1. Validate job queue and target configuration
+	 * 2. Check and update file handles for date rotation
+	 * 3. Process all queued message jobs in batch
+	 * 4. Format messages according to log type
+	 * 5. Write to files based on line limit configuration
+	 * 
+	 * Line Limit Handling:
+	 * - max_lines_ = 0: Unlimited mode, append to file continuously
+	 * - max_lines_ > 0: Limited mode, rotate when limit exceeded
+	 * - Overflow lines moved to backup file if enabled
+	 * 
+	 * File Writing Strategy:
+	 * - Unlimited: Write immediately, keep file open
+	 * - Limited: Buffer lines, write and close on completion
+	 * - Backup: Move excess lines to backup file before main write
+	 * 
+	 * @return result_void indicating successful processing or error
+	 */
 	auto file_writer::do_work() -> result_void
 	{
 		if (job_queue_ == nullptr)
@@ -97,11 +165,13 @@ namespace log_module
 			return result_void{error{error_code::resource_allocation_failed, "there is no job_queue"}};
 		}
 
+		// Skip processing if no specific log type is targeted
 		if (file_target_ == log_types::None)
 		{
 			return {};
 		}
 
+		// Check for date changes and update file handles if needed
 		check_file_handle();
 
 		auto remaining_logs = job_queue_->dequeue_batch();

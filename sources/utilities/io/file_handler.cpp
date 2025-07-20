@@ -35,8 +35,55 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <filesystem>
 #include <fstream>
 
+/**
+ * @file file_handler.cpp
+ * @brief Implementation of cross-platform file I/O operations.
+ *
+ * This file contains the implementation of the file utility class, providing
+ * safe and efficient file operations with proper error handling. The implementation
+ * uses modern C++ filesystem library for cross-platform compatibility and
+ * standard I/O streams for reliable file access.
+ * 
+ * Key Features:
+ * - Cross-platform file operations using std::filesystem
+ * - Binary file I/O with efficient buffer management
+ * - Automatic directory creation for output operations
+ * - Comprehensive error handling with descriptive messages
+ * - Support for both vector and span data types
+ * - Safe file removal with validation checks
+ * 
+ * Error Handling Philosophy:
+ * - Returns std::optional<std::string> for error messages
+ * - std::nullopt indicates successful operation
+ * - Descriptive error messages for debugging and logging
+ * - Graceful handling of file system errors
+ * 
+ * Performance Considerations:
+ * - Uses efficient iterator-based loading for large files
+ * - Binary I/O mode for optimal performance
+ * - Automatic buffer sizing based on file content
+ * - Minimal memory allocations during operations
+ */
+
 namespace utility_module
 {
+	/**
+	 * @brief Safely removes a file from the filesystem.
+	 * 
+	 * Implementation details:
+	 * - Validates file existence before attempting removal
+	 * - Ensures path points to a regular file (not directory or special file)
+	 * - Uses error_code version to avoid exceptions
+	 * - Provides descriptive error messages for failure cases
+	 * 
+	 * Safety Checks:
+	 * - File existence validation prevents unnecessary operations
+	 * - Regular file check prevents accidental directory removal
+	 * - Error code handling ensures graceful failure
+	 * 
+	 * @param path Filesystem path to the file to remove
+	 * @return std::nullopt on success, error message on failure
+	 */
 	auto file::remove(const std::string& path) -> std::optional<std::string>
 	{
 		if (!std::filesystem::exists(path))
@@ -58,6 +105,29 @@ namespace utility_module
 		return std::nullopt;
 	}
 
+	/**
+	 * @brief Loads entire file contents into memory as binary data.
+	 * 
+	 * Implementation details:
+	 * - Validates file existence before attempting to open
+	 * - Opens file in binary mode for accurate data reading
+	 * - Uses iterator-based loading for efficient memory usage
+	 * - Automatically sizes buffer based on file content
+	 * - Explicit stream closure for resource management
+	 * 
+	 * Memory Efficiency:
+	 * - Single allocation sized to file content
+	 * - Iterator-based reading minimizes intermediate buffers
+	 * - Automatic buffer resizing handled by vector
+	 * 
+	 * Error Handling:
+	 * - File existence check prevents open failures
+	 * - Stream validation ensures successful file access
+	 * - Returns empty vector with error message on failure
+	 * 
+	 * @param path Filesystem path to the file to load
+	 * @return Tuple of (file_data, error_message), error is nullopt on success
+	 */
 	auto file::load(const std::string& path)
 		-> std::tuple<std::vector<uint8_t>, std::optional<std::string>>
 	{
@@ -72,6 +142,7 @@ namespace utility_module
 			return { std::vector<uint8_t>{}, "Failed to open file" };
 		}
 
+		// Efficient iterator-based loading
 		std::vector<uint8_t> buffer((std::istreambuf_iterator<char>(stream)),
 									std::istreambuf_iterator<char>());
 		stream.close();
@@ -79,6 +150,32 @@ namespace utility_module
 		return { buffer, std::nullopt };
 	}
 
+	/**
+	 * @brief Saves binary data to file, creating directories as needed.
+	 * 
+	 * Implementation details:
+	 * - Automatically creates parent directories if they don't exist
+	 * - Opens file in binary mode with truncation for clean writes
+	 * - Writes entire data buffer in single operation
+	 * - Uses reinterpret_cast for safe binary data conversion
+	 * - Explicit stream closure for reliable resource management
+	 * 
+	 * Directory Creation:
+	 * - Extracts parent path from target file path
+	 * - Creates entire directory hierarchy if needed
+	 * - Uses error_code version to avoid exceptions
+	 * - Fails gracefully if directory creation fails
+	 * 
+	 * File Writing:
+	 * - Binary mode preserves data integrity
+	 * - Truncation mode ensures clean file state
+	 * - Single write operation for efficiency
+	 * - Proper type casting for binary compatibility
+	 * 
+	 * @param path Target file path for saving data
+	 * @param data Binary data to write to file
+	 * @return std::nullopt on success, error message on failure
+	 */
 	auto file::save(const std::string& path,
 					const std::vector<uint8_t>& data) -> std::optional<std::string>
 	{

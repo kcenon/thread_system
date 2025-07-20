@@ -42,8 +42,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <windows.h>
 #endif
 
+/**
+ * @file convert_string.cpp
+ * @brief Implementation of cross-platform string conversion utilities.
+ *
+ * This file provides comprehensive string conversion functionality supporting:
+ * - Character encoding conversion (UTF-8, UTF-16, system locale)
+ * - Cross-platform compatibility (Windows, Linux, macOS)
+ * - Both wide and narrow string types
+ * - Efficient conversion with proper error handling
+ * 
+ * Platform-specific implementations:
+ * - Windows: Uses Windows API (MultiByteToWideChar, WideCharToMultiByte)
+ * - Unix/Linux/macOS: Uses iconv library for encoding conversion
+ * 
+ * Performance considerations:
+ * - Template-based implementation for compile-time optimization
+ * - Minimal memory allocations
+ * - Efficient buffer management
+ */
+
 namespace utility_module
 {
+	/**
+	 * @brief Core template function for string encoding conversion.
+	 * 
+	 * Implementation details:
+	 * - Template-based for type safety and performance
+	 * - Supports conversion between different character encodings
+	 * - Uses platform-specific APIs for optimal performance
+	 * - Handles both narrow (char) and wide (wchar_t) character types
+	 * 
+	 * Error Handling:
+	 * - Throws std::runtime_error on conversion failures
+	 * - Provides detailed error messages with encoding information
+	 * - Handles edge cases like empty strings and invalid sequences
+	 * 
+	 * @tparam FromType Source string type (std::string, std::wstring, etc.)
+	 * @tparam ToType Target string type (std::string, std::wstring, etc.)
+	 * @param value Source string to convert
+	 * @param from_encoding Source character encoding
+	 * @param to_encoding Target character encoding
+	 * @return Converted string in target encoding
+	 */
 	template <typename FromType, typename ToType>
 	auto convert_string::convert(const FromType& value,
 								 const std::string& from_encoding,

@@ -46,8 +46,56 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     #include <mach/mach.h>
 #endif
 
+/**
+ * @file metrics_collector.cpp
+ * @brief Implementation of cross-platform system and thread pool metrics collection.
+ *
+ * This file contains the implementation of the metrics collection system, providing
+ * comprehensive monitoring capabilities for system resources, thread pool performance,
+ * and worker thread statistics. The implementation is cross-platform and supports
+ * Windows, Linux, and macOS with platform-specific optimizations.
+ * 
+ * Key Features:
+ * - Cross-platform system metrics collection (CPU, memory, threads)
+ * - Thread pool performance monitoring and statistics
+ * - Worker thread activity and performance metrics
+ * - Configurable collection intervals and buffer management
+ * - Thread-safe metrics aggregation and snapshot creation
+ * - Global singleton pattern for system-wide monitoring
+ * 
+ * Monitoring Capabilities:
+ * - Real-time system resource utilization
+ * - Thread pool queue depths and processing rates
+ * - Worker thread utilization and task completion times
+ * - Memory usage patterns and allocation statistics
+ * - Performance trend analysis through historical snapshots
+ * 
+ * Performance Characteristics:
+ * - Low-overhead data collection (typically <1% CPU impact)
+ * - Configurable collection frequency (default: 1 second)
+ * - Ring buffer storage for efficient memory usage
+ * - Lock-free atomic operations for high-frequency counters
+ * - Minimal impact on monitored thread pool performance
+ */
+
 namespace monitoring_module {
 
+    /**
+     * @brief Constructs a metrics collector with specified configuration.
+     * 
+     * Implementation details:
+     * - Initializes ring buffer for snapshot storage with configured size
+     * - Stores monitoring configuration for collection behavior
+     * - Sets up atomic variables for thread-safe operation
+     * - Does not start collection automatically (requires explicit start())
+     * 
+     * Configuration Impact:
+     * - buffer_size: Determines historical snapshot retention
+     * - collection_interval: Sets monitoring frequency
+     * - enable_* flags: Control which metrics are collected
+     * 
+     * @param config Monitoring configuration settings
+     */
     metrics_collector::metrics_collector(monitoring_config config)
         : config_(std::move(config))
         , snapshot_buffer_(std::make_unique<thread_safe_ring_buffer<metrics_snapshot>>(config_.buffer_size)) {
@@ -57,6 +105,26 @@ namespace monitoring_module {
         stop();
     }
 
+    /**
+     * @brief Starts the metrics collection thread.
+     * 
+     * Implementation details:
+     * - Validates collector is not already running
+     * - Sets atomic flags for thread coordination
+     * - Creates and starts dedicated collection thread
+     * - Handles thread creation failures gracefully
+     * 
+     * Thread Safety:
+     * - Uses memory ordering for proper synchronization
+     * - Atomic flag updates prevent race conditions
+     * - Exception handling ensures consistent state
+     * 
+     * Error Conditions:
+     * - Already running: Returns appropriate error code
+     * - Thread creation failure: Cleans up state and returns error
+     * 
+     * @return result_void indicating success or detailed error information
+     */
     auto metrics_collector::start() -> thread_module::result_void {
         if (running_.load(std::memory_order_acquire)) {
             return thread_module::result_void{thread_module::error{
