@@ -32,10 +32,64 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "adaptive_typed_job_queue.h"
 
+/**
+ * @file adaptive_typed_job_queue.cpp
+ * @brief Explicit template instantiation for typed job queue with job_types enumeration.
+ *
+ * This file provides explicit template instantiation for the adaptive_typed_job_queue_t
+ * template class and factory function with the job_types enumeration. This approach
+ * separates template compilation from header inclusion, improving compilation times
+ * and reducing binary size.
+ * 
+ * Template Instantiation Benefits:
+ * - Faster compilation times for client code using typed queues
+ * - Reduced binary size through single instantiation point
+ * - Better error localization for template-related issues
+ * - Cleaner separation between interface and implementation
+ * - Improved build system dependency management
+ * 
+ * Instantiated Components:
+ * - adaptive_typed_job_queue_t<job_types>: Main queue implementation
+ * - create_typed_job_queue<job_types>: Factory function for queue creation
+ * - All supported queue strategies and configurations
+ * 
+ * Usage Pattern:
+ * - Client code includes only the header file
+ * - Template implementation is pre-compiled in this unit
+ * - Linker resolves template instantiation automatically
+ * - Type safety maintained through template parameter validation
+ */
+
 namespace typed_thread_pool_module
 {
-	// Explicit instantiation for common types
+	/**
+	 * @brief Explicit instantiation of adaptive typed job queue for job_types.
+	 * 
+	 * This instantiation creates a concrete implementation of the adaptive
+	 * typed job queue template for the job_types enumeration, enabling
+	 * efficient job categorization and routing in typed thread pools.
+	 * 
+	 * Features instantiated:
+	 * - Lock-free and mutex-based queue implementations
+	 * - Adaptive strategy selection based on contention
+	 * - Type-safe job categorization using job_types enum
+	 * - High-performance concurrent access patterns
+	 */
 	template class adaptive_typed_job_queue_t<job_types>;
+	
+	/**
+	 * @brief Explicit instantiation of typed job queue factory function.
+	 * 
+	 * This instantiation provides the factory function for creating
+	 * typed job queues with specified strategies and configurations.
+	 * The factory handles queue strategy selection and initialization.
+	 * 
+	 * Parameters instantiated:
+	 * - queue_strategy: Strategy selection (lock-free, mutex, adaptive)
+	 * - size_t: Maximum queue capacity or thread count
+	 * 
+	 * @return Shared pointer to initialized typed job queue
+	 */
 	template auto create_typed_job_queue<job_types>(
 		adaptive_typed_job_queue_t<job_types>::queue_strategy, 
 		size_t) -> std::shared_ptr<typed_job_queue_t<job_types>>;

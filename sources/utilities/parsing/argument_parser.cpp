@@ -37,8 +37,50 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cctype>
 #include <charconv>
 
+/**
+ * @file argument_parser.cpp
+ * @brief Implementation of cross-platform command-line argument parsing utility.
+ *
+ * This file contains the implementation of the argument_manager class, providing
+ * robust command-line argument parsing with support for multiple data types and
+ * string encodings. The parser supports both narrow and wide character strings
+ * and provides type-safe value extraction.
+ * 
+ * Key Features:
+ * - Cross-platform argument parsing (Windows wide char support)
+ * - Type-safe value extraction for numeric and boolean types
+ * - Flexible string encoding conversion (narrow/wide)
+ * - Comprehensive error handling and validation
+ * - Template-based numeric conversion using std::from_chars
+ * - Support for both string and argv-style input
+ * 
+ * Supported Argument Format:
+ * - GNU-style long options: --option value
+ * - Help option: --help (no value required)
+ * - Case-insensitive boolean parsing (true/false, 1/0)
+ * - Robust whitespace and null character handling
+ * 
+ * Performance Characteristics:
+ * - Efficient string parsing with minimal allocations
+ * - Fast numeric conversion using std::from_chars
+ * - Template specialization for compile-time optimization
+ * - Linear parsing complexity O(n) where n = argument count
+ */
+
 namespace utility_module
 {
+	/**
+	 * @brief Converts string to lowercase for case-insensitive comparisons.
+	 * 
+	 * Implementation details:
+	 * - Creates copy of input string to avoid modifying original
+	 * - Uses std::transform with std::tolower for character conversion
+	 * - Handles unsigned char casting to avoid undefined behavior
+	 * - Primarily used for boolean value parsing (true/false)
+	 * 
+	 * @param str String view to convert to lowercase
+	 * @return Lowercase copy of the input string
+	 */
 	auto argument_manager::to_lower(std::string_view str) -> std::string
 	{
 		std::string lower_str(str);
@@ -53,6 +95,23 @@ namespace utility_module
 		return (it != arguments_.end()) ? std::optional<std::string>(it->second) : std::nullopt;
 	}
 
+	/**
+	 * @brief Converts argument value to boolean with flexible parsing.
+	 * 
+	 * Implementation details:
+	 * - Retrieves string value for the specified key
+	 * - Performs case-insensitive comparison for boolean values
+	 * - Supports multiple boolean representations for flexibility
+	 * - Returns nullopt for missing keys or invalid boolean values
+	 * 
+	 * Supported Boolean Formats:
+	 * - "true", "1" -> true
+	 * - "false", "0" -> false
+	 * - Case-insensitive ("True", "FALSE", etc.)
+	 * 
+	 * @param key Argument key to look up
+	 * @return Optional boolean value, nullopt if key missing or invalid
+	 */
 	auto argument_manager::to_bool(std::string_view key) const -> std::optional<bool>
 	{
 		auto value = to_string(key);
@@ -100,6 +159,31 @@ namespace utility_module
 	}
 #endif
 
+	/**
+	 * @brief Template method for type-safe numeric value conversion.
+	 * 
+	 * Implementation details:
+	 * - Uses modern std::from_chars for fast, locale-independent parsing
+	 * - Validates entire string is consumed during conversion
+	 * - Handles overflow and underflow conditions gracefully
+	 * - Template specialization enables compile-time type safety
+	 * 
+	 * Conversion Process:
+	 * 1. Retrieve string value for the specified key
+	 * 2. Use std::from_chars for efficient numeric parsing
+	 * 3. Validate conversion consumed entire string
+	 * 4. Check for arithmetic errors (overflow/underflow)
+	 * 
+	 * Error Handling:
+	 * - Missing key: returns nullopt
+	 * - Invalid format: returns nullopt
+	 * - Out of range: returns nullopt
+	 * - Partial conversion: returns nullopt
+	 * 
+	 * @tparam NumericType Target numeric type (int, short, long, etc.)
+	 * @param key Argument key to look up and convert
+	 * @return Optional numeric value, nullopt if conversion fails
+	 */
 	template <typename NumericType>
 	auto argument_manager::to_numeric(std::string_view key) const -> std::optional<NumericType>
 	{
