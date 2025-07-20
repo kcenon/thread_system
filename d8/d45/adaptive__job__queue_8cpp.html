@@ -79,13 +79,16 @@ $(function() {
   <div class="headertitle"><div class="title">adaptive_job_queue.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of the adaptive job queue with automatic strategy selection.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d6c/adaptive__job__queue_8h_source.html">adaptive_job_queue.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for adaptive_job_queue.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/de3/adaptive__job__queue_8cpp__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp" alt=""/></div>
 <map name="asources_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp" id="asources_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp">
-<area shape="rect" title=" " alt="" coords="2054,5,2245,60"/>
+<area shape="rect" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="2054,5,2245,60"/>
 <area shape="rect" href="../../dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="2067,108,2232,133"/>
 <area shape="poly" title=" " alt="" coords="2152,60,2152,94,2147,94,2147,60"/>
 <area shape="rect" href="../../db/d9d/job__queue_8h.html" title=" " alt="" coords="989,262,1145,287"/>
@@ -237,10 +240,35 @@ Functions</h2></td></tr>
 <tr class="memdesc:a9e9107b4cdc012e2223a50f8c05d8130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function to create appropriate job queue.  <br /></td></tr>
 <tr class="separator:a9e9107b4cdc012e2223a50f8c05d8130"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of the adaptive job queue with automatic strategy selection. </p>
+<p>This file contains the implementation of the adaptive_job_queue class, which provides intelligent queue strategy selection based on runtime performance characteristics. The queue automatically switches between mutex-based and lock-free implementations to optimize performance under varying contention levels.</p>
+<p>Key Features:</p><ul>
+<li>Automatic strategy selection (ADAPTIVE mode)</li>
+<li>Dual-mode operation (mutex-based and lock-free)</li>
+<li>Real-time performance monitoring and metrics</li>
+<li>Contention-aware optimization</li>
+<li>Transparent API compatibility with standard job_queue</li>
+<li>Configurable strategy switching thresholds</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>Low contention: Mutex strategy (96ns latency)</li>
+<li>Medium contention: Adaptive switching (142ns latency)</li>
+<li>High contention: Lock-free strategy (320ns latency, +37% faster than mutex-only)</li>
+<li>Peak throughput: Up to 13M jobs/second (theoretical maximum)</li>
+</ul>
+<p>Strategy Selection Algorithm:</p><ul>
+<li>Monitors enqueue/dequeue latencies</li>
+<li>Tracks contention metrics (thread count, operation frequency)</li>
+<li>Switches strategies based on performance thresholds</li>
+<li>Includes hysteresis to prevent thrashing </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

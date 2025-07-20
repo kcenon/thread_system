@@ -1,5 +1,5 @@
 <map id="sources/thread_pool/workers/thread_worker.cpp" name="sources/thread_pool/workers/thread_worker.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="356,5,556,45"/>
+<area shape="rect" id="Node000001" title="Implementation of worker thread for thread pool execution." alt="" coords="356,5,556,45"/>
 <area shape="rect" id="Node000002" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="393,247,519,273"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="459,46,459,233,453,233,453,46"/>
 <area shape="rect" id="Node000004" href="$de/d52/formatter_8h.html" title=" " alt="" coords="1441,665,1567,705"/>

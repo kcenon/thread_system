@@ -118,101 +118,114 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../logger/core/logger.h&quot;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/core/formatter.h&quot;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
-<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">   40</a></span>    <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_worker::thread_worker</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; use_time_tag)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), use_time_tag_(use_time_tag), job_queue_(nullptr)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>{</div>
+<div class="foldopen" id="foldopen00084" data-start="{" data-end="}">
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">   84</a></span>    <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_worker::thread_worker</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; use_time_tag)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), use_time_tag_(use_time_tag), job_queue_(nullptr)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    }</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">   45</a></span>    <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">thread_worker::~thread_worker</a>(<span class="keywordtype">void</span>) {}</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">   47</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">thread_worker::set_job_queue</a>(std::shared_ptr&lt;job_queue&gt; <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        job_queue_ = <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">   97</a></span>    <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">thread_worker::~thread_worker</a>(<span class="keywordtype">void</span>) {}</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="foldopen" id="foldopen00115" data-start="{" data-end="}">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">  115</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">thread_worker::set_job_queue</a>(std::shared_ptr&lt;job_queue&gt; <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        job_queue_ = <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
 </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">   52</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_worker::should_continue_work</a>() const -&gt; <span class="keywordtype">bool</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">empty</a>();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">  136</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_worker::should_continue_work</a>() const -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        }</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;<a class="code hl_function" href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">empty</a>();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
 </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">   62</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_worker::do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">auto</span> dequeue_result = job_queue_-&gt;dequeue();</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">if</span> (!job_queue_-&gt;is_stopped())</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            started_time_point = std::nullopt;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">if</span> (use_time_tag_)</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        {</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        current_job-&gt;set_job_queue(job_queue_);</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        {</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                                       current_job-&gt;get_name());</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(started_time_point.value(),</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                                   <span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                                   current_job-&gt;get_name());</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="foldopen" id="foldopen00185" data-start="{" data-end="}">
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">  185</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_worker::do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="comment">// Validate that job queue is available for processing</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordflow">if</span> (job_queue_ == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        {</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="comment">// Attempt to dequeue the next job from the shared queue</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keyword">auto</span> dequeue_result = job_queue_-&gt;dequeue();</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            <span class="comment">// Handle empty queue scenarios based on queue state</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">if</span> (!job_queue_-&gt;is_stopped())</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                <span class="comment">// Queue is empty but still active - this is an error condition</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>            }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            <span class="comment">// Queue is stopped and empty - normal shutdown condition</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        <span class="comment">// Extract the job from the result and validate it</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        {</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="comment">// Initialize timing measurement if performance monitoring is enabled</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            started_time_point = std::nullopt;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keywordflow">if</span> (use_time_tag_)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        {</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        }</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="comment">// Associate the job with its source queue for potential re-submission</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        current_job-&gt;set_job_queue(job_queue_);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="comment">// Execute the job&#39;s work method and capture the result</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        {</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        }</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="comment">// Log successful job completion based on timing configuration</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        {</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            <span class="comment">// Standard logging without timing information</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                                       current_job-&gt;get_name());</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        }</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="comment">// Enhanced logging with execution timing information</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(started_time_point.value(),</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                                   <span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                                   current_job-&gt;get_name());</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    }</div>
 </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>} <span class="comment">// namespace thread_pool_module</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>} <span class="comment">// namespace thread_pool_module</span></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html_a01a57bbafa000d3f8515784e1b9e67f5"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">thread_module::job_queue::empty</a></div><div class="ttdeci">auto empty(void) const -&gt; bool</div><div class="ttdoc">Checks if the queue is currently empty.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00145">job_queue.cpp:145</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html_a01a57bbafa000d3f8515784e1b9e67f5"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5">thread_module::job_queue::empty</a></div><div class="ttdeci">auto empty(void) const -&gt; bool</div><div class="ttdoc">Checks if the queue is currently empty.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d4c/job__queue_8cpp_source.html#l00349">job_queue.cpp:349</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a3de7e59a29b65f516d7e871b2b3d5877"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker::do_work</a></div><div class="ttdeci">auto do_work() -&gt; result_void override</div><div class="ttdoc">Processes one or more jobs from the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00062">thread_worker.cpp:62</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a72dc84ebf79776edb633d05d407c8d4b"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_pool_module::thread_worker::thread_worker</a></div><div class="ttdeci">thread_worker(const bool &amp;use_time_tag=true)</div><div class="ttdoc">Constructs a new thread_worker.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00040">thread_worker.cpp:40</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aa59a0a31ba753314c3283828ca21cf97"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">thread_pool_module::thread_worker::~thread_worker</a></div><div class="ttdeci">virtual ~thread_worker(void)</div><div class="ttdoc">Virtual destructor. Ensures the worker thread is stopped before destruction.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00045">thread_worker.cpp:45</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aced5aa76dbf8bd7221365b750ea5e698"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">thread_pool_module::thread_worker::set_job_queue</a></div><div class="ttdeci">auto set_job_queue(std::shared_ptr&lt; job_queue &gt; job_queue) -&gt; void</div><div class="ttdoc">Sets the job_queue that this worker should process.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00047">thread_worker.cpp:47</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_ae38261aaa674556fbff48afd2ca13ab7"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker::should_continue_work</a></div><div class="ttdeci">auto should_continue_work() const -&gt; bool override</div><div class="ttdoc">Determines if there are jobs available in the queue to continue working on.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00052">thread_worker.cpp:52</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a3de7e59a29b65f516d7e871b2b3d5877"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker::do_work</a></div><div class="ttdeci">auto do_work() -&gt; result_void override</div><div class="ttdoc">Processes one or more jobs from the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00185">thread_worker.cpp:185</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a72dc84ebf79776edb633d05d407c8d4b"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_pool_module::thread_worker::thread_worker</a></div><div class="ttdeci">thread_worker(const bool &amp;use_time_tag=true)</div><div class="ttdoc">Constructs a new thread_worker.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00084">thread_worker.cpp:84</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aa59a0a31ba753314c3283828ca21cf97"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">thread_pool_module::thread_worker::~thread_worker</a></div><div class="ttdeci">virtual ~thread_worker(void)</div><div class="ttdoc">Virtual destructor. Ensures the worker thread is stopped before destruction.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00097">thread_worker.cpp:97</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aced5aa76dbf8bd7221365b750ea5e698"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">thread_pool_module::thread_worker::set_job_queue</a></div><div class="ttdeci">auto set_job_queue(std::shared_ptr&lt; job_queue &gt; job_queue) -&gt; void</div><div class="ttdoc">Sets the job_queue that this worker should process.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00115">thread_worker.cpp:115</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_ae38261aaa674556fbff48afd2ca13ab7"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker::should_continue_work</a></div><div class="ttdeci">auto should_continue_work() const -&gt; bool override</div><div class="ttdoc">Determines if there are jobs available in the queue to continue working on.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00136">thread_worker.cpp:136</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A shared pointer to the job queue from which this worker obtains jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00137">thread_worker.h:137</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_a07ee6e4d0fe0281daff694059ec4d352"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a></div><div class="ttdeci">auto write_sequence(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db6/logger_2core_2logger_8h_source.html#l00182">logger.h:182</a></div></div>
@@ -221,7 +234,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

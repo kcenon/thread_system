@@ -78,6 +78,9 @@ $(function() {
   <div class="headertitle"><div class="title">message_job.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of formatted message job for log output writers.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../db/dd4/message__job_8h_source.html">message_job.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d52/formatter_8h_source.html">../../utilities/core/formatter.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -85,7 +88,7 @@ Include dependency graph for message_job.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d61/message__job_8cpp__incl.png" border="0" usemap="#asources_2logger_2jobs_2message__job_8cpp" alt=""/></div>
 <map name="asources_2logger_2jobs_2message__job_8cpp" id="asources_2logger_2jobs_2message__job_8cpp">
-<area shape="rect" title=" " alt="" coords="903,5,1051,45"/>
+<area shape="rect" title="Implementation of formatted message job for log output writers." alt="" coords="903,5,1051,45"/>
 <area shape="rect" href="../../db/dd4/message__job_8h.html" title=" " alt="" coords="593,93,713,119"/>
 <area shape="poly" title=" " alt="" coords="904,47,714,93,713,88,902,42"/>
 <area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="1209,343,1335,383"/>
@@ -188,10 +191,34 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:d9/de0/namespacelog__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe logging system built on the thread system foundation. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of formatted message job for log output writers. </p>
+<p>This file contains the implementation of the message_job class, which represents a fully formatted log message ready for output. Message jobs are created after log_job processing and contain the final formatted message with timestamp and log level information.</p>
+<p>Key Features:</p><ul>
+<li>Stores pre-formatted log messages for output writers</li>
+<li>Maintains log level classification for filtering</li>
+<li>Provides flexible message retrieval with optional newline</li>
+<li>Lightweight validation during job execution</li>
+<li>Minimal processing overhead for output operations</li>
+</ul>
+<p>Usage in Logging Pipeline:</p><ol type="1">
+<li>log_job formats raw message with timestamp and timing</li>
+<li>message_job created with formatted result</li>
+<li>message_job dispatched to appropriate output writers</li>
+<li>Writers retrieve formatted message and write to destination</li>
+</ol>
+<p>Design Rationale:</p><ul>
+<li>Separates message formatting from output writing</li>
+<li>Enables parallel processing of formatted messages</li>
+<li>Supports multiple output writers for same message</li>
+<li>Maintains clean separation of concerns </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d1/d69/message__job_8cpp_source.html">message_job.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

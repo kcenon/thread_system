@@ -79,6 +79,9 @@ $(function() {
   <div class="headertitle"><div class="title">argument_parser.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of cross-platform command-line argument parsing utility.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d5/d9d/argument__parser_8h_source.html">argument_parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d1/d46/convert__string_8h_source.html">../conversion/convert_string.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
@@ -89,7 +92,7 @@ Include dependency graph for argument_parser.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/d8d/argument__parser_8cpp__incl.png" border="0" usemap="#asources_2utilities_2parsing_2argument__parser_8cpp" alt=""/></div>
 <map name="asources_2utilities_2parsing_2argument__parser_8cpp" id="asources_2utilities_2parsing_2argument__parser_8cpp">
-<area shape="rect" title=" " alt="" coords="525,5,702,45"/>
+<area shape="rect" title="Implementation of cross&#45;platform command&#45;line argument parsing utility." alt="" coords="525,5,702,45"/>
 <area shape="rect" href="../../d5/d9d/argument__parser_8h.html" title=" " alt="" coords="235,101,379,126"/>
 <area shape="poly" title=" " alt="" coords="547,48,361,100,360,94,545,43"/>
 <area shape="rect" href="../../d1/d46/convert__string_8h.html" title=" " alt="" coords="417,93,575,133"/>
@@ -142,10 +145,35 @@ Functions</h2></td></tr>
 <tr class="memitem:ac2caeb6d7e34d120f1df410763c4114e" id="r_ac2caeb6d7e34d120f1df410763c4114e"><td class="memItemLeft" align="right" valign="top">template auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2a/namespaceutility__module.html#ac2caeb6d7e34d120f1df410763c4114e">utility_module::argument_manager::try_parse&lt; std::wstring &gt;</a> (const std::wstring &amp;) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="separator:ac2caeb6d7e34d120f1df410763c4114e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of cross-platform command-line argument parsing utility. </p>
+<p>This file contains the implementation of the argument_manager class, providing robust command-line argument parsing with support for multiple data types and string encodings. The parser supports both narrow and wide character strings and provides type-safe value extraction.</p>
+<p>Key Features:</p><ul>
+<li>Cross-platform argument parsing (Windows wide char support)</li>
+<li>Type-safe value extraction for numeric and boolean types</li>
+<li>Flexible string encoding conversion (narrow/wide)</li>
+<li>Comprehensive error handling and validation</li>
+<li>Template-based numeric conversion using std::from_chars</li>
+<li>Support for both string and argv-style input</li>
+</ul>
+<p>Supported Argument Format:</p><ul>
+<li>GNU-style long options: &ndash;option value</li>
+<li>Help option: &ndash;help (no value required)</li>
+<li>Case-insensitive boolean parsing (true/false, 1/0)</li>
+<li>Robust whitespace and null character handling</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>Efficient string parsing with minimal allocations</li>
+<li>Fast numeric conversion using std::from_chars</li>
+<li>Template specialization for compile-time optimization</li>
+<li>Linear parsing complexity O(n) where n = argument count </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../da/d2f/argument__parser_8cpp_source.html">argument_parser.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

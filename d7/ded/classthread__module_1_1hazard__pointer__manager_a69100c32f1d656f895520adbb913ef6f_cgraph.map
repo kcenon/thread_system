@@ -2,6 +2,6 @@
 <area shape="rect" id="Node000001" title="Acquire a hazard pointer." alt="" coords="5,13,201,53"/>
 <area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aca927cce02b6978435047f450366b4f7" title=" " alt="" coords="249,13,476,53"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,30,236,30,236,35,201,35"/>
-<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aac057200a6cc20129b4d7e0500db8af5" title=" " alt="" coords="524,5,720,60"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aac057200a6cc20129b4d7e0500db8af5" title="Acquires a hazard record for the current thread." alt="" coords="524,5,720,60"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="476,30,510,30,510,35,476,35"/>
 </map>

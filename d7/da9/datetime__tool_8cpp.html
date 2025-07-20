@@ -79,6 +79,9 @@ $(function() {
   <div class="headertitle"><div class="title">datetime_tool.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of cross-platform date and time formatting utilities.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d9/da1/datetime__tool_8h_source.html">datetime_tool.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d52/formatter_8h_source.html">../core/formatter.h</a>&quot;</code><br />
 <code>#include &lt;ctime&gt;</code><br />
@@ -88,7 +91,7 @@ Include dependency graph for datetime_tool.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d12/datetime__tool_8cpp__incl.png" border="0" usemap="#asources_2utilities_2time_2datetime__tool_8cpp" alt=""/></div>
 <map name="asources_2utilities_2time_2datetime__tool_8cpp" id="asources_2utilities_2time_2datetime__tool_8cpp">
-<area shape="rect" title=" " alt="" coords="382,5,541,45"/>
+<area shape="rect" title="Implementation of cross&#45;platform date and time formatting utilities." alt="" coords="382,5,541,45"/>
 <area shape="rect" href="../../d9/da1/datetime__tool_8h.html" title=" " alt="" coords="63,93,188,119"/>
 <area shape="poly" title=" " alt="" coords="382,48,188,93,187,88,381,43"/>
 <area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="339,93,477,119"/>
@@ -127,10 +130,41 @@ Functions</h2></td></tr>
 <tr class="memitem:adf34574b9652431c382280969ebf1007" id="r_adf34574b9652431c382280969ebf1007"><td class="memItemLeft" align="right" valign="top">template auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2a/namespaceutility__module.html#adf34574b9652431c382280969ebf1007">utility_module::datetime_tool::time_difference&lt; std::chrono::milliseconds, std::chrono::high_resolution_clock &gt;</a> (const std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; &amp;, const std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; &amp;) -&gt; double</td></tr>
 <tr class="separator:adf34574b9652431c382280969ebf1007"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of cross-platform date and time formatting utilities. </p>
+<p>This file contains the implementation of the datetime_tool class, providing comprehensive date and time formatting capabilities with support for multiple time precision levels and cross-platform compatibility. The implementation supports both modern C++20 chrono facilities and fallback mechanisms.</p>
+<p>Key Features:</p><ul>
+<li>Cross-platform date and time formatting</li>
+<li>Multiple precision levels (seconds, milliseconds, microseconds, nanoseconds)</li>
+<li>Configurable separators for flexible output formatting</li>
+<li>Modern C++20 chrono support with fallback compatibility</li>
+<li>Efficient time difference calculations with template specialization</li>
+<li>Thread-safe operations using chrono library primitives</li>
+</ul>
+<p>Time Zone Handling:</p><ul>
+<li>Automatic local time zone conversion when available</li>
+<li>Fallback to system-level time zone handling</li>
+<li>Consistent behavior across different platforms</li>
+<li>Conditional compilation for optimal performance</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>Efficient string formatting using formatter utility</li>
+<li>Minimal memory allocations during formatting</li>
+<li>Template specialization for compile-time optimization</li>
+<li>Fast arithmetic operations for sub-second precision</li>
+</ul>
+<p>Format Support:</p><ul>
+<li>Customizable date separators (e.g., "-", "/", ".")</li>
+<li>Customizable time separators (e.g., ":", ".")</li>
+<li>Zero-padded numeric formatting for consistency</li>
+<li>Precision-specific sub-second formatting </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

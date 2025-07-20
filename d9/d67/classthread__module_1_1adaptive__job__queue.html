@@ -498,32 +498,63 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
+<p>Constructs an adaptive job queue with specified initial strategy.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">initial_strategy</td><td>Initial queue strategy </td></tr>
+    <tr><td class="paramname">initial_strategy</td><td>Initial queue strategy</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implementation details:</p><ul>
+<li>Creates both mutex-based and lock-free queue implementations</li>
+<li>Initializes performance monitoring system</li>
+<li>Sets up strategy switching logic if ADAPTIVE mode is selected</li>
+<li>Resets performance metrics to baseline</li>
+</ul>
+<p>Strategy Initialization:</p><ul>
+<li>MUTEX_ONLY: Uses only the legacy mutex-based queue</li>
+<li>LOCKFREE_ONLY: Uses only the lock-free MPMC queue</li>
+<li>ADAPTIVE: Intelligently switches between both based on performance</li>
+</ul>
+<p>Performance Monitoring:</p><ul>
+<li>Started automatically for ADAPTIVE mode</li>
+<li>Collects latency and contention metrics</li>
+<li>Triggers strategy switches based on performance thresholds</li>
+</ul>
+<p>Memory Usage:</p><ul>
+<li>Both queue implementations are always created (enables fast switching)</li>
+<li>Memory overhead: ~2KB for dual queue setup</li>
+<li>Metrics collection: ~1KB for performance data</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initial_strategy</td><td>Starting queue strategy (MUTEX_ONLY, LOCKFREE_ONLY, or ADAPTIVE) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00037">37</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   38</span>        : <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>(std::make_unique&lt;job_queue&gt;())</div>
-<div class="line"><span class="lineno">   39</span>        , <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>(std::make_unique&lt;lockfree_job_queue&gt;())</div>
-<div class="line"><span class="lineno">   40</span>        , <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a>(initial_strategy)</div>
-<div class="line"><span class="lineno">   41</span>    {</div>
-<div class="line"><span class="lineno">   42</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7">initialize_strategy</a>();</div>
-<div class="line"><span class="lineno">   43</span>        </div>
-<div class="line"><span class="lineno">   44</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>) {</div>
-<div class="line"><span class="lineno">   45</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6">start_performance_monitor</a>();</div>
-<div class="line"><span class="lineno">   46</span>        }</div>
-<div class="line"><span class="lineno">   47</span>        </div>
-<div class="line"><span class="lineno">   48</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_function" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3">reset</a>();</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00093">93</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>        : <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>(std::make_unique&lt;job_queue&gt;())          <span class="comment">// Mutex-based implementation</span></div>
+<div class="line"><span class="lineno">   95</span>        , <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>(std::make_unique&lt;lockfree_job_queue&gt;())   <span class="comment">// Lock-free MPMC implementation</span></div>
+<div class="line"><span class="lineno">   96</span>        , <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a>(initial_strategy)                           <span class="comment">// Current strategy setting</span></div>
+<div class="line"><span class="lineno">   97</span>    {</div>
+<div class="line"><span class="lineno">   98</span>        <span class="comment">// Set up initial strategy routing</span></div>
+<div class="line"><span class="lineno">   99</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7">initialize_strategy</a>();</div>
+<div class="line"><span class="lineno">  100</span>        </div>
+<div class="line"><span class="lineno">  101</span>        <span class="comment">// Enable performance monitoring for adaptive behavior</span></div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>) {</div>
+<div class="line"><span class="lineno">  103</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6">start_performance_monitor</a>();</div>
+<div class="line"><span class="lineno">  104</span>        }</div>
+<div class="line"><span class="lineno">  105</span>        </div>
+<div class="line"><span class="lineno">  106</span>        <span class="comment">// Initialize performance metrics to clean state</span></div>
+<div class="line"><span class="lineno">  107</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_function" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3">reset</a>();</div>
+<div class="line"><span class="lineno">  108</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a0fb9765e5d24e4120d3f208cf86c66ae"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">thread_module::adaptive_job_queue::mpmc_queue_</a></div><div class="ttdeci">std::unique_ptr&lt; lockfree_job_queue &gt; mpmc_queue_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00158">adaptive_job_queue.h:158</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a3d6a5da3fcf0b0b319f6d9b34b8caed7"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7">thread_module::adaptive_job_queue::initialize_strategy</a></div><div class="ttdeci">auto initialize_strategy() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00221">adaptive_job_queue.cpp:221</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a3d6a5da3fcf0b0b319f6d9b34b8caed7"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a3d6a5da3fcf0b0b319f6d9b34b8caed7">thread_module::adaptive_job_queue::initialize_strategy</a></div><div class="ttdeci">auto initialize_strategy() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00280">adaptive_job_queue.cpp:280</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a5abfc8958db801d27b7c9c5f110c0408"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">thread_module::adaptive_job_queue::metrics_</a></div><div class="ttdeci">atomic_performance_metrics metrics_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00165">adaptive_job_queue.h:165</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a95cfbfa46d97d5fd6fe36f317cdfe5cc"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">thread_module::adaptive_job_queue::legacy_queue_</a></div><div class="ttdeci">std::unique_ptr&lt; job_queue &gt; legacy_queue_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00157">adaptive_job_queue.h:157</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ad24e153f446d7bbb55962cafcfcd1dfe"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">thread_module::adaptive_job_queue::strategy_</a></div><div class="ttdeci">queue_strategy strategy_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00162">adaptive_job_queue.h:162</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_af4837d18086f86aa38878336e023f6c6"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6">thread_module::adaptive_job_queue::start_performance_monitor</a></div><div class="ttdeci">auto start_performance_monitor() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00250">adaptive_job_queue.cpp:250</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_af4837d18086f86aa38878336e023f6c6"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#af4837d18086f86aa38878336e023f6c6">thread_module::adaptive_job_queue::start_performance_monitor</a></div><div class="ttdeci">auto start_performance_monitor() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00309">adaptive_job_queue.cpp:309</a></div></div>
 <div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics_html_a38792acaf61b360570366af261fe6ec3"><div class="ttname"><a href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3">thread_module::adaptive_job_queue::atomic_performance_metrics::reset</a></div><div class="ttdeci">auto reset() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00133">adaptive_job_queue.h:133</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -571,11 +602,11 @@ Here is the call graph for this function:</div>
 
 <p>Destructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>    {</div>
-<div class="line"><span class="lineno">   53</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a98c73f56316171964d2fa5344148b768">stop_performance_monitor</a>();</div>
-<div class="line"><span class="lineno">   54</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a98c73f56316171964d2fa5344148b768"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a98c73f56316171964d2fa5344148b768">thread_module::adaptive_job_queue::stop_performance_monitor</a></div><div class="ttdeci">auto stop_performance_monitor() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00258">adaptive_job_queue.cpp:258</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00110">110</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>    {</div>
+<div class="line"><span class="lineno">  112</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a98c73f56316171964d2fa5344148b768">stop_performance_monitor</a>();</div>
+<div class="line"><span class="lineno">  113</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a98c73f56316171964d2fa5344148b768"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a98c73f56316171964d2fa5344148b768">thread_module::adaptive_job_queue::stop_performance_monitor</a></div><div class="ttdeci">auto stop_performance_monitor() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00317">adaptive_job_queue.cpp:317</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -615,15 +646,28 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Removes all jobs currently in the queue without processing them. </p>
-<p>This operation is thread-safe and can be used to discard pending jobs, typically during shutdown or error recovery. It does not affect the <code>stop_</code> or <code>notify_</code> flags. </p>
+<p>Removes all jobs from the queue without returning them.</p>
+<p>This operation is thread-safe and can be used to discard pending jobs, typically during shutdown or error recovery. It does not affect the <code>stop_</code> or <code>notify_</code> flags.</p>
+<p>Implementation details:</p><ul>
+<li>Discards all jobs immediately (destructors called automatically)</li>
+<li>Uses deque::clear() for efficient bulk removal</li>
+<li>Notifies all waiting threads since queue is now empty</li>
+<li>More efficient than <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a6a050d5ffd7b23bd0826ffdf48479d81" title="Dequeues all remaining jobs from the queue without processing them.">dequeue_batch()</a> when jobs don't need to be processed</li>
+</ul>
+<p>Use Cases:</p><ul>
+<li>Emergency shutdown (discard pending work)</li>
+<li>Queue reset/reinitialization</li>
+<li>Error recovery scenarios</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Jobs are destroyed immediately, so any cleanup logic in job destructors will run </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00137">137</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  138</span>    {</div>
-<div class="line"><span class="lineno">  139</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;clear();</div>
-<div class="line"><span class="lineno">  140</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ae590e4560c853d15dd3780493f327554"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">thread_module::adaptive_job_queue::get_current_impl</a></div><div class="ttdeci">auto get_current_impl() -&gt; job_queue *</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00343">adaptive_job_queue.cpp:343</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00196">196</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  197</span>    {</div>
+<div class="line"><span class="lineno">  198</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;clear();</div>
+<div class="line"><span class="lineno">  199</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ae590e4560c853d15dd3780493f327554"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">thread_module::adaptive_job_queue::get_current_impl</a></div><div class="ttdeci">auto get_current_impl() -&gt; job_queue *</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00402">adaptive_job_queue.cpp:402</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -652,39 +696,61 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Dequeues a job from the queue in FIFO order. </p>
+<p>Removes and returns the first job from the queue (blocking operation).</p>
 <dl class="section return"><dt>Returns</dt><dd>A result&lt;std::unique_ptr&lt;job&gt;&gt; containing either a valid job or an error object.</dd></dl>
-<p>If the queue is empty, the caller may block depending on the internal concurrency model (unless <code>stop_</code> is set, in which case it may return immediately). </p>
+<p>If the queue is empty, the caller may block depending on the internal concurrency model (unless <code>stop_</code> is set, in which case it may return immediately).</p>
+<p>Implementation details:</p><ul>
+<li>Uses unique_lock (required by condition_variable)</li>
+<li>Blocks until a job is available OR queue is stopped</li>
+<li>Returns error if queue is empty after waking up (indicates stop condition)</li>
+<li>Efficiently moves job out of queue (zero-copy transfer)</li>
+<li>Automatically unlocks mutex when function exits</li>
+</ul>
+<p>Blocking Behavior:</p><ul>
+<li>Waits indefinitely until job available or stop requested</li>
+<li>Uses condition variable for efficient waiting (no busy polling)</li>
+<li>Multiple threads can wait concurrently (fair wake-up via notify_one)</li>
+</ul>
+<p>Stop Coordination:</p><ul>
+<li>Wakes up when stop_.load() becomes true</li>
+<li>Returns error instead of blocking indefinitely during shutdown</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Safe for concurrent access with other dequeue/enqueue operations</li>
+<li>Uses proper synchronization primitives</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to job on success, error if queue empty/stopped </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>    {</div>
-<div class="line"><span class="lineno">   99</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  100</span>        <span class="keywordtype">bool</span> had_contention = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  101</span>        </div>
-<div class="line"><span class="lineno">  102</span>        result&lt;std::unique_ptr&lt;job&gt;&gt; result = error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;Queue is empty&quot;</span>};</div>
-<div class="line"><span class="lineno">  103</span>        <span class="keyword">auto</span>* impl = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>();</div>
-<div class="line"><span class="lineno">  104</span>        </div>
-<div class="line"><span class="lineno">  105</span>        <span class="comment">// Try to detect contention for adaptive mode</span></div>
-<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>) {</div>
-<div class="line"><span class="lineno">  107</span>            <span class="keyword">auto</span> before_lock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  108</span>            result = impl-&gt;dequeue();</div>
-<div class="line"><span class="lineno">  109</span>            <span class="keyword">auto</span> after_lock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  110</span>            </div>
-<div class="line"><span class="lineno">  111</span>            <span class="keyword">auto</span> lock_time = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(after_lock - before_lock);</div>
-<div class="line"><span class="lineno">  112</span>            <span class="keywordflow">if</span> (lock_time.count() &gt; 100) {</div>
-<div class="line"><span class="lineno">  113</span>                had_contention = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  114</span>            }</div>
-<div class="line"><span class="lineno">  115</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  116</span>            result = impl-&gt;dequeue();</div>
-<div class="line"><span class="lineno">  117</span>        }</div>
-<div class="line"><span class="lineno">  118</span>        </div>
-<div class="line"><span class="lineno">  119</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
-<div class="line"><span class="lineno">  120</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration), had_contention);</div>
-<div class="line"><span class="lineno">  121</span>        </div>
-<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  123</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a085fa3a028925a953671a15c37cdab5f"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">thread_module::adaptive_job_queue::update_metrics</a></div><div class="ttdeci">auto update_metrics(std::chrono::nanoseconds duration, bool had_contention=false) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00333">adaptive_job_queue.cpp:333</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00156">156</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>    {</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keywordtype">bool</span> had_contention = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  160</span>        </div>
+<div class="line"><span class="lineno">  161</span>        result&lt;std::unique_ptr&lt;job&gt;&gt; result = error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;Queue is empty&quot;</span>};</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keyword">auto</span>* impl = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>();</div>
+<div class="line"><span class="lineno">  163</span>        </div>
+<div class="line"><span class="lineno">  164</span>        <span class="comment">// Try to detect contention for adaptive mode</span></div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>) {</div>
+<div class="line"><span class="lineno">  166</span>            <span class="keyword">auto</span> before_lock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  167</span>            result = impl-&gt;dequeue();</div>
+<div class="line"><span class="lineno">  168</span>            <span class="keyword">auto</span> after_lock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  169</span>            </div>
+<div class="line"><span class="lineno">  170</span>            <span class="keyword">auto</span> lock_time = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(after_lock - before_lock);</div>
+<div class="line"><span class="lineno">  171</span>            <span class="keywordflow">if</span> (lock_time.count() &gt; 100) {</div>
+<div class="line"><span class="lineno">  172</span>                had_contention = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  173</span>            }</div>
+<div class="line"><span class="lineno">  174</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  175</span>            result = impl-&gt;dequeue();</div>
+<div class="line"><span class="lineno">  176</span>        }</div>
+<div class="line"><span class="lineno">  177</span>        </div>
+<div class="line"><span class="lineno">  178</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
+<div class="line"><span class="lineno">  179</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration), had_contention);</div>
+<div class="line"><span class="lineno">  180</span>        </div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  182</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a085fa3a028925a953671a15c37cdab5f"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">thread_module::adaptive_job_queue::update_metrics</a></div><div class="ttdeci">auto update_metrics(std::chrono::nanoseconds duration, bool had_contention=false) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00392">adaptive_job_queue.cpp:392</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a495af42dec197fe1ddd44f21b0e5c824"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">thread_module::adaptive_job_queue::current_type_</a></div><div class="ttdeci">std::atomic&lt; queue_type &gt; current_type_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00161">adaptive_job_queue.h:161</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_ae2cbd9332f2bd47f8293bef8a5d4371f"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">log_module::start</a></div><div class="ttdeci">auto start() -&gt; std::optional&lt; std::string &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db6/logger_2core_2logger_8h_source.html#l00339">logger.h:339</a></div></div>
 <div class="ttc" id="anamespacemonitoring__module_html_a5288937db3fb31594060a3ae2c801b01"><div class="ttname"><a href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">monitoring_module::duration</a></div><div class="ttdeci">std::chrono::nanoseconds duration</div><div class="ttdoc">Duration type for time measurements.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00079">monitoring_types.h:79</a></div></div>
@@ -717,22 +783,45 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Dequeues all remaining jobs from the queue without processing them. </p>
+<p>Removes and returns ALL jobs from the queue (non-blocking operation).</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::deque</code> of unique_ptr&lt;job&gt; containing all jobs that were in the queue at the time of the call.</dd></dl>
-<p>Similar to <code><a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a065b0415380028c12e84b84604603a20" title="Removes all jobs currently in the queue without processing them.">clear()</a></code>, but returns the dequeued jobs to the caller for potential inspection or manual processing. </p>
+<p>Similar to <code><a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a065b0415380028c12e84b84604603a20" title="Removes all jobs currently in the queue without processing them.">clear()</a></code>, but returns the dequeued jobs to the caller for potential inspection or manual processing.</p>
+<p>Implementation details:</p><ul>
+<li>Non-blocking: returns immediately regardless of queue state</li>
+<li>Uses efficient swap operation to transfer entire queue contents</li>
+<li>Notifies all waiting threads since queue is now empty</li>
+<li>Returns empty deque if queue was already empty</li>
+<li>Leaves queue in empty state after operation</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>O(1) complexity due to swap operation (very efficient)</li>
+<li>No copying of job objects (moves ownership)</li>
+<li>Single lock acquisition for entire batch</li>
+</ul>
+<p>Use Cases:</p><ul>
+<li>Shutdown scenarios (drain all pending work)</li>
+<li>Batch processing of accumulated jobs</li>
+<li>Queue migration between workers</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Uses scoped_lock for automatic cleanup</li>
+<li>notify_all() ensures no threads remain blocked on empty queue</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Deque containing all jobs that were in the queue </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a874dc85e1da329be9005ca68e724332b">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00125">125</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  126</span>    {</div>
-<div class="line"><span class="lineno">  127</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  128</span>        </div>
-<div class="line"><span class="lineno">  129</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;dequeue_batch();</div>
-<div class="line"><span class="lineno">  130</span>        </div>
-<div class="line"><span class="lineno">  131</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
-<div class="line"><span class="lineno">  132</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
-<div class="line"><span class="lineno">  133</span>        </div>
-<div class="line"><span class="lineno">  134</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  135</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00184">184</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  185</span>    {</div>
+<div class="line"><span class="lineno">  186</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  187</span>        </div>
+<div class="line"><span class="lineno">  188</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;dequeue_batch();</div>
+<div class="line"><span class="lineno">  189</span>        </div>
+<div class="line"><span class="lineno">  190</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
+<div class="line"><span class="lineno">  191</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
+<div class="line"><span class="lineno">  192</span>        </div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  194</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -752,10 +841,10 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00142">142</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>    {</div>
-<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;empty();</div>
-<div class="line"><span class="lineno">  145</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00201">201</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  202</span>    {</div>
+<div class="line"><span class="lineno">  203</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;empty();</div>
+<div class="line"><span class="lineno">  204</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -794,6 +883,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Enqueues a new job into the queue. </p>
+<p>Adds a single job to the back of the queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>A unique pointer to the job being added. </td></tr>
@@ -801,38 +891,61 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message.</dd></dl>
-<p>This method is thread-safe. If <code>notify_</code> is set to <code>true</code>, a waiting thread (if any) will be notified upon successful enqueue. </p>
+<p>This method is thread-safe. If <code>notify_</code> is set to <code>true</code>, a waiting thread (if any) will be notified upon successful enqueue.</p>
+<p>Implementation details:</p><ul>
+<li>First checks if queue is stopped to fail fast</li>
+<li>Validates that the job pointer is not null</li>
+<li>Uses scoped_lock for automatic mutex management</li>
+<li>Moves the job into the queue (zero-copy transfer)</li>
+<li>Optionally notifies one waiting thread if notifications enabled</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Uses mutex to protect queue modification</li>
+<li>Safe to call concurrently from multiple threads</li>
+<li>notify_one() wakes exactly one waiting thread (fair scheduling)</li>
+</ul>
+<p>Error Conditions:</p><ul>
+<li>Returns error if queue is stopped</li>
+<li>Returns error if job is null</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Unique pointer to job (moved into queue) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Empty result on success, error on failure </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af46f8b8f92a3a55465c043414d6b4748">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>    {</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   59</span>        <span class="keywordtype">bool</span> had_contention = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   60</span>        </div>
-<div class="line"><span class="lineno">   61</span>        result_void result;</div>
-<div class="line"><span class="lineno">   62</span>        <span class="keyword">auto</span>* impl = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>();</div>
-<div class="line"><span class="lineno">   63</span>        </div>
-<div class="line"><span class="lineno">   64</span>        <span class="comment">// Try to detect contention for adaptive mode</span></div>
-<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>) {</div>
-<div class="line"><span class="lineno">   66</span>            <span class="comment">// Simple contention detection: if we can&#39;t get the lock immediately</span></div>
-<div class="line"><span class="lineno">   67</span>            <span class="keyword">auto</span> before_lock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   68</span>            result = impl-&gt;enqueue(std::move(value));</div>
-<div class="line"><span class="lineno">   69</span>            <span class="keyword">auto</span> after_lock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   70</span>            </div>
-<div class="line"><span class="lineno">   71</span>            <span class="keyword">auto</span> lock_time = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(after_lock - before_lock);</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">if</span> (lock_time.count() &gt; 100) { <span class="comment">// More than 100ns to acquire lock</span></div>
-<div class="line"><span class="lineno">   73</span>                had_contention = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   74</span>            }</div>
-<div class="line"><span class="lineno">   75</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   76</span>            result = impl-&gt;enqueue(std::move(value));</div>
-<div class="line"><span class="lineno">   77</span>        }</div>
-<div class="line"><span class="lineno">   78</span>        </div>
-<div class="line"><span class="lineno">   79</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
-<div class="line"><span class="lineno">   80</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration), had_contention);</div>
-<div class="line"><span class="lineno">   81</span>        </div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">   83</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00115">115</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>    {</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordtype">bool</span> had_contention = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  119</span>        </div>
+<div class="line"><span class="lineno">  120</span>        result_void result;</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keyword">auto</span>* impl = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>();</div>
+<div class="line"><span class="lineno">  122</span>        </div>
+<div class="line"><span class="lineno">  123</span>        <span class="comment">// Try to detect contention for adaptive mode</span></div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>) {</div>
+<div class="line"><span class="lineno">  125</span>            <span class="comment">// Simple contention detection: if we can&#39;t get the lock immediately</span></div>
+<div class="line"><span class="lineno">  126</span>            <span class="keyword">auto</span> before_lock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  127</span>            result = impl-&gt;enqueue(std::move(value));</div>
+<div class="line"><span class="lineno">  128</span>            <span class="keyword">auto</span> after_lock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  129</span>            </div>
+<div class="line"><span class="lineno">  130</span>            <span class="keyword">auto</span> lock_time = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(after_lock - before_lock);</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">if</span> (lock_time.count() &gt; 100) { <span class="comment">// More than 100ns to acquire lock</span></div>
+<div class="line"><span class="lineno">  132</span>                had_contention = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  133</span>            }</div>
+<div class="line"><span class="lineno">  134</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  135</span>            result = impl-&gt;enqueue(std::move(value));</div>
+<div class="line"><span class="lineno">  136</span>        }</div>
+<div class="line"><span class="lineno">  137</span>        </div>
+<div class="line"><span class="lineno">  138</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
+<div class="line"><span class="lineno">  139</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration), had_contention);</div>
+<div class="line"><span class="lineno">  140</span>        </div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  142</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -861,27 +974,51 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Enqueues a batch of jobs into the queue. </p>
+<p>Adds multiple jobs to the queue in a single operation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">jobs</td><td>A vector of unique pointers to the jobs being added. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> indicating success or an error message.</dd></dl>
+<p>Implementation details:</p><ul>
+<li>Validates queue state and input before any modifications</li>
+<li>Pre-validates all jobs to ensure atomicity (all or nothing)</li>
+<li>Uses single lock acquisition for entire batch (better performance)</li>
+<li>Moves all jobs efficiently without copying</li>
+<li>Only notifies once after all jobs are added (avoids notification spam)</li>
+</ul>
+<p>Performance Benefits:</p><ul>
+<li>Single mutex acquisition vs multiple for individual enqueues</li>
+<li>Single notification vs notification per job</li>
+<li>Reduced contention for high-throughput scenarios</li>
+</ul>
+<p>Atomicity:</p><ul>
+<li>Either all jobs are added or none are (on validation failure)</li>
+<li>No partial batches in case of null job detection</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jobs</td><td>Vector of unique pointers to jobs (moved into queue) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Empty result on success, error on failure </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4f7eea372ce86fdf2ff2aaf52c0008a9">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00085">85</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>    {</div>
-<div class="line"><span class="lineno">   87</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   88</span>        </div>
-<div class="line"><span class="lineno">   89</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;enqueue_batch(std::move(jobs));</div>
-<div class="line"><span class="lineno">   90</span>        </div>
-<div class="line"><span class="lineno">   91</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
-<div class="line"><span class="lineno">   92</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
-<div class="line"><span class="lineno">   93</span>        </div>
-<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">   95</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00144">144</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  145</span>    {</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a> = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  147</span>        </div>
+<div class="line"><span class="lineno">  148</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;enqueue_batch(std::move(jobs));</div>
+<div class="line"><span class="lineno">  149</span>        </div>
+<div class="line"><span class="lineno">  150</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = std::chrono::high_resolution_clock::now() - <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#ae2cbd9332f2bd47f8293bef8a5d4371f">start</a>;</div>
+<div class="line"><span class="lineno">  151</span>        <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a085fa3a028925a953671a15c37cdab5f">update_metrics</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
+<div class="line"><span class="lineno">  152</span>        </div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  154</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -902,39 +1039,39 @@ Here is the call graph for this function:</div>
 
 <p>Force evaluation and potential switch of queue implementation. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00165">165</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  166</span>    {</div>
-<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> != <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>) {</div>
-<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  169</span>        }</div>
-<div class="line"><span class="lineno">  170</span>        </div>
-<div class="line"><span class="lineno">  171</span>        <span class="keyword">auto</span> now = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  172</span>        <span class="keyword">auto</span> elapsed = now - <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a3d162225bf3244af497f11f2ec26d30f">last_evaluation</a>;</div>
-<div class="line"><span class="lineno">  173</span>        </div>
-<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">if</span> (elapsed &lt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a88b07e2fe77e4639b33f64fc6e54f831">EVALUATION_INTERVAL</a>) {</div>
-<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  176</span>        }</div>
-<div class="line"><span class="lineno">  177</span>        </div>
-<div class="line"><span class="lineno">  178</span>        <span class="comment">// Check if we have enough data</span></div>
-<div class="line"><span class="lineno">  179</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load() &lt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#abb172cc674ca491ffd2c4cd13d6a0d66">MIN_OPERATIONS_FOR_SWITCH</a>) {</div>
-<div class="line"><span class="lineno">  180</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  181</span>        }</div>
-<div class="line"><span class="lineno">  182</span>        </div>
-<div class="line"><span class="lineno">  183</span>        <span class="comment">// Evaluate current performance</span></div>
-<div class="line"><span class="lineno">  184</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a> &amp;&amp; <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a9416cb1fd0d953a6b222e5d742694152">should_switch_to_lockfree</a>()) {</div>
-<div class="line"><span class="lineno">  185</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912">migrate_to_lockfree</a>();</div>
-<div class="line"><span class="lineno">  186</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a> &amp;&amp; <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a35e4fb6824f07716ff28c3511fa37348">should_switch_to_legacy</a>()) {</div>
-<div class="line"><span class="lineno">  187</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb">migrate_to_legacy</a>();</div>
-<div class="line"><span class="lineno">  188</span>        }</div>
-<div class="line"><span class="lineno">  189</span>        </div>
-<div class="line"><span class="lineno">  190</span>        <span class="comment">// Reset metrics for next evaluation period</span></div>
-<div class="line"><span class="lineno">  191</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_function" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3">reset</a>();</div>
-<div class="line"><span class="lineno">  192</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a202eef417cbe2a681acc9c33ef8f5912"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912">thread_module::adaptive_job_queue::migrate_to_lockfree</a></div><div class="ttdeci">auto migrate_to_lockfree() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00300">adaptive_job_queue.cpp:300</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a35e4fb6824f07716ff28c3511fa37348"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a35e4fb6824f07716ff28c3511fa37348">thread_module::adaptive_job_queue::should_switch_to_legacy</a></div><div class="ttdeci">auto should_switch_to_legacy() const -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00288">adaptive_job_queue.cpp:288</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00224">224</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  225</span>    {</div>
+<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a> != <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>) {</div>
+<div class="line"><span class="lineno">  227</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  228</span>        }</div>
+<div class="line"><span class="lineno">  229</span>        </div>
+<div class="line"><span class="lineno">  230</span>        <span class="keyword">auto</span> now = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  231</span>        <span class="keyword">auto</span> elapsed = now - <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a3d162225bf3244af497f11f2ec26d30f">last_evaluation</a>;</div>
+<div class="line"><span class="lineno">  232</span>        </div>
+<div class="line"><span class="lineno">  233</span>        <span class="keywordflow">if</span> (elapsed &lt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a88b07e2fe77e4639b33f64fc6e54f831">EVALUATION_INTERVAL</a>) {</div>
+<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  235</span>        }</div>
+<div class="line"><span class="lineno">  236</span>        </div>
+<div class="line"><span class="lineno">  237</span>        <span class="comment">// Check if we have enough data</span></div>
+<div class="line"><span class="lineno">  238</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load() &lt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#abb172cc674ca491ffd2c4cd13d6a0d66">MIN_OPERATIONS_FOR_SWITCH</a>) {</div>
+<div class="line"><span class="lineno">  239</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  240</span>        }</div>
+<div class="line"><span class="lineno">  241</span>        </div>
+<div class="line"><span class="lineno">  242</span>        <span class="comment">// Evaluate current performance</span></div>
+<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a> &amp;&amp; <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a9416cb1fd0d953a6b222e5d742694152">should_switch_to_lockfree</a>()) {</div>
+<div class="line"><span class="lineno">  244</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912">migrate_to_lockfree</a>();</div>
+<div class="line"><span class="lineno">  245</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> == <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a> &amp;&amp; <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a35e4fb6824f07716ff28c3511fa37348">should_switch_to_legacy</a>()) {</div>
+<div class="line"><span class="lineno">  246</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb">migrate_to_legacy</a>();</div>
+<div class="line"><span class="lineno">  247</span>        }</div>
+<div class="line"><span class="lineno">  248</span>        </div>
+<div class="line"><span class="lineno">  249</span>        <span class="comment">// Reset metrics for next evaluation period</span></div>
+<div class="line"><span class="lineno">  250</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_function" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a38792acaf61b360570366af261fe6ec3">reset</a>();</div>
+<div class="line"><span class="lineno">  251</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a202eef417cbe2a681acc9c33ef8f5912"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a202eef417cbe2a681acc9c33ef8f5912">thread_module::adaptive_job_queue::migrate_to_lockfree</a></div><div class="ttdeci">auto migrate_to_lockfree() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00359">adaptive_job_queue.cpp:359</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a35e4fb6824f07716ff28c3511fa37348"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a35e4fb6824f07716ff28c3511fa37348">thread_module::adaptive_job_queue::should_switch_to_legacy</a></div><div class="ttdeci">auto should_switch_to_legacy() const -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00347">adaptive_job_queue.cpp:347</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a88b07e2fe77e4639b33f64fc6e54f831"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a88b07e2fe77e4639b33f64fc6e54f831">thread_module::adaptive_job_queue::EVALUATION_INTERVAL</a></div><div class="ttdeci">static constexpr auto EVALUATION_INTERVAL</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00170">adaptive_job_queue.h:170</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a92d12580743472a4c01c5c967d5a4efb"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb">thread_module::adaptive_job_queue::migrate_to_legacy</a></div><div class="ttdeci">auto migrate_to_legacy() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00318">adaptive_job_queue.cpp:318</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a9416cb1fd0d953a6b222e5d742694152"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a9416cb1fd0d953a6b222e5d742694152">thread_module::adaptive_job_queue::should_switch_to_lockfree</a></div><div class="ttdeci">auto should_switch_to_lockfree() const -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00277">adaptive_job_queue.cpp:277</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a92d12580743472a4c01c5c967d5a4efb"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a92d12580743472a4c01c5c967d5a4efb">thread_module::adaptive_job_queue::migrate_to_legacy</a></div><div class="ttdeci">auto migrate_to_legacy() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00377">adaptive_job_queue.cpp:377</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a9416cb1fd0d953a6b222e5d742694152"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a9416cb1fd0d953a6b222e5d742694152">thread_module::adaptive_job_queue::should_switch_to_lockfree</a></div><div class="ttdeci">auto should_switch_to_lockfree() const -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00336">adaptive_job_queue.cpp:336</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_abb172cc674ca491ffd2c4cd13d6a0d66"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#abb172cc674ca491ffd2c4cd13d6a0d66">thread_module::adaptive_job_queue::MIN_OPERATIONS_FOR_SWITCH</a></div><div class="ttdeci">static constexpr size_t MIN_OPERATIONS_FOR_SWITCH</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00175">adaptive_job_queue.h:175</a></div></div>
 <div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics_html_a1bf90c43a3d0c58d4dd79289bbeddd0b"><div class="ttname"><a href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">thread_module::adaptive_job_queue::atomic_performance_metrics::operation_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; operation_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00127">adaptive_job_queue.h:127</a></div></div>
 <div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics_html_a3d162225bf3244af497f11f2ec26d30f"><div class="ttname"><a href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a3d162225bf3244af497f11f2ec26d30f">thread_module::adaptive_job_queue::atomic_performance_metrics::last_evaluation</a></div><div class="ttdeci">std::chrono::steady_clock::time_point last_evaluation</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00131">adaptive_job_queue.h:131</a></div></div>
@@ -964,16 +1101,16 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00343">343</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  344</span>    {</div>
-<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  346</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
-<div class="line"><span class="lineno">  347</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>.get();</div>
-<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
-<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>.get();</div>
-<div class="line"><span class="lineno">  351</span>        }</div>
-<div class="line"><span class="lineno">  352</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00402">402</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  403</span>    {</div>
+<div class="line"><span class="lineno">  404</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  405</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
+<div class="line"><span class="lineno">  406</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>.get();</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
+<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  409</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>.get();</div>
+<div class="line"><span class="lineno">  410</span>        }</div>
+<div class="line"><span class="lineno">  411</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1014,16 +1151,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00354">354</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  355</span>    {</div>
-<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
-<div class="line"><span class="lineno">  358</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>.get();</div>
-<div class="line"><span class="lineno">  359</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
-<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  361</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>.get();</div>
-<div class="line"><span class="lineno">  362</span>        }</div>
-<div class="line"><span class="lineno">  363</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00413">413</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  414</span>    {</div>
+<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  416</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
+<div class="line"><span class="lineno">  417</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>.get();</div>
+<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
+<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  420</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>.get();</div>
+<div class="line"><span class="lineno">  421</span>        }</div>
+<div class="line"><span class="lineno">  422</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1045,19 +1182,19 @@ Here is the caller graph for this function:</div>
 <p>Get current queue type. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current queue implementation type </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00194">194</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  195</span>    {</div>
-<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
-<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;mutex_based&quot;</span>;</div>
-<div class="line"><span class="lineno">  199</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
-<div class="line"><span class="lineno">  200</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;lock_free&quot;</span>;</div>
-<div class="line"><span class="lineno">  201</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a3bf07fe8ac3883060b1558113ba248d4">queue_type::HYBRID</a>:</div>
-<div class="line"><span class="lineno">  202</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;hybrid&quot;</span>;</div>
-<div class="line"><span class="lineno">  203</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  204</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">  205</span>        }</div>
-<div class="line"><span class="lineno">  206</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00253">253</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  254</span>    {</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.load(std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>:</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;mutex_based&quot;</span>;</div>
+<div class="line"><span class="lineno">  258</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>:</div>
+<div class="line"><span class="lineno">  259</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;lock_free&quot;</span>;</div>
+<div class="line"><span class="lineno">  260</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a3bf07fe8ac3883060b1558113ba248d4">queue_type::HYBRID</a>:</div>
+<div class="line"><span class="lineno">  261</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;hybrid&quot;</span>;</div>
+<div class="line"><span class="lineno">  262</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  263</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">  264</span>        }</div>
+<div class="line"><span class="lineno">  265</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1089,16 +1226,16 @@ Here is the caller graph for this function:</div>
 <p>Get performance metrics. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current performance metrics </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00208">208</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  209</span>    {</div>
-<div class="line"><span class="lineno">  210</span>        performance_metrics <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>;</div>
-<div class="line"><span class="lineno">  211</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.operation_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load();</div>
-<div class="line"><span class="lineno">  212</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.total_latency_ns = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load();</div>
-<div class="line"><span class="lineno">  213</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.contention_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load();</div>
-<div class="line"><span class="lineno">  214</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.switch_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.load();</div>
-<div class="line"><span class="lineno">  215</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.last_evaluation = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a3d162225bf3244af497f11f2ec26d30f">last_evaluation</a>;</div>
-<div class="line"><span class="lineno">  216</span>        <span class="keywordflow">return</span> <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>;</div>
-<div class="line"><span class="lineno">  217</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00267">267</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  268</span>    {</div>
+<div class="line"><span class="lineno">  269</span>        performance_metrics <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>;</div>
+<div class="line"><span class="lineno">  270</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.operation_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load();</div>
+<div class="line"><span class="lineno">  271</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.total_latency_ns = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load();</div>
+<div class="line"><span class="lineno">  272</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.contention_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load();</div>
+<div class="line"><span class="lineno">  273</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.switch_count = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.load();</div>
+<div class="line"><span class="lineno">  274</span>        <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.last_evaluation = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a3d162225bf3244af497f11f2ec26d30f">last_evaluation</a>;</div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>;</div>
+<div class="line"><span class="lineno">  276</span>    }</div>
 <div class="ttc" id="anamespacemetrics_html"><div class="ttname"><a href="../../d1/d82/namespacemetrics.html">metrics</a></div><div class="ttdoc">Convenience functions for global metrics operations.</div></div>
 <div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics_html_a227162bae024d26e13a921707a349c05"><div class="ttname"><a href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">thread_module::adaptive_job_queue::atomic_performance_metrics::switch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; switch_count</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00130">adaptive_job_queue.h:130</a></div></div>
 <div class="ttc" id="astructthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics_html_a9a3cdeafb8a219fd3cddbfa08ab7a50d"><div class="ttname"><a href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">thread_module::adaptive_job_queue::atomic_performance_metrics::total_latency_ns</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_latency_ns</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00128">adaptive_job_queue.h:128</a></div></div>
@@ -1139,35 +1276,35 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00221">221</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  222</span>    {</div>
-<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a>) {</div>
-<div class="line"><span class="lineno">  224</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1">queue_strategy::FORCE_LEGACY</a>:</div>
-<div class="line"><span class="lineno">  225</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
-<div class="line"><span class="lineno">  226</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  227</span>            </div>
-<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eafe210246000a180fd0d5f617009a7745">queue_strategy::FORCE_LOCKFREE</a>:</div>
-<div class="line"><span class="lineno">  229</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>;</div>
-<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  231</span>            </div>
-<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea8640c650d24d411eed108592294d9750">queue_strategy::AUTO_DETECT</a>:</div>
-<div class="line"><span class="lineno">  233</span>            <span class="comment">// Use lock-free for systems with 4+ cores</span></div>
-<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">if</span> (std::thread::hardware_concurrency() &gt;= 4) {</div>
-<div class="line"><span class="lineno">  235</span>                <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>;</div>
-<div class="line"><span class="lineno">  236</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  237</span>                <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
-<div class="line"><span class="lineno">  238</span>            }</div>
-<div class="line"><span class="lineno">  239</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  240</span>            </div>
-<div class="line"><span class="lineno">  241</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>:</div>
-<div class="line"><span class="lineno">  242</span>            <span class="comment">// Start with legacy and let it adapt</span></div>
-<div class="line"><span class="lineno">  243</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
-<div class="line"><span class="lineno">  244</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  245</span>        }</div>
-<div class="line"><span class="lineno">  246</span>        </div>
-<div class="line"><span class="lineno">  247</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Adaptive queue initialized with strategy: %s&quot;</span>, <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">get_current_type</a>().c_str());</div>
-<div class="line"><span class="lineno">  248</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_aadbcef3b1d1d3a1479d7f4a5c05e93e7"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">thread_module::adaptive_job_queue::get_current_type</a></div><div class="ttdeci">auto get_current_type() const -&gt; std::string</div><div class="ttdoc">Get current queue type.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00194">adaptive_job_queue.cpp:194</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00280">280</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>    {</div>
+<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">switch</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ad24e153f446d7bbb55962cafcfcd1dfe">strategy_</a>) {</div>
+<div class="line"><span class="lineno">  283</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1">queue_strategy::FORCE_LEGACY</a>:</div>
+<div class="line"><span class="lineno">  284</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
+<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  286</span>            </div>
+<div class="line"><span class="lineno">  287</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eafe210246000a180fd0d5f617009a7745">queue_strategy::FORCE_LOCKFREE</a>:</div>
+<div class="line"><span class="lineno">  288</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>;</div>
+<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  290</span>            </div>
+<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea8640c650d24d411eed108592294d9750">queue_strategy::AUTO_DETECT</a>:</div>
+<div class="line"><span class="lineno">  292</span>            <span class="comment">// Use lock-free for systems with 4+ cores</span></div>
+<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">if</span> (std::thread::hardware_concurrency() &gt;= 4) {</div>
+<div class="line"><span class="lineno">  294</span>                <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>;</div>
+<div class="line"><span class="lineno">  295</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  296</span>                <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
+<div class="line"><span class="lineno">  297</span>            }</div>
+<div class="line"><span class="lineno">  298</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  299</span>            </div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624ea90cff4f81e21a20801df4abe9cbf0cbe">queue_strategy::ADAPTIVE</a>:</div>
+<div class="line"><span class="lineno">  301</span>            <span class="comment">// Start with legacy and let it adapt</span></div>
+<div class="line"><span class="lineno">  302</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a> = <a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>;</div>
+<div class="line"><span class="lineno">  303</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  304</span>        }</div>
+<div class="line"><span class="lineno">  305</span>        </div>
+<div class="line"><span class="lineno">  306</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Adaptive queue initialized with strategy: %s&quot;</span>, <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">get_current_type</a>().c_str());</div>
+<div class="line"><span class="lineno">  307</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_aadbcef3b1d1d3a1479d7f4a5c05e93e7"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">thread_module::adaptive_job_queue::get_current_type</a></div><div class="ttdeci">auto get_current_type() const -&gt; std::string</div><div class="ttdoc">Get current queue type.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00253">adaptive_job_queue.cpp:253</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_a143b2d6375ecd7c12e04c0219ab3c6a5"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a></div><div class="ttdeci">auto write_information(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db6/logger_2core_2logger_8h_source.html#l00170">logger.h:170</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1217,20 +1354,20 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00318">318</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  319</span>    {</div>
-<div class="line"><span class="lineno">  320</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Migrating from lock-free to mutex-based queue&quot;</span>);</div>
-<div class="line"><span class="lineno">  321</span>        </div>
-<div class="line"><span class="lineno">  322</span>        <span class="comment">// Drain lock-free queue into legacy queue</span></div>
-<div class="line"><span class="lineno">  323</span>        <span class="keyword">auto</span> jobs = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>-&gt;dequeue_batch();</div>
-<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; job : jobs) {</div>
-<div class="line"><span class="lineno">  325</span>            <span class="keyword">auto</span> enqueue_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>-&gt;enqueue(std::move(job));</div>
-<div class="line"><span class="lineno">  326</span>            (void)enqueue_result; <span class="comment">// Ignore result</span></div>
-<div class="line"><span class="lineno">  327</span>        }</div>
-<div class="line"><span class="lineno">  328</span>        </div>
-<div class="line"><span class="lineno">  329</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.store(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">  330</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  331</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00377">377</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  378</span>    {</div>
+<div class="line"><span class="lineno">  379</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Migrating from lock-free to mutex-based queue&quot;</span>);</div>
+<div class="line"><span class="lineno">  380</span>        </div>
+<div class="line"><span class="lineno">  381</span>        <span class="comment">// Drain lock-free queue into legacy queue</span></div>
+<div class="line"><span class="lineno">  382</span>        <span class="keyword">auto</span> jobs = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>-&gt;dequeue_batch();</div>
+<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; job : jobs) {</div>
+<div class="line"><span class="lineno">  384</span>            <span class="keyword">auto</span> enqueue_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>-&gt;enqueue(std::move(job));</div>
+<div class="line"><span class="lineno">  385</span>            (void)enqueue_result; <span class="comment">// Ignore result</span></div>
+<div class="line"><span class="lineno">  386</span>        }</div>
+<div class="line"><span class="lineno">  387</span>        </div>
+<div class="line"><span class="lineno">  388</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.store(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1a36f12c61992acaef9cab60d7d3587e66">queue_type::LEGACY_MUTEX</a>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  389</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  390</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1269,23 +1406,23 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00300">300</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  301</span>    {</div>
-<div class="line"><span class="lineno">  302</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Migrating from mutex-based to lock-free queue&quot;</span>);</div>
-<div class="line"><span class="lineno">  303</span>        </div>
-<div class="line"><span class="lineno">  304</span>        <span class="comment">// Drain legacy queue into lock-free queue</span></div>
-<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">while</span> (<span class="keyword">auto</span> job_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>-&gt;dequeue()) {</div>
-<div class="line"><span class="lineno">  306</span>            <span class="keywordflow">if</span> (job_result.has_value()) {</div>
-<div class="line"><span class="lineno">  307</span>                <span class="keyword">auto</span> enqueue_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>-&gt;enqueue(std::move(job_result.value()));</div>
-<div class="line"><span class="lineno">  308</span>                (void)enqueue_result; <span class="comment">// Ignore result</span></div>
-<div class="line"><span class="lineno">  309</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  310</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  311</span>            }</div>
-<div class="line"><span class="lineno">  312</span>        }</div>
-<div class="line"><span class="lineno">  313</span>        </div>
-<div class="line"><span class="lineno">  314</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.store(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">  315</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  316</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00359">359</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  360</span>    {</div>
+<div class="line"><span class="lineno">  361</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5">log_module::write_information</a>(<span class="stringliteral">&quot;Migrating from mutex-based to lock-free queue&quot;</span>);</div>
+<div class="line"><span class="lineno">  362</span>        </div>
+<div class="line"><span class="lineno">  363</span>        <span class="comment">// Drain legacy queue into lock-free queue</span></div>
+<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">while</span> (<span class="keyword">auto</span> job_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a95cfbfa46d97d5fd6fe36f317cdfe5cc">legacy_queue_</a>-&gt;dequeue()) {</div>
+<div class="line"><span class="lineno">  365</span>            <span class="keywordflow">if</span> (job_result.has_value()) {</div>
+<div class="line"><span class="lineno">  366</span>                <span class="keyword">auto</span> enqueue_result = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fb9765e5d24e4120d3f208cf86c66ae">mpmc_queue_</a>-&gt;enqueue(std::move(job_result.value()));</div>
+<div class="line"><span class="lineno">  367</span>                (void)enqueue_result; <span class="comment">// Ignore result</span></div>
+<div class="line"><span class="lineno">  368</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  369</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  370</span>            }</div>
+<div class="line"><span class="lineno">  371</span>        }</div>
+<div class="line"><span class="lineno">  372</span>        </div>
+<div class="line"><span class="lineno">  373</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a495af42dec197fe1ddd44f21b0e5c824">current_type_</a>.store(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a2736418d0b8f71823c83aa4a658851b1af8c29e7a09fef5508e47661f44f3b56b">queue_type::LOCKFREE_MPMC</a>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  374</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a227162bae024d26e13a921707a349c05">switch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  375</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1324,18 +1461,18 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00266">266</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  267</span>    {</div>
-<div class="line"><span class="lineno">  268</span>        <span class="keywordflow">while</span> (!<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.load(std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  269</span>            std::this_thread::sleep_for(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a88b07e2fe77e4639b33f64fc6e54f831">EVALUATION_INTERVAL</a>);</div>
-<div class="line"><span class="lineno">  270</span>            </div>
-<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.load(std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  272</span>                <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afec82094c945fe77daa6e89893cd111f">evaluate_and_switch</a>();</div>
-<div class="line"><span class="lineno">  273</span>            }</div>
-<div class="line"><span class="lineno">  274</span>        }</div>
-<div class="line"><span class="lineno">  275</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00325">325</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  326</span>    {</div>
+<div class="line"><span class="lineno">  327</span>        <span class="keywordflow">while</span> (!<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.load(std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  328</span>            std::this_thread::sleep_for(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a88b07e2fe77e4639b33f64fc6e54f831">EVALUATION_INTERVAL</a>);</div>
+<div class="line"><span class="lineno">  329</span>            </div>
+<div class="line"><span class="lineno">  330</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.load(std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  331</span>                <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afec82094c945fe77daa6e89893cd111f">evaluate_and_switch</a>();</div>
+<div class="line"><span class="lineno">  332</span>            }</div>
+<div class="line"><span class="lineno">  333</span>        }</div>
+<div class="line"><span class="lineno">  334</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a97368c2ba67f93cf1c4ad9af65b4e701"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">thread_module::adaptive_job_queue::stop_monitor_</a></div><div class="ttdeci">std::atomic&lt; bool &gt; stop_monitor_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00167">adaptive_job_queue.h:167</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_afec82094c945fe77daa6e89893cd111f"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afec82094c945fe77daa6e89893cd111f">thread_module::adaptive_job_queue::evaluate_and_switch</a></div><div class="ttdeci">auto evaluate_and_switch() -&gt; void</div><div class="ttdoc">Force evaluation and potential switch of queue implementation.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00165">adaptive_job_queue.cpp:165</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_afec82094c945fe77daa6e89893cd111f"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afec82094c945fe77daa6e89893cd111f">thread_module::adaptive_job_queue::evaluate_and_switch</a></div><div class="ttdeci">auto evaluate_and_switch() -&gt; void</div><div class="ttdoc">Force evaluation and potential switch of queue implementation.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00224">adaptive_job_queue.cpp:224</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1362,17 +1499,17 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00288">288</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  289</span>    {</div>
-<div class="line"><span class="lineno">  290</span>        <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">if</span> (ops == 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  292</span>        </div>
-<div class="line"><span class="lineno">  293</span>        <span class="keyword">auto</span> avg_latency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
-<div class="line"><span class="lineno">  294</span>        <span class="keyword">auto</span> contention_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
-<div class="line"><span class="lineno">  295</span>        </div>
-<div class="line"><span class="lineno">  296</span>        <span class="comment">// Switch back if contention is low and lock-free overhead isn&#39;t worth it</span></div>
-<div class="line"><span class="lineno">  297</span>        <span class="keywordflow">return</span> (contention_ratio &lt; CONTENTION_THRESHOLD_LOW &amp;&amp; avg_latency &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a31f11f44eb1409a8f3fb7865dfe78ff9">LATENCY_THRESHOLD_LOW_NS</a> * 2);</div>
-<div class="line"><span class="lineno">  298</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00347">347</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  348</span>    {</div>
+<div class="line"><span class="lineno">  349</span>        <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">if</span> (ops == 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  351</span>        </div>
+<div class="line"><span class="lineno">  352</span>        <span class="keyword">auto</span> avg_latency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
+<div class="line"><span class="lineno">  353</span>        <span class="keyword">auto</span> contention_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
+<div class="line"><span class="lineno">  354</span>        </div>
+<div class="line"><span class="lineno">  355</span>        <span class="comment">// Switch back if contention is low and lock-free overhead isn&#39;t worth it</span></div>
+<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">return</span> (contention_ratio &lt; CONTENTION_THRESHOLD_LOW &amp;&amp; avg_latency &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a31f11f44eb1409a8f3fb7865dfe78ff9">LATENCY_THRESHOLD_LOW_NS</a> * 2);</div>
+<div class="line"><span class="lineno">  357</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a31f11f44eb1409a8f3fb7865dfe78ff9"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a31f11f44eb1409a8f3fb7865dfe78ff9">thread_module::adaptive_job_queue::LATENCY_THRESHOLD_LOW_NS</a></div><div class="ttdeci">static constexpr double LATENCY_THRESHOLD_LOW_NS</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00174">adaptive_job_queue.h:174</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1400,16 +1537,16 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00277">277</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  278</span>    {</div>
-<div class="line"><span class="lineno">  279</span>        <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">if</span> (ops == 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  281</span>        </div>
-<div class="line"><span class="lineno">  282</span>        <span class="keyword">auto</span> avg_latency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
-<div class="line"><span class="lineno">  283</span>        <span class="keyword">auto</span> contention_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
-<div class="line"><span class="lineno">  284</span>        </div>
-<div class="line"><span class="lineno">  285</span>        <span class="keywordflow">return</span> (contention_ratio &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afc3bebbc72306f42351170ae4de52816">CONTENTION_THRESHOLD_HIGH</a> &amp;&amp; avg_latency &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a7db88a68dbd4e0e3050572ee8f8c3429">LATENCY_THRESHOLD_HIGH_NS</a>);</div>
-<div class="line"><span class="lineno">  286</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00336">336</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  337</span>    {</div>
+<div class="line"><span class="lineno">  338</span>        <span class="keyword">auto</span> ops = <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">if</span> (ops == 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  340</span>        </div>
+<div class="line"><span class="lineno">  341</span>        <span class="keyword">auto</span> avg_latency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
+<div class="line"><span class="lineno">  342</span>        <span class="keyword">auto</span> contention_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.load(std::memory_order_relaxed)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(ops);</div>
+<div class="line"><span class="lineno">  343</span>        </div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">return</span> (contention_ratio &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afc3bebbc72306f42351170ae4de52816">CONTENTION_THRESHOLD_HIGH</a> &amp;&amp; avg_latency &gt; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a7db88a68dbd4e0e3050572ee8f8c3429">LATENCY_THRESHOLD_HIGH_NS</a>);</div>
+<div class="line"><span class="lineno">  345</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a7db88a68dbd4e0e3050572ee8f8c3429"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a7db88a68dbd4e0e3050572ee8f8c3429">thread_module::adaptive_job_queue::LATENCY_THRESHOLD_HIGH_NS</a></div><div class="ttdeci">static constexpr double LATENCY_THRESHOLD_HIGH_NS</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00173">adaptive_job_queue.h:173</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_afc3bebbc72306f42351170ae4de52816"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#afc3bebbc72306f42351170ae4de52816">thread_module::adaptive_job_queue::CONTENTION_THRESHOLD_HIGH</a></div><div class="ttdeci">static constexpr double CONTENTION_THRESHOLD_HIGH</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00171">adaptive_job_queue.h:171</a></div></div>
 </div><!-- fragment -->
@@ -1431,10 +1568,10 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00147">147</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  148</span>    {</div>
-<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;size();</div>
-<div class="line"><span class="lineno">  150</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00206">206</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  207</span>    {</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554">get_current_impl</a>()-&gt;size();</div>
+<div class="line"><span class="lineno">  209</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1481,15 +1618,15 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00250">250</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  251</span>    {</div>
-<div class="line"><span class="lineno">  252</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.store(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  253</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a> = std::make_unique&lt;std::thread&gt;([<span class="keyword">this</span>]() {</div>
-<div class="line"><span class="lineno">  254</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1">monitor_performance</a>();</div>
-<div class="line"><span class="lineno">  255</span>        });</div>
-<div class="line"><span class="lineno">  256</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00309">309</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  310</span>    {</div>
+<div class="line"><span class="lineno">  311</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.store(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  312</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a> = std::make_unique&lt;std::thread&gt;([<span class="keyword">this</span>]() {</div>
+<div class="line"><span class="lineno">  313</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1">monitor_performance</a>();</div>
+<div class="line"><span class="lineno">  314</span>        });</div>
+<div class="line"><span class="lineno">  315</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ac1d5840de0c4b19187d75b7132eb39ea"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">thread_module::adaptive_job_queue::monitor_thread_</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; monitor_thread_</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d6c/adaptive__job__queue_8h_source.html#l00166">adaptive_job_queue.h:166</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ac7876e5960468db35420247e2436fad1"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1">thread_module::adaptive_job_queue::monitor_performance</a></div><div class="ttdeci">auto monitor_performance() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00266">adaptive_job_queue.cpp:266</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_ac7876e5960468db35420247e2436fad1"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac7876e5960468db35420247e2436fad1">thread_module::adaptive_job_queue::monitor_performance</a></div><div class="ttdeci">auto monitor_performance() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00325">adaptive_job_queue.cpp:325</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1526,13 +1663,13 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00258">258</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  259</span>    {</div>
-<div class="line"><span class="lineno">  260</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.store(<span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a>-&gt;joinable()) {</div>
-<div class="line"><span class="lineno">  262</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a>-&gt;join();</div>
-<div class="line"><span class="lineno">  263</span>        }</div>
-<div class="line"><span class="lineno">  264</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00317">317</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  318</span>    {</div>
+<div class="line"><span class="lineno">  319</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a97368c2ba67f93cf1c4ad9af65b4e701">stop_monitor_</a>.store(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  320</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a> &amp;&amp; <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a>-&gt;joinable()) {</div>
+<div class="line"><span class="lineno">  321</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#ac1d5840de0c4b19187d75b7132eb39ea">monitor_thread_</a>-&gt;join();</div>
+<div class="line"><span class="lineno">  322</span>        }</div>
+<div class="line"><span class="lineno">  323</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1571,25 +1708,32 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Returns a string representation of this <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a>. </p>
+<p>Provides a string representation of the queue's current state.</p>
 <dl class="section return"><dt>Returns</dt><dd>A std::string describing the state of the queue (e.g., size, flags).</dd></dl>
-<p>Primarily used for logging and debugging. Derived classes may override this to include additional diagnostic information. </p>
+<p>Primarily used for logging and debugging. Derived classes may override this to include additional diagnostic information.</p>
+<p>Implementation details:</p><ul>
+<li>Uses <a class="el" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af">size()</a> method to get current job count</li>
+<li>Formats output using the formatter utility</li>
+<li>Useful for logging and debugging purposes</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string showing current job count </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  153</span>    {</div>
-<div class="line"><span class="lineno">  154</span>        <span class="keyword">auto</span> <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a> = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb">get_metrics</a>();</div>
-<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(</div>
-<div class="line"><span class="lineno">  156</span>            <span class="stringliteral">&quot;adaptive_job_queue[type={}, size={}, avg_latency={:.1f}ns, contention={:.2%}, switches={}]&quot;</span>,</div>
-<div class="line"><span class="lineno">  157</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">get_current_type</a>(),</div>
-<div class="line"><span class="lineno">  158</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af">size</a>(),</div>
-<div class="line"><span class="lineno">  159</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.get_average_latency_ns(),</div>
-<div class="line"><span class="lineno">  160</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.get_contention_ratio(),</div>
-<div class="line"><span class="lineno">  161</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.switch_count</div>
-<div class="line"><span class="lineno">  162</span>        );</div>
-<div class="line"><span class="lineno">  163</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a152c509ecb73f3a2810d1ab80bbc73af"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af">thread_module::adaptive_job_queue::size</a></div><div class="ttdeci">auto size() const -&gt; std::size_t</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00147">adaptive_job_queue.cpp:147</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a99863b19e32e5d47636220b03de543bb"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb">thread_module::adaptive_job_queue::get_metrics</a></div><div class="ttdeci">auto get_metrics() const -&gt; performance_metrics</div><div class="ttdoc">Get performance metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00208">adaptive_job_queue.cpp:208</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00211">211</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  212</span>    {</div>
+<div class="line"><span class="lineno">  213</span>        <span class="keyword">auto</span> <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a> = <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb">get_metrics</a>();</div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(</div>
+<div class="line"><span class="lineno">  215</span>            <span class="stringliteral">&quot;adaptive_job_queue[type={}, size={}, avg_latency={:.1f}ns, contention={:.2%}, switches={}]&quot;</span>,</div>
+<div class="line"><span class="lineno">  216</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7">get_current_type</a>(),</div>
+<div class="line"><span class="lineno">  217</span>            <a class="code hl_function" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af">size</a>(),</div>
+<div class="line"><span class="lineno">  218</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.get_average_latency_ns(),</div>
+<div class="line"><span class="lineno">  219</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.get_contention_ratio(),</div>
+<div class="line"><span class="lineno">  220</span>            <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>.switch_count</div>
+<div class="line"><span class="lineno">  221</span>        );</div>
+<div class="line"><span class="lineno">  222</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a152c509ecb73f3a2810d1ab80bbc73af"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af">thread_module::adaptive_job_queue::size</a></div><div class="ttdeci">auto size() const -&gt; std::size_t</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00206">adaptive_job_queue.cpp:206</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a99863b19e32e5d47636220b03de543bb"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb">thread_module::adaptive_job_queue::get_metrics</a></div><div class="ttdeci">auto get_metrics() const -&gt; performance_metrics</div><div class="ttdoc">Get performance metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00267">adaptive_job_queue.cpp:267</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1649,15 +1793,15 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00333">333</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  334</span>    {</div>
-<div class="line"><span class="lineno">  335</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  336</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count()), std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  337</span>        </div>
-<div class="line"><span class="lineno">  338</span>        <span class="keywordflow">if</span> (had_contention) {</div>
-<div class="line"><span class="lineno">  339</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  340</span>        }</div>
-<div class="line"><span class="lineno">  341</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00392">392</a> of file <a class="el" href="../../d8/d45/adaptive__job__queue_8cpp_source.html">adaptive_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  393</span>    {</div>
+<div class="line"><span class="lineno">  394</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a1bf90c43a3d0c58d4dd79289bbeddd0b">operation_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  395</span>        <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#a9a3cdeafb8a219fd3cddbfa08ab7a50d">total_latency_ns</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count()), std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  396</span>        </div>
+<div class="line"><span class="lineno">  397</span>        <span class="keywordflow">if</span> (had_contention) {</div>
+<div class="line"><span class="lineno">  398</span>            <a class="code hl_variable" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a5abfc8958db801d27b7c9c5f110c0408">metrics_</a>.<a class="code hl_variable" href="../../d9/d53/structthread__module_1_1adaptive__job__queue_1_1atomic__performance__metrics.html#accd0fa108e64f3f5f28e9b98b0f1b136">contention_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  399</span>        }</div>
+<div class="line"><span class="lineno">  400</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1982,7 +2126,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

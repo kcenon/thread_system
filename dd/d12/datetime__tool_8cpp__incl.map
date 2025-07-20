@@ -1,5 +1,5 @@
 <map id="sources/utilities/time/datetime_tool.cpp" name="sources/utilities/time/datetime_tool.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="382,5,541,45"/>
+<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform date and time formatting utilities." alt="" coords="382,5,541,45"/>
 <area shape="rect" id="Node000002" href="$d9/da1/datetime__tool_8h.html" title=" " alt="" coords="63,93,188,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="382,48,188,93,187,88,381,43"/>
 <area shape="rect" id="Node000005" href="$de/d52/formatter_8h.html" title=" " alt="" coords="339,93,477,119"/>

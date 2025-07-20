@@ -317,14 +317,14 @@ Additional Inherited Members</h2></td></tr>
 <p>Constructor for the <code><a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages.">log_collector</a></code> class. </p>
 <p>Initializes the log queue and sets up default log types for console, file, and callback outputs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;log_collector&quot;</span>)</div>
-<div class="line"><span class="lineno">   42</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
-<div class="line"><span class="lineno">   43</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
-<div class="line"><span class="lineno">   44</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
-<div class="line"><span class="lineno">   45</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>(<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a9e9107b4cdc012e2223a50f8c05d8130">thread_module::create_job_queue</a>(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1">thread_module::adaptive_job_queue::queue_strategy::FORCE_LEGACY</a>))</div>
-<div class="line"><span class="lineno">   46</span>    {</div>
-<div class="line"><span class="lineno">   47</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00079">79</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;log_collector&quot;</span>)</div>
+<div class="line"><span class="lineno">   81</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
+<div class="line"><span class="lineno">   82</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
+<div class="line"><span class="lineno">   83</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>(<a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
+<div class="line"><span class="lineno">   84</span>        , <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>(<a class="code hl_function" href="../../de/d48/namespacethread__module.html#a9e9107b4cdc012e2223a50f8c05d8130">thread_module::create_job_queue</a>(<a class="code hl_enumvalue" href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1">thread_module::adaptive_job_queue::queue_strategy::FORCE_LEGACY</a>))</div>
+<div class="line"><span class="lineno">   85</span>    {</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_a276fd980e9546d0884d4e094f844fa9d"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">log_module::log_collector::console_log_type_</a></div><div class="ttdeci">log_types console_log_type_</div><div class="ttdoc">Types of logs to write to console.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00256">log_collector.h:256</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_a5ad249f71948f35a1e6696d5cc67a810"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">log_module::log_collector::callback_log_type_</a></div><div class="ttdeci">log_types callback_log_type_</div><div class="ttdoc">Types of logs to write to message callbacks.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00257">log_collector.h:257</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_ab57512e92c20b5c5ad52191799003e40"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">log_module::log_collector::file_log_type_</a></div><div class="ttdeci">log_types file_log_type_</div><div class="ttdoc">Types of logs to write to file.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00255">log_collector.h:255</a></div></div>
@@ -332,7 +332,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclassthread__module_1_1adaptive__job__queue_html_a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1"><div class="ttname"><a href="../../d9/d67/classthread__module_1_1adaptive__job__queue.html#a99ade5899f88831d716301436307624eaf3c4c243192b89e67b25ab06a21e41f1">thread_module::adaptive_job_queue::queue_strategy::FORCE_LEGACY</a></div><div class="ttdeci">@ FORCE_LEGACY</div><div class="ttdoc">Always use mutex-based queue.</div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
 <div class="ttc" id="anamespacelog__module_html_ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></div><div class="ttdeci">@ None</div><div class="ttdoc">No specific category for the log message.</div></div>
-<div class="ttc" id="anamespacethread__module_html_a9e9107b4cdc012e2223a50f8c05d8130"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a9e9107b4cdc012e2223a50f8c05d8130">thread_module::create_job_queue</a></div><div class="ttdeci">auto create_job_queue(adaptive_job_queue::queue_strategy strategy) -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Factory function to create appropriate job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00367">adaptive_job_queue.cpp:367</a></div></div>
+<div class="ttc" id="anamespacethread__module_html_a9e9107b4cdc012e2223a50f8c05d8130"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a9e9107b4cdc012e2223a50f8c05d8130">thread_module::create_job_queue</a></div><div class="ttdeci">auto create_job_queue(adaptive_job_queue::queue_strategy strategy) -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Factory function to create appropriate job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d45/adaptive__job__queue_8cpp_source.html#l00426">adaptive_job_queue.cpp:426</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -366,36 +366,36 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a8a5b2eb7b63e97711e7bd58da331fc15">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00250">250</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  251</span>    {</div>
-<div class="line"><span class="lineno">  252</span>        log_job <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;STOP&quot;</span>);</div>
-<div class="line"><span class="lineno">  253</span>        <span class="keyword">auto</span> work_result = <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">do_work</a>();</div>
-<div class="line"><span class="lineno">  254</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">  255</span>        {</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
-<div class="line"><span class="lineno">  257</span>        }</div>
-<div class="line"><span class="lineno">  258</span> </div>
-<div class="line"><span class="lineno">  259</span>        <span class="keyword">auto</span> enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>,</div>
-<div class="line"><span class="lineno">  260</span>                                         <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(), <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
-<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  262</span>        {</div>
-<div class="line"><span class="lineno">  263</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
-<div class="line"><span class="lineno">  264</span>        }</div>
-<div class="line"><span class="lineno">  265</span> </div>
-<div class="line"><span class="lineno">  266</span>        enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>, <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(),</div>
-<div class="line"><span class="lineno">  267</span>                                    <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
-<div class="line"><span class="lineno">  268</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  269</span>        {</div>
-<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
-<div class="line"><span class="lineno">  271</span>        }</div>
-<div class="line"><span class="lineno">  272</span> </div>
-<div class="line"><span class="lineno">  273</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  274</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00316">316</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  317</span>    {</div>
+<div class="line"><span class="lineno">  318</span>        log_job <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;STOP&quot;</span>);</div>
+<div class="line"><span class="lineno">  319</span>        <span class="keyword">auto</span> work_result = <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">do_work</a>();</div>
+<div class="line"><span class="lineno">  320</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">  321</span>        {</div>
+<div class="line"><span class="lineno">  322</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
+<div class="line"><span class="lineno">  323</span>        }</div>
+<div class="line"><span class="lineno">  324</span> </div>
+<div class="line"><span class="lineno">  325</span>        <span class="keyword">auto</span> enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>,</div>
+<div class="line"><span class="lineno">  326</span>                                         <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(), <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
+<div class="line"><span class="lineno">  327</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  328</span>        {</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
+<div class="line"><span class="lineno">  330</span>        }</div>
+<div class="line"><span class="lineno">  331</span> </div>
+<div class="line"><span class="lineno">  332</span>        enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>, <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(),</div>
+<div class="line"><span class="lineno">  333</span>                                    <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
+<div class="line"><span class="lineno">  334</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  335</span>        {</div>
+<div class="line"><span class="lineno">  336</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
+<div class="line"><span class="lineno">  337</span>        }</div>
+<div class="line"><span class="lineno">  338</span> </div>
+<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  340</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_a86ba5e26338ca6d9d48941b26eb5d98c"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">log_module::log_collector::console_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; console_queue_</div><div class="ttdoc">Weak pointer to the queue for console output jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00261">log_collector.h:261</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_ab7fecba14eb03947827db31a46476eb3"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">log_module::log_collector::file_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; file_queue_</div><div class="ttdoc">Weak pointer to the queue for file output jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00262">log_collector.h:262</a></div></div>
-<div class="ttc" id="aclasslog__module_1_1log__collector_html_abb92393b1d9aadd419446a521aaa514f"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">log_module::log_collector::enqueue_log</a></div><div class="ttdeci">auto enqueue_log(const log_types &amp;current_log_type, const log_types &amp;target_log_type, std::weak_ptr&lt; job_queue &gt; weak_queue, const std::string &amp;datetime, const std::string &amp;message) -&gt; result_void</div><div class="ttdoc">Enqueues a log message for processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d3c/log__collector_8cpp_source.html#l00276">log_collector.cpp:276</a></div></div>
+<div class="ttc" id="aclasslog__module_1_1log__collector_html_abb92393b1d9aadd419446a521aaa514f"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">log_module::log_collector::enqueue_log</a></div><div class="ttdeci">auto enqueue_log(const log_types &amp;current_log_type, const log_types &amp;target_log_type, std::weak_ptr&lt; job_queue &gt; weak_queue, const std::string &amp;datetime, const std::string &amp;message) -&gt; result_void</div><div class="ttdoc">Enqueues a log message for processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d3c/log__collector_8cpp_source.html#l00342">log_collector.cpp:342</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job_html_a4f34f234108da3f7adccc9cbbd831c71"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">thread_module::job::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; result_void</div><div class="ttdoc">The core task execution method to be overridden by derived classes.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00051">job.cpp:51</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_a4f34f234108da3f7adccc9cbbd831c71"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">thread_module::job::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; result_void</div><div class="ttdoc">The core task execution method to be overridden by derived classes.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00150">job.cpp:150</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -435,35 +435,59 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Performs initialization before starting the log collector thread. </p>
-<dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error. </dd></dl>
+<p>Initializes log collector and sends startup notification.</p>
+<dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error.</dd></dl>
+<p>Implementation details:</p><ul>
+<li>Creates startup log message to indicate collector activation</li>
+<li>Distributes startup message to all configured output targets</li>
+<li>Validates that startup message is properly formatted</li>
+<li>Ensures all output queues are ready for message processing</li>
+</ul>
+<p>Startup Message Processing:</p><ol type="1">
+<li>Creates <a class="el" href="../../df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system.">log_job</a> with "START" message</li>
+<li>Processes job to generate formatted timestamp and message</li>
+<li>Enqueues startup message to console output (if configured)</li>
+<li>Enqueues startup message to file output (if configured)</li>
+<li>Returns error if any step fails</li>
+</ol>
+<p>Error Handling:</p><ul>
+<li>Job formatting failure: Returns formatting error</li>
+<li>Console enqueue failure: Returns queue operation error</li>
+<li>File enqueue failure: Returns queue operation error</li>
+<li>All errors prevent collector startup</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>result_void indicating successful initialization or error </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00128">128</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  129</span>    {</div>
-<div class="line"><span class="lineno">  130</span>        log_job <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;START&quot;</span>);</div>
-<div class="line"><span class="lineno">  131</span>        <span class="keyword">auto</span> work_result = <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">do_work</a>();</div>
-<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">  133</span>        {</div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
-<div class="line"><span class="lineno">  135</span>        }</div>
-<div class="line"><span class="lineno">  136</span> </div>
-<div class="line"><span class="lineno">  137</span>        <span class="keyword">auto</span> enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>,</div>
-<div class="line"><span class="lineno">  138</span>                                         <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(), <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
-<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  140</span>        {</div>
-<div class="line"><span class="lineno">  141</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
-<div class="line"><span class="lineno">  142</span>        }</div>
-<div class="line"><span class="lineno">  143</span> </div>
-<div class="line"><span class="lineno">  144</span>        enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>, <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(),</div>
-<div class="line"><span class="lineno">  145</span>                                    <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
-<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  147</span>        {</div>
-<div class="line"><span class="lineno">  148</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
-<div class="line"><span class="lineno">  149</span>        }</div>
-<div class="line"><span class="lineno">  150</span> </div>
-<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  152</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00191">191</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  192</span>    {</div>
+<div class="line"><span class="lineno">  193</span>        <span class="comment">// Create and process startup log message</span></div>
+<div class="line"><span class="lineno">  194</span>        log_job <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>(<span class="stringliteral">&quot;START&quot;</span>);</div>
+<div class="line"><span class="lineno">  195</span>        <span class="keyword">auto</span> work_result = <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.<a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">do_work</a>();</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">  197</span>        {</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
+<div class="line"><span class="lineno">  199</span>        }</div>
+<div class="line"><span class="lineno">  200</span> </div>
+<div class="line"><span class="lineno">  201</span>        <span class="comment">// Send startup notification to console output</span></div>
+<div class="line"><span class="lineno">  202</span>        <span class="keyword">auto</span> enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>,</div>
+<div class="line"><span class="lineno">  203</span>                                         <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(), <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  205</span>        {</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
+<div class="line"><span class="lineno">  207</span>        }</div>
+<div class="line"><span class="lineno">  208</span> </div>
+<div class="line"><span class="lineno">  209</span>        <span class="comment">// Send startup notification to file output</span></div>
+<div class="line"><span class="lineno">  210</span>        enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>, <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>, <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>, <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.datetime(),</div>
+<div class="line"><span class="lineno">  211</span>                                    <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>.message());</div>
+<div class="line"><span class="lineno">  212</span>        <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  213</span>        {</div>
+<div class="line"><span class="lineno">  214</span>            <span class="keywordflow">return</span> enqueue_result.get_error();</div>
+<div class="line"><span class="lineno">  215</span>        }</div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  218</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -501,11 +525,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00073">73</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>    {</div>
-<div class="line"><span class="lineno">   75</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   76</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a> = type;</div>
-<div class="line"><span class="lineno">   77</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00112">112</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>    {</div>
+<div class="line"><span class="lineno">  114</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  115</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a> = type;</div>
+<div class="line"><span class="lineno">  116</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_ab79c32b6a3e3c00320f3b2bba145095c"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">log_module::log_collector::queue_mutex_</a></div><div class="ttdeci">std::mutex queue_mutex_</div><div class="ttdoc">Mutex to protect access to log_queue_ and writer queues.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00267">log_collector.h:267</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -529,11 +553,11 @@ Here is the call graph for this function:</div>
 <p>Retrieves the current log types that are written to a callback. </p>
 <dl class="section return"><dt>Returns</dt><dd>The <code>log_types</code> currently set for callback output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00079">79</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>    { </div>
-<div class="line"><span class="lineno">   81</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>; </div>
-<div class="line"><span class="lineno">   83</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00118">118</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>    { </div>
+<div class="line"><span class="lineno">  120</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>; </div>
+<div class="line"><span class="lineno">  122</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -555,11 +579,11 @@ Here is the call graph for this function:</div>
 <p>Gets the log types that are written to the console. </p>
 <dl class="section return"><dt>Returns</dt><dd>The log types that are currently set to be written to the console. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>    { </div>
-<div class="line"><span class="lineno">   57</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>; </div>
-<div class="line"><span class="lineno">   59</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00094">94</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>    { </div>
+<div class="line"><span class="lineno">   96</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>; </div>
+<div class="line"><span class="lineno">   98</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -587,11 +611,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>    { </div>
-<div class="line"><span class="lineno">   51</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   52</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a> = type; </div>
-<div class="line"><span class="lineno">   53</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00088">88</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    { </div>
+<div class="line"><span class="lineno">   90</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">   91</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a> = type; </div>
+<div class="line"><span class="lineno">   92</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -624,101 +648,101 @@ Here is the call graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00154">154</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  155</span>    {</div>
-<div class="line"><span class="lineno">  156</span>        <span class="comment">// First get a local copy of the log queue with proper synchronization</span></div>
-<div class="line"><span class="lineno">  157</span>        std::shared_ptr&lt;job_queue&gt; queue_copy;</div>
-<div class="line"><span class="lineno">  158</span>        {</div>
-<div class="line"><span class="lineno">  159</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">  160</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">  161</span>            {</div>
-<div class="line"><span class="lineno">  162</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
-<div class="line"><span class="lineno">  163</span>            }</div>
-<div class="line"><span class="lineno">  164</span>            queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>;</div>
-<div class="line"><span class="lineno">  165</span>        }</div>
-<div class="line"><span class="lineno">  166</span> </div>
-<div class="line"><span class="lineno">  167</span>        <span class="comment">// Now work with the local copy</span></div>
-<div class="line"><span class="lineno">  168</span>        <span class="keyword">auto</span> dequeue_result = queue_copy-&gt;dequeue();</div>
-<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
-<div class="line"><span class="lineno">  170</span>        {</div>
-<div class="line"><span class="lineno">  171</span>            <span class="keywordflow">if</span> (!queue_copy-&gt;is_stopped())</div>
-<div class="line"><span class="lineno">  172</span>            {</div>
-<div class="line"><span class="lineno">  173</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
-<div class="line"><span class="lineno">  174</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
-<div class="line"><span class="lineno">  175</span>            }</div>
-<div class="line"><span class="lineno">  176</span> </div>
-<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  178</span>        }</div>
-<div class="line"><span class="lineno">  179</span> </div>
-<div class="line"><span class="lineno">  180</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">job_ptr</a> = std::move(dequeue_result.value());</div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (job_ptr == <span class="keyword">nullptr</span>) </div>
-<div class="line"><span class="lineno">  182</span>        {</div>
-<div class="line"><span class="lineno">  183</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: received empty job&quot;</span>};</div>
-<div class="line"><span class="lineno">  184</span>        }</div>
-<div class="line"><span class="lineno">  185</span> </div>
-<div class="line"><span class="lineno">  186</span>        <span class="keyword">auto</span> current_log = std::unique_ptr&lt;log_job&gt;(<span class="keyword">static_cast&lt;</span>log_job*<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">job_ptr</a>.release()));</div>
-<div class="line"><span class="lineno">  187</span> </div>
-<div class="line"><span class="lineno">  188</span>        <span class="keyword">auto</span> work_result = current_log-&gt;do_work();</div>
-<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">  190</span>        {</div>
-<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
-<div class="line"><span class="lineno">  192</span>        }</div>
-<div class="line"><span class="lineno">  193</span> </div>
-<div class="line"><span class="lineno">  194</span>        <span class="comment">// Get thread-safe copies of the targets and queues</span></div>
-<div class="line"><span class="lineno">  195</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> console_target_copy;</div>
-<div class="line"><span class="lineno">  196</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> file_target_copy;</div>
-<div class="line"><span class="lineno">  197</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> callback_target_copy;</div>
-<div class="line"><span class="lineno">  198</span>        std::weak_ptr&lt;job_queue&gt; console_queue_copy;</div>
-<div class="line"><span class="lineno">  199</span>        std::weak_ptr&lt;job_queue&gt; file_queue_copy;</div>
-<div class="line"><span class="lineno">  200</span>        std::weak_ptr&lt;job_queue&gt; callback_queue_copy;</div>
-<div class="line"><span class="lineno">  201</span>        </div>
-<div class="line"><span class="lineno">  202</span>        {</div>
-<div class="line"><span class="lineno">  203</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">  204</span>            console_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>;</div>
-<div class="line"><span class="lineno">  205</span>            file_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>;</div>
-<div class="line"><span class="lineno">  206</span>            callback_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>;</div>
-<div class="line"><span class="lineno">  207</span>            console_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>;</div>
-<div class="line"><span class="lineno">  208</span>            file_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>;</div>
-<div class="line"><span class="lineno">  209</span>            callback_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ad95e2a80fc345b6c7289aa7dea13bf4b">callback_queue_</a>;</div>
-<div class="line"><span class="lineno">  210</span>        }</div>
-<div class="line"><span class="lineno">  211</span>        </div>
-<div class="line"><span class="lineno">  212</span>        <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> enqueue_result;</div>
-<div class="line"><span class="lineno">  213</span> </div>
-<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= console_target_copy)</div>
-<div class="line"><span class="lineno">  215</span>        {</div>
-<div class="line"><span class="lineno">  216</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
-<div class="line"><span class="lineno">  217</span>                                         console_queue_copy, current_log-&gt;datetime(), </div>
-<div class="line"><span class="lineno">  218</span>                                         current_log-&gt;message());</div>
-<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
-<div class="line"><span class="lineno">  220</span>            {</div>
-<div class="line"><span class="lineno">  221</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
-<div class="line"><span class="lineno">  222</span>            }</div>
-<div class="line"><span class="lineno">  223</span>        }</div>
-<div class="line"><span class="lineno">  224</span> </div>
-<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= file_target_copy)</div>
-<div class="line"><span class="lineno">  226</span>        {</div>
-<div class="line"><span class="lineno">  227</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
-<div class="line"><span class="lineno">  228</span>                                         file_queue_copy, current_log-&gt;datetime(), </div>
-<div class="line"><span class="lineno">  229</span>                                         current_log-&gt;message());</div>
-<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
-<div class="line"><span class="lineno">  231</span>            {</div>
-<div class="line"><span class="lineno">  232</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
-<div class="line"><span class="lineno">  233</span>            }</div>
-<div class="line"><span class="lineno">  234</span>        }</div>
-<div class="line"><span class="lineno">  235</span> </div>
-<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= callback_target_copy)</div>
-<div class="line"><span class="lineno">  237</span>        {</div>
-<div class="line"><span class="lineno">  238</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
-<div class="line"><span class="lineno">  239</span>                                         callback_queue_copy, current_log-&gt;datetime(), </div>
-<div class="line"><span class="lineno">  240</span>                                         current_log-&gt;message());</div>
-<div class="line"><span class="lineno">  241</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
-<div class="line"><span class="lineno">  242</span>            {</div>
-<div class="line"><span class="lineno">  243</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
-<div class="line"><span class="lineno">  244</span>            }</div>
-<div class="line"><span class="lineno">  245</span>        }</div>
-<div class="line"><span class="lineno">  246</span> </div>
-<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  248</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00220">220</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>    {</div>
+<div class="line"><span class="lineno">  222</span>        <span class="comment">// First get a local copy of the log queue with proper synchronization</span></div>
+<div class="line"><span class="lineno">  223</span>        std::shared_ptr&lt;job_queue&gt; queue_copy;</div>
+<div class="line"><span class="lineno">  224</span>        {</div>
+<div class="line"><span class="lineno">  225</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  226</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  227</span>            {</div>
+<div class="line"><span class="lineno">  228</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
+<div class="line"><span class="lineno">  229</span>            }</div>
+<div class="line"><span class="lineno">  230</span>            queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>;</div>
+<div class="line"><span class="lineno">  231</span>        }</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>        <span class="comment">// Now work with the local copy</span></div>
+<div class="line"><span class="lineno">  234</span>        <span class="keyword">auto</span> dequeue_result = queue_copy-&gt;dequeue();</div>
+<div class="line"><span class="lineno">  235</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
+<div class="line"><span class="lineno">  236</span>        {</div>
+<div class="line"><span class="lineno">  237</span>            <span class="keywordflow">if</span> (!queue_copy-&gt;is_stopped())</div>
+<div class="line"><span class="lineno">  238</span>            {</div>
+<div class="line"><span class="lineno">  239</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
+<div class="line"><span class="lineno">  240</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
+<div class="line"><span class="lineno">  241</span>            }</div>
+<div class="line"><span class="lineno">  242</span> </div>
+<div class="line"><span class="lineno">  243</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  244</span>        }</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">job_ptr</a> = std::move(dequeue_result.value());</div>
+<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">if</span> (job_ptr == <span class="keyword">nullptr</span>) </div>
+<div class="line"><span class="lineno">  248</span>        {</div>
+<div class="line"><span class="lineno">  249</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: received empty job&quot;</span>};</div>
+<div class="line"><span class="lineno">  250</span>        }</div>
+<div class="line"><span class="lineno">  251</span> </div>
+<div class="line"><span class="lineno">  252</span>        <span class="keyword">auto</span> current_log = std::unique_ptr&lt;log_job&gt;(<span class="keyword">static_cast&lt;</span>log_job*<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="../../d2/dca/namespacethread__module_1_1jobs.html#aad65bda06a2be2bfad673d5581d42eaf">job_ptr</a>.release()));</div>
+<div class="line"><span class="lineno">  253</span> </div>
+<div class="line"><span class="lineno">  254</span>        <span class="keyword">auto</span> work_result = current_log-&gt;do_work();</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">  256</span>        {</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">return</span> work_result.get_error();</div>
+<div class="line"><span class="lineno">  258</span>        }</div>
+<div class="line"><span class="lineno">  259</span> </div>
+<div class="line"><span class="lineno">  260</span>        <span class="comment">// Get thread-safe copies of the targets and queues</span></div>
+<div class="line"><span class="lineno">  261</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> console_target_copy;</div>
+<div class="line"><span class="lineno">  262</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> file_target_copy;</div>
+<div class="line"><span class="lineno">  263</span>        <a class="code hl_enumeration" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709">log_types</a> callback_target_copy;</div>
+<div class="line"><span class="lineno">  264</span>        std::weak_ptr&lt;job_queue&gt; console_queue_copy;</div>
+<div class="line"><span class="lineno">  265</span>        std::weak_ptr&lt;job_queue&gt; file_queue_copy;</div>
+<div class="line"><span class="lineno">  266</span>        std::weak_ptr&lt;job_queue&gt; callback_queue_copy;</div>
+<div class="line"><span class="lineno">  267</span>        </div>
+<div class="line"><span class="lineno">  268</span>        {</div>
+<div class="line"><span class="lineno">  269</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  270</span>            console_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a276fd980e9546d0884d4e094f844fa9d">console_log_type_</a>;</div>
+<div class="line"><span class="lineno">  271</span>            file_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>;</div>
+<div class="line"><span class="lineno">  272</span>            callback_target_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a5ad249f71948f35a1e6696d5cc67a810">callback_log_type_</a>;</div>
+<div class="line"><span class="lineno">  273</span>            console_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a>;</div>
+<div class="line"><span class="lineno">  274</span>            file_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a>;</div>
+<div class="line"><span class="lineno">  275</span>            callback_queue_copy = <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ad95e2a80fc345b6c7289aa7dea13bf4b">callback_queue_</a>;</div>
+<div class="line"><span class="lineno">  276</span>        }</div>
+<div class="line"><span class="lineno">  277</span>        </div>
+<div class="line"><span class="lineno">  278</span>        <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> enqueue_result;</div>
+<div class="line"><span class="lineno">  279</span> </div>
+<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= console_target_copy)</div>
+<div class="line"><span class="lineno">  281</span>        {</div>
+<div class="line"><span class="lineno">  282</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
+<div class="line"><span class="lineno">  283</span>                                         console_queue_copy, current_log-&gt;datetime(), </div>
+<div class="line"><span class="lineno">  284</span>                                         current_log-&gt;message());</div>
+<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
+<div class="line"><span class="lineno">  286</span>            {</div>
+<div class="line"><span class="lineno">  287</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
+<div class="line"><span class="lineno">  288</span>            }</div>
+<div class="line"><span class="lineno">  289</span>        }</div>
+<div class="line"><span class="lineno">  290</span> </div>
+<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= file_target_copy)</div>
+<div class="line"><span class="lineno">  292</span>        {</div>
+<div class="line"><span class="lineno">  293</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
+<div class="line"><span class="lineno">  294</span>                                         file_queue_copy, current_log-&gt;datetime(), </div>
+<div class="line"><span class="lineno">  295</span>                                         current_log-&gt;message());</div>
+<div class="line"><span class="lineno">  296</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
+<div class="line"><span class="lineno">  297</span>            {</div>
+<div class="line"><span class="lineno">  298</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
+<div class="line"><span class="lineno">  299</span>            }</div>
+<div class="line"><span class="lineno">  300</span>        }</div>
+<div class="line"><span class="lineno">  301</span> </div>
+<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">if</span> (current_log-&gt;get_type() &lt;= callback_target_copy)</div>
+<div class="line"><span class="lineno">  303</span>        {</div>
+<div class="line"><span class="lineno">  304</span>            enqueue_result = <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abb92393b1d9aadd419446a521aaa514f">enqueue_log</a>(current_log-&gt;get_type(), current_log-&gt;get_type(), </div>
+<div class="line"><span class="lineno">  305</span>                                         callback_queue_copy, current_log-&gt;datetime(), </div>
+<div class="line"><span class="lineno">  306</span>                                         current_log-&gt;message());</div>
+<div class="line"><span class="lineno">  307</span>            <span class="keywordflow">if</span> (enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">has_error</a>())</div>
+<div class="line"><span class="lineno">  308</span>            {</div>
+<div class="line"><span class="lineno">  309</span>                <span class="keywordflow">return</span> enqueue_result.<a class="code hl_function" href="../../dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29">get_error</a>();</div>
+<div class="line"><span class="lineno">  310</span>            }</div>
+<div class="line"><span class="lineno">  311</span>        }</div>
+<div class="line"><span class="lineno">  312</span> </div>
+<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  314</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_ad95e2a80fc345b6c7289aa7dea13bf4b"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#ad95e2a80fc345b6c7289aa7dea13bf4b">log_module::log_collector::callback_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; callback_queue_</div><div class="ttdoc">Weak pointer to the queue for callback output jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00264">log_collector.h:264</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html_a64f976580593a2aabce0d01da67e7838"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838">thread_module::result_void::has_error</a></div><div class="ttdeci">bool has_error() const</div><div class="ttdoc">Checks if the result contains an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00214">error_handling.h:214</a></div></div>
@@ -811,45 +835,45 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00276">276</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  281</span>    {</div>
-<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">if</span> (current_log_type == <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
-<div class="line"><span class="lineno">  283</span>        {</div>
-<div class="line"><span class="lineno">  284</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  285</span>        }</div>
-<div class="line"><span class="lineno">  286</span> </div>
-<div class="line"><span class="lineno">  287</span>        <span class="comment">// Safely handle weak pointer - lock and check validity</span></div>
-<div class="line"><span class="lineno">  288</span>        std::shared_ptr&lt;job_queue&gt; locked_queue;</div>
-<div class="line"><span class="lineno">  289</span>        {</div>
-<div class="line"><span class="lineno">  290</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">  291</span>            locked_queue = weak_queue.lock();</div>
-<div class="line"><span class="lineno">  292</span>            <span class="keywordflow">if</span> (!locked_queue)</div>
-<div class="line"><span class="lineno">  293</span>            {</div>
-<div class="line"><span class="lineno">  294</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;Queue is no longer available&quot;</span>};</div>
-<div class="line"><span class="lineno">  295</span>            }</div>
-<div class="line"><span class="lineno">  296</span>        }</div>
-<div class="line"><span class="lineno">  297</span>        </div>
-<div class="line"><span class="lineno">  298</span>        <span class="comment">// Now we have a valid shared_ptr to the queue</span></div>
-<div class="line"><span class="lineno">  299</span>        <span class="keywordflow">if</span> (!message.empty())</div>
-<div class="line"><span class="lineno">  300</span>        {</div>
-<div class="line"><span class="lineno">  301</span>            <span class="keywordflow">try</span> </div>
-<div class="line"><span class="lineno">  302</span>            {</div>
-<div class="line"><span class="lineno">  303</span>                <span class="keyword">auto</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a> = std::make_unique&lt;message_job&gt;(target_log_type, datetime, message);</div>
-<div class="line"><span class="lineno">  304</span>                <span class="keyword">auto</span> enqueue_result = locked_queue-&gt;enqueue(std::move(<a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>));</div>
-<div class="line"><span class="lineno">  305</span>                <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  306</span>                {</div>
-<div class="line"><span class="lineno">  307</span>                    <span class="keywordflow">return</span> enqueue_result.get_error();</div>
-<div class="line"><span class="lineno">  308</span>                }</div>
-<div class="line"><span class="lineno">  309</span>            }</div>
-<div class="line"><span class="lineno">  310</span>            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e)</div>
-<div class="line"><span class="lineno">  311</span>            {</div>
-<div class="line"><span class="lineno">  312</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_creation_failed, </div>
-<div class="line"><span class="lineno">  313</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;Error creating or enqueuing message job: {}&quot;</span>, e.what())};</div>
-<div class="line"><span class="lineno">  314</span>            }</div>
-<div class="line"><span class="lineno">  315</span>        }</div>
-<div class="line"><span class="lineno">  316</span> </div>
-<div class="line"><span class="lineno">  317</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  318</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00342">342</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  347</span>    {</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">if</span> (current_log_type == <a class="code hl_enumvalue" href="../../d9/de0/namespacelog__module.html#ac59af6ec9704b7fd0d73e7becbc54709a6adf97f83acf6453d4a6a4b1070f3754">log_types::None</a>)</div>
+<div class="line"><span class="lineno">  349</span>        {</div>
+<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  351</span>        }</div>
+<div class="line"><span class="lineno">  352</span> </div>
+<div class="line"><span class="lineno">  353</span>        <span class="comment">// Safely handle weak pointer - lock and check validity</span></div>
+<div class="line"><span class="lineno">  354</span>        std::shared_ptr&lt;job_queue&gt; locked_queue;</div>
+<div class="line"><span class="lineno">  355</span>        {</div>
+<div class="line"><span class="lineno">  356</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  357</span>            locked_queue = weak_queue.lock();</div>
+<div class="line"><span class="lineno">  358</span>            <span class="keywordflow">if</span> (!locked_queue)</div>
+<div class="line"><span class="lineno">  359</span>            {</div>
+<div class="line"><span class="lineno">  360</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;Queue is no longer available&quot;</span>};</div>
+<div class="line"><span class="lineno">  361</span>            }</div>
+<div class="line"><span class="lineno">  362</span>        }</div>
+<div class="line"><span class="lineno">  363</span>        </div>
+<div class="line"><span class="lineno">  364</span>        <span class="comment">// Now we have a valid shared_ptr to the queue</span></div>
+<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">if</span> (!message.empty())</div>
+<div class="line"><span class="lineno">  366</span>        {</div>
+<div class="line"><span class="lineno">  367</span>            <span class="keywordflow">try</span> </div>
+<div class="line"><span class="lineno">  368</span>            {</div>
+<div class="line"><span class="lineno">  369</span>                <span class="keyword">auto</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a> = std::make_unique&lt;message_job&gt;(target_log_type, datetime, message);</div>
+<div class="line"><span class="lineno">  370</span>                <span class="keyword">auto</span> enqueue_result = locked_queue-&gt;enqueue(std::move(<a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>));</div>
+<div class="line"><span class="lineno">  371</span>                <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  372</span>                {</div>
+<div class="line"><span class="lineno">  373</span>                    <span class="keywordflow">return</span> enqueue_result.get_error();</div>
+<div class="line"><span class="lineno">  374</span>                }</div>
+<div class="line"><span class="lineno">  375</span>            }</div>
+<div class="line"><span class="lineno">  376</span>            <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e)</div>
+<div class="line"><span class="lineno">  377</span>            {</div>
+<div class="line"><span class="lineno">  378</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_creation_failed, </div>
+<div class="line"><span class="lineno">  379</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;Error creating or enqueuing message job: {}&quot;</span>, e.what())};</div>
+<div class="line"><span class="lineno">  380</span>            }</div>
+<div class="line"><span class="lineno">  381</span>        }</div>
+<div class="line"><span class="lineno">  382</span> </div>
+<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  384</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -884,11 +908,11 @@ Here is the call graph for this function:</div>
 <p>Gets the log types that are written to a file. </p>
 <dl class="section return"><dt>Returns</dt><dd>The log types that are currently set to be written to a file. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00067">67</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>    { </div>
-<div class="line"><span class="lineno">   69</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>; </div>
-<div class="line"><span class="lineno">   71</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00106">106</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    { </div>
+<div class="line"><span class="lineno">  108</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a>; </div>
+<div class="line"><span class="lineno">  110</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -916,11 +940,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   62</span>    { </div>
-<div class="line"><span class="lineno">   63</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   64</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a> = type; </div>
-<div class="line"><span class="lineno">   65</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00100">100</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  101</span>    { </div>
+<div class="line"><span class="lineno">  102</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  103</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab57512e92c20b5c5ad52191799003e40">file_log_type_</a> = type; </div>
+<div class="line"><span class="lineno">  104</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1041,11 +1065,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>    {</div>
-<div class="line"><span class="lineno">   99</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">  100</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ad95e2a80fc345b6c7289aa7dea13bf4b">callback_queue_</a> = queue;</div>
-<div class="line"><span class="lineno">  101</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  137</span>    {</div>
+<div class="line"><span class="lineno">  138</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  139</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ad95e2a80fc345b6c7289aa7dea13bf4b">callback_queue_</a> = queue;</div>
+<div class="line"><span class="lineno">  140</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1073,11 +1097,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00085">85</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>    {</div>
-<div class="line"><span class="lineno">   87</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   88</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a> = queue;</div>
-<div class="line"><span class="lineno">   89</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00124">124</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>    {</div>
+<div class="line"><span class="lineno">  126</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  127</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#a86ba5e26338ca6d9d48941b26eb5d98c">console_queue_</a> = queue;</div>
+<div class="line"><span class="lineno">  128</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1105,11 +1129,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00091">91</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">   94</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a> = queue;</div>
-<div class="line"><span class="lineno">   95</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00130">130</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>    {</div>
+<div class="line"><span class="lineno">  132</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  133</span>        <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab7fecba14eb03947827db31a46476eb3">file_queue_</a> = queue;</div>
+<div class="line"><span class="lineno">  134</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1142,12 +1166,12 @@ Here is the call graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00121">121</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  122</span>    { </div>
-<div class="line"><span class="lineno">  123</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
-<div class="line"><span class="lineno">  124</span>        <span class="comment">// Check if log_queue_ is valid before accessing it</span></div>
-<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a> &amp;&amp; !<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>-&gt;empty();</div>
-<div class="line"><span class="lineno">  126</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00160">160</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  161</span>    { </div>
+<div class="line"><span class="lineno">  162</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#ab79c32b6a3e3c00320f3b2bba145095c">queue_mutex_</a>);</div>
+<div class="line"><span class="lineno">  163</span>        <span class="comment">// Check if log_queue_ is valid before accessing it</span></div>
+<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a> &amp;&amp; !<a class="code hl_variable" href="../../d7/da3/classlog__module_1_1log__collector.html#adbdd1b4d11778f143ee74938cbb9ac25">log_queue_</a>-&gt;empty();</div>
+<div class="line"><span class="lineno">  165</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1193,10 +1217,10 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00103">103</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  108</span>    {</div>
-<div class="line"><span class="lineno">  109</span>        <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb">write_string</a>(type, message, start_time);</div>
-<div class="line"><span class="lineno">  110</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00142">142</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>    {</div>
+<div class="line"><span class="lineno">  148</span>        <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb">write_string</a>(type, message, start_time);</div>
+<div class="line"><span class="lineno">  149</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1log__collector_html_abffdf0a0fd93e9d5bab36d1e832569fb"><div class="ttname"><a href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb">log_module::log_collector::write_string</a></div><div class="ttdeci">auto write_string(const log_types &amp;type, const StringType &amp;message, std::optional&lt; std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; &gt; start_time) -&gt; void</div><div class="ttdoc">Template method for writing log messages of various string types.</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d77/log__collector_8h_source.html#l00221">log_collector.h:221</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1243,10 +1267,10 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00112">112</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>    {</div>
-<div class="line"><span class="lineno">  118</span>        <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb">write_string</a>(type, message, start_time);</div>
-<div class="line"><span class="lineno">  119</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html#l00151">151</a> of file <a class="el" href="../../d7/d3c/log__collector_8cpp_source.html">log_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  156</span>    {</div>
+<div class="line"><span class="lineno">  157</span>        <a class="code hl_function" href="../../d7/da3/classlog__module_1_1log__collector.html#abffdf0a0fd93e9d5bab36d1e832569fb">write_string</a>(type, message, start_time);</div>
+<div class="line"><span class="lineno">  158</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1571,7 +1595,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

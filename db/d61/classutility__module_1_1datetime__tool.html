@@ -132,9 +132,9 @@ Typical Usage</h3>
 <div class="line"><span class="comment">// ... do some work ...</span></div>
 <div class="line"><span class="keywordtype">double</span> duration_ms = datetime_tool::time_difference&lt;&gt;(start); <span class="comment">// Default = milliseconds</span></div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Elapsed ms: &quot;</span> &lt;&lt; duration_ms &lt;&lt; std::endl;</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a506f9bd4f2527b28f2dcf9ae66e9abf6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">utility_module::datetime_tool::time</a></div><div class="ttdeci">static auto time(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;:&quot;) -&gt; std::string</div><div class="ttdoc">Formats the time portion (HH:MM:SS by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00066">datetime_tool.cpp:66</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_aace0614bc0081035af24d8458470db85"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">utility_module::datetime_tool::date</a></div><div class="ttdeci">static auto date(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;-&quot;) -&gt; std::string</div><div class="ttdoc">Formats the date portion (YYYY-MM-DD by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00042">datetime_tool.cpp:42</a></div></div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_ae8bc79e53ad02c718cac3b93592c2d5e"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">utility_module::datetime_tool::milliseconds</a></div><div class="ttdeci">static auto milliseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;milli_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the milliseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">datetime_tool.cpp:90</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a506f9bd4f2527b28f2dcf9ae66e9abf6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">utility_module::datetime_tool::time</a></div><div class="ttdeci">static auto time(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;:&quot;) -&gt; std::string</div><div class="ttdoc">Formats the time portion (HH:MM:SS by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00152">datetime_tool.cpp:152</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_aace0614bc0081035af24d8458470db85"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85">utility_module::datetime_tool::date</a></div><div class="ttdeci">static auto date(const std::chrono::system_clock::time_point &amp;time, const std::string &amp;separator_character=&quot;-&quot;) -&gt; std::string</div><div class="ttdoc">Formats the date portion (YYYY-MM-DD by default) of a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">datetime_tool.cpp:102</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_ae8bc79e53ad02c718cac3b93592c2d5e"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">utility_module::datetime_tool::milliseconds</a></div><div class="ttdeci">static auto milliseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;milli_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the milliseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00203">datetime_tool.cpp:203</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../d9/da1/datetime__tool_8h_source.html#l00062">62</a> of file <a class="el" href="../../d9/da1/datetime__tool_8h_source.html">datetime_tool.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -173,6 +173,7 @@ Typical Usage</h3>
 </div><div class="memdoc">
 
 <p>Formats the date portion (YYYY-MM-DD by default) of a time point. </p>
+<p>Formats a time point as a date string with customizable separator.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> to convert. </td></tr>
@@ -181,30 +182,57 @@ Typical Usage</h3>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A string in the format "YYYY&lt;sep&gt;MM&lt;sep&gt;DD".</dd></dl>
-<p>This function uses the local time zone for conversion. To handle time zones explicitly, additional logic may be required. </p>
+<p>This function uses the local time zone for conversion. To handle time zones explicitly, additional logic may be required.</p>
+<p>Implementation details:</p><ul>
+<li>Uses modern C++20 chrono facilities when available for accuracy</li>
+<li>Falls back to traditional C time functions for compatibility</li>
+<li>Automatically converts to local time zone for user-friendly display</li>
+<li>Provides consistent YYYY-MM-DD format with configurable separators</li>
+</ul>
+<p>Platform Compatibility:</p><ul>
+<li>Modern systems: Uses std::chrono::current_zone() for accurate timezone handling</li>
+<li>Legacy systems: Uses localtime() with manual timezone adjustment</li>
+<li>Both paths produce identical output format</li>
+</ul>
+<p>Formatting Details:</p><ul>
+<li>Year: 4-digit zero-padded format (e.g., 2024)</li>
+<li>Month: 2-digit zero-padded format (01-12)</li>
+<li>Day: 2-digit zero-padded format (01-31)</li>
+<li>Separator: User-configurable (common: "-", "/", ".")</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>System clock time point to format </td></tr>
+    <tr><td class="paramname">separator_character</td><td>Character(s) to use between date components </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted date string (e.g., "2024-01-15" with "-" separator) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   44</span>    {</div>
-<div class="line"><span class="lineno">   45</span><span class="preprocessor">#ifdef USE_STD_CHRONO_CURRENT_ZONE</span></div>
-<div class="line"><span class="lineno">   46</span>        <span class="keyword">const</span> <span class="keyword">auto</span> local_time = std::chrono::current_zone()-&gt;to_local(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
-<div class="line"><span class="lineno">   47</span>        <span class="keyword">const</span> <span class="keyword">auto</span> ymd</div>
-<div class="line"><span class="lineno">   48</span>            = std::chrono::year_month_day{ std::chrono::floor&lt;std::chrono::days&gt;(local_time) };</div>
-<div class="line"><span class="lineno">   49</span> </div>
-<div class="line"><span class="lineno">   50</span>        <span class="keyword">const</span> <span class="keyword">auto</span> year = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(ymd.year());</div>
-<div class="line"><span class="lineno">   51</span>        <span class="keyword">const</span> <span class="keyword">auto</span> month = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(ymd.month());</div>
-<div class="line"><span class="lineno">   52</span>        <span class="keyword">const</span> <span class="keyword">auto</span> day = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(ymd.day());</div>
-<div class="line"><span class="lineno">   53</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">   54</span>        <span class="keyword">const</span> <span class="keyword">auto</span> time_t = std::chrono::system_clock::to_time_t(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
-<div class="line"><span class="lineno">   55</span>        <span class="keyword">const</span> <span class="keyword">auto</span>* tm = std::localtime(&amp;time_t);</div>
-<div class="line"><span class="lineno">   56</span> </div>
-<div class="line"><span class="lineno">   57</span>        <span class="keyword">const</span> <span class="keyword">auto</span> year = tm-&gt;tm_year + 1900;</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keyword">const</span> <span class="keyword">auto</span> month = tm-&gt;tm_mon + 1;</div>
-<div class="line"><span class="lineno">   59</span>        <span class="keyword">const</span> <span class="keyword">auto</span> day = tm-&gt;tm_mday;</div>
-<div class="line"><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">   61</span> </div>
-<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:04d}{}{:02d}{}{:02d}&quot;</span>, year, separator_character, month,</div>
-<div class="line"><span class="lineno">   63</span>                                 separator_character, day);</div>
-<div class="line"><span class="lineno">   64</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>    {</div>
+<div class="line"><span class="lineno">  105</span><span class="preprocessor">#ifdef USE_STD_CHRONO_CURRENT_ZONE</span></div>
+<div class="line"><span class="lineno">  106</span>        <span class="comment">// Modern C++20 approach: Use timezone-aware chrono facilities</span></div>
+<div class="line"><span class="lineno">  107</span>        <span class="keyword">const</span> <span class="keyword">auto</span> local_time = std::chrono::current_zone()-&gt;to_local(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keyword">const</span> <span class="keyword">auto</span> ymd</div>
+<div class="line"><span class="lineno">  109</span>            = std::chrono::year_month_day{ std::chrono::floor&lt;std::chrono::days&gt;(local_time) };</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>        <span class="keyword">const</span> <span class="keyword">auto</span> year = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(ymd.year());</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keyword">const</span> <span class="keyword">auto</span> month = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(ymd.month());</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keyword">const</span> <span class="keyword">auto</span> day = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(ymd.day());</div>
+<div class="line"><span class="lineno">  114</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  115</span>        <span class="comment">// Legacy fallback: Use traditional C time functions</span></div>
+<div class="line"><span class="lineno">  116</span>        <span class="keyword">const</span> <span class="keyword">auto</span> time_t = std::chrono::system_clock::to_time_t(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">const</span> <span class="keyword">auto</span>* tm = std::localtime(&amp;time_t);</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span>        <span class="keyword">const</span> <span class="keyword">auto</span> year = tm-&gt;tm_year + 1900;  <span class="comment">// tm_year is years since 1900</span></div>
+<div class="line"><span class="lineno">  120</span>        <span class="keyword">const</span> <span class="keyword">auto</span> month = tm-&gt;tm_mon + 1;     <span class="comment">// tm_mon is 0-based</span></div>
+<div class="line"><span class="lineno">  121</span>        <span class="keyword">const</span> <span class="keyword">auto</span> day = tm-&gt;tm_mday;          <span class="comment">// tm_mday is 1-based</span></div>
+<div class="line"><span class="lineno">  122</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:04d}{}{:02d}{}{:02d}&quot;</span>, year, separator_character, month,</div>
+<div class="line"><span class="lineno">  125</span>                                 separator_character, day);</div>
+<div class="line"><span class="lineno">  126</span>    }</div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -269,6 +297,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Extracts the microseconds (0-999) component from a time point. </p>
+<p>Extracts microsecond component from time point with optional offset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
@@ -277,19 +306,40 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing microseconds (e.g., "000", "256").</dd></dl>
-<p>Typically used when higher precision than milliseconds is desired (e.g., logging). Formatted to 3 digits, so it represents only the thousandths part of a millisecond. </p>
+<p>Typically used when higher precision than milliseconds is desired (e.g., logging). Formatted to 3 digits, so it represents only the thousandths part of a millisecond.</p>
+<p>Implementation details:</p><ul>
+<li>Calculates microseconds since epoch for the given time point</li>
+<li>Extracts only the microsecond component (0-999) within each millisecond</li>
+<li>Applies optional offset for adjusted microsecond calculations</li>
+<li>Ensures result stays within valid microsecond range using modulo</li>
+</ul>
+<p>Precision Notes:</p><ul>
+<li>This extracts the microsecond portion within the current millisecond</li>
+<li>Result represents the sub-millisecond precision (000-999 microseconds)</li>
+<li>Combined with <a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e" title="Extracts the milliseconds (0-999) component from a time point.">milliseconds()</a> provides microsecond-level precision</li>
+<li>Useful for high-precision timing and performance measurements</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>System clock time point to extract microseconds from </td></tr>
+    <tr><td class="paramname">micro_portion</td><td>Optional offset to add to microseconds (default: 0) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>3-digit zero-padded microsecond string (000-999) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>    {</div>
-<div class="line"><span class="lineno">  105</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
-<div class="line"><span class="lineno">  106</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a></div>
-<div class="line"><span class="lineno">  107</span>            = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(duration).count() % 1000;</div>
-<div class="line"><span class="lineno">  108</span> </div>
-<div class="line"><span class="lineno">  109</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a> + micro_portion) % 1000;</div>
-<div class="line"><span class="lineno">  110</span> </div>
-<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a>);</div>
-<div class="line"><span class="lineno">  112</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_af24272c85e0cd14d223fb7b736253d77"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">utility_module::datetime_tool::microseconds</a></div><div class="ttdeci">static auto microseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;micro_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the microseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00102">datetime_tool.cpp:102</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00235">235</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span>    {</div>
+<div class="line"><span class="lineno">  238</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">  239</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a></div>
+<div class="line"><span class="lineno">  240</span>            = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(duration).count() % 1000;</div>
+<div class="line"><span class="lineno">  241</span> </div>
+<div class="line"><span class="lineno">  242</span>        <span class="comment">// Apply offset and ensure result stays within valid range</span></div>
+<div class="line"><span class="lineno">  243</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a> + micro_portion) % 1000;</div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">microseconds</a>);</div>
+<div class="line"><span class="lineno">  246</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_af24272c85e0cd14d223fb7b736253d77"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#af24272c85e0cd14d223fb7b736253d77">utility_module::datetime_tool::microseconds</a></div><div class="ttdeci">static auto microseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;micro_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the microseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00235">datetime_tool.cpp:235</a></div></div>
 <div class="ttc" id="anamespacemonitoring__module_html_a5288937db3fb31594060a3ae2c801b01"><div class="ttname"><a href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">monitoring_module::duration</a></div><div class="ttdeci">std::chrono::nanoseconds duration</div><div class="ttdoc">Duration type for time measurements.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00079">monitoring_types.h:79</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -352,6 +402,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Extracts the milliseconds (0-999) component from a time point. </p>
+<p>Extracts millisecond component from time point with optional offset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
@@ -360,18 +411,45 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing milliseconds (e.g., "007", "150").</dd></dl>
-<p>Only the sub-second part of the time point is used; the rest is discarded. The result is formatted to always be 3 digits, enabling easy concatenation into timestamps. </p>
+<p>Only the sub-second part of the time point is used; the rest is discarded. The result is formatted to always be 3 digits, enabling easy concatenation into timestamps.</p>
+<p>Implementation details:</p><ul>
+<li>Calculates milliseconds since epoch for the given time point</li>
+<li>Extracts only the millisecond component (0-999) using modulo operation</li>
+<li>Applies optional offset for adjusted millisecond calculations</li>
+<li>Ensures result stays within valid millisecond range using modulo</li>
+</ul>
+<p>Calculation Process:</p><ol type="1">
+<li>Convert time point to duration since epoch</li>
+<li>Cast to milliseconds precision and extract millisecond component</li>
+<li>Add user-provided offset for time adjustments</li>
+<li>Apply modulo 1000 to keep result in valid range</li>
+</ol>
+<p>Use Cases:</p><ul>
+<li>High-precision timestamp formatting</li>
+<li>Time offset calculations for logging</li>
+<li>Sub-second precision display requirements</li>
+<li>Performance measurement and profiling</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>System clock time point to extract milliseconds from </td></tr>
+    <tr><td class="paramname">milli_portion</td><td>Optional offset to add to milliseconds (default: 0) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>3-digit zero-padded millisecond string (000-999) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00090">90</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
-<div class="line"><span class="lineno">   94</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a></div>
-<div class="line"><span class="lineno">   95</span>            = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(duration).count() % 1000;</div>
-<div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a> + milli_portion) % 1000;</div>
-<div class="line"><span class="lineno">   98</span> </div>
-<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a>);</div>
-<div class="line"><span class="lineno">  100</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00203">203</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>    {</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">  207</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a></div>
+<div class="line"><span class="lineno">  208</span>            = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(duration).count() % 1000;</div>
+<div class="line"><span class="lineno">  209</span> </div>
+<div class="line"><span class="lineno">  210</span>        <span class="comment">// Apply offset and ensure result stays within valid range</span></div>
+<div class="line"><span class="lineno">  211</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a> + milli_portion) % 1000;</div>
+<div class="line"><span class="lineno">  212</span> </div>
+<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#ae8bc79e53ad02c718cac3b93592c2d5e">milliseconds</a>);</div>
+<div class="line"><span class="lineno">  214</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -433,6 +511,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Extracts the nanoseconds (0-999) component from a time point. </p>
+<p>Extracts nanosecond component from time point with optional offset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> from which to extract. </td></tr>
@@ -441,19 +520,40 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A zero-padded three-digit string representing nanoseconds (e.g., "000", "999").</dd></dl>
-<p>If full nanosecond resolution is required, consider a different approach, as this method only shows the first 3 digits in the nanosecond field. </p>
+<p>If full nanosecond resolution is required, consider a different approach, as this method only shows the first 3 digits in the nanosecond field.</p>
+<p>Implementation details:</p><ul>
+<li>Calculates nanoseconds since epoch for the given time point</li>
+<li>Extracts only the nanosecond component (0-999) within each microsecond</li>
+<li>Applies optional offset for adjusted nanosecond calculations</li>
+<li>Ensures result stays within valid nanosecond range using modulo</li>
+</ul>
+<p>Precision Notes:</p><ul>
+<li>This extracts the nanosecond portion within the current microsecond</li>
+<li>Result represents the sub-microsecond precision (000-999 nanoseconds)</li>
+<li>Provides the highest precision available from std::chrono</li>
+<li>Essential for ultra-high-precision timing measurements</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>System clock time point to extract nanoseconds from </td></tr>
+    <tr><td class="paramname">nano_portion</td><td>Optional offset to add to nanoseconds (default: 0) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>3-digit zero-padded nanosecond string (000-999) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">114</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  116</span>    {</div>
-<div class="line"><span class="lineno">  117</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
-<div class="line"><span class="lineno">  118</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a></div>
-<div class="line"><span class="lineno">  119</span>            = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration).count() % 1000;</div>
-<div class="line"><span class="lineno">  120</span> </div>
-<div class="line"><span class="lineno">  121</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a> + nano_portion) % 1000;</div>
-<div class="line"><span class="lineno">  122</span> </div>
-<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a>);</div>
-<div class="line"><span class="lineno">  124</span>    }</div>
-<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a715b310f2e28321265f02b39ef334eb6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">utility_module::datetime_tool::nanoseconds</a></div><div class="ttdeci">static auto nanoseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;nano_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the nanoseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00114">datetime_tool.cpp:114</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00267">267</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  269</span>    {</div>
+<div class="line"><span class="lineno">  270</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a> = <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>.time_since_epoch();</div>
+<div class="line"><span class="lineno">  271</span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a></div>
+<div class="line"><span class="lineno">  272</span>            = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration).count() % 1000;</div>
+<div class="line"><span class="lineno">  273</span> </div>
+<div class="line"><span class="lineno">  274</span>        <span class="comment">// Apply offset and ensure result stays within valid range</span></div>
+<div class="line"><span class="lineno">  275</span>        <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a> = (<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a> + nano_portion) % 1000;</div>
+<div class="line"><span class="lineno">  276</span> </div>
+<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:03d}&quot;</span>, <a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">nanoseconds</a>);</div>
+<div class="line"><span class="lineno">  278</span>    }</div>
+<div class="ttc" id="aclassutility__module_1_1datetime__tool_html_a715b310f2e28321265f02b39ef334eb6"><div class="ttname"><a href="../../db/d61/classutility__module_1_1datetime__tool.html#a715b310f2e28321265f02b39ef334eb6">utility_module::datetime_tool::nanoseconds</a></div><div class="ttdeci">static auto nanoseconds(const std::chrono::system_clock::time_point &amp;time, const int &amp;nano_portion=0) -&gt; std::string</div><div class="ttdoc">Extracts the nanoseconds (0-999) component from a time point.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/da9/datetime__tool_8cpp_source.html#l00267">datetime_tool.cpp:267</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -505,6 +605,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Formats the time portion (HH:MM:SS by default) of a time point. </p>
+<p>Formats a time point as a time string with customizable separator.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The <code>std::chrono::system_clock::time_point</code> to convert. </td></tr>
@@ -513,30 +614,57 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A string in the format "HH&lt;sep&gt;MM&lt;sep&gt;SS".</dd></dl>
-<p>Similar to <code><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY-MM-DD by default) of a time point.">date()</a></code>, this function converts the given time point to local time before extracting hours, minutes, and seconds. </p>
+<p>Similar to <code><a class="el" href="../../db/d61/classutility__module_1_1datetime__tool.html#aace0614bc0081035af24d8458470db85" title="Formats the date portion (YYYY-MM-DD by default) of a time point.">date()</a></code>, this function converts the given time point to local time before extracting hours, minutes, and seconds.</p>
+<p>Implementation details:</p><ul>
+<li>Extracts time-of-day components from the time point</li>
+<li>Uses modern C++20 hh_mm_ss for accurate time component extraction</li>
+<li>Falls back to traditional tm structure for compatibility</li>
+<li>Provides consistent HH:MM:SS format with configurable separators</li>
+</ul>
+<p>Time Component Extraction:</p><ul>
+<li>Modern: Uses std::chrono::hh_mm_ss for precise time-of-day calculation</li>
+<li>Legacy: Uses tm structure fields with standard C library</li>
+<li>Both methods handle local timezone conversion automatically</li>
+</ul>
+<p>Formatting Details:</p><ul>
+<li>Hours: 2-digit zero-padded format (00-23), 24-hour format</li>
+<li>Minutes: 2-digit zero-padded format (00-59)</li>
+<li>Seconds: 2-digit zero-padded format (00-59)</li>
+<li>Separator: User-configurable (common: ":", ".")</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>System clock time point to format </td></tr>
+    <tr><td class="paramname">separator_character</td><td>Character(s) to use between time components </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted time string (e.g., "14:30:25" with ":" separator) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00066">66</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>    {</div>
-<div class="line"><span class="lineno">   69</span><span class="preprocessor">#ifdef USE_STD_CHRONO_CURRENT_ZONE</span></div>
-<div class="line"><span class="lineno">   70</span>        <span class="keyword">const</span> <span class="keyword">auto</span> local_time = std::chrono::current_zone()-&gt;to_local(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keyword">const</span> <span class="keyword">auto</span> tod = std::chrono::hh_mm_ss{ std::chrono::floor&lt;std::chrono::seconds&gt;(</div>
-<div class="line"><span class="lineno">   72</span>            local_time - std::chrono::floor&lt;std::chrono::days&gt;(local_time)) };</div>
-<div class="line"><span class="lineno">   73</span> </div>
-<div class="line"><span class="lineno">   74</span>        <span class="keyword">const</span> <span class="keyword">auto</span> hours = tod.hours().count();</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keyword">const</span> <span class="keyword">auto</span> minutes = tod.minutes().count();</div>
-<div class="line"><span class="lineno">   76</span>        <span class="keyword">const</span> <span class="keyword">auto</span> seconds = tod.seconds().count();</div>
-<div class="line"><span class="lineno">   77</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">   78</span>        <span class="keyword">const</span> <span class="keyword">auto</span> time_t = std::chrono::system_clock::to_time_t(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
-<div class="line"><span class="lineno">   79</span>        <span class="keyword">const</span> <span class="keyword">auto</span>* tm = std::localtime(&amp;time_t);</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>        <span class="keyword">const</span> <span class="keyword">auto</span> hours = tm-&gt;tm_hour;</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keyword">const</span> <span class="keyword">auto</span> minutes = tm-&gt;tm_min;</div>
-<div class="line"><span class="lineno">   83</span>        <span class="keyword">const</span> <span class="keyword">auto</span> seconds = tm-&gt;tm_sec;</div>
-<div class="line"><span class="lineno">   84</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">   85</span> </div>
-<div class="line"><span class="lineno">   86</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:02d}{}{:02d}{}{:02d}&quot;</span>, hours, separator_character, minutes,</div>
-<div class="line"><span class="lineno">   87</span>                                 separator_character, seconds);</div>
-<div class="line"><span class="lineno">   88</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  154</span>    {</div>
+<div class="line"><span class="lineno">  155</span><span class="preprocessor">#ifdef USE_STD_CHRONO_CURRENT_ZONE</span></div>
+<div class="line"><span class="lineno">  156</span>        <span class="comment">// Modern C++20 approach: Use precise time-of-day extraction</span></div>
+<div class="line"><span class="lineno">  157</span>        <span class="keyword">const</span> <span class="keyword">auto</span> local_time = std::chrono::current_zone()-&gt;to_local(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keyword">const</span> <span class="keyword">auto</span> tod = std::chrono::hh_mm_ss{ std::chrono::floor&lt;std::chrono::seconds&gt;(</div>
+<div class="line"><span class="lineno">  159</span>            local_time - std::chrono::floor&lt;std::chrono::days&gt;(local_time)) };</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>        <span class="keyword">const</span> <span class="keyword">auto</span> hours = tod.hours().count();</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keyword">const</span> <span class="keyword">auto</span> minutes = tod.minutes().count();</div>
+<div class="line"><span class="lineno">  163</span>        <span class="keyword">const</span> <span class="keyword">auto</span> seconds = tod.seconds().count();</div>
+<div class="line"><span class="lineno">  164</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  165</span>        <span class="comment">// Legacy fallback: Use traditional C time functions</span></div>
+<div class="line"><span class="lineno">  166</span>        <span class="keyword">const</span> <span class="keyword">auto</span> time_t = std::chrono::system_clock::to_time_t(<a class="code hl_function" href="../../db/d61/classutility__module_1_1datetime__tool.html#a506f9bd4f2527b28f2dcf9ae66e9abf6">time</a>);</div>
+<div class="line"><span class="lineno">  167</span>        <span class="keyword">const</span> <span class="keyword">auto</span>* tm = std::localtime(&amp;time_t);</div>
+<div class="line"><span class="lineno">  168</span> </div>
+<div class="line"><span class="lineno">  169</span>        <span class="keyword">const</span> <span class="keyword">auto</span> hours = tm-&gt;tm_hour;    <span class="comment">// 24-hour format (0-23)</span></div>
+<div class="line"><span class="lineno">  170</span>        <span class="keyword">const</span> <span class="keyword">auto</span> minutes = tm-&gt;tm_min;   <span class="comment">// Minutes (0-59)</span></div>
+<div class="line"><span class="lineno">  171</span>        <span class="keyword">const</span> <span class="keyword">auto</span> seconds = tm-&gt;tm_sec;   <span class="comment">// Seconds (0-59)</span></div>
+<div class="line"><span class="lineno">  172</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  173</span> </div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;{:02d}{}{:02d}{}{:02d}&quot;</span>, hours, separator_character, minutes,</div>
+<div class="line"><span class="lineno">  175</span>                                 separator_character, seconds);</div>
+<div class="line"><span class="lineno">  176</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -600,6 +728,7 @@ template&lt;typename DurationType , typename ClockType &gt; </div>
 </div><div class="memdoc">
 
 <p>Calculates the time difference between two time points in a specified duration type. </p>
+<p>Calculates time difference between two time points with specified precision.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">DurationType</td><td>The duration type to compute (e.g. <code>std::chrono::milliseconds</code>, <code>std::chrono::seconds</code>). Defaults to <code>std::chrono::milliseconds</code>. </td></tr>
@@ -615,14 +744,50 @@ template&lt;typename DurationType , typename ClockType &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>double</code> representing the difference in <code>DurationType</code> units.</dd></dl>
-<p>If you wish to measure performance or elapsed time between two operations, store a time point before the operation, then call this function afterwards (or at any later time). The result can be cast to floating-point for fractional values (e.g. 12.34 ms). </p>
+<p>If you wish to measure performance or elapsed time between two operations, store a time point before the operation, then call this function afterwards (or at any later time). The result can be cast to floating-point for fractional values (e.g. 12.34 ms).</p>
+<p>Implementation details:</p><ul>
+<li>Template-based approach allows compile-time precision selection</li>
+<li>Supports any chrono clock type for flexible timing measurements</li>
+<li>Returns floating-point result for sub-unit precision</li>
+<li>Uses efficient chrono duration casting for optimal performance</li>
+</ul>
+<p>Template Parameters:</p><ul>
+<li>DurationType: Precision unit (milliseconds, microseconds, etc.)</li>
+<li>ClockType: Clock type (steady_clock, high_resolution_clock, etc.)</li>
+</ul>
+<p>Calculation Process:</p><ol type="1">
+<li>Subtract start_time from end_time to get duration</li>
+<li>Cast to specified duration type with double precision</li>
+<li>Return count as floating-point value</li>
+</ol>
+<p>Use Cases:</p><ul>
+<li>Performance benchmarking and profiling</li>
+<li>Timeout calculations and validation</li>
+<li>Elapsed time measurements in applications</li>
+<li>High-precision timing for scientific computations</li>
+</ul>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DurationType</td><td>Chrono duration type for result precision </td></tr>
+    <tr><td class="paramname">ClockType</td><td>Chrono clock type for time points </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start_time</td><td>Starting time point for measurement </td></tr>
+    <tr><td class="paramname">end_time</td><td>Ending time point for measurement </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Time difference as floating-point value in specified units </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  130</span>    {</div>
-<div class="line"><span class="lineno">  131</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a></div>
-<div class="line"><span class="lineno">  132</span>            = std::chrono::duration&lt;double, typename DurationType::period&gt;(end_time - start_time);</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count();</div>
-<div class="line"><span class="lineno">  134</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html#l00311">311</a> of file <a class="el" href="../../d7/da9/datetime__tool_8cpp_source.html">datetime_tool.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  314</span>    {</div>
+<div class="line"><span class="lineno">  315</span>        <span class="keyword">auto</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a></div>
+<div class="line"><span class="lineno">  316</span>            = std::chrono::duration&lt;double, typename DurationType::period&gt;(end_time - start_time);</div>
+<div class="line"><span class="lineno">  317</span>        <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../dc/da4/namespacemonitoring__module.html#a5288937db3fb31594060a3ae2c801b01">duration</a>.count();</div>
+<div class="line"><span class="lineno">  318</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -643,7 +808,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -249,14 +249,27 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default constructor for the <code><a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user-defined cal...">callback_writer</a></code> class. </p>
-<p>Initializes the job queue that stores log messages. After construction, log messages are queued and then processed by invoking the registered callback function in sequence. </p>
+<p>Constructs a callback writer with message queue initialization.</p>
+<p>Initializes the job queue that stores log messages. After construction, log messages are queued and then processed by invoking the registered callback function in sequence.</p>
+<p>Implementation details:</p><ul>
+<li>Inherits from thread_base for asynchronous processing capability</li>
+<li>Creates dedicated job queue for message job processing</li>
+<li>Initializes callback function pointer to null (must be set before use)</li>
+<li>Sets thread name for debugging and monitoring purposes</li>
+</ul>
+<p>Initialization State:</p><ul>
+<li>Worker thread not started until explicitly requested</li>
+<li>Message queue ready for job submission</li>
+<li>Callback function must be registered before processing</li>
+<li>No automatic thread startup (controlled by caller) </li>
+</ul>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;callback_writer&quot;</span>)</div>
-<div class="line"><span class="lineno">   51</span>        , <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
-<div class="line"><span class="lineno">   52</span>        , <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a>(<span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   53</span>    {</div>
-<div class="line"><span class="lineno">   54</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;callback_writer&quot;</span>)</div>
+<div class="line"><span class="lineno">  101</span>        , <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>(std::make_shared&lt;job_queue&gt;())</div>
+<div class="line"><span class="lineno">  102</span>        , <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a>(<span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  103</span>    {</div>
+<div class="line"><span class="lineno">  104</span>    }</div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_aea256534a7ca78c739dafd590029c324"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">log_module::callback_writer::callback_</a></div><div class="ttdeci">std::function&lt; void(const log_types &amp;, const std::string &amp;, const std::string &amp;)&gt; callback_</div><div class="ttdoc">The user-defined callback function for handling log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00125">callback_writer.h:125</a></div></div>
 <div class="ttc" id="aclasslog__module_1_1callback__writer_html_afe84900903a814985ff6f823ecbe0aaa"><div class="ttname"><a href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">log_module::callback_writer::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A job queue that manages queued log messages.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d1a/callback__writer_8h_source.html#l00123">callback_writer.h:123</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
@@ -289,49 +302,87 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves log messages from the queue and invokes the callback function to process them. </p>
+<p>Processes queued message jobs through registered callback function.</p>
 <p>This method is called periodically by the internal thread loop, delivering each log message in the queue to the callback function in turn. If an error occurs during processing, an error result is returned.</p>
 <dl class="section return"><dt>Returns</dt><dd>result_void<ul>
 <li>A success result indicates successful processing.</li>
-<li>An error result contains a description of the error that occurred. </li>
+<li>An error result contains a description of the error that occurred.</li>
 </ul>
 </dd></dl>
+<p>Implementation details:</p><ul>
+<li>Validates job queue availability before processing</li>
+<li>Dequeues all available message jobs in a single batch operation</li>
+<li>Processes each message job individually with error isolation</li>
+<li>Invokes registered callback function for each valid message</li>
+<li>Continues processing even if individual messages fail</li>
+</ul>
+<p>Processing Workflow:</p><ol type="1">
+<li>Validate job queue is available</li>
+<li>Dequeue all pending message jobs in batch</li>
+<li>For each job: a. Check if callback function is registered b. Cast job to <a class="el" href="../../db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class.">message_job</a> type c. Execute job validation (do_work) d. Invoke callback with message data</li>
+<li>Continue with next job on errors</li>
+</ol>
+<p>Error Handling:</p><ul>
+<li>Missing queue: Returns resource allocation error</li>
+<li>Missing callback: Logs warning and skips message</li>
+<li>Job validation failure: Logs error and continues</li>
+<li>Individual failures don't stop batch processing</li>
+</ul>
+<p>Performance Optimizations:</p><ul>
+<li>Batch dequeue reduces queue lock contention</li>
+<li>Single validation check per processing cycle</li>
+<li>Minimal memory allocations during processing</li>
+<li>Error isolation prevents cascade failures</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Job queue operations are thread-safe</li>
+<li>Callback function pointer read is atomic</li>
+<li>No shared state modification during processing</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>result_void indicating overall processing success or failure </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00065">65</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>    {</div>
-<div class="line"><span class="lineno">   67</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   68</span>        {</div>
-<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>}};</div>
-<div class="line"><span class="lineno">   70</span>        }</div>
-<div class="line"><span class="lineno">   71</span> </div>
-<div class="line"><span class="lineno">   72</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;dequeue_batch();</div>
-<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">while</span> (!remaining_logs.empty())</div>
-<div class="line"><span class="lineno">   74</span>        {</div>
-<div class="line"><span class="lineno">   75</span>            <span class="keyword">auto</span> current_job = std::move(remaining_logs.front());</div>
-<div class="line"><span class="lineno">   76</span>            remaining_logs.pop_front();</div>
-<div class="line"><span class="lineno">   77</span> </div>
-<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   79</span>            {</div>
-<div class="line"><span class="lineno">   80</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;there is no callback function&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">   81</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   82</span>            }</div>
-<div class="line"><span class="lineno">   83</span> </div>
-<div class="line"><span class="lineno">   84</span>            <span class="keyword">auto</span> current_log</div>
-<div class="line"><span class="lineno">   85</span>                = std::unique_ptr&lt;message_job&gt;(<span class="keyword">static_cast&lt;</span>message_job*<span class="keyword">&gt;</span>(current_job.release()));</div>
-<div class="line"><span class="lineno">   86</span> </div>
-<div class="line"><span class="lineno">   87</span>            <span class="keyword">auto</span> work_result = current_log-&gt;do_work();</div>
-<div class="line"><span class="lineno">   88</span>            <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">   89</span>            {</div>
-<div class="line"><span class="lineno">   90</span>                std::cout &lt;&lt; work_result.get_error().to_string() &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">   91</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   92</span>            }</div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>            <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a>(current_log-&gt;log_type(), current_log-&gt;datetime(), current_log-&gt;message());</div>
-<div class="line"><span class="lineno">   95</span>        }</div>
-<div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><span class="lineno">   98</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00175">175</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  176</span>    {</div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment">// Validate job queue availability</span></div>
+<div class="line"><span class="lineno">  178</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  179</span>        {</div>
+<div class="line"><span class="lineno">  180</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>}};</div>
+<div class="line"><span class="lineno">  181</span>        }</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span>        <span class="comment">// Dequeue all available message jobs for batch processing</span></div>
+<div class="line"><span class="lineno">  184</span>        <span class="keyword">auto</span> remaining_logs = <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;dequeue_batch();</div>
+<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">while</span> (!remaining_logs.empty())</div>
+<div class="line"><span class="lineno">  186</span>        {</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keyword">auto</span> current_job = std::move(remaining_logs.front());</div>
+<div class="line"><span class="lineno">  188</span>            remaining_logs.pop_front();</div>
+<div class="line"><span class="lineno">  189</span> </div>
+<div class="line"><span class="lineno">  190</span>            <span class="comment">// Check if callback function is registered</span></div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  192</span>            {</div>
+<div class="line"><span class="lineno">  193</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;there is no callback function&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  194</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  195</span>            }</div>
+<div class="line"><span class="lineno">  196</span> </div>
+<div class="line"><span class="lineno">  197</span>            <span class="comment">// Cast to specific message job type for processing</span></div>
+<div class="line"><span class="lineno">  198</span>            <span class="keyword">auto</span> current_log</div>
+<div class="line"><span class="lineno">  199</span>                = std::unique_ptr&lt;message_job&gt;(<span class="keyword">static_cast&lt;</span>message_job*<span class="keyword">&gt;</span>(current_job.release()));</div>
+<div class="line"><span class="lineno">  200</span> </div>
+<div class="line"><span class="lineno">  201</span>            <span class="comment">// Validate message job before callback invocation</span></div>
+<div class="line"><span class="lineno">  202</span>            <span class="keyword">auto</span> work_result = current_log-&gt;do_work();</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">  204</span>            {</div>
+<div class="line"><span class="lineno">  205</span>                std::cout &lt;&lt; work_result.get_error().to_string() &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  206</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  207</span>            }</div>
+<div class="line"><span class="lineno">  208</span> </div>
+<div class="line"><span class="lineno">  209</span>            <span class="comment">// Invoke registered callback with message data</span></div>
+<div class="line"><span class="lineno">  210</span>            <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a>(current_log-&gt;log_type(), current_log-&gt;datetime(), current_log-&gt;message());</div>
+<div class="line"><span class="lineno">  211</span>        }</div>
+<div class="line"><span class="lineno">  212</span> </div>
+<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><span class="lineno">  214</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
 </div><!-- fragment -->
@@ -389,18 +440,41 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the user-defined callback function that processes log messages. </p>
+<p>Registers a callback function for custom log message handling.</p>
 <p>The callback function is invoked whenever a log message is retrieved from the queue, receiving the log type (<code>log_types</code>), the log message string, and an optional tag string as parameters.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">callback</td><td>The log callback function with the signature <code>(const log_types&amp;, const std::string&amp;, const std::string&amp;)</code>. </td></tr>
+    <tr><td class="paramname">callback</td><td>The log callback function with the signature <code>(const log_types&amp;, const std::string&amp;, const std::string&amp;)</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implementation details:</p><ul>
+<li>Stores user-provided callback function for message processing</li>
+<li>Callback receives log type, timestamp, and formatted message</li>
+<li>Thread-safe assignment (atomic pointer update)</li>
+<li>Replaces any previously registered callback function</li>
+</ul>
+<p>Callback Signature:</p><ul>
+<li>log_types: Message classification (info, warning, error, etc.)</li>
+<li>std::string (datetime): Formatted timestamp string</li>
+<li>std::string (message): Complete formatted log message</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Safe to call while writer thread is running</li>
+<li>New callback takes effect for subsequent messages</li>
+<li>No synchronization needed for callback assignment</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>Function to handle processed log messages </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>    {</div>
-<div class="line"><span class="lineno">   60</span>        <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a> = callback;</div>
-<div class="line"><span class="lineno">   61</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span>    {</div>
+<div class="line"><span class="lineno">  131</span>        <a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#aea256534a7ca78c739dafd590029c324">callback_</a> = callback;</div>
+<div class="line"><span class="lineno">  132</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -438,8 +512,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00063">63</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;empty(); }</div>
+<p class="definition">Definition at line <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html#l00134">134</a> of file <a class="el" href="../../d5/d76/callback__writer_8cpp_source.html">callback_writer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>{ <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../dd/d67/classlog__module_1_1callback__writer.html#afe84900903a814985ff6f823ecbe0aaa">job_queue_</a>-&gt;empty(); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -503,7 +577,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

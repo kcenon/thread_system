@@ -1,5 +1,5 @@
 <map id="sources/logger/writers/console_writer.cpp" name="sources/logger/writers/console_writer.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="2598,5,2765,45"/>
+<area shape="rect" id="Node000001" title="Implementation of console output writer for log messages." alt="" coords="2598,5,2765,45"/>
 <area shape="rect" id="Node000002" href="$dc/d9a/console__writer_8h.html" title=" " alt="" coords="2347,93,2475,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2617,48,2464,92,2462,87,2616,43"/>
 <area shape="rect" id="Node000005" href="$de/d52/formatter_8h.html" title=" " alt="" coords="2138,504,2265,544"/>

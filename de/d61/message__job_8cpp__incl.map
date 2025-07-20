@@ -1,5 +1,5 @@
 <map id="sources/logger/jobs/message_job.cpp" name="sources/logger/jobs/message_job.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="903,5,1051,45"/>
+<area shape="rect" id="Node000001" title="Implementation of formatted message job for log output writers." alt="" coords="903,5,1051,45"/>
 <area shape="rect" id="Node000002" href="$db/dd4/message__job_8h.html" title=" " alt="" coords="593,93,713,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="904,47,714,93,713,88,902,42"/>
 <area shape="rect" id="Node000004" href="$de/d52/formatter_8h.html" title=" " alt="" coords="1209,343,1335,383"/>

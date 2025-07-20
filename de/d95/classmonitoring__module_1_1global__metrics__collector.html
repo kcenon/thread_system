@@ -201,7 +201,7 @@ Example</h3>
 <div class="line"><span class="comment">// Use from anywhere in the application</span></div>
 <div class="line"><span class="keyword">auto</span> collector = global.get_collector();</div>
 <div class="line"><span class="keyword">auto</span> <a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a> = collector-&gt;get_current_snapshot();</div>
-<div class="ttc" id="aclassmonitoring__module_1_1global__metrics__collector_html_ac375f4d87ca3ba0ed3c37ee5d466d0e8"><div class="ttname"><a href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">monitoring_module::global_metrics_collector::instance</a></div><div class="ttdeci">static auto instance() -&gt; global_metrics_collector &amp;</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00273">metrics_collector.cpp:273</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1global__metrics__collector_html_ac375f4d87ca3ba0ed3c37ee5d466d0e8"><div class="ttname"><a href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">monitoring_module::global_metrics_collector::instance</a></div><div class="ttdeci">static auto instance() -&gt; global_metrics_collector &amp;</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00341">metrics_collector.cpp:341</a></div></div>
 <div class="ttc" id="anamespacemetrics_html"><div class="ttname"><a href="../../d1/d82/namespacemetrics.html">metrics</a></div><div class="ttdoc">Convenience functions for global metrics operations.</div></div>
 <div class="ttc" id="astructmonitoring__module_1_1monitoring__config_html"><div class="ttname"><a href="../../db/d71/structmonitoring__module_1_1monitoring__config.html">monitoring_module::monitoring_config</a></div><div class="ttdoc">Configuration parameters for the monitoring system.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00258">monitoring_types.h:258</a></div></div>
 <div class="ttc" id="astructmonitoring__module_1_1monitoring__config_html_a2bd3b48c1131e9248179c4b75b64bbd9"><div class="ttname"><a href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a2bd3b48c1131e9248179c4b75b64bbd9">monitoring_module::monitoring_config::collection_interval</a></div><div class="ttdeci">std::chrono::milliseconds collection_interval</div><div class="ttdoc">Metrics collection interval (default: 100ms)</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00259">monitoring_types.h:259</a></div></div>
@@ -281,11 +281,11 @@ Example</h3>
 <p>Retrieves the underlying metrics collector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Shared pointer to the metrics collector, or nullptr if not initialized </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00301">301</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  301</span>                                                                                     {</div>
-<div class="line"><span class="lineno">  302</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
-<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>;</div>
-<div class="line"><span class="lineno">  304</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00369">369</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  369</span>                                                                                     {</div>
+<div class="line"><span class="lineno">  370</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
+<div class="line"><span class="lineno">  371</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>;</div>
+<div class="line"><span class="lineno">  372</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1global__metrics__collector_html_aaa0d7aa62d6affe1621763988d497973"><div class="ttname"><a href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">monitoring_module::global_metrics_collector::init_mutex_</a></div><div class="ttdeci">std::mutex init_mutex_</div><div class="ttdoc">Protects initialization.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00366">metrics_collector.h:366</a></div></div>
 <div class="ttc" id="aclassmonitoring__module_1_1global__metrics__collector_html_aedd41d1d75e4fbef84ee4417f256d338"><div class="ttname"><a href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">monitoring_module::global_metrics_collector::collector_</a></div><div class="ttdeci">std::shared_ptr&lt; metrics_collector &gt; collector_</div><div class="ttdoc">The actual collector instance.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00365">metrics_collector.h:365</a></div></div>
 </div><!-- fragment -->
@@ -317,20 +317,20 @@ Example</h3>
 <dl class="section return"><dt>Returns</dt><dd>result_void containing error on failure</dd></dl>
 <p>Must be called before using the global collector. Subsequent calls will return an error unless <a class="el" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ab0318127c7c66dbcccec3ad066dacb43" title="Shuts down the global collector.">shutdown()</a> is called first. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00278">278</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  278</span>                                                                                                  {</div>
-<div class="line"><span class="lineno">  279</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
-<div class="line"><span class="lineno">  280</span>        </div>
-<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>) {</div>
-<div class="line"><span class="lineno">  282</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
-<div class="line"><span class="lineno">  283</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a>,</div>
-<div class="line"><span class="lineno">  284</span>                <span class="stringliteral">&quot;Global metrics collector already initialized&quot;</span></div>
-<div class="line"><span class="lineno">  285</span>            }};</div>
-<div class="line"><span class="lineno">  286</span>        }</div>
-<div class="line"><span class="lineno">  287</span> </div>
-<div class="line"><span class="lineno">  288</span>        <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a> = std::make_shared&lt;metrics_collector&gt;(std::move(config));</div>
-<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>-&gt;start();</div>
-<div class="line"><span class="lineno">  290</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00346">346</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  346</span>                                                                                                  {</div>
+<div class="line"><span class="lineno">  347</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
+<div class="line"><span class="lineno">  348</span>        </div>
+<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>) {</div>
+<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
+<div class="line"><span class="lineno">  351</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a>,</div>
+<div class="line"><span class="lineno">  352</span>                <span class="stringliteral">&quot;Global metrics collector already initialized&quot;</span></div>
+<div class="line"><span class="lineno">  353</span>            }};</div>
+<div class="line"><span class="lineno">  354</span>        }</div>
+<div class="line"><span class="lineno">  355</span> </div>
+<div class="line"><span class="lineno">  356</span>        <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a> = std::make_shared&lt;metrics_collector&gt;(std::move(config));</div>
+<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>-&gt;start();</div>
+<div class="line"><span class="lineno">  358</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a></div><div class="ttdeci">@ thread_already_running</div></div>
@@ -363,11 +363,11 @@ Example</h3>
 <p>Returns the singleton instance. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the global metrics collector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00273">273</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  273</span>                                                                         {</div>
-<div class="line"><span class="lineno">  274</span>        <span class="keyword">static</span> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#a511371207cdb8f5cf366f351c1c7d760">global_metrics_collector</a> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">instance</a>;</div>
-<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">instance</a>;</div>
-<div class="line"><span class="lineno">  276</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00341">341</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  341</span>                                                                         {</div>
+<div class="line"><span class="lineno">  342</span>        <span class="keyword">static</span> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#a511371207cdb8f5cf366f351c1c7d760">global_metrics_collector</a> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">instance</a>;</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8">instance</a>;</div>
+<div class="line"><span class="lineno">  344</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1global__metrics__collector_html_a511371207cdb8f5cf366f351c1c7d760"><div class="ttname"><a href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#a511371207cdb8f5cf366f351c1c7d760">monitoring_module::global_metrics_collector::global_metrics_collector</a></div><div class="ttdeci">global_metrics_collector()=default</div><div class="ttdoc">Private constructor for singleton pattern.</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -439,15 +439,15 @@ Here is the caller graph for this function:</div>
 <p>Shuts down the global collector. </p>
 <p>Stops collection and releases resources. After shutdown, <a class="el" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#a72d0a553b53586a02bf1bdd8f5c28907" title="Initializes the global collector with configuration.">initialize()</a> can be called again with new configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00292">292</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  292</span>                                                    {</div>
-<div class="line"><span class="lineno">  293</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
-<div class="line"><span class="lineno">  294</span>        </div>
-<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>) {</div>
-<div class="line"><span class="lineno">  296</span>            <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>-&gt;stop();</div>
-<div class="line"><span class="lineno">  297</span>            <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>.reset();</div>
-<div class="line"><span class="lineno">  298</span>        }</div>
-<div class="line"><span class="lineno">  299</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00360">360</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  360</span>                                                    {</div>
+<div class="line"><span class="lineno">  361</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aaa0d7aa62d6affe1621763988d497973">init_mutex_</a>);</div>
+<div class="line"><span class="lineno">  362</span>        </div>
+<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>) {</div>
+<div class="line"><span class="lineno">  364</span>            <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>-&gt;stop();</div>
+<div class="line"><span class="lineno">  365</span>            <a class="code hl_variable" href="../../de/d95/classmonitoring__module_1_1global__metrics__collector.html#aedd41d1d75e4fbef84ee4417f256d338">collector_</a>.reset();</div>
+<div class="line"><span class="lineno">  366</span>        }</div>
+<div class="line"><span class="lineno">  367</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -511,7 +511,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

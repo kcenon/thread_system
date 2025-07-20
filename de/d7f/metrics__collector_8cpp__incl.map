@@ -1,5 +1,5 @@
 <map id="sources/monitoring/core/metrics_collector.cpp" name="sources/monitoring/core/metrics_collector.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="421,5,617,45"/>
+<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform system and thread pool metrics collection." alt="" coords="421,5,617,45"/>
 <area shape="rect" id="Node000002" href="$d4/d88/metrics__collector_8h.html" title=" " alt="" coords="392,93,537,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="508,47,483,84,478,80,504,44"/>
 <area shape="rect" id="Node000019" href="$de/d52/formatter_8h.html" title=" " alt="" coords="1068,167,1195,207"/>

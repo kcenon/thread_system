@@ -78,6 +78,9 @@ $(function() {
   <div class="headertitle"><div class="title">console_writer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of console output writer for log messages.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d9a/console__writer_8h_source.html">console_writer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d52/formatter_8h_source.html">../../utilities/core/formatter.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../db/dd4/message__job_8h_source.html">../jobs/message_job.h</a>&quot;</code><br />
@@ -87,7 +90,7 @@ Include dependency graph for console_writer.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d0/dba/console__writer_8cpp__incl.png" border="0" usemap="#asources_2logger_2writers_2console__writer_8cpp" alt=""/></div>
 <map name="asources_2logger_2writers_2console__writer_8cpp" id="asources_2logger_2writers_2console__writer_8cpp">
-<area shape="rect" title=" " alt="" coords="2598,5,2765,45"/>
+<area shape="rect" title="Implementation of console output writer for log messages." alt="" coords="2598,5,2765,45"/>
 <area shape="rect" href="../../dc/d9a/console__writer_8h.html" title=" " alt="" coords="2347,93,2475,119"/>
 <area shape="poly" title=" " alt="" coords="2617,48,2464,92,2462,87,2616,43"/>
 <area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="2138,504,2265,544"/>
@@ -262,10 +265,38 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:d9/de0/namespacelog__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe logging system built on the thread system foundation. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of console output writer for log messages. </p>
+<p>This file contains the implementation of the console_writer class, which outputs formatted log messages to the console (stdout). The writer processes message jobs asynchronously and provides formatted console output with timestamps and log levels.</p>
+<p>Key Features:</p><ul>
+<li>Asynchronous console output using dedicated worker thread</li>
+<li>Batch processing for efficient console I/O operations</li>
+<li>Formatted output with timestamps and log level indicators</li>
+<li>Cross-platform formatting support (std::format or fmt library)</li>
+<li>Buffer optimization for reduced console write operations</li>
+</ul>
+<p>Output Format:</p><ul>
+<li>With log type: "[timestamp][log_type] message"</li>
+<li>Without log type: "[timestamp] message"</li>
+<li>Automatic newline handling for proper console display</li>
+</ul>
+<p>Performance Optimizations:</p><ul>
+<li>Message batching reduces console write system calls</li>
+<li>String buffer accumulation minimizes I/O overhead</li>
+<li>Conditional compilation for optimal formatting library</li>
+<li>Efficient string building using back_inserter</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Console output serialized through single writer thread</li>
+<li>Message queue provides thread-safe job submission</li>
+<li>No concurrent console access conflicts </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d1/d4f/console__writer_8cpp_source.html">console_writer.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -78,6 +78,9 @@ $(function() {
   <div class="headertitle"><div class="title">file_handler.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of cross-platform file I/O operations.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../db/de6/file__handler_8h_source.html">file_handler.h</a>&quot;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
@@ -86,7 +89,7 @@ Include dependency graph for file_handler.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d81/file__handler_8cpp__incl.png" border="0" usemap="#asources_2utilities_2io_2file__handler_8cpp" alt=""/></div>
 <map name="asources_2utilities_2io_2file__handler_8cpp" id="asources_2utilities_2io_2file__handler_8cpp">
-<area shape="rect" title=" " alt="" coords="269,5,410,45"/>
+<area shape="rect" title="Implementation of cross&#45;platform file I/O operations." alt="" coords="269,5,410,45"/>
 <area shape="rect" href="../../db/de6/file__handler_8h.html" title=" " alt="" coords="161,93,270,119"/>
 <area shape="poly" title=" " alt="" coords="311,48,247,88,244,84,308,43"/>
 <area shape="rect" title=" " alt="" coords="294,93,385,119"/>
@@ -125,10 +128,35 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:dd/d2a/namespaceutility__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility components supporting the thread system library. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of cross-platform file I/O operations. </p>
+<p>This file contains the implementation of the file utility class, providing safe and efficient file operations with proper error handling. The implementation uses modern C++ filesystem library for cross-platform compatibility and standard I/O streams for reliable file access.</p>
+<p>Key Features:</p><ul>
+<li>Cross-platform file operations using std::filesystem</li>
+<li>Binary file I/O with efficient buffer management</li>
+<li>Automatic directory creation for output operations</li>
+<li>Comprehensive error handling with descriptive messages</li>
+<li>Support for both vector and span data types</li>
+<li>Safe file removal with validation checks</li>
+</ul>
+<p>Error Handling Philosophy:</p><ul>
+<li>Returns std::optional&lt;std::string&gt; for error messages</li>
+<li>std::nullopt indicates successful operation</li>
+<li>Descriptive error messages for debugging and logging</li>
+<li>Graceful handling of file system errors</li>
+</ul>
+<p>Performance Considerations:</p><ul>
+<li>Uses efficient iterator-based loading for large files</li>
+<li>Binary I/O mode for optimal performance</li>
+<li>Automatic buffer sizing based on file content</li>
+<li>Minimal memory allocations during operations </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d5/de5/file__handler_8cpp_source.html">file_handler.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <map id="sources/thread_base/jobs/job.cpp" name="sources/thread_base/jobs/job.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="314,5,470,45"/>
+<area shape="rect" id="Node000001" title="Implementation of the base job class for the thread system." alt="" coords="314,5,470,45"/>
 <area shape="rect" id="Node000002" href="$d3/d6a/job_8h.html" title=" " alt="" coords="689,240,743,265"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="421,43,690,230,687,234,418,48"/>
 <area shape="rect" id="Node000028" href="$db/d9d/job__queue_8h.html" title=" " alt="" coords="867,93,968,119"/>

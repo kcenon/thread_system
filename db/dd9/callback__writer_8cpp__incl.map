@@ -1,5 +1,5 @@
 <map id="sources/logger/writers/callback_writer.cpp" name="sources/logger/writers/callback_writer.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1394,5,1561,45"/>
+<area shape="rect" id="Node000001" title="Implementation of callback&#45;based log writer for custom output handling." alt="" coords="1394,5,1561,45"/>
 <area shape="rect" id="Node000002" href="$d0/d1a/callback__writer_8h.html" title=" " alt="" coords="1091,93,1223,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1401,48,1218,93,1217,87,1400,43"/>
 <area shape="rect" id="Node000013" href="$de/d52/formatter_8h.html" title=" " alt="" coords="1942,504,2069,544"/>

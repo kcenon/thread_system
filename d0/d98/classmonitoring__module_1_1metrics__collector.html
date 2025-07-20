@@ -304,15 +304,32 @@ Example Usage</h3>
 <p>Constructs a metrics collector with specified configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Monitoring configuration parameters </td></tr>
+    <tr><td class="paramname">config</td><td>Monitoring configuration parameters</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implementation details:</p><ul>
+<li>Initializes ring buffer for snapshot storage with configured size</li>
+<li>Stores monitoring configuration for collection behavior</li>
+<li>Sets up atomic variables for thread-safe operation</li>
+<li>Does not start collection automatically (requires explicit <a class="el" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread.">start()</a>)</li>
+</ul>
+<p>Configuration Impact:</p><ul>
+<li>buffer_size: Determines historical snapshot retention</li>
+<li>collection_interval: Sets monitoring frequency</li>
+<li>enable_* flags: Control which metrics are collected</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Monitoring configuration settings </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>        : <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>(std::move(config))</div>
-<div class="line"><span class="lineno">   53</span>        , <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>(std::make_unique&lt;thread_safe_ring_buffer&lt;metrics_snapshot&gt;&gt;(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#abfc896fd95c3d0245fbf69675e95c3f7">buffer_size</a>)) {</div>
-<div class="line"><span class="lineno">   54</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>        : <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>(std::move(config))</div>
+<div class="line"><span class="lineno">  101</span>        , <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>(std::make_unique&lt;thread_safe_ring_buffer&lt;metrics_snapshot&gt;&gt;(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#abfc896fd95c3d0245fbf69675e95c3f7">buffer_size</a>)) {</div>
+<div class="line"><span class="lineno">  102</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a4b225814ca9693450b5e3bdf04e08668"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">monitoring_module::metrics_collector::snapshot_buffer_</a></div><div class="ttdeci">std::unique_ptr&lt; thread_safe_ring_buffer&lt; metrics_snapshot &gt; &gt; snapshot_buffer_</div><div class="ttdoc">Ring buffer for storing historical snapshots.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00274">metrics_collector.h:274</a></div></div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_abe598f6fde44e50bb42e883de0774bb2"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">monitoring_module::metrics_collector::config_</a></div><div class="ttdeci">monitoring_config config_</div><div class="ttdoc">Current configuration.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00269">metrics_collector.h:269</a></div></div>
 </div><!-- fragment -->
@@ -335,11 +352,11 @@ Example Usage</h3>
 
 <p>Destructor ensures collection thread is properly stopped. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>                                          {</div>
-<div class="line"><span class="lineno">   57</span>        <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a9ae1fb8ab8b43097f7b41a8c391b6cc1">stop</a>();</div>
-<div class="line"><span class="lineno">   58</span>    }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a9ae1fb8ab8b43097f7b41a8c391b6cc1"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a9ae1fb8ab8b43097f7b41a8c391b6cc1">monitoring_module::metrics_collector::stop</a></div><div class="ttdeci">auto stop() -&gt; void</div><div class="ttdoc">Stops the metrics collection thread.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00084">metrics_collector.cpp:84</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00104">104</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>                                          {</div>
+<div class="line"><span class="lineno">  105</span>        <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a9ae1fb8ab8b43097f7b41a8c391b6cc1">stop</a>();</div>
+<div class="line"><span class="lineno">  106</span>    }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a9ae1fb8ab8b43097f7b41a8c391b6cc1"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a9ae1fb8ab8b43097f7b41a8c391b6cc1">monitoring_module::metrics_collector::stop</a></div><div class="ttdeci">auto stop() -&gt; void</div><div class="ttdoc">Stops the metrics collection thread.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00152">metrics_collector.cpp:152</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -380,28 +397,28 @@ Here is the call graph for this function:</div>
 <p>Performs a single metrics collection cycle. </p>
 <p>Gathers metrics from all registered sources and stores a snapshot in the ring buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00169">169</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span>                                                    {</div>
-<div class="line"><span class="lineno">  170</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a5eac681de2320ff9f63ca45381800c72">enable_system_metrics</a>) {</div>
-<div class="line"><span class="lineno">  171</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a368275db5a63ee46c3a0469f65579a08">collect_system_metrics</a>();</div>
-<div class="line"><span class="lineno">  172</span>        }</div>
-<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a9a03ac8613d40a9895113ff0052a7cff">enable_thread_pool_metrics</a>) {</div>
-<div class="line"><span class="lineno">  174</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aad46e3493c4e9bdb7b6690fb91ce2fde">collect_thread_pool_metrics</a>();</div>
-<div class="line"><span class="lineno">  175</span>        }</div>
-<div class="line"><span class="lineno">  176</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#afe2a8cdd97d564eac1c35002d5874b07">enable_worker_metrics</a>) {</div>
-<div class="line"><span class="lineno">  177</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a35f27faf72d1d5ba4b3bd4b764a7840c">collect_worker_metrics</a>();</div>
-<div class="line"><span class="lineno">  178</span>        }</div>
-<div class="line"><span class="lineno">  179</span> </div>
-<div class="line"><span class="lineno">  180</span>        <span class="comment">// Create and save snapshot</span></div>
-<div class="line"><span class="lineno">  181</span>        <span class="keyword">auto</span> snapshot = <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a598039f95e975a0afecc6ef9cecea038">get_current_snapshot</a>();</div>
-<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>-&gt;push(snapshot)) {</div>
-<div class="line"><span class="lineno">  183</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aabf5ece78b8fa3a34930615b524be5d8">buffer_overflows</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  184</span>        }</div>
-<div class="line"><span class="lineno">  185</span>    }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a35f27faf72d1d5ba4b3bd4b764a7840c"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a35f27faf72d1d5ba4b3bd4b764a7840c">monitoring_module::metrics_collector::collect_worker_metrics</a></div><div class="ttdeci">auto collect_worker_metrics() -&gt; void</div><div class="ttdoc">Collects worker thread metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00263">metrics_collector.cpp:263</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a368275db5a63ee46c3a0469f65579a08"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a368275db5a63ee46c3a0469f65579a08">monitoring_module::metrics_collector::collect_system_metrics</a></div><div class="ttdeci">auto collect_system_metrics() -&gt; void</div><div class="ttdoc">Collects system-level metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00187">metrics_collector.cpp:187</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a598039f95e975a0afecc6ef9cecea038"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a598039f95e975a0afecc6ef9cecea038">monitoring_module::metrics_collector::get_current_snapshot</a></div><div class="ttdeci">auto get_current_snapshot() const -&gt; metrics_snapshot</div><div class="ttdoc">Retrieves the most recent metrics snapshot.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00114">metrics_collector.cpp:114</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_aad46e3493c4e9bdb7b6690fb91ce2fde"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aad46e3493c4e9bdb7b6690fb91ce2fde">monitoring_module::metrics_collector::collect_thread_pool_metrics</a></div><div class="ttdeci">auto collect_thread_pool_metrics() -&gt; void</div><div class="ttdoc">Collects thread pool metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00254">metrics_collector.cpp:254</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00237">237</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span>                                                    {</div>
+<div class="line"><span class="lineno">  238</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a5eac681de2320ff9f63ca45381800c72">enable_system_metrics</a>) {</div>
+<div class="line"><span class="lineno">  239</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a368275db5a63ee46c3a0469f65579a08">collect_system_metrics</a>();</div>
+<div class="line"><span class="lineno">  240</span>        }</div>
+<div class="line"><span class="lineno">  241</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a9a03ac8613d40a9895113ff0052a7cff">enable_thread_pool_metrics</a>) {</div>
+<div class="line"><span class="lineno">  242</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aad46e3493c4e9bdb7b6690fb91ce2fde">collect_thread_pool_metrics</a>();</div>
+<div class="line"><span class="lineno">  243</span>        }</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#afe2a8cdd97d564eac1c35002d5874b07">enable_worker_metrics</a>) {</div>
+<div class="line"><span class="lineno">  245</span>            <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a35f27faf72d1d5ba4b3bd4b764a7840c">collect_worker_metrics</a>();</div>
+<div class="line"><span class="lineno">  246</span>        }</div>
+<div class="line"><span class="lineno">  247</span> </div>
+<div class="line"><span class="lineno">  248</span>        <span class="comment">// Create and save snapshot</span></div>
+<div class="line"><span class="lineno">  249</span>        <span class="keyword">auto</span> snapshot = <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a598039f95e975a0afecc6ef9cecea038">get_current_snapshot</a>();</div>
+<div class="line"><span class="lineno">  250</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>-&gt;push(snapshot)) {</div>
+<div class="line"><span class="lineno">  251</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aabf5ece78b8fa3a34930615b524be5d8">buffer_overflows</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  252</span>        }</div>
+<div class="line"><span class="lineno">  253</span>    }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a35f27faf72d1d5ba4b3bd4b764a7840c"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a35f27faf72d1d5ba4b3bd4b764a7840c">monitoring_module::metrics_collector::collect_worker_metrics</a></div><div class="ttdeci">auto collect_worker_metrics() -&gt; void</div><div class="ttdoc">Collects worker thread metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00331">metrics_collector.cpp:331</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a368275db5a63ee46c3a0469f65579a08"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a368275db5a63ee46c3a0469f65579a08">monitoring_module::metrics_collector::collect_system_metrics</a></div><div class="ttdeci">auto collect_system_metrics() -&gt; void</div><div class="ttdoc">Collects system-level metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00255">metrics_collector.cpp:255</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a598039f95e975a0afecc6ef9cecea038"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a598039f95e975a0afecc6ef9cecea038">monitoring_module::metrics_collector::get_current_snapshot</a></div><div class="ttdeci">auto get_current_snapshot() const -&gt; metrics_snapshot</div><div class="ttdoc">Retrieves the most recent metrics snapshot.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00182">metrics_collector.cpp:182</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_aad46e3493c4e9bdb7b6690fb91ce2fde"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aad46e3493c4e9bdb7b6690fb91ce2fde">monitoring_module::metrics_collector::collect_thread_pool_metrics</a></div><div class="ttdeci">auto collect_thread_pool_metrics() -&gt; void</div><div class="ttdoc">Collects thread pool metrics.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00322">metrics_collector.cpp:322</a></div></div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_ac3b311467a117692a536194ddafebbf2"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">monitoring_module::metrics_collector::stats_</a></div><div class="ttdeci">collection_statistics stats_</div><div class="ttdoc">Collection statistics.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00282">metrics_collector.h:282</a></div></div>
 <div class="ttc" id="astructmonitoring__module_1_1collection__statistics_html_aabf5ece78b8fa3a34930615b524be5d8"><div class="ttname"><a href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aabf5ece78b8fa3a34930615b524be5d8">monitoring_module::collection_statistics::buffer_overflows</a></div><div class="ttdeci">std::atomic&lt; std::uint64_t &gt; buffer_overflows</div><div class="ttdoc">Times buffer was full on push.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00062">metrics_collector.h:62</a></div></div>
 <div class="ttc" id="astructmonitoring__module_1_1monitoring__config_html_a5eac681de2320ff9f63ca45381800c72"><div class="ttname"><a href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a5eac681de2320ff9f63ca45381800c72">monitoring_module::monitoring_config::enable_system_metrics</a></div><div class="ttdeci">bool enable_system_metrics</div><div class="ttdoc">Enable system-level metrics collection.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d01/monitoring__types_8h_source.html#l00261">monitoring_types.h:261</a></div></div>
@@ -435,73 +452,73 @@ Here is the call graph for this function:</div>
 
 <p>Collects system-level metrics. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00187">187</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  187</span>                                                           {</div>
-<div class="line"><span class="lineno">  188</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  189</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  190</span>        }</div>
-<div class="line"><span class="lineno">  191</span> </div>
-<div class="line"><span class="lineno">  192</span>        <span class="comment">// Platform-specific system metrics collection</span></div>
-<div class="line"><span class="lineno">  193</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="lineno">  194</span>        <span class="comment">// Windows implementation</span></div>
-<div class="line"><span class="lineno">  195</span>        MEMORYSTATUSEX mem_status;</div>
-<div class="line"><span class="lineno">  196</span>        mem_status.dwLength = <span class="keyword">sizeof</span>(mem_status);</div>
-<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">if</span> (GlobalMemoryStatusEx(&amp;mem_status)) {</div>
-<div class="line"><span class="lineno">  198</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(</div>
-<div class="line"><span class="lineno">  199</span>                mem_status.ullTotalPhys - mem_status.ullAvailPhys, </div>
-<div class="line"><span class="lineno">  200</span>                std::memory_order_relaxed</div>
-<div class="line"><span class="lineno">  201</span>            );</div>
-<div class="line"><span class="lineno">  202</span>        }</div>
-<div class="line"><span class="lineno">  203</span> </div>
-<div class="line"><span class="lineno">  204</span>        <span class="comment">// CPU usage replaced with simple implementation (more complex logic needed in practice)</span></div>
-<div class="line"><span class="lineno">  205</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;cpu_usage_percent.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  206</span> </div>
-<div class="line"><span class="lineno">  207</span><span class="preprocessor">#elif defined(__linux__)</span></div>
-<div class="line"><span class="lineno">  208</span>        <span class="comment">// Linux implementation</span></div>
-<div class="line"><span class="lineno">  209</span>        std::ifstream meminfo(<span class="stringliteral">&quot;/proc/meminfo&quot;</span>);</div>
-<div class="line"><span class="lineno">  210</span>        std::string line;</div>
-<div class="line"><span class="lineno">  211</span>        std::uint64_t total_mem = 0, free_mem = 0;</div>
-<div class="line"><span class="lineno">  212</span> </div>
-<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">while</span> (std::getline(meminfo, line)) {</div>
-<div class="line"><span class="lineno">  214</span>            <span class="keywordflow">if</span> (line.find(<span class="stringliteral">&quot;MemTotal:&quot;</span>) == 0) {</div>
-<div class="line"><span class="lineno">  215</span>                total_mem = std::stoull(line.substr(line.find_last_of(<span class="charliteral">&#39; &#39;</span>) + 1)) * 1024;</div>
-<div class="line"><span class="lineno">  216</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (line.find(<span class="stringliteral">&quot;MemFree:&quot;</span>) == 0) {</div>
-<div class="line"><span class="lineno">  217</span>                free_mem = std::stoull(line.substr(line.find_last_of(<span class="charliteral">&#39; &#39;</span>) + 1)) * 1024;</div>
-<div class="line"><span class="lineno">  218</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  219</span>            }</div>
-<div class="line"><span class="lineno">  220</span>        }</div>
-<div class="line"><span class="lineno">  221</span> </div>
-<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">if</span> (total_mem &gt; 0 &amp;&amp; free_mem &gt; 0) {</div>
-<div class="line"><span class="lineno">  223</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(total_mem - free_mem, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  224</span>        }</div>
-<div class="line"><span class="lineno">  225</span> </div>
-<div class="line"><span class="lineno">  226</span><span class="preprocessor">#elif defined(__APPLE__)</span></div>
-<div class="line"><span class="lineno">  227</span>        <span class="comment">// macOS implementation</span></div>
-<div class="line"><span class="lineno">  228</span>        vm_size_t page_size;</div>
-<div class="line"><span class="lineno">  229</span>        vm_statistics64_data_t vm_stats;</div>
-<div class="line"><span class="lineno">  230</span>        mach_msg_type_number_t info_count = HOST_VM_INFO64_COUNT;</div>
-<div class="line"><span class="lineno">  231</span>        </div>
-<div class="line"><span class="lineno">  232</span>        host_page_size(mach_host_self(), &amp;page_size);</div>
-<div class="line"><span class="lineno">  233</span>        </div>
-<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">if</span> (host_statistics64(mach_host_self(), HOST_VM_INFO64,</div>
-<div class="line"><span class="lineno">  235</span>                            (host_info64_t)&amp;vm_stats, &amp;info_count) == KERN_SUCCESS) {</div>
-<div class="line"><span class="lineno">  236</span>            </div>
-<div class="line"><span class="lineno">  237</span>            std::uint64_t used_memory = (vm_stats.active_count + </div>
-<div class="line"><span class="lineno">  238</span>                                        vm_stats.inactive_count + </div>
-<div class="line"><span class="lineno">  239</span>                                        vm_stats.wire_count) * page_size;</div>
-<div class="line"><span class="lineno">  240</span>            </div>
-<div class="line"><span class="lineno">  241</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(used_memory, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  242</span>        }</div>
-<div class="line"><span class="lineno">  243</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  244</span> </div>
-<div class="line"><span class="lineno">  245</span>        <span class="comment">// Active thread count (simple implementation)</span></div>
-<div class="line"><span class="lineno">  246</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;active_threads.store(</div>
-<div class="line"><span class="lineno">  247</span>            std::thread::hardware_concurrency(), </div>
-<div class="line"><span class="lineno">  248</span>            std::memory_order_relaxed</div>
-<div class="line"><span class="lineno">  249</span>        );</div>
-<div class="line"><span class="lineno">  250</span> </div>
-<div class="line"><span class="lineno">  251</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  252</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00255">255</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  255</span>                                                           {</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  258</span>        }</div>
+<div class="line"><span class="lineno">  259</span> </div>
+<div class="line"><span class="lineno">  260</span>        <span class="comment">// Platform-specific system metrics collection</span></div>
+<div class="line"><span class="lineno">  261</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="lineno">  262</span>        <span class="comment">// Windows implementation</span></div>
+<div class="line"><span class="lineno">  263</span>        MEMORYSTATUSEX mem_status;</div>
+<div class="line"><span class="lineno">  264</span>        mem_status.dwLength = <span class="keyword">sizeof</span>(mem_status);</div>
+<div class="line"><span class="lineno">  265</span>        <span class="keywordflow">if</span> (GlobalMemoryStatusEx(&amp;mem_status)) {</div>
+<div class="line"><span class="lineno">  266</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(</div>
+<div class="line"><span class="lineno">  267</span>                mem_status.ullTotalPhys - mem_status.ullAvailPhys, </div>
+<div class="line"><span class="lineno">  268</span>                std::memory_order_relaxed</div>
+<div class="line"><span class="lineno">  269</span>            );</div>
+<div class="line"><span class="lineno">  270</span>        }</div>
+<div class="line"><span class="lineno">  271</span> </div>
+<div class="line"><span class="lineno">  272</span>        <span class="comment">// CPU usage replaced with simple implementation (more complex logic needed in practice)</span></div>
+<div class="line"><span class="lineno">  273</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;cpu_usage_percent.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  274</span> </div>
+<div class="line"><span class="lineno">  275</span><span class="preprocessor">#elif defined(__linux__)</span></div>
+<div class="line"><span class="lineno">  276</span>        <span class="comment">// Linux implementation</span></div>
+<div class="line"><span class="lineno">  277</span>        std::ifstream meminfo(<span class="stringliteral">&quot;/proc/meminfo&quot;</span>);</div>
+<div class="line"><span class="lineno">  278</span>        std::string line;</div>
+<div class="line"><span class="lineno">  279</span>        std::uint64_t total_mem = 0, free_mem = 0;</div>
+<div class="line"><span class="lineno">  280</span> </div>
+<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">while</span> (std::getline(meminfo, line)) {</div>
+<div class="line"><span class="lineno">  282</span>            <span class="keywordflow">if</span> (line.find(<span class="stringliteral">&quot;MemTotal:&quot;</span>) == 0) {</div>
+<div class="line"><span class="lineno">  283</span>                total_mem = std::stoull(line.substr(line.find_last_of(<span class="charliteral">&#39; &#39;</span>) + 1)) * 1024;</div>
+<div class="line"><span class="lineno">  284</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (line.find(<span class="stringliteral">&quot;MemFree:&quot;</span>) == 0) {</div>
+<div class="line"><span class="lineno">  285</span>                free_mem = std::stoull(line.substr(line.find_last_of(<span class="charliteral">&#39; &#39;</span>) + 1)) * 1024;</div>
+<div class="line"><span class="lineno">  286</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  287</span>            }</div>
+<div class="line"><span class="lineno">  288</span>        }</div>
+<div class="line"><span class="lineno">  289</span> </div>
+<div class="line"><span class="lineno">  290</span>        <span class="keywordflow">if</span> (total_mem &gt; 0 &amp;&amp; free_mem &gt; 0) {</div>
+<div class="line"><span class="lineno">  291</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(total_mem - free_mem, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  292</span>        }</div>
+<div class="line"><span class="lineno">  293</span> </div>
+<div class="line"><span class="lineno">  294</span><span class="preprocessor">#elif defined(__APPLE__)</span></div>
+<div class="line"><span class="lineno">  295</span>        <span class="comment">// macOS implementation</span></div>
+<div class="line"><span class="lineno">  296</span>        vm_size_t page_size;</div>
+<div class="line"><span class="lineno">  297</span>        vm_statistics64_data_t vm_stats;</div>
+<div class="line"><span class="lineno">  298</span>        mach_msg_type_number_t info_count = HOST_VM_INFO64_COUNT;</div>
+<div class="line"><span class="lineno">  299</span>        </div>
+<div class="line"><span class="lineno">  300</span>        host_page_size(mach_host_self(), &amp;page_size);</div>
+<div class="line"><span class="lineno">  301</span>        </div>
+<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">if</span> (host_statistics64(mach_host_self(), HOST_VM_INFO64,</div>
+<div class="line"><span class="lineno">  303</span>                            (host_info64_t)&amp;vm_stats, &amp;info_count) == KERN_SUCCESS) {</div>
+<div class="line"><span class="lineno">  304</span>            </div>
+<div class="line"><span class="lineno">  305</span>            std::uint64_t used_memory = (vm_stats.active_count + </div>
+<div class="line"><span class="lineno">  306</span>                                        vm_stats.inactive_count + </div>
+<div class="line"><span class="lineno">  307</span>                                        vm_stats.wire_count) * page_size;</div>
+<div class="line"><span class="lineno">  308</span>            </div>
+<div class="line"><span class="lineno">  309</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;memory_usage_bytes.store(used_memory, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  310</span>        }</div>
+<div class="line"><span class="lineno">  311</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  312</span> </div>
+<div class="line"><span class="lineno">  313</span>        <span class="comment">// Active thread count (simple implementation)</span></div>
+<div class="line"><span class="lineno">  314</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;active_threads.store(</div>
+<div class="line"><span class="lineno">  315</span>            std::thread::hardware_concurrency(), </div>
+<div class="line"><span class="lineno">  316</span>            std::memory_order_relaxed</div>
+<div class="line"><span class="lineno">  317</span>        );</div>
+<div class="line"><span class="lineno">  318</span> </div>
+<div class="line"><span class="lineno">  319</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  320</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_ae2991b37c70b318326633cc7da63e52e"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">monitoring_module::metrics_collector::system_metrics_</a></div><div class="ttdeci">std::shared_ptr&lt; system_metrics &gt; system_metrics_</div><div class="ttdoc">System metrics source.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00277">metrics_collector.h:277</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -531,15 +548,15 @@ Here is the call graph for this function:</div>
 
 <p>Collects thread pool metrics. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00254">254</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  254</span>                                                                {</div>
-<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  257</span>        }</div>
-<div class="line"><span class="lineno">  258</span> </div>
-<div class="line"><span class="lineno">  259</span>        <span class="comment">// Thread pool metrics are updated externally, so only update timestamp</span></div>
-<div class="line"><span class="lineno">  260</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  261</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00322">322</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  322</span>                                                                {</div>
+<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  324</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  325</span>        }</div>
+<div class="line"><span class="lineno">  326</span> </div>
+<div class="line"><span class="lineno">  327</span>        <span class="comment">// Thread pool metrics are updated externally, so only update timestamp</span></div>
+<div class="line"><span class="lineno">  328</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  329</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a87ddee255b592894ea01d5c98634696a"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">monitoring_module::metrics_collector::thread_pool_metrics_</a></div><div class="ttdeci">std::shared_ptr&lt; thread_pool_metrics &gt; thread_pool_metrics_</div><div class="ttdoc">Thread pool metrics source.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00278">metrics_collector.h:278</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -569,15 +586,15 @@ Here is the call graph for this function:</div>
 
 <p>Collects worker thread metrics. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00263">263</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  263</span>                                                           {</div>
-<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  266</span>        }</div>
-<div class="line"><span class="lineno">  267</span> </div>
-<div class="line"><span class="lineno">  268</span>        <span class="comment">// Worker metrics are also updated externally, so only update timestamp</span></div>
-<div class="line"><span class="lineno">  269</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  270</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00331">331</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  331</span>                                                           {</div>
+<div class="line"><span class="lineno">  332</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  333</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  334</span>        }</div>
+<div class="line"><span class="lineno">  335</span> </div>
+<div class="line"><span class="lineno">  336</span>        <span class="comment">// Worker metrics are also updated externally, so only update timestamp</span></div>
+<div class="line"><span class="lineno">  337</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>-&gt;timestamp = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  338</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_ade5371d19080b015f6233e28b6352b4f"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">monitoring_module::metrics_collector::worker_metrics_</a></div><div class="ttdeci">std::shared_ptr&lt; worker_metrics &gt; worker_metrics_</div><div class="ttdoc">Worker metrics source.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00279">metrics_collector.h:279</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -608,30 +625,30 @@ Here is the call graph for this function:</div>
 <p>Main collection loop executed by the collection thread. </p>
 <p>Runs continuously while the collector is active, gathering metrics at the configured interval and storing them in the ring buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00146">146</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  146</span>                                                    {</div>
-<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">while</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  148</span>            <span class="keyword">auto</span> start_time = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  149</span> </div>
-<div class="line"><span class="lineno">  150</span>            <span class="keywordflow">try</span> {</div>
-<div class="line"><span class="lineno">  151</span>                <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a25d5d910f1718cad711f8a7d89b25312">collect_metrics</a>();</div>
-<div class="line"><span class="lineno">  152</span>                <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#a4f654742861c6f3d3f348d0da08858bb">total_collections</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  153</span>            } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
-<div class="line"><span class="lineno">  154</span>                <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aa5f2e0a73685a04dd231948c97138cc5">collection_errors</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  155</span>            }</div>
-<div class="line"><span class="lineno">  156</span> </div>
-<div class="line"><span class="lineno">  157</span>            <span class="keyword">auto</span> end_time = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  158</span>            <span class="keyword">auto</span> collection_duration = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(</div>
-<div class="line"><span class="lineno">  159</span>                end_time - start_time).count();</div>
-<div class="line"><span class="lineno">  160</span>            </div>
-<div class="line"><span class="lineno">  161</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#abdddde6a4e7599bc82bec1df7c0d94c0">collection_time_ns</a>.store(<span class="keyword">static_cast&lt;</span>std::uint64_t<span class="keyword">&gt;</span>(collection_duration), </div>
-<div class="line"><span class="lineno">  162</span>                                           std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  163</span> </div>
-<div class="line"><span class="lineno">  164</span>            <span class="comment">// Wait for collection interval</span></div>
-<div class="line"><span class="lineno">  165</span>            std::this_thread::sleep_for(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a2bd3b48c1131e9248179c4b75b64bbd9">collection_interval</a>);</div>
-<div class="line"><span class="lineno">  166</span>        }</div>
-<div class="line"><span class="lineno">  167</span>    }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a25d5d910f1718cad711f8a7d89b25312"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a25d5d910f1718cad711f8a7d89b25312">monitoring_module::metrics_collector::collect_metrics</a></div><div class="ttdeci">auto collect_metrics() -&gt; void</div><div class="ttdoc">Performs a single metrics collection cycle.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00169">metrics_collector.cpp:169</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00214">214</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  214</span>                                                    {</div>
+<div class="line"><span class="lineno">  215</span>        <span class="keywordflow">while</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  216</span>            <span class="keyword">auto</span> start_time = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  217</span> </div>
+<div class="line"><span class="lineno">  218</span>            <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  219</span>                <a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a25d5d910f1718cad711f8a7d89b25312">collect_metrics</a>();</div>
+<div class="line"><span class="lineno">  220</span>                <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#a4f654742861c6f3d3f348d0da08858bb">total_collections</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  221</span>            } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><span class="lineno">  222</span>                <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aa5f2e0a73685a04dd231948c97138cc5">collection_errors</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  223</span>            }</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>            <span class="keyword">auto</span> end_time = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  226</span>            <span class="keyword">auto</span> collection_duration = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(</div>
+<div class="line"><span class="lineno">  227</span>                end_time - start_time).count();</div>
+<div class="line"><span class="lineno">  228</span>            </div>
+<div class="line"><span class="lineno">  229</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>.<a class="code hl_variable" href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#abdddde6a4e7599bc82bec1df7c0d94c0">collection_time_ns</a>.store(<span class="keyword">static_cast&lt;</span>std::uint64_t<span class="keyword">&gt;</span>(collection_duration), </div>
+<div class="line"><span class="lineno">  230</span>                                           std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  231</span> </div>
+<div class="line"><span class="lineno">  232</span>            <span class="comment">// Wait for collection interval</span></div>
+<div class="line"><span class="lineno">  233</span>            std::this_thread::sleep_for(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a>.<a class="code hl_variable" href="../../db/d71/structmonitoring__module_1_1monitoring__config.html#a2bd3b48c1131e9248179c4b75b64bbd9">collection_interval</a>);</div>
+<div class="line"><span class="lineno">  234</span>        }</div>
+<div class="line"><span class="lineno">  235</span>    }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a25d5d910f1718cad711f8a7d89b25312"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a25d5d910f1718cad711f8a7d89b25312">monitoring_module::metrics_collector::collect_metrics</a></div><div class="ttdeci">auto collect_metrics() -&gt; void</div><div class="ttdoc">Performs a single metrics collection cycle.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00237">metrics_collector.cpp:237</a></div></div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a77c39befc7ccf010c269eac236d63213"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">monitoring_module::metrics_collector::stop_requested_</a></div><div class="ttdeci">std::atomic&lt; bool &gt; stop_requested_</div><div class="ttdoc">Stop request flag.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00271">metrics_collector.h:271</a></div></div>
 <div class="ttc" id="astructmonitoring__module_1_1collection__statistics_html_a4f654742861c6f3d3f348d0da08858bb"><div class="ttname"><a href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#a4f654742861c6f3d3f348d0da08858bb">monitoring_module::collection_statistics::total_collections</a></div><div class="ttdeci">std::atomic&lt; std::uint64_t &gt; total_collections</div><div class="ttdoc">Total collection cycles completed.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00060">metrics_collector.h:60</a></div></div>
 <div class="ttc" id="astructmonitoring__module_1_1collection__statistics_html_aa5f2e0a73685a04dd231948c97138cc5"><div class="ttname"><a href="../../db/d8a/structmonitoring__module_1_1collection__statistics.html#aa5f2e0a73685a04dd231948c97138cc5">monitoring_module::collection_statistics::collection_errors</a></div><div class="ttdeci">std::atomic&lt; std::uint64_t &gt; collection_errors</div><div class="ttdoc">Number of collection errors.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00061">metrics_collector.h:61</a></div></div>
@@ -668,10 +685,10 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Collection statistics structure</dd></dl>
 <p>Provides insights into collector performance and health, including error counts and timing information. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00137">137</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>                                                                                {</div>
-<div class="line"><span class="lineno">  138</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>;</div>
-<div class="line"><span class="lineno">  139</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00205">205</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>                                                                                {</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac3b311467a117692a536194ddafebbf2">stats_</a>;</div>
+<div class="line"><span class="lineno">  207</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -694,25 +711,25 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot</dd></dl>
 <p>Returns the latest collected metrics. If no metrics have been collected yet, returns a snapshot with default values. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00114">114</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>                                                                           {</div>
-<div class="line"><span class="lineno">  115</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
-<div class="line"><span class="lineno">  116</span>        </div>
-<div class="line"><span class="lineno">  117</span>        metrics_snapshot snapshot;</div>
-<div class="line"><span class="lineno">  118</span>        snapshot.capture_time = std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">  119</span> </div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  121</span>            snapshot.system = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>;</div>
-<div class="line"><span class="lineno">  122</span>        }</div>
-<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  124</span>            snapshot.thread_pool = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>;</div>
-<div class="line"><span class="lineno">  125</span>        }</div>
-<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>) {</div>
-<div class="line"><span class="lineno">  127</span>            snapshot.worker = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>;</div>
-<div class="line"><span class="lineno">  128</span>        }</div>
-<div class="line"><span class="lineno">  129</span> </div>
-<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">return</span> snapshot;</div>
-<div class="line"><span class="lineno">  131</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00182">182</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>                                                                           {</div>
+<div class="line"><span class="lineno">  183</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
+<div class="line"><span class="lineno">  184</span>        </div>
+<div class="line"><span class="lineno">  185</span>        metrics_snapshot snapshot;</div>
+<div class="line"><span class="lineno">  186</span>        snapshot.capture_time = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  189</span>            snapshot.system = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a>;</div>
+<div class="line"><span class="lineno">  190</span>        }</div>
+<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  192</span>            snapshot.thread_pool = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a>;</div>
+<div class="line"><span class="lineno">  193</span>        }</div>
+<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>) {</div>
+<div class="line"><span class="lineno">  195</span>            snapshot.worker = *<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a>;</div>
+<div class="line"><span class="lineno">  196</span>        }</div>
+<div class="line"><span class="lineno">  197</span> </div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">return</span> snapshot;</div>
+<div class="line"><span class="lineno">  199</span>    }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_aaccb0e1fe9811d2c3615a3768fc0e3a6"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">monitoring_module::metrics_collector::metrics_mutex_</a></div><div class="ttdeci">std::mutex metrics_mutex_</div><div class="ttdoc">Protects metrics access.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00283">metrics_collector.h:283</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -743,10 +760,10 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first</dd></dl>
 <p>Returns up to count recent snapshots. If fewer snapshots are available, returns all available snapshots. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00133">133</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  133</span>                                                                                                     {</div>
-<div class="line"><span class="lineno">  134</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>-&gt;get_all_items();</div>
-<div class="line"><span class="lineno">  135</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00201">201</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  201</span>                                                                                                     {</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a4b225814ca9693450b5e3bdf04e08668">snapshot_buffer_</a>-&gt;get_all_items();</div>
+<div class="line"><span class="lineno">  203</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -807,11 +824,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>The collector will periodically read from this metrics structure. Only one system metrics source can be registered at a time. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   99</span>                                                                                                 {</div>
-<div class="line"><span class="lineno">  100</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
-<div class="line"><span class="lineno">  101</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
-<div class="line"><span class="lineno">  102</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00167">167</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>                                                                                                 {</div>
+<div class="line"><span class="lineno">  168</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
+<div class="line"><span class="lineno">  169</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ae2991b37c70b318326633cc7da63e52e">system_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
+<div class="line"><span class="lineno">  170</span>    }</div>
 <div class="ttc" id="anamespacemetrics_html"><div class="ttname"><a href="../../d1/d82/namespacemetrics.html">metrics</a></div><div class="ttdoc">Convenience functions for global metrics operations.</div></div>
 </div><!-- fragment -->
 </div>
@@ -841,11 +858,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>The collector will periodically read from this metrics structure. Only one thread pool metrics source can be registered at a time. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00104">104</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>                                                                                                           {</div>
-<div class="line"><span class="lineno">  105</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
-<div class="line"><span class="lineno">  106</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
-<div class="line"><span class="lineno">  107</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00172">172</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>                                                                                                           {</div>
+<div class="line"><span class="lineno">  173</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
+<div class="line"><span class="lineno">  174</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a87ddee255b592894ea01d5c98634696a">thread_pool_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
+<div class="line"><span class="lineno">  175</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -874,11 +891,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>The collector will periodically read from this metrics structure. Only one worker metrics source can be registered at a time. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00109">109</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  109</span>                                                                                                 {</div>
-<div class="line"><span class="lineno">  110</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
-<div class="line"><span class="lineno">  111</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
-<div class="line"><span class="lineno">  112</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00177">177</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>                                                                                                 {</div>
+<div class="line"><span class="lineno">  178</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
+<div class="line"><span class="lineno">  179</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ade5371d19080b015f6233e28b6352b4f">worker_metrics_</a> = std::move(<a class="code hl_namespace" href="../../d1/d82/namespacemetrics.html">metrics</a>);</div>
+<div class="line"><span class="lineno">  180</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -899,33 +916,49 @@ Here is the caller graph for this function:</div>
 
 <p>Starts the metrics collection thread. </p>
 <dl class="section return"><dt>Returns</dt><dd>result_void containing error on failure, or success value</dd></dl>
-<p>Begins periodic collection of metrics according to the configured interval. The collector must be started before metrics can be gathered. Calling <a class="el" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread.">start()</a> on an already running collector returns an error. </p>
+<p>Begins periodic collection of metrics according to the configured interval. The collector must be started before metrics can be gathered. Calling <a class="el" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread.">start()</a> on an already running collector returns an error.</p>
+<p>Implementation details:</p><ul>
+<li>Validates collector is not already running</li>
+<li>Sets atomic flags for thread coordination</li>
+<li>Creates and starts dedicated collection thread</li>
+<li>Handles thread creation failures gracefully</li>
+</ul>
+<p>Thread Safety:</p><ul>
+<li>Uses memory ordering for proper synchronization</li>
+<li>Atomic flag updates prevent race conditions</li>
+<li>Exception handling ensures consistent state</li>
+</ul>
+<p>Error Conditions:</p><ul>
+<li>Already running: Returns appropriate error code</li>
+<li>Thread creation failure: Cleans up state and returns error</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>result_void indicating success or detailed error information </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00060">60</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   60</span>                                                              {</div>
-<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
-<div class="line"><span class="lineno">   63</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a>,</div>
-<div class="line"><span class="lineno">   64</span>                <span class="stringliteral">&quot;Metrics collector is already running&quot;</span></div>
-<div class="line"><span class="lineno">   65</span>            }};</div>
-<div class="line"><span class="lineno">   66</span>        }</div>
-<div class="line"><span class="lineno">   67</span> </div>
-<div class="line"><span class="lineno">   68</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">   69</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">true</span>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">   70</span> </div>
-<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><span class="lineno">   72</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a> = std::make_unique&lt;std::thread&gt;(&amp;<a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a2eaffd2f0ed8d25859f42471777a43c5">metrics_collector::collection_loop</a>, <span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">   73</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><span class="lineno">   74</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">   75</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
-<div class="line"><span class="lineno">   76</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca2c7f2f4d429f6b2bafc5f45649587300">thread_module::error_code::thread_start_failure</a>,</div>
-<div class="line"><span class="lineno">   77</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a>(<span class="stringliteral">&quot;Failed to start collection thread: {}&quot;</span>, e.what())</div>
-<div class="line"><span class="lineno">   78</span>            }};</div>
-<div class="line"><span class="lineno">   79</span>        }</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><span class="lineno">   82</span>    }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a2eaffd2f0ed8d25859f42471777a43c5"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a2eaffd2f0ed8d25859f42471777a43c5">monitoring_module::metrics_collector::collection_loop</a></div><div class="ttdeci">auto collection_loop() -&gt; void</div><div class="ttdoc">Main collection loop executed by the collection thread.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00146">metrics_collector.cpp:146</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00128">128</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>                                                              {</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  130</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
+<div class="line"><span class="lineno">  131</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a>,</div>
+<div class="line"><span class="lineno">  132</span>                <span class="stringliteral">&quot;Metrics collector is already running&quot;</span></div>
+<div class="line"><span class="lineno">  133</span>            }};</div>
+<div class="line"><span class="lineno">  134</span>        }</div>
+<div class="line"><span class="lineno">  135</span> </div>
+<div class="line"><span class="lineno">  136</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  137</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">true</span>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  140</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a> = std::make_unique&lt;std::thread&gt;(&amp;<a class="code hl_function" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a2eaffd2f0ed8d25859f42471777a43c5">metrics_collector::collection_loop</a>, <span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  141</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><span class="lineno">  142</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a>{<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{</div>
+<div class="line"><span class="lineno">  144</span>                <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca2c7f2f4d429f6b2bafc5f45649587300">thread_module::error_code::thread_start_failure</a>,</div>
+<div class="line"><span class="lineno">  145</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a>(<span class="stringliteral">&quot;Failed to start collection thread: {}&quot;</span>, e.what())</div>
+<div class="line"><span class="lineno">  146</span>            }};</div>
+<div class="line"><span class="lineno">  147</span>        }</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><span class="lineno">  150</span>    }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a2eaffd2f0ed8d25859f42471777a43c5"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a2eaffd2f0ed8d25859f42471777a43c5">monitoring_module::metrics_collector::collection_loop</a></div><div class="ttdeci">auto collection_loop() -&gt; void</div><div class="ttdoc">Main collection loop executed by the collection thread.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9e/metrics__collector_8cpp_source.html#l00214">metrics_collector.cpp:214</a></div></div>
 <div class="ttc" id="aclassmonitoring__module_1_1metrics__collector_html_a762451155c860079fe8315e267dc012c"><div class="ttname"><a href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">monitoring_module::metrics_collector::collection_thread_</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; collection_thread_</div><div class="ttdoc">Dedicated collection thread.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d88/metrics__collector_8h_source.html#l00281">metrics_collector.h:281</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
@@ -968,21 +1001,21 @@ Here is the call graph for this function:</div>
 <p>Stops the metrics collection thread. </p>
 <p>Signals the collection thread to stop and waits for it to exit. Safe to call even if the collector is not running. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00084">84</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>                                         {</div>
-<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   87</span>        }</div>
-<div class="line"><span class="lineno">   88</span> </div>
-<div class="line"><span class="lineno">   89</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.store(<span class="keyword">true</span>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">   90</span> </div>
-<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a> &amp;&amp; <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>-&gt;joinable()) {</div>
-<div class="line"><span class="lineno">   92</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>-&gt;join();</div>
-<div class="line"><span class="lineno">   93</span>        }</div>
-<div class="line"><span class="lineno">   94</span> </div>
-<div class="line"><span class="lineno">   95</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
-<div class="line"><span class="lineno">   96</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>.reset();</div>
-<div class="line"><span class="lineno">   97</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  152</span>                                         {</div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  154</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  155</span>        }</div>
+<div class="line"><span class="lineno">  156</span> </div>
+<div class="line"><span class="lineno">  157</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a77c39befc7ccf010c269eac236d63213">stop_requested_</a>.store(<span class="keyword">true</span>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a> &amp;&amp; <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>-&gt;joinable()) {</div>
+<div class="line"><span class="lineno">  160</span>            <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>-&gt;join();</div>
+<div class="line"><span class="lineno">  161</span>        }</div>
+<div class="line"><span class="lineno">  162</span> </div>
+<div class="line"><span class="lineno">  163</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aeac83b1ff04126a869965504b2d56298">running_</a>.store(<span class="keyword">false</span>, std::memory_order_release);</div>
+<div class="line"><span class="lineno">  164</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#a762451155c860079fe8315e267dc012c">collection_thread_</a>.reset();</div>
+<div class="line"><span class="lineno">  165</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1021,11 +1054,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>Changes take effect on the next collection cycle. Note that changing buffer_size will clear existing historical data. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00141">141</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  141</span>                                                                                 {</div>
-<div class="line"><span class="lineno">  142</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
-<div class="line"><span class="lineno">  143</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a> = config;</div>
-<div class="line"><span class="lineno">  144</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html#l00209">209</a> of file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  209</span>                                                                                 {</div>
+<div class="line"><span class="lineno">  210</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#aaccb0e1fe9811d2c3615a3768fc0e3a6">metrics_mutex_</a>);</div>
+<div class="line"><span class="lineno">  211</span>        <a class="code hl_variable" href="../../d0/d98/classmonitoring__module_1_1metrics__collector.html#abe598f6fde44e50bb42e883de0774bb2">config_</a> = config;</div>
+<div class="line"><span class="lineno">  212</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1299,7 +1332,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

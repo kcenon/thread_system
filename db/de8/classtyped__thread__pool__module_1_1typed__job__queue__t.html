@@ -824,13 +824,37 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div><div class="memdoc">
 
 <p>Enqueues a batch of jobs into the queue. </p>
+<p>Adds multiple jobs to the queue in a single operation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">jobs</td><td>A vector of unique pointers to the jobs being added. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error message. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A result_void indicating success or an error message.</dd></dl>
+<p>Implementation details:</p><ul>
+<li>Validates queue state and input before any modifications</li>
+<li>Pre-validates all jobs to ensure atomicity (all or nothing)</li>
+<li>Uses single lock acquisition for entire batch (better performance)</li>
+<li>Moves all jobs efficiently without copying</li>
+<li>Only notifies once after all jobs are added (avoids notification spam)</li>
+</ul>
+<p>Performance Benefits:</p><ul>
+<li>Single mutex acquisition vs multiple for individual enqueues</li>
+<li>Single notification vs notification per job</li>
+<li>Reduced contention for high-throughput scenarios</li>
+</ul>
+<p>Atomicity:</p><ul>
+<li>Either all jobs are added or none are (on validation failure)</li>
+<li>No partial batches in case of null job detection</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jobs</td><td>Vector of unique pointers to jobs (moved into queue) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Empty result on success, error on failure </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a4f7eea372ce86fdf2ff2aaf52c0008a9">thread_module::job_queue</a>.</p>
 
@@ -1096,7 +1120,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

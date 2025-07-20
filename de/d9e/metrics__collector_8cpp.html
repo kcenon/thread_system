@@ -79,6 +79,9 @@ $(function() {
   <div class="headertitle"><div class="title">metrics_collector.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of cross-platform system and thread pool metrics collection.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d4/d88/metrics__collector_8h_source.html">metrics_collector.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d52/formatter_8h_source.html">../../utilities/core/formatter.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -86,7 +89,7 @@ Include dependency graph for metrics_collector.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d7f/metrics__collector_8cpp__incl.png" border="0" usemap="#asources_2monitoring_2core_2metrics__collector_8cpp" alt=""/></div>
 <map name="asources_2monitoring_2core_2metrics__collector_8cpp" id="asources_2monitoring_2core_2metrics__collector_8cpp">
-<area shape="rect" title=" " alt="" coords="421,5,617,45"/>
+<area shape="rect" title="Implementation of cross&#45;platform system and thread pool metrics collection." alt="" coords="421,5,617,45"/>
 <area shape="rect" href="../../d4/d88/metrics__collector_8h.html" title=" " alt="" coords="392,93,537,119"/>
 <area shape="poly" title=" " alt="" coords="508,47,483,84,478,80,504,44"/>
 <area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="1068,167,1195,207"/>
@@ -169,10 +172,37 @@ Functions</h2></td></tr>
 <tr class="memdesc:a38644b6b1dc3204d8abeb6bda55b9e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if global monitoring is active.  <br /></td></tr>
 <tr class="separator:a38644b6b1dc3204d8abeb6bda55b9e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of cross-platform system and thread pool metrics collection. </p>
+<p>This file contains the implementation of the metrics collection system, providing comprehensive monitoring capabilities for system resources, thread pool performance, and worker thread statistics. The implementation is cross-platform and supports Windows, Linux, and macOS with platform-specific optimizations.</p>
+<p>Key Features:</p><ul>
+<li>Cross-platform system metrics collection (CPU, memory, threads)</li>
+<li>Thread pool performance monitoring and statistics</li>
+<li>Worker thread activity and performance metrics</li>
+<li>Configurable collection intervals and buffer management</li>
+<li>Thread-safe metrics aggregation and snapshot creation</li>
+<li>Global singleton pattern for system-wide monitoring</li>
+</ul>
+<p>Monitoring Capabilities:</p><ul>
+<li>Real-time system resource utilization</li>
+<li>Thread pool queue depths and processing rates</li>
+<li>Worker thread utilization and task completion times</li>
+<li>Memory usage patterns and allocation statistics</li>
+<li>Performance trend analysis through historical snapshots</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>Low-overhead data collection (typically &lt;1% CPU impact)</li>
+<li>Configurable collection frequency (default: 1 second)</li>
+<li>Ring buffer storage for efficient memory usage</li>
+<li>Lock-free atomic operations for high-frequency counters</li>
+<li>Minimal impact on monitored thread pool performance </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../de/d9e/metrics__collector_8cpp_source.html">metrics_collector.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 20 2025 08:13:19 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
