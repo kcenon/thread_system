@@ -40,6 +40,7 @@
  * - Edge cases
  */
 
+#include <benchmark/benchmark.h>
 #include <chrono>
 #include <vector>
 #include <atomic>
@@ -51,165 +52,208 @@
 #include <algorithm>
 #include <numeric>
 
-#include "thread_pool.h"
-#include "typed_thread_pool.h"
-#include "logger.h"
+#include "../../sources/thread_pool/core/thread_pool.h"
+#include "../../sources/thread_pool/workers/thread_worker.h"
+#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
+// Helper function to create thread pool
+auto create_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<thread_pool_module::thread_pool>, std::optional<std::string>>
+{
+    std::shared_ptr<thread_pool_module::thread_pool> pool;
+    try {
+        pool = std::make_shared<thread_pool_module::thread_pool>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
+
+// Helper function to create typed thread pool
+template<typename Type>
+auto create_priority_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+{
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    try {
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
 
 using namespace std::chrono;
 using namespace thread_pool_module;
 using namespace typed_thread_pool_module;
+using namespace utility_module;
 
-class StressTestBenchmark {
-public:
-    StressTestBenchmark() {
-        log_module::start();
-        log_module::console_target(log_module::log_types::Error | log_module::log_types::Warning);
-    }
+/**
+ * @brief Benchmark maximum thread creation
+ */
+static void BM_MaximumThreads(benchmark::State& state) {
+    const size_t thread_count = state.range(0);
     
-    ~StressTestBenchmark() {
-        log_module::stop();
-    }
-    
-    void run_all_tests() {
-        log_module::information("\n=== Stress Test Benchmarks ===\n");
+    for (auto _ : state) {
+        auto start = high_resolution_clock::now();
         
-        test_maximum_threads();
-        test_queue_overflow();
-        test_rapid_start_stop();
-        test_exception_handling();
-        test_memory_pressure();
-        test_priority_starvation();
-        test_thundering_herd();
-        test_cascading_failures();
-        
-        log_module::information("\n=== Stress Tests Complete ===\n");
-    }
-    
-private:
-    void test_maximum_threads() {
-        log_module::information("\n1. Maximum Thread Creation Test\n");
-        log_module::information("-------------------------------\n");
-        
-        std::vector<size_t> thread_counts = {100, 500, 1000, 2000, 5000};
-        
-        for (size_t count : thread_counts) {
-            auto start = high_resolution_clock::now();
-            
-            auto [pool, error] = create_default(count);
-            
-            if (error) {
-                log_module::error(format_string("  {} threads: FAILED - {}", count, *error));
-                break;
-            }
-            
-            auto result = pool->start();
-            
-            if (!result) {
-                log_module::error(format_string("  {} threads: FAILED - {}", count, result.error()));
-                break;
-            }
-            
-            auto end = high_resolution_clock::now();
-            double creation_time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            // Test basic functionality
-            std::atomic<size_t> completed{0};
-            const size_t test_jobs = 1000;
-            
-            for (size_t i = 0; i < test_jobs; ++i) {
-                pool->add_job([&completed] {
-                    completed.fetch_add(1);
-                });
-            }
-            
-            pool->stop();
-            
-            log_module::information(format_string("  {} threads: Created in {}ms, Completed {}/{} jobs", 
-                                                  count, static_cast<int>(creation_time_ms), 
-                                                  completed.load(), test_jobs));
-        }
-    }
-    
-    void test_queue_overflow() {
-        log_module::information("\n2. Queue Overflow Test\n");
-        log_module::information("----------------------\n");
-        
-        auto [pool, error] = create_default(4);
-        if (error) return;
-        
-        pool->start();
-        
-        // Submit jobs that take time to process
-        const size_t slow_jobs = 100;
-        for (size_t i = 0; i < slow_jobs; ++i) {
-            pool->add_job([] {
-                std::this_thread::sleep_for(seconds(10));
-            });
+        auto [pool, error] = create_default(thread_count);
+        if (error.has_value()) {
+            state.SkipWithError(formatter::format("Failed to create pool with {} threads: {}", 
+                                                 thread_count, *error).c_str());
+            return;
         }
         
-        // Now flood with many quick jobs
-        std::vector<size_t> flood_sizes = {10000, 100000, 1000000};
+        auto result = pool->start();
+        if (result.has_value()) {
+            state.SkipWithError(formatter::format("Failed to start pool: {}", 
+                                                 result.value()).c_str());
+            return;
+        }
         
-        for (size_t flood_size : flood_sizes) {
-            auto start = high_resolution_clock::now();
-            
-            try {
-                for (size_t i = 0; i < flood_size; ++i) {
-                    pool->add_job([] {
-                        // Quick job
-                    });
-                }
-                
-                auto end = high_resolution_clock::now();
-                double submission_time_ms = duration_cast<milliseconds>(end - start).count();
-                double submission_rate = (flood_size * 1000.0) / submission_time_ms;
-                
-                log_module::information(format_string("  {} jobs: Submitted in {}ms ({} jobs/s)", 
-                                                      flood_size, static_cast<int>(submission_time_ms), 
-                                                      static_cast<int>(submission_rate)));
-                         
-            } catch (const std::exception& e) {
-                log_module::error(format_string("  {} jobs: FAILED - {}", flood_size, e.what()));
-                break;
-            }
+        auto creation_end = high_resolution_clock::now();
+        
+        // Test basic functionality
+        std::atomic<size_t> completed{0};
+        const size_t test_jobs = 1000;
+        
+        for (size_t i = 0; i < test_jobs; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
+                completed.fetch_add(1);
+                return result_void();
+            }));
         }
         
         pool->stop();
+        
+        state.counters["creation_ms"] = duration_cast<milliseconds>(creation_end - start).count();
+        state.counters["jobs_completed"] = completed.load();
     }
     
-    void test_rapid_start_stop() {
-        log_module::information("\n3. Rapid Start/Stop Cycles\n");
-        log_module::information("--------------------------\n");
-        
-        const size_t num_cycles = 1000;
+    state.counters["threads"] = thread_count;
+}
+BENCHMARK(BM_MaximumThreads)
+    ->Arg(100)
+    ->Arg(500)
+    ->Arg(1000)
+    ->Arg(2000)
+    ->Unit(benchmark::kMillisecond);
+/**
+ * @brief Benchmark queue overflow handling
+ */
+static void BM_QueueOverflow(benchmark::State& state) {
+    const size_t flood_size = state.range(0);
+    
+    auto [pool, error] = create_default(4);
+    if (error.has_value()) {
+        state.SkipWithError("Failed to create thread pool");
+        return;
+    }
+    
+    pool->start();
+    
+    // Submit jobs that take time to process
+    const size_t slow_jobs = 100;
+    for (size_t i = 0; i < slow_jobs; ++i) {
+        pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+            std::this_thread::sleep_for(seconds(10));
+            return result_void();
+        }));
+    }
+    
+    for (auto _ : state) {
+        // Flood with many quick jobs
+        try {
+            for (size_t i = 0; i < flood_size; ++i) {
+                pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+                    // Quick job
+                    return result_void();
+                }));
+            }
+        } catch (const std::exception& e) {
+            state.SkipWithError(formatter::format("Queue overflow at {} jobs: {}", 
+                                                 flood_size, e.what()).c_str());
+            break;
+        }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * flood_size);
+    state.counters["flood_size"] = flood_size;
+}
+BENCHMARK(BM_QueueOverflow)
+    ->Arg(10000)
+    ->Arg(100000)
+    ->Arg(1000000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark rapid start/stop cycles
+ */
+static void BM_RapidStartStop(benchmark::State& state) {
+    const size_t num_cycles = state.range(0);
+    
+    auto [pool, error] = create_default(8);
+    if (error.has_value()) {
+        state.SkipWithError("Failed to create thread pool");
+        return;
+    }
+    
+    std::vector<double> cycle_times;
+    cycle_times.reserve(num_cycles);
+    
+    for (auto _ : state) {
         size_t successful_cycles = 0;
-        std::vector<double> cycle_times;
-        
-        auto [pool, error] = create_default(8);
-        if (error) return;
         
         for (size_t i = 0; i < num_cycles; ++i) {
             auto cycle_start = high_resolution_clock::now();
             
             auto start_result = pool->start();
-            if (!start_result) {
-                log_module::error(format_string("Start failed at cycle {}: {}", i, start_result.error()));
+            if (start_result.has_value()) {
+                state.SkipWithError(formatter::format("Start failed at cycle {}: {}", 
+                                                     i, start_result.value()).c_str());
                 break;
             }
             
             // Submit a few jobs
             std::atomic<int> counter{0};
             for (int j = 0; j < 10; ++j) {
-                pool->add_job([&counter] {
+                pool->enqueue(std::make_unique<callback_job>([&counter]() -> result_void {
                     counter.fetch_add(1);
                 });
             }
             
-            auto stop_result = pool->stop();
-            if (!stop_result) {
-                log_module::error(format_string("Stop failed at cycle {}: {}", i, stop_result.error()));
-                break;
-            }
+            pool->stop();
             
             auto cycle_end = high_resolution_clock::now();
             double cycle_time_us = duration_cast<microseconds>(cycle_end - cycle_start).count();
@@ -218,28 +262,39 @@ private:
             successful_cycles++;
         }
         
-        if (!cycle_times.empty()) {
-            double avg_cycle_time = std::accumulate(cycle_times.begin(), cycle_times.end(), 0.0) 
-                                  / cycle_times.size();
-            auto [min_it, max_it] = std::minmax_element(cycle_times.begin(), cycle_times.end());
-            
-            log_module::information(format_string("Completed {}/{} cycles", successful_cycles, num_cycles));
-            log_module::information(format_string("Average cycle time: {:.1f}μs", avg_cycle_time));
-            log_module::information(format_string("Min: {:.1f}μs, Max: {:.1f}μs", *min_it, *max_it));
-        }
+        state.counters["successful_cycles"] = successful_cycles;
     }
     
-    void test_exception_handling() {
-        log_module::information("\n4. Exception Handling Under Load\n");
-        log_module::information("--------------------------------\n");
+    if (!cycle_times.empty()) {
+        double avg_cycle_time = std::accumulate(cycle_times.begin(), cycle_times.end(), 0.0) 
+                              / cycle_times.size();
+        auto [min_it, max_it] = std::minmax_element(cycle_times.begin(), cycle_times.end());
         
+        state.counters["avg_cycle_us"] = avg_cycle_time;
+        state.counters["min_cycle_us"] = *min_it;
+        state.counters["max_cycle_us"] = *max_it;
+    }
+}
+BENCHMARK(BM_RapidStartStop)
+    ->Arg(100)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark exception handling under load
+ */
+static void BM_ExceptionHandling(benchmark::State& state) {
+    const size_t total_jobs = state.range(0);
+    const double exception_rate = 0.1;  // 10% of jobs throw exceptions
+    
+    for (auto _ : state) {
         auto [pool, error] = create_default(8);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
         
         pool->start();
-        
-        const size_t total_jobs = 10000;
-        const double exception_rate = 0.1;  // 10% of jobs throw exceptions
         
         std::atomic<size_t> successful_jobs{0};
         std::atomic<size_t> failed_jobs{0};
@@ -248,10 +303,8 @@ private:
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis(0.0, 1.0);
         
-        auto start = high_resolution_clock::now();
-        
         for (size_t i = 0; i < total_jobs; ++i) {
-            pool->add_job([&dis, &gen, &successful_jobs, &failed_jobs, exception_rate]() 
+            pool->enqueue(std::make_unique<callback_job>([&dis, &gen, &successful_jobs, &failed_jobs, exception_rate]() 
                          -> result_void {
                 if (dis(gen) < exception_rate) {
                     failed_jobs.fetch_add(1);
@@ -271,86 +324,93 @@ private:
         
         pool->stop();
         
-        auto end = high_resolution_clock::now();
-        double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-        
-        log_module::information(format_string("Total jobs: {}", total_jobs));
-        log_module::information(format_string("Successful: {}", successful_jobs.load()));
-        log_module::information(format_string("Failed: {}", failed_jobs.load()));
-        log_module::information(format_string("Time: {}ms", static_cast<int>(elapsed_ms)));
-        log_module::information(format_string("Throughput: {:.0f} jobs/s", total_jobs * 1000.0 / elapsed_ms));
+        state.counters["successful"] = successful_jobs.load();
+        state.counters["failed"] = failed_jobs.load();
     }
     
-    void test_memory_pressure() {
-        log_module::information("\n5. Memory Pressure Test\n");
-        log_module::information("-----------------------\n");
+    state.SetItemsProcessed(state.iterations() * total_jobs);
+}
+BENCHMARK(BM_ExceptionHandling)
+    ->Arg(1000)
+    ->Arg(10000)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark memory pressure with large captures
+ */
+static void BM_MemoryPressure(benchmark::State& state) {
+    const size_t size_mb = state.range(0);
+    const size_t num_jobs = state.range(1);
+    
+    auto [pool, error] = create_default(8);
+    if (error.has_value()) {
+        state.SkipWithError("Failed to create thread pool");
+        return;
+    }
+    
+    pool->start();
+    
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
         
-        auto [pool, error] = create_default(8);
-        if (error) return;
-        
-        pool->start();
-        
-        // Test with increasingly large captured data
-        std::vector<size_t> data_sizes_mb = {1, 10, 50, 100};
-        
-        for (size_t size_mb : data_sizes_mb) {
-            std::atomic<size_t> completed{0};
-            std::atomic<bool> out_of_memory{false};
-            
-            const size_t num_jobs = 100;
-            
-            auto start = high_resolution_clock::now();
-            
-            try {
-                for (size_t i = 0; i < num_jobs; ++i) {
-                    // Create large data to capture
-                    std::vector<char> large_data(size_mb * 1024 * 1024);
-                    std::fill(large_data.begin(), large_data.end(), 'X');
+        try {
+            for (size_t i = 0; i < num_jobs; ++i) {
+                // Create large data to capture
+                std::vector<char> large_data(size_mb * 1024 * 1024);
+                std::fill(large_data.begin(), large_data.end(), 'X');
+                
+                pool->enqueue(std::make_unique<callback_job>([data = std::move(large_data), &completed]() -> result_void {
+                    // Access data to ensure it's not optimized away
+                    volatile char c = data[data.size() / 2];
+                    (void)c;
                     
-                    pool->add_job([data = std::move(large_data), &completed] {
-                        // Access data to ensure it's not optimized away
-                        volatile char c = data[data.size() / 2];
-                        (void)c;
-                        
-                        completed.fetch_add(1);
-                    });
-                }
-                
-                pool->stop();
-                pool->start();  // Reset for next test
-                
-                auto end = high_resolution_clock::now();
-                double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-                
-                log_module::information(format_string("{}MB per job: Completed {}/{} in {}ms", 
-                                                      size_mb, completed.load(), num_jobs, 
-                                                      static_cast<int>(elapsed_ms)));
-                         
-            } catch (const std::bad_alloc&) {
-                out_of_memory = true;
-                log_module::error(format_string("{}MB per job: OUT OF MEMORY after {} jobs", 
-                                                size_mb, completed.load()));
-                break;
+                    completed.fetch_add(1);
+                });
             }
+            
+            pool->stop();
+            pool->start();  // Reset for next iteration
+            
+            state.counters["completed"] = completed.load();
+            
+        } catch (const std::bad_alloc&) {
+            state.SkipWithError(formatter::format("Out of memory with {}MB per job", 
+                                                 size_mb).c_str());
+            break;
         }
-        
-        pool->stop();
     }
     
-    void test_priority_starvation() {
-        log_module::information("\n6. Type Starvation Test\n");
-        log_module::information("---------------------------\n");
-        
-        enum class Type { 
-            RealTimeest = 1,
-            RealTime = 10,
-            Medium = 50,
-            Background = 100,
-            Backgroundest = 1000
-        };
-        
+    state.counters["mb_per_job"] = size_mb;
+    state.counters["total_mb"] = size_mb * num_jobs;
+}
+BENCHMARK(BM_MemoryPressure)
+    ->Args({1, 100})
+    ->Args({10, 100})
+    ->Args({50, 20})
+    ->Args({100, 10})
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark priority starvation
+ */
+static void BM_PriorityStarvation(benchmark::State& state) {
+    const size_t jobs_per_priority = state.range(0);
+    
+    enum class Type { 
+        Highest = 1,
+        High = 10,
+        Medium = 50,
+        Low = 100,
+        Lowest = 1000
+    };
+    
+    for (auto _ : state) {
         auto [pool, error] = create_priority_default<Type>(4);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create typed thread pool");
+            return;
+        }
         
         pool->start();
         
@@ -360,68 +420,75 @@ private:
         std::atomic<size_t> low_completed{0};
         std::atomic<size_t> lowest_completed{0};
         
-        const size_t jobs_per_priority = 1000;
-        
         // Submit all jobs
         for (size_t i = 0; i < jobs_per_priority; ++i) {
-            pool->add_job([&highest_completed] {
+            pool->enqueue(std::make_unique<callback_job>([&highest_completed]() -> result_void {
                 std::this_thread::sleep_for(microseconds(100));
                 highest_completed.fetch_add(1);
-            }, Type::RealTimeest);
+            }, Type::Highest);
             
-            pool->add_job([&high_completed] {
+            pool->enqueue(std::make_unique<callback_job>([&high_completed]() -> result_void {
                 std::this_thread::sleep_for(microseconds(100));
                 high_completed.fetch_add(1);
-            }, Type::RealTime);
+            }, Type::High);
             
-            pool->add_job([&medium_completed] {
+            pool->enqueue(std::make_unique<callback_job>([&medium_completed]() -> result_void {
                 std::this_thread::sleep_for(microseconds(100));
                 medium_completed.fetch_add(1);
             }, Type::Medium);
             
-            pool->add_job([&low_completed] {
+            pool->enqueue(std::make_unique<callback_job>([&low_completed]() -> result_void {
                 std::this_thread::sleep_for(microseconds(100));
                 low_completed.fetch_add(1);
-            }, Type::Background);
+            }, Type::Low);
             
-            pool->add_job([&lowest_completed] {
+            pool->enqueue(std::make_unique<callback_job>([&lowest_completed]() -> result_void {
                 std::this_thread::sleep_for(microseconds(100));
                 lowest_completed.fetch_add(1);
-            }, Type::Backgroundest);
+            }, Type::Lowest);
         }
         
-        // Check progress at intervals
-        log_module::information("Time(s)  RealTimeest  RealTime  Medium  Background  Backgroundest");
-        
-        for (int seconds = 1; seconds <= 10; ++seconds) {
-            std::this_thread::sleep_for(seconds(1));
-            
-            log_module::information(format_string("{:7}  {:7}  {:4}  {:6}  {:3}  {:6}", 
-                                                  seconds, highest_completed.load(), high_completed.load(),
-                                                  medium_completed.load(), low_completed.load(), 
-                                                  lowest_completed.load()));
-                     
-            // Check if low priority jobs are starving
-            if (highest_completed.load() == jobs_per_priority &&
-                high_completed.load() == jobs_per_priority &&
-                lowest_completed.load() == 0) {
-                log_module::warning("WARNING: Backgroundest priority jobs are starving!");
-            }
-        }
+        // Let some jobs complete
+        std::this_thread::sleep_for(seconds(2));
         
         pool->stop();
+        
+        state.counters["highest"] = highest_completed.load();
+        state.counters["high"] = high_completed.load();
+        state.counters["medium"] = medium_completed.load();
+        state.counters["low"] = low_completed.load();
+        state.counters["lowest"] = lowest_completed.load();
+        
+        // Check for starvation
+        if (highest_completed.load() == jobs_per_priority &&
+            high_completed.load() == jobs_per_priority &&
+            lowest_completed.load() == 0) {
+            state.counters["lowest_starved"] = 1;
+        }
     }
     
-    void test_thundering_herd() {
-        log_module::information("\n7. Thundering Herd Test\n");
-        log_module::information("-----------------------\n");
-        
+    state.counters["jobs_per_priority"] = jobs_per_priority;
+}
+BENCHMARK(BM_PriorityStarvation)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond)
+    ->UseRealTime();
+    
+/**
+ * @brief Benchmark thundering herd problem
+ */
+static void BM_ThunderingHerd(benchmark::State& state) {
+    const size_t num_waiters = state.range(0);
+    
+    for (auto _ : state) {
         auto [pool, error] = create_default(8);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
         
         pool->start();
         
-        const size_t num_waiters = 1000;
         std::promise<void> start_signal;
         auto start_future = start_signal.get_future();
         
@@ -430,7 +497,7 @@ private:
         
         // Create many jobs that all wait for the same signal
         for (size_t i = 0; i < num_waiters; ++i) {
-            pool->add_job([&start_future, &started, &completed] {
+            pool->enqueue(std::make_unique<callback_job>([&start_future, &started, &completed]() -> result_void {
                 // Wait for signal
                 start_future.wait();
                 started.fetch_add(1);
@@ -462,11 +529,12 @@ private:
         
         pool->stop();
         
-        // Analyze the thundering herd behavior
-        log_module::information("Jobs started within:");
+        // Find time to start various percentages
         size_t thresholds[] = {100, 500, 900, 950, 990, 1000};
         
         for (size_t threshold : thresholds) {
+            if (threshold > num_waiters) continue;
+            
             auto it = std::find_if(progress.begin(), progress.end(),
                                   [threshold](const auto& p) { 
                                       return p.first >= threshold; 
@@ -474,23 +542,34 @@ private:
             
             if (it != progress.end()) {
                 size_t time_ms = (it - progress.begin()) * 10;
-                log_module::information(format_string("  {:4} jobs: {}ms", threshold, time_ms));
+                state.counters[formatter::format("start_{}jobs_ms", threshold)] = time_ms;
             }
         }
     }
     
-    void test_cascading_failures() {
-        log_module::information("\n8. Cascading Failure Test\n");
-        log_module::information("-------------------------\n");
-        
+    state.counters["waiters"] = num_waiters;
+}
+BENCHMARK(BM_ThunderingHerd)
+    ->Arg(1000)
+    ->Arg(10000)
+    ->Unit(benchmark::kMillisecond)
+    ->UseRealTime();
+    
+/**
+ * @brief Benchmark cascading failures
+ */
+static void BM_CascadingFailures(benchmark::State& state) {
+    const size_t chain_length = state.range(0);
+    const size_t num_chains = state.range(1);
+    
+    for (auto _ : state) {
         auto [pool, error] = create_default(8);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
         
         pool->start();
-        
-        // Simulate a chain of dependent tasks where failure propagates
-        const size_t chain_length = 100;
-        const size_t num_chains = 10;
         
         std::atomic<size_t> successful_chains{0};
         std::atomic<size_t> failed_chains{0};
@@ -508,7 +587,7 @@ private:
             
             // Submit chain of dependent tasks
             for (size_t i = 0; i < chain_length; ++i) {
-                pool->add_job([i, &futures, &promises, will_fail, chain_length, 
+                pool->enqueue(std::make_unique<callback_job>([i, &futures, &promises, will_fail, chain_length, 
                               &successful_chains, &failed_chains] {
                     // Wait for previous task (except first)
                     if (i > 0) {
@@ -550,17 +629,18 @@ private:
         
         pool->stop();
         
-        log_module::information(format_string("Total chains: {}", num_chains));
-        log_module::information(format_string("Successful: {}", successful_chains.load()));
-        log_module::information(format_string("Failed: {}", failed_chains.load()));
-        log_module::information(format_string("Failure propagation rate: {:.1f}%", 
-                                             failed_chains.load() * 100.0 / num_chains));
+        state.counters["successful_chains"] = successful_chains.load();
+        state.counters["failed_chains"] = failed_chains.load();
+        state.counters["failure_rate_%"] = failed_chains.load() * 100.0 / num_chains;
     }
-};
-
-int main() {
-    StressTestBenchmark benchmark;
-    benchmark.run_all_tests();
     
-    return 0;
+    state.counters["chain_length"] = chain_length;
+    state.counters["num_chains"] = num_chains;
 }
+BENCHMARK(BM_CascadingFailures)
+    ->Args({100, 10})
+    ->Args({50, 20})
+    ->Unit(benchmark::kMillisecond);
+    
+// Main function to run benchmarks
+BENCHMARK_MAIN();

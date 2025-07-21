@@ -7,258 +7,186 @@ All rights reserved.
 
 /**
  * @file scalability_benchmark.cpp
- * @brief Comprehensive scalability benchmark for thread pools
+ * @brief Google Benchmark-based scalability tests for thread pools
  * 
  * Tests how thread pools scale with different numbers of threads,
- * workload types, and system configurations.
+ * workload types, and system configurations using Google Benchmark.
  */
 
-#include <chrono>
+#include <benchmark/benchmark.h>
 #include <vector>
 #include <thread>
 #include <atomic>
 #include <random>
 #include <algorithm>
+#include <numeric>
+#include <map>
 
-#include "thread_pool.h"
-#include "typed_thread_pool.h"
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/thread_pool/core/thread_pool.h"
+#include "../../sources/thread_pool/workers/thread_worker.h"
+#include "../../sources/thread_base/jobs/callback_job.h"
+#include "../../sources/utilities/core/formatter.h"
 
 using namespace thread_pool_module;
-using namespace typed_thread_pool_module;
-using namespace log_module;
+using namespace thread_module;
+using namespace utility_module;
 
-class scalability_benchmark {
-private:
-    struct test_config {
-        std::vector<size_t> thread_counts{1, 2, 4, 8, 16, std::thread::hardware_concurrency()};
-        std::vector<size_t> job_counts{1000, 10000, 100000, 1000000};
-        std::vector<std::chrono::microseconds> job_durations{
-            std::chrono::microseconds(0),    // CPU-bound
-            std::chrono::microseconds(1),    // Very light
-            std::chrono::microseconds(10),   // Light
-            std::chrono::microseconds(100),  // Medium
-            std::chrono::microseconds(1000)  // Heavy
-        };
-    };
-
-    test_config config_;
-    std::atomic<uint64_t> completed_jobs_{0};
-    std::atomic<uint64_t> total_work_time_{0};
-
-    struct benchmark_result {
-        size_t thread_count;
-        size_t job_count;
-        std::chrono::microseconds job_duration;
-        std::chrono::milliseconds total_time;
-        double throughput_jobs_per_sec;
-        double efficiency_percent;
-        double speedup;
-    };
-
-    std::vector<benchmark_result> results_;
-
-public:
-    void run_all_benchmarks() {
-        information(format_string("=== Thread Pool Scalability Benchmark ==="));
-        information(format_string("Hardware concurrency: {} threads\n", std::thread::hardware_concurrency()));
-
-        // Test different workload patterns
-        run_cpu_bound_scalability();
-        run_io_bound_scalability();
-        run_mixed_workload_scalability();
-        run_burst_workload_scalability();
-        
-        print_summary();
+/**
+ * @brief Benchmark CPU-bound workload scalability
+ * 
+ * Measures how thread pool scales with CPU-intensive tasks.
+ */
+static void BM_CPUBoundScalability(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t job_count = state.range(1);
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("cpu_bound_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
     }
-
-private:
-    void run_cpu_bound_scalability() {
-        information(format_string("--- CPU-Bound Workload Scalability ---"));
+    pool->start();
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
         
-        for (auto job_count : {10000, 100000}) {
-            information(format_string("Testing with {} CPU-intensive jobs:", job_count));
-            
-            double baseline_time = 0.0;
-            
-            for (auto thread_count : config_.thread_counts) {
-                auto result = benchmark_cpu_workload(thread_count, job_count);
-                
-                if (thread_count == 1) {
-                    baseline_time = result.total_time.count();
-                }
-                
-                result.speedup = baseline_time / result.total_time.count();
-                result.efficiency_percent = (result.speedup / thread_count) * 100.0;
-                
-                results_.push_back(result);
-                print_result(result);
-            }
-            information(format_string(""));
-        }
-    }
-
-    void run_io_bound_scalability() {
-        information(format_string("--- I/O-Bound Workload Scalability ---"));
-        
-        for (auto delay : {std::chrono::microseconds(100), std::chrono::microseconds(1000)}) {
-            information(format_string("Testing with {}μs I/O simulation:", delay.count()));
-            
-            double baseline_time = 0.0;
-            
-            for (auto thread_count : config_.thread_counts) {
-                auto result = benchmark_io_workload(thread_count, 10000, delay);
-                
-                if (thread_count == 1) {
-                    baseline_time = result.total_time.count();
-                }
-                
-                result.speedup = baseline_time / result.total_time.count();
-                result.efficiency_percent = (result.speedup / thread_count) * 100.0;
-                
-                results_.push_back(result);
-                print_result(result);
-            }
-            information(format_string(""));
-        }
-    }
-
-    void run_mixed_workload_scalability() {
-        information(format_string("--- Mixed Workload Scalability ---"));
-        
-        for (auto thread_count : config_.thread_counts) {
-            auto result = benchmark_mixed_workload(thread_count, 50000);
-            results_.push_back(result);
-            print_result(result);
-        }
-        information(format_string(""));
-    }
-
-    void run_burst_workload_scalability() {
-        information(format_string("--- Burst Workload Scalability ---"));
-        
-        for (auto thread_count : config_.thread_counts) {
-            auto result = benchmark_burst_workload(thread_count);
-            results_.push_back(result);
-            print_result(result);
-        }
-        information(format_string(""));
-    }
-
-    benchmark_result benchmark_cpu_workload(size_t thread_count, size_t job_count) {
-        auto pool = std::make_shared<thread_pool>();
-        pool->start();
-
-        // Add workers
-        for (size_t i = 0; i < thread_count; ++i) {
-            pool->enqueue(std::make_unique<thread_worker>(pool));
-        }
-
-        completed_jobs_ = 0;
-        auto start_time = std::chrono::high_resolution_clock::now();
-
+        state.PauseTiming();
         // Submit CPU-intensive jobs
         for (size_t i = 0; i < job_count; ++i) {
-            auto job = std::make_unique<callback_job>([this]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
                 // CPU-intensive work: prime number calculation
                 volatile uint64_t sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j * j;
                 }
-                completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                return {};
+                completed.fetch_add(1, std::memory_order_relaxed);
+                return result_void{};
             });
-            
             pool->enqueue(std::move(job));
         }
-
-        // Wait for completion
-        while (completed_jobs_.load() < job_count) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-
-        pool->stop();
-
-        benchmark_result result;
-        result.thread_count = thread_count;
-        result.job_count = job_count;
-        result.job_duration = std::chrono::microseconds(0);
-        result.total_time = duration;
-        result.throughput_jobs_per_sec = (job_count * 1000.0) / duration.count();
+        state.ResumeTiming();
         
-        return result;
-    }
-
-    benchmark_result benchmark_io_workload(size_t thread_count, size_t job_count, 
-                                         std::chrono::microseconds io_delay) {
-        auto pool = std::make_shared<thread_pool>();
-        pool->start();
-
-        // Add workers
-        for (size_t i = 0; i < thread_count; ++i) {
-            pool->enqueue(std::make_unique<thread_worker>(pool));
+        // Wait for completion
+        while (completed.load() < job_count) {
+            std::this_thread::yield();
         }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * job_count);
+    state.counters["workers"] = num_workers;
+    state.counters["job_count"] = job_count;
 
-        completed_jobs_ = 0;
-        auto start_time = std::chrono::high_resolution_clock::now();
+}
+// Test matrix: Workers x Job count
+BENCHMARK(BM_CPUBoundScalability)
+    ->Args({1, 10000})
+    ->Args({2, 10000})
+    ->Args({4, 10000})
+    ->Args({8, 10000})
+    ->Args({16, 10000})
+    ->Args({1, 100000})
+    ->Args({2, 100000})
+    ->Args({4, 100000})
+    ->Args({8, 100000})
+    ->Args({16, 100000});
 
+/**
+ * @brief Benchmark I/O-bound workload scalability
+ * 
+ * Measures how thread pool scales with I/O-intensive tasks.
+ */
+static void BM_IOBoundScalability(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t job_count = state.range(1);
+    const size_t io_delay_us = state.range(2);
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("io_bound_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
+    }
+    pool->start();
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
+        
+        state.PauseTiming();
         // Submit I/O-bound jobs
         for (size_t i = 0; i < job_count; ++i) {
-            auto job = std::make_unique<callback_job>([this, io_delay]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed, io_delay_us]() -> result_void {
                 // Simulate I/O wait
-                std::this_thread::sleep_for(io_delay);
-                completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                return {};
+                std::this_thread::sleep_for(std::chrono::microseconds(io_delay_us));
+                completed.fetch_add(1, std::memory_order_relaxed);
+                return result_void{};
             });
-            
             pool->enqueue(std::move(job));
         }
-
-        // Wait for completion
-        while (completed_jobs_.load() < job_count) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-
-        pool->stop();
-
-        benchmark_result result;
-        result.thread_count = thread_count;
-        result.job_count = job_count;
-        result.job_duration = io_delay;
-        result.total_time = duration;
-        result.throughput_jobs_per_sec = (job_count * 1000.0) / duration.count();
+        state.ResumeTiming();
         
-        return result;
-    }
-
-    benchmark_result benchmark_mixed_workload(size_t thread_count, size_t job_count) {
-        auto pool = std::make_shared<thread_pool>();
-        pool->start();
-
-        // Add workers
-        for (size_t i = 0; i < thread_count; ++i) {
-            pool->enqueue(std::make_unique<thread_worker>(pool));
+        // Wait for completion
+        while (completed.load() < job_count) {
+            std::this_thread::yield();
         }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * job_count);
+    state.counters["workers"] = num_workers;
+    state.counters["job_count"] = job_count;
+    state.counters["io_delay_us"] = io_delay_us;
+}
+// Test matrix: Workers x Job count x I/O delay
+BENCHMARK(BM_IOBoundScalability)
+    ->Args({1, 10000, 100})
+    ->Args({2, 10000, 100})
+    ->Args({4, 10000, 100})
+    ->Args({8, 10000, 100})
+    ->Args({16, 10000, 100})
+    ->Args({1, 10000, 1000})
+    ->Args({2, 10000, 1000})
+    ->Args({4, 10000, 1000})
+    ->Args({8, 10000, 1000})
+    ->Args({16, 10000, 1000});
 
-        completed_jobs_ = 0;
-        auto start_time = std::chrono::high_resolution_clock::now();
-
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> workload_dist(0, 2);
-
+/**
+ * @brief Benchmark mixed workload scalability
+ * 
+ * Measures how thread pool scales with mixed CPU/IO/Memory workloads.
+ */
+static void BM_MixedWorkloadScalability(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t job_count = 50000;
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("mixed_workload_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
+    }
+    pool->start();
+    
+    // Random number generator for workload distribution
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> workload_dist(0, 2);
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
+        
+        state.PauseTiming();
         // Submit mixed workload jobs
         for (size_t i = 0; i < job_count; ++i) {
             int workload_type = workload_dist(gen);
             
-            auto job = std::make_unique<callback_job>([this, workload_type]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed, workload_type]() -> result_void {
                 switch (workload_type) {
                     case 0: // CPU-intensive
                         {
@@ -279,145 +207,223 @@ private:
                         }
                         break;
                 }
-                completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                return {};
+                completed.fetch_add(1, std::memory_order_relaxed);
+                return result_void{};
             });
-            
             pool->enqueue(std::move(job));
         }
-
-        // Wait for completion
-        while (completed_jobs_.load() < job_count) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-
-        pool->stop();
-
-        benchmark_result result;
-        result.thread_count = thread_count;
-        result.job_count = job_count;
-        result.job_duration = std::chrono::microseconds(0);
-        result.total_time = duration;
-        result.throughput_jobs_per_sec = (job_count * 1000.0) / duration.count();
+        state.ResumeTiming();
         
-        return result;
-    }
-
-    benchmark_result benchmark_burst_workload(size_t thread_count) {
-        auto pool = std::make_shared<thread_pool>();
-        pool->start();
-
-        // Add workers
-        for (size_t i = 0; i < thread_count; ++i) {
-            pool->enqueue(std::make_unique<thread_worker>(pool));
+        // Wait for completion
+        while (completed.load() < job_count) {
+            std::this_thread::yield();
         }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * job_count);
+    state.counters["workers"] = num_workers;
+}
+// Test with different worker counts
+BENCHMARK(BM_MixedWorkloadScalability)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16)
+    ->Arg(std::thread::hardware_concurrency());
 
-        completed_jobs_ = 0;
-        auto start_time = std::chrono::high_resolution_clock::now();
-
+/**
+ * @brief Benchmark burst workload scalability
+ * 
+ * Measures how thread pool handles sudden bursts of jobs.
+ */
+static void BM_BurstWorkloadScalability(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t burst_size = 1000;
+    const size_t num_bursts = 10;
+    const auto burst_interval = std::chrono::milliseconds(50);
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("burst_workload_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
+    }
+    pool->start();
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
+        const size_t total_jobs = burst_size * num_bursts;
+        
+        state.PauseTiming();
         // Submit jobs in bursts
-        const size_t burst_size = 1000;
-        const size_t num_bursts = 10;
-        const auto burst_interval = std::chrono::milliseconds(50);
-
         for (size_t burst = 0; burst < num_bursts; ++burst) {
             // Submit burst of jobs
             for (size_t i = 0; i < burst_size; ++i) {
-                auto job = std::make_unique<callback_job>([this]() -> result_void {
+                auto job = std::make_unique<callback_job>([&completed]() -> result_void {
                     volatile uint64_t sum = 0;
                     for (int j = 0; j < 100; ++j) {
                         sum += j;
                     }
-                    completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                    return {};
+                    completed.fetch_add(1, std::memory_order_relaxed);
+                    return result_void{};
                 });
-                
                 pool->enqueue(std::move(job));
             }
-
+            
             // Wait between bursts
             if (burst < num_bursts - 1) {
                 std::this_thread::sleep_for(burst_interval);
             }
         }
-
+        state.ResumeTiming();
+        
         // Wait for completion
-        const size_t total_jobs = burst_size * num_bursts;
-        while (completed_jobs_.load() < total_jobs) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-
-        pool->stop();
-
-        benchmark_result result;
-        result.thread_count = thread_count;
-        result.job_count = total_jobs;
-        result.job_duration = std::chrono::microseconds(0);
-        result.total_time = duration;
-        result.throughput_jobs_per_sec = (total_jobs * 1000.0) / duration.count();
-        
-        return result;
-    }
-
-    void print_result(const benchmark_result& result) {
-        information(format_string("  {:2} threads: {:6}ms, {:8.2f} jobs/sec, {:5.2f}x speedup, {:5.2f}% efficiency",
-                  result.thread_count, result.total_time.count(), result.throughput_jobs_per_sec,
-                  result.speedup, result.efficiency_percent));
-    }
-
-    void print_summary() {
-        information(format_string("=== Scalability Summary ==="));
-        
-        // Find best and worst efficiency results
-        auto best_efficiency = std::max_element(results_.begin(), results_.end(),
-            [](const auto& a, const auto& b) { return a.efficiency_percent < b.efficiency_percent; });
-        
-        auto worst_efficiency = std::min_element(results_.begin(), results_.end(),
-            [](const auto& a, const auto& b) { return a.efficiency_percent < b.efficiency_percent; });
-
-        if (best_efficiency != results_.end()) {
-            information(format_string("Best efficiency: {:.1f}% with {} threads",
-                      best_efficiency->efficiency_percent, best_efficiency->thread_count));
-        }
-
-        if (worst_efficiency != results_.end()) {
-            information(format_string("Worst efficiency: {:.1f}% with {} threads",
-                      worst_efficiency->efficiency_percent, worst_efficiency->thread_count));
-        }
-
-        // Calculate average efficiency per thread count
-        std::map<size_t, std::vector<double>> efficiency_by_threads;
-        for (const auto& result : results_) {
-            efficiency_by_threads[result.thread_count].push_back(result.efficiency_percent);
-        }
-
-        information(format_string("\nAverage efficiency by thread count:"));
-        for (const auto& [thread_count, efficiencies] : efficiency_by_threads) {
-            double avg = std::accumulate(efficiencies.begin(), efficiencies.end(), 0.0) / efficiencies.size();
-            information(format_string("  {:2} threads: {:.1f}%", thread_count, avg));
+        while (completed.load() < total_jobs) {
+            std::this_thread::yield();
         }
     }
-};
-
-int main() {
-    set_title("scalability_benchmark");
-    console_target(log_types::Information | log_types::Warning | log_types::Error);
-    start();
-
-    try {
-        scalability_benchmark benchmark;
-        benchmark.run_all_benchmarks();
-    } catch (const std::exception& e) {
-        error(format_string("Benchmark failed: {}", e.what()));
-        return 1;
-    }
-
-    stop();
-    return 0;
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * burst_size * num_bursts);
+    state.counters["workers"] = num_workers;
+    state.counters["burst_size"] = burst_size;
+    state.counters["num_bursts"] = num_bursts;
 }
+// Test with different worker counts
+BENCHMARK(BM_BurstWorkloadScalability)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16)
+    ->Arg(std::thread::hardware_concurrency());
+
+/**
+ * @brief Benchmark scaling efficiency
+ * 
+ * Measures how efficiently the thread pool scales compared to single thread baseline.
+ */
+static void BM_ScalingEfficiency(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t total_jobs = 100000;
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("scaling_efficiency_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
+    }
+    pool->start();
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
+        
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        // Submit all jobs
+        for (size_t i = 0; i < total_jobs; ++i) {
+            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+                // Simulate some work
+                volatile int sum = 0;
+                for (int j = 0; j < 1000; ++j) {
+                    sum += j;
+                }
+                completed.fetch_add(1);
+                return result_void{};
+            });
+            pool->enqueue(std::move(job));
+        }
+        
+        // Wait for completion
+        while (completed.load() < total_jobs) {
+            std::this_thread::yield();
+        }
+        
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        state.SetIterationTime(duration.count() / 1000.0);
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * total_jobs);
+    state.counters["workers"] = num_workers;
+    state.counters["jobs_per_worker"] = total_jobs / num_workers;
+}
+// Test with different thread counts
+BENCHMARK(BM_ScalingEfficiency)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16)
+    ->Arg(std::thread::hardware_concurrency())
+    ->UseManualTime();
+
+/**
+ * @brief Benchmark weak scaling
+ * 
+ * Measures performance when both problem size and worker count increase proportionally.
+ */
+static void BM_WeakScaling(benchmark::State& state) {
+    const size_t num_workers = state.range(0);
+    const size_t jobs_per_worker = 10000;
+    const size_t total_jobs = num_workers * jobs_per_worker;
+    
+    // Create thread pool
+    auto pool = std::make_shared<thread_pool>("weak_scaling_pool");
+    for (size_t i = 0; i < num_workers; ++i) {
+        auto worker = std::make_unique<thread_worker>();
+        pool->enqueue(std::move(worker));
+    }
+    pool->start();
+    
+    // Benchmark
+    for (auto _ : state) {
+        std::atomic<size_t> completed{0};
+        
+        state.PauseTiming();
+        // Submit jobs
+        for (size_t i = 0; i < total_jobs; ++i) {
+            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+                // Fixed amount of work per job
+                volatile uint64_t sum = 0;
+                for (int j = 0; j < 1000; ++j) {
+                    sum += j * j;
+                }
+                completed.fetch_add(1);
+                return result_void{};
+            });
+            pool->enqueue(std::move(job));
+        }
+        state.ResumeTiming();
+        
+        // Wait for completion
+        while (completed.load() < total_jobs) {
+            std::this_thread::yield();
+        }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * total_jobs);
+    state.counters["workers"] = num_workers;
+    state.counters["total_jobs"] = total_jobs;
+    state.counters["jobs_per_worker"] = jobs_per_worker;
+}
+// Test weak scaling
+BENCHMARK(BM_WeakScaling)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
+
+// Main function to run benchmarks
+BENCHMARK_MAIN();

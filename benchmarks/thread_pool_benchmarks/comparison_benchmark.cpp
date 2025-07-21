@@ -40,6 +40,7 @@
  * - Custom thread pool implementations
  */
 
+#include <benchmark/benchmark.h>
 #include <chrono>
 #include <vector>
 #include <thread>
@@ -57,10 +58,66 @@
 #include <omp.h>
 #endif
 
-#include "thread_pool.h"
-#include "typed_thread_pool.h"
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/thread_pool/core/thread_pool.h"
+#include "../../sources/thread_pool/workers/thread_worker.h"
+#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
+
+// Helper function to create thread pool
+auto create_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<thread_pool_module::thread_pool>, std::optional<std::string>>
+{
+    std::shared_ptr<thread_pool_module::thread_pool> pool;
+    try {
+        pool = std::make_shared<thread_pool_module::thread_pool>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
+
+// Helper function to create typed thread pool
+template<typename Type>
+auto create_priority_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+{
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    try {
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
 
 using namespace std::chrono;
 using namespace thread_pool_module;
@@ -70,7 +127,7 @@ class SimpleThreadPool {
 public:
     explicit SimpleThreadPool(size_t num_threads) : stop_(false) {
         for (size_t i = 0; i < num_threads; ++i) {
-            workers_.emplace_back([this] {
+            workers_.emplace_back([this]() -> result_void {
                 while (true) {
                     std::function<void()> task;
                     {
@@ -116,609 +173,673 @@ private:
     std::atomic<bool> stop_;
 };
 
-class ComparisonBenchmark {
-public:
-    ComparisonBenchmark() {
-        log_module::start();
-        log_module::console_target(log_module::log_types::Information);
-    }
+// Store results for comparison across benchmarks
+static std::map<std::string, double> g_baseline_times;
     
-    ~ComparisonBenchmark() {
-        log_module::stop();
-    }
+/**
+ * @brief Benchmark sequential task execution baseline
+ */
+static void BM_SimpleTaskExecution_Sequential(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
     
-    void run_all_benchmarks() {
-        log_module::information("\n=== Comparative Performance Benchmarks ===\n");
+    for (auto _ : state) {
+        std::atomic<size_t> counter{0};
         
-        compare_simple_task_execution();
-        compare_parallel_computation();
-        compare_io_bound_workload();
-        compare_mixed_workload();
-        compare_task_creation_overhead();
-        compare_memory_usage();
+        for (size_t i = 0; i < num_tasks; ++i) {
+            counter.fetch_add(1);
+        }
         
-        log_module::information("\n=== Comparison Complete ===\n");
+        benchmark::DoNotOptimize(counter.load());
     }
     
-private:
-    struct BenchmarkResult {
-        std::string name;
-        double time_ms;
-        double speedup;
-        size_t operations;
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+    g_baseline_times["simple_task"] = state.iterations();
+}
+BENCHMARK(BM_SimpleTaskExecution_Sequential)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark Thread System simple task execution
+ */
+static void BM_SimpleTaskExecution_ThreadSystem(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(std::thread::hardware_concurrency());
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        std::atomic<size_t> counter{0};
+        
+        for (size_t i = 0; i < num_tasks; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([&counter]() -> result_void {
+                counter.fetch_add(1);
+                return result_void();
+            }));
+        }
+        
+        pool->stop();
+        benchmark::DoNotOptimize(counter.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+    if (g_baseline_times.count("simple_task")) {
+        state.counters["speedup"] = g_baseline_times["simple_task"] / state.iterations();
+    }
+}
+BENCHMARK(BM_SimpleTaskExecution_ThreadSystem)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark std::async simple task execution
+ */
+static void BM_SimpleTaskExecution_StdAsync(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    
+    for (auto _ : state) {
+        std::atomic<size_t> counter{0};
+        std::vector<std::future<void>> futures;
+        futures.reserve(num_tasks);
+        
+        for (size_t i = 0; i < num_tasks; ++i) {
+            futures.push_back(std::async(std::launch::async, [&counter]() {
+                counter.fetch_add(1);
+            }));
+        }
+        
+        for (auto& f : futures) {
+            f.get();
+        }
+        
+        benchmark::DoNotOptimize(counter.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+    if (g_baseline_times.count("simple_task")) {
+        state.counters["speedup"] = g_baseline_times["simple_task"] / state.iterations();
+    }
+}
+BENCHMARK(BM_SimpleTaskExecution_StdAsync)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark simple thread pool task execution
+ */
+static void BM_SimpleTaskExecution_SimplePool(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    
+    for (auto _ : state) {
+        SimpleThreadPool pool(std::thread::hardware_concurrency());
+        std::atomic<size_t> counter{0};
+        std::atomic<size_t> completed{0};
+        
+        for (size_t i = 0; i < num_tasks; ++i) {
+            pool.submit([&counter, &completed]() {
+                counter.fetch_add(1);
+                completed.fetch_add(1);
+            });
+        }
+        
+        // Wait for completion
+        while (completed.load() < num_tasks) {
+            std::this_thread::sleep_for(milliseconds(1));
+        }
+        
+        benchmark::DoNotOptimize(counter.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+    if (g_baseline_times.count("simple_task")) {
+        state.counters["speedup"] = g_baseline_times["simple_task"] / state.iterations();
+    }
+}
+BENCHMARK(BM_SimpleTaskExecution_SimplePool)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+
+#ifdef _OPENMP
+/**
+ * @brief Benchmark OpenMP simple task execution
+ */
+static void BM_SimpleTaskExecution_OpenMP(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    
+    for (auto _ : state) {
+        std::atomic<size_t> counter{0};
+        
+        #pragma omp parallel for
+        for (size_t i = 0; i < num_tasks; ++i) {
+            counter.fetch_add(1);
+        }
+        
+        benchmark::DoNotOptimize(counter.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+    if (g_baseline_times.count("simple_task")) {
+        state.counters["speedup"] = g_baseline_times["simple_task"] / state.iterations();
+    }
+}
+BENCHMARK(BM_SimpleTaskExecution_OpenMP)
+    ->Arg(100000)
+    ->Unit(benchmark::kMillisecond);
+#endif
+    
+/**
+ * @brief Benchmark sequential parallel computation baseline
+ */
+static void BM_ParallelComputation_Sequential(benchmark::State& state) {
+    const size_t data_size = state.range(0);
+    std::vector<double> data(data_size);
+    
+    // Initialize data
+    for (size_t i = 0; i < data_size; ++i) {
+        data[i] = static_cast<double>(i) * 0.1;
+    }
+    
+    for (auto _ : state) {
+        double sum = 0;
+        for (const auto& val : data) {
+            sum += std::sin(val) * std::cos(val);
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+    
+    state.SetItemsProcessed(state.iterations() * data_size);
+    g_baseline_times["parallel_comp"] = state.iterations();
+}
+BENCHMARK(BM_ParallelComputation_Sequential)
+    ->Arg(10000000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark Thread System parallel computation
+ */
+static void BM_ParallelComputation_ThreadSystem(benchmark::State& state) {
+    const size_t data_size = state.range(0);
+    std::vector<double> data(data_size);
+    
+    // Initialize data
+    for (size_t i = 0; i < data_size; ++i) {
+        data[i] = static_cast<double>(i) * 0.1;
+    }
+    
+    const size_t num_workers = std::thread::hardware_concurrency();
+    const size_t chunk_size = data_size / num_workers;
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(num_workers);
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        
+        std::vector<std::future<double>> futures;
+        std::vector<std::promise<double>> promises(num_workers);
+        
+        for (size_t i = 0; i < num_workers; ++i) {
+            futures.push_back(promises[i].get_future());
+        }
+        
+        for (size_t i = 0; i < num_workers; ++i) {
+            size_t start_idx = i * chunk_size;
+            size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
+            
+            pool->enqueue(std::make_unique<callback_job>([&data, start_idx, end_idx, p = std::move(promises[i])]() mutable {
+                double local_sum = 0;
+                for (size_t j = start_idx; j < end_idx; ++j) {
+                    local_sum += std::sin(data[j]) * std::cos(data[j]);
+                }
+                p.set_value(local_sum);
+            });
+        }
+        
+        double total_sum = 0;
+        for (auto& f : futures) {
+            total_sum += f.get();
+        }
+        
+        pool->stop();
+        benchmark::DoNotOptimize(total_sum);
+    }
+    
+    state.SetItemsProcessed(state.iterations() * data_size);
+    if (g_baseline_times.count("parallel_comp")) {
+        state.counters["speedup"] = g_baseline_times["parallel_comp"] / state.iterations();
+    }
+}
+BENCHMARK(BM_ParallelComputation_ThreadSystem)
+    ->Arg(10000000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark std::async parallel computation
+ */
+static void BM_ParallelComputation_StdAsync(benchmark::State& state) {
+    const size_t data_size = state.range(0);
+    std::vector<double> data(data_size);
+    
+    // Initialize data
+    for (size_t i = 0; i < data_size; ++i) {
+        data[i] = static_cast<double>(i) * 0.1;
+    }
+    
+    const size_t num_workers = std::thread::hardware_concurrency();
+    const size_t chunk_size = data_size / num_workers;
+    
+    for (auto _ : state) {
+        std::vector<std::future<double>> futures;
+        
+        for (size_t i = 0; i < num_workers; ++i) {
+            size_t start_idx = i * chunk_size;
+            size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
+            
+            futures.push_back(std::async(std::launch::async, 
+                [&data, start_idx, end_idx]() -> double {
+                    double local_sum = 0;
+                    for (size_t j = start_idx; j < end_idx; ++j) {
+                        local_sum += std::sin(data[j]) * std::cos(data[j]);
+                    }
+                    return local_sum;
+                }
+            ));
+        }
+        
+        double total_sum = 0;
+        for (auto& f : futures) {
+            total_sum += f.get();
+        }
+        
+        benchmark::DoNotOptimize(total_sum);
+    }
+    
+    state.SetItemsProcessed(state.iterations() * data_size);
+    if (g_baseline_times.count("parallel_comp")) {
+        state.counters["speedup"] = g_baseline_times["parallel_comp"] / state.iterations();
+    }
+}
+BENCHMARK(BM_ParallelComputation_StdAsync)
+    ->Arg(10000000)
+    ->Unit(benchmark::kMillisecond);
+
+#ifdef _OPENMP
+/**
+ * @brief Benchmark OpenMP parallel computation
+ */
+static void BM_ParallelComputation_OpenMP(benchmark::State& state) {
+    const size_t data_size = state.range(0);
+    std::vector<double> data(data_size);
+    
+    // Initialize data
+    for (size_t i = 0; i < data_size; ++i) {
+        data[i] = static_cast<double>(i) * 0.1;
+    }
+    
+    for (auto _ : state) {
+        double sum = 0;
+        #pragma omp parallel for reduction(+:sum)
+        for (size_t i = 0; i < data_size; ++i) {
+            sum += std::sin(data[i]) * std::cos(data[i]);
+        }
+        
+        benchmark::DoNotOptimize(sum);
+    }
+    
+    state.SetItemsProcessed(state.iterations() * data_size);
+    if (g_baseline_times.count("parallel_comp")) {
+        state.counters["speedup"] = g_baseline_times["parallel_comp"] / state.iterations();
+    }
+}
+BENCHMARK(BM_ParallelComputation_OpenMP)
+    ->Arg(10000000)
+    ->Unit(benchmark::kMillisecond);
+#endif
+    
+/**
+ * @brief Benchmark Thread System I/O bound workload with many workers
+ */
+static void BM_IOBound_ThreadSystem_ManyWorkers(benchmark::State& state) {
+    const size_t num_operations = state.range(0);
+    const int io_delay_ms = state.range(1);
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(std::thread::hardware_concurrency() * 4);
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        std::atomic<size_t> completed{0};
+        
+        for (size_t i = 0; i < num_operations; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
+                // Simulate I/O
+                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+                completed.fetch_add(1);
+                return result_void();
+            }));
+        }
+        
+        pool->stop();
+        benchmark::DoNotOptimize(completed.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_operations);
+    state.counters["worker_multiplier"] = 4;
+}
+BENCHMARK(BM_IOBound_ThreadSystem_ManyWorkers)
+    ->Args({1000, 10})
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark Thread System I/O bound workload with normal workers
+ */
+static void BM_IOBound_ThreadSystem_NormalWorkers(benchmark::State& state) {
+    const size_t num_operations = state.range(0);
+    const int io_delay_ms = state.range(1);
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(std::thread::hardware_concurrency());
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        std::atomic<size_t> completed{0};
+        
+        for (size_t i = 0; i < num_operations; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
+                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+                completed.fetch_add(1);
+                return result_void();
+            }));
+        }
+        
+        pool->stop();
+        benchmark::DoNotOptimize(completed.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_operations);
+    state.counters["worker_multiplier"] = 1;
+}
+BENCHMARK(BM_IOBound_ThreadSystem_NormalWorkers)
+    ->Args({1000, 10})
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark std::async I/O bound workload
+ */
+static void BM_IOBound_StdAsync(benchmark::State& state) {
+    const size_t num_operations = state.range(0);
+    const int io_delay_ms = state.range(1);
+    
+    for (auto _ : state) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(num_operations);
+        
+        for (size_t i = 0; i < num_operations; ++i) {
+            futures.push_back(std::async(std::launch::async, [io_delay_ms]() {
+                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+            }));
+        }
+        
+        for (auto& f : futures) {
+            f.get();
+        }
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_operations);
+}
+BENCHMARK(BM_IOBound_StdAsync)
+    ->Args({1000, 10})
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark Thread System mixed CPU/IO workload
+ */
+static void BM_MixedWorkload_ThreadSystem(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    const int cpu_work_units = 1000;
+    const int io_delay_ms = 5;
+    
+    auto mixed_work = [cpu_work_units, io_delay_ms]() -> result_void {
+        // CPU work
+        volatile double result = 0;
+        for (int i = 0; i < cpu_work_units; ++i) {
+            result += std::sin(i) * std::cos(i);
+        }
+        
+        // I/O work
+        std::this_thread::sleep_for(milliseconds(io_delay_ms));
     };
     
-    void print_comparison_table(const std::vector<BenchmarkResult>& results) {
-        // Find baseline (first result)
-        double baseline_time = results.empty() ? 1.0 : results[0].time_ms;
-        
-        log_module::information("\n");
-        log_module::information(format_string("%*s%*s%*s%*s", 25, "Implementation", 12, "Time (ms)", 12, "Speedup", 15, "Ops/sec"));
-        log_module::information(std::string(64, '-'));
-        
-        for (const auto& result : results) {
-            double speedup = baseline_time / result.time_ms;
-            double ops_per_sec = (result.operations * 1000.0) / result.time_ms;
-            
-            log_module::information(format_string("%*s%*.2f%*.2fx%*.0f", 25, result.name.c_str(), 12, result.time_ms, 12, speedup, 15, ops_per_sec));
+    for (auto _ : state) {
+        auto [pool, error] = create_default(std::thread::hardware_concurrency());
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
         }
+        
+        pool->start();
+        
+        for (size_t i = 0; i < num_tasks; ++i) {
+            pool->enqueue(std::make_unique<callback_job>(mixed_work));
+        }
+        
+        pool->stop();
     }
     
-    void compare_simple_task_execution() {
-        log_module::information("\n1. Simple Task Execution Comparison\n");
-        log_module::information("-----------------------------------\n");
-        
-        const size_t num_tasks = 100000;
-        std::vector<BenchmarkResult> results;
-        
-        // Baseline: Sequential execution
-        {
-            std::atomic<size_t> counter{0};
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_tasks; ++i) {
-                counter.fetch_add(1);
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"Sequential", time_ms, 1.0, num_tasks});
-        }
-        
-        // Thread System
-        {
-            auto [pool, error] = create_default(std::thread::hardware_concurrency());
-            if (!error) {
-                pool->start();
-                
-                std::atomic<size_t> counter{0};
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_tasks; ++i) {
-                    pool->add_job([&counter] {
-                        counter.fetch_add(1);
-                    });
-                }
-                
-                pool->stop();
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Thread System", time_ms, 1.0, num_tasks});
-            }
-        }
-        
-        // std::async
-        {
-            std::atomic<size_t> counter{0};
-            std::vector<std::future<void>> futures;
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_tasks; ++i) {
-                futures.push_back(std::async(std::launch::async, [&counter] {
-                    counter.fetch_add(1);
-                }));
-            }
-            
-            for (auto& f : futures) {
-                f.get();
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"std::async", time_ms, 1.0, num_tasks});
-        }
-        
-        // Simple thread pool
-        {
-            SimpleThreadPool pool(std::thread::hardware_concurrency());
-            std::atomic<size_t> counter{0};
-            std::atomic<size_t> completed{0};
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_tasks; ++i) {
-                pool.submit([&counter, &completed, num_tasks] {
-                    counter.fetch_add(1);
-                    completed.fetch_add(1);
-                });
-            }
-            
-            // Wait for completion
-            while (completed.load() < num_tasks) {
-                std::this_thread::sleep_for(milliseconds(1));
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"Simple Thread Pool", time_ms, 1.0, num_tasks});
-        }
-        
-        #ifdef _OPENMP
-        // OpenMP
-        {
-            std::atomic<size_t> counter{0};
-            
-            auto start = high_resolution_clock::now();
-            
-            #pragma omp parallel for
-            for (size_t i = 0; i < num_tasks; ++i) {
-                counter.fetch_add(1);
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"OpenMP", time_ms, 1.0, num_tasks});
-        }
-        #endif
-        
-        print_comparison_table(results);
-    }
-    
-    void compare_parallel_computation() {
-        log_module::information("\n2. Parallel Computation Comparison\n");
-        log_module::information("----------------------------------\n");
-        
-        const size_t data_size = 10000000;
-        std::vector<double> data(data_size);
-        
-        // Initialize data
-        for (size_t i = 0; i < data_size; ++i) {
-            data[i] = static_cast<double>(i) * 0.1;
-        }
-        
-        std::vector<BenchmarkResult> results;
-        
-        // Baseline: Sequential
-        {
-            auto start = high_resolution_clock::now();
-            
-            double sum = 0;
-            for (const auto& val : data) {
-                sum += std::sin(val) * std::cos(val);
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"Sequential", time_ms, 1.0, data_size});
-        }
-        
-        // Thread System with batching
-        {
-            auto [pool, error] = create_default(std::thread::hardware_concurrency());
-            if (!error) {
-                pool->start();
-                
-                const size_t num_workers = std::thread::hardware_concurrency();
-                const size_t chunk_size = data_size / num_workers;
-                
-                std::vector<std::future<double>> futures;
-                std::vector<std::promise<double>> promises(num_workers);
-                
-                for (size_t i = 0; i < num_workers; ++i) {
-                    futures.push_back(promises[i].get_future());
-                }
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_workers; ++i) {
-                    size_t start_idx = i * chunk_size;
-                    size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
-                    
-                    pool->add_job([&data, start_idx, end_idx, p = std::move(promises[i])]() mutable {
-                        double local_sum = 0;
-                        for (size_t j = start_idx; j < end_idx; ++j) {
-                            local_sum += std::sin(data[j]) * std::cos(data[j]);
-                        }
-                        p.set_value(local_sum);
-                    });
-                }
-                
-                double total_sum = 0;
-                for (auto& f : futures) {
-                    total_sum += f.get();
-                }
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Thread System", time_ms, 1.0, data_size});
-                
-                pool->stop();
-            }
-        }
-        
-        // std::async with futures
-        {
-            const size_t num_workers = std::thread::hardware_concurrency();
-            const size_t chunk_size = data_size / num_workers;
-            
-            auto start = high_resolution_clock::now();
-            
-            std::vector<std::future<double>> futures;
-            
-            for (size_t i = 0; i < num_workers; ++i) {
-                size_t start_idx = i * chunk_size;
-                size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
-                
-                futures.push_back(std::async(std::launch::async, 
-                    [&data, start_idx, end_idx] {
-                        double local_sum = 0;
-                        for (size_t j = start_idx; j < end_idx; ++j) {
-                            local_sum += std::sin(data[j]) * std::cos(data[j]);
-                        }
-                        return local_sum;
-                    }
-                ));
-            }
-            
-            double total_sum = 0;
-            for (auto& f : futures) {
-                total_sum += f.get();
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"std::async", time_ms, 1.0, data_size});
-        }
-        
-        #ifdef _OPENMP
-        // OpenMP reduction
-        {
-            auto start = high_resolution_clock::now();
-            
-            double sum = 0;
-            #pragma omp parallel for reduction(+:sum)
-            for (size_t i = 0; i < data_size; ++i) {
-                sum += std::sin(data[i]) * std::cos(data[i]);
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"OpenMP", time_ms, 1.0, data_size});
-        }
-        #endif
-        
-        print_comparison_table(results);
-    }
-    
-    void compare_io_bound_workload() {
-        log_module::information("\n3. I/O Bound Workload Comparison\n");
-        log_module::information("--------------------------------\n");
-        
-        const size_t num_operations = 1000;
-        const int io_delay_ms = 10;
-        
-        std::vector<BenchmarkResult> results;
-        
-        // Thread System with many workers (good for I/O)
-        {
-            auto [pool, error] = create_default(std::thread::hardware_concurrency() * 4);
-            if (!error) {
-                pool->start();
-                
-                std::atomic<size_t> completed{0};
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_operations; ++i) {
-                    pool->add_job([io_delay_ms, &completed] {
-                        // Simulate I/O
-                        std::this_thread::sleep_for(milliseconds(io_delay_ms));
-                        completed.fetch_add(1);
-                    });
-                }
-                
-                pool->stop();
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Thread System (4x workers)", time_ms, 1.0, num_operations});
-            }
-        }
-        
-        // Thread System with normal workers
-        {
-            auto [pool, error] = create_default(std::thread::hardware_concurrency());
-            if (!error) {
-                pool->start();
-                
-                std::atomic<size_t> completed{0};
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_operations; ++i) {
-                    pool->add_job([io_delay_ms, &completed] {
-                        std::this_thread::sleep_for(milliseconds(io_delay_ms));
-                        completed.fetch_add(1);
-                    });
-                }
-                
-                pool->stop();
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Thread System (1x workers)", time_ms, 1.0, num_operations});
-            }
-        }
-        
-        // std::async (unlimited threads)
-        {
-            std::vector<std::future<void>> futures;
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_operations; ++i) {
-                futures.push_back(std::async(std::launch::async, [io_delay_ms] {
-                    std::this_thread::sleep_for(milliseconds(io_delay_ms));
-                }));
-            }
-            
-            for (auto& f : futures) {
-                f.get();
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"std::async", time_ms, 1.0, num_operations});
-        }
-        
-        print_comparison_table(results);
-    }
-    
-    void compare_mixed_workload() {
-        log_module::information("\n4. Mixed CPU/IO Workload Comparison\n");
-        log_module::information("-----------------------------------\n");
-        
-        const size_t num_tasks = 1000;
-        const int cpu_work_units = 1000;
-        const int io_delay_ms = 5;
-        
-        std::vector<BenchmarkResult> results;
-        
-        auto mixed_work = [cpu_work_units, io_delay_ms] {
-            // CPU work
-            volatile double result = 0;
-            for (int i = 0; i < cpu_work_units; ++i) {
-                result += std::sin(i) * std::cos(i);
-            }
-            
-            // I/O work
-            std::this_thread::sleep_for(milliseconds(io_delay_ms));
-        };
-        
-        // Thread System
-        {
-            auto [pool, error] = create_default(std::thread::hardware_concurrency());
-            if (!error) {
-                pool->start();
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_tasks; ++i) {
-                    pool->add_job(mixed_work);
-                }
-                
-                pool->stop();
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Thread System", time_ms, 1.0, num_tasks});
-            }
-        }
-        
-        // Type Thread System (with different types for CPU vs I/O)
-        {
-            enum class TaskType { CPU = 1, IO = 10 };
-            
-            auto [pool, error] = create_priority_default<TaskType>(std::thread::hardware_concurrency());
-            if (!error) {
-                pool->start();
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < num_tasks / 2; ++i) {
-                    // CPU-heavy tasks get higher priority
-                    pool->add_job([cpu_work_units] {
-                        volatile double result = 0;
-                        for (int j = 0; j < cpu_work_units * 2; ++j) {
-                            result += std::sin(j) * std::cos(j);
-                        }
-                    }, TaskType::CPU);
-                    
-                    // I/O-heavy tasks get lower priority
-                    pool->add_job([io_delay_ms] {
-                        std::this_thread::sleep_for(milliseconds(io_delay_ms * 2));
-                    }, TaskType::IO);
-                }
-                
-                pool->stop();
-                
-                auto end = high_resolution_clock::now();
-                double time_ms = duration_cast<milliseconds>(end - start).count();
-                
-                results.push_back({"Type Thread System", time_ms, 1.0, num_tasks});
-            }
-        }
-        
-        // std::async
-        {
-            std::vector<std::future<void>> futures;
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_tasks; ++i) {
-                futures.push_back(std::async(std::launch::async, mixed_work));
-            }
-            
-            for (auto& f : futures) {
-                f.get();
-            }
-            
-            auto end = high_resolution_clock::now();
-            double time_ms = duration_cast<milliseconds>(end - start).count();
-            
-            results.push_back({"std::async", time_ms, 1.0, num_tasks});
-        }
-        
-        print_comparison_table(results);
-    }
-    
-    void compare_task_creation_overhead() {
-        log_module::information("\n5. Task Creation Overhead Comparison\n");
-        log_module::information("------------------------------------\n");
-        
-        const size_t num_iterations = 100;
-        const size_t tasks_per_iteration = 1000;
-        
-        std::vector<BenchmarkResult> results;
-        
-        // Thread System
-        {
-            auto [pool, error] = create_default(4);
-            if (!error) {
-                pool->start();
-                
-                std::vector<double> times;
-                
-                for (size_t iter = 0; iter < num_iterations; ++iter) {
-                    auto start = high_resolution_clock::now();
-                    
-                    for (size_t i = 0; i < tasks_per_iteration; ++i) {
-                        pool->add_job([] {});
-                    }
-                    
-                    auto end = high_resolution_clock::now();
-                    times.push_back(duration_cast<microseconds>(end - start).count());
-                }
-                
-                pool->stop();
-                
-                double avg_time_us = std::accumulate(times.begin(), times.end(), 0.0) / times.size();
-                double per_task_ns = (avg_time_us * 1000.0) / tasks_per_iteration;
-                
-                results.push_back({"Thread System", per_task_ns / 1000.0, 1.0, tasks_per_iteration});
-                
-                log_module::information(format_string("Thread System: %.1f ns per task submission\n", per_task_ns));
-            }
-        }
-        
-        // std::async
-        {
-            std::vector<double> times;
-            
-            for (size_t iter = 0; iter < num_iterations; ++iter) {
-                std::vector<std::future<void>> futures;
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < tasks_per_iteration; ++i) {
-                    futures.push_back(std::async(std::launch::deferred, [] {}));
-                }
-                
-                auto end = high_resolution_clock::now();
-                times.push_back(duration_cast<microseconds>(end - start).count());
-                
-                // Clean up futures
-                futures.clear();
-            }
-            
-            double avg_time_us = std::accumulate(times.begin(), times.end(), 0.0) / times.size();
-            double per_task_ns = (avg_time_us * 1000.0) / tasks_per_iteration;
-            
-            results.push_back({"std::async (deferred)", per_task_ns / 1000.0, 1.0, tasks_per_iteration});
-            
-            log_module::information(format_string("std::async (deferred): %.1f ns per task creation\n", per_task_ns));
-        }
-        
-        // Raw function object creation
-        {
-            std::vector<double> times;
-            
-            for (size_t iter = 0; iter < num_iterations; ++iter) {
-                std::vector<std::function<void()>> tasks;
-                
-                auto start = high_resolution_clock::now();
-                
-                for (size_t i = 0; i < tasks_per_iteration; ++i) {
-                    tasks.push_back([] {});
-                }
-                
-                auto end = high_resolution_clock::now();
-                times.push_back(duration_cast<microseconds>(end - start).count());
-            }
-            
-            double avg_time_us = std::accumulate(times.begin(), times.end(), 0.0) / times.size();
-            double per_task_ns = (avg_time_us * 1000.0) / tasks_per_iteration;
-            
-            log_module::information(format_string("Raw lambda creation: %.1f ns per lambda\n", per_task_ns));
-        }
-    }
-    
-    void compare_memory_usage() {
-        log_module::information("\n6. Memory Usage Comparison\n");
-        log_module::information("--------------------------\n");
-        log_module::information("(Memory measurements are approximations)\n\n");
-        
-        const size_t num_queued_tasks = 100000;
-        
-        // Estimate memory per task
-        size_t thread_system_memory = sizeof(job) * num_queued_tasks;
-        size_t async_memory = sizeof(std::future<void>) * num_queued_tasks + 
-                             sizeof(std::promise<void>) * num_queued_tasks;
-        size_t simple_pool_memory = sizeof(std::function<void()>) * num_queued_tasks;
-        
-        log_module::information(format_string("Memory per %zu queued tasks:\n", num_queued_tasks));
-        log_module::information(format_string("  Thread System: %.2f MB (%zu bytes/task)\n", 
-                                             (thread_system_memory / 1024.0 / 1024.0), 
-                                             (thread_system_memory / num_queued_tasks)));
-        log_module::information(format_string("  std::async: %.2f MB (%zu bytes/task)\n", 
-                                             (async_memory / 1024.0 / 1024.0), 
-                                             (async_memory / num_queued_tasks)));
-        log_module::information(format_string("  Simple Pool: %.2f MB (%zu bytes/task)\n", 
-                                             (simple_pool_memory / 1024.0 / 1024.0), 
-                                             (simple_pool_memory / num_queued_tasks)));
-    }
-};
-
-int main() {
-    ComparisonBenchmark benchmark;
-    benchmark.run_all_benchmarks();
-    
-    return 0;
+    state.SetItemsProcessed(state.iterations() * num_tasks);
 }
+BENCHMARK(BM_MixedWorkload_ThreadSystem)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark Typed Thread System mixed workload with priority
+ */
+static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    const int cpu_work_units = 1000;
+    const int io_delay_ms = 5;
+    
+    enum class TaskType { CPU = 1, IO = 10 };
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_priority_default<TaskType>(std::thread::hardware_concurrency());
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        
+        for (size_t i = 0; i < num_tasks / 2; ++i) {
+            // CPU-heavy tasks get higher priority
+            pool->enqueue(std::make_unique<callback_job>([cpu_work_units]() -> result_void {
+                volatile double result = 0;
+                for (int j = 0; j < cpu_work_units * 2; ++j) {
+                    result += std::sin(j) * std::cos(j);
+                }
+                return result_void();
+            }, TaskType::CPU));
+            
+            // I/O-heavy tasks get lower priority
+            pool->enqueue(std::make_unique<callback_job>([io_delay_ms]() -> result_void {
+                std::this_thread::sleep_for(milliseconds(io_delay_ms * 2));
+                return result_void();
+            }, TaskType::IO));
+        }
+        
+        pool->stop();
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+}
+BENCHMARK(BM_MixedWorkload_TypedThreadSystem)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond);
+
+/**
+ * @brief Benchmark std::async mixed workload
+ */
+static void BM_MixedWorkload_StdAsync(benchmark::State& state) {
+    const size_t num_tasks = state.range(0);
+    const int cpu_work_units = 1000;
+    const int io_delay_ms = 5;
+    
+    auto mixed_work = [cpu_work_units, io_delay_ms]() -> result_void {
+        // CPU work
+        volatile double result = 0;
+        for (int i = 0; i < cpu_work_units; ++i) {
+            result += std::sin(i) * std::cos(i);
+        }
+        
+        // I/O work
+        std::this_thread::sleep_for(milliseconds(io_delay_ms));
+    };
+    
+    for (auto _ : state) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(num_tasks);
+        
+        for (size_t i = 0; i < num_tasks; ++i) {
+            futures.push_back(std::async(std::launch::async, mixed_work));
+        }
+        
+        for (auto& f : futures) {
+            f.get();
+        }
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_tasks);
+}
+BENCHMARK(BM_MixedWorkload_StdAsync)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark Thread System task creation overhead
+ */
+static void BM_TaskCreation_ThreadSystem(benchmark::State& state) {
+    const size_t tasks_per_iteration = state.range(0);
+    
+    auto [pool, error] = create_default(4);
+    if (!error.empty()) {
+        state.SkipWithError("Failed to create thread pool");
+        return;
+    }
+    
+    pool->start();
+    
+    for (auto _ : state) {
+        for (size_t i = 0; i < tasks_per_iteration; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+                return result_void();
+            }));
+        }
+    }
+    
+    pool->stop();
+    
+    state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+}
+BENCHMARK(BM_TaskCreation_ThreadSystem)
+    ->Arg(1000)
+    ->Unit(benchmark::kMicrosecond);
+
+/**
+ * @brief Benchmark std::async task creation overhead
+ */
+static void BM_TaskCreation_StdAsync(benchmark::State& state) {
+    const size_t tasks_per_iteration = state.range(0);
+    
+    for (auto _ : state) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(tasks_per_iteration);
+        
+        for (size_t i = 0; i < tasks_per_iteration; ++i) {
+            futures.push_back(std::async(std::launch::deferred, [] {}));
+        }
+        
+        futures.clear();
+    }
+    
+    state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+}
+BENCHMARK(BM_TaskCreation_StdAsync)
+    ->Arg(1000)
+    ->Unit(benchmark::kMicrosecond);
+
+/**
+ * @brief Benchmark raw lambda creation overhead
+ */
+static void BM_TaskCreation_RawLambda(benchmark::State& state) {
+    const size_t tasks_per_iteration = state.range(0);
+    
+    for (auto _ : state) {
+        std::vector<std::function<void()>> tasks;
+        tasks.reserve(tasks_per_iteration);
+        
+        for (size_t i = 0; i < tasks_per_iteration; ++i) {
+            tasks.push_back([] {});
+        }
+        
+        benchmark::DoNotOptimize(tasks.data());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+}
+BENCHMARK(BM_TaskCreation_RawLambda)
+    ->Arg(1000)
+    ->Unit(benchmark::kMicrosecond);
+    
+/**
+ * @brief Benchmark memory usage comparison
+ * 
+ * This benchmark estimates memory usage for different approaches.
+ * Since we can't directly measure memory in Google Benchmark,
+ * we calculate theoretical memory usage based on object sizes.
+ */
+static void BM_MemoryUsage_Comparison(benchmark::State& state) {
+    const size_t num_queued_tasks = state.range(0);
+    
+    // Estimate memory per task
+    size_t thread_system_memory = sizeof(job) * num_queued_tasks;
+    size_t async_memory = sizeof(std::future<void>) * num_queued_tasks + 
+                         sizeof(std::promise<void>) * num_queued_tasks;
+    size_t simple_pool_memory = sizeof(std::function<void()>) * num_queued_tasks;
+    
+    for (auto _ : state) {
+        // This is a meta-benchmark that just reports memory usage
+        benchmark::DoNotOptimize(thread_system_memory);
+        benchmark::DoNotOptimize(async_memory);
+        benchmark::DoNotOptimize(simple_pool_memory);
+    }
+    
+    state.counters["thread_system_MB"] = thread_system_memory / 1024.0 / 1024.0;
+    state.counters["thread_system_bytes_per_task"] = thread_system_memory / num_queued_tasks;
+    state.counters["async_MB"] = async_memory / 1024.0 / 1024.0;
+    state.counters["async_bytes_per_task"] = async_memory / num_queued_tasks;
+    state.counters["simple_pool_MB"] = simple_pool_memory / 1024.0 / 1024.0;
+    state.counters["simple_pool_bytes_per_task"] = simple_pool_memory / num_queued_tasks;
+}
+BENCHMARK(BM_MemoryUsage_Comparison)
+    ->Arg(100000)
+    ->Unit(benchmark::kNanosecond);
+
+// Main function to run benchmarks
+BENCHMARK_MAIN();
