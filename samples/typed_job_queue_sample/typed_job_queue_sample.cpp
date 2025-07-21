@@ -301,7 +301,8 @@ void performance_comparison_example()
                 while (completed.load() < num_jobs) {
                     auto job = queue.dequeue({job_types::RealTime, job_types::Batch, job_types::Background});
                     if (job.has_value()) {
-                        job.value()->do_work();
+                        auto work_result = job.value()->do_work();
+                        (void)work_result; // Ignore result for sample
                     } else {
                         std::this_thread::yield();
                     }
@@ -498,7 +499,8 @@ void stress_test_example()
                 while (consumed < ops_per_thread) {
                     auto job = queue.dequeue({job_types::RealTime, job_types::Batch, job_types::Background});
                     if (job.has_value()) {
-                        job.value()->do_work();
+                        auto work_result = job.value()->do_work();
+                        (void)work_result; // Ignore result for sample
                         consumed++;
                     } else {
                         std::this_thread::yield();

@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  * This benchmark compares:
  * - Thread System Standard Logger
- * - Thread System Lock-free Logger
  * - spdlog (popular C++ logging library)
  * - Simple console output (baseline)
  * 
@@ -48,8 +47,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <benchmark/benchmark.h>
-#include "../../sources/logger/core/logger_implementation.h"
-#include "../../sources/logger/core/lockfree_logger.h"
+#include "../../sources/utilities/interface/logger.h"
+#include "../../sources/utilities/core/formatter.h"
 
 // Check if spdlog is available
 #ifdef HAS_SPDLOG
@@ -66,7 +65,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 
 using namespace log_module;
-using namespace log_module::implementation;
+using namespace utility_module;
 
 // Test configurations
 static const int WARMUP_ITERATIONS = 1000;
@@ -77,18 +76,11 @@ static void init_thread_system_loggers() {
     static bool initialized = false;
     if (!initialized) {
         // Standard logger
-        auto& std_logger = logger::handle();
-        std_logger.set_title("BenchmarkStandard");
-        std_logger.console_target(log_types::None);
-        std_logger.file_target(log_types::Information);
-        std_logger.start();
-        
-        // Lock-free logger
-        auto& lf_logger = lockfree_logger::handle();
-        lf_logger.set_title("BenchmarkLockfree");
-        lf_logger.console_target(log_types::None);
-        lf_logger.file_target(log_types::Information);
-        lf_logger.start();
+        stop();
+        set_title("BenchmarkStandard");
+        console_target();
+        file_target(log_types::Information);
+        start();
         
         initialized = true;
     }
@@ -141,24 +133,10 @@ static void BM_ConsoleOutput(benchmark::State& state) {
 // Benchmark: Thread System Standard Logger
 static void BM_ThreadSystemStandard(benchmark::State& state) {
     init_thread_system_loggers();
-    auto& logger = logger::handle();
     
     int counter = 0;
     for (auto _ : state) {
-        logger.write(log_types::Information, TEST_MESSAGE, counter++);
-    }
-    
-    state.SetItemsProcessed(state.iterations());
-}
-
-// Benchmark: Thread System Lock-free Logger
-static void BM_ThreadSystemLockfree(benchmark::State& state) {
-    init_thread_system_loggers();
-    auto& logger = lockfree_logger::handle();
-    
-    int counter = 0;
-    for (auto _ : state) {
-        logger.write(log_types::Information, TEST_MESSAGE, counter++);
+        write_information(L"Benchmark log message with some data: value={}", counter++);
     }
     
     state.SetItemsProcessed(state.iterations());
@@ -193,7 +171,6 @@ static void BM_SpdlogAsync(benchmark::State& state) {
 // Multi-threaded benchmarks
 static void BM_ThreadSystemStandard_MT(benchmark::State& state) {
     init_thread_system_loggers();
-    auto& logger = logger::handle();
     
     if (state.thread_index() == 0) {
         // Setup on first thread
@@ -201,25 +178,7 @@ static void BM_ThreadSystemStandard_MT(benchmark::State& state) {
     
     int counter = state.thread_index() * 1000000;
     for (auto _ : state) {
-        logger.write(log_types::Information, 
-                    "Thread {} - {}", state.thread_index(), counter++);
-    }
-    
-    state.SetItemsProcessed(state.iterations());
-}
-
-static void BM_ThreadSystemLockfree_MT(benchmark::State& state) {
-    init_thread_system_loggers();
-    auto& logger = lockfree_logger::handle();
-    
-    if (state.thread_index() == 0) {
-        // Setup on first thread
-    }
-    
-    int counter = state.thread_index() * 1000000;
-    for (auto _ : state) {
-        logger.write(log_types::Information, 
-                    "Thread {} - {}", state.thread_index(), counter++);
+        write_information(L"Thread {} - {}", state.thread_index(), counter++);
     }
     
     state.SetItemsProcessed(state.iterations());
@@ -260,27 +219,10 @@ static void BM_SpdlogAsync_MT(benchmark::State& state) {
 // Latency-focused benchmarks (single message)
 static void BM_ThreadSystemStandard_Latency(benchmark::State& state) {
     init_thread_system_loggers();
-    auto& logger = logger::handle();
     
     for (auto _ : state) {
         auto start = std::chrono::high_resolution_clock::now();
-        logger.write(log_types::Information, "Latency test message");
-        auto end = std::chrono::high_resolution_clock::now();
-        
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-        state.SetIterationTime(elapsed.count() / 1e9);
-    }
-    
-    state.SetItemsProcessed(state.iterations());
-}
-
-static void BM_ThreadSystemLockfree_Latency(benchmark::State& state) {
-    init_thread_system_loggers();
-    auto& logger = lockfree_logger::handle();
-    
-    for (auto _ : state) {
-        auto start = std::chrono::high_resolution_clock::now();
-        logger.write(log_types::Information, "Latency test message");
+        write_information(L"Latency test message");
         auto end = std::chrono::high_resolution_clock::now();
         
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -305,65 +247,57 @@ static void BM_Spdlog_Latency(benchmark::State& state) {
     
     state.SetItemsProcessed(state.iterations());
 }
+
+static void BM_SpdlogAsync_Latency(benchmark::State& state) {
+    auto logger = init_spdlog_async();
+    
+    for (auto _ : state) {
+        auto start = std::chrono::high_resolution_clock::now();
+        logger->info("Latency test message");
+        auto end = std::chrono::high_resolution_clock::now();
+        
+        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        state.SetIterationTime(elapsed.count() / 1e9);
+    }
+    
+    state.SetItemsProcessed(state.iterations());
+}
 #endif
 
 // Register benchmarks
-
-// Single-threaded throughput
-BENCHMARK(BM_ConsoleOutput)->Name("Console/SingleThread");
-BENCHMARK(BM_ThreadSystemStandard)->Name("ThreadSystem-Standard/SingleThread");
-BENCHMARK(BM_ThreadSystemLockfree)->Name("ThreadSystem-Lockfree/SingleThread");
-#ifdef HAS_SPDLOG
-BENCHMARK(BM_Spdlog)->Name("spdlog/SingleThread");
-BENCHMARK(BM_SpdlogAsync)->Name("spdlog-Async/SingleThread");
-#endif
-
-// Multi-threaded scalability
-BENCHMARK(BM_ThreadSystemStandard_MT)->Name("ThreadSystem-Standard/2Threads")->Threads(2);
-BENCHMARK(BM_ThreadSystemStandard_MT)->Name("ThreadSystem-Standard/4Threads")->Threads(4);
-BENCHMARK(BM_ThreadSystemStandard_MT)->Name("ThreadSystem-Standard/8Threads")->Threads(8);
-BENCHMARK(BM_ThreadSystemStandard_MT)->Name("ThreadSystem-Standard/16Threads")->Threads(16);
-
-BENCHMARK(BM_ThreadSystemLockfree_MT)->Name("ThreadSystem-Lockfree/2Threads")->Threads(2);
-BENCHMARK(BM_ThreadSystemLockfree_MT)->Name("ThreadSystem-Lockfree/4Threads")->Threads(4);
-BENCHMARK(BM_ThreadSystemLockfree_MT)->Name("ThreadSystem-Lockfree/8Threads")->Threads(8);
-BENCHMARK(BM_ThreadSystemLockfree_MT)->Name("ThreadSystem-Lockfree/16Threads")->Threads(16);
+BENCHMARK(BM_ConsoleOutput);
+BENCHMARK(BM_ThreadSystemStandard);
 
 #ifdef HAS_SPDLOG
-BENCHMARK(BM_Spdlog_MT)->Name("spdlog/2Threads")->Threads(2);
-BENCHMARK(BM_Spdlog_MT)->Name("spdlog/4Threads")->Threads(4);
-BENCHMARK(BM_Spdlog_MT)->Name("spdlog/8Threads")->Threads(8);
-BENCHMARK(BM_Spdlog_MT)->Name("spdlog/16Threads")->Threads(16);
-
-BENCHMARK(BM_SpdlogAsync_MT)->Name("spdlog-Async/2Threads")->Threads(2);
-BENCHMARK(BM_SpdlogAsync_MT)->Name("spdlog-Async/4Threads")->Threads(4);
-BENCHMARK(BM_SpdlogAsync_MT)->Name("spdlog-Async/8Threads")->Threads(8);
-BENCHMARK(BM_SpdlogAsync_MT)->Name("spdlog-Async/16Threads")->Threads(16);
+BENCHMARK(BM_Spdlog);
+BENCHMARK(BM_SpdlogAsync);
 #endif
 
-// Latency measurements
-BENCHMARK(BM_ThreadSystemStandard_Latency)->Name("ThreadSystem-Standard/Latency")->UseManualTime();
-BENCHMARK(BM_ThreadSystemLockfree_Latency)->Name("ThreadSystem-Lockfree/Latency")->UseManualTime();
+// Multi-threaded benchmarks
+BENCHMARK(BM_ThreadSystemStandard_MT)->Threads(1);
+BENCHMARK(BM_ThreadSystemStandard_MT)->Threads(2);
+BENCHMARK(BM_ThreadSystemStandard_MT)->Threads(4);
+BENCHMARK(BM_ThreadSystemStandard_MT)->Threads(8);
+
 #ifdef HAS_SPDLOG
-BENCHMARK(BM_Spdlog_Latency)->Name("spdlog/Latency")->UseManualTime();
+BENCHMARK(BM_Spdlog_MT)->Threads(1);
+BENCHMARK(BM_Spdlog_MT)->Threads(2);
+BENCHMARK(BM_Spdlog_MT)->Threads(4);
+BENCHMARK(BM_Spdlog_MT)->Threads(8);
+
+BENCHMARK(BM_SpdlogAsync_MT)->Threads(1);
+BENCHMARK(BM_SpdlogAsync_MT)->Threads(2);
+BENCHMARK(BM_SpdlogAsync_MT)->Threads(4);
+BENCHMARK(BM_SpdlogAsync_MT)->Threads(8);
 #endif
 
-// Custom main to print system info
-int main(int argc, char** argv) {
-    std::cout << "Logger Comparison Benchmark\n";
-    std::cout << "===========================\n";
-    std::cout << "Comparing:\n";
-    std::cout << "- Thread System Standard Logger (mutex-based)\n";
-    std::cout << "- Thread System Lock-free Logger\n";
+// Latency benchmarks
+BENCHMARK(BM_ThreadSystemStandard_Latency)->UseManualTime();
+
 #ifdef HAS_SPDLOG
-    std::cout << "- spdlog (sync and async modes)\n";
-#else
-    std::cout << "- spdlog (NOT AVAILABLE - install with vcpkg)\n";
+BENCHMARK(BM_Spdlog_Latency)->UseManualTime();
+BENCHMARK(BM_SpdlogAsync_Latency)->UseManualTime();
 #endif
-    std::cout << "- Console output (baseline)\n\n";
-    
-    benchmark::Initialize(&argc, argv);
-    benchmark::RunSpecifiedBenchmarks();
-    
-    return 0;
-}
+
+// Main function
+BENCHMARK_MAIN();

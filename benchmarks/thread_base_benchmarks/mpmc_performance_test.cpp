@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <benchmark/benchmark.h>
 #include "job_queue.h"
 #include "lockfree/queues/lockfree_job_queue.h"
-#include "lockfree/adaptive_job_queue.h"
+#include "lockfree/queues/adaptive_job_queue.h"
 #include "callback_job.h"
 #include <thread>
 #include <vector>

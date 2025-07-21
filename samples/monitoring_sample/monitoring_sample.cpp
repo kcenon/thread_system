@@ -194,6 +194,7 @@ int main() {
     std::atomic<bool> keep_submitting{true};
     std::thread job_submitter([&]() {
         int job_id = 0;
+        (void)job_id; // Used for tracking submitted jobs
         while (keep_submitting.load()) {
             // 버스트 단위로 작업 제출
             int jobs_to_submit = burst_size(gen);

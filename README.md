@@ -97,9 +97,9 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 *Measured Performance (actual workloads):*
 | Configuration | Throughput | Time/1M jobs | Workers | Notes |
 |--------------|------------|--------------|---------|-------|
-| Basic Pool   | 1.16M/s    | 865 ms       | 10      | 🏆 Real-world baseline performance |
+| Basic Pool   | 1.16M/s    | 862 ms       | 10      | 🏆 Real-world baseline performance |
 | Adaptive Pool | Dynamic    | Optimized    | Variable| 🚀 Automatic optimization based on load |
-| Type Pool    | 1.24M/s    | 807 ms       | 6       | ✅ 7.2% faster with fewer workers |
+| Type Pool    | 1.24M/s    | 806 ms       | 6       | ✅ 6.9% faster with fewer workers |
 | **Adaptive Queues** | **Dynamic** | **Optimized** | **Auto** | 🚀 **Automatic optimization** |
 | Peak (empty) | 13.0M/s    | -            | 1       | 📊 Theoretical maximum |
 
@@ -126,7 +126,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 |---------|---------|------------|-------------------|-----------------|
 | 1       | 1.0x    | 💯 **100%** | 🥇 Excellent | Single-threaded workloads |
 | 2       | 2.0x    | 💚 **99%**  | 🥇 Excellent | Dual-core systems |
-| 4       | 3.9x    | 💚 **98%**  | 🥇 Excellent | Quad-core optimal |
+| 4       | 3.9x    | 💚 **97.5%**  | 🥇 Excellent | Quad-core optimal |
 | 8       | 7.7x    | 💚 **96%**  | 🥈 Very Good | Standard multi-core |
 | 16      | 15.0x   | 💙 **94%**  | 🥈 Very Good | High-end workstations |
 | 32      | 28.3x   | 💛 **88%**  | 🥉 Good | Server environments |
@@ -147,7 +147,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 |-------------|---------------|-----------|-----------|------------|---------------|
 | 🏆 **Thread System Logger** | 4.41M/s | **1.07M/s** | **0.41M/s** | **0.39M/s** | All scenarios (adaptive) |
 | 🥈 **Standard Mode** | 4.41M/s | 0.86M/s | 0.23M/s | 0.18M/s | Low concurrency |
-| 📊 **Adaptive Benefit** | 0% | **+25%** | **+76%** | **+118%** | Auto-optimization |
+| 📊 **Adaptive Benefit** | 0% | **+24%** | **+78%** | **+117%** | Auto-optimization |
 
 **Logger vs Industry Standards** (spdlog comparison included):
 | System | Single-thread | 4 Threads | 8 Threads | Latency | vs Console |
@@ -170,7 +170,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 |------------|--------------|---------------|-------------|----------|
 | **Single Type** | 💚 **-3%** | 💯 **100%** | 525K/s | Specialized workloads |
 | **3 Types** | 💛 **-9%** | 💯 **99.6%** | 495K/s | Standard prioritization |
-| **Real Workload** | 💚 **+7%** | 💯 **100%** | **1.24M/s** | **Actual measurement** |
+| **Real Workload** | 💚 **+6.9%** | 💯 **100%** | **1.24M/s** | **Actual measurement** |
 
 *With Adaptive Queues:*
 | Scenario | Performance | vs Standard | Type Accuracy | Notes |
@@ -178,7 +178,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | **Low contention** | 1.24M/s | Same | 💯 **100%** | Mutex strategy selected |
 | **High contention** | Dynamic | **Up to +71%** | 💯 **99%+** | Lock-free mode engaged |
 | **Mixed workload** | Optimized | **Automatic** | 💯 **99.5%** | Strategy switches as needed |
-| **Real measurement** | **1.24M/s** | **+7%** | 💯 **100%** | **Production workload** |
+| **Real measurement** | **1.24M/s** | **+6.9%** | 💯 **100%** | **Production workload** |
 
 **Memory Usage & Creation Performance**:
 | Workers | Creation Time | Memory Usage | Efficiency | Resource Rating |

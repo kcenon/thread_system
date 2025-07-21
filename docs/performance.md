@@ -186,8 +186,8 @@ The recent data race fixes addressed three critical concurrency issues while mai
 
 | Configuration | Throughput | Time (1M jobs) | Workers | CPU Usage | Improvement |
 |--------------|------------|----------------|---------|-----------|-------------|
-| Basic Pool   | 1.16M/s    | 865 ms         | 10      | 559%      | Baseline    |
-| Type Pool    | 1.24M/s    | 807 ms         | 6       | 330%      | +7.2%       |
+| Basic Pool   | 1.16M/s    | 862 ms         | 10      | 559%      | Baseline    |
+| Type Pool    | 1.24M/s    | 806 ms         | 6       | 330%      | +6.9%       |
 
 #### Type Thread Pool with Adaptive Queues
 
@@ -407,11 +407,11 @@ The Thread System includes comprehensive benchmarks for performance testing:
 |---------|---------|------------|-------------------|-----------------|
 | 1       | 1.0x    | 100%       | 0.1               | 98%             |
 | 2       | 2.0x    | 99%        | 0.2               | 97%             |
-| 4       | 3.9x    | 98%        | 0.5               | 96%             |
-| 8       | 7.7x    | 96%        | 1.2               | 95%             |
-| 16      | 15.0x   | 94%        | 3.1               | 92%             |
-| 32      | 28.3x   | 88%        | 8.7               | 86%             |
-| 64      | 52.1x   | 81%        | 22.4              | 78%             |
+| 4       | 3.9x    | 97.5%      | 0.5               | 96%             |
+| 8       | 7.7x    | 96.25%     | 1.2               | 95%             |
+| 16      | 15.0x   | 93.75%     | 3.1               | 92%             |
+| 32      | 28.3x   | 88.4%      | 8.7               | 86%             |
+| 64      | 52.1x   | 81.4%      | 22.4              | 78%             |
 
 ### Workload-Specific Scaling
 
@@ -691,7 +691,7 @@ This section compares Thread System's logging performance against industry-stand
 
 1. **Single-threaded Champion**: spdlog async (5.35M/s) edges out Thread System (4.34M/s)
 2. **Multi-threaded Champion**: Thread System with adaptive queues shows consistent performance
-3. **Latency Champion**: Thread System with 148ns, **15.7x lower** than spdlog sync
+3. **Latency Champion**: Thread System with 148ns, **15.8x lower** than spdlog sync (2333/148 = 15.76)
 4. **Scalability**: Thread System adaptive mode provides automatic optimization
 
 ### Recommendations
@@ -1124,6 +1124,78 @@ private:
    - Allow idle workers to steal from other type queues
    - Better CPU utilization under uneven load
    - Configurable stealing policies
+
+## Performance Recommendations Summary (2025)
+
+### Quick Configuration Guide
+
+#### 1. **For General Applications**
+```cpp
+// Use standard thread pool with adaptive queues
+auto pool = std::make_shared<thread_pool>("MyPool");
+
+// Add workers (hardware_concurrency for CPU-bound)
+for (int i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    pool->enqueue(std::make_unique<thread_worker>());
+}
+pool->start();
+```
+
+#### 2. **For Priority-Sensitive Applications**
+```cpp
+// Use typed thread pool with adaptive queues
+auto pool = std::make_shared<typed_thread_pool_t<job_types>>("PriorityPool");
+
+// Add specialized workers
+for (auto priority : {job_types::RealTime, job_types::Batch, job_types::Background}) {
+    auto worker = std::make_unique<typed_thread_worker_t<job_types>>();
+    worker->set_responsibilities({priority});
+    pool->enqueue(std::move(worker));
+}
+
+// Add universal workers for load balancing
+for (int i = 0; i < 2; ++i) {
+    auto worker = std::make_unique<typed_thread_worker_t<job_types>>();
+    worker->set_responsibilities({job_types::RealTime, job_types::Batch, job_types::Background});
+    pool->enqueue(std::move(worker));
+}
+pool->start();
+```
+
+#### 3. **For High-Concurrency Scenarios**
+```cpp
+// Standard pool with batch processing
+auto pool = std::make_shared<thread_pool>("HighConcurrency");
+
+// Configure workers for batch processing
+std::vector<std::unique_ptr<thread_worker>> workers;
+for (int i = 0; i < std::thread::hardware_concurrency() * 2; ++i) {
+    auto worker = std::make_unique<thread_worker>();
+    worker->set_batch_processing(true, 32); // Process up to 32 jobs at once
+    workers.push_back(std::move(worker));
+}
+pool->enqueue_batch(std::move(workers));
+pool->start();
+```
+
+### Performance Tuning Quick Reference
+
+| Scenario | Configuration | Expected Performance |
+|----------|---------------|---------------------|
+| **CPU-Bound Tasks** | Workers = hardware_concurrency() | 96% efficiency at 8 cores |
+| **I/O-Bound Tasks** | Workers = hardware_concurrency() × 2 | Good overlap of I/O waits |
+| **Mixed Workload** | Workers = hardware_concurrency() × 1.5 | Balanced performance |
+| **Low Latency** | Standard pool, single jobs | ~77ns submission latency |
+| **High Throughput** | Batch processing enabled | Up to 13M jobs/s theoretical |
+| **Priority Scheduling** | Typed pool with 3-4 workers per type | 99.6% type accuracy |
+
+### Common Pitfalls to Avoid
+
+1. **Over-Threading**: Don't create more workers than 2× hardware threads
+2. **Small Jobs**: Batch jobs < 10μs for better efficiency
+3. **Memory Allocation**: Pre-allocate job objects when possible
+4. **Queue Depth**: Monitor queue depth; > 1000 indicates backpressure needed
+5. **Type Proliferation**: Keep priority types to 3-5 for optimal performance
 
 
 ## Conclusion

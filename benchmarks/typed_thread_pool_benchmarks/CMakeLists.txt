@@ -22,10 +22,16 @@ add_executable(queue_comparison_benchmark
     queue_comparison_benchmark.cpp
 )
 
+# Typed scheduling benchmark with Google Benchmark
+add_executable(typed_scheduling_benchmark_google
+    typed_scheduling_benchmark_google.cpp
+)
+
 # Set common properties for all priority benchmarks
 set(TYPED_BENCHMARK_TARGETS
     typed_scheduling_benchmark
     queue_comparison_benchmark
+    typed_scheduling_benchmark_google
 )
 
 foreach(target ${TYPED_BENCHMARK_TARGETS})
@@ -36,10 +42,10 @@ foreach(target ${TYPED_BENCHMARK_TARGETS})
         target_link_libraries(${target} PRIVATE typed_thread_pool thread_pool logger utilities)
     endif()
     
-    # Add Google Benchmark for new benchmarks
-    if(target STREQUAL "typed_lockfree_benchmark" OR target STREQUAL "queue_comparison_benchmark")
-        find_package(benchmark CONFIG REQUIRED)
-        target_link_libraries(${target} PRIVATE benchmark::benchmark benchmark::benchmark_main)
+    # Add Google Benchmark for benchmarks
+    if(target STREQUAL "typed_scheduling_benchmark_google" OR 
+       target STREQUAL "queue_comparison_benchmark")
+        target_link_libraries(${target} PRIVATE benchmark::benchmark)
     endif()
     
     # Set C++20 standard

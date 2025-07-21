@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * - Mixed I/O and CPU tasks
  */
 
+#include <benchmark/benchmark.h>
 #include <chrono>
 #include <vector>
 #include <random>
@@ -54,10 +55,65 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <map>
 #include <thread>
 
-#include "thread_pool.h"
-#include "typed_thread_pool.h"
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/thread_pool/core/thread_pool.h"
+#include "../../sources/thread_pool/workers/thread_worker.h"
+#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
+// Helper function to create thread pool
+auto create_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<thread_pool_module::thread_pool>, std::optional<std::string>>
+{
+    std::shared_ptr<thread_pool_module::thread_pool> pool;
+    try {
+        pool = std::make_shared<thread_pool_module::thread_pool>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
+
+// Helper function to create typed thread pool
+template<typename Type>
+auto create_priority_default(const uint16_t& worker_counts)
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+{
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    try {
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+    } catch (const std::bad_alloc& e) {
+        return { nullptr, std::string(e.what()) };
+    }
+    
+    std::optional<std::string> error_message = std::nullopt;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    workers.reserve(worker_counts);
+    for (uint16_t i = 0; i < worker_counts; ++i) {
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+    }
+    
+    error_message = pool->enqueue_batch(std::move(workers));
+    if (error_message.has_value()) {
+        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
+                                           error_message.value_or("unknown error")) };
+    }
+    
+    return { pool, std::nullopt };
+}
 
 using namespace std::chrono;
 using namespace thread_pool_module;
@@ -95,279 +151,265 @@ public:
     }
 };
 
-class RealWorldBenchmark {
-public:
-    RealWorldBenchmark() {
-        log_module::start();
-        log_module::console_target(log_module::log_types::Information);
-    }
+// Simulate different request types for web server
+struct RequestType {
+    std::string name;
+    int cpu_work;      // CPU complexity (1-100)
+    int io_duration;   // I/O duration in ms
+    double frequency;  // Relative frequency (0.0-1.0)
+};
+
+static const std::vector<RequestType> g_request_types = {
+    {"Static file", 1, 1, 0.5},
+    {"API query", 5, 10, 0.3},
+    {"Database write", 10, 50, 0.15},
+    {"Complex computation", 50, 5, 0.05}
+};
+/**
+ * @brief Benchmark web server request handling simulation
+ */
+static void BM_WebServerSimulation(benchmark::State& state) {
+    const size_t workers = state.range(0);
+    const size_t total_requests = state.range(1);
     
-    ~RealWorldBenchmark() {
-        log_module::stop();
-    }
-    
-    void run_all_benchmarks() {
-        log_module::write_information("\n=== Real-World Scenario Benchmarks ===\n");
-        
-        benchmark_web_server_simulation();
-        benchmark_image_processing_pipeline();
-        benchmark_data_analysis_workload();
-        benchmark_game_engine_simulation();
-        benchmark_microservice_communication();
-        benchmark_batch_file_processing();
-        
-        log_module::write_information("\n=== Real-World Benchmarks Complete ===\n");
-    }
-    
-private:
-    void benchmark_web_server_simulation() {
-        log_module::write_information("\n1. Web Server Request Handling Simulation\n");
-        log_module::write_information("-----------------------------------------\n");
-        
-        // Simulate different request types with varying processing times
-        struct RequestType {
-            std::string name;
-            int cpu_work;      // CPU complexity (1-100)
-            int io_duration;   // I/O duration in ms
-            double frequency;  // Relative frequency (0.0-1.0)
-        };
-        
-        std::vector<RequestType> request_types = {
-            {"Static file", 1, 1, 0.5},
-            {"API query", 5, 10, 0.3},
-            {"Database write", 10, 50, 0.15},
-            {"Complex computation", 50, 5, 0.05}
-        };
-        
-        // Test with different worker counts
-        std::vector<size_t> worker_counts = {8, 16, 32, 64};
-        
-        for (size_t workers : worker_counts) {
-            auto [pool, error] = create_default(workers);
-            if (error) continue;
-            
-            pool->start();
-            
-            const size_t total_requests = 10000;
-            std::atomic<size_t> completed_requests{0};
-            std::atomic<size_t> total_response_time_ms{0};
-            
-            auto start = high_resolution_clock::now();
-            
-            // Random request generator
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_real_distribution<> dis(0.0, 1.0);
-            
-            for (size_t i = 0; i < total_requests; ++i) {
-                // Select request type based on frequency
-                double rand_val = dis(gen);
-                double cumulative = 0.0;
-                
-                for (const auto& req_type : request_types) {
-                    cumulative += req_type.frequency;
-                    if (rand_val <= cumulative) {
-                        pool->add_job([&req_type, &completed_requests, &total_response_time_ms] {
-                            auto req_start = high_resolution_clock::now();
-                            
-                            // Process request
-                            WorkloadSimulator::simulate_mixed_work(
-                                req_type.cpu_work, 
-                                req_type.io_duration
-                            );
-                            
-                            auto req_end = high_resolution_clock::now();
-                            auto response_time = duration_cast<milliseconds>(req_end - req_start).count();
-                            
-                            total_response_time_ms.fetch_add(response_time);
-                            completed_requests.fetch_add(1);
-                        });
-                        break;
-                    }
-                }
-            }
-            
-            pool->stop();
-            
-            auto end = high_resolution_clock::now();
-            double total_time_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
-            double requests_per_second = total_requests / total_time_s;
-            double avg_response_time = static_cast<double>(total_response_time_ms.load()) / total_requests;
-            
-            log_module::write_information(utility_module::formatter::format(
-                "Workers: %3zu | RPS: %.0f | Avg Response: %.1fms",
-                workers, requests_per_second, avg_response_time).c_str());
+    for (auto _ : state) {
+        auto [pool, error] = create_default(workers);
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
         }
-    }
-    
-    void benchmark_image_processing_pipeline() {
-        log_module::write_information("\n2. Image Processing Pipeline Simulation\n");
-        log_module::write_information("---------------------------------------\n");
-        
-        // Simulate image processing stages
-        struct ProcessingStage {
-            std::string name;
-            int complexity;  // Processing complexity
-        };
-        
-        std::vector<ProcessingStage> stages = {
-            {"Load", 10},
-            {"Resize", 20},
-            {"Filter", 50},
-            {"Compress", 30},
-            {"Save", 15}
-        };
-        
-        std::vector<size_t> image_counts = {100, 500, 1000, 5000};
-        
-        auto [pool, error] = create_default(std::thread::hardware_concurrency());
-        if (error) return;
         
         pool->start();
         
-        for (size_t num_images : image_counts) {
-            std::atomic<size_t> images_processed{0};
+        std::atomic<size_t> completed_requests{0};
+        std::atomic<size_t> total_response_time_ms{0};
+        
+        // Random request generator
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dis(0.0, 1.0);
+        
+        for (size_t i = 0; i < total_requests; ++i) {
+            // Select request type based on frequency
+            double rand_val = dis(gen);
+            double cumulative = 0.0;
             
-            auto start = high_resolution_clock::now();
-            
-            // Process each image through all stages
-            for (size_t img = 0; img < num_images; ++img) {
-                pool->add_job([img, &stages, &images_processed] {
-                    // Simulate processing through each stage
-                    for (const auto& stage : stages) {
-                        WorkloadSimulator::simulate_cpu_work(stage.complexity);
-                    }
-                    
-                    images_processed.fetch_add(1);
-                });
+            for (const auto& req_type : g_request_types) {
+                cumulative += req_type.frequency;
+                if (rand_val <= cumulative) {
+                    pool->enqueue(std::make_unique<callback_job>([&req_type, &completed_requests, &total_response_time_ms]() -> result_void {
+                        auto req_start = high_resolution_clock::now();
+                        
+                        // Process request
+                        WorkloadSimulator::simulate_mixed_work(
+                            req_type.cpu_work, 
+                            req_type.io_duration
+                        );
+                        
+                        auto req_end = high_resolution_clock::now();
+                        auto response_time = duration_cast<milliseconds>(req_end - req_start).count();
+                        
+                        total_response_time_ms.fetch_add(response_time);
+                        completed_requests.fetch_add(1);
+                        return result_void();
+                    }));
+                    break;
+                }
             }
-            
-            pool->stop();
-            pool->start();  // Reset for next test
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
-            double images_per_second = num_images / elapsed_s;
-            
-            log_module::write_information(utility_module::formatter::format(
-                "%5zu images: %.1f img/s, Total time: %.1fs",
-                num_images, images_per_second, elapsed_s).c_str());
         }
         
         pool->stop();
+        
+        double avg_response_time = static_cast<double>(total_response_time_ms.load()) / total_requests;
+        state.counters["avg_response_ms"] = avg_response_time;
     }
     
-    void benchmark_data_analysis_workload() {
-        log_module::write_information("\n3. Data Analysis Workload Simulation\n");
-        log_module::write_information("------------------------------------\n");
-        
-        // Simulate MapReduce-style data processing
-        const size_t data_size_mb = 100;
-        const size_t chunk_size_mb = 10;
-        const size_t num_chunks = data_size_mb / chunk_size_mb;
-        
-        std::vector<size_t> worker_counts = {2, 4, 8, 16};
-        
-        for (size_t workers : worker_counts) {
-            auto [pool, error] = create_default(workers);
-            if (error) continue;
-            
-            pool->start();
-            
-            // Map phase
-            std::vector<std::future<double>> map_results;
-            std::vector<std::promise<double>> promises(num_chunks);
-            
-            for (size_t i = 0; i < num_chunks; ++i) {
-                map_results.push_back(promises[i].get_future());
-            }
-            
-            auto start = high_resolution_clock::now();
-            
-            // Submit map tasks
-            for (size_t i = 0; i < num_chunks; ++i) {
-                pool->add_job([i, chunk_size_mb, p = std::move(promises[i])]() mutable {
-                    // Simulate data processing
-                    WorkloadSimulator::simulate_memory_work(chunk_size_mb);
-                    WorkloadSimulator::simulate_cpu_work(100);
-                    
-                    // Return partial result
-                    double result = static_cast<double>(i) * 3.14159;
-                    p.set_value(result);
-                });
-            }
-            
-            // Collect map results
-            double map_sum = 0;
-            for (auto& future : map_results) {
-                map_sum += future.get();
-            }
-            
-            // Reduce phase
-            std::promise<double> reduce_promise;
-            auto reduce_future = reduce_promise.get_future();
-            
-            pool->add_job([map_sum, p = std::move(reduce_promise)]() mutable {
-                // Simulate reduce operation
-                WorkloadSimulator::simulate_cpu_work(50);
-                p.set_value(map_sum / 2.0);
-            });
-            
-            double final_result = reduce_future.get();
-            
-            pool->stop();
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-            double throughput_mb_s = (data_size_mb * 1000.0) / elapsed_ms;
-            
-            log_module::write_information(utility_module::formatter::format(
-                "%2zu workers: %.2f MB/s, Time: %.0fms",
-                workers, throughput_mb_s, elapsed_ms).c_str());
+    state.SetItemsProcessed(state.iterations() * total_requests);
+    state.counters["workers"] = workers;
+}
+BENCHMARK(BM_WebServerSimulation)
+    ->Args({8, 10000})
+    ->Args({16, 10000})
+    ->Args({32, 10000})
+    ->Args({64, 10000})
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark image processing pipeline simulation
+ */
+static void BM_ImageProcessingPipeline(benchmark::State& state) {
+    const size_t num_images = state.range(0);
+    
+    // Simulate image processing stages
+    struct ProcessingStage {
+        std::string name;
+        int complexity;  // Processing complexity
+    };
+    
+    const std::vector<ProcessingStage> stages = {
+        {"Load", 10},
+        {"Resize", 20},
+        {"Filter", 50},
+        {"Compress", 30},
+        {"Save", 15}
+    };
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(std::thread::hardware_concurrency());
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
         }
-    }
-    
-    void benchmark_game_engine_simulation() {
-        log_module::write_information("\n4. Game Engine Update Loop Simulation\n");
-        log_module::write_information("-------------------------------------\n");
-        
-        // Simulate game engine subsystems
-        enum class Type { 
-            Physics = 1,      // RealTimeest priority
-            AI = 2,
-            Rendering = 3,
-            Audio = 4,
-            Network = 5       // Backgroundest priority
-        };
-        
-        struct Subsystem {
-            std::string name;
-            Type priority;
-            int update_time_us;  // Microseconds per update
-            int frequency;       // Updates per frame
-        };
-        
-        std::vector<Subsystem> subsystems = {
-            {"Physics", Type::Physics, 1000, 2},
-            {"AI", Type::AI, 500, 1},
-            {"Rendering", Type::Rendering, 2000, 1},
-            {"Audio", Type::Audio, 200, 4},
-            {"Network", Type::Network, 300, 2}
-        };
-        
-        auto [pool, error] = create_priority_default<Type>(8);
-        if (error) return;
         
         pool->start();
         
-        const int target_fps = 60;
-        const int frame_time_ms = 1000 / target_fps;
-        const int num_frames = 300;  // 5 seconds at 60 FPS
+        std::atomic<size_t> images_processed{0};
+        
+        // Process each image through all stages
+        for (size_t img = 0; img < num_images; ++img) {
+            pool->enqueue(std::make_unique<callback_job>([&stages, &images_processed]() -> result_void {
+                // Simulate processing through each stage
+                for (const auto& stage : stages) {
+                    WorkloadSimulator::simulate_cpu_work(stage.complexity);
+                }
+                
+                images_processed.fetch_add(1);
+                return result_void();
+            }));
+        }
+        
+        pool->stop();
+        
+        benchmark::DoNotOptimize(images_processed.load());
+    }
+    
+    state.SetItemsProcessed(state.iterations() * num_images);
+    state.counters["images"] = num_images;
+}
+BENCHMARK(BM_ImageProcessingPipeline)
+    ->Arg(100)
+    ->Arg(500)
+    ->Arg(1000)
+    ->Arg(5000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark data analysis workload (MapReduce simulation)
+ */
+static void BM_DataAnalysisWorkload(benchmark::State& state) {
+    const size_t workers = state.range(0);
+    const size_t data_size_mb = state.range(1);
+    const size_t chunk_size_mb = 10;
+    const size_t num_chunks = data_size_mb / chunk_size_mb;
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_default(workers);
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
+        
+        pool->start();
+        
+        // Map phase
+        std::vector<std::future<double>> map_results;
+        std::vector<std::promise<double>> promises(num_chunks);
+        
+        for (size_t i = 0; i < num_chunks; ++i) {
+            map_results.push_back(promises[i].get_future());
+        }
+        
+        // Submit map tasks
+        for (size_t i = 0; i < num_chunks; ++i) {
+            pool->enqueue(std::make_unique<callback_job>([i, chunk_size_mb, p = std::move(promises[i])]() mutable -> result_void {
+                // Simulate data processing
+                WorkloadSimulator::simulate_memory_work(chunk_size_mb);
+                WorkloadSimulator::simulate_cpu_work(100);
+                
+                // Return partial result
+                double result = static_cast<double>(i) * 3.14159;
+                p.set_value(result);
+                return result_void();
+            }));
+        }
+        
+        // Collect map results
+        double map_sum = 0;
+        for (auto& future : map_results) {
+            map_sum += future.get();
+        }
+        
+        // Reduce phase
+        std::promise<double> reduce_promise;
+        auto reduce_future = reduce_promise.get_future();
+        
+        pool->enqueue(std::make_unique<callback_job>([map_sum, p = std::move(reduce_promise)]() mutable -> result_void {
+            // Simulate reduce operation
+            WorkloadSimulator::simulate_cpu_work(50);
+            p.set_value(map_sum / 2.0);
+            return result_void();
+        }));
+        
+        double final_result = reduce_future.get();
+        pool->stop();
+        
+        benchmark::DoNotOptimize(final_result);
+    }
+    
+    state.SetBytesProcessed(state.iterations() * data_size_mb * 1024 * 1024);
+    state.counters["workers"] = workers;
+    state.counters["data_size_mb"] = data_size_mb;
+}
+BENCHMARK(BM_DataAnalysisWorkload)
+    ->Args({2, 100})
+    ->Args({4, 100})
+    ->Args({8, 100})
+    ->Args({16, 100})
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark game engine update loop simulation
+ */
+static void BM_GameEngineSimulation(benchmark::State& state) {
+    const int target_fps = state.range(0);
+    const int num_frames = state.range(1);
+    const int frame_time_ms = 1000 / target_fps;
+    
+    // Simulate game engine subsystems
+    enum class Type { 
+        Physics = 1,      // Highest priority
+        AI = 2,
+        Rendering = 3,
+        Audio = 4,
+        Network = 5       // Lowest priority
+    };
+    
+    struct Subsystem {
+        std::string name;
+        Type priority;
+        int update_time_us;  // Microseconds per update
+        int frequency;       // Updates per frame
+    };
+    
+    const std::vector<Subsystem> subsystems = {
+        {"Physics", Type::Physics, 1000, 2},
+        {"AI", Type::AI, 500, 1},
+        {"Rendering", Type::Rendering, 2000, 1},
+        {"Audio", Type::Audio, 200, 4},
+        {"Network", Type::Network, 300, 2}
+    };
+    
+    for (auto _ : state) {
+        auto [pool, error] = create_priority_default<Type>(8);
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create typed thread pool");
+            return;
+        }
+        
+        pool->start();
         
         std::atomic<int> completed_frames{0};
         std::atomic<int> missed_frames{0};
-        
-        auto start = high_resolution_clock::now();
         
         for (int frame = 0; frame < num_frames; ++frame) {
             auto frame_start = high_resolution_clock::now();
@@ -379,7 +421,7 @@ private:
                 for (int i = 0; i < subsystem.frequency; ++i) {
                     total_subsystems++;
                     
-                    pool->add_job([&subsystem, &subsystems_completed] {
+                    pool->enqueue(std::make_unique<callback_job>([&subsystem, &subsystems_completed]() -> result_void {
                         // Simulate subsystem update
                         auto end_time = high_resolution_clock::now() + 
                                        microseconds(subsystem.update_time_us);
@@ -388,7 +430,8 @@ private:
                         }
                         
                         subsystems_completed.fetch_add(1);
-                    }, subsystem.priority);
+                        return result_void();
+                    }, subsystem.priority));
                 }
             }
             
@@ -416,49 +459,56 @@ private:
         
         pool->stop();
         
-        auto end = high_resolution_clock::now();
-        double total_time_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
-        double actual_fps = completed_frames.load() / total_time_s;
-        double frame_miss_rate = (missed_frames.load() * 100.0) / completed_frames.load();
-        
-        log_module::write_information(utility_module::formatter::format(
-            "Target FPS: %d\nActual FPS: %.1f\nMissed frames: %d (%.1f%%)",
-            target_fps, actual_fps, missed_frames.load(), frame_miss_rate).c_str());
+        state.counters["completed_frames"] = completed_frames.load();
+        state.counters["missed_frames"] = missed_frames.load();
+        state.counters["miss_rate_%"] = (missed_frames.load() * 100.0) / completed_frames.load();
     }
     
-    void benchmark_microservice_communication() {
-        log_module::write_information("\n5. Microservice Communication Pattern\n");
-        log_module::write_information("-------------------------------------\n");
-        
-        // Simulate service-to-service communication
-        struct Service {
-            std::string name;
-            int processing_time_ms;
-            std::vector<std::string> dependencies;
-        };
-        
-        std::vector<Service> services = {
-            {"Gateway", 5, {}},
-            {"Auth", 10, {"Gateway"}},
-            {"UserService", 15, {"Auth"}},
-            {"OrderService", 20, {"Auth", "UserService"}},
-            {"PaymentService", 25, {"OrderService"}},
-            {"NotificationService", 10, {"OrderService", "PaymentService"}}
-        };
-        
+    state.counters["target_fps"] = target_fps;
+}
+BENCHMARK(BM_GameEngineSimulation)
+    ->Args({60, 300})   // 60 FPS, 5 seconds
+    ->Args({30, 150})   // 30 FPS, 5 seconds
+    ->Args({120, 600})  // 120 FPS, 5 seconds
+    ->Unit(benchmark::kMillisecond)
+    ->UseRealTime();
+    
+/**
+ * @brief Benchmark microservice communication pattern
+ */
+static void BM_MicroserviceCommunication(benchmark::State& state) {
+    const size_t num_requests = state.range(0);
+    
+    // Simulate service-to-service communication
+    struct Service {
+        std::string name;
+        int processing_time_ms;
+        std::vector<std::string> dependencies;
+    };
+    
+    const std::vector<Service> services = {
+        {"Gateway", 5, {}},
+        {"Auth", 10, {"Gateway"}},
+        {"UserService", 15, {"Auth"}},
+        {"OrderService", 20, {"Auth", "UserService"}},
+        {"PaymentService", 25, {"OrderService"}},
+        {"NotificationService", 10, {"OrderService", "PaymentService"}}
+    };
+    
+    for (auto _ : state) {
         auto [pool, error] = create_default(16);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
         
         pool->start();
         
-        const size_t num_requests = 1000;
         std::atomic<size_t> completed_requests{0};
         std::atomic<size_t> total_latency_ms{0};
         
-        auto start = high_resolution_clock::now();
-        
         for (size_t req = 0; req < num_requests; ++req) {
-            pool->add_job([&services, &completed_requests, &total_latency_ms, &pool] {
+            pool->enqueue(std::make_unique<callback_job>([&services, &completed_requests, &total_latency_ms, &pool]() -> result_void {
                 auto req_start = high_resolution_clock::now();
                 
                 // Process through service chain
@@ -476,10 +526,11 @@ private:
                     std::promise<void> promise;
                     service_futures[service.name] = promise.get_future();
                     
-                    pool->add_job([&service, p = std::move(promise)]() mutable {
+                    pool->enqueue(std::make_unique<callback_job>([&service, p = std::move(promise)]() mutable -> result_void {
                         WorkloadSimulator::simulate_io_work(service.processing_time_ms);
                         p.set_value();
-                    });
+                        return result_void();
+                    }));
                 }
                 
                 // Wait for final service
@@ -492,7 +543,8 @@ private:
                 
                 total_latency_ms.fetch_add(latency);
                 completed_requests.fetch_add(1);
-            });
+                return result_void();
+            }));
         }
         
         // Wait for all requests
@@ -502,92 +554,91 @@ private:
         
         pool->stop();
         
-        auto end = high_resolution_clock::now();
-        double total_time_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
-        double requests_per_second = num_requests / total_time_s;
         double avg_latency = static_cast<double>(total_latency_ms.load()) / num_requests;
-        
-        log_module::write_information(utility_module::formatter::format(
-            "Requests/second: %.0f\nAverage latency: %.1fms",
-            requests_per_second, avg_latency).c_str());
+        state.counters["avg_latency_ms"] = avg_latency;
     }
     
-    void benchmark_batch_file_processing() {
-        log_module::write_information("\n6. Batch File Processing Simulation\n");
-        log_module::write_information("-----------------------------------\n");
-        
-        // Simulate processing different file types
-        struct FileType {
-            std::string extension;
-            int processing_complexity;
-            size_t avg_size_kb;
-        };
-        
-        std::vector<FileType> file_types = {
-            {".txt", 10, 50},
-            {".csv", 20, 500},
-            {".json", 30, 200},
-            {".xml", 40, 300},
-            {".log", 15, 1000}
-        };
-        
-        const size_t total_files = 10000;
-        std::vector<size_t> batch_sizes = {10, 50, 100, 500};
-        
+    state.SetItemsProcessed(state.iterations() * num_requests);
+}
+BENCHMARK(BM_MicroserviceCommunication)
+    ->Arg(100)
+    ->Arg(500)
+    ->Arg(1000)
+    ->Unit(benchmark::kMillisecond);
+    
+/**
+ * @brief Benchmark batch file processing simulation
+ */
+static void BM_BatchFileProcessing(benchmark::State& state) {
+    const size_t batch_size = state.range(0);
+    const size_t total_files = state.range(1);
+    
+    // Simulate processing different file types
+    struct FileType {
+        std::string extension;
+        int processing_complexity;
+        size_t avg_size_kb;
+    };
+    
+    const std::vector<FileType> file_types = {
+        {".txt", 10, 50},
+        {".csv", 20, 500},
+        {".json", 30, 200},
+        {".xml", 40, 300},
+        {".log", 15, 1000}
+    };
+    
+    for (auto _ : state) {
         auto [pool, error] = create_default(std::thread::hardware_concurrency() * 2);
-        if (error) return;
+        if (error.has_value()) {
+            state.SkipWithError("Failed to create thread pool");
+            return;
+        }
         
         pool->start();
         
-        for (size_t batch_size : batch_sizes) {
-            std::atomic<size_t> files_processed{0};
-            std::atomic<size_t> total_bytes_processed{0};
+        std::atomic<size_t> files_processed{0};
+        std::atomic<size_t> total_bytes_processed{0};
+        
+        // Process files in batches
+        for (size_t i = 0; i < total_files; i += batch_size) {
+            size_t current_batch_size = std::min(batch_size, total_files - i);
             
-            auto start = high_resolution_clock::now();
-            
-            // Process files in batches
-            for (size_t i = 0; i < total_files; i += batch_size) {
-                size_t current_batch_size = std::min(batch_size, total_files - i);
+            pool->enqueue(std::make_unique<callback_job>([current_batch_size, &file_types, &files_processed, &total_bytes_processed]() -> result_void {
+                size_t batch_bytes = 0;
                 
-                pool->add_job([current_batch_size, &file_types, &files_processed, &total_bytes_processed] {
-                    size_t batch_bytes = 0;
+                for (size_t j = 0; j < current_batch_size; ++j) {
+                    // Randomly select file type
+                    const auto& file_type = file_types[j % file_types.size()];
                     
-                    for (size_t j = 0; j < current_batch_size; ++j) {
-                        // Randomly select file type
-                        const auto& file_type = file_types[j % file_types.size()];
-                        
-                        // Simulate file processing
-                        WorkloadSimulator::simulate_cpu_work(file_type.processing_complexity);
-                        WorkloadSimulator::simulate_io_work(1);  // File I/O
-                        
-                        batch_bytes += file_type.avg_size_kb * 1024;
-                    }
+                    // Simulate file processing
+                    WorkloadSimulator::simulate_cpu_work(file_type.processing_complexity);
+                    WorkloadSimulator::simulate_io_work(1);  // File I/O
                     
-                    files_processed.fetch_add(current_batch_size);
-                    total_bytes_processed.fetch_add(batch_bytes);
-                });
-            }
-            
-            pool->stop();
-            pool->start();  // Reset for next test
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_s = duration_cast<milliseconds>(end - start).count() / 1000.0;
-            double files_per_second = total_files / elapsed_s;
-            double mb_per_second = (total_bytes_processed.load() / 1024.0 / 1024.0) / elapsed_s;
-            
-            log_module::write_information(utility_module::formatter::format(
-                "Batch size %3zu: %.0f files/s, %.1f MB/s",
-                batch_size, files_per_second, mb_per_second).c_str());
+                    batch_bytes += file_type.avg_size_kb * 1024;
+                }
+                
+                files_processed.fetch_add(current_batch_size);
+                total_bytes_processed.fetch_add(batch_bytes);
+                return result_void();
+            }));
         }
         
         pool->stop();
+        
+        state.SetBytesProcessed(total_bytes_processed.load());
     }
-};
-
-int main() {
-    RealWorldBenchmark benchmark;
-    benchmark.run_all_benchmarks();
     
-    return 0;
+    state.SetItemsProcessed(state.iterations() * total_files);
+    state.counters["batch_size"] = batch_size;
+    state.counters["total_files"] = total_files;
 }
+BENCHMARK(BM_BatchFileProcessing)
+    ->Args({10, 10000})
+    ->Args({50, 10000})
+    ->Args({100, 10000})
+    ->Args({500, 10000})
+    ->Unit(benchmark::kMillisecond);
+
+// Main function to run benchmarks
+BENCHMARK_MAIN();
