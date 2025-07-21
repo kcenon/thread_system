@@ -281,7 +281,7 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue)
 	EXPECT_TRUE(queue.empty());
 }
 
-TEST_F(MPMCQueueTest, DISABLED_ProducerConsumerStress)
+TEST_F(MPMCQueueTest, ProducerConsumerStress)
 {
 	// Use smaller numbers to reduce memory pressure and race conditions
 	lockfree_job_queue queue;
@@ -518,7 +518,7 @@ TEST_F(MPMCQueueTest, PerformanceComparison)
 }
 
 // Simple MPMC performance test - safe alternative
-TEST_F(MPMCQueueTest, DISABLED_SimpleMPMCPerformance)
+TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 {
 	lockfree_job_queue mpmc_queue;
 	const size_t num_jobs = 50;  // Reduced number
@@ -588,7 +588,7 @@ TEST_F(MPMCQueueTest, DISABLED_SimpleMPMCPerformance)
 }
 
 // Multiple producer consumer test - simplified version to avoid segfaults
-TEST_F(MPMCQueueTest, DISABLED_MultipleProducerConsumer)
+TEST_F(MPMCQueueTest, MultipleProducerConsumer)
 {
 	lockfree_job_queue queue;
 	const size_t num_producers = 2;
