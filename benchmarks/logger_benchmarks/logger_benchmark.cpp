@@ -31,260 +31,303 @@
 
 /**
  * @file logger_benchmark.cpp
- * @brief Performance benchmarks for the logging system
+ * @brief Google Benchmark-based performance tests for the logging system
+ * 
+ * This file contains comprehensive benchmarks using Google Benchmark to measure:
+ * - Logging throughput for different log levels
+ * - Logging latency under various conditions
+ * - Concurrent logging performance
+ * - Format string performance
+ * - Different logging targets (console, file, etc.)
  */
 
-#include <iostream>
-#include <chrono>
+#include <benchmark/benchmark.h>
 #include <vector>
 #include <thread>
 #include <atomic>
-#include <iomanip>
-#include <locale>
-#include <codecvt>
+#include <sstream>
+#include <fstream>
 
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
 
-// Separate logger for test output to avoid interference with benchmark
-namespace test_output {
-    void print_info(const std::string& message) {
-        log_module::information(message);
-    }
-}
-
-using namespace std::chrono;
+using namespace log_module;
 using namespace utility_module;
 
-class LoggerBenchmark {
-public:
-    LoggerBenchmark() {
-        // Logger will be configured per test
+/**
+ * @brief Benchmark logging throughput for different log levels
+ * 
+ * Measures how many log messages per second can be processed
+ * for each log level (Debug, Info, Warning, Error).
+ */
+static void BM_LoggerThroughput(benchmark::State& state) {
+    const auto log_level = static_cast<log_types>(state.range(0));
+    const std::wstring message = L"Benchmark log message for throughput testing";
+    
+    // Setup logger
+    log_module::stop();
+    log_module::start();
+    
+    // Configure null output to measure pure logging overhead
+    log_module::console_target(log_level);
+    
+    // Select logging function based on level
+    std::function<void(const std::wstring&)> log_func;
+    switch (log_level) {
+        case log_types::Debug:
+            log_func = [](const std::wstring& msg) { log_module::write_debug(L"{}", msg); };
+            break;
+        case log_types::Information:
+            log_func = [](const std::wstring& msg) { log_module::write_information(L"{}", msg); };
+            break;
+        // Warning type not available in this logging system
+        case log_types::Error:
+            log_func = [](const std::wstring& msg) { log_module::write_error(L"{}", msg); };
+            break;
+        default:
+            log_func = [](const std::wstring& msg) { log_module::write_information(L"{}", msg); };
     }
     
-    void run_all_benchmarks() {
-        test_output::print_info("\n=== Logger Performance Benchmarks ===");
-        
-        benchmark_throughput();
-        benchmark_latency();
-        benchmark_concurrent_logging();
-        benchmark_different_targets();
-        
-        test_output::print_info("\n=== Logger Benchmark Complete ===");
+    // Benchmark
+    for (auto _ : state) {
+        log_func(message);
     }
     
-private:
-    void benchmark_throughput() {
-        test_output::print_info("\n1. Logger Throughput by Log Level");
-        test_output::print_info("---------------------------------");
-        
-        struct LevelTest {
-            log_module::log_types level;
-            std::wstring name;
-            std::function<void(const std::wstring&)> log_func;
-        };
-        
-        std::vector<LevelTest> levels = {
-            {log_module::log_types::Debug, L"Debug", 
-             [](const std::wstring& msg) { log_module::debug(msg); }},
-            {log_module::log_types::Information, L"Info", 
-             [](const std::wstring& msg) { log_module::info(msg); }},
-            {log_module::log_types::Warning, L"Warning", 
-             [](const std::wstring& msg) { log_module::warning(msg); }},
-            {log_module::log_types::Error, L"Error", 
-             [](const std::wstring& msg) { log_module::error(msg); }}
-        };
-        
-        for (const auto& level : levels) {
-            // Configure logger for this test
-            log_module::stop();
-            log_module::set_title("throughput_test");
-            log_module::file_target(level.level);
-            log_module::console_target(log_module::log_types::None);
-            log_module::start();
-            
-            const size_t num_messages = 100000;
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_messages; ++i) {
-                level.log_func(formatter::format(L"Test message {}: {}", 
-                    i, L"Performance benchmark"));
-            }
-            
-            // Wait for all messages to be processed
-            log_module::stop();
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-            double throughput = (num_messages * 1000.0) / elapsed_ms;
-            
-            // Convert wstring to string for logging
-            std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-            std::string level_name = converter.to_bytes(level.name);
-            test_output::print_info(formatter::format("{}: {:.0f} msg/s", level_name, throughput));
-        }
-    }
+    // Cleanup
+    log_module::stop();
     
-    void benchmark_latency() {
-        test_output::print_info("\n2. Logger Latency Analysis");
-        test_output::print_info("--------------------------");
-        
-        // Configure for latency testing
-        log_module::stop();
-        log_module::set_title("latency_test");
-        log_module::file_target(log_module::log_types::All);
-        log_module::console_target(log_module::log_types::None);
-        log_module::start();
-        
-        std::vector<double> latencies;
-        const size_t num_samples = 10000;
-        
-        for (size_t i = 0; i < num_samples; ++i) {
-            auto start = high_resolution_clock::now();
-            
-            log_module::info(L"Latency test message {}", i);
-            
-            auto end = high_resolution_clock::now();
-            double latency_us = duration_cast<microseconds>(end - start).count();
-            latencies.push_back(latency_us);
-            
-            // Small delay to avoid overwhelming the system
-            if (i % 100 == 0) {
-                std::this_thread::sleep_for(microseconds(10));
-            }
-        }
-        
-        // Calculate statistics
-        std::sort(latencies.begin(), latencies.end());
-        
-        double avg_latency = 0;
-        for (double lat : latencies) {
-            avg_latency += lat;
-        }
-        avg_latency /= latencies.size();
-        
-        double p50 = latencies[latencies.size() * 50 / 100];
-        double p90 = latencies[latencies.size() * 90 / 100];
-        double p99 = latencies[latencies.size() * 99 / 100];
-        double p999 = latencies[latencies.size() * 999 / 1000];
-        
-        test_output::print_info(formatter::format("Average: {:.1f} μs", avg_latency));
-        test_output::print_info(formatter::format("P50: {:.1f} μs", p50));
-        test_output::print_info(formatter::format("P90: {:.1f} μs", p90));
-        test_output::print_info(formatter::format("P99: {:.1f} μs", p99));
-        test_output::print_info(formatter::format("P99.9: {:.1f} μs", p999));
-        
-        log_module::stop();
-    }
-    
-    void benchmark_concurrent_logging() {
-        test_output::print_info("\n3. Concurrent Logging Performance");
-        test_output::print_info("---------------------------------");
-        
-        std::vector<size_t> thread_counts = {1, 2, 4, 8, 16};
-        
-        for (size_t num_threads : thread_counts) {
-            log_module::stop();
-            log_module::set_title("concurrent_test");
-            log_module::file_target(log_module::log_types::All);
-            log_module::console_target(log_module::log_types::None);
-            log_module::start();
-            
-            const size_t messages_per_thread = 10000;
-            std::atomic<size_t> total_messages{0};
-            
-            auto start = high_resolution_clock::now();
-            
-            std::vector<std::thread> threads;
-            for (size_t t = 0; t < num_threads; ++t) {
-                threads.emplace_back([t, messages_per_thread, &total_messages] {
-                    for (size_t i = 0; i < messages_per_thread; ++i) {
-                        log_module::info(L"Thread {} message {}", t, i);
-                        total_messages.fetch_add(1);
-                    }
-                });
-            }
-            
-            for (auto& thread : threads) {
-                thread.join();
-            }
-            
-            log_module::stop();
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-            double throughput = (total_messages.load() * 1000.0) / elapsed_ms;
-            
-            test_output::print_info(formatter::format("{} threads: {:.0f} msg/s", num_threads, throughput));
-        }
-    }
-    
-    void benchmark_different_targets() {
-        test_output::print_info("\n4. Performance by Output Target");
-        test_output::print_info("-------------------------------");
-        
-        struct TargetTest {
-            std::string name;
-            std::function<void()> configure;
-        };
-        
-        std::vector<TargetTest> targets = {
-            {"Console only", [] {
-                log_module::file_target(log_module::log_types::None);
-                log_module::console_target(log_module::log_types::All);
-                log_module::callback_target(log_module::log_types::None);
-            }},
-            {"File only", [] {
-                log_module::file_target(log_module::log_types::All);
-                log_module::console_target(log_module::log_types::None);
-                log_module::callback_target(log_module::log_types::None);
-            }},
-            {"Both console & file", [] {
-                log_module::file_target(log_module::log_types::All);
-                log_module::console_target(log_module::log_types::All);
-                log_module::callback_target(log_module::log_types::None);
-            }},
-            {"Callback only", [] {
-                log_module::file_target(log_module::log_types::None);
-                log_module::console_target(log_module::log_types::None);
-                log_module::callback_target(log_module::log_types::All);
-                log_module::message_callback(
-                    [](const log_module::log_types&, const std::string&, 
-                       const std::string&) {
-                        // Empty callback to measure overhead
-                    });
-            }}
-        };
-        
-        const size_t num_messages = 50000;
-        
-        for (const auto& target : targets) {
-            log_module::stop();
-            log_module::set_title("target_test");
-            target.configure();
-            log_module::start();
-            
-            auto start = high_resolution_clock::now();
-            
-            for (size_t i = 0; i < num_messages; ++i) {
-                log_module::info(L"Target benchmark message {}", i);
-            }
-            
-            log_module::stop();
-            
-            auto end = high_resolution_clock::now();
-            double elapsed_ms = duration_cast<milliseconds>(end - start).count();
-            double throughput = (num_messages * 1000.0) / elapsed_ms;
-            
-            test_output::print_info(formatter::format("{}: {:.0f} msg/s", target.name, throughput));
-        }
-    }
-};
-
-int main() {
-    LoggerBenchmark benchmark;
-    benchmark.run_all_benchmarks();
-    
-    return 0;
+    state.SetItemsProcessed(state.iterations());
+    state.counters["log_level"] = static_cast<int>(log_level);
 }
+// Test all log levels
+BENCHMARK(BM_LoggerThroughput)
+    ->Arg(static_cast<int>(log_types::Debug))
+    ->Arg(static_cast<int>(log_types::Information))
+    ->Arg(static_cast<int>(log_types::Error));
+
+/**
+ * @brief Benchmark logging latency
+ * 
+ * Measures the time taken for a single log operation
+ * including timestamp generation and formatting.
+ */
+static void BM_LoggerLatency(benchmark::State& state) {
+    const size_t message_length = state.range(0);
+    const std::wstring message(message_length, L'X');
+    
+    // Setup logger with console output
+    log_module::stop();
+    log_module::start();
+    log_module::console_target(log_types::Information);
+    
+    // Measure latency
+    for (auto _ : state) {
+        auto start = std::chrono::high_resolution_clock::now();
+        log_module::write_information(L"{}", message);
+        auto end = std::chrono::high_resolution_clock::now();
+        
+        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        state.SetIterationTime(elapsed.count() / 1e9);
+    }
+    
+    // Cleanup
+    log_module::stop();
+    
+    state.SetItemsProcessed(state.iterations());
+    state.counters["message_length"] = message_length;
+}
+// Test different message lengths
+BENCHMARK(BM_LoggerLatency)
+    ->Arg(10)
+    ->Arg(100)
+    ->Arg(1000)
+    ->Arg(10000)
+    ->UseManualTime();
+
+/**
+ * @brief Benchmark concurrent logging performance
+ * 
+ * Measures throughput when multiple threads are logging simultaneously.
+ */
+static void BM_ConcurrentLogging(benchmark::State& state) {
+    const size_t num_threads = state.range(0);
+    const size_t messages_per_thread = 1000;
+    
+    // Setup logger
+    log_module::stop();
+    log_module::start();
+    log_module::console_target(log_types::Information);
+    
+    for (auto _ : state) {
+        std::vector<std::thread> threads;
+        std::atomic<size_t> total_logged{0};
+        
+        state.PauseTiming();
+        // Create threads
+        for (size_t i = 0; i < num_threads; ++i) {
+            threads.emplace_back([&total_logged, i, messages_per_thread]() {
+                for (size_t j = 0; j < messages_per_thread; ++j) {
+                    log_module::write_information(L"Thread {} message {}", i, j);
+                    total_logged.fetch_add(1);
+                }
+            });
+        }
+        state.ResumeTiming();
+        
+        // Wait for all threads
+        for (auto& t : threads) {
+            t.join();
+        }
+    }
+    
+    // Cleanup
+    log_module::stop();
+    
+    state.SetItemsProcessed(state.iterations() * num_threads * messages_per_thread);
+    state.counters["threads"] = num_threads;
+}
+// Test with different thread counts
+BENCHMARK(BM_ConcurrentLogging)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
+
+/**
+ * @brief Benchmark formatted logging performance
+ * 
+ * Measures the overhead of formatting complex log messages.
+ */
+static void BM_FormattedLogging(benchmark::State& state) {
+    const size_t num_args = state.range(0);
+    
+    // Setup logger
+    log_module::stop();
+    log_module::start();
+    log_module::console_target(log_types::Information);
+    
+    // Benchmark based on number of format arguments
+    for (auto _ : state) {
+        switch (num_args) {
+            case 0:
+                log_module::write_information(L"Simple message without formatting");
+                break;
+            case 1:
+                log_module::write_information(L"Message with {} argument", 42);
+                break;
+            case 3:
+                log_module::write_information(L"Message with {} {} {}", 
+                    L"multiple", 42, 3.14);
+                break;
+            case 5:
+                log_module::write_information(L"Complex {} with {} args: {}, {}, {}", 
+                    L"message", 5, true, 3.14159, L"test");
+                break;
+        }
+    }
+    
+    // Cleanup
+    log_module::stop();
+    
+    state.SetItemsProcessed(state.iterations());
+    state.counters["format_args"] = num_args;
+}
+// Test different numbers of format arguments
+BENCHMARK(BM_FormattedLogging)
+    ->Arg(0)
+    ->Arg(1)
+    ->Arg(3)
+    ->Arg(5);
+
+/**
+ * @brief Benchmark different logging targets
+ * 
+ * Compares performance of console, file, and callback logging.
+ */
+static void BM_LoggingTargets(benchmark::State& state) {
+    const int target_type = state.range(0);
+    const std::wstring message = L"Benchmark message for target testing";
+    
+    // Setup logger
+    log_module::stop();
+    log_module::start();
+    
+    // Configure target based on type
+    std::string temp_file = "benchmark_log.txt";
+    switch (target_type) {
+        case 0: // Console
+            log_module::console_target(log_types::Information);
+            break;
+        case 1: // File
+            log_module::file_target(log_types::Information);
+            break;
+        case 2: // Callback
+            log_module::message_callback([](const log_types&, const std::string&, const std::string&) {
+                // No-op callback
+            });
+            log_module::callback_target(log_types::Information);
+            break;
+    }
+    
+    // Benchmark
+    for (auto _ : state) {
+        log_module::write_information(L"{}", message);
+    }
+    
+    // Cleanup
+    log_module::stop();
+    if (target_type == 1) {
+        std::remove(temp_file.c_str());
+    }
+    
+    state.SetItemsProcessed(state.iterations());
+    state.counters["target"] = target_type;
+}
+// Test different targets (0=console, 1=file, 2=callback)
+BENCHMARK(BM_LoggingTargets)
+    ->Arg(0)
+    ->Arg(1)
+    ->Arg(2);
+
+/**
+ * @brief Benchmark batch logging performance
+ * 
+ * Measures performance when logging multiple messages in quick succession.
+ */
+static void BM_BatchLogging(benchmark::State& state) {
+    const size_t batch_size = state.range(0);
+    
+    // Setup logger
+    log_module::stop();
+    log_module::start();
+    log_module::console_target(log_types::Information);
+    
+    // Prepare messages
+    std::vector<std::wstring> messages;
+    for (size_t i = 0; i < batch_size; ++i) {
+        messages.push_back(formatter::format(L"Batch message {}", i));
+    }
+    
+    // Benchmark
+    for (auto _ : state) {
+        for (const auto& msg : messages) {
+            log_module::write_information(L"{}", msg);
+        }
+    }
+    
+    // Cleanup
+    log_module::stop();
+    
+    state.SetItemsProcessed(state.iterations() * batch_size);
+    state.counters["batch_size"] = batch_size;
+}
+// Test different batch sizes
+BENCHMARK(BM_BatchLogging)
+    ->Arg(10)
+    ->Arg(100)
+    ->Arg(1000)
+    ->Arg(10000);
+
+// Main function to run benchmarks
+BENCHMARK_MAIN();

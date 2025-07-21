@@ -19,6 +19,7 @@ target_link_libraries(monitoring_overhead_benchmark PRIVATE
     thread_pool
     logger
     monitoring
+    benchmark::benchmark
     ${CMAKE_THREAD_LIBS_INIT}
 )
 

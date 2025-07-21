@@ -35,9 +35,9 @@
  */
 
 #include <benchmark/benchmark.h>
-#include "thread_pool.h"
-#include "thread_worker.h"
-#include "callback_job.h"
+#include "../../sources/thread_pool/core/thread_pool.h"
+#include "../../sources/thread_pool/workers/thread_worker.h"
+#include "../../sources/thread_base/jobs/callback_job.h"
 #include <atomic>
 #include <memory>
 #include <vector>

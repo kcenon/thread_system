@@ -24,9 +24,9 @@ All rights reserved.
 #include <algorithm>
 #include <iomanip>
 
-#include "typed_thread_pool.h"
-#include "logger.h"
-#include "formatter.h"
+#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
+#include "../../sources/logger/core/logger.h"
+#include "../../sources/utilities/core/formatter.h"
 
 using namespace typed_thread_pool_module;
 using namespace log_module;

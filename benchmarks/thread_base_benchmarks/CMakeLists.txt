@@ -25,6 +25,7 @@ target_link_libraries(simple_mpmc_benchmark PRIVATE
     thread_base
     utilities
     logger
+    benchmark::benchmark
 )
 set_target_properties(simple_mpmc_benchmark PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
