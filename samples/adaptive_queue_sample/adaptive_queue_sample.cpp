@@ -91,7 +91,8 @@ void strategy_comparison_example()
                     auto result = queue.dequeue();
                     if (result.has_value()) {
                         auto& job = result.value();
-                        job->do_work();
+                        auto work_result = job->do_work();
+                        (void)work_result; // Ignore result for sample
                         consumed.fetch_add(1);
                     } else {
                         std::this_thread::yield();
@@ -118,6 +119,9 @@ void strategy_comparison_example()
             case adaptive_job_queue::queue_strategy::ADAPTIVE:
                 strategy_name = "Adaptive";
                 break;
+            case adaptive_job_queue::queue_strategy::AUTO_DETECT:
+                strategy_name = "Auto-detect";
+                break;
         }
         
         write_information("{} strategy: {} jobs in {} ms = {} ops/sec",
@@ -143,7 +147,8 @@ void adaptive_behavior_example()
             while (running) {
                 auto job = std::make_unique<callback_job>(
                     []() -> result_void { return result_void(); });
-                queue.enqueue(std::move(job));
+                auto enqueue_result = queue.enqueue(std::move(job));
+                (void)enqueue_result; // Ignore result for sample
                 std::this_thread::sleep_for(1ms);
             }
         });
@@ -152,7 +157,8 @@ void adaptive_behavior_example()
             while (running) {
                 auto result = queue.dequeue();
                 if (result.has_value()) {
-                    result.value()->do_work();
+                    auto work_result = result.value()->do_work();
+                    (void)work_result; // Ignore result for sample
                     jobs_processed.fetch_add(1);
                 }
                 std::this_thread::sleep_for(1ms);
@@ -188,7 +194,8 @@ void adaptive_behavior_example()
                 while (running) {
                     auto job = std::make_unique<callback_job>(
                         []() -> result_void { return result_void(); });
-                    queue.enqueue(std::move(job));
+                    auto enqueue_result = queue.enqueue(std::move(job));
+                    (void)enqueue_result; // Ignore result for sample
                     if (dist(gen) < 10) {  // 10% chance of sleep
                         std::this_thread::sleep_for(std::chrono::microseconds(dist(gen)));
                     }
@@ -202,7 +209,8 @@ void adaptive_behavior_example()
                 while (running) {
                     auto result = queue.dequeue();
                     if (result.has_value()) {
-                        result.value()->do_work();
+                        auto work_result = result.value()->do_work();
+                        (void)work_result; // Ignore result for sample
                         jobs_processed.fetch_add(1);
                     }
                 }
@@ -299,7 +307,8 @@ void performance_monitoring_example()
         while (dequeued.load() < num_operations) {
             auto result = queue.dequeue();
             if (result.has_value()) {
-                result.value()->do_work();
+                auto work_result = result.value()->do_work();
+                (void)work_result; // Ignore result for sample
                 dequeued.fetch_add(1);
             }
         }
