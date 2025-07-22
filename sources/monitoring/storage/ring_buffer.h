@@ -356,7 +356,15 @@ namespace monitoring_module {
                 return result;
             }
 
-            result.reserve(size());
+            // Calculate size inline to avoid recursive mutex lock
+            std::size_t current_size;
+            if (tail_ >= head_) {
+                current_size = tail_ - head_;
+            } else {
+                current_size = capacity_ - head_ + tail_;
+            }
+            
+            result.reserve(current_size);
 
             if (tail_ > head_) {
                 for (std::size_t i = head_; i < tail_; ++i) {
