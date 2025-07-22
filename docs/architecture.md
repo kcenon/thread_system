@@ -269,6 +269,39 @@ Hazard pointers prevent use-after-free:
 3. Retire when done
 4. Batch reclamation for efficiency
 
+### Memory Optimization Strategies
+
+#### Lazy Initialization
+Adaptive queues now use lazy initialization to reduce initial memory footprint:
+```cpp
+class adaptive_job_queue {
+    mutable std::unique_ptr<job_queue> legacy_queue_;
+    mutable std::unique_ptr<lockfree_job_queue> mpmc_queue_;
+    
+    // Queues created only when needed
+    auto ensure_legacy_queue() const -> void {
+        if (!legacy_queue_) {
+            legacy_queue_ = std::make_unique<job_queue>();
+        }
+    }
+};
+```
+
+#### Optimized Node Pool
+Node pools now use conservative initial allocation:
+```cpp
+// Before: 4 chunks × 1024 nodes = 4096 nodes pre-allocated
+// After: 1 chunk × 256 nodes = 256 nodes pre-allocated
+// Memory savings: ~93.75%
+node_pool(size_t initial_chunks = 1, size_t chunk_size = 256);
+```
+
+#### Memory Usage Profile
+- **Initial allocation**: Reduced by >90% for most components
+- **On-demand growth**: Memory allocated as needed
+- **Peak usage**: Unchanged - same maximum capacity
+- **Performance impact**: Negligible - allocation amortized
+
 ## Platform Support
 
 ### Conditional Compilation
