@@ -68,10 +68,10 @@ namespace thread_module
 	public:
 		/**
 		 * @brief Constructor
-		 * @param initial_chunks Number of chunks to pre-allocate
-		 * @param chunk_size Number of nodes per chunk
+		 * @param initial_chunks Number of chunks to pre-allocate (default: 1)
+		 * @param chunk_size Number of nodes per chunk (default: 256)
 		 */
-		explicit node_pool(size_t initial_chunks = 4, size_t chunk_size = 1024);
+		explicit node_pool(size_t initial_chunks = 1, size_t chunk_size = 256);
 		
 		/**
 		 * @brief Destructor
@@ -120,8 +120,10 @@ namespace thread_module
 		
 	private:
 		static constexpr size_t CACHE_LINE_SIZE = 64;
-		static constexpr size_t MIN_CHUNK_SIZE = 256;
+		static constexpr size_t MIN_CHUNK_SIZE = 64;
 		static constexpr size_t MAX_CHUNK_SIZE = 8192;
+		static constexpr size_t DEFAULT_CHUNK_SIZE = 256;
+		static constexpr size_t DEFAULT_INITIAL_CHUNKS = 1;
 		
 		/**
 		 * @struct PoolChunk
