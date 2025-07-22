@@ -5,7 +5,26 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-07-09
+## [Unreleased] - 2025-07-22
+
+### Added
+- **Memory Optimization Improvements** 💾
+  - Implemented lazy initialization for adaptive_job_queue
+    - Legacy and MPMC queues now initialized only on first use
+    - Reduces initial memory usage by ~50% when queue remains unused
+  - Optimized node_pool initial allocation
+    - Reduced initial chunks from 4 to 1
+    - Reduced chunk size from 1024 to 256 nodes
+    - Saves ~93.75% initial memory for node pools
+  - Overall memory footprint significantly reduced while maintaining performance
+
+### Changed
+- **Memory Management** 🔧
+  - adaptive_job_queue constructor no longer pre-allocates queues
+  - node_pool now uses more conservative initial allocation strategy
+  - Memory is allocated on-demand rather than upfront
+
+## [Previous] - 2025-07-09
 
 ### Changed
 - **Major Code Cleanup** 🧹

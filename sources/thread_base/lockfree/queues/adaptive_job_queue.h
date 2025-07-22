@@ -153,9 +153,9 @@ namespace thread_module
 			HYBRID
 		};
 		
-		// Queue implementations
-		std::unique_ptr<job_queue> legacy_queue_;
-		std::unique_ptr<lockfree_job_queue> mpmc_queue_;
+		// Queue implementations (lazy initialization)
+		mutable std::unique_ptr<job_queue> legacy_queue_;
+		mutable std::unique_ptr<lockfree_job_queue> mpmc_queue_;
 		
 		// Current state
 		std::atomic<queue_type> current_type_;
@@ -188,6 +188,10 @@ namespace thread_module
 		// Helper to get current implementation
 		[[nodiscard]] auto get_current_impl() -> job_queue*;
 		[[nodiscard]] auto get_current_impl() const -> const job_queue*;
+		
+		// Lazy initialization helpers
+		auto ensure_legacy_queue() const -> void;
+		auto ensure_mpmc_queue() const -> void;
 	};
 	
 	/**
