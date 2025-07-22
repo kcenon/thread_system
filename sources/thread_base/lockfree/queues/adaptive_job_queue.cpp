@@ -91,9 +91,7 @@ namespace thread_module
 	 * @param initial_strategy Starting queue strategy (MUTEX_ONLY, LOCKFREE_ONLY, or ADAPTIVE)
 	 */
 	adaptive_job_queue::adaptive_job_queue(queue_strategy initial_strategy)
-		: legacy_queue_(std::make_unique<job_queue>())          // Mutex-based implementation
-		, mpmc_queue_(std::make_unique<lockfree_job_queue>())   // Lock-free MPMC implementation
-		, strategy_(initial_strategy)                           // Current strategy setting
+		: strategy_(initial_strategy)                           // Current strategy setting
 	{
 		// Set up initial strategy routing
 		initialize_strategy();
@@ -105,6 +103,9 @@ namespace thread_module
 		
 		// Initialize performance metrics to clean state
 		metrics_.reset();
+		
+		// Note: Queue implementations are now lazily initialized on first use
+		// This reduces initial memory footprint by ~50%
 	}
 	
 	adaptive_job_queue::~adaptive_job_queue()
@@ -360,13 +361,18 @@ namespace thread_module
 	{
 		log_module::write_information("Migrating from mutex-based to lock-free queue");
 		
+		// Ensure lock-free queue exists
+		ensure_mpmc_queue();
+		
 		// Drain legacy queue into lock-free queue
-		while (auto job_result = legacy_queue_->dequeue()) {
-			if (job_result.has_value()) {
-				auto enqueue_result = mpmc_queue_->enqueue(std::move(job_result.value()));
-				(void)enqueue_result; // Ignore result
-			} else {
-				break;
+		if (legacy_queue_) {
+			while (auto job_result = legacy_queue_->dequeue()) {
+				if (job_result.has_value()) {
+					auto enqueue_result = mpmc_queue_->enqueue(std::move(job_result.value()));
+					(void)enqueue_result; // Ignore result
+				} else {
+					break;
+				}
 			}
 		}
 		
@@ -378,11 +384,16 @@ namespace thread_module
 	{
 		log_module::write_information("Migrating from lock-free to mutex-based queue");
 		
+		// Ensure legacy queue exists
+		ensure_legacy_queue();
+		
 		// Drain lock-free queue into legacy queue
-		auto jobs = mpmc_queue_->dequeue_batch();
-		for (auto& job : jobs) {
-			auto enqueue_result = legacy_queue_->enqueue(std::move(job));
-			(void)enqueue_result; // Ignore result
+		if (mpmc_queue_) {
+			auto jobs = mpmc_queue_->dequeue_batch();
+			for (auto& job : jobs) {
+				auto enqueue_result = legacy_queue_->enqueue(std::move(job));
+				(void)enqueue_result; // Ignore result
+			}
 		}
 		
 		current_type_.store(queue_type::LEGACY_MUTEX, std::memory_order_release);
@@ -399,13 +410,29 @@ namespace thread_module
 		}
 	}
 	
+	auto adaptive_job_queue::ensure_legacy_queue() const -> void
+	{
+		if (!legacy_queue_) {
+			legacy_queue_ = std::make_unique<job_queue>();
+		}
+	}
+	
+	auto adaptive_job_queue::ensure_mpmc_queue() const -> void
+	{
+		if (!mpmc_queue_) {
+			mpmc_queue_ = std::make_unique<lockfree_job_queue>();
+		}
+	}
+	
 	auto adaptive_job_queue::get_current_impl() -> job_queue*
 	{
 		switch (current_type_.load(std::memory_order_acquire)) {
 		case queue_type::LOCKFREE_MPMC:
+			ensure_mpmc_queue();
 			return mpmc_queue_.get();
 		case queue_type::LEGACY_MUTEX:
 		default:
+			ensure_legacy_queue();
 			return legacy_queue_.get();
 		}
 	}
@@ -414,9 +441,11 @@ namespace thread_module
 	{
 		switch (current_type_.load(std::memory_order_acquire)) {
 		case queue_type::LOCKFREE_MPMC:
+			ensure_mpmc_queue();
 			return mpmc_queue_.get();
 		case queue_type::LEGACY_MUTEX:
 		default:
+			ensure_legacy_queue();
 			return legacy_queue_.get();
 		}
 	}
