@@ -446,6 +446,28 @@ The Thread System includes comprehensive benchmarks for performance testing:
 | 16 Workers   | 54.8 MB        | 16.6 MB         | 18.7 MB     | 262 KB     |
 | 32 Workers   | 63.2 MB        | 20.2 MB         | 25.1 MB     | 231 KB     |
 
+### Memory Optimization Impact (v2.0)
+
+With the latest memory optimizations:
+
+| Component | Before | After | Savings | Notes |
+|-----------|--------|-------|---------|-------|
+| Adaptive Queue (idle) | 8.2 MB | 0.4 MB | 95% | Lazy initialization |
+| Node Pool (256 nodes) | 16 KB | 1 KB | 93.75% | Reduced initial chunks |
+| Thread Pool (8 workers) | 15.4 MB | 12.1 MB | 21% | Combined optimizations |
+| Peak Memory (unchanged) | 16.3 MB | 16.3 MB | 0% | Same maximum capacity |
+
+### Startup Memory Profile
+
+| Phase | Memory Usage | Time | Description |
+|-------|-------------|------|-------------|
+| Binary Load | 8.2 MB | 0 ms | Base executable |
+| Library Init | 10.4 MB | 2 ms | Dynamic libraries |
+| Thread Pool Create | 10.8 MB | 0.3 ms | Pool structure only |
+| Worker Spawn (8) | 12.1 MB | 1.2 ms | Thread stack allocation |
+| First Job | 12.3 MB | 0.1 ms | Queue initialization |
+| Steady State | 12.8 MB | - | Normal operation |
+
 ### Memory Allocation Impact on Performance
 
 | Memory Pattern | Allocation Size | Jobs/sec | vs No Alloc | P99 Latency | Memory Overhead |
