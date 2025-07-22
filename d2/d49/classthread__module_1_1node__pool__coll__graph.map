@@ -1,20 +1,20 @@
 <map id="thread_module::node_pool&lt; T &gt;" name="thread_module::node_pool&lt; T &gt;">
-<area shape="rect" id="Node000001" title="High&#45;performance memory pool for lock&#45;free data structures." alt="" coords="217,605,391,1045"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="50,448,203,543"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,542,211,647,206,650,149,544"/>
-<area shape="rect" id="Node000003" href="$d8/dc5/structthread__module_1_1node__pool_1_1FreeNode.html" title="Node in the free list." alt="" coords="5,785,163,865"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="82,544,69,568,57,619,56,673,61,724,70,769,65,770,56,725,50,673,52,619,64,566,77,541"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,785,116,559,121,559,92,786"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="227,448,381,543"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="307,543,307,589,301,589,301,543"/>
-<area shape="rect" id="Node000005" href="$db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html" title="A chunk of pre&#45;allocated nodes." alt="" coords="191,261,355,341"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="282,341,297,432,291,432,277,342"/>
-<area shape="poly" id="edge9_Node000005_Node000005" title=" " alt="" coords="356,287,374,291,382,301,373,312,370,308,377,301,371,296,355,292"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="157,133,312,199"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="235,199,239,237,242,246,237,247,233,238,229,199"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="223,5,246,71"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="237,71,237,117,232,117,232,71"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="360,133,515,199"/>
-<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="444,199,447,223,447,237,434,439,421,582,400,645,395,643,416,581,428,438,441,237,441,223,439,199"/>
-<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="361,199,323,225,303,249,298,245,320,221,358,194"/>
+<area shape="rect" id="Node000001" title="High&#45;performance memory pool for lock&#45;free data structures." alt="" coords="210,605,411,1085"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="57,448,210,543"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,542,205,631,200,633,155,544"/>
+<area shape="rect" id="Node000003" href="$d8/dc5/structthread__module_1_1node__pool_1_1FreeNode.html" title="Node in the free list." alt="" coords="5,805,163,885"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="87,544,74,568,61,625,58,684,63,740,72,789,67,790,58,741,53,684,56,624,70,566,83,542"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,805,122,558,127,559,92,806"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="234,448,387,543"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="313,543,313,589,308,589,308,543"/>
+<area shape="rect" id="Node000005" href="$db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html" title="A chunk of pre&#45;allocated nodes." alt="" coords="198,261,362,341"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="289,341,303,432,298,432,284,342"/>
+<area shape="poly" id="edge9_Node000005_Node000005" title=" " alt="" coords="363,287,381,291,389,301,380,312,376,308,383,301,378,296,362,292"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="164,133,319,199"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="241,199,245,237,248,246,243,247,240,238,236,199"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="230,5,253,71"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="244,71,244,117,239,117,239,71"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="367,133,521,199"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="451,199,453,223,453,266,447,341,444,409,444,463,441,515,428,582,419,614,414,612,423,581,435,515,439,462,439,409,441,341,447,266,448,223,446,199"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="368,199,330,225,309,249,305,245,326,221,365,194"/>
 </map>
