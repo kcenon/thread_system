@@ -28,6 +28,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Threads::Threads
 )
 
+# Link atomic library on Linux for 16-byte atomic operations
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(${PROJECT_NAME} PRIVATE atomic)
+endif()
+
 enable_testing()
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})

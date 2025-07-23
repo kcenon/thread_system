@@ -201,7 +201,6 @@ namespace monitoring_module {
             result.reserve(count);
 
             const auto current_tail = tail_.load(std::memory_order_acquire);
-            const auto current_head = head_.load(std::memory_order_acquire);
             const auto current_size = size();
 
             if (current_size == 0) {
