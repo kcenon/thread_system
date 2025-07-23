@@ -32,6 +32,14 @@ if(UNIX AND NOT WIN32)
   # Validates type-based scheduling, task routing, and edge cases
   add_subdirectory(typed_thread_pool_test)
   
+  # Monitoring tests
+  # Validates metrics collection, ring buffer, and monitoring functionality
+  add_subdirectory(monitoring_test)
+  
+  # Platform-specific tests
+  # Validates platform-specific features, atomic operations, and cache performance
+  add_subdirectory(platform_test)
+  
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
