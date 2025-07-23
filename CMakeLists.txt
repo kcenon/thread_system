@@ -526,7 +526,8 @@ if(SET_STD_CONCEPTS AND HAS_STD_CONCEPTS)
     add_definitions(-DUSE_STD_CONCEPTS)
     message(STATUS "✅ Using std::concepts - compile test passed")
   else()
-    message(STATUS "❌ std::concepts compile test failed")
+    message(WARNING "⚠️  std::concepts compile test failed")
+    message(STATUS "Build will continue without concepts support")
   endif()
 endif()
 
@@ -542,9 +543,12 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-  # Verify that vcpkg toolchain is provided
+  # Warn if vcpkg toolchain is not provided (but allow build to continue)
   if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    message(FATAL_ERROR "Please provide the path to vcpkg toolchain file using -DCMAKE_TOOLCHAIN_FILE=<path_to_vcpkg_toolchain>")
+    message(WARNING "vcpkg toolchain file not provided. Some dependencies may not be found automatically.")
+    message(STATUS "To use vcpkg, provide -DCMAKE_TOOLCHAIN_FILE=<path_to_vcpkg_toolchain>")
+  else()
+    message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
   endif()
 
   # Add subdirectories for source code, samples, and unit tests
