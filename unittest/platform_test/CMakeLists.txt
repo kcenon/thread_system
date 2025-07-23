@@ -1,8 +1,8 @@
-project(thread_pool_unit)
+project(platform_test)
 
 file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-# Direct linking for macOS
+# Create the test executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # Add GTest include path (if vcpkg is used)
@@ -16,6 +16,11 @@ if(DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../bu
     endif()
 endif()
 
+# Include thread_base headers
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/monitoring)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_pool)
+
 # Try to find GTest (vcpkg first, then system)
 find_package(GTest CONFIG)
 if(NOT GTest_FOUND)
@@ -25,11 +30,19 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+    thread_base
+    monitoring
+    utilities
+    logger
     GTest::gtest
     GTest::gtest_main
     Threads::Threads
 )
+
+# Link atomic library on Linux for 16-byte atomic operations
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(${PROJECT_NAME} PRIVATE atomic)
+endif()
 
 enable_testing()
 
