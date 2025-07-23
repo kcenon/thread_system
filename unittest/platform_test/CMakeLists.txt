@@ -21,8 +21,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/monitoring)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_pool)
 
-# Use vcpkg provided GTest
-find_package(GTest CONFIG REQUIRED)
+# Try to find GTest (vcpkg first, then system)
+find_package(GTest CONFIG)
+if(NOT GTest_FOUND)
+    find_package(GTest REQUIRED)
+endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
