@@ -131,7 +131,7 @@ TEST_F(MetricsCollectorTest, HistoricalData) {
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
     
     // Get historical data with retry logic for CI environments
-    std::vector<monitoring_module::system_metrics_snapshot> history;
+    std::vector<monitoring_module::metrics_snapshot> history;
     int retries = 0;
     const int max_retries = 10;
     
@@ -271,7 +271,7 @@ TEST_F(MetricsCollectorTest, CollectionTiming) {
     collector->stop();
     
     // Get snapshots with retry logic for CI environments
-    std::vector<monitoring_module::system_metrics_snapshot> snapshots;
+    std::vector<monitoring_module::metrics_snapshot> snapshots;
     int retries = 0;
     const int max_retries = 10;
     

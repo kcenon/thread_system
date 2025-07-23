@@ -405,7 +405,7 @@ TEST_F(MonitoringConcurrencyTest, CollectorRapidStartStop) {
     EXPECT_FALSE(collector->is_running());
     
     // Should have collected some data (with retry logic for CI)
-    std::vector<monitoring_module::system_metrics_snapshot> snapshots;
+    std::vector<monitoring_module::metrics_snapshot> snapshots;
     int retries = 0;
     const int max_retries = 10;
     
