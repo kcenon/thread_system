@@ -221,10 +221,10 @@ template&lt;typename T &gt; </div>
 <div class="line"><span class="lineno">   99</span>            , <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a7080362345cd5541f0aeff8151904318">tail_</a>(0) {</div>
 <div class="line"><span class="lineno">  100</span>        }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a1679ee905fb87014f4358154ff0b3557"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a1679ee905fb87014f4358154ff0b3557">monitoring_module::ring_buffer::capacity</a></div><div class="ttdeci">auto capacity() const -&gt; std::size_t</div><div class="ttdoc">Returns the maximum capacity of the buffer.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00185">ring_buffer.h:185</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a197b12de4a193fad0a180fb22860956f"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a197b12de4a193fad0a180fb22860956f">monitoring_module::ring_buffer::buffer_</a></div><div class="ttdeci">std::vector&lt; T &gt; buffer_</div><div class="ttdoc">Underlying storage.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00231">ring_buffer.h:231</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a216942fb9eb3aa7bc9f6f9abdb717fb2"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a216942fb9eb3aa7bc9f6f9abdb717fb2">monitoring_module::ring_buffer::head_</a></div><div class="ttdeci">std::atomic&lt; std::size_t &gt; head_</div><div class="ttdoc">Consumer position (next item to read)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00232">ring_buffer.h:232</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a7080362345cd5541f0aeff8151904318"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a7080362345cd5541f0aeff8151904318">monitoring_module::ring_buffer::tail_</a></div><div class="ttdeci">std::atomic&lt; std::size_t &gt; tail_</div><div class="ttdoc">Producer position (next item to write)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00233">ring_buffer.h:233</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_affb5124d463fe1586956098a12b73936"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">monitoring_module::ring_buffer::capacity_</a></div><div class="ttdeci">const std::size_t capacity_</div><div class="ttdoc">Total buffer capacity (including empty slot)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00230">ring_buffer.h:230</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a197b12de4a193fad0a180fb22860956f"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a197b12de4a193fad0a180fb22860956f">monitoring_module::ring_buffer::buffer_</a></div><div class="ttdeci">std::vector&lt; T &gt; buffer_</div><div class="ttdoc">Underlying storage.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00230">ring_buffer.h:230</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a216942fb9eb3aa7bc9f6f9abdb717fb2"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a216942fb9eb3aa7bc9f6f9abdb717fb2">monitoring_module::ring_buffer::head_</a></div><div class="ttdeci">std::atomic&lt; std::size_t &gt; head_</div><div class="ttdoc">Consumer position (next item to read)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00231">ring_buffer.h:231</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a7080362345cd5541f0aeff8151904318"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a7080362345cd5541f0aeff8151904318">monitoring_module::ring_buffer::tail_</a></div><div class="ttdeci">std::atomic&lt; std::size_t &gt; tail_</div><div class="ttdoc">Producer position (next item to write)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00232">ring_buffer.h:232</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_affb5124d463fe1586956098a12b73936"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">monitoring_module::ring_buffer::capacity_</a></div><div class="ttdeci">const std::size_t capacity_</div><div class="ttdoc">Total buffer capacity (including empty slot)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00229">ring_buffer.h:229</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -378,30 +378,29 @@ template&lt;typename T &gt; </div>
 <div class="line"><span class="lineno">  201</span>            result.reserve(count);</div>
 <div class="line"><span class="lineno">  202</span> </div>
 <div class="line"><span class="lineno">  203</span>            <span class="keyword">const</span> <span class="keyword">auto</span> current_tail = <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a7080362345cd5541f0aeff8151904318">tail_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  204</span>            <span class="keyword">const</span> <span class="keyword">auto</span> current_head = <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a216942fb9eb3aa7bc9f6f9abdb717fb2">head_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  205</span>            <span class="keyword">const</span> <span class="keyword">auto</span> current_size = <a class="code hl_function" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a650a6cab95fc453ad0cfe413ff3ecf5c">size</a>();</div>
-<div class="line"><span class="lineno">  206</span> </div>
-<div class="line"><span class="lineno">  207</span>            <span class="keywordflow">if</span> (current_size == 0) {</div>
-<div class="line"><span class="lineno">  208</span>                <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  209</span>            }</div>
-<div class="line"><span class="lineno">  210</span> </div>
-<div class="line"><span class="lineno">  211</span>            <span class="keyword">const</span> <span class="keyword">auto</span> items_to_copy = std::min(count, current_size);</div>
-<div class="line"><span class="lineno">  212</span>            <span class="keyword">auto</span> start_index = current_tail;</div>
-<div class="line"><span class="lineno">  213</span> </div>
-<div class="line"><span class="lineno">  214</span>            <span class="comment">// Get items_to_copy items from the back</span></div>
-<div class="line"><span class="lineno">  215</span>            <span class="keywordflow">if</span> (items_to_copy &lt;= current_tail) {</div>
-<div class="line"><span class="lineno">  216</span>                start_index = current_tail - items_to_copy;</div>
-<div class="line"><span class="lineno">  217</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  218</span>                start_index = <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">capacity_</a> - (items_to_copy - current_tail);</div>
-<div class="line"><span class="lineno">  219</span>            }</div>
-<div class="line"><span class="lineno">  220</span> </div>
-<div class="line"><span class="lineno">  221</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; items_to_copy; ++i) {</div>
-<div class="line"><span class="lineno">  222</span>                <span class="keyword">const</span> <span class="keyword">auto</span> index = (start_index + i) % <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">capacity_</a>;</div>
-<div class="line"><span class="lineno">  223</span>                result.push_back(<a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a197b12de4a193fad0a180fb22860956f">buffer_</a>[index]);</div>
-<div class="line"><span class="lineno">  224</span>            }</div>
-<div class="line"><span class="lineno">  225</span> </div>
-<div class="line"><span class="lineno">  226</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  227</span>        }</div>
+<div class="line"><span class="lineno">  204</span>            <span class="keyword">const</span> <span class="keyword">auto</span> current_size = <a class="code hl_function" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a650a6cab95fc453ad0cfe413ff3ecf5c">size</a>();</div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">if</span> (current_size == 0) {</div>
+<div class="line"><span class="lineno">  207</span>                <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  208</span>            }</div>
+<div class="line"><span class="lineno">  209</span> </div>
+<div class="line"><span class="lineno">  210</span>            <span class="keyword">const</span> <span class="keyword">auto</span> items_to_copy = std::min(count, current_size);</div>
+<div class="line"><span class="lineno">  211</span>            <span class="keyword">auto</span> start_index = current_tail;</div>
+<div class="line"><span class="lineno">  212</span> </div>
+<div class="line"><span class="lineno">  213</span>            <span class="comment">// Get items_to_copy items from the back</span></div>
+<div class="line"><span class="lineno">  214</span>            <span class="keywordflow">if</span> (items_to_copy &lt;= current_tail) {</div>
+<div class="line"><span class="lineno">  215</span>                start_index = current_tail - items_to_copy;</div>
+<div class="line"><span class="lineno">  216</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  217</span>                start_index = <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">capacity_</a> - (items_to_copy - current_tail);</div>
+<div class="line"><span class="lineno">  218</span>            }</div>
+<div class="line"><span class="lineno">  219</span> </div>
+<div class="line"><span class="lineno">  220</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; items_to_copy; ++i) {</div>
+<div class="line"><span class="lineno">  221</span>                <span class="keyword">const</span> <span class="keyword">auto</span> index = (start_index + i) % <a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#affb5124d463fe1586956098a12b73936">capacity_</a>;</div>
+<div class="line"><span class="lineno">  222</span>                result.push_back(<a class="code hl_variable" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a197b12de4a193fad0a180fb22860956f">buffer_</a>[index]);</div>
+<div class="line"><span class="lineno">  223</span>            }</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  226</span>        }</div>
 <div class="ttc" id="aclassmonitoring__module_1_1ring__buffer_html_a650a6cab95fc453ad0cfe413ff3ecf5c"><div class="ttname"><a href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a650a6cab95fc453ad0cfe413ff3ecf5c">monitoring_module::ring_buffer::size</a></div><div class="ttdeci">auto size() const -&gt; std::size_t</div><div class="ttdoc">Returns the current number of elements in the buffer.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00152">ring_buffer.h:152</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -597,7 +596,7 @@ template&lt;typename T &gt; </div>
 
 <p>Underlying storage. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00231">231</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00230">230</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -625,7 +624,7 @@ template&lt;typename T &gt; </div>
 
 <p>Total buffer capacity (including empty slot) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00230">230</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00229">229</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -653,7 +652,7 @@ template&lt;typename T &gt; </div>
 
 <p>Consumer position (next item to read) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00232">232</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00231">231</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -681,7 +680,7 @@ template&lt;typename T &gt; </div>
 
 <p>Producer position (next item to write) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00233">233</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00232">232</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -691,7 +690,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2025 11:41:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jul 23 2025 12:29:44 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

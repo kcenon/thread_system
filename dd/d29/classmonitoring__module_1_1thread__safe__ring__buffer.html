@@ -165,7 +165,7 @@ Performance Considerations</h3>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/dc0/classmonitoring__module_1_1ring__buffer.html" title="Lock-free ring buffer for single producer, single consumer scenarios.">ring_buffer</a> For single-producer single-consumer scenarios </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00267">267</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00266">266</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adca9dc3d8f46efc5a024edcb0cf0a658" name="adca9dc3d8f46efc5a024edcb0cf0a658"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adca9dc3d8f46efc5a024edcb0cf0a658">&#9670;&#160;</a></span>thread_safe_ring_buffer()</h2>
@@ -201,16 +201,16 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00273">273</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  274</span>            : <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>(capacity)</div>
-<div class="line"><span class="lineno">  275</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>(capacity)</div>
-<div class="line"><span class="lineno">  276</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>(0)</div>
-<div class="line"><span class="lineno">  277</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>(0) {</div>
-<div class="line"><span class="lineno">  278</span>        }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a3ca1639471021889f24d07bac125ea17"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">monitoring_module::thread_safe_ring_buffer::capacity_</a></div><div class="ttdeci">const std::size_t capacity_</div><div class="ttdoc">Maximum buffer capacity.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00386">ring_buffer.h:386</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a4af1fc5f36182fa1540ffdd5731fcfcf"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">monitoring_module::thread_safe_ring_buffer::tail_</a></div><div class="ttdeci">std::size_t tail_</div><div class="ttdoc">Producer position.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00389">ring_buffer.h:389</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a54382e3743a0bcf2c34f025736dd92e6"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">monitoring_module::thread_safe_ring_buffer::buffer_</a></div><div class="ttdeci">std::vector&lt; T &gt; buffer_</div><div class="ttdoc">Underlying storage.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00387">ring_buffer.h:387</a></div></div>
-<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_abf38a87e25c1200a1e8b45bcc6d3975e"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">monitoring_module::thread_safe_ring_buffer::head_</a></div><div class="ttdeci">std::size_t head_</div><div class="ttdoc">Consumer position.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00388">ring_buffer.h:388</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00272">272</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  273</span>            : <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>(capacity)</div>
+<div class="line"><span class="lineno">  274</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>(capacity)</div>
+<div class="line"><span class="lineno">  275</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>(0)</div>
+<div class="line"><span class="lineno">  276</span>            , <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>(0) {</div>
+<div class="line"><span class="lineno">  277</span>        }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a3ca1639471021889f24d07bac125ea17"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">monitoring_module::thread_safe_ring_buffer::capacity_</a></div><div class="ttdeci">const std::size_t capacity_</div><div class="ttdoc">Maximum buffer capacity.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00385">ring_buffer.h:385</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a4af1fc5f36182fa1540ffdd5731fcfcf"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">monitoring_module::thread_safe_ring_buffer::tail_</a></div><div class="ttdeci">std::size_t tail_</div><div class="ttdoc">Producer position.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00388">ring_buffer.h:388</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_a54382e3743a0bcf2c34f025736dd92e6"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">monitoring_module::thread_safe_ring_buffer::buffer_</a></div><div class="ttdeci">std::vector&lt; T &gt; buffer_</div><div class="ttdoc">Underlying storage.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00386">ring_buffer.h:386</a></div></div>
+<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_abf38a87e25c1200a1e8b45bcc6d3975e"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">monitoring_module::thread_safe_ring_buffer::head_</a></div><div class="ttdeci">std::size_t head_</div><div class="ttdoc">Consumer position.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00387">ring_buffer.h:387</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -243,12 +243,12 @@ template&lt;typename T &gt; </div>
 <p>Checks if the buffer is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if buffer contains no elements </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00338">338</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  338</span>                                   {</div>
-<div class="line"><span class="lineno">  339</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
-<div class="line"><span class="lineno">  340</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
-<div class="line"><span class="lineno">  341</span>        }</div>
-<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_abf1efaf56396cfa86cb516de6b7b58d3"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">monitoring_module::thread_safe_ring_buffer::mutex_</a></div><div class="ttdeci">std::mutex mutex_</div><div class="ttdoc">Mutex for thread synchronization.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00390">ring_buffer.h:390</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00337">337</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  337</span>                                   {</div>
+<div class="line"><span class="lineno">  338</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
+<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
+<div class="line"><span class="lineno">  340</span>        }</div>
+<div class="ttc" id="aclassmonitoring__module_1_1thread__safe__ring__buffer_html_abf1efaf56396cfa86cb516de6b7b58d3"><div class="ttname"><a href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">monitoring_module::thread_safe_ring_buffer::mutex_</a></div><div class="ttdeci">std::mutex mutex_</div><div class="ttdoc">Mutex for thread synchronization.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d7b/ring__buffer_8h_source.html#l00389">ring_buffer.h:389</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -281,40 +281,40 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>Vector containing all buffered items in FIFO order</dd></dl>
 <p>Creates a snapshot of all current buffer contents. The buffer remains unchanged after this operation. Useful for periodic bulk processing or debugging. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00351">351</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  351</span>                                                   {</div>
-<div class="line"><span class="lineno">  352</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
-<div class="line"><span class="lineno">  353</span>            std::vector&lt;T&gt; result;</div>
-<div class="line"><span class="lineno">  354</span> </div>
-<div class="line"><span class="lineno">  355</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>) {</div>
-<div class="line"><span class="lineno">  356</span>                <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  357</span>            }</div>
-<div class="line"><span class="lineno">  358</span> </div>
-<div class="line"><span class="lineno">  359</span>            <span class="comment">// Calculate size inline to avoid recursive mutex lock</span></div>
-<div class="line"><span class="lineno">  360</span>            std::size_t current_size;</div>
-<div class="line"><span class="lineno">  361</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt;= <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
-<div class="line"><span class="lineno">  362</span>                current_size = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>;</div>
-<div class="line"><span class="lineno">  363</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  364</span>                current_size = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
-<div class="line"><span class="lineno">  365</span>            }</div>
-<div class="line"><span class="lineno">  366</span>            </div>
-<div class="line"><span class="lineno">  367</span>            result.reserve(current_size);</div>
-<div class="line"><span class="lineno">  368</span> </div>
-<div class="line"><span class="lineno">  369</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
-<div class="line"><span class="lineno">  370</span>                <span class="keywordflow">for</span> (std::size_t i = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>; ++i) {</div>
-<div class="line"><span class="lineno">  371</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
-<div class="line"><span class="lineno">  372</span>                }</div>
-<div class="line"><span class="lineno">  373</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  374</span>                <span class="keywordflow">for</span> (std::size_t i = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>; ++i) {</div>
-<div class="line"><span class="lineno">  375</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
-<div class="line"><span class="lineno">  376</span>                }</div>
-<div class="line"><span class="lineno">  377</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>; ++i) {</div>
-<div class="line"><span class="lineno">  378</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
-<div class="line"><span class="lineno">  379</span>                }</div>
-<div class="line"><span class="lineno">  380</span>            }</div>
-<div class="line"><span class="lineno">  381</span> </div>
-<div class="line"><span class="lineno">  382</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  383</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00350">350</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  350</span>                                                   {</div>
+<div class="line"><span class="lineno">  351</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
+<div class="line"><span class="lineno">  352</span>            std::vector&lt;T&gt; result;</div>
+<div class="line"><span class="lineno">  353</span> </div>
+<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>) {</div>
+<div class="line"><span class="lineno">  355</span>                <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  356</span>            }</div>
+<div class="line"><span class="lineno">  357</span> </div>
+<div class="line"><span class="lineno">  358</span>            <span class="comment">// Calculate size inline to avoid recursive mutex lock</span></div>
+<div class="line"><span class="lineno">  359</span>            std::size_t current_size;</div>
+<div class="line"><span class="lineno">  360</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt;= <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
+<div class="line"><span class="lineno">  361</span>                current_size = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>;</div>
+<div class="line"><span class="lineno">  362</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  363</span>                current_size = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
+<div class="line"><span class="lineno">  364</span>            }</div>
+<div class="line"><span class="lineno">  365</span>            </div>
+<div class="line"><span class="lineno">  366</span>            result.reserve(current_size);</div>
+<div class="line"><span class="lineno">  367</span> </div>
+<div class="line"><span class="lineno">  368</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
+<div class="line"><span class="lineno">  369</span>                <span class="keywordflow">for</span> (std::size_t i = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>; ++i) {</div>
+<div class="line"><span class="lineno">  370</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
+<div class="line"><span class="lineno">  371</span>                }</div>
+<div class="line"><span class="lineno">  372</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">for</span> (std::size_t i = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>; ++i) {</div>
+<div class="line"><span class="lineno">  374</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
+<div class="line"><span class="lineno">  375</span>                }</div>
+<div class="line"><span class="lineno">  376</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>; ++i) {</div>
+<div class="line"><span class="lineno">  377</span>                    result.push_back(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[i]);</div>
+<div class="line"><span class="lineno">  378</span>                }</div>
+<div class="line"><span class="lineno">  379</span>            }</div>
+<div class="line"><span class="lineno">  380</span> </div>
+<div class="line"><span class="lineno">  381</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  382</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -354,18 +354,18 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>true if an element was removed, false if buffer is empty</dd></dl>
 <p>Thread-safe method that can be called from any thread. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00306">306</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  306</span>                                  {</div>
-<div class="line"><span class="lineno">  307</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
-<div class="line"><span class="lineno">  308</span> </div>
-<div class="line"><span class="lineno">  309</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>) {</div>
-<div class="line"><span class="lineno">  310</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Buffer is empty</span></div>
-<div class="line"><span class="lineno">  311</span>            }</div>
-<div class="line"><span class="lineno">  312</span> </div>
-<div class="line"><span class="lineno">  313</span>            item = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>];</div>
-<div class="line"><span class="lineno">  314</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> = (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>;</div>
-<div class="line"><span class="lineno">  315</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  316</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00305">305</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>                                  {</div>
+<div class="line"><span class="lineno">  306</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
+<div class="line"><span class="lineno">  307</span> </div>
+<div class="line"><span class="lineno">  308</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>) {</div>
+<div class="line"><span class="lineno">  309</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Buffer is empty</span></div>
+<div class="line"><span class="lineno">  310</span>            }</div>
+<div class="line"><span class="lineno">  311</span> </div>
+<div class="line"><span class="lineno">  312</span>            item = <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>];</div>
+<div class="line"><span class="lineno">  313</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> = (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>;</div>
+<div class="line"><span class="lineno">  314</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  315</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -405,18 +405,18 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>true if successful, false if buffer is full</dd></dl>
 <p>Thread-safe method that can be called from any thread. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00287">287</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  287</span>                                         {</div>
-<div class="line"><span class="lineno">  288</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
-<div class="line"><span class="lineno">  289</span> </div>
-<div class="line"><span class="lineno">  290</span>            <span class="keywordflow">if</span> ((<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
-<div class="line"><span class="lineno">  291</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Buffer is full</span></div>
-<div class="line"><span class="lineno">  292</span>            }</div>
-<div class="line"><span class="lineno">  293</span> </div>
-<div class="line"><span class="lineno">  294</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>] = item;</div>
-<div class="line"><span class="lineno">  295</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> = (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>;</div>
-<div class="line"><span class="lineno">  296</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  297</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00286">286</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>                                         {</div>
+<div class="line"><span class="lineno">  287</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">if</span> ((<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> == <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
+<div class="line"><span class="lineno">  290</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Buffer is full</span></div>
+<div class="line"><span class="lineno">  291</span>            }</div>
+<div class="line"><span class="lineno">  292</span> </div>
+<div class="line"><span class="lineno">  293</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6">buffer_</a>[<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>] = item;</div>
+<div class="line"><span class="lineno">  294</span>            <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> = (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> + 1) % <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a>;</div>
+<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  296</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -449,16 +449,16 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>Number of elements currently stored</dd></dl>
 <p>Provides an exact count under mutex protection. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00324">324</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  324</span>                                       {</div>
-<div class="line"><span class="lineno">  325</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
-<div class="line"><span class="lineno">  326</span>            </div>
-<div class="line"><span class="lineno">  327</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt;= <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
-<div class="line"><span class="lineno">  328</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>;</div>
-<div class="line"><span class="lineno">  329</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  330</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
-<div class="line"><span class="lineno">  331</span>            }</div>
-<div class="line"><span class="lineno">  332</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00323">323</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  323</span>                                       {</div>
+<div class="line"><span class="lineno">  324</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf1efaf56396cfa86cb516de6b7b58d3">mutex_</a>);</div>
+<div class="line"><span class="lineno">  325</span>            </div>
+<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> &gt;= <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>) {</div>
+<div class="line"><span class="lineno">  327</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a>;</div>
+<div class="line"><span class="lineno">  328</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  329</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a3ca1639471021889f24d07bac125ea17">capacity_</a> - <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#abf38a87e25c1200a1e8b45bcc6d3975e">head_</a> + <a class="code hl_variable" href="../../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a4af1fc5f36182fa1540ffdd5731fcfcf">tail_</a>;</div>
+<div class="line"><span class="lineno">  330</span>            }</div>
+<div class="line"><span class="lineno">  331</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -487,7 +487,7 @@ template&lt;typename T &gt; </div>
 
 <p>Underlying storage. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00387">387</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00386">386</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -515,7 +515,7 @@ template&lt;typename T &gt; </div>
 
 <p>Maximum buffer capacity. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00386">386</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00385">385</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +543,7 @@ template&lt;typename T &gt; </div>
 
 <p>Consumer position. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00388">388</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00387">387</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -571,7 +571,7 @@ template&lt;typename T &gt; </div>
 
 <p>Mutex for thread synchronization. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00390">390</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00389">389</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -599,7 +599,7 @@ template&lt;typename T &gt; </div>
 
 <p>Producer position. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00389">389</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html#l00388">388</a> of file <a class="el" href="../../d7/d7b/ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -609,7 +609,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2025 11:41:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Jul 23 2025 12:29:44 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
