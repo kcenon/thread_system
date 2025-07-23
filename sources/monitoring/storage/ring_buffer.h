@@ -201,7 +201,6 @@ namespace monitoring_module {
             result.reserve(count);
 
             const auto current_tail = tail_.load(std::memory_order_acquire);
-            const auto current_head = head_.load(std::memory_order_acquire);
             const auto current_size = size();
 
             if (current_size == 0) {
@@ -356,7 +355,15 @@ namespace monitoring_module {
                 return result;
             }
 
-            result.reserve(size());
+            // Calculate size inline to avoid recursive mutex lock
+            std::size_t current_size;
+            if (tail_ >= head_) {
+                current_size = tail_ - head_;
+            } else {
+                current_size = capacity_ - head_ + tail_;
+            }
+            
+            result.reserve(current_size);
 
             if (tail_ > head_) {
                 for (std::size_t i = head_; i < tail_; ++i) {
