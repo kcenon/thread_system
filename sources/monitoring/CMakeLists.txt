@@ -18,7 +18,11 @@ set_target_properties(monitoring PROPERTIES
 # Include directories
 target_include_directories(monitoring 
     PUBLIC 
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/sources>
+        $<INSTALL_INTERFACE:include>
+        $<INSTALL_INTERFACE:include/thread_system>
+        $<INSTALL_INTERFACE:include/thread_system/monitoring>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/..
 )

@@ -14,9 +14,6 @@ add_subdirectory(interfaces)
 # Core thread foundation classes 
 add_subdirectory(thread_base)
 
-# Logging system (depends on utilities)
-add_subdirectory(logger)
-
 # Standard thread pool implementation (depends on thread_base)
 add_subdirectory(thread_pool)
 

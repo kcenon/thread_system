@@ -20,10 +20,6 @@ if(UNIX AND NOT WIN32)
   # Validates fundamental threading components, job queues, and cancellation mechanisms
   add_subdirectory(thread_base_test)
   
-  # Logger tests
-  # Validates logging system functionality, writers, and async message handling
-  add_subdirectory(logger_test)
-  
   # Thread pool tests
   # Validates standard thread pool operations, task queueing, and execution
   add_subdirectory(thread_pool_test)
