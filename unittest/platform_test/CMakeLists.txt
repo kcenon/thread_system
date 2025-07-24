@@ -18,7 +18,8 @@ endif()
 
 # Include thread_base headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/monitoring)
+# Monitoring include removed - moved to separate project
+# include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/monitoring)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_pool)
 
 # Try to find GTest (vcpkg first, then system)
@@ -31,9 +32,8 @@ find_package(Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     thread_base
-    monitoring
     utilities
-    logger
+    interfaces
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

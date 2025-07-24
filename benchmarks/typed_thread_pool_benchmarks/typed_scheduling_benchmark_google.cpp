@@ -26,11 +26,9 @@ All rights reserved.
 #include <future>
 
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
 #include "../../sources/utilities/core/formatter.h"
 
 using namespace typed_thread_pool_module;
-using namespace log_module;
 using namespace std::chrono;
 
 // Job execution record for analysis

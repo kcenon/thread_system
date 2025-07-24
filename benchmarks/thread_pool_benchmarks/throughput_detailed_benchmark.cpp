@@ -58,7 +58,6 @@
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
 #include "../../sources/utilities/core/formatter.h"
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)

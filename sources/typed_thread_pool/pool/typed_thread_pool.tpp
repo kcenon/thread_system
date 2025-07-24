@@ -239,8 +239,8 @@ namespace typed_thread_pool_module
 			auto stop_result = worker->stop();
 			if (stop_result.has_error())
 			{
-				log_module::write_error("error stopping worker: {}",
-										stop_result.get_error().message());
+				// Error stopping worker - silently continue
+				// Previously logged with: log_module::write_error("error stopping worker: {}", stop_result.get_error().message());
 			}
 		}
 

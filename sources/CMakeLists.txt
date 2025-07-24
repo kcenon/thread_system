@@ -21,4 +21,5 @@ add_subdirectory(thread_pool)
 add_subdirectory(typed_thread_pool)
 
 # Monitoring system (depends on thread_base and utilities)
-add_subdirectory(monitoring)
+# TEMPORARILY DISABLED: Monitoring is being moved to separate project
+# add_subdirectory(monitoring)

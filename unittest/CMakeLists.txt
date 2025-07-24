@@ -30,7 +30,8 @@ if(UNIX AND NOT WIN32)
   
   # Monitoring tests
   # Validates metrics collection, ring buffer, and monitoring functionality
-  add_subdirectory(monitoring_test)
+  # TEMPORARILY DISABLED: Monitoring is being moved to separate project
+  # add_subdirectory(monitoring_test)
   
   # Platform-specific tests
   # Validates platform-specific features, atomic operations, and cache performance

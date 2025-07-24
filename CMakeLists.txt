@@ -596,12 +596,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
   
-  install(DIRECTORY sources/monitoring/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/monitoring
-          FILES_MATCHING PATTERN "*.h")
+  # Monitoring headers disabled - moved to separate project
+  # install(DIRECTORY sources/monitoring/
+  #         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/monitoring
+  #         FILES_MATCHING PATTERN "*.h")
   
   # Install libraries
-  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool monitoring
+  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool
           EXPORT ThreadSystemTargets
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

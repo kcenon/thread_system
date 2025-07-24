@@ -33,7 +33,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     thread_base
     utilities
-    logger
+    interfaces
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

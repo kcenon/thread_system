@@ -6,6 +6,7 @@ set(INTERFACE_SOURCES
 set(INTERFACE_HEADERS
     logger_interface.h
     error_handler.h
+    monitoring_interface.h
 )
 
 add_library(interfaces STATIC ${INTERFACE_SOURCES})

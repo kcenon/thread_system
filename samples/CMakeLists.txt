@@ -57,5 +57,5 @@ add_subdirectory(minimal_thread_pool)
 
 # Real-time monitoring sample
 # Shows real-time performance monitoring and metrics collection
-# TEMPORARILY DISABLED: Uses logger directly, needs update to use interface
+# TEMPORARILY DISABLED: Monitoring is being moved to separate project
 # add_subdirectory(monitoring_sample)
