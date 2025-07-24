@@ -37,5 +37,5 @@ if(COMMAND target_precompile_headers_if_supported)
     target_precompile_headers_if_supported(${PROJECT_NAME})
 endif()
 
-# Link against dependencies: thread_base for core functionality and logger for logging
-target_link_libraries(${PROJECT_NAME} PUBLIC thread_base logger)
+# Link against dependencies: thread_base for core functionality and interfaces for logging
+target_link_libraries(${PROJECT_NAME} PUBLIC thread_base interfaces)

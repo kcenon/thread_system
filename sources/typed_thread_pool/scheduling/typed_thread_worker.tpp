@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "typed_thread_worker.h"
 
-#include "../../logger/core/logger.h"
+#include "../../interfaces/logger_interface.h"
 #include "../../utilities/core/formatter.h"
 #include "typed_job_queue.h"
 
@@ -125,16 +125,19 @@ namespace typed_thread_pool_module
 
 		if (!started_time_point.has_value())
 		{
-			log_module::write_sequence(
+			THREAD_LOG_DEBUG(formatter::format(
 				"job executed successfully: {}[{}] on typed_thread_worker",
-				current_job->get_name(), current_job->priority());
+				current_job->get_name(), current_job->priority()));
 
 			return {}; // Success
 		}
 
-		log_module::write_sequence(started_time_point.value(),
-							   "job executed successfully: {}[{}] on typed_thread_worker",
-							   current_job->get_name(), current_job->priority());
+		auto end_time = std::chrono::high_resolution_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
+			end_time - started_time_point.value()).count();
+		THREAD_LOG_DEBUG(formatter::format(
+			"job executed successfully: {}[{}] on typed_thread_worker ({}ns)",
+			current_job->get_name(), current_job->priority(), duration));
 
 		return {}; // Success
 	}

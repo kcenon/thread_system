@@ -32,8 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_worker.h"
 
-#include "../../logger/core/logger.h"
+#include "../../interfaces/logger_interface.h"
 #include "../../utilities/core/formatter.h"
+
+using namespace utility_module;
 
 /**
  * @file thread_worker.cpp
@@ -236,14 +238,18 @@ namespace thread_pool_module
 		if (!started_time_point.has_value())
 		{
 			// Standard logging without timing information
-			log_module::write_sequence("job executed successfully: {} on thread_worker",
-									   current_job->get_name());
+			THREAD_LOG_DEBUG(formatter::format("job executed successfully: {} on thread_worker",
+									   current_job->get_name()));
 		}
-
-		// Enhanced logging with execution timing information
-		log_module::write_sequence(started_time_point.value(),
-								   "job executed successfully: {} on thread_worker",
-								   current_job->get_name());
+		else
+		{
+			// Enhanced logging with execution timing information
+			auto end_time = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				end_time - started_time_point.value()).count();
+			THREAD_LOG_DEBUG(formatter::format("job executed successfully: {} on thread_worker ({}ns)",
+									   current_job->get_name(), duration));
+		}
 
 		return result_void{};
 	}

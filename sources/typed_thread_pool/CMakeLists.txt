@@ -32,5 +32,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # Link against required dependencies:
 # - thread_base: For core threading primitives
 # - thread_pool: This component extends the thread pool implementation
-# - logger: For diagnostic and error logging
-target_link_libraries(${PROJECT_NAME} PUBLIC thread_base thread_pool logger)
+# - interfaces: For diagnostic and error logging interfaces
+target_link_libraries(${PROJECT_NAME} PUBLIC thread_base thread_pool interfaces)

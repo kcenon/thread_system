@@ -580,6 +580,10 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
           FILES_MATCHING PATTERN "*.h")
           
+  install(DIRECTORY sources/interfaces/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
+          FILES_MATCHING PATTERN "*.h")
+          
   install(DIRECTORY sources/thread_base/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
           FILES_MATCHING PATTERN "*.h")
@@ -597,7 +601,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
   
   # Install libraries
-  install(TARGETS utilities thread_base logger thread_pool typed_thread_pool
+  install(TARGETS utilities interfaces thread_base logger thread_pool typed_thread_pool
           EXPORT ThreadSystemTargets
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

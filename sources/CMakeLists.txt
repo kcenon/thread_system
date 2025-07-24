@@ -8,6 +8,9 @@
 # Basic utility components (no thread-specific dependencies)
 add_subdirectory(utilities)
 
+# Interface definitions for dependency injection
+add_subdirectory(interfaces)
+
 # Core thread foundation classes 
 add_subdirectory(thread_base)
 

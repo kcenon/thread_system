@@ -71,8 +71,8 @@ endif()
 # Platform-specific threading library configuration
 if(APPLE)
     # On macOS, pthread is automatically linked by the system
-    # We only need to link our own utilities library
-    target_link_libraries(${PROJECT_NAME} PUBLIC utilities)
+    # We only need to link our own utilities library and interfaces
+    target_link_libraries(${PROJECT_NAME} PUBLIC utilities interfaces)
 else()
     # On other platforms, we need to explicitly find and link the threading library
     set(THREADS_PREFER_PTHREAD_FLAG ON)  # Prefer -pthread flag if available
@@ -81,6 +81,7 @@ else()
     # Link against both our utilities and the system's threading library
     target_link_libraries(${PROJECT_NAME} PUBLIC 
         utilities           # Our utility functions
+        interfaces          # Logger and error handler interfaces
         Threads::Threads    # System threading library (usually pthread)
     )
 endif()

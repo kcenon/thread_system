@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_pool.h"
 #include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 
-#include "../../logger/core/logger.h"
+#include "../../interfaces/logger_interface.h"
 #include "../../utilities/core/formatter.h"
 
 using namespace utility_module;
@@ -306,8 +306,8 @@ namespace thread_pool_module
 			auto stop_result = worker->stop();
 			if (stop_result.has_error())
 			{
-				log_module::write_error("error stopping worker: {}",
-										stop_result.get_error().to_string());
+				THREAD_LOG_ERROR(formatter::format("error stopping worker: {}",
+										stop_result.get_error().to_string()));
 			}
 		}
 
