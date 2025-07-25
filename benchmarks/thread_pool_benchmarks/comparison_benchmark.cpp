@@ -61,6 +61,7 @@
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
+#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
 #include "../../sources/utilities/core/formatter.h"
 
 // Helper function to create thread pool
@@ -92,27 +93,26 @@ auto create_default(const uint16_t& worker_counts)
 
 // Helper function to create typed thread pool
 template<typename Type>
-auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+auto create_priority_default(const uint16_t& worker_counts, const std::vector<Type>& types)
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
     std::optional<std::string> error_message = std::nullopt;
-    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<Type>>(types));
     }
     
-    error_message = pool->enqueue_batch(std::move(workers));
-    if (error_message.has_value()) {
-        return { nullptr, formatter::format("cannot enqueue to workers: {}", 
-                                           error_message.value_or("unknown error")) };
+    auto result = pool->enqueue_batch(std::move(workers));
+    if (result.has_error()) {
+        return { nullptr, result.get_error().message() };
     }
     
     return { pool, std::nullopt };
@@ -120,6 +120,7 @@ auto create_priority_default(const uint16_t& worker_counts)
 
 using namespace std::chrono;
 using namespace thread_pool_module;
+using namespace typed_thread_pool_module;
 
 // Simple thread pool implementation for comparison
 class SimpleThreadPool {
@@ -133,7 +134,7 @@ public:
                         std::unique_lock<std::mutex> lock(mutex_);
                         cv_.wait(lock, [this] { return stop_ || !tasks_.empty(); });
                         
-                        if (stop_ && tasks_.empty()) return;
+                        if (stop_ && tasks_.empty()) return result_void();
                         
                         task = std::move(tasks_.front());
                         tasks_.pop();
@@ -287,7 +288,7 @@ static void BM_SimpleTaskExecution_SimplePool(benchmark::State& state) {
         
         // Wait for completion
         while (completed.load() < num_tasks) {
-            std::this_thread::sleep_for(milliseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
         
         benchmark::DoNotOptimize(counter.load());
@@ -382,23 +383,26 @@ static void BM_ParallelComputation_ThreadSystem(benchmark::State& state) {
         pool->start();
         
         std::vector<std::future<double>> futures;
-        std::vector<std::promise<double>> promises(num_workers);
+        std::vector<std::shared_ptr<std::promise<double>>> promises;
         
         for (size_t i = 0; i < num_workers; ++i) {
-            futures.push_back(promises[i].get_future());
+            promises.push_back(std::make_shared<std::promise<double>>());
+            futures.push_back(promises[i]->get_future());
         }
         
         for (size_t i = 0; i < num_workers; ++i) {
             size_t start_idx = i * chunk_size;
             size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
             
-            pool->enqueue(std::make_unique<callback_job>([&data, start_idx, end_idx, p = std::move(promises[i])]() mutable {
+            auto promise_ptr = promises[i];
+            pool->enqueue(std::make_unique<callback_job>([&data, start_idx, end_idx, promise_ptr]() -> result_void {
                 double local_sum = 0;
                 for (size_t j = start_idx; j < end_idx; ++j) {
                     local_sum += std::sin(data[j]) * std::cos(data[j]);
                 }
-                p.set_value(local_sum);
-            });
+                promise_ptr->set_value(local_sum);
+                return result_void();
+            }));
         }
         
         double total_sum = 0;
@@ -522,7 +526,7 @@ static void BM_IOBound_ThreadSystem_ManyWorkers(benchmark::State& state) {
         for (size_t i = 0; i < num_operations; ++i) {
             pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
                 // Simulate I/O
-                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+                std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
                 completed.fetch_add(1);
                 return result_void();
             }));
@@ -558,7 +562,7 @@ static void BM_IOBound_ThreadSystem_NormalWorkers(benchmark::State& state) {
         
         for (size_t i = 0; i < num_operations; ++i) {
             pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
-                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+                std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
                 completed.fetch_add(1);
                 return result_void();
             }));
@@ -588,7 +592,7 @@ static void BM_IOBound_StdAsync(benchmark::State& state) {
         
         for (size_t i = 0; i < num_operations; ++i) {
             futures.push_back(std::async(std::launch::async, [io_delay_ms]() {
-                std::this_thread::sleep_for(milliseconds(io_delay_ms));
+                std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
             }));
         }
         
@@ -611,7 +615,7 @@ static void BM_MixedWorkload_ThreadSystem(benchmark::State& state) {
     const int cpu_work_units = 1000;
     const int io_delay_ms = 5;
     
-    auto mixed_work = [cpu_work_units, io_delay_ms]() -> result_void {
+    auto mixed_work = [cpu_work_units, io_delay_ms]() {
         // CPU work
         volatile double result = 0;
         for (int i = 0; i < cpu_work_units; ++i) {
@@ -619,7 +623,7 @@ static void BM_MixedWorkload_ThreadSystem(benchmark::State& state) {
         }
         
         // I/O work
-        std::this_thread::sleep_for(milliseconds(io_delay_ms));
+        std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
     };
     
     for (auto _ : state) {
@@ -632,7 +636,10 @@ static void BM_MixedWorkload_ThreadSystem(benchmark::State& state) {
         pool->start();
         
         for (size_t i = 0; i < num_tasks; ++i) {
-            pool->enqueue(std::make_unique<callback_job>(mixed_work));
+            pool->enqueue(std::make_unique<callback_job>([mixed_work]() -> result_void {
+                mixed_work();
+                return result_void();
+            }));
         }
         
         pool->stop();
@@ -644,6 +651,17 @@ BENCHMARK(BM_MixedWorkload_ThreadSystem)
     ->Arg(1000)
     ->Unit(benchmark::kMillisecond);
 
+// Define TaskType enum for typed thread pool benchmark
+enum class TaskType : int { CPU = 1, IO = 10 };
+
+// Formatter for TaskType
+template <>
+struct std::formatter<TaskType> : std::formatter<int> {
+    auto format(TaskType type, format_context& ctx) const {
+        return formatter<int>::format(static_cast<int>(type), ctx);
+    }
+};
+
 /**
  * @brief Benchmark Typed Thread System mixed workload with priority
  */
@@ -652,10 +670,8 @@ static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
     const int cpu_work_units = 1000;
     const int io_delay_ms = 5;
     
-    enum class TaskType { CPU = 1, IO = 10 };
-    
     for (auto _ : state) {
-        auto [pool, error] = create_priority_default<TaskType>(std::thread::hardware_concurrency());
+        auto [pool, error] = create_priority_default<TaskType>(std::thread::hardware_concurrency(), {TaskType::CPU, TaskType::IO});
         if (error.has_value()) {
             state.SkipWithError("Failed to create thread pool");
             return;
@@ -665,19 +681,21 @@ static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
         
         for (size_t i = 0; i < num_tasks / 2; ++i) {
             // CPU-heavy tasks get higher priority
-            pool->enqueue(std::make_unique<callback_job>([cpu_work_units]() -> result_void {
-                volatile double result = 0;
-                for (int j = 0; j < cpu_work_units * 2; ++j) {
-                    result += std::sin(j) * std::cos(j);
-                }
-                return result_void();
-            }, TaskType::CPU));
+            pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job_t<TaskType>>(
+                [cpu_work_units]() -> result_void {
+                    volatile double result = 0;
+                    for (int j = 0; j < cpu_work_units * 2; ++j) {
+                        result += std::sin(j) * std::cos(j);
+                    }
+                    return result_void();
+                }, TaskType::CPU));
             
             // I/O-heavy tasks get lower priority
-            pool->enqueue(std::make_unique<callback_job>([io_delay_ms]() -> result_void {
-                std::this_thread::sleep_for(milliseconds(io_delay_ms * 2));
-                return result_void();
-            }, TaskType::IO));
+            pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job_t<TaskType>>(
+                [io_delay_ms]() -> result_void {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms * 2));
+                    return result_void();
+                }, TaskType::IO));
         }
         
         pool->stop();
@@ -697,7 +715,7 @@ static void BM_MixedWorkload_StdAsync(benchmark::State& state) {
     const int cpu_work_units = 1000;
     const int io_delay_ms = 5;
     
-    auto mixed_work = [cpu_work_units, io_delay_ms]() -> result_void {
+    auto mixed_work = [cpu_work_units, io_delay_ms]() {
         // CPU work
         volatile double result = 0;
         for (int i = 0; i < cpu_work_units; ++i) {
@@ -705,7 +723,7 @@ static void BM_MixedWorkload_StdAsync(benchmark::State& state) {
         }
         
         // I/O work
-        std::this_thread::sleep_for(milliseconds(io_delay_ms));
+        std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
     };
     
     for (auto _ : state) {
@@ -734,7 +752,7 @@ static void BM_TaskCreation_ThreadSystem(benchmark::State& state) {
     const size_t tasks_per_iteration = state.range(0);
     
     auto [pool, error] = create_default(4);
-    if (!error.empty()) {
+    if (error.has_value()) {
         state.SkipWithError("Failed to create thread pool");
         return;
     }
@@ -752,7 +770,9 @@ static void BM_TaskCreation_ThreadSystem(benchmark::State& state) {
     pool->stop();
     
     state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
-    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = benchmark::Counter(state.iterations() * tasks_per_iteration, 
+                                                       benchmark::Counter::kIsRate | benchmark::Counter::kInvert,
+                                                       benchmark::Counter::kIs1000);
 }
 BENCHMARK(BM_TaskCreation_ThreadSystem)
     ->Arg(1000)
@@ -776,7 +796,9 @@ static void BM_TaskCreation_StdAsync(benchmark::State& state) {
     }
     
     state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
-    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = benchmark::Counter(state.iterations() * tasks_per_iteration, 
+                                                       benchmark::Counter::kIsRate | benchmark::Counter::kInvert,
+                                                       benchmark::Counter::kIs1000);
 }
 BENCHMARK(BM_TaskCreation_StdAsync)
     ->Arg(1000)
@@ -800,7 +822,9 @@ static void BM_TaskCreation_RawLambda(benchmark::State& state) {
     }
     
     state.SetItemsProcessed(state.iterations() * tasks_per_iteration);
-    state.counters["ns_per_task"] = (state.elapsed_time() * 1e9) / (state.iterations() * tasks_per_iteration);
+    state.counters["ns_per_task"] = benchmark::Counter(state.iterations() * tasks_per_iteration, 
+                                                       benchmark::Counter::kIsRate | benchmark::Counter::kInvert,
+                                                       benchmark::Counter::kIs1000);
 }
 BENCHMARK(BM_TaskCreation_RawLambda)
     ->Arg(1000)
