@@ -75,11 +75,13 @@ namespace typed_thread_pool_module
 	
 	template <typename job_type>
 	typed_thread_pool_t<job_type>::typed_thread_pool_t(
-		const std::string& thread_title)
+		const std::string& thread_title,
+		const thread_context& context)
 		: thread_title_(thread_title)
 		, job_queue_(create_typed_job_queue<job_type>(
 			adaptive_typed_job_queue_t<job_type>::queue_strategy::ADAPTIVE))
 		, start_pool_(false)
+		, context_(context)
 	{
 	}
 
@@ -164,6 +166,7 @@ namespace typed_thread_pool_module
 		}
 
 		worker->set_job_queue(job_queue_);
+		worker->set_context(context_);
 
 		if (start_pool_.load())
 		{
@@ -198,6 +201,7 @@ namespace typed_thread_pool_module
 		for (auto& worker : workers)
 		{
 			worker->set_job_queue(job_queue_);
+			worker->set_context(context_);
 		}
 
 		if (start_pool_.load())
@@ -239,8 +243,9 @@ namespace typed_thread_pool_module
 			auto stop_result = worker->stop();
 			if (stop_result.has_error())
 			{
-				// Error stopping worker - silently continue
-				// Previously logged with: log_module::write_error("error stopping worker: {}", stop_result.get_error().message());
+				// Error stopping worker - log if context has logger
+				context_.log(log_level::error, 
+					formatter::format("error stopping worker: {}", stop_result.get_error().message()));
 			}
 		}
 
@@ -293,6 +298,13 @@ namespace typed_thread_pool_module
 		for (auto& worker : workers_)
 		{
 			worker->set_job_queue(job_queue_);
+			worker->set_context(context_);
 		}
+	}
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::get_context(void) const -> const thread_context&
+	{
+		return context_;
 	}
 } // namespace typed_thread_pool_module

@@ -57,6 +57,7 @@ namespace thread_pool_module
 	 * - Creates adaptive job queue that automatically optimizes based on contention
 	 * - Pool starts in stopped state (start_pool_ = false)
 	 * - No workers are initially assigned (workers_ is empty)
+	 * - Stores thread context for logging and monitoring
 	 * 
 	 * Adaptive Queue Strategy:
 	 * - ADAPTIVE mode automatically switches between mutex and lock-free implementations
@@ -64,9 +65,12 @@ namespace thread_pool_module
 	 * - Eliminates need for manual queue strategy selection
 	 * 
 	 * @param thread_title Descriptive name for this thread pool instance
+	 * @param context Thread context providing logging and monitoring services
 	 */
-	thread_pool::thread_pool(const std::string& thread_title)
-		: thread_title_(thread_title), start_pool_(false), job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE))
+	thread_pool::thread_pool(const std::string& thread_title, const thread_context& context)
+		: thread_title_(thread_title), start_pool_(false), 
+		  job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE)),
+		  context_(context)
 	{
 	}
 
@@ -235,6 +239,7 @@ namespace thread_pool_module
 		}
 
 		worker->set_job_queue(job_queue_);
+		worker->set_context(context_);
 
 		if (start_pool_.load())
 		{
@@ -267,6 +272,7 @@ namespace thread_pool_module
 		for (auto& worker : workers)
 		{
 			worker->set_job_queue(job_queue_);
+			worker->set_context(context_);
 
 			if (start_pool_.load())
 			{
@@ -306,8 +312,9 @@ namespace thread_pool_module
 			auto stop_result = worker->stop();
 			if (stop_result.has_error())
 			{
-				THREAD_LOG_ERROR(formatter::format("error stopping worker: {}",
-										stop_result.get_error().to_string()));
+				context_.log(log_level::error, 
+				            formatter::format("error stopping worker: {}",
+				                            stop_result.get_error().to_string()));
 			}
 		}
 
@@ -329,5 +336,10 @@ namespace thread_pool_module
 		}
 
 		return format_string;
+	}
+
+	auto thread_pool::get_context(void) const -> const thread_context&
+	{
+		return context_;
 	}
 } // namespace thread_pool_module

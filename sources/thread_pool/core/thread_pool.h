@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../workers/thread_worker.h"
 #include "../../utilities/conversion/convert_string.h"
 #include "../detail/forward_declarations.h"
+#include "../../interfaces/thread_context.h"
 #include "config.h"
 
 #include <tuple>
@@ -119,10 +120,13 @@ namespace thread_pool_module
 		 * @brief Constructs a new @c thread_pool instance.
 		 * @param thread_title An optional title or identifier for the thread pool (defaults to
 		 * "thread_pool").
+		 * @param context Optional thread context for logging and monitoring (defaults to empty context).
 		 *
 		 * This title can be used for logging or debugging purposes.
+		 * The context provides access to logging and monitoring services.
 		 */
-		thread_pool(const std::string& thread_title = "thread_pool");
+		thread_pool(const std::string& thread_title = "thread_pool", 
+		           const thread_context& context = thread_context());
 
 		/**
 		 * @brief Virtual destructor. Cleans up resources used by the thread pool.
@@ -251,6 +255,12 @@ namespace thread_pool_module
 		 */
 		[[nodiscard]] auto to_string(void) const -> std::string;
 
+		/**
+		 * @brief Gets the thread context for this pool.
+		 * @return The thread context providing access to logging and monitoring services.
+		 */
+		[[nodiscard]] auto get_context(void) const -> const thread_context&;
+
 	private:
 		/**
 		 * @brief A title or name for this thread pool, useful for identification and logging.
@@ -281,6 +291,14 @@ namespace thread_pool_module
 		 * when @c thread_pool::start() is called.
 		 */
 		std::vector<std::unique_ptr<thread_worker>> workers_;
+
+		/**
+		 * @brief The thread context providing access to logging and monitoring services.
+		 *
+		 * This context is shared with all worker threads created by this pool,
+		 * enabling consistent logging and monitoring throughout the pool.
+		 */
+		thread_context context_;
 	};
 } // namespace thread_pool_module
 

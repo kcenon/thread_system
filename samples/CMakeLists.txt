@@ -9,6 +9,10 @@
 # Demonstrates basic thread pool usage without logger dependency
 add_subdirectory(minimal_thread_pool)
 
+# Composition-based design sample
+# Demonstrates modern dependency injection and composition patterns
+add_subdirectory(composition_example)
+
 # Basic logger usage sample
 # Demonstrates configuration and usage of the logging system
 # TEMPORARILY DISABLED: Logger is being moved to separate project
