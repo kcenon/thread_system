@@ -67,3 +67,7 @@ add_subdirectory(composition_example)
 # Integration example
 # Demonstrates integration with external logger and monitoring systems
 add_subdirectory(integration_example)
+
+# Multi-process monitoring integration
+# Demonstrates integration with multi-process monitoring features
+add_subdirectory(multi_process_monitoring_integration)

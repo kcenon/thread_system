@@ -108,6 +108,12 @@ namespace thread_pool_module
 		auto set_context(const thread_context& context) -> void;
 
 		/**
+		 * @brief Get the worker ID.
+		 * @return The unique ID for this worker instance.
+		 */
+		[[nodiscard]] std::size_t get_worker_id() const;
+
+		/**
 		 * @brief Gets the thread context for this worker.
 		 * @return The thread context providing access to logging and monitoring services.
 		 */
@@ -135,6 +141,16 @@ namespace thread_pool_module
 		auto do_work() -> result_void override;
 
 	private:
+		/**
+		 * @brief Static counter for generating unique worker IDs.
+		 */
+		static std::atomic<std::size_t> next_worker_id_;
+
+		/**
+		 * @brief Unique ID for this worker instance.
+		 */
+		std::size_t worker_id_{0};
+
 		/**
 		 * @brief Indicates whether to use time tags or timestamps for job processing.
 		 *

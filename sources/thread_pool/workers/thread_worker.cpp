@@ -69,6 +69,8 @@ using namespace utility_module;
 
 namespace thread_pool_module
 {
+	// Initialize static member
+	std::atomic<std::size_t> thread_worker::next_worker_id_{0};
 	/**
 	 * @brief Constructs a worker thread with optional timing capabilities.
 	 * 
@@ -89,7 +91,7 @@ namespace thread_pool_module
 	 */
 	thread_worker::thread_worker(const bool& use_time_tag, const thread_context& context)
 		: thread_base("thread_worker"), use_time_tag_(use_time_tag), job_queue_(nullptr),
-		  context_(context)
+		  context_(context), worker_id_(next_worker_id_.fetch_add(1))
 	{
 	}
 
@@ -289,12 +291,17 @@ namespace thread_pool_module
 				monitoring_interface::worker_metrics metrics;
 				metrics.jobs_processed = 1;
 				metrics.total_processing_time_ns = static_cast<std::uint64_t>(duration);
-				// Worker ID would need to be tracked - for now using thread ID
-				context_.update_worker_metrics(std::hash<std::thread::id>{}(std::this_thread::get_id()), 
-				                              metrics);
+				metrics.timestamp = std::chrono::steady_clock::now();
+				// Use proper worker ID instead of thread hash
+				context_.update_worker_metrics(worker_id_, metrics);
 			}
 		}
 
 		return result_void{};
+	}
+
+	std::size_t thread_worker::get_worker_id() const
+	{
+		return worker_id_;
 	}
 } // namespace thread_pool_module

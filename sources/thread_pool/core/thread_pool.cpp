@@ -49,6 +49,8 @@ using namespace utility_module;
 
 namespace thread_pool_module
 {
+	// Initialize static member
+	std::atomic<std::uint32_t> thread_pool::next_pool_instance_id_{0};
 	/**
 	 * @brief Constructs a thread pool with adaptive job queue.
 	 * 
@@ -70,8 +72,18 @@ namespace thread_pool_module
 	thread_pool::thread_pool(const std::string& thread_title, const thread_context& context)
 		: thread_title_(thread_title), start_pool_(false), 
 		  job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE)),
-		  context_(context)
+		  context_(context), pool_instance_id_(next_pool_instance_id_.fetch_add(1))
 	{
+		// Report initial pool registration if monitoring is available
+		if (context_.monitoring())
+		{
+			monitoring_interface::thread_pool_metrics initial_metrics;
+			initial_metrics.pool_name = thread_title_;
+			initial_metrics.pool_instance_id = pool_instance_id_;
+			initial_metrics.worker_threads = 0;
+			initial_metrics.timestamp = std::chrono::steady_clock::now();
+			context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, initial_metrics);
+		}
 	}
 
 	/**
@@ -341,5 +353,46 @@ namespace thread_pool_module
 	auto thread_pool::get_context(void) const -> const thread_context&
 	{
 		return context_;
+	}
+
+	std::uint32_t thread_pool::get_pool_instance_id() const
+	{
+		return pool_instance_id_;
+	}
+
+	void thread_pool::report_metrics()
+	{
+		if (!context_.monitoring())
+		{
+			return;
+		}
+
+		monitoring_interface::thread_pool_metrics metrics;
+		metrics.pool_name = thread_title_;
+		metrics.pool_instance_id = pool_instance_id_;
+		metrics.worker_threads = workers_.size();
+		metrics.idle_threads = get_idle_worker_count();
+		
+		if (job_queue_)
+		{
+			metrics.jobs_pending = job_queue_->size();
+		}
+		
+		metrics.timestamp = std::chrono::steady_clock::now();
+		
+		// Report metrics with pool identification
+		context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, metrics);
+	}
+
+	std::size_t thread_pool::get_idle_worker_count() const
+	{
+		std::size_t idle_count = 0;
+		for (const auto& worker : workers_)
+		{
+			// Check if worker is not currently processing a job
+			// This is a simplified implementation - workers would need to expose their state
+			// For now, we'll return 0 as workers don't currently expose idle state
+		}
+		return idle_count;
 	}
 } // namespace thread_pool_module

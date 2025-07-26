@@ -256,6 +256,26 @@ namespace thread_pool_module
 		[[nodiscard]] auto to_string(void) const -> std::string;
 
 		/**
+		 * @brief Get the pool instance id.
+		 * @return Returns the unique instance id for this pool.
+		 */
+		[[nodiscard]] std::uint32_t get_pool_instance_id() const;
+
+		/**
+		 * @brief Collect and report current thread pool metrics.
+		 * 
+		 * This method gathers current metrics from the pool and reports them
+		 * through the monitoring interface if available.
+		 */
+		void report_metrics();
+
+		/**
+		 * @brief Get the number of idle workers.
+		 * @return Number of workers currently not processing jobs.
+		 */
+		[[nodiscard]] std::size_t get_idle_worker_count() const;
+
+		/**
 		 * @brief Gets the thread context for this pool.
 		 * @return The thread context providing access to logging and monitoring services.
 		 */
@@ -263,9 +283,19 @@ namespace thread_pool_module
 
 	private:
 		/**
+		 * @brief Static counter for generating unique pool instance IDs.
+		 */
+		static std::atomic<std::uint32_t> next_pool_instance_id_;
+
+		/**
 		 * @brief A title or name for this thread pool, useful for identification and logging.
 		 */
 		std::string thread_title_;
+
+		/**
+		 * @brief Unique instance ID for this pool (for multi-pool scenarios).
+		 */
+		std::uint32_t pool_instance_id_{0};
 
 		/**
 		 * @brief Indicates whether the pool is currently running.

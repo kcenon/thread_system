@@ -37,8 +37,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <vector>
 #include <cstdint>
+#include <string>
 
 namespace monitoring_interface {
+
+    // Forward declarations for multi-process support
+    struct process_identifier;
+    struct thread_pool_identifier;
+    struct process_thread_pool_metrics;
+    struct multi_process_metrics_snapshot;
+    class multi_process_monitoring_interface;
 
     /**
      * @struct system_metrics
@@ -66,6 +74,10 @@ namespace monitoring_interface {
         std::uint64_t worker_threads{0};
         std::uint64_t idle_threads{0};
         std::chrono::steady_clock::time_point timestamp;
+        
+        // Multi-process support fields
+        std::string pool_name;               // Pool identifier name
+        std::uint32_t pool_instance_id{0};   // Instance ID for multiple pools
         
         virtual ~thread_pool_metrics() = default;
     };
@@ -119,6 +131,22 @@ namespace monitoring_interface {
          * @param metrics The thread pool metrics to record
          */
         virtual void update_thread_pool_metrics(const thread_pool_metrics& metrics) = 0;
+
+        /**
+         * @brief Updates thread pool metrics with pool identifier (for multi-pool scenarios).
+         * @param pool_name Name of the thread pool
+         * @param pool_instance_id Instance ID for multiple pools with same name
+         * @param metrics The thread pool metrics to record
+         */
+        virtual void update_thread_pool_metrics(const std::string& pool_name, 
+                                              std::uint32_t pool_instance_id,
+                                              const thread_pool_metrics& metrics) {
+            // Default implementation: copy identifiers and forward to original method
+            thread_pool_metrics identified_metrics = metrics;
+            identified_metrics.pool_name = pool_name;
+            identified_metrics.pool_instance_id = pool_instance_id;
+            update_thread_pool_metrics(identified_metrics);
+        }
 
         /**
          * @brief Updates worker thread metrics.
