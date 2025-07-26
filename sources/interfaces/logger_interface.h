@@ -1,4 +1,4 @@
-// Copyright (c) 2024, kcenon
+// Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without

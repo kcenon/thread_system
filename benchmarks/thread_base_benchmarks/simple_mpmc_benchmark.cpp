@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2025, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Google Benchmark-based MPMC Queue Performance Tests
