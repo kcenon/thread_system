@@ -63,3 +63,7 @@ add_subdirectory(composition_example)
 # Shows real-time performance monitoring and metrics collection
 # TEMPORARILY DISABLED: Monitoring is being moved to separate project
 # add_subdirectory(monitoring_sample)
+
+# Integration example
+# Demonstrates integration with external logger and monitoring systems
+add_subdirectory(integration_example)
