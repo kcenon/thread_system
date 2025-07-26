@@ -14,6 +14,49 @@ The Thread System Project is a comprehensive, production-ready C++20 multithread
 
 > **🏗️ Modular Architecture**: Recently refactored to a clean, modular design with ~8,700+ lines of code removed. Logger and monitoring systems are now available as separate, optional projects for maximum flexibility.
 
+## 🔗 Project Ecosystem & Inter-Dependencies
+
+This project is part of a modular ecosystem designed for high-performance concurrent applications:
+
+### Core Threading Framework
+- **[thread_system](https://github.com/kcenon/thread_system)** (This project): Core threading framework with worker pools, job queues, and thread management
+  - Provides: `logger_interface`, `monitoring_interface` for integration
+  - Dependencies: None (standalone)
+  - Usage: Core threading functionality, interfaces for other systems
+
+### Optional Integration Components
+- **[logger_system](https://github.com/kcenon/logger_system)**: High-performance asynchronous logging
+  - Implements: `thread_module::logger_interface`
+  - Dependencies: `thread_system` (for interfaces)
+  - Integration: Seamless logging for thread operations and debugging
+
+- **[monitoring_system](https://github.com/kcenon/monitoring_system)**: Real-time metrics collection and performance monitoring
+  - Implements: `monitoring_interface::monitoring_interface`
+  - Dependencies: `thread_system` (for interfaces)
+  - Integration: Thread pool metrics, system performance tracking
+
+- **[integrated_thread_system](https://github.com/kcenon/integrated_thread_system)**: Complete solution examples
+  - Dependencies: `thread_system`, `logger_system`, `monitoring_system`
+  - Purpose: Integration examples, complete application templates
+  - Usage: Reference implementation for full-stack integration
+
+### Dependency Flow
+```
+thread_system (core interfaces)
+    ↑                    ↑
+logger_system    monitoring_system
+    ↑                    ↑
+    └── integrated_thread_system ──┘
+```
+
+### Integration Benefits
+- **Plug-and-play**: Use only the components you need
+- **Interface-driven**: Clean abstractions enable easy swapping
+- **Performance-optimized**: Each system optimized for its domain
+- **Unified ecosystem**: Consistent API design across all projects
+
+> 📖 **[Complete Architecture Guide](../ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
+
 ## Project Purpose & Mission
 
 This project addresses the fundamental challenge faced by developers worldwide: **making concurrent programming accessible, safe, and efficient**. Traditional threading approaches often lead to complex code, hard-to-debug race conditions, and performance bottlenecks. Our mission is to provide a comprehensive solution that:
