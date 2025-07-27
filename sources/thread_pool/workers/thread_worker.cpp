@@ -90,8 +90,11 @@ namespace thread_pool_module
 	 * @param context Thread context providing logging and monitoring services
 	 */
 	thread_worker::thread_worker(const bool& use_time_tag, const thread_context& context)
-		: thread_base("thread_worker"), use_time_tag_(use_time_tag), job_queue_(nullptr),
-		  context_(context), worker_id_(next_worker_id_.fetch_add(1))
+		: thread_base("thread_worker"), 
+		  worker_id_(next_worker_id_.fetch_add(1)),
+		  use_time_tag_(use_time_tag), 
+		  job_queue_(nullptr),
+		  context_(context)
 	{
 	}
 

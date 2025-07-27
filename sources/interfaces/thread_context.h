@@ -131,6 +131,20 @@ public:
     }
 
     /**
+     * @brief Update thread pool metrics with pool identifier
+     * @param pool_name Name of the thread pool
+     * @param pool_instance_id Instance ID for multiple pools
+     * @param metrics Thread pool metrics to record
+     */
+    void update_thread_pool_metrics(const std::string& pool_name,
+                                   std::uint32_t pool_instance_id,
+                                   const monitoring_interface::thread_pool_metrics& metrics) const {
+        if (monitoring_) {
+            monitoring_->update_thread_pool_metrics(pool_name, pool_instance_id, metrics);
+        }
+    }
+
+    /**
      * @brief Update worker metrics if monitoring is available
      * @param worker_id Worker identifier
      * @param metrics Worker metrics to record

@@ -70,9 +70,11 @@ namespace thread_pool_module
 	 * @param context Thread context providing logging and monitoring services
 	 */
 	thread_pool::thread_pool(const std::string& thread_title, const thread_context& context)
-		: thread_title_(thread_title), start_pool_(false), 
+		: thread_title_(thread_title), 
+		  pool_instance_id_(next_pool_instance_id_.fetch_add(1)),
+		  start_pool_(false), 
 		  job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE)),
-		  context_(context), pool_instance_id_(next_pool_instance_id_.fetch_add(1))
+		  context_(context)
 	{
 		// Report initial pool registration if monitoring is available
 		if (context_.monitoring())

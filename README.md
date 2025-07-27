@@ -14,6 +14,8 @@ The Thread System Project is a comprehensive, production-ready C++20 multithread
 
 > **🏗️ Modular Architecture**: Recently refactored to a clean, modular design with ~8,700+ lines of code removed. Logger and monitoring systems are now available as separate, optional projects for maximum flexibility.
 
+> **🔄 Migration Status**: Currently migrating to a fully modular architecture. Phase 1 (Interface extraction) is complete. See [MIGRATION.md](MIGRATION.md) for details.
+
 ## 🔗 Project Ecosystem & Inter-Dependencies
 
 This project is part of a modular ecosystem designed for high-performance concurrent applications:

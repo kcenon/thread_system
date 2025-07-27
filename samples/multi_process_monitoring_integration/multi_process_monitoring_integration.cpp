@@ -30,30 +30,29 @@ All rights reserved.
 
 using namespace thread_pool_module;
 using namespace thread_module;
-using namespace monitoring_interface;
 using namespace utility_module;
 
 // Mock implementation of multi-process monitoring
-class sample_monitoring : public monitoring_interface {
+class sample_monitoring : public ::monitoring_interface::monitoring_interface {
 public:
-    void update_system_metrics(const system_metrics& metrics) override {
+    void update_system_metrics(const ::monitoring_interface::system_metrics& metrics) override {
         std::cout << formatter::format("System metrics: CPU: {}%, Memory: {} bytes\n", 
                                       metrics.cpu_usage_percent, metrics.memory_usage_bytes);
     }
     
-    void update_thread_pool_metrics(const thread_pool_metrics& metrics) override {
+    void update_thread_pool_metrics(const ::monitoring_interface::thread_pool_metrics& metrics) override {
         std::cout << formatter::format("Thread pool '{}' (ID: {}): Workers: {}, Idle: {}, Pending: {}\n",
                                       metrics.pool_name, metrics.pool_instance_id,
                                       metrics.worker_threads, metrics.idle_threads, metrics.jobs_pending);
     }
     
-    void update_worker_metrics(std::size_t worker_id, const worker_metrics& metrics) override {
+    void update_worker_metrics(std::size_t worker_id, const ::monitoring_interface::worker_metrics& metrics) override {
         std::cout << formatter::format("Worker {}: Processed {} jobs, Total time: {} ns\n",
                                       worker_id, metrics.jobs_processed, metrics.total_processing_time_ns);
     }
     
-    metrics_snapshot get_current_snapshot() const override { return {}; }
-    std::vector<metrics_snapshot> get_recent_snapshots(std::size_t) const override { return {}; }
+    ::monitoring_interface::metrics_snapshot get_current_snapshot() const override { return {}; }
+    std::vector<::monitoring_interface::metrics_snapshot> get_recent_snapshots(std::size_t) const override { return {}; }
     bool is_active() const override { return true; }
 };
 
@@ -75,8 +74,10 @@ int main() {
     std::cout << formatter::format("Secondary pool instance ID: {}\n\n", secondary_pool->get_pool_instance_id());
     
     // Start pools with different worker counts
-    primary_pool->start(4);
-    secondary_pool->start(2);
+    // TODO: Update to use new thread_pool API
+    // The start() method no longer takes worker count parameter
+    primary_pool->start();
+    secondary_pool->start();
     
     // Report initial metrics
     primary_pool->report_metrics();
@@ -87,12 +88,12 @@ int main() {
     // Submit jobs to primary pool
     for (int i = 0; i < 10; ++i) {
         auto job = std::make_unique<callback_job>(
-            formatter::format("primary_job_{}", i),
             [i]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50 + i * 10));
                 std::cout << formatter::format("Primary job {} completed\n", i);
                 return result_void{};
-            }
+            },
+            formatter::format("primary_job_{}", i)
         );
         primary_pool->enqueue(std::move(job));
     }
@@ -100,12 +101,12 @@ int main() {
     // Submit jobs to secondary pool
     for (int i = 0; i < 5; ++i) {
         auto job = std::make_unique<callback_job>(
-            formatter::format("secondary_job_{}", i),
             [i]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 std::cout << formatter::format("Secondary job {} completed\n", i);
                 return result_void{};
-            }
+            },
+            formatter::format("secondary_job_{}", i)
         );
         secondary_pool->enqueue(std::move(job));
     }
