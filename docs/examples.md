@@ -9,12 +9,9 @@ This guide contains practical examples demonstrating how to use the Thread Syste
 ```cpp
 #include "thread_pool/core/thread_pool.h"
 #include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
+#include <iostream>
 
 int main() {
-    // Start logger
-    log_module::start();
-    
     // Create thread pool
     auto pool = std::make_shared<thread_pool_module::thread_pool>();
     
@@ -31,7 +28,7 @@ int main() {
     // Submit job
     pool->enqueue(std::make_unique<thread_module::callback_job>(
         []() -> thread_module::result_void {
-            log_module::write_information("Hello from thread pool!");
+            std::cout << "Hello from thread pool!" << std::endl;
             return {};
         }
     ));
@@ -41,7 +38,6 @@ int main() {
     
     // Clean up
     pool->stop();
-    log_module::stop();
     
     return 0;
 }
@@ -188,15 +184,13 @@ int main() {
 ```cpp
 #include "thread_pool/core/thread_pool.h"
 #include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
 #include <fstream>
 #include <vector>
 #include <filesystem>
+#include <iostream>
+#include <mutex>
 
 void process_files(const std::vector<std::filesystem::path>& files) {
-    // Start logger
-    log_module::start();
-    
     // Create pool
     auto pool = std::make_shared<thread_pool_module::thread_pool>();
     
@@ -210,13 +204,14 @@ void process_files(const std::vector<std::filesystem::path>& files) {
     
     // Process each file
     std::vector<std::shared_ptr<size_t>> line_counts;
+    auto output_mutex = std::make_shared<std::mutex>();
     
     for (const auto& file : files) {
         auto count = std::make_shared<size_t>(0);
         line_counts.push_back(count);
         
         pool->enqueue(std::make_unique<thread_module::callback_job>(
-            [file, count]() -> thread_module::result_void {
+            [file, count, output_mutex]() -> thread_module::result_void {
                 std::ifstream ifs(file);
                 if (!ifs) {
                     return thread_module::error_info(
@@ -230,8 +225,11 @@ void process_files(const std::vector<std::filesystem::path>& files) {
                     (*count)++;
                 }
                 
-                log_module::write_information("File {} has {} lines", 
-                                            file.filename().string(), *count);
+                {
+                    std::lock_guard<std::mutex> lock(*output_mutex);
+                    std::cout << "File " << file.filename().string() 
+                              << " has " << *count << " lines" << std::endl;
+                }
                 return {};
             }
         ));
@@ -245,11 +243,10 @@ void process_files(const std::vector<std::filesystem::path>& files) {
     for (const auto& count : line_counts) {
         total += *count;
     }
-    log_module::write_information("Total lines: {}", total);
+    std::cout << "Total lines: " << total << std::endl;
     
     // Clean up
     pool->stop();
-    log_module::stop();
 }
 ```
 
@@ -260,13 +257,13 @@ void process_files(const std::vector<std::filesystem::path>& files) {
 ```cpp
 #include "typed_thread_pool/pool/typed_thread_pool.h"
 #include "typed_thread_pool/jobs/callback_typed_job.h"
-#include "logger/core/logger.h"
+#include <iostream>
+#include <mutex>
 
 int main() {
-    log_module::start();
-    
     // Create typed thread pool
     auto pool = std::make_shared<typed_thread_pool_module::typed_thread_pool>();
+    auto output_mutex = std::make_shared<std::mutex>();
     
     // Add workers with different type responsibilities
     // Worker 1: Only handles High priority
@@ -285,16 +282,18 @@ int main() {
     for (int i = 0; i < 5; ++i) {
         pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job<job_types>>(
             job_types::High,
-            [i]() -> thread_module::result_void {
-                log_module::write_information("High priority job {}", i);
+            [i, output_mutex]() -> thread_module::result_void {
+                std::lock_guard<std::mutex> lock(*output_mutex);
+                std::cout << "High priority job " << i << std::endl;
                 return {};
             }
         ));
         
         pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job<job_types>>(
             job_types::Low,
-            [i]() -> thread_module::result_void {
-                log_module::write_information("Low priority job {}", i);
+            [i, output_mutex]() -> thread_module::result_void {
+                std::lock_guard<std::mutex> lock(*output_mutex);
+                std::cout << "Low priority job " << i << std::endl;
                 return {};
             }
         ));
@@ -304,7 +303,6 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     
     pool->stop();
-    log_module::stop();
     return 0;
 }
 ```
@@ -314,6 +312,8 @@ int main() {
 ```cpp
 #include "typed_thread_pool/pool/typed_thread_pool.h"
 #include "typed_thread_pool/jobs/typed_job.h"
+#include <iostream>
+#include <mutex>
 
 // Define custom priority types
 enum class TaskPriority : uint8_t {
@@ -327,24 +327,28 @@ enum class TaskPriority : uint8_t {
 class MyCustomJob : public typed_thread_pool_module::typed_job_t<TaskPriority> {
 private:
     std::string task_name_;
+    std::shared_ptr<std::mutex> output_mutex_;
     
 public:
-    MyCustomJob(TaskPriority priority, const std::string& name)
-        : typed_job_t<TaskPriority>(priority), task_name_(name) {}
+    MyCustomJob(TaskPriority priority, const std::string& name, 
+                std::shared_ptr<std::mutex> mutex)
+        : typed_job_t<TaskPriority>(priority), 
+          task_name_(name), 
+          output_mutex_(mutex) {}
     
     auto operator()() -> thread_module::result_void override {
-        log_module::write_information("Executing {}: {}", 
-                                    static_cast<int>(get_type()), task_name_);
+        std::lock_guard<std::mutex> lock(*output_mutex_);
+        std::cout << "Executing priority " << static_cast<int>(get_type()) 
+                  << ": " << task_name_ << std::endl;
         // Do actual work here
         return {};
     }
 };
 
 int main() {
-    log_module::start();
-    
     // Create pool with custom priority type
     auto pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<TaskPriority>>();
+    auto output_mutex = std::make_shared<std::mutex>();
     
     // Add workers
     pool->enqueue(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<TaskPriority>>(
@@ -354,76 +358,110 @@ int main() {
     pool->start();
     
     // Submit custom jobs
-    pool->enqueue(std::make_unique<MyCustomJob>(TaskPriority::Critical, "Database backup"));
-    pool->enqueue(std::make_unique<MyCustomJob>(TaskPriority::Background, "Cache cleanup"));
+    pool->enqueue(std::make_unique<MyCustomJob>(TaskPriority::Critical, "Database backup", output_mutex));
+    pool->enqueue(std::make_unique<MyCustomJob>(TaskPriority::Background, "Cache cleanup", output_mutex));
     
     std::this_thread::sleep_for(std::chrono::seconds(1));
     
     pool->stop();
-    log_module::stop();
     return 0;
 }
 ```
 
-## Logging Examples
+## Advanced Thread Pool Examples
 
-### Comprehensive Logging Setup
+### Custom Job Priority Queue
 
 ```cpp
-#include "logger/core/logger.h"
-#include <iostream>
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/jobs/callback_job.h"
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
-int main() {
-    // Configure logger
-    log_module::set_title("MyApplication");
-    log_module::set_max_lines(10000);  // Max lines per file
-    log_module::set_use_backup(true);  // Create backup files
-    
-    // Configure targets
-    log_module::console_target(log_module::log_types::Information | 
-                              log_module::log_types::Error);
-    log_module::file_target(log_module::log_types::All);
-    
-    // Set up callback for custom handling
-    log_module::callback_target(log_module::log_types::Error);
-    log_module::message_callback(
-        [](const log_module::log_types& type, 
-           const std::string& datetime, 
-           const std::string& message) {
-            if (type == log_module::log_types::Error) {
-                // Send error notifications, etc.
-                std::cerr << "ALERT: " << message << std::endl;
-            }
+class PriorityJobQueue {
+private:
+    struct PriorityJob {
+        int priority;
+        std::function<void()> task;
+        
+        bool operator<(const PriorityJob& other) const {
+            return priority < other.priority; // Higher priority first
         }
-    );
+    };
     
-    // Start logger
-    if (auto error = log_module::start()) {
-        std::cerr << "Failed to start logger: " << *error << std::endl;
-        return 1;
+    std::priority_queue<PriorityJob> queue_;
+    std::mutex mutex_;
+    std::condition_variable cv_;
+    bool stopped_ = false;
+    
+public:
+    void add_job(int priority, std::function<void()> task) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        queue_.push({priority, std::move(task)});
+        cv_.notify_one();
     }
     
-    // Use logger
-    log_module::write_information("Application started");
-    log_module::write_debug("Debug mode enabled");
-    log_module::write_error("Example error message");
+    std::optional<std::function<void()>> get_job() {
+        std::unique_lock<std::mutex> lock(mutex_);
+        cv_.wait(lock, [this] { return !queue_.empty() || stopped_; });
+        
+        if (stopped_ && queue_.empty()) {
+            return std::nullopt;
+        }
+        
+        auto job = queue_.top();
+        queue_.pop();
+        return job.task;
+    }
     
-    // Structured logging
-    int user_id = 12345;
-    std::string action = "login";
-    log_module::write_sequence("User {} performed action: {}", user_id, action);
+    void stop() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        stopped_ = true;
+        cv_.notify_all();
+    }
+};
+
+void example_priority_processing() {
+    auto queue = std::make_shared<PriorityJobQueue>();
+    auto pool = std::make_shared<thread_pool_module::thread_pool>();
     
-    // Stop logger
-    log_module::stop();
-    return 0;
+    // Add workers
+    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    for (int i = 0; i < 2; ++i) {
+        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+    }
+    pool->enqueue_batch(std::move(workers));
+    pool->start();
+    
+    // Worker thread to process priority queue
+    pool->enqueue(std::make_unique<thread_module::callback_job>(
+        [queue]() -> thread_module::result_void {
+            while (auto job = queue->get_job()) {
+                (*job)();
+            }
+            return {};
+        }
+    ));
+    
+    // Add jobs with different priorities
+    queue->add_job(1, []() { std::cout << "Low priority task" << std::endl; });
+    queue->add_job(10, []() { std::cout << "High priority task" << std::endl; });
+    queue->add_job(5, []() { std::cout << "Medium priority task" << std::endl; });
+    
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    queue->stop();
+    pool->stop();
 }
 ```
 
-### Performance Logging
+### Performance Measurement
 
 ```cpp
-#include "logger/core/logger.h"
+#include "thread_base/core/thread_base.h"
 #include <chrono>
+#include <iostream>
+#include <iomanip>
 
 class PerformanceTimer {
 private:
@@ -434,23 +472,51 @@ public:
     PerformanceTimer(const std::string& operation) 
         : operation_(operation), 
           start_(std::chrono::high_resolution_clock::now()) {
-        log_module::write_sequence("Starting: {}", operation_);
+        std::cout << "Starting: " << operation_ << std::endl;
     }
     
     ~PerformanceTimer() {
         auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start_);
-        log_module::write_sequence("Completed: {} ({}ms)", operation_, duration.count());
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start_);
+        std::cout << "Completed: " << operation_ 
+                  << " (" << std::fixed << std::setprecision(2) 
+                  << duration.count() / 1000.0 << "ms)" << std::endl;
     }
 };
 
-void some_operation() {
-    PerformanceTimer timer("Database query");
+void measure_thread_pool_performance() {
+    auto pool = std::make_shared<thread_pool_module::thread_pool>();
     
-    // Simulate work
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    // Add workers
+    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    for (int i = 0; i < 4; ++i) {
+        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+    }
+    pool->enqueue_batch(std::move(workers));
+    pool->start();
     
-    // Timer destructor will log completion
+    {
+        PerformanceTimer timer("1000 job submissions");
+        
+        std::atomic<int> completed{0};
+        for (int i = 0; i < 1000; ++i) {
+            pool->enqueue(std::make_unique<thread_module::callback_job>(
+                [&completed]() -> thread_module::result_void {
+                    // Simulate work
+                    std::this_thread::sleep_for(std::chrono::microseconds(100));
+                    completed++;
+                    return {};
+                }
+            ));
+        }
+        
+        // Wait for completion
+        while (completed < 1000) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+    }
+    
+    pool->stop();
 }
 ```
 
@@ -461,15 +527,17 @@ void some_operation() {
 ```cpp
 #include "thread_pool/core/thread_pool.h"
 #include "typed_thread_pool/pool/typed_thread_pool.h"
-#include "logger/core/logger.h"
+#include <iostream>
+#include <mutex>
 
 class WebServer {
 private:
     std::shared_ptr<typed_thread_pool_module::typed_thread_pool> request_pool_;
     std::shared_ptr<thread_pool_module::thread_pool> io_pool_;
+    std::shared_ptr<std::mutex> output_mutex_;
     
 public:
-    WebServer() {
+    WebServer() : output_mutex_(std::make_shared<std::mutex>()) {
         // Request handling pool with priorities
         request_pool_ = std::make_shared<typed_thread_pool_module::typed_thread_pool>();
         
@@ -501,7 +569,8 @@ public:
     void start() {
         request_pool_->start();
         io_pool_->start();
-        log_module::write_information("Web server started");
+        std::lock_guard<std::mutex> lock(*output_mutex_);
+        std::cout << "Web server started" << std::endl;
     }
     
     void handle_request(const std::string& path, bool is_api) {
@@ -511,7 +580,10 @@ public:
             std::make_unique<typed_thread_pool_module::callback_typed_job<job_types>>(
                 priority,
                 [this, path]() -> thread_module::result_void {
-                    log_module::write_information("Processing request: {}", path);
+                    {
+                        std::lock_guard<std::mutex> lock(*output_mutex_);
+                        std::cout << "Processing request: " << path << std::endl;
+                    }
                     
                     // Process request
                     if (path.starts_with("/static/")) {
@@ -529,15 +601,17 @@ public:
     void stop() {
         request_pool_->stop();
         io_pool_->stop();
-        log_module::write_information("Web server stopped");
+        std::lock_guard<std::mutex> lock(*output_mutex_);
+        std::cout << "Web server stopped" << std::endl;
     }
     
 private:
     void serve_static_file(const std::string& file) {
         io_pool_->enqueue(std::make_unique<thread_module::callback_job>(
-            [file]() -> thread_module::result_void {
+            [this, file]() -> thread_module::result_void {
                 // Read and serve file
-                log_module::write_debug("Serving static file: {}", file);
+                std::lock_guard<std::mutex> lock(*output_mutex_);
+                std::cout << "Serving static file: " << file << std::endl;
                 return {};
             }
         ));
@@ -545,7 +619,8 @@ private:
     
     void generate_response(const std::string& path) {
         // Generate dynamic response
-        log_module::write_debug("Generating response for: {}", path);
+        std::lock_guard<std::mutex> lock(*output_mutex_);
+        std::cout << "Generating response for: " << path << std::endl;
     }
 };
 ```
@@ -554,9 +629,10 @@ private:
 
 ```cpp
 #include "typed_thread_pool/pool/typed_thread_pool.h"
-#include "logger/core/logger.h"
 #include <queue>
 #include <mutex>
+#include <iostream>
+#include <numeric>
 
 class DataPipeline {
 private:
@@ -568,6 +644,7 @@ private:
     std::shared_ptr<typed_thread_pool_module::typed_thread_pool> pool_;
     std::queue<DataItem> input_queue_;
     std::mutex queue_mutex_;
+    std::mutex output_mutex_;
     
 public:
     DataPipeline() {
@@ -636,11 +713,15 @@ public:
     
 private:
     void validate_and_queue(const DataItem& item) {
-        log_module::write_debug("Validating item {}", item.id);
+        {
+            std::lock_guard<std::mutex> lock(output_mutex_);
+            std::cout << "Validating item " << item.id << std::endl;
+        }
         
         // Validation logic
         if (item.data.empty()) {
-            log_module::write_error("Invalid data for item {}", item.id);
+            std::lock_guard<std::mutex> lock(output_mutex_);
+            std::cerr << "Invalid data for item " << item.id << std::endl;
             return;
         }
         
@@ -656,12 +737,16 @@ private:
             
             // Process data
             double sum = std::accumulate(item.data.begin(), item.data.end(), 0.0);
-            log_module::write_information("Processed item {}: sum = {}", item.id, sum);
+            
+            std::lock_guard<std::mutex> output_lock(output_mutex_);
+            std::cout << "Processed item " << item.id 
+                      << ": sum = " << sum << std::endl;
         }
     }
     
     void cleanup_processed_data() {
-        log_module::write_debug("Performing cleanup");
+        std::lock_guard<std::mutex> lock(output_mutex_);
+        std::cout << "Performing cleanup" << std::endl;
         // Cleanup logic
     }
 };
@@ -672,6 +757,12 @@ private:
 ### Resource Management
 
 ```cpp
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/jobs/callback_job.h"
+#include <iostream>
+#include <atomic>
+#include <chrono>
+
 class ResourcePool {
 private:
     std::shared_ptr<thread_pool_module::thread_pool> pool_;
@@ -679,6 +770,14 @@ private:
 public:
     ResourcePool() {
         pool_ = std::make_shared<thread_pool_module::thread_pool>();
+        
+        // Add workers
+        std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+        for (int i = 0; i < 2; ++i) {
+            workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+        }
+        pool_->enqueue_batch(std::move(workers));
+        pool_->start();
     }
     
     // RAII pattern for automatic cleanup
@@ -704,7 +803,7 @@ public:
         auto start = std::chrono::steady_clock::now();
         while (!done->load()) {
             if (std::chrono::steady_clock::now() - start > timeout) {
-                log_module::write_error("Task timed out");
+                std::cerr << "Task timed out" << std::endl;
                 break;
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -716,6 +815,12 @@ public:
 ### Exception Safety
 
 ```cpp
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/jobs/callback_job.h"
+#include <future>
+#include <optional>
+#include <iostream>
+
 template<typename T>
 class SafeJobExecutor {
 private:
@@ -735,10 +840,10 @@ public:
                     T result = task();
                     promise->set_value(result);
                 } catch (const std::exception& e) {
-                    log_module::write_error("Job failed: {}", e.what());
+                    std::cerr << "Job failed: " << e.what() << std::endl;
                     promise->set_value(std::nullopt);
                 } catch (...) {
-                    log_module::write_error("Job failed: unknown error");
+                    std::cerr << "Job failed: unknown error" << std::endl;
                     promise->set_value(std::nullopt);
                 }
                 return {};
@@ -748,4 +853,177 @@ public:
         return future;
     }
 };
+```
+
+## Examples with Optional Modules
+
+The Thread System can be enhanced with optional modules like logger and monitoring. These modules are maintained as separate projects but can be integrated when needed.
+
+### Integration with Logger Module
+
+If you have the logger module installed separately, you can enhance your thread pool with logging capabilities:
+
+```cpp
+#include "thread_pool/core/thread_pool.h"
+#include "thread_base/jobs/callback_job.h"
+// #include "logger/core/logger.h" // Include if logger module is available
+
+class ThreadPoolWithOptionalLogging {
+private:
+    std::shared_ptr<thread_pool_module::thread_pool> pool_;
+    bool logging_enabled_;
+    
+public:
+    ThreadPoolWithOptionalLogging(bool enable_logging = false) 
+        : logging_enabled_(enable_logging) {
+        pool_ = std::make_shared<thread_pool_module::thread_pool>();
+        
+        // Initialize logger if available and enabled
+        #ifdef HAS_LOGGER_MODULE
+        if (logging_enabled_) {
+            log_module::start();
+            log_module::write_information("Thread pool initialized with logging");
+        }
+        #endif
+    }
+    
+    ~ThreadPoolWithOptionalLogging() {
+        pool_->stop();
+        
+        #ifdef HAS_LOGGER_MODULE
+        if (logging_enabled_) {
+            log_module::stop();
+        }
+        #endif
+    }
+    
+    void submit_job(std::function<void()> task) {
+        pool_->enqueue(std::make_unique<thread_module::callback_job>(
+            [this, task]() -> thread_module::result_void {
+                #ifdef HAS_LOGGER_MODULE
+                if (logging_enabled_) {
+                    log_module::write_debug("Starting job execution");
+                }
+                #endif
+                
+                task();
+                
+                #ifdef HAS_LOGGER_MODULE
+                if (logging_enabled_) {
+                    log_module::write_debug("Job execution completed");
+                }
+                #endif
+                
+                return {};
+            }
+        ));
+    }
+};
+```
+
+### Custom Error Handler with Optional Monitoring
+
+You can implement custom error handlers that integrate with external monitoring systems:
+
+```cpp
+#include "thread_pool/core/thread_pool.h"
+#include "interfaces/error_handler.h"
+
+class CustomErrorHandler : public thread_module::error_handler {
+private:
+    std::function<void(const std::string&)> monitor_callback_;
+    
+public:
+    CustomErrorHandler(std::function<void(const std::string&)> callback = nullptr)
+        : monitor_callback_(callback) {}
+    
+    void handle_error(const thread_module::error_info& error) override {
+        // Basic error handling
+        std::cerr << "Thread error: " << error.message() << std::endl;
+        
+        // Optional monitoring integration
+        if (monitor_callback_) {
+            monitor_callback_(error.message());
+        }
+        
+        // Could also integrate with external monitoring services
+        #ifdef HAS_MONITORING_MODULE
+        monitoring_module::report_error(error.type(), error.message());
+        #endif
+    }
+};
+
+// Usage example
+void setup_thread_pool_with_monitoring() {
+    auto pool = std::make_shared<thread_pool_module::thread_pool>();
+    
+    // Set up custom error handler with monitoring callback
+    auto error_handler = std::make_unique<CustomErrorHandler>(
+        [](const std::string& error) {
+            // Send to external monitoring service
+            std::cout << "Monitoring alert: " << error << std::endl;
+        }
+    );
+    
+    // Configure pool with custom error handler
+    // pool->set_error_handler(std::move(error_handler));
+}
+```
+
+### Building with Optional Modules
+
+When building your application, you can conditionally include optional modules:
+
+```cmake
+# CMakeLists.txt
+cmake_minimum_required(VERSION 3.16)
+project(MyApplication)
+
+# Core thread system
+find_package(ThreadSystem REQUIRED)
+
+# Optional modules
+find_package(LoggerModule QUIET)
+find_package(MonitoringModule QUIET)
+
+add_executable(my_app main.cpp)
+target_link_libraries(my_app PRIVATE ThreadSystem::thread_system)
+
+# Conditionally link optional modules
+if(LoggerModule_FOUND)
+    target_compile_definitions(my_app PRIVATE HAS_LOGGER_MODULE)
+    target_link_libraries(my_app PRIVATE LoggerModule::logger)
+endif()
+
+if(MonitoringModule_FOUND)
+    target_compile_definitions(my_app PRIVATE HAS_MONITORING_MODULE)
+    target_link_libraries(my_app PRIVATE MonitoringModule::monitoring)
+endif()
+```
+
+### Compilation Instructions
+
+For basic examples without optional modules:
+```bash
+# Linux/macOS
+g++ -std=c++20 -I/path/to/thread_system/include example.cpp -lthread_system -pthread
+
+# Windows (MSVC)
+cl /std:c++20 /I"path\to\thread_system\include" example.cpp thread_system.lib
+```
+
+For examples with optional modules:
+```bash
+# With logger module
+g++ -std=c++20 -DHAS_LOGGER_MODULE \
+    -I/path/to/thread_system/include \
+    -I/path/to/logger_module/include \
+    example.cpp -lthread_system -llogger -pthread
+
+# With both logger and monitoring
+g++ -std=c++20 -DHAS_LOGGER_MODULE -DHAS_MONITORING_MODULE \
+    -I/path/to/thread_system/include \
+    -I/path/to/logger_module/include \
+    -I/path/to/monitoring_module/include \
+    example.cpp -lthread_system -llogger -lmonitoring -pthread
 ```

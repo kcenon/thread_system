@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2025, 🍀☀🌕🌥 🌊
 All rights reserved.
 *****************************************************************************/
 
@@ -25,11 +25,9 @@ All rights reserved.
 #include <iomanip>
 
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
 #include "../../sources/utilities/core/formatter.h"
 
 using namespace typed_thread_pool_module;
-using namespace log_module;
 
 class priority_scheduling_benchmark {
 private:
@@ -62,7 +60,7 @@ private:
 
 public:
     void run_all_priority_benchmarks() {
-        information(format_string("=== Type Thread Pool Scheduling Benchmark ===\n"));
+        std::cout << "=== Type Thread Pool Scheduling Benchmark ===\n" << std::endl;
 
         test_basic_priority_ordering();
         test_priority_fairness();
@@ -75,7 +73,7 @@ public:
 
 private:
     void test_basic_priority_ordering() {
-        information(format_string("--- Basic Type Ordering Test ---"));
+        std::cout << "--- Basic Type Ordering Test ---" << std::endl;
         
         setup_priority_pool();
         
@@ -111,11 +109,11 @@ private:
         
         analyze_priority_ordering(metrics);
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_priority_fairness() {
-        information(format_string("--- Type Fairness Test ---"));
+        std::cout << "--- Type Fairness Test ---" << std::endl;
         
         setup_priority_pool();
         
@@ -154,11 +152,11 @@ private:
         
         analyze_priority_fairness(metrics);
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_priority_inversion_scenarios() {
-        information(format_string("--- Type Inversion Test ---"));
+        std::cout << "--- Type Inversion Test ---" << std::endl;
         
         setup_priority_pool();
         
@@ -196,11 +194,11 @@ private:
         
         analyze_priority_inversion(metrics);
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_mixed_priority_loads() {
-        information(format_string("--- Mixed Type Load Test ---"));
+        std::cout << "--- Mixed Type Load Test ---" << std::endl;
         
         setup_priority_pool();
         
@@ -258,11 +256,11 @@ private:
         
         analyze_mixed_priority_performance(metrics);
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_priority_starvation_resistance() {
-        information(format_string("--- Type Starvation Resistance Test ---"));
+        std::cout << "--- Type Starvation Resistance Test ---" << std::endl;
         
         setup_priority_pool();
         
@@ -302,25 +300,25 @@ private:
         
         analyze_starvation_resistance(metrics);
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_dynamic_priority_changes() {
-        information(format_string("--- Dynamic Type Changes Test ---"));
+        std::cout << "--- Dynamic Type Changes Test ---" << std::endl;
         
         // This test would require priority adjustment functionality
         // For now, we'll simulate the behavior
         setup_priority_pool();
         
-        information(format_string("Dynamic priority adjustment not implemented in current API"));
-        information(format_string("Would test: job priority escalation, priority aging, etc."));
+        std::cout << "Dynamic priority adjustment not implemented in current API" << std::endl;
+        std::cout << "Would test: job priority escalation, priority aging, etc." << std::endl;
         
         cleanup_pool();
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void test_priority_vs_fifo_comparison() {
-        information(format_string("--- Type vs FIFO Comparison Test ---"));
+        std::cout << "--- Type vs FIFO Comparison Test ---" << std::endl;
         
         // Test priority pool
         auto priority_metrics = run_priority_pool_test();
@@ -329,7 +327,7 @@ private:
         auto fifo_metrics = run_fifo_pool_test();
         
         compare_priority_vs_fifo(priority_metrics, fifo_metrics);
-        information(format_string(""));
+        std::cout << std::endl;
     }
 
     void submit_test_job(size_t job_id, job_types priority, std::chrono::milliseconds work_duration) {
@@ -407,7 +405,7 @@ private:
         std::lock_guard<std::mutex> lock(records_mutex_);
         
         if (execution_records_.empty()) {
-            warning(format_string("No execution records found!"));
+            std::cerr << "Warning: No execution records found!" << std::endl;
             return;
         }
         
@@ -422,11 +420,11 @@ private:
             execution_positions[sorted_records[i].priority].push_back(i);
         }
         
-        information(format_string("Type execution analysis:"));
+        std::cout << "Type execution analysis:" << std::endl;
         for (const auto& [priority, positions] : execution_positions) {
             double avg_position = std::accumulate(positions.begin(), positions.end(), 0.0) / positions.size();
-            information(format_string("  %s: avg position %.1f (lower is better)", 
-                      priority_to_string(priority).c_str(), avg_position));
+            std::cout << format_string("  %s: avg position %.1f (lower is better)", 
+                      priority_to_string(priority).c_str(), avg_position) << std::endl;
         }
         
         // Calculate priority ordering score
@@ -444,7 +442,7 @@ private:
         
         double ordering_score = (total_comparisons > 0) ? 
                                (correct_orderings * 100.0 / total_comparisons) : 0.0;
-        information(format_string("Type ordering score: %.1f%%", ordering_score));
+        std::cout << format_string("Type ordering score: %.1f%%", ordering_score) << std::endl;
     }
 
     void analyze_priority_fairness(const priority_metrics& metrics) {
@@ -455,7 +453,7 @@ private:
             latencies_by_priority[record.priority].push_back(record.total_latency_ms());
         }
         
-        information(format_string("Type fairness analysis:"));
+        std::cout << "Type fairness analysis:" << std::endl;
         for (const auto& [priority, latencies] : latencies_by_priority) {
             if (latencies.empty()) continue;
             
@@ -464,8 +462,8 @@ private:
             std::sort(sorted_latencies.begin(), sorted_latencies.end());
             double p95_latency = sorted_latencies[static_cast<size_t>(0.95 * (sorted_latencies.size() - 1))];
             
-            information(format_string("  %s: count=%zu, avg=%.1fms, p95=%.1fms", 
-                      priority_to_string(priority).c_str(), latencies.size(), avg_latency, p95_latency));
+            std::cout << format_string("  %s: count=%zu, avg=%.1fms, p95=%.1fms", 
+                      priority_to_string(priority).c_str(), latencies.size(), avg_latency, p95_latency) << std::endl;
         }
     }
 
@@ -488,14 +486,14 @@ private:
             double avg_critical = std::accumulate(critical_latencies.begin(), critical_latencies.end(), 0.0) / critical_latencies.size();
             double avg_low = std::accumulate(low_latencies.begin(), low_latencies.end(), 0.0) / low_latencies.size();
             
-            information(format_string("Type inversion analysis:"));
-            information(format_string("  Critical jobs avg latency: %.1fms", avg_critical));
-            information(format_string("  Background priority jobs avg latency: %.1fms", avg_low));
+            std::cout << "Type inversion analysis:" << std::endl;
+            std::cout << format_string("  Critical jobs avg latency: %.1fms", avg_critical) << std::endl;
+            std::cout << format_string("  Background priority jobs avg latency: %.1fms", avg_low) << std::endl;
             
             if (avg_critical < avg_low) {
-                information(format_string("  Result: No significant priority inversion detected"));
+                std::cout << "  Result: No significant priority inversion detected" << std::endl;
             } else {
-                warning(format_string("  Result: Potential priority inversion detected!"));
+                std::cerr << "  Warning: Result: Potential priority inversion detected!" << std::endl;
             }
         }
     }
@@ -511,12 +509,12 @@ private:
             stats.second++;
         }
         
-        information(format_string("Mixed priority load performance:"));
+        std::cout << "Mixed priority load performance:" << std::endl;
         for (auto& [priority, stats] : priority_stats) {
             if (stats.second > 0) {
                 stats.first /= stats.second; // Calculate average
-                information(format_string("  %s: %zu jobs, avg latency: %.1fms", 
-                          priority_to_string(priority).c_str(), stats.second, stats.first));
+                std::cout << format_string("  %s: %zu jobs, avg latency: %.1fms", 
+                          priority_to_string(priority).c_str(), stats.second, stats.first) << std::endl;
             }
         }
     }
@@ -535,14 +533,14 @@ private:
             }
         }
         
-        information(format_string("Starvation resistance analysis:"));
-        information(format_string("  Background priority jobs completed: %zu", low_priority_completed));
-        information(format_string("  Max low priority latency: %.1fms", max_low_priority_latency));
+        std::cout << "Starvation resistance analysis:" << std::endl;
+        std::cout << format_string("  Background priority jobs completed: %zu", low_priority_completed) << std::endl;
+        std::cout << format_string("  Max low priority latency: %.1fms", max_low_priority_latency) << std::endl;
         
         if (low_priority_completed > 40) { // Expected ~50
-            information(format_string("  Result: Good starvation resistance"));
+            std::cout << "  Result: Good starvation resistance" << std::endl;
         } else {
-            warning(format_string("  Result: Possible starvation detected"));
+            std::cerr << "  Warning: Result: Possible starvation detected" << std::endl;
         }
     }
 
@@ -570,7 +568,7 @@ private:
     priority_metrics run_fifo_pool_test() {
         // For comparison, we'd need a FIFO-only pool
         // This is simplified - in reality you'd use regular thread_pool
-        information(format_string("FIFO comparison placeholder (would use regular thread_pool)"));
+        std::cout << "FIFO comparison placeholder (would use regular thread_pool)" << std::endl;
         
         priority_metrics metrics;
         return metrics;
@@ -578,9 +576,9 @@ private:
 
     void compare_priority_vs_fifo(const priority_metrics& priority_metrics, 
                                 const priority_metrics& fifo_metrics) {
-        information(format_string("Type vs FIFO comparison:"));
-        information(format_string("  (This would compare response times for different priority levels)"));
-        information(format_string("  (Type pools should show better high-priority response times)"));
+        std::cout << "Type vs FIFO comparison:" << std::endl;
+        std::cout << "  (This would compare response times for different priority levels)" << std::endl;
+        std::cout << "  (Type pools should show better high-priority response times)" << std::endl;
     }
 
     std::string priority_to_string(job_types priority) {
@@ -595,18 +593,13 @@ private:
 };
 
 int main() {
-    set_title("priority_benchmark");
-    console_target(log_types::Information | log_types::Warning | log_types::Error);
-    start();
-
     try {
         priority_scheduling_benchmark benchmark;
         benchmark.run_all_priority_benchmarks();
     } catch (const std::exception& e) {
-        error(format_string("Type benchmark failed: %s", e.what()));
+        std::cerr << format_string("Type benchmark failed: %s", e.what()) << std::endl;
         return 1;
     }
 
-    stop();
     return 0;
 }

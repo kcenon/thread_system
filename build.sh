@@ -363,6 +363,12 @@ if [ $BUILD_CORES -eq 0 ]; then
     fi
 fi
 
+# macOS specific: Force single thread to avoid jobserver issues
+if [ "$(uname)" == "Darwin" ]; then
+    print_warning "macOS detected: Using single-threaded build to avoid jobserver issues"
+    BUILD_CORES=1
+fi
+
 print_status "Using $BUILD_CORES cores for compilation"
 
 # Store original directory
@@ -475,11 +481,11 @@ BUILD_TARGET=""
 if [ "$TARGET" == "all" ]; then
     BUILD_TARGET="all"
 elif [ "$TARGET" == "lib-only" ]; then
-    BUILD_TARGET="thread_base thread_pool priority_thread_pool log_module"
+    BUILD_TARGET="thread_base thread_pool typed_thread_pool interfaces utilities"
 elif [ "$TARGET" == "samples" ]; then
-    BUILD_TARGET="builder_sample thread_pool_sample priority_thread_pool_sample logger_sample"
+    BUILD_TARGET="minimal_thread_pool"
 elif [ "$TARGET" == "tests" ]; then
-    BUILD_TARGET="thread_base_unit thread_pool_unit typed_thread_pool_unit logger_unit utilities_unit"
+    BUILD_TARGET="thread_base_unit thread_pool_unit typed_thread_pool_unit utilities_unit platform_test"
 fi
 
 # Detect build system (Ninja or Make)

@@ -54,11 +54,13 @@
 #include <algorithm>
 #include <memory>
 #include <fstream>
+#include <future>
 
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
+#include "../../sources/typed_thread_pool/scheduling/typed_thread_worker.h"
+#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
 #include "../../sources/utilities/core/formatter.h"
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
@@ -71,17 +73,16 @@ auto create_default(const uint16_t& worker_counts)
         return { nullptr, std::string(e.what()) };
     }
     
-    std::optional<std::string> error_message = std::nullopt;
     std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
         workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
     }
     
-    error_message = pool->enqueue_batch(std::move(workers));
-    if (error_message.has_value()) {
+    auto enqueue_result = pool->enqueue_batch(std::move(workers));
+    if (enqueue_result.has_value()) {
         return { nullptr, formatter::format("cannot enqueue to workers: {}", 
-                                           error_message.value_or("unknown error")) };
+                                           enqueue_result.value()) };
     }
     
     return { pool, std::nullopt };
@@ -90,26 +91,25 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
-    std::optional<std::string> error_message = std::nullopt;
-    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<Type>>(std::vector<Type>{}, true));
     }
     
-    error_message = pool->enqueue_batch(std::move(workers));
-    if (error_message.has_value()) {
+    auto enqueue_result = pool->enqueue_batch(std::move(workers));
+    if (enqueue_result.has_error()) {
         return { nullptr, formatter::format("cannot enqueue to workers: {}", 
-                                           error_message.value_or("unknown error")) };
+                                           enqueue_result.get_error().message()) };
     }
     
     return { pool, std::nullopt };
@@ -364,7 +364,8 @@ static void BM_MemoryAllocationImpact(benchmark::State& state) {
                 auto buffer = allocate_with_pattern(pattern);
                 execute_job_with_complexity(JobComplexity::Light);
                 completed.fetch_add(1);
-            });
+                return result_void();
+            }));
         }
         
         pool->stop();
@@ -409,7 +410,8 @@ static void BM_QueueDepth(benchmark::State& state) {
                 pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
                     execute_job_with_complexity(JobComplexity::Medium);
                     completed.fetch_add(1);
-                });
+                    return result_void();
+                }));
             }
         }
         
@@ -454,12 +456,13 @@ static void BM_BurstPattern(benchmark::State& state) {
                 pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
                     execute_job_with_complexity(JobComplexity::Light);
                     completed.fetch_add(1);
-                });
+                    return result_void();
+                }));
             }
             
             // Quiet period
             if (burst < num_bursts - 1) {
-                std::this_thread::sleep_for(milliseconds(quiet_period_ms));
+                std::this_thread::sleep_for(std::chrono::milliseconds(quiet_period_ms));
             }
         }
         
@@ -520,13 +523,14 @@ static void BM_JobDependencies(benchmark::State& state) {
                     if (i < chain_length) {
                         promises[i].set_value();
                     }
-                });
+                    return result_void();
+                }));
             }
         }
         
         // Wait for all jobs to complete
         while (completed.load() < num_chains * chain_length) {
-            std::this_thread::sleep_for(microseconds(100));
+            std::this_thread::sleep_for(std::chrono::microseconds(100));
         }
         
         pool->stop();
@@ -548,13 +552,12 @@ BENCHMARK(BM_JobDependencies)
  * @brief Benchmark typed thread pool priority impact
  */
 static void BM_PriorityImpact(benchmark::State& state) {
-    enum class Priority { 
-        Critical = 1,
-        High = 10,
-        Normal = 50,
-        Low = 100,
-        Background = 1000
-    };
+    using Priority = int;
+    constexpr Priority Critical = 1;
+    constexpr Priority High = 10;
+    constexpr Priority Normal = 50;
+    constexpr Priority Low = 100;
+    constexpr Priority Background = 1000;
     
     const size_t jobs_per_priority = state.range(0);
     const size_t worker_count = std::thread::hardware_concurrency();
@@ -569,28 +572,29 @@ static void BM_PriorityImpact(benchmark::State& state) {
         pool->start();
         
         std::map<Priority, std::atomic<size_t>> completed;
-        for (auto p : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
+        for (auto p : {Critical, High, Normal, Low, Background}) {
             completed[p] = 0;
         }
         
         // Submit jobs with different priorities
         for (size_t i = 0; i < jobs_per_priority; ++i) {
-            for (auto priority : {Priority::Critical, Priority::High, Priority::Normal, Priority::Low, Priority::Background}) {
-                pool->enqueue(std::make_unique<callback_job>([&completed, priority]() -> result_void {
+            for (auto priority : {Critical, High, Normal, Low, Background}) {
+                pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job_t<Priority>>([&completed, priority]() -> result_void {
                     execute_job_with_complexity(JobComplexity::Light);
                     completed[priority].fetch_add(1);
-                }, priority);
+                    return result_void();
+                }, priority));
             }
         }
         
         pool->stop();
         
         // Report completion counts by priority
-        state.counters["critical"] = completed[Priority::Critical].load();
-        state.counters["high"] = completed[Priority::High].load();
-        state.counters["normal"] = completed[Priority::Normal].load();
-        state.counters["low"] = completed[Priority::Low].load();
-        state.counters["background"] = completed[Priority::Background].load();
+        state.counters["critical"] = completed[Critical].load();
+        state.counters["high"] = completed[High].load();
+        state.counters["normal"] = completed[Normal].load();
+        state.counters["low"] = completed[Low].load();
+        state.counters["background"] = completed[Background].load();
     }
     
     state.SetItemsProcessed(state.iterations() * jobs_per_priority * 5);
@@ -623,7 +627,7 @@ static void BM_MixedWorkload(benchmark::State& state) {
         } else if (roll < cpu_light_pct + cpu_heavy_pct) {
             return [] { execute_job_with_complexity(JobComplexity::Heavy); };
         } else if (roll < cpu_light_pct + cpu_heavy_pct + io_pct) {
-            return [] { std::this_thread::sleep_for(milliseconds(5)); };
+            return [] { std::this_thread::sleep_for(std::chrono::milliseconds(5)); };
         } else {
             return [] { 
                 auto buffer = allocate_with_pattern(MemoryPattern::Medium);
@@ -643,7 +647,10 @@ static void BM_MixedWorkload(benchmark::State& state) {
         
         for (size_t i = 0; i < total_jobs; ++i) {
             auto job = generate_job();
-            pool->enqueue(std::make_unique<callback_job>(job);
+            pool->enqueue(std::make_unique<callback_job>([job]() -> result_void {
+                job();
+                return result_void();
+            }));
         }
         
         pool->stop();
@@ -686,23 +693,24 @@ static void BM_SustainedThroughput(benchmark::State& state) {
         std::atomic<bool> running{true};
         
         // Job submission thread
-        std::thread submitter([&pool, &jobs_submitted, &running]() -> result_void {
+        std::thread submitter([&pool, &jobs_submitted, &running, &jobs_completed]() {
             while (running.load()) {
                 pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> result_void {
                     execute_job_with_complexity(JobComplexity::Medium);
                     jobs_completed.fetch_add(1);
-                });
+                    return result_void();
+                }));
                 jobs_submitted.fetch_add(1);
                 
                 // Small delay to prevent overwhelming
                 if (jobs_submitted.load() % 1000 == 0) {
-                    std::this_thread::sleep_for(microseconds(10));
+                    std::this_thread::sleep_for(std::chrono::microseconds(10));
                 }
             }
         });
         
         // Run for specified duration
-        std::this_thread::sleep_for(seconds(duration_seconds));
+        std::this_thread::sleep_for(std::chrono::seconds(duration_seconds));
         
         running = false;
         submitter.join();

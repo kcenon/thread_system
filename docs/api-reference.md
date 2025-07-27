@@ -17,16 +17,13 @@ Complete API documentation for the Thread System framework.
    - [typed_thread_pool_t Template](#typed_thread_pool_t-template)
    - [typed_thread_worker_t Template](#typed_thread_worker_t-template)
    - [job_types Enumeration](#job_types-enumeration)
-5. [Logger Module](#logger-module-log_module)
-   - [Logging Functions](#logging-functions)
-   - [log_types Enumeration](#log_types-enumeration)
-6. [Monitoring Module](#monitoring-module-monitoring_module)
-   - [metrics_collector Class](#metrics_collector-class)
-   - [Performance Statistics](#performance-statistics)
-7. [Utilities Module](#utilities-module-utility_module)
+5. [External Modules](#external-modules)
+   - [Logger Module](#logger-module)
+   - [Monitoring Module](#monitoring-module)
+6. [Utilities Module](#utilities-module-utility_module)
    - [formatter_macros](#formatter-macros)
    - [convert_string](#convert_string)
-8. [Quick Reference](#quick-reference)
+7. [Quick Reference](#quick-reference)
 
 ## Overview
 
@@ -298,118 +295,43 @@ enum class job_types : uint8_t {
 };
 ```
 
-## Logger Module (log_module)
+## External Modules
 
-### Logging Functions
+The following modules have been moved to separate projects for better modularity and reusability:
 
-Free functions for asynchronous logging.
+### Logger Module
 
-```cpp
-namespace log_module {
-    // Configuration
-    auto set_title(const std::string& title) -> void;
-    auto console_target(log_types types) -> void;
-    auto file_target(log_types types, const std::string& filename = "") -> void;
-    auto callback_target(log_types types) -> void;
-    auto message_callback(log_callback callback) -> void;
-    
-    // Lifecycle
-    auto start() -> std::optional<std::string>;
-    auto stop() -> void;
-    
-    // Logging functions
-    template<typename... Args>
-    auto write_information(const char* format, const Args&... args) -> void;
-    
-    template<typename... Args>
-    auto write_error(const char* format, const Args&... args) -> void;
-    
-    template<typename... Args>
-    auto write_debug(const char* format, const Args&... args) -> void;
-    
-    template<typename... Args>
-    auto write_sequence(const char* format, const Args&... args) -> void;
-    
-    template<typename... Args>
-    auto write_parameter(const char* format, const Args&... args) -> void;
-}
-```
+The asynchronous logging functionality is now available as a separate project. It provides:
 
-### log_types Enumeration
+- **High-performance asynchronous logging** with multiple output targets
+- **Structured logging** with type-safe formatting
+- **Log level filtering** with bitwise-enabled categories
+- **File rotation** and compression support
+- **Thread-safe operations** with minimal performance impact
 
-Bitwise-enabled log levels.
+**Repository**: Available as a standalone project for integration into various applications.
 
-```cpp
-enum class log_types : uint8_t {
-    None = 0,
-    Exception = 1 << 0,
-    Error = 1 << 1,
-    Information = 1 << 2,
-    Debug = 1 << 3,
-    Sequence = 1 << 4,
-    Parameter = 1 << 5,
-    All = Exception | Error | Information | Debug | Sequence | Parameter
-};
-```
+### Monitoring Module
 
-## Monitoring Module (monitoring_module)
+The performance monitoring and metrics collection system is now a separate project. It offers:
 
-### metrics_collector Class
+- **Real-time performance metrics** collection and analysis
+- **System resource monitoring** (CPU, memory, thread usage)
+- **Thread pool statistics** tracking and reporting
+- **Historical data retention** with configurable duration
+- **Extensible metrics framework** for custom measurements
 
-Real-time performance metrics collection.
+**Repository**: Available as a standalone project for comprehensive application monitoring.
 
-```cpp
-class metrics_collector {
-public:
-    // Lifecycle
-    auto start() -> result_void;
-    auto stop() -> void;
-    
-    // Metrics registration
-    auto register_system_metrics(std::shared_ptr<system_metrics> metrics) -> void;
-    auto register_thread_pool_metrics(std::shared_ptr<thread_pool_metrics> metrics) -> void;
-    
-    // Data access
-    auto get_current_snapshot() const -> metrics_snapshot;
-    auto get_history(std::chrono::seconds duration) const -> std::vector<metrics_snapshot>;
-};
+### Integration with Thread System
 
-// Global functions
-namespace metrics {
-    auto start_global_monitoring(monitoring_config config = {}) -> result_void;
-    auto stop_global_monitoring() -> void;
-    auto get_current_metrics() -> metrics_snapshot;
-}
-```
+While these modules are now separate projects, they were designed to work seamlessly with the Thread System:
 
-### Performance Statistics
+- The logger can be used to track thread pool operations and job execution
+- The monitoring module can collect detailed metrics from thread pools and workers
+- Both modules maintain the same design principles and performance characteristics
 
-Structures for performance monitoring.
-
-```cpp
-struct queue_statistics {
-    std::atomic<uint64_t> enqueue_count{0};
-    std::atomic<uint64_t> dequeue_count{0};
-    std::atomic<uint64_t> enqueue_failures{0};
-    std::atomic<uint64_t> dequeue_failures{0};
-    std::atomic<uint64_t> max_size{0};
-    std::atomic<double> avg_wait_time_ns{0.0};
-};
-
-struct system_metrics {
-    std::atomic<uint64_t> memory_usage_bytes{0};
-    std::atomic<double> cpu_usage_percent{0.0};
-    std::atomic<uint32_t> active_threads{0};
-};
-
-struct thread_pool_metrics {
-    std::atomic<uint64_t> jobs_completed{0};
-    std::atomic<uint64_t> jobs_failed{0};
-    std::atomic<double> avg_processing_time_ns{0.0};
-    std::atomic<uint32_t> active_workers{0};
-    std::atomic<uint32_t> queue_depth{0};
-};
-```
+For applications requiring logging or monitoring capabilities, include these modules as separate dependencies in your project.
 
 ## Utilities Module (utility_module)
 
@@ -488,37 +410,60 @@ auto priority_job = std::make_unique<callback_typed_job<job_types>>(
 typed_pool->enqueue(std::move(priority_job));
 ```
 
-### Logging Example
+### Error Handling Example
 
 ```cpp
-// Configure logger
-log_module::set_title("MyApp");
-log_module::console_target(log_module::log_types::All);
-log_module::file_target(log_module::log_types::Error | log_module::log_types::Information);
-
-// Start logger
-log_module::start();
-
-// Log messages
-log_module::write_information("Application started");
-log_module::write_error("Failed to connect: {}", error_message);
-log_module::write_debug("Processing {} items", item_count);
-
-// Stop logger
-log_module::stop();
+// Using result type for error handling
+auto process_with_result() -> result_void {
+    auto pool = std::make_shared<thread_pool>();
+    
+    // Start pool with error checking
+    if (auto error = pool->start(); error.has_value()) {
+        return thread_module::error{
+            thread_module::error_code::thread_start_failure,
+            *error
+        };
+    }
+    
+    // Submit job with error handling
+    auto job = std::make_unique<callback_job>([]() -> result_void {
+        // Simulate potential failure
+        if (some_condition_fails()) {
+            return thread_module::error{
+                thread_module::error_code::job_execution_failed,
+                "Operation failed due to invalid state"
+            };
+        }
+        return {}; // Success
+    });
+    
+    if (auto error = pool->enqueue(std::move(job)); error.has_value()) {
+        return thread_module::error{
+            thread_module::error_code::queue_full,
+            *error
+        };
+    }
+    
+    return {}; // Success
+}
 ```
 
-### Performance Monitoring
+### Batch Processing Example
 
 ```cpp
-// Start global monitoring
-monitoring_module::metrics::start_global_monitoring();
+// Configure worker for batch processing
+auto worker = std::make_unique<thread_worker>("BatchWorker");
+worker->set_batch_processing(true, 64); // Enable with batch size 64
 
-// Get current metrics
-auto snapshot = monitoring_module::metrics::get_current_metrics();
-std::cout << "CPU Usage: " << snapshot.system.cpu_usage_percent << "%\n";
-std::cout << "Jobs Completed: " << snapshot.thread_pool.jobs_completed << "\n";
+// Submit multiple jobs for efficient batch processing
+std::vector<std::unique_ptr<job>> batch;
+for (int i = 0; i < 1000; ++i) {
+    batch.push_back(std::make_unique<callback_job>([i]() -> result_void {
+        // Process item i
+        return {};
+    }));
+}
 
-// Stop monitoring
-monitoring_module::metrics::stop_global_monitoring();
+// Enqueue entire batch
+pool->enqueue_batch(std::move(batch));
 ```

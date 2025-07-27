@@ -8,11 +8,11 @@
 # Basic utility components (no thread-specific dependencies)
 add_subdirectory(utilities)
 
+# Interface definitions for dependency injection
+add_subdirectory(interfaces)
+
 # Core thread foundation classes 
 add_subdirectory(thread_base)
-
-# Logging system (depends on utilities)
-add_subdirectory(logger)
 
 # Standard thread pool implementation (depends on thread_base)
 add_subdirectory(thread_pool)
@@ -21,4 +21,5 @@ add_subdirectory(thread_pool)
 add_subdirectory(typed_thread_pool)
 
 # Monitoring system (depends on thread_base and utilities)
-add_subdirectory(monitoring)
+# TEMPORARILY DISABLED: Monitoring is being moved to separate project
+# add_subdirectory(monitoring)

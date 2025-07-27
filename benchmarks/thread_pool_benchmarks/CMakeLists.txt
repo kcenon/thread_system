@@ -77,9 +77,9 @@ set(THREAD_POOL_BENCHMARK_TARGETS
 foreach(target ${THREAD_POOL_BENCHMARK_TARGETS})
     # Link against required dependencies
     if(APPLE)
-        target_link_libraries(${target} PRIVATE thread_pool typed_thread_pool logger utilities benchmark::benchmark "-framework CoreFoundation")
+        target_link_libraries(${target} PRIVATE thread_pool typed_thread_pool utilities benchmark::benchmark "-framework CoreFoundation")
     else()
-        target_link_libraries(${target} PRIVATE thread_pool typed_thread_pool logger utilities benchmark::benchmark)
+        target_link_libraries(${target} PRIVATE thread_pool typed_thread_pool utilities benchmark::benchmark)
     endif()
     
     # Set C++20 standard

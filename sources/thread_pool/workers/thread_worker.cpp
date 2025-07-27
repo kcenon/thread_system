@@ -32,8 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_worker.h"
 
-#include "../../logger/core/logger.h"
+#include "../../interfaces/logger_interface.h"
 #include "../../utilities/core/formatter.h"
+
+#include <thread>
+
+using namespace utility_module;
 
 /**
  * @file thread_worker.cpp
@@ -65,6 +69,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace thread_pool_module
 {
+	// Initialize static member
+	std::atomic<std::size_t> thread_worker::next_worker_id_{0};
 	/**
 	 * @brief Constructs a worker thread with optional timing capabilities.
 	 * 
@@ -73,6 +79,7 @@ namespace thread_pool_module
 	 * - Sets descriptive name "thread_worker" for debugging and logging
 	 * - Initializes timing flag for optional performance measurement
 	 * - Job queue is not set initially (must be set before starting work)
+	 * - Stores thread context for logging and monitoring
 	 * 
 	 * Performance Timing:
 	 * - When enabled, measures execution time for each job
@@ -80,9 +87,14 @@ namespace thread_pool_module
 	 * - Minimal overhead when disabled (single boolean check)
 	 * 
 	 * @param use_time_tag If true, enables timing measurements for job execution
+	 * @param context Thread context providing logging and monitoring services
 	 */
-	thread_worker::thread_worker(const bool& use_time_tag)
-		: thread_base("thread_worker"), use_time_tag_(use_time_tag), job_queue_(nullptr)
+	thread_worker::thread_worker(const bool& use_time_tag, const thread_context& context)
+		: thread_base("thread_worker"), 
+		  worker_id_(next_worker_id_.fetch_add(1)),
+		  use_time_tag_(use_time_tag), 
+		  job_queue_(nullptr),
+		  context_(context)
 	{
 	}
 
@@ -115,6 +127,31 @@ namespace thread_pool_module
 	auto thread_worker::set_job_queue(std::shared_ptr<job_queue> job_queue) -> void
 	{
 		job_queue_ = job_queue;
+	}
+
+	/**
+	 * @brief Sets the thread context for this worker.
+	 * 
+	 * Implementation details:
+	 * - Stores the context for use in logging and monitoring
+	 * - Should be called before starting the worker thread
+	 * - Context provides access to optional services
+	 * 
+	 * @param context Thread context with logging and monitoring services
+	 */
+	auto thread_worker::set_context(const thread_context& context) -> void
+	{
+		context_ = context;
+	}
+
+	/**
+	 * @brief Gets the thread context for this worker.
+	 * 
+	 * @return The thread context providing access to logging and monitoring services
+	 */
+	auto thread_worker::get_context(void) const -> const thread_context&
+	{
+		return context_;
 	}
 
 	/**
@@ -236,15 +273,38 @@ namespace thread_pool_module
 		if (!started_time_point.has_value())
 		{
 			// Standard logging without timing information
-			log_module::write_sequence("job executed successfully: {} on thread_worker",
-									   current_job->get_name());
+			context_.log(log_level::debug,
+			            formatter::format("job executed successfully: {} on thread_worker",
+			                            current_job->get_name()));
+		}
+		else
+		{
+			// Enhanced logging with execution timing information
+			auto end_time = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				end_time - started_time_point.value()).count();
+			
+			context_.log(log_level::debug,
+			            formatter::format("job executed successfully: {} on thread_worker ({}ns)",
+			                            current_job->get_name(), duration));
+			
+			// Update worker metrics if monitoring is available
+			if (context_.monitoring())
+			{
+				monitoring_interface::worker_metrics metrics;
+				metrics.jobs_processed = 1;
+				metrics.total_processing_time_ns = static_cast<std::uint64_t>(duration);
+				metrics.timestamp = std::chrono::steady_clock::now();
+				// Use proper worker ID instead of thread hash
+				context_.update_worker_metrics(worker_id_, metrics);
+			}
 		}
 
-		// Enhanced logging with execution timing information
-		log_module::write_sequence(started_time_point.value(),
-								   "job executed successfully: {} on thread_worker",
-								   current_job->get_name());
-
 		return result_void{};
+	}
+
+	std::size_t thread_worker::get_worker_id() const
+	{
+		return worker_id_;
 	}
 } // namespace thread_pool_module

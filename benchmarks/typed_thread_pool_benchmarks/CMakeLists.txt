@@ -37,9 +37,9 @@ set(TYPED_BENCHMARK_TARGETS
 foreach(target ${TYPED_BENCHMARK_TARGETS})
     # Link against priority thread pool and dependencies
     if(APPLE)
-        target_link_libraries(${target} PRIVATE typed_thread_pool thread_pool logger utilities "-framework CoreFoundation")
+        target_link_libraries(${target} PRIVATE typed_thread_pool thread_pool utilities "-framework CoreFoundation")
     else()
-        target_link_libraries(${target} PRIVATE typed_thread_pool thread_pool logger utilities)
+        target_link_libraries(${target} PRIVATE typed_thread_pool thread_pool utilities)
     endif()
     
     # Add Google Benchmark for benchmarks

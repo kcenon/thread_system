@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../thread_base/jobs/job_queue.h"
 #include "../../utilities/conversion/convert_string.h"
 #include "../detail/forward_declarations.h"
+#include "../../interfaces/thread_context.h"
 #include "worker_policy.h"
 
 #include <memory>
@@ -77,11 +78,14 @@ namespace thread_pool_module
 		 * @brief Constructs a new @c thread_worker.
 		 * @param use_time_tag If set to @c true (default), the worker may log or utilize
 		 *                     timestamps/tags when processing jobs.
+		 * @param context Optional thread context for logging and monitoring (defaults to empty context).
 		 *
 		 * This flag can be used to measure job durations, implement logging with
 		 * timestamps, or any other time-related features in your job processing.
+		 * The context provides access to logging and monitoring services.
 		 */
-		thread_worker(const bool& use_time_tag = true);
+		thread_worker(const bool& use_time_tag = true, 
+		             const thread_context& context = thread_context());
 
 		/**
 		 * @brief Virtual destructor. Ensures the worker thread is stopped before destruction.
@@ -96,6 +100,24 @@ namespace thread_pool_module
 		 * the queue for new jobs and process them.
 		 */
 		auto set_job_queue(std::shared_ptr<job_queue> job_queue) -> void;
+
+		/**
+		 * @brief Sets the thread context for this worker.
+		 * @param context The thread context providing access to logging and monitoring services.
+		 */
+		auto set_context(const thread_context& context) -> void;
+
+		/**
+		 * @brief Get the worker ID.
+		 * @return The unique ID for this worker instance.
+		 */
+		[[nodiscard]] std::size_t get_worker_id() const;
+
+		/**
+		 * @brief Gets the thread context for this worker.
+		 * @return The thread context providing access to logging and monitoring services.
+		 */
+		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
 	protected:
 		/**
@@ -120,6 +142,16 @@ namespace thread_pool_module
 
 	private:
 		/**
+		 * @brief Static counter for generating unique worker IDs.
+		 */
+		static std::atomic<std::size_t> next_worker_id_;
+
+		/**
+		 * @brief Unique ID for this worker instance.
+		 */
+		std::size_t worker_id_{0};
+
+		/**
 		 * @brief Indicates whether to use time tags or timestamps for job processing.
 		 *
 		 * When @c true, the worker might record timestamps (e.g., job start/end times)
@@ -135,6 +167,14 @@ namespace thread_pool_module
 		 * of queued jobs.
 		 */
 		std::shared_ptr<job_queue> job_queue_;
+
+		/**
+		 * @brief The thread context providing access to logging and monitoring services.
+		 *
+		 * This context enables the worker to log messages and report metrics
+		 * through the configured services.
+		 */
+		thread_context context_;
 	};
 } // namespace thread_pool_module
 

@@ -34,6 +34,15 @@ cd thread_system
 ./dependency.bat && ./build.bat  # Windows
 ```
 
+### Optional External Modules
+
+Thread System is designed with a modular architecture. The core thread pool functionality is standalone, with optional external modules available:
+
+- **Logger Module**: High-performance asynchronous logging ([github.com/kcenon/logger](https://github.com/kcenon/logger))
+- **Monitoring Module**: Real-time performance monitoring and metrics ([github.com/kcenon/monitoring](https://github.com/kcenon/monitoring))
+
+These modules can be integrated separately based on your application needs.
+
 ## Platform-Specific Instructions
 
 ### Linux (Ubuntu/Debian)
@@ -80,7 +89,6 @@ Let's create a simple program that demonstrates the basic features:
 #include "thread_pool/core/thread_pool.h"
 #include "thread_pool/workers/thread_worker.h"
 #include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -89,9 +97,6 @@ using namespace thread_pool_module;
 using namespace thread_module;
 
 int main() {
-    // Start the logger
-    log_module::start();
-    
     // Create a thread pool
     auto pool = std::make_shared<thread_pool>();
     
@@ -135,9 +140,8 @@ int main() {
     }
     std::cout << std::endl;
     
-    // Stop the pool and logger
+    // Stop the pool
     pool->stop();
-    log_module::stop();
     
     return 0;
 }
@@ -150,7 +154,7 @@ int main() {
 ./build.sh  # or build.bat on Windows
 
 # Compile your program
-g++ -std=c++20 -I build/include first_program.cpp -L build/lib -lthread_pool -llogger -pthread -o first_program
+g++ -std=c++20 -I build/include first_program.cpp -L build/lib -lthread_pool -pthread -o first_program
 
 # Run
 ./first_program
@@ -169,7 +173,6 @@ Results: 0 1 4 9 16 25 36 49 64 81
 #include "thread_pool/core/thread_pool.h"
 #include "thread_pool/workers/thread_worker.h"
 #include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -179,8 +182,6 @@ using namespace thread_pool_module;
 using namespace thread_module;
 
 int main() {
-    // Start the logger
-    log_module::start();
     
     // Create a high-performance adaptive thread pool
     auto pool = std::make_shared<thread_pool>();
@@ -237,9 +238,8 @@ int main() {
                   << " batch operations" << std::endl;
     }
     
-    // Stop the pool and logger
+    // Stop the pool
     pool->stop();
-    log_module::stop();
     
     return 0;
 }
@@ -299,7 +299,7 @@ int x = 10, y = 20;
 pool->enqueue(std::make_unique<callback_job>(
     [x, y]() -> result_void { 
         int result = x + y;
-        log_module::write_information("Result: {}", result);
+        std::cout << "Result: " << result << std::endl;
         return {}; 
     }
 ));
@@ -371,7 +371,7 @@ adaptive_typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
     job_types::RealTime,
     []() -> result_void { 
         // Critical real-time task
-        log_module::write_information("Real-time task executed");
+        std::cout << "Real-time task executed" << std::endl;
         return {}; 
     }
 ));
@@ -380,14 +380,14 @@ adaptive_typed_pool->enqueue(std::make_unique<callback_typed_job<job_types>>(
     job_types::Background,
     []() -> result_void { 
         // Background task
-        log_module::write_information("Background task executed");
+        std::cout << "Background task executed" << std::endl;
         return {}; 
     }
 ));
 
 // Get pool status
 if (adaptive_typed_pool->is_running()) {
-    log_module::write_information("Adaptive typed pool is running successfully");
+    std::cout << "Adaptive typed pool is running successfully" << std::endl;
 }
 ```
 
@@ -399,24 +399,46 @@ if (adaptive_typed_pool->is_running()) {
 - **Simplified deployment** with automatic tuning
 - **Adaptive batching** based on workload characteristics
 
-### 4. Asynchronous Logging
+### 4. Optional Module Integration
 
-High-performance thread-safe logging:
+#### Logger Module (External)
 
+For high-performance asynchronous logging, you can integrate the external logger module:
+
+```bash
+# Clone the logger module
+git clone https://github.com/kcenon/logger.git
+
+# Build and integrate with your project
+# See logger documentation for detailed integration steps
+```
+
+Example usage with logger:
 ```cpp
 #include "logger/core/logger.h"
 
 // Start logger (once per application)
 log_module::start();
 
-// Log messages using convenience functions
+// Log messages
 log_module::write_information("Application started");
 log_module::write_debug("Debug message: {}", debug_info);
 log_module::write_error("Error: {}", error_message);
 
-// Configure log targets
-log_module::console_target(log_module::log_types::Information | log_module::log_types::Error);
-log_module::file_target(log_module::log_types::All);
+// Stop logger on shutdown
+log_module::stop();
+```
+
+#### Monitoring Module (External)
+
+For real-time performance monitoring:
+
+```bash
+# Clone the monitoring module
+git clone https://github.com/kcenon/monitoring.git
+
+# Build and integrate with your project
+# See monitoring documentation for detailed integration steps
 ```
 
 ## Common Use Cases
@@ -532,7 +554,6 @@ cmake -B build \
 # Run sample applications
 ./build/bin/thread_pool_sample
 ./build/bin/typed_thread_pool_sample
-./build/bin/logger_sample
 ```
 
 ### Run Tests (Linux only)
@@ -580,7 +601,7 @@ git submodule add https://github.com/kcenon/thread_system.git external/thread_sy
 
 # In your CMakeLists.txt
 add_subdirectory(external/thread_system)
-target_link_libraries(your_target PRIVATE thread_pool logger)
+target_link_libraries(your_target PRIVATE thread_pool)
 ```
 
 ### Using with CMake FetchContent
@@ -595,7 +616,7 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(thread_system)
-target_link_libraries(your_target PRIVATE thread_pool logger)
+target_link_libraries(your_target PRIVATE thread_pool)
 ```
 
 ## Best Practices
@@ -624,10 +645,10 @@ target_link_libraries(your_target PRIVATE thread_pool logger)
    - Monitor memory usage with built-in statistics
 
 ### Error Handling and Monitoring
-6. **Exception Safety**: Jobs can throw exceptions safely - they're captured and logged
+6. **Exception Safety**: Jobs can throw exceptions safely - they're captured and handled
 7. **Performance Monitoring**: Use built-in statistics to track throughput and latency
 8. **Clean Shutdown**: Thread pools automatically clean up on destruction
-9. **Logger Initialization**: Call `log_module::start()` once at application startup
+9. **External Modules**: Integrate logger and monitoring modules as needed for enhanced capabilities
 
 ### Adaptive Queue Tips
 10. **Strategy Selection**: Trust automatic strategy selection for optimal performance

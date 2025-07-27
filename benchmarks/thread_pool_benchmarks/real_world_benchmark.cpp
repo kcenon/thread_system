@@ -58,7 +58,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
+#include "../../sources/typed_thread_pool/scheduling/typed_thread_worker.h"
+#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
 #include "../../sources/utilities/core/formatter.h"
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
@@ -90,32 +91,31 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_thread_pool_module::typed_thread_pool<Type>> pool;
+    std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool<Type>>();
+        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
-    std::optional<std::string> error_message = std::nullopt;
-    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker<Type>>> workers;
+    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker<Type>>());
+        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<Type>>(
+            std::vector<Type>{}, true));
     }
     
-    error_message = pool->enqueue_batch(std::move(workers));
-    if (error_message.has_value()) {
+    auto enqueue_result = pool->enqueue_batch(std::move(workers));
+    if (enqueue_result.has_error()) {
         return { nullptr, formatter::format("cannot enqueue to workers: {}", 
-                                           error_message.value_or("unknown error")) };
+                                           enqueue_result.get_error().message()) };
     }
     
     return { pool, std::nullopt };
 }
 
-using namespace std::chrono;
 using namespace thread_pool_module;
 using namespace typed_thread_pool_module;
 
@@ -132,7 +132,7 @@ public:
     
     // Simulate I/O operation (e.g., database query)
     static void simulate_io_work(int duration_ms) {
-        std::this_thread::sleep_for(milliseconds(duration_ms));
+        std::this_thread::sleep_for(std::chrono::milliseconds(duration_ms));
     }
     
     // Simulate memory-intensive work
@@ -198,7 +198,7 @@ static void BM_WebServerSimulation(benchmark::State& state) {
                 cumulative += req_type.frequency;
                 if (rand_val <= cumulative) {
                     pool->enqueue(std::make_unique<callback_job>([&req_type, &completed_requests, &total_response_time_ms]() -> result_void {
-                        auto req_start = high_resolution_clock::now();
+                        auto req_start = std::chrono::high_resolution_clock::now();
                         
                         // Process request
                         WorkloadSimulator::simulate_mixed_work(
@@ -206,8 +206,8 @@ static void BM_WebServerSimulation(benchmark::State& state) {
                             req_type.io_duration
                         );
                         
-                        auto req_end = high_resolution_clock::now();
-                        auto response_time = duration_cast<milliseconds>(req_end - req_start).count();
+                        auto req_end = std::chrono::high_resolution_clock::now();
+                        auto response_time = std::chrono::duration_cast<std::chrono::milliseconds>(req_end - req_start).count();
                         
                         total_response_time_ms.fetch_add(response_time);
                         completed_requests.fetch_add(1);
@@ -313,22 +313,24 @@ static void BM_DataAnalysisWorkload(benchmark::State& state) {
         
         // Map phase
         std::vector<std::future<double>> map_results;
-        std::vector<std::promise<double>> promises(num_chunks);
+        std::vector<std::shared_ptr<std::promise<double>>> promises;
         
         for (size_t i = 0; i < num_chunks; ++i) {
-            map_results.push_back(promises[i].get_future());
+            auto promise = std::make_shared<std::promise<double>>();
+            map_results.push_back(promise->get_future());
+            promises.push_back(promise);
         }
         
         // Submit map tasks
         for (size_t i = 0; i < num_chunks; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([i, chunk_size_mb, p = std::move(promises[i])]() mutable -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([i, chunk_size_mb, p = promises[i]]() mutable -> result_void {
                 // Simulate data processing
                 WorkloadSimulator::simulate_memory_work(chunk_size_mb);
                 WorkloadSimulator::simulate_cpu_work(100);
                 
                 // Return partial result
                 double result = static_cast<double>(i) * 3.14159;
-                p.set_value(result);
+                p->set_value(result);
                 return result_void();
             }));
         }
@@ -340,13 +342,13 @@ static void BM_DataAnalysisWorkload(benchmark::State& state) {
         }
         
         // Reduce phase
-        std::promise<double> reduce_promise;
-        auto reduce_future = reduce_promise.get_future();
+        auto reduce_promise = std::make_shared<std::promise<double>>();
+        auto reduce_future = reduce_promise->get_future();
         
-        pool->enqueue(std::make_unique<callback_job>([map_sum, p = std::move(reduce_promise)]() mutable -> result_void {
+        pool->enqueue(std::make_unique<callback_job>([map_sum, p = reduce_promise]() mutable -> result_void {
             // Simulate reduce operation
             WorkloadSimulator::simulate_cpu_work(50);
-            p.set_value(map_sum / 2.0);
+            p->set_value(map_sum / 2.0);
             return result_void();
         }));
         
@@ -376,13 +378,7 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
     const int frame_time_ms = 1000 / target_fps;
     
     // Simulate game engine subsystems
-    enum class Type { 
-        Physics = 1,      // Highest priority
-        AI = 2,
-        Rendering = 3,
-        Audio = 4,
-        Network = 5       // Lowest priority
-    };
+    using Type = job_types;
     
     struct Subsystem {
         std::string name;
@@ -392,15 +388,15 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
     };
     
     const std::vector<Subsystem> subsystems = {
-        {"Physics", Type::Physics, 1000, 2},
-        {"AI", Type::AI, 500, 1},
-        {"Rendering", Type::Rendering, 2000, 1},
-        {"Audio", Type::Audio, 200, 4},
-        {"Network", Type::Network, 300, 2}
+        {"Physics", Type::RealTime, 1000, 2},      // Highest priority
+        {"AI", Type::Batch, 500, 1},
+        {"Rendering", Type::Batch, 2000, 1},
+        {"Audio", Type::Background, 200, 4},
+        {"Network", Type::Background, 300, 2}      // Lowest priority
     };
     
     for (auto _ : state) {
-        auto [pool, error] = create_priority_default<Type>(8);
+        auto [pool, error] = create_priority_default<job_types>(8);
         if (error.has_value()) {
             state.SkipWithError("Failed to create typed thread pool");
             return;
@@ -412,7 +408,7 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
         std::atomic<int> missed_frames{0};
         
         for (int frame = 0; frame < num_frames; ++frame) {
-            auto frame_start = high_resolution_clock::now();
+            auto frame_start = std::chrono::high_resolution_clock::now();
             std::atomic<int> subsystems_completed{0};
             int total_subsystems = 0;
             
@@ -421,11 +417,11 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
                 for (int i = 0; i < subsystem.frequency; ++i) {
                     total_subsystems++;
                     
-                    pool->enqueue(std::make_unique<callback_job>([&subsystem, &subsystems_completed]() -> result_void {
+                    pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>([&subsystem, &subsystems_completed]() -> result_void {
                         // Simulate subsystem update
-                        auto end_time = high_resolution_clock::now() + 
-                                       microseconds(subsystem.update_time_us);
-                        while (high_resolution_clock::now() < end_time) {
+                        auto end_time = std::chrono::high_resolution_clock::now() + 
+                                       std::chrono::microseconds(subsystem.update_time_us);
+                        while (std::chrono::high_resolution_clock::now() < end_time) {
                             // Busy wait to simulate work
                         }
                         
@@ -436,14 +432,14 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
             }
             
             // Wait for frame completion or timeout
-            auto frame_deadline = frame_start + milliseconds(frame_time_ms);
+            auto frame_deadline = frame_start + std::chrono::milliseconds(frame_time_ms);
             while (subsystems_completed.load() < total_subsystems && 
-                   high_resolution_clock::now() < frame_deadline) {
-                std::this_thread::sleep_for(microseconds(100));
+                   std::chrono::high_resolution_clock::now() < frame_deadline) {
+                std::this_thread::sleep_for(std::chrono::microseconds(100));
             }
             
-            auto frame_end = high_resolution_clock::now();
-            auto frame_duration = duration_cast<milliseconds>(frame_end - frame_start).count();
+            auto frame_end = std::chrono::high_resolution_clock::now();
+            auto frame_duration = std::chrono::duration_cast<std::chrono::milliseconds>(frame_end - frame_start).count();
             
             if (frame_duration > frame_time_ms) {
                 missed_frames.fetch_add(1);
@@ -453,7 +449,7 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
             
             // Sleep if frame completed early
             if (frame_duration < frame_time_ms) {
-                std::this_thread::sleep_for(milliseconds(frame_time_ms - frame_duration));
+                std::this_thread::sleep_for(std::chrono::milliseconds(frame_time_ms - frame_duration));
             }
         }
         
@@ -509,7 +505,7 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
         
         for (size_t req = 0; req < num_requests; ++req) {
             pool->enqueue(std::make_unique<callback_job>([&services, &completed_requests, &total_latency_ms, &pool]() -> result_void {
-                auto req_start = high_resolution_clock::now();
+                auto req_start = std::chrono::high_resolution_clock::now();
                 
                 // Process through service chain
                 std::map<std::string, std::future<void>> service_futures;
@@ -523,12 +519,12 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
                     }
                     
                     // Process service
-                    std::promise<void> promise;
-                    service_futures[service.name] = promise.get_future();
+                    auto promise = std::make_shared<std::promise<void>>();
+                    service_futures[service.name] = promise->get_future();
                     
-                    pool->enqueue(std::make_unique<callback_job>([&service, p = std::move(promise)]() mutable -> result_void {
+                    pool->enqueue(std::make_unique<callback_job>([&service, p = promise]() mutable -> result_void {
                         WorkloadSimulator::simulate_io_work(service.processing_time_ms);
-                        p.set_value();
+                        p->set_value();
                         return result_void();
                     }));
                 }
@@ -538,8 +534,8 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
                     service_futures["NotificationService"].get();
                 }
                 
-                auto req_end = high_resolution_clock::now();
-                auto latency = duration_cast<milliseconds>(req_end - req_start).count();
+                auto req_end = std::chrono::high_resolution_clock::now();
+                auto latency = std::chrono::duration_cast<std::chrono::milliseconds>(req_end - req_start).count();
                 
                 total_latency_ms.fetch_add(latency);
                 completed_requests.fetch_add(1);
@@ -549,7 +545,7 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
         
         // Wait for all requests
         while (completed_requests.load() < num_requests) {
-            std::this_thread::sleep_for(milliseconds(10));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
         
         pool->stop();

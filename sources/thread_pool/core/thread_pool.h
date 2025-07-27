@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../workers/thread_worker.h"
 #include "../../utilities/conversion/convert_string.h"
 #include "../detail/forward_declarations.h"
+#include "../../interfaces/thread_context.h"
 #include "config.h"
 
 #include <tuple>
@@ -119,10 +120,13 @@ namespace thread_pool_module
 		 * @brief Constructs a new @c thread_pool instance.
 		 * @param thread_title An optional title or identifier for the thread pool (defaults to
 		 * "thread_pool").
+		 * @param context Optional thread context for logging and monitoring (defaults to empty context).
 		 *
 		 * This title can be used for logging or debugging purposes.
+		 * The context provides access to logging and monitoring services.
 		 */
-		thread_pool(const std::string& thread_title = "thread_pool");
+		thread_pool(const std::string& thread_title = "thread_pool", 
+		           const thread_context& context = thread_context());
 
 		/**
 		 * @brief Virtual destructor. Cleans up resources used by the thread pool.
@@ -251,11 +255,47 @@ namespace thread_pool_module
 		 */
 		[[nodiscard]] auto to_string(void) const -> std::string;
 
+		/**
+		 * @brief Get the pool instance id.
+		 * @return Returns the unique instance id for this pool.
+		 */
+		[[nodiscard]] std::uint32_t get_pool_instance_id() const;
+
+		/**
+		 * @brief Collect and report current thread pool metrics.
+		 * 
+		 * This method gathers current metrics from the pool and reports them
+		 * through the monitoring interface if available.
+		 */
+		void report_metrics();
+
+		/**
+		 * @brief Get the number of idle workers.
+		 * @return Number of workers currently not processing jobs.
+		 */
+		[[nodiscard]] std::size_t get_idle_worker_count() const;
+
+		/**
+		 * @brief Gets the thread context for this pool.
+		 * @return The thread context providing access to logging and monitoring services.
+		 */
+		[[nodiscard]] auto get_context(void) const -> const thread_context&;
+
 	private:
+		/**
+		 * @brief Static counter for generating unique pool instance IDs.
+		 */
+		static std::atomic<std::uint32_t> next_pool_instance_id_;
+
 		/**
 		 * @brief A title or name for this thread pool, useful for identification and logging.
 		 */
 		std::string thread_title_;
+
+		/**
+		 * @brief Unique instance ID for this pool (for multi-pool scenarios).
+		 */
+		std::uint32_t pool_instance_id_{0};
 
 		/**
 		 * @brief Indicates whether the pool is currently running.
@@ -281,6 +321,14 @@ namespace thread_pool_module
 		 * when @c thread_pool::start() is called.
 		 */
 		std::vector<std::unique_ptr<thread_worker>> workers_;
+
+		/**
+		 * @brief The thread context providing access to logging and monitoring services.
+		 *
+		 * This context is shared with all worker threads created by this pool,
+		 * enabling consistent logging and monitoring throughout the pool.
+		 */
+		thread_context context_;
 	};
 } // namespace thread_pool_module
 

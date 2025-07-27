@@ -9,11 +9,11 @@
 find_package(benchmark CONFIG REQUIRED)
 
 # Add subdirectories for each component's benchmarks
-add_subdirectory(logger_benchmarks)
+# REMOVED: logger_benchmarks - logger moved to separate project
 add_subdirectory(thread_pool_benchmarks)
 add_subdirectory(typed_thread_pool_benchmarks)
 add_subdirectory(thread_base_benchmarks)
-add_subdirectory(monitoring_benchmarks)
+# REMOVED: monitoring_benchmarks - monitoring moved to separate project
 
 # Data race fixes benchmark
 add_executable(data_race_benchmark data_race_benchmark.cpp)
@@ -29,7 +29,6 @@ add_custom_target(benchmarks
 
 # Add dependencies to the master benchmarks target
 add_dependencies(benchmarks
-    logger_benchmarks_target
     thread_pool_benchmarks_target
     typed_thread_pool_benchmarks_target
     thread_base_benchmarks_target

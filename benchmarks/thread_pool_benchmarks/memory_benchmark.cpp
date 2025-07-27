@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2024, DongCheol Shin
+ * Copyright (c) 2025, DongCheol Shin
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -54,7 +54,6 @@
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/logger/core/logger.h"
 #include "../../sources/utilities/core/formatter.h"
 
 // Helper function to create thread pool
@@ -94,7 +93,6 @@ auto create_priority_default(const uint16_t& worker_counts) {
 
 using namespace thread_pool_module;
 using namespace typed_thread_pool_module;
-using namespace log_module;
 
 class MemoryMonitor {
 public:
@@ -294,46 +292,7 @@ BENCHMARK(BM_JobQueueMemory)
     ->Arg(100000)
     ->Unit(benchmark::kMillisecond);
     
-/**
- * @brief Benchmark logger memory usage
- */
-static void BM_LoggerMemory(benchmark::State& state) {
-    const size_t log_entries = state.range(0);
-    
-    for (auto _ : state) {
-        // Restart logger with file target
-        log_module::stop();
-        
-        auto before = MemoryMonitor::get_current_memory();
-        
-        log_module::start();
-        log_module::file_target(log_types::Information);
-        
-        // Generate log entries
-        for (size_t i = 0; i < log_entries; ++i) {
-            log_module::write_information(L"Test log entry {}: {}", i, 
-                           L"This is a test message to measure memory usage");
-        }
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        auto after = MemoryMonitor::get_current_memory();
-        
-        size_t memory_increase = after.resident_size - before.resident_size;
-        
-        state.counters["total_MB"] = memory_increase / 1024.0 / 1024.0;
-        state.counters["per_entry_bytes"] = static_cast<double>(memory_increase) / log_entries;
-        
-        log_module::stop();
-    }
-    
-    state.counters["entries"] = log_entries;
-}
-BENCHMARK(BM_LoggerMemory)
-    ->Arg(1000)
-    ->Arg(5000)
-    ->Arg(10000)
-    ->Arg(20000)
-    ->Unit(benchmark::kMillisecond);
+// Logger memory benchmark removed - logger moved to separate project
 
 /**
  * @brief Benchmark memory allocation patterns

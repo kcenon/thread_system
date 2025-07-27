@@ -10,7 +10,54 @@
 
 ## Project Overview
 
-The Thread System Project is a comprehensive, production-ready C++20 multithreading framework designed to democratize concurrent programming. By providing intuitive abstractions and robust implementations, it empowers developers of all skill levels to build high-performance, thread-safe applications without the typical complexity and pitfalls of manual thread management.
+The Thread System Project is a comprehensive, production-ready C++20 multithreading framework designed to democratize concurrent programming. Built with a modular, interface-based architecture, it provides intuitive abstractions and robust implementations that empower developers of all skill levels to build high-performance, thread-safe applications without the typical complexity and pitfalls of manual thread management.
+
+> **🏗️ Modular Architecture**: Recently refactored to a clean, modular design with ~8,700+ lines of code removed. Logger and monitoring systems are now available as separate, optional projects for maximum flexibility.
+
+> **🔄 Migration Status**: Currently migrating to a fully modular architecture. Phase 1 (Interface extraction) is complete. See [MIGRATION.md](MIGRATION.md) for details.
+
+## 🔗 Project Ecosystem & Inter-Dependencies
+
+This project is part of a modular ecosystem designed for high-performance concurrent applications:
+
+### Core Threading Framework
+- **[thread_system](https://github.com/kcenon/thread_system)** (This project): Core threading framework with worker pools, job queues, and thread management
+  - Provides: `logger_interface`, `monitoring_interface` for integration
+  - Dependencies: None (standalone)
+  - Usage: Core threading functionality, interfaces for other systems
+
+### Optional Integration Components
+- **[logger_system](https://github.com/kcenon/logger_system)**: High-performance asynchronous logging
+  - Implements: `thread_module::logger_interface`
+  - Dependencies: `thread_system` (for interfaces)
+  - Integration: Seamless logging for thread operations and debugging
+
+- **[monitoring_system](https://github.com/kcenon/monitoring_system)**: Real-time metrics collection and performance monitoring
+  - Implements: `monitoring_interface::monitoring_interface`
+  - Dependencies: `thread_system` (for interfaces)
+  - Integration: Thread pool metrics, system performance tracking
+
+- **[integrated_thread_system](https://github.com/kcenon/integrated_thread_system)**: Complete solution examples
+  - Dependencies: `thread_system`, `logger_system`, `monitoring_system`
+  - Purpose: Integration examples, complete application templates
+  - Usage: Reference implementation for full-stack integration
+
+### Dependency Flow
+```
+thread_system (core interfaces)
+    ↑                    ↑
+logger_system    monitoring_system
+    ↑                    ↑
+    └── integrated_thread_system ──┘
+```
+
+### Integration Benefits
+- **Plug-and-play**: Use only the components you need
+- **Interface-driven**: Clean abstractions enable easy swapping
+- **Performance-optimized**: Each system optimized for its domain
+- **Unified ecosystem**: Consistent API design across all projects
+
+> 📖 **[Complete Architecture Guide](../ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
 
 ## Project Purpose & Mission
 
@@ -40,7 +87,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 - **Intuitive API design**: Clean, self-documenting interfaces reduce learning curve
 - **Rich documentation**: Comprehensive Doxygen documentation with examples
 - **Flexible configuration**: Adaptive queues with automatic optimization
-- **Debugging support**: Built-in logging and monitoring capabilities
+- **Modular components**: Use only what you need - logging and monitoring are optional
 
 ### 🌐 **Cross-Platform Compatibility**
 - **Universal support**: Works on Windows, Linux, and macOS
@@ -50,9 +97,9 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 ### 📈 **Enterprise-Ready Features**
 - **Type-based scheduling**: Sophisticated job type specialization for real-time systems
-- **Asynchronous logging**: High-performance, non-blocking logging system
-- **Resource monitoring**: Built-in performance metrics and health checks
-- **Modular design**: Use individual components or the complete framework
+- **Interface-based design**: Clean separation of concerns with well-defined interfaces
+- **Optional integrations**: Logger and monitoring available as separate projects
+- **Modular architecture**: Use individual components or the complete framework
 
 ## Real-World Impact & Use Cases
 
@@ -68,7 +115,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 *Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma, Apple Clang 17.0.0*
 
-> **🚀 Architecture Update**: Latest simplified architecture (2025-07-09) removed ~2,800 lines of duplicate code while maintaining all performance capabilities. Adaptive queues now provide automatic optimization for all workload scenarios.
+> **🚀 Architecture Update**: Latest modular architecture (2025-07-25) removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
 
 #### Core Performance Metrics (Latest Benchmarks - 2025-07-09)
 - **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs - theoretical)
@@ -82,7 +129,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 - **Queue operations**: Adaptive strategy provides **up to 7.7x faster** when needed
 - **High contention**: Adaptive mode provides **up to 3.46x improvement** when beneficial
 - **Priority scheduling**: Type-based routing with **high accuracy** under all conditions
-- **Memory efficiency**: <1MB baseline, reduced codebase by ~2,800 lines
+- **Memory efficiency**: <1MB baseline, reduced codebase by ~8,700+ lines
 - **Scalability**: Adaptive architecture maintains performance under any contention level
 
 #### Impact of Thread Safety Fixes
@@ -199,7 +246,8 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 - **Memory management**: Smart pointers and RAII for automatic resource cleanup
 - **Exception safety**: Strong exception safety guarantees throughout
 - **Adaptive algorithms**: MPMC queues, automatic strategy selection, and atomic operations
-- **SIMD optimization**: Vectorized operations where applicable
+- **Interface-based design**: Clean separation between interface and implementation
+- **Modular architecture**: Core threading functionality with optional logger/monitoring integration
 
 ### 🔄 **Design Patterns Implementation**
 - **Command Pattern**: Job encapsulation for flexible task execution
@@ -247,20 +295,17 @@ thread_system/
 │   │   ├── types/                  # Log types and formatters
 │   │   ├── writers/                # Console, file, callback writers
 │   │   └── jobs/                   # Log job processing
-│   ├── 📁 utilities/               # Utility functions
-│   │   ├── core/                   # formatter, span
-│   │   ├── conversion/             # String conversions
-│   │   ├── time/                   # Date/time utilities
-│   │   └── io/                     # File handling
-│   └── 📁 monitoring/              # Real-time monitoring system
-│       ├── core/                   # Metrics collector, monitoring types
-│       └── storage/                # Ring buffer for time-series data
+│   └── 📁 utilities/               # Utility functions
+│       ├── core/                   # formatter, span
+│       ├── conversion/             # String conversions
+│       ├── time/                   # Date/time utilities
+│       └── io/                     # File handling
 ├── 📁 samples/                     # Example applications
 │   ├── thread_pool_sample/         # Basic thread pool usage
 │   ├── typed_thread_pool_sample/   # Mutex-based priority scheduling
 │   ├── typed_thread_pool_sample_2/        # Advanced typed pool usage
-│   ├── logger_sample/              # Logging examples
-│   ├── monitoring_sample/          # Real-time metrics collection
+│   ├── logger_sample/              # Logging examples (requires separate logger project)
+│   ├── monitoring_sample/          # Real-time metrics collection (requires separate monitoring project)
 │   ├── mpmc_queue_sample/          # Adaptive MPMC queue usage
 │   ├── hazard_pointer_sample/      # Memory reclamation demo
 │   ├── node_pool_sample/           # Memory pool operations
@@ -270,7 +315,6 @@ thread_system/
 │   ├── thread_base_test/           # Base thread functionality tests
 │   ├── thread_pool_test/           # Thread pool tests
 │   ├── typed_thread_pool_test/     # Typed pool tests
-│   ├── logger_test/                # Logger tests
 │   └── utilities_test/             # Utility function tests
 ├── 📁 benchmarks/                  # Performance benchmarks
 │   ├── thread_base_benchmarks/     # Core threading benchmarks
@@ -286,8 +330,8 @@ thread_system/
 │   │   ├── typed_scheduling_benchmark.cpp # Priority scheduling
 │   │   ├── typed_lockfree_benchmark.cpp   # 🆕 Lock-free vs mutex
 │   │   └── queue_comparison_benchmark.cpp # 🆕 Queue performance
-│   ├── logger_benchmarks/          # Logging performance
-│   └── monitoring_benchmarks/      # Monitoring overhead
+│   ├── logger_benchmarks/          # Logging performance (requires separate logger project)
+│   └── monitoring_benchmarks/      # Monitoring overhead (requires separate monitoring project)
 ├── 📁 docs/                        # Documentation
 ├── 📁 cmake/                       # CMake modules
 ├── 📄 CMakeLists.txt               # Main build configuration
@@ -331,17 +375,17 @@ thread_system/
 ```
 utilities (no dependencies)
     │
-    ├──> thread_base
-    │        │
-    │        ├──> thread_pool
-    │        │
-    │        └──> typed_thread_pool
-    │                   │
-    │                   └── typed_thread_pool (adaptive)
-    │
-    ├──> logger
-    │
-    └──> monitoring
+    └──> thread_base
+             │
+             ├──> thread_pool
+             │
+             └──> typed_thread_pool
+                        │
+                        └── typed_thread_pool (adaptive)
+
+Optional External Projects:
+- logger (separate project for logging functionality)
+- monitoring (separate project for metrics collection)
 ```
 
 ### 🛠️ **Build Output Structure**
@@ -361,9 +405,7 @@ build/
 │   ├── libthread_base.a
 │   ├── libthread_pool.a
 │   ├── libtyped_thread_pool.a  # Includes both mutex & lock-free
-│   ├── liblogger.a
-│   ├── libutilities.a
-│   └── libmonitoring.a
+│   └── libutilities.a
 └── include/                # Public headers (for installation)
 ```
 
@@ -383,7 +425,9 @@ build/
   - `hazard_pointer`: Safe memory reclamation for lock-free data structures
   - `node_pool`: Memory pool for queue operations
 
-### 2. [Logging System (log_module)](https://github.com/kcenon/thread_system/tree/main/sources/logger)
+### 2. [Logging System (Separate Project)](https://github.com/kcenon/logger)
+
+> **Note**: The logging system is now available as a separate, optional project for maximum flexibility and minimal dependencies.
 
 - **Namespace-level logging functions**: `write_information()`, `write_error()`, `write_debug()`, etc.
 - **`log_types` enum**: Bitwise-enabled log levels (Exception, Error, Information, Debug, Sequence, Parameter)
@@ -418,7 +462,9 @@ build/
 - **Builder pattern support**: Fluent API for pool configuration
 - **Drop-in compatibility**: Same API for easy migration
 
-### 4. [Real-time Monitoring System (monitoring_module)](https://github.com/kcenon/thread_system/tree/main/sources/monitoring)
+### 4. [Real-time Monitoring System (Separate Project)](https://github.com/kcenon/monitoring)
+
+> **Note**: The monitoring system is now available as a separate, optional project for clean separation of concerns.
 
 - **`metrics_collector` class**: Real-time performance metrics collection engine
 - **Cross-platform system metrics**: Memory usage, CPU utilization, active threads
@@ -481,10 +527,10 @@ The framework provides two distinct typed thread pool implementations optimized 
 - **Result<T> type**: Modern error handling with monadic operations
 
 ### 📊 **Production Monitoring & Diagnostics**
-- **Real-time metrics**: Job processing rates, queue depths, and worker utilization
+- **Optional monitoring integration**: Connect with separate monitoring project when needed
 - **Performance profiling**: Built-in timing and bottleneck identification
 - **Health checks**: Automatic detection of thread failures and recovery
-- **Comprehensive logging**: Multi-level, multi-target logging with asynchronous processing
+- **Optional logging integration**: Connect with separate logger project for comprehensive logging
 
 ### ⚙️ **Configuration & Customization**
 - **Template-based flexibility**: Custom type types and job implementations
@@ -507,14 +553,14 @@ The framework provides two distinct typed thread pool implementations optimized 
 ```cpp
 #include "thread_pool/core/thread_pool.h"
 #include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
+// Optional: #include "logger/core/logger.h" // If using separate logger project
 
 using namespace thread_pool_module;
 using namespace thread_module;
 
 int main() {
-    // 1. Start the logger
-    log_module::start();
+    // 1. Start the logger (if using separate logger project)
+    // log_module::start();
     
     // 2. Create a high-performance adaptive thread pool
     auto pool = std::make_shared<thread_pool>();
@@ -540,7 +586,8 @@ int main() {
             [&counter, i]() -> result_void {
                 counter.fetch_add(1);
                 if (i % 10000 == 0) {
-                    log_module::write_information("Processed {} jobs", i);
+                    // Optional logging: log_module::write_information("Processed {} jobs", i);
+                    std::cout << "Processed " << i << " jobs\n";
                 }
                 return {};
             }
@@ -558,23 +605,22 @@ int main() {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     auto throughput = static_cast<double>(total_jobs) / duration.count() * 1000.0;
     
-    log_module::write_information("Performance Results:");
-    log_module::write_information("- Total jobs: {}", total_jobs);
-    log_module::write_information("- Execution time: {} ms", duration.count());
-    log_module::write_information("- Throughput: {:.2f} jobs/second", throughput);
+    // Optional logging (or use std::cout)
+    std::cout << "Performance Results:\n";
+    std::cout << "- Total jobs: " << total_jobs << "\n";
+    std::cout << "- Execution time: " << duration.count() << " ms\n";
+    std::cout << "- Throughput: " << std::fixed << std::setprecision(2) << throughput << " jobs/second\n";
     
     auto workers_list = pool->get_workers();
     for (size_t i = 0; i < workers_list.size(); ++i) {
         auto stats = static_cast<thread_worker*>(workers_list[i].get())->get_statistics();
-        log_module::write_information("Worker {}: {} jobs, avg time: {} ns, {} batch ops",
-                                     i, stats.jobs_processed, 
-                                     stats.avg_processing_time_ns,
-                                     stats.batch_operations);
+        std::cout << "Worker " << i << ": " << stats.jobs_processed << " jobs, avg time: " 
+                  << stats.avg_processing_time_ns << " ns, " << stats.batch_operations << " batch ops\n";
     }
     
     // 8. Clean shutdown
     pool->stop();
-    log_module::stop();
+    // log_module::stop(); // If using logger
     
     return 0;
 }
@@ -851,8 +897,13 @@ target_link_libraries(your_target PRIVATE
     thread_base 
     thread_pool 
     typed_thread_pool 
-    logger
+    utilities
 )
+
+# Optional: Add logger and monitoring if needed
+# add_subdirectory(logger)      # Separate project
+# add_subdirectory(monitoring)  # Separate project
+# target_link_libraries(your_target PRIVATE logger monitoring)
 
 # Using with FetchContent
 include(FetchContent)
@@ -936,35 +987,9 @@ namespace typed_thread_pool_module {
     };
 }
 
-// Monitoring API
-namespace monitoring_module {
-    class metrics_collector {
-        auto start() -> thread_module::result_void;
-        auto stop() -> void;
-        auto get_current_snapshot() const -> metrics_snapshot;
-        auto register_system_metrics(std::shared_ptr<system_metrics> metrics) -> void;
-        auto register_thread_pool_metrics(std::shared_ptr<thread_pool_metrics> metrics) -> void;
-    };
-    
-    // Convenience functions
-    namespace metrics {
-        auto start_global_monitoring(monitoring_config config = {}) -> thread_module::result_void;
-        auto stop_global_monitoring() -> void;
-        auto get_current_metrics() -> metrics_snapshot;
-        auto is_monitoring_active() -> bool;
-    }
-}
-
-// Logger API
-namespace log_module {
-    auto start() -> std::optional<std::string>;
-    auto stop() -> void;
-    
-    template<typename... Args>
-    auto write_information(const char* format, const Args&... args) -> void;
-    auto write_error(const char* format, const Args&... args) -> void;
-    auto write_debug(const char* format, const Args&... args) -> void;
-}
+// Optional External APIs (available as separate projects):
+// - Logger API: See https://github.com/kcenon/logger
+// - Monitoring API: See https://github.com/kcenon/monitoring
 ```
 
 ## Contributing
