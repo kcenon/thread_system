@@ -5,7 +5,52 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-07-22
+## [Unreleased] - 2025-07-25
+
+### Changed
+- **Major Modularization** 🏗️
+  - Moved logger module to separate project (https://github.com/kcenon/logger)
+  - Moved monitoring module to separate project (https://github.com/kcenon/monitoring)
+  - Removed ~8,700+ lines of code from core thread system
+  - Core thread system now ~2,700 lines focused purely on threading
+  - Created interface-based architecture for external module integration
+
+### Removed
+- **Logger Module** 📝
+  - All logger implementation files (27 files)
+  - Logger benchmarks and samples
+  - Logger unit tests
+  - Logger is now an optional external dependency
+
+- **Monitoring Module** 📊
+  - metrics_collector implementation
+  - monitoring_types and ring_buffer
+  - Monitoring benchmarks and samples
+  - Monitoring unit tests
+  - Monitoring is now an optional external dependency
+
+- **Unused Utilities** 🔧
+  - file_handler (I/O utilities)
+  - argument_parser (parsing utilities)
+  - datetime_tool (time utilities)
+  - Old logger interface from utilities
+
+### Added
+- **Interface-Based Design** 🔌
+  - logger_interface.h for optional logger integration
+  - monitoring_interface.h for optional monitoring integration
+  - Clean separation between core and auxiliary functionality
+
+### Documentation
+- **Updated All Documentation** 📚
+  - README.md reflects modular architecture
+  - api-reference.md focuses on core APIs
+  - architecture.md describes new modular design
+  - getting-started.md shows usage without external dependencies
+  - examples.md demonstrates both core-only and with-modules usage
+  - performance.md updated with latest benchmarks
+
+## [2.0.0] - 2025-07-22
 
 ### Added
 - **Memory Optimization Improvements** 💾

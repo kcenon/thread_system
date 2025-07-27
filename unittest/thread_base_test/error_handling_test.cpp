@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2025, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -206,29 +206,30 @@ TEST_F(ErrorHandlingTest, ThreadBaseStartStop) {
     protected:
         result_void do_work() override {
             work_count.fetch_add(1);
-            if (work_count.load() == 3) {
+            if (work_count.load() >= 3) {
                 error_occurred.store(true);
                 return error{error_code::unknown_error, "Test error"};
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            std::this_thread::sleep_for(std::chrono::milliseconds(5));
             return {};
         }
     };
     
     auto worker = std::make_unique<test_thread>();
-    worker->set_wake_interval(std::chrono::milliseconds(20));
+    worker->set_wake_interval(std::chrono::milliseconds(10));
     
     // Start the thread
     worker->start();
     
-    // Let it run for a bit
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // Let it run for a bit - ensure enough time for at least 3 iterations
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
     
     // Stop the thread
     worker->stop();
     
     // Verify it executed multiple times
     EXPECT_GT(worker->work_count.load(), 0);
+    EXPECT_GE(worker->work_count.load(), 3);  // Should have run at least 3 times
     EXPECT_TRUE(worker->error_occurred.load());
 }
 

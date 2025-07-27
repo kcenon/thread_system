@@ -11,6 +11,7 @@ This comprehensive guide covers patterns, best practices, antipatterns to avoid,
 5. [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
 6. [Debugging Concurrent Code](#debugging-concurrent-code)
 7. [Performance Optimization](#performance-optimization)
+8. [Integrating External Modules](#integrating-external-modules)
 
 ## Best Practices
 
@@ -62,21 +63,21 @@ This comprehensive guide covers patterns, best practices, antipatterns to avoid,
 - Use types inconsistently across the application
 - Create type workers without assigning appropriate jobs
 
-### 4. Logging Usage
+### 4. Error Handling
 
 #### ✅ DO:
-- Initialize the logger early in your application
-- Use appropriate log levels for different types of messages
-- Set appropriate log targets based on environment (development vs. production)
-- Use structured logging where possible
-- Configure reasonable wake intervals for log processing
+- Always check return values from Thread System functions
+- Use the `result<T>` or `std::optional<std::string>` error patterns
+- Implement custom error handlers when needed
+- Provide meaningful error messages with context
+- Handle errors appropriately at each layer
 
 #### ❌ DON'T:
-- Log sensitive information
-- Create excessive log volume in production
-- Log in tight loops without level checks
-- Use blocking log operations in performance-critical code paths
-- Leave the logger running after your application is supposed to shut down
+- Ignore error return values
+- Let exceptions propagate from worker threads without handling
+- Use generic error messages without context
+- Assume operations will always succeed
+- Mix different error handling patterns inconsistently
 
 ## Common Patterns
 
@@ -194,27 +195,31 @@ jobs.push_back(std::make_unique<typed_thread_pool_module::callback_typed_job>(
 ));
 ```
 
-### 4. Logger Initialization Pattern
+### 4. Error Handler Pattern
 
 ```cpp
-auto initialize_logger() -> std::optional<std::string> {
-    // Set application name
-    log_module::set_title("my_application");
+// Implement a custom error handler for thread operations
+class ApplicationErrorHandler : public thread_module::error_handler {
+public:
+    void handle_error(const std::string& error_message) override {
+        // Handle errors according to your application needs
+        // Could write to a log file, send to monitoring system, etc.
+        std::cerr << "Thread error: " << error_message << std::endl;
+        
+        // If using external logger module:
+        // if (logger_) {
+        //     logger_->write_error("Thread error: {}", error_message);
+        // }
+    }
     
-    // Configure log targets
-    log_module::file_target(log_module::log_types::Error | log_module::log_types::Warning);
-    log_module::console_target(log_module::log_types::Information);
-    
-    // For production systems, use file logging with backup
-    log_module::set_use_backup(true);
-    log_module::set_max_lines(10000);
-    
-    // Set wake interval for non-critical logs
-    log_module::set_wake_interval(std::chrono::milliseconds(100));
-    
-    // Start the logger
-    return log_module::start();
-}
+private:
+    // Optional: reference to external logger
+    // std::shared_ptr<logger_interface> logger_;
+};
+
+// Use the error handler
+auto error_handler = std::make_shared<ApplicationErrorHandler>();
+thread_pool->set_error_handler(error_handler);
 ```
 
 ### 5. Producer-Consumer Pattern
@@ -267,7 +272,8 @@ void process_large_dataset(const std::vector<Data>& dataset) {
     // Create thread pool
     auto [pool, error] = create_default(thread_count);
     if (error.has_value()) {
-        log_module::write_error("Failed to create thread pool: {}", error.value());
+        // Handle error appropriately - could use external logger if available
+        std::cerr << "Failed to create thread pool: " << error.value() << std::endl;
         return;
     }
     
@@ -418,29 +424,39 @@ pool->enqueue(std::make_unique<thread_module::callback_job>(
 ));
 ```
 
-### 5. The Excessive Logging Antipattern
+### 5. The Performance Monitoring Antipattern
 
 ❌ **Problematic Approach**:
 ```cpp
 for (int i = 0; i < 1000000; i++) {
-    // Logging in a tight loop
-    log_module::write_debug("Processing item: {}", i);
+    // Recording metrics for every single operation
+    auto start = std::chrono::steady_clock::now();
     // Process item
+    auto end = std::chrono::steady_clock::now();
+    // Recording every single operation creates overhead
+    record_metric("item_processed", end - start);
 }
 ```
 
 ✅ **Better Approach**:
 ```cpp
-// Log at appropriate intervals or significant events only
+// Record metrics at appropriate intervals or aggregated
+std::atomic<size_t> processed_count{0};
+auto batch_start = std::chrono::steady_clock::now();
+
 for (int i = 0; i < 1000000; i++) {
-    // Only log at reasonable intervals
-    if (i % 10000 == 0) {
-        log_module::write_debug("Processing item: {}", i);
-    }
     // Process item
+    processed_count++;
+    
+    // Record metrics periodically
+    if (i % 10000 == 0) {
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = now - batch_start;
+        // Record aggregated metrics
+        record_batch_metrics(10000, elapsed);
+        batch_start = now;
+    }
 }
-// Log completion
-log_module::write_information("Processed {} items", 1000000);
 ```
 
 ## Troubleshooting Common Issues
@@ -522,7 +538,8 @@ log_module::write_information("Processed {} items", 1000000);
    ```cpp
    std::unique_lock<std::mutex> lock(mutex_, std::chrono::seconds(5));
    if (!lock) {
-       log_module::write_error("Potential deadlock detected - could not acquire lock within timeout");
+       // Handle potential deadlock - log error if logger is available
+       handle_error("Potential deadlock detected - could not acquire lock within timeout");
        // Implement recovery strategy
    }
    ```
@@ -834,30 +851,40 @@ private:
 
 ## Debugging Concurrent Code
 
-### Using Logs Effectively
+### Using Diagnostics Effectively
 
-1. **Include thread IDs in logs:**
+1. **Track thread IDs for debugging:**
    ```cpp
-   log_module::message_callback([](const log_module::log_types& type,
-                                  const std::string& datetime,
-                                  const std::string& message) {
-       // Get current thread ID
-       auto thread_id = std::this_thread::get_id();
-       std::cout << "[" << datetime << "][Thread " << thread_id << "][" << type << "] " 
-                 << message << std::endl;
-   });
+   // Custom diagnostic helper
+   class ThreadDiagnostics {
+   public:
+       static void record_event(const std::string& event) {
+           auto thread_id = std::this_thread::get_id();
+           auto timestamp = std::chrono::steady_clock::now();
+           
+           // Store or output diagnostic information
+           std::ostringstream oss;
+           oss << "[" << timestamp.time_since_epoch().count() 
+               << "][Thread " << thread_id << "] " << event;
+           
+           // Output to console, file, or external logger if available
+           std::cout << oss.str() << std::endl;
+       }
+   };
    ```
 
-2. **Log state transitions:**
+2. **Track state transitions:**
    ```cpp
    auto do_work() -> result_void override {
-       log_module::write_debug("Worker state: entering critical section");
+       ThreadDiagnostics::record_event("Worker state: entering critical section");
        {
            std::lock_guard<std::mutex> lock(mutex_);
            // Critical section
-           log_module::write_debug("Worker state: in critical section, count={}", count_);
+           ThreadDiagnostics::record_event(
+               "Worker state: in critical section, count=" + std::to_string(count_)
+           );
        }
-       log_module::write_debug("Worker state: exited critical section");
+       ThreadDiagnostics::record_event("Worker state: exited critical section");
        return {};
    }
    ```
@@ -866,9 +893,11 @@ private:
    ```cpp
    std::atomic<uint64_t> global_seq_{0};
    
-   void log_event(const std::string& event) {
+   void record_sequenced_event(const std::string& event) {
        uint64_t seq = global_seq_++;
-       log_module::write_sequence("[SEQ:{}] {}", seq, event);
+       std::ostringstream oss;
+       oss << "[SEQ:" << seq << "] " << event;
+       ThreadDiagnostics::record_event(oss.str());
    }
    ```
 
@@ -895,12 +924,14 @@ private:
    ```cpp
    auto error = pool->start();
    if (error.has_value()) {
-       log_module::write_error("Thread pool failed to start: {}", 
-                               error.value_or("unknown error"));
+       // Handle startup error
+       std::cerr << "Thread pool failed to start: " 
+                 << error.value_or("unknown error") << std::endl;
        // Handle error
    } else {
-       log_module::write_information("Thread pool started successfully with {} workers", 
-                                     pool->get_worker_count());
+       // Record successful startup
+       std::cout << "Thread pool started successfully with " 
+                 << pool->get_worker_count() << " workers" << std::endl;
    }
    ```
 
@@ -909,11 +940,11 @@ private:
    // Add debugging to your job
    auto job = std::make_unique<thread_module::callback_job>(
        [](void) -> std::optional<std::string> {
-           log_module::write_debug("Job started");
+           ThreadDiagnostics::record_event("Job started");
            
            // Your job logic here
            
-           log_module::write_debug("Job completed");
+           ThreadDiagnostics::record_event("Job completed");
            return std::nullopt;
        }
    );
@@ -975,6 +1006,120 @@ worker.set_wake_interval(std::chrono::seconds(1));
 worker.set_wake_interval(std::chrono::minutes(1));
 ```
 
+## Integrating External Modules
+
+### Logger Integration Pattern
+
+Thread System is designed to work with external logging libraries. Here's how to integrate them:
+
+```cpp
+// Example: Integrating an external logger
+class LoggerAdapter : public thread_module::error_handler {
+public:
+    LoggerAdapter(std::shared_ptr<external::Logger> logger) 
+        : logger_(logger) {}
+    
+    void handle_error(const std::string& error_message) override {
+        if (logger_) {
+            logger_->error("Thread System: {}", error_message);
+        }
+    }
+    
+private:
+    std::shared_ptr<external::Logger> logger_;
+};
+
+// Usage
+auto external_logger = external::Logger::create("app.log");
+auto logger_adapter = std::make_shared<LoggerAdapter>(external_logger);
+thread_pool->set_error_handler(logger_adapter);
+```
+
+### Monitoring Integration Pattern
+
+For performance monitoring and metrics collection:
+
+```cpp
+// Example: Integrating external monitoring
+class MonitoringAdapter {
+public:
+    MonitoringAdapter(std::shared_ptr<external::MetricsCollector> collector)
+        : collector_(collector) {}
+    
+    void record_job_execution(const std::string& job_type, 
+                             std::chrono::nanoseconds duration) {
+        if (collector_) {
+            collector_->record_histogram("thread_system.job_duration", 
+                                       duration.count(),
+                                       {{"job_type", job_type}});
+        }
+    }
+    
+    void record_pool_size(size_t active_workers, size_t total_workers) {
+        if (collector_) {
+            collector_->record_gauge("thread_system.active_workers", 
+                                   active_workers);
+            collector_->record_gauge("thread_system.total_workers", 
+                                   total_workers);
+        }
+    }
+    
+private:
+    std::shared_ptr<external::MetricsCollector> collector_;
+};
+```
+
+### Best Practices for Modular Architecture
+
+1. **Use Dependency Injection**:
+   ```cpp
+   class Application {
+   public:
+       Application(std::shared_ptr<thread_module::error_handler> error_handler = nullptr)
+           : error_handler_(error_handler) {
+           // Create thread pool
+           auto [pool, error] = create_default(4);
+           if (!error.has_value() && error_handler_) {
+               pool->set_error_handler(error_handler_);
+           }
+           thread_pool_ = std::move(pool);
+       }
+       
+   private:
+       std::shared_ptr<thread_module::error_handler> error_handler_;
+       std::unique_ptr<thread_pool_module::thread_pool> thread_pool_;
+   };
+   ```
+
+2. **Create Abstract Interfaces**:
+   ```cpp
+   // Define your own interfaces for optional dependencies
+   class ILogger {
+   public:
+       virtual ~ILogger() = default;
+       virtual void log(const std::string& message) = 0;
+   };
+   
+   class IMonitor {
+   public:
+       virtual ~IMonitor() = default;
+       virtual void record_metric(const std::string& name, double value) = 0;
+   };
+   ```
+
+3. **Use Null Object Pattern for Optional Dependencies**:
+   ```cpp
+   class NullLogger : public ILogger {
+   public:
+       void log(const std::string&) override {
+           // No-op implementation
+       }
+   };
+   
+   // Use null logger when no real logger is provided
+   auto logger = external_logger ? external_logger : std::make_shared<NullLogger>();
+   ```
+
 ## Conclusion
 
 Following these patterns and avoiding the antipatterns will help you use Thread System effectively. The core principles to remember are:
@@ -984,6 +1129,7 @@ Following these patterns and avoiding the antipatterns will help you use Thread 
 3. **Avoid overengineering**: Use the simplest concurrency pattern that meets your needs
 4. **Monitor and measure**: Always validate the performance benefits of your threading design
 5. **Handle errors**: Always check return values and handle errors properly
-6. **Debug methodically**: Use logs, debuggers, and thread sanitizers to identify issues
+6. **Debug methodically**: Use diagnostics, debuggers, and thread sanitizers to identify issues
+7. **Keep it modular**: Design your system to work with or without external logging/monitoring
 
 By following these guidelines, you can create robust, efficient, and maintainable concurrent applications with Thread System.

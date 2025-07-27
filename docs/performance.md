@@ -34,9 +34,10 @@ The Thread System framework delivers exceptional performance across various work
 - **Scaling Efficiency**: 96% at 8 cores (theoretical), 55-56% real-world
 - **Memory Efficient**: <1MB baseline memory usage
 - **Cross-Platform**: Consistent performance across Windows, Linux, and macOS
-- **Simplified Architecture**: 
+- **Modularized Architecture**: 
   - Adaptive queue strategy for automatic optimization
-  - Reduced code complexity by ~2,800 lines
+  - Reduced code complexity by ~8,700+ lines
+  - Separated logger and monitoring into independent projects
   - Maintains high performance with cleaner design
 
 ## Benchmark Environment
@@ -54,11 +55,14 @@ The Thread System framework delivers exceptional performance across various work
 - **Features**: std::format enabled, std::thread fallback (std::jthread not available)
 
 ### Thread System Version
-- **Version**: Latest development build with simplified architecture
-- **Build Date**: 2025-07-09 (latest update - duplicate code removed)
+- **Version**: Latest development build with modularized architecture
+- **Build Date**: 2025-07-25 (latest update - logger and monitoring modules removed)
 - **Configuration**: Release build with adaptive queue support
 - **Benchmark Tool**: Google Benchmark
-- **Architecture Changes**: Removed ~2,800 lines of duplicate code
+- **Architecture Changes**: 
+  - Removed ~8,700+ lines including logger and monitoring modules
+  - Logger and monitoring moved to separate projects
+  - Clean interface-based architecture
 - **Performance**: Maintained with automatic optimization via adaptive queues
 
 ## Core Performance Metrics
@@ -344,7 +348,7 @@ The Thread System includes comprehensive benchmarks for performance testing:
 #### Thread Pool Benchmarks (`benchmarks/thread_pool_benchmarks/`)
 - **gbench_thread_pool**: Basic Google Benchmark integration
 - **thread_pool_benchmark**: Core thread pool performance metrics
-- **memory_benchmark**: Memory usage and allocation patterns
+- **memory_benchmark**: Memory usage and allocation patterns (logger benchmark removed)
 - **real_world_benchmark**: Realistic workload simulations
 - **stress_test_benchmark**: Extreme load and contention testing
 - **scalability_benchmark**: Multi-core scaling analysis
@@ -356,6 +360,9 @@ The Thread System includes comprehensive benchmarks for performance testing:
 - **mpmc_performance_test**: MPMC queue performance analysis
 - **simple_mpmc_benchmark**: Basic queue operations
 - **quick_mpmc_test**: Fast queue validation
+
+#### Other Benchmarks
+- **data_race_benchmark**: Data race fix impact analysis
 
 #### Running Benchmarks
 ```bash
@@ -599,12 +606,25 @@ The adaptive logger implementation provides automatic optimization for high-thro
 
 ### Current Status
 
-- Simplified architecture with adaptive queue selection
+- Modularized architecture with adaptive queue selection
+- Logger and monitoring separated into independent projects
 - All stress tests enabled and passing reliably
 - Adaptive implementation provides optimal performance for all scenarios
 - Average operation latencies:
   - Enqueue: ~96 ns (low contention), ~320 ns (high contention)
   - Dequeue: ~571 ns with adaptive optimization
+
+### Recent Benchmark Results (2025-07-25)
+
+#### Data Race Fix Verification
+| Threads | Wake Interval Access | Cancellation Token | Job Queue Consistency |
+|---------|---------------------|--------------------|-----------------------|
+| 1       | 163μs/10K           | 25μs/100           | -                     |
+| 4       | 272μs/10K           | 59μs/400           | 842μs/2K dequeued     |
+| 8       | 438μs/10K           | 111μs/800          | 2.18ms/4K dequeued    |
+| 16      | 750μs/10K           | 210μs/1.6K         | 4.81ms/8K dequeued    |
+
+*Note: All data race issues have been resolved with proper synchronization.*
 
 ### Usage Recommendations
 
@@ -632,7 +652,11 @@ The adaptive logger implementation provides automatic optimization for high-thro
 4. **Retry Handling**: Operations may fail under extreme contention - implement retry logic
 5. **Monitoring**: Use built-in statistics to track performance metrics including retry counts
 
-## Logger Comparison with Industry Standards
+## Logger Performance (Now Separate Project)
+
+*Note: Logger has been moved to a separate project. The following benchmarks are from when logger was integrated with Thread System.*
+
+### Logger Comparison with Industry Standards
 
 ### Overview
 This section compares Thread System's logging performance against industry-standard logging libraries. The logger uses adaptive job queues for automatic optimization.
@@ -1239,7 +1263,7 @@ The Thread System framework provides exceptional performance characteristics wit
 4. **Memory Efficiency**: 
    - Standard pool: <1MB baseline memory usage
    - Dynamic allocation based on actual usage
-   - Reduced codebase by ~2,800 lines without performance loss
+   - Reduced codebase by ~8,700+ lines without performance loss
 5. **Platform Optimization**: 
    - Consistent performance across Windows, Linux, and macOS
    - Platform-specific optimizations where beneficial
@@ -1260,7 +1284,8 @@ The Thread System framework provides exceptional performance characteristics wit
    - Let adaptive queues handle optimization
 3. **Clean Architecture Benefits**:
    - Reduced code complexity improves maintainability
-   - Removed ~2,800 lines of duplicate code
+   - Removed ~8,700+ lines (logger, monitoring, unused utilities)
+   - Modular design with interface-based architecture
    - Performance maintained through smart design
 4. **Monitor Performance**:
    - Track job throughput and latency

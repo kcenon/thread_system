@@ -580,12 +580,12 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
           FILES_MATCHING PATTERN "*.h")
           
-  install(DIRECTORY sources/thread_base/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
+  install(DIRECTORY sources/interfaces/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
           FILES_MATCHING PATTERN "*.h")
           
-  install(DIRECTORY sources/logger/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/logger
+  install(DIRECTORY sources/thread_base/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
           FILES_MATCHING PATTERN "*.h")
           
   install(DIRECTORY sources/thread_pool/
@@ -596,8 +596,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
   
+  # Monitoring headers disabled - moved to separate project
+  # install(DIRECTORY sources/monitoring/
+  #         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/monitoring
+  #         FILES_MATCHING PATTERN "*.h")
+  
   # Install libraries
-  install(TARGETS utilities thread_base logger thread_pool typed_thread_pool
+  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool
           EXPORT ThreadSystemTargets
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

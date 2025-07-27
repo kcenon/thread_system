@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../utilities/core/formatter.h"
 #include "../../thread_base/core/thread_base.h"
 #include "../../utilities/conversion/convert_string.h"
+#include "../../interfaces/thread_context.h"
 #include "typed_job_queue.h"
 
 #include <memory>
@@ -105,13 +106,16 @@ namespace typed_thread_pool_module
 		 * A boolean flag indicating whether the worker should utilize
 		 * time-tagged information (if available) for job scheduling
 		 * or logging. Defaults to \c true.
+		 * 
+		 * @param context Thread context providing logging and monitoring services.
 		 *
 		 * @note
 		 * The \c use_time_tag feature may be leveraged by derived classes or
 		 * additional logging mechanisms if time-based processing is required.
 		 */
 		typed_thread_worker_t(std::vector<job_type> types = all_types(),
-								 const bool& use_time_tag = true);
+								 const bool& use_time_tag = true,
+								 const thread_context& context = thread_context());
 
 		/**
 		 * @brief Virtual destructor for the typed_thread_worker_t class.
@@ -148,6 +152,20 @@ namespace typed_thread_pool_module
 		 * levels the worker will process.
 		 */
 		[[nodiscard]] auto types(void) const -> std::vector<job_type>;
+
+		/**
+		 * @brief Sets the thread context for this worker.
+		 *
+		 * @param context Thread context providing optional services
+		 */
+		auto set_context(const thread_context& context) -> void;
+
+		/**
+		 * @brief Gets the thread context for this worker.
+		 *
+		 * @return const thread_context& Reference to the thread context
+		 */
+		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
 	protected:
 		/**
@@ -208,6 +226,13 @@ namespace typed_thread_pool_module
 		 * execution.
 		 */
 		std::shared_ptr<typed_job_queue_t<job_type>> job_queue_;
+
+		/**
+		 * @brief The thread context providing optional services.
+		 *
+		 * Provides access to logging and monitoring services if available.
+		 */
+		thread_context context_;
 	};
 
 	/// Convenience typedef for a worker configured with default job_types.

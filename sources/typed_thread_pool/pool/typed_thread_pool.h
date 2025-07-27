@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../utilities/core/formatter.h"
 #include "../../utilities/conversion/convert_string.h"
+#include "../../interfaces/thread_context.h"
 #include "../scheduling/typed_job_queue.h"
 #include "../scheduling/typed_thread_worker.h"
 
@@ -147,8 +148,10 @@ namespace typed_thread_pool_module
 		 *
 		 * @param thread_title A human-readable title or name for the thread pool.
 		 * This can help in debugging or logging.
+		 * @param context Thread context providing optional logging and monitoring services
 		 */
-		typed_thread_pool_t(const std::string& thread_title = "typed_thread_pool");
+		typed_thread_pool_t(const std::string& thread_title = "typed_thread_pool",
+		                   const thread_context& context = thread_context());
 
 		/**
 		 * @brief Destroys the typed_thread_pool_t object.
@@ -314,6 +317,13 @@ namespace typed_thread_pool_module
 		 */
 		auto set_job_queue(std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void;
 
+		/**
+		 * @brief Gets the thread context for this pool.
+		 *
+		 * @return const thread_context& Reference to the thread context
+		 */
+		[[nodiscard]] auto get_context(void) const -> const thread_context&;
+
 	private:
 		/** @brief A descriptive name or title for this thread pool, useful for logging. */
 		std::string thread_title_;
@@ -326,6 +336,9 @@ namespace typed_thread_pool_module
 
 		/** @brief The collection of worker threads responsible for processing jobs. */
 		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>> workers_;
+
+		/** @brief The thread context providing optional services. */
+		thread_context context_;
 	};
 
 	/// Alias for a typed_thread_pool with the default job_types type.

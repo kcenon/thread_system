@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_pool.h"
 #include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
 
-#include "../../logger/core/logger.h"
+#include "../../interfaces/logger_interface.h"
 #include "../../utilities/core/formatter.h"
 
 using namespace utility_module;
@@ -49,6 +49,8 @@ using namespace utility_module;
 
 namespace thread_pool_module
 {
+	// Initialize static member
+	std::atomic<std::uint32_t> thread_pool::next_pool_instance_id_{0};
 	/**
 	 * @brief Constructs a thread pool with adaptive job queue.
 	 * 
@@ -57,6 +59,7 @@ namespace thread_pool_module
 	 * - Creates adaptive job queue that automatically optimizes based on contention
 	 * - Pool starts in stopped state (start_pool_ = false)
 	 * - No workers are initially assigned (workers_ is empty)
+	 * - Stores thread context for logging and monitoring
 	 * 
 	 * Adaptive Queue Strategy:
 	 * - ADAPTIVE mode automatically switches between mutex and lock-free implementations
@@ -64,10 +67,25 @@ namespace thread_pool_module
 	 * - Eliminates need for manual queue strategy selection
 	 * 
 	 * @param thread_title Descriptive name for this thread pool instance
+	 * @param context Thread context providing logging and monitoring services
 	 */
-	thread_pool::thread_pool(const std::string& thread_title)
-		: thread_title_(thread_title), start_pool_(false), job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE))
+	thread_pool::thread_pool(const std::string& thread_title, const thread_context& context)
+		: thread_title_(thread_title), 
+		  pool_instance_id_(next_pool_instance_id_.fetch_add(1)),
+		  start_pool_(false), 
+		  job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE)),
+		  context_(context)
 	{
+		// Report initial pool registration if monitoring is available
+		if (context_.monitoring())
+		{
+			monitoring_interface::thread_pool_metrics initial_metrics;
+			initial_metrics.pool_name = thread_title_;
+			initial_metrics.pool_instance_id = pool_instance_id_;
+			initial_metrics.worker_threads = 0;
+			initial_metrics.timestamp = std::chrono::steady_clock::now();
+			context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, initial_metrics);
+		}
 	}
 
 	/**
@@ -235,6 +253,7 @@ namespace thread_pool_module
 		}
 
 		worker->set_job_queue(job_queue_);
+		worker->set_context(context_);
 
 		if (start_pool_.load())
 		{
@@ -267,6 +286,7 @@ namespace thread_pool_module
 		for (auto& worker : workers)
 		{
 			worker->set_job_queue(job_queue_);
+			worker->set_context(context_);
 
 			if (start_pool_.load())
 			{
@@ -306,8 +326,9 @@ namespace thread_pool_module
 			auto stop_result = worker->stop();
 			if (stop_result.has_error())
 			{
-				log_module::write_error("error stopping worker: {}",
-										stop_result.get_error().to_string());
+				context_.log(log_level::error, 
+				            formatter::format("error stopping worker: {}",
+				                            stop_result.get_error().to_string()));
 			}
 		}
 
@@ -329,5 +350,47 @@ namespace thread_pool_module
 		}
 
 		return format_string;
+	}
+
+	auto thread_pool::get_context(void) const -> const thread_context&
+	{
+		return context_;
+	}
+
+	std::uint32_t thread_pool::get_pool_instance_id() const
+	{
+		return pool_instance_id_;
+	}
+
+	void thread_pool::report_metrics()
+	{
+		if (!context_.monitoring())
+		{
+			return;
+		}
+
+		monitoring_interface::thread_pool_metrics metrics;
+		metrics.pool_name = thread_title_;
+		metrics.pool_instance_id = pool_instance_id_;
+		metrics.worker_threads = workers_.size();
+		metrics.idle_threads = get_idle_worker_count();
+		
+		if (job_queue_)
+		{
+			metrics.jobs_pending = job_queue_->size();
+		}
+		
+		metrics.timestamp = std::chrono::steady_clock::now();
+		
+		// Report metrics with pool identification
+		context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, metrics);
+	}
+
+	std::size_t thread_pool::get_idle_worker_count() const
+	{
+		// TODO: Implement proper idle worker counting
+		// This would require workers to expose their current state
+		// For now, return 0 to indicate no idle workers
+		return 0;
 	}
 } // namespace thread_pool_module

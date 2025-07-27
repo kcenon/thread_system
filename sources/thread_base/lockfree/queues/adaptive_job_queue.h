@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2025, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../jobs/job_queue.h"
 #include "lockfree_job_queue.h"
-#include "../../logger/core/logger.h"
 #include <thread>
 #include <chrono>
 #include <atomic>
