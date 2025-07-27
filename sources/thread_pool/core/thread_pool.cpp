@@ -388,13 +388,9 @@ namespace thread_pool_module
 
 	std::size_t thread_pool::get_idle_worker_count() const
 	{
-		std::size_t idle_count = 0;
-		for (const auto& worker : workers_)
-		{
-			// Check if worker is not currently processing a job
-			// This is a simplified implementation - workers would need to expose their state
-			// For now, we'll return 0 as workers don't currently expose idle state
-		}
-		return idle_count;
+		// TODO: Implement proper idle worker counting
+		// This would require workers to expose their current state
+		// For now, return 0 to indicate no idle workers
+		return 0;
 	}
 } // namespace thread_pool_module
