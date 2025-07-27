@@ -1,0 +1,23 @@
+<map id="thread_module::crash_handler" name="thread_module::crash_handler">
+<area shape="rect" id="Node000001" title="Thread&#45;safe crash handler for the entire thread system." alt="" coords="335,676,543,1216"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="119,135,198,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,201,90,230,62,264,35,305,17,339,9,375,13,421,33,488,62,553,99,615,141,673,186,726,233,775,324,856,320,860,229,779,182,730,137,676,95,618,58,556,28,490,8,422,3,375,12,337,31,302,58,261,86,226,117,197"/>
+<area shape="rect" id="Node000005" href="$df/db2/structthread__module_1_1crash__handler_1_1callback__entry.html" title=" " alt="" coords="72,263,245,383"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="161,200,161,246,156,246,156,200"/>
+<area shape="rect" id="Node000007" href="$d7/dbf/structthread__module_1_1crash__handler_1_1cleanup__entry.html" title=" " alt="" coords="269,273,440,373"/>
+<area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="200,197,281,260,277,265,197,202"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="93,5,224,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="161,99,161,134,156,134,156,99"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="77,445,246,540"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="192,539,328,760,323,763,187,542"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="162,383,163,429,158,429,157,383"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="270,445,439,540"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="366,540,388,660,383,661,361,541"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="357,373,357,429,352,429,352,373"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="463,460,547,525"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="502,526,496,564,481,660,476,659,491,564,497,525"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="572,460,727,525"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="649,526,641,586,622,653,591,722,554,787,549,785,586,719,617,651,636,585,644,525"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="751,460,897,525"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="825,526,814,588,803,622,787,653,738,720,680,780,618,832,558,876,555,871,615,828,676,776,734,716,783,651,798,620,809,586,819,525"/>
+</map>

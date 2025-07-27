@@ -1,0 +1,11 @@
+<map id="thread_module::thread_context" name="thread_module::thread_context">
+<area shape="rect" id="Node000001" title="Context object that provides access to optional services." alt="" coords="129,460,323,769"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,317,204,397"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,396,148,443,143,446,121,398"/>
+<area shape="rect" id="Node000003" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="24,50,185,210"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,211,107,301,102,301,102,211"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="228,317,467,397"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="331,398,309,446,304,443,326,396"/>
+<area shape="rect" id="Node000005" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="250,5,445,255"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="350,255,350,301,345,301,345,255"/>
+</map>

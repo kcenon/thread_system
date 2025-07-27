@@ -1,8 +1,26 @@
 var searchData=
 [
-  ['result_0',['result',['../d2/d93/classthread__module_1_1result.html',1,'thread_module']]],
-  ['result_3c_20void_20_3e_1',['result&lt; void &gt;',['../de/d5e/classthread__module_1_1result_3_01void_01_4.html',1,'thread_module']]],
-  ['result_5fvoid_2',['result_void',['../dd/da2/classthread__module_1_1result__void.html',1,'thread_module']]],
-  ['retirednode_3',['RetiredNode',['../dd/dbf/structthread__module_1_1hazard__pointer__manager_1_1RetiredNode.html',1,'thread_module::hazard_pointer_manager']]],
-  ['ring_5fbuffer_4',['ring_buffer',['../d7/dc0/classmonitoring__module_1_1ring__buffer.html',1,'monitoring_module']]]
+  ['thread_5fbase_0',['thread_base',['../da/d94/classthread__module_1_1thread__base.html',1,'thread_module']]],
+  ['thread_5fcontext_1',['thread_context',['../d5/d07/classthread__module_1_1thread__context.html',1,'thread_module']]],
+  ['thread_5fcontext_5fbuilder_2',['thread_context_builder',['../dc/d2a/classthread__module_1_1thread__context__builder.html',1,'thread_module']]],
+  ['thread_5fimpl_3',['thread_impl',['../df/d50/classthread__module_1_1detail_1_1thread__impl.html',1,'thread_module::detail']]],
+  ['thread_5fpool_4',['thread_pool',['../d9/da1/classthread__pool__module_1_1thread__pool.html',1,'thread_pool_module']]],
+  ['thread_5fpool_5fcrash_5fsafety_5',['thread_pool_crash_safety',['../d4/d20/classthread__module_1_1thread__pool__crash__safety.html',1,'thread_module']]],
+  ['thread_5fpool_5fmetrics_6',['thread_pool_metrics',['../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html',1,'monitoring_interface']]],
+  ['thread_5fworker_7',['thread_worker',['../d7/d1b/classthread__pool__module_1_1thread__worker.html',1,'thread_pool_module']]],
+  ['token_5fstate_8',['token_state',['../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html',1,'thread_module::cancellation_token']]],
+  ['typed_5fjob_5ffactory_5finterface_9',['typed_job_factory_interface',['../dd/dab/classtyped__thread__pool__module_1_1typed__job__factory__interface.html',1,'typed_thread_pool_module']]],
+  ['typed_5fjob_5finterface_10',['typed_job_interface',['../d0/d67/classtyped__thread__pool__module_1_1typed__job__interface.html',1,'typed_thread_pool_module']]],
+  ['typed_5fjob_5fqueue_5ft_11',['typed_job_queue_t',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fjob_5fqueue_5ft_3c_20job_5ftype_20_3e_12',['typed_job_queue_t&lt; job_type &gt;',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fjob_5fqueue_5ft_3c_20job_5ftypes_20_3e_13',['typed_job_queue_t&lt; job_types &gt;',['../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fjob_5ft_14',['typed_job_t',['../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fjob_5fqueue_5ft_15',['typed_lockfree_job_queue_t',['../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5flockfree_5fjob_5fqueue_5ft_3c_20job_5ftypes_20_3e_16',['typed_lockfree_job_queue_t&lt; job_types &gt;',['../d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fqueue_5fstatistics_17',['typed_queue_statistics',['../d8/d18/structtyped__queue__statistics.html',1,'typed_queue_statistics'],['../d3/dbe/structtyped__thread__pool__module_1_1typed__lockfree__job__queue__t_1_1typed__queue__statistics.html',1,'typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics']]],
+  ['typed_5fqueue_5fstatistics_5ft_18',['typed_queue_statistics_t',['../dd/dab/structtyped__thread__pool__module_1_1typed__queue__statistics__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fpool_5fbuilder_19',['typed_thread_pool_builder',['../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fpool_5ft_20',['typed_thread_pool_t',['../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fworker_5ft_21',['typed_thread_worker_t',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]],
+  ['typed_5fthread_5fworker_5ft_3c_20job_5ftypes_20_3e_22',['typed_thread_worker_t&lt; job_types &gt;',['../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html',1,'typed_thread_pool_module']]]
 ];

@@ -1,31 +1,5 @@
 var searchData=
 [
   ['backoff_0',['backoff',['../de/d2d/structthread__module_1_1lockfree_1_1adaptive__config.html#a06775e9ffafe2cf6c3c7821a71296fb1',1,'thread_module::lockfree::adaptive_config']]],
-  ['backoff_5ftime_5fns_1',['backoff_time_ns',['../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e',1,'thread_module::lockfree::performance_stats']]],
-  ['backup_5ffile_5f_2',['backup_file_',['../dc/d2b/classlog__module_1_1file__writer.html#a7f456083280cd44cd8886e0e216c39e5',1,'log_module::file_writer']]],
-  ['backup_5fname_5f_3',['backup_name_',['../dc/d2b/classlog__module_1_1file__writer.html#aa73a117192d83f77b941b205b34f142c',1,'log_module::file_writer']]],
-  ['bg_5fblack_4',['bg_black',['../d4/d9e/namespacelog__module_1_1colors.html#af859cab899c3e32f8affd387c6b2b221',1,'log_module::colors']]],
-  ['bg_5fblue_5',['bg_blue',['../d4/d9e/namespacelog__module_1_1colors.html#a638a2a6309835a794ea362744156a129',1,'log_module::colors']]],
-  ['bg_5fcyan_6',['bg_cyan',['../d4/d9e/namespacelog__module_1_1colors.html#a240f1118e690872e44984b016bd9e14d',1,'log_module::colors']]],
-  ['bg_5fgreen_7',['bg_green',['../d4/d9e/namespacelog__module_1_1colors.html#a70c73054e645e5b4fb9bef82b1a3333d',1,'log_module::colors']]],
-  ['bg_5fmagenta_8',['bg_magenta',['../d4/d9e/namespacelog__module_1_1colors.html#ad7361be9482c132b1f85604e418d2ef8',1,'log_module::colors']]],
-  ['bg_5fred_9',['bg_red',['../d4/d9e/namespacelog__module_1_1colors.html#adf0d1858a992e7a2a1f804dd27147ad0',1,'log_module::colors']]],
-  ['bg_5fwhite_10',['bg_white',['../d4/d9e/namespacelog__module_1_1colors.html#acf89ee41ef03f0cb30dfc65e546f6c0a',1,'log_module::colors']]],
-  ['bg_5fyellow_11',['bg_yellow',['../d4/d9e/namespacelog__module_1_1colors.html#ae0b9453317b333ce94b83efdc724f436',1,'log_module::colors']]],
-  ['black_12',['black',['../d4/d9e/namespacelog__module_1_1colors.html#af6d8fb2eef583cd98462e73e69ddc2ca',1,'log_module::colors']]],
-  ['blue_13',['blue',['../d4/d9e/namespacelog__module_1_1colors.html#a1981d64afd2326e1e6522dbc08234ce4',1,'log_module::colors']]],
-  ['bold_14',['bold',['../d4/d9e/namespacelog__module_1_1colors.html#af6498474d1fcbe6c961e7b125473a186',1,'log_module::colors']]],
-  ['bright_5fblack_15',['bright_black',['../d4/d9e/namespacelog__module_1_1colors.html#a5cbfa30c14cb03fb0e8b6774dd73be7b',1,'log_module::colors']]],
-  ['bright_5fblue_16',['bright_blue',['../d4/d9e/namespacelog__module_1_1colors.html#a8e4cea0ddde0f0bdb2dc5adc64235f18',1,'log_module::colors']]],
-  ['bright_5fcyan_17',['bright_cyan',['../d4/d9e/namespacelog__module_1_1colors.html#a7b670b5178dc2509f3c2bce7c779410d',1,'log_module::colors']]],
-  ['bright_5fgreen_18',['bright_green',['../d4/d9e/namespacelog__module_1_1colors.html#a53451c2c15bf5e1c128658c13285bd8c',1,'log_module::colors']]],
-  ['bright_5fmagenta_19',['bright_magenta',['../d4/d9e/namespacelog__module_1_1colors.html#ac8a41059d6f774831333ecf30ff926ce',1,'log_module::colors']]],
-  ['bright_5fred_20',['bright_red',['../d4/d9e/namespacelog__module_1_1colors.html#a5966403b6c05100cb69b851b2e5f7f14',1,'log_module::colors']]],
-  ['bright_5fwhite_21',['bright_white',['../d4/d9e/namespacelog__module_1_1colors.html#a11d888384b78820f241ab67b8bd96cfd',1,'log_module::colors']]],
-  ['bright_5fyellow_22',['bright_yellow',['../d4/d9e/namespacelog__module_1_1colors.html#aca20017b03cfe5baad04bf014411a21b',1,'log_module::colors']]],
-  ['buffer_5f_23',['buffer_',['../dd/d1c/classlog__module_1_1detail_1_1optimization_1_1stack__string__builder.html#a4948d41e9629abf2d189095521015a8c',1,'log_module::detail::optimization::stack_string_builder::buffer_'],['../d7/dc0/classmonitoring__module_1_1ring__buffer.html#a197b12de4a193fad0a180fb22860956f',1,'monitoring_module::ring_buffer::buffer_'],['../dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a54382e3743a0bcf2c34f025736dd92e6',1,'monitoring_module::thread_safe_ring_buffer::buffer_']]],
-  ['buffer_5foverflows_24',['buffer_overflows',['../db/d8a/structmonitoring__module_1_1collection__statistics.html#aabf5ece78b8fa3a34930615b524be5d8',1,'monitoring_module::collection_statistics']]],
-  ['buffer_5fsize_25',['buffer_size',['../db/d71/structmonitoring__module_1_1monitoring__config.html#abfc896fd95c3d0245fbf69675e95c3f7',1,'monitoring_module::monitoring_config::buffer_size'],['../d2/db6/structlog__module_1_1writer__factory_1_1writer__options.html#a4f20a133d35bf7b523b28ce51866631b',1,'log_module::writer_factory::writer_options::buffer_size'],['../d5/d42/structlog__module_1_1config_1_1writer__config.html#ac37aad44439b36974db7cffe9578b838',1,'log_module::config::writer_config::buffer_size']]],
-  ['buffered_26',['buffered',['../d2/db6/structlog__module_1_1writer__factory_1_1writer__options.html#ab42d8c210e4d427b7740f898dd8c760c',1,'log_module::writer_factory::writer_options']]],
-  ['bytes_5fwritten_27',['bytes_written',['../da/d01/structlog__module_1_1base__writer_1_1writer__stats.html#ae0f82a65b64190f78d28fe3f221323a3',1,'log_module::base_writer::writer_stats']]]
+  ['backoff_5ftime_5fns_1',['backoff_time_ns',['../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e',1,'thread_module::lockfree::performance_stats']]]
 ];

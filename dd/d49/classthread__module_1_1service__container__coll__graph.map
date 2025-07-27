@@ -1,0 +1,11 @@
+<map id="thread_module::service_container" name="thread_module::service_container">
+<area shape="rect" id="Node000001" title="Modern service container for dependency injection." alt="" coords="27,468,193,668"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,318,89,383"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,383,79,451,74,453,54,384"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="113,296,307,405"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,407,165,454,160,452,183,404"/>
+<area shape="rect" id="Node000004" href="$d4/d0f/structthread__module_1_1service__container_1_1service__entry.html" title=" " alt="" coords="121,133,299,233"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="213,234,213,279,207,279,207,234"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="125,5,295,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="213,71,213,117,207,117,207,71"/>
+</map>

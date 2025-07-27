@@ -1,0 +1,7 @@
+<map id="monitoring_interface::thread_pool_metrics" name="monitoring_interface::thread_pool_metrics">
+<area shape="rect" id="Node000001" title="Thread pool performance metrics interface." alt="" coords="5,263,193,483"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="60,135,139,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,200,102,246,97,246,97,200"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="34,5,165,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,99,102,134,97,134,97,99"/>
+</map>

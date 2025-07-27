@@ -1,0 +1,7 @@
+<map id="thread_pool_module::thread_pool::thread_pool" name="thread_pool_module::thread_pool::thread_pool">
+<area shape="rect" id="Node000001" title="Constructs a new thread_pool instance." alt="" coords="5,41,197,81"/>
+<area shape="rect" id="Node000002" href="$d5/d07/classthread__module_1_1thread__context.html#a69d56738b7b690adc5aaf352eb7a6470" title="Get the monitoring service." alt="" coords="250,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,44,236,38,237,43,198,49"/>
+<area shape="rect" id="Node000003" href="$d5/d07/classthread__module_1_1thread__context.html#a91a0a65d4be276e19cacf6e5bd4e5d39" title="Update thread pool metrics if monitoring is available." alt="" coords="245,70,425,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,73,232,79,231,84,197,79"/>
+</map>

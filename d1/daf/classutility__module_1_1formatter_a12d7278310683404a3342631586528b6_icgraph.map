@@ -1,11 +1,9 @@
 <map id="utility_module::formatter::format_to" name="utility_module::formatter::format_to">
-<area shape="rect" id="Node000001" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="473,69,660,109"/>
-<area shape="rect" id="Node000002" href="$d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67" title="The primary work routine that processes and outputs console log messages." alt="" coords="261,5,417,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="481,68,410,48,411,43,483,63"/>
-<area shape="rect" id="Node000003" href="$d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="252,69,425,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="459,92,426,92,426,87,459,87"/>
-<area shape="rect" id="Node000004" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="253,133,425,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="483,116,411,136,410,131,481,110"/>
-<area shape="rect" id="Node000005" href="$d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,126,204,181"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="239,156,204,156,204,151,239,151"/>
+<area shape="rect" id="Node000001" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="473,37,660,77"/>
+<area shape="rect" id="Node000002" href="$d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402" title="Replaces all occurrences of token in source with target, returning a new string." alt="" coords="252,5,425,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="459,45,425,40,426,35,460,40"/>
+<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="253,69,425,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="460,75,425,80,425,75,459,70"/>
+<area shape="rect" id="Node000004" href="$d3/d10/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html#a34685a0dd7bbe85126124e2f2398af30" title="Formats a thread_pool object as a string using {fmt}." alt="" coords="5,62,204,117"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="239,92,204,92,204,87,239,87"/>
 </map>

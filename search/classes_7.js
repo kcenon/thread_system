@@ -1,14 +1,12 @@
 var searchData=
 [
-  ['has_5fdo_5fwork_5fmethod_0',['has_do_work_method',['../dd/d19/structtyped__thread__pool__module_1_1detail_1_1has__do__work__method.html',1,'typed_thread_pool_module::detail']]],
-  ['has_5fdo_5fwork_5fmethod_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20t_20_3e_28_29_2edo_5fwork_28_29_29_3e_20_3e_1',['has_do_work_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().do_work())&gt; &gt;',['../db/df5/structtyped__thread__pool__module_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_326af756acd357eb452243a29392a2b29.html',1,'typed_thread_pool_module::detail']]],
-  ['has_5fget_5fmethod_2',['has_get_method',['../df/d64/structthread__pool__module_1_1detail_1_1has__get__method.html',1,'thread_pool_module::detail']]],
-  ['has_5fget_5fmethod_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20t_20_3e_28_29_2eget_28_29_29_3e_20_3e_3',['has_get_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().get())&gt; &gt;',['../d9/d62/structthread__pool__module_1_1detail_1_1has__get__method_3_01T_00_01std_1_1void__t_3_01decltype_a0465c2793b601c1efa3be7652b795e9.html',1,'thread_pool_module::detail']]],
-  ['has_5fpriority_5fmethod_4',['has_priority_method',['../d2/d0b/structtyped__thread__pool__module_1_1detail_1_1has__priority__method.html',1,'typed_thread_pool_module::detail']]],
-  ['has_5fpriority_5fmethod_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20t_20_3e_28_29_2epriority_28_29_29_3e_20_3e_5',['has_priority_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().priority())&gt; &gt;',['../de/d9b/structtyped__thread__pool__module_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3e6416fec089501094ca1aa6baa646e2f.html',1,'typed_thread_pool_module::detail']]],
-  ['has_5fto_5fstring_6',['has_to_string',['../de/dff/structlog__module_1_1detail_1_1has__to__string.html',1,'log_module::detail']]],
-  ['has_5fto_5fstring_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20t_20_3e_28_29_2eto_5fstring_28_29_29_3e_20_3e_7',['has_to_string&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().to_string())&gt; &gt;',['../d5/dab/structlog__module_1_1detail_1_1has__to__string_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1d3990b1d7dc7e69d816107c9a88e04327.html',1,'log_module::detail']]],
-  ['hazard_5fpointer_8',['hazard_pointer',['../d5/d31/classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html',1,'thread_module::hazard_pointer_manager']]],
-  ['hazard_5fpointer_5fmanager_9',['hazard_pointer_manager',['../d7/ded/classthread__module_1_1hazard__pointer__manager.html',1,'thread_module']]],
-  ['hazardrecord_10',['HazardRecord',['../d8/d35/structthread__module_1_1hazard__pointer__manager_1_1HazardRecord.html',1,'thread_module::hazard_pointer_manager']]]
+  ['job_0',['job',['../d8/d42/classthread__module_1_1job.html',1,'thread_module']]],
+  ['job_5feraser_1',['job_eraser',['../d1/d76/classtyped__thread__pool__module_1_1detail_1_1job__eraser.html',1,'typed_thread_pool_module::detail']]],
+  ['job_5finterface_2',['job_interface',['../d6/ddf/classthread__module_1_1jobs_1_1job__interface.html',1,'thread_module::jobs']]],
+  ['job_5fqueue_3',['job_queue',['../df/d6d/classthread__module_1_1job__queue.html',1,'thread_module']]],
+  ['job_5ftype_5fextractor_4',['job_type_extractor',['../d0/dfa/structtyped__thread__pool__module_1_1detail_1_1job__type__extractor.html',1,'typed_thread_pool_module::detail']]],
+  ['job_5ftype_5fextractor_3c_20t_20_3e_5',['job_type_extractor&lt; T &gt;',['../d1/d67/structtyped__thread__pool__module_1_1detail_1_1job__type__extractor_3_01T_01_4.html',1,'typed_thread_pool_module::detail']]],
+  ['job_5ftype_5flist_6',['job_type_list',['../d0/dc2/structtyped__thread__pool__module_1_1detail_1_1job__type__list.html',1,'typed_thread_pool_module::detail']]],
+  ['job_5ftype_5ftraits_7',['job_type_traits',['../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html',1,'typed_thread_pool_module::detail']]],
+  ['job_5fvalidator_8',['job_validator',['../d2/d06/structtyped__thread__pool__module_1_1detail_1_1job__validator.html',1,'typed_thread_pool_module::detail']]]
 ];

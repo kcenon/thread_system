@@ -1,0 +1,5 @@
+<map id="thread_module::thread_context::thread_context" name="thread_module::thread_context::thread_context">
+<area shape="rect" id="Node000001" title="Default constructor &#45; resolves services from global container." alt="" coords="224,5,408,45"/>
+<area shape="rect" id="Node000002" href="$d5/d07/classthread__module_1_1thread__context.html#a957cbc5a68f379f4587b602247c6d059" title="Create a child context with the same services." alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,28,176,28,176,23,210,23"/>
+</map>

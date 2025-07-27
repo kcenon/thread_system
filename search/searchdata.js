@@ -1,18 +1,18 @@
 var indexSectionsWithContent =
 {
   0: "5abcdefghijklmnopqrstuvwy~✅🌟🎯🏆📈📚🔧🚀🛠🛡🤝",
-  1: "abcdefghijlmnpqrstuvw",
+  1: "acdefhijlmnpqrstvw",
   2: "lmtu",
-  3: "abcdefhjlmnprstw",
+  3: "acefhjlmnpstw",
   4: "abcdefghijlmnoprstuvw~",
-  5: "abcdefghijlmnopqrstuvwy",
-  6: "acdefijlnpqrstuvw",
-  7: "bejlmqstw",
-  8: "abcdefghijlmnopqrstuw",
+  5: "abcdefhijlmnopqrstuvwy",
+  6: "acdefijlnpqrstuv",
+  7: "bcejlmqstw",
+  8: "abcdefhijlmnopqrstuw",
   9: "h",
-  10: "cd",
+  10: "dt",
   11: "dst",
-  12: "lt"
+  12: "t"
 };
 
 var indexSectionNames =
