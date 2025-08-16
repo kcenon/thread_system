@@ -350,7 +350,7 @@ template&lt;detail::JobType job_type&gt; </div>
 
 <p>Alias for a typed_thread_pool with the default job_types type. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00345">345</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00332">332</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -368,7 +368,7 @@ template&lt;detail::JobType job_type&gt; </div>
 
 <p>Convenience typedef for a worker configured with default job_types. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html#l00239">239</a> of file <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html">typed_thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html#l00214">214</a> of file <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html">typed_thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -445,7 +445,7 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Returns a vector containing all possible <code>job_types</code> values. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::vector&lt;job_types&gt;</code> with [RealTime, Batch, Background].</dd></dl>
 <p>This function is useful when iterating over all defined types (e.g. for logging, UI selection, or testing).</p>
-<h3><a class="anchor" id="autotoc_md25"></a>
+<h3><a class="anchor" id="autotoc_md44"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> type : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(type) &lt;&lt; std::endl;</div>
@@ -600,7 +600,7 @@ template&lt;typename job_type  = job_types&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> containing one of "REALTIME", "BATCH", "BACKGROUND", or "UNKNOWN" if <code>job_type</code> is out of expected range.</dd></dl>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md43"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> p = <a class="code hl_enumvalue" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216">job_types::RealTime</a>;</div>
 <div class="line">std::string_view sv = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(p); <span class="comment">// &quot;REALTIME&quot;</span></div>
@@ -617,7 +617,7 @@ Example</h3>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 27 2025 08:24:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 16 2025 13:29:09 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

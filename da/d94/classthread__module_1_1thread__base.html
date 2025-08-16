@@ -92,13 +92,21 @@ Inheritance diagram for thread_module::thread_base:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/da4/classthread__module_1_1thread__base__inherit__graph.png" border="0" usemap="#athread__module_1_1thread__base_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1thread__base_inherit__map" id="athread__module_1_1thread__base_inherit__map">
-<area shape="rect" title="A foundational class for implementing custom worker threads." alt="" coords="221,5,421,531"/>
-<area shape="rect" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title=" " alt="" coords="5,581,204,876"/>
-<area shape="poly" title=" " alt="" coords="217,495,176,582,171,580,212,493"/>
-<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="229,579,413,879"/>
-<area shape="poly" title=" " alt="" coords="323,545,323,578,318,578,318,545"/>
-<area shape="rect" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="437,581,636,876"/>
-<area shape="poly" title=" " alt="" coords="429,493,470,580,465,582,424,495"/>
+<area shape="rect" title="A foundational class for implementing custom worker threads." alt="" coords="637,5,837,531"/>
+<area shape="rect" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title=" " alt="" coords="5,754,204,989"/>
+<area shape="poly" title=" " alt="" coords="625,313,528,357,419,416,365,451,312,490,263,533,219,580,190,620,166,665,147,710,133,755,128,753,142,708,162,662,185,618,215,577,259,530,309,486,362,447,417,411,525,352,623,308"/>
+<area shape="rect" href="../../dd/d67/classlog__module_1_1callback__writer.html" title="A class that processes log messages in a separate thread and delivers logs through a user&#45;defined cal..." alt="" coords="229,781,413,961"/>
+<area shape="poly" title=" " alt="" coords="628,359,576,406,523,459,472,518,427,580,400,629,377,682,344,782,339,780,372,680,395,627,422,577,468,515,519,456,572,402,624,355"/>
+<area shape="rect" href="../../d9/de4/classlog__module_1_1console__writer.html" title="A specialized thread class that continuously writes log messages to the console." alt="" coords="437,791,621,951"/>
+<area shape="poly" title=" " alt="" coords="644,545,558,792,553,790,639,543"/>
+<area shape="rect" href="../../dc/d2b/classlog__module_1_1file__writer.html" title="Writes log messages to a file in a dedicated thread." alt="" coords="645,579,829,1164"/>
+<area shape="poly" title=" " alt="" coords="739,545,739,578,734,578,734,545"/>
+<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html" title="A class for collecting and managing log messages." alt="" coords="853,619,1034,1124"/>
+<area shape="poly" title=" " alt="" coords="834,543,859,618,854,620,829,545"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="1058,781,1242,961"/>
+<area shape="poly" title=" " alt="" coords="849,356,900,403,953,456,1004,515,1048,577,1076,627,1099,680,1132,780,1127,782,1094,682,1071,629,1044,580,999,518,949,460,896,407,845,360"/>
+<area shape="rect" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="1267,754,1465,989"/>
+<area shape="poly" title=" " alt="" coords="850,308,947,352,1055,412,1110,447,1163,487,1212,530,1256,577,1285,618,1309,662,1328,708,1343,753,1338,755,1323,710,1304,665,1281,620,1252,580,1208,534,1159,491,1107,452,1053,416,945,357,848,313"/>
 </map>
 </div>
 <div class="dynheader">
@@ -211,7 +219,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A foundational class for implementing custom worker threads. </p>
 <p>The <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> class provides a framework for managing a single worker thread, offering lifecycle methods (start, stop), optional wake intervals, and hooks (<code>before_start</code>, <code>do_work</code>, <code>after_stop</code>) for derived classes to customize behavior.</p>
 <p>This class abstracts platform-specific thread management details and provides a unified interface for both C++20 <code>std::jthread</code> and traditional <code>std::thread</code>, selected at compile time via the <code>USE_STD_JTHREAD</code> macro.</p>
-<h3><a class="anchor" id="autotoc_md0"></a>
+<h3><a class="anchor" id="autotoc_md19"></a>
 Key Features</h3>
 <ul>
 <li>Standardized thread lifecycle management (start/stop)</li>
@@ -221,10 +229,10 @@ Key Features</h3>
 <li>Built-in cancellation support (via <code>std::jthread</code> or custom mechanism)</li>
 <li>Thread-safe signaling and state management</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Thread Safety</h3>
 <p>All public methods in <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> are thread-safe. The class uses internal synchronization mechanisms to protect its state.</p>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md21"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Inherit from <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a></code> and override <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5" title="The main work routine for the worker thread.">do_work()</a></code>, <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229" title="Called just before the worker thread starts running.">before_start()</a></code>, and/or <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a8a5b2eb7b63e97711e7bd58da331fc15" title="Called immediately after the worker thread has stopped.">after_stop()</a></code> as needed.</li>
@@ -232,7 +240,7 @@ Typical Usage</h3>
 <li>When shutting down or no longer needing the thread's work, call <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#ac6d46b6122580eba745e1e1d56fa1571" title="Requests the worker thread to stop and waits for it to finish.">stop()</a></code>.</li>
 <li>The thread can periodically check <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f" title="Determines whether the thread should continue doing work.">should_continue_work()</a></code> or internal conditions to determine if it should continue running.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md3"></a>
+<h3><a class="anchor" id="autotoc_md22"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>my_worker : <span class="keyword">public</span> <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -464,6 +472,8 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> containing an error on failure, or success value if successful.</dd></dl>
 <p>Override this method in derived classes to perform any cleanup or finalization tasks once the worker thread has fully exited. </p>
 
+<p>Reimplemented in <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#af7d8b04f608e82fbdc0108949254eab4">log_module::log_collector</a>, and <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#af1d5c443eb17d1503adf80326bb389ed">log_module::file_writer</a>.</p>
+
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00281">281</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  281</span>{ <span class="keywordflow">return</span> {}; }</div>
 </div><!-- fragment -->
@@ -496,6 +506,8 @@ Here is the call graph for this function:</div>
 <p>Called just before the worker thread starts running. </p>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> containing an error on failure, or success value if successful.</dd></dl>
 <p>Override this method in derived classes to perform any initialization or setup required before the worker thread begins its main loop. </p>
+
+<p>Reimplemented in <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2">log_module::log_collector</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#aea13fa148c30d7b241501434370c3140">log_module::console_writer</a>, and <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#a23e227df609a4a21806afa7c21b683e9">log_module::file_writer</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00262">262</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  262</span>{ <span class="keywordflow">return</span> {}; }</div>
@@ -530,7 +542,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> containing an error on failure, or success value if successful.</dd></dl>
 <p>Derived classes should override this method to implement the actual work the thread needs to perform. This method is called repeatedly (in an internal loop) until the thread is signaled to stop or <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f" title="Determines whether the thread should continue doing work.">should_continue_work()</a></code> returns <code>false</code>. </p>
 
-<p>Reimplemented in <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker</a>, <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#abaed427230a66a01b8e40ed117ae8204">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#abaed427230a66a01b8e40ed117ae8204">typed_thread_pool_module::typed_thread_worker_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ab1c57034b84d90c7e166dd6180859c6b">log_module::log_collector</a>, <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a8bac50883ab6860f967ac0e2b11745cc">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#a741c89df0ae9545c9ad92fe95416dc67">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#a672575761862c41b13d336af13ecb6b5">log_module::file_writer</a>, <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877">thread_pool_module::thread_worker</a>, <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#abaed427230a66a01b8e40ed117ae8204">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#abaed427230a66a01b8e40ed117ae8204">typed_thread_pool_module::typed_thread_worker_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00272">272</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  272</span>{ <span class="keywordflow">return</span> {}; }</div>
@@ -782,7 +794,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is work to do, <code>false</code> otherwise.</dd></dl>
 <p>The default implementation always returns <code>false</code> (indicating no ongoing work). Override this in derived classes if you wish the thread to perform repeated tasks until some condition changes. </p>
 
-<p>Reimplemented in <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker</a>, <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#aa903598f572540b7d6f2039396e91400">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#aa903598f572540b7d6f2039396e91400">typed_thread_pool_module::typed_thread_worker_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d7/da3/classlog__module_1_1log__collector.html#ad0fec4d6d4707a3551280f947d66d8df">log_module::log_collector</a>, <a class="el" href="../../dd/d67/classlog__module_1_1callback__writer.html#a2bfd71d56ba3640a7d8c2e054e73a917">log_module::callback_writer</a>, <a class="el" href="../../d9/de4/classlog__module_1_1console__writer.html#aef095f674cdd5baa968a98e04fcbcbeb">log_module::console_writer</a>, <a class="el" href="../../dc/d2b/classlog__module_1_1file__writer.html#acffa230285384fe4720b6bcbbba985aa">log_module::file_writer</a>, <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker</a>, <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#aa903598f572540b7d6f2039396e91400">typed_thread_pool_module::typed_thread_worker_t&lt; job_type &gt;</a>, and <a class="el" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html#aa903598f572540b7d6f2039396e91400">typed_thread_pool_module::typed_thread_worker_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dbc/thread__base_8h_source.html#l00253">253</a> of file <a class="el" href="../../df/dbc/thread__base_8h_source.html">thread_base.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  253</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
@@ -854,7 +866,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  163</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45">worker_thread_</a> &amp;&amp; <a class="code hl_variable" href="../../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45">worker_thread_</a>-&gt;joinable())</div>
 <div class="line"><span class="lineno">  164</span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="lineno">  165</span>        {</div>
-<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">return</span> result_void{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">error_code::thread_already_running</a>, <span class="stringliteral">&quot;thread is already running&quot;</span>}};</div>
+<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">return</span> result_void{error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">error_code::thread_already_running</a>, <span class="stringliteral">&quot;thread is already running&quot;</span>}};</div>
 <div class="line"><span class="lineno">  167</span>        }</div>
 <div class="line"><span class="lineno">  168</span> </div>
 <div class="line"><span class="lineno">  169</span>        <span class="comment">// Ensure clean state by stopping any existing thread first</span></div>
@@ -987,7 +999,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  296</span> </div>
 <div class="line"><span class="lineno">  297</span>            <a class="code hl_variable" href="../../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45">worker_thread_</a>.reset();</div>
 <div class="line"><span class="lineno">  298</span> </div>
-<div class="line"><span class="lineno">  299</span>            <span class="keywordflow">return</span> result_void{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">error_code::resource_allocation_failed</a>, e.what()}};</div>
+<div class="line"><span class="lineno">  299</span>            <span class="keywordflow">return</span> result_void{error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">error_code::resource_allocation_failed</a>, e.what()}};</div>
 <div class="line"><span class="lineno">  300</span>        }</div>
 <div class="line"><span class="lineno">  301</span> </div>
 <div class="line"><span class="lineno">  302</span>        <span class="comment">// Thread creation successful</span></div>
@@ -1002,7 +1014,6 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html_afeb2e53943516cf65354f9cd5930b2d5"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; result_void</div><div class="ttdoc">The main work routine for the worker thread.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00272">thread_base.h:272</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">thread_module::error_code::resource_allocation_failed</a></div><div class="ttdeci">@ resource_allocation_failed</div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae6fac5620122dc140bbc13a44aeac670">thread_module::error_code::thread_already_running</a></div><div class="ttdeci">@ thread_already_running</div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
 <div class="ttc" id="anamespacethread__module_html_ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23">thread_module::thread_conditions::Stopping</a></div><div class="ttdeci">@ Stopping</div><div class="ttdoc">Thread in the process of stopping.</div></div>
 </div><!-- fragment -->
 </div>
@@ -1062,7 +1073,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  335</span>        <span class="comment">// Early exit if no thread to stop (idempotent behavior)</span></div>
 <div class="line"><span class="lineno">  336</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45">worker_thread_</a> == <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  337</span>        {</div>
-<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">return</span> result_void{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447caf2be7360c604a961b720a704f214b53c">error_code::thread_not_running</a>, <span class="stringliteral">&quot;thread is not running&quot;</span>}};</div>
+<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">return</span> result_void{error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447caf2be7360c604a961b720a704f214b53c">error_code::thread_not_running</a>, <span class="stringliteral">&quot;thread is not running&quot;</span>}};</div>
 <div class="line"><span class="lineno">  339</span>        }</div>
 <div class="line"><span class="lineno">  340</span> </div>
 <div class="line"><span class="lineno">  341</span>        <span class="comment">// Only attempt to stop if thread is actually joinable</span></div>
@@ -1407,7 +1418,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 27 2025 08:24:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 16 2025 13:29:09 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

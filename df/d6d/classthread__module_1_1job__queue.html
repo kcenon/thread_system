@@ -221,7 +221,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>A thread-safe job queue for managing and dispatching work items. </p>
 <p>The <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> class provides a synchronized queue for storing and retrieving <code>job</code> objects (or derived classes). Multiple threads can safely enqueue and dequeue jobs, ensuring proper synchronization and preventing data races.</p>
 <p>This class inherits from <code>std::enable_shared_from_this</code>, which allows it to create <code>std::shared_ptr</code> instances referring to itself via <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#aa80c0ee832f3fbd837112b2b667bf5a7" title="Obtains a std::shared_ptr that points to this queue instance.">get_ptr()</a></code>. This is often useful when passing a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> pointer to jobs themselves or other components that need a safe, shared reference to the queue.</p>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md36"></a>
 Typical Usage</h3>
 <ol type="1">
 <li>Create a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> instance, typically via <code>std::make_shared</code>.</li>
@@ -425,7 +425,7 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  253</span>        <span class="comment">// Check if we woke up due to stop condition (queue empty after stop)</span></div>
 <div class="line"><span class="lineno">  254</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>.empty())</div>
 <div class="line"><span class="lineno">  255</span>        {</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;there are no jobs to dequeue&quot;</span>};</div>
+<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;there are no jobs to dequeue&quot;</span>};</div>
 <div class="line"><span class="lineno">  257</span>        }</div>
 <div class="line"><span class="lineno">  258</span> </div>
 <div class="line"><span class="lineno">  259</span>        <span class="comment">// Efficiently extract first job from queue</span></div>
@@ -435,7 +435,6 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  263</span>        <span class="keywordflow">return</span> value;  <span class="comment">// Return moved job (caller takes ownership)</span></div>
 <div class="line"><span class="lineno">  264</span>    }</div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">thread_module::error_code::queue_empty</a></div><div class="ttdeci">@ queue_empty</div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -545,7 +544,17 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  352</span> </div>
 <div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a55397528ca3262d79d1a8693459af310">queue_</a>.empty();</div>
 <div class="line"><span class="lineno">  354</span>    }</div>
-</div><!-- fragment -->
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph.png" border="0" usemap="#adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph" alt=""/></div>
+<map name="adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph" id="adf/d6d/classthread__module_1_1job__queue_a01a57bbafa000d3f8515784e1b9e67f5_icgraph">
+<area shape="rect" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
+<area shape="rect" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
+<area shape="poly" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="af46f8b8f92a3a55465c043414d6b4748" name="af46f8b8f92a3a55465c043414d6b4748"></a>
@@ -613,13 +622,13 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  130</span>        <span class="comment">// Early validation: check if queue is still accepting jobs</span></div>
 <div class="line"><span class="lineno">  131</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load())</div>
 <div class="line"><span class="lineno">  132</span>        {</div>
-<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
 <div class="line"><span class="lineno">  134</span>        }</div>
 <div class="line"><span class="lineno">  135</span> </div>
 <div class="line"><span class="lineno">  136</span>        <span class="comment">// Validate input: null jobs are not allowed</span></div>
 <div class="line"><span class="lineno">  137</span>        <span class="keywordflow">if</span> (value == <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  138</span>        {</div>
-<div class="line"><span class="lineno">  139</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job&quot;</span>};</div>
+<div class="line"><span class="lineno">  139</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job&quot;</span>};</div>
 <div class="line"><span class="lineno">  140</span>        }</div>
 <div class="line"><span class="lineno">  141</span> </div>
 <div class="line"><span class="lineno">  142</span>        <span class="comment">// Critical section: modify queue with proper synchronization</span></div>
@@ -705,13 +714,13 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  181</span>        <span class="comment">// Early validation: check if queue is still accepting jobs</span></div>
 <div class="line"><span class="lineno">  182</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load())</div>
 <div class="line"><span class="lineno">  183</span>        {</div>
-<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Job queue is stopped&quot;</span>};</div>
 <div class="line"><span class="lineno">  185</span>        }</div>
 <div class="line"><span class="lineno">  186</span> </div>
 <div class="line"><span class="lineno">  187</span>        <span class="comment">// Validate batch: empty batches are not allowed</span></div>
 <div class="line"><span class="lineno">  188</span>        <span class="keywordflow">if</span> (jobs.empty())</div>
 <div class="line"><span class="lineno">  189</span>        {</div>
-<div class="line"><span class="lineno">  190</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue empty batch&quot;</span>};</div>
+<div class="line"><span class="lineno">  190</span>            <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue empty batch&quot;</span>};</div>
 <div class="line"><span class="lineno">  191</span>        }</div>
 <div class="line"><span class="lineno">  192</span> </div>
 <div class="line"><span class="lineno">  193</span>        <span class="comment">// Pre-validate all jobs before modifying queue (ensures atomicity)</span></div>
@@ -719,7 +728,7 @@ Typical Usage</h3>
 <div class="line"><span class="lineno">  195</span>        {</div>
 <div class="line"><span class="lineno">  196</span>            <span class="keywordflow">if</span> (job == <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">  197</span>            {</div>
-<div class="line"><span class="lineno">  198</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job in batch&quot;</span>};</div>
+<div class="line"><span class="lineno">  198</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">error_code::invalid_argument</a>, <span class="stringliteral">&quot;cannot enqueue null job in batch&quot;</span>};</div>
 <div class="line"><span class="lineno">  199</span>            }</div>
 <div class="line"><span class="lineno">  200</span>        }</div>
 <div class="line"><span class="lineno">  201</span> </div>
@@ -1134,7 +1143,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 27 2025 08:24:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 16 2025 13:29:09 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

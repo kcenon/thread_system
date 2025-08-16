@@ -331,7 +331,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   79</span>            <span class="keyword">auto</span> result = callback();</div>
 <div class="line"><span class="lineno">   80</span>            <span class="keywordflow">if</span> (result.has_value()) {</div>
 <div class="line"><span class="lineno">   81</span>                <span class="comment">// Error occurred: convert string to error object</span></div>
-<div class="line"><span class="lineno">   82</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
+<div class="line"><span class="lineno">   82</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
 <div class="line"><span class="lineno">   83</span>            }</div>
 <div class="line"><span class="lineno">   84</span>            <span class="comment">// Success: return empty result_void</span></div>
 <div class="line"><span class="lineno">   85</span>            <span class="keywordflow">return</span> result_void{};</div>
@@ -342,7 +342,6 @@ Protected Attributes</h2></td></tr>
 <div class="ttc" id="aclassthread__module_1_1callback__job_html_af96aa97ba4758fbb48b1a61543819f50"><div class="ttname"><a href="../../dc/d7f/classthread__module_1_1callback__job.html#af96aa97ba4758fbb48b1a61543819f50">thread_module::callback_job::callback_</a></div><div class="ttdeci">std::function&lt; result_void(void)&gt; callback_</div><div class="ttdoc">Stores the user-defined callback that does not take any parameters.</div><div class="ttdef"><b>Definition</b> <a href="../../db/ddd/callback__job_8h_source.html#l00211">callback_job.h:211</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a2603786e8e0c0ee23132344b9173c40d"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a2603786e8e0c0ee23132344b9173c40d">thread_module::job::job</a></div><div class="ttdeci">job(const std::string &amp;name=&quot;job&quot;)</div><div class="ttdoc">Constructs a new job with an optional human-readable name.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00078">job.cpp:78</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">thread_module::error_code::job_execution_failed</a></div><div class="ttdeci">@ job_execution_failed</div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -511,7 +510,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  141</span>            <span class="keyword">auto</span> result = data_callback(callback_data);</div>
 <div class="line"><span class="lineno">  142</span>            <span class="keywordflow">if</span> (result.has_value()) {</div>
 <div class="line"><span class="lineno">  143</span>                <span class="comment">// Error occurred: convert string to error object</span></div>
-<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
+<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cac848d909f9a2bf57ca73bb5c2b2c049f">error_code::job_execution_failed</a>, result.value()};</div>
 <div class="line"><span class="lineno">  145</span>            }</div>
 <div class="line"><span class="lineno">  146</span>            <span class="comment">// Success: return empty result_void</span></div>
 <div class="line"><span class="lineno">  147</span>            <span class="keywordflow">return</span> result_void{};</div>
@@ -851,7 +850,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 27 2025 08:24:20 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 16 2025 13:29:09 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

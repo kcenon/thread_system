@@ -1,5 +1,0 @@
-<map id="monitoring_module::thread_safe_ring_buffer::size" name="monitoring_module::thread_safe_ring_buffer::size">
-<area shape="rect" id="Node000001" title="Returns the current number of elements in the buffer." alt="" coords="229,13,440,53"/>
-<area shape="rect" id="Node000002" href="$dd/d29/classmonitoring__module_1_1thread__safe__ring__buffer.html#a2108e5c45b017fd52eb48fd0b77aeb69" title="Retrieves all items currently in the buffer." alt="" coords="5,5,181,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,35,182,35,182,30,216,30"/>
-</map>
