@@ -992,6 +992,80 @@ We welcome contributions! Please see our [Contributing Guide](./docs/contributin
 - **Discussions**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **Email**: kcenon@naver.com
 
+## Configuration & Tuning
+
+- Queue Strategy
+  - Standard pool uses an adaptive queue by default: `thread_module::create_job_queue(adaptive_job_queue::queue_strategy::ADAPTIVE)`.
+  - Typed pool uses an adaptive typed queue by default: `typed_thread_pool_module::create_typed_job_queue(...)`.
+  - Strategies: `AUTO_DETECT`, `FORCE_LEGACY` (mutex-based), `FORCE_LOCKFREE`, `ADAPTIVE`.
+  - Thresholds: evaluation interval and contention/latency thresholds are compile-time constants today. Expose as configuration if your deployment requires runtime tuning.
+
+- Worker Sizing
+  - CPU-bound: start with workers ~= hardware threads; benchmark and adjust.
+  - IO-bound: allow more workers than cores to cover blocking time.
+  - Mixed workloads: prefer typed thread pool to protect latency for critical types.
+
+- Periodic Wake Interval
+  - Use `thread_base::set_wake_interval(std::optional<std::chrono::milliseconds>)` for periodic housekeeping.
+  - Access is guarded by a dedicated mutex for correctness (~5% overhead under contention); use only when you need periodic work.
+
+- Monitoring & Logging
+  - Enable `monitoring_module::metrics_collector` to record pool/worker/system metrics at a configured interval.
+  - Use logger writers (console/file/callback) suitable to production environments; keep file rotation enabled for long-running services.
+
+## Error Handling & Cancellation
+
+- Result Pattern
+  - Operations return `result_void` or `result<T>` (see `thread_base/sync/error_handling.h`).
+  - On success: `result_void{}` or `result<T>{value}`; On failure: `error{error_code::..., "message"}`.
+  - Example:
+    ```cpp
+    auto r = pool->enqueue(std::move(job));
+    if (r) { /* success */ } else { /* r.get_error().to_string() */ }
+    ```
+
+- Cancellation
+  - Jobs can accept a `cancellation_token`; long-running jobs should periodically check `token.is_cancelled()` and return `error{error_code::operation_canceled, ...}` when appropriate.
+  - Cancellation is cooperative; use for graceful shutdown and bounded latency guarantees.
+
+## Build & Platform Policy
+
+- C++20 Features (autodetected in CMake)
+  - `std::format` vs `{fmt}`: Windows builds default to `{fmt}` for maximum compatibility. Non-Windows uses `std::format` only if compile tests pass. Override on Windows with `-DWINDOWS_ALLOW_STD_FORMAT=ON` if you accept risks.
+  - `std::jthread`: enabled via `USE_STD_JTHREAD` when supported; otherwise falls back to `std::thread`.
+  - `std::span`, `std::chrono::current_zone`, `std::filesystem`: enabled when compile tests succeed; otherwise fallbacks are used where available.
+
+- Dependencies (via vcpkg): `{fmt}`, `gtest`, `benchmark`, `spdlog`, `libiconv`.
+
+- Quick Build
+  - Unix/macOS: `./dependency.sh && ./build.sh`
+  - Windows: `dependency.bat && build.bat`
+
+## Testing
+
+- Unit Tests: GoogleTest-based suites under `unittest/` (thread base/pool, typed pool, logger, utilities, platform behavior).
+- Run: configure with CMake and execute `ctest -C <Debug|Release> --output-on-failure` from the build directory. The root scripts trigger tests on CI matrices.
+- Coverage: see `TEST_COVERAGE_IMPROVEMENT_REPORT.md` and CI configuration for thresholds and guidance.
+
+## Known Limitations & Notes
+
+- Adaptive Typed Queue Migration
+  - Current `adaptive_typed_job_queue` switches implementation without migrating already enqueued items between strategies. Plan graceful switches: drain or stop before switching, or select `FORCE_*` strategies when migration safety is required.
+
+- Lock-free Queue Backoff Limits
+  - `lockfree_job_queue` uses retry and yield/backoff. Under extreme contention, enqueue/dequeue may fail after `MAX_TOTAL_RETRIES` with a typed error. Handle by backoff-and-retry or routing to an alternate path.
+
+- Size Semantics in Typed Queues
+  - Legacy typed queues report total size, not per-type; lock-free typed queues expose per-type sizes. Use typed APIs for accurate type-aware visibility.
+
+- Performance vs. Safety Trade-offs
+  - Mutex protections (e.g., wake interval) and cancellation checks have documented overhead (+3–5%) that improve correctness. Disable only with full understanding of the risks.
+
+## Upgrade & Migration Tips
+
+- Moving from single-queue to typed scheduling: start by routing only your most latency-sensitive types; keep background work on the standard pool to minimize overhead.
+- For bursty traffic with variable contention, keep the default adaptive queue; for highly predictable loads, consider forcing `FORCE_LOCKFREE`/`FORCE_LEGACY` and tune for your steady-state.
+
 ## License
 
 This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
