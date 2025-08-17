@@ -637,15 +637,15 @@ target_link_libraries(your_target PRIVATE thread_pool logger)
 
 ## What's Next?
 
-- Explore the [API Reference](./api-reference.md) for complete documentation
-- Learn about [Performance Optimization](./performance.md)
-- Check out [Common Patterns and Best Practices](./patterns.md)
-- Read the [Architecture Overview](./architecture.md)
+- Explore the [API Reference](./API-REFERENCE.md) for complete documentation
+- Learn about [Performance Optimization](./PERFORMANCE.md)
+- Check out [Common Patterns and Best Practices](./PATTERNS.md)
+- Read the [Architecture Overview](./ARCHITECTURE.md)
 
 ## Need Help?
 
 - Check our [FAQ](./FAQ.md)
-- Review [Common Patterns](./patterns.md) for troubleshooting
+- Review [Common Patterns](./PATTERNS.md) for troubleshooting
 - Visit the project [GitHub page](https://github.com/kcenon/thread_system)
 
 ---

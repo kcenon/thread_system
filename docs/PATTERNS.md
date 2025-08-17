@@ -975,6 +975,19 @@ worker.set_wake_interval(std::chrono::seconds(1));
 worker.set_wake_interval(std::chrono::minutes(1));
 ```
 
+### Choosing Queue Strategy
+
+- Variable contention: keep `ADAPTIVE` to auto-switch.
+- Consistently high contention: `FORCE_LOCKFREE` to reduce mutex costs.
+- Low contention / few threads: `FORCE_LEGACY` (mutex-based) for minimal overhead.
+- Typed workloads: prefer typed queues/pools to protect latency for critical types.
+
+### Backoff & Retry Guidance (Lock-free)
+
+- Handle `resource_limit_reached` by exponential backoff and retry.
+- Consider producer batching to reduce contention and improve cache locality.
+- Yield occasionally under heavy contention to aid progress (`std::this_thread::yield()`).
+
 ## Conclusion
 
 Following these patterns and avoiding the antipatterns will help you use Thread System effectively. The core principles to remember are:

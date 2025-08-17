@@ -110,6 +110,14 @@ if (worker_result.has_error()) {
 
 ## Testing Guidelines
 
+## Documentation Guidelines
+
+- Last Updated: Include a final line such as `Last updated: <Month YYYY>` for major docs.
+- Links: Use lowercase filenames for consistency (e.g., `faq.md`, not `FAQ.md`).
+- Structure: Start with a brief overview, then how-to, then references; avoid duplication with other docs—link instead.
+- Snippets: Keep examples minimal and compilable; prefer code from `samples/` when possible.
+- Review: Documentation changes follow the same PR review rules; large docs should include a short changelog in the PR description.
+
 ### Unit Tests
 
 ```cpp

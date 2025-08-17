@@ -50,7 +50,7 @@ echo -e "\n1. Checking required documentation files..."
 required_files=(
     "README.md"
     "docs/README.md"
-    "docs/FAQ.md"
+    "docs/FAQ.MD"
     "docs/tutorials/getting-started/quick-start.md"
     "docs/examples/basic/file_processing.md"
 )

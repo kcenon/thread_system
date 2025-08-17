@@ -39,6 +39,8 @@ The Thread System framework delivers exceptional performance across various work
   - Reduced code complexity by ~2,800 lines
   - Maintains high performance with cleaner design
 
+Note: For runtime observability and alerting guidance, see [monitoring-performance.md](./MONITORING-PERFORMANCE.md).
+
 ## Benchmark Environment
 
 ### Test Hardware
@@ -771,6 +773,43 @@ This section compares Thread System's logging performance against industry-stand
 | std::async | ~15.2 μs | ~12.8 μs | ~28.0 μs |
 
 ## Optimization Strategies
+
+### Adaptive Queue Thresholds
+
+Adaptive queues use compile-time thresholds for evaluation interval, contention ratio, and average latency to decide switching between mutex-based and lock-free strategies. If your deployment requires tuning beyond defaults, consider exposing these as configuration options at build-time or via a thin runtime config layer. See also the operational guidance in [monitoring-performance.md](./MONITORING-PERFORMANCE.md).
+
+## Benchmarking Procedure
+
+This project uses Google Benchmark for microbenchmarks and sample-driven scenarios for end-to-end measurement.
+
+### Prerequisites
+- Build in Release with `-O3`.
+- Ensure CPU frequency scaling is minimized (performance governor) when possible.
+- Pin background load off the test machine for consistent results.
+
+### Running Benchmarks (Generic)
+```bash
+# Configure & build (Unix/macOS)
+./dependency.sh && ./build.sh
+
+# From your build directory (path depends on generator):
+ctest -C Release -R benchmark -V || true  # if integrated
+
+# Or run produced benchmark binaries directly (example names vary):
+./bin/ts_queue_benchmarks
+./bin/ts_thread_pool_benchmarks
+```
+
+### Methodology
+- Report p50/p95/p99 latency, throughput (jobs/s), and CPU utilization.
+- Sweep worker counts: 1, 2, 4, 8, 16, 32 to establish scaling curves.
+- Sweep job complexity: empty/1µs/10µs/100µs/1ms to bracket realistic workloads.
+- Repeat runs (>=5) and report median with error bars when publishing.
+
+### Result Hygiene
+- Log compiler, flags, CPU model, OS build, and date.
+- Include queue strategy setting (ADAPTIVE/FORCE_LOCKFREE/FORCE_LEGACY).
+- Note any safety toggles (e.g., wake-interval mutex protection).
 
 ### 1. Optimal Thread Count Selection
 

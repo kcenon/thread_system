@@ -2,6 +2,13 @@
 
 This guide contains practical examples demonstrating how to use the Thread System framework in real-world scenarios.
 
+## Running the Examples
+
+- Build the project (Unix/macOS): `./dependency.sh && ./build.sh`
+- Build the project (Windows): `dependency.bat && build.bat`
+- Sample sources live under `samples/` (e.g., `samples/thread_pool_sample/thread_pool_sample.cpp`).
+- You can run built sample binaries from your build directory (exact paths depend on your generator/toolchain).
+
 ## Quick Start Examples
 
 ### Hello World with Thread Pool

@@ -32,6 +32,29 @@ Complete API documentation for the Thread System framework.
 
 The Thread System framework provides a comprehensive set of classes for building multi-threaded applications with adaptive performance optimization.
 
+### Error Handling & Cancellation (Quick Guide)
+
+- All public APIs return `result_void` or `result<T>` for errors instead of throwing.
+- Jobs may receive a `cancellation_token`; long-running code should check and exit cooperatively.
+
+```cpp
+// Enqueue with error checking
+auto err = pool->enqueue(std::move(job));
+if (err) { /* success */ } else { /* err.get_error().to_string() */ }
+
+// Inside a job
+auto do_work() -> result_void override {
+    auto token = get_cancellation_token();
+    for (auto& item : items_) {
+        if (token.is_cancelled()) {
+            return error{error_code::operation_canceled, "job cancelled"};
+        }
+        process(item);
+    }
+    return {};
+}
+```
+
 ### Core Components
 
 - **Core Classes** (`thread_module` namespace)

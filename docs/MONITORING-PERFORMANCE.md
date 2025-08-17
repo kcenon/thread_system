@@ -245,3 +245,95 @@ The Thread System monitoring module delivers excellent performance characteristi
 5. **Compression**: Time-series data compression for longer retention
 
 The monitoring system provides a solid foundation for understanding thread system performance with minimal impact on application execution.
+
+## Operational Guidance & Cross-links
+
+- For offline benchmarking and tuning strategies, see [performance.md](./PERFORMANCE.md).
+- Alerting suggestions: contention ratio > 10% (60s), p99 enqueue/dequeue latency > target for 60s, backlog growth without recovery.
+- Prefer atomic counters and light-weight snapshots to keep collection overhead <1–2%.
+
+## Prometheus/OpenMetrics Export (Example)
+
+This framework does not bundle an HTTP server. The following shows how to render metrics in the Prometheus text exposition format, so you can plug it into any lightweight HTTP endpoint in your application.
+
+```cpp
+#include "monitoring/core/metrics_collector.h"
+#include <string>
+
+using namespace monitoring_module;
+
+static std::string escape_label_value(std::string v) {
+    for (auto& c : v) { if (c == '\\' || c == '"' || c == '\n') c = '_'; }
+    return v;
+}
+
+std::string render_prometheus_metrics(const metrics_snapshot& s) {
+    std::string out;
+    out.reserve(2048);
+
+    // HELP/TYPE lines (static)
+    out += "# HELP ts_jobs_completed Total jobs completed by the thread pool\n";
+    out += "# TYPE ts_jobs_completed counter\n";
+    out += "# HELP ts_queue_depth Current number of jobs queued\n";
+    out += "# TYPE ts_queue_depth gauge\n";
+    out += "# HELP ts_worker_utilization Worker utilization (0..1)\n";
+    out += "# TYPE ts_worker_utilization gauge\n";
+    out += "# HELP ts_queue_contention_ratio Contention ratio observed by adaptive queue\n";
+    out += "# TYPE ts_queue_contention_ratio gauge\n";
+
+    // Labels: add pool title if available
+    std::string labels;
+    if (!s.thread_pool.title.empty()) {
+        labels = "{pool=\"" + escape_label_value(s.thread_pool.title) + "\"}";
+    }
+
+    // Values
+    out += "ts_jobs_completed" + labels + " " + std::to_string(s.thread_pool.jobs_completed.load()) + "\n";
+    out += "ts_queue_depth" + labels + " " + std::to_string(s.thread_pool.queue_depth.load()) + "\n";
+    out += "ts_worker_utilization" + labels + " " + std::to_string(s.thread_pool.worker_utilization.load() / 100.0) + "\n";
+    out += "ts_queue_contention_ratio" + labels + " " + std::to_string(s.thread_pool.queue_contention_ratio.load() / 100.0) + "\n";
+
+    // System metrics
+    out += "# HELP ts_system_memory_bytes System memory usage (bytes)\n";
+    out += "# TYPE ts_system_memory_bytes gauge\n";
+    out += "ts_system_memory_bytes " + std::to_string(s.system.memory_usage_bytes.load()) + "\n";
+
+    return out;
+}
+```
+
+Expose an HTTP handler that returns the string from `render_prometheus_metrics(metrics::get_current_metrics())` with content type `text/plain; version=0.0.4`.
+
+### Example Alert Rules (Prometheus)
+
+```yaml
+groups:
+- name: thread-system.rules
+  rules:
+  - alert: HighQueueContention
+    expr: ts_queue_contention_ratio > 0.10
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: High contention in thread pool queue
+      description: Contention ratio is above 10% for 5 minutes.
+
+  - alert: ElevatedQueueLatency
+    expr: histogram_quantile(0.99, sum(rate(ts_queue_latency_bucket[5m])) by (le)) > 5e-7
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: p99 enqueue/dequeue latency above target
+      description: Investigate adaptive strategy and producer batching.
+
+  - alert: LoggerBacklogGrowing
+    expr: increase(ts_logger_backlog[10m]) > 0
+    for: 10m
+    labels:
+      severity: info
+    annotations:
+      summary: Logger backlog is growing
+      description: Tune writer throughput or reduce log volume.
+```

@@ -184,7 +184,7 @@ struct custom_metrics {
 
 ## Related Documentation
 
-- [Monitoring Module Architecture](../../docs/architecture.md#monitoring-system)
-- [Performance Guide](../../docs/performance.md#monitoring-overhead)
-- [API Reference](../../docs/api-reference.md#monitoring-api)
+- [Monitoring Module Architecture](../../docs/ARCHITECTURE.md#monitoring-system)
+- [Performance Guide](../../docs/PERFORMANCE.md#monitoring-overhead)
+- [API Reference](../../docs/API-REFERENCE.md#monitoring-api)
 - [Thread System Overview](../../README.md#real-time-monitoring-system)

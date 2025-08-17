@@ -1,5 +1,7 @@
 # Thread System Architecture
 
+> Terminology note: In code and comments, the term "legacy" refers to the mutex-based implementation (baseline queue), as opposed to the lock-free MPMC implementation. Identifiers like `FORCE_LEGACY`, `legacy_queue_`, and `ensure_legacy_queue()` intentionally mirror the codebase for clarity. In narrative text, we clarify it as "mutex-based" where applicable.
+
 ## Table of Contents
 1. [Overview](#overview)
 2. [Core Architecture](#core-architecture)
@@ -384,4 +386,4 @@ typed_pool->set_queue_strategy(queue_strategy::ADAPTIVE);
 
 The Thread System provides a robust foundation for concurrent programming in modern C++. Its adaptive architecture ensures optimal performance across diverse workloads while maintaining ease of use and safety. The modular design allows developers to use only the components they need, from simple thread pools to advanced lock-free structures.
 
-For practical examples, see the [samples directory](../samples/). For API details, consult the [API reference](./api-reference.md).
+For practical examples, see the [samples directory](../samples/). For API details, consult the [API reference](./API-REFERENCE.md).

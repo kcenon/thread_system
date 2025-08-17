@@ -189,7 +189,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | 16      | 🟡 **1.0 μs** | 🟡 **4.2 MB** | 💛 **94%** | 🔋 Moderate |
 | 32      | 🟠 **2.0 μs** | 🟠 **7.4 MB** | 🟡 **88%** | 📊 Heavy |
 
-For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/performance.md).
+For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/PERFORMANCE.md).
 
 ## Technology Stack & Architecture
 
@@ -868,11 +868,11 @@ FetchContent_MakeAvailable(thread_system)
 
 ### Core API Reference
 
-- **[API Reference](./docs/api-reference.md)**: Complete API documentation
-- **[Architecture Guide](./docs/architecture.md)**: System design and internals
-- **[Performance Guide](./docs/performance.md)**: Optimization tips and benchmarks
-- **[Examples](./docs/examples.md)**: Comprehensive code examples
-- **[FAQ](./docs/faq.md)**: Frequently asked questions
+- **[API Reference](./docs/API-REFERENCE.md)**: Complete API documentation
+- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and internals
+- **[Performance Guide](./docs/PERFORMANCE.md)**: Optimization tips and benchmarks
+- **[Examples](./docs/EXAMPLES.md)**: Comprehensive code examples
+- **[FAQ](./docs/FAQ.md)**: Frequently asked questions
 
 ### Quick API Overview
 
@@ -969,7 +969,7 @@ namespace log_module {
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./docs/contributing.md) for details.
+We welcome contributions! Please see our [Contributing Guide](./docs/CONTRIBUTING.md) for details.
 
 ### Development Setup
 

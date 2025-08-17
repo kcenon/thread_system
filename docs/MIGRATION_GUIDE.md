@@ -684,6 +684,13 @@ void performance_comparison() {
 
 ## Common Migration Challenges and Solutions
 
+### Caveat: Adaptive Typed Queue Switching
+
+When using `adaptive_typed_job_queue`, implementation switching (mutex-based ↔ lock-free) does not migrate already enqueued items between strategies. Recommended approaches:
+- Drain or stop the queue before switching strategies during maintenance windows.
+- For predictable steady-state, select `FORCE_LOCKFREE` or `FORCE_LEGACY` to avoid runtime switching.
+- If migration is required, implement a controlled drain-and-reenqueue path at the application layer.
+
 ### Challenge 1: Adapting to Result-based Error Handling
 
 **Problem**: Thread System uses `std::optional<std::string>` or `result_void` for error reporting instead of exceptions.
