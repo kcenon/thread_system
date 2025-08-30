@@ -78,13 +78,16 @@ $(function() {
   <div class="headertitle"><div class="title">callback_job.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of callback-based job execution for the thread system.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../db/ddd/callback__job_8h_source.html">callback_job.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for callback_job.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/dd7/callback__job_8cpp__incl.png" border="0" usemap="#asources_2thread__base_2jobs_2callback__job_8cpp" alt=""/></div>
 <map name="asources_2thread__base_2jobs_2callback__job_8cpp" id="asources_2thread__base_2jobs_2callback__job_8cpp">
-<area shape="rect" title=" " alt="" coords="230,5,395,45"/>
+<area shape="rect" title="Implementation of callback&#45;based job execution for the thread system." alt="" coords="230,5,395,45"/>
 <area shape="rect" href="../../db/ddd/callback__job_8h.html" title=" " alt="" coords="255,93,370,119"/>
 <area shape="poly" title=" " alt="" coords="315,46,315,79,310,79,310,46"/>
 <area shape="rect" href="../../d3/d6a/job_8h.html" title=" " alt="" coords="492,167,547,192"/>
@@ -172,10 +175,22 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:de/d48/namespacethread__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core threading foundation of the thread system library. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of callback-based job execution for the thread system. </p>
+<p>This file contains the implementation of the callback_job class, which provides a flexible way to create jobs using lambda functions, function objects, or plain function pointers. The callback_job class supports multiple callback types for different use cases and automatic error handling conversion.</p>
+<p>Key Features:</p><ul>
+<li>Multiple callback types (parameterless, data-based)</li>
+<li>Automatic error conversion from legacy to modern error handling</li>
+<li>Type-safe callback storage and execution</li>
+<li>Support for both lambda functions and function objects</li>
+<li>Efficient data handling for data-based callbacks </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../df/d63/callback__job_8cpp_source.html">callback_job.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

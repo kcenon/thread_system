@@ -1,5 +1,0 @@
-<map id="utility_module::datetime_tool::milliseconds" name="utility_module::datetime_tool::milliseconds">
-<area shape="rect" id="Node000001" title="Extracts the milliseconds (0&#45;999) component from a time point." alt="" coords="207,5,389,45"/>
-<area shape="rect" id="Node000002" href="$df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="5,5,159,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,28,159,28,159,23,193,23"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="thread_module::adaptive_job_queue::migrate_to_legacy" name="thread_module::adaptive_job_queue::migrate_to_legacy">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,191,60"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a143b2d6375ecd7c12e04c0219ab3c6a5" title=" " alt="" coords="239,20,461,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,30,225,30,225,35,191,35"/>
-<area shape="rect" id="Node000003" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="509,13,720,53"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="462,30,495,30,495,35,462,35"/>
-</map>

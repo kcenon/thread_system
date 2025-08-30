@@ -1,5 +1,5 @@
 <map id="sources/thread_base/lockfree/queues/lockfree_job_queue.cpp" name="sources/thread_base/lockfree/queues/lockfree_job_queue.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="2150,5,2337,60"/>
+<area shape="rect" id="Node000001" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="2150,5,2337,60"/>
 <area shape="rect" id="Node000002" href="$db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="2163,108,2324,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2246,60,2246,94,2241,94,2241,60"/>
 <area shape="rect" id="Node000003" href="$db/d9d/job__queue_8h.html" title=" " alt="" coords="960,189,1116,214"/>

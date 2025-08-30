@@ -178,6 +178,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac328b7b9124685e02d46f6dd13ac6e09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to create a builder.  <br /></td></tr>
 <tr class="separator:ac328b7b9124685e02d46f6dd13ac6e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6471112cdc4e66bf0b675a1b93dcda00" id="r_a6471112cdc4e66bf0b675a1b93dcda00"><td class="memItemLeft" align="right" valign="top">template auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#a6471112cdc4e66bf0b675a1b93dcda00">create_typed_job_queue&lt; job_types &gt;</a> (<a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt;::queue_strategy, size_t) -&gt; std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; <a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6">job_types</a> &gt; &gt;</td></tr>
+<tr class="memdesc:a6471112cdc4e66bf0b675a1b93dcda00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicit instantiation of typed job queue factory function.  <br /></td></tr>
 <tr class="separator:a6471112cdc4e66bf0b675a1b93dcda00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6724193b1b67a70e4609fe4aad69332" id="r_ae6724193b1b67a70e4609fe4aad69332"><td class="memTemplParams" colspan="2">template&lt;typename job_type  = job_types&gt; </td></tr>
 <tr class="memitem:ae6724193b1b67a70e4609fe4aad69332"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/db9/namespacetyped__thread__pool__module.html#ae6724193b1b67a70e4609fe4aad69332">create_typed_job_queue</a> (typename <a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; job_type &gt;::queue_strategy strategy=<a class="el" href="../../d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html">adaptive_typed_job_queue_t</a>&lt; job_type &gt;::queue_strategy::AUTO_DETECT, size_t max_threads=128) -&gt; std::shared_ptr&lt; <a class="el" href="../../db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html">typed_job_queue_t</a>&lt; job_type &gt; &gt;</td></tr>
@@ -349,7 +350,7 @@ template&lt;detail::JobType job_type&gt; </div>
 
 <p>Alias for a typed_thread_pool with the default job_types type. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00332">332</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00345">345</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
 
 </div>
 </div>
@@ -367,7 +368,7 @@ template&lt;detail::JobType job_type&gt; </div>
 
 <p>Convenience typedef for a worker configured with default job_types. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html#l00214">214</a> of file <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html">typed_thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html#l00239">239</a> of file <a class="el" href="../../d1/d2f/typed__thread__worker_8h_source.html">typed_thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -444,7 +445,7 @@ template&lt;detail::JobType job_type&gt; </div>
 <p>Returns a vector containing all possible <code>job_types</code> values. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::vector&lt;job_types&gt;</code> with [RealTime, Batch, Background].</dd></dl>
 <p>This function is useful when iterating over all defined types (e.g. for logging, UI selection, or testing).</p>
-<h3><a class="anchor" id="autotoc_md44"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> type : <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a96671dbdb6d4db6672ac272d5b2fc34c">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(type) &lt;&lt; std::endl;</div>
@@ -557,6 +558,14 @@ template&lt;typename job_type  = job_types&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Explicit instantiation of typed job queue factory function. </p>
+<p>This instantiation provides the factory function for creating typed job queues with specified strategies and configurations. The factory handles queue strategy selection and initialization.</p>
+<p>Parameters instantiated:</p><ul>
+<li>queue_strategy: Strategy selection (lock-free, mutex, adaptive)</li>
+<li>size_t: Maximum queue capacity or thread count</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to initialized typed job queue </dd></dl>
+
 </div>
 </div>
 <a id="abd49ff02ea4da8eb45ed55b95511f043" name="abd49ff02ea4da8eb45ed55b95511f043"></a>
@@ -591,7 +600,7 @@ template&lt;typename job_type  = job_types&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> containing one of "REALTIME", "BATCH", "BACKGROUND", or "UNKNOWN" if <code>job_type</code> is out of expected range.</dd></dl>
-<h3><a class="anchor" id="autotoc_md43"></a>
+<h3><a class="anchor" id="autotoc_md24"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> p = <a class="code hl_enumvalue" href="../../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216">job_types::RealTime</a>;</div>
 <div class="line">std::string_view sv = <a class="code hl_function" href="../../de/d48/namespacethread__module.html#a353c9e3581f9b950570feaa9bd756222">to_string</a>(p); <span class="comment">// &quot;REALTIME&quot;</span></div>
@@ -608,7 +617,7 @@ Example</h3>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:15 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

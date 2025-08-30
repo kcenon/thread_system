@@ -1,31 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,593,117,619"/>
-<area shape="rect" id="Node000001" href="$d5/dab/structlog__module_1_1detail_1_1has__to__string_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1d3990b1d7dc7e69d816107c9a88e04327.html" title=" " alt="" coords="207,5,374,89"/>
-<area shape="poly" id="edge39_Node000000_Node000001" title=" " alt="" coords="62,579,73,476,93,334,106,261,123,195,141,139,163,100,183,82,206,68,208,73,186,86,167,104,146,141,128,196,112,262,98,335,78,477,68,580"/>
-<area shape="rect" id="Node000002" href="$d3/d31/structlog__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html" title=" " alt="" coords="205,114,377,183"/>
-<area shape="poly" id="edge40_Node000000_Node000002" title=" " alt="" coords="63,579,76,493,98,378,127,268,144,224,163,194,182,178,203,166,206,170,185,182,167,197,149,226,132,269,103,379,82,494,69,580"/>
-<area shape="rect" id="Node000003" href="$de/dbf/structlog__module_1_1detail_1_1is__streamable_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1de4ceca9624d7db9e77a61f61603d18213.html" title=" " alt="" coords="170,208,411,292"/>
-<area shape="poly" id="edge41_Node000000_Node000003" title=" " alt="" coords="62,579,70,524,87,450,117,373,138,336,163,303,177,290,181,294,167,306,142,339,121,375,92,452,75,524,67,580"/>
-<area shape="rect" id="Node000004" href="$dc/d0e/structlog__module_1_1detail_1_1is__string__like_3_01char_0fN_0e_4.html" title=" " alt="" coords="196,317,385,357"/>
-<area shape="poly" id="edge42_Node000000_Node000004" title=" " alt="" coords="64,579,74,533,92,476,121,417,141,390,164,367,195,348,197,353,167,371,145,394,126,420,97,478,79,534,69,580"/>
-<area shape="rect" id="Node000005" href="$d4/d89/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_01_5_01_4.html" title=" " alt="" coords="208,381,373,436"/>
-<area shape="poly" id="edge43_Node000000_Node000005" title=" " alt="" coords="70,579,105,512,131,476,164,445,207,423,209,427,167,449,135,480,109,515,75,582"/>
-<area shape="rect" id="Node000006" href="$d4/dd7/structlog__module_1_1detail_1_1is__string__like_3_01const_01char_0fN_0e_4.html" title=" " alt="" coords="208,460,373,515"/>
-<area shape="poly" id="edge44_Node000000_Node000006" title=" " alt="" coords="84,582,120,552,164,524,207,506,209,511,167,528,124,556,88,586"/>
-<area shape="rect" id="Node000007" href="$d5/df9/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string_01_4.html" title=" " alt="" coords="215,539,366,593"/>
-<area shape="poly" id="edge45_Node000000_Node000007" title=" " alt="" coords="130,591,215,576,216,582,131,597"/>
-<area shape="rect" id="Node000008" href="$d2/d28/structlog__module_1_1detail_1_1is__string__like_3_01std_1_1string__view_01_4.html" title=" " alt="" coords="215,617,366,672"/>
-<area shape="poly" id="edge46_Node000000_Node000008" title=" " alt="" coords="131,615,216,629,215,635,131,620"/>
-<area shape="rect" id="Node000009" href="$db/d56/structlog__module_1_1detail_1_1is__time__point_3_01std_1_1chrono_1_1time__point_3_01Clock_00_01Duration_01_4_01_4.html" title=" " alt="" coords="207,697,374,766"/>
-<area shape="poly" id="edge47_Node000000_Node000009" title=" " alt="" coords="89,626,125,654,167,681,208,701,206,706,164,686,122,658,86,630"/>
-<area shape="rect" id="Node000010" href="$d9/d62/structthread__pool__module_1_1detail_1_1has__get__method_3_01T_00_01std_1_1void__t_3_01decltype_a0465c2793b601c1efa3be7652b795e9.html" title=" " alt="" coords="183,790,399,859"/>
-<area shape="poly" id="edge48_Node000000_Node000010" title=" " alt="" coords="74,630,108,702,134,742,167,776,184,788,181,792,164,780,130,745,103,705,69,632"/>
-<area shape="rect" id="Node000011" href="$d2/d92/structthread__pool__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html" title=" " alt="" coords="205,883,376,953"/>
-<area shape="poly" id="edge49_Node000000_Node000011" title=" " alt="" coords="68,632,77,682,95,745,124,811,144,842,167,869,185,884,206,895,204,900,182,888,163,873,140,845,120,814,90,747,72,683,63,633"/>
-<area shape="rect" id="Node000012" href="$db/df5/structtyped__thread__pool__module_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_326af756acd357eb452243a29392a2b29.html" title=" " alt="" coords="165,977,416,1046"/>
-<area shape="poly" id="edge50_Node000000_Node000012" title=" " alt="" coords="65,632,69,698,83,786,96,833,114,880,137,924,167,963,181,975,177,979,163,966,133,927,109,882,91,835,78,787,64,698,60,632"/>
-<area shape="rect" id="Node000013" href="$de/d9b/structtyped__thread__pool__module_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3e6416fec089501094ca1aa6baa646e2f.html" title=" " alt="" coords="191,1071,390,1155"/>
-<area shape="poly" id="edge51_Node000000_Node000013" title=" " alt="" coords="68,632,80,726,101,852,131,975,148,1023,167,1056,193,1078,189,1082,163,1060,143,1025,125,976,96,853,75,726,63,633"/>
-<area shape="rect" id="Node000014" href="$de/d38/structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type_3_01T_00_01std_1_1void__t_3_6c25439dd3b606b635c5ac1f9fed271e.html" title=" " alt="" coords="165,1179,416,1249"/>
-<area shape="poly" id="edge52_Node000000_Node000014" title=" " alt="" coords="67,633,76,746,94,905,107,987,124,1061,144,1122,167,1164,181,1177,177,1181,163,1168,139,1124,119,1062,102,988,89,906,70,747,62,633"/>
+<area shape="rect" id="Node000000" href="$db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html" title="A chunk of pre&#45;allocated nodes." alt="" coords="5,5,177,45"/>
 </map>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['error_5fhandling_2eh_0',['error_handling.h',['../d3/d11/error__handling_8h.html',1,'']]]
+  ['hazard_5fpointer_2ecpp_0',['hazard_pointer.cpp',['../db/dad/hazard__pointer_8cpp.html',1,'']]],
+  ['hazard_5fpointer_2eh_1',['hazard_pointer.h',['../dc/d54/hazard__pointer_8h.html',1,'']]]
 ];

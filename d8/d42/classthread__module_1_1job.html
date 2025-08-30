@@ -90,17 +90,13 @@ Inheritance diagram for thread_module::job:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d8b/classthread__module_1_1job__inherit__graph.png" border="0" usemap="#athread__module_1_1job_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__module_1_1job_inherit__map" id="athread__module_1_1job_inherit__map">
-<area shape="rect" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="289,5,478,311"/>
-<area shape="rect" href="../../df/df4/classlog__module_1_1log__job.html" title="Represents a discrete logging task that can be scheduled and executed within a concurrent job system." alt="" coords="5,359,159,724"/>
-<area shape="poly" title=" " alt="" coords="280,246,224,300,173,360,161,378,157,375,169,357,220,297,276,243"/>
-<area shape="rect" href="../../db/daf/classlog__module_1_1message__job.html" title="Represents a console logging job derived from the base job class." alt="" coords="183,449,367,634"/>
-<area shape="poly" title=" " alt="" coords="339,325,304,449,299,447,334,323"/>
-<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="392,429,593,654"/>
-<area shape="poly" title=" " alt="" coords="433,323,463,428,458,429,428,325"/>
-<area shape="rect" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="617,451,808,631"/>
-<area shape="poly" title=" " alt="" coords="491,240,551,295,608,357,641,402,670,450,665,452,637,405,604,360,547,299,487,244"/>
-<area shape="rect" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="617,772,808,907"/>
-<area shape="poly" title=" " alt="" coords="715,645,715,772,710,772,710,645"/>
+<area shape="rect" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="121,5,310,311"/>
+<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="5,359,207,584"/>
+<area shape="poly" title=" " alt="" coords="160,325,148,359,143,358,155,323"/>
+<area shape="rect" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="231,381,421,561"/>
+<area shape="poly" title=" " alt="" coords="276,323,297,380,292,382,271,325"/>
+<area shape="rect" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="231,632,421,767"/>
+<area shape="poly" title=" " alt="" coords="329,576,329,632,323,632,323,576"/>
 </map>
 </div>
 <div class="dynheader">
@@ -193,13 +189,13 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a unit of work (task) to be executed, typically by a job queue. </p>
 <p>The <code>job</code> class provides a base interface for scheduling and executing discrete tasks within a multi-threaded environment. Derived classes can override the <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> method to implement custom logic for their specific tasks.</p>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md5"></a>
 Thread-Safety</h3>
 <ul>
 <li><code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code> will generally be called from a worker thread. If your task accesses shared data or interacts with shared resources, you must ensure your implementation is thread-safe.</li>
 <li>The job itself is meant to be used via <code>std::shared_ptr</code>, making it easier to manage lifetimes across multiple threads.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md25"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Error Handling</h3>
 <ul>
 <li>A job returns a <code><a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a></code> from <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code>.<ul>
@@ -209,7 +205,7 @@ Error Handling</h3>
 </li>
 <li>Error information can be used for logging, debugging, or to retry a job if desired.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md26"></a>
+<h3><a class="anchor" id="autotoc_md7"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Create a custom job that overrides do_work().</span></div>
 <div class="line"><span class="keyword">class </span>my_job : <span class="keyword">public</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div>
@@ -257,6 +253,7 @@ Usage Example</h3>
 </div><div class="memdoc">
 
 <p>Constructs a new <code>job</code> with an optional human-readable name. </p>
+<p>Constructs a basic job with name only.</p>
 <p>Use this constructor when your derived job class does not need to store any initial data beyond what you might manually store in derived class members.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -264,13 +261,30 @@ Usage Example</h3>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md27"></a>
+<h4><a class="anchor" id="autotoc_md8"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a basic job with a custom name</span></div>
 <div class="line"><span class="keyword">auto</span> my_simple_job = std::make_shared&lt;thread_module::job&gt;(<span class="stringliteral">&quot;simple_job&quot;</span>);</div>
-</div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>: <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>(name), <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aadb578c9335a9e7c4ed20a8161d5e80d">data_</a>(std::vector&lt;uint8_t&gt;()) {}</div>
+</div><!-- fragment --><p>Implementation details:</p><ul>
+<li>Initializes job with descriptive name for identification</li>
+<li>Creates empty data vector (no binary data associated)</li>
+<li>Cancellation token is default-constructed (not cancelled)</li>
+<li>Job queue is not associated initially (weak_ptr is empty)</li>
+</ul>
+<p>Use Cases:</p><ul>
+<li>Simple computational jobs without input data</li>
+<li>Lambda-based callback jobs</li>
+<li>Jobs that generate data rather than process it</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Descriptive name for debugging and logging </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00078">78</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>: <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>(name), <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aadb578c9335a9e7c4ed20a8161d5e80d">data_</a>(std::vector&lt;uint8_t&gt;()) {}</div>
 <div class="ttc" id="aclassthread__module_1_1job_html_aadb578c9335a9e7c4ed20a8161d5e80d"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aadb578c9335a9e7c4ed20a8161d5e80d">thread_module::job::data_</a></div><div class="ttdeci">std::vector&lt; uint8_t &gt; data_</div><div class="ttdoc">An optional container of raw byte data that may be used by the job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00268">job.h:268</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_ac01785f3d30005f2ad40f840504c5e6f"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">thread_module::job::name_</a></div><div class="ttdeci">std::string name_</div><div class="ttdoc">The descriptive name of the job, used primarily for identification and logging.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00260">job.h:260</a></div></div>
 </div><!-- fragment -->
@@ -303,6 +317,7 @@ Example</h4>
 </div><div class="memdoc">
 
 <p>Constructs a new <code>job</code> with associated raw byte data and a name. </p>
+<p>Constructs a data-processing job with binary data.</p>
 <p>This constructor is particularly useful if your job needs an inline payload or associated data that should be passed directly to <code><a class="el" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes.">do_work()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -311,16 +326,39 @@ Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md28"></a>
+<h4><a class="anchor" id="autotoc_md9"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="comment">// Creating a job that has binary data.</span></div>
 <div class="line">std::vector&lt;uint8_t&gt; my_data = {0xDE, 0xAD, 0xBE, 0xEF};</div>
 <div class="line"><span class="keyword">auto</span> data_job = std::make_shared&lt;thread_module::job&gt;(my_data, <span class="stringliteral">&quot;data_handling_job&quot;</span>);</div>
-</div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>                                                                  : <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>(name), <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aadb578c9335a9e7c4ed20a8161d5e80d">data_</a>(data)</div>
-<div class="line"><span class="lineno">   44</span>    {</div>
-<div class="line"><span class="lineno">   45</span>    }</div>
+</div><!-- fragment --><p>Implementation details:</p><ul>
+<li>Stores binary data for processing during job execution</li>
+<li>Data is copied into the job (caller retains ownership of original)</li>
+<li>Suitable for file processing, network data handling, etc.</li>
+<li>Memory efficient for moderate data sizes</li>
+</ul>
+<p>Data Handling:</p><ul>
+<li>Data is stored as std::vector&lt;uint8_t&gt; for flexibility</li>
+<li>Supports any binary data format (images, documents, network packets)</li>
+<li>Data lifetime matches job lifetime (automatic cleanup)</li>
+</ul>
+<p>Performance Considerations:</p><ul>
+<li>Data is copied during construction (consider move semantics for large data)</li>
+<li>Memory usage scales with data size</li>
+<li>Efficient for data sizes up to several MB</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Binary data to be processed by this job </td></tr>
+    <tr><td class="paramname">name</td><td>Descriptive name for debugging and logging </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>                                                                  : <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>(name), <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aadb578c9335a9e7c4ed20a8161d5e80d">data_</a>(data)</div>
+<div class="line"><span class="lineno">  103</span>    {</div>
+<div class="line"><span class="lineno">  104</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -349,9 +387,16 @@ Example</h4>
 </div><div class="memdoc">
 
 <p>Virtual destructor for the <code>job</code> class to allow proper cleanup in derived classes. </p>
+<p>Destroys the job and cleans up resources.</p>
+<p>Implementation details:</p><ul>
+<li>Virtual destructor ensures proper cleanup of derived classes</li>
+<li>Automatically cleans up stored data and job queue reference</li>
+<li>No manual cleanup required due to RAII design</li>
+<li>Safe to destroy even if job is queued (weak_ptr prevents dangling references) </li>
+</ul>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{}</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00115">115</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -381,15 +426,16 @@ Example</h4>
 </div><div class="memdoc">
 
 <p>The core task execution method to be overridden by derived classes. </p>
+<p>Default implementation of work execution (must be overridden).</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::optional&lt;std::string&gt;</code> indicating success or error:<ul>
 <li><code>std::nullopt</code> on success, meaning no error occurred.</li>
 <li>A non-empty string on failure, providing an error message or explanation.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md29"></a>
+<h4><a class="anchor" id="autotoc_md10"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns <code>std::nullopt</code> (i.e., no error). Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md30"></a>
+<h4><a class="anchor" id="autotoc_md11"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
@@ -401,43 +447,52 @@ Concurrency</h4>
 <li>An error result (constructed with error{error_code, message}) on failure.</li>
 </ul>
 </dd></dl>
-<h4><a class="anchor" id="autotoc_md31"></a>
+<h4><a class="anchor" id="autotoc_md12"></a>
 Default Behavior</h4>
 <p>The base class implementation simply returns a success result. Override this method in a derived class to perform meaningful work.</p>
-<h4><a class="anchor" id="autotoc_md32"></a>
+<h4><a class="anchor" id="autotoc_md13"></a>
 Concurrency</h4>
 <ul>
 <li>Typically invoked by worker threads in a <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>.</li>
 <li>Ensure that any shared data or resources accessed here are protected with appropriate synchronization mechanisms (mutexes, locks, etc.) if needed.</li>
-<li>This method should check the cancellation token if one is set and return an error with code operation_canceled if the token is cancelled. </li>
+<li>This method should check the cancellation token if one is set and return an error with code operation_canceled if the token is cancelled.</li>
 </ul>
+<p>Implementation details:</p><ul>
+<li>Base implementation always returns "not implemented" error</li>
+<li>Forces derived classes to provide actual work implementation</li>
+<li>Maintains compatibility with <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a> error handling</li>
+<li>Should never be called in production (indicates missing override)</li>
+</ul>
+<p>Design Pattern:</p><ul>
+<li>Template method pattern: defines interface, requires implementation</li>
+<li>Pure virtual in spirit (returns error instead of being pure virtual)</li>
+<li>Enables compilation while encouraging proper inheritance</li>
+</ul>
+<p>Derived Class Requirements:</p><ul>
+<li>Must override this method to provide actual work logic</li>
+<li>Should return empty <a class="el" href="../../dd/da2/classthread__module_1_1result__void.html" title="Wrapper for void result.">result_void</a>{} on success</li>
+<li>Should return error{...} on failure with descriptive message</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Error indicating method needs to be implemented in derived class </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea">log_module::log_job</a>, <a class="el" href="../../db/daf/classlog__module_1_1message__job.html#aad5e4eca1a5f7b093f3a9d5a5e810d20">log_module::message_job</a>, <a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0">thread_module::callback_job</a>, and <a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html#a03e4d2b239b48e210e67fc322cccbfd0">typed_thread_pool_module::callback_typed_job_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0">thread_module::callback_job</a>, and <a class="el" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html#a03e4d2b239b48e210e67fc322cccbfd0">typed_thread_pool_module::callback_typed_job_t&lt; job_type &gt;</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   51</span>                                         { </div>
-<div class="line"><span class="lineno">   52</span>    <span class="comment">// For backward compatibility, we convert the old string-based error to the new typed error</span></div>
-<div class="line"><span class="lineno">   53</span>    std::optional&lt;std::string&gt; old_result = <span class="stringliteral">&quot;not implemented&quot;</span>;</div>
-<div class="line"><span class="lineno">   54</span>    </div>
-<div class="line"><span class="lineno">   55</span>    <span class="keywordflow">if</span> (!old_result.has_value()) {</div>
-<div class="line"><span class="lineno">   56</span>        <span class="keywordflow">return</span> result_void{};</div>
-<div class="line"><span class="lineno">   57</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">return</span> error{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae">error_code::not_implemented</a>, old_result.value()};</div>
-<div class="line"><span class="lineno">   59</span>    }</div>
-<div class="line"><span class="lineno">   60</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00150">150</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  150</span>                                         { </div>
+<div class="line"><span class="lineno">  151</span>        <span class="comment">// Base implementation indicates missing override in derived class</span></div>
+<div class="line"><span class="lineno">  152</span>        <span class="comment">// This should never be called in production code</span></div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae">error_code::not_implemented</a>, <span class="stringliteral">&quot;job::do_work() must be implemented in derived class&quot;</span>};</div>
+<div class="line"><span class="lineno">  154</span>    }</div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae">thread_module::error_code::not_implemented</a></div><div class="ttdeci">@ not_implemented</div></div>
+<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph.png" border="0" usemap="#ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph" alt=""/></div>
 <map name="ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph" id="ad8/d42/classthread__module_1_1job_a4f34f234108da3f7adccc9cbbd831c71_icgraph">
-<area shape="rect" title="The core task execution method to be overridden by derived classes." alt="" coords="243,69,391,109"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#af7d8b04f608e82fbdc0108949254eab4" title="Performs cleanup after stopping the log collector thread." alt="" coords="5,5,195,45"/>
-<area shape="poly" title=" " alt="" coords="235,68,167,48,169,43,236,63"/>
-<area shape="rect" href="../../d7/da3/classlog__module_1_1log__collector.html#afc272e73b57716c68643c842250585e2" title="Performs initialization before starting the log collector thread." alt="" coords="5,69,195,109"/>
-<area shape="poly" title=" " alt="" coords="229,92,195,92,195,87,229,87"/>
-<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="9,133,191,173"/>
-<area shape="poly" title=" " alt="" coords="236,116,169,136,167,131,235,111"/>
+<area shape="rect" title="The core task execution method to be overridden by derived classes." alt="" coords="236,5,384,45"/>
+<area shape="rect" href="../../dc/d7f/classthread__module_1_1callback__job.html#a23ec46e20f136f63d5ceb41258f668c0" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="5,5,188,45"/>
+<area shape="poly" title=" " alt="" coords="222,28,188,28,188,23,222,23"/>
 </map>
 </div>
 
@@ -467,12 +522,32 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Gets the cancellation token associated with this job. </p>
-<dl class="section return"><dt>Returns</dt><dd>The cancellation token, or a default token if none was set. </dd></dl>
+<p>Gets the current cancellation token.</p>
+<dl class="section return"><dt>Returns</dt><dd>The cancellation token, or a default token if none was set.</dd></dl>
+<p>Implementation details:</p><ul>
+<li>Returns copy of stored cancellation token</li>
+<li>Thread-safe operation (<a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations.">cancellation_token</a> is thread-safe)</li>
+<li>Used by derived classes to check cancellation status</li>
+<li>Returns default token if none was set (not cancelled)</li>
+</ul>
+<p>Typical Usage in Derived Classes: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">    <span class="keyword">auto</span> token = <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#ade6a001db5de335aea187e281a928730">get_cancellation_token</a>();</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; large_number; ++i) {</div>
+<div class="line">        <span class="keywordflow">if</span> (token.is_cancelled()) {</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::cancelled, <span class="stringliteral">&quot;Job was cancelled&quot;</span>};</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Do work...</span></div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> {};</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassthread__module_1_1job_html_a4f34f234108da3f7adccc9cbbd831c71"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71">thread_module::job::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; result_void</div><div class="ttdoc">The core task execution method to be overridden by derived classes.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00150">job.cpp:150</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job_html_ade6a001db5de335aea187e281a928730"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#ade6a001db5de335aea187e281a928730">thread_module::job::get_cancellation_token</a></div><div class="ttdeci">virtual auto get_cancellation_token() const -&gt; cancellation_token</div><div class="ttdoc">Gets the cancellation token associated with this job.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00207">job.cpp:207</a></div></div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>Current cancellation token </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00066">66</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>                                                             {</div>
-<div class="line"><span class="lineno">   67</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">cancellation_token_</a>;</div>
-<div class="line"><span class="lineno">   68</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00207">207</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  207</span>                                                                 {</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">cancellation_token_</a>;</div>
+<div class="line"><span class="lineno">  209</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a6e6b667fca252a8a22e1977772df17da"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">thread_module::job::cancellation_token_</a></div><div class="ttdeci">cancellation_token cancellation_token_</div><div class="ttdoc">The cancellation token associated with this job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00284">job.h:284</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -502,8 +577,9 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Retrieves the <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> associated with this job, if any. </p>
+<p>Gets the associated job queue if it still exists.</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the associated <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. Will be empty if no queue was set or if the queue has already been destroyed.</dd></dl>
-<h4><a class="anchor" id="autotoc_md34"></a>
+<h4><a class="anchor" id="autotoc_md15"></a>
 Usage Example</h4>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> jq = <a class="code hl_function" href="../../d8/d42/classthread__module_1_1job.html#a5b215be529afbe56e5328747d39779c8">get_job_queue</a>();</div>
 <div class="line"><span class="keywordflow">if</span> (jq)</div>
@@ -514,12 +590,28 @@ Usage Example</h4>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// The queue is no longer valid</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassthread__module_1_1job_html_a5b215be529afbe56e5328747d39779c8"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a5b215be529afbe56e5328747d39779c8">thread_module::job::get_job_queue</a></div><div class="ttdeci">virtual auto get_job_queue(void) const -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Retrieves the job_queue associated with this job, if any.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00075">job.cpp:75</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassthread__module_1_1job_html_a5b215be529afbe56e5328747d39779c8"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a5b215be529afbe56e5328747d39779c8">thread_module::job::get_job_queue</a></div><div class="ttdeci">virtual auto get_job_queue(void) const -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Retrieves the job_queue associated with this job, if any.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00259">job.cpp:259</a></div></div>
+</div><!-- fragment --><p>Implementation details:</p><ul>
+<li>Converts weak_ptr to shared_ptr (may return nullptr)</li>
+<li>Thread-safe operation (weak_ptr::lock is atomic)</li>
+<li>Returns nullptr if queue has been destroyed</li>
+<li>Used for advanced job scheduling scenarios</li>
+</ul>
+<p>Return Value Interpretation:</p><ul>
+<li>Valid shared_ptr: Queue is alive and accessible</li>
+<li>nullptr: Queue has been destroyed or was never set</li>
+</ul>
+<p>Safety Considerations:</p><ul>
+<li>Always check return value before use</li>
+<li>Queue may be destroyed between check and use</li>
+<li>Designed to fail gracefully if queue is unavailable</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to job queue or nullptr if unavailable </dd></dl>
+
 <p>Reimplemented in <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#ada77cfa3bcdd88ee5e35d5f64ecd1b2f">typed_thread_pool_module::typed_job_t&lt; job_type &gt;</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00075">75</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a>.lock(); }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00259">259</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  259</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a>.lock(); }</div>
 <div class="ttc" id="aclassthread__module_1_1job_html_aed0248a449f4e341057aa29c0369e625"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">thread_module::job::job_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A weak reference to the job_queue that currently manages this job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00276">job.h:276</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -541,11 +633,18 @@ Usage Example</h4>
 </div><div class="memdoc">
 
 <p>Retrieves the name of this job. </p>
+<p>Gets the descriptive name of this job.</p>
 <dl class="section return"><dt>Returns</dt><dd>A string containing the name assigned to this job.</dd></dl>
-<p>The name can be useful for logging and diagnostic messages, especially when multiple jobs are running concurrently. </p>
+<p>The name can be useful for logging and diagnostic messages, especially when multiple jobs are running concurrently.</p>
+<p>Implementation details:</p><ul>
+<li>Simple accessor for job identification</li>
+<li>Thread-safe (string is immutable after construction)</li>
+<li>Used for debugging, logging, and diagnostics</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Job name as provided during construction </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -574,17 +673,41 @@ Usage Example</h4>
 </div><div class="memdoc">
 
 <p>Sets a cancellation token that can be used to cancel the job. </p>
+<p>Sets the cancellation token for cooperative cancellation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">token</td><td>The cancellation token to associate with this job. </td></tr>
+    <tr><td class="paramname">token</td><td>The cancellation token to associate with this job.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implementation details:</p><ul>
+<li>Stores cancellation token for use during job execution</li>
+<li>Enables cooperative cancellation (job checks token periodically)</li>
+<li>Thread-safe assignment (<a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations.">cancellation_token</a> is thread-safe)</li>
+<li>Token can be checked during long-running operations</li>
+</ul>
+<p>Cancellation Model:</p><ul>
+<li>Cooperative: job must check token voluntarily</li>
+<li>Non-preemptive: job won't be forcibly stopped</li>
+<li>Graceful: allows cleanup before termination</li>
+</ul>
+<p>Usage Pattern:</p><ol type="1">
+<li>Create <a class="el" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations.">cancellation_token</a></li>
+<li>Set token on jobs before submission</li>
+<li>Job checks token during execution</li>
+<li>External code can signal cancellation</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>Cancellation token for cooperative cancellation </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   62</span>                                                                        {</div>
-<div class="line"><span class="lineno">   63</span>    <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">cancellation_token_</a> = token;</div>
-<div class="line"><span class="lineno">   64</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00178">178</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>                                                                            {</div>
+<div class="line"><span class="lineno">  179</span>        <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#a6e6b667fca252a8a22e1977772df17da">cancellation_token_</a> = token;</div>
+<div class="line"><span class="lineno">  180</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -613,6 +736,7 @@ Usage Example</h4>
 </div><div class="memdoc">
 
 <p>Associates this job with a specific <code><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code>. </p>
+<p>Associates this job with a job queue for scheduling.</p>
 <p>Once assigned, the job can be aware of the queue that manages it, enabling scenarios like re-enqueuing itself upon partial failure, or querying the queue for state (depending on the queue's interface).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -620,18 +744,42 @@ Usage Example</h4>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md33"></a>
+<h4><a class="anchor" id="autotoc_md14"></a>
 Implementation Detail</h4>
 <ul>
-<li>Stored internally as a <code>std::weak_ptr</code>. If the queue is destroyed, the pointer becomes invalid. </li>
+<li>Stored internally as a <code>std::weak_ptr</code>. If the queue is destroyed, the pointer becomes invalid.</li>
 </ul>
+<p>Implementation details:</p><ul>
+<li>Stores weak reference to prevent circular dependencies</li>
+<li>Allows job to interact with its queue if needed</li>
+<li>Automatic cleanup when queue is destroyed</li>
+<li>Used for advanced job management scenarios</li>
+</ul>
+<p>Weak Reference Benefits:</p><ul>
+<li>Prevents memory leaks from circular references</li>
+<li>Queue can be destroyed without affecting jobs</li>
+<li>Jobs can check if queue is still alive</li>
+<li>No impact on queue lifetime management</li>
+</ul>
+<p>Use Cases:</p><ul>
+<li>Jobs that need to submit additional jobs</li>
+<li>Self-scheduling or recursive jobs</li>
+<li>Jobs that need queue statistics</li>
+<li>Advanced workflow management</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></td><td>Shared pointer to the job queue </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Reimplemented in <a class="el" href="../../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a752eb21e19322b8241126830617771d4">typed_thread_pool_module::typed_job_t&lt; job_type &gt;</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00070">70</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>    {</div>
-<div class="line"><span class="lineno">   72</span>        <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a> = job_queue;</div>
-<div class="line"><span class="lineno">   73</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00234">234</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  235</span>    {</div>
+<div class="line"><span class="lineno">  236</span>        <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">job_queue_</a> = job_queue;</div>
+<div class="line"><span class="lineno">  237</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -660,16 +808,29 @@ Implementation Detail</h4>
 </div><div class="memdoc">
 
 <p>Provides a string representation of the job for logging or debugging. </p>
+<p>Provides a string representation of this job.</p>
 <p>By default, this returns the job's name. Derived classes can override to include extra diagnostic details (e.g., job status, data contents, etc.).</p>
 <dl class="section return"><dt>Returns</dt><dd>A string describing the job (e.g., <code>name_</code>).</dd></dl>
-<h4><a class="anchor" id="autotoc_md35"></a>
+<h4><a class="anchor" id="autotoc_md16"></a>
 Example</h4>
 <div class="fragment"><div class="line">std::shared_ptr&lt;my_job&gt; job_ptr = std::make_shared&lt;my_job&gt;();</div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line">std::string desc = job_ptr-&gt;to_string(); <span class="comment">// &quot;my_custom_job&quot;, for instance</span></div>
-</div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00077">77</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;job: {}&quot;</span>, <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>); }</div>
+</div><!-- fragment --><p>Implementation details:</p><ul>
+<li>Formats job name for display purposes</li>
+<li>Used in debugging, logging, and diagnostics</li>
+<li>Consistent format across all job types</li>
+<li>Thread-safe operation (accesses immutable name)</li>
+</ul>
+<p>Output Format:</p><ul>
+<li>"job: &lt;name&gt;" where &lt;name&gt; is the job's descriptive name</li>
+<li>Simple, readable format for human consumption</li>
+<li>Suitable for log files and debug output</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string representation of the job </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d83/job_8cpp_source.html#l00277">277</a> of file <a class="el" href="../../de/d83/job_8cpp_source.html">job.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;job: {}&quot;</span>, <a class="code hl_variable" href="../../d8/d42/classthread__module_1_1job.html#ac01785f3d30005f2ad40f840504c5e6f">name_</a>); }</div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -802,7 +963,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

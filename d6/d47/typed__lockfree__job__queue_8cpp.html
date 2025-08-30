@@ -78,13 +78,16 @@ $(function() {
   <div class="headertitle"><div class="title">typed_lockfree_job_queue.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Explicit template instantiation for typed lock-free job queue.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d68/typed__lockfree__job__queue_8h_source.html">typed_lockfree_job_queue.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for typed_lockfree_job_queue.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d0/d01/typed__lockfree__job__queue_8cpp__incl.png" border="0" usemap="#asources_2typed__thread__pool_2scheduling_2typed__lockfree__job__queue_8cpp" alt=""/></div>
 <map name="asources_2typed__thread__pool_2scheduling_2typed__lockfree__job__queue_8cpp" id="asources_2typed__thread__pool_2scheduling_2typed__lockfree__job__queue_8cpp">
-<area shape="rect" title=" " alt="" coords="1967,5,2150,60"/>
+<area shape="rect" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="1967,5,2150,60"/>
 <area shape="rect" href="../../dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="1985,108,2132,148"/>
 <area shape="poly" title=" " alt="" coords="2061,60,2061,94,2056,94,2056,60"/>
 <area shape="rect" href="../../db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="2077,196,2293,236"/>
@@ -258,10 +261,33 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:d4/db9/namespacetyped__thread__pool__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-based thread pool implementation for job scheduling with types. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Explicit template instantiation for typed lock-free job queue. </p>
+<p>This file provides explicit template instantiation for the typed_lockfree_job_queue_t template class with the job_types enumeration. This approach separates template compilation from header inclusion, reducing compile times and binary size.</p>
+<p>Key Features:</p><ul>
+<li>Explicit template instantiation for job_types enumeration</li>
+<li>Reduces template instantiation overhead in client code</li>
+<li>Centralizes template compilation for the typed job queue</li>
+<li>Maintains type safety while improving build performance</li>
+</ul>
+<p>Template Instantiation Benefits:</p><ul>
+<li>Faster compilation times for client code</li>
+<li>Reduced binary size through single instantiation</li>
+<li>Better error localization for template-related issues</li>
+<li>Cleaner separation of interface and implementation</li>
+</ul>
+<p>Usage:</p><ul>
+<li>Client code includes only the header file</li>
+<li>Template implementation is pre-compiled in this unit</li>
+<li>Linker resolves template instantiation automatically</li>
+<li>Type safety maintained through template parameter validation </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d6/d47/typed__lockfree__job__queue_8cpp_source.html">typed_lockfree_job_queue.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

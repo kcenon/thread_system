@@ -1,5 +1,0 @@
-<map id="monitoring_module::metrics_collector::~metrics_collector" name="monitoring_module::metrics_collector::~metrics_collector">
-<area shape="rect" id="Node000001" title="Destructor ensures collection thread is properly stopped." alt="" coords="5,5,163,60"/>
-<area shape="rect" id="Node000002" href="$d0/d98/classmonitoring__module_1_1metrics__collector.html#a9ae1fb8ab8b43097f7b41a8c391b6cc1" title="Stops the metrics collection thread." alt="" coords="211,13,381,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,30,197,30,197,35,163,35"/>
-</map>

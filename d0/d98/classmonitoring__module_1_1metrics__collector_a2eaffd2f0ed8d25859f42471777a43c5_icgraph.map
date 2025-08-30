@@ -1,5 +1,0 @@
-<map id="monitoring_module::metrics_collector::collection_loop" name="monitoring_module::metrics_collector::collection_loop">
-<area shape="rect" id="Node000001" title="Main collection loop executed by the collection thread." alt="" coords="225,5,465,45"/>
-<area shape="rect" id="Node000002" href="$d0/d98/classmonitoring__module_1_1metrics__collector.html#ac46ded286aea5f8248bd41569fae4c8a" title="Starts the metrics collection thread." alt="" coords="5,5,177,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,28,178,28,178,23,212,23"/>
-</map>

@@ -1,12 +1,8 @@
 <map id="thread_pool_module::thread_worker::do_work" name="thread_pool_module::thread_worker::do_work">
-<area shape="rect" id="Node000001" title="Processes one or more jobs from the queue." alt="" coords="5,37,192,77"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="251,5,437,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,43,237,37,237,42,192,48"/>
-<area shape="rect" id="Node000004" href="$d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,73,448,98"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="192,65,227,69,226,75,192,71"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="508,5,695,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="438,31,494,32,494,37,438,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="508,19,451,19,451,14,508,14"/>
-<area shape="rect" id="Node000005" href="$d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,69,707,109"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="448,84,483,85,483,90,448,90"/>
+<area shape="rect" id="Node000001" title="Processes one or more jobs from the queue." alt="" coords="5,5,192,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="240,5,427,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,23,226,23,226,28,192,28"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="475,5,661,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="427,31,461,32,461,37,427,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="474,19,440,19,440,14,474,14"/>
 </map>

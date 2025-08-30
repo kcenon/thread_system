@@ -1,7 +1,0 @@
-<map id="fmt::formatter&lt; log_module::log_types, wchar_t &gt;::format" name="fmt::formatter&lt; log_module::log_types, wchar_t &gt;::format">
-<area shape="rect" id="Node000001" title="Formats a log_module::log_types enumerator as a wide string." alt="" coords="5,20,159,75"/>
-<area shape="rect" id="Node000002" href="$d9/de0/namespacelog__module.html#a4f66017a4ded34b2b7d3754b1ad9fe8b" title="Retrieves the string representation of a given log_types value." alt="" coords="212,5,375,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,34,198,28,199,34,159,39"/>
-<area shape="rect" id="Node000003" href="$d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="207,55,380,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,55,193,59,193,65,158,60"/>
-</map>

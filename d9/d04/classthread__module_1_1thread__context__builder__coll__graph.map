@@ -1,0 +1,11 @@
+<map id="thread_module::thread_context_builder" name="thread_module::thread_context_builder">
+<area shape="rect" id="Node000001" title="Builder for thread_context with fluent interface." alt="" coords="133,460,319,600"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,317,204,397"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,396,170,445,165,448,130,399"/>
+<area shape="rect" id="Node000003" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="24,50,185,210"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,211,107,301,102,301,102,211"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="228,317,467,397"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="322,399,287,448,282,445,317,396"/>
+<area shape="rect" id="Node000005" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="250,5,445,255"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="350,255,350,301,345,301,345,255"/>
+</map>

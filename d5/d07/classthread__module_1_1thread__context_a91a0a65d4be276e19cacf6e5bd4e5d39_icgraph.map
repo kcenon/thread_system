@@ -1,0 +1,7 @@
+<map id="thread_module::thread_context::update_thread_pool_metrics" name="thread_module::thread_context::update_thread_pool_metrics">
+<area shape="rect" id="Node000001" title="Update thread pool metrics if monitoring is available." alt="" coords="245,41,425,96"/>
+<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#af5b500ab1783fac73830ccca85c511e9" title="Collect and report current thread pool metrics." alt="" coords="24,5,179,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,55,178,47,179,42,232,50"/>
+<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#af6e64b6c2404f1b071f8658caeee6a64" title="Constructs a new thread_pool instance." alt="" coords="5,85,197,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,87,198,93,197,87,231,82"/>
+</map>

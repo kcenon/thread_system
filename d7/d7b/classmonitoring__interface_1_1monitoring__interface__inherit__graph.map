@@ -1,0 +1,5 @@
+<map id="monitoring_interface::monitoring_interface" name="monitoring_interface::monitoring_interface">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,200,255"/>
+<area shape="rect" id="Node000002" href="$dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="5,303,200,497"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,268,105,303,100,303,100,268"/>
+</map>

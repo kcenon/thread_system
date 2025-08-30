@@ -77,6 +77,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="../../db/d6a/classthread__pool__module_1_1thread__worker-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">thread_pool_module::thread_worker Class Reference</div></div>
 </div><!--header-->
@@ -91,9 +92,9 @@ Inheritance diagram for thread_pool_module::thread_worker:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d0a/classthread__pool__module_1_1thread__worker__inherit__graph.png" border="0" usemap="#athread__pool__module_1_1thread__worker_inherit__map" alt="Inheritance graph"/></div>
 <map name="athread__pool__module_1_1thread__worker_inherit__map" id="athread__pool__module_1_1thread__worker_inherit__map">
-<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="13,579,197,759"/>
+<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="13,579,197,879"/>
 <area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,205,531"/>
-<area shape="poly" title=" " alt="" coords="108,544,108,578,103,578,103,544"/>
+<area shape="poly" title=" " alt="" coords="108,545,108,578,103,578,103,545"/>
 </map>
 </div>
 <div class="dynheader">
@@ -101,66 +102,87 @@ Collaboration diagram for thread_pool_module::thread_worker:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d47/classthread__pool__module_1_1thread__worker__coll__graph.png" border="0" usemap="#athread__pool__module_1_1thread__worker_coll__map" alt="Collaboration graph"/></div>
 <map name="athread__pool__module_1_1thread__worker_coll__map" id="athread__pool__module_1_1thread__worker_coll__map">
-<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="292,1194,476,1354"/>
-<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="732,591,932,996"/>
-<area shape="poly" title=" " alt="" coords="726,1009,682,1060,631,1102,611,1112,593,1116,559,1115,526,1113,508,1117,489,1126,453,1157,425,1195,421,1192,450,1154,487,1122,506,1112,525,1108,559,1110,592,1111,609,1107,628,1098,679,1056,722,1006"/>
-<area shape="rect" title=" " alt="" coords="273,13,357,78"/>
-<area shape="poly" title=" " alt="" coords="313,78,302,179,293,313,293,381,298,442,308,492,325,526,358,556,391,571,426,575,462,572,501,568,541,566,584,571,629,588,678,620,722,657,718,661,674,624,627,593,583,576,541,571,501,573,463,577,426,580,390,576,355,561,321,530,303,494,292,443,288,381,288,313,296,179,308,78"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="73,148,258,528"/>
-<area shape="poly" title=" " alt="" coords="274,79,229,111,215,134,210,131,225,108,271,74"/>
-<area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="489,298,687,378"/>
-<area shape="poly" title=" " alt="" coords="358,66,415,100,471,146,500,179,525,214,565,282,560,285,520,217,495,182,467,150,412,104,356,70"/>
-<area shape="rect" title=" " alt="" coords="1045,298,1192,378"/>
-<area shape="poly" title=" " alt="" coords="1109,379,1078,453,1056,493,1029,530,1010,543,992,554,944,610,940,607,989,550,1008,538,1025,526,1051,490,1074,450,1104,377"/>
-<area shape="rect" title=" " alt="" coords="1077,13,1161,78"/>
-<area shape="poly" title=" " alt="" coords="1121,78,1121,281,1116,281,1116,78"/>
-<area shape="rect" title=" " alt="" coords="767,13,913,78"/>
-<area shape="poly" title=" " alt="" coords="853,78,871,147,889,265,898,357,898,449,888,567,887,575,882,574,883,566,893,449,893,357,883,265,865,149,848,79"/>
-<area shape="poly" title=" " alt="" coords="788,80,744,112,702,150,676,182,652,217,615,285,610,282,647,214,671,179,698,146,740,107,785,76"/>
-<area shape="rect" title=" " alt="" coords="1217,305,1295,371"/>
-<area shape="poly" title=" " alt="" coords="1258,371,1255,407,1247,449,1231,492,1206,530,1190,542,1173,546,1157,548,1139,554,1037,620,946,692,943,687,1034,615,1136,550,1156,542,1173,540,1187,537,1202,526,1226,490,1242,448,1250,406,1253,371"/>
-<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="505,1487,695,1732"/>
-<area shape="poly" title=" " alt="" coords="1258,371,1250,460,1232,567,1175,824,1151,930,1125,1027,1092,1120,1046,1214,982,1315,897,1426,855,1468,808,1505,759,1537,711,1563,708,1559,756,1533,805,1501,852,1464,893,1422,978,1312,1041,1212,1087,1118,1120,1025,1146,929,1169,823,1227,566,1245,459,1252,370"/>
-<area shape="rect" title=" " alt="" coords="1191,5,1321,85"/>
-<area shape="poly" title=" " alt="" coords="1259,99,1259,305,1253,305,1253,99"/>
-<area shape="rect" title=" " alt="" coords="712,298,856,378"/>
-<area shape="poly" title=" " alt="" coords="776,379,762,465,759,516,763,566,764,574,759,575,757,567,754,516,756,464,771,378"/>
-<area shape="rect" title=" " alt="" coords="233,753,401,833"/>
-<area shape="poly" title=" " alt="" coords="325,833,373,1177,368,1178,320,834"/>
-<area shape="poly" title=" " alt="" coords="231,527,302,737,297,739,226,529"/>
-<area shape="rect" title=" " alt="" coords="109,1020,269,1100"/>
-<area shape="poly" title=" " alt="" coords="174,528,190,1004,185,1004,169,528"/>
-<area shape="rect" title=" " alt="" coords="69,5,249,85"/>
-<area shape="poly" title=" " alt="" coords="163,99,164,148,158,148,157,99"/>
-<area shape="rect" title=" " alt="" coords="5,1937,216,2017"/>
-<area shape="poly" title=" " alt="" coords="99,1937,91,1889,87,1836,87,792,95,666,114,544,119,544,100,667,92,792,92,1836,96,1889,104,1937"/>
-<area shape="rect" title=" " alt="" coords="327,1795,495,1875"/>
-<area shape="poly" title=" " alt="" coords="329,1877,210,1933,208,1928,326,1872"/>
-<area shape="poly" title=" " alt="" coords="507,1724,456,1784,452,1780,503,1721"/>
-<area shape="rect" title=" " alt="" coords="723,1241,882,1307"/>
-<area shape="poly" title=" " alt="" coords="802,1307,786,1381,772,1424,753,1464,732,1494,709,1521,705,1518,728,1490,748,1461,767,1422,781,1380,796,1306"/>
-<area shape="poly" title=" " alt="" coords="179,1101,164,1167,154,1251,155,1296,161,1340,173,1383,193,1423,220,1458,253,1488,290,1514,329,1536,412,1569,490,1589,488,1594,410,1574,327,1540,287,1518,250,1492,216,1461,188,1425,168,1385,155,1341,150,1296,149,1251,159,1166,174,1099"/>
-<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="501,1124,699,1424"/>
-<area shape="poly" title=" " alt="" coords="603,1424,603,1470,597,1470,597,1424"/>
-<area shape="rect" title=" " alt="" coords="448,746,616,841"/>
-<area shape="poly" title=" " alt="" coords="541,841,579,1107,574,1108,536,841"/>
-<area shape="poly" title=" " alt="" coords="586,379,542,730,537,729,581,378"/>
-<area shape="rect" title=" " alt="" coords="499,5,677,85"/>
-<area shape="poly" title=" " alt="" coords="591,86,591,281,585,281,585,86"/>
+<area shape="rect" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="627,1323,811,1563"/>
+<area shape="rect" href="../../da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="921,760,1121,1165"/>
+<area shape="poly" title=" " alt="" coords="916,1164,851,1271,814,1325,809,1322,846,1268,912,1161"/>
+<area shape="rect" title=" " alt="" coords="1151,97,1235,163"/>
+<area shape="poly" title=" " alt="" coords="1195,163,1185,450,1172,616,1163,685,1151,737,1130,791,1125,789,1146,735,1157,684,1166,616,1179,449,1190,163"/>
+<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="5,317,191,697"/>
+<area shape="poly" title=" " alt="" coords="1191,164,1175,213,1160,237,1139,257,1110,266,1060,272,924,278,704,281,616,296,425,301,298,307,245,313,207,321,205,316,245,308,298,302,425,296,615,291,703,276,924,272,1060,267,1109,261,1137,252,1156,234,1170,211,1186,162"/>
+<area shape="rect" href="../../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="1517,467,1716,547"/>
+<area shape="poly" title=" " alt="" coords="1218,161,1245,193,1280,229,1321,264,1367,291,1403,300,1434,300,1465,300,1481,305,1500,315,1533,344,1561,379,1583,416,1599,451,1594,453,1578,418,1556,382,1529,348,1496,320,1479,310,1464,306,1434,305,1402,306,1365,296,1318,268,1276,233,1241,197,1214,165"/>
+<area shape="rect" title=" " alt="" coords="701,467,847,547"/>
+<area shape="poly" title=" " alt="" coords="772,548,770,589,773,638,783,688,804,735,812,743,821,747,842,758,911,824,907,828,839,762,818,752,809,747,800,737,778,690,768,639,765,589,766,547"/>
+<area shape="rect" title=" " alt="" coords="732,97,816,163"/>
+<area shape="poly" title=" " alt="" coords="777,163,777,451,771,451,771,163"/>
+<area shape="rect" title=" " alt="" coords="1331,97,1476,163"/>
+<area shape="poly" title=" " alt="" coords="1403,163,1377,465,1361,620,1348,698,1305,761,1252,817,1194,864,1136,903,1133,898,1191,860,1248,813,1301,758,1344,696,1356,620,1372,464,1398,162"/>
+<area shape="poly" title=" " alt="" coords="1424,162,1589,452,1584,454,1419,165"/>
+<area shape="rect" title=" " alt="" coords="1040,475,1119,540"/>
+<area shape="poly" title=" " alt="" coords="1078,540,1052,744,1046,743,1073,540"/>
+<area shape="rect" href="../../d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="378,1656,567,1901"/>
+<area shape="poly" title=" " alt="" coords="1096,539,1126,620,1141,670,1151,721,1171,846,1179,946,1177,994,1169,1045,1156,1101,1135,1166,1107,1242,1079,1305,1050,1359,1018,1407,981,1451,938,1495,825,1595,767,1639,705,1678,642,1711,584,1738,581,1733,640,1706,702,1673,764,1635,822,1591,934,1491,977,1447,1014,1403,1046,1356,1075,1303,1102,1240,1130,1164,1151,1100,1164,1044,1171,994,1174,946,1166,847,1146,722,1135,671,1121,622,1091,541"/>
+<area shape="rect" title=" " alt="" coords="995,90,1126,170"/>
+<area shape="poly" title=" " alt="" coords="1066,183,1080,474,1075,475,1061,184"/>
+<area shape="rect" title=" " alt="" coords="871,467,1015,547"/>
+<area shape="poly" title=" " alt="" coords="934,548,919,635,916,685,922,736,924,743,918,744,917,736,911,686,913,634,929,547"/>
+<area shape="rect" title=" " alt="" coords="645,930,828,995"/>
+<area shape="poly" title=" " alt="" coords="738,995,727,1307,722,1307,733,995"/>
+<area shape="rect" title=" " alt="" coords="227,923,395,1003"/>
+<area shape="poly" title=" " alt="" coords="328,1002,364,1080,388,1123,416,1164,445,1197,470,1220,533,1267,566,1291,617,1336,614,1340,563,1295,530,1271,467,1224,441,1201,412,1167,384,1126,359,1082,324,1004"/>
+<area shape="poly" title=" " alt="" coords="193,677,204,696,219,720,262,818,295,906,290,908,257,820,214,723,200,699,189,679"/>
+<area shape="rect" title=" " alt="" coords="147,1189,307,1269"/>
+<area shape="poly" title=" " alt="" coords="134,697,218,1165,219,1173,214,1174,213,1166,128,698"/>
+<area shape="rect" title=" " alt="" coords="8,90,188,170"/>
+<area shape="poly" title=" " alt="" coords="101,184,101,317,95,317,95,184"/>
+<area shape="rect" title=" " alt="" coords="18,2107,229,2187"/>
+<area shape="poly" title=" " alt="" coords="112,2107,103,2059,99,2005,99,961,98,714,103,714,105,961,105,2005,109,2058,117,2106"/>
+<area shape="rect" title=" " alt="" coords="275,1964,443,2044"/>
+<area shape="poly" title=" " alt="" coords="295,2047,204,2100,202,2096,292,2042"/>
+<area shape="poly" title=" " alt="" coords="413,1903,389,1951,384,1948,408,1901"/>
+<area shape="rect" title=" " alt="" coords="393,1411,552,1476"/>
+<area shape="poly" title=" " alt="" coords="475,1477,475,1640,470,1640,470,1477"/>
+<area shape="poly" title=" " alt="" coords="230,1269,233,1334,242,1417,262,1506,276,1550,295,1592,328,1643,368,1688,364,1692,324,1646,290,1595,271,1552,257,1508,237,1417,227,1334,224,1270"/>
+<area shape="rect" href="../../df/d25/classthread__module_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="1481,1293,1680,1593"/>
+<area shape="poly" title=" " alt="" coords="1483,1592,1457,1615,1429,1634,1360,1663,1267,1688,1156,1710,1035,1729,788,1756,584,1773,583,1768,788,1751,1034,1723,1155,1705,1266,1683,1358,1658,1426,1630,1454,1611,1480,1588"/>
+<area shape="rect" title=" " alt="" coords="1523,915,1691,1010"/>
+<area shape="poly" title=" " alt="" coords="1607,1010,1593,1277,1587,1277,1602,1010"/>
+<area shape="poly" title=" " alt="" coords="1619,548,1611,899,1606,899,1613,548"/>
+<area shape="rect" title=" " alt="" coords="1527,90,1706,170"/>
+<area shape="poly" title=" " alt="" coords="1619,170,1619,451,1614,451,1614,170"/>
+<area shape="rect" href="../../d5/d07/classthread__module_1_1thread__context.html" title="Context object that provides access to optional services." alt="" coords="426,808,621,1117"/>
+<area shape="poly" title=" " alt="" coords="589,1117,667,1307,662,1309,584,1119"/>
+<area shape="rect" title=" " alt="" coords="477,467,676,547"/>
+<area shape="poly" title=" " alt="" coords="575,548,546,792,541,791,569,547"/>
+<area shape="rect" href="../../d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="496,50,657,210"/>
+<area shape="poly" title=" " alt="" coords="579,210,579,451,574,451,574,210"/>
+<area shape="rect" title=" " alt="" coords="215,467,453,547"/>
+<area shape="poly" title=" " alt="" coords="353,547,455,791,450,793,348,549"/>
+<area shape="rect" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="237,5,431,255"/>
+<area shape="poly" title=" " alt="" coords="337,255,337,451,331,451,331,255"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a72dc84ebf79776edb633d05d407c8d4b" id="r_a72dc84ebf79776edb633d05d407c8d4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a72dc84ebf79776edb633d05d407c8d4b">thread_worker</a> (const bool &amp;use_time_tag=true)</td></tr>
-<tr class="memdesc:a72dc84ebf79776edb633d05d407c8d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code>.  <br /></td></tr>
-<tr class="separator:a72dc84ebf79776edb633d05d407c8d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa77085627155fc477a71e9e808523af5" id="r_aa77085627155fc477a71e9e808523af5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa77085627155fc477a71e9e808523af5">thread_worker</a> (const bool &amp;use_time_tag=true, const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> &amp;context=<a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a>())</td></tr>
+<tr class="memdesc:aa77085627155fc477a71e9e808523af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code>.  <br /></td></tr>
+<tr class="separator:aa77085627155fc477a71e9e808523af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa59a0a31ba753314c3283828ca21cf97" id="r_aa59a0a31ba753314c3283828ca21cf97"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aa59a0a31ba753314c3283828ca21cf97">~thread_worker</a> (void)</td></tr>
 <tr class="memdesc:aa59a0a31ba753314c3283828ca21cf97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Ensures the worker thread is stopped before destruction.  <br /></td></tr>
 <tr class="separator:aa59a0a31ba753314c3283828ca21cf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced5aa76dbf8bd7221365b750ea5e698" id="r_aced5aa76dbf8bd7221365b750ea5e698"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aced5aa76dbf8bd7221365b750ea5e698">set_job_queue</a> (std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>) -&gt; void</td></tr>
 <tr class="memdesc:aced5aa76dbf8bd7221365b750ea5e698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <code>job_queue</code> that this worker should process.  <br /></td></tr>
 <tr class="separator:aced5aa76dbf8bd7221365b750ea5e698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3159d048c23c427ea7052e02eac44da7" id="r_a3159d048c23c427ea7052e02eac44da7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3159d048c23c427ea7052e02eac44da7">set_context</a> (const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> &amp;context) -&gt; void</td></tr>
+<tr class="memdesc:a3159d048c23c427ea7052e02eac44da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the thread context for this worker.  <br /></td></tr>
+<tr class="separator:a3159d048c23c427ea7052e02eac44da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01f3b80d0c4addb57d576358e67e01c6" id="r_a01f3b80d0c4addb57d576358e67e01c6"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a01f3b80d0c4addb57d576358e67e01c6">get_worker_id</a> () const</td></tr>
+<tr class="memdesc:a01f3b80d0c4addb57d576358e67e01c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the worker ID.  <br /></td></tr>
+<tr class="separator:a01f3b80d0c4addb57d576358e67e01c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a841713f62c6660ecb2ec77bea9a10a0c" id="r_a841713f62c6660ecb2ec77bea9a10a0c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a841713f62c6660ecb2ec77bea9a10a0c">get_context</a> (void) const -&gt; const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> &amp;</td></tr>
+<tr class="memdesc:a841713f62c6660ecb2ec77bea9a10a0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the thread context for this worker.  <br /></td></tr>
+<tr class="separator:a841713f62c6660ecb2ec77bea9a10a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthread__module_1_1thread__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthread__module_1_1thread__base')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></td></tr>
 <tr class="memitem:a0df16877f4bdab741dc5416b5a9b7fc3 inherit pub_methods_classthread__module_1_1thread__base" id="r_a0df16877f4bdab741dc5416b5a9b7fc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#a0df16877f4bdab741dc5416b5a9b7fc3">thread_base</a> (const <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a> &amp;)=delete</td></tr>
 <tr class="separator:a0df16877f4bdab741dc5416b5a9b7fc3 inherit pub_methods_classthread__module_1_1thread__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,12 +238,24 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a413065e14d4b8a6ced52d8e476572d38" id="r_a413065e14d4b8a6ced52d8e476572d38"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38">worker_id_</a> {0}</td></tr>
+<tr class="memdesc:a413065e14d4b8a6ced52d8e476572d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique ID for this worker instance.  <br /></td></tr>
+<tr class="separator:a413065e14d4b8a6ced52d8e476572d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d84effb29fed42670e1ab3e0cb2bbe1" id="r_a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a></td></tr>
 <tr class="memdesc:a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether to use time tags or timestamps for job processing.  <br /></td></tr>
 <tr class="separator:a9d84effb29fed42670e1ab3e0cb2bbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff57c34d31b8e5279a00fa23ce54d32a" id="r_aff57c34d31b8e5279a00fa23ce54d32a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a></td></tr>
 <tr class="memdesc:aff57c34d31b8e5279a00fa23ce54d32a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A shared pointer to the job queue from which this worker obtains jobs.  <br /></td></tr>
 <tr class="separator:aff57c34d31b8e5279a00fa23ce54d32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bc67c054abe801fc5ed8aa576aa83e7" id="r_a0bc67c054abe801fc5ed8aa576aa83e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a></td></tr>
+<tr class="memdesc:a0bc67c054abe801fc5ed8aa576aa83e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread context providing access to logging and monitoring services.  <br /></td></tr>
+<tr class="separator:a0bc67c054abe801fc5ed8aa576aa83e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:ac69427d7110dda7ebd40d664487d32cc" id="r_ac69427d7110dda7ebd40d664487d32cc"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; std::size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ac69427d7110dda7ebd40d664487d32cc">next_worker_id_</a> {0}</td></tr>
+<tr class="memdesc:ac69427d7110dda7ebd40d664487d32cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static counter for generating unique worker IDs.  <br /></td></tr>
+<tr class="separator:ac69427d7110dda7ebd40d664487d32cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -233,7 +267,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A specialized worker thread that processes jobs from a <code>job_queue</code>. </p>
 <p>The <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code> class inherits from <code>thread_base</code>, leveraging its life-cycle control methods (<code>start</code>, <code>stop</code>, etc.) and provides an implementation for job processing using a shared <code>job_queue</code>. By overriding <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7" title="Determines if there are jobs available in the queue to continue working on.">should_continue_work()</a></code> and <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue.">do_work()</a></code>, it polls the queue for available jobs and executes them.</p>
-<h3><a class="anchor" id="autotoc_md42"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Typical Usage</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> my_queue = std::make_shared&lt;job_queue&gt;();</div>
 <div class="line"><span class="keyword">auto</span> worker   = std::make_unique&lt;thread_worker&gt;();</div>
@@ -245,10 +279,10 @@ Typical Usage</h3>
 <div class="line"><span class="comment">// Eventually...</span></div>
 <div class="line">worker-&gt;stop();  <span class="comment">// Waits for current job to finish, then stops</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00073">73</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00074">74</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a72dc84ebf79776edb633d05d407c8d4b" name="a72dc84ebf79776edb633d05d407c8d4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72dc84ebf79776edb633d05d407c8d4b">&#9670;&#160;</a></span>thread_worker()</h2>
+<a id="aa77085627155fc477a71e9e808523af5" name="aa77085627155fc477a71e9e808523af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa77085627155fc477a71e9e808523af5">&#9670;&#160;</a></span>thread_worker()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,28 +291,66 @@ Typical Usage</h3>
           <td class="memname">thread_pool_module::thread_worker::thread_worker </td>
           <td>(</td>
           <td class="paramtype">const bool &amp;&#160;</td>
-          <td class="paramname"><em>use_time_tag</em> = <code>true</code></td><td>)</td>
+          <td class="paramname"><em>use_time_tag</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em> = <code><a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a>()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Constructs a new <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_worker</a></code>. </p>
+<p>Constructs a worker thread with optional timing capabilities.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">use_time_tag</td><td>If set to <code>true</code> (default), the worker may log or utilize timestamps/tags when processing jobs.</td></tr>
+    <tr><td class="paramname">use_time_tag</td><td>If set to <code>true</code> (default), the worker may log or utilize timestamps/tags when processing jobs. </td></tr>
+    <tr><td class="paramname">context</td><td>Optional thread context for logging and monitoring (defaults to empty context).</td></tr>
   </table>
   </dd>
 </dl>
-<p>This flag can be used to measure job durations, implement logging with timestamps, or any other time-related features in your job processing. </p>
+<p>This flag can be used to measure job durations, implement logging with timestamps, or any other time-related features in your job processing. The context provides access to logging and monitoring services.</p>
+<p>Implementation details:</p><ul>
+<li>Inherits from thread_base to get thread management functionality</li>
+<li>Sets descriptive name "thread_worker" for debugging and logging</li>
+<li>Initializes timing flag for optional performance measurement</li>
+<li>Job queue is not set initially (must be set before starting work)</li>
+<li>Stores thread context for logging and monitoring</li>
+</ul>
+<p>Performance Timing:</p><ul>
+<li>When enabled, measures execution time for each job</li>
+<li>Uses high_resolution_clock for precise measurements</li>
+<li>Minimal overhead when disabled (single boolean check)</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">use_time_tag</td><td>If true, enables timing measurements for job execution </td></tr>
+    <tr><td class="paramname">context</td><td>Thread context providing logging and monitoring services </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>(use_time_tag), <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>(<span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   42</span>    {</div>
-<div class="line"><span class="lineno">   43</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00092">92</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>        : <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_base</a>(<span class="stringliteral">&quot;thread_worker&quot;</span>), </div>
+<div class="line"><span class="lineno">   94</span>          <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38">worker_id_</a>(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ac69427d7110dda7ebd40d664487d32cc">next_worker_id_</a>.fetch_add(1)),</div>
+<div class="line"><span class="lineno">   95</span>          <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>(use_time_tag), </div>
+<div class="line"><span class="lineno">   96</span>          <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>(<span class="keyword">nullptr</span>),</div>
+<div class="line"><span class="lineno">   97</span>          <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>(context)</div>
+<div class="line"><span class="lineno">   98</span>    {</div>
+<div class="line"><span class="lineno">   99</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a9d84effb29fed42670e1ab3e0cb2bbe1"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">thread_pool_module::thread_worker::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdoc">Indicates whether to use time tags or timestamps for job processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00129">thread_worker.h:129</a></div></div>
-<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A shared pointer to the job queue from which this worker obtains jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00137">thread_worker.h:137</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a0bc67c054abe801fc5ed8aa576aa83e7"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">thread_pool_module::thread_worker::context_</a></div><div class="ttdeci">thread_context context_</div><div class="ttdoc">The thread context providing access to logging and monitoring services.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00177">thread_worker.h:177</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a413065e14d4b8a6ced52d8e476572d38"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38">thread_pool_module::thread_worker::worker_id_</a></div><div class="ttdeci">std::size_t worker_id_</div><div class="ttdoc">Unique ID for this worker instance.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00152">thread_worker.h:152</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_a9d84effb29fed42670e1ab3e0cb2bbe1"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">thread_pool_module::thread_worker::use_time_tag_</a></div><div class="ttdeci">bool use_time_tag_</div><div class="ttdoc">Indicates whether to use time tags or timestamps for job processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00161">thread_worker.h:161</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_ac69427d7110dda7ebd40d664487d32cc"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ac69427d7110dda7ebd40d664487d32cc">thread_pool_module::thread_worker::next_worker_id_</a></div><div class="ttdeci">static std::atomic&lt; std::size_t &gt; next_worker_id_</div><div class="ttdoc">Static counter for generating unique worker IDs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00147">thread_worker.h:147</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A shared pointer to the job queue from which this worker obtains jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00169">thread_worker.h:169</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -307,9 +379,15 @@ Typical Usage</h3>
 </div><div class="memdoc">
 
 <p>Virtual destructor. Ensures the worker thread is stopped before destruction. </p>
+<p>Destroys the worker thread.</p>
+<p>Implementation details:</p><ul>
+<li>Base class destructor handles thread shutdown</li>
+<li>No manual cleanup required due to RAII design</li>
+<li>Shared pointer to job queue is automatically released </li>
+</ul>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00045">45</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>{}</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00109">109</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -339,85 +417,249 @@ Typical Usage</h3>
 </div><div class="memdoc">
 
 <p>Processes one or more jobs from the queue. </p>
+<p>Executes a single work cycle by processing one job from the queue.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>result_void</code> containing an error if the work fails, or success value otherwise.</dd></dl>
-<p>This method fetches a job from the queue (if available), executes it, and may repeat depending on the implementation. If any job fails, an error is returned. Otherwise, return a success value. </p>
+<p>This method fetches a job from the queue (if available), executes it, and may repeat depending on the implementation. If any job fails, an error is returned. Otherwise, return a success value.</p>
+<p>Implementation details:</p><ul>
+<li>Dequeues one job from the associated job queue</li>
+<li>Validates job pointer before execution</li>
+<li>Optionally measures execution timing for performance analysis</li>
+<li>Associates job with queue for potential re-submission</li>
+<li>Logs execution results with appropriate detail level</li>
+</ul>
+<p>Job Processing Workflow:</p><ol type="1">
+<li>Validate job queue availability</li>
+<li>Attempt to dequeue next job</li>
+<li>Handle empty queue or stopped queue scenarios</li>
+<li>Validate dequeued job pointer</li>
+<li>Optionally record start time for measurement</li>
+<li>Associate job with queue for context</li>
+<li>Execute job's <a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue.">do_work()</a> method</li>
+<li>Handle execution errors with detailed logging</li>
+<li>Log successful completion with timing info if enabled</li>
+</ol>
+<p>Error Handling:</p><ul>
+<li>Missing job queue: Returns resource allocation error</li>
+<li>Empty queue: Returns success if queue is stopped, error otherwise</li>
+<li>Null job pointer: Returns job invalid error</li>
+<li>Job execution failure: Returns execution failed error with details</li>
+</ul>
+<p>Performance Measurements:</p><ul>
+<li>High-resolution timing when use_time_tag_ is enabled</li>
+<li>Nanosecond precision for accurate profiling</li>
+<li>Minimal overhead when timing is disabled</li>
+</ul>
+<p>Logging Behavior:</p><ul>
+<li>Standard success message when timing is disabled</li>
+<li>Timestamped success message when timing is enabled</li>
+<li>Error details are propagated up the call stack</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>result_void indicating success or detailed error information </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>    {</div>
-<div class="line"><span class="lineno">   64</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   65</span>        {</div>
-<div class="line"><span class="lineno">   66</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
-<div class="line"><span class="lineno">   67</span>        }</div>
-<div class="line"><span class="lineno">   68</span> </div>
-<div class="line"><span class="lineno">   69</span>        <span class="keyword">auto</span> dequeue_result = <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;dequeue();</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
-<div class="line"><span class="lineno">   71</span>        {</div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;is_stopped())</div>
-<div class="line"><span class="lineno">   73</span>            {</div>
-<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
-<div class="line"><span class="lineno">   75</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
-<div class="line"><span class="lineno">   76</span>            }</div>
-<div class="line"><span class="lineno">   77</span> </div>
-<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">   79</span>        }</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   83</span>        {</div>
-<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
-<div class="line"><span class="lineno">   85</span>        }</div>
-<div class="line"><span class="lineno">   86</span> </div>
-<div class="line"><span class="lineno">   87</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
-<div class="line"><span class="lineno">   88</span>            started_time_point = std::nullopt;</div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>)</div>
-<div class="line"><span class="lineno">   90</span>        {</div>
-<div class="line"><span class="lineno">   91</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   92</span>        }</div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>        current_job-&gt;set_job_queue(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>);</div>
-<div class="line"><span class="lineno">   95</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
-<div class="line"><span class="lineno">   96</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
-<div class="line"><span class="lineno">   97</span>        {</div>
-<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
-<div class="line"><span class="lineno">   99</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
-<div class="line"><span class="lineno">  100</span>        }</div>
-<div class="line"><span class="lineno">  101</span> </div>
-<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
-<div class="line"><span class="lineno">  103</span>        {</div>
-<div class="line"><span class="lineno">  104</span>            <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><span class="lineno">  105</span>                                       current_job-&gt;get_name());</div>
-<div class="line"><span class="lineno">  106</span>        }</div>
-<div class="line"><span class="lineno">  107</span> </div>
-<div class="line"><span class="lineno">  108</span>        <a class="code hl_function" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a>(started_time_point.value(),</div>
-<div class="line"><span class="lineno">  109</span>                                   <span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
-<div class="line"><span class="lineno">  110</span>                                   current_job-&gt;get_name());</div>
-<div class="line"><span class="lineno">  111</span> </div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><span class="lineno">  113</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00222">222</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  223</span>    {</div>
+<div class="line"><span class="lineno">  224</span>        <span class="comment">// Validate that job queue is available for processing</span></div>
+<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  226</span>        {</div>
+<div class="line"><span class="lineno">  227</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::resource_allocation_failed, <span class="stringliteral">&quot;there is no job_queue&quot;</span>};</div>
+<div class="line"><span class="lineno">  228</span>        }</div>
+<div class="line"><span class="lineno">  229</span> </div>
+<div class="line"><span class="lineno">  230</span>        <span class="comment">// Attempt to dequeue the next job from the shared queue</span></div>
+<div class="line"><span class="lineno">  231</span>        <span class="keyword">auto</span> dequeue_result = <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;dequeue();</div>
+<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">if</span> (!dequeue_result.has_value())</div>
+<div class="line"><span class="lineno">  233</span>        {</div>
+<div class="line"><span class="lineno">  234</span>            <span class="comment">// Handle empty queue scenarios based on queue state</span></div>
+<div class="line"><span class="lineno">  235</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;is_stopped())</div>
+<div class="line"><span class="lineno">  236</span>            {</div>
+<div class="line"><span class="lineno">  237</span>                <span class="comment">// Queue is empty but still active - this is an error condition</span></div>
+<div class="line"><span class="lineno">  238</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::queue_empty, </div>
+<div class="line"><span class="lineno">  239</span>                    <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error dequeue job: {}&quot;</span>, dequeue_result.get_error().to_string())};</div>
+<div class="line"><span class="lineno">  240</span>            }</div>
+<div class="line"><span class="lineno">  241</span> </div>
+<div class="line"><span class="lineno">  242</span>            <span class="comment">// Queue is stopped and empty - normal shutdown condition</span></div>
+<div class="line"><span class="lineno">  243</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  244</span>        }</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>        <span class="comment">// Extract the job from the result and validate it</span></div>
+<div class="line"><span class="lineno">  247</span>        <span class="keyword">auto</span> current_job = std::move(dequeue_result.value());</div>
+<div class="line"><span class="lineno">  248</span>        <span class="keywordflow">if</span> (current_job == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  249</span>        {</div>
+<div class="line"><span class="lineno">  250</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_invalid, <span class="stringliteral">&quot;error executing job: nullptr&quot;</span>};</div>
+<div class="line"><span class="lineno">  251</span>        }</div>
+<div class="line"><span class="lineno">  252</span> </div>
+<div class="line"><span class="lineno">  253</span>        <span class="comment">// Initialize timing measurement if performance monitoring is enabled</span></div>
+<div class="line"><span class="lineno">  254</span>        std::optional&lt;std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt;&gt;</div>
+<div class="line"><span class="lineno">  255</span>            started_time_point = std::nullopt;</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a9d84effb29fed42670e1ab3e0cb2bbe1">use_time_tag_</a>)</div>
+<div class="line"><span class="lineno">  257</span>        {</div>
+<div class="line"><span class="lineno">  258</span>            started_time_point = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  259</span>        }</div>
+<div class="line"><span class="lineno">  260</span> </div>
+<div class="line"><span class="lineno">  261</span>        <span class="comment">// Associate the job with its source queue for potential re-submission</span></div>
+<div class="line"><span class="lineno">  262</span>        current_job-&gt;set_job_queue(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>);</div>
+<div class="line"><span class="lineno">  263</span>        </div>
+<div class="line"><span class="lineno">  264</span>        <span class="comment">// Execute the job&#39;s work method and capture the result</span></div>
+<div class="line"><span class="lineno">  265</span>        <span class="keyword">auto</span> work_result = current_job-&gt;do_work();</div>
+<div class="line"><span class="lineno">  266</span>        <span class="keywordflow">if</span> (work_result.has_error())</div>
+<div class="line"><span class="lineno">  267</span>        {</div>
+<div class="line"><span class="lineno">  268</span>            <span class="keywordflow">return</span> <a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>{error_code::job_execution_failed, </div>
+<div class="line"><span class="lineno">  269</span>                <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error executing job: {}&quot;</span>, work_result.get_error().to_string())};</div>
+<div class="line"><span class="lineno">  270</span>        }</div>
+<div class="line"><span class="lineno">  271</span> </div>
+<div class="line"><span class="lineno">  272</span>        <span class="comment">// Log successful job completion based on timing configuration</span></div>
+<div class="line"><span class="lineno">  273</span>        <span class="keywordflow">if</span> (!started_time_point.has_value())</div>
+<div class="line"><span class="lineno">  274</span>        {</div>
+<div class="line"><span class="lineno">  275</span>            <span class="comment">// Standard logging without timing information</span></div>
+<div class="line"><span class="lineno">  276</span>            <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>.<a class="code hl_function" href="../../d5/d07/classthread__module_1_1thread__context.html#a3d396355e4e6c250f63082d9ebb0cd86">log</a>(log_level::debug,</div>
+<div class="line"><span class="lineno">  277</span>                        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker&quot;</span>,</div>
+<div class="line"><span class="lineno">  278</span>                                        current_job-&gt;get_name()));</div>
+<div class="line"><span class="lineno">  279</span>        }</div>
+<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  281</span>        {</div>
+<div class="line"><span class="lineno">  282</span>            <span class="comment">// Enhanced logging with execution timing information</span></div>
+<div class="line"><span class="lineno">  283</span>            <span class="keyword">auto</span> end_time = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  284</span>            <span class="keyword">auto</span> duration = std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(</div>
+<div class="line"><span class="lineno">  285</span>                end_time - started_time_point.value()).count();</div>
+<div class="line"><span class="lineno">  286</span>            </div>
+<div class="line"><span class="lineno">  287</span>            <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>.<a class="code hl_function" href="../../d5/d07/classthread__module_1_1thread__context.html#a3d396355e4e6c250f63082d9ebb0cd86">log</a>(log_level::debug,</div>
+<div class="line"><span class="lineno">  288</span>                        <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;job executed successfully: {} on thread_worker ({}ns)&quot;</span>,</div>
+<div class="line"><span class="lineno">  289</span>                                        current_job-&gt;get_name(), duration));</div>
+<div class="line"><span class="lineno">  290</span>            </div>
+<div class="line"><span class="lineno">  291</span>            <span class="comment">// Update worker metrics if monitoring is available</span></div>
+<div class="line"><span class="lineno">  292</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>.<a class="code hl_function" href="../../d5/d07/classthread__module_1_1thread__context.html#a69d56738b7b690adc5aaf352eb7a6470">monitoring</a>())</div>
+<div class="line"><span class="lineno">  293</span>            {</div>
+<div class="line"><span class="lineno">  294</span>                <a class="code hl_struct" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">monitoring_interface::worker_metrics</a> metrics;</div>
+<div class="line"><span class="lineno">  295</span>                metrics.<a class="code hl_variable" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#aae67d3bc0445ea6a76da8222f3c6eb76">jobs_processed</a> = 1;</div>
+<div class="line"><span class="lineno">  296</span>                metrics.<a class="code hl_variable" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#a87f5d4b90948f0347df99004cd7caf09">total_processing_time_ns</a> = <span class="keyword">static_cast&lt;</span>std::uint64_t<span class="keyword">&gt;</span>(duration);</div>
+<div class="line"><span class="lineno">  297</span>                metrics.<a class="code hl_variable" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#a3cbc31cfb4028fbfa7e04dd0745a0472">timestamp</a> = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  298</span>                <span class="comment">// Use proper worker ID instead of thread hash</span></div>
+<div class="line"><span class="lineno">  299</span>                <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>.<a class="code hl_function" href="../../d5/d07/classthread__module_1_1thread__context.html#a7b236349d37aedf6c20ede84920c2d9c">update_worker_metrics</a>(<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38">worker_id_</a>, metrics);</div>
+<div class="line"><span class="lineno">  300</span>            }</div>
+<div class="line"><span class="lineno">  301</span>        }</div>
+<div class="line"><span class="lineno">  302</span> </div>
+<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><span class="lineno">  304</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__context_html_a3d396355e4e6c250f63082d9ebb0cd86"><div class="ttname"><a href="../../d5/d07/classthread__module_1_1thread__context.html#a3d396355e4e6c250f63082d9ebb0cd86">thread_module::thread_context::log</a></div><div class="ttdeci">void log(log_level level, const std::string &amp;message) const</div><div class="ttdoc">Log a message if logger is available.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/dd1/thread__context_8h_source.html#l00092">thread_context.h:92</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__context_html_a69d56738b7b690adc5aaf352eb7a6470"><div class="ttname"><a href="../../d5/d07/classthread__module_1_1thread__context.html#a69d56738b7b690adc5aaf352eb7a6470">thread_module::thread_context::monitoring</a></div><div class="ttdeci">std::shared_ptr&lt; monitoring_interface::monitoring_interface &gt; monitoring() const</div><div class="ttdoc">Get the monitoring service.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/dd1/thread__context_8h_source.html#l00083">thread_context.h:83</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1thread__context_html_a7b236349d37aedf6c20ede84920c2d9c"><div class="ttname"><a href="../../d5/d07/classthread__module_1_1thread__context.html#a7b236349d37aedf6c20ede84920c2d9c">thread_module::thread_context::update_worker_metrics</a></div><div class="ttdeci">void update_worker_metrics(std::size_t worker_id, const monitoring_interface::worker_metrics &amp;metrics) const</div><div class="ttdoc">Update worker metrics if monitoring is available.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/dd1/thread__context_8h_source.html#l00152">thread_context.h:152</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
-<div class="ttc" id="anamespacelog__module_html_a07ee6e4d0fe0281daff694059ec4d352"><div class="ttname"><a href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352">log_module::write_sequence</a></div><div class="ttdeci">auto write_sequence(const char *formats, const Args &amp;... args) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db6/logger_2core_2logger_8h_source.html#l00182">logger.h:182</a></div></div>
+<div class="ttc" id="astructmonitoring__interface_1_1worker__metrics_html"><div class="ttname"><a href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">monitoring_interface::worker_metrics</a></div><div class="ttdoc">Worker thread performance metrics interface.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d4f/monitoring__interface_8h_source.html#l00089">monitoring_interface.h:89</a></div></div>
+<div class="ttc" id="astructmonitoring__interface_1_1worker__metrics_html_a3cbc31cfb4028fbfa7e04dd0745a0472"><div class="ttname"><a href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#a3cbc31cfb4028fbfa7e04dd0745a0472">monitoring_interface::worker_metrics::timestamp</a></div><div class="ttdeci">std::chrono::steady_clock::time_point timestamp</div><div class="ttdef"><b>Definition</b> <a href="../../db/d4f/monitoring__interface_8h_source.html#l00094">monitoring_interface.h:94</a></div></div>
+<div class="ttc" id="astructmonitoring__interface_1_1worker__metrics_html_a87f5d4b90948f0347df99004cd7caf09"><div class="ttname"><a href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#a87f5d4b90948f0347df99004cd7caf09">monitoring_interface::worker_metrics::total_processing_time_ns</a></div><div class="ttdeci">std::uint64_t total_processing_time_ns</div><div class="ttdef"><b>Definition</b> <a href="../../db/d4f/monitoring__interface_8h_source.html#l00091">monitoring_interface.h:91</a></div></div>
+<div class="ttc" id="astructmonitoring__interface_1_1worker__metrics_html_aae67d3bc0445ea6a76da8222f3c6eb76"><div class="ttname"><a href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html#aae67d3bc0445ea6a76da8222f3c6eb76">monitoring_interface::worker_metrics::jobs_processed</a></div><div class="ttdeci">std::uint64_t jobs_processed</div><div class="ttdef"><b>Definition</b> <a href="../../db/d4f/monitoring__interface_8h_source.html#l00090">monitoring_interface.h:90</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph" alt=""/></div>
 <map name="ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_a3de7e59a29b65f516d7e871b2b3d5877_cgraph">
-<area shape="rect" title="Processes one or more jobs from the queue." alt="" coords="5,37,192,77"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="251,5,437,45"/>
-<area shape="poly" title=" " alt="" coords="192,43,237,37,237,42,192,48"/>
-<area shape="rect" href="../../d9/de0/namespacelog__module.html#a07ee6e4d0fe0281daff694059ec4d352" title=" " alt="" coords="240,73,448,98"/>
-<area shape="poly" title=" " alt="" coords="192,65,227,69,226,75,192,71"/>
-<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="508,5,695,45"/>
-<area shape="poly" title=" " alt="" coords="438,31,494,32,494,37,438,37"/>
-<area shape="poly" title=" " alt="" coords="508,19,451,19,451,14,508,14"/>
-<area shape="rect" href="../../d4/d78/classlog__module_1_1implementation_1_1logger.html#ae4e605560406763d5d8bb068c7449b99" title="Retrieves the singleton instance of the logger." alt="" coords="496,69,707,109"/>
-<area shape="poly" title=" " alt="" coords="448,84,483,85,483,90,448,90"/>
+<area shape="rect" title="Processes one or more jobs from the queue." alt="" coords="5,5,192,45"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="240,5,427,45"/>
+<area shape="poly" title=" " alt="" coords="192,23,226,23,226,28,192,28"/>
+<area shape="rect" href="../../d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="475,5,661,45"/>
+<area shape="poly" title=" " alt="" coords="427,31,461,32,461,37,427,37"/>
+<area shape="poly" title=" " alt="" coords="474,19,440,19,440,14,474,14"/>
 </map>
 </div>
 
+</div>
+</div>
+<a id="a841713f62c6660ecb2ec77bea9a10a0c" name="a841713f62c6660ecb2ec77bea9a10a0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a841713f62c6660ecb2ec77bea9a10a0c">&#9670;&#160;</a></span>get_context()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto thread_pool_module::thread_worker::get_context </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a>&amp;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the thread context for this worker. </p>
+<dl class="section return"><dt>Returns</dt><dd>The thread context providing access to logging and monitoring services.</dd>
+<dd>
+The thread context providing access to logging and monitoring services </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00152">152</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  153</span>    {</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a>;</div>
+<div class="line"><span class="lineno">  155</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a01f3b80d0c4addb57d576358e67e01c6" name="a01f3b80d0c4addb57d576358e67e01c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f3b80d0c4addb57d576358e67e01c6">&#9670;&#160;</a></span>get_worker_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t thread_pool_module::thread_worker::get_worker_id </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the worker ID. </p>
+<dl class="section return"><dt>Returns</dt><dd>The unique ID for this worker instance. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00306">306</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  307</span>    {</div>
+<div class="line"><span class="lineno">  308</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38">worker_id_</a>;</div>
+<div class="line"><span class="lineno">  309</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3159d048c23c427ea7052e02eac44da7" name="a3159d048c23c427ea7052e02eac44da7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3159d048c23c427ea7052e02eac44da7">&#9670;&#160;</a></span>set_context()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto thread_pool_module::thread_worker::set_context </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em></td><td>)</td>
+          <td> -&gt; void</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the thread context for this worker. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>The thread context providing access to logging and monitoring services.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implementation details:</p><ul>
+<li>Stores the context for use in logging and monitoring</li>
+<li>Should be called before starting the worker thread</li>
+<li>Context provides access to optional services</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Thread context with logging and monitoring services </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00142">142</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    {</div>
+<div class="line"><span class="lineno">  144</span>        <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a0bc67c054abe801fc5ed8aa576aa83e7">context_</a> = context;</div>
+<div class="line"><span class="lineno">  145</span>    }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aced5aa76dbf8bd7221365b750ea5e698" name="aced5aa76dbf8bd7221365b750ea5e698"></a>
@@ -437,18 +679,36 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Sets the <code>job_queue</code> that this worker should process. </p>
+<p>Associates this worker with a job queue for processing.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">job_queue</td><td>A shared pointer to the queue containing jobs.</td></tr>
   </table>
   </dd>
 </dl>
-<p>Once the queue is set and <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aae48654e457dcf12cf7909a7e784fd89" title="Starts the worker thread.">start()</a></code> is called, the worker will repeatedly poll the queue for new jobs and process them. </p>
+<p>Once the queue is set and <code><a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aae48654e457dcf12cf7909a7e784fd89" title="Starts the worker thread.">start()</a></code> is called, the worker will repeatedly poll the queue for new jobs and process them.</p>
+<p>Implementation details:</p><ul>
+<li>Stores shared pointer to enable job dequeuing</li>
+<li>Must be called before starting the worker thread</li>
+<li>Thread-safe operation (atomic pointer assignment)</li>
+<li>Multiple workers can share the same job queue</li>
+</ul>
+<p>Queue Relationship:</p><ul>
+<li>Worker holds shared ownership of the queue</li>
+<li>Queue lifetime is managed by thread pool</li>
+<li>Worker can safely access queue throughout its lifetime</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">job_queue</td><td>Shared pointer to the job queue for this worker </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   48</span>    {</div>
-<div class="line"><span class="lineno">   49</span>        <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> = <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>;</div>
-<div class="line"><span class="lineno">   50</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>    {</div>
+<div class="line"><span class="lineno">  129</span>        <a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> = <a class="code hl_class" href="../../df/d6d/classthread__module_1_1job__queue.html">job_queue</a>;</div>
+<div class="line"><span class="lineno">  130</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -478,34 +738,64 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Determines if there are jobs available in the queue to continue working on. </p>
+<p>Determines if the worker should continue processing jobs.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is work in the queue, <code>false</code> otherwise.</dd></dl>
-<p>Called in the thread's main loop (defined by <code>thread_base</code>) to decide if <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue.">do_work()</a></code> should be invoked. Returns <code>true</code> if the job queue is not empty; otherwise, <code>false</code>. </p>
+<p>Called in the thread's main loop (defined by <code>thread_base</code>) to decide if <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#a3de7e59a29b65f516d7e871b2b3d5877" title="Processes one or more jobs from the queue.">do_work()</a></code> should be invoked. Returns <code>true</code> if the job queue is not empty; otherwise, <code>false</code>.</p>
+<p>Implementation details:</p><ul>
+<li>Used by thread_base to control the work loop</li>
+<li>Returns false if no job queue is set (prevents infinite loop)</li>
+<li>Returns false if job queue is empty (allows worker to exit)</li>
+<li>Thread-safe operation (job_queue methods are thread-safe)</li>
+</ul>
+<p>Work Loop Control:</p><ul>
+<li>Called repeatedly by thread_base work loop</li>
+<li>Worker exits gracefully when this returns false</li>
+<li>Prevents CPU spinning when no work is available</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>true if worker should continue processing, false to exit </dd></dl>
 
 <p>Reimplemented from <a class="el" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   53</span>    {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
-<div class="line"><span class="lineno">   55</span>        {</div>
-<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   57</span>        }</div>
-<div class="line"><span class="lineno">   58</span> </div>
-<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;empty();</div>
-<div class="line"><span class="lineno">   60</span>    }</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph.png" border="0" usemap="#ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" alt=""/></div>
-<map name="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph" id="ad7/d1b/classthread__pool__module_1_1thread__worker_ae38261aaa674556fbff48afd2ca13ab7_cgraph">
-<area shape="rect" title="Determines if there are jobs available in the queue to continue working on." alt="" coords="5,5,180,60"/>
-<area shape="rect" href="../../df/d6d/classthread__module_1_1job__queue.html#a01a57bbafa000d3f8515784e1b9e67f5" title="Checks if the queue is currently empty." alt="" coords="228,13,376,53"/>
-<area shape="poly" title=" " alt="" coords="180,30,214,30,214,35,180,35"/>
-</map>
-</div>
-
+<p class="definition">Definition at line <a class="el" href="../../de/d61/thread__worker_8cpp_source.html#l00173">173</a> of file <a class="el" href="../../de/d61/thread__worker_8cpp_source.html">thread_worker.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  174</span>    {</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a> == <span class="keyword">nullptr</span>)</div>
+<div class="line"><span class="lineno">  176</span>        {</div>
+<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  178</span>        }</div>
+<div class="line"><span class="lineno">  179</span> </div>
+<div class="line"><span class="lineno">  180</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">job_queue_</a>-&gt;empty();</div>
+<div class="line"><span class="lineno">  181</span>    }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0bc67c054abe801fc5ed8aa576aa83e7" name="a0bc67c054abe801fc5ed8aa576aa83e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bc67c054abe801fc5ed8aa576aa83e7">&#9670;&#160;</a></span>context_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d5/d07/classthread__module_1_1thread__context.html">thread_context</a> thread_pool_module::thread_worker::context_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The thread context providing access to logging and monitoring services. </p>
+<p>This context enables the worker to log messages and report metrics through the configured services. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00177">177</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+
+</div>
+</div>
 <a id="aff57c34d31b8e5279a00fa23ce54d32a" name="aff57c34d31b8e5279a00fa23ce54d32a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff57c34d31b8e5279a00fa23ce54d32a">&#9670;&#160;</a></span>job_queue_</h2>
 
@@ -529,7 +819,33 @@ Here is the call graph for this function:</div>
 <p>A shared pointer to the job queue from which this worker obtains jobs. </p>
 <p>Multiple workers can share the same queue, enabling concurrent processing of queued jobs. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00137">137</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00169">169</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+
+</div>
+</div>
+<a id="ac69427d7110dda7ebd40d664487d32cc" name="ac69427d7110dda7ebd40d664487d32cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac69427d7110dda7ebd40d664487d32cc">&#9670;&#160;</a></span>next_worker_id_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; std::size_t &gt; thread_pool_module::thread_worker::next_worker_id_ {0}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static counter for generating unique worker IDs. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00147">147</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 
 </div>
 </div>
@@ -556,8 +872,35 @@ Here is the call graph for this function:</div>
 <p>Indicates whether to use time tags or timestamps for job processing. </p>
 <p>When <code>true</code>, the worker might record timestamps (e.g., job start/end times) or log them for debugging/monitoring. The exact usage depends on the job and override details in derived classes. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00129">129</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00161">161</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 
+</div>
+</div>
+<a id="a413065e14d4b8a6ced52d8e476572d38" name="a413065e14d4b8a6ced52d8e476572d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a413065e14d4b8a6ced52d8e476572d38">&#9670;&#160;</a></span>worker_id_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t thread_pool_module::thread_worker::worker_id_ {0}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unique ID for this worker instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00152">152</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  152</span>{0};</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -567,7 +910,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:15 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

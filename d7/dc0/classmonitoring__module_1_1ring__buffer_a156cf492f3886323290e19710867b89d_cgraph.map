@@ -1,5 +1,0 @@
-<map id="monitoring_module::ring_buffer::get_recent_items" name="monitoring_module::ring_buffer::get_recent_items">
-<area shape="rect" id="Node000001" title="Retrieves the most recent N items from the buffer." alt="" coords="5,5,219,45"/>
-<area shape="rect" id="Node000002" href="$d7/dc0/classmonitoring__module_1_1ring__buffer.html#a650a6cab95fc453ad0cfe413ff3ecf5c" title="Returns the current number of elements in the buffer." alt="" coords="267,5,424,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,23,253,23,253,28,219,28"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="monitoring_module::metrics::is_monitoring_active" name="monitoring_module::metrics::is_monitoring_active">
-<area shape="rect" id="Node000001" title="Checks if global monitoring is active." alt="" coords="5,5,173,60"/>
-<area shape="rect" id="Node000002" href="$de/d95/classmonitoring__module_1_1global__metrics__collector.html#ac375f4d87ca3ba0ed3c37ee5d466d0e8" title="Returns the singleton instance." alt="" coords="221,5,403,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,30,207,30,207,35,174,35"/>
-</map>

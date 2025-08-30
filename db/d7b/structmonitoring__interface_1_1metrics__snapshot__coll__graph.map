@@ -1,0 +1,13 @@
+<map id="monitoring_interface::metrics_snapshot" name="monitoring_interface::metrics_snapshot">
+<area shape="rect" id="Node000001" title="Complete snapshot of all metrics at a point in time." alt="" coords="215,545,380,625"/>
+<area shape="rect" id="Node000002" href="$df/d06/structmonitoring__interface_1_1system__metrics.html" title="System&#45;level performance metrics interface." alt="" coords="5,293,179,453"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,451,230,519,243,532,239,536,226,523,160,455"/>
+<area shape="rect" id="Node000003" href="$d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html" title="Thread pool performance metrics interface." alt="" coords="203,263,391,483"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="300,483,300,529,295,529,295,483"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="258,135,337,200"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="300,200,300,246,295,246,295,200"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="232,5,363,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="300,99,300,134,295,134,295,99"/>
+<area shape="rect" id="Node000006" href="$d6/da4/structmonitoring__interface_1_1worker__metrics.html" title="Worker thread performance metrics interface." alt="" coords="416,293,611,453"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="460,454,431,490,398,523,380,538,377,533,394,519,427,486,456,451"/>
+</map>

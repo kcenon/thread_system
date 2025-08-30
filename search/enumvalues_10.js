@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['realtime_0',['RealTime',['../d4/db9/namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216',1,'typed_thread_pool_module']]],
-  ['relaxed_1',['relaxed',['../de/d41/namespacethread__module_1_1lockfree.html#a07cdd7466a09a6c46b1f7a1121ab9037a81f32be24a2a62fc472cc43edc97e65b',1,'thread_module::lockfree']]],
-  ['resource_5fallocation_5ffailed_2',['resource_allocation_failed',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5',1,'thread_module']]],
-  ['resource_5flimit_5freached_3',['resource_limit_reached',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24',1,'thread_module']]],
-  ['running_4',['running',['../d2/dca/namespacethread__module_1_1jobs.html#ab7e88d20a4feef6010627676c6cc6a93a75101dcdfc88455bcafc9e53e0b06689',1,'thread_module::jobs']]]
+  ['sequential_0',['sequential',['../de/d41/namespacethread__module_1_1lockfree.html#a07cdd7466a09a6c46b1f7a1121ab9037a6ec7489017b25b5fff20d353b6d2162e',1,'thread_module::lockfree']]],
+  ['singleton_1',['singleton',['../d8/d74/classthread__module_1_1service__container.html#a57d3fd681ca9a79c0b2191c5527da69ca2ed500a3529637175e675a8791b7c56e',1,'thread_module::service_container']]],
+  ['standard_2',['standard',['../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899ac00f0c4675b91fb8b918e4079a0b1bac',1,'thread_module']]],
+  ['starting_3',['starting',['../d8/d98/namespacethread__pool__module.html#a91dfb70040110beaa487b8abbdc8d9fda1ee85f6c60017a7f0646ba8dc5824de6',1,'thread_pool_module']]],
+  ['stopped_4',['stopped',['../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fdac23e2b09ebe6bf4cb5e2a9abe85c0be2',1,'thread_module::Stopped'],['../d8/d98/namespacethread__pool__module.html#a91dfb70040110beaa487b8abbdc8d9fdaf0a0bfe6bc7d2c58d2989034f83183e0',1,'thread_pool_module::stopped']]],
+  ['stopping_5',['stopping',['../de/d48/namespacethread__module.html#ac36545c2cec0c3066226f519c089c5fda7b7ecb39b9e110c2a31409a1672bad23',1,'thread_module::Stopping'],['../d8/d98/namespacethread__pool__module.html#a91dfb70040110beaa487b8abbdc8d9fda3b2a3c8ed19fc3647432e72885d633e7',1,'thread_pool_module::stopping']]],
+  ['success_6',['success',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca260ca9dd8a4577fc00b7bd5810298076',1,'thread_module']]]
 ];

@@ -78,6 +78,9 @@ $(function() {
   <div class="headertitle"><div class="title">hazard_pointer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of lock-free memory management using hazard pointers.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d54/hazard__pointer_8h_source.html">hazard_pointer.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
@@ -86,7 +89,7 @@ Include dependency graph for hazard_pointer.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/ddb/hazard__pointer_8cpp__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp" alt=""/></div>
 <map name="asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp" id="asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp">
-<area shape="rect" title=" " alt="" coords="339,5,525,60"/>
+<area shape="rect" title="Implementation of lock&#45;free memory management using hazard pointers." alt="" coords="339,5,525,60"/>
 <area shape="rect" href="../../dc/d54/hazard__pointer_8h.html" title=" " alt="" coords="235,108,365,133"/>
 <area shape="poly" title=" " alt="" coords="393,62,331,103,328,98,390,58"/>
 <area shape="rect" title=" " alt="" coords="389,108,475,133"/>
@@ -118,10 +121,35 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:de/d48/namespacethread__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core threading foundation of the thread system library. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of lock-free memory management using hazard pointers. </p>
+<p>This file contains the implementation of the hazard pointer system, which provides safe memory reclamation for lock-free data structures. Hazard pointers prevent the ABA problem by ensuring that memory is not reclaimed while other threads might still be accessing it.</p>
+<p>Key Features:</p><ul>
+<li>Thread-safe memory reclamation for lock-free structures</li>
+<li>Protection against use-after-free and ABA problems</li>
+<li>Efficient memory usage with deferred reclamation</li>
+<li>Scalable design supporting multiple threads</li>
+<li>Configurable scanning thresholds and intervals</li>
+</ul>
+<p>Algorithm Overview:</p><ol type="1">
+<li>Threads acquire hazard pointers before accessing shared data</li>
+<li>Retired memory is added to thread-local retired lists</li>
+<li>Periodic scanning compares retired memory against active hazard pointers</li>
+<li>Memory not protected by hazard pointers is safely reclaimed</li>
+<li>Protected memory remains in retired list for later scanning</li>
+</ol>
+<p>Performance Characteristics:</p><ul>
+<li>O(1) hazard pointer acquisition and release</li>
+<li>O(n*m) scanning cost where n=retired nodes, m=hazard pointers</li>
+<li>Configurable memory overhead vs. reclamation latency tradeoffs</li>
+<li>Thread-local operations minimize contention </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../db/dad/hazard__pointer_8cpp_source.html">hazard_pointer.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

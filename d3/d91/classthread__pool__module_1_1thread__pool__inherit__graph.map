@@ -1,5 +1,5 @@
 <map id="thread_pool_module::thread_pool" name="thread_pool_module::thread_pool">
-<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="27,133,174,473"/>
+<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="8,133,193,613"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,5,196,85"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,99,103,133,98,133,98,99"/>
 </map>

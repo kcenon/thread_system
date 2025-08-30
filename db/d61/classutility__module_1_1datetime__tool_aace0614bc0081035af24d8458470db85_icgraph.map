@@ -1,7 +1,0 @@
-<map id="utility_module::datetime_tool::date" name="utility_module::datetime_tool::date">
-<area shape="rect" id="Node000001" title="Formats the date portion (YYYY&#45;MM&#45;DD by default) of a time point." alt="" coords="224,37,407,77"/>
-<area shape="rect" id="Node000002" href="$df/df4/classlog__module_1_1log__job.html#ada1fd89526ec4ba431f1f197fbd5f5ea" title="Executes the logging operation within the job system." alt="" coords="14,5,167,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,45,167,39,168,34,210,40"/>
-<area shape="rect" id="Node000003" href="$dc/d2b/classlog__module_1_1file__writer.html#a2c38528dd928bd374b1fe96928903370" title="Generates the primary and backup log file names." alt="" coords="5,69,176,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,75,177,80,176,75,210,70"/>
-</map>

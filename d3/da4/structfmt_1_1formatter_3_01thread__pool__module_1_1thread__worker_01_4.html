@@ -115,12 +115,12 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Specialization of fmt::formatter for <code><a class="el" href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue.">thread_pool_module::thread_worker</a></code>. </p>
 <p>Allows <code>thread_worker</code> objects to be formatted as strings using the {fmt} library.</p>
-<h3><a class="anchor" id="autotoc_md41"></a>
+<h3><a class="anchor" id="autotoc_md22"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> worker = std::make_unique&lt;thread_pool_module::thread_worker&gt;();</div>
 <div class="line">std::string output = fmt::format(<span class="stringliteral">&quot;Worker status: {}&quot;</span>, *worker);</div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00214">214</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00254">254</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad8a4148b4d82df8d047f84254965eccc" name="ad8a4148b4d82df8d047f84254965eccc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad8a4148b4d82df8d047f84254965eccc">&#9670;&#160;</a></span>format()</h2>
@@ -174,11 +174,11 @@ template&lt;typename FormatContext &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00224">224</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  225</span>    {</div>
-<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  227</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_a08ab300ad2b8a1e7f46a6f669cbfe31e"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this thread_base object.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00271">thread_base.cpp:271</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d9/de2/thread__worker_8h_source.html#l00264">264</a> of file <a class="el" href="../../d9/de2/thread__worker_8h_source.html">thread_worker.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  265</span>    {</div>
+<div class="line"><span class="lineno">  266</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  267</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1thread__base_html_a08ab300ad2b8a1e7f46a6f669cbfe31e"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this thread_base object.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00415">thread_base.cpp:415</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -203,7 +203,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

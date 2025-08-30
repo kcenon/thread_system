@@ -1,5 +1,0 @@
-<map id="log_module::message_job" name="log_module::message_job">
-<area shape="rect" id="Node000001" title="Represents a console logging job derived from the base job class." alt="" coords="8,359,192,544"/>
-<area shape="rect" id="Node000002" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,195,311"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,325,103,359,97,359,97,325"/>
-</map>

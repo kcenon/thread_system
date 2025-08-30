@@ -78,13 +78,16 @@ $(function() {
   <div class="headertitle"><div class="title">lockfree_job_queue.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementation of lock-free multi-producer multi-consumer (MPMC) job queue.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lockfree_job_queue.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d09/lockfree__job__queue_8cpp__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2queues_2lockfree__job__queue_8cpp" alt=""/></div>
 <map name="asources_2thread__base_2lockfree_2queues_2lockfree__job__queue_8cpp" id="asources_2thread__base_2lockfree_2queues_2lockfree__job__queue_8cpp">
-<area shape="rect" title=" " alt="" coords="2150,5,2337,60"/>
+<area shape="rect" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="2150,5,2337,60"/>
 <area shape="rect" href="../../db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="2163,108,2324,133"/>
 <area shape="poly" title=" " alt="" coords="2246,60,2246,94,2241,94,2241,60"/>
 <area shape="rect" href="../../db/d9d/job__queue_8h.html" title=" " alt="" coords="960,189,1116,214"/>
@@ -222,10 +225,40 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:de/d48/namespacethread__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core threading foundation of the thread system library. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementation of lock-free multi-producer multi-consumer (MPMC) job queue. </p>
+<p>This file contains the implementation of a high-performance lock-free job queue using the Michael &amp; Scott algorithm with hazard pointers for safe memory reclamation. The queue supports multiple producers and consumers operating concurrently without locks or blocking operations.</p>
+<p>Key Features:</p><ul>
+<li>Lock-free MPMC queue with linearizable operations</li>
+<li>Hazard pointer-based memory management for ABA prevention</li>
+<li>Node pool for efficient memory allocation and reuse</li>
+<li>Graceful shutdown with job draining capability</li>
+<li>High throughput under contention (&gt;1M ops/sec)</li>
+</ul>
+<p>Algorithm Details:</p><ul>
+<li>Based on Michael &amp; Scott lock-free queue algorithm</li>
+<li>Uses compare-and-swap operations for atomic updates</li>
+<li>Maintains head and tail pointers with hazard pointer protection</li>
+<li>Dummy node simplifies empty queue handling</li>
+</ul>
+<p>Performance Characteristics:</p><ul>
+<li>O(1) amortized enqueue and dequeue operations</li>
+<li>Wait-free progress guarantee for individual operations</li>
+<li>Scales linearly with thread count under moderate contention</li>
+<li>Memory overhead: ~64 bytes per queued job (including node)</li>
+</ul>
+<p>Memory Management:</p><ul>
+<li>Custom node pool reduces allocation overhead</li>
+<li>Hazard pointers prevent premature node reclamation</li>
+<li>Automatic cleanup on queue destruction</li>
+<li>Configurable memory pool size and growth strategy </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

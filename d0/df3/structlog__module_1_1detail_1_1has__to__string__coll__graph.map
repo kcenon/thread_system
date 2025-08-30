@@ -1,5 +1,0 @@
-<map id="log_module::detail::has_to_string&lt; T, typename &gt;" name="log_module::detail::has_to_string&lt; T, typename &gt;">
-<area shape="rect" id="Node000001" title="SFINAE helper to detect if a type has a specific member function." alt="" coords="5,119,141,213"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="18,5,129,71"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,84,76,118,71,118,71,84"/>
-</map>

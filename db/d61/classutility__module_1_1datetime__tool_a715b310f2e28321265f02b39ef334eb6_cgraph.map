@@ -1,8 +1,0 @@
-<map id="utility_module::datetime_tool::nanoseconds" name="utility_module::datetime_tool::nanoseconds">
-<area shape="rect" id="Node000001" title="Extracts the nanoseconds (0&#45;999) component from a time point." alt="" coords="5,5,188,45"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="236,5,423,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,23,222,23,222,28,188,28"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="471,5,657,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="423,31,457,32,457,37,423,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="470,19,436,19,436,14,470,14"/>
-</map>

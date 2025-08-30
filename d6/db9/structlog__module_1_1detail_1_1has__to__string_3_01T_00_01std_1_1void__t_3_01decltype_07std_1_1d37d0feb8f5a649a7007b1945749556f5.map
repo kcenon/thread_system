@@ -1,5 +1,0 @@
-<map id="log_module::detail::has_to_string&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().to_string())&gt; &gt;" name="log_module::detail::has_to_string&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().to_string())&gt; &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,119,164,243"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="33,5,137,71"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,84,87,118,82,118,82,84"/>
-</map>

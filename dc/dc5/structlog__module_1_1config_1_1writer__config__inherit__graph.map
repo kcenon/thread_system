@@ -1,7 +1,0 @@
-<map id="log_module::config::writer_config" name="log_module::config::writer_config">
-<area shape="rect" id="Node000001" title="Writer configuration structure." alt="" coords="119,5,256,145"/>
-<area shape="rect" id="Node000002" href="$d5/dd7/structlog__module_1_1config_1_1console__writer__config.html" title="Console writer specific configuration." alt="" coords="5,223,172,343"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,159,119,224,115,222,146,157"/>
-<area shape="rect" id="Node000003" href="$d2/d6d/structlog__module_1_1config_1_1file__writer__config.html" title="File writer specific configuration." alt="" coords="197,193,378,373"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,156,246,192,242,194,224,159"/>
-</map>

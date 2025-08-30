@@ -117,7 +117,7 @@ Public Member Functions</h2></td></tr>
 struct fmt::formatter&lt; typed_thread_pool_module::typed_thread_pool_t&lt; job_type &gt; &gt;</div><p>Specialization of fmt::formatter for typed_thread_pool_t&lt;job_type&gt;. </p>
 <p>Allows formatting of typed_thread_pool_t&lt;job_type&gt; objects as strings using the {fmt} library (<a href="https://github.com/fmtlib/fmt">https://github.com/fmtlib/fmt</a>). </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00400">400</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00413">413</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1485f5f6d44d531f8aa95276b7c0349a" name="a1485f5f6d44d531f8aa95276b7c0349a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1485f5f6d44d531f8aa95276b7c0349a">&#9670;&#160;</a></span>format()</h2>
@@ -173,10 +173,10 @@ template&lt;typename FormatContext &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An iterator to the end of the formatted output. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00412">412</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  414</span>    {</div>
-<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#a44080ec87b7429cfeb1f6f98b496ef02">to_string</a>(), ctx);</div>
-<div class="line"><span class="lineno">  416</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html#l00425">425</a> of file <a class="el" href="../../d6/dfc/typed__thread__pool_8h_source.html">typed_thread_pool.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  427</span>    {</div>
+<div class="line"><span class="lineno">  428</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.<a class="code hl_function" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#a44080ec87b7429cfeb1f6f98b496ef02">to_string</a>(), ctx);</div>
+<div class="line"><span class="lineno">  429</span>    }</div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__pool__t_html_a44080ec87b7429cfeb1f6f98b496ef02"><div class="ttname"><a href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#a44080ec87b7429cfeb1f6f98b496ef02">typed_thread_pool_module::typed_thread_pool_t::to_string</a></div><div class="ttdeci">auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Generates a string representation of the thread pool's internal state.</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -197,7 +197,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 10 2025 01:18:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
