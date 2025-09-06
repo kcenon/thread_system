@@ -128,7 +128,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html" title="Node structure for the queue.">Node</a> structure for the queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00215">215</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00216">216</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aefd98701a3d865dc48d8fb7df3571d18" name="aefd98701a3d865dc48d8fb7df3571d18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aefd98701a3d865dc48d8fb7df3571d18">&#9670;&#160;</a></span>Node()</h2>
@@ -206,11 +206,11 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00236">236</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  237</span>            {</div>
-<div class="line"><span class="lineno">  238</span>                <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.store(<span class="keyword">nullptr</span>, order);</div>
-<div class="line"><span class="lineno">  239</span>            }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1Node_html_a7a97cc184cad33bd0c6cf817d9ad8b10"><div class="ttname"><a href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">thread_module::lockfree_job_queue::Node::data</a></div><div class="ttdeci">std::atomic&lt; job_ptr * &gt; data</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00217">lockfree_job_queue.h:217</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00237">237</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  238</span>            {</div>
+<div class="line"><span class="lineno">  239</span>                <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.store(<span class="keyword">nullptr</span>, order);</div>
+<div class="line"><span class="lineno">  240</span>            }</div>
+<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1Node_html_a7a97cc184cad33bd0c6cf817d9ad8b10"><div class="ttname"><a href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">thread_module::lockfree_job_queue::Node::data</a></div><div class="ttdeci">std::atomic&lt; job_ptr * &gt; data</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00218">lockfree_job_queue.h:218</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -251,10 +251,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00231">231</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  232</span>            {</div>
-<div class="line"><span class="lineno">  233</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.load(order);</div>
-<div class="line"><span class="lineno">  234</span>            }</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00232">232</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  233</span>            {</div>
+<div class="line"><span class="lineno">  234</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.load(order);</div>
+<div class="line"><span class="lineno">  235</span>            }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -303,12 +303,12 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00225">225</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  226</span>            {</div>
-<div class="line"><span class="lineno">  227</span>                <a class="code hl_typedef" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">job_ptr</a>* expected = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">  228</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.compare_exchange_strong(expected, new_data, order);</div>
-<div class="line"><span class="lineno">  229</span>            }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a6c2acc9328387fb677b5f9a740588772"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">thread_module::lockfree_job_queue::job_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; job &gt; job_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00209">lockfree_job_queue.h:209</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00226">226</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>            {</div>
+<div class="line"><span class="lineno">  228</span>                <a class="code hl_typedef" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">job_ptr</a>* expected = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  229</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="../../da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#a7a97cc184cad33bd0c6cf817d9ad8b10">data</a>.compare_exchange_strong(expected, new_data, order);</div>
+<div class="line"><span class="lineno">  230</span>            }</div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a6c2acc9328387fb677b5f9a740588772"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">thread_module::lockfree_job_queue::job_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; job &gt; job_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00210">lockfree_job_queue.h:210</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -337,8 +337,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00217">217</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  217</span>{<span class="keyword">nullptr</span>};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00218">218</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  218</span>{<span class="keyword">nullptr</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -354,8 +354,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00218">218</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  218</span>{<span class="keyword">nullptr</span>};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00219">219</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  219</span>{<span class="keyword">nullptr</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -371,8 +371,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00219">219</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  219</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00220">220</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -382,7 +382,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2025 15:34:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 20:52:50 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
