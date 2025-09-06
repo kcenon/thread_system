@@ -57,7 +57,7 @@ logger_system    monitoring_system
 - **Performance-optimized**: Each system optimized for its domain
 - **Unified ecosystem**: Consistent API design across all projects
 
-> 📖 **[Complete Architecture Guide](../ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
+> 📖 **[Complete Architecture Guide](docs/ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
 
 ## Project Purpose & Mission
 
