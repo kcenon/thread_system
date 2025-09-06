@@ -250,8 +250,7 @@ namespace utility_module
 			}
 		}
 
-	public:
-
+			public:
 		/**
 		 * @brief Formats a wide-character string with the given arguments.
 		 * @tparam FormatArgs Parameter pack of argument types.

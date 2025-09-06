@@ -243,40 +243,40 @@ namespace thread_module
 				}
 			}
 			
-			// Link the batch into the queue
+			// Link the batch into the queue using a helper lambda to reduce method complexity
 			Node* first_node = nodes.front();
 			Node* last_node = nodes.back();
-			size_t retry_count = 0;
-			
-			while (true) {
-				Node* tail = tail_.load(std::memory_order_acquire);
-				Node* next = tail->next.load(std::memory_order_acquire);
-				
-				if (tail == tail_.load(std::memory_order_acquire)) {
-					if (next == nullptr) {
-						// Try to link the batch
-						if (tail->next.compare_exchange_weak(next, first_node,
-															  std::memory_order_release,
-															  std::memory_order_relaxed)) {
-							// Try to advance tail
-							tail_.compare_exchange_weak(tail, last_node,
-													   std::memory_order_release,
-													   std::memory_order_relaxed);
-							break;
+			auto link_batch = [this](Node* first, Node* last) {
+				size_t retry_count_local = 0;
+				while (true) {
+					Node* tail = tail_.load(std::memory_order_acquire);
+					Node* next = tail->next.load(std::memory_order_acquire);
+					if (tail == tail_.load(std::memory_order_acquire)) {
+						if (next == nullptr) {
+							// Try to link the batch
+							if (tail->next.compare_exchange_weak(next, first,
+															std::memory_order_release,
+															std::memory_order_relaxed)) {
+								// Try to advance tail
+								tail_.compare_exchange_weak(tail, last,
+													std::memory_order_release,
+													std::memory_order_relaxed);
+								break;
+							}
+						} else {
+							// Help advance tail
+							tail_.compare_exchange_weak(tail, next,
+												  std::memory_order_release,
+												  std::memory_order_relaxed);
 						}
-					} else {
-						// Help advance tail
-						tail_.compare_exchange_weak(tail, next,
-												   std::memory_order_release,
-												   std::memory_order_relaxed);
+					}
+					if (++retry_count_local > RETRY_THRESHOLD) {
+						increment_retry_count();
+						retry_count_local = 0;
 					}
 				}
-				
-				if (++retry_count > RETRY_THRESHOLD) {
-					increment_retry_count();
-					retry_count = 0;
-				}
-			}
+			};
+			link_batch(first_node, last_node);
 			
 			// Update statistics
 			stats_.enqueue_batch_count.fetch_add(1, std::memory_order_relaxed);
@@ -286,9 +286,8 @@ namespace thread_module
 			auto duration = std::chrono::high_resolution_clock::now() - start_time;
 			record_enqueue_time(std::chrono::duration_cast<std::chrono::nanoseconds>(duration));
 			
-			return result_void{};
-			
-		} catch (...) {
+				return result_void{};
+			} catch (...) {
 			// Clean up on failure
 			for (auto* data : data_storage) {
 				delete data;

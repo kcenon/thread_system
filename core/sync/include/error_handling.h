@@ -98,39 +98,36 @@ enum class error_code {
  * @return A human-readable string describing the error
  */
 inline std::string error_code_to_string(error_code code) {
-    switch (code) {
-        case error_code::success: return "Success";
-        case error_code::unknown_error: return "Unknown error";
-        case error_code::operation_canceled: return "Operation canceled";
-        case error_code::operation_timeout: return "Operation timed out";
-        case error_code::not_implemented: return "Not implemented";
-        case error_code::invalid_argument: return "Invalid argument";
-            
-        case error_code::thread_already_running: return "Thread is already running";
-        case error_code::thread_not_running: return "Thread is not running";
-        case error_code::thread_start_failure: return "Failed to start thread";
-        case error_code::thread_join_failure: return "Failed to join thread";
-            
-        case error_code::queue_full: return "Queue is full";
-        case error_code::queue_empty: return "Queue is empty";
-        case error_code::queue_stopped: return "Queue is stopped";
-            
-        case error_code::job_creation_failed: return "Failed to create job";
-        case error_code::job_execution_failed: return "Failed to execute job";
-        case error_code::job_invalid: return "Invalid job";
-            
-        case error_code::resource_allocation_failed: return "Failed to allocate resource";
-        case error_code::resource_limit_reached: return "Resource limit reached";
-            
-        case error_code::mutex_error: return "Mutex error";
-        case error_code::deadlock_detected: return "Deadlock detected";
-        case error_code::condition_variable_error: return "Condition variable error";
-            
-        case error_code::io_error: return "I/O error";
-        case error_code::file_not_found: return "File not found";
-            
-        default: return "Unknown error code";
+    using map_entry = std::pair<error_code, std::string_view>;
+    static constexpr map_entry kMap[] = {
+        {error_code::success, "Success"},
+        {error_code::unknown_error, "Unknown error"},
+        {error_code::operation_canceled, "Operation canceled"},
+        {error_code::operation_timeout, "Operation timed out"},
+        {error_code::not_implemented, "Not implemented"},
+        {error_code::invalid_argument, "Invalid argument"},
+        {error_code::thread_already_running, "Thread is already running"},
+        {error_code::thread_not_running, "Thread is not running"},
+        {error_code::thread_start_failure, "Failed to start thread"},
+        {error_code::thread_join_failure, "Failed to join thread"},
+        {error_code::queue_full, "Queue is full"},
+        {error_code::queue_empty, "Queue is empty"},
+        {error_code::queue_stopped, "Queue is stopped"},
+        {error_code::job_creation_failed, "Failed to create job"},
+        {error_code::job_execution_failed, "Failed to execute job"},
+        {error_code::job_invalid, "Invalid job"},
+        {error_code::resource_allocation_failed, "Failed to allocate resource"},
+        {error_code::resource_limit_reached, "Resource limit reached"},
+        {error_code::mutex_error, "Mutex error"},
+        {error_code::deadlock_detected, "Deadlock detected"},
+        {error_code::condition_variable_error, "Condition variable error"},
+        {error_code::io_error, "I/O error"},
+        {error_code::file_not_found, "File not found"},
+    };
+    for (const auto& [k, v] : kMap) {
+        if (k == code) return std::string(v);
     }
+    return std::string("Unknown error code");
 }
 
 /**
