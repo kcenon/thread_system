@@ -91,6 +91,40 @@ check_required_headers()
 check_cpp_stdlib_features()
 
 ##################################################
+# Sanitizers and Static Analysis
+##################################################
+
+option(ENABLE_ASAN "Enable AddressSanitizer" OFF)
+option(ENABLE_UBSAN "Enable UndefinedBehaviorSanitizer" OFF)
+option(ENABLE_TSAN "Enable ThreadSanitizer" OFF)
+option(ENABLE_CLANG_TIDY "Enable clang-tidy static analysis" OFF)
+
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+  if(CLANG_TIDY_EXE)
+    message(STATUS "Enabling clang-tidy: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_EXE})
+  else()
+    message(WARNING "clang-tidy not found; ENABLE_CLANG_TIDY ignored")
+  endif()
+endif()
+
+function(apply_sanitizers target)
+  if(ENABLE_ASAN)
+    target_compile_options(${target} PRIVATE -fsanitize=address)
+    target_link_libraries(${target} PRIVATE -fsanitize=address)
+  endif()
+  if(ENABLE_UBSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=undefined)
+    target_link_libraries(${target} PRIVATE -fsanitize=undefined)
+  endif()
+  if(ENABLE_TSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=thread)
+    target_link_libraries(${target} PRIVATE -fsanitize=thread)
+  endif()
+endfunction()
+
+##################################################
 # Platform-Specific Threading Configuration
 ##################################################
 
