@@ -139,6 +139,13 @@ modular_structure/
 1. `thread_pool::start()` no longer accepts worker count parameter
 2. `callback_job` constructor now takes callback first, then optional name
 3. Namespace `monitoring_interface` contains both namespace and class of same name
+4. API consistency: `thread_pool` methods now return `result_void` instead of `std::optional<std::string>`
+   - Updated signatures:
+     - `auto start() -> result_void`
+     - `auto stop(bool immediately = false) -> result_void`
+     - `auto enqueue(std::unique_ptr<job>&&) -> result_void`
+     - `auto enqueue_batch(std::vector<std::unique_ptr<job>>&&) -> result_void`
+   - Check errors via `has_error()` and inspect with `get_error().to_string()`
 
 ### Build System Changes
 - Will require separate module dependencies in future phases

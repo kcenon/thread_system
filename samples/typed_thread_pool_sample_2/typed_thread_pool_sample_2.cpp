@@ -206,7 +206,12 @@ auto main() -> int
 
 	log_module::write_information("started {}", thread_pool->to_string());
 
-	thread_pool->stop();
+    {
+        auto stop_result = thread_pool->stop();
+        if (stop_result.has_error()) {
+            log_module::write_error("error stopping thread pool: {}", stop_result.get_error().message());
+        }
+    }
 
 	log_module::write_information("stopped {}", thread_pool->to_string());
 

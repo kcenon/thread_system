@@ -932,10 +932,10 @@ FetchContent_MakeAvailable(thread_system)
 namespace thread_pool_module {
     // Thread pool with adaptive queue support
     class thread_pool {
-        auto start() -> std::optional<std::string>;
-        auto stop(bool immediately = false) -> void;
-        auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
-        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+        auto start() -> result_void;
+        auto stop(bool immediately = false) -> result_void;
+        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
         auto get_workers() const -> const std::vector<std::shared_ptr<thread_worker>>&;
         auto get_queue_statistics() const -> queue_statistics;
     };

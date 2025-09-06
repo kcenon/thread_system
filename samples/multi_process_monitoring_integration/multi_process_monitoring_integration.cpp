@@ -20,6 +20,7 @@ All rights reserved.
 #include <interfaces/monitoring_interface.h>
 #include <interfaces/thread_context.h>
 #include <thread_base/jobs/callback_job.h>
+#include <thread_pool/workers/thread_worker.h>
 #include <utilities/core/formatter.h>
 
 #include <chrono>
@@ -73,11 +74,36 @@ int main() {
     std::cout << formatter::format("Primary pool instance ID: {}\n", primary_pool->get_pool_instance_id());
     std::cout << formatter::format("Secondary pool instance ID: {}\n\n", secondary_pool->get_pool_instance_id());
     
-    // Start pools with different worker counts
-    // TODO: Update to use new thread_pool API
-    // The start() method no longer takes worker count parameter
-    primary_pool->start();
-    secondary_pool->start();
+    // Add workers then start pools
+    {
+        std::vector<std::unique_ptr<thread_worker>> workers;
+        for (int i = 0; i < 3; ++i) workers.push_back(std::make_unique<thread_worker>());
+        auto r = primary_pool->enqueue_batch(std::move(workers));
+        if (r.has_error()) {
+            std::cerr << "Failed to add workers to primary_pool: " << r.get_error().to_string() << "\n";
+            return 1;
+        }
+    }
+    {
+        std::vector<std::unique_ptr<thread_worker>> workers;
+        for (int i = 0; i < 2; ++i) workers.push_back(std::make_unique<thread_worker>());
+        auto r = secondary_pool->enqueue_batch(std::move(workers));
+        if (r.has_error()) {
+            std::cerr << "Failed to add workers to secondary_pool: " << r.get_error().to_string() << "\n";
+            return 1;
+        }
+    }
+    
+    auto start_primary = primary_pool->start();
+    if (start_primary.has_error()) {
+        std::cerr << "Failed to start primary_pool: " << start_primary.get_error().to_string() << "\n";
+        return 1;
+    }
+    auto start_secondary = secondary_pool->start();
+    if (start_secondary.has_error()) {
+        std::cerr << "Failed to start secondary_pool: " << start_secondary.get_error().to_string() << "\n";
+        return 1;
+    }
     
     // Report initial metrics
     primary_pool->report_metrics();
@@ -95,7 +121,10 @@ int main() {
             },
             formatter::format("primary_job_{}", i)
         );
-        primary_pool->enqueue(std::move(job));
+        auto r = primary_pool->enqueue(std::move(job));
+        if (r.has_error()) {
+            std::cerr << "enqueue to primary_pool failed: " << r.get_error().to_string() << "\n";
+        }
     }
     
     // Submit jobs to secondary pool
@@ -108,7 +137,10 @@ int main() {
             },
             formatter::format("secondary_job_{}", i)
         );
-        secondary_pool->enqueue(std::move(job));
+        auto r = secondary_pool->enqueue(std::move(job));
+        if (r.has_error()) {
+            std::cerr << "enqueue to secondary_pool failed: " << r.get_error().to_string() << "\n";
+        }
     }
     
     // Periodically report metrics while jobs are processing
@@ -121,8 +153,14 @@ int main() {
     
     // Stop pools
     std::cout << "\n--- Stopping pools ---\n";
-    primary_pool->stop();
-    secondary_pool->stop();
+    auto stop_primary = primary_pool->stop();
+    if (stop_primary.has_error()) {
+        std::cerr << "Error stopping primary_pool: " << stop_primary.get_error().to_string() << "\n";
+    }
+    auto stop_secondary = secondary_pool->stop();
+    if (stop_secondary.has_error()) {
+        std::cerr << "Error stopping secondary_pool: " << stop_secondary.get_error().to_string() << "\n";
+    }
     
     // Final metrics
     std::cout << "\n--- Final Metrics ---\n";

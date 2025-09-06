@@ -149,14 +149,26 @@ void demonstrate_composition() {
     for (int i = 0; i < 4; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
-    pool->enqueue_batch(std::move(workers));
+    {
+        auto r = pool->enqueue_batch(std::move(workers));
+        if (r.has_error()) {
+            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+            return;
+        }
+    }
     
     // 4. Start pool - will log through context
-    pool->start();
+    {
+        auto r = pool->start();
+        if (r.has_error()) {
+            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+            return;
+        }
+    }
     
     // 5. Submit jobs that will be logged
     for (int i = 0; i < 10; ++i) {
-        pool->enqueue(std::make_unique<callback_job>(
+        auto r = pool->enqueue(std::make_unique<callback_job>(
             [i, &context]() -> result_void {
                 context.log(log_level::info, 
                     "Processing job " + std::to_string(i));
@@ -167,13 +179,21 @@ void demonstrate_composition() {
                 return result_void();
             }
         ));
+        if (r.has_error()) {
+            std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+        }
     }
     
     // 6. Wait for completion
     std::this_thread::sleep_for(std::chrono::seconds(2));
     
     // 7. Stop pool
-    pool->stop();
+    {
+        auto r = pool->stop();
+        if (r.has_error()) {
+            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        }
+    }
     
     std::cout << "\n=== Basic Thread Pool Demo Complete ===\n" << std::endl;
 }
@@ -197,15 +217,24 @@ void demonstrate_typed_pool_composition() {
         auto worker = std::make_unique<typed_thread_worker_t<job_types>>();
         // For typed workers, set the type they handle
         // Note: The typed worker template includes the type in the template parameter
-        pool->enqueue(std::move(worker));
+        auto r = pool->enqueue(std::move(worker));
+        if (r.has_error()) {
+            std::cerr << "enqueue worker failed: " << r.get_error().to_string() << std::endl;
+        }
     }
     
-    pool->start();
+    {
+        auto r = pool->start();
+        if (r.has_error()) {
+            std::cerr << "typed pool start failed: " << r.get_error().to_string() << std::endl;
+            return;
+        }
+    }
     
     // Submit jobs with different priorities
     for (int i = 0; i < 5; ++i) {
         // Real-time job
-        pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
+        auto r1 = pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
             [i, &context]() -> result_void {
                 context.log(log_level::info, 
                     "RealTime job " + std::to_string(i) + " executing");
@@ -213,9 +242,12 @@ void demonstrate_typed_pool_composition() {
             },
             job_types::RealTime
         ));
+        if (r1.has_error()) {
+            std::cerr << "enqueue realtime job failed: " << r1.get_error().to_string() << std::endl;
+        }
         
         // Background job
-        pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
+        auto r2 = pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
             [i, &context]() -> result_void {
                 context.log(log_level::debug, 
                     "Background job " + std::to_string(i) + " executing");
@@ -224,10 +256,18 @@ void demonstrate_typed_pool_composition() {
             },
             job_types::Background
         ));
+        if (r2.has_error()) {
+            std::cerr << "enqueue background job failed: " << r2.get_error().to_string() << std::endl;
+        }
     }
     
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    pool->stop();
+    {
+        auto r = pool->stop();
+        if (r.has_error()) {
+            std::cerr << "typed pool stop failed: " << r.get_error().to_string() << std::endl;
+        }
+    }
     
     std::cout << "\n=== Typed Thread Pool Demo Complete ===\n" << std::endl;
 }
@@ -249,23 +289,43 @@ void demonstrate_minimal_usage() {
     for (int i = 0; i < 2; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
-    pool->enqueue_batch(std::move(workers));
+    {
+        auto r = pool->enqueue_batch(std::move(workers));
+        if (r.has_error()) {
+            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+            return;
+        }
+    }
     
-    pool->start();
+    {
+        auto r = pool->start();
+        if (r.has_error()) {
+            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+            return;
+        }
+    }
     
     // Submit jobs - no logging will occur
     std::atomic<int> counter{0};
     for (int i = 0; i < 5; ++i) {
-        pool->enqueue(std::make_unique<callback_job>(
+        auto r = pool->enqueue(std::make_unique<callback_job>(
             [&counter]() -> result_void {
                 counter.fetch_add(1);
                 return result_void();
             }
         ));
+        if (r.has_error()) {
+            std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+        }
     }
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    pool->stop();
+    {
+        auto r = pool->stop();
+        if (r.has_error()) {
+            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        }
+    }
     
     std::cout << "Completed " << counter.load() << " jobs without any logging/monitoring" << std::endl;
     std::cout << "\n=== Minimal Demo Complete ===\n" << std::endl;
