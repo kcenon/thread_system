@@ -133,7 +133,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Performance statistics structure (non-atomic version for returning) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00072">72</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00073">73</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a78b35f30ab39d3a42c92cd4cc516e57e" name="a78b35f30ab39d3a42c92cd4cc516e57e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a78b35f30ab39d3a42c92cd4cc516e57e">&#9670;&#160;</a></span>get_average_dequeue_latency_ns()</h2>
@@ -159,13 +159,13 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00089">89</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   90</span>            {</div>
-<div class="line"><span class="lineno">   91</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">dequeue_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><span class="lineno">   92</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a9b0c29772672083fb0b4cc2a6dd088a3">total_dequeue_time</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">dequeue_count</a>);</div>
-<div class="line"><span class="lineno">   93</span>            }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a9b0c29772672083fb0b4cc2a6dd088a3"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a9b0c29772672083fb0b4cc2a6dd088a3">thread_module::lockfree_job_queue::queue_statistics::total_dequeue_time</a></div><div class="ttdeci">uint64_t total_dequeue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00079">lockfree_job_queue.h:79</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_ae57ea51b70ee4765eb0916bb05fa9060"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">thread_module::lockfree_job_queue::queue_statistics::dequeue_count</a></div><div class="ttdeci">uint64_t dequeue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00075">lockfree_job_queue.h:75</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00090">90</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>            {</div>
+<div class="line"><span class="lineno">   92</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">dequeue_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><span class="lineno">   93</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a9b0c29772672083fb0b4cc2a6dd088a3">total_dequeue_time</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">dequeue_count</a>);</div>
+<div class="line"><span class="lineno">   94</span>            }</div>
+<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a9b0c29772672083fb0b4cc2a6dd088a3"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a9b0c29772672083fb0b4cc2a6dd088a3">thread_module::lockfree_job_queue::queue_statistics::total_dequeue_time</a></div><div class="ttdeci">uint64_t total_dequeue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00080">lockfree_job_queue.h:80</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_ae57ea51b70ee4765eb0916bb05fa9060"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#ae57ea51b70ee4765eb0916bb05fa9060">thread_module::lockfree_job_queue::queue_statistics::dequeue_count</a></div><div class="ttdeci">uint64_t dequeue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00076">lockfree_job_queue.h:76</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -193,13 +193,13 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00083">83</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>            {</div>
-<div class="line"><span class="lineno">   85</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">enqueue_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><span class="lineno">   86</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a4bd21812d63b54ccfa0555e0b60e562c">total_enqueue_time</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">enqueue_count</a>);</div>
-<div class="line"><span class="lineno">   87</span>            }</div>
-<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a4bd21812d63b54ccfa0555e0b60e562c"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a4bd21812d63b54ccfa0555e0b60e562c">thread_module::lockfree_job_queue::queue_statistics::total_enqueue_time</a></div><div class="ttdeci">uint64_t total_enqueue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00078">lockfree_job_queue.h:78</a></div></div>
-<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a7033c3fe8ef4c5c2526acbe2a0806930"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">thread_module::lockfree_job_queue::queue_statistics::enqueue_count</a></div><div class="ttdeci">uint64_t enqueue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00074">lockfree_job_queue.h:74</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00084">84</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>            {</div>
+<div class="line"><span class="lineno">   86</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">enqueue_count</a> == 0) <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><span class="lineno">   87</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a4bd21812d63b54ccfa0555e0b60e562c">total_enqueue_time</a>) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">enqueue_count</a>);</div>
+<div class="line"><span class="lineno">   88</span>            }</div>
+<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a4bd21812d63b54ccfa0555e0b60e562c"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a4bd21812d63b54ccfa0555e0b60e562c">thread_module::lockfree_job_queue::queue_statistics::total_enqueue_time</a></div><div class="ttdeci">uint64_t total_enqueue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00079">lockfree_job_queue.h:79</a></div></div>
+<div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1queue__statistics_html_a7033c3fe8ef4c5c2526acbe2a0806930"><div class="ttname"><a href="../../d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html#a7033c3fe8ef4c5c2526acbe2a0806930">thread_module::lockfree_job_queue::queue_statistics::enqueue_count</a></div><div class="ttdeci">uint64_t enqueue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00075">lockfree_job_queue.h:75</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -216,8 +216,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00081">81</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00082">82</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -233,8 +233,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00077">77</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00078">78</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,8 +250,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00075">75</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00076">76</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -267,8 +267,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00076">76</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00077">77</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -284,8 +284,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00074">74</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00075">75</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -301,8 +301,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00080">80</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00081">81</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -318,8 +318,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00079">79</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00080">80</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -335,8 +335,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00078">78</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   78</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html#l00079">79</a> of file <a class="el" href="../../db/d5a/lockfree__job__queue_8h_source.html">lockfree_job_queue.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>{0};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -346,7 +346,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2025 15:14:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:34:00 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
