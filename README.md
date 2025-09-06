@@ -158,6 +158,24 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | High (8+ threads) | Lock-free | 320 ns | +37% faster | Scales under contention |
 | Variable Load | **Auto-switching** | **Dynamic** | **Optimized** | **Automatic** |
 
+## Documentation
+
+- Module READMEs:
+  - core/README.md
+  - implementations/README.md
+  - interfaces/README.md
+- Guides:
+  - docs/USER_GUIDE.md
+  - docs/INTERFACES.md
+
+Build API docs with Doxygen (optional):
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target docs
+# Open documents/html/index.html
+```
+
 *Real Workload Performance (8-worker configuration):*
 | Job Complexity | Throughput | Use Case | Scaling Efficiency |
 |----------------|------------|----------|-------------------|

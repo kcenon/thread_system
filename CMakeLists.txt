@@ -20,6 +20,7 @@ project(ThreadSystem
 # - OFF (default): Builds as standalone project with samples and tests
 # - ON: Builds only the core libraries for integration into other projects
 option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 
 ##################################################
 # C++ Standard Configuration
@@ -563,6 +564,20 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
   if(BUILD_BENCHMARKS)
     add_subdirectory(benchmarks)  # Performance benchmarks
+  endif()
+
+  # Documentation (Doxygen)
+  if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+      add_custom_target(docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+    else()
+      message(WARNING "Doxygen not found; 'docs' target will not be available")
+    endif()
   endif()
 else()
   # When building as a submodule of another project:

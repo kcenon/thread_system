@@ -119,6 +119,26 @@ modular_structure/
 - `simple_test.cpp` - Minimal integration test
 - `minimal_test.cpp` - Direct job queue test
 
+---
+
+### 2025-09 Updates (Phase 2–3)
+
+The project completed a structural migration and documentation pass:
+
+- New source layout under core/, implementations/, interfaces/, utilities/
+- CMake updated with per-module targets and an optional `docs` target (Doxygen)
+- Added public interfaces: executor_interface, scheduler_interface, monitorable_interface
+- job_queue implements scheduler_interface; thread_pool and typed_thread_pool implement executor_interface
+- Documentation added:
+  - docs/INTERFACES.md (interface overview)
+  - docs/USER_GUIDE.md (build, usage, docs generation)
+  - Module READMEs in core/, implementations/, interfaces/
+
+Action items for downstream integrations:
+- Update include paths to the new module headers
+- Link to the new library targets (thread_base, thread_pool, typed_thread_pool, lockfree, interfaces, utilities)
+- Generate Doxygen docs via `cmake --build build --target docs` (requires Doxygen)
+
 **Integration Patterns Verified:**
 - Custom logger implementation works with thread_context
 - Custom monitoring implementation captures metrics correctly
