@@ -24,6 +24,9 @@ if(UNIX AND NOT WIN32)
   # Validates standard thread pool operations, task queueing, and execution
   add_subdirectory(thread_pool_test)
   
+  # Interfaces tests
+  add_subdirectory(interfaces_test)
+  
   # Typed thread pool tests
   # Validates type-based scheduling, task routing, and edge cases
   add_subdirectory(typed_thread_pool_test)

@@ -71,3 +71,6 @@ add_subdirectory(integration_example)
 # Multi-process monitoring integration
 # Demonstrates integration with multi-process monitoring features
 add_subdirectory(multi_process_monitoring_integration)
+
+# Service registry sample
+add_subdirectory(service_registry_sample)

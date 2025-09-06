@@ -57,7 +57,7 @@ logger_system    monitoring_system
 - **Performance-optimized**: Each system optimized for its domain
 - **Unified ecosystem**: Consistent API design across all projects
 
-> 📖 **[Complete Architecture Guide](../ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
+> 📖 **[Complete Architecture Guide](docs/ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
 
 ## Project Purpose & Mission
 
@@ -157,6 +157,24 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | Medium (4 threads) | Adaptive | 142 ns | +8.2% faster | Balanced performance |
 | High (8+ threads) | Lock-free | 320 ns | +37% faster | Scales under contention |
 | Variable Load | **Auto-switching** | **Dynamic** | **Optimized** | **Automatic** |
+
+## Documentation
+
+- Module READMEs:
+  - core/README.md
+  - implementations/README.md
+  - interfaces/README.md
+- Guides:
+  - docs/USER_GUIDE.md
+  - docs/INTERFACES.md
+
+Build API docs with Doxygen (optional):
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target docs
+# Open documents/html/index.html
+```
 
 *Real Workload Performance (8-worker configuration):*
 | Job Complexity | Throughput | Use Case | Scaling Efficiency |
@@ -920,9 +938,9 @@ FetchContent_MakeAvailable(thread_system)
 ### Core API Reference
 
 - **[API Reference](./docs/api-reference.md)**: Complete API documentation
-- **[Architecture Guide](./docs/architecture.md)**: System design and internals
+- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and internals
 - **[Performance Guide](./docs/performance.md)**: Optimization tips and benchmarks
-- **[Examples](./docs/examples.md)**: Comprehensive code examples
+- **[User Guide](./docs/USER_GUIDE.md)**: Usage guide and examples
 - **[FAQ](./docs/faq.md)**: Frequently asked questions
 
 ### Quick API Overview
@@ -932,10 +950,10 @@ FetchContent_MakeAvailable(thread_system)
 namespace thread_pool_module {
     // Thread pool with adaptive queue support
     class thread_pool {
-        auto start() -> std::optional<std::string>;
-        auto stop(bool immediately = false) -> void;
-        auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
-        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+        auto start() -> result_void;
+        auto stop(bool immediately = false) -> result_void;
+        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
         auto get_workers() const -> const std::vector<std::shared_ptr<thread_worker>>&;
         auto get_queue_statistics() const -> queue_statistics;
     };

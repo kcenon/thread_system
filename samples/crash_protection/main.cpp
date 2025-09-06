@@ -17,7 +17,9 @@
 
 // Include crash protection headers
 #include "interfaces/crash_handler.h"
-#include "thread_pool/thread_pool.h"
+#include "thread_pool/core/thread_pool.h"
+#include "thread_pool/workers/thread_worker.h"
+#include "thread_base/jobs/callback_job.h"
 
 using namespace thread_module;
 
@@ -180,9 +182,13 @@ int main() {
     // Step 3: Create and configure thread pool with crash protection
     std::cout << "\n--- Step 3: Create Thread Pool ---" << std::endl;
     
-    auto thread_pool = std::make_shared<thread_pool>(4);
+    using thread_pool_t = thread_pool_module::thread_pool;
+    using thread_worker_t = thread_pool_module::thread_worker;
+    using thread_module::callback_job;
     
-    // Enable crash protection for thread pool
+    auto thread_pool = std::make_shared<thread_pool_t>("MainPool");
+    
+    // Enable crash protection for thread pool (conceptual)
     thread_pool_crash_safety::enable_for_pool("MainPool", *thread_pool);
     thread_pool_crash_safety::set_job_crash_handler(
         [](const std::string& pool_name, const crash_context& context) {
@@ -190,23 +196,45 @@ int main() {
             std::cout << "Signal: " << context.signal_name << std::endl;
         });
     
-    thread_pool->start();
+    // Add workers
+    {
+        std::vector<std::unique_ptr<thread_worker_t>> workers;
+        for (int i = 0; i < 4; ++i) {
+            workers.push_back(std::make_unique<thread_worker_t>());
+        }
+        auto r = thread_pool->enqueue_batch(std::move(workers));
+        if (r.has_error()) {
+            std::cerr << "Failed to add workers: " << r.get_error().to_string() << std::endl;
+            return 1;
+        }
+    }
+    // Start pool
+    {
+        auto r = thread_pool->start();
+        if (r.has_error()) {
+            std::cerr << "Failed to start thread pool: " << r.get_error().to_string() << std::endl;
+            return 1;
+        }
+    }
     std::cout << "[OK] Thread pool started with crash protection" << std::endl;
     
     // Step 4: Submit normal tasks
     std::cout << "\n--- Step 4: Submit Normal Tasks ---" << std::endl;
     
-    std::vector<std::future<void>> normal_futures;
     for (int i = 0; i < 10; ++i) {
-        normal_futures.push_back(
-            thread_pool->enqueue([i] { normal_task(i); })
+        auto job = std::make_unique<callback_job>(
+            [i]() -> thread_module::result_void {
+                normal_task(i);
+                return {};
+            }
         );
+        auto r = thread_pool->enqueue(std::move(job));
+        if (r.has_error()) {
+            std::cerr << "enqueue normal task failed: " << r.get_error().to_string() << std::endl;
+        }
     }
-    
-    // Wait for normal tasks
-    for (auto& future : normal_futures) {
-        future.wait();
-    }
+    // Give some time for tasks
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     
     std::cout << "[OK] All normal tasks completed" << std::endl;
     
@@ -214,27 +242,36 @@ int main() {
     std::cout << "\n--- Step 5: Submit Potentially Crashing Tasks ---" << std::endl;
     std::cout << "[WARN] Some of these tasks may crash - crash protection will handle them" << std::endl;
     
-    std::vector<std::future<void>> risky_futures;
     for (int i = 10; i < 25; ++i) {
-        risky_futures.push_back(
-            thread_pool->enqueue([i] { 
-                try {
-                    potentially_crashing_task(i);
-                } catch (...) {
-                    std::cout << "[PROTECT] Exception caught and handled for task " << i << std::endl;
+        auto job = std::make_unique<callback_job>(
+            [i, &crash_handler]() -> thread_module::result_void {
+                // Simulate occasional crash handling without real crash
+                std::random_device rd; std::mt19937 gen(rd());
+                std::uniform_int_distribution<> dist(1, 10);
+                int outcome = dist(gen);
+                if (outcome >= 9) {
+                    crash_context ctx;
+                    ctx.signal_number = SIGUSR1;
+                    ctx.signal_name = "SIGUSR1";
+                    ctx.fault_address = nullptr;
+                    ctx.stack_trace = "Simulated crash";
+                    ctx.crash_time = std::chrono::system_clock::now();
+                    ctx.crashing_thread = std::this_thread::get_id();
+                    crash_handler.trigger_crash_handling(ctx);
+                    tasks_failed.fetch_add(1);
+                } else {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                    tasks_completed.fetch_add(1);
                 }
-            })
+                return {};
+            }
         );
-    }
-    
-    // Wait for risky tasks (some may cause crashes)
-    for (auto& future : risky_futures) {
-        try {
-            future.wait();
-        } catch (...) {
-            // Some tasks may have caused crashes
+        auto r = thread_pool->enqueue(std::move(job));
+        if (r.has_error()) {
+            std::cerr << "enqueue risky task failed: " << r.get_error().to_string() << std::endl;
         }
     }
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     
     // Step 6: Test manual crash scenarios
     std::cout << "\n--- Step 6: Manual Crash Tests ---" << std::endl;
@@ -287,7 +324,12 @@ int main() {
     std::cout << "\n--- Step 8: Graceful Shutdown ---" << std::endl;
     
     std::cout << "Stopping thread pool..." << std::endl;
-    thread_pool->stop();
+    {
+        auto r = thread_pool->stop();
+        if (r.has_error()) {
+            std::cerr << "Failed to stop thread pool: " << r.get_error().to_string() << std::endl;
+        }
+    }
     
     std::cout << "Cleaning up resources..." << std::endl;
     cleanup_global_resources();

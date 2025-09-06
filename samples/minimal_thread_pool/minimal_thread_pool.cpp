@@ -35,9 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 #include <thread>
 
-#include "thread_pool/core/thread_pool.h"
-#include "thread_pool/workers/thread_worker.h"
-#include "thread_base/jobs/callback_job.h"
+#include "thread_pool.h"
+#include "thread_worker.h"
+#include "callback_job.h"
 
 using namespace thread_pool_module;
 using namespace thread_module;
@@ -58,15 +58,15 @@ int main() {
     
     // Add workers to pool
     auto result = pool->enqueue_batch(std::move(workers));
-    if (result.has_value()) {
-        std::cerr << "Error adding workers: " << result.value() << std::endl;
+    if (result.has_error()) {
+        std::cerr << "Error adding workers: " << result.get_error().to_string() << std::endl;
         return 1;
     }
     
     // Start the pool
     result = pool->start();
-    if (result.has_value()) {
-        std::cerr << "Error starting pool: " << result.value() << std::endl;
+    if (result.has_error()) {
+        std::cerr << "Error starting pool: " << result.get_error().to_string() << std::endl;
         return 1;
     }
     
@@ -94,8 +94,8 @@ int main() {
         );
         
         result = pool->enqueue(std::move(job));
-        if (result.has_value()) {
-            std::cerr << "Error enqueuing job: " << result.value() << std::endl;
+        if (result.has_error()) {
+            std::cerr << "Error enqueuing job: " << result.get_error().to_string() << std::endl;
         }
     }
     
@@ -108,7 +108,10 @@ int main() {
     std::cout << "All jobs completed!" << std::endl;
     
     // Stop the pool
-    pool->stop();
+    auto stop_result = pool->stop();
+    if (stop_result.has_error()) {
+        std::cerr << "Error stopping pool: " << stop_result.get_error().to_string() << std::endl;
+    }
     std::cout << "Thread pool stopped." << std::endl;
     
     return 0;

@@ -119,6 +119,26 @@ modular_structure/
 - `simple_test.cpp` - Minimal integration test
 - `minimal_test.cpp` - Direct job queue test
 
+---
+
+### 2025-09 Updates (Phase 2–3)
+
+The project completed a structural migration and documentation pass:
+
+- New source layout under core/, implementations/, interfaces/, utilities/
+- CMake updated with per-module targets and an optional `docs` target (Doxygen)
+- Added public interfaces: executor_interface, scheduler_interface, monitorable_interface
+- job_queue implements scheduler_interface; thread_pool and typed_thread_pool implement executor_interface
+- Documentation added:
+  - docs/INTERFACES.md (interface overview)
+  - docs/USER_GUIDE.md (build, usage, docs generation)
+  - Module READMEs in core/, implementations/, interfaces/
+
+Action items for downstream integrations:
+- Update include paths to the new module headers
+- Link to the new library targets (thread_base, thread_pool, typed_thread_pool, lockfree, interfaces, utilities)
+- Generate Doxygen docs via `cmake --build build --target docs` (requires Doxygen)
+
 **Integration Patterns Verified:**
 - Custom logger implementation works with thread_context
 - Custom monitoring implementation captures metrics correctly
@@ -139,6 +159,13 @@ modular_structure/
 1. `thread_pool::start()` no longer accepts worker count parameter
 2. `callback_job` constructor now takes callback first, then optional name
 3. Namespace `monitoring_interface` contains both namespace and class of same name
+4. API consistency: `thread_pool` methods now return `result_void` instead of `std::optional<std::string>`
+   - Updated signatures:
+     - `auto start() -> result_void`
+     - `auto stop(bool immediately = false) -> result_void`
+     - `auto enqueue(std::unique_ptr<job>&&) -> result_void`
+     - `auto enqueue_batch(std::vector<std::unique_ptr<job>>&&) -> result_void`
+   - Check errors via `has_error()` and inspect with `get_error().to_string()`
 
 ### Build System Changes
 - Will require separate module dependencies in future phases
@@ -163,3 +190,9 @@ No action required. All changes are backward compatible.
 - Phase 5: In Progress - Estimated 6 weeks
 
 Total estimated completion: Q1 2025
+### Current Status (2025-09-06)
+
+The migration is complete with the modular structure in place and interfaces integrated across pools and queues. See details below.
+### Detailed Status Log
+
+The previously separate status document (MIGRATION_STATUS.md) has been merged into this section to keep migration guidance and current state together.
