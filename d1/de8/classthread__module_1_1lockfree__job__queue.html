@@ -504,7 +504,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a41536bb8449f7deb0e7a659346853548"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548">thread_module::lockfree_job_queue::hp_manager_</a></div><div class="ttdeci">std::unique_ptr&lt; hazard_pointer_manager &gt; hp_manager_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00247">lockfree_job_queue.h:247</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_abb9c9776b2ab3344259aed46b742bd56"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">thread_module::lockfree_job_queue::tail_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; tail_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00243">lockfree_job_queue.h:243</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_abe8280272f994c978e50c6146771a552"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">thread_module::lockfree_job_queue::head_</a></div><div class="ttdeci">std::atomic&lt; node_ptr &gt; head_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00242">lockfree_job_queue.h:242</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_afb585ce05c746fdbeee49726c536ff5e"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#afb585ce05c746fdbeee49726c536ff5e">thread_module::lockfree_job_queue::allocate_node</a></div><div class="ttdeci">auto allocate_node() -&gt; node_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00422">lockfree_job_queue.cpp:422</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_afb585ce05c746fdbeee49726c536ff5e"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#afb585ce05c746fdbeee49726c536ff5e">thread_module::lockfree_job_queue::allocate_node</a></div><div class="ttdeci">auto allocate_node() -&gt; node_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00421">lockfree_job_queue.cpp:421</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -572,8 +572,8 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  135</span>            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(dummy);</div>
 <div class="line"><span class="lineno">  136</span>        }</div>
 <div class="line"><span class="lineno">  137</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a3ed2d3219be96981becef15bf4548dd0"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">thread_module::lockfree_job_queue::deallocate_node</a></div><div class="ttdeci">auto deallocate_node(node_ptr node) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00427">lockfree_job_queue.cpp:427</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_acc07d4f8712c2e0a6b4669b5474b5aca"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca">thread_module::lockfree_job_queue::clear</a></div><div class="ttdeci">auto clear() -&gt; void override</div><div class="ttdoc">Clear all jobs from the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00354">lockfree_job_queue.cpp:354</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a3ed2d3219be96981becef15bf4548dd0"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">thread_module::lockfree_job_queue::deallocate_node</a></div><div class="ttdeci">auto deallocate_node(node_ptr node) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00426">lockfree_job_queue.cpp:426</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_acc07d4f8712c2e0a6b4669b5474b5aca"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca">thread_module::lockfree_job_queue::clear</a></div><div class="ttdeci">auto clear() -&gt; void override</div><div class="ttdoc">Clear all jobs from the queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00353">lockfree_job_queue.cpp:353</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -669,10 +669,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00422">422</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  423</span>    {</div>
-<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0c0672ccabed4d3516daa77b460a5911">node_pool_</a>-&gt;allocate();</div>
-<div class="line"><span class="lineno">  425</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00421">421</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  422</span>    {</div>
+<div class="line"><span class="lineno">  423</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0c0672ccabed4d3516daa77b460a5911">node_pool_</a>-&gt;allocate();</div>
+<div class="line"><span class="lineno">  424</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -714,22 +714,22 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a76f3ac914b567dc7bcc2971eacd4ae37">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00354">354</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  355</span>    {</div>
-<div class="line"><span class="lineno">  356</span>        <span class="comment">// Dequeue all items</span></div>
-<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><span class="lineno">  358</span>            <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">try_dequeue</a>();</div>
-<div class="line"><span class="lineno">  359</span>            <span class="keywordflow">if</span> (!result.has_value()) {</div>
-<div class="line"><span class="lineno">  360</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  361</span>            }</div>
-<div class="line"><span class="lineno">  362</span>        }</div>
-<div class="line"><span class="lineno">  363</span>        </div>
-<div class="line"><span class="lineno">  364</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  365</span>        <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_all();</div>
-<div class="line"><span class="lineno">  366</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00353">353</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  354</span>    {</div>
+<div class="line"><span class="lineno">  355</span>        <span class="comment">// Dequeue all items</span></div>
+<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><span class="lineno">  357</span>            <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">try_dequeue</a>();</div>
+<div class="line"><span class="lineno">  358</span>            <span class="keywordflow">if</span> (!result.has_value()) {</div>
+<div class="line"><span class="lineno">  359</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  360</span>            }</div>
+<div class="line"><span class="lineno">  361</span>        }</div>
+<div class="line"><span class="lineno">  362</span>        </div>
+<div class="line"><span class="lineno">  363</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  364</span>        <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_all();</div>
+<div class="line"><span class="lineno">  365</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a862c8cfa56448b7db38792ed3ff56e1c"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">thread_module::job_queue::condition_</a></div><div class="ttdeci">std::condition_variable condition_</div><div class="ttdoc">Condition variable used to signal worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00241">job_queue.h:241</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a51bc06f4ce2f753e077b2a6b44198287"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">thread_module::lockfree_job_queue::stats_</a></div><div class="ttdeci">atomic_statistics stats_</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00250">lockfree_job_queue.h:250</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_aacd4265624ebc3ebdb08a0fb228a041d"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">thread_module::lockfree_job_queue::try_dequeue</a></div><div class="ttdeci">auto try_dequeue() -&gt; result&lt; std::unique_ptr&lt; job &gt; &gt;</div><div class="ttdoc">Try to dequeue without blocking.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00349">lockfree_job_queue.cpp:349</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_aacd4265624ebc3ebdb08a0fb228a041d"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">thread_module::lockfree_job_queue::try_dequeue</a></div><div class="ttdeci">auto try_dequeue() -&gt; result&lt; std::unique_ptr&lt; job &gt; &gt;</div><div class="ttdoc">Try to dequeue without blocking.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00348">lockfree_job_queue.cpp:348</a></div></div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_a364683a94dd27b9da6e415d2a99af176"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">thread_module::lockfree_job_queue::atomic_statistics::current_size</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; current_size</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00108">lockfree_job_queue.h:108</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -778,15 +778,15 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00427">427</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  428</span>    {</div>
-<div class="line"><span class="lineno">  429</span>        <span class="keywordflow">if</span> (node) {</div>
-<div class="line"><span class="lineno">  430</span>            node-&gt;clear_data();</div>
-<div class="line"><span class="lineno">  431</span>            node-&gt;next.store(<span class="keyword">nullptr</span>, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  432</span>            node-&gt;version.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  433</span>            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0c0672ccabed4d3516daa77b460a5911">node_pool_</a>-&gt;deallocate(node);</div>
-<div class="line"><span class="lineno">  434</span>        }</div>
-<div class="line"><span class="lineno">  435</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00426">426</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  427</span>    {</div>
+<div class="line"><span class="lineno">  428</span>        <span class="keywordflow">if</span> (node) {</div>
+<div class="line"><span class="lineno">  429</span>            node-&gt;clear_data();</div>
+<div class="line"><span class="lineno">  430</span>            node-&gt;next.store(<span class="keyword">nullptr</span>, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  431</span>            node-&gt;version.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  432</span>            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0c0672ccabed4d3516daa77b460a5911">node_pool_</a>-&gt;deallocate(node);</div>
+<div class="line"><span class="lineno">  433</span>        }</div>
+<div class="line"><span class="lineno">  434</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -839,28 +839,28 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00303">303</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  304</span>    {</div>
-<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  306</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Queue is stopped&quot;</span>};</div>
-<div class="line"><span class="lineno">  307</span>        }</div>
-<div class="line"><span class="lineno">  308</span>        </div>
-<div class="line"><span class="lineno">  309</span>        <span class="keyword">auto</span> start_time = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">  310</span>        </div>
-<div class="line"><span class="lineno">  311</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">dequeue_impl</a>();</div>
-<div class="line"><span class="lineno">  312</span>        </div>
-<div class="line"><span class="lineno">  313</span>        <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
-<div class="line"><span class="lineno">  314</span>        <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0142e52c1537543e84e72378832903aa">record_dequeue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
-<div class="line"><span class="lineno">  315</span>        </div>
-<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">if</span> (result.has_value()) {</div>
-<div class="line"><span class="lineno">  317</span>            <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_one();</div>
-<div class="line"><span class="lineno">  318</span>        }</div>
-<div class="line"><span class="lineno">  319</span>        </div>
-<div class="line"><span class="lineno">  320</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  321</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00302">302</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  303</span>    {</div>
+<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">stop_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  305</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">error_code::queue_stopped</a>, <span class="stringliteral">&quot;Queue is stopped&quot;</span>};</div>
+<div class="line"><span class="lineno">  306</span>        }</div>
+<div class="line"><span class="lineno">  307</span>        </div>
+<div class="line"><span class="lineno">  308</span>        <span class="keyword">auto</span> start_time = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><span class="lineno">  309</span>        </div>
+<div class="line"><span class="lineno">  310</span>        <span class="keyword">auto</span> result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">dequeue_impl</a>();</div>
+<div class="line"><span class="lineno">  311</span>        </div>
+<div class="line"><span class="lineno">  312</span>        <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
+<div class="line"><span class="lineno">  313</span>        <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0142e52c1537543e84e72378832903aa">record_dequeue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
+<div class="line"><span class="lineno">  314</span>        </div>
+<div class="line"><span class="lineno">  315</span>        <span class="keywordflow">if</span> (result.has_value()) {</div>
+<div class="line"><span class="lineno">  316</span>            <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_one();</div>
+<div class="line"><span class="lineno">  317</span>        }</div>
+<div class="line"><span class="lineno">  318</span>        </div>
+<div class="line"><span class="lineno">  319</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  320</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1job__queue_html_a092523f285ed29d9e7db6b5f665c984b"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html#a092523f285ed29d9e7db6b5f665c984b">thread_module::job_queue::stop_</a></div><div class="ttdeci">std::atomic_bool stop_</div><div class="ttdoc">Indicates whether the queue has been signaled to stop.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00225">job_queue.h:225</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a0142e52c1537543e84e72378832903aa"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0142e52c1537543e84e72378832903aa">thread_module::lockfree_job_queue::record_dequeue_time</a></div><div class="ttdeci">auto record_dequeue_time(std::chrono::nanoseconds duration) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00586">lockfree_job_queue.cpp:586</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a68d49065ca9cbdc9830306dd7e760849"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">thread_module::lockfree_job_queue::dequeue_impl</a></div><div class="ttdeci">auto dequeue_impl() -&gt; result&lt; job_ptr &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00502">lockfree_job_queue.cpp:502</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a0142e52c1537543e84e72378832903aa"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0142e52c1537543e84e72378832903aa">thread_module::lockfree_job_queue::record_dequeue_time</a></div><div class="ttdeci">auto record_dequeue_time(std::chrono::nanoseconds duration) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00585">lockfree_job_queue.cpp:585</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a68d49065ca9cbdc9830306dd7e760849"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">thread_module::lockfree_job_queue::dequeue_impl</a></div><div class="ttdeci">auto dequeue_impl() -&gt; result&lt; job_ptr &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00501">lockfree_job_queue.cpp:501</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca7cf957d8abdc60ec16fc5bd302c55987">thread_module::error_code::queue_stopped</a></div><div class="ttdeci">@ queue_stopped</div></div>
 <div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -923,26 +923,26 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a874dc85e1da329be9005ca68e724332b">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00323">323</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  324</span>    {</div>
-<div class="line"><span class="lineno">  325</span>        std::deque&lt;std::unique_ptr&lt;job&gt;&gt; result;</div>
-<div class="line"><span class="lineno">  326</span>        </div>
-<div class="line"><span class="lineno">  327</span>        <span class="comment">// Try to dequeue up to MAX_BATCH_SIZE items</span></div>
-<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a65cbab594a06b6c7b7a00cd8d7a0c784">MAX_BATCH_SIZE</a>; ++i) {</div>
-<div class="line"><span class="lineno">  329</span>            <span class="keyword">auto</span> job_result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">try_dequeue</a>();</div>
-<div class="line"><span class="lineno">  330</span>            <span class="keywordflow">if</span> (!job_result.has_value()) {</div>
-<div class="line"><span class="lineno">  331</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  332</span>            }</div>
-<div class="line"><span class="lineno">  333</span>            result.push_back(std::move(job_result.value()));</div>
-<div class="line"><span class="lineno">  334</span>        }</div>
-<div class="line"><span class="lineno">  335</span>        </div>
-<div class="line"><span class="lineno">  336</span>        <span class="keywordflow">if</span> (!result.empty()) {</div>
-<div class="line"><span class="lineno">  337</span>            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  338</span>            <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_all();</div>
-<div class="line"><span class="lineno">  339</span>        }</div>
-<div class="line"><span class="lineno">  340</span>        </div>
-<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  342</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00322">322</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  323</span>    {</div>
+<div class="line"><span class="lineno">  324</span>        std::deque&lt;std::unique_ptr&lt;job&gt;&gt; result;</div>
+<div class="line"><span class="lineno">  325</span>        </div>
+<div class="line"><span class="lineno">  326</span>        <span class="comment">// Try to dequeue up to MAX_BATCH_SIZE items</span></div>
+<div class="line"><span class="lineno">  327</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a65cbab594a06b6c7b7a00cd8d7a0c784">MAX_BATCH_SIZE</a>; ++i) {</div>
+<div class="line"><span class="lineno">  328</span>            <span class="keyword">auto</span> job_result = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#aacd4265624ebc3ebdb08a0fb228a041d">try_dequeue</a>();</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">if</span> (!job_result.has_value()) {</div>
+<div class="line"><span class="lineno">  330</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  331</span>            }</div>
+<div class="line"><span class="lineno">  332</span>            result.push_back(std::move(job_result.value()));</div>
+<div class="line"><span class="lineno">  333</span>        }</div>
+<div class="line"><span class="lineno">  334</span>        </div>
+<div class="line"><span class="lineno">  335</span>        <span class="keywordflow">if</span> (!result.empty()) {</div>
+<div class="line"><span class="lineno">  336</span>            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  337</span>            <a class="code hl_variable" href="../../df/d6d/classthread__module_1_1job__queue.html#a862c8cfa56448b7db38792ed3ff56e1c">condition_</a>.notify_all();</div>
+<div class="line"><span class="lineno">  338</span>        }</div>
+<div class="line"><span class="lineno">  339</span>        </div>
+<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  341</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a65cbab594a06b6c7b7a00cd8d7a0c784"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a65cbab594a06b6c7b7a00cd8d7a0c784">thread_module::lockfree_job_queue::MAX_BATCH_SIZE</a></div><div class="ttdeci">static constexpr size_t MAX_BATCH_SIZE</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00253">lockfree_job_queue.h:253</a></div></div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_a67d68f86928bccaad3f97524e7239436"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">thread_module::lockfree_job_queue::atomic_statistics::dequeue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; dequeue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00104">lockfree_job_queue.h:104</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -983,88 +983,88 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00502">502</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  503</span>    {</div>
-<div class="line"><span class="lineno">  504</span>        <span class="keywordtype">size_t</span> retry_count = 0;</div>
-<div class="line"><span class="lineno">  505</span>        <span class="keywordtype">size_t</span> total_retries = 0;</div>
-<div class="line"><span class="lineno">  506</span>        </div>
-<div class="line"><span class="lineno">  507</span>        <span class="keywordflow">while</span> (total_retries &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ae54e0549ef108bed31b4ce4262826570">MAX_TOTAL_RETRIES</a>) {</div>
-<div class="line"><span class="lineno">  508</span>            <span class="comment">// Use hazard pointers to protect head access</span></div>
-<div class="line"><span class="lineno">  509</span>            <span class="keyword">auto</span> hp = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548">hp_manager_</a>-&gt;acquire();</div>
-<div class="line"><span class="lineno">  510</span>            Node* head = hp.protect(<a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>);</div>
-<div class="line"><span class="lineno">  511</span>            </div>
-<div class="line"><span class="lineno">  512</span>            <span class="keywordflow">if</span> (!head) {</div>
-<div class="line"><span class="lineno">  513</span>                <span class="comment">// This should never happen if constructor succeeded</span></div>
-<div class="line"><span class="lineno">  514</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Head pointer is null&quot;</span>};</div>
-<div class="line"><span class="lineno">  515</span>            }</div>
-<div class="line"><span class="lineno">  516</span>            </div>
-<div class="line"><span class="lineno">  517</span>            Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  518</span>            Node* next = head-&gt;next.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  519</span>            </div>
-<div class="line"><span class="lineno">  520</span>            <span class="comment">// Check if head is still valid</span></div>
-<div class="line"><span class="lineno">  521</span>            <span class="keywordflow">if</span> (head == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  522</span>                <span class="keywordflow">if</span> (head == tail) {</div>
-<div class="line"><span class="lineno">  523</span>                    <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">  524</span>                        <span class="comment">// Queue is empty</span></div>
-<div class="line"><span class="lineno">  525</span>                        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;Queue is empty&quot;</span>};</div>
-<div class="line"><span class="lineno">  526</span>                    }</div>
-<div class="line"><span class="lineno">  527</span>                    </div>
-<div class="line"><span class="lineno">  528</span>                    <span class="comment">// Help advance tail</span></div>
-<div class="line"><span class="lineno">  529</span>                    <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
-<div class="line"><span class="lineno">  530</span>                                               std::memory_order_release,</div>
-<div class="line"><span class="lineno">  531</span>                                               std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  532</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  533</span>                    <span class="comment">// Read data from next node</span></div>
-<div class="line"><span class="lineno">  534</span>                    <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">  535</span>                        <span class="keywordflow">continue</span>; <span class="comment">// Retry</span></div>
-<div class="line"><span class="lineno">  536</span>                    }</div>
-<div class="line"><span class="lineno">  537</span>                    </div>
-<div class="line"><span class="lineno">  538</span>                    <a class="code hl_typedef" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">job_ptr</a>* data = next-&gt;get_data(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  539</span>                    </div>
-<div class="line"><span class="lineno">  540</span>                    <span class="comment">// Try to advance head</span></div>
-<div class="line"><span class="lineno">  541</span>                    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.compare_exchange_weak(head, next,</div>
-<div class="line"><span class="lineno">  542</span>                                                     std::memory_order_release,</div>
-<div class="line"><span class="lineno">  543</span>                                                     std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  544</span>                        <span class="keywordflow">if</span> (data) {</div>
-<div class="line"><span class="lineno">  545</span>                            <span class="keyword">auto</span> result = std::move(*data);</div>
-<div class="line"><span class="lineno">  546</span>                            <span class="keyword">delete</span> data;</div>
-<div class="line"><span class="lineno">  547</span>                            </div>
-<div class="line"><span class="lineno">  548</span>                            <span class="comment">// Retire the old head node</span></div>
-<div class="line"><span class="lineno">  549</span>                            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">retire_node</a>(head);</div>
-<div class="line"><span class="lineno">  550</span>                            </div>
-<div class="line"><span class="lineno">  551</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  552</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.fetch_sub(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  553</span>                            </div>
-<div class="line"><span class="lineno">  554</span>                            <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  555</span>                        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  556</span>                            <span class="comment">// Data was null, retry</span></div>
-<div class="line"><span class="lineno">  557</span>                            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">retire_node</a>(head);</div>
-<div class="line"><span class="lineno">  558</span>                            <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  559</span>                        }</div>
-<div class="line"><span class="lineno">  560</span>                    }</div>
-<div class="line"><span class="lineno">  561</span>                }</div>
-<div class="line"><span class="lineno">  562</span>            }</div>
-<div class="line"><span class="lineno">  563</span>            </div>
-<div class="line"><span class="lineno">  564</span>            <span class="keywordflow">if</span> (++retry_count &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
-<div class="line"><span class="lineno">  565</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
-<div class="line"><span class="lineno">  566</span>                retry_count = 0;</div>
-<div class="line"><span class="lineno">  567</span>            }</div>
-<div class="line"><span class="lineno">  568</span>            </div>
-<div class="line"><span class="lineno">  569</span>            ++total_retries;</div>
-<div class="line"><span class="lineno">  570</span>            </div>
-<div class="line"><span class="lineno">  571</span>            <span class="comment">// Add small delay to reduce contention</span></div>
-<div class="line"><span class="lineno">  572</span>            <span class="keywordflow">if</span> (total_retries % 100 == 0) {</div>
-<div class="line"><span class="lineno">  573</span>                std::this_thread::yield();</div>
-<div class="line"><span class="lineno">  574</span>            }</div>
-<div class="line"><span class="lineno">  575</span>        }</div>
-<div class="line"><span class="lineno">  576</span>        </div>
-<div class="line"><span class="lineno">  577</span>        <span class="comment">// If we reach here, we&#39;ve exceeded max retries</span></div>
-<div class="line"><span class="lineno">  578</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">error_code::resource_limit_reached</a>, <span class="stringliteral">&quot;Dequeue failed after maximum retries&quot;</span>};</div>
-<div class="line"><span class="lineno">  579</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a25e56ce502ae1f8ed15e28b27f179808"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">thread_module::lockfree_job_queue::increment_retry_count</a></div><div class="ttdeci">auto increment_retry_count() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00591">lockfree_job_queue.cpp:591</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00501">501</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  502</span>    {</div>
+<div class="line"><span class="lineno">  503</span>        <span class="keywordtype">size_t</span> retry_count = 0;</div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordtype">size_t</span> total_retries = 0;</div>
+<div class="line"><span class="lineno">  505</span>        </div>
+<div class="line"><span class="lineno">  506</span>        <span class="keywordflow">while</span> (total_retries &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ae54e0549ef108bed31b4ce4262826570">MAX_TOTAL_RETRIES</a>) {</div>
+<div class="line"><span class="lineno">  507</span>            <span class="comment">// Use hazard pointers to protect head access</span></div>
+<div class="line"><span class="lineno">  508</span>            <span class="keyword">auto</span> hp = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548">hp_manager_</a>-&gt;acquire();</div>
+<div class="line"><span class="lineno">  509</span>            Node* head = hp.protect(<a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>);</div>
+<div class="line"><span class="lineno">  510</span>            </div>
+<div class="line"><span class="lineno">  511</span>            <span class="keywordflow">if</span> (!head) {</div>
+<div class="line"><span class="lineno">  512</span>                <span class="comment">// This should never happen if constructor succeeded</span></div>
+<div class="line"><span class="lineno">  513</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Head pointer is null&quot;</span>};</div>
+<div class="line"><span class="lineno">  514</span>            }</div>
+<div class="line"><span class="lineno">  515</span>            </div>
+<div class="line"><span class="lineno">  516</span>            Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  517</span>            Node* next = head-&gt;next.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  518</span>            </div>
+<div class="line"><span class="lineno">  519</span>            <span class="comment">// Check if head is still valid</span></div>
+<div class="line"><span class="lineno">  520</span>            <span class="keywordflow">if</span> (head == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  521</span>                <span class="keywordflow">if</span> (head == tail) {</div>
+<div class="line"><span class="lineno">  522</span>                    <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  523</span>                        <span class="comment">// Queue is empty</span></div>
+<div class="line"><span class="lineno">  524</span>                        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca64a7ed43d482ecf6f39282aaef0e4c02">error_code::queue_empty</a>, <span class="stringliteral">&quot;Queue is empty&quot;</span>};</div>
+<div class="line"><span class="lineno">  525</span>                    }</div>
+<div class="line"><span class="lineno">  526</span>                    </div>
+<div class="line"><span class="lineno">  527</span>                    <span class="comment">// Help advance tail</span></div>
+<div class="line"><span class="lineno">  528</span>                    <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
+<div class="line"><span class="lineno">  529</span>                                               std::memory_order_release,</div>
+<div class="line"><span class="lineno">  530</span>                                               std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  531</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  532</span>                    <span class="comment">// Read data from next node</span></div>
+<div class="line"><span class="lineno">  533</span>                    <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  534</span>                        <span class="keywordflow">continue</span>; <span class="comment">// Retry</span></div>
+<div class="line"><span class="lineno">  535</span>                    }</div>
+<div class="line"><span class="lineno">  536</span>                    </div>
+<div class="line"><span class="lineno">  537</span>                    <a class="code hl_typedef" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">job_ptr</a>* data = next-&gt;get_data(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  538</span>                    </div>
+<div class="line"><span class="lineno">  539</span>                    <span class="comment">// Try to advance head</span></div>
+<div class="line"><span class="lineno">  540</span>                    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.compare_exchange_weak(head, next,</div>
+<div class="line"><span class="lineno">  541</span>                                                     std::memory_order_release,</div>
+<div class="line"><span class="lineno">  542</span>                                                     std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  543</span>                        <span class="keywordflow">if</span> (data) {</div>
+<div class="line"><span class="lineno">  544</span>                            <span class="keyword">auto</span> result = std::move(*data);</div>
+<div class="line"><span class="lineno">  545</span>                            <span class="keyword">delete</span> data;</div>
+<div class="line"><span class="lineno">  546</span>                            </div>
+<div class="line"><span class="lineno">  547</span>                            <span class="comment">// Retire the old head node</span></div>
+<div class="line"><span class="lineno">  548</span>                            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">retire_node</a>(head);</div>
+<div class="line"><span class="lineno">  549</span>                            </div>
+<div class="line"><span class="lineno">  550</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  551</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.fetch_sub(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  552</span>                            </div>
+<div class="line"><span class="lineno">  553</span>                            <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  554</span>                        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  555</span>                            <span class="comment">// Data was null, retry</span></div>
+<div class="line"><span class="lineno">  556</span>                            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">retire_node</a>(head);</div>
+<div class="line"><span class="lineno">  557</span>                            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  558</span>                        }</div>
+<div class="line"><span class="lineno">  559</span>                    }</div>
+<div class="line"><span class="lineno">  560</span>                }</div>
+<div class="line"><span class="lineno">  561</span>            }</div>
+<div class="line"><span class="lineno">  562</span>            </div>
+<div class="line"><span class="lineno">  563</span>            <span class="keywordflow">if</span> (++retry_count &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno">  564</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
+<div class="line"><span class="lineno">  565</span>                retry_count = 0;</div>
+<div class="line"><span class="lineno">  566</span>            }</div>
+<div class="line"><span class="lineno">  567</span>            </div>
+<div class="line"><span class="lineno">  568</span>            ++total_retries;</div>
+<div class="line"><span class="lineno">  569</span>            </div>
+<div class="line"><span class="lineno">  570</span>            <span class="comment">// Add small delay to reduce contention</span></div>
+<div class="line"><span class="lineno">  571</span>            <span class="keywordflow">if</span> (total_retries % 100 == 0) {</div>
+<div class="line"><span class="lineno">  572</span>                std::this_thread::yield();</div>
+<div class="line"><span class="lineno">  573</span>            }</div>
+<div class="line"><span class="lineno">  574</span>        }</div>
+<div class="line"><span class="lineno">  575</span>        </div>
+<div class="line"><span class="lineno">  576</span>        <span class="comment">// If we reach here, we&#39;ve exceeded max retries</span></div>
+<div class="line"><span class="lineno">  577</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">error_code::resource_limit_reached</a>, <span class="stringliteral">&quot;Dequeue failed after maximum retries&quot;</span>};</div>
+<div class="line"><span class="lineno">  578</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a25e56ce502ae1f8ed15e28b27f179808"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">thread_module::lockfree_job_queue::increment_retry_count</a></div><div class="ttdeci">auto increment_retry_count() -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00590">lockfree_job_queue.cpp:590</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a5a4d6989c51c2a57094505f110ea0e89"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">thread_module::lockfree_job_queue::RETRY_THRESHOLD</a></div><div class="ttdeci">static constexpr size_t RETRY_THRESHOLD</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00254">lockfree_job_queue.h:254</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a6c2acc9328387fb677b5f9a740588772"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a6c2acc9328387fb677b5f9a740588772">thread_module::lockfree_job_queue::job_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; job &gt; job_ptr</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00208">lockfree_job_queue.h:208</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a845b4340ea27921afb658ecb53c5ba59"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">thread_module::lockfree_job_queue::retire_node</a></div><div class="ttdeci">auto retire_node(node_ptr node) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00437">lockfree_job_queue.cpp:437</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a845b4340ea27921afb658ecb53c5ba59"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a845b4340ea27921afb658ecb53c5ba59">thread_module::lockfree_job_queue::retire_node</a></div><div class="ttdeci">auto retire_node(node_ptr node) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00436">lockfree_job_queue.cpp:436</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_ae54e0549ef108bed31b4ce4262826570"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ae54e0549ef108bed31b4ce4262826570">thread_module::lockfree_job_queue::MAX_TOTAL_RETRIES</a></div><div class="ttdeci">static constexpr size_t MAX_TOTAL_RETRIES</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00255">lockfree_job_queue.h:255</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">thread_module::error_code::resource_limit_reached</a></div><div class="ttdeci">@ resource_limit_reached</div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">thread_module::error_code::unknown_error</a></div><div class="ttdeci">@ unknown_error</div></div>
@@ -1102,12 +1102,12 @@ Here is the call graph for this function:</div>
 <p>Check if the queue is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if empty, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00368">368</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  369</span>    {</div>
-<div class="line"><span class="lineno">  370</span>        Node* head = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  371</span>        Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  372</span>        <span class="keywordflow">return</span> (head == tail) &amp;&amp; (head-&gt;next.load(std::memory_order_acquire) == <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">  373</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00367">367</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  368</span>    {</div>
+<div class="line"><span class="lineno">  369</span>        Node* head = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552">head_</a>.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  370</span>        Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  371</span>        <span class="keywordflow">return</span> (head == tail) &amp;&amp; (head-&gt;next.load(std::memory_order_acquire) == <span class="keyword">nullptr</span>);</div>
+<div class="line"><span class="lineno">  372</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1209,8 +1209,8 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  197</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Exception during enqueue&quot;</span>};</div>
 <div class="line"><span class="lineno">  198</span>        }</div>
 <div class="line"><span class="lineno">  199</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_adad95926d7aaeb86181b06a76b282ee0"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#adad95926d7aaeb86181b06a76b282ee0">thread_module::lockfree_job_queue::record_enqueue_time</a></div><div class="ttdeci">auto record_enqueue_time(std::chrono::nanoseconds duration) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00581">lockfree_job_queue.cpp:581</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_adba2bd0ce861d33976fa3c47af714016"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#adba2bd0ce861d33976fa3c47af714016">thread_module::lockfree_job_queue::enqueue_impl</a></div><div class="ttdeci">auto enqueue_impl(job_ptr *data_storage) -&gt; result_void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00442">lockfree_job_queue.cpp:442</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_adad95926d7aaeb86181b06a76b282ee0"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#adad95926d7aaeb86181b06a76b282ee0">thread_module::lockfree_job_queue::record_enqueue_time</a></div><div class="ttdeci">auto record_enqueue_time(std::chrono::nanoseconds duration) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00580">lockfree_job_queue.cpp:580</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_adba2bd0ce861d33976fa3c47af714016"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#adba2bd0ce861d33976fa3c47af714016">thread_module::lockfree_job_queue::enqueue_impl</a></div><div class="ttdeci">auto enqueue_impl(job_ptr *data_storage) -&gt; result_void</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00441">lockfree_job_queue.cpp:441</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cae55d43eabeefe5a8271b4a3c898bd18f">thread_module::error_code::invalid_argument</a></div><div class="ttdeci">@ invalid_argument</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -1313,40 +1313,40 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  243</span>                }</div>
 <div class="line"><span class="lineno">  244</span>            }</div>
 <div class="line"><span class="lineno">  245</span>            </div>
-<div class="line"><span class="lineno">  246</span>            <span class="comment">// Link the batch into the queue</span></div>
+<div class="line"><span class="lineno">  246</span>            <span class="comment">// Link the batch into the queue using a helper lambda to reduce method complexity</span></div>
 <div class="line"><span class="lineno">  247</span>            Node* first_node = nodes.front();</div>
 <div class="line"><span class="lineno">  248</span>            Node* last_node = nodes.back();</div>
-<div class="line"><span class="lineno">  249</span>            <span class="keywordtype">size_t</span> retry_count = 0;</div>
-<div class="line"><span class="lineno">  250</span>            </div>
-<div class="line"><span class="lineno">  251</span>            <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><span class="lineno">  252</span>                Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  253</span>                Node* next = tail-&gt;next.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  254</span>                </div>
-<div class="line"><span class="lineno">  255</span>                <span class="keywordflow">if</span> (tail == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  256</span>                    <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">  257</span>                        <span class="comment">// Try to link the batch</span></div>
-<div class="line"><span class="lineno">  258</span>                        <span class="keywordflow">if</span> (tail-&gt;next.compare_exchange_weak(next, first_node,</div>
-<div class="line"><span class="lineno">  259</span>                                                              std::memory_order_release,</div>
-<div class="line"><span class="lineno">  260</span>                                                              std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  261</span>                            <span class="comment">// Try to advance tail</span></div>
-<div class="line"><span class="lineno">  262</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, last_node,</div>
-<div class="line"><span class="lineno">  263</span>                                                       std::memory_order_release,</div>
-<div class="line"><span class="lineno">  264</span>                                                       std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  265</span>                            <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  266</span>                        }</div>
-<div class="line"><span class="lineno">  267</span>                    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  268</span>                        <span class="comment">// Help advance tail</span></div>
-<div class="line"><span class="lineno">  269</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
-<div class="line"><span class="lineno">  270</span>                                                   std::memory_order_release,</div>
-<div class="line"><span class="lineno">  271</span>                                                   std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  249</span>            <span class="keyword">auto</span> link_batch = [<span class="keyword">this</span>](Node* first, Node* last) {</div>
+<div class="line"><span class="lineno">  250</span>                <span class="keywordtype">size_t</span> retry_count_local = 0;</div>
+<div class="line"><span class="lineno">  251</span>                <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><span class="lineno">  252</span>                    Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  253</span>                    Node* next = tail-&gt;next.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  254</span>                    <span class="keywordflow">if</span> (tail == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  255</span>                        <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  256</span>                            <span class="comment">// Try to link the batch</span></div>
+<div class="line"><span class="lineno">  257</span>                            <span class="keywordflow">if</span> (tail-&gt;next.compare_exchange_weak(next, first,</div>
+<div class="line"><span class="lineno">  258</span>                                                            std::memory_order_release,</div>
+<div class="line"><span class="lineno">  259</span>                                                            std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  260</span>                                <span class="comment">// Try to advance tail</span></div>
+<div class="line"><span class="lineno">  261</span>                                <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, last,</div>
+<div class="line"><span class="lineno">  262</span>                                                    std::memory_order_release,</div>
+<div class="line"><span class="lineno">  263</span>                                                    std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  264</span>                                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  265</span>                            }</div>
+<div class="line"><span class="lineno">  266</span>                        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  267</span>                            <span class="comment">// Help advance tail</span></div>
+<div class="line"><span class="lineno">  268</span>                            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
+<div class="line"><span class="lineno">  269</span>                                                  std::memory_order_release,</div>
+<div class="line"><span class="lineno">  270</span>                                                  std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  271</span>                        }</div>
 <div class="line"><span class="lineno">  272</span>                    }</div>
-<div class="line"><span class="lineno">  273</span>                }</div>
-<div class="line"><span class="lineno">  274</span>                </div>
-<div class="line"><span class="lineno">  275</span>                <span class="keywordflow">if</span> (++retry_count &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
-<div class="line"><span class="lineno">  276</span>                    <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
-<div class="line"><span class="lineno">  277</span>                    retry_count = 0;</div>
-<div class="line"><span class="lineno">  278</span>                }</div>
-<div class="line"><span class="lineno">  279</span>            }</div>
+<div class="line"><span class="lineno">  273</span>                    <span class="keywordflow">if</span> (++retry_count_local &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno">  274</span>                        <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
+<div class="line"><span class="lineno">  275</span>                        retry_count_local = 0;</div>
+<div class="line"><span class="lineno">  276</span>                    }</div>
+<div class="line"><span class="lineno">  277</span>                }</div>
+<div class="line"><span class="lineno">  278</span>            };</div>
+<div class="line"><span class="lineno">  279</span>            link_batch(first_node, last_node);</div>
 <div class="line"><span class="lineno">  280</span>            </div>
 <div class="line"><span class="lineno">  281</span>            <span class="comment">// Update statistics</span></div>
 <div class="line"><span class="lineno">  282</span>            <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">enqueue_batch_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
@@ -1356,19 +1356,18 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  286</span>            <span class="keyword">auto</span> duration = std::chrono::high_resolution_clock::now() - start_time;</div>
 <div class="line"><span class="lineno">  287</span>            <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#adad95926d7aaeb86181b06a76b282ee0">record_enqueue_time</a>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(duration));</div>
 <div class="line"><span class="lineno">  288</span>            </div>
-<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">return</span> result_void{};</div>
-<div class="line"><span class="lineno">  290</span>            </div>
-<div class="line"><span class="lineno">  291</span>        } <span class="keywordflow">catch</span> (...) {</div>
-<div class="line"><span class="lineno">  292</span>            <span class="comment">// Clean up on failure</span></div>
-<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>* data : data_storage) {</div>
-<div class="line"><span class="lineno">  294</span>                <span class="keyword">delete</span> data;</div>
-<div class="line"><span class="lineno">  295</span>            }</div>
-<div class="line"><span class="lineno">  296</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : nodes) {</div>
-<div class="line"><span class="lineno">  297</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(node);</div>
-<div class="line"><span class="lineno">  298</span>            }</div>
-<div class="line"><span class="lineno">  299</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Exception during batch enqueue&quot;</span>};</div>
-<div class="line"><span class="lineno">  300</span>        }</div>
-<div class="line"><span class="lineno">  301</span>    }</div>
+<div class="line"><span class="lineno">  289</span>                <span class="keywordflow">return</span> result_void{};</div>
+<div class="line"><span class="lineno">  290</span>            } <span class="keywordflow">catch</span> (...) {</div>
+<div class="line"><span class="lineno">  291</span>            <span class="comment">// Clean up on failure</span></div>
+<div class="line"><span class="lineno">  292</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>* data : data_storage) {</div>
+<div class="line"><span class="lineno">  293</span>                <span class="keyword">delete</span> data;</div>
+<div class="line"><span class="lineno">  294</span>            }</div>
+<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : nodes) {</div>
+<div class="line"><span class="lineno">  296</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(node);</div>
+<div class="line"><span class="lineno">  297</span>            }</div>
+<div class="line"><span class="lineno">  298</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca4e44c97a51e5519cd277f335de285ead">error_code::unknown_error</a>, <span class="stringliteral">&quot;Exception during batch enqueue&quot;</span>};</div>
+<div class="line"><span class="lineno">  299</span>        }</div>
+<div class="line"><span class="lineno">  300</span>    }</div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_a5597c41feeb5a5fe76c01f751d7b1b30"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">thread_module::lockfree_job_queue::atomic_statistics::enqueue_batch_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_batch_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00103">lockfree_job_queue.h:103</a></div></div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_aaea40834a9a90acb0d86db080c99a2c3"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">thread_module::lockfree_job_queue::atomic_statistics::enqueue_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; enqueue_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00101">lockfree_job_queue.h:101</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -1420,65 +1419,65 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00442">442</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  443</span>    {</div>
-<div class="line"><span class="lineno">  444</span>        Node* new_node = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#afb585ce05c746fdbeee49726c536ff5e">allocate_node</a>();</div>
-<div class="line"><span class="lineno">  445</span>        <span class="keywordflow">if</span> (!new_node) {</div>
-<div class="line"><span class="lineno">  446</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">error_code::resource_allocation_failed</a>, <span class="stringliteral">&quot;Failed to allocate node&quot;</span>};</div>
-<div class="line"><span class="lineno">  447</span>        }</div>
-<div class="line"><span class="lineno">  448</span>        </div>
-<div class="line"><span class="lineno">  449</span>        <span class="keywordtype">size_t</span> retry_count = 0;</div>
-<div class="line"><span class="lineno">  450</span>        <span class="keywordtype">size_t</span> total_retries = 0;</div>
-<div class="line"><span class="lineno">  451</span>        </div>
-<div class="line"><span class="lineno">  452</span>        <span class="keywordflow">while</span> (total_retries &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ae54e0549ef108bed31b4ce4262826570">MAX_TOTAL_RETRIES</a>) {</div>
-<div class="line"><span class="lineno">  453</span>            Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  454</span>            Node* next = tail-&gt;next.load(std::memory_order_acquire);</div>
-<div class="line"><span class="lineno">  455</span>            </div>
-<div class="line"><span class="lineno">  456</span>            <span class="comment">// Check if tail is still valid</span></div>
-<div class="line"><span class="lineno">  457</span>            <span class="keywordflow">if</span> (tail == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire)) {</div>
-<div class="line"><span class="lineno">  458</span>                <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">  459</span>                    <span class="comment">// Try to link new node</span></div>
-<div class="line"><span class="lineno">  460</span>                    <span class="keywordflow">if</span> (tail-&gt;next.compare_exchange_weak(next, new_node,</div>
-<div class="line"><span class="lineno">  461</span>                                                          std::memory_order_release,</div>
-<div class="line"><span class="lineno">  462</span>                                                          std::memory_order_relaxed)) {</div>
-<div class="line"><span class="lineno">  463</span>                        <span class="comment">// Set data after linking</span></div>
-<div class="line"><span class="lineno">  464</span>                        new_node-&gt;set_data(data_storage);</div>
-<div class="line"><span class="lineno">  465</span>                        </div>
-<div class="line"><span class="lineno">  466</span>                        <span class="comment">// Try to advance tail</span></div>
-<div class="line"><span class="lineno">  467</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, new_node,</div>
-<div class="line"><span class="lineno">  468</span>                                                   std::memory_order_release,</div>
-<div class="line"><span class="lineno">  469</span>                                                   std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  470</span>                        </div>
-<div class="line"><span class="lineno">  471</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  472</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  473</span>                        </div>
-<div class="line"><span class="lineno">  474</span>                        <span class="keywordflow">return</span> result_void{};</div>
-<div class="line"><span class="lineno">  475</span>                    }</div>
-<div class="line"><span class="lineno">  476</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  477</span>                    <span class="comment">// Help advance tail</span></div>
-<div class="line"><span class="lineno">  478</span>                    <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
-<div class="line"><span class="lineno">  479</span>                                               std::memory_order_release,</div>
-<div class="line"><span class="lineno">  480</span>                                               std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  481</span>                }</div>
-<div class="line"><span class="lineno">  482</span>            }</div>
-<div class="line"><span class="lineno">  483</span>            </div>
-<div class="line"><span class="lineno">  484</span>            <span class="keywordflow">if</span> (++retry_count &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
-<div class="line"><span class="lineno">  485</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
-<div class="line"><span class="lineno">  486</span>                retry_count = 0;</div>
-<div class="line"><span class="lineno">  487</span>            }</div>
-<div class="line"><span class="lineno">  488</span>            </div>
-<div class="line"><span class="lineno">  489</span>            ++total_retries;</div>
-<div class="line"><span class="lineno">  490</span>            </div>
-<div class="line"><span class="lineno">  491</span>            <span class="comment">// Add small delay to reduce contention</span></div>
-<div class="line"><span class="lineno">  492</span>            <span class="keywordflow">if</span> (total_retries % 100 == 0) {</div>
-<div class="line"><span class="lineno">  493</span>                std::this_thread::yield();</div>
-<div class="line"><span class="lineno">  494</span>            }</div>
-<div class="line"><span class="lineno">  495</span>        }</div>
-<div class="line"><span class="lineno">  496</span>        </div>
-<div class="line"><span class="lineno">  497</span>        <span class="comment">// If we reach here, we&#39;ve exceeded max retries</span></div>
-<div class="line"><span class="lineno">  498</span>        <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(new_node);</div>
-<div class="line"><span class="lineno">  499</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">error_code::resource_limit_reached</a>, <span class="stringliteral">&quot;Enqueue failed after maximum retries&quot;</span>};</div>
-<div class="line"><span class="lineno">  500</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00441">441</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  442</span>    {</div>
+<div class="line"><span class="lineno">  443</span>        Node* new_node = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#afb585ce05c746fdbeee49726c536ff5e">allocate_node</a>();</div>
+<div class="line"><span class="lineno">  444</span>        <span class="keywordflow">if</span> (!new_node) {</div>
+<div class="line"><span class="lineno">  445</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">error_code::resource_allocation_failed</a>, <span class="stringliteral">&quot;Failed to allocate node&quot;</span>};</div>
+<div class="line"><span class="lineno">  446</span>        }</div>
+<div class="line"><span class="lineno">  447</span>        </div>
+<div class="line"><span class="lineno">  448</span>        <span class="keywordtype">size_t</span> retry_count = 0;</div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordtype">size_t</span> total_retries = 0;</div>
+<div class="line"><span class="lineno">  450</span>        </div>
+<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">while</span> (total_retries &lt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#ae54e0549ef108bed31b4ce4262826570">MAX_TOTAL_RETRIES</a>) {</div>
+<div class="line"><span class="lineno">  452</span>            Node* tail = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  453</span>            Node* next = tail-&gt;next.load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">  454</span>            </div>
+<div class="line"><span class="lineno">  455</span>            <span class="comment">// Check if tail is still valid</span></div>
+<div class="line"><span class="lineno">  456</span>            <span class="keywordflow">if</span> (tail == <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.load(std::memory_order_acquire)) {</div>
+<div class="line"><span class="lineno">  457</span>                <span class="keywordflow">if</span> (next == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  458</span>                    <span class="comment">// Try to link new node</span></div>
+<div class="line"><span class="lineno">  459</span>                    <span class="keywordflow">if</span> (tail-&gt;next.compare_exchange_weak(next, new_node,</div>
+<div class="line"><span class="lineno">  460</span>                                                          std::memory_order_release,</div>
+<div class="line"><span class="lineno">  461</span>                                                          std::memory_order_relaxed)) {</div>
+<div class="line"><span class="lineno">  462</span>                        <span class="comment">// Set data after linking</span></div>
+<div class="line"><span class="lineno">  463</span>                        new_node-&gt;set_data(data_storage);</div>
+<div class="line"><span class="lineno">  464</span>                        </div>
+<div class="line"><span class="lineno">  465</span>                        <span class="comment">// Try to advance tail</span></div>
+<div class="line"><span class="lineno">  466</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, new_node,</div>
+<div class="line"><span class="lineno">  467</span>                                                   std::memory_order_release,</div>
+<div class="line"><span class="lineno">  468</span>                                                   std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  469</span>                        </div>
+<div class="line"><span class="lineno">  470</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  471</span>                        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  472</span>                        </div>
+<div class="line"><span class="lineno">  473</span>                        <span class="keywordflow">return</span> result_void{};</div>
+<div class="line"><span class="lineno">  474</span>                    }</div>
+<div class="line"><span class="lineno">  475</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  476</span>                    <span class="comment">// Help advance tail</span></div>
+<div class="line"><span class="lineno">  477</span>                    <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#abb9c9776b2ab3344259aed46b742bd56">tail_</a>.compare_exchange_weak(tail, next,</div>
+<div class="line"><span class="lineno">  478</span>                                               std::memory_order_release,</div>
+<div class="line"><span class="lineno">  479</span>                                               std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  480</span>                }</div>
+<div class="line"><span class="lineno">  481</span>            }</div>
+<div class="line"><span class="lineno">  482</span>            </div>
+<div class="line"><span class="lineno">  483</span>            <span class="keywordflow">if</span> (++retry_count &gt; <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5a4d6989c51c2a57094505f110ea0e89">RETRY_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno">  484</span>                <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a25e56ce502ae1f8ed15e28b27f179808">increment_retry_count</a>();</div>
+<div class="line"><span class="lineno">  485</span>                retry_count = 0;</div>
+<div class="line"><span class="lineno">  486</span>            }</div>
+<div class="line"><span class="lineno">  487</span>            </div>
+<div class="line"><span class="lineno">  488</span>            ++total_retries;</div>
+<div class="line"><span class="lineno">  489</span>            </div>
+<div class="line"><span class="lineno">  490</span>            <span class="comment">// Add small delay to reduce contention</span></div>
+<div class="line"><span class="lineno">  491</span>            <span class="keywordflow">if</span> (total_retries % 100 == 0) {</div>
+<div class="line"><span class="lineno">  492</span>                std::this_thread::yield();</div>
+<div class="line"><span class="lineno">  493</span>            }</div>
+<div class="line"><span class="lineno">  494</span>        }</div>
+<div class="line"><span class="lineno">  495</span>        </div>
+<div class="line"><span class="lineno">  496</span>        <span class="comment">// If we reach here, we&#39;ve exceeded max retries</span></div>
+<div class="line"><span class="lineno">  497</span>        <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(new_node);</div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">error</a>{<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca03273d60e581aa34c9f233314fe7ab24">error_code::resource_limit_reached</a>, <span class="stringliteral">&quot;Enqueue failed after maximum retries&quot;</span>};</div>
+<div class="line"><span class="lineno">  499</span>    }</div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cacde679dc006944a4dcc197c13cf731e5">thread_module::error_code::resource_allocation_failed</a></div><div class="ttdeci">@ resource_allocation_failed</div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1511,19 +1510,19 @@ Here is the call graph for this function:</div>
 <p>Get performance statistics. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current statistics </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00380">380</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  381</span>    {</div>
-<div class="line"><span class="lineno">  382</span>        queue_statistics stats;</div>
-<div class="line"><span class="lineno">  383</span>        stats.enqueue_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.load();</div>
-<div class="line"><span class="lineno">  384</span>        stats.dequeue_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.load();</div>
-<div class="line"><span class="lineno">  385</span>        stats.enqueue_batch_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">enqueue_batch_count</a>.load();</div>
-<div class="line"><span class="lineno">  386</span>        stats.dequeue_batch_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.load();</div>
-<div class="line"><span class="lineno">  387</span>        stats.total_enqueue_time = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.load();</div>
-<div class="line"><span class="lineno">  388</span>        stats.total_dequeue_time = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.load();</div>
-<div class="line"><span class="lineno">  389</span>        stats.retry_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.load();</div>
-<div class="line"><span class="lineno">  390</span>        stats.current_size = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.load();</div>
-<div class="line"><span class="lineno">  391</span>        <span class="keywordflow">return</span> stats;</div>
-<div class="line"><span class="lineno">  392</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00379">379</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  380</span>    {</div>
+<div class="line"><span class="lineno">  381</span>        queue_statistics stats;</div>
+<div class="line"><span class="lineno">  382</span>        stats.enqueue_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.load();</div>
+<div class="line"><span class="lineno">  383</span>        stats.dequeue_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.load();</div>
+<div class="line"><span class="lineno">  384</span>        stats.enqueue_batch_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">enqueue_batch_count</a>.load();</div>
+<div class="line"><span class="lineno">  385</span>        stats.dequeue_batch_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.load();</div>
+<div class="line"><span class="lineno">  386</span>        stats.total_enqueue_time = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.load();</div>
+<div class="line"><span class="lineno">  387</span>        stats.total_dequeue_time = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.load();</div>
+<div class="line"><span class="lineno">  388</span>        stats.retry_count = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.load();</div>
+<div class="line"><span class="lineno">  389</span>        stats.current_size = <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.load();</div>
+<div class="line"><span class="lineno">  390</span>        <span class="keywordflow">return</span> stats;</div>
+<div class="line"><span class="lineno">  391</span>    }</div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_a41387f3519acef3333ea0da294c73ead"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">thread_module::lockfree_job_queue::atomic_statistics::retry_count</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; retry_count</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00107">lockfree_job_queue.h:107</a></div></div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_a478bdf8f4f19a9c7f4da87bfe33d4668"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">thread_module::lockfree_job_queue::atomic_statistics::total_dequeue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_dequeue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00106">lockfree_job_queue.h:106</a></div></div>
 <div class="ttc" id="astructthread__module_1_1lockfree__job__queue_1_1atomic__statistics_html_ae63933ee753aa84f5fd27b055b127432"><div class="ttname"><a href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">thread_module::lockfree_job_queue::atomic_statistics::total_enqueue_time</a></div><div class="ttdeci">std::atomic&lt; uint64_t &gt; total_enqueue_time</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5a/lockfree__job__queue_8h_source.html#l00105">lockfree_job_queue.h:105</a></div></div>
@@ -1567,10 +1566,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00591">591</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  592</span>    {</div>
-<div class="line"><span class="lineno">  593</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  594</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00590">590</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  591</span>    {</div>
+<div class="line"><span class="lineno">  592</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  593</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1650,10 +1649,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00586">586</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  587</span>    {</div>
-<div class="line"><span class="lineno">  588</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  589</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00585">585</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  586</span>    {</div>
+<div class="line"><span class="lineno">  587</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  588</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1681,10 +1680,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00581">581</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  582</span>    {</div>
-<div class="line"><span class="lineno">  583</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  584</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00580">580</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  581</span>    {</div>
+<div class="line"><span class="lineno">  582</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.fetch_add(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(duration.count()), std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  583</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1705,16 +1704,16 @@ Here is the caller graph for this function:</div>
 
 <p>Reset performance statistics. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00394">394</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  395</span>    {</div>
-<div class="line"><span class="lineno">  396</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  397</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  398</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">enqueue_batch_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  399</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  400</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  401</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  402</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.store(0, std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  403</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00393">393</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  394</span>    {</div>
+<div class="line"><span class="lineno">  395</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#aaea40834a9a90acb0d86db080c99a2c3">enqueue_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  396</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#acd85f5005da63794c5296f09b6f4adfa">dequeue_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  397</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a5597c41feeb5a5fe76c01f751d7b1b30">enqueue_batch_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  398</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a67d68f86928bccaad3f97524e7239436">dequeue_batch_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  399</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#ae63933ee753aa84f5fd27b055b127432">total_enqueue_time</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  400</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a478bdf8f4f19a9c7f4da87bfe33d4668">total_dequeue_time</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  401</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a41387f3519acef3333ea0da294c73ead">retry_count</a>.store(0, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  402</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1742,10 +1741,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00437">437</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  438</span>    {</div>
-<div class="line"><span class="lineno">  439</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548">hp_manager_</a>-&gt;retire(node, std::function&lt;<span class="keywordtype">void</span>(Node*)&gt;([<span class="keyword">this</span>](Node* n) { <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(n); }));</div>
-<div class="line"><span class="lineno">  440</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00436">436</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  437</span>    {</div>
+<div class="line"><span class="lineno">  438</span>        <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548">hp_manager_</a>-&gt;retire(node, std::function&lt;<span class="keywordtype">void</span>(Node*)&gt;([<span class="keyword">this</span>](Node* n) { <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a3ed2d3219be96981becef15bf4548dd0">deallocate_node</a>(n); }));</div>
+<div class="line"><span class="lineno">  439</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1768,10 +1767,10 @@ Here is the caller graph for this function:</div>
 <p>Get the current size of the queue. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of jobs in the queue </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00375">375</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  376</span>    {</div>
-<div class="line"><span class="lineno">  377</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.load(std::memory_order_relaxed);</div>
-<div class="line"><span class="lineno">  378</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00374">374</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  375</span>    {</div>
+<div class="line"><span class="lineno">  376</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a51bc06f4ce2f753e077b2a6b44198287">stats_</a>.<a class="code hl_variable" href="../../d4/df7/structthread__module_1_1lockfree__job__queue_1_1atomic__statistics.html#a364683a94dd27b9da6e415d2a99af176">current_size</a>.load(std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">  377</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1804,21 +1803,21 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented from <a class="el" href="../../df/d6d/classthread__module_1_1job__queue.html#a8b5f309bc1114fb8aef6115313b67f24">thread_module::job_queue</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00405">405</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  406</span>    {</div>
-<div class="line"><span class="lineno">  407</span>        <span class="keyword">auto</span> stats = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589">get_statistics</a>();</div>
-<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">return</span> formatter::format(</div>
-<div class="line"><span class="lineno">  409</span>            <span class="stringliteral">&quot;lockfree_job_queue[size={}, enqueued={}, dequeued={}, &quot;</span></div>
-<div class="line"><span class="lineno">  410</span>            <span class="stringliteral">&quot;avg_enqueue_latency={:.1f}ns, avg_dequeue_latency={:.1f}ns, retries={}]&quot;</span>,</div>
-<div class="line"><span class="lineno">  411</span>            stats.current_size,</div>
-<div class="line"><span class="lineno">  412</span>            stats.enqueue_count,</div>
-<div class="line"><span class="lineno">  413</span>            stats.dequeue_count,</div>
-<div class="line"><span class="lineno">  414</span>            stats.get_average_enqueue_latency_ns(),</div>
-<div class="line"><span class="lineno">  415</span>            stats.get_average_dequeue_latency_ns(),</div>
-<div class="line"><span class="lineno">  416</span>            stats.retry_count</div>
-<div class="line"><span class="lineno">  417</span>        );</div>
-<div class="line"><span class="lineno">  418</span>    }</div>
-<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a9520ea0d61ca11141e23f79f0d2fb589"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589">thread_module::lockfree_job_queue::get_statistics</a></div><div class="ttdeci">auto get_statistics() const -&gt; queue_statistics</div><div class="ttdoc">Get performance statistics.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00380">lockfree_job_queue.cpp:380</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00404">404</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  405</span>    {</div>
+<div class="line"><span class="lineno">  406</span>        <span class="keyword">auto</span> stats = <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589">get_statistics</a>();</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">return</span> formatter::format(</div>
+<div class="line"><span class="lineno">  408</span>            <span class="stringliteral">&quot;lockfree_job_queue[size={}, enqueued={}, dequeued={}, &quot;</span></div>
+<div class="line"><span class="lineno">  409</span>            <span class="stringliteral">&quot;avg_enqueue_latency={:.1f}ns, avg_dequeue_latency={:.1f}ns, retries={}]&quot;</span>,</div>
+<div class="line"><span class="lineno">  410</span>            stats.current_size,</div>
+<div class="line"><span class="lineno">  411</span>            stats.enqueue_count,</div>
+<div class="line"><span class="lineno">  412</span>            stats.dequeue_count,</div>
+<div class="line"><span class="lineno">  413</span>            stats.get_average_enqueue_latency_ns(),</div>
+<div class="line"><span class="lineno">  414</span>            stats.get_average_dequeue_latency_ns(),</div>
+<div class="line"><span class="lineno">  415</span>            stats.retry_count</div>
+<div class="line"><span class="lineno">  416</span>        );</div>
+<div class="line"><span class="lineno">  417</span>    }</div>
+<div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a9520ea0d61ca11141e23f79f0d2fb589"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589">thread_module::lockfree_job_queue::get_statistics</a></div><div class="ttdeci">auto get_statistics() const -&gt; queue_statistics</div><div class="ttdoc">Get performance statistics.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00379">lockfree_job_queue.cpp:379</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1850,10 +1849,10 @@ Here is the call graph for this function:</div>
 <p>Try to dequeue without blocking. </p>
 <dl class="section return"><dt>Returns</dt><dd>The dequeued job or error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00349">349</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  350</span>    {</div>
-<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">dequeue_impl</a>();</div>
-<div class="line"><span class="lineno">  352</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00348">348</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  349</span>    {</div>
+<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a68d49065ca9cbdc9830306dd7e760849">dequeue_impl</a>();</div>
+<div class="line"><span class="lineno">  351</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1882,10 +1881,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Success or error result </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00344">344</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  345</span>    {</div>
-<div class="line"><span class="lineno">  346</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99">enqueue</a>(std::move(value));</div>
-<div class="line"><span class="lineno">  347</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00343">343</a> of file <a class="el" href="../../d4/dca/lockfree__job__queue_8cpp_source.html">lockfree_job_queue.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  344</span>    {</div>
+<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99">enqueue</a>(std::move(value));</div>
+<div class="line"><span class="lineno">  346</span>    }</div>
 <div class="ttc" id="aclassthread__module_1_1lockfree__job__queue_html_a5f71430c071d8e51f6f9727dff2f0c99"><div class="ttname"><a href="../../d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99">thread_module::lockfree_job_queue::enqueue</a></div><div class="ttdeci">auto enqueue(std::unique_ptr&lt; job &gt; &amp;&amp;value) -&gt; result_void override</div><div class="ttdoc">Enqueue a single job.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dca/lockfree__job__queue_8cpp_source.html#l00171">lockfree_job_queue.cpp:171</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2090,7 +2089,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:14:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

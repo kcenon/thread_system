@@ -334,7 +334,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00558">558</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00555">555</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
@@ -529,7 +529,7 @@ template&lt;typename T &gt; </div>
 <div class="line"><span class="lineno">   42</span>  <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288aad42f6697b035b7580e4fef93be20b4d">debug</a> = 4,</div>
 <div class="line"><span class="lineno">   43</span>  <a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a04a75036e9d520bb983c5ed03b8d0182">trace</a> = 5</div>
 <div class="line"><span class="lineno">   44</span>};</div>
-<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00139">error_handling.h:139</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288a04a75036e9d520bb983c5ed03b8d0182"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a04a75036e9d520bb983c5ed03b8d0182">thread_module::log_level::trace</a></div><div class="ttdeci">@ trace</div></div>
 <div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288a7b83d3f08fa392b79e3f553b585971cd"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a7b83d3f08fa392b79e3f553b585971cd">thread_module::log_level::warning</a></div><div class="ttdeci">@ warning</div></div>
 <div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288a7e85bcb66fb9a809d5ab4f62a8b8bea8"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a7e85bcb66fb9a809d5ab4f62a8b8bea8">thread_module::log_level::critical</a></div><div class="ttdeci">@ critical</div></div>
@@ -726,40 +726,37 @@ template&lt;typename T &gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00100">100</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  100</span>                                                       {</div>
-<div class="line"><span class="lineno">  101</span>    <span class="keywordflow">switch</span> (code) {</div>
-<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">case</span> error_code::success: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Success&quot;</span>;</div>
-<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">case</span> error_code::unknown_error: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown error&quot;</span>;</div>
-<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">case</span> error_code::operation_canceled: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Operation canceled&quot;</span>;</div>
-<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">case</span> error_code::operation_timeout: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Operation timed out&quot;</span>;</div>
-<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">case</span> error_code::not_implemented: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Not implemented&quot;</span>;</div>
-<div class="line"><span class="lineno">  107</span>        <span class="keywordflow">case</span> error_code::invalid_argument: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Invalid argument&quot;</span>;</div>
-<div class="line"><span class="lineno">  108</span>            </div>
-<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">case</span> error_code::thread_already_running: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Thread is already running&quot;</span>;</div>
-<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">case</span> error_code::thread_not_running: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Thread is not running&quot;</span>;</div>
-<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">case</span> error_code::thread_start_failure: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Failed to start thread&quot;</span>;</div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">case</span> error_code::thread_join_failure: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Failed to join thread&quot;</span>;</div>
-<div class="line"><span class="lineno">  113</span>            </div>
-<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">case</span> error_code::queue_full: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Queue is full&quot;</span>;</div>
-<div class="line"><span class="lineno">  115</span>        <span class="keywordflow">case</span> error_code::queue_empty: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Queue is empty&quot;</span>;</div>
-<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">case</span> error_code::queue_stopped: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Queue is stopped&quot;</span>;</div>
-<div class="line"><span class="lineno">  117</span>            </div>
-<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">case</span> error_code::job_creation_failed: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Failed to create job&quot;</span>;</div>
-<div class="line"><span class="lineno">  119</span>        <span class="keywordflow">case</span> error_code::job_execution_failed: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Failed to execute job&quot;</span>;</div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">case</span> error_code::job_invalid: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Invalid job&quot;</span>;</div>
-<div class="line"><span class="lineno">  121</span>            </div>
-<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">case</span> error_code::resource_allocation_failed: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Failed to allocate resource&quot;</span>;</div>
-<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">case</span> error_code::resource_limit_reached: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Resource limit reached&quot;</span>;</div>
-<div class="line"><span class="lineno">  124</span>            </div>
-<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">case</span> error_code::mutex_error: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Mutex error&quot;</span>;</div>
-<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">case</span> error_code::deadlock_detected: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Deadlock detected&quot;</span>;</div>
-<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">case</span> error_code::condition_variable_error: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Condition variable error&quot;</span>;</div>
-<div class="line"><span class="lineno">  128</span>            </div>
-<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">case</span> error_code::io_error: <span class="keywordflow">return</span> <span class="stringliteral">&quot;I/O error&quot;</span>;</div>
-<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">case</span> error_code::file_not_found: <span class="keywordflow">return</span> <span class="stringliteral">&quot;File not found&quot;</span>;</div>
-<div class="line"><span class="lineno">  131</span>            </div>
-<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">default</span>: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown error code&quot;</span>;</div>
-<div class="line"><span class="lineno">  133</span>    }</div>
-<div class="line"><span class="lineno">  134</span>}</div>
+<div class="line"><span class="lineno">  101</span>    <span class="keyword">using </span>map_entry = std::pair&lt;error_code, std::string_view&gt;;</div>
+<div class="line"><span class="lineno">  102</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> map_entry kMap[] = {</div>
+<div class="line"><span class="lineno">  103</span>        {error_code::success, <span class="stringliteral">&quot;Success&quot;</span>},</div>
+<div class="line"><span class="lineno">  104</span>        {error_code::unknown_error, <span class="stringliteral">&quot;Unknown error&quot;</span>},</div>
+<div class="line"><span class="lineno">  105</span>        {error_code::operation_canceled, <span class="stringliteral">&quot;Operation canceled&quot;</span>},</div>
+<div class="line"><span class="lineno">  106</span>        {error_code::operation_timeout, <span class="stringliteral">&quot;Operation timed out&quot;</span>},</div>
+<div class="line"><span class="lineno">  107</span>        {error_code::not_implemented, <span class="stringliteral">&quot;Not implemented&quot;</span>},</div>
+<div class="line"><span class="lineno">  108</span>        {error_code::invalid_argument, <span class="stringliteral">&quot;Invalid argument&quot;</span>},</div>
+<div class="line"><span class="lineno">  109</span>        {error_code::thread_already_running, <span class="stringliteral">&quot;Thread is already running&quot;</span>},</div>
+<div class="line"><span class="lineno">  110</span>        {error_code::thread_not_running, <span class="stringliteral">&quot;Thread is not running&quot;</span>},</div>
+<div class="line"><span class="lineno">  111</span>        {error_code::thread_start_failure, <span class="stringliteral">&quot;Failed to start thread&quot;</span>},</div>
+<div class="line"><span class="lineno">  112</span>        {error_code::thread_join_failure, <span class="stringliteral">&quot;Failed to join thread&quot;</span>},</div>
+<div class="line"><span class="lineno">  113</span>        {error_code::queue_full, <span class="stringliteral">&quot;Queue is full&quot;</span>},</div>
+<div class="line"><span class="lineno">  114</span>        {error_code::queue_empty, <span class="stringliteral">&quot;Queue is empty&quot;</span>},</div>
+<div class="line"><span class="lineno">  115</span>        {error_code::queue_stopped, <span class="stringliteral">&quot;Queue is stopped&quot;</span>},</div>
+<div class="line"><span class="lineno">  116</span>        {error_code::job_creation_failed, <span class="stringliteral">&quot;Failed to create job&quot;</span>},</div>
+<div class="line"><span class="lineno">  117</span>        {error_code::job_execution_failed, <span class="stringliteral">&quot;Failed to execute job&quot;</span>},</div>
+<div class="line"><span class="lineno">  118</span>        {error_code::job_invalid, <span class="stringliteral">&quot;Invalid job&quot;</span>},</div>
+<div class="line"><span class="lineno">  119</span>        {error_code::resource_allocation_failed, <span class="stringliteral">&quot;Failed to allocate resource&quot;</span>},</div>
+<div class="line"><span class="lineno">  120</span>        {error_code::resource_limit_reached, <span class="stringliteral">&quot;Resource limit reached&quot;</span>},</div>
+<div class="line"><span class="lineno">  121</span>        {error_code::mutex_error, <span class="stringliteral">&quot;Mutex error&quot;</span>},</div>
+<div class="line"><span class="lineno">  122</span>        {error_code::deadlock_detected, <span class="stringliteral">&quot;Deadlock detected&quot;</span>},</div>
+<div class="line"><span class="lineno">  123</span>        {error_code::condition_variable_error, <span class="stringliteral">&quot;Condition variable error&quot;</span>},</div>
+<div class="line"><span class="lineno">  124</span>        {error_code::io_error, <span class="stringliteral">&quot;I/O error&quot;</span>},</div>
+<div class="line"><span class="lineno">  125</span>        {error_code::file_not_found, <span class="stringliteral">&quot;File not found&quot;</span>},</div>
+<div class="line"><span class="lineno">  126</span>    };</div>
+<div class="line"><span class="lineno">  127</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [k, v] : kMap) {</div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">if</span> (k == code) <span class="keywordflow">return</span> std::string(v);</div>
+<div class="line"><span class="lineno">  129</span>    }</div>
+<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;Unknown error code&quot;</span>);</div>
+<div class="line"><span class="lineno">  131</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -813,14 +810,14 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00570">570</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  570</span>                                                                                  {</div>
-<div class="line"><span class="lineno">  571</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>) {</div>
-<div class="line"><span class="lineno">  572</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result&lt;void&gt;</a>(<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{error_code::unknown_error, *<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>});</div>
-<div class="line"><span class="lineno">  573</span>    }</div>
-<div class="line"><span class="lineno">  574</span>    <span class="keywordflow">return</span> result&lt;void&gt;();</div>
-<div class="line"><span class="lineno">  575</span>}</div>
-<div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00241">error_handling.h:241</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00567">567</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  567</span>                                                                                  {</div>
+<div class="line"><span class="lineno">  568</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>) {</div>
+<div class="line"><span class="lineno">  569</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result&lt;void&gt;</a>(<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{error_code::unknown_error, *<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>});</div>
+<div class="line"><span class="lineno">  570</span>    }</div>
+<div class="line"><span class="lineno">  571</span>    <span class="keywordflow">return</span> result&lt;void&gt;();</div>
+<div class="line"><span class="lineno">  572</span>}</div>
+<div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00238">error_handling.h:238</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -852,13 +849,13 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00562">562</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  562</span>                                                                                   {</div>
-<div class="line"><span class="lineno">  563</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>) {</div>
-<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result&lt;T&gt;</a>(<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{error_code::unknown_error, *<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>});</div>
-<div class="line"><span class="lineno">  565</span>    }</div>
-<div class="line"><span class="lineno">  566</span>    <span class="keywordflow">return</span> result&lt;T&gt;(std::forward&lt;T&gt;(value));</div>
-<div class="line"><span class="lineno">  567</span>}</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00559">559</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  559</span>                                                                                   {</div>
+<div class="line"><span class="lineno">  560</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>) {</div>
+<div class="line"><span class="lineno">  561</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result&lt;T&gt;</a>(<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a>{error_code::unknown_error, *<a class="code hl_class" href="../../dc/d6c/classthread__module_1_1error.html">error</a>});</div>
+<div class="line"><span class="lineno">  562</span>    }</div>
+<div class="line"><span class="lineno">  563</span>    <span class="keywordflow">return</span> result&lt;T&gt;(std::forward&lt;T&gt;(value));</div>
+<div class="line"><span class="lineno">  564</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -886,15 +883,15 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00578">578</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  578</span>                                                                                {</div>
-<div class="line"><span class="lineno">  579</span>    <span class="keywordflow">if</span> (res) {</div>
-<div class="line"><span class="lineno">  580</span>        <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  581</span>    }</div>
-<div class="line"><span class="lineno">  582</span>    <span class="keywordflow">return</span> res.<a class="code hl_function" href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a631894b40e3a08e8637bf47f7ffabfd6">get_error</a>().<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>();</div>
-<div class="line"><span class="lineno">  583</span>}</div>
-<div class="ttc" id="aclassthread__module_1_1error_html_add7860e073cc1262c1b0a6ab442ece06"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">thread_module::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00168">error_handling.h:168</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result_3_01void_01_4_html_a631894b40e3a08e8637bf47f7ffabfd6"><div class="ttname"><a href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a631894b40e3a08e8637bf47f7ffabfd6">thread_module::result&lt; void &gt;::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00479">error_handling.h:479</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00575">575</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  575</span>                                                                                {</div>
+<div class="line"><span class="lineno">  576</span>    <span class="keywordflow">if</span> (res) {</div>
+<div class="line"><span class="lineno">  577</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  578</span>    }</div>
+<div class="line"><span class="lineno">  579</span>    <span class="keywordflow">return</span> res.<a class="code hl_function" href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a631894b40e3a08e8637bf47f7ffabfd6">get_error</a>().<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>();</div>
+<div class="line"><span class="lineno">  580</span>}</div>
+<div class="ttc" id="aclassthread__module_1_1error_html_add7860e073cc1262c1b0a6ab442ece06"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">thread_module::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00165">error_handling.h:165</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result_3_01void_01_4_html_a631894b40e3a08e8637bf47f7ffabfd6"><div class="ttname"><a href="../../de/d5e/classthread__module_1_1result_3_01void_01_4.html#a631894b40e3a08e8637bf47f7ffabfd6">thread_module::result&lt; void &gt;::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00476">error_handling.h:476</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -930,15 +927,15 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00586">586</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  586</span>                                                                                     {</div>
-<div class="line"><span class="lineno">  587</span>    <span class="keywordflow">if</span> (res) {</div>
-<div class="line"><span class="lineno">  588</span>        <span class="keywordflow">return</span> {res.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">value</a>(), std::nullopt};</div>
-<div class="line"><span class="lineno">  589</span>    }</div>
-<div class="line"><span class="lineno">  590</span>    <span class="keywordflow">return</span> {std::nullopt, res.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">get_error</a>().<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>()};</div>
-<div class="line"><span class="lineno">  591</span>}</div>
-<div class="ttc" id="aclassthread__module_1_1result_html_ab86c031aec44d755964eb64b93ab9d3f"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">thread_module::result::value</a></div><div class="ttdeci">T &amp; value() &amp;</div><div class="ttdoc">Gets the value.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00279">error_handling.h:279</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result_html_aca4e5ef822c9a7e2bde65e6f6dd8c521"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">thread_module::result::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00315">error_handling.h:315</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00583">583</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  583</span>                                                                                     {</div>
+<div class="line"><span class="lineno">  584</span>    <span class="keywordflow">if</span> (res) {</div>
+<div class="line"><span class="lineno">  585</span>        <span class="keywordflow">return</span> {res.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">value</a>(), std::nullopt};</div>
+<div class="line"><span class="lineno">  586</span>    }</div>
+<div class="line"><span class="lineno">  587</span>    <span class="keywordflow">return</span> {std::nullopt, res.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">get_error</a>().<a class="code hl_function" href="../../dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06">to_string</a>()};</div>
+<div class="line"><span class="lineno">  588</span>}</div>
+<div class="ttc" id="aclassthread__module_1_1result_html_ab86c031aec44d755964eb64b93ab9d3f"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">thread_module::result::value</a></div><div class="ttdeci">T &amp; value() &amp;</div><div class="ttdoc">Gets the value.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00276">error_handling.h:276</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result_html_aca4e5ef822c9a7e2bde65e6f6dd8c521"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521">thread_module::result::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00312">error_handling.h:312</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1020,7 +1017,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:14:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

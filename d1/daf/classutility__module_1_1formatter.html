@@ -143,7 +143,7 @@ Example</h3>
 <div class="line">std::array&lt;char, 50&gt; buffer;</div>
 <div class="line"><span class="keyword">auto</span> it = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">formatter::format_to</a>(buffer.begin(), <span class="stringliteral">&quot;Number: {}&quot;</span>, 42);</div>
 <div class="line"><span class="comment">// &#39;it&#39; now points to the end of the written text</span></div>
-<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00287">formatter.h:287</a></div></div>
+<div class="ttc" id="aclassutility__module_1_1formatter_html_a12d7278310683404a3342631586528b6"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6">utility_module::formatter::format_to</a></div><div class="ttdeci">static auto format_to(OutputIt out, const char *formats, const FormatArgs &amp;... args) -&gt; OutputIt</div><div class="ttdoc">Formats a narrow-character string directly to an output iterator.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00286">formatter.h:286</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00162">162</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
@@ -359,17 +359,17 @@ template&lt;typename... FormatArgs&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::wstring</code> containing the formatted result. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00263">263</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  264</span>        {</div>
-<div class="line"><span class="lineno">  265</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_wformat_args(args...));</div>
-<div class="line"><span class="lineno">  267</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  268</span>            <span class="comment">// Fallback implementation using wostringstream</span></div>
-<div class="line"><span class="lineno">  269</span>            std::wostringstream woss;</div>
-<div class="line"><span class="lineno">  270</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f">wformat_impl</a>(woss, formats, args...);</div>
-<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">return</span> woss.str();</div>
-<div class="line"><span class="lineno">  272</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  273</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00262">262</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  263</span>        {</div>
+<div class="line"><span class="lineno">  264</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">return</span> std::vformat(formats, std::make_wformat_args(args...));</div>
+<div class="line"><span class="lineno">  266</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  267</span>            <span class="comment">// Fallback implementation using wostringstream</span></div>
+<div class="line"><span class="lineno">  268</span>            std::wostringstream woss;</div>
+<div class="line"><span class="lineno">  269</span>            <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f">wformat_impl</a>(woss, formats, args...);</div>
+<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">return</span> woss.str();</div>
+<div class="line"><span class="lineno">  271</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  272</span>        }</div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_ae47ecd0a7cd1f3d21fabf31c99e1ac0f"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#ae47ecd0a7cd1f3d21fabf31c99e1ac0f">utility_module::formatter::wformat_impl</a></div><div class="ttdeci">static void wformat_impl(Stream &amp;stream, const wchar_t *format)</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00236">formatter.h:236</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -665,16 +665,16 @@ template&lt;typename OutputIt , typename... FormatArgs&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>The output iterator advanced to the end of the written text.</dd></dl>
 <p>This method is useful when writing to a buffer, a container, or custom iterators. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00287">287</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  289</span>        {</div>
-<div class="line"><span class="lineno">  290</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  291</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_format_args(args...));</div>
-<div class="line"><span class="lineno">  292</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  293</span>            <span class="comment">// Fallback implementation</span></div>
-<div class="line"><span class="lineno">  294</span>            std::string result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">format</a>(formats, args...);</div>
-<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">return</span> std::copy(result.begin(), result.end(), out);</div>
-<div class="line"><span class="lineno">  296</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  297</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00286">286</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  288</span>        {</div>
+<div class="line"><span class="lineno">  289</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  290</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_format_args(args...));</div>
+<div class="line"><span class="lineno">  291</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  292</span>            <span class="comment">// Fallback implementation</span></div>
+<div class="line"><span class="lineno">  293</span>            std::string result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">format</a>(formats, args...);</div>
+<div class="line"><span class="lineno">  294</span>            <span class="keywordflow">return</span> std::copy(result.begin(), result.end(), out);</div>
+<div class="line"><span class="lineno">  295</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  296</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -768,16 +768,16 @@ template&lt;typename OutputIt , typename... FormatArgs&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The output iterator advanced to the end of the written text. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00309">309</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  311</span>        {</div>
-<div class="line"><span class="lineno">  312</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
-<div class="line"><span class="lineno">  313</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_wformat_args(args...));</div>
-<div class="line"><span class="lineno">  314</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  315</span>            <span class="comment">// Fallback implementation</span></div>
-<div class="line"><span class="lineno">  316</span>            std::wstring result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">format</a>(formats, args...);</div>
-<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">return</span> std::copy(result.begin(), result.end(), out);</div>
-<div class="line"><span class="lineno">  318</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">  319</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="../../de/d52/formatter_8h_source.html#l00308">308</a> of file <a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  310</span>        {</div>
+<div class="line"><span class="lineno">  311</span><span class="preprocessor">#ifdef USE_STD_FORMAT</span></div>
+<div class="line"><span class="lineno">  312</span>            <span class="keywordflow">return</span> std::vformat_to(out, formats, std::make_wformat_args(args...));</div>
+<div class="line"><span class="lineno">  313</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  314</span>            <span class="comment">// Fallback implementation</span></div>
+<div class="line"><span class="lineno">  315</span>            std::wstring result = <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">format</a>(formats, args...);</div>
+<div class="line"><span class="lineno">  316</span>            <span class="keywordflow">return</span> std::copy(result.begin(), result.end(), out);</div>
+<div class="line"><span class="lineno">  317</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  318</span>        }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1037,7 +1037,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:14:47 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
