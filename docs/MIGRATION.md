@@ -190,3 +190,9 @@ No action required. All changes are backward compatible.
 - Phase 5: In Progress - Estimated 6 weeks
 
 Total estimated completion: Q1 2025
+### Current Status (2025-09-06)
+
+The migration is complete with the modular structure in place and interfaces integrated across pools and queues. See details below.
+### Detailed Status Log
+
+The previously separate status document (MIGRATION_STATUS.md) has been merged into this section to keep migration guidance and current state together.

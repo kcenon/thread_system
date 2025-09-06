@@ -38,6 +38,26 @@ cmake --build build --target docs
 # Open thread_system/documents/html/index.html
 ```
 
+## Interfaces Overview
+
+The project provides interfaces to decouple components and enable DI:
+
+- executor_interface: submit work and shutdown; implemented by thread_pool and typed_thread_pool
+- scheduler_interface: enqueue/dequeue jobs; implemented by job_queue
+- monitorable_interface: expose metrics; optional for components reporting metrics
+- service_registry: lightweight, header-only service lookup utility
+
+Basic usage:
+
+```cpp
+// executor_interface via thread_pool
+auto pool = std::make_shared<thread_pool_module::thread_pool>();
+pool->enqueue_batch({std::make_unique<thread_pool_module::thread_worker>(false)});
+pool->start();
+pool->execute(std::make_unique<thread_module::callback_job>([](){ return thread_module::result_void(); }));
+pool->shutdown();
+```
+
 ## Samples
 
 - minimal_thread_pool: minimal pool usage
@@ -45,4 +65,3 @@ cmake --build build --target docs
 - integration_example: external logger/monitoring integration
 - multi_process_monitoring_integration: process-aware monitoring
 - service_registry_sample: using service_registry
-

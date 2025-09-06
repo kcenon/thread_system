@@ -133,3 +133,30 @@ Dependency Graph:
                                             │   system        │
                                             └─────────────────┘
 ```
+
+## 📁 Directory Structure (Overview)
+
+Project layout after modularization:
+
+```
+thread_system/
+├── core/
+│   ├── base/{include,src}
+│   ├── jobs/{include,src}
+│   └── sync/{include,src}
+├── interfaces/
+├── implementations/
+│   ├── thread_pool/{include,src}
+│   ├── typed_thread_pool/{include,src}
+│   └── lockfree/{include,src}
+├── utilities/{include,src}
+├── benchmarks/
+├── samples/
+├── docs/
+└── cmake/
+```
+
+Design rules:
+- core exposes public headers under `include/` and implementations under `src/`
+- implementations depend on core and interfaces
+- utilities is standalone; interfaces depend only on core/base
