@@ -938,9 +938,9 @@ FetchContent_MakeAvailable(thread_system)
 ### Core API Reference
 
 - **[API Reference](./docs/api-reference.md)**: Complete API documentation
-- **[Architecture Guide](./docs/architecture.md)**: System design and internals
+- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and internals
 - **[Performance Guide](./docs/performance.md)**: Optimization tips and benchmarks
-- **[Examples](./docs/examples.md)**: Comprehensive code examples
+- **[User Guide](./docs/USER_GUIDE.md)**: Usage guide and examples
 - **[FAQ](./docs/faq.md)**: Frequently asked questions
 
 ### Quick API Overview
