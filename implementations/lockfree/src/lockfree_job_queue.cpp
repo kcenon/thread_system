@@ -248,36 +248,22 @@ auto lockfree_job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
 		return result;
 	}
 	
-	auto lockfree_job_queue::dequeue_batch() -> std::deque<std::unique_ptr<job>>
-	{
-		std::deque<std::unique_ptr<job>> result;
-		
-		// Try to dequeue up to MAX_BATCH_SIZE items
-		for (size_t i = 0; i < MAX_BATCH_SIZE; ++i) {
-			auto job_result = try_dequeue();
-			if (!job_result.has_value()) {
-				break;
-			}
-			result.push_back(std::move(job_result.value()));
-		}
-		
-		if (!result.empty()) {
-			stats_.dequeue_batch_count.fetch_add(1, std::memory_order_relaxed);
-			condition_.notify_all();
-		}
-		
-		return result;
-	}
+auto lockfree_job_queue::dequeue_batch() -> std::deque<std::unique_ptr<job>>
+{
+    auto items = drain_batch(MAX_BATCH_SIZE);
+    finalize_dequeue_batch(items);
+    return items;
+}
 	
 	auto lockfree_job_queue::try_enqueue(std::unique_ptr<job>&& value) -> result_void
 	{
 		return enqueue(std::move(value));
 	}
 	
-	auto lockfree_job_queue::try_dequeue() -> result<std::unique_ptr<job>>
-	{
-		return dequeue_impl();
-	}
+auto lockfree_job_queue::try_dequeue() -> result<std::unique_ptr<job>>
+{
+    return attempt_dequeue();
+}
 	
 	auto lockfree_job_queue::clear() -> void
 	{
@@ -519,6 +505,34 @@ auto lockfree_job_queue::record_dequeue_time(std::chrono::nanoseconds duration) 
 auto lockfree_job_queue::increment_retry_count() -> void
 {
     stats_.retry_count.fetch_add(1, std::memory_order_relaxed);
+}
+
+// --- Helpers extracted from dequeue operations to reduce complexity ---
+
+auto lockfree_job_queue::attempt_dequeue() -> result<std::unique_ptr<job>>
+{
+    return dequeue_impl();
+}
+
+auto lockfree_job_queue::drain_batch(std::size_t max_items) -> std::deque<std::unique_ptr<job>>
+{
+    std::deque<std::unique_ptr<job>> items;
+    for (size_t i = 0; i < max_items; ++i) {
+        auto job_result = attempt_dequeue();
+        if (!job_result.has_value()) {
+            break;
+        }
+        items.push_back(std::move(job_result.value()));
+    }
+    return items;
+}
+
+auto lockfree_job_queue::finalize_dequeue_batch(std::deque<std::unique_ptr<job>>& items) -> void
+{
+    if (!items.empty()) {
+        stats_.dequeue_batch_count.fetch_add(1, std::memory_order_relaxed);
+        condition_.notify_all();
+    }
 }
 
 // --- Helpers extracted from enqueue_batch to reduce complexity ---

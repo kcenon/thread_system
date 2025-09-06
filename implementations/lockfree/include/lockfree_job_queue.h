@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <thread>
 #include <vector>
+#include <deque>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -279,6 +280,11 @@ namespace thread_module
 											  std::chrono::nanoseconds duration) -> void;
 		auto cleanup_batch_resources(std::vector<Node*>& nodes,
 									 std::vector<job_ptr*>& data_storage) -> void;
+
+		// Dequeue helpers (extracted to reduce complexity)
+		auto attempt_dequeue() -> result<std::unique_ptr<job>>;
+		auto drain_batch(std::size_t max_items) -> std::deque<std::unique_ptr<job>>;
+		auto finalize_dequeue_batch(std::deque<std::unique_ptr<job>>& items) -> void;
 	};
 
 } // namespace thread_module
