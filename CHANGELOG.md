@@ -50,6 +50,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - examples.md demonstrates both core-only and with-modules usage
   - performance.md updated with latest benchmarks
 
+## [2.1.0] - 2025-09-06
+
+### Added
+- Interfaces: `executor_interface`, `scheduler_interface`, `monitorable_interface`
+- `service_registry` (header-only) for lightweight DI
+- Interface tests and service registry sample
+- Docs: `docs/INTERFACES.md`, `docs/USER_GUIDE.md`, `docs/QUALITY.md`, `docs/COVERAGE.md`, module READMEs
+- CMake: docs target (Doxygen), sanitizer and clang-tidy options
+
+### Changed
+- `thread_pool`, `typed_thread_pool` implement `executor_interface`
+- `job_queue` implements `scheduler_interface`
+- CMake modular structure and install rules updated for new layout
+
+### Testing
+- Added error-path tests for job_queue, thread_pool, typed_thread_pool
+- Wired sanitizers to unit test targets
+
 ## [2.0.0] - 2025-07-22
 
 ### Added
