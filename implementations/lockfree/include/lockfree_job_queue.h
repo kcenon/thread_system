@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -267,6 +268,17 @@ namespace thread_module
 		auto record_enqueue_time(std::chrono::nanoseconds duration) -> void;
 		auto record_dequeue_time(std::chrono::nanoseconds duration) -> void;
 		auto increment_retry_count() -> void;
+
+		// Enqueue_batch helpers (extracted to reduce method complexity)
+		auto validate_batch(std::vector<std::unique_ptr<job>>& jobs) const -> result_void;
+		auto prepare_batch_nodes(std::vector<std::unique_ptr<job>>& jobs,
+								 std::vector<Node*>& nodes,
+								 std::vector<job_ptr*>& data_storage) -> result_void;
+		auto link_batch_nodes(Node* first, Node* last) -> void;
+		auto update_stats_after_enqueue_batch(std::size_t count,
+											  std::chrono::nanoseconds duration) -> void;
+		auto cleanup_batch_resources(std::vector<Node*>& nodes,
+									 std::vector<job_ptr*>& data_storage) -> void;
 	};
 
 } // namespace thread_module

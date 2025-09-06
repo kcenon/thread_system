@@ -198,106 +198,35 @@ namespace thread_module
 		}
 	}
 	
-	auto lockfree_job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
-	{
-		if (jobs.empty()) {
-			return error{error_code::invalid_argument, "Cannot enqueue empty batch"};
-		}
-		
-		if (stop_.load(std::memory_order_acquire)) {
-			return error{error_code::queue_stopped, "Queue is stopped"};
-		}
-		
-		if (jobs.size() > MAX_BATCH_SIZE) {
-			return error{error_code::invalid_argument, "Batch size exceeds maximum"};
-		}
-		
-		auto start_time = std::chrono::high_resolution_clock::now();
-		
-		// Prepare nodes and data storage
-		std::vector<Node*> nodes;
-		std::vector<job_ptr*> data_storage;
-		
-		try {
-			nodes.reserve(jobs.size());
-			data_storage.reserve(jobs.size());
-			
-			// Create linked list of nodes
-			for (size_t i = 0; i < jobs.size(); ++i) {
-				if (!jobs[i]) {
-					throw std::invalid_argument("Null job in batch");
-				}
-				
-				Node* node = allocate_node();
-				if (!node) {
-					throw std::runtime_error("Failed to allocate node");
-				}
-				job_ptr* data = new job_ptr(std::move(jobs[i]));
-				
-				node->set_data(data);
-				nodes.push_back(node);
-				data_storage.push_back(data);
-				
-				if (i > 0 && nodes.size() > 1) {
-					nodes[i-1]->next.store(node, std::memory_order_release);
-				}
-			}
-			
-			// Link the batch into the queue using a helper lambda to reduce method complexity
-			Node* first_node = nodes.front();
-			Node* last_node = nodes.back();
-			auto link_batch = [this](Node* first, Node* last) {
-				size_t retry_count_local = 0;
-				while (true) {
-					Node* tail = tail_.load(std::memory_order_acquire);
-					Node* next = tail->next.load(std::memory_order_acquire);
-					if (tail == tail_.load(std::memory_order_acquire)) {
-						if (next == nullptr) {
-							// Try to link the batch
-							if (tail->next.compare_exchange_weak(next, first,
-															std::memory_order_release,
-															std::memory_order_relaxed)) {
-								// Try to advance tail
-								tail_.compare_exchange_weak(tail, last,
-													std::memory_order_release,
-													std::memory_order_relaxed);
-								break;
-							}
-						} else {
-							// Help advance tail
-							tail_.compare_exchange_weak(tail, next,
-												  std::memory_order_release,
-												  std::memory_order_relaxed);
-						}
-					}
-					if (++retry_count_local > RETRY_THRESHOLD) {
-						increment_retry_count();
-						retry_count_local = 0;
-					}
-				}
-			};
-			link_batch(first_node, last_node);
-			
-			// Update statistics
-			stats_.enqueue_batch_count.fetch_add(1, std::memory_order_relaxed);
-			stats_.enqueue_count.fetch_add(jobs.size(), std::memory_order_relaxed);
-			stats_.current_size.fetch_add(jobs.size(), std::memory_order_relaxed);
-			
-			auto duration = std::chrono::high_resolution_clock::now() - start_time;
-			record_enqueue_time(std::chrono::duration_cast<std::chrono::nanoseconds>(duration));
-			
-				return result_void{};
-			} catch (...) {
-			// Clean up on failure
-			for (auto* data : data_storage) {
-				delete data;
-			}
-			for (auto* node : nodes) {
-				deallocate_node(node);
-			}
-			return error{error_code::unknown_error, "Exception during batch enqueue"};
-		}
-	}
+auto lockfree_job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+{
+    // Validate request
+    if (auto r = validate_batch(jobs); r.has_error()) {
+        return r;
+    }
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    // Prepare nodes and data storage
+    std::vector<Node*> nodes;
+    std::vector<job_ptr*> data_storage;
+
+    // Try to build nodes; handle any failure explicitly
+    auto prep = prepare_batch_nodes(jobs, nodes, data_storage);
+    if (prep.has_error()) {
+        cleanup_batch_resources(nodes, data_storage);
+        return prep;
+    }
+
+    // Link the prepared batch into the queue
+    link_batch_nodes(nodes.front(), nodes.back());
+
+    // Update statistics and record timing
+    auto duration = std::chrono::high_resolution_clock::now() - start_time;
+    update_stats_after_enqueue_batch(nodes.size(), std::chrono::duration_cast<std::chrono::nanoseconds>(duration));
+
+    return result_void{};
+}
 	
 	auto lockfree_job_queue::dequeue() -> result<std::unique_ptr<job>>
 	{
@@ -582,14 +511,118 @@ namespace thread_module
 		stats_.total_enqueue_time.fetch_add(static_cast<uint64_t>(duration.count()), std::memory_order_relaxed);
 	}
 	
-	auto lockfree_job_queue::record_dequeue_time(std::chrono::nanoseconds duration) -> void
-	{
-		stats_.total_dequeue_time.fetch_add(static_cast<uint64_t>(duration.count()), std::memory_order_relaxed);
-	}
-	
-	auto lockfree_job_queue::increment_retry_count() -> void
-	{
-		stats_.retry_count.fetch_add(1, std::memory_order_relaxed);
-	}
+auto lockfree_job_queue::record_dequeue_time(std::chrono::nanoseconds duration) -> void
+{
+    stats_.total_dequeue_time.fetch_add(static_cast<uint64_t>(duration.count()), std::memory_order_relaxed);
+}
+
+auto lockfree_job_queue::increment_retry_count() -> void
+{
+    stats_.retry_count.fetch_add(1, std::memory_order_relaxed);
+}
+
+// --- Helpers extracted from enqueue_batch to reduce complexity ---
+
+auto lockfree_job_queue::validate_batch(std::vector<std::unique_ptr<job>>& jobs) const -> result_void
+{
+    if (jobs.empty()) {
+        return error{error_code::invalid_argument, "Cannot enqueue empty batch"};
+    }
+    if (stop_.load(std::memory_order_acquire)) {
+        return error{error_code::queue_stopped, "Queue is stopped"};
+    }
+    if (jobs.size() > MAX_BATCH_SIZE) {
+        return error{error_code::invalid_argument, "Batch size exceeds maximum"};
+    }
+    return result_void{};
+}
+
+auto lockfree_job_queue::prepare_batch_nodes(std::vector<std::unique_ptr<job>>& jobs,
+                                             std::vector<Node*>& nodes,
+                                             std::vector<job_ptr*>& data_storage) -> result_void
+{
+    nodes.reserve(jobs.size());
+    data_storage.reserve(jobs.size());
+
+    for (size_t i = 0; i < jobs.size(); ++i) {
+        if (!jobs[i]) {
+            return error{error_code::invalid_argument, "Null job in batch"};
+        }
+
+        Node* node = allocate_node();
+        if (!node) {
+            return error{error_code::resource_allocation_failed, "Failed to allocate node"};
+        }
+
+        job_ptr* data = nullptr;
+        try {
+            data = new job_ptr(std::move(jobs[i]));
+        } catch (...) {
+            deallocate_node(node);
+            return error{error_code::resource_allocation_failed, "Failed to allocate job storage"};
+        }
+
+        node->set_data(data);
+        nodes.push_back(node);
+        data_storage.push_back(data);
+
+        if (i > 0) {
+            nodes[i - 1]->next.store(node, std::memory_order_release);
+        }
+    }
+
+    return result_void{};
+}
+
+auto lockfree_job_queue::link_batch_nodes(Node* first, Node* last) -> void
+{
+    size_t retry_count_local = 0;
+    while (true) {
+        Node* tail = tail_.load(std::memory_order_acquire);
+        Node* next = tail->next.load(std::memory_order_acquire);
+        if (tail == tail_.load(std::memory_order_acquire)) {
+            if (next == nullptr) {
+                if (tail->next.compare_exchange_weak(next, first,
+                                                     std::memory_order_release,
+                                                     std::memory_order_relaxed)) {
+                    tail_.compare_exchange_weak(tail, last,
+                                                std::memory_order_release,
+                                                std::memory_order_relaxed);
+                    break;
+                }
+            } else {
+                tail_.compare_exchange_weak(tail, next,
+                                            std::memory_order_release,
+                                            std::memory_order_relaxed);
+            }
+        }
+        if (++retry_count_local > RETRY_THRESHOLD) {
+            increment_retry_count();
+            retry_count_local = 0;
+        }
+    }
+}
+
+auto lockfree_job_queue::update_stats_after_enqueue_batch(std::size_t count,
+                                                          std::chrono::nanoseconds duration) -> void
+{
+    stats_.enqueue_batch_count.fetch_add(1, std::memory_order_relaxed);
+    stats_.enqueue_count.fetch_add(static_cast<uint64_t>(count), std::memory_order_relaxed);
+    stats_.current_size.fetch_add(static_cast<uint64_t>(count), std::memory_order_relaxed);
+    record_enqueue_time(duration);
+}
+
+auto lockfree_job_queue::cleanup_batch_resources(std::vector<Node*>& nodes,
+                                                 std::vector<job_ptr*>& data_storage) -> void
+{
+    for (auto* data : data_storage) {
+        delete data;
+    }
+    for (auto* node : nodes) {
+        deallocate_node(node);
+    }
+    data_storage.clear();
+    nodes.clear();
+}
 
 } // namespace thread_module
