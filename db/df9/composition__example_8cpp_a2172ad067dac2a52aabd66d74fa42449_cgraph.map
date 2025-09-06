@@ -1,0 +1,11 @@
+<map id="demonstrate_typed_pool_composition" name="demonstrate_typed_pool_composition">
+<area shape="rect" id="Node000001" title="Demonstrate typed thread pool with composition." alt="" coords="5,41,189,81"/>
+<area shape="rect" id="Node000002" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#ad63b3eedcda1fa14aa7936740dc3d4d6" title=" " alt="" coords="237,5,408,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,44,223,39,224,44,190,49"/>
+<area shape="rect" id="Node000003" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#af06f0082aa8091bc60fc7c7db0eb2a2c" title=" " alt="" coords="237,70,408,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,73,224,79,223,84,189,79"/>
+<area shape="rect" id="Node000004" href="$d8/d74/classthread__module_1_1service__container.html#a7a1cf07b7287db73a3d668311f55a02e" title="Get the global service container instance." alt="" coords="456,45,631,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="408,82,442,77,443,83,409,88"/>
+<area shape="rect" id="Node000005" href="$d8/d74/classthread__module_1_1service__container.html#a2c3f7c454b152c087247943d54f4a9f4" title="Resolve a service." alt="" coords="456,109,631,149"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="409,107,443,112,442,117,408,112"/>
+</map>

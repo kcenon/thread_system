@@ -1,0 +1,45 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,147,60,173"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,90,315,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,145,107,125,138,116,140,121,109,131,61,150"/>
+<area shape="rect" id="Node000008" href="$d6/d86/adaptive__queue__sample_8cpp.html#a0d30dd48c20143aa0863800f13cff270" title=" " alt="" coords="137,389,286,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="45,171,190,376,186,379,41,174"/>
+<area shape="rect" id="Node000014" href="$d6/d86/adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="120,16,303,56"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="41,145,68,111,106,75,133,60,136,64,110,79,71,115,45,149"/>
+<area shape="rect" id="Node000015" href="$d6/d86/adaptive__queue__sample_8cpp.html#a3772663ac668fe738c0ae87ffd3750df" title=" " alt="" coords="132,140,291,180"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="60,157,118,157,118,163,60,163"/>
+<area shape="rect" id="Node000016" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,205,298,230"/>
+<area shape="poly" id="edge22_Node000001_Node000016" title=" " alt="" coords="61,170,109,189,140,199,138,204,107,195,59,175"/>
+<area shape="rect" id="Node000003" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fccc80e5ae38229e9170a0f09830008" title="Dequeues a job from the queue in FIFO order." alt="" coords="377,133,563,173"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,113,364,130,363,135,277,118"/>
+<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ac0c35e20c335c6e244216402bf6ec8bc" title="Enqueues a new job into the queue." alt="" coords="377,5,563,45"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="254,87,362,55,388,47,390,52,363,60,255,93"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7" title="Get current queue type." alt="" coords="363,261,577,301"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="296,113,316,126,330,141,337,157,342,188,346,218,352,233,365,247,370,252,366,256,361,251,348,236,341,220,336,189,332,158,325,144,313,130,293,118"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="387,69,553,109"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="315,95,373,92,374,97,315,100"/>
+<area shape="rect" id="Node000007" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="387,197,553,237"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="288,113,316,126,332,140,341,155,350,169,364,183,376,190,374,195,361,187,345,173,337,158,328,144,313,130,286,118"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="238,387,293,349,362,311,379,303,381,308,364,316,296,354,241,391"/>
+<area shape="rect" id="Node000009" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a6a050d5ffd7b23bd0826ffdf48479d81" title="Dequeues all remaining jobs from the queue without processing them." alt="" coords="369,517,571,557"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="241,427,296,465,364,503,381,510,379,515,362,508,293,470,238,432"/>
+<area shape="rect" id="Node000010" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="396,325,544,365"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="285,388,382,364,383,369,287,394"/>
+<area shape="rect" id="Node000011" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a79ab6ce07de32b07ba50c7075979ad82" title="Enqueues a batch of jobs into the queue." alt="" coords="369,581,571,621"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="228,428,283,496,321,534,364,567,375,573,373,578,361,572,317,538,279,500,224,431"/>
+<area shape="rect" id="Node000012" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="387,389,553,429"/>
+<area shape="poly" id="edge12_Node000008_Node000012" title=" " alt="" coords="286,407,374,407,374,412,286,412"/>
+<area shape="rect" id="Node000013" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="391,453,549,493"/>
+<area shape="poly" id="edge13_Node000008_Node000013" title=" " alt="" coords="287,425,378,448,377,453,285,430"/>
+<area shape="poly" id="edge15_Node000014_Node000004" title=" " alt="" coords="303,30,363,27,363,32,303,35"/>
+<area shape="poly" id="edge17_Node000015_Node000003" title=" " alt="" coords="291,155,364,153,364,159,291,161"/>
+<area shape="poly" id="edge19_Node000015_Node000004" title=" " alt="" coords="290,138,313,125,328,108,336,91,344,73,361,55,369,50,372,54,364,59,349,76,341,93,333,111,316,129,292,143"/>
+<area shape="poly" id="edge20_Node000015_Node000006" title=" " alt="" coords="285,137,382,111,383,116,286,143"/>
+<area shape="poly" id="edge21_Node000015_Node000007" title=" " alt="" coords="291,175,374,193,373,199,290,180"/>
+<area shape="poly" id="edge18_Node000015_Node000010" title=" " alt="" coords="292,174,316,190,329,206,337,221,341,252,346,283,352,297,364,311,384,325,381,329,361,315,348,300,341,284,336,253,332,223,325,208,313,194,289,179"/>
+<area shape="poly" id="edge23_Node000016_Node000003" title=" " alt="" coords="263,202,314,189,375,174,377,179,315,195,265,207"/>
+<area shape="poly" id="edge24_Node000016_Node000004" title=" " alt="" coords="294,202,313,190,326,174,333,158,336,125,340,90,347,73,361,55,366,51,369,55,365,59,352,75,345,92,342,125,338,160,331,177,316,194,297,207"/>
+<area shape="poly" id="edge27_Node000016_Node000007" title=" " alt="" coords="298,215,374,215,374,220,298,220"/>
+<area shape="poly" id="edge25_Node000016_Node000012" title=" " alt="" coords="223,229,277,298,318,340,364,375,376,382,373,386,361,380,314,344,273,302,219,232"/>
+<area shape="poly" id="edge26_Node000016_Node000013" title=" " alt="" coords="223,229,301,349,364,439,380,449,377,453,361,443,297,352,219,232"/>
+</map>

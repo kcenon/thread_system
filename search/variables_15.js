@@ -1,4 +1,14 @@
 var searchData=
 [
-  ['yield_5fon_5fidle_0',['yield_on_idle',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a83c2d53afbb4f95ba008f2bab642b121',1,'thread_pool_module::worker_policy']]]
+  ['wait_5finterval_5f_0',['wait_interval_',['../d6/d01/logger__sample_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb',1,'wait_interval_:&#160;logger_sample.cpp'],['../d5/de9/thread__pool__sample_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb',1,'wait_interval_:&#160;thread_pool_sample.cpp'],['../d4/dd6/typed__thread__pool__sample_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb',1,'wait_interval_:&#160;typed_thread_pool_sample.cpp'],['../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb',1,'wait_interval_:&#160;typed_thread_pool_sample_2.cpp']]],
+  ['wake_5finterval_5f_1',['wake_interval_',['../da/d94/classthread__module_1_1thread__base.html#a47dad4325d074bf852e643aaf2e8fe95',1,'thread_module::thread_base']]],
+  ['wake_5finterval_5fmutex_5f_2',['wake_interval_mutex_',['../da/d94/classthread__module_1_1thread__base.html#a47f05db653b3f0c75635d939a4d03ce5',1,'thread_module::thread_base']]],
+  ['worker_3',['worker',['../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html#a67b05b221d9ee3179affafc9d891afd1',1,'monitoring_interface::metrics_snapshot']]],
+  ['worker_5fcondition_5f_4',['worker_condition_',['../da/d94/classthread__module_1_1thread__base.html#adc1b2dce42e59a25d78761baf4dcf230',1,'thread_module::thread_base']]],
+  ['worker_5fcount_5f_5',['worker_count_',['../dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a3e19ba6ebfc511b831119c85af049916',1,'typed_thread_pool_module::typed_thread_pool_builder']]],
+  ['worker_5fid_5f_6',['worker_id_',['../d7/d1b/classthread__pool__module_1_1thread__worker.html#a413065e14d4b8a6ced52d8e476572d38',1,'thread_pool_module::thread_worker']]],
+  ['worker_5fname_5fprefix_7',['worker_name_prefix',['../d4/d53/structthread__pool__module_1_1worker__policy.html#aeaa7ebf0dc088404ce8af0a5e0e640b4',1,'thread_pool_module::worker_policy']]],
+  ['worker_5fthread_5f_8',['worker_thread_',['../da/d94/classthread__module_1_1thread__base.html#a31ec9019ff9e44cbe30bafaef8febe45',1,'thread_module::thread_base']]],
+  ['worker_5fthreads_9',['worker_threads',['../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a847ac2ac98d7e31461a5b9bf145a90fa',1,'monitoring_interface::thread_pool_metrics']]],
+  ['workers_5f_10',['workers_',['../d9/da1/classthread__pool__module_1_1thread__pool.html#a492d443faffcd01b64ab689f08308aec',1,'thread_pool_module::thread_pool::workers_'],['../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html#aa5018167ca3833a3e59687dd67b0985b',1,'typed_thread_pool_module::typed_thread_pool_t::workers_']]]
 ];

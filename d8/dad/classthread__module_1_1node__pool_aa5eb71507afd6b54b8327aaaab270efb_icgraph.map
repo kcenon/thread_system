@@ -1,0 +1,13 @@
+<map id="thread_module::node_pool::get_statistics" name="thread_module::node_pool::get_statistics">
+<area shape="rect" id="Node000001" title=" " alt="" coords="348,55,508,95"/>
+<area shape="rect" id="Node000002" href="$df/d10/node__pool__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da" title=" " alt="" coords="108,5,300,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,54,254,33,255,28,337,49"/>
+<area shape="rect" id="Node000004" href="$df/d10/node__pool__sample_8cpp.html#a0b8a24e2a3fa5fabbfe9aaf38342e331" title=" " alt="" coords="113,55,295,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="334,78,295,78,295,73,334,73"/>
+<area shape="rect" id="Node000005" href="$df/d10/node__pool__sample_8cpp.html#a045af7dc6cffef072ee51d32a2bdcdf4" title=" " alt="" coords="121,119,287,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="345,102,275,122,274,117,343,97"/>
+<area shape="rect" id="Node000003" href="$df/d10/node__pool__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,63,60,88"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="137,37,109,46,61,65,59,61,107,41,136,32"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="99,78,60,78,60,73,99,73"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="127,117,107,110,59,90,61,85,109,105,129,112"/>
+</map>

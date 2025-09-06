@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_base/jobs/callback_job.h File Reference</title>
+<title>Thread System: core/jobs/include/callback_job.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_f275034da0fe94e1f46793c3d061397d.html">thread_base</a></li><li class="navelem"><a class="el" href="../../dir_9a67b789ea6bafaaefe2358c2b988334.html">jobs</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><a class="el" href="../../dir_89ff7df80dfe069bb3db33b1883ff5ba.html">jobs</a></li><li class="navelem"><a class="el" href="../../dir_629ce02dfe275bb1aff8982d6798dadb.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -88,135 +88,85 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for callback_job.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/def/callback__job_8h__incl.png" border="0" usemap="#asources_2thread__base_2jobs_2callback__job_8h" alt=""/></div>
-<map name="asources_2thread__base_2jobs_2callback__job_8h" id="asources_2thread__base_2jobs_2callback__job_8h">
-<area shape="rect" title=" " alt="" coords="235,5,391,45"/>
-<area shape="rect" href="../../d3/d6a/job_8h.html" title=" " alt="" coords="492,93,547,119"/>
-<area shape="poly" title=" " alt="" coords="363,43,480,87,478,92,361,48"/>
-<area shape="rect" title=" " alt="" coords="1097,343,1155,368"/>
-<area shape="poly" title=" " alt="" coords="391,24,484,27,598,38,720,58,781,72,840,91,913,120,966,153,1012,194,1065,253,1094,292,1116,329,1111,331,1090,295,1061,256,1009,198,963,157,911,125,838,96,780,78,719,63,597,43,484,33,391,29"/>
-<area shape="rect" title=" " alt="" coords="5,343,68,368"/>
-<area shape="poly" title=" " alt="" coords="268,48,228,69,189,95,161,122,136,152,95,218,65,281,47,330,42,328,61,279,90,215,132,149,157,118,186,91,225,64,266,43"/>
-<area shape="rect" title=" " alt="" coords="171,343,246,368"/>
-<area shape="poly" title=" " alt="" coords="279,48,248,69,217,95,181,135,155,168,136,205,119,255,114,275,119,293,139,317,165,334,162,339,136,321,114,296,109,275,114,254,131,203,151,165,177,131,213,91,244,65,277,43"/>
-<area shape="rect" title=" " alt="" coords="653,343,740,368"/>
-<area shape="poly" title=" " alt="" coords="391,30,530,45,693,71,772,88,841,110,896,135,918,149,933,165,951,194,950,214,935,226,911,233,850,241,820,247,795,257,750,294,716,333,712,330,746,291,793,252,819,241,849,235,910,228,933,221,945,212,946,195,929,168,914,154,894,140,839,115,770,93,692,76,529,50,391,35"/>
-<area shape="rect" title=" " alt="" coords="129,262,206,287"/>
-<area shape="poly" title=" " alt="" coords="292,47,240,98,213,132,191,168,177,209,171,248,166,247,172,208,186,166,209,128,236,95,288,44"/>
-<area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="1161,255,1288,295"/>
-<area shape="poly" title=" " alt="" coords="547,106,622,110,729,120,852,137,976,164,1032,182,1086,203,1178,246,1176,251,1084,208,1030,187,975,169,851,142,729,125,622,115,547,111"/>
-<area shape="poly" title=" " alt="" coords="547,106,744,125,854,142,899,152,933,164,1106,331,1102,335,930,169,898,157,853,147,743,130,546,112"/>
-<area shape="rect" title=" " alt="" coords="975,343,1072,368"/>
-<area shape="poly" title=" " alt="" coords="548,112,614,133,690,164,722,185,754,204,789,215,822,218,881,215,909,215,937,219,966,231,996,253,1009,270,1018,289,1025,328,1020,329,1013,291,1005,272,992,257,963,235,936,224,909,220,881,221,822,223,788,220,752,209,719,190,687,169,612,138,546,118"/>
-<area shape="rect" href="../../d1/d46/convert__string_8h.html" title=" " alt="" coords="510,255,681,295"/>
-<area shape="poly" title=" " alt="" coords="529,118,555,166,586,241,581,243,550,168,524,120"/>
-<area shape="rect" title=" " alt="" coords="92,343,147,368"/>
-<area shape="poly" title=" " alt="" coords="492,112,334,132,249,149,215,158,190,169,163,187,145,204,131,226,119,255,113,294,116,329,111,330,108,293,114,254,127,223,141,201,160,182,187,164,213,153,247,143,333,127,492,107"/>
-<area shape="poly" title=" " alt="" coords="492,111,411,116,306,126,205,143,165,155,137,169,118,185,101,205,74,249,56,293,45,330,40,328,51,291,69,246,96,202,114,182,134,164,163,150,204,138,305,121,411,111,491,106"/>
-<area shape="poly" title=" " alt="" coords="492,113,371,133,310,149,286,158,271,169,254,196,238,240,216,330,211,328,233,238,249,194,267,165,284,154,308,144,370,127,491,108"/>
-<area shape="rect" href="../../d3/d11/error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="807,262,981,287"/>
-<area shape="poly" title=" " alt="" coords="540,116,614,157,710,204,781,233,846,255,844,260,779,238,708,209,611,162,537,121"/>
-<area shape="rect" href="../../d4/db5/cancellation__token_8h.html" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="281,167,427,207"/>
-<area shape="poly" title=" " alt="" coords="496,121,408,163,405,158,494,116"/>
-<area shape="rect" title=" " alt="" coords="419,262,486,287"/>
-<area shape="poly" title=" " alt="" coords="527,118,538,159,538,184,532,208,513,236,488,256,484,252,509,232,528,206,533,183,532,159,522,120"/>
-<area shape="poly" title=" " alt="" coords="492,113,350,132,276,148,247,158,226,169,208,186,194,207,176,250,171,248,190,205,204,183,223,165,245,153,274,143,349,126,491,107"/>
-<area shape="rect" title=" " alt="" coords="451,174,518,199"/>
-<area shape="poly" title=" " alt="" coords="517,120,498,163,493,160,512,118"/>
-<area shape="rect" href="../../d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="765,167,919,207"/>
-<area shape="poly" title=" " alt="" coords="547,111,752,161,751,166,546,117"/>
-<area shape="poly" title=" " alt="" coords="1202,297,1153,336,1150,332,1199,293"/>
-<area shape="poly" title=" " alt="" coords="1177,297,1067,340,1065,335,1175,292"/>
-<area shape="rect" title=" " alt="" coords="1180,343,1272,368"/>
-<area shape="poly" title=" " alt="" coords="1228,295,1228,329,1223,329,1222,295"/>
-<area shape="rect" title=" " alt="" coords="1495,343,1600,368"/>
-<area shape="poly" title=" " alt="" coords="1289,289,1488,337,1487,342,1287,294"/>
-<area shape="rect" title=" " alt="" coords="1297,343,1371,368"/>
-<area shape="poly" title=" " alt="" coords="1253,293,1308,332,1305,337,1250,297"/>
-<area shape="rect" title=" " alt="" coords="1395,343,1470,368"/>
-<area shape="poly" title=" " alt="" coords="1275,292,1390,335,1388,340,1274,297"/>
-<area shape="poly" title=" " alt="" coords="681,282,862,303,1083,340,1082,345,862,309,680,287"/>
-<area shape="poly" title=" " alt="" coords="681,289,961,340,960,345,680,294"/>
-<area shape="poly" title=" " alt="" coords="510,295,498,297,405,311,331,319,256,328,161,345,160,340,255,323,330,314,405,305,498,292,509,290"/>
-<area shape="poly" title=" " alt="" coords="510,295,498,297,383,312,291,319,199,327,82,345,81,340,199,322,291,314,382,306,498,292,510,290"/>
-<area shape="rect" title=" " alt="" coords="379,343,446,368"/>
-<area shape="poly" title=" " alt="" coords="553,297,453,340,451,335,551,292"/>
-<area shape="rect" title=" " alt="" coords="470,343,537,368"/>
-<area shape="poly" title=" " alt="" coords="575,297,529,336,526,331,571,293"/>
-<area shape="rect" title=" " alt="" coords="561,343,629,368"/>
-<area shape="poly" title=" " alt="" coords="598,295,598,329,593,329,593,295"/>
-<area shape="poly" title=" " alt="" coords="510,295,260,345,259,340,509,290"/>
-<area shape="rect" title=" " alt="" coords="270,343,355,368"/>
-<area shape="poly" title=" " alt="" coords="528,297,368,342,366,336,527,292"/>
-<area shape="poly" title=" " alt="" coords="929,285,1084,337,1083,342,927,290"/>
-<area shape="poly" title=" " alt="" coords="914,285,994,333,991,338,912,290"/>
-<area shape="poly" title=" " alt="" coords="943,285,1167,337,1166,343,942,290"/>
-<area shape="poly" title=" " alt="" coords="807,287,509,317,260,345,259,340,509,312,806,282"/>
-<area shape="rect" title=" " alt="" coords="764,343,840,368"/>
-<area shape="poly" title=" " alt="" coords="882,290,828,336,824,332,879,285"/>
-<area shape="poly" title=" " alt="" coords="866,290,739,340,737,335,864,285"/>
-<area shape="rect" title=" " alt="" coords="864,343,951,368"/>
-<area shape="poly" title=" " alt="" coords="899,287,906,329,900,330,893,288"/>
-<area shape="poly" title=" " alt="" coords="336,209,285,253,219,297,159,320,82,344,81,339,157,315,217,292,282,248,333,205"/>
-<area shape="poly" title=" " alt="" coords="428,202,440,204,498,210,573,216,646,228,675,238,695,253,705,271,709,291,706,329,701,329,704,291,700,273,691,256,672,243,645,233,573,221,497,216,439,209,427,207"/>
-<area shape="poly" title=" " alt="" coords="378,205,431,251,427,255,374,209"/>
-<area shape="poly" title=" " alt="" coords="314,209,206,259,204,254,312,204"/>
-<area shape="rect" title=" " alt="" coords="331,262,395,287"/>
-<area shape="poly" title=" " alt="" coords="359,207,363,248,358,248,353,207"/>
-<area shape="poly" title=" " alt="" coords="920,203,1149,254,1147,259,919,208"/>
-<area shape="poly" title=" " alt="" coords="789,209,663,253,661,248,787,204"/>
+<div class="center"><img src="../../da/def/callback__job_8h__incl.png" border="0" usemap="#acore_2jobs_2include_2callback__job_8h" alt=""/></div>
+<map name="acore_2jobs_2include_2callback__job_8h" id="acore_2jobs_2include_2callback__job_8h">
+<area shape="rect" title=" " alt="" coords="1002,5,1193,45"/>
+<area shape="rect" href="../../d3/d6a/job_8h.html" title=" " alt="" coords="854,93,909,119"/>
+<area shape="poly" title=" " alt="" coords="1047,48,922,93,921,88,1045,43"/>
+<area shape="rect" title=" " alt="" coords="1175,255,1233,280"/>
+<area shape="poly" title=" " alt="" coords="1184,43,1221,62,1237,76,1250,92,1264,121,1267,148,1261,175,1250,208,1240,228,1227,246,1223,243,1236,225,1246,206,1256,174,1262,148,1259,123,1246,95,1233,79,1218,67,1182,48"/>
+<area shape="rect" title=" " alt="" coords="1585,255,1660,280"/>
+<area shape="poly" title=" " alt="" coords="1190,43,1263,62,1348,88,1435,122,1517,164,1568,203,1606,242,1602,246,1564,207,1515,169,1432,127,1346,93,1262,67,1188,48"/>
+<area shape="rect" title=" " alt="" coords="942,255,1029,280"/>
+<area shape="poly" title=" " alt="" coords="1102,46,1105,78,1103,120,1095,166,1077,208,1055,233,1028,251,1025,246,1051,229,1072,205,1090,164,1098,120,1099,78,1097,46"/>
+<area shape="rect" title=" " alt="" coords="5,255,83,280"/>
+<area shape="poly" title=" " alt="" coords="1002,29,778,33,642,40,500,52,363,70,240,94,186,110,139,127,101,147,71,169,59,184,52,203,46,241,41,240,47,202,55,182,67,165,98,142,137,122,185,105,239,89,362,65,500,47,641,35,778,28,1002,23"/>
+<area shape="rect" title=" " alt="" coords="305,255,367,280"/>
+<area shape="poly" title=" " alt="" coords="1002,35,840,50,651,75,559,93,477,114,410,139,384,154,365,169,352,184,345,203,338,241,333,240,339,202,348,182,361,165,382,149,408,135,475,109,558,88,650,70,840,44,1002,30"/>
+<area shape="rect" title=" " alt="" coords="723,167,869,207"/>
+<area shape="poly" title=" " alt="" coords="871,121,828,159,825,155,867,117"/>
+<area shape="rect" title=" " alt="" coords="893,167,1040,207"/>
+<area shape="poly" title=" " alt="" coords="896,117,938,155,934,159,892,121"/>
+<area shape="rect" href="../../d3/d11/error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="1317,174,1445,199"/>
+<area shape="poly" title=" " alt="" coords="909,109,1304,171,1303,176,909,114"/>
+<area shape="poly" title=" " alt="" coords="909,106,953,110,1008,120,1067,138,1123,164,1145,181,1164,201,1193,241,1188,244,1160,205,1141,185,1120,169,1065,143,1007,125,952,116,909,111"/>
+<area shape="poly" title=" " alt="" coords="909,106,1182,124,1342,141,1409,152,1458,164,1499,181,1538,202,1600,244,1597,249,1535,207,1497,186,1456,169,1407,157,1341,146,1181,129,909,111"/>
+<area shape="rect" title=" " alt="" coords="1053,255,1150,280"/>
+<area shape="poly" title=" " alt="" coords="909,108,1014,128,1065,144,1085,154,1098,165,1108,183,1112,203,1110,241,1105,240,1107,203,1103,185,1094,168,1082,158,1063,149,1013,133,908,114"/>
+<area shape="rect" href="../../d4/db5/cancellation__token_8h.html" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="142,174,298,199"/>
+<area shape="poly" title=" " alt="" coords="854,113,363,169,312,176,311,170,362,164,853,108"/>
+<area shape="rect" title=" " alt="" coords="107,255,173,280"/>
+<area shape="poly" title=" " alt="" coords="854,110,693,112,462,120,347,127,247,137,171,151,147,159,133,168,124,185,122,203,131,241,126,243,117,204,119,183,129,165,144,155,170,146,246,132,347,122,462,114,693,107,854,105"/>
+<area shape="poly" title=" " alt="" coords="854,111,692,116,459,127,239,145,159,156,115,169,95,184,79,203,56,243,51,241,74,200,91,180,112,164,158,151,238,140,459,122,692,111,853,105"/>
+<area shape="poly" title=" " alt="" coords="910,110,964,122,1021,143,1044,156,1060,171,1064,189,1054,208,1040,218,1017,226,949,239,860,249,756,257,543,266,381,268,381,263,543,260,756,252,859,244,949,234,1016,221,1037,213,1050,205,1059,188,1055,174,1041,160,1019,147,962,127,908,115"/>
+<area shape="rect" title=" " alt="" coords="374,174,429,199"/>
+<area shape="poly" title=" " alt="" coords="854,111,781,115,679,124,560,142,442,169,436,171,435,166,441,164,559,137,678,119,781,110,854,106"/>
+<area shape="rect" title=" " alt="" coords="453,174,520,199"/>
+<area shape="poly" title=" " alt="" coords="854,113,715,131,624,147,533,169,525,172,524,167,531,164,623,142,714,125,853,107"/>
+<area shape="rect" title=" " alt="" coords="544,167,699,207"/>
+<area shape="poly" title=" " alt="" coords="854,118,698,165,696,160,853,113"/>
+<area shape="poly" title=" " alt="" coords="1357,202,1243,252,1241,247,1354,197"/>
+<area shape="poly" title=" " alt="" coords="1417,197,1575,248,1574,253,1416,202"/>
+<area shape="rect" title=" " alt="" coords="1258,255,1350,280"/>
+<area shape="poly" title=" " alt="" coords="1372,201,1327,247,1323,243,1368,198"/>
+<area shape="poly" title=" " alt="" coords="1341,202,1156,254,1155,248,1340,197"/>
+<area shape="rect" title=" " alt="" coords="1374,255,1450,280"/>
+<area shape="poly" title=" " alt="" coords="1388,199,1405,241,1400,243,1383,200"/>
+<area shape="poly" title=" " alt="" coords="1323,202,1043,257,1042,252,1322,197"/>
+<area shape="rect" title=" " alt="" coords="1474,255,1561,280"/>
+<area shape="poly" title=" " alt="" coords="1403,197,1487,245,1484,250,1400,202"/>
+<area shape="poly" title=" " alt="" coords="298,196,363,204,683,237,928,259,928,264,682,242,362,209,298,201"/>
+<area shape="poly" title=" " alt="" coords="210,201,164,247,160,243,206,198"/>
+<area shape="poly" title=" " alt="" coords="195,202,83,252,81,247,193,197"/>
+<area shape="rect" title=" " alt="" coords="197,255,261,280"/>
+<area shape="poly" title=" " alt="" coords="224,199,229,241,224,241,219,200"/>
+<area shape="poly" title=" " alt="" coords="239,197,309,245,306,249,236,202"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d7/d63/callback__job_8h__dep__incl.png" border="0" usemap="#asources_2thread__base_2jobs_2callback__job_8hdep" alt=""/></div>
-<map name="asources_2thread__base_2jobs_2callback__job_8hdep" id="asources_2thread__base_2jobs_2callback__job_8hdep">
-<area shape="rect" title=" " alt="" coords="259,5,415,45"/>
-<area shape="rect" href="../../df/d63/callback__job_8cpp.html" title="Implementation of callback&#45;based job execution for the thread system." alt="" coords="162,93,327,133"/>
-<area shape="poly" title=" " alt="" coords="308,57,267,95,263,91,305,53"/>
-<area shape="rect" href="../../db/d9d/job__queue_8h.html" title=" " alt="" coords="352,93,508,133"/>
-<area shape="poly" title=" " alt="" coords="369,53,411,91,408,95,366,57"/>
-<area shape="rect" href="../../de/d83/job_8cpp.html" title="Implementation of the base job class for the thread system." alt="" coords="5,189,161,229"/>
-<area shape="poly" title=" " alt="" coords="343,139,173,184,147,191,146,186,172,179,342,134"/>
-<area shape="rect" href="../../dd/d4c/job__queue_8cpp.html" title="Implementation of thread&#45;safe FIFO job queue for thread system." alt="" coords="185,189,341,229"/>
-<area shape="poly" title=" " alt="" coords="386,142,298,191,296,186,383,138"/>
-<area shape="rect" href="../../dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="103,284,293,339"/>
-<area shape="poly" title=" " alt="" coords="419,147,393,193,375,217,354,238,316,265,275,286,272,282,313,261,351,234,371,213,388,190,414,144"/>
-<area shape="rect" href="../../db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="713,181,899,236"/>
-<area shape="poly" title=" " alt="" coords="520,134,713,182,712,187,519,139"/>
-<area shape="rect" href="../../d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="1128,284,1300,339"/>
-<area shape="poly" title=" " alt="" coords="522,117,704,137,809,155,912,179,982,201,1051,229,1165,281,1163,286,1049,234,981,206,911,184,808,160,703,142,522,123"/>
-<area shape="rect" href="../../d3/dec/thread__pool_8h.html" title=" " alt="" coords="317,291,471,331"/>
-<area shape="poly" title=" " alt="" coords="427,147,400,292,395,291,421,146"/>
-<area shape="rect" href="../../d9/de2/thread__worker_8h.html" title=" " alt="" coords="468,189,653,229"/>
-<area shape="poly" title=" " alt="" coords="469,139,536,186,533,191,466,144"/>
-<area shape="rect" href="../../d8/d45/adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="97,387,288,441"/>
-<area shape="poly" title=" " alt="" coords="199,353,197,387,191,386,193,352"/>
-<area shape="rect" href="../../df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="313,394,475,434"/>
-<area shape="poly" title=" " alt="" coords="262,343,358,391,356,396,260,347"/>
-<area shape="poly" title=" " alt="" coords="700,233,665,239,564,253,485,261,406,270,305,287,294,289,293,284,304,281,405,265,484,256,563,247,664,233,699,228"/>
-<area shape="rect" href="../../d4/dca/lockfree__job__queue_8cpp.html" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="917,284,1103,339"/>
-<area shape="poly" title=" " alt="" coords="872,239,958,282,956,286,870,244"/>
-<area shape="poly" title=" " alt="" coords="913,232,1116,281,1129,285,1127,290,1115,287,912,238"/>
-<area shape="rect" href="../../dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="720,284,892,339"/>
-<area shape="poly" title=" " alt="" coords="809,250,809,284,803,284,803,250"/>
-<area shape="rect" href="../../d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="1221,489,1399,544"/>
-<area shape="poly" title=" " alt="" coords="1214,352,1216,396,1221,419,1230,440,1248,466,1271,487,1268,491,1244,469,1225,443,1216,420,1211,397,1208,352"/>
-<area shape="rect" href="../../d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="950,387,1142,441"/>
-<area shape="poly" title=" " alt="" coords="1160,348,1091,389,1089,384,1157,344"/>
-<area shape="rect" href="../../d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="1239,387,1411,441"/>
-<area shape="poly" title=" " alt="" coords="1255,346,1298,385,1294,389,1251,350"/>
-<area shape="rect" href="../../de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="950,489,1142,544"/>
-<area shape="poly" title=" " alt="" coords="1049,455,1049,489,1043,489,1043,455"/>
-<area shape="poly" title=" " alt="" coords="1321,455,1316,490,1311,489,1316,455"/>
-<area shape="poly" title=" " alt="" coords="882,341,984,384,982,389,880,346"/>
-<area shape="rect" href="../../d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="715,387,897,441"/>
-<area shape="poly" title=" " alt="" coords="809,352,809,387,803,387,803,352"/>
-<area shape="poly" title=" " alt="" coords="397,345,397,394,391,394,391,345"/>
-<area shape="poly" title=" " alt="" coords="519,238,427,294,424,289,516,234"/>
-<area shape="rect" href="../../de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="495,291,695,331"/>
-<area shape="poly" title=" " alt="" coords="574,241,591,290,586,292,569,243"/>
+<div class="center"><img src="../../d7/d63/callback__job_8h__dep__incl.png" border="0" usemap="#acore_2jobs_2include_2callback__job_8hdep" alt=""/></div>
+<map name="acore_2jobs_2include_2callback__job_8hdep" id="acore_2jobs_2include_2callback__job_8hdep">
+<area shape="rect" title=" " alt="" coords="654,5,845,45"/>
+<area shape="rect" href="../../db/d9d/job__queue_8h.html" title=" " alt="" coords="106,108,262,148"/>
+<area shape="poly" title=" " alt="" coords="641,38,468,59,371,75,275,96,230,110,228,105,274,91,370,70,467,54,640,33"/>
+<area shape="rect" href="../../df/d63/callback__job_8cpp.html" title="Implementation of callback&#45;based job execution for the thread system." alt="" coords="287,108,449,148"/>
+<area shape="poly" title=" " alt="" coords="643,51,462,96,418,110,416,105,461,91,642,46"/>
+<area shape="rect" href="../../db/df9/composition__example_8cpp.html" title=" " alt="" coords="473,101,644,155"/>
+<area shape="poly" title=" " alt="" coords="703,54,610,103,607,98,700,49"/>
+<area shape="rect" href="../../d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="669,101,830,155"/>
+<area shape="poly" title=" " alt="" coords="752,59,752,100,747,100,747,59"/>
+<area shape="rect" href="../../d8/dae/minimal__thread__pool_8cpp.html" title=" " alt="" coords="855,108,1081,148"/>
+<area shape="poly" title=" " alt="" coords="804,49,928,106,926,110,802,54"/>
+<area shape="rect" href="../../d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="1105,93,1300,163"/>
+<area shape="poly" title=" " alt="" coords="859,42,973,64,1094,91,1106,94,1104,99,1093,96,971,69,858,47"/>
+<area shape="rect" href="../../d9/d16/service__registry__sample_2main_8cpp.html" title=" " alt="" coords="1325,108,1510,148"/>
+<area shape="poly" title=" " alt="" coords="859,31,1070,51,1192,68,1313,91,1366,105,1364,110,1311,96,1191,74,1069,57,858,36"/>
+<area shape="rect" href="../../de/d83/job_8cpp.html" title="Implementation of the base job class for the thread system." alt="" coords="5,211,160,236"/>
+<area shape="poly" title=" " alt="" coords="155,159,97,212,94,208,151,155"/>
+<area shape="rect" href="../../dd/d4c/job__queue_8cpp.html" title="Implementation of thread&#45;safe FIFO job queue for thread system." alt="" coords="184,211,387,236"/>
+<area shape="poly" title=" " alt="" coords="217,155,274,208,271,212,213,159"/>
 </map>
 </div>
 </div>
@@ -237,7 +187,7 @@ Namespaces</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

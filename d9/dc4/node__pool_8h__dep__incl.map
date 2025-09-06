@@ -1,29 +1,31 @@
-<map id="sources/thread_base/lockfree/memory/node_pool.h" name="sources/thread_base/lockfree/memory/node_pool.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="447,5,621,60"/>
-<area shape="rect" id="Node000002" href="$db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="441,108,627,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="537,74,537,108,531,108,531,74"/>
-<area shape="rect" id="Node000003" href="$dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="124,211,315,265"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,169,302,213,301,208,439,164"/>
-<area shape="rect" id="Node000006" href="$d4/dca/lockfree__job__queue_8cpp.html" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="339,211,526,265"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="499,175,461,212,457,209,496,171"/>
-<area shape="rect" id="Node000007" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="551,211,723,265"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="572,170,612,209,608,212,569,174"/>
-<area shape="rect" id="Node000012" href="$dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="752,211,924,265"/>
-<area shape="poly" id="edge12_Node000002_Node000012" title=" " alt="" coords="627,164,760,208,758,213,625,169"/>
-<area shape="rect" id="Node000004" href="$d8/d45/adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,313,196,368"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="180,276,133,315,130,311,176,272"/>
-<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="221,321,383,361"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="252,274,288,318,284,322,248,278"/>
-<area shape="rect" id="Node000008" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="479,416,658,471"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="571,275,550,293,535,314,529,340,532,366,541,392,553,414,548,417,536,394,526,368,523,339,530,312,546,290,567,271"/>
-<area shape="rect" id="Node000009" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="742,313,934,368"/>
-<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="702,269,787,311,784,316,700,274"/>
-<area shape="rect" id="Node000011" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="545,313,717,368"/>
-<area shape="poly" id="edge10_Node000007_Node000011" title=" " alt="" coords="637,279,635,313,630,313,632,279"/>
-<area shape="rect" id="Node000010" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="742,416,934,471"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="841,382,841,416,835,416,835,382"/>
-<area shape="poly" id="edge11_Node000011_Node000008" title=" " alt="" coords="610,381,587,417,583,414,605,378"/>
-<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="841,279,841,313,835,313,835,279"/>
-<area shape="rect" id="Node000013" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="959,313,1141,368"/>
-<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="906,269,996,311,994,316,904,273"/>
+<map id="implementations/lockfree/include/node_pool.h" name="implementations/lockfree/include/node_pool.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="517,5,708,45"/>
+<area shape="rect" id="Node000002" href="$db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="505,93,721,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="615,59,615,93,610,93,610,59"/>
+<area shape="rect" id="Node000003" href="$dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="160,189,380,229"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="531,139,340,191,339,186,530,134"/>
+<area shape="rect" id="Node000006" href="$d4/dca/lockfree__job__queue_8cpp.html" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="405,189,607,229"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="583,144,529,191,526,187,579,140"/>
+<area shape="rect" id="Node000007" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="632,181,807,236"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="646,140,691,179,688,183,643,144"/>
+<area shape="rect" id="Node000013" href="$dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="831,181,1040,236"/>
+<area shape="poly" id="edge13_Node000002_Node000013" title=" " alt="" coords="692,135,845,179,844,184,691,140"/>
+<area shape="rect" id="Node000004" href="$d8/d45/adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,291,212,331"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="230,238,140,294,137,289,227,234"/>
+<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="236,291,424,331"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="291,239,321,290,316,293,286,242"/>
+<area shape="rect" id="Node000008" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="757,284,970,339"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="770,242,827,282,824,286,767,246"/>
+<area shape="rect" id="Node000010" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="539,387,713,441"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="719,250,711,294,695,340,678,366,658,388,654,385,674,363,690,337,706,293,714,249"/>
+<area shape="rect" id="Node000012" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="507,284,681,339"/>
+<area shape="poly" id="edge11_Node000007_Node000012" title=" " alt="" coords="677,247,628,286,625,282,674,243"/>
+<area shape="rect" id="Node000009" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="768,387,959,441"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="866,352,866,387,861,387,861,352"/>
+<area shape="rect" id="Node000011" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="541,489,711,544"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="629,455,629,489,623,489,623,455"/>
+<area shape="poly" id="edge12_Node000012_Node000010" title=" " alt="" coords="609,351,620,386,615,387,604,352"/>
+<area shape="poly" id="edge14_Node000013_Node000008" title=" " alt="" coords="911,249,884,285,880,282,906,246"/>
+<area shape="rect" id="Node000014" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="995,284,1177,339"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="987,241,1048,282,1045,286,984,246"/>
 </map>

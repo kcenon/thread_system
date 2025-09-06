@@ -1,0 +1,9 @@
+<map id="demonstrate_memory_efficiency" name="demonstrate_memory_efficiency">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,69,172,109"/>
+<area shape="rect" id="Node000002" href="$d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6" title="Allocate a node from the pool." alt="" coords="220,5,380,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,67,220,47,221,52,156,72"/>
+<area shape="rect" id="Node000003" href="$d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804" title="Deallocate a node back to the pool." alt="" coords="220,69,380,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,87,206,87,206,92,172,92"/>
+<area shape="rect" id="Node000004" href="$d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb" title=" " alt="" coords="220,133,380,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="156,107,221,127,220,132,155,112"/>
+</map>

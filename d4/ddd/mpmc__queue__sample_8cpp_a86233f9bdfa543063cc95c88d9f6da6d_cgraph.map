@@ -1,0 +1,12 @@
+<map id="performance_example" name="performance_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,99,175,125"/>
+<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="227,5,409,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,97,251,48,253,53,126,102"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="461,35,627,75"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="175,99,447,64,448,69,176,104"/>
+<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99" title="Enqueue a single job." alt="" coords="227,120,409,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="176,120,214,125,213,130,175,125"/>
+<area shape="rect" id="Node000005" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589" title="Get performance statistics." alt="" coords="223,184,413,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="118,122,224,170,243,177,241,182,222,174,116,127"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="409,34,448,40,447,45,409,40"/>
+</map>

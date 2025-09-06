@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/interfaces/crash_handler.h Source File</title>
+<title>Thread System: interfaces/crash_handler.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_68ee83b40a7bdfc1e98d486394e56a1c.html">interfaces</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_ff6b5900125bb0123025c1cb24bdc726.html">interfaces</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,8 +98,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;csignal&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="../../de/d48/namespacethread__module.html">   18</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a> {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899">   23</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="../../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899">crash_safety_level</a> {</div>
@@ -259,7 +258,6 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>} <span class="comment">// namespace thread_module</span></div>
-</div>
 <div class="ttc" id="aclassthread__module_1_1crash__handler_html"><div class="ttname"><a href="../../d6/d49/classthread__module_1_1crash__handler.html">thread_module::crash_handler</a></div><div class="ttdoc">Thread-safe crash handler for the entire thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00056">crash_handler.h:56</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1crash__handler_html_a03d72787870ecd7d6f6cdafccdd3b343"><div class="ttname"><a href="../../d6/d49/classthread__module_1_1crash__handler.html#a03d72787870ecd7d6f6cdafccdd3b343">thread_module::crash_handler::register_crash_callback</a></div><div class="ttdeci">size_t register_crash_callback(const std::string &amp;name, crash_callback callback, int priority=100)</div><div class="ttdoc">Register a callback to be called during crash handling.</div></div>
 <div class="ttc" id="aclassthread__module_1_1crash__handler_html_a057964802783ee12c900b6dc375c1169"><div class="ttname"><a href="../../d6/d49/classthread__module_1_1crash__handler.html#a057964802783ee12c900b6dc375c1169">thread_module::crash_handler::write_crash_log</a></div><div class="ttdeci">void write_crash_log(const crash_context &amp;context)</div></div>
@@ -308,7 +306,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassthread__module_1_1thread__pool__crash__safety_html_a1d221c51928774bbe724d9a152cdb1b2"><div class="ttname"><a href="../../d4/d20/classthread__module_1_1thread__pool__crash__safety.html#a1d221c51928774bbe724d9a152cdb1b2">thread_module::thread_pool_crash_safety::handle_job_crash</a></div><div class="ttdeci">static void handle_job_crash(const std::string &amp;pool_name, const crash_context &amp;context)</div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__pool__crash__safety_html_a6f41b8b68fadb4e7d5053b914704332e"><div class="ttname"><a href="../../d4/d20/classthread__module_1_1thread__pool__crash__safety.html#a6f41b8b68fadb4e7d5053b914704332e">thread_module::thread_pool_crash_safety::set_job_crash_handler</a></div><div class="ttdeci">static void set_job_crash_handler(std::function&lt; void(const std::string &amp;pool_name, const crash_context &amp;)&gt; handler)</div><div class="ttdoc">Register job crash handler.</div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__pool__crash__safety_html_ad542c57ccae4e0b2ed6048c6116a36a2"><div class="ttname"><a href="../../d4/d20/classthread__module_1_1thread__pool__crash__safety.html#ad542c57ccae4e0b2ed6048c6116a36a2">thread_module::thread_pool_crash_safety::enable_for_pool</a></div><div class="ttdeci">static void enable_for_pool(const std::string &amp;pool_name, class thread_pool &amp;pool)</div><div class="ttdoc">Enable crash safety for a thread pool.</div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00018">crash_handler.h:18</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a8e2e4ef65ebb4f41dfd38f28ae7a0899"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899">thread_module::crash_safety_level</a></div><div class="ttdeci">crash_safety_level</div><div class="ttdoc">Crash safety levels for different scenarios.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00023">crash_handler.h:23</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a8e2e4ef65ebb4f41dfd38f28ae7a0899a9e7aa5c51cfe1d6922cd9a0c03387901"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899a9e7aa5c51cfe1d6922cd9a0c03387901">thread_module::crash_safety_level::paranoid</a></div><div class="ttdeci">@ paranoid</div></div>
 <div class="ttc" id="anamespacethread__module_html_a8e2e4ef65ebb4f41dfd38f28ae7a0899ac00f0c4675b91fb8b918e4079a0b1bac"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899ac00f0c4675b91fb8b918e4079a0b1bac">thread_module::crash_safety_level::standard</a></div><div class="ttdeci">@ standard</div></div>
@@ -338,7 +336,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,5 +1,17 @@
 <map id="thread_module::hazard_pointer_manager::acquire_slot" name="thread_module::hazard_pointer_manager::acquire_slot">
-<area shape="rect" id="Node000001" title=" " alt="" coords="249,5,476,45"/>
-<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="5,5,201,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,28,201,28,201,23,236,23"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="807,51,1033,91"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="563,51,759,91"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="793,74,759,74,759,69,793,69"/>
+<area shape="rect" id="Node000003" href="$d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da" title=" " alt="" coords="108,5,300,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="565,51,514,42,403,30,300,24,300,18,404,25,515,37,566,46"/>
+<area shape="rect" id="Node000005" href="$d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36" title=" " alt="" coords="348,51,515,91"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="549,74,515,74,515,69,549,69"/>
+<area shape="rect" id="Node000006" href="$d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7" title=" " alt="" coords="357,116,505,141"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="568,97,484,119,482,113,566,92"/>
+<area shape="rect" id="Node000004" href="$d1/ddb/hazard__pointer__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,59,60,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="150,37,61,66,60,60,149,32"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="334,74,60,74,60,69,334,69"/>
+<area shape="rect" id="Node000007" href="$d1/ddb/hazard__pointer__sample_8cpp.html#a1051075875056cb7708ae56346e00712" title=" " alt="" coords="113,109,295,149"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="343,131,295,131,295,126,343,126"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="130,107,59,83,61,78,132,102"/>
 </map>

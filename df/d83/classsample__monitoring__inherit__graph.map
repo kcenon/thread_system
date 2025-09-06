@@ -1,0 +1,5 @@
+<map id="sample_monitoring" name="sample_monitoring">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,303,200,483"/>
+<area shape="rect" id="Node000002" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,5,200,255"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,268,105,303,100,303,100,268"/>
+</map>

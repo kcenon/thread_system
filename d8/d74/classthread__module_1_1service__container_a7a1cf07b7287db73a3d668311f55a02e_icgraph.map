@@ -1,7 +1,31 @@
 <map id="thread_module::service_container::global" name="thread_module::service_container::global">
-<area shape="rect" id="Node000001" title="Get the global service container instance." alt="" coords="237,49,412,89"/>
-<area shape="rect" id="Node000002" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#af06f0082aa8091bc60fc7c7db0eb2a2c" title=" " alt="" coords="12,5,183,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,55,182,49,183,44,224,50"/>
-<area shape="rect" id="Node000003" href="$db/ded/classthread__module_1_1scoped__service.html#aa91cac5aac6c248bcc36d5aa34aeb093" title=" " alt="" coords="5,85,189,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="224,87,190,93,189,87,223,82"/>
+<area shape="rect" id="Node000001" title="Get the global service container instance." alt="" coords="608,243,783,283"/>
+<area shape="rect" id="Node000002" href="$d7/d51/integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="373,186,535,226"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="596,243,534,228,535,222,598,237"/>
+<area shape="rect" id="Node000004" href="$db/df9/composition__example_8cpp.html#a2cc626209026644ec679ff229ca36a06" title="Demonstrate composition&#45;based design." alt="" coords="108,85,300,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="671,234,624,180,593,153,559,132,495,110,427,97,360,92,300,92,300,87,361,87,428,92,496,105,561,128,596,149,628,176,675,231"/>
+<area shape="rect" id="Node000005" href="$db/df9/composition__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,111,60,136"/>
+<area shape="poly" id="edge12_Node000001_Node000005" title=" " alt="" coords="659,236,613,204,559,176,515,165,455,155,310,140,60,127,61,122,310,135,456,150,516,160,561,172,616,199,662,232"/>
+<area shape="rect" id="Node000006" href="$db/df9/composition__example_8cpp.html#a353f73822e6878864dca0d8706ad075d" title="Demonstrate using thread pool without any services." alt="" coords="121,421,287,461"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="687,298,671,342,645,394,609,444,587,466,561,483,521,500,479,508,436,510,392,506,312,487,247,463,249,458,313,482,393,500,436,504,479,503,520,495,559,478,583,461,605,441,641,391,666,340,682,296"/>
+<area shape="rect" id="Node000007" href="$d7/d51/integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="356,251,552,276"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="594,266,552,266,552,261,594,261"/>
+<area shape="rect" id="Node000008" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#af06f0082aa8091bc60fc7c7db0eb2a2c" title=" " alt="" coords="369,5,539,60"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="675,232,628,158,596,117,558,81,529,62,532,58,562,77,600,114,632,155,680,230"/>
+<area shape="rect" id="Node000010" href="$db/ded/classthread__module_1_1scoped__service.html#aa91cac5aac6c248bcc36d5aa34aeb093" title=" " alt="" coords="362,365,546,405"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="659,294,614,325,561,355,532,367,530,362,559,350,611,321,656,289"/>
+<area shape="rect" id="Node000011" href="$d7/d51/integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="363,429,545,469"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="677,296,629,359,597,391,561,419,539,431,536,426,559,414,594,387,625,355,672,293"/>
+<area shape="rect" id="Node000012" href="$d7/d51/integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="348,301,560,341"/>
+<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="598,289,539,303,538,298,597,284"/>
+<area shape="rect" id="Node000003" href="$d7/d51/integration__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="177,279,231,304"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="373,233,349,241,232,284,231,279,347,235,371,228"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="105,115,61,122,60,117,104,110"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="173,412,139,369,106,318,81,267,60,215,35,137,40,135,65,213,86,265,110,315,143,366,178,409"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="343,278,232,291,231,286,342,273"/>
+<area shape="rect" id="Node000009" href="$db/df9/composition__example_8cpp.html#a2172ad067dac2a52aabd66d74fa42449" title="Demonstrate typed thread pool with composition." alt="" coords="112,17,296,57"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="355,37,296,38,296,33,355,32"/>
+<area shape="poly" id="edge11_Node000009_Node000005" title=" " alt="" coords="131,65,109,75,52,113,49,108,107,70,129,60"/>
+<area shape="poly" id="edge15_Node000011_Node000003" title=" " alt="" coords="360,426,347,419,305,392,268,360,215,306,218,302,272,356,309,387,349,414,363,421"/>
+<area shape="poly" id="edge17_Node000012_Node000003" title=" " alt="" coords="334,309,231,297,232,292,335,304"/>
 </map>

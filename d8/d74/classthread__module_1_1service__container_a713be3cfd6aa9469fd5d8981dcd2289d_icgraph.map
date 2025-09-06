@@ -1,5 +1,18 @@
 <map id="thread_module::service_container::register_singleton" name="thread_module::service_container::register_singleton">
-<area shape="rect" id="Node000001" title="Register a service with singleton lifetime." alt="" coords="237,5,452,45"/>
-<area shape="rect" id="Node000002" href="$db/ded/classthread__module_1_1scoped__service.html#aa91cac5aac6c248bcc36d5aa34aeb093" title=" " alt="" coords="5,5,189,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,28,189,28,189,23,224,23"/>
+<area shape="rect" id="Node000001" title="Register a service with singleton lifetime." alt="" coords="368,120,583,160"/>
+<area shape="rect" id="Node000002" href="$d7/d51/integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="133,5,295,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,115,377,87,319,60,287,48,288,43,321,55,379,82,431,111"/>
+<area shape="rect" id="Node000004" href="$d7/d51/integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="116,70,312,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="370,120,272,98,273,93,371,114"/>
+<area shape="rect" id="Node000005" href="$db/ded/classthread__module_1_1scoped__service.html#aa91cac5aac6c248bcc36d5aa34aeb093" title=" " alt="" coords="122,120,306,160"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="354,143,306,143,306,137,354,137"/>
+<area shape="rect" id="Node000006" href="$d7/d51/integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="123,184,305,224"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="380,166,297,187,296,181,379,161"/>
+<area shape="rect" id="Node000007" href="$d7/d51/integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="108,248,320,288"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="436,171,383,205,321,238,290,250,288,246,319,234,380,201,434,166"/>
+<area shape="rect" id="Node000003" href="$d7/d51/integration__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,131,60,157"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,52,110,60,89,76,70,96,44,132,40,129,66,93,85,72,106,55,120,48"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="138,101,109,110,59,133,56,129,107,106,137,96"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="131,182,107,175,59,157,61,152,109,169,133,177"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="117,244,106,238,84,219,65,198,39,158,43,155,69,194,88,216,110,234,119,240"/>
 </map>

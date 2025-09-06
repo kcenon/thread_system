@@ -1,0 +1,9 @@
+<map id="stress_test_example" name="stress_test_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,163,102"/>
+<area shape="rect" id="Node000002" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267" title="Dequeues the next available job (of any type or priority)." alt="" coords="211,5,428,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,74,231,46,232,52,133,79"/>
+<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="245,69,393,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,87,231,87,231,92,163,92"/>
+<area shape="rect" id="Node000004" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38" title="Enqueues a non&#45;priority (base) job into the queue." alt="" coords="211,133,428,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="133,100,232,127,231,132,131,105"/>
+</map>

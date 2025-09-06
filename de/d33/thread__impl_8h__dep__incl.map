@@ -1,19 +1,7 @@
-<map id="sources/thread_base/detail/thread_impl.h" name="sources/thread_base/detail/thread_impl.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="209,5,367,45"/>
-<area shape="rect" id="Node000002" href="$df/dbc/thread__base_8h.html" title=" " alt="" coords="210,93,366,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,59,291,93,285,93,285,59"/>
-<area shape="rect" id="Node000003" href="$df/d10/thread__base_8cpp.html" title="Implementation of the core thread base class." alt="" coords="5,189,171,229"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="236,142,130,191,127,186,234,137"/>
-<area shape="rect" id="Node000004" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="195,189,381,229"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="291,147,291,189,285,189,285,147"/>
-<area shape="rect" id="Node000008" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="410,181,582,236"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="344,137,439,179,436,184,341,141"/>
-<area shape="rect" id="Node000005" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="10,291,163,331"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="239,237,126,294,123,289,237,232"/>
-<area shape="rect" id="Node000007" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="188,291,388,331"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="291,243,291,291,285,291,285,243"/>
-<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="5,387,168,427"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="89,345,89,387,84,387,84,345"/>
-<area shape="rect" id="Node000009" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="412,284,591,339"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="501,250,503,284,497,284,495,250"/>
+<map id="core/base/include/detail/thread_impl.h" name="core/base/include/detail/thread_impl.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="8,5,185,45"/>
+<area shape="rect" id="Node000002" href="$df/dbc/thread__base_8h.html" title=" " alt="" coords="5,93,188,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,59,99,93,94,93,94,59"/>
+<area shape="rect" id="Node000003" href="$df/d10/thread__base_8cpp.html" title="Implementation of the core thread base class." alt="" coords="19,181,174,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,147,99,181,94,181,94,147"/>
 </map>

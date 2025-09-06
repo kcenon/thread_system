@@ -1,0 +1,9 @@
+<map id="potentially_crashing_task" name="potentially_crashing_task">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,195,80"/>
+<area shape="rect" id="Node000002" href="$d8/dcb/crash__protection_2main_8cpp.html#a78786fc29ec6b5eb7c3e4a210da29a64" title=" " alt="" coords="280,5,400,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,52,266,30,267,36,163,57"/>
+<area shape="rect" id="Node000003" href="$d8/dcb/crash__protection_2main_8cpp.html#a313aefe1da4451d1eca01e5e8dac33ea" title=" " alt="" coords="243,55,437,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,65,229,65,229,70,195,70"/>
+<area shape="rect" id="Node000004" href="$d8/dcb/crash__protection_2main_8cpp.html#adc8549c9469161e94e0cbbecd4aefeda" title=" " alt="" coords="252,105,428,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,77,243,99,242,104,153,83"/>
+</map>

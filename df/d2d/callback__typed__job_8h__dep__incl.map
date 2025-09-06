@@ -1,14 +1,17 @@
-<map id="sources/typed_thread_pool/jobs/callback_typed_job.h" name="sources/typed_thread_pool/jobs/callback_typed_job.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="43,5,272,45"/>
-<area shape="rect" id="Node000002" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="71,93,243,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,59,160,93,155,93,155,59"/>
-<area shape="rect" id="Node000003" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="5,299,184,353"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="96,158,76,176,61,197,55,223,58,249,67,275,79,297,74,300,62,277,53,250,49,222,56,195,72,172,92,154"/>
-<area shape="rect" id="Node000004" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="268,196,460,251"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="224,151,311,194,309,198,222,156"/>
-<area shape="rect" id="Node000006" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="71,196,243,251"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="160,162,160,196,155,196,155,162"/>
-<area shape="rect" id="Node000005" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="268,299,460,353"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="367,264,367,299,361,299,361,264"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="136,264,113,300,109,297,131,261"/>
+<map id="implementations/typed_thread_pool/include/callback_typed_job.h" name="implementations/typed_thread_pool/include/callback_typed_job.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="294,5,469,60"/>
+<area shape="rect" id="Node000002" href="$d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="231,108,406,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,73,337,109,333,106,355,70"/>
+<area shape="rect" id="Node000006" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="359,416,529,471"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="412,70,452,133,470,171,484,210,494,254,497,289,493,325,484,369,475,394,463,417,459,415,470,392,479,367,488,324,491,289,488,255,479,211,465,173,447,135,408,72"/>
+<area shape="rect" id="Node000003" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="5,211,219,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,171,167,213,165,208,252,166"/>
+<area shape="rect" id="Node000005" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="294,313,469,368"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="296,176,286,197,279,220,278,242,284,264,304,290,330,311,326,315,300,294,279,267,272,243,274,219,281,195,291,174"/>
+<area shape="rect" id="Node000007" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="294,211,469,265"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="345,173,367,209,363,212,340,176"/>
+<area shape="rect" id="Node000004" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="17,313,207,368"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="115,279,115,313,109,313,109,279"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="407,378,430,414,425,417,403,381"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="384,279,384,313,379,313,379,279"/>
 </map>

@@ -1,0 +1,15 @@
+<map id="typed_thread_pool_module::typed_job_queue_t::dequeue" name="typed_thread_pool_module::typed_job_queue_t::dequeue">
+<area shape="rect" id="Node000001" title="Dequeues the next available job (of any type or priority)." alt="" coords="375,105,592,145"/>
+<area shape="rect" id="Node000002" href="$d0/d68/typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="112,5,323,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="438,100,385,71,326,45,288,33,290,28,328,39,388,66,440,95"/>
+<area shape="rect" id="Node000004" href="$d0/d68/typed__job__queue__sample_8cpp.html#a37aa6c7a2c2e921edf037ae704057e8c" title=" " alt="" coords="108,55,327,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="376,104,276,83,278,77,377,99"/>
+<area shape="rect" id="Node000005" href="$d0/d68/typed__job__queue__sample_8cpp.html#ae02d8cf8e89039528a2dac66c67534df" title=" " alt="" coords="123,105,311,145"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="361,127,311,127,311,122,361,122"/>
+<area shape="rect" id="Node000006" href="$d0/d68/typed__job__queue__sample_8cpp.html#aa5aaded1abd8b4090507fbd19498d080" title=" " alt="" coords="139,169,296,195"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="377,150,278,172,276,167,376,145"/>
+<area shape="rect" id="Node000007" href="$d0/d68/typed__job__queue__sample_8cpp.html#aceb31b2947f66758e30c046021ca2be4" title=" " alt="" coords="122,219,313,244"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="439,154,386,182,328,209,285,221,284,216,326,203,384,178,436,150"/>
+<area shape="rect" id="Node000003" href="$d0/d68/typed__job__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,21,60,21,60,15,98,15"/>
+</map>

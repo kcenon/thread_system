@@ -1,0 +1,5 @@
+<map id="thread_module::job_queue::get_next_job" name="thread_module::job_queue::get_next_job">
+<area shape="rect" id="Node000001" title="scheduler_interface implementation: get next job" alt="" coords="5,5,167,45"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html#af289a45a46d0a7852e2c4bf3e1046005" title="Dequeues a job from the queue in FIFO order." alt="" coords="215,5,363,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,23,201,23,201,28,167,28"/>
+</map>

@@ -1,9 +1,9 @@
-<map id="sources/typed_thread_pool/detail/type_traits.h" name="sources/typed_thread_pool/detail/type_traits.h">
-<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="70,5,254,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,97,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,48,80,87,77,83,134,43"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="122,93,202,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,46,165,79,159,79,159,46"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="226,93,285,119"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,44,232,82,229,86,183,48"/>
+<map id="implementations/typed_thread_pool/include/type_traits.h" name="implementations/typed_thread_pool/include/type_traits.h">
+<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="75,5,249,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,97,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,62,79,102,76,97,127,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="122,108,202,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,60,165,94,159,94,159,60"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="226,108,285,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="192,58,234,96,231,100,189,62"/>
 </map>

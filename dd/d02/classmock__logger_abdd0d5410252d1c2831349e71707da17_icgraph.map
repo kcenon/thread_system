@@ -1,0 +1,7 @@
+<map id="mock_logger::level_to_string" name="mock_logger::level_to_string">
+<area shape="rect" id="Node000001" title=" " alt="" coords="188,23,335,63"/>
+<area shape="rect" id="Node000002" href="$dd/d02/classmock__logger.html#a9f9c37034358c5fbb20092e17c5c5421" title="Log a message with specified level." alt="" coords="5,5,140,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,34,140,30,141,24,175,29"/>
+<area shape="rect" id="Node000003" href="$dd/d02/classmock__logger.html#a22751d3846e0de4919539f3b81d01f06" title="Log a message with source location information." alt="" coords="5,55,140,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,57,141,61,140,56,174,52"/>
+</map>

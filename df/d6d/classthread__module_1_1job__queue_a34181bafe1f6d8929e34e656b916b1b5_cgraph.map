@@ -1,0 +1,5 @@
+<map id="thread_module::job_queue::schedule" name="thread_module::job_queue::schedule">
+<area shape="rect" id="Node000001" title="scheduler_interface implementation: schedule a job" alt="" coords="5,5,153,45"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html#af46f8b8f92a3a55465c043414d6b4748" title="Enqueues a new job into the queue." alt="" coords="201,5,349,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,23,187,23,187,28,154,28"/>
+</map>

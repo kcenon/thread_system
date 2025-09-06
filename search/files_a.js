@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['service_5fcontainer_2eh_0',['service_container.h',['../dd/d28/service__container_8h.html',1,'']]],
-  ['span_2eh_1',['span.h',['../d4/d7a/span_8h.html',1,'']]],
-  ['sync_5fprimitives_2eh_2',['sync_primitives.h',['../df/d7d/sync__primitives_8h.html',1,'']]]
+  ['pool_5fbuilder_2eh_0',['pool_builder.h',['../d1/df2/pool__builder_8h.html',1,'']]],
+  ['pool_5ftraits_2eh_1',['pool_traits.h',['../da/d62/pool__traits_8h.html',1,'']]]
 ];

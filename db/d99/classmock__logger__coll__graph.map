@@ -1,0 +1,7 @@
+<map id="mock_logger" name="mock_logger">
+<area shape="rect" id="Node000001" title="Mock logger implementation for demonstration." alt="" coords="92,228,227,473"/>
+<area shape="rect" id="Node000002" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="5,5,167,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,178,128,227,123,229,109,179"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="191,53,275,118"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,119,200,213,195,211,221,118"/>
+</map>

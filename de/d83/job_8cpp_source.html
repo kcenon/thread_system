@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_base/jobs/job.cpp Source File</title>
+<title>Thread System: core/jobs/src/job.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_f275034da0fe94e1f46793c3d061397d.html">thread_base</a></li><li class="navelem"><a class="el" href="../../dir_9a67b789ea6bafaaefe2358c2b988334.html">jobs</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><a class="el" href="../../dir_89ff7df80dfe069bb3db33b1883ff5ba.html">jobs</a></li><li class="navelem"><a class="el" href="../../dir_e2a2508d08959e0ae9980e3866e99500.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -166,7 +166,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>} <span class="comment">// namespace thread_module</span></div>
 <div class="ttc" id="aclassthread__module_1_1cancellation__token_html"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html">thread_module::cancellation_token</a></div><div class="ttdoc">Provides a mechanism for cooperative cancellation of operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00055">cancellation_token.h:55</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1error_html"><div class="ttname"><a href="../../dc/d6c/classthread__module_1_1error.html">thread_module::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00142">error_handling.h:142</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00076">job_queue.h:77</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a073a30af3ad6c547f7c1300837d0f397"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a073a30af3ad6c547f7c1300837d0f397">thread_module::job::set_cancellation_token</a></div><div class="ttdeci">virtual auto set_cancellation_token(const cancellation_token &amp;token) -&gt; void</div><div class="ttdoc">Sets a cancellation token that can be used to cancel the job.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00178">job.cpp:178</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a2603786e8e0c0ee23132344b9173c40d"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a2603786e8e0c0ee23132344b9173c40d">thread_module::job::job</a></div><div class="ttdeci">job(const std::string &amp;name=&quot;job&quot;)</div><div class="ttdoc">Constructs a new job with an optional human-readable name.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00078">job.cpp:78</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a3d105dae37b1813ec252463f5f3d3f80"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a3d105dae37b1813ec252463f5f3d3f80">thread_module::job::get_name</a></div><div class="ttdeci">auto get_name(void) const -&gt; std::string</div><div class="ttdoc">Retrieves the name of this job.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00127">job.cpp:127</a></div></div>
@@ -181,13 +181,13 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 <div class="ttc" id="ajob_8h_html"><div class="ttname"><a href="../../d3/d6a/job_8h.html">job.h</a></div></div>
 <div class="ttc" id="ajob__queue_8h_html"><div class="ttname"><a href="../../db/d9d/job__queue_8h.html">job_queue.h</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00018">crash_handler.h:18</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
 <div class="ttc" id="anamespacethread__module_html_a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae">thread_module::error_code::not_implemented</a></div><div class="ttdeci">@ not_implemented</div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00065">convert_string.cpp:66</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00045">convert_string.h:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

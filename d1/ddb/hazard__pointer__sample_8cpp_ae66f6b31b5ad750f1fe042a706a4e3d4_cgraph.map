@@ -1,0 +1,34 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,129,60,155"/>
+<area shape="rect" id="Node000002" href="$d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da" title=" " alt="" coords="337,136,529,161"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,140,324,144,324,150,60,145"/>
+<area shape="rect" id="Node000010" href="$d1/ddb/hazard__pointer__sample_8cpp.html#a1051075875056cb7708ae56346e00712" title=" " alt="" coords="108,179,289,219"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="61,149,128,172,126,177,59,154"/>
+<area shape="rect" id="Node000013" href="$d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36" title=" " alt="" coords="350,71,517,111"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="60,133,108,123,226,107,336,96,337,102,227,113,108,129,61,138"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="577,227,773,267"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="499,159,531,172,546,182,555,193,565,203,579,213,591,219,589,224,576,218,561,207,552,196,542,186,528,176,497,164"/>
+<area shape="rect" id="Node000006" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65" title=" " alt="" coords="589,5,761,60"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="500,134,528,121,543,109,552,96,561,83,576,69,583,65,586,69,579,73,565,86,556,99,546,113,531,126,502,138"/>
+<area shape="rect" id="Node000007" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734" title="Retire a pointer for later reclamation." alt="" coords="584,163,767,203"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="523,159,571,166,570,171,522,164"/>
+<area shape="rect" id="Node000008" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af" title="Force a scan and reclaim cycle." alt="" coords="586,84,765,139"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="516,133,572,125,573,130,516,139"/>
+<area shape="rect" id="Node000004" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aca927cce02b6978435047f450366b4f7" title=" " alt="" coords="821,227,1048,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="773,245,808,245,808,250,773,250"/>
+<area shape="rect" id="Node000005" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aac057200a6cc20129b4d7e0500db8af5" title="Acquires a hazard record for the current thread." alt="" coords="1096,220,1292,275"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="1048,245,1082,245,1082,250,1048,250"/>
+<area shape="rect" id="Node000009" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7" title=" " alt="" coords="839,84,1030,139"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="765,109,825,109,825,114,765,114"/>
+<area shape="poly" id="edge10_Node000010_Node000006" title=" " alt="" coords="210,178,231,149,260,115,295,83,336,57,396,36,458,24,519,20,576,20,576,25,520,25,459,30,397,41,338,62,298,87,264,119,235,152,215,181"/>
+<area shape="rect" id="Node000011" href="$d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7" title=" " alt="" coords="359,235,507,260"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="290,215,358,229,357,235,289,221"/>
+<area shape="rect" id="Node000012" href="$d0/d8f/classLockFreeStack.html#a5805194d42cf8202b1f8d81c446fe947" title=" " alt="" coords="356,185,511,211"/>
+<area shape="poly" id="edge14_Node000010_Node000012" title=" " alt="" coords="290,196,342,196,342,201,290,201"/>
+<area shape="poly" id="edge12_Node000011_Node000003" title=" " alt="" coords="508,245,563,245,563,250,508,250"/>
+<area shape="poly" id="edge13_Node000011_Node000007" title=" " alt="" coords="485,232,529,221,589,205,590,210,530,226,486,237"/>
+<area shape="poly" id="edge16_Node000013_Node000003" title=" " alt="" coords="513,109,531,121,549,145,556,169,562,191,579,213,585,218,582,222,575,217,558,194,551,170,544,147,528,125,510,114"/>
+<area shape="poly" id="edge17_Node000013_Node000006" title=" " alt="" coords="516,69,575,54,576,59,517,74"/>
+<area shape="poly" id="edge18_Node000013_Node000007" title=" " alt="" coords="501,109,531,121,579,149,595,156,593,161,576,154,528,126,499,114"/>
+<area shape="poly" id="edge19_Node000013_Node000008" title=" " alt="" coords="517,96,573,100,572,106,516,101"/>
+</map>

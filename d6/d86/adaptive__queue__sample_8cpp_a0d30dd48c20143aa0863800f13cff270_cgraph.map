@@ -1,0 +1,15 @@
+<map id="different_strategies_example" name="different_strategies_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,165,155,205"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a6a050d5ffd7b23bd0826ffdf48479d81" title="Dequeues all remaining jobs from the queue without processing them." alt="" coords="209,5,411,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,163,137,109,167,80,201,55,213,49,215,53,204,60,171,84,141,113,97,167"/>
+<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="236,69,384,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,163,202,119,222,111,223,116,204,124,116,168"/>
+<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a79ab6ce07de32b07ba50c7075979ad82" title="Enqueues a batch of jobs into the queue." alt="" coords="209,133,411,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,172,195,167,195,172,156,178"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7" title="Get current queue type." alt="" coords="203,197,417,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="156,193,189,198,189,203,155,198"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="227,261,393,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="116,203,204,247,223,254,222,259,202,252,114,208"/>
+<area shape="rect" id="Node000007" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="231,325,389,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="97,204,141,258,171,286,204,311,219,319,217,324,201,316,167,290,137,261,93,207"/>
+</map>

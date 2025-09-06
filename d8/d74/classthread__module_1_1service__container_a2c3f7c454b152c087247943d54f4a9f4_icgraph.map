@@ -1,5 +1,9 @@
 <map id="thread_module::service_container::resolve" name="thread_module::service_container::resolve">
-<area shape="rect" id="Node000001" title="Resolve a service." alt="" coords="224,13,399,53"/>
-<area shape="rect" id="Node000002" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#af06f0082aa8091bc60fc7c7db0eb2a2c" title=" " alt="" coords="5,5,176,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,35,176,35,176,30,210,30"/>
+<area shape="rect" id="Node000001" title="Resolve a service." alt="" coords="559,13,733,53"/>
+<area shape="rect" id="Node000002" href="$dc/d2a/classthread__module_1_1thread__context__builder.html#af06f0082aa8091bc60fc7c7db0eb2a2c" title=" " alt="" coords="340,5,511,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="545,35,511,35,511,30,545,30"/>
+<area shape="rect" id="Node000003" href="$db/df9/composition__example_8cpp.html#a2172ad067dac2a52aabd66d74fa42449" title="Demonstrate typed thread pool with composition." alt="" coords="108,13,292,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="326,35,292,35,292,30,326,30"/>
+<area shape="rect" id="Node000004" href="$db/df9/composition__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,20,60,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="94,35,60,35,60,30,94,30"/>
 </map>

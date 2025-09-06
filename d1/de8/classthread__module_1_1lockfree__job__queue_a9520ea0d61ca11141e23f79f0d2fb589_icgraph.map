@@ -1,5 +1,9 @@
 <map id="thread_module::lockfree_job_queue::get_statistics" name="thread_module::lockfree_job_queue::get_statistics">
-<area shape="rect" id="Node000001" title="Get performance statistics." alt="" coords="235,5,425,45"/>
-<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="5,5,187,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,28,187,28,187,23,221,23"/>
+<area shape="rect" id="Node000001" title="Get performance statistics." alt="" coords="337,27,528,67"/>
+<area shape="rect" id="Node000002" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="114,5,283,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="323,36,283,31,284,26,324,31"/>
+<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#ac073ec9f29375d75aa22cd204ca17e14" title="Get string representation of the queue." alt="" coords="108,55,289,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="324,63,290,67,289,62,324,58"/>
+<area shape="rect" id="Node000003" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,21,60,21,60,15,100,15"/>
 </map>

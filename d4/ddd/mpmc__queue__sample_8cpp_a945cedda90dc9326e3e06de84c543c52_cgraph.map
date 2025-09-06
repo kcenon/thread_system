@@ -1,0 +1,15 @@
+<map id="batch_operations_example" name="batch_operations_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,141,204,166"/>
+<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a8bbaa9c2b1f3b9bcd4c565d610c8fdac" title="Dequeue all available jobs." alt="" coords="252,5,455,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,138,177,98,251,55,268,48,270,53,253,60,179,103,124,143"/>
+<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="279,69,427,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,138,265,109,266,114,156,143"/>
+<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a4533b6d4c696ecc1f4aac124b686c140" title="Enqueue multiple jobs as a batch." alt="" coords="252,133,455,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,151,239,151,239,156,204,156"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="271,197,436,237"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="156,164,262,191,261,196,155,169"/>
+<area shape="rect" id="Node000007" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="274,261,433,301"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="124,164,179,204,253,247,270,254,268,259,251,252,177,208,121,168"/>
+<area shape="rect" id="Node000005" href="$da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#ac26e0613a9a8f7c8da52ea02734d53d1" title=" " alt="" coords="503,133,705,173"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="455,151,489,151,489,156,455,156"/>
+</map>

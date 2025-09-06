@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_pool/workers/thread_worker.h Source File</title>
+<title>Thread System: implementations/thread_pool/include/thread_worker.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_c0904cdde27aa94ebdc79c42782c063e.html">workers</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d12a494b5868c3171ad5a86c7563cf73.html">implementations</a></li><li class="navelem"><a class="el" href="../../dir_63ae926dc5cc2be39d0e962dfa3fda2c.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_b70d4464489ba202d7513908b17ecbcd.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,11 +115,11 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">*****************************************************************************/</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../thread_base/core/thread_base.h&quot;</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/core/formatter.h&quot;</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;../../thread_base/jobs/job_queue.h&quot;</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;../../utilities/conversion/convert_string.h&quot;</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;../detail/forward_declarations.h&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../core/base/include/thread_base.h&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/include/formatter.h&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;../../core/jobs/include/job_queue.h&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;../../utilities/include/convert_string.h&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;<a class="code" href="../../d9/d88/thread__pool_2include_2detail_2forward__declarations_8h.html">detail/forward_declarations.h</a>&quot;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;../../interfaces/thread_context.h&quot;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d09/worker__policy_8h.html">worker_policy.h</a>&quot;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
@@ -211,7 +211,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>};</div>
 </div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00076">job_queue.h:77</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dbc/thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1thread__base_html_a08ab300ad2b8a1e7f46a6f669cbfe31e"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a08ab300ad2b8a1e7f46a6f669cbfe31e">thread_module::thread_base::to_string</a></div><div class="ttdeci">virtual auto to_string(void) const -&gt; std::string</div><div class="ttdoc">Returns a string representation of this thread_base object.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/thread__base_8cpp_source.html#l00415">thread_base.cpp:415</a></div></div>
@@ -230,15 +230,16 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_ae38261aaa674556fbff48afd2ca13ab7"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#ae38261aaa674556fbff48afd2ca13ab7">thread_pool_module::thread_worker::should_continue_work</a></div><div class="ttdeci">auto should_continue_work() const -&gt; bool override</div><div class="ttdoc">Determines if there are jobs available in the queue to continue working on.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d61/thread__worker_8cpp_source.html#l00173">thread_worker.cpp:173</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1thread__worker_html_aff57c34d31b8e5279a00fa23ce54d32a"><div class="ttname"><a href="../../d7/d1b/classthread__pool__module_1_1thread__worker.html#aff57c34d31b8e5279a00fa23ce54d32a">thread_pool_module::thread_worker::job_queue_</a></div><div class="ttdeci">std::shared_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A shared pointer to the job queue from which this worker obtains jobs.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00169">thread_worker.h:169</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a8b61bbabdc9b7a5118130f5330a928d4"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4">utility_module::convert_string::to_wstring</a></div><div class="ttdeci">static auto to_wstring(const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a std::string (system-encoded) to a std::wstring.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00166">convert_string.cpp:166</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00018">crash_handler.h:18</a></div></div>
-<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00049">future_extensions.h:49</a></div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00065">convert_string.cpp:66</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d4c/thread__pool_2include_2config_8h_source.html#l00046">config.h:46</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00045">convert_string.h:46</a></div></div>
 <div class="ttc" id="astructfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4_html_ad8a4148b4d82df8d047f84254965eccc"><div class="ttname"><a href="../../d3/da4/structfmt_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html#ad8a4148b4d82df8d047f84254965eccc">fmt::formatter&lt; thread_pool_module::thread_worker &gt;::format</a></div><div class="ttdeci">auto format(const thread_pool_module::thread_worker &amp;item, FormatContext &amp;ctx) const</div><div class="ttdoc">Formats a thread_worker object as a string.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/de2/thread__worker_8h_source.html#l00264">thread_worker.h:264</a></div></div>
+<div class="ttc" id="athread__pool_2include_2detail_2forward__declarations_8h_html"><div class="ttname"><a href="../../d9/d88/thread__pool_2include_2detail_2forward__declarations_8h.html">forward_declarations.h</a></div><div class="ttdoc">Forward declarations for thread_pool module.</div></div>
 <div class="ttc" id="aworker__policy_8h_html"><div class="ttname"><a href="../../d3/d09/worker__policy_8h.html">worker_policy.h</a></div><div class="ttdoc">Worker behavior policies and configuration.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

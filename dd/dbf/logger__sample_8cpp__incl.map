@@ -1,0 +1,9 @@
+<map id="samples/logger_sample/logger_sample.cpp" name="samples/logger_sample/logger_sample.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,5,274,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,85,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,48,79,89,77,84,151,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="110,93,261,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,46,188,79,183,79,183,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="285,93,465,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="232,43,335,85,333,90,230,48"/>
+</map>

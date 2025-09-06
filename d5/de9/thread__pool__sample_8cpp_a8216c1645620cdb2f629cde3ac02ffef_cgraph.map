@@ -1,0 +1,38 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,251,60,276"/>
+<area shape="rect" id="Node000002" href="$d5/de9/thread__pool__sample_8cpp.html#afdecb283f7b6ef04c30664770c33ba7b" title=" " alt="" coords="136,5,252,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="32,250,37,211,49,158,70,100,86,72,106,48,124,34,127,39,110,52,91,75,75,102,54,159,42,212,37,251"/>
+<area shape="rect" id="Node000003" href="$dd/da2/classthread__module_1_1result__void.html#ad2cc15aedbecb4756f0295f57116df29" title="Gets the error." alt="" coords="353,21,518,61"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="33,250,40,218,53,177,74,135,89,115,106,98,146,80,205,65,338,46,339,51,206,70,148,85,110,103,93,119,79,137,58,179,45,220,38,251"/>
+<area shape="rect" id="Node000004" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="591,223,777,263"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="35,250,43,226,58,195,79,166,107,142,141,126,177,115,250,104,326,107,401,120,472,141,537,166,638,214,635,219,535,171,470,146,399,126,325,112,251,109,178,120,143,131,109,147,82,169,62,198,48,228,40,252"/>
+<area shape="rect" id="Node000006" href="$dd/da2/classthread__module_1_1result__void.html#a64f976580593a2aabce0d01da67e7838" title="Checks if the result contains an error." alt="" coords="111,157,277,197"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="51,248,107,213,132,200,134,205,109,218,54,253"/>
+<area shape="rect" id="Node000007" href="$d5/de9/thread__pool__sample_8cpp.html#a8d986ee76ac0cece6635815924ac089f" title=" " alt="" coords="372,201,499,227"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="60,257,358,221,358,226,61,263"/>
+<area shape="rect" id="Node000008" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a6d46f58bc981e0d902d18c785b74fabb" title="Starts the thread pool and all associated workers." alt="" coords="117,271,271,311"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="61,265,104,273,103,278,60,271"/>
+<area shape="rect" id="Node000009" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a691d77bd2867a58abcf032bb03ed5190" title="Stops the thread pool and all worker threads." alt="" coords="358,251,513,291"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="47,275,73,300,109,321,155,334,193,336,231,331,279,321,303,312,327,301,350,293,351,298,329,306,305,317,281,326,232,336,193,341,154,339,107,326,70,304,43,278"/>
+<area shape="rect" id="Node000010" href="$d5/de9/thread__pool__sample_8cpp.html#a45a2e7b90bdee2f4511ea9571fc87db4" title=" " alt="" coords="153,387,235,412"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="42,275,68,319,87,344,110,365,141,382,138,387,106,369,83,347,63,322,38,277"/>
+<area shape="rect" id="Node000013" href="$dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="115,441,273,481"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="39,275,60,344,81,386,110,423,120,431,117,435,106,427,77,389,56,346,34,277"/>
+<area shape="rect" id="Node000015" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a04a80e890d56ba5e4deb5ca9a0a93199" title="Provides a string representation of this thread_pool." alt="" coords="108,505,280,545"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="37,276,41,317,52,374,74,436,90,465,110,491,114,494,110,498,106,494,85,468,69,438,47,375,36,318,32,276"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="253,21,339,29,339,34,252,26"/>
+<area shape="rect" id="Node000005" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="825,223,1012,263"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="777,249,812,250,812,255,777,255"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="825,237,791,237,791,232,825,232"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="499,219,577,228,577,233,498,224"/>
+<area shape="poly" id="edge12_Node000009_Node000004" title=" " alt="" coords="513,260,577,253,577,258,513,265"/>
+<area shape="rect" id="Node000011" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#aa68d6e4535415d1bf7b8e359276e40a9" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="328,315,543,355"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="235,386,345,356,347,362,237,391"/>
+<area shape="rect" id="Node000012" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="353,379,518,419"/>
+<area shape="poly" id="edge15_Node000010_Node000012" title=" " alt="" coords="236,397,339,397,339,402,236,402"/>
+<area shape="rect" id="Node000014" href="$de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="356,443,515,483"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="274,459,342,460,342,465,273,464"/>
+<area shape="rect" id="Node000016" href="$d1/daf/classutility__module_1_1formatter.html#a12d7278310683404a3342631586528b6" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="342,507,529,547"/>
+<area shape="poly" id="edge19_Node000015_Node000016" title=" " alt="" coords="280,523,328,523,328,529,280,528"/>
+<area shape="poly" id="edge20_Node000016_Node000004" title=" " alt="" coords="523,505,541,493,566,469,589,442,626,383,653,324,671,275,676,277,658,326,631,385,593,446,570,473,544,497,525,509"/>
+</map>

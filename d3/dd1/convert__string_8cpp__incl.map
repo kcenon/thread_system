@@ -1,11 +1,11 @@
-<map id="sources/utilities/conversion/convert_string.cpp" name="sources/utilities/conversion/convert_string.cpp">
-<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform string conversion utilities." alt="" coords="889,5,1089,45"/>
+<map id="utilities/src/convert_string.cpp" name="utilities/src/convert_string.cpp">
+<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform string conversion utilities." alt="" coords="916,5,1063,45"/>
 <area shape="rect" id="Node000002" href="$d1/d46/convert__string_8h.html" title=" " alt="" coords="825,93,951,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="966,48,916,87,913,82,963,43"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="1212,167,1279,192"/>
 <area shape="poly" id="edge20_Node000001_Node000006" title=" " alt="" coords="992,45,998,82,1006,101,1017,116,1199,164,1198,169,1015,121,1001,103,993,83,987,46"/>
-<area shape="rect" id="Node000012" href="$de/d52/formatter_8h.html" title=" " alt="" coords="317,93,456,119"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="889,42,470,97,469,91,889,37"/>
+<area shape="rect" id="Node000012" href="$de/d52/formatter_8h.html" title=" " alt="" coords="307,93,466,119"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="916,39,480,95,480,90,915,34"/>
 <area shape="rect" id="Node000017" title=" " alt="" coords="1027,93,1095,119"/>
 <area shape="poly" id="edge18_Node000001_Node000017" title=" " alt="" coords="1009,44,1043,81,1039,85,1005,47"/>
 <area shape="rect" id="Node000018" title=" " alt="" coords="1119,93,1206,119"/>

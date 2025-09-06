@@ -1,9 +1,37 @@
 <map id="thread_module::result::get_error" name="thread_module::result::get_error">
-<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="296,69,461,109"/>
-<area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="5,5,248,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="285,68,205,48,207,43,287,63"/>
-<area shape="rect" id="Node000003" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="44,69,209,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="282,92,209,92,209,87,282,87"/>
-<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="44,133,209,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,115,207,136,205,131,285,110"/>
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="399,301,564,341"/>
+<area shape="rect" id="Node000002" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="151,5,307,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="472,288,459,233,436,167,419,133,400,100,376,70,349,44,329,32,307,25,308,20,331,28,352,40,380,66,404,97,424,130,441,165,464,232,477,286"/>
+<area shape="rect" id="Node000004" href="$d0/d68/typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="124,104,335,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="463,289,445,254,419,215,387,176,349,144,324,132,326,127,352,140,391,172,424,212,449,252,468,287"/>
+<area shape="rect" id="Node000006" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="130,55,329,80"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="469,288,453,243,428,190,394,137,373,114,349,94,327,82,330,77,352,89,377,110,398,134,433,188,458,241,474,287"/>
+<area shape="rect" id="Node000007" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="108,154,351,194"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="452,292,406,249,379,227,349,208,322,196,325,192,352,204,382,223,410,245,455,289"/>
+<area shape="rect" id="Node000008" href="$d6/d86/adaptive__queue__sample_8cpp.html#a0d30dd48c20143aa0863800f13cff270" title=" " alt="" coords="155,218,304,258"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="419,298,350,273,303,259,305,254,352,267,421,293"/>
+<area shape="rect" id="Node000010" href="$d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="202,283,257,308"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="385,314,257,301,257,295,385,308"/>
+<area shape="rect" id="Node000011" href="$d0/d68/typed__job__queue__sample_8cpp.html#a37aa6c7a2c2e921edf037ae704057e8c" title=" " alt="" coords="120,332,339,357"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="385,332,339,337,339,332,384,327"/>
+<area shape="rect" id="Node000012" href="$de/d48/namespacethread__module.html#a1b008e1fb7f03a09191a6e6bd4808468" title=" " alt="" coords="147,382,312,422"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="417,348,351,371,307,385,306,379,350,366,415,343"/>
+<area shape="rect" id="Node000013" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="147,446,312,486"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="455,353,410,396,382,418,352,436,313,452,311,447,349,432,379,413,406,392,451,349"/>
+<area shape="rect" id="Node000014" href="$d5/de9/thread__pool__sample_8cpp.html#a45a2e7b90bdee2f4511ea9571fc87db4" title=" " alt="" coords="188,609,271,635"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="477,355,464,409,440,476,404,543,380,574,352,600,334,611,313,619,272,625,271,620,311,614,331,607,349,596,376,570,400,540,435,474,459,408,472,354"/>
+<area shape="rect" id="Node000016" href="$d0/d68/typed__job__queue__sample_8cpp.html#aceb31b2947f66758e30c046021ca2be4" title=" " alt="" coords="134,560,325,585"/>
+<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="473,355,457,399,432,452,398,505,376,529,352,550,326,563,324,559,349,545,373,525,393,502,428,450,452,397,468,353"/>
+<area shape="rect" id="Node000017" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="143,511,316,536"/>
+<area shape="poly" id="edge17_Node000001_Node000017" title=" " alt="" coords="468,354,449,389,424,429,391,468,352,500,317,516,315,511,349,496,387,464,419,426,445,386,463,352"/>
+<area shape="rect" id="Node000003" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,31,60,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="138,32,61,43,60,37,138,27"/>
+<area shape="rect" id="Node000005" href="$d0/d68/typed__job__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,104,60,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,119,60,119,60,114,110,114"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="116,56,60,49,61,44,116,51"/>
+<area shape="rect" id="Node000009" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,368,60,393"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="143,255,110,272,85,295,66,321,41,369,37,367,61,318,81,291,106,268,140,251"/>
+<area shape="rect" id="Node000015" href="$d5/de9/thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="5,609,60,635"/>
+<area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="174,625,60,625,60,619,174,619"/>
+<area shape="poly" id="edge18_Node000017_Node000009" title=" " alt="" coords="128,512,106,500,80,476,60,446,36,395,41,393,64,444,84,472,110,496,131,507"/>
 </map>

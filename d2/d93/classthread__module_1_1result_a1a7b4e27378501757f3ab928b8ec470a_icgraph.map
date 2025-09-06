@@ -1,9 +1,29 @@
 <map id="thread_module::result::has_value" name="thread_module::result::has_value">
-<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="464,45,629,85"/>
-<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca" title="Clear all jobs from the queue." alt="" coords="235,13,416,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="450,53,416,48,417,43,451,48"/>
-<area shape="rect" id="Node000004" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="235,77,416,117"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="451,81,417,86,416,81,450,76"/>
-<area shape="rect" id="Node000003" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a4b5e4a86af5f59bf79cf8899f6782bfa" title="Destructor." alt="" coords="5,5,187,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="221,35,187,35,187,30,221,30"/>
+<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="592,171,757,211"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="337,70,544,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="631,165,589,140,543,117,490,98,491,93,545,112,592,136,633,161"/>
+<area shape="rect" id="Node000004" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="121,154,277,179"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="592,170,544,161,473,156,402,155,277,161,277,156,402,150,474,150,544,156,593,165"/>
+<area shape="rect" id="Node000006" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#acc07d4f8712c2e0a6b4669b5474b5aca" title="Clear all jobs from the queue." alt="" coords="350,336,531,376"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="651,223,605,272,576,297,545,320,508,338,506,334,543,315,573,293,601,268,647,219"/>
+<area shape="rect" id="Node000008" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="350,171,531,211"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="578,193,531,193,531,188,578,188"/>
+<area shape="rect" id="Node000009" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="135,203,262,229"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="593,217,544,225,469,231,392,232,262,225,263,220,392,227,468,226,544,220,592,211"/>
+<area shape="rect" id="Node000010" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="114,253,283,278"/>
+<area shape="poly" id="edge14_Node000001_Node000010" title=" " alt="" coords="613,218,545,239,477,251,408,259,284,267,283,261,407,254,476,245,543,233,611,213"/>
+<area shape="rect" id="Node000011" href="$d6/d86/adaptive__queue__sample_8cpp.html#a3772663ac668fe738c0ae87ffd3750df" title=" " alt="" coords="361,5,520,45"/>
+<area shape="poly" id="edge15_Node000001_Node000011" title=" " alt="" coords="649,161,603,109,574,83,543,60,519,48,521,43,545,55,578,78,607,105,653,158"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="171,42,226,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="323,72,226,60,227,55,324,66"/>
+<area shape="rect" id="Node000005" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,203,60,229"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="135,186,109,193,61,209,59,204,107,188,134,180"/>
+<area shape="rect" id="Node000007" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a4b5e4a86af5f59bf79cf8899f6782bfa" title="Destructor." alt="" coords="108,329,289,383"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="336,359,289,359,289,353,336,353"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="336,183,277,177,277,172,336,178"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="337,204,262,212,262,207,336,199"/>
+<area shape="poly" id="edge11_Node000008_Node000010" title=" " alt="" coords="368,218,290,243,247,255,246,250,289,237,367,212"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="122,219,60,219,60,213,122,213"/>
+<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="138,251,107,243,59,227,61,222,109,237,139,246"/>
+<area shape="poly" id="edge16_Node000011_Node000003" title=" " alt="" coords="348,39,226,54,226,49,347,34"/>
 </map>

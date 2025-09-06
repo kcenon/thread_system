@@ -1,17 +1,9 @@
-<map id="sources/interfaces/thread_context.h" name="sources/interfaces/thread_context.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,383,45"/>
-<area shape="rect" id="Node000002" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="10,203,163,243"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,47,184,67,143,95,123,121,108,150,92,204,87,202,103,148,119,118,139,91,181,62,227,42"/>
-<area shape="rect" id="Node000004" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="154,101,339,141"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="293,58,262,102,258,99,289,55"/>
-<area shape="rect" id="Node000006" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="412,196,591,251"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="334,55,366,100,406,146,464,194,460,198,402,150,362,103,329,58"/>
-<area shape="rect" id="Node000007" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="415,93,587,148"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="364,49,449,91,447,96,361,54"/>
-<area shape="rect" id="Node000003" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="5,299,168,339"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,257,89,299,84,299,84,257"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="207,150,118,206,115,201,204,146"/>
-<area shape="rect" id="Node000005" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="188,203,388,243"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="262,152,283,202,278,204,257,154"/>
-<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="504,162,504,196,499,196,499,162"/>
+<map id="interfaces/thread_context.h" name="interfaces/thread_context.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="181,5,382,31"/>
+<area shape="rect" id="Node000002" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="5,86,176,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,39,145,88,143,84,245,34"/>
+<area shape="rect" id="Node000003" href="$d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="201,86,362,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="284,44,284,86,279,86,279,44"/>
+<area shape="rect" id="Node000004" href="$d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="387,79,581,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="320,34,412,76,410,81,317,39"/>
 </map>

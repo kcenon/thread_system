@@ -1,0 +1,7 @@
+<map id="thread_module::logger_interface" name="thread_module::logger_interface">
+<area shape="rect" id="Node000001" title="Logger interface for thread system." alt="" coords="71,5,232,165"/>
+<area shape="rect" id="Node000002" href="$d4/d06/classconsole__logger.html" title="Simple console logger implementation." alt="" coords="5,273,140,419"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,179,97,274,92,272,121,178"/>
+<area shape="rect" id="Node000003" href="$dd/d02/classmock__logger.html" title="Mock logger implementation for demonstration." alt="" coords="164,213,299,479"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="182,178,193,212,188,214,177,179"/>
+</map>

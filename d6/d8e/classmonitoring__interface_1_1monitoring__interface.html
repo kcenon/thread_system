@@ -86,9 +86,15 @@ Inheritance diagram for monitoring_interface::monitoring_interface:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d7b/classmonitoring__interface_1_1monitoring__interface__inherit__graph.png" border="0" usemap="#amonitoring__interface_1_1monitoring__interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="amonitoring__interface_1_1monitoring__interface_inherit__map" id="amonitoring__interface_1_1monitoring__interface_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,5,200,255"/>
-<area shape="rect" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="5,303,200,497"/>
-<area shape="poly" title=" " alt="" coords="105,268,105,303,100,303,100,268"/>
+<area shape="rect" title=" " alt="" coords="333,5,528,255"/>
+<area shape="rect" href="../../d7/dde/classconsole__monitoring.html" title="Simple monitoring implementation." alt="" coords="5,413,200,593"/>
+<area shape="poly" title=" " alt="" coords="324,205,266,251,214,304,176,358,144,414,140,411,171,355,210,301,263,247,320,201"/>
+<area shape="rect" href="../../d2/db4/classmock__monitoring.html" title="Mock monitoring implementation for demonstration." alt="" coords="224,303,419,703"/>
+<area shape="poly" title=" " alt="" coords="393,269,383,303,378,302,388,267"/>
+<area shape="rect" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="443,405,637,600"/>
+<area shape="poly" title=" " alt="" coords="474,268,514,404,509,406,469,269"/>
+<area shape="rect" href="../../d3/d20/classsample__monitoring.html" title=" " alt="" coords="661,413,856,593"/>
+<area shape="poly" title=" " alt="" coords="541,201,598,247,651,301,690,355,722,411,717,414,686,358,647,304,595,251,538,205"/>
 </map>
 </div>
 <div class="dynheader">
@@ -182,7 +188,7 @@ Public Member Functions</h2></td></tr>
 <p>Retrieves the most recent metrics snapshot. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84503c7a139398c9173eb24c9be0ea0f">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a3d1214f0644d3de27a8ac758a4b5936e">mock_monitoring</a>, and <a class="el" href="../../d3/d20/classsample__monitoring.html#a84d877f96a454c46ea6bc82d3cef997d">sample_monitoring</a>.</p>
 
 </div>
 </div>
@@ -219,7 +225,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../d7/dde/classconsole__monitoring.html#aef2569fef8f87604828b642195052c4b">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a9b21d9861542772df8a018fffd59dc76">mock_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../d3/d20/classsample__monitoring.html#ae536d7fd4d7cc1fa007729d917f98896">sample_monitoring</a>.</p>
 
 </div>
 </div>
@@ -249,7 +255,7 @@ Public Member Functions</h2></td></tr>
 <p>Checks if monitoring is currently active. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84da24be478fa4e500195b3a711e07b9">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a5750e05cb87377e837b6d6097a3d235a">mock_monitoring</a>, and <a class="el" href="../../d3/d20/classsample__monitoring.html#a3c059b5810d3fd155c38ea0f895e2ab8">sample_monitoring</a>.</p>
 
 </div>
 </div>
@@ -435,12 +441,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>sources/interfaces/<a class="el" href="../../db/d4f/monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<li>interfaces/<a class="el" href="../../db/d4f/monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

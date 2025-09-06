@@ -1,5 +1,7 @@
 <map id="thread_module::crash_handler::instance" name="thread_module::crash_handler::instance">
-<area shape="rect" id="Node000001" title="Get the global crash handler instance." alt="" coords="244,13,407,53"/>
-<area shape="rect" id="Node000002" href="$d5/dfd/classthread__module_1_1scoped__crash__callback.html#a47303dfad19247c8a6ff07588ef4c9ef" title=" " alt="" coords="5,5,196,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,35,196,35,196,30,230,30"/>
+<area shape="rect" id="Node000001" title="Get the global crash handler instance." alt="" coords="244,30,407,70"/>
+<area shape="rect" id="Node000002" href="$d8/dcb/crash__protection_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="73,5,128,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,39,128,24,128,19,231,34"/>
+<area shape="rect" id="Node000003" href="$d5/dfd/classthread__module_1_1scoped__crash__callback.html#a47303dfad19247c8a6ff07588ef4c9ef" title=" " alt="" coords="5,55,196,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,66,196,71,196,66,230,61"/>
 </map>

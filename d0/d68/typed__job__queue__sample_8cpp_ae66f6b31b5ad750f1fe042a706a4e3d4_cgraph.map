@@ -1,0 +1,13 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,60,134"/>
+<area shape="rect" id="Node000002" href="$d0/d68/typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="108,109,319,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,119,95,119,95,124,60,124"/>
+<area shape="rect" id="Node000003" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a42501ddf68f746e78064242d0884f267" title="Dequeues the next available job (of any type or priority)." alt="" coords="367,5,584,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="241,106,366,55,389,47,390,52,368,60,243,111"/>
+<area shape="rect" id="Node000004" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html#a52afb9ecbbf0a61e3e22913e568b4d38" title="Enqueues a non&#45;priority (base) job into the queue." alt="" coords="367,69,584,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="317,106,353,102,354,107,318,111"/>
+<area shape="rect" id="Node000005" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="393,133,558,173"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="318,131,379,139,379,144,317,137"/>
+<area shape="rect" id="Node000006" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="396,197,555,237"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="243,132,368,183,390,191,389,196,366,188,241,137"/>
+</map>

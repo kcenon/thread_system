@@ -1,25 +1,19 @@
-<map id="sources/interfaces/logger_interface.h" name="sources/interfaces/logger_interface.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="353,5,497,45"/>
-<area shape="rect" id="Node000002" href="$d6/dac/error__handler_8h.html" title=" " alt="" coords="5,93,147,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="340,50,148,97,146,92,339,45"/>
-<area shape="rect" id="Node000003" href="$de/d6d/logger__interface_8cpp.html" title=" " alt="" coords="171,93,330,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="376,54,290,96,288,91,374,49"/>
-<area shape="rect" id="Node000004" href="$dc/dd1/thread__context_8h.html" title=" " alt="" coords="355,93,496,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="428,59,428,93,423,93,423,59"/>
-<area shape="rect" id="Node000006" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="448,387,611,427"/>
-<area shape="poly" id="edge12_Node000001_Node000006" title=" " alt="" coords="498,48,534,67,567,92,624,189,676,283,683,312,682,325,676,340,663,356,647,370,610,389,608,384,644,365,659,353,671,337,677,324,678,313,671,285,620,191,563,95,531,71,496,53"/>
-<area shape="rect" id="Node000008" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="461,291,661,331"/>
-<area shape="poly" id="edge13_Node000001_Node000008" title=" " alt="" coords="474,50,507,74,543,103,575,139,599,180,604,211,599,241,589,270,576,292,572,290,584,267,594,240,599,211,593,182,570,142,539,107,504,78,471,55"/>
-<area shape="rect" id="Node000005" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="283,291,437,331"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="407,146,389,182,373,241,365,292,359,291,368,240,384,180,402,144"/>
-<area shape="rect" id="Node000007" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="398,189,583,229"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="448,143,480,187,475,190,444,146"/>
-<area shape="rect" id="Node000009" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="52,284,231,339"/>
-<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="342,136,139,183,128,206,125,233,128,259,134,283,129,284,123,260,120,233,123,205,136,179,340,131"/>
-<area shape="rect" id="Node000010" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="150,181,322,236"/>
-<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="376,142,290,184,288,179,374,137"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="407,336,496,384,494,389,405,340"/>
-<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="457,239,386,293,383,289,453,235"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="514,239,550,290,546,293,510,242"/>
-<area shape="poly" id="edge11_Node000010_Node000009" title=" " alt="" coords="204,248,168,286,164,282,200,244"/>
+<map id="interfaces/logger_interface.h" name="interfaces/logger_interface.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="375,5,585,31"/>
+<area shape="rect" id="Node000002" href="$d6/dac/error__handler_8h.html" title=" " alt="" coords="5,86,195,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,36,156,89,155,83,411,31"/>
+<area shape="rect" id="Node000003" href="$de/d6d/logger__interface_8cpp.html" title=" " alt="" coords="219,86,443,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="447,39,354,88,352,83,445,35"/>
+<area shape="rect" id="Node000004" href="$dc/dd1/thread__context_8h.html" title=" " alt="" coords="518,86,719,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="513,35,599,83,597,88,511,40"/>
+<area shape="rect" id="Node000005" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="341,174,512,229"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="477,45,457,119,439,175,434,173,452,118,472,44"/>
+<area shape="rect" id="Node000008" href="$dc/dbc/mock__logger_8h.html" title=" " alt="" coords="743,79,929,119"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="546,31,751,76,750,81,545,36"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="586,120,478,176,475,172,584,115"/>
+<area shape="rect" id="Node000006" href="$d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="755,174,917,229"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="657,115,780,172,778,176,655,119"/>
+<area shape="rect" id="Node000007" href="$d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="536,167,731,236"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="625,125,631,166,626,167,620,125"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="839,132,839,174,833,174,833,132"/>
 </map>

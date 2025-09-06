@@ -1,0 +1,13 @@
+<map id="core/base/include/service_registry.h" name="core/base/include/service_registry.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="142,5,329,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,52,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,48,66,93,64,88,185,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="77,93,154,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="208,48,146,88,143,84,205,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="178,93,293,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="238,46,238,79,233,79,233,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="317,93,404,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="267,43,332,84,329,88,264,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="428,93,552,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="297,43,440,87,439,92,296,48"/>
+</map>

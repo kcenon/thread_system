@@ -1,0 +1,14 @@
+<map id="mpmc_example" name="mpmc_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,127,132,153"/>
+<area shape="rect" id="Node000002" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="180,5,361,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,125,127,95,179,62,204,49,207,54,181,66,130,99,88,129"/>
+<area shape="rect" id="Node000003" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="409,35,575,75"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="109,125,179,105,291,83,395,65,396,71,292,88,181,111,111,130"/>
+<area shape="rect" id="Node000004" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="197,120,345,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="133,137,183,137,183,143,133,143"/>
+<area shape="rect" id="Node000005" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99" title="Enqueue a single job." alt="" coords="180,184,361,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="111,150,195,177,193,182,109,155"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="188,248,353,288"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="84,151,125,191,181,234,193,240,190,245,179,238,121,195,80,155"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="362,35,396,39,396,45,361,40"/>
+</map>

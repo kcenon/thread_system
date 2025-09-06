@@ -1,0 +1,17 @@
+<map id="interfaces/monitorable_interface.h" name="interfaces/monitorable_interface.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="187,5,357,45"/>
+<area shape="rect" id="Node000002" href="$db/d4f/monitoring__interface_8h.html" title=" " alt="" coords="187,93,357,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="275,46,275,79,269,79,269,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,72,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="235,121,86,166,84,161,234,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,167,163,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="250,121,166,163,164,158,248,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="187,167,264,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="267,120,243,157,238,154,262,118"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="289,167,351,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="282,118,307,154,302,157,278,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="376,167,443,192"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="295,116,376,158,374,163,293,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="467,167,525,192"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="309,116,454,162,453,167,307,121"/>
+</map>

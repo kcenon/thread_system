@@ -1,0 +1,9 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,60,70"/>
+<area shape="rect" id="Node000002" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="108,5,273,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,49,94,42,95,47,61,55"/>
+<area shape="rect" id="Node000003" href="$dc/d6c/classthread__module_1_1error.html#add7860e073cc1262c1b0a6ab442ece06" title="Converts the error to a string representation." alt="" coords="111,69,270,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,60,99,68,97,73,60,65"/>
+<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#ab8102462516a4fb48654ff8a47389306" title="Converts an error_code to a string representation." alt="" coords="321,69,480,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="270,87,308,87,308,92,270,92"/>
+</map>

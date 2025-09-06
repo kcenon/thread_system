@@ -1,0 +1,9 @@
+<map id="dynamic_service_example" name="dynamic_service_example">
+<area shape="rect" id="Node000001" title="Example 4: Dynamic service registration." alt="" coords="5,77,201,102"/>
+<area shape="rect" id="Node000002" href="$d8/d74/classthread__module_1_1service__container.html#ae81eef0f3c84dc8889cb191568441eee" title="Clear all registered services." alt="" coords="269,5,444,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,74,263,46,264,51,155,79"/>
+<area shape="rect" id="Node000003" href="$d8/d74/classthread__module_1_1service__container.html#a7a1cf07b7287db73a3d668311f55a02e" title="Get the global service container instance." alt="" coords="269,69,444,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,87,256,87,256,92,202,92"/>
+<area shape="rect" id="Node000004" href="$d8/d74/classthread__module_1_1service__container.html#a713be3cfd6aa9469fd5d8981dcd2289d" title="Register a service with singleton lifetime." alt="" coords="249,133,464,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,100,264,127,263,132,154,105"/>
+</map>

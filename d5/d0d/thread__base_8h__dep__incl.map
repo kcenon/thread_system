@@ -1,17 +1,5 @@
-<map id="sources/thread_base/core/thread_base.h" name="sources/thread_base/core/thread_base.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="210,5,366,45"/>
-<area shape="rect" id="Node000002" href="$df/d10/thread__base_8cpp.html" title="Implementation of the core thread base class." alt="" coords="5,101,171,141"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,54,130,103,127,98,234,49"/>
-<area shape="rect" id="Node000003" href="$d9/de2/thread__worker_8h.html" title=" " alt="" coords="195,101,381,141"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="291,59,291,101,285,101,285,59"/>
-<area shape="rect" id="Node000007" href="$d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="410,93,582,148"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="344,49,439,91,436,96,341,53"/>
-<area shape="rect" id="Node000004" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="10,203,163,243"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="239,149,126,206,123,201,237,144"/>
-<area shape="rect" id="Node000006" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="188,203,388,243"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="291,155,291,203,285,203,285,155"/>
-<area shape="rect" id="Node000005" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="5,299,168,339"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="89,257,89,299,84,299,84,257"/>
-<area shape="rect" id="Node000008" href="$d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="412,196,591,251"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="501,162,503,196,497,196,495,162"/>
+<map id="core/base/include/thread_base.h" name="core/base/include/thread_base.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,188,45"/>
+<area shape="rect" id="Node000002" href="$df/d10/thread__base_8cpp.html" title="Implementation of the core thread base class." alt="" coords="19,93,174,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,59,99,93,94,93,94,59"/>
 </map>

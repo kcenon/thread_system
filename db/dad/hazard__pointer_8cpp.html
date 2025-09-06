@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_base/lockfree/memory/hazard_pointer.cpp File Reference</title>
+<title>Thread System: implementations/lockfree/src/hazard_pointer.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_f275034da0fe94e1f46793c3d061397d.html">thread_base</a></li><li class="navelem"><a class="el" href="../../dir_95bc6dbe709a8dacbd0832df62fd1413.html">lockfree</a></li><li class="navelem"><a class="el" href="../../dir_2caa84201cb8c63558e6a18c9a506fb7.html">memory</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d12a494b5868c3171ad5a86c7563cf73.html">implementations</a></li><li class="navelem"><a class="el" href="../../dir_9d5efa4425e81a38ab1ae5e5e9374f0f.html">lockfree</a></li><li class="navelem"><a class="el" href="../../dir_bab7c40cd93c71102e1797c26af6b869.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -87,29 +87,29 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hazard_pointer.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/ddb/hazard__pointer_8cpp__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp" alt=""/></div>
-<map name="asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp" id="asources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp">
-<area shape="rect" title="Implementation of lock&#45;free memory management using hazard pointers." alt="" coords="339,5,525,60"/>
-<area shape="rect" href="../../dc/d54/hazard__pointer_8h.html" title=" " alt="" coords="235,108,365,133"/>
-<area shape="poly" title=" " alt="" coords="393,62,331,103,328,98,390,58"/>
-<area shape="rect" title=" " alt="" coords="389,108,475,133"/>
-<area shape="poly" title=" " alt="" coords="435,60,435,94,429,94,429,60"/>
-<area shape="rect" title=" " alt="" coords="499,108,613,133"/>
-<area shape="poly" title=" " alt="" coords="471,58,529,98,526,102,468,62"/>
-<area shape="rect" title=" " alt="" coords="5,181,72,207"/>
-<area shape="poly" title=" " alt="" coords="259,136,86,183,85,177,257,131"/>
-<area shape="rect" title=" " alt="" coords="96,181,160,207"/>
-<area shape="poly" title=" " alt="" coords="273,136,170,178,168,174,271,131"/>
-<area shape="rect" title=" " alt="" coords="185,181,247,207"/>
-<area shape="poly" title=" " alt="" coords="288,135,242,174,239,170,285,131"/>
-<area shape="rect" title=" " alt="" coords="272,181,328,207"/>
-<area shape="poly" title=" " alt="" coords="303,134,303,168,297,168,297,134"/>
-<area shape="rect" title=" " alt="" coords="353,181,439,207"/>
-<area shape="poly" title=" " alt="" coords="317,131,371,171,368,175,314,136"/>
-<area shape="rect" title=" " alt="" coords="464,181,531,207"/>
-<area shape="poly" title=" " alt="" coords="333,131,453,174,451,179,331,136"/>
-<area shape="rect" title=" " alt="" coords="555,181,632,207"/>
-<area shape="poly" title=" " alt="" coords="348,131,542,177,540,183,347,136"/>
+<div class="center"><img src="../../db/ddb/hazard__pointer_8cpp__incl.png" border="0" usemap="#aimplementations_2lockfree_2src_2hazard__pointer_8cpp" alt=""/></div>
+<map name="aimplementations_2lockfree_2src_2hazard__pointer_8cpp" id="aimplementations_2lockfree_2src_2hazard__pointer_8cpp">
+<area shape="rect" title="Implementation of lock&#45;free memory management using hazard pointers." alt="" coords="337,5,527,45"/>
+<area shape="rect" href="../../dc/d54/hazard__pointer_8h.html" title=" " alt="" coords="235,93,365,119"/>
+<area shape="poly" title=" " alt="" coords="402,48,333,88,330,84,399,43"/>
+<area shape="rect" title=" " alt="" coords="389,93,475,119"/>
+<area shape="poly" title=" " alt="" coords="435,46,435,79,429,79,429,46"/>
+<area shape="rect" title=" " alt="" coords="499,93,613,119"/>
+<area shape="poly" title=" " alt="" coords="463,43,527,84,525,88,461,48"/>
+<area shape="rect" title=" " alt="" coords="5,167,72,192"/>
+<area shape="poly" title=" " alt="" coords="259,121,86,168,85,163,257,116"/>
+<area shape="rect" title=" " alt="" coords="96,167,160,192"/>
+<area shape="poly" title=" " alt="" coords="273,121,170,164,168,159,271,116"/>
+<area shape="rect" title=" " alt="" coords="185,167,247,192"/>
+<area shape="poly" title=" " alt="" coords="288,121,242,160,239,155,285,117"/>
+<area shape="rect" title=" " alt="" coords="272,167,328,192"/>
+<area shape="poly" title=" " alt="" coords="303,119,303,153,297,153,297,119"/>
+<area shape="rect" title=" " alt="" coords="353,167,439,192"/>
+<area shape="poly" title=" " alt="" coords="317,117,371,156,368,160,314,121"/>
+<area shape="rect" title=" " alt="" coords="464,167,531,192"/>
+<area shape="poly" title=" " alt="" coords="333,116,453,159,451,164,331,121"/>
+<area shape="rect" title=" " alt="" coords="555,167,632,192"/>
+<area shape="poly" title=" " alt="" coords="348,116,542,163,540,168,347,121"/>
 </map>
 </div>
 </div>
@@ -149,7 +149,7 @@ Namespaces</h2></td></tr>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

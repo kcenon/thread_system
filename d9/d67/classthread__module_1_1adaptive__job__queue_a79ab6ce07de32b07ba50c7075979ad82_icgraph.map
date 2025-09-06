@@ -1,0 +1,7 @@
+<map id="thread_module::adaptive_job_queue::enqueue_batch" name="thread_module::adaptive_job_queue::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueues a batch of jobs into the queue." alt="" coords="305,5,508,45"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#a0d30dd48c20143aa0863800f13cff270" title=" " alt="" coords="108,5,257,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,28,257,28,257,23,291,23"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

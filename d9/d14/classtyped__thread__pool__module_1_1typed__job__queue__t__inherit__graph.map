@@ -1,9 +1,11 @@
 <map id="typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_job_queue_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="12,601,243,1011"/>
-<area shape="rect" id="Node000004" href="$d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="5,1059,249,2037"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="130,1024,130,1059,125,1059,125,1024"/>
-<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="35,133,220,553"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,567,130,601,125,601,125,567"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="37,5,217,85"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,99,130,133,125,133,125,99"/>
+<area shape="rect" id="Node000001" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="83,581,313,991"/>
+<area shape="rect" id="Node000005" href="$d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="76,1039,320,2017"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="201,1004,201,1039,195,1039,195,1004"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="128,173,268,533"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,547,201,581,195,581,195,547"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,25,185,105"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="117,118,136,172,131,174,111,119"/>
+<area shape="rect" id="Node000004" href="$db/db0/classthread__module_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="209,5,392,125"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="277,139,265,174,260,172,272,137"/>
 </map>

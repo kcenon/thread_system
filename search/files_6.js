@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['lockfree_5fconfig_2eh_0',['lockfree_config.h',['../d6/d05/lockfree__config_8h.html',1,'']]],
-  ['lockfree_5fjob_5fqueue_2ecpp_1',['lockfree_job_queue.cpp',['../d4/dca/lockfree__job__queue_8cpp.html',1,'']]],
-  ['lockfree_5fjob_5fqueue_2eh_2',['lockfree_job_queue.h',['../db/d5a/lockfree__job__queue_8h.html',1,'']]],
-  ['logger_5finterface_2ecpp_3',['logger_interface.cpp',['../de/d6d/logger__interface_8cpp.html',1,'']]],
-  ['logger_5finterface_2eh_4',['logger_interface.h',['../d4/d79/logger__interface_8h.html',1,'']]]
+  ['job_2ecpp_0',['job.cpp',['../de/d83/job_8cpp.html',1,'']]],
+  ['job_2eh_1',['job.h',['../d3/d6a/job_8h.html',1,'']]],
+  ['job_5fqueue_2ecpp_2',['job_queue.cpp',['../dd/d4c/job__queue_8cpp.html',1,'']]],
+  ['job_5fqueue_2eh_3',['job_queue.h',['../db/d9d/job__queue_8h.html',1,'']]],
+  ['job_5ftypes_2eh_4',['job_types.h',['../dc/d70/core_2jobs_2include_2job__types_8h.html',1,'(Global Namespace)'],['../d1/d1c/implementations_2typed__thread__pool_2include_2job__types_8h.html',1,'(Global Namespace)']]]
 ];

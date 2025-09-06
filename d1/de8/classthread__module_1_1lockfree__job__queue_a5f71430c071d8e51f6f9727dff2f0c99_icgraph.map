@@ -1,0 +1,13 @@
+<map id="thread_module::lockfree_job_queue::enqueue" name="thread_module::lockfree_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueue a single job." alt="" coords="325,47,507,87"/>
+<area shape="rect" id="Node000002" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="115,5,271,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="311,47,250,33,251,28,312,42"/>
+<area shape="rect" id="Node000004" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="129,55,256,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="311,70,257,70,257,65,311,65"/>
+<area shape="rect" id="Node000005" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="108,104,277,129"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="312,93,251,107,250,101,311,88"/>
+<area shape="rect" id="Node000003" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,55,60,80"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,37,109,45,61,61,59,55,107,39,132,32"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="115,70,60,70,60,65,115,65"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="135,102,107,94,60,79,61,73,109,89,136,97"/>
+</map>

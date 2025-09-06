@@ -1,0 +1,13 @@
+<map id="adaptive_behavior_example" name="adaptive_behavior_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,141,212,166"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a0fccc80e5ae38229e9170a0f09830008" title="Dequeues a job from the queue in FIFO order." alt="" coords="275,5,460,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,138,183,98,259,55,277,47,279,52,261,60,185,103,128,143"/>
+<area shape="rect" id="Node000003" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ac0c35e20c335c6e244216402bf6ec8bc" title="Enqueues a new job into the queue." alt="" coords="275,69,460,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,138,272,110,273,115,162,143"/>
+<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7" title="Get current queue type." alt="" coords="260,133,475,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="212,151,246,151,246,156,212,156"/>
+<area shape="rect" id="Node000005" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="285,197,450,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="162,164,273,191,272,197,161,169"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="285,261,450,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="128,164,185,204,261,247,279,254,277,259,259,252,183,209,125,168"/>
+</map>

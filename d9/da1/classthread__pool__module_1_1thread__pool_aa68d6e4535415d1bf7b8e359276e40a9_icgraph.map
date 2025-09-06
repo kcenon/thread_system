@@ -1,0 +1,7 @@
+<map id="thread_pool_module::thread_pool::enqueue_batch" name="thread_pool_module::thread_pool::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="239,5,453,45"/>
+<area shape="rect" id="Node000002" href="$d5/de9/thread__pool__sample_8cpp.html#a45a2e7b90bdee2f4511ea9571fc87db4" title=" " alt="" coords="108,13,191,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,28,191,28,191,23,225,23"/>
+<area shape="rect" id="Node000003" href="$d5/de9/thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

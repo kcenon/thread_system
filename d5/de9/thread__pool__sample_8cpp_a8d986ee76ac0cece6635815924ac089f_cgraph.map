@@ -1,0 +1,8 @@
+<map id="initialize_logger" name="initialize_logger">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,132,38"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="180,5,367,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,23,166,23,166,28,132,28"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="415,5,601,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="367,31,401,32,401,37,367,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="414,19,380,19,380,14,414,14"/>
+</map>

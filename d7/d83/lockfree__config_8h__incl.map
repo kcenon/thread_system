@@ -1,5 +1,5 @@
-<map id="sources/thread_base/lockfree/lockfree_config.h" name="sources/thread_base/lockfree/lockfree_config.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="35,5,229,45"/>
+<map id="implementations/lockfree/include/lockfree_config.h" name="implementations/lockfree/include/lockfree_config.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="37,5,227,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,48,65,86,62,82,108,44"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="97,93,167,119"/>

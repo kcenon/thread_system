@@ -1,0 +1,5 @@
+<map id="samples/integration_example/mock_monitoring.h" name="samples/integration_example/mock_monitoring.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,221,45"/>
+<area shape="rect" id="Node000002" href="$d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="33,93,194,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,59,116,93,111,93,111,59"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="samples/typed_thread_pool_sample_2/test_type.h" name="samples/typed_thread_pool_sample_2/test_type.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="348,5,552,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,185,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="373,48,156,100,155,95,372,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="210,93,357,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="415,48,333,90,331,85,412,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="381,101,439,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="444,47,424,89,419,87,439,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="463,101,519,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="462,44,482,87,477,89,457,47"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="543,101,610,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="480,43,550,91,547,95,477,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="635,101,732,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="502,43,641,94,639,99,500,48"/>
+</map>

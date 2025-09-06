@@ -1,0 +1,7 @@
+<map id="thread_pool_module::thread_pool::stop" name="thread_pool_module::thread_pool::stop">
+<area shape="rect" id="Node000001" title="Stops the thread pool and all worker threads." alt="" coords="256,27,411,67"/>
+<area shape="rect" id="Node000002" href="$d5/de9/thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="79,5,134,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,38,134,24,135,19,242,33"/>
+<area shape="rect" id="Node000003" href="$d9/da1/classthread__pool__module_1_1thread__pool.html#a0bef86cfd95f66f96fc0257e92e92784" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,55,208,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,61,209,65,208,60,242,56"/>
+</map>

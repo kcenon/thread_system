@@ -1,0 +1,21 @@
+<map id="samples/node_pool_sample/node_pool_sample.cpp" name="samples/node_pool_sample/node_pool_sample.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="477,5,679,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,169,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="477,45,184,95,183,90,476,40"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="193,101,344,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="511,48,324,100,322,94,509,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="369,101,433,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="540,48,438,97,435,92,538,43"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="457,101,520,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="560,48,513,93,509,89,556,44"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="545,101,611,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="581,46,581,87,575,87,575,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="635,101,707,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="601,44,650,89,647,93,597,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="731,101,798,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="620,43,728,92,726,97,618,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="822,101,899,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="649,43,811,91,819,93,817,98,809,96,648,48"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="923,101,998,126"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="680,40,792,61,912,91,921,93,919,99,911,96,791,67,679,45"/>
+</map>

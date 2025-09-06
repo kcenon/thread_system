@@ -1,0 +1,7 @@
+<map id="thread_module::executor_interface" name="thread_module::executor_interface">
+<area shape="rect" id="Node000001" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="113,5,289,125"/>
+<area shape="rect" id="Node000002" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="5,201,187,601"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,139,162,201,156,200,176,138"/>
+<area shape="rect" id="Node000003" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="211,173,402,628"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="227,137,238,172,233,174,221,139"/>
+</map>

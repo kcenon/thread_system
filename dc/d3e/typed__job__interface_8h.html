@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/typed_thread_pool/core/typed_job_interface.h File Reference</title>
+<title>Thread System: implementations/typed_thread_pool/include/typed_job_interface.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_ea000f00c09a2827791e3cb7870d1327.html">typed_thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_7cad37f4e0cfe274d055a8ddf8582fe6.html">core</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d12a494b5868c3171ad5a86c7563cf73.html">implementations</a></li><li class="navelem"><a class="el" href="../../dir_c6253df87f3a7c8e6abb90a7613546c0.html">typed_thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_0048610a133f35511cd688ac574f6114.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -83,44 +83,27 @@ $(function() {
 
 <p>Interface definitions for typed jobs.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../df/d41/typed__thread__pool_2detail_2forward__declarations_8h_source.html">../detail/forward_declarations.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../df/d63/type__traits_8h_source.html">../detail/type_traits.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d11/error__handling_8h_source.html">../../thread_base/sync/error_handling.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;../detail/forward_declarations.h&quot;</code><br />
+<code>#include &quot;../detail/type_traits.h&quot;</code><br />
+<code>#include &quot;../../thread_base/sync/error_handling.h&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for typed_job_interface.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/d68/typed__job__interface_8h__incl.png" border="0" usemap="#asources_2typed__thread__pool_2core_2typed__job__interface_8h" alt=""/></div>
-<map name="asources_2typed__thread__pool_2core_2typed__job__interface_8h" id="asources_2typed__thread__pool_2core_2typed__job__interface_8h">
-<area shape="rect" title="Interface definitions for typed jobs." alt="" coords="301,5,464,60"/>
-<area shape="rect" href="../../df/d41/typed__thread__pool_2detail_2forward__declarations_8h.html" title="Forward declarations for typed_thread_pool module." alt="" coords="5,115,229,141"/>
-<area shape="poly" title=" " alt="" coords="309,63,163,113,162,108,307,58"/>
-<area shape="rect" href="../../df/d63/type__traits_8h.html" title="Type traits and concepts for typed_thread_pool module." alt="" coords="304,115,461,141"/>
-<area shape="poly" title=" " alt="" coords="385,60,385,101,380,101,380,60"/>
-<area shape="rect" title=" " alt="" coords="228,196,287,221"/>
-<area shape="poly" title=" " alt="" coords="343,62,317,84,294,109,275,147,265,183,259,182,270,145,290,107,313,80,340,58"/>
-<area shape="rect" href="../../d3/d11/error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="495,108,655,148"/>
-<area shape="poly" title=" " alt="" coords="438,58,525,100,522,104,436,62"/>
-<area shape="rect" title=" " alt="" coords="679,115,756,141"/>
-<area shape="poly" title=" " alt="" coords="465,50,562,75,667,105,676,108,675,113,666,111,561,80,463,56"/>
-<area shape="rect" title=" " alt="" coords="415,196,507,221"/>
-<area shape="poly" title=" " alt="" coords="396,139,442,184,438,188,392,143"/>
-<area shape="rect" title=" " alt="" coords="311,196,391,221"/>
-<area shape="poly" title=" " alt="" coords="380,142,363,184,358,182,375,140"/>
-<area shape="poly" title=" " alt="" coords="366,143,289,191,286,186,363,139"/>
-<area shape="poly" title=" " alt="" coords="549,150,491,190,488,186,546,146"/>
-<area shape="poly" title=" " alt="" coords="495,151,301,198,300,193,494,145"/>
-<area shape="rect" title=" " alt="" coords="643,196,717,221"/>
-<area shape="poly" title=" " alt="" coords="602,146,655,185,652,190,599,150"/>
-<area shape="rect" title=" " alt="" coords="742,196,839,221"/>
-<area shape="poly" title=" " alt="" coords="627,146,747,189,745,194,625,151"/>
-<area shape="rect" title=" " alt="" coords="863,196,939,221"/>
-<area shape="poly" title=" " alt="" coords="654,145,851,193,849,198,652,151"/>
-<area shape="rect" title=" " alt="" coords="963,196,1050,221"/>
-<area shape="poly" title=" " alt="" coords="655,143,667,145,950,193,949,198,666,151,654,148"/>
-<area shape="rect" title=" " alt="" coords="531,196,618,221"/>
-<area shape="poly" title=" " alt="" coords="577,148,577,182,572,182,572,148"/>
+<div class="center"><img src="../../d5/d68/typed__job__interface_8h__incl.png" border="0" usemap="#aimplementations_2typed__thread__pool_2include_2typed__job__interface_8h" alt=""/></div>
+<map name="aimplementations_2typed__thread__pool_2include_2typed__job__interface_8h" id="aimplementations_2typed__thread__pool_2include_2typed__job__interface_8h">
+<area shape="rect" title="Interface definitions for typed jobs." alt="" coords="427,5,602,60"/>
+<area shape="rect" title=" " alt="" coords="5,115,229,141"/>
+<area shape="poly" title=" " alt="" coords="428,57,180,115,179,110,426,52"/>
+<area shape="rect" title=" " alt="" coords="253,115,411,141"/>
+<area shape="poly" title=" " alt="" coords="465,62,368,112,365,107,462,58"/>
+<area shape="rect" title=" " alt="" coords="435,108,595,148"/>
+<area shape="poly" title=" " alt="" coords="517,60,517,94,512,94,512,60"/>
+<area shape="rect" title=" " alt="" coords="619,115,677,141"/>
+<area shape="poly" title=" " alt="" coords="554,58,622,105,619,110,551,62"/>
+<area shape="rect" title=" " alt="" coords="701,115,779,141"/>
+<area shape="poly" title=" " alt="" coords="579,58,701,108,699,113,577,63"/>
 </map>
 </div>
 </div>
@@ -160,7 +143,7 @@ Typedefs</h2></td></tr>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

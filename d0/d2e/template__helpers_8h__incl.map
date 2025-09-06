@@ -1,9 +1,9 @@
-<map id="sources/typed_thread_pool/detail/template_helpers.h" name="sources/typed_thread_pool/detail/template_helpers.h">
-<area shape="rect" id="Node000001" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="182,5,345,60"/>
+<map id="implementations/typed_thread_pool/include/template_helpers.h" name="implementations/typed_thread_pool/include/template_helpers.h">
+<area shape="rect" id="Node000001" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="176,5,351,60"/>
 <area shape="rect" id="Node000002" href="$df/d63/type__traits_8h.html" title="Type traits and concepts for typed_thread_pool module." alt="" coords="105,108,209,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,62,184,101,180,97,229,58"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,181,97,207"/>
-<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="183,59,136,80,95,110,74,139,61,169,56,167,69,136,91,106,134,75,181,54"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="177,61,133,81,95,110,74,139,61,169,56,167,69,136,91,106,131,77,174,56"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="233,108,293,133"/>
 <area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="266,60,266,94,261,94,261,60"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="317,108,372,133"/>

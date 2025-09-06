@@ -1,0 +1,13 @@
+<map id="thread_module::adaptive_job_queue::dequeue" name="thread_module::adaptive_job_queue::dequeue">
+<area shape="rect" id="Node000001" title="Dequeues a job from the queue in FIFO order." alt="" coords="363,55,548,95"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,5,315,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="356,55,265,33,267,28,357,50"/>
+<area shape="rect" id="Node000004" href="$d6/d86/adaptive__queue__sample_8cpp.html#a3772663ac668fe738c0ae87ffd3750df" title=" " alt="" coords="132,55,291,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="349,78,291,78,291,73,349,73"/>
+<area shape="rect" id="Node000005" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,120,298,145"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="357,101,267,123,265,117,356,96"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,63,60,88"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="140,37,109,46,61,65,59,60,107,41,138,32"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="118,78,60,78,60,73,118,73"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="138,119,107,110,59,90,61,85,109,105,140,114"/>
+</map>

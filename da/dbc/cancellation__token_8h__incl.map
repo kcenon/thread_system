@@ -1,5 +1,5 @@
-<map id="sources/thread_base/sync/cancellation_token.h" name="sources/thread_base/sync/cancellation_token.h">
-<area shape="rect" id="Node000001" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="149,5,344,45"/>
+<map id="core/sync/include/cancellation_token.h" name="core/sync/include/cancellation_token.h">
+<area shape="rect" id="Node000001" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="137,5,356,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,48,83,91,81,86,196,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="97,93,183,119"/>

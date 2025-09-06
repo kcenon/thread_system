@@ -1,0 +1,17 @@
+<map id="demonstrate_basic_usage" name="demonstrate_basic_usage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,128,197,153"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="245,13,441,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,126,177,95,244,62,263,55,265,60,246,67,179,100,125,130"/>
+<area shape="rect" id="Node000005" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65" title=" " alt="" coords="257,77,429,132"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="187,125,243,117,244,122,187,131"/>
+<area shape="rect" id="Node000006" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734" title="Retire a pointer for later reclamation." alt="" coords="252,157,435,197"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="187,151,239,158,238,164,187,156"/>
+<area shape="rect" id="Node000007" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af" title="Force a scan and reclaim cycle." alt="" coords="254,221,433,276"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="129,151,246,206,263,213,261,218,244,211,127,156"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aca927cce02b6978435047f450366b4f7" title=" " alt="" coords="489,13,716,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="441,30,476,30,476,35,441,35"/>
+<area shape="rect" id="Node000004" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aac057200a6cc20129b4d7e0500db8af5" title="Acquires a hazard record for the current thread." alt="" coords="764,5,960,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="716,30,750,30,750,35,716,35"/>
+<area shape="rect" id="Node000008" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#abf2733b8ed10262cbbb4a5c8f7f15fd7" title=" " alt="" coords="507,221,698,276"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="433,246,493,246,493,251,433,251"/>
+</map>

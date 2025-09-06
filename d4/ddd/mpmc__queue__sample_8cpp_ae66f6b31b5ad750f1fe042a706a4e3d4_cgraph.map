@@ -1,0 +1,43 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,409,60,434"/>
+<area shape="rect" id="Node000002" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="129,355,285,381"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,411,151,382,153,387,61,416"/>
+<area shape="rect" id="Node000008" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="108,173,307,198"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="41,407,186,208,191,211,45,410"/>
+<area shape="rect" id="Node000013" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="144,441,271,466"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="61,424,131,437,130,442,60,429"/>
+<area shape="rect" id="Node000015" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="123,562,292,587"/>
+<area shape="poly" id="edge21_Node000001_Node000015" title=" " alt="" coords="50,432,183,550,179,554,47,436"/>
+<area shape="rect" id="Node000003" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a983796c2f228c697d814c71a2902d031" title="Dequeue a single job." alt="" coords="365,376,547,416"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="286,374,352,382,351,387,285,379"/>
+<area shape="rect" id="Node000004" href="$d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a" title="Checks if the result contains a value." alt="" coords="624,437,789,477"/>
+<area shape="poly" id="edge6_Node000002_Node000004" title=" " alt="" coords="280,353,341,346,411,343,485,347,558,361,591,374,622,390,674,427,671,431,619,395,589,379,557,367,485,353,411,349,341,351,281,358"/>
+<area shape="rect" id="Node000005" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a5f71430c071d8e51f6f9727dff2f0c99" title="Enqueue a single job." alt="" coords="365,555,547,595"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="236,379,272,400,308,427,324,444,333,459,357,490,418,544,414,548,353,494,329,462,320,447,305,431,269,404,233,383"/>
+<area shape="rect" id="Node000006" href="$d2/d93/classthread__module_1_1result.html#aca4e5ef822c9a7e2bde65e6f6dd8c521" title="Gets the error." alt="" coords="373,133,539,173"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="213,354,233,320,264,274,304,225,353,183,363,177,365,182,356,187,308,229,268,277,237,323,218,357"/>
+<area shape="rect" id="Node000007" href="$dc/d6c/classthread__module_1_1error.html#a84124dcf079f2498f8e954c56472b55f" title="Gets the error message." alt="" coords="377,197,535,237"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="219,353,274,302,312,273,353,247,367,240,369,245,356,252,315,277,278,306,223,357"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="539,413,612,431,611,437,538,419"/>
+<area shape="poly" id="edge13_Node000008_Node000006" title=" " alt="" coords="306,170,359,163,360,168,307,175"/>
+<area shape="poly" id="edge14_Node000008_Node000007" title=" " alt="" coords="307,195,364,203,363,208,306,201"/>
+<area shape="rect" id="Node000009" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a8bbaa9c2b1f3b9bcd4c565d610c8fdac" title="Dequeue all available jobs." alt="" coords="355,69,557,109"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="235,170,354,119,375,111,377,116,356,124,237,175"/>
+<area shape="rect" id="Node000010" href="$d8/d42/classthread__module_1_1job.html#a4f34f234108da3f7adccc9cbbd831c71" title="The core task execution method to be overridden by derived classes." alt="" coords="382,261,530,301"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="237,196,356,247,377,254,375,259,354,252,235,201"/>
+<area shape="rect" id="Node000011" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a4533b6d4c696ecc1f4aac124b686c140" title="Enqueue multiple jobs as a batch." alt="" coords="355,5,557,45"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="218,171,273,116,311,83,353,55,366,48,369,53,356,60,314,88,276,119,222,174"/>
+<area shape="rect" id="Node000012" href="$da/d32/structthread__module_1_1lockfree__job__queue_1_1Node.html#ac26e0613a9a8f7c8da52ea02734d53d1" title=" " alt="" coords="605,5,808,45"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="557,23,592,23,592,28,557,28"/>
+<area shape="poly" id="edge16_Node000013_Node000003" title=" " alt="" coords="263,438,355,417,356,422,264,443"/>
+<area shape="poly" id="edge19_Node000013_Node000004" title=" " alt="" coords="247,464,298,478,355,489,456,498,557,489,621,478,622,483,558,495,456,503,354,495,296,483,245,469"/>
+<area shape="poly" id="edge18_Node000013_Node000005" title=" " alt="" coords="230,464,286,497,356,534,387,547,385,552,354,538,284,502,228,468"/>
+<area shape="poly" id="edge17_Node000013_Node000010" title=" " alt="" coords="229,438,305,391,417,308,421,312,308,396,232,443"/>
+<area shape="rect" id="Node000014" href="$d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f" title="Gets the value." alt="" coords="373,440,539,480"/>
+<area shape="poly" id="edge20_Node000013_Node000014" title=" " alt="" coords="271,452,360,455,359,460,271,458"/>
+<area shape="poly" id="edge22_Node000015_Node000003" title=" " alt="" coords="220,560,305,477,327,450,337,438,353,426,364,419,367,424,356,430,341,442,331,453,309,480,224,564"/>
+<area shape="poly" id="edge25_Node000015_Node000004" title=" " alt="" coords="242,585,303,604,382,620,426,624,471,623,515,617,556,604,596,581,631,551,661,518,683,488,688,491,665,521,635,555,599,586,558,609,516,622,471,629,426,629,382,625,301,609,240,590"/>
+<area shape="poly" id="edge23_Node000015_Node000005" title=" " alt="" coords="292,572,351,572,351,577,292,577"/>
+<area shape="rect" id="Node000016" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html#a9520ea0d61ca11141e23f79f0d2fb589" title="Get performance statistics." alt="" coords="361,669,551,709"/>
+<area shape="poly" id="edge24_Node000015_Node000016" title=" " alt="" coords="233,585,356,648,388,662,386,667,354,653,230,590"/>
+</map>

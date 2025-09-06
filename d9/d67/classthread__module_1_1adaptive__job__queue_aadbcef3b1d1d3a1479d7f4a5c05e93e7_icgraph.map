@@ -1,5 +1,12 @@
 <map id="thread_module::adaptive_job_queue::get_current_type" name="thread_module::adaptive_job_queue::get_current_type">
-<area shape="rect" id="Node000001" title="Get current queue type." alt="" coords="239,5,453,45"/>
-<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="5,5,191,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,28,191,28,191,23,225,23"/>
+<area shape="rect" id="Node000001" title="Get current queue type." alt="" coords="363,55,577,95"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,5,315,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="365,55,269,33,270,28,366,50"/>
+<area shape="rect" id="Node000004" href="$d6/d86/adaptive__queue__sample_8cpp.html#a0d30dd48c20143aa0863800f13cff270" title=" " alt="" coords="137,55,286,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="348,78,286,78,286,73,348,73"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ab446375c6ffb9807a3c49747a51c7ac1" title="Returns a string representation of this job_queue." alt="" coords="119,119,304,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="376,101,293,122,292,117,375,96"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,35,60,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,36,60,46,60,40,120,30"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="123,64,60,54,60,49,123,59"/>
 </map>

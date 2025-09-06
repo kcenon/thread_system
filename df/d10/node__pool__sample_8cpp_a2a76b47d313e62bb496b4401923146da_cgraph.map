@@ -1,0 +1,9 @@
+<map id="demonstrate_basic_usage" name="demonstrate_basic_usage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,197,102"/>
+<area shape="rect" id="Node000002" href="$d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6" title="Allocate a node from the pool." alt="" coords="245,5,405,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,74,241,47,242,52,148,79"/>
+<area shape="rect" id="Node000003" href="$d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804" title="Deallocate a node back to the pool." alt="" coords="245,69,405,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,87,232,87,232,92,198,92"/>
+<area shape="rect" id="Node000004" href="$d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb" title=" " alt="" coords="245,133,405,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="148,100,242,127,241,132,146,105"/>
+</map>

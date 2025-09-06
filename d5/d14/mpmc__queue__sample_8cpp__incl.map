@@ -1,0 +1,19 @@
+<map id="samples/mpmc_queue_sample/mpmc_queue_sample.cpp" name="samples/mpmc_queue_sample/mpmc_queue_sample.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="529,5,779,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,164,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="529,42,365,63,178,96,177,90,364,58,528,37"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="188,101,379,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="580,48,372,100,371,95,578,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="403,108,553,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="620,48,513,104,511,99,617,43"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="578,108,642,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="648,47,624,97,619,94,643,44"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="667,108,729,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="665,44,689,94,684,97,660,47"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="754,108,821,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="683,43,761,98,758,102,679,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="845,108,911,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="712,43,771,64,834,91,849,99,846,103,832,96,769,69,710,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="935,108,1007,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="756,43,839,63,924,91,942,99,940,104,922,96,838,68,755,48"/>
+</map>

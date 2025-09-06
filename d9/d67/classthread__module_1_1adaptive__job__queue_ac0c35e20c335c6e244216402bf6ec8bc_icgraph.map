@@ -1,0 +1,16 @@
+<map id="thread_module::adaptive_job_queue::enqueue" name="thread_module::adaptive_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues a new job into the queue." alt="" coords="363,87,548,127"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,5,315,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="402,84,314,46,271,33,273,28,316,41,404,79"/>
+<area shape="rect" id="Node000004" href="$d6/d86/adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="120,55,303,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="349,96,303,90,303,85,349,91"/>
+<area shape="rect" id="Node000005" href="$d6/d86/adaptive__queue__sample_8cpp.html#a3772663ac668fe738c0ae87ffd3750df" title=" " alt="" coords="132,119,291,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="349,124,291,132,290,126,349,119"/>
+<area shape="rect" id="Node000006" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,184,298,209"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="404,136,316,174,273,186,271,181,314,169,402,131"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,95,60,120"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,37,109,46,74,70,47,96,43,93,70,66,107,41,126,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="107,97,61,105,60,100,106,91"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="118,125,60,115,61,109,119,120"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="126,182,107,174,70,148,43,122,47,118,74,144,109,169,128,177"/>
+</map>

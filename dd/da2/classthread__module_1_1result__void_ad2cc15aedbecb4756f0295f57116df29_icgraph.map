@@ -1,0 +1,8 @@
+<map id="thread_module::result_void::get_error" name="thread_module::result_void::get_error">
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="272,23,437,63"/>
+<area shape="rect" id="Node000002" href="$d5/de9/thread__pool__sample_8cpp.html#afdecb283f7b6ef04c30664770c33ba7b" title=" " alt="" coords="108,5,224,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="258,33,224,28,225,23,259,28"/>
+<area shape="rect" id="Node000003" href="$d5/de9/thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="5,31,60,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="259,46,60,46,60,41,259,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,34,61,41,59,36,94,29"/>
+</map>

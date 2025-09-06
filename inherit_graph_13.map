@@ -1,3 +1,30 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d8/d93/structthread__module_1_1adaptive__job__queue_1_1performance__metrics.html" title="Performance metrics structure (non&#45;atomic for returning)" alt="" coords="5,5,192,60"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="28,301,173,341"/>
+<area shape="rect" id="Node000001" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="269,229,417,269"/>
+<area shape="poly" id="edge17_Node000000_Node000001" title=" " alt="" coords="181,294,274,266,276,271,183,299"/>
+<area shape="rect" id="Node000011" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="266,373,421,413"/>
+<area shape="poly" id="edge26_Node000000_Node000011" title=" " alt="" coords="183,342,276,370,274,375,181,347"/>
+<area shape="rect" id="Node000013" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="244,293,443,348"/>
+<area shape="poly" id="edge27_Node000000_Node000013" title=" " alt="" coords="187,318,244,318,244,323,187,323"/>
+<area shape="rect" id="Node000002" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="511,5,709,60"/>
+<area shape="poly" id="edge18_Node000001_Node000002" title=" " alt="" coords="361,215,413,143,449,104,489,70,511,58,514,62,492,75,452,108,417,146,366,218"/>
+<area shape="rect" id="Node000003" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="491,85,729,125"/>
+<area shape="poly" id="edge19_Node000001_Node000003" title=" " alt="" coords="374,217,426,174,489,134,519,122,521,127,492,139,429,179,377,221"/>
+<area shape="rect" id="Node000004" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="509,149,711,204"/>
+<area shape="poly" id="edge20_Node000001_Node000004" title=" " alt="" coords="430,223,508,201,510,206,431,228"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="517,229,703,269"/>
+<area shape="poly" id="edge21_Node000001_Node000005" title=" " alt="" coords="431,246,517,246,517,251,431,251"/>
+<area shape="rect" id="Node000006" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer job queue." alt="" coords="519,293,701,333"/>
+<area shape="poly" id="edge22_Node000001_Node000006" title=" " alt="" coords="431,267,526,290,525,295,430,272"/>
+<area shape="rect" id="Node000007" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="491,357,729,397"/>
+<area shape="poly" id="edge23_Node000001_Node000007" title=" " alt="" coords="431,272,444,280,460,296,469,312,477,328,492,343,514,354,512,359,489,347,473,331,464,315,456,299,441,284,428,276"/>
+<area shape="rect" id="Node000009" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="509,421,711,476"/>
+<area shape="poly" id="edge25_Node000001_Node000009" title=" " alt="" coords="431,269,445,280,458,296,465,313,469,345,474,376,480,392,493,407,510,420,507,425,489,411,476,394,468,378,464,346,460,314,453,299,441,284,428,274"/>
+<area shape="rect" id="Node000008" href="$d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="777,349,983,404"/>
+<area shape="poly" id="edge24_Node000007_Node000008" title=" " alt="" coords="743,374,777,374,777,379,743,379"/>
+<area shape="rect" id="Node000012" href="$dd/df7/classthread__module_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="9,369,193,409"/>
+<area shape="poly" id="edge28_Node000012_Node000011" title=" " alt="" coords="206,388,266,389,266,394,206,393"/>
+<area shape="poly" id="edge29_Node000012_Node000013" title=" " alt="" coords="185,362,244,346,246,351,186,368"/>
+<area shape="rect" id="Node000010" href="$db/db0/classthread__module_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,229,196,269"/>
+<area shape="poly" id="edge30_Node000010_Node000001" title=" " alt="" coords="210,246,269,246,269,251,210,251"/>
 </map>

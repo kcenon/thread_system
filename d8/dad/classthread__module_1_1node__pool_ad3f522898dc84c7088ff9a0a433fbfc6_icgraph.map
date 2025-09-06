@@ -1,0 +1,16 @@
+<map id="thread_module::node_pool::allocate" name="thread_module::node_pool::allocate">
+<area shape="rect" id="Node000001" title="Allocate a node from the pool." alt="" coords="351,87,511,127"/>
+<area shape="rect" id="Node000002" href="$df/d10/node__pool__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da" title=" " alt="" coords="109,5,301,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="381,83,302,46,262,33,264,28,304,41,383,78"/>
+<area shape="rect" id="Node000004" href="$df/d10/node__pool__sample_8cpp.html#a0b8a24e2a3fa5fabbfe9aaf38342e331" title=" " alt="" coords="115,55,296,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="337,97,296,91,297,86,337,91"/>
+<area shape="rect" id="Node000005" href="$df/d10/node__pool__sample_8cpp.html#a045af7dc6cffef072ee51d32a2bdcdf4" title=" " alt="" coords="122,119,289,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="337,123,289,130,289,125,337,118"/>
+<area shape="rect" id="Node000006" href="$df/d10/node__pool__sample_8cpp.html#a7fed26dc813113ec67b03b813762c921" title=" " alt="" coords="108,183,303,223"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="382,136,304,174,272,186,270,181,302,169,379,132"/>
+<area shape="rect" id="Node000003" href="$df/d10/node__pool__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,95,60,120"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,37,109,46,74,71,47,96,43,93,71,66,107,41,126,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="102,97,61,105,60,100,101,92"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="108,124,60,115,61,110,109,119"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="119,180,107,174,71,148,44,122,48,118,75,144,109,169,122,175"/>
+</map>

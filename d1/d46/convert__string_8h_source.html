@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/utilities/conversion/convert_string.h Source File</title>
+<title>Thread System: utilities/include/convert_string.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_3a976ff09299edbd61448c47c674b6c9.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_8fa91a610133cad2895e8fa2234a687e.html">conversion</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_df38b2a5d584e0f6066b4518b95c638b.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_827a11265e92f27716d64af6b8b348f5.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -125,7 +125,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../dd/d2a/namespaceutility__module.html">   45</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
 <div class="foldopen" id="foldopen00077" data-start="{" data-end="};">
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="../../d1/d53/classutility__module_1_1convert__string.html">   77</a></span>    <span class="keyword">class </span><a class="code hl_class" href="../../d1/d53/classutility__module_1_1convert__string.html">convert_string</a></div>
@@ -232,6 +233,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    };</div>
 </div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>} <span class="comment">// namespace utility_module</span></div>
+</div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html">utility_module::convert_string</a></div><div class="ttdoc">Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations...</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00077">convert_string.h:78</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a118786eba66d84cd2a02c911775141ec"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a118786eba66d84cd2a02c911775141ec">utility_module::convert_string::from_base64</a></div><div class="ttdeci">static auto from_base64(const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Decodes a Base64 string into a byte array.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00418">convert_string.cpp:418</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_a253963501540b93269546be1be251f6e"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e">utility_module::convert_string::to_string</a></div><div class="ttdeci">static auto to_string(const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdoc">Converts a std::wstring to a std::string using the system encoding.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00136">convert_string.cpp:136</a></div></div>
@@ -263,11 +265,11 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_afbde2f9b7be55d89662baedd43ba63cfaad921d60486366258809553a3db49a4a"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cfaad921d60486366258809553a3db49a4a">utility_module::convert_string::endian_types::unknown</a></div><div class="ttdeci">@ unknown</div><div class="ttdoc">Unknown or not applicable.</div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_afbde2f9b7be55d89662baedd43ba63cfad861877da56b8b4ceb35c8cbfdf65bb4"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#afbde2f9b7be55d89662baedd43ba63cfad861877da56b8b4ceb35c8cbfdf65bb4">utility_module::convert_string::endian_types::big</a></div><div class="ttdeci">@ big</div><div class="ttdoc">Big-endian.</div></div>
 <div class="ttc" id="aclassutility__module_1_1convert__string_html_aff4cf9e1164a4cb47d032b1d4f1caaad"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#aff4cf9e1164a4cb47d032b1d4f1caaad">utility_module::convert_string::string_to_vector</a></div><div class="ttdeci">static auto string_to_vector(const T &amp;value) -&gt; std::vector&lt; char &gt;</div><div class="ttdoc">Converts a string (or wide string) to a std::vector&lt;char&gt; for iconv processing.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00283">convert_string.h:283</a></div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00065">convert_string.cpp:66</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00045">convert_string.h:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

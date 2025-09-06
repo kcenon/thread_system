@@ -1,9 +1,25 @@
 <map id="thread_module::result::value" name="thread_module::result::value">
-<area shape="rect" id="Node000001" title="Gets the value." alt="" coords="236,69,401,109"/>
-<area shape="rect" id="Node000002" href="$dc/d7f/classthread__module_1_1callback__job.html#adac1dc1c40f32c01fc2db47508fc5ef6" title="Constructs a new callback_job instance with a data&#45;based callback." alt="" coords="5,5,188,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,68,166,48,167,43,236,63"/>
-<area shape="rect" id="Node000003" href="$dc/d7f/classthread__module_1_1callback__job.html#a5a334d1a712ee0ff58e23e89e80bd7a3" title="Constructs a new callback_job instance with a parameterless callback." alt="" coords="5,69,188,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,92,188,92,188,87,222,87"/>
-<area shape="rect" id="Node000004" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="14,133,179,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,116,167,136,166,131,235,111"/>
+<area shape="rect" id="Node000001" title="Gets the value." alt="" coords="363,215,528,255"/>
+<area shape="rect" id="Node000002" href="$d6/d86/adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,312,315,337"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="398,264,316,302,274,314,272,309,314,297,396,259"/>
+<area shape="rect" id="Node000004" href="$dc/d7f/classthread__module_1_1callback__job.html#adac1dc1c40f32c01fc2db47508fc5ef6" title="Constructs a new callback_job instance with a data&#45;based callback." alt="" coords="120,55,303,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="418,206,373,156,344,131,313,110,289,98,292,93,316,105,347,127,376,153,422,202"/>
+<area shape="rect" id="Node000005" href="$dc/d7f/classthread__module_1_1callback__job.html#a5a334d1a712ee0ff58e23e89e80bd7a3" title="Constructs a new callback_job instance with a parameterless callback." alt="" coords="120,119,303,159"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="394,211,314,174,281,162,283,157,316,169,397,207"/>
+<area shape="rect" id="Node000006" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="148,5,275,31"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="429,204,411,166,385,123,353,81,313,46,295,35,274,28,276,23,297,31,316,41,357,77,390,120,415,164,433,201"/>
+<area shape="rect" id="Node000008" href="$de/d48/namespacethread__module.html#a5d54a128ec1a3c88386e19726ea3faf7" title=" " alt="" coords="129,247,294,287"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="349,251,295,259,294,253,348,246"/>
+<area shape="rect" id="Node000009" href="$d6/d86/adaptive__queue__sample_8cpp.html#a3772663ac668fe738c0ae87ffd3750df" title=" " alt="" coords="132,183,291,223"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="349,225,290,217,291,211,350,220"/>
+<area shape="rect" id="Node000010" href="$d0/d68/typed__job__queue__sample_8cpp.html#aceb31b2947f66758e30c046021ca2be4" title=" " alt="" coords="116,361,307,387"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="420,268,374,312,346,334,316,352,288,364,286,359,313,348,343,329,371,308,416,264"/>
+<area shape="rect" id="Node000011" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,411,298,436"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="430,269,385,337,353,372,316,402,292,413,290,408,313,397,349,368,381,333,425,266"/>
+<area shape="rect" id="Node000003" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,312,60,337"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,327,60,327,60,322,94,322"/>
+<area shape="rect" id="Node000007" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="134,21,60,21,60,15,134,15"/>
+<area shape="poly" id="edge9_Node000009_Node000003" title=" " alt="" coords="121,231,110,238,88,255,70,276,44,313,39,310,66,272,85,251,106,233,118,226"/>
+<area shape="poly" id="edge12_Node000011_Node000003" title=" " alt="" coords="120,408,107,402,68,371,41,339,45,336,72,367,109,397,123,403"/>
 </map>

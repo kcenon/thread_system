@@ -1,0 +1,38 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,425,60,451"/>
+<area shape="rect" id="Node000002" href="$d8/dcb/crash__protection_2main_8cpp.html#abcc3426fa8cd19b722d7fd8e93448fef" title=" " alt="" coords="112,5,303,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="32,425,37,347,49,232,71,117,87,71,106,40,109,37,113,41,110,44,92,74,77,118,55,233,42,348,37,426"/>
+<area shape="rect" id="Node000003" href="$d8/dcb/crash__protection_2main_8cpp.html#a7e2dac29460f757cd4a198671c3b7bf3" title=" " alt="" coords="121,55,294,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="32,425,39,356,53,255,74,156,89,116,106,90,110,86,114,90,110,93,94,119,80,157,58,256,44,356,38,425"/>
+<area shape="rect" id="Node000004" href="$d4/d20/classthread__module_1_1thread__pool__crash__safety.html#ad542c57ccae4e0b2ed6048c6116a36a2" title="Enable crash safety for a thread pool." alt="" coords="108,104,307,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="31,425,33,378,43,311,52,273,65,236,83,201,106,170,110,166,114,169,110,173,87,204,70,239,57,275,48,312,38,379,36,425"/>
+<area shape="rect" id="Node000005" href="$d6/d49/classthread__module_1_1crash__handler.html#ae85f9fe6691db1fdac09b928a92dece3" title=" " alt="" coords="126,183,289,223"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="32,425,37,387,49,336,71,282,87,256,106,233,113,228,116,232,110,237,91,259,76,284,54,338,42,388,38,425"/>
+<area shape="rect" id="Node000006" href="$d6/d49/classthread__module_1_1crash__handler.html#a47cf213a452d573bfa5da37d1b7f3654" title="Initialize crash handling with specified safety level." alt="" coords="126,247,289,287"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="35,424,58,364,78,328,106,297,113,292,116,297,110,301,83,331,62,366,40,426"/>
+<area shape="rect" id="Node000007" href="$d6/d49/classthread__module_1_1crash__handler.html#a46a791b4e21ae6dd8981d523bd5eb005" title="Get the global crash handler instance." alt="" coords="126,311,289,351"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="42,423,69,392,106,361,118,355,120,360,110,366,72,396,46,427"/>
+<area shape="rect" id="Node000008" href="$d8/dcb/crash__protection_2main_8cpp.html#a1a248f585fa8d27c85bb9ec05d6472df" title=" " alt="" coords="156,376,259,401"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="59,426,107,410,142,401,144,406,109,415,61,431"/>
+<area shape="rect" id="Node000009" href="$d8/dcb/crash__protection_2main_8cpp.html#a611a2c2c939164753898da654dc0dc8a" title=" " alt="" coords="140,425,275,451"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="60,435,126,435,126,441,60,441"/>
+<area shape="rect" id="Node000010" href="$d6/d49/classthread__module_1_1crash__handler.html#adad785942780b04ba99e1a827c5f521c" title="Register a resource cleanup function." alt="" coords="110,475,305,515"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="61,444,134,468,132,473,59,449"/>
+<area shape="rect" id="Node000011" href="$d6/d49/classthread__module_1_1crash__handler.html#a03d72787870ecd7d6f6cdafccdd3b343" title="Register a callback to be called during crash handling." alt="" coords="118,540,297,595"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="44,450,71,487,110,525,118,531,115,535,106,529,67,490,40,453"/>
+<area shape="rect" id="Node000012" href="$d6/d49/classthread__module_1_1crash__handler.html#af73014f86dd48f62d9a81b89ed40aa08" title="Set custom crash log directory." alt="" coords="120,619,295,673"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="39,450,46,481,59,522,80,566,110,604,114,608,111,612,106,608,76,568,55,524,41,482,34,451"/>
+<area shape="rect" id="Node000013" href="$d4/d20/classthread__module_1_1thread__pool__crash__safety.html#a6f41b8b68fadb4e7d5053b914704332e" title="Register job crash handler." alt="" coords="120,697,295,752"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="37,451,40,494,50,556,72,623,89,655,110,683,114,687,110,690,106,686,84,658,67,625,45,557,35,495,31,451"/>
+<area shape="rect" id="Node000014" href="$d8/d42/classthread__module_1_1job.html#ab11c230165f14290a427f58267ece23b" title="Provides a string representation of the job for logging or debugging." alt="" coords="133,777,281,817"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="38,450,46,515,60,609,82,701,95,737,110,762,123,773,120,777,106,765,90,740,77,703,55,610,40,516,33,451"/>
+<area shape="rect" id="Node000017" href="$d6/d49/classthread__module_1_1crash__handler.html#a1a4fd12433eebba77206eb322b7abb82" title="Manually trigger crash handling (for testing)" alt="" coords="122,841,293,896"/>
+<area shape="poly" id="edge17_Node000001_Node000017" title=" " alt="" coords="37,451,44,527,57,639,79,752,93,797,110,827,113,831,109,834,106,830,88,799,74,753,52,640,38,527,32,451"/>
+<area shape="rect" id="Node000018" href="$d6/d49/classthread__module_1_1crash__handler.html#a70ec77fb99c1a4bc3d65c315833f21ba" title="Unregister a crash callback." alt="" coords="126,920,289,975"/>
+<area shape="poly" id="edge18_Node000001_Node000018" title=" " alt="" coords="37,451,41,540,53,677,62,748,75,814,91,868,110,906,117,913,113,917,106,909,86,870,70,815,57,749,47,677,36,541,32,451"/>
+<area shape="rect" id="Node000015" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="355,777,541,817"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="281,794,341,794,341,799,281,799"/>
+<area shape="rect" id="Node000016" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="589,777,776,817"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="541,803,576,803,576,808,541,808"/>
+<area shape="poly" id="edge16_Node000016_Node000015" title=" " alt="" coords="589,791,555,790,555,785,589,785"/>
+</map>

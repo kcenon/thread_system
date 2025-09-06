@@ -10,9 +10,12 @@ var searchData=
   ['compile_5fstring_7',['compile_string',['../d6/dee/structthread__pool__module_1_1detail_1_1compile__string.html',1,'thread_pool_module::detail']]],
   ['condition_5fvariable_5fwrapper_8',['condition_variable_wrapper',['../da/df8/classthread__module_1_1sync_1_1condition__variable__wrapper.html',1,'thread_module::sync']]],
   ['conditional_5ffeature_9',['conditional_feature',['../da/da3/structtyped__thread__pool__module_1_1detail_1_1conditional__feature.html',1,'typed_thread_pool_module::detail']]],
-  ['constexpr_5fstring_10',['constexpr_string',['../de/dc3/structtyped__thread__pool__module_1_1detail_1_1constexpr__string.html',1,'typed_thread_pool_module::detail']]],
-  ['convert_5fstring_11',['convert_string',['../d1/d53/classutility__module_1_1convert__string.html',1,'utility_module']]],
-  ['crash_5fcontext_12',['crash_context',['../d8/d68/structthread__module_1_1crash__context.html',1,'thread_module']]],
-  ['crash_5fhandler_13',['crash_handler',['../d6/d49/classthread__module_1_1crash__handler.html',1,'thread_module']]],
-  ['crash_5fstats_14',['crash_stats',['../db/d15/structthread__module_1_1crash__handler_1_1crash__stats.html',1,'thread_module::crash_handler']]]
+  ['console_5flogger_10',['console_logger',['../d4/d06/classconsole__logger.html',1,'']]],
+  ['console_5fmonitoring_11',['console_monitoring',['../d7/dde/classconsole__monitoring.html',1,'']]],
+  ['constexpr_5fstring_12',['constexpr_string',['../de/dc3/structtyped__thread__pool__module_1_1detail_1_1constexpr__string.html',1,'typed_thread_pool_module::detail']]],
+  ['convert_5fstring_13',['convert_string',['../d1/d53/classutility__module_1_1convert__string.html',1,'utility_module']]],
+  ['crash_5fcontext_14',['crash_context',['../d8/d68/structthread__module_1_1crash__context.html',1,'thread_module']]],
+  ['crash_5fhandler_15',['crash_handler',['../d6/d49/classthread__module_1_1crash__handler.html',1,'thread_module']]],
+  ['crash_5fstats_16',['crash_stats',['../db/d15/structthread__module_1_1crash__handler_1_1crash__stats.html',1,'thread_module::crash_handler']]],
+  ['critical_5fresource_17',['critical_resource',['../d3/d9c/classcritical__resource.html',1,'']]]
 ];

@@ -1,5 +1,27 @@
 <map id="thread_module::error::message" name="thread_module::error::message">
-<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="296,5,455,45"/>
-<area shape="rect" id="Node000002" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="5,5,248,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,28,248,28,248,23,282,23"/>
+<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="399,186,557,226"/>
+<area shape="rect" id="Node000002" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="151,5,307,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="458,175,440,143,415,107,385,73,349,44,329,34,307,27,308,22,331,29,352,40,389,69,420,104,445,140,463,172"/>
+<area shape="rect" id="Node000004" href="$d0/d68/typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="124,104,335,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="430,182,392,162,350,145,305,132,306,127,352,139,394,157,433,177"/>
+<area shape="rect" id="Node000006" href="$d4/ddd/mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="130,55,329,80"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="450,177,406,133,379,112,349,94,321,82,323,78,352,89,382,107,410,129,454,174"/>
+<area shape="rect" id="Node000007" href="$dd/dd0/classtyped__thread__pool__module_1_1typed__thread__pool__builder.html#a1775132788a1b6a8742af166547a202b" title="Build the typed thread pool with current configuration." alt="" coords="108,154,351,194"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="385,197,351,192,351,187,385,191"/>
+<area shape="rect" id="Node000008" href="$d6/d86/adaptive__queue__sample_8cpp.html#a0d30dd48c20143aa0863800f13cff270" title=" " alt="" coords="155,218,304,258"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="385,221,304,231,304,226,385,215"/>
+<area shape="rect" id="Node000010" href="$d0/d68/typed__job__queue__sample_8cpp.html#a37aa6c7a2c2e921edf037ae704057e8c" title=" " alt="" coords="120,283,339,308"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="433,235,394,255,352,273,306,285,305,280,350,267,392,250,430,230"/>
+<area shape="rect" id="Node000011" href="$d0/d68/typed__job__queue__sample_8cpp.html#aceb31b2947f66758e30c046021ca2be4" title=" " alt="" coords="134,332,325,357"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="453,238,409,282,382,304,352,322,319,334,317,329,349,317,379,299,406,278,449,235"/>
+<area shape="rect" id="Node000012" href="$d6/d86/adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="143,381,316,407"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="463,240,445,272,420,308,389,343,352,372,317,387,315,382,349,368,385,339,415,305,440,269,458,237"/>
+<area shape="rect" id="Node000003" href="$d4/ddd/mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,31,60,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="138,32,61,43,60,37,138,27"/>
+<area shape="rect" id="Node000005" href="$d0/d68/typed__job__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,104,60,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,119,60,119,60,114,110,114"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="116,56,60,49,61,44,116,51"/>
+<area shape="rect" id="Node000009" href="$d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,303,60,328"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="143,260,109,272,53,305,50,300,107,268,141,255"/>
+<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="128,380,107,372,73,352,46,330,49,326,76,348,109,368,130,375"/>
 </map>

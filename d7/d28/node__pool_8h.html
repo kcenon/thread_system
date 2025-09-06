@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_base/lockfree/memory/node_pool.h File Reference</title>
+<title>Thread System: implementations/lockfree/include/node_pool.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_f275034da0fe94e1f46793c3d061397d.html">thread_base</a></li><li class="navelem"><a class="el" href="../../dir_95bc6dbe709a8dacbd0832df62fd1413.html">lockfree</a></li><li class="navelem"><a class="el" href="../../dir_2caa84201cb8c63558e6a18c9a506fb7.html">memory</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d12a494b5868c3171ad5a86c7563cf73.html">implementations</a></li><li class="navelem"><a class="el" href="../../dir_9d5efa4425e81a38ab1ae5e5e9374f0f.html">lockfree</a></li><li class="navelem"><a class="el" href="../../dir_f2c2e90be2d8eee09fb00e4de9471301.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,61 +91,63 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for node_pool.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/dcd/node__pool_8h__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2memory_2node__pool_8h" alt=""/></div>
-<map name="asources_2thread__base_2lockfree_2memory_2node__pool_8h" id="asources_2thread__base_2lockfree_2memory_2node__pool_8h">
-<area shape="rect" title=" " alt="" coords="325,5,499,60"/>
-<area shape="rect" title=" " alt="" coords="5,108,72,133"/>
-<area shape="poly" title=" " alt="" coords="325,56,86,110,85,105,324,51"/>
-<area shape="rect" title=" " alt="" coords="97,108,159,133"/>
-<area shape="poly" title=" " alt="" coords="326,63,173,108,172,103,324,58"/>
-<area shape="rect" title=" " alt="" coords="184,108,261,133"/>
-<area shape="poly" title=" " alt="" coords="355,62,261,105,259,100,353,58"/>
-<area shape="rect" title=" " alt="" coords="285,108,341,133"/>
-<area shape="poly" title=" " alt="" coords="384,62,339,101,335,97,380,58"/>
-<area shape="rect" title=" " alt="" coords="366,108,458,133"/>
-<area shape="poly" title=" " alt="" coords="415,60,415,94,409,94,409,60"/>
-<area shape="rect" title=" " alt="" coords="482,108,531,133"/>
-<area shape="poly" title=" " alt="" coords="443,58,486,97,482,101,439,62"/>
-<area shape="rect" title=" " alt="" coords="556,108,620,133"/>
-<area shape="poly" title=" " alt="" coords="467,58,553,100,551,104,465,62"/>
-<area shape="rect" title=" " alt="" coords="644,108,759,133"/>
-<area shape="poly" title=" " alt="" coords="500,57,651,102,649,107,499,62"/>
-<area shape="rect" href="../../de/d0e/node__pool_8tpp.html" title=" " alt="" coords="783,108,897,133"/>
-<area shape="poly" title=" " alt="" coords="500,49,770,103,769,108,499,54"/>
+<div class="center"><img src="../../d9/dcd/node__pool_8h__incl.png" border="0" usemap="#aimplementations_2lockfree_2include_2node__pool_8h" alt=""/></div>
+<map name="aimplementations_2lockfree_2include_2node__pool_8h" id="aimplementations_2lockfree_2include_2node__pool_8h">
+<area shape="rect" title=" " alt="" coords="317,5,507,45"/>
+<area shape="rect" title=" " alt="" coords="5,93,72,119"/>
+<area shape="poly" title=" " alt="" coords="317,48,86,96,85,91,316,42"/>
+<area shape="rect" title=" " alt="" coords="97,93,159,119"/>
+<area shape="poly" title=" " alt="" coords="345,48,174,95,172,90,343,43"/>
+<area shape="rect" title=" " alt="" coords="184,93,261,119"/>
+<area shape="poly" title=" " alt="" coords="368,48,264,90,262,85,366,43"/>
+<area shape="rect" title=" " alt="" coords="285,93,341,119"/>
+<area shape="poly" title=" " alt="" coords="390,48,340,87,337,82,386,43"/>
+<area shape="rect" title=" " alt="" coords="366,93,458,119"/>
+<area shape="poly" title=" " alt="" coords="415,46,415,79,409,79,409,46"/>
+<area shape="rect" title=" " alt="" coords="482,93,531,119"/>
+<area shape="poly" title=" " alt="" coords="437,43,483,82,480,86,433,48"/>
+<area shape="rect" title=" " alt="" coords="556,93,620,119"/>
+<area shape="poly" title=" " alt="" coords="455,43,551,85,548,90,453,48"/>
+<area shape="rect" title=" " alt="" coords="644,93,759,119"/>
+<area shape="poly" title=" " alt="" coords="482,43,646,87,645,92,481,48"/>
+<area shape="rect" href="../../de/d0e/node__pool_8tpp.html" title=" " alt="" coords="783,93,897,119"/>
+<area shape="poly" title=" " alt="" coords="508,41,769,89,768,94,507,47"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/dc4/node__pool_8h__dep__incl.png" border="0" usemap="#asources_2thread__base_2lockfree_2memory_2node__pool_8hdep" alt=""/></div>
-<map name="asources_2thread__base_2lockfree_2memory_2node__pool_8hdep" id="asources_2thread__base_2lockfree_2memory_2node__pool_8hdep">
-<area shape="rect" title=" " alt="" coords="447,5,621,60"/>
-<area shape="rect" href="../../db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="441,108,627,163"/>
-<area shape="poly" title=" " alt="" coords="537,74,537,108,531,108,531,74"/>
-<area shape="rect" href="../../dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="124,211,315,265"/>
-<area shape="poly" title=" " alt="" coords="440,169,302,213,301,208,439,164"/>
-<area shape="rect" href="../../d4/dca/lockfree__job__queue_8cpp.html" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="339,211,526,265"/>
-<area shape="poly" title=" " alt="" coords="499,175,461,212,457,209,496,171"/>
-<area shape="rect" href="../../d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="551,211,723,265"/>
-<area shape="poly" title=" " alt="" coords="572,170,612,209,608,212,569,174"/>
-<area shape="rect" href="../../dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="752,211,924,265"/>
-<area shape="poly" title=" " alt="" coords="627,164,760,208,758,213,625,169"/>
-<area shape="rect" href="../../d8/d45/adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,313,196,368"/>
-<area shape="poly" title=" " alt="" coords="180,276,133,315,130,311,176,272"/>
-<area shape="rect" href="../../df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="221,321,383,361"/>
-<area shape="poly" title=" " alt="" coords="252,274,288,318,284,322,248,278"/>
-<area shape="rect" href="../../d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="479,416,658,471"/>
-<area shape="poly" title=" " alt="" coords="571,275,550,293,535,314,529,340,532,366,541,392,553,414,548,417,536,394,526,368,523,339,530,312,546,290,567,271"/>
-<area shape="rect" href="../../d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="742,313,934,368"/>
-<area shape="poly" title=" " alt="" coords="702,269,787,311,784,316,700,274"/>
-<area shape="rect" href="../../d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="545,313,717,368"/>
-<area shape="poly" title=" " alt="" coords="637,279,635,313,630,313,632,279"/>
-<area shape="rect" href="../../de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="742,416,934,471"/>
-<area shape="poly" title=" " alt="" coords="841,382,841,416,835,416,835,382"/>
-<area shape="poly" title=" " alt="" coords="610,381,587,417,583,414,605,378"/>
-<area shape="poly" title=" " alt="" coords="841,279,841,313,835,313,835,279"/>
-<area shape="rect" href="../../d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="959,313,1141,368"/>
-<area shape="poly" title=" " alt="" coords="906,269,996,311,994,316,904,273"/>
+<div class="center"><img src="../../d9/dc4/node__pool_8h__dep__incl.png" border="0" usemap="#aimplementations_2lockfree_2include_2node__pool_8hdep" alt=""/></div>
+<map name="aimplementations_2lockfree_2include_2node__pool_8hdep" id="aimplementations_2lockfree_2include_2node__pool_8hdep">
+<area shape="rect" title=" " alt="" coords="517,5,708,45"/>
+<area shape="rect" href="../../db/d5a/lockfree__job__queue_8h.html" title=" " alt="" coords="505,93,721,133"/>
+<area shape="poly" title=" " alt="" coords="615,59,615,93,610,93,610,59"/>
+<area shape="rect" href="../../dc/d6c/adaptive__job__queue_8h.html" title=" " alt="" coords="160,189,380,229"/>
+<area shape="poly" title=" " alt="" coords="531,139,340,191,339,186,530,134"/>
+<area shape="rect" href="../../d4/dca/lockfree__job__queue_8cpp.html" title="Implementation of lock&#45;free multi&#45;producer multi&#45;consumer (MPMC) job queue." alt="" coords="405,189,607,229"/>
+<area shape="poly" title=" " alt="" coords="583,144,529,191,526,187,579,140"/>
+<area shape="rect" href="../../d5/d70/typed__job__queue_8h.html" title=" " alt="" coords="632,181,807,236"/>
+<area shape="poly" title=" " alt="" coords="646,140,691,179,688,183,643,144"/>
+<area shape="rect" href="../../dc/d68/typed__lockfree__job__queue_8h.html" title=" " alt="" coords="831,181,1040,236"/>
+<area shape="poly" title=" " alt="" coords="692,135,845,179,844,184,691,140"/>
+<area shape="rect" href="../../d8/d45/adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,291,212,331"/>
+<area shape="poly" title=" " alt="" coords="230,238,140,294,137,289,227,234"/>
+<area shape="rect" href="../../df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="236,291,424,331"/>
+<area shape="poly" title=" " alt="" coords="291,239,321,290,316,293,286,242"/>
+<area shape="rect" href="../../d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="757,284,970,339"/>
+<area shape="poly" title=" " alt="" coords="770,242,827,282,824,286,767,246"/>
+<area shape="rect" href="../../d6/dfc/typed__thread__pool_8h.html" title=" " alt="" coords="539,387,713,441"/>
+<area shape="poly" title=" " alt="" coords="719,250,711,294,695,340,678,366,658,388,654,385,674,363,690,337,706,293,714,249"/>
+<area shape="rect" href="../../d1/d2f/typed__thread__worker_8h.html" title=" " alt="" coords="507,284,681,339"/>
+<area shape="poly" title=" " alt="" coords="677,247,628,286,625,282,674,243"/>
+<area shape="rect" href="../../de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="768,387,959,441"/>
+<area shape="poly" title=" " alt="" coords="866,352,866,387,861,387,861,352"/>
+<area shape="rect" href="../../db/df9/composition__example_8cpp.html" title=" " alt="" coords="541,489,711,544"/>
+<area shape="poly" title=" " alt="" coords="629,455,629,489,623,489,623,455"/>
+<area shape="poly" title=" " alt="" coords="609,351,620,386,615,387,604,352"/>
+<area shape="poly" title=" " alt="" coords="911,249,884,285,880,282,906,246"/>
+<area shape="rect" href="../../d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="995,284,1177,339"/>
+<area shape="poly" title=" " alt="" coords="987,241,1048,282,1045,286,984,246"/>
 </map>
 </div>
 </div>
@@ -175,7 +177,7 @@ Namespaces</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

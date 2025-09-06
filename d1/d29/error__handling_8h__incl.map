@@ -1,5 +1,5 @@
-<map id="sources/thread_base/sync/error_handling.h" name="sources/thread_base/sync/error_handling.h">
-<area shape="rect" id="Node000001" title="Modern error handling for the thread system." alt="" coords="269,5,435,45"/>
+<map id="core/sync/include/error_handling.h" name="core/sync/include/error_handling.h">
+<area shape="rect" id="Node000001" title="Modern error handling for the thread system." alt="" coords="267,5,437,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,64,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,48,78,96,77,90,271,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="88,93,163,119"/>

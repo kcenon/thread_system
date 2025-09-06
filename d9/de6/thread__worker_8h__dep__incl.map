@@ -1,9 +1,22 @@
-<map id="sources/thread_pool/workers/thread_worker.h" name="sources/thread_pool/workers/thread_worker.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="94,5,279,45"/>
-<area shape="rect" id="Node000002" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="10,93,163,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,56,111,95,107,91,152,52"/>
-<area shape="rect" id="Node000004" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="188,93,388,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="221,52,267,91,264,95,218,56"/>
-<area shape="rect" id="Node000003" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="5,181,168,221"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,147,89,181,84,181,84,147"/>
+<map id="implementations/thread_pool/include/thread_worker.h" name="implementations/thread_pool/include/thread_worker.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="827,5,1043,45"/>
+<area shape="rect" id="Node000002" href="$d3/dec/thread__pool_8h.html" title=" " alt="" coords="612,93,813,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="875,53,762,96,760,91,873,48"/>
+<area shape="rect" id="Node000006" href="$d8/dae/minimal__thread__pool_8cpp.html" title=" " alt="" coords="599,196,826,236"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="909,58,826,135,742,198,739,194,823,131,906,54"/>
+<area shape="rect" id="Node000007" href="$d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="850,181,1045,251"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="940,59,948,181,943,181,935,59"/>
+<area shape="rect" id="Node000008" href="$d9/d16/service__registry__sample_2main_8cpp.html" title=" " alt="" coords="1069,196,1255,236"/>
+<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="954,56,980,94,1013,131,1064,167,1116,194,1114,198,1061,172,1010,135,975,98,950,59"/>
+<area shape="rect" id="Node000009" href="$de/d61/thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="1023,93,1226,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="990,49,1084,91,1082,96,988,53"/>
+<area shape="rect" id="Node000003" href="$df/d17/thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="5,196,193,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="599,127,414,148,309,164,207,184,154,198,152,193,205,179,308,159,413,143,598,121"/>
+<area shape="rect" id="Node000004" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="218,189,389,243"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="599,138,502,159,401,184,377,191,376,186,400,179,501,154,598,133"/>
+<area shape="rect" id="Node000005" href="$d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="413,189,575,243"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="660,142,552,191,550,186,658,137"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="715,147,715,196,710,196,710,147"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="770,136,870,179,868,184,768,141"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="827,131,939,152,1057,179,1108,193,1106,199,1056,184,938,157,826,136"/>
 </map>

@@ -1,5 +1,5 @@
-<map id="sources/interfaces/monitoring_interface.h" name="sources/interfaces/monitoring_interface.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="185,5,359,45"/>
+<map id="interfaces/monitoring_interface.h" name="interfaces/monitoring_interface.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="191,5,353,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,48,86,92,84,87,215,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="96,93,163,119"/>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_pool/async/future_extensions.h Source File</title>
+<title>Thread System: implementations/thread_pool/include/future_extensions.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_0130c45ac4ff57a34cbafc0f335be468.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_719b790bc48e48dfef3093837cbac6c8.html">async</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d12a494b5868c3171ad5a86c7563cf73.html">implementations</a></li><li class="navelem"><a class="el" href="../../dir_63ae926dc5cc2be39d0e962dfa3fda2c.html">thread_pool</a></li><li class="navelem"><a class="el" href="../../dir_b70d4464489ba202d7513908b17ecbcd.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -121,8 +121,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="../../d8/d98/namespacethread__pool__module.html">   49</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a> {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a> {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>; <span class="comment">// For result&lt;T&gt; types</span></div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    </div>
@@ -325,7 +324,6 @@ $(document).ready(function() { init_codefold(1); });
 </div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    </div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>} <span class="comment">// namespace thread_pool_module</span></div>
-</div>
 <div class="ttc" id="aclassthread__pool__module_1_1pool__future_html"><div class="ttname"><a href="../../df/d38/classthread__pool__module_1_1pool__future.html">thread_pool_module::pool_future</a></div><div class="ttdoc">A future that can be scheduled on a thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00060">future_extensions.h:60</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1pool__future_html_a00acf46e1daa9463dd6ba666aa4ac891"><div class="ttname"><a href="../../df/d38/classthread__pool__module_1_1pool__future.html#a00acf46e1daa9463dd6ba666aa4ac891">thread_pool_module::pool_future::value_type</a></div><div class="ttdeci">T value_type</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00062">future_extensions.h:62</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1pool__future_html_a173208d00b57bebda406480174ea13ba"><div class="ttname"><a href="../../df/d38/classthread__pool__module_1_1pool__future.html#a173208d00b57bebda406480174ea13ba">thread_pool_module::pool_future::is_ready</a></div><div class="ttdeci">bool is_ready() const</div><div class="ttdoc">Check if the future is ready.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00073">future_extensions.h:73</a></div></div>
@@ -352,8 +350,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassthread__pool__module_1_1pool__promise_html_a9a3a08160f4baa3802afbe80fa377261"><div class="ttname"><a href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#a9a3a08160f4baa3802afbe80fa377261">thread_pool_module::pool_promise::set_exception</a></div><div class="ttdeci">void set_exception(std::exception_ptr exception)</div><div class="ttdoc">Set an exception.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00153">future_extensions.h:153</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1pool__promise_html_aad180158afe37d0296d0ae0b5e64a763"><div class="ttname"><a href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#aad180158afe37d0296d0ae0b5e64a763">thread_pool_module::pool_promise::value_type</a></div><div class="ttdeci">T value_type</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00122">future_extensions.h:122</a></div></div>
 <div class="ttc" id="aclassthread__pool__module_1_1pool__promise_html_adb8ba4100cf069d773192ac21bc0811c"><div class="ttname"><a href="../../d4/d02/classthread__pool__module_1_1pool__promise.html#adb8ba4100cf069d773192ac21bc0811c">thread_pool_module::pool_promise::promise_</a></div><div class="ttdeci">std::promise&lt; T &gt; promise_</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00172">future_extensions.h:172</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00018">crash_handler.h:18</a></div></div>
-<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00049">future_extensions.h:49</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../df/d4c/thread__pool_2include_2config_8h_source.html#l00046">config.h:46</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_a1dfc5e3068af68df35df3b9bd117d1be"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#a1dfc5e3068af68df35df3b9bd117d1be">thread_pool_module::wait_for_all</a></div><div class="ttdeci">void wait_for_all(Futures &amp;... futures)</div><div class="ttdoc">Wait for all futures to complete.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00241">future_extensions.h:241</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_a2ab7372dcd09abd745b3978af363b73f"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#a2ab7372dcd09abd745b3978af363b73f">thread_pool_module::make_ready_future</a></div><div class="ttdeci">pool_future&lt; void &gt; make_ready_future()</div><div class="ttdoc">Create a future that is already ready with void.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00219">future_extensions.h:219</a></div></div>
 <div class="ttc" id="anamespacethread__pool__module_html_a3b7411875accbf7de1655ba3cd38784f"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#a3b7411875accbf7de1655ba3cd38784f">thread_pool_module::wait_for_any</a></div><div class="ttdeci">size_t wait_for_any(Futures &amp;... futures)</div><div class="ttdoc">Wait for any future to complete.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dca/future__extensions_8h_source.html#l00249">future_extensions.h:249</a></div></div>
@@ -361,7 +359,7 @@ $(document).ready(function() { init_codefold(1); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

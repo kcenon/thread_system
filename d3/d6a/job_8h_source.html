@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thread System: sources/thread_base/jobs/job.h Source File</title>
+<title>Thread System: core/jobs/include/job.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -74,7 +74,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_f275034da0fe94e1f46793c3d061397d.html">thread_base</a></li><li class="navelem"><a class="el" href="../../dir_9a67b789ea6bafaaefe2358c2b988334.html">jobs</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><a class="el" href="../../dir_89ff7df80dfe069bb3db33b1883ff5ba.html">jobs</a></li><li class="navelem"><a class="el" href="../../dir_629ce02dfe275bb1aff8982d6798dadb.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,10 +115,10 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../utilities/core/formatter.h&quot;</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/conversion/convert_string.h&quot;</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;../sync/error_handling.h&quot;</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;../sync/cancellation_token.h&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;../../utilities/include/formatter.h&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;../../utilities/include/convert_string.h&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/d11/error__handling_8h.html">error_handling.h</a>&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;<a class="code" href="../../d4/db5/cancellation__token_8h.html">cancellation_token.h</a>&quot;</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
@@ -175,12 +175,13 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment">// Formatter specializations for job</span></div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">// ----------------------------------------------------------------------------</span></div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="preprocessor">#include &quot;../../utilities/core/formatter_macros.h&quot;</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="preprocessor">#include &quot;../../utilities/include/formatter_macros.h&quot;</span></div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="comment">// Generate formatter specializations for thread_module::job</span></div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><a class="code hl_define" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(<a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a>)</div>
+<div class="ttc" id="acancellation__token_8h_html"><div class="ttname"><a href="../../d4/db5/cancellation__token_8h.html">cancellation_token.h</a></div><div class="ttdoc">Implementation of a cancellation token for cooperative cancellation.</div></div>
 <div class="ttc" id="aclassthread__module_1_1cancellation__token_html"><div class="ttname"><a href="../../df/d25/classthread__module_1_1cancellation__token.html">thread_module::cancellation_token</a></div><div class="ttdoc">Provides a mechanism for cooperative cancellation of operations.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/db5/cancellation__token_8h_source.html#l00055">cancellation_token.h:55</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00075">job_queue.h:76</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1job__queue_html"><div class="ttname"><a href="../../df/d6d/classthread__module_1_1job__queue.html">thread_module::job_queue</a></div><div class="ttdoc">A thread-safe job queue for managing and dispatching work items.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d9d/job__queue_8h_source.html#l00076">job_queue.h:77</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a073a30af3ad6c547f7c1300837d0f397"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a073a30af3ad6c547f7c1300837d0f397">thread_module::job::set_cancellation_token</a></div><div class="ttdeci">virtual auto set_cancellation_token(const cancellation_token &amp;token) -&gt; void</div><div class="ttdoc">Sets a cancellation token that can be used to cancel the job.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00178">job.cpp:178</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_a3d105dae37b1813ec252463f5f3d3f80"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#a3d105dae37b1813ec252463f5f3d3f80">thread_module::job::get_name</a></div><div class="ttdeci">auto get_name(void) const -&gt; std::string</div><div class="ttdoc">Retrieves the name of this job.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00127">job.cpp:127</a></div></div>
@@ -195,13 +196,14 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aclassthread__module_1_1job_html_aed0248a449f4e341057aa29c0369e625"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#aed0248a449f4e341057aa29c0369e625">thread_module::job::job_queue_</a></div><div class="ttdeci">std::weak_ptr&lt; job_queue &gt; job_queue_</div><div class="ttdoc">A weak reference to the job_queue that currently manages this job.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00276">job.h:276</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1job_html_af0ee035dcfd2ef2a5d2fd5ff98bb03b5"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html#af0ee035dcfd2ef2a5d2fd5ff98bb03b5">thread_module::job::~job</a></div><div class="ttdeci">virtual ~job(void)</div><div class="ttdoc">Virtual destructor for the job class to allow proper cleanup in derived classes.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d83/job_8cpp_source.html#l00115">job.cpp:115</a></div></div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
+<div class="ttc" id="aerror__handling_8h_html"><div class="ttname"><a href="../../d3/d11/error__handling_8h.html">error_handling.h</a></div><div class="ttdoc">Modern error handling for the thread system.</div></div>
 <div class="ttc" id="aformatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Generates fmt::formatter specialization.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d8a/formatter__macros_8h_source.html#l00102">formatter_macros.h:102</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dc9/crash__handler_8h_source.html#l00018">crash_handler.h:18</a></div></div>
-<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d86/convert__string_8cpp_source.html#l00065">convert_string.cpp:66</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="anamespaceutility__module_html"><div class="ttname"><a href="../../dd/d2a/namespaceutility__module.html">utility_module</a></div><div class="ttdoc">Utility components supporting the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d46/convert__string_8h_source.html#l00045">convert_string.h:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 30 2025 13:23:14 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 6 2025 15:00:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

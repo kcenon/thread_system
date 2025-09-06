@@ -1,7 +1,5 @@
-<map id="sources/typed_thread_pool/detail/type_traits.h" name="sources/typed_thread_pool/detail/type_traits.h">
-<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="88,5,272,45"/>
-<area shape="rect" id="Node000002" href="$dc/d3e/typed__job__interface_8h.html" title="Interface definitions for typed jobs." alt="" coords="5,93,168,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,57,115,95,111,91,150,53"/>
-<area shape="rect" id="Node000003" href="$d9/d93/template__helpers_8h.html" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="192,93,355,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,53,249,91,245,95,207,57"/>
+<map id="implementations/typed_thread_pool/include/type_traits.h" name="implementations/typed_thread_pool/include/type_traits.h">
+<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="5,5,180,60"/>
+<area shape="rect" id="Node000002" href="$d9/d93/template__helpers_8h.html" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="5,108,180,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,74,95,108,90,108,90,74"/>
 </map>

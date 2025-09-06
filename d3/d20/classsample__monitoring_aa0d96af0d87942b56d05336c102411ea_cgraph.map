@@ -1,0 +1,8 @@
+<map id="sample_monitoring::update_worker_metrics" name="sample_monitoring::update_worker_metrics">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,180,45"/>
+<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="228,5,415,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,23,214,23,214,28,180,28"/>
+<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="463,5,649,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="415,31,449,32,449,37,415,37"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="462,19,428,19,428,14,462,14"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="LockFreeStack::pop" name="LockFreeStack::pop">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,52,153,77"/>
+<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f" title="Acquire a hazard pointer." alt="" coords="201,13,397,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,51,187,46,188,52,154,57"/>
+<area shape="rect" id="Node000005" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734" title="Retire a pointer for later reclamation." alt="" coords="208,77,391,117"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="154,73,195,79,194,84,153,78"/>
+<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aca927cce02b6978435047f450366b4f7" title=" " alt="" coords="445,13,672,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="397,30,432,30,432,35,397,35"/>
+<area shape="rect" id="Node000004" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aac057200a6cc20129b4d7e0500db8af5" title="Acquires a hazard record for the current thread." alt="" coords="720,5,916,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="672,30,706,30,706,35,672,35"/>
+</map>

@@ -1,16 +1,11 @@
 <map id="thread_module::adaptive_job_queue::to_string" name="thread_module::adaptive_job_queue::to_string">
-<area shape="rect" id="Node000001" title="Returns a string representation of this job_queue." alt="" coords="5,101,191,141"/>
-<area shape="rect" id="Node000002" href="$d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="253,5,439,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,99,238,55,260,47,262,52,240,60,141,104"/>
-<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7" title="Get current queue type." alt="" coords="239,69,453,109"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="190,107,225,102,225,108,191,112"/>
-<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb" title="Get performance metrics." alt="" coords="253,133,439,173"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="191,131,240,137,239,142,190,136"/>
-<area shape="rect" id="Node000006" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af" title=" " alt="" coords="253,197,439,237"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="141,139,240,183,262,191,260,196,238,188,138,144"/>
-<area shape="rect" id="Node000003" href="$d1/daf/classutility__module_1_1formatter.html#a0e0cfc83510413df54bdf125abddbfbf" title=" " alt="" coords="515,5,702,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="439,31,502,32,502,37,439,37"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="515,19,453,19,453,14,515,14"/>
-<area shape="rect" id="Node000007" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554" title=" " alt="" coords="501,197,716,237"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="439,215,487,215,487,220,439,220"/>
+<area shape="rect" id="Node000001" title="Returns a string representation of this job_queue." alt="" coords="5,69,191,109"/>
+<area shape="rect" id="Node000002" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#aadbcef3b1d1d3a1479d7f4a5c05e93e7" title="Get current queue type." alt="" coords="239,5,453,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,67,254,46,255,51,177,72"/>
+<area shape="rect" id="Node000003" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a99863b19e32e5d47636220b03de543bb" title="Get performance metrics." alt="" coords="253,69,439,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,87,240,87,240,92,191,92"/>
+<area shape="rect" id="Node000004" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#a152c509ecb73f3a2810d1ab80bbc73af" title=" " alt="" coords="253,133,439,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="177,107,255,127,254,132,176,112"/>
+<area shape="rect" id="Node000005" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html#ae590e4560c853d15dd3780493f327554" title=" " alt="" coords="501,133,716,173"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="439,151,487,151,487,156,439,156"/>
 </map>

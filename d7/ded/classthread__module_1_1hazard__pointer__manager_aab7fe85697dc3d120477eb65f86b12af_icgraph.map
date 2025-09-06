@@ -1,7 +1,14 @@
 <map id="thread_module::hazard_pointer_manager::scan_and_reclaim" name="thread_module::hazard_pointer_manager::scan_and_reclaim">
-<area shape="rect" id="Node000001" title="Force a scan and reclaim cycle." alt="" coords="272,34,451,89"/>
-<area shape="rect" id="Node000002" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aa28233e460899ee53dc66167bc610123" title=" " alt="" coords="5,5,224,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="258,49,224,44,225,39,259,44"/>
-<area shape="rect" id="Node000003" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#ad5cb434831474da9549365dad45c0c91" title="Destructor &#45; ensures all retired objects are reclaimed." alt="" coords="13,70,216,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,79,217,85,216,80,258,74"/>
+<area shape="rect" id="Node000001" title="Force a scan and reclaim cycle." alt="" coords="375,80,553,135"/>
+<area shape="rect" id="Node000002" href="$d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da" title=" " alt="" coords="121,5,313,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="398,76,326,46,282,33,283,28,328,41,400,71"/>
+<area shape="rect" id="Node000004" href="$d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36" title=" " alt="" coords="134,55,301,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="361,97,301,89,301,83,361,91"/>
+<area shape="rect" id="Node000005" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#aa28233e460899ee53dc66167bc610123" title=" " alt="" coords="108,119,327,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="361,123,327,128,327,122,361,118"/>
+<area shape="rect" id="Node000006" href="$d7/ded/classthread__module_1_1hazard__pointer__manager.html#ad5cb434831474da9549365dad45c0c91" title="Destructor &#45; ensures all retired objects are reclaimed." alt="" coords="116,184,319,239"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="396,143,328,174,296,186,294,181,326,169,393,138"/>
+<area shape="rect" id="Node000003" href="$d1/ddb/hazard__pointer__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,35,60,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="124,36,61,46,60,40,123,30"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="119,63,60,54,61,49,120,58"/>
 </map>

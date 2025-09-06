@@ -1,0 +1,17 @@
+<map id="console_monitoring" name="console_monitoring">
+<area shape="rect" id="Node000001" title="Simple monitoring implementation." alt="" coords="27,857,221,1037"/>
+<area shape="rect" id="Node000002" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,545,200,795"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,809,120,857,114,857,111,809"/>
+<area shape="rect" id="Node000003" href="$dc/d59/structmonitoring__interface_1_1metrics__snapshot.html" title="Complete snapshot of all metrics at a point in time." alt="" coords="224,630,389,710"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="283,712,194,845,190,842,279,709"/>
+<area shape="rect" id="Node000004" href="$df/d06/structmonitoring__interface_1_1system__metrics.html" title="System&#45;level performance metrics interface." alt="" coords="15,293,188,453"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="159,451,272,615,268,618,154,454"/>
+<area shape="rect" id="Node000005" href="$d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html" title="Thread pool performance metrics interface." alt="" coords="213,263,401,483"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="309,483,309,613,304,613,304,483"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="267,135,346,200"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="309,200,309,246,304,246,304,200"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="241,5,372,85"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="309,99,309,134,304,134,304,99"/>
+<area shape="rect" id="Node000008" href="$d6/da4/structmonitoring__interface_1_1worker__metrics.html" title="Worker thread performance metrics interface." alt="" coords="425,293,620,453"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="467,455,347,618,343,615,463,451"/>
+</map>

@@ -1,9 +1,9 @@
-<map id="sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h" name="sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="121,5,293,60"/>
-<area shape="rect" id="Node000002" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="5,108,197,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,72,131,110,127,106,167,68"/>
-<area shape="rect" id="Node000004" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="222,108,405,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,68,287,106,284,110,243,72"/>
-<area shape="rect" id="Node000003" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="5,211,197,265"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,176,104,211,99,211,99,176"/>
+<map id="implementations/typed_thread_pool/include/typed_lockfree_job_queue.h" name="implementations/typed_thread_pool/include/typed_lockfree_job_queue.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="118,5,327,60"/>
+<area shape="rect" id="Node000002" href="$d2/dbb/adaptive__typed__job__queue_8h.html" title=" " alt="" coords="5,108,219,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,71,143,110,139,106,182,67"/>
+<area shape="rect" id="Node000004" href="$d6/d47/typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="243,108,426,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="264,67,307,106,304,110,260,71"/>
+<area shape="rect" id="Node000003" href="$de/df2/adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="17,211,207,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="115,176,115,211,109,211,109,176"/>
 </map>

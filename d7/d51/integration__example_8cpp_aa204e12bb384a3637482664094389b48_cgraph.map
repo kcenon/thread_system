@@ -1,0 +1,9 @@
+<map id="thread_pool_with_logger_example" name="thread_pool_with_logger_example">
+<area shape="rect" id="Node000001" title="Example 1: Thread pool with external logger only." alt="" coords="5,69,188,109"/>
+<area shape="rect" id="Node000002" href="$d8/d74/classthread__module_1_1service__container.html#ae81eef0f3c84dc8889cb191568441eee" title="Clear all registered services." alt="" coords="256,5,431,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,67,252,46,253,51,175,72"/>
+<area shape="rect" id="Node000003" href="$d8/d74/classthread__module_1_1service__container.html#a7a1cf07b7287db73a3d668311f55a02e" title="Get the global service container instance." alt="" coords="256,69,431,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,87,242,87,242,92,188,92"/>
+<area shape="rect" id="Node000004" href="$d8/d74/classthread__module_1_1service__container.html#a713be3cfd6aa9469fd5d8981dcd2289d" title="Register a service with singleton lifetime." alt="" coords="236,133,451,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,107,253,127,252,132,174,112"/>
+</map>
