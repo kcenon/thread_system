@@ -16,12 +16,12 @@ All rights reserved.
  * - Integrate with process identification for multi-process scenarios
  */
 
-#include <thread_pool/core/thread_pool.h>
-#include <interfaces/monitoring_interface.h>
-#include <interfaces/thread_context.h>
-#include <thread_base/jobs/callback_job.h>
-#include <thread_pool/workers/thread_worker.h>
-#include <utilities/core/formatter.h>
+#include "thread_pool.h"
+#include "monitoring_interface.h"
+#include "thread_context.h"
+#include "callback_job.h"
+#include "thread_worker.h"
+#include "formatter.h"
 
 #include <chrono>
 #include <thread>

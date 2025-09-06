@@ -33,11 +33,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../utilities/conversion/convert_string.h"
+#include "../../utilities/include/formatter.h"
+#include "../../utilities/include/convert_string.h"
 #include "../../interfaces/thread_context.h"
-#include "../scheduling/typed_job_queue.h"
-#include "../scheduling/typed_thread_worker.h"
+#include "typed_job_queue.h"
+#include "typed_thread_worker.h"
+#include "../../interfaces/executor_interface.h"
 
 #include <tuple>
 #include <string>
@@ -141,6 +142,7 @@ namespace typed_thread_pool_module
 	template <typename job_type = job_types>
 	class typed_thread_pool_t
 		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
+		, public thread_module::executor_interface
 	{
 	public:
 		/**
@@ -200,6 +202,10 @@ namespace typed_thread_pool_module
 		 */
 		[[nodiscard]] auto get_job_queue(void)
 			-> std::shared_ptr<typed_job_queue_t<job_type>>;
+
+		// executor_interface
+		auto execute(std::unique_ptr<job>&& work) -> result_void override;
+		auto shutdown() -> result_void override { return stop(false); }
 
 		/**
 		 * @brief Enqueues a priority job into the thread pool's job queue.

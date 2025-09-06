@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "../../sources/thread_base/sync/error_handling.h"
-#include "../../sources/thread_base/jobs/job_queue.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/thread_base/core/thread_base.h"
+#include "error_handling.h"
+#include "job_queue.h"
+#include "callback_job.h"
+#include "thread_base.h"
 #include <thread>
 #include <chrono>
 

@@ -32,7 +32,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../sources/interfaces/logger_interface.h"
+#include "../../interfaces/logger_interface.h"
 #include <iostream>
 #include <mutex>
 #include <iomanip>

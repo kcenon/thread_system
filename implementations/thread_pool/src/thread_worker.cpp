@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_worker.h"
 
 #include "../../interfaces/logger_interface.h"
-#include "../../utilities/core/formatter.h"
+#include "../../utilities/include/formatter.h"
 
 #include <thread>
 

@@ -110,24 +110,56 @@ thread_system/
 └── docs/                      # ✅ 문서 추가됨
 ```
 
-## 다음 단계 (Phase 2 예정)
+## Phase 2 진행 현황 (in-progress)
+
+### 수행 일시: 2025-09-06 (Asia/Seoul)
+
+### Task 1.14: CMakeLists.txt 수정 ✅
+- 최상위 CMake에 신규 구조 반영: `utilities/`, `interfaces/`, `core/`, `implementations/`
+- 하위 모듈 CMakeLists 추가:
+  - `utilities/`, `interfaces/`, `core/`
+  - `implementations/thread_pool/`, `implementations/typed_thread_pool/`, `implementations/lockfree/`
+- 설치 규칙(install) 신규 include 경로로 전면 갱신
+
+### Task 1.15: 빌드 테스트 ✅ (라이브러리 타겟 기준)
+- 개별 타겟 빌드 검증:
+  - `thread_base`, `lockfree`, `thread_pool`, `typed_thread_pool` 정적 라이브러리 빌드 성공
+- 전체 빌드도 다수 타겟 성공 (일부 샘플/테스트 수정 병행)
+
+### Include 경로 수정 ✅ (핵심부 완료)
+- 신규 레이아웃에 맞춰 대다수 소스의 include 경로 정리
+- 대표 수정
+  - `utilities/core/*` → `utilities/include/*`
+  - `thread_base/*` → `core/base/include/*`, `core/jobs/include/*`, `core/sync/include/*`
+  - `lockfree/*` → `implementations/lockfree/include/*`
+  - `thread_pool/*` → `implementations/thread_pool/include/*`
+  - `typed_thread_pool/*` → `implementations/typed_thread_pool/include/*`
+
+### 테스트 및 샘플 업데이트 🔄 (대부분 완료)
+- unittest
+  - thread_base_test: include 경로 전면 수정 및 `lockfree` 링크 추가 (링킹 이슈 일부 잔존)
+  - thread_pool_test, typed_thread_pool_test: 경로/링크 갱신 후 통과 확인
+  - platform_test: 일부 성능 기준 실패 있으나 컴파일/실행 가능 (기능 이슈로 별도 트랙)
+- samples
+  - minimal_thread_pool, composition_example, integration_example, multi_process_monitoring_integration: 신규 include 경로 및 include_directories 반영 (모두 빌드 성공)
+
+### 남은 이슈
+- thread_base_unit 링크 에러(arm64): `adaptive_job_queue`, `lockfree_job_queue` 심볼 미해결 보고됨
+  - 원인 추정: 정적 라이브러리 링크 순서/아카이브 해제 정책(macOS) 영향 가능성
+  - 대응 방안: 
+    1) `thread_base_unit`에 대한 링크 순서 고정 또는 `-Wl,-all_load`(macOS) 적용 검토
+    2) 테스트 내 직접 참조 심볼 여부/원형 선언/ODR 중복 여부 재점검
+    3) 필요 시 테스트 타겟에 `lockfree`를 마지막에 명시적으로 재링크
+
+---
+
+## 다음 단계 (Phase 2 잔여)
 
 ### 남은 주요 작업
-1. **Task 1.14: CMakeLists.txt 수정**
-   - 새 디렉토리 구조 반영
-   - 타겟 경로 업데이트
-
-2. **Task 1.15: 빌드 테스트**
-   - 전체 프로젝트 빌드 확인
-   - 컴파일 에러 수정
-
-3. **Include 경로 수정**
-   - 모든 소스 파일의 include 경로 업데이트
-   - 상대 경로를 새 구조에 맞게 조정
-
-4. **테스트 및 샘플 업데이트**
-   - unittest 디렉토리를 tests로 이동
-   - 샘플 코드의 include 경로 수정
+1. thread_base_unit 링크 이슈 해결 (macOS 정적 링크 정책 대응)
+2. 잔여 include 경로 점검(코너 케이스)
+3. 필요 시 테스트 구조 개선(실행 실패 기준 완화/성능 테스트 분리)
+4. samples 추가 정리(비활성 샘플 점진적 복구)
 
 ## 현재 상태 평가
 

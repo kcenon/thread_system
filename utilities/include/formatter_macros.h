@@ -48,7 +48,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "formatter.h"
-#include "../conversion/convert_string.h"
+#include "convert_string.h"
 
 #ifdef USE_STD_FORMAT
 

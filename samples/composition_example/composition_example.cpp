@@ -34,14 +34,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <thread>
 
-#include "../../sources/interfaces/service_container.h"
-#include "../../sources/interfaces/thread_context.h"
-#include "../../sources/interfaces/logger_interface.h"
-#include "../../sources/interfaces/monitoring_interface.h"
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
+#include "../../interfaces/service_container.h"
+#include "../../interfaces/thread_context.h"
+#include "../../interfaces/logger_interface.h"
+#include "../../interfaces/monitoring_interface.h"
+#include "thread_pool.h"
+#include "callback_job.h"
+#include "typed_thread_pool.h"
+#include "callback_typed_job.h"
 
 using namespace thread_module;
 using namespace thread_pool_module;

@@ -32,11 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../thread_base/jobs/job_queue.h"
-#include "../workers/thread_worker.h"
-#include "../../utilities/conversion/convert_string.h"
-#include "../detail/forward_declarations.h"
+#include "../../utilities/include/formatter.h"
+#include "../../core/jobs/include/job_queue.h"
+#include "thread_worker.h"
+#include "../../utilities/include/convert_string.h"
+#include "detail/forward_declarations.h"
+#include "../../interfaces/executor_interface.h"
 #include "../../interfaces/thread_context.h"
 #include "config.h"
 
@@ -113,7 +114,7 @@ namespace thread_pool_module
 	 * @see job_queue The shared queue for storing pending jobs
 	 * @see typed_thread_pool_module::typed_thread_pool For a priority-based version
 	 */
-	class thread_pool : public std::enable_shared_from_this<thread_pool>
+	class thread_pool : public std::enable_shared_from_this<thread_pool>, public thread_module::executor_interface
 	{
 	public:
 		/**
@@ -144,6 +145,10 @@ namespace thread_pool_module
 		 * within member functions to avoid storing a separate shared pointer.
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
+
+		// executor_interface
+		auto execute(std::unique_ptr<job>&& work) -> result_void override;
+		auto shutdown() -> result_void override;
 
         /**
          * @brief Starts the thread pool and all associated workers.

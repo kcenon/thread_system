@@ -39,8 +39,8 @@
  * including scheduling strategies, idle handling, and work stealing.
  */
 
-#include "../detail/forward_declarations.h"
-#include "../core/config.h"
+#include "detail/forward_declarations.h"
+#include "config.h"
 #include <chrono>
 #include <string>
 

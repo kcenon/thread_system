@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../thread_base/jobs/job.h"
-#include "../core/job_types.h"
+#include "../../core/jobs/include/job.h"
+#include "job_types.h"
 
 using namespace thread_module;
 

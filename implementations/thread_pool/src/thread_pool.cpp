@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "thread_pool.h"
-#include "../../thread_base/lockfree/queues/adaptive_job_queue.h"
+#include "../../lockfree/include/adaptive_job_queue.h"
 
 #include "../../interfaces/logger_interface.h"
-#include "../../utilities/core/formatter.h"
+#include "../../utilities/include/formatter.h"
 
 using namespace utility_module;
 
@@ -173,6 +173,14 @@ namespace thread_pool_module
 	 * @return Shared pointer to the job queue
 	 */
 	auto thread_pool::get_job_queue(void) -> std::shared_ptr<job_queue> { return job_queue_; }
+
+	// executor_interface
+	auto thread_pool::execute(std::unique_ptr<job>&& work) -> result_void
+	{
+		return enqueue(std::move(work));
+	}
+
+	auto thread_pool::shutdown() -> result_void { return stop(false); }
 
 	/**
 	 * @brief Adds a single job to the thread pool for processing.

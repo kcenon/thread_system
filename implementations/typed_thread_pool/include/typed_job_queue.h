@@ -32,14 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../utilities/core/span.h"
-#include "../../thread_base/jobs/job_queue.h"
-#include "../../thread_base/lockfree/queues/lockfree_job_queue.h"
-#include "../jobs/typed_job.h"
-#include "../../utilities/conversion/convert_string.h"
-#include "../core/job_types.h"
-#include "../jobs/callback_typed_job.h"
+#include "../../utilities/include/formatter.h"
+#include "../../utilities/include/span.h"
+#include "../../core/jobs/include/job_queue.h"
+#include "../../lockfree/include/lockfree_job_queue.h"
+#include "typed_job.h"
+#include "../../utilities/include/convert_string.h"
+#include "job_types.h"
+#include "callback_typed_job.h"
 
 #include <map>
 #include <unordered_map>

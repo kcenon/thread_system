@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "adaptive_typed_job_queue.h"
-#include "../../utilities/core/formatter.h"
+#include "../../utilities/include/formatter.h"
 
 namespace typed_thread_pool_module
 {

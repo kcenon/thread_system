@@ -35,9 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 #include <thread>
 
-#include "thread_pool/core/thread_pool.h"
-#include "thread_pool/workers/thread_worker.h"
-#include "thread_base/jobs/callback_job.h"
+#include "thread_pool.h"
+#include "thread_worker.h"
+#include "callback_job.h"
 
 using namespace thread_pool_module;
 using namespace thread_module;

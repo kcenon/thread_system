@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../jobs/job_queue.h"
-#include "../memory/hazard_pointer.h"
-#include "../memory/node_pool.h"
-#include "../../utilities/core/formatter.h"
+#include "../../core/jobs/include/job_queue.h"
+#include "hazard_pointer.h"
+#include "node_pool.h"
+#include "../../utilities/include/formatter.h"
 
 #include <atomic>
 #include <memory>

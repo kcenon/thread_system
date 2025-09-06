@@ -33,10 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "job.h"
-#include "../../utilities/core/formatter.h"
+#include "../../utilities/include/formatter.h"
 #include "callback_job.h"
-#include "../../utilities/conversion/convert_string.h"
-#include "../sync/error_handling.h"
+#include "../../utilities/include/convert_string.h"
+#include "error_handling.h"
+#include "scheduler_interface.h"
 
 #include <mutex>
 #include <deque>
@@ -72,7 +73,7 @@ namespace thread_module
 	 * 4. Call @c stop_waiting_dequeue() and possibly @c clear() to shut down the queue
 	 *    gracefully when all jobs are done or when the system is stopping.
 	 */
-	class job_queue : public std::enable_shared_from_this<job_queue>
+	class job_queue : public std::enable_shared_from_this<job_queue>, public scheduler_interface
 	{
 	public:
 		/**
@@ -115,6 +116,16 @@ namespace thread_module
 		 *               won't be automatically notified.
 		 */
 		auto set_notify(bool notify) -> void;
+
+		/**
+		 * @brief scheduler_interface implementation: schedule a job
+		 */
+		auto schedule(std::unique_ptr<job>&& value) -> result_void override { return enqueue(std::move(value)); }
+
+		/**
+		 * @brief scheduler_interface implementation: get next job
+		 */
+		auto get_next_job() -> result<std::unique_ptr<job>> override { return dequeue(); }
 
 		/**
 		 * @brief Enqueues a new job into the queue.
@@ -245,7 +256,7 @@ namespace thread_module
 // Formatter specializations for job_queue
 // ----------------------------------------------------------------------------
 
-#include "../../utilities/core/formatter_macros.h"
+#include "../../utilities/include/formatter_macros.h"
 
 // Generate formatter specializations for thread_module::job_queue
 DECLARE_FORMATTER(thread_module::job_queue)

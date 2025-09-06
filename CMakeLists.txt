@@ -551,10 +551,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
   endif()
 
-  # Add subdirectories for source code, samples, and unit tests
-  add_subdirectory(sources)  # Core library code
-  add_subdirectory(samples)  # Example applications
-  add_subdirectory(unittest)  # Unit tests
+  # Add subdirectories for new modularized source code, samples, and unit tests
+  add_subdirectory(utilities)        # Utilities library
+  add_subdirectory(interfaces)       # Public interfaces
+  add_subdirectory(core)             # Core (thread_base, jobs, sync)
+  add_subdirectory(implementations)  # Implementations (thread_pool, typed_thread_pool, lockfree)
+  add_subdirectory(samples)          # Example applications
+  add_subdirectory(unittest)         # Unit tests
   
   # Add benchmarks directory if requested
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
@@ -576,25 +579,38 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   include(GNUInstallDirs)
   
   # Install header files with proper directory structure
-  install(DIRECTORY sources/utilities/
+  # Install headers from new directory structure
+  install(DIRECTORY utilities/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/interfaces/
+
+  install(DIRECTORY interfaces/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_base/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
+
+  install(DIRECTORY core/base/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/base
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_pool
+
+  install(DIRECTORY core/jobs/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/jobs
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/typed_thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
+
+  install(DIRECTORY core/sync/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/sync
+          FILES_MATCHING PATTERN "*.h")
+
+  install(DIRECTORY implementations/thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/thread_pool
+          FILES_MATCHING PATTERN "*.h")
+
+  install(DIRECTORY implementations/typed_thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/typed_thread_pool
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
+
+  install(DIRECTORY implementations/lockfree/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/lockfree
+          FILES_MATCHING PATTERN "*.h")
   
   # Monitoring headers disabled - moved to separate project
   # install(DIRECTORY sources/monitoring/
@@ -602,7 +618,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   #         FILES_MATCHING PATTERN "*.h")
   
   # Install libraries
-  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool
+  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool lockfree
           EXPORT ThreadSystemTargets
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

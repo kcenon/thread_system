@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../utilities/conversion/convert_string.h"
-#include "../sync/error_handling.h"
-#include "../sync/cancellation_token.h"
+#include "../../utilities/include/formatter.h"
+#include "../../utilities/include/convert_string.h"
+#include "error_handling.h"
+#include "cancellation_token.h"
 
 #include <tuple>
 #include <memory>
@@ -289,7 +289,7 @@ namespace thread_module
 // Formatter specializations for job
 // ----------------------------------------------------------------------------
 
-#include "../../utilities/core/formatter_macros.h"
+#include "../../utilities/include/formatter_macros.h"
 
 // Generate formatter specializations for thread_module::job
 DECLARE_FORMATTER(thread_module::job)

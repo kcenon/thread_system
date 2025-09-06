@@ -49,10 +49,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 
 // Thread system headers
-#include "../../sources/interfaces/service_container.h"
-#include "../../sources/interfaces/thread_context.h"
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
+#include "../../interfaces/service_container.h"
+#include "../../interfaces/thread_context.h"
+#include "thread_pool.h"
+#include "callback_job.h"
 
 // External logger headers (would be from installed package)
 // #include <logger_system/logger.h>

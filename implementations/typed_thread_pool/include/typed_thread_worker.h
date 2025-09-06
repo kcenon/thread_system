@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../thread_base/core/thread_base.h"
-#include "../../utilities/conversion/convert_string.h"
+#include "../../utilities/include/formatter.h"
+#include "../../core/base/include/thread_base.h"
+#include "../../utilities/include/convert_string.h"
 #include "../../interfaces/thread_context.h"
 #include "typed_job_queue.h"
 

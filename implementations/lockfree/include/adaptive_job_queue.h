@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../jobs/job_queue.h"
+#include "../../core/jobs/include/job_queue.h"
 #include "lockfree_job_queue.h"
 #include <thread>
 #include <chrono>

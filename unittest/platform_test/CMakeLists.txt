@@ -16,11 +16,13 @@ if(DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../bu
     endif()
 endif()
 
-# Include thread_base headers
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
-# Monitoring include removed - moved to separate project
-# include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/monitoring)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_pool)
+# Include new headers for core and thread_pool
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
+)
 
 # Try to find GTest (vcpkg first, then system)
 find_package(GTest CONFIG)

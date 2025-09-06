@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "typed_thread_worker.h"
 
 #include "../../interfaces/logger_interface.h"
-#include "../../utilities/core/formatter.h"
+#include "../../utilities/include/formatter.h"
 #include "typed_job_queue.h"
 
 using namespace utility_module;

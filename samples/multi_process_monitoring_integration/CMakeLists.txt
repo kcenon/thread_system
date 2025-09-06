@@ -13,7 +13,12 @@ target_link_libraries(multi_process_monitoring_integration
 # Add include directories
 target_include_directories(multi_process_monitoring_integration 
     PRIVATE 
-        ${PROJECT_SOURCE_DIR}/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../interfaces
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../utilities/include
 )
 
 # Set C++ standard

@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../thread_base/lockfree/queues/lockfree_job_queue.h"
-#include "../jobs/typed_job.h"
-#include "../core/job_types.h"
-#include "../../utilities/core/formatter.h"
-#include "../../utilities/core/span.h"
+#include "../../lockfree/include/lockfree_job_queue.h"
+#include "typed_job.h"
+#include "job_types.h"
+#include "../../utilities/include/formatter.h"
+#include "../../utilities/include/span.h"
 
 #include <unordered_map>
 #include <shared_mutex>

@@ -1,13 +1,7 @@
-project(integration_example)
+project(service_registry_sample)
 
-# Create the example executable
-add_executable(${PROJECT_NAME} 
-    integration_example.cpp
-    mock_logger.h
-    mock_monitoring.h
-)
+add_executable(${PROJECT_NAME} main.cpp)
 
-# Link against required libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     thread_pool
     thread_base
@@ -15,19 +9,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     utilities
 )
 
-# Include new headers for interfaces, core and thread_pool
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../../interfaces
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
 )
 
-# Set output directory
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
-# Set C++ standard
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)

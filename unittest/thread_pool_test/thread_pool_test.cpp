@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "core/thread_pool.h"
+#include "thread_pool.h"
 
 using namespace thread_pool_module;
 

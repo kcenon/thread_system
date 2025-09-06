@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/core/formatter.h"
-#include "../../utilities/conversion/convert_string.h"
+#include "../../utilities/include/formatter.h"
+#include "../../utilities/include/convert_string.h"
 #include "thread_conditions.h"
-#include "../sync/error_handling.h"
-#include "../detail/thread_impl.h"
+#include "error_handling.h"
+#include "detail/thread_impl.h"
 
 #include <mutex>
 #include <memory>
@@ -364,7 +364,7 @@ namespace thread_module
 // Formatter specializations for thread_base
 // ----------------------------------------------------------------------------
 
-#include "../../utilities/core/formatter_macros.h"
+#include "../../utilities/include/formatter_macros.h"
 
 // Generate formatter specializations for thread_module::thread_base
 DECLARE_FORMATTER(thread_module::thread_base)

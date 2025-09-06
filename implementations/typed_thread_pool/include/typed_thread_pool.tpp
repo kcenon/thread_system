@@ -31,8 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "typed_thread_pool.h"
-#include "../scheduling/adaptive_typed_job_queue.h"
-#include "../../utilities/core/formatter.h"
+#include "adaptive_typed_job_queue.h"
+#include "../../utilities/include/formatter.h"
 
 using namespace utility_module;
 
@@ -125,6 +125,16 @@ namespace typed_thread_pool_module
 		-> std::shared_ptr<typed_job_queue_t<job_type>>
 	{
 		return job_queue_;
+	}
+
+	// executor_interface
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::execute(std::unique_ptr<job>&& work) -> result_void
+	{
+		if (!job_queue_) {
+			return error{error_code::resource_allocation_failed, "null job queue"};
+		}
+		return job_queue_->enqueue(std::move(work));
 	}
 
 	template <typename job_type>
