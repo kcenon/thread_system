@@ -54,3 +54,8 @@ add_custom_target(${PROJECT_NAME}_test ALL
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
     DEPENDS ${PROJECT_NAME}
 )
+
+# Apply sanitizers if enabled
+if(COMMAND apply_sanitizers)
+    apply_sanitizers(${PROJECT_NAME})
+endif()
