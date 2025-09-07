@@ -21,7 +21,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          repository: kcenon/thread_system
           persist-credentials: true
           clean: true
           fetch-depth: 1

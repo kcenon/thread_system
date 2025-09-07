@@ -169,33 +169,32 @@ jobs:
           } else {
             Write-Host "Running basic verification test (system libraries fallback)..."
             
-            @'
-#include <iostream>
-#include <thread>
-#include <chrono>
-#include <atomic>
+            
+            # Write minimal C++ test without here-string to avoid YAML parsing issues
+            Set-Content -Path "verification_test.cpp" -Encoding UTF8 '#include <iostream>'
+            Add-Content -Path "verification_test.cpp" '#include <thread>'
+            Add-Content -Path "verification_test.cpp" '#include <chrono>'
+            Add-Content -Path "verification_test.cpp" '#include <atomic>'
+            Add-Content -Path "verification_test.cpp" ''
+            Add-Content -Path "verification_test.cpp" 'int main() {'
+            Add-Content -Path "verification_test.cpp" '    std::cout << "Thread System CI Verification (Windows)\n";'
+            Add-Content -Path "verification_test.cpp" '    std::cout << "========================================\n";'
+            Add-Content -Path "verification_test.cpp" '    std::atomic<bool> test_completed{false};'
+            Add-Content -Path "verification_test.cpp" '    {'
+            Add-Content -Path "verification_test.cpp" '        std::jthread test_thread([&test_completed]() {'
+            Add-Content -Path "verification_test.cpp" '            std::this_thread::sleep_for(std::chrono::milliseconds(10));'
+            Add-Content -Path "verification_test.cpp" '            test_completed = true;'
+            Add-Content -Path "verification_test.cpp" '        });'
+            Add-Content -Path "verification_test.cpp" '    }'
+            Add-Content -Path "verification_test.cpp" '    if (test_completed) {'
+            Add-Content -Path "verification_test.cpp" '        std::cout << "✅ Core functionality verified on Windows\n";'
+            Add-Content -Path "verification_test.cpp" '        return 0;'
+            Add-Content -Path "verification_test.cpp" '    } else {'
+            Add-Content -Path "verification_test.cpp" '        std::cout << "❌ Verification failed\n";'
+            Add-Content -Path "verification_test.cpp" '        return 1;'
+            Add-Content -Path "verification_test.cpp" '    }'
+            Add-Content -Path "verification_test.cpp" '}'
 
-int main() {
-    std::cout << "Thread System CI Verification (Windows)\n";
-    std::cout << "========================================\n";
-    
-    std::atomic<bool> test_completed{false};
-    {
-        std::jthread test_thread([&test_completed]() {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            test_completed = true;
-        });
-    }
-    
-    if (test_completed) {
-        std::cout << "✅ Core functionality verified on Windows\n";
-        return 0;
-    } else {
-        std::cout << "❌ Verification failed\n";
-        return 1;
-    }
-}
-'@ | Out-File -FilePath "verification_test.cpp" -Encoding UTF8
             
             cl /std:c++20 /DUSE_STD_FORMAT verification_test.cpp /Fe:verification_test.exe
             .\verification_test.exe

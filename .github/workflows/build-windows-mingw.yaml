@@ -35,10 +35,9 @@ jobs:
       - name: Setup MinGW
         shell: pwsh
         run: |
-          try {
-            choco install mingw --version=12.2.0 -y
-          } catch {
-            Write-Warning "Falling back to latest available MinGW via Chocolatey"
+          choco install mingw --version=12.2.0 -y
+          if ($LASTEXITCODE -ne 0) {
+            Write-Warning "Pinned MinGW 12.2.0 unavailable; installing latest via Chocolatey"
             choco install mingw -y
           }
           $mingwPath = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
@@ -193,33 +192,31 @@ jobs:
             }
           } else {
             Write-Host "Running basic verification test (system libraries fallback or tests not built)..."
-            @'
-  #include <iostream>
-  #include <thread>
-  #include <chrono>
-  #include <atomic>
-  
-  int main() {
-      std::cout << "Thread System CI Verification (MinGW)\n";
-      std::cout << "====================================\n";
-      
-      std::atomic<bool> test_completed{false};
-      {
-          std::jthread test_thread([&test_completed]() {
-              std::this_thread::sleep_for(std::chrono::milliseconds(10));
-              test_completed = true;
-          });
-      }
-      
-      if (test_completed) {
-          std::cout << "✅ Core functionality verified on MinGW\n";
-          return 0;
-      } else {
-          std::cout << "❌ Verification failed\n";
-          return 1;
-      }
-  }
-  '@ | Out-File -FilePath "verification_test.cpp" -Encoding UTF8
+            
+            # Write minimal C++ test without here-string to avoid YAML parsing issues
+            Set-Content -Path "verification_test.cpp" -Encoding UTF8 '#include <iostream>'
+            Add-Content -Path "verification_test.cpp" '#include <thread>'
+            Add-Content -Path "verification_test.cpp" '#include <chrono>'
+            Add-Content -Path "verification_test.cpp" '#include <atomic>'
+            Add-Content -Path "verification_test.cpp" ''
+            Add-Content -Path "verification_test.cpp" 'int main() {'
+            Add-Content -Path "verification_test.cpp" '    std::cout << "Thread System CI Verification (MinGW)\\n";'
+            Add-Content -Path "verification_test.cpp" '    std::cout << "====================================\\n";'
+            Add-Content -Path "verification_test.cpp" '    std::atomic<bool> test_completed{false};'
+            Add-Content -Path "verification_test.cpp" '    {'
+            Add-Content -Path "verification_test.cpp" '        std::jthread test_thread([&test_completed]() {'
+            Add-Content -Path "verification_test.cpp" '            std::this_thread::sleep_for(std::chrono::milliseconds(10));'
+            Add-Content -Path "verification_test.cpp" '            test_completed = true;'
+            Add-Content -Path "verification_test.cpp" '        });'
+            Add-Content -Path "verification_test.cpp" '    }'
+            Add-Content -Path "verification_test.cpp" '    if (test_completed) {'
+            Add-Content -Path "verification_test.cpp" '        std::cout << "✅ Core functionality verified on MinGW\\n";'
+            Add-Content -Path "verification_test.cpp" '        return 0;'
+            Add-Content -Path "verification_test.cpp" '    } else {'
+            Add-Content -Path "verification_test.cpp" '        std::cout << "❌ Verification failed\\n";'
+            Add-Content -Path "verification_test.cpp" '        return 1;'
+            Add-Content -Path "verification_test.cpp" '    }'
+            Add-Content -Path "verification_test.cpp" '}'
             
             g++ -std=c++20 -pthread -DUSE_STD_FORMAT verification_test.cpp -o verification_test.exe
             .\verification_test.exe
