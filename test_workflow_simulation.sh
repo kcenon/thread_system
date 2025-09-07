@@ -13,7 +13,7 @@ rm -rf CMakeCache.txt CMakeFiles/
 
 # Simulate the fallback build that would happen in GitHub Actions
 echo "Building with system libraries fallback (like in CI)..."
-cmake .. \
+if cmake .. \
     -G Ninja \
     -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON \
     -DCMAKE_BUILD_TYPE=Debug \
@@ -21,8 +21,7 @@ cmake .. \
     -DCMAKE_TOOLCHAIN_FILE="" \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++
-
-if [ $? -eq 0 ]; then
+then
     echo "✅ CMake configuration succeeded (fallback scenario)"
 else
     echo "❌ CMake configuration failed"
@@ -30,9 +29,7 @@ else
 fi
 
 # Build the project
-cmake --build . --parallel 2
-
-if [ $? -eq 0 ]; then
+if cmake --build . --parallel 2; then
     echo "✅ Build succeeded (fallback scenario)"
 else
     echo "❌ Build failed"
@@ -77,10 +74,8 @@ int main() {
 }
 EOF
 
-    g++ -std=c++20 -DUSE_STD_FORMAT -o ci_verification_test ci_verification_test.cpp -lpthread
-    ./ci_verification_test
-    
-    if [ $? -eq 0 ]; then
+    if g++ -std=c++20 -DUSE_STD_FORMAT -o ci_verification_test ci_verification_test.cpp -lpthread \
+       && ./ci_verification_test; then
         echo "✅ Basic verification test passed"
     else
         echo "❌ Basic verification test failed"

@@ -600,26 +600,35 @@ fi
 
 print_status "Using build system: $BUILD_COMMAND"
 
-# Run build with appropriate target and cores
-if [ "$BUILD_COMMAND" == "ninja" ]; then
+# Run build with appropriate target and cores (fail fast on error)
+if [ "$BUILD_COMMAND" = "ninja" ]; then
     if [ -n "$BUILD_TARGET" ]; then
-        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS $BUILD_TARGET
+        if ! $BUILD_COMMAND -j"$BUILD_CORES" $BUILD_ARGS "$BUILD_TARGET"; then
+            print_error "Build failed. See the output above for details."
+            cd "$ORIGINAL_DIR"
+            exit 1
+        fi
     else
-        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
+        if ! $BUILD_COMMAND -j"$BUILD_CORES" $BUILD_ARGS; then
+            print_error "Build failed. See the output above for details."
+            cd "$ORIGINAL_DIR"
+            exit 1
+        fi
     fi
-elif [ "$BUILD_COMMAND" == "make" ]; then
+elif [ "$BUILD_COMMAND" = "make" ]; then
     if [ -n "$BUILD_TARGET" ]; then
-        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS $BUILD_TARGET
+        if ! $BUILD_COMMAND -j"$BUILD_CORES" $BUILD_ARGS "$BUILD_TARGET"; then
+            print_error "Build failed. See the output above for details."
+            cd "$ORIGINAL_DIR"
+            exit 1
+        fi
     else
-        $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
+        if ! $BUILD_COMMAND -j"$BUILD_CORES" $BUILD_ARGS; then
+            print_error "Build failed. See the output above for details."
+            cd "$ORIGINAL_DIR"
+            exit 1
+        fi
     fi
-fi
-
-# Check if build was successful
-if [ $? -ne 0 ]; then
-    print_error "Build failed. See the output above for details."
-    cd "$ORIGINAL_DIR"
-    exit 1
 fi
 
 # Run tests if requested
