@@ -12,6 +12,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     utilities
 )
 
+# Include new headers for interfaces, core and pools
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../interfaces
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/typed_thread_pool/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/lockfree/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
+)
+
 # Set output directory
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"

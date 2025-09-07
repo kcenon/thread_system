@@ -145,16 +145,15 @@ namespace thread_pool_module
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
 
-		/**
-		 * @brief Starts the thread pool and all associated workers.
-		 * @return @c std::optional<std::string> containing an error message if the start
-		 *         operation fails, or @c std::nullopt on success.
-		 *
-		 * If the pool is already running, a subsequent call to @c start() may return an error.
-		 * On success, each @c thread_worker in @c workers_ is started, enabling them to process
-		 * jobs from the @c job_queue_.
-		 */
-		auto start(void) -> std::optional<std::string>;
+        /**
+         * @brief Starts the thread pool and all associated workers.
+         * @return @c result_void containing an error on failure, or success value on success.
+         *
+         * If the pool is already running, a subsequent call to @c start() may return an error.
+         * On success, each @c thread_worker in @c workers_ is started, enabling them to process
+         * jobs from the @c job_queue_.
+         */
+        auto start(void) -> result_void;
 
 		/**
 		 * @brief Returns the shared @c job_queue used by this thread pool.
@@ -165,87 +164,42 @@ namespace thread_pool_module
 		 */
 		[[nodiscard]] auto get_job_queue(void) -> std::shared_ptr<job_queue>;
 
-		/**
-		 * @brief Enqueues a new job into the shared @c job_queue.
-		 * @param job A @c std::unique_ptr<job> representing the work to be done.
-		 * @return @c std::optional<std::string> containing an error message if the enqueue
-		 *         operation fails, or @c std::nullopt on success.
-		 *
-		 * Example:
-		 * @code
-		 * auto pool = std::make_shared<thread_pool_module::thread_pool>();
-		 * pool->start();
-		 *
-		 * auto my_job = std::make_unique<callback_job>(
-		 * 	   // some callback...
-		 * );
-		 * if (auto err = pool->enqueue(std::move(my_job))) {
-		 *     // handle error
-		 * }
-		 * @endcode
-		 */
-		auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
+        /**
+         * @brief Enqueues a new job into the shared @c job_queue.
+         * @param job A @c std::unique_ptr<job> representing the work to be done.
+         * @return @c result_void containing an error on failure, or success value on success.
+         */
+        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
 
-		/**
-		 * @brief Enqueues a batch of jobs into the shared @c job_queue.
-		 * @param jobs A vector of @c std::unique_ptr<job> objects to be added.
-		 * @return @c std::optional<std::string> containing an error message if the enqueue
-		 *         operation fails, or @c std::nullopt on success.
-		 *
-		 * Example:
-		 * @code
-		 * auto pool = std::make_shared<thread_pool_module::thread_pool>();
-		 * pool->start();
-		 *
-		 * std::vector<std::unique_ptr<job>> jobs;
-		 * jobs.push_back(std::make_unique<callback_job>(
-		 *     // some callback...
-		 * ));
-		 * jobs.push_back(std::make_unique<callback_job>(
-		 *     // another callback...
-		 * ));
-		 *
-		 * if (auto err = pool->enqueue_batch(std::move(jobs))) {
-		 *     // handle error
-		 * }
-		 * @endcode
-		 */
-		auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+        /**
+         * @brief Enqueues a batch of jobs into the shared @c job_queue.
+         * @param jobs A vector of @c std::unique_ptr<job> objects to be added.
+         * @return @c result_void containing an error on failure, or success value on success.
+         */
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
 
-		/**
-		 * @brief Adds a @c thread_worker to the thread pool for specialized or additional
-		 * processing.
-		 * @param worker A @c std::unique_ptr<thread_worker> object.
-		 * @return @c std::optional<std::string> containing an error message if the operation
-		 *         fails, or @c std::nullopt on success.
-		 *
-		 * Each worker is stored in @c workers_. When @c start() is called, these workers
-		 * begin running and can process jobs from the @c job_queue.
-		 */
-		auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
+        /**
+         * @brief Adds a @c thread_worker to the thread pool for specialized or additional processing.
+         * @param worker A @c std::unique_ptr<thread_worker> object.
+         * @return @c result_void containing an error on failure, or success value on success.
+         */
+        auto enqueue(std::unique_ptr<thread_worker>&& worker) -> result_void;
 
-		/**
-		 * @brief Adds a batch of @c thread_worker objects to the thread pool.
-		 * @param workers A vector of @c std::unique_ptr<thread_worker> objects.
-		 * @return @c std::optional<std::string> containing an error message if the operation
-		 *         fails, or @c std::nullopt on success.
-		 *
-		 * Each worker is stored in @c workers_. When @c start() is called, these workers
-		 * begin running and can process jobs from the @c job_queue.
-		 */
-		auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
-			-> std::optional<std::string>;
+        /**
+         * @brief Adds a batch of @c thread_worker objects to the thread pool.
+         * @param workers A vector of @c std::unique_ptr<thread_worker> objects.
+         * @return @c result_void containing an error on failure, or success value on success.
+         */
+        auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+            -> result_void;
 
-		/**
-		 * @brief Stops the thread pool and all worker threads.
-		 * @param immediately_stop If @c true, any ongoing jobs may be interrupted; if @c false
-		 *        (default), each worker attempts to finish its current job before stopping.
-		 *
-		 * Once stopped, the pool's @c start_pool_ flag is set to false, and no further
-		 * job processing occurs. Behavior of re-starting a stopped pool depends on the
-		 * implementation and may require re-initialization.
-		 */
-		auto stop(const bool& immediately_stop = false) -> void;
+        /**
+         * @brief Stops the thread pool and all worker threads.
+         * @param immediately_stop If @c true, any ongoing jobs may be interrupted; if @c false
+         *        (default), each worker attempts to finish its current job before stopping.
+         * @return @c result_void containing an error on failure, or success value on success.
+         */
+        auto stop(const bool& immediately_stop = false) -> result_void;
 
 		/**
 		 * @brief Provides a string representation of this @c thread_pool.

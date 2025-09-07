@@ -20,6 +20,7 @@ project(ThreadSystem
 # - OFF (default): Builds as standalone project with samples and tests
 # - ON: Builds only the core libraries for integration into other projects
 option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 
 ##################################################
 # C++ Standard Configuration
@@ -88,6 +89,40 @@ check_required_headers()
 
 # Check C++ standard library features
 check_cpp_stdlib_features()
+
+##################################################
+# Sanitizers and Static Analysis
+##################################################
+
+option(ENABLE_ASAN "Enable AddressSanitizer" OFF)
+option(ENABLE_UBSAN "Enable UndefinedBehaviorSanitizer" OFF)
+option(ENABLE_TSAN "Enable ThreadSanitizer" OFF)
+option(ENABLE_CLANG_TIDY "Enable clang-tidy static analysis" OFF)
+
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+  if(CLANG_TIDY_EXE)
+    message(STATUS "Enabling clang-tidy: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_EXE})
+  else()
+    message(WARNING "clang-tidy not found; ENABLE_CLANG_TIDY ignored")
+  endif()
+endif()
+
+function(apply_sanitizers target)
+  if(ENABLE_ASAN)
+    target_compile_options(${target} PRIVATE -fsanitize=address)
+    target_link_libraries(${target} PRIVATE -fsanitize=address)
+  endif()
+  if(ENABLE_UBSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=undefined)
+    target_link_libraries(${target} PRIVATE -fsanitize=undefined)
+  endif()
+  if(ENABLE_TSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=thread)
+    target_link_libraries(${target} PRIVATE -fsanitize=thread)
+  endif()
+endfunction()
 
 ##################################################
 # Platform-Specific Threading Configuration
@@ -551,15 +586,32 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
   endif()
 
-  # Add subdirectories for source code, samples, and unit tests
-  add_subdirectory(sources)  # Core library code
-  add_subdirectory(samples)  # Example applications
-  add_subdirectory(unittest)  # Unit tests
+  # Add subdirectories for new modularized source code, samples, and unit tests
+  add_subdirectory(utilities)        # Utilities library
+  add_subdirectory(interfaces)       # Public interfaces
+  add_subdirectory(core)             # Core (thread_base, jobs, sync)
+  add_subdirectory(implementations)  # Implementations (thread_pool, typed_thread_pool, lockfree)
+  add_subdirectory(samples)          # Example applications
+  add_subdirectory(unittest)         # Unit tests
   
   # Add benchmarks directory if requested
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
   if(BUILD_BENCHMARKS)
     add_subdirectory(benchmarks)  # Performance benchmarks
+  endif()
+
+  # Documentation (Doxygen)
+  if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+      add_custom_target(docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+    else()
+      message(WARNING "Doxygen not found; 'docs' target will not be available")
+    endif()
   endif()
 else()
   # When building as a submodule of another project:
@@ -576,25 +628,38 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   include(GNUInstallDirs)
   
   # Install header files with proper directory structure
-  install(DIRECTORY sources/utilities/
+  # Install headers from new directory structure
+  install(DIRECTORY utilities/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/interfaces/
+
+  install(DIRECTORY interfaces/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_base/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
+
+  install(DIRECTORY core/base/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/base
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_pool
+
+  install(DIRECTORY core/jobs/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/jobs
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/typed_thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
+
+  install(DIRECTORY core/sync/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/sync
+          FILES_MATCHING PATTERN "*.h")
+
+  install(DIRECTORY implementations/thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/thread_pool
+          FILES_MATCHING PATTERN "*.h")
+
+  install(DIRECTORY implementations/typed_thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/typed_thread_pool
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
+
+  install(DIRECTORY implementations/lockfree/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/lockfree
+          FILES_MATCHING PATTERN "*.h")
   
   # Monitoring headers disabled - moved to separate project
   # install(DIRECTORY sources/monitoring/
@@ -602,7 +667,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   #         FILES_MATCHING PATTERN "*.h")
   
   # Install libraries
-  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool
+  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool lockfree
           EXPORT ThreadSystemTargets
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

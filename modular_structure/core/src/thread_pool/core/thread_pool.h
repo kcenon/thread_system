@@ -154,7 +154,7 @@ namespace thread_pool_module
 		 * On success, each @c thread_worker in @c workers_ is started, enabling them to process
 		 * jobs from the @c job_queue_.
 		 */
-		auto start(void) -> std::optional<std::string>;
+        auto start(void) -> result_void;
 
 		/**
 		 * @brief Returns the shared @c job_queue used by this thread pool.
@@ -184,7 +184,7 @@ namespace thread_pool_module
 		 * }
 		 * @endcode
 		 */
-		auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
+        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
 
 		/**
 		 * @brief Enqueues a batch of jobs into the shared @c job_queue.
@@ -210,7 +210,7 @@ namespace thread_pool_module
 		 * }
 		 * @endcode
 		 */
-		auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
 
 		/**
 		 * @brief Adds a @c thread_worker to the thread pool for specialized or additional
@@ -222,7 +222,7 @@ namespace thread_pool_module
 		 * Each worker is stored in @c workers_. When @c start() is called, these workers
 		 * begin running and can process jobs from the @c job_queue.
 		 */
-		auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
+        auto enqueue(std::unique_ptr<thread_worker>&& worker) -> result_void;
 
 		/**
 		 * @brief Adds a batch of @c thread_worker objects to the thread pool.
@@ -233,8 +233,8 @@ namespace thread_pool_module
 		 * Each worker is stored in @c workers_. When @c start() is called, these workers
 		 * begin running and can process jobs from the @c job_queue.
 		 */
-		auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
-			-> std::optional<std::string>;
+        auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+            -> result_void;
 
 		/**
 		 * @brief Stops the thread pool and all worker threads.
@@ -245,7 +245,7 @@ namespace thread_pool_module
 		 * job processing occurs. Behavior of re-starting a stopped pool depends on the
 		 * implementation and may require re-initialization.
 		 */
-		auto stop(const bool& immediately_stop = false) -> void;
+        auto stop(const bool& immediately_stop = false) -> result_void;
 
 		/**
 		 * @brief Provides a string representation of this @c thread_pool.

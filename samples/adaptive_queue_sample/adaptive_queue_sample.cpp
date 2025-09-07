@@ -76,8 +76,13 @@ void strategy_comparison_example()
                             return result_void();
                         });
                     
-                    while (!queue.enqueue(std::move(job))) {
+                    while (true) {
+                        auto r = queue.enqueue(std::move(job));
+                        if (!r.has_error()) break;
                         std::this_thread::yield();
+                        // Recreate moved job for retry
+                        job = std::make_unique<callback_job>(
+                            [p, i]() -> result_void { return result_void(); });
                     }
                     produced.fetch_add(1);
                 }
@@ -148,7 +153,9 @@ void adaptive_behavior_example()
                 auto job = std::make_unique<callback_job>(
                     []() -> result_void { return result_void(); });
                 auto enqueue_result = queue.enqueue(std::move(job));
-                (void)enqueue_result; // Ignore result for sample
+                if (enqueue_result.has_error()) {
+                    write_error("enqueue failed: {}", enqueue_result.get_error().message());
+                }
                 std::this_thread::sleep_for(1ms);
             }
         });
@@ -195,7 +202,9 @@ void adaptive_behavior_example()
                     auto job = std::make_unique<callback_job>(
                         []() -> result_void { return result_void(); });
                     auto enqueue_result = queue.enqueue(std::move(job));
-                    (void)enqueue_result; // Ignore result for sample
+                    if (enqueue_result.has_error()) {
+                        // Best-effort: ignore for demo
+                    }
                     if (dist(gen) < 10) {  // 10% chance of sleep
                         std::this_thread::sleep_for(std::chrono::microseconds(dist(gen)));
                     }
@@ -251,7 +260,9 @@ void different_strategies_example()
     }
     
     auto enqueue_result = mutex_queue.enqueue_batch(std::move(jobs));
-    if (enqueue_result) {
+    if (enqueue_result.has_error()) {
+        write_error("Batch enqueue failed: {}", enqueue_result.get_error().message());
+    } else {
         write_information("Batch enqueue successful");
     }
     
@@ -386,9 +397,8 @@ void web_server_simulation()
                         return result_void(); // Success
                     });
                 
-                if (!request_queue.enqueue(std::move(request))) {
-                    requests_failed.fetch_add(1);
-                }
+                auto r = request_queue.enqueue(std::move(request));
+                if (r.has_error()) requests_failed.fetch_add(1);
                 
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_dist(gen)));
             }
