@@ -11,7 +11,7 @@ on:
 
 jobs:
   build_windows_msys2:
-    runs-on: windows-latest
+    runs-on: windows-2022  # Fixed version to avoid runner image issues
     defaults:
       run:
         shell: msys2 {0}
@@ -46,6 +46,10 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-make
+            mingw-w64-x86_64-fmt
+            mingw-w64-x86_64-gtest
+            mingw-w64-x86_64-benchmark
+            mingw-w64-x86_64-spdlog
             git
 
       - name: Cache vcpkg
@@ -70,7 +74,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-msys2-vcpkg-installed-
 
-      - name: Set up vcpkg
+      - name: Clean PATH and set MSYS2 priority
+        run: |
+          echo "Cleaning PATH to avoid conflicts..."
+          # Remove Windows system paths that might interfere
+          export PATH="/mingw64/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+          
+          # Remove any strawberry perl or other conflicting paths
+          export PATH=$(echo $PATH | tr ':' '\n' | grep -v -E 'strawberry|Perl|Python|Ruby' | tr '\n' ':')
+          
+          echo "PATH=$PATH" >> $GITHUB_ENV
+          echo "Current PATH: $PATH"
+          
+          # Verify correct gcc/g++ is being used
+          which gcc
+          which g++
+          gcc --version
+          g++ --version
+
+      - name: Set up vcpkg (optional - try system packages first)
+        id: vcpkg_setup
+        continue-on-error: true
         run: |
           if [ ! -d "vcpkg" ]; then
             echo "Cloning vcpkg repository..."
@@ -85,10 +109,11 @@ jobs:
           echo "Bootstrapping vcpkg..."
           ./vcpkg/bootstrap-vcpkg.sh
 
-      - name: Install dependencies with vcpkg
-        if: steps.vcpkg-installed.outputs.cache-hit != 'true'
+      - name: Install dependencies with vcpkg (if setup succeeded)
+        if: steps.vcpkg-installed.outputs.cache-hit != 'true' && steps.vcpkg_setup.outcome == 'success'
+        continue-on-error: true
         run: |
-          echo "Installing dependencies..."
+          echo "Installing dependencies via vcpkg..."
           GWS="$(cygpath -u "$GITHUB_WORKSPACE")"
           ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root="${GWS}/vcpkg_installed" --triplet x64-mingw-dynamic
 
@@ -107,35 +132,34 @@ jobs:
           rm -rf build
           mkdir -p build
 
-      - name: Build application (vcpkg first attempt)
-        id: build_vcpkg
-        continue-on-error: true
+      - name: Build application (prefer system packages)
+        id: build_system
         env:
-          CC: gcc
-          CXX: g++
+          CC: /mingw64/bin/gcc
+          CXX: /mingw64/bin/g++
         run: |
           export PATH="/mingw64/bin:$PATH"
-          GWS="$(cygpath -u "$GITHUB_WORKSPACE")"
           cd build
+          
+          echo "Building with MSYS2 system packages..."
           cmake .. \
             -G "Ninja" \
             -DBUILD_TESTS=ON \
             -DCMAKE_INSTALL_PREFIX="../target" \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DCMAKE_TOOLCHAIN_FILE="$GWS/vcpkg/scripts/buildsystems/vcpkg.cmake" \
-            -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic \
-            -DVCPKG_INSTALLED_DIR="$GWS/vcpkg_installed" \
-            -DCMAKE_PREFIX_PATH="$GWS/vcpkg_installed/x64-mingw-dynamic" \
             -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe \
             -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
             -DCMAKE_AR=/mingw64/bin/ar.exe \
             -DCMAKE_RANLIB=/mingw64/bin/ranlib.exe \
-            -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe
+            -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe \
+            -DCMAKE_PREFIX_PATH=/mingw64 \
+            -Dfmt_DIR=/mingw64/lib/cmake/fmt \
+            -DGTest_DIR=/mingw64/lib/cmake/GTest
 
           cmake --build . --parallel $(nproc)
 
-      - name: Build application (system libraries fallback)
-        if: steps.build_vcpkg.outcome == 'failure'
+      - name: Build application (minimal fallback)
+        if: steps.build_system.outcome == 'failure'
         env:
           CC: gcc
           CXX: g++
