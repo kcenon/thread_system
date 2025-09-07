@@ -31,6 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <iostream>
+#include <memory>
+#include <chrono>
+#include <thread>
 
 #include "logger/core/logger.h"
 #include "utilities/core/formatter.h"

@@ -32,6 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "typed_lockfree_job_queue.h"
 
+// Include necessary standard library headers for template implementation
+#include <mutex>
+#include <shared_mutex>
+
 namespace typed_thread_pool_module
 {
 	template <typename job_type>

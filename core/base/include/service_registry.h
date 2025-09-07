@@ -7,6 +7,7 @@
 
 #include <any>
 #include <memory>
+#include <mutex>
 #include <shared_mutex>
 #include <typeindex>
 #include <unordered_map>
