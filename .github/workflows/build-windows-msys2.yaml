@@ -89,7 +89,8 @@ jobs:
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
         run: |
           echo "Installing dependencies..."
-          ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root="${GITHUB_WORKSPACE}/vcpkg_installed" --triplet x64-mingw-dynamic
+          GWS="$(cygpath -u "$GITHUB_WORKSPACE")"
+          ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root="${GWS}/vcpkg_installed" --triplet x64-mingw-dynamic
 
       - name: Cache CMake build
         uses: actions/cache@v3
@@ -114,14 +115,17 @@ jobs:
           CXX: g++
         run: |
           export PATH="/mingw64/bin:$PATH"
+          GWS="$(cygpath -u "$GITHUB_WORKSPACE")"
           cd build
           cmake .. \
             -G "Ninja" \
             -DBUILD_TESTS=ON \
             -DCMAKE_INSTALL_PREFIX="../target" \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake" \
+            -DCMAKE_TOOLCHAIN_FILE="$GWS/vcpkg/scripts/buildsystems/vcpkg.cmake" \
             -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic \
+            -DVCPKG_INSTALLED_DIR="$GWS/vcpkg_installed" \
+            -DCMAKE_PREFIX_PATH="$GWS/vcpkg_installed/x64-mingw-dynamic" \
             -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe \
             -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
             -DCMAKE_AR=/mingw64/bin/ar.exe \

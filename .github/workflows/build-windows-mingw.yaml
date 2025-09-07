@@ -138,7 +138,9 @@ jobs:
             "-DBUILD_TESTS=ON" `
             "-DCMAKE_INSTALL_PREFIX=../target" `
             "-DCMAKE_TOOLCHAIN_FILE=$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-            "-DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic"
+            "-DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic" `
+            "-DVCPKG_INSTALLED_DIR=$env:GITHUB_WORKSPACE\vcpkg_installed" `
+            "-DCMAKE_PREFIX_PATH=$env:GITHUB_WORKSPACE\vcpkg_installed\x64-mingw-dynamic"
 
           if ($LASTEXITCODE -ne 0) {
             Write-Error "CMake configuration failed"
