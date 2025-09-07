@@ -17,16 +17,6 @@ jobs:
       BUILD_TYPE: Debug
     
     steps:
-      - name: Clean workspace
-        shell: pwsh
-        run: |
-          if (Test-Path .git) {
-            Remove-Item -Recurse -Force .git
-          }
-          if (Test-Path .github) {
-            Remove-Item -Recurse -Force .github
-          }
-      
       - name: Configure git
         shell: pwsh
         run: |
@@ -37,7 +27,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          repository: kcenon/thread_system
           persist-credentials: true
           clean: true
           fetch-depth: 1
@@ -159,6 +148,9 @@ jobs:
           Write-Host "Building core libraries only..."
           cmake --build . --config $env:BUILD_TYPE --parallel $env:NUMBER_OF_PROCESSORS
           Pop-Location
+
+      - name: Setup MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Run tests
         shell: pwsh

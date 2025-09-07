@@ -17,16 +17,6 @@ jobs:
       BUILD_TYPE: Debug
     
     steps:
-      - name: Clean workspace
-        shell: pwsh
-        run: |
-          if (Test-Path .git) {
-            Remove-Item -Recurse -Force .git
-          }
-          if (Test-Path .github) {
-            Remove-Item -Recurse -Force .github
-          }
-
       - name: Configure git
         shell: pwsh
         run: |
@@ -37,7 +27,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          repository: kcenon/thread_system
           persist-credentials: true
           clean: true
           fetch-depth: 1
@@ -46,7 +35,12 @@ jobs:
       - name: Setup MinGW
         shell: pwsh
         run: |
-          choco install mingw -y
+          try {
+            choco install mingw --version=12.2.0 -y
+          } catch {
+            Write-Warning "Falling back to latest available MinGW via Chocolatey"
+            choco install mingw -y
+          }
           $mingwPath = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
           echo "$mingwPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           $env:PATH = "$mingwPath;$env:PATH"
@@ -227,7 +221,7 @@ jobs:
   }
   '@ | Out-File -FilePath "verification_test.cpp" -Encoding UTF8
             
-            g++ -std=c++20 -DUSE_STD_FORMAT verification_test.cpp -o verification_test.exe
+            g++ -std=c++20 -pthread -DUSE_STD_FORMAT verification_test.cpp -o verification_test.exe
             .\verification_test.exe
           }
           Pop-Location
