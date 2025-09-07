@@ -80,6 +80,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;logger/core/logger.h&quot;</code><br />
 <code>#include &quot;utilities/core/formatter.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../df/dfe/test__type_8h_source.html">test_type.h</a>&quot;</code><br />
@@ -90,30 +93,36 @@ Include dependency graph for typed_thread_pool_sample_2.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/d09/typed__thread__pool__sample__2_8cpp__incl.png" border="0" usemap="#asamples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" alt=""/></div>
 <map name="asamples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" id="asamples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp">
-<area shape="rect" title=" " alt="" coords="266,5,469,60"/>
-<area shape="rect" title=" " alt="" coords="31,115,111,141"/>
-<area shape="poly" title=" " alt="" coords="278,63,124,111,116,113,115,108,123,105,276,58"/>
-<area shape="rect" title=" " alt="" coords="136,115,287,141"/>
-<area shape="poly" title=" " alt="" coords="325,62,244,111,241,106,322,58"/>
-<area shape="rect" title=" " alt="" coords="5,203,185,229"/>
-<area shape="poly" title=" " alt="" coords="360,62,337,107,320,130,300,150,273,168,244,183,184,203,182,197,242,178,270,163,296,146,316,126,332,104,355,59"/>
-<area shape="rect" href="../../df/dfe/test__type_8h.html" title=" " alt="" coords="363,115,457,141"/>
-<area shape="poly" title=" " alt="" coords="382,59,401,102,397,104,377,61"/>
-<area shape="rect" title=" " alt="" coords="481,108,656,148"/>
-<area shape="poly" title=" " alt="" coords="425,58,516,100,514,105,423,62"/>
-<area shape="rect" title=" " alt="" coords="680,115,785,141"/>
-<area shape="poly" title=" " alt="" coords="469,55,669,105,682,109,681,114,668,111,468,60"/>
-<area shape="poly" title=" " alt="" coords="370,143,344,151,153,202,151,197,343,145,369,138"/>
-<area shape="rect" title=" " alt="" coords="210,196,357,236"/>
-<area shape="poly" title=" " alt="" coords="394,143,324,191,321,186,391,139"/>
-<area shape="rect" title=" " alt="" coords="381,203,439,229"/>
-<area shape="poly" title=" " alt="" coords="413,141,413,189,407,189,407,141"/>
-<area shape="rect" title=" " alt="" coords="463,203,519,229"/>
-<area shape="poly" title=" " alt="" coords="423,139,472,191,469,195,419,143"/>
-<area shape="rect" title=" " alt="" coords="543,203,610,229"/>
-<area shape="poly" title=" " alt="" coords="434,138,543,194,541,199,431,143"/>
-<area shape="rect" title=" " alt="" coords="635,203,732,229"/>
-<area shape="poly" title=" " alt="" coords="448,138,634,197,633,202,446,143"/>
+<area shape="rect" title=" " alt="" coords="364,5,567,60"/>
+<area shape="rect" title=" " alt="" coords="5,115,85,141"/>
+<area shape="poly" title=" " alt="" coords="364,53,236,77,98,111,88,114,87,108,97,105,235,72,363,48"/>
+<area shape="rect" title=" " alt="" coords="109,115,187,141"/>
+<area shape="poly" title=" " alt="" coords="364,63,199,111,192,113,190,108,198,105,363,58"/>
+<area shape="rect" title=" " alt="" coords="211,115,277,141"/>
+<area shape="poly" title=" " alt="" coords="404,63,284,113,282,108,402,58"/>
+<area shape="rect" title=" " alt="" coords="301,115,365,141"/>
+<area shape="poly" title=" " alt="" coords="430,62,362,110,359,105,427,58"/>
+<area shape="rect" title=" " alt="" coords="390,115,541,141"/>
+<area shape="poly" title=" " alt="" coords="468,60,468,101,463,101,463,60"/>
+<area shape="rect" title=" " alt="" coords="259,203,439,229"/>
+<area shape="poly" title=" " alt="" coords="510,58,533,78,553,100,562,124,560,137,554,150,534,166,501,180,422,203,421,198,499,175,531,161,550,146,555,136,556,125,548,103,530,81,507,63"/>
+<area shape="rect" href="../../df/dfe/test__type_8h.html" title=" " alt="" coords="617,115,711,141"/>
+<area shape="poly" title=" " alt="" coords="522,58,629,107,626,112,520,62"/>
+<area shape="rect" title=" " alt="" coords="735,108,910,148"/>
+<area shape="poly" title=" " alt="" coords="566,57,738,102,737,107,565,63"/>
+<area shape="rect" title=" " alt="" coords="934,115,1039,141"/>
+<area shape="poly" title=" " alt="" coords="567,44,735,69,923,105,938,109,937,114,922,111,734,74,566,49"/>
+<area shape="poly" title=" " alt="" coords="624,143,598,151,407,202,405,197,597,145,623,138"/>
+<area shape="rect" title=" " alt="" coords="464,196,611,236"/>
+<area shape="poly" title=" " alt="" coords="648,143,578,191,575,186,645,139"/>
+<area shape="rect" title=" " alt="" coords="635,203,693,229"/>
+<area shape="poly" title=" " alt="" coords="667,141,667,189,661,189,661,141"/>
+<area shape="rect" title=" " alt="" coords="717,203,773,229"/>
+<area shape="poly" title=" " alt="" coords="677,139,726,191,723,195,673,143"/>
+<area shape="rect" title=" " alt="" coords="797,203,864,229"/>
+<area shape="poly" title=" " alt="" coords="688,138,797,194,795,199,685,143"/>
+<area shape="rect" title=" " alt="" coords="889,203,986,229"/>
+<area shape="poly" title=" " alt="" coords="702,138,888,197,887,202,700,143"/>
 </map>
 </div>
 </div>
@@ -188,49 +197,49 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00083">83</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>{</div>
-<div class="line"><span class="lineno">   89</span>    std::shared_ptr&lt;typed_thread_pool_t&lt;test_priority&gt;&gt; pool;</div>
-<div class="line"><span class="lineno">   90</span> </div>
-<div class="line"><span class="lineno">   91</span>    <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        pool = std::make_shared&lt;typed_thread_pool_t&lt;test_priority&gt;&gt;();</div>
-<div class="line"><span class="lineno">   94</span>    }</div>
-<div class="line"><span class="lineno">   95</span>    <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc&amp; e)</div>
-<div class="line"><span class="lineno">   96</span>    {</div>
-<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, std::string(e.what()) };</div>
-<div class="line"><span class="lineno">   98</span>    }</div>
-<div class="line"><span class="lineno">   99</span> </div>
-<div class="line"><span class="lineno">  100</span>    std::optional&lt;std::string&gt; error_message = std::nullopt;</div>
-<div class="line"><span class="lineno">  101</span> </div>
-<div class="line"><span class="lineno">  102</span>    std::vector&lt;std::unique_ptr&lt;typed_thread_worker_t&lt;test_priority&gt;&gt;&gt; workers;</div>
-<div class="line"><span class="lineno">  103</span>    workers.reserve(top_priority_workers + middle_priority_workers + bottom_priority_workers);</div>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00086">86</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>{</div>
+<div class="line"><span class="lineno">   92</span>    std::shared_ptr&lt;typed_thread_pool_t&lt;test_priority&gt;&gt; pool;</div>
+<div class="line"><span class="lineno">   93</span> </div>
+<div class="line"><span class="lineno">   94</span>    <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">   95</span>    {</div>
+<div class="line"><span class="lineno">   96</span>        pool = std::make_shared&lt;typed_thread_pool_t&lt;test_priority&gt;&gt;();</div>
+<div class="line"><span class="lineno">   97</span>    }</div>
+<div class="line"><span class="lineno">   98</span>    <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc&amp; e)</div>
+<div class="line"><span class="lineno">   99</span>    {</div>
+<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, std::string(e.what()) };</div>
+<div class="line"><span class="lineno">  101</span>    }</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>    std::optional&lt;std::string&gt; error_message = std::nullopt;</div>
 <div class="line"><span class="lineno">  104</span> </div>
-<div class="line"><span class="lineno">  105</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; top_priority_workers; ++i)</div>
-<div class="line"><span class="lineno">  106</span>    {</div>
-<div class="line"><span class="lineno">  107</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
-<div class="line"><span class="lineno">  108</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeaa4ffdcf0dc1f31b9acaf295d75b51d00">test_priority::Top</a> }, <span class="stringliteral">&quot;top priority worker&quot;</span>));</div>
-<div class="line"><span class="lineno">  109</span>    }</div>
-<div class="line"><span class="lineno">  110</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; middle_priority_workers; ++i)</div>
-<div class="line"><span class="lineno">  111</span>    {</div>
-<div class="line"><span class="lineno">  112</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
-<div class="line"><span class="lineno">  113</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeab1ca34f82e83c52b010f86955f264e05">test_priority::Middle</a> }, <span class="stringliteral">&quot;middle priority worker&quot;</span>));</div>
-<div class="line"><span class="lineno">  114</span>    }</div>
-<div class="line"><span class="lineno">  115</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; bottom_priority_workers; ++i)</div>
-<div class="line"><span class="lineno">  116</span>    {</div>
-<div class="line"><span class="lineno">  117</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
-<div class="line"><span class="lineno">  118</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4">test_priority::Bottom</a> }, <span class="stringliteral">&quot;bottom priority worker&quot;</span>));</div>
-<div class="line"><span class="lineno">  119</span>    }</div>
-<div class="line"><span class="lineno">  120</span> </div>
-<div class="line"><span class="lineno">  121</span>    <span class="keyword">auto</span> enqueue_result = pool-&gt;enqueue_batch(std::move(workers));</div>
-<div class="line"><span class="lineno">  122</span>    <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  123</span>    {</div>
-<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot enqueue to workers: {}&quot;</span>,</div>
-<div class="line"><span class="lineno">  125</span>                                            enqueue_result.get_error().message()) };</div>
-<div class="line"><span class="lineno">  126</span>    }</div>
-<div class="line"><span class="lineno">  127</span> </div>
-<div class="line"><span class="lineno">  128</span>    <span class="keywordflow">return</span> { pool, std::nullopt };</div>
-<div class="line"><span class="lineno">  129</span>}</div>
+<div class="line"><span class="lineno">  105</span>    std::vector&lt;std::unique_ptr&lt;typed_thread_worker_t&lt;test_priority&gt;&gt;&gt; workers;</div>
+<div class="line"><span class="lineno">  106</span>    workers.reserve(top_priority_workers + middle_priority_workers + bottom_priority_workers);</div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; top_priority_workers; ++i)</div>
+<div class="line"><span class="lineno">  109</span>    {</div>
+<div class="line"><span class="lineno">  110</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
+<div class="line"><span class="lineno">  111</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeaa4ffdcf0dc1f31b9acaf295d75b51d00">test_priority::Top</a> }, <span class="stringliteral">&quot;top priority worker&quot;</span>));</div>
+<div class="line"><span class="lineno">  112</span>    }</div>
+<div class="line"><span class="lineno">  113</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; middle_priority_workers; ++i)</div>
+<div class="line"><span class="lineno">  114</span>    {</div>
+<div class="line"><span class="lineno">  115</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
+<div class="line"><span class="lineno">  116</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeab1ca34f82e83c52b010f86955f264e05">test_priority::Middle</a> }, <span class="stringliteral">&quot;middle priority worker&quot;</span>));</div>
+<div class="line"><span class="lineno">  117</span>    }</div>
+<div class="line"><span class="lineno">  118</span>    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; bottom_priority_workers; ++i)</div>
+<div class="line"><span class="lineno">  119</span>    {</div>
+<div class="line"><span class="lineno">  120</span>        workers.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_worker_t&lt;test_priority&gt;</a>&gt;(</div>
+<div class="line"><span class="lineno">  121</span>            std::vector&lt;test_priority&gt;{ <a class="code hl_enumvalue" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4">test_priority::Bottom</a> }, <span class="stringliteral">&quot;bottom priority worker&quot;</span>));</div>
+<div class="line"><span class="lineno">  122</span>    }</div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>    <span class="keyword">auto</span> enqueue_result = pool-&gt;enqueue_batch(std::move(workers));</div>
+<div class="line"><span class="lineno">  125</span>    <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  126</span>    {</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;cannot enqueue to workers: {}&quot;</span>,</div>
+<div class="line"><span class="lineno">  128</span>                                            enqueue_result.get_error().message()) };</div>
+<div class="line"><span class="lineno">  129</span>    }</div>
+<div class="line"><span class="lineno">  130</span> </div>
+<div class="line"><span class="lineno">  131</span>    <span class="keywordflow">return</span> { pool, std::nullopt };</div>
+<div class="line"><span class="lineno">  132</span>}</div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1typed__thread__worker__t_html"><div class="ttname"><a href="../../d0/d0f/classtyped__thread__pool__module_1_1typed__thread__worker__t.html">typed_thread_pool_module::typed_thread_worker_t</a></div><div class="ttdoc">A template-based worker thread class that processes jobs from a priority job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d2f/typed__thread__worker_8h_source.html#l00094">typed_thread_worker.h:95</a></div></div>
 <div class="ttc" id="aclassutility__module_1_1formatter_html_a1b5ec167f6e47412edd77a4ea658e339"><div class="ttname"><a href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">utility_module::formatter::format</a></div><div class="ttdeci">static auto format(const char *formats, const FormatArgs &amp;... args) -&gt; std::string</div><div class="ttdoc">Formats a narrow-character string with the given arguments.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d52/formatter_8h_source.html#l00176">formatter.h:176</a></div></div>
 <div class="ttc" id="atest__type_8h_html_ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4"><div class="ttname"><a href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4">test_priority::Bottom</a></div><div class="ttdeci">@ Bottom</div><div class="ttdoc">Bottom priority.</div></div>
@@ -278,32 +287,32 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>{</div>
-<div class="line"><span class="lineno">   64</span>    log_module::set_title(<span class="stringliteral">&quot;typed_thread_pool_sample_2&quot;</span>);</div>
-<div class="line"><span class="lineno">   65</span>    log_module::set_use_backup(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6eee59c09ca43892dd312e505bddfd45">use_backup_</a>);</div>
-<div class="line"><span class="lineno">   66</span>    log_module::set_max_lines(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a69bace6ba4426549e3302d9d1067aa6c">max_lines_</a>);</div>
-<div class="line"><span class="lineno">   67</span>    log_module::file_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a>);</div>
-<div class="line"><span class="lineno">   68</span>    log_module::console_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aac3d4a1520fb7a63f35125d262273453">console_target_</a>);</div>
-<div class="line"><span class="lineno">   69</span>    log_module::callback_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a>);</div>
-<div class="line"><span class="lineno">   70</span>    <span class="comment">// Note: This demonstrates the logger callback feature - std::cout is intentionally used here</span></div>
-<div class="line"><span class="lineno">   71</span>    log_module::message_callback(</div>
-<div class="line"><span class="lineno">   72</span>        [](<span class="keyword">const</span> log_module::log_types&amp; type, <span class="keyword">const</span> std::string&amp; datetime,</div>
-<div class="line"><span class="lineno">   73</span>           <span class="keyword">const</span> std::string&amp; message)</div>
-<div class="line"><span class="lineno">   74</span>        { std::cout &lt;&lt; <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;[{}][{}] {}\n&quot;</span>, datetime, type, message); });</div>
-<div class="line"><span class="lineno">   75</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a> &gt; 0)</div>
-<div class="line"><span class="lineno">   76</span>    {</div>
-<div class="line"><span class="lineno">   77</span>        log_module::set_wake_interval(std::chrono::milliseconds(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a>));</div>
-<div class="line"><span class="lineno">   78</span>    }</div>
-<div class="line"><span class="lineno">   79</span> </div>
-<div class="line"><span class="lineno">   80</span>    <span class="keywordflow">return</span> log_module::start();</div>
-<div class="line"><span class="lineno">   81</span>}</div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a3abdd48d223391d05ed86e83324cfff0"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a></div><div class="ttdeci">log_module::log_types file_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">typed_thread_pool_sample_2.cpp:54</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a4a6c383c6cd8baa8bae05e63a42848a4"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a></div><div class="ttdeci">log_module::log_types callback_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">typed_thread_pool_sample_2.cpp:56</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a69bace6ba4426549e3302d9d1067aa6c"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a69bace6ba4426549e3302d9d1067aa6c">max_lines_</a></div><div class="ttdeci">uint32_t max_lines_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00051">typed_thread_pool_sample_2.cpp:51</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a6eee59c09ca43892dd312e505bddfd45"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6eee59c09ca43892dd312e505bddfd45">use_backup_</a></div><div class="ttdeci">bool use_backup_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00050">typed_thread_pool_sample_2.cpp:50</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_aac3d4a1520fb7a63f35125d262273453"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aac3d4a1520fb7a63f35125d262273453">console_target_</a></div><div class="ttdeci">log_module::log_types console_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">typed_thread_pool_sample_2.cpp:55</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_ac003efd196c1f1f82baa1d9503b53fbb"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a></div><div class="ttdeci">uint16_t wait_interval_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00052">typed_thread_pool_sample_2.cpp:52</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">65</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>{</div>
+<div class="line"><span class="lineno">   67</span>    log_module::set_title(<span class="stringliteral">&quot;typed_thread_pool_sample_2&quot;</span>);</div>
+<div class="line"><span class="lineno">   68</span>    log_module::set_use_backup(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6eee59c09ca43892dd312e505bddfd45">use_backup_</a>);</div>
+<div class="line"><span class="lineno">   69</span>    log_module::set_max_lines(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a69bace6ba4426549e3302d9d1067aa6c">max_lines_</a>);</div>
+<div class="line"><span class="lineno">   70</span>    log_module::file_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a>);</div>
+<div class="line"><span class="lineno">   71</span>    log_module::console_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aac3d4a1520fb7a63f35125d262273453">console_target_</a>);</div>
+<div class="line"><span class="lineno">   72</span>    log_module::callback_target(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a>);</div>
+<div class="line"><span class="lineno">   73</span>    <span class="comment">// Note: This demonstrates the logger callback feature - std::cout is intentionally used here</span></div>
+<div class="line"><span class="lineno">   74</span>    log_module::message_callback(</div>
+<div class="line"><span class="lineno">   75</span>        [](<span class="keyword">const</span> log_module::log_types&amp; type, <span class="keyword">const</span> std::string&amp; datetime,</div>
+<div class="line"><span class="lineno">   76</span>           <span class="keyword">const</span> std::string&amp; message)</div>
+<div class="line"><span class="lineno">   77</span>        { std::cout &lt;&lt; <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;[{}][{}] {}\n&quot;</span>, datetime, type, message); });</div>
+<div class="line"><span class="lineno">   78</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a> &gt; 0)</div>
+<div class="line"><span class="lineno">   79</span>    {</div>
+<div class="line"><span class="lineno">   80</span>        log_module::set_wake_interval(std::chrono::milliseconds(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a>));</div>
+<div class="line"><span class="lineno">   81</span>    }</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span>    <span class="keywordflow">return</span> log_module::start();</div>
+<div class="line"><span class="lineno">   84</span>}</div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a3abdd48d223391d05ed86e83324cfff0"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a></div><div class="ttdeci">log_module::log_types file_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00057">typed_thread_pool_sample_2.cpp:57</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a4a6c383c6cd8baa8bae05e63a42848a4"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a></div><div class="ttdeci">log_module::log_types callback_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">typed_thread_pool_sample_2.cpp:59</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a69bace6ba4426549e3302d9d1067aa6c"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a69bace6ba4426549e3302d9d1067aa6c">max_lines_</a></div><div class="ttdeci">uint32_t max_lines_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">typed_thread_pool_sample_2.cpp:54</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a6eee59c09ca43892dd312e505bddfd45"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6eee59c09ca43892dd312e505bddfd45">use_backup_</a></div><div class="ttdeci">bool use_backup_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">typed_thread_pool_sample_2.cpp:53</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_aac3d4a1520fb7a63f35125d262273453"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aac3d4a1520fb7a63f35125d262273453">console_target_</a></div><div class="ttdeci">log_module::log_types console_target_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">typed_thread_pool_sample_2.cpp:58</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_ac003efd196c1f1f82baa1d9503b53fbb"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ac003efd196c1f1f82baa1d9503b53fbb">wait_interval_</a></div><div class="ttdeci">uint16_t wait_interval_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">typed_thread_pool_sample_2.cpp:55</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -346,73 +355,73 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">163</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  164</span>{</div>
-<div class="line"><span class="lineno">  165</span>    <span class="keyword">auto</span> error_message = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f">initialize_logger</a>();</div>
-<div class="line"><span class="lineno">  166</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
-<div class="line"><span class="lineno">  167</span>    {</div>
-<div class="line"><span class="lineno">  168</span>        std::cerr &lt;&lt; <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error starting logger: {}\n&quot;</span>,</div>
-<div class="line"><span class="lineno">  169</span>                                       error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
-<div class="line"><span class="lineno">  170</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  171</span>    }</div>
-<div class="line"><span class="lineno">  172</span> </div>
-<div class="line"><span class="lineno">  173</span>    std::shared_ptr&lt;typed_thread_pool_t&lt;test_priority&gt;&gt; thread_pool = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">  174</span>    std::tie(thread_pool, error_message)</div>
-<div class="line"><span class="lineno">  175</span>        = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a>(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6e58bd36acdfc2a9700e5d820abc3d61">top_priority_workers_</a>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ae5be33e6e0564dd1bef34ef37894c479">middle_priority_workers_</a>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80">bottom_priority_workers_</a>);</div>
-<div class="line"><span class="lineno">  176</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
-<div class="line"><span class="lineno">  177</span>    {</div>
-<div class="line"><span class="lineno">  178</span>        log_module::write_error(<span class="stringliteral">&quot;error creating thread pool: {}&quot;</span>,</div>
-<div class="line"><span class="lineno">  179</span>                                error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
-<div class="line"><span class="lineno">  180</span> </div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  182</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">166</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>{</div>
+<div class="line"><span class="lineno">  168</span>    <span class="keyword">auto</span> error_message = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f">initialize_logger</a>();</div>
+<div class="line"><span class="lineno">  169</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
+<div class="line"><span class="lineno">  170</span>    {</div>
+<div class="line"><span class="lineno">  171</span>        std::cerr &lt;&lt; <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error starting logger: {}\n&quot;</span>,</div>
+<div class="line"><span class="lineno">  172</span>                                       error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
+<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  174</span>    }</div>
+<div class="line"><span class="lineno">  175</span> </div>
+<div class="line"><span class="lineno">  176</span>    std::shared_ptr&lt;typed_thread_pool_t&lt;test_priority&gt;&gt; thread_pool = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  177</span>    std::tie(thread_pool, error_message)</div>
+<div class="line"><span class="lineno">  178</span>        = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a>(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6e58bd36acdfc2a9700e5d820abc3d61">top_priority_workers_</a>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ae5be33e6e0564dd1bef34ef37894c479">middle_priority_workers_</a>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80">bottom_priority_workers_</a>);</div>
+<div class="line"><span class="lineno">  179</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
+<div class="line"><span class="lineno">  180</span>    {</div>
+<div class="line"><span class="lineno">  181</span>        log_module::write_error(<span class="stringliteral">&quot;error creating thread pool: {}&quot;</span>,</div>
+<div class="line"><span class="lineno">  182</span>                                error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
 <div class="line"><span class="lineno">  183</span> </div>
-<div class="line"><span class="lineno">  184</span>    log_module::write_information(<span class="stringliteral">&quot;created {}&quot;</span>, thread_pool-&gt;to_string());</div>
-<div class="line"><span class="lineno">  185</span> </div>
-<div class="line"><span class="lineno">  186</span>    error_message = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a>(thread_pool);</div>
-<div class="line"><span class="lineno">  187</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
-<div class="line"><span class="lineno">  188</span>    {</div>
-<div class="line"><span class="lineno">  189</span>        log_module::write_error(<span class="stringliteral">&quot;error storing job: {}&quot;</span>, error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
-<div class="line"><span class="lineno">  190</span> </div>
-<div class="line"><span class="lineno">  191</span>        thread_pool.reset();</div>
-<div class="line"><span class="lineno">  192</span> </div>
-<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  194</span>    }</div>
+<div class="line"><span class="lineno">  184</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  185</span>    }</div>
+<div class="line"><span class="lineno">  186</span> </div>
+<div class="line"><span class="lineno">  187</span>    log_module::write_information(<span class="stringliteral">&quot;created {}&quot;</span>, thread_pool-&gt;to_string());</div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span>    error_message = <a class="code hl_function" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a>(thread_pool);</div>
+<div class="line"><span class="lineno">  190</span>    <span class="keywordflow">if</span> (error_message.has_value())</div>
+<div class="line"><span class="lineno">  191</span>    {</div>
+<div class="line"><span class="lineno">  192</span>        log_module::write_error(<span class="stringliteral">&quot;error storing job: {}&quot;</span>, error_message.value_or(<span class="stringliteral">&quot;unknown error&quot;</span>));</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>        thread_pool.reset();</div>
 <div class="line"><span class="lineno">  195</span> </div>
-<div class="line"><span class="lineno">  196</span>    <span class="keyword">auto</span> start_result = thread_pool-&gt;start();</div>
-<div class="line"><span class="lineno">  197</span>    <span class="keywordflow">if</span> (start_result.has_error())</div>
-<div class="line"><span class="lineno">  198</span>    {</div>
-<div class="line"><span class="lineno">  199</span>        log_module::write_error(<span class="stringliteral">&quot;error starting thread pool: {}&quot;</span>,</div>
-<div class="line"><span class="lineno">  200</span>                                start_result.get_error().message());</div>
-<div class="line"><span class="lineno">  201</span> </div>
-<div class="line"><span class="lineno">  202</span>        thread_pool.reset();</div>
-<div class="line"><span class="lineno">  203</span> </div>
-<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  205</span>    }</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  197</span>    }</div>
+<div class="line"><span class="lineno">  198</span> </div>
+<div class="line"><span class="lineno">  199</span>    <span class="keyword">auto</span> start_result = thread_pool-&gt;start();</div>
+<div class="line"><span class="lineno">  200</span>    <span class="keywordflow">if</span> (start_result.has_error())</div>
+<div class="line"><span class="lineno">  201</span>    {</div>
+<div class="line"><span class="lineno">  202</span>        log_module::write_error(<span class="stringliteral">&quot;error starting thread pool: {}&quot;</span>,</div>
+<div class="line"><span class="lineno">  203</span>                                start_result.get_error().message());</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>        thread_pool.reset();</div>
 <div class="line"><span class="lineno">  206</span> </div>
-<div class="line"><span class="lineno">  207</span>    log_module::write_information(<span class="stringliteral">&quot;started {}&quot;</span>, thread_pool-&gt;to_string());</div>
-<div class="line"><span class="lineno">  208</span> </div>
-<div class="line"><span class="lineno">  209</span>    {</div>
-<div class="line"><span class="lineno">  210</span>        <span class="keyword">auto</span> stop_result = thread_pool-&gt;stop();</div>
-<div class="line"><span class="lineno">  211</span>        <span class="keywordflow">if</span> (stop_result.has_error()) {</div>
-<div class="line"><span class="lineno">  212</span>            log_module::write_error(<span class="stringliteral">&quot;error stopping thread pool: {}&quot;</span>, stop_result.get_error().message());</div>
-<div class="line"><span class="lineno">  213</span>        }</div>
-<div class="line"><span class="lineno">  214</span>    }</div>
-<div class="line"><span class="lineno">  215</span> </div>
-<div class="line"><span class="lineno">  216</span>    log_module::write_information(<span class="stringliteral">&quot;stopped {}&quot;</span>, thread_pool-&gt;to_string());</div>
-<div class="line"><span class="lineno">  217</span> </div>
-<div class="line"><span class="lineno">  218</span>    thread_pool.reset();</div>
-<div class="line"><span class="lineno">  219</span> </div>
-<div class="line"><span class="lineno">  220</span>    log_module::stop();</div>
-<div class="line"><span class="lineno">  221</span> </div>
-<div class="line"><span class="lineno">  222</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  223</span>}</div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a053c6e0a280d23520270f183587cb036"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a></div><div class="ttdeci">auto store_job(std::shared_ptr&lt; typed_thread_pool_t&lt; test_priority &gt; &gt; thread_pool) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00131">typed_thread_pool_sample_2.cpp:131</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a6e58bd36acdfc2a9700e5d820abc3d61"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6e58bd36acdfc2a9700e5d820abc3d61">top_priority_workers_</a></div><div class="ttdeci">uint16_t top_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">typed_thread_pool_sample_2.cpp:58</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a77bf62c88607230eb7d09c3533421c80"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80">bottom_priority_workers_</a></div><div class="ttdeci">uint16_t bottom_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00060">typed_thread_pool_sample_2.cpp:60</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a8d986ee76ac0cece6635815924ac089f"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f">initialize_logger</a></div><div class="ttdeci">auto initialize_logger() -&gt; std::optional&lt; std::string &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">typed_thread_pool_sample_2.cpp:62</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_aa3f0b7249bf28fd9f1be6a9094be08bf"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;top_priority_workers, const uint16_t &amp;middle_priority_workers, const uint16_t &amp;bottom_priority_workers) -&gt; std::tuple&lt; std::shared_ptr&lt; typed_thread_pool_t&lt; test_priority &gt; &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00083">typed_thread_pool_sample_2.cpp:83</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_ae5be33e6e0564dd1bef34ef37894c479"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ae5be33e6e0564dd1bef34ef37894c479">middle_priority_workers_</a></div><div class="ttdeci">uint16_t middle_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">typed_thread_pool_sample_2.cpp:59</a></div></div>
+<div class="line"><span class="lineno">  207</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  208</span>    }</div>
+<div class="line"><span class="lineno">  209</span> </div>
+<div class="line"><span class="lineno">  210</span>    log_module::write_information(<span class="stringliteral">&quot;started {}&quot;</span>, thread_pool-&gt;to_string());</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>    {</div>
+<div class="line"><span class="lineno">  213</span>        <span class="keyword">auto</span> stop_result = thread_pool-&gt;stop();</div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">if</span> (stop_result.has_error()) {</div>
+<div class="line"><span class="lineno">  215</span>            log_module::write_error(<span class="stringliteral">&quot;error stopping thread pool: {}&quot;</span>, stop_result.get_error().message());</div>
+<div class="line"><span class="lineno">  216</span>        }</div>
+<div class="line"><span class="lineno">  217</span>    }</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>    log_module::write_information(<span class="stringliteral">&quot;stopped {}&quot;</span>, thread_pool-&gt;to_string());</div>
+<div class="line"><span class="lineno">  220</span> </div>
+<div class="line"><span class="lineno">  221</span>    thread_pool.reset();</div>
+<div class="line"><span class="lineno">  222</span> </div>
+<div class="line"><span class="lineno">  223</span>    log_module::stop();</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  226</span>}</div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a053c6e0a280d23520270f183587cb036"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a></div><div class="ttdeci">auto store_job(std::shared_ptr&lt; typed_thread_pool_t&lt; test_priority &gt; &gt; thread_pool) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00134">typed_thread_pool_sample_2.cpp:134</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a6e58bd36acdfc2a9700e5d820abc3d61"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6e58bd36acdfc2a9700e5d820abc3d61">top_priority_workers_</a></div><div class="ttdeci">uint16_t top_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00061">typed_thread_pool_sample_2.cpp:61</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a77bf62c88607230eb7d09c3533421c80"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80">bottom_priority_workers_</a></div><div class="ttdeci">uint16_t bottom_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00063">typed_thread_pool_sample_2.cpp:63</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a8d986ee76ac0cece6635815924ac089f"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f">initialize_logger</a></div><div class="ttdeci">auto initialize_logger() -&gt; std::optional&lt; std::string &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">typed_thread_pool_sample_2.cpp:65</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_aa3f0b7249bf28fd9f1be6a9094be08bf"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;top_priority_workers, const uint16_t &amp;middle_priority_workers, const uint16_t &amp;bottom_priority_workers) -&gt; std::tuple&lt; std::shared_ptr&lt; typed_thread_pool_t&lt; test_priority &gt; &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00086">typed_thread_pool_sample_2.cpp:86</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_ae5be33e6e0564dd1bef34ef37894c479"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#ae5be33e6e0564dd1bef34ef37894c479">middle_priority_workers_</a></div><div class="ttdeci">uint16_t middle_priority_workers_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">typed_thread_pool_sample_2.cpp:62</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -455,40 +464,40 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00131">131</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  133</span>{</div>
-<div class="line"><span class="lineno">  134</span>    <span class="keywordtype">int</span> target = 0;</div>
-<div class="line"><span class="lineno">  135</span> </div>
-<div class="line"><span class="lineno">  136</span>    std::vector&lt;std::unique_ptr&lt;typed_job_t&lt;test_priority&gt;&gt;&gt; jobs;</div>
-<div class="line"><span class="lineno">  137</span>    jobs.reserve(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>);</div>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00134">134</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  136</span>{</div>
+<div class="line"><span class="lineno">  137</span>    <span class="keywordtype">int</span> target = 0;</div>
 <div class="line"><span class="lineno">  138</span> </div>
-<div class="line"><span class="lineno">  139</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> index = 0; index &lt; <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>; ++index)</div>
-<div class="line"><span class="lineno">  140</span>    {</div>
-<div class="line"><span class="lineno">  141</span>        target = index % 3;</div>
-<div class="line"><span class="lineno">  142</span>        jobs.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t&lt;test_priority&gt;</a>&gt;(</div>
-<div class="line"><span class="lineno">  143</span>            [target](<span class="keywordtype">void</span>) -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></div>
-<div class="line"><span class="lineno">  144</span>            {</div>
-<div class="line"><span class="lineno">  145</span>                log_module::write_debug(<span class="stringliteral">&quot;Hello, World!: {} priority&quot;</span>, target);</div>
-<div class="line"><span class="lineno">  146</span>                <span class="keywordflow">return</span> {};</div>
-<div class="line"><span class="lineno">  147</span>            },</div>
-<div class="line"><span class="lineno">  148</span>            <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a><span class="keyword">&gt;</span>(target)));</div>
-<div class="line"><span class="lineno">  149</span>    }</div>
-<div class="line"><span class="lineno">  150</span> </div>
-<div class="line"><span class="lineno">  151</span>    <span class="keyword">auto</span> enqueue_result = thread_pool-&gt;enqueue_batch(std::move(jobs));</div>
-<div class="line"><span class="lineno">  152</span>    <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
-<div class="line"><span class="lineno">  153</span>    {</div>
-<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error enqueuing jobs: {}&quot;</span>,</div>
-<div class="line"><span class="lineno">  155</span>                                 enqueue_result.get_error().message());</div>
-<div class="line"><span class="lineno">  156</span>    }</div>
-<div class="line"><span class="lineno">  157</span> </div>
-<div class="line"><span class="lineno">  158</span>    log_module::write_sequence(<span class="stringliteral">&quot;enqueued jobs: {}&quot;</span>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>);</div>
-<div class="line"><span class="lineno">  159</span> </div>
-<div class="line"><span class="lineno">  160</span>    <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  161</span>}</div>
+<div class="line"><span class="lineno">  139</span>    std::vector&lt;std::unique_ptr&lt;typed_job_t&lt;test_priority&gt;&gt;&gt; jobs;</div>
+<div class="line"><span class="lineno">  140</span>    jobs.reserve(<a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>);</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> index = 0; index &lt; <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>; ++index)</div>
+<div class="line"><span class="lineno">  143</span>    {</div>
+<div class="line"><span class="lineno">  144</span>        target = index % 3;</div>
+<div class="line"><span class="lineno">  145</span>        jobs.push_back(std::make_unique&lt;<a class="code hl_class" href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t&lt;test_priority&gt;</a>&gt;(</div>
+<div class="line"><span class="lineno">  146</span>            [target](<span class="keywordtype">void</span>) -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a></div>
+<div class="line"><span class="lineno">  147</span>            {</div>
+<div class="line"><span class="lineno">  148</span>                log_module::write_debug(<span class="stringliteral">&quot;Hello, World!: {} priority&quot;</span>, target);</div>
+<div class="line"><span class="lineno">  149</span>                <span class="keywordflow">return</span> {};</div>
+<div class="line"><span class="lineno">  150</span>            },</div>
+<div class="line"><span class="lineno">  151</span>            <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a><span class="keyword">&gt;</span>(target)));</div>
+<div class="line"><span class="lineno">  152</span>    }</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>    <span class="keyword">auto</span> enqueue_result = thread_pool-&gt;enqueue_batch(std::move(jobs));</div>
+<div class="line"><span class="lineno">  155</span>    <span class="keywordflow">if</span> (enqueue_result.has_error())</div>
+<div class="line"><span class="lineno">  156</span>    {</div>
+<div class="line"><span class="lineno">  157</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="../../d1/daf/classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339">formatter::format</a>(<span class="stringliteral">&quot;error enqueuing jobs: {}&quot;</span>,</div>
+<div class="line"><span class="lineno">  158</span>                                 enqueue_result.get_error().message());</div>
+<div class="line"><span class="lineno">  159</span>    }</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>    log_module::write_sequence(<span class="stringliteral">&quot;enqueued jobs: {}&quot;</span>, <a class="code hl_variable" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a>);</div>
+<div class="line"><span class="lineno">  162</span> </div>
+<div class="line"><span class="lineno">  163</span>    <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  164</span>}</div>
 <div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
 <div class="ttc" id="aclasstyped__thread__pool__module_1_1callback__typed__job__t_html"><div class="ttname"><a href="../../d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">typed_thread_pool_module::callback_typed_job_t</a></div><div class="ttdoc">A template for creating priority-based jobs that execute a user-defined callback.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d90/callback__typed__job_8h_source.html#l00054">callback_typed_job.h:55</a></div></div>
 <div class="ttc" id="atest__type_8h_html_ad32194f99371a0d604b0d5676eb17dde"><div class="ttname"><a href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a></div><div class="ttdeci">test_priority</div><div class="ttdoc">Enumeration of test priority levels.</div><div class="ttdef"><b>Definition</b> <a href="../../df/dfe/test__type_8h_source.html#l00050">test_type.h:51</a></div></div>
-<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a9d17fd03266a6ab45927c964749b1cc1"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a></div><div class="ttdeci">uint32_t test_line_count_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">typed_thread_pool_sample_2.cpp:53</a></div></div>
+<div class="ttc" id="atyped__thread__pool__sample__2_8cpp_html_a9d17fd03266a6ab45927c964749b1cc1"><div class="ttname"><a href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a></div><div class="ttdeci">uint32_t test_line_count_</div><div class="ttdef"><b>Definition</b> <a href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">typed_thread_pool_sample_2.cpp:56</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -528,7 +537,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00060">60</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00063">63</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -544,7 +553,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -560,7 +569,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -576,7 +585,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00057">57</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -592,7 +601,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -608,7 +617,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -624,7 +633,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">53</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +649,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -656,7 +665,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00050">50</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">53</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
@@ -672,14 +681,14 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 7 2025 16:23:35 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Sep 7 2025 17:05:25 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
