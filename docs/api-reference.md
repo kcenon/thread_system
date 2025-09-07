@@ -10,20 +10,29 @@ Complete API documentation for the Thread System framework.
    - [job Class](#job-class)
    - [job_queue Class](#job_queue-class)
    - [result Template](#resultt-template)
-3. [Thread Pool Module](#thread-pool-module-thread_pool_module)
+3. [Synchronization Module](#synchronization-module)
+   - [sync_primitives](#sync_primitives)
+   - [cancellation_token](#cancellation_token)
+   - [service_registry](#service_registry)
+4. [Thread Pool Module](#thread-pool-module-thread_pool_module)
    - [thread_pool Class](#thread_pool-class)
    - [thread_worker Class](#thread_worker-class)
-4. [Typed Thread Pool Module](#typed-thread-pool-module-typed_thread_pool_module)
+5. [Typed Thread Pool Module](#typed-thread-pool-module-typed_thread_pool_module)
    - [typed_thread_pool_t Template](#typed_thread_pool_t-template)
    - [typed_thread_worker_t Template](#typed_thread_worker_t-template)
    - [job_types Enumeration](#job_types-enumeration)
-5. [External Modules](#external-modules)
-   - [Logger Module](#logger-module)
-   - [Monitoring Module](#monitoring-module)
-6. [Utilities Module](#utilities-module-utility_module)
+6. [Interfaces](#interfaces)
+   - [executor_interface](#executor_interface)
+   - [scheduler_interface](#scheduler_interface)
+   - [logger_interface](#logger_interface)
+   - [monitoring_interface](#monitoring_interface)
+7. [External Modules](#external-modules)
+   - [Logger System](#logger-system)
+   - [Monitoring System](#monitoring-system)
+8. [Utilities Module](#utilities-module-utility_module)
    - [formatter_macros](#formatter-macros)
    - [convert_string](#convert_string)
-7. [Quick Reference](#quick-reference)
+9. [Quick Reference](#quick-reference)
 
 ## Overview
 
@@ -55,9 +64,11 @@ The Thread System framework provides a comprehensive set of classes for building
 ### Advanced Features
 
 - **Adaptive Queue System**: Automatic switching between mutex and lock-free strategies
-- **Hazard Pointers**: Safe memory reclamation for lock-free structures
-- **Node Pools**: Memory pools for reduced allocation overhead
-- **Real-time Monitoring**: Performance metrics collection and analysis
+- **Enhanced Synchronization**: Comprehensive synchronization wrappers with timeout support
+- **Cancellation Support**: Cooperative cancellation with linked token hierarchies
+- **Service Registry**: Lightweight dependency injection container
+- **Error Handling**: Modern result<T> pattern for robust error management
+- **Interface-Based Design**: Clean separation of concerns through well-defined interfaces
 
 ## Core Module (thread_module)
 
@@ -175,6 +186,152 @@ enum class error_code {
     queue_full,
     queue_empty
 };
+```
+
+## Synchronization Module
+
+### sync_primitives
+
+Comprehensive synchronization wrapper utilities providing enhanced functionality over standard library primitives.
+
+```cpp
+#include "core/sync/include/sync_primitives.h"
+
+// Scoped lock guard with timeout support
+class scoped_lock_guard {
+public:
+    template<typename Mutex>
+    explicit scoped_lock_guard(Mutex& mutex, 
+                              std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
+    
+    [[nodiscard]] bool owns_lock() const noexcept;
+    explicit operator bool() const noexcept;
+};
+
+// Enhanced condition variable wrapper
+class condition_variable_wrapper {
+public:
+    template<typename Predicate>
+    void wait(std::unique_lock<std::mutex>& lock, Predicate pred);
+    
+    template<typename Rep, typename Period, typename Predicate>
+    bool wait_for(std::unique_lock<std::mutex>& lock,
+                  const std::chrono::duration<Rep, Period>& rel_time,
+                  Predicate pred);
+    
+    void notify_one() noexcept;
+    void notify_all() noexcept;
+};
+
+// Atomic flag with wait/notify support
+class atomic_flag_wrapper {
+public:
+    void test_and_set(std::memory_order order = std::memory_order_seq_cst) noexcept;
+    void clear(std::memory_order order = std::memory_order_seq_cst) noexcept;
+    void wait(bool old, std::memory_order order = std::memory_order_seq_cst) const noexcept;
+    void notify_one() noexcept;
+    void notify_all() noexcept;
+};
+
+// Shared mutex wrapper for reader-writer locks
+class shared_mutex_wrapper {
+public:
+    void lock();
+    bool try_lock();
+    void unlock();
+    void lock_shared();
+    bool try_lock_shared();
+    void unlock_shared();
+};
+```
+
+### cancellation_token
+
+Provides cooperative cancellation mechanism for long-running operations.
+
+```cpp
+#include "core/sync/include/cancellation_token.h"
+
+class cancellation_token {
+public:
+    // Create a new cancellation token
+    static cancellation_token create();
+    
+    // Create a linked token (cancelled when any parent is cancelled)
+    static cancellation_token create_linked(
+        std::initializer_list<cancellation_token> tokens);
+    
+    // Cancel the operation
+    void cancel();
+    
+    // Check cancellation status
+    [[nodiscard]] bool is_cancelled() const;
+    
+    // Throw if cancelled
+    void throw_if_cancelled() const;
+    
+    // Register callback for cancellation
+    void register_callback(std::function<void()> callback);
+};
+
+// Usage example
+auto token = cancellation_token::create();
+auto linked = cancellation_token::create_linked({token, other_token});
+
+token.register_callback([]() {
+    std::cout << "Operation cancelled" << std::endl;
+});
+
+// In worker thread
+while (!token.is_cancelled()) {
+    // Do work
+    token.throw_if_cancelled(); // Throws if cancelled
+}
+```
+
+### service_registry
+
+Lightweight dependency injection container for managing service instances.
+
+```cpp
+#include "core/base/include/service_registry.h"
+
+class service_registry {
+public:
+    // Register a service
+    template<typename Interface, typename Implementation>
+    void register_service(std::shared_ptr<Implementation> service);
+    
+    // Retrieve a service
+    template<typename Interface>
+    [[nodiscard]] std::shared_ptr<Interface> get_service() const;
+    
+    // Check if service is registered
+    template<typename Interface>
+    [[nodiscard]] bool has_service() const;
+    
+    // Unregister a service
+    template<typename Interface>
+    bool unregister_service();
+    
+    // Clear all services
+    void clear();
+};
+
+// Usage example
+service_registry registry;
+
+// Register services
+registry.register_service<logger_interface>(
+    std::make_shared<console_logger>());
+registry.register_service<monitoring_interface>(
+    std::make_shared<metrics_collector>());
+
+// Retrieve services
+auto logger = registry.get_service<logger_interface>();
+if (logger) {
+    logger->log("Service retrieved successfully");
+}
 ```
 
 ## Thread Pool Module (thread_pool_module)
@@ -295,13 +452,110 @@ enum class job_types : uint8_t {
 };
 ```
 
+## Interfaces
+
+The thread system uses interface-based design for clean separation of concerns and easy extensibility.
+
+### executor_interface
+
+Base interface for all executor implementations (thread pools).
+
+```cpp
+#include "interfaces/executor_interface.h"
+
+class executor_interface {
+public:
+    virtual ~executor_interface() = default;
+    
+    // Execute a job
+    virtual auto execute(std::unique_ptr<job> job) -> result_void = 0;
+    
+    // Execute multiple jobs
+    virtual auto execute_batch(std::vector<std::unique_ptr<job>> jobs) -> result_void = 0;
+    
+    // Shutdown the executor
+    virtual auto shutdown(bool wait_for_completion = true) -> void = 0;
+    
+    // Check if executor is running
+    [[nodiscard]] virtual auto is_running() const -> bool = 0;
+};
+```
+
+### scheduler_interface
+
+Interface for job scheduling strategies.
+
+```cpp
+#include "interfaces/scheduler_interface.h"
+
+class scheduler_interface {
+public:
+    virtual ~scheduler_interface() = default;
+    
+    // Schedule a job
+    virtual auto schedule(std::unique_ptr<job> job) -> result_void = 0;
+    
+    // Get next job to execute
+    virtual auto get_next() -> result<std::unique_ptr<job>> = 0;
+    
+    // Check if there are pending jobs
+    [[nodiscard]] virtual auto has_pending() const -> bool = 0;
+};
+```
+
+### logger_interface
+
+Interface for optional logger integration.
+
+```cpp
+#include "interfaces/logger_interface.h"
+
+namespace thread_module {
+class logger_interface {
+public:
+    virtual ~logger_interface() = default;
+    
+    // Log a message
+    virtual void log(const std::string& message) = 0;
+    virtual void log_error(const std::string& message) = 0;
+    virtual void log_warning(const std::string& message) = 0;
+    virtual void log_info(const std::string& message) = 0;
+    virtual void log_debug(const std::string& message) = 0;
+};
+}
+```
+
+### monitoring_interface
+
+Interface for optional monitoring integration.
+
+```cpp
+#include "interfaces/monitoring_interface.h"
+
+namespace monitoring_interface {
+class monitoring_interface {
+public:
+    virtual ~monitoring_interface() = default;
+    
+    // Record metrics
+    virtual void record_metric(const std::string& name, double value) = 0;
+    virtual void increment_counter(const std::string& name) = 0;
+    
+    // Get current metrics
+    virtual auto get_metrics() const -> std::map<std::string, double> = 0;
+};
+}
+```
+
 ## External Modules
 
 The following modules have been moved to separate projects for better modularity and reusability:
 
-### Logger Module
+### Logger System
 
-The asynchronous logging functionality is now available as a separate project. It provides:
+**Repository**: https://github.com/kcenon/logger_system
+
+The asynchronous logging functionality is now available as a separate project that implements the `logger_interface`. It provides:
 
 - **High-performance asynchronous logging** with multiple output targets
 - **Structured logging** with type-safe formatting
@@ -309,11 +563,11 @@ The asynchronous logging functionality is now available as a separate project. I
 - **File rotation** and compression support
 - **Thread-safe operations** with minimal performance impact
 
-**Repository**: Available as a standalone project for integration into various applications.
+### Monitoring System
 
-### Monitoring Module
+**Repository**: https://github.com/kcenon/monitoring_system
 
-The performance monitoring and metrics collection system is now a separate project. It offers:
+The performance monitoring and metrics collection system is now a separate project that implements the `monitoring_interface`. It offers:
 
 - **Real-time performance metrics** collection and analysis
 - **System resource monitoring** (CPU, memory, thread usage)
@@ -321,17 +575,22 @@ The performance monitoring and metrics collection system is now a separate proje
 - **Historical data retention** with configurable duration
 - **Extensible metrics framework** for custom measurements
 
-**Repository**: Available as a standalone project for comprehensive application monitoring.
-
 ### Integration with Thread System
 
-While these modules are now separate projects, they were designed to work seamlessly with the Thread System:
+These external modules integrate seamlessly through the interface pattern:
 
-- The logger can be used to track thread pool operations and job execution
-- The monitoring module can collect detailed metrics from thread pools and workers
-- Both modules maintain the same design principles and performance characteristics
+```cpp
+// Example: Using external logger with thread pool
+#include "thread_pool.h"
+#include "logger_system/logger.h"  // External module
 
-For applications requiring logging or monitoring capabilities, include these modules as separate dependencies in your project.
+service_registry registry;
+registry.register_service<thread_module::logger_interface>(
+    std::make_shared<logger_module::logger>());
+
+auto pool = std::make_shared<thread_pool>();
+pool->set_logger(registry.get_service<thread_module::logger_interface>());
+```
 
 ## Utilities Module (utility_module)
 
@@ -364,6 +623,9 @@ namespace convert_string {
 ### Creating a Basic Thread Pool
 
 ```cpp
+#include "implementations/thread_pool/include/thread_pool.h"
+#include "core/jobs/include/callback_job.h"
+
 // Create and configure pool
 auto pool = std::make_shared<thread_pool>("MyPool");
 
@@ -373,13 +635,22 @@ for (int i = 0; i < 4; ++i) {
 }
 
 // Start pool
-pool->start();
+if (auto error = pool->start(); error.has_value()) {
+    std::cerr << "Failed to start pool: " << *error << std::endl;
+    return;
+}
 
-// Submit jobs
-pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+// Submit jobs with cancellation support
+auto token = cancellation_token::create();
+auto job = std::make_unique<callback_job>([]() -> result_void {
     // Do work
     return {};
-}));
+});
+job->set_cancellation_token(token);
+pool->enqueue(std::move(job));
+
+// Cancel if needed
+token.cancel();
 
 // Stop pool
 pool->stop();
@@ -466,4 +737,70 @@ for (int i = 0; i < 1000; ++i) {
 
 // Enqueue entire batch
 pool->enqueue_batch(std::move(batch));
+```
+
+### Using Service Registry
+
+```cpp
+#include "core/base/include/service_registry.h"
+
+// Create registry and register services
+service_registry registry;
+
+// Register thread pool as executor service
+auto pool = std::make_shared<thread_pool>();
+registry.register_service<executor_interface>(pool);
+
+// Register external logger (if available)
+#ifdef HAS_LOGGER_SYSTEM
+registry.register_service<thread_module::logger_interface>(
+    std::make_shared<external_logger>());
+#endif
+
+// Use services throughout application
+auto executor = registry.get_service<executor_interface>();
+if (executor) {
+    executor->execute(std::make_unique<my_job>());
+}
+```
+
+### Advanced Synchronization Example
+
+```cpp
+#include "core/sync/include/sync_primitives.h"
+
+// Using scoped lock with timeout
+std::mutex resource_mutex;
+{
+    scoped_lock_guard lock(resource_mutex, std::chrono::milliseconds(100));
+    if (lock.owns_lock()) {
+        // Successfully acquired lock within timeout
+        // Access protected resource
+    } else {
+        // Timeout occurred
+        // Handle timeout scenario
+    }
+}
+
+// Using enhanced condition variable
+condition_variable_wrapper cv;
+std::mutex cv_mutex;
+bool ready = false;
+
+// Producer thread
+{
+    std::unique_lock<std::mutex> lock(cv_mutex);
+    ready = true;
+    cv.notify_one();
+}
+
+// Consumer thread with timeout
+{
+    std::unique_lock<std::mutex> lock(cv_mutex);
+    if (cv.wait_for(lock, std::chrono::seconds(1), []{ return ready; })) {
+        // Condition met within timeout
+    } else {
+        // Timeout occurred
+    }
+}
 ```
