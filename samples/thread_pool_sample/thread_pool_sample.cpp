@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <iostream>
+#include <memory>
+#include <chrono>
 
 #include "logger/core/logger.h"
 #include "utilities/core/formatter.h"
@@ -71,7 +73,7 @@ auto initialize_logger() -> std::optional<std::string>
 }
 
 auto create_default(const uint16_t& worker_counts)
-	-> std::tuple<std::shared_ptr<thread_pool>, std::optional<std::string>>
+	-> std::tuple<std::shared_ptr<thread_pool>, result_void>
 {
 	std::shared_ptr<thread_pool> pool;
 
@@ -84,7 +86,7 @@ auto create_default(const uint16_t& worker_counts)
 		return { nullptr, std::string(e.what()) };
 	}
 
-	std::optional<std::string> error_message = std::nullopt;
+	result_void error_result;
 
 	std::vector<std::unique_ptr<thread_worker>> workers;
 	workers.reserve(worker_counts);
@@ -93,19 +95,18 @@ auto create_default(const uint16_t& worker_counts)
 		workers.push_back(std::make_unique<thread_worker>());
 	}
 
-	error_message = pool->enqueue_batch(std::move(workers));
-	if (error_message.has_value())
+	auto enqueue_result = pool->enqueue_batch(std::move(workers));
+	if (enqueue_result.has_error())
 	{
-		return { nullptr, formatter::format("cannot enqueue to workers: {}",
-											error_message.value_or("unknown error")) };
+		return { nullptr, result_void{enqueue_result.get_error()} };
 	}
 
-	return { pool, std::nullopt };
+	return { pool, result_void{} };
 }
 
-auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::string>
+auto store_job(std::shared_ptr<thread_pool> thread_pool) -> result_void
 {
-	std::optional<std::string> error_message = std::nullopt;
+	result_void result;
 
 	std::vector<std::unique_ptr<job>> jobs;
 	jobs.reserve(test_line_count_);
@@ -120,16 +121,15 @@ auto store_job(std::shared_ptr<thread_pool> thread_pool) -> std::optional<std::s
 			}));
 	}
 
-	error_message = thread_pool->enqueue_batch(std::move(jobs));
-	if (error_message.has_value())
+	result = thread_pool->enqueue_batch(std::move(jobs));
+	if (result.has_error())
 	{
-		return formatter::format("error enqueuing jobs: {}",
-								 error_message.value_or("unknown error"));
+		return result.get_error();
 	}
 
 	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
 
-	return std::nullopt;
+	return result_void{};
 }
 
 auto main() -> int
@@ -143,32 +143,33 @@ auto main() -> int
 	}
 
 	std::shared_ptr<thread_pool> thread_pool = nullptr;
-	std::tie(thread_pool, error_message) = create_default(thread_counts_);
-	if (error_message.has_value())
+	result_void pool_init_result;
+	std::tie(thread_pool, pool_init_result) = create_default(thread_counts_);
+	if (pool_init_result.has_error())
 	{
 		log_module::write_error("error creating thread pool: {}",
-								error_message.value_or("unknown error"));
+								pool_init_result.get_error().to_string());
 
 		return 0;
 	}
 
 	log_module::write_information("created {}", thread_pool->to_string());
 
-	error_message = store_job(thread_pool);
-	if (error_message.has_value())
+	auto store_result = store_job(thread_pool);
+	if (store_result.has_error())
 	{
-		log_module::write_error("error storing job: {}", error_message.value_or("unknown error"));
+		log_module::write_error("error storing job: {}", store_result.get_error().to_string());
 
 		thread_pool.reset();
 
 		return 0;
 	}
 
-	error_message = thread_pool->start();
-	if (error_message.has_value())
+	auto start_result = thread_pool->start();
+	if (start_result.has_error())
 	{
 		log_module::write_error("error starting thread pool: {}",
-								error_message.value_or("unknown error"));
+								start_result.get_error().to_string());
 
 		thread_pool.reset();
 
@@ -177,7 +178,12 @@ auto main() -> int
 
 	log_module::write_information("started {}", thread_pool->to_string());
 
-	thread_pool->stop();
+	auto stop_result = thread_pool->stop();
+	if (stop_result.has_error())
+	{
+		log_module::write_error("error stopping thread pool: {}",
+								stop_result.get_error().to_string());
+	}
 
 	log_module::write_information("stopped {}", thread_pool->to_string());
 

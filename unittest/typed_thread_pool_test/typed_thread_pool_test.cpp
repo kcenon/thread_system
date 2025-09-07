@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "core/job_types.h"
-#include "pool/typed_thread_pool.h"
-#include "scheduling/typed_thread_worker.h"
+#include "job_types.h"
+#include "typed_thread_pool.h"
+#include "typed_thread_worker.h"
 
 using namespace typed_thread_pool_module;
 using namespace thread_module;

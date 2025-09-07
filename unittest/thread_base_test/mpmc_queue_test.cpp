@@ -37,9 +37,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "gtest/gtest.h"
-#include "lockfree/queues/lockfree_job_queue.h"
-#include "lockfree/queues/adaptive_job_queue.h"
-#include "jobs/callback_job.h"
+#include "lockfree_job_queue.h"
+#include "adaptive_job_queue.h"
+#include "callback_job.h"
 #include <thread>
 #include <vector>
 #include <atomic>

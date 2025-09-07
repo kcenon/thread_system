@@ -3,6 +3,11 @@
 #include <thread_system_core/thread_base/jobs/callback_job.h>
 #include <iostream>
 #include <atomic>
+#include <thread>
+#include <chrono>
+#include <memory>
+#include <vector>
+#include <string>
 
 int main() {
     using namespace thread_pool_module;

@@ -136,12 +136,12 @@ namespace thread_pool_module
 	 * 
 	 * @return std::nullopt on success, error message on failure
 	 */
-	auto thread_pool::start(void) -> std::optional<std::string>
-	{
+auto thread_pool::start(void) -> result_void
+{
 		// Validate that workers have been added
 		if (workers_.empty())
 		{
-			return "No workers to start";
+            return error{error_code::invalid_argument, "no workers to start"};
 		}
 
 		// Attempt to start each worker
@@ -151,16 +151,16 @@ namespace thread_pool_module
 			if (start_result.has_error())
 			{
 				// If any worker fails, stop all and return error
-				stop();
-				return start_result.get_error().to_string();
+                stop();
+                return start_result.get_error();
 			}
 		}
 
 		// Mark pool as successfully started
 		start_pool_.store(true);
 
-		return std::nullopt;  // Success
-	}
+        return {};
+}
 
 	/**
 	 * @brief Returns the shared job queue used by all workers.
@@ -195,61 +195,61 @@ namespace thread_pool_module
 	 * @param job Unique pointer to job (ownership transferred)
 	 * @return std::nullopt on success, error message on failure
 	 */
-	auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>
-	{
+auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> result_void
+{
 		// Validate inputs
 		if (job == nullptr)
 		{
-			return "Job is null";
+            return error{error_code::invalid_argument, "job is null"};
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return "Job queue is null";
+            return error{error_code::resource_allocation_failed, "job queue is null"};
 		}
 
 		// Delegate to adaptive queue for optimal processing
 		auto enqueue_result = job_queue_->enqueue(std::move(job));
-		if (enqueue_result.has_error())
-		{
-			return enqueue_result.get_error().to_string();
-		}
+    if (enqueue_result.has_error())
+    {
+        return enqueue_result.get_error();
+    }
 
-		return std::nullopt;  // Success
-	}
+    return {};
+}
 
-	auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
-		-> std::optional<std::string>
-	{
+auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+		-> result_void
+{
 		if (jobs.empty())
 		{
-			return "Jobs are empty";
+			return error{error_code::invalid_argument, "jobs are empty"};
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return "Job queue is null";
+			return error{error_code::resource_allocation_failed, "job queue is null"};
 		}
 
 		auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
 		if (enqueue_result.has_error())
 		{
-			return enqueue_result.get_error().to_string();
+			return enqueue_result.get_error();
 		}
 
-		return std::nullopt;
-	}
+		return {};
+}
 
-	auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>
-	{
+auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> result_void
+{
 		if (worker == nullptr)
 		{
-			return "Worker is null";
+			return error{error_code::invalid_argument, "worker is null"};
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return "Job queue is null";
+			return error{error_code::resource_allocation_failed, "job queue is null"};
 		}
 
 		worker->set_job_queue(job_queue_);
@@ -261,26 +261,26 @@ namespace thread_pool_module
 			if (start_result.has_error())
 			{
 				stop();
-				return start_result.get_error().to_string();
+				return start_result.get_error();
 			}
 		}
 
 		workers_.emplace_back(std::move(worker));
 
-		return std::nullopt;
-	}
+		return {};
+}
 
-	auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
-		-> std::optional<std::string>
-	{
+auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+		-> result_void
+{
 		if (workers.empty())
 		{
-			return "Workers are empty";
+			return error{error_code::invalid_argument, "workers are empty"};
 		}
 
 		if (job_queue_ == nullptr)
 		{
-			return "Job queue is null";
+			return error{error_code::resource_allocation_failed, "job queue is null"};
 		}
 
 		for (auto& worker : workers)
@@ -294,21 +294,21 @@ namespace thread_pool_module
 				if (start_result.has_error())
 				{
 					stop();
-					return start_result.get_error().to_string();
+					return start_result.get_error();
 				}
 			}
 
 			workers_.emplace_back(std::move(worker));
 		}
 
-		return std::nullopt;
-	}
+		return {};
+}
 
-	auto thread_pool::stop(const bool& immediately_stop) -> void
-	{
+auto thread_pool::stop(const bool& immediately_stop) -> result_void
+{
 		if (!start_pool_.load())
 		{
-			return;
+			return {};
 		}
 
 		if (job_queue_ != nullptr)
@@ -333,7 +333,8 @@ namespace thread_pool_module
 		}
 
 		start_pool_.store(false);
-	}
+		return {};
+}
 
 	auto thread_pool::to_string(void) const -> std::string
 	{

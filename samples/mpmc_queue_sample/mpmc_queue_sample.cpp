@@ -62,7 +62,7 @@ void basic_spsc_example()
             });
             
             auto result = queue.enqueue(std::move(job));
-            if (!result) {
+            if (result.has_error()) {
                 write_error(
                     "Failed to enqueue job {}: {}", i, result.get_error().message());
             }
@@ -132,7 +132,7 @@ void mpmc_example()
                 // Retry on failure (high contention scenario)
                 while (true) {
                     auto result = queue.enqueue(std::move(job));
-                    if (result) {
+                    if (!result.has_error()) {
                         produced.fetch_add(1);
                         break;
                     }
@@ -205,7 +205,7 @@ void batch_operations_example()
         "Enqueueing {} jobs in batch", batch.size());
     
     auto enqueue_result = queue.enqueue_batch(std::move(batch));
-    if (!enqueue_result) {
+    if (enqueue_result.has_error()) {
         write_error(
             "Batch enqueue failed: {}", enqueue_result.get_error().message());
         return;
@@ -246,8 +246,11 @@ void performance_example()
             return result_void();
         });
         
-        while (!queue.enqueue(std::move(job))) {
+        while (true) {
+            auto r = queue.enqueue(std::move(job));
+            if (!r.has_error()) break;
             std::this_thread::yield();
+            job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         }
     }
     
