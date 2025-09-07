@@ -94,14 +94,12 @@ jobs:
           fi
           
           echo "Bootstrapping vcpkg..."
-          export VCPKG_FORCE_SYSTEM_BINARIES=1
           ./vcpkg/bootstrap-vcpkg.sh
 
       - name: Install dependencies with vcpkg
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
         run: |
           echo "Installing dependencies..."
-          export VCPKG_FORCE_SYSTEM_BINARIES=1
           ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root="${GITHUB_WORKSPACE}/vcpkg_installed" --triplet x64-mingw-dynamic
 
       - name: Cache CMake build
