@@ -9,9 +9,9 @@ cmake --build build -j
 
 ## Modules
 
-- core: `thread_base`, `job`, `job_queue`, `sync`
-- implementations: `thread_pool`, `typed_thread_pool`, `lockfree` (lock-free + adaptive queues)
-- interfaces: logging, monitoring, executor/scheduler/monitorable, service container/context
+- core: `thread_base`, `job`, `job_queue`, `sync` (including sync_primitives, cancellation_token, error_handling)
+- implementations: `thread_pool`, `typed_thread_pool`, adaptive queues
+- interfaces: logging, monitoring, executor/scheduler, service registry
 - utilities: formatting, string conversion, span
 
 ## Quick Start: Thread Pool
@@ -46,8 +46,8 @@ using namespace typed_thread_pool_module;
 
 ## Adaptive Job Queue (automatic strategy)
 
-`implementations/lockfree` provides an adaptive queue that switches between
-mutex-based and lock-free MPMC internally based on contention and latency.
+The adaptive queue automatically switches between mutex-based and lock-free 
+strategies internally based on contention and latency patterns.
 
 ```cpp
 thread_module::adaptive_job_queue q{
