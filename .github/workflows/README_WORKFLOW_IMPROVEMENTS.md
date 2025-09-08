@@ -1,93 +1,124 @@
-# GitHub Workflows - vcpkg Fallback Improvements
+# GitHub Workflows — vcpkg Caching & Fallback Improvements
 
-This document describes the improvements made to GitHub Actions workflows to handle vcpkg failures gracefully.
+This document summarizes the CI improvements to make builds faster and more reliable by:
+- Enabling vcpkg binary caching (x‑gha) so dependencies are not rebuilt when nothing changed.
+- Keeping the existing graceful fallback to system libraries when vcpkg fails.
 
-## Problem Addressed
+Updated: 2025-09-08 (Asia/Seoul)
 
-The original workflows were completely dependent on vcpkg working correctly. This caused CI/CD failures in several scenarios:
-- ARM64 runners with compiler detection issues
-- vcpkg bootstrap failures  
-- Network issues preventing dependency downloads
-- Transient vcpkg service interruptions
+## What Changed
 
-## Solution Implemented
+1) vcpkg binary cache enabled
+- Added environment variables to all relevant jobs:
+  - `VCPKG_BINARY_SOURCES="clear;x-gha,readwrite"`
+  - `VCPKG_FEATURE_FLAGS="manifests,registries,versions,binarycaching"`
+- Effect: vcpkg reuses prebuilt artifacts via GitHub Actions cache storage and uploads new builds automatically.
 
-Added intelligent fallback logic that mirrors the improvements made to `build.sh`:
+2) Stronger cache keys for vcpkg_installed
+- Cache key now includes platform, triplet, manifest hash, optional `vcpkg-configuration.json` hash, and vcpkg commit:
+  - `${{ runner.os }}-<flavor>-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-${{ hashFiles('vcpkg.json','vcpkg-configuration.json') }}-${{ steps.vcpkg-commit.outputs.commit }}`
+- A dedicated step determines the vcpkg git commit after cloning/pulling vcpkg.
+- Result: cache invalidates only when it should (manifest/triplet/vcpkg version changes), avoiding unnecessary rebuilds.
 
-### 1. Dual Build Strategy
+3) Triplet standardized per platform
+- `VCPKG_DEFAULT_TRIPLET` is set explicitly:
+  - Ubuntu (GCC/Clang): `x64-linux`
+  - Windows (Visual Studio): `x64-windows`
+  - Windows (MinGW/MSYS2): `x64-mingw-dynamic`
+- `vcpkg install` uses `--triplet $VCPKG_DEFAULT_TRIPLET` for consistency and cache isolation.
 
-**Primary Attempt (vcpkg)**:
-- Builds full project including tests and samples
-- Uses external dependencies via vcpkg
-- Tagged with `id: build_vcpkg` and `continue-on-error: true`
-
-**Fallback Attempt (system libraries)**:
-- Triggered when primary build fails (`if: steps.build_vcpkg.outcome == 'failure'`)
-- Builds core libraries only (`BUILD_THREADSYSTEM_AS_SUBMODULE=ON`)
-- Uses C++20 standard library features (`USE_STD_FORMAT=ON`)
-- Cleans CMake cache before retry
-
-### 2. Adaptive Testing
-
-**With vcpkg success**: Runs full unit test suite
-**With system fallback**: Runs basic verification tests using C++20 features
+4) Install step skips on cache hit
+- The `Install dependencies with vcpkg` step only runs when the `vcpkg_installed` cache misses.
+- Combined with the x‑gha binary cache, dependency build work is minimized on repeat runs.
 
 ## Affected Workflows
 
-### Ubuntu GCC (`build-ubuntu-gcc.yaml`)
-- ✅ Primary vcpkg build attempt
-- ✅ System libraries fallback with GCC
-- ✅ Adaptive testing (unit tests vs verification)
+- Ubuntu GCC: `.github/workflows/build-ubuntu-gcc.yaml`
+- Ubuntu Clang: `.github/workflows/build-ubuntu-clang.yaml`
+- Windows Visual Studio: `.github/workflows/build-windows-vs.yaml`
+- Windows MinGW: `.github/workflows/build-windows-mingw.yaml`
+- Windows MSYS2: `.github/workflows/build-windows-msys2.yaml`
 
-### Ubuntu Clang (`build-ubuntu-clang.yaml`) 
-- ✅ Primary vcpkg build attempt
-- ✅ System libraries fallback with Clang
-- ✅ Adaptive testing (unit tests vs verification)
+All of the above received the caching changes while preserving the existing fallback logic.
 
-### Windows Visual Studio (`build-windows-vs.yaml`)
-- ✅ Primary vcpkg build attempt  
-- ✅ System libraries fallback with MSVC
-- ✅ Windows-specific verification test with cl.exe
+## How It Works
 
-## Benefits
+1) vcpkg sources are cloned/updated and bootstrapped as before.
+2) The workflow reads the vcpkg commit (`git -C vcpkg rev-parse HEAD`).
+3) `actions/cache` restores `vcpkg_installed` using a key that combines:
+   - OS + flavor (gcc/clang/vs/msys2/mingw)
+   - Triplet (per‑platform)
+   - `hashFiles('vcpkg.json','vcpkg-configuration.json')` (the latter is optional; empty hash if missing)
+   - vcpkg commit hash
+4) If cache hit: skip `vcpkg install`.
+5) If cache miss: run `vcpkg install` (which also benefits from x‑gha binary cache), then proceed to build.
+6) If the “vcpkg first attempt” build fails, the workflows still fall back to system libraries and run a minimal verification test.
 
-1. **Resilience**: CI/CD no longer fails due to vcpkg issues
-2. **Coverage**: Still gets full testing when vcpkg works
-3. **Minimum viable**: Always builds and tests core functionality
-4. **Platform agnostic**: Works across Linux, Windows, different architectures
-5. **Early detection**: Identifies when dependencies are problematic
+## Verifying in Logs
 
-## Verification Tests
+Look for the following in the Actions logs:
+- `Cache restored from key: ... vcpkg-installed-...` → vcpkg installation cache hit
+- `Using binary cache` or fast `vcpkg install` times → x‑gha cache effective
+- `Install dependencies with vcpkg` step is skipped when `cache-hit == 'true'`
+- If vcpkg build fails: a second CMake configure/build without the toolchain file
 
-When fallback occurs, workflows run simplified verification tests that confirm:
-- C++20 `std::jthread` functionality
-- Basic threading and atomic operations
-- Standard library integration
-- Platform-specific compilation
+## When Caches Invalidate
 
-## Example Output
+- `vcpkg.json` changes (add/remove/update dependencies)
+- `vcpkg-configuration.json` changes (registries/versions), if present
+- Triplet changes (`VCPKG_DEFAULT_TRIPLET`)
+- vcpkg repository commit changes (after `git pull`)
+- Runner OS/flavor changes (e.g., gcc → clang)
 
-### Successful vcpkg build:
+## Notes & Caveats
+
+- MSYS2 job treats vcpkg as optional; commit detection and caching run only if vcpkg setup succeeds.
+- ARM64 runners may set `VCPKG_FORCE_SYSTEM_BINARIES=arm`; this is orthogonal to caching and remains supported.
+- The CMake build directory is still recreated in each run by default. If you want to speed up full rebuilds further, consider:
+  - Removing unconditional `rm -rf build` and relying on the existing CMake build cache action.
+  - Tightening workflow triggers with `paths:` filters so builds run only when relevant files change.
+
+## Why This Matters
+
+- Faster CI with fewer dependency rebuilds.
+- More deterministic cache invalidation tied to actual sources of change.
+- Resilient builds thanks to the existing system‑library fallback path.
+
+## Example Snippets
+
+Environment variables in jobs:
+
 ```
-✅ Installing dependencies with vcpkg...
-✅ Building with full test suite...
-✅ Running 15 unit tests...
+env:
+  BUILD_TYPE: Debug
+  VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
+  VCPKG_FEATURE_FLAGS: "manifests,registries,versions,binarycaching"
+  VCPKG_DEFAULT_TRIPLET: x64-linux  # or x64-windows / x64-mingw-dynamic
 ```
 
-### Fallback scenario:
+Determine vcpkg commit (Linux/MSYS2 shell):
+
 ```
-⚠️ vcpkg build failed, falling back to system libraries...
-✅ Building core libraries only...
-✅ Running basic verification test...
-✅ Core functionality verified
+- name: Determine vcpkg commit
+  id: vcpkg-commit
+  run: echo "commit=$(git -C vcpkg rev-parse HEAD)" >> $GITHUB_OUTPUT
 ```
 
-## Future Improvements
+Cache key structure:
 
-Consider adding:
-- Notification when fallback occurs (Slack/email)
-- Metrics collection on fallback frequency
-- Artifact upload for both build types
-- Matrix builds with both strategies
+```
+key: ${{ runner.os }}-<flavor>-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-
+     ${{ hashFiles('vcpkg.json','vcpkg-configuration.json') }}-
+     ${{ steps.vcpkg-commit.outputs.commit }}
+```
 
-This ensures the Thread System remains buildable and testable in all CI/CD environments.
+Install using the selected triplet:
+
+```
+./vcpkg/vcpkg install \
+  --x-manifest-root=. \
+  --x-install-root=${{ github.workspace }}/vcpkg_installed \
+  --triplet $VCPKG_DEFAULT_TRIPLET
+```
+
+These changes ensure the Thread System remains buildable, testable, and fast across platforms while avoiding unnecessary rebuilds when nothing has changed.
