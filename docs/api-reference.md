@@ -13,26 +13,28 @@ Complete API documentation for the Thread System framework.
 3. [Synchronization Module](#synchronization-module)
    - [sync_primitives](#sync_primitives)
    - [cancellation_token](#cancellation_token)
+4. [Dependency Injection](#dependency-injection)
+   - [service_container](#service_container)
    - [service_registry](#service_registry)
-4. [Thread Pool Module](#thread-pool-module-thread_pool_module)
+5. [Thread Pool Module](#thread-pool-module-thread_pool_module)
    - [thread_pool Class](#thread_pool-class)
    - [thread_worker Class](#thread_worker-class)
-5. [Typed Thread Pool Module](#typed-thread-pool-module-typed_thread_pool_module)
+6. [Typed Thread Pool Module](#typed-thread-pool-module-typed_thread_pool_module)
    - [typed_thread_pool_t Template](#typed_thread_pool_t-template)
    - [typed_thread_worker_t Template](#typed_thread_worker_t-template)
    - [job_types Enumeration](#job_types-enumeration)
-6. [Interfaces](#interfaces)
+7. [Interfaces](#interfaces)
    - [executor_interface](#executor_interface)
    - [scheduler_interface](#scheduler_interface)
    - [logger_interface](#logger_interface)
    - [monitoring_interface](#monitoring_interface)
-7. [External Modules](#external-modules)
+8. [External Modules](#external-modules)
    - [Logger System](#logger-system)
    - [Monitoring System](#monitoring-system)
-8. [Utilities Module](#utilities-module-utility_module)
+9. [Utilities Module](#utilities-module-utility_module)
    - [formatter_macros](#formatter-macros)
    - [convert_string](#convert_string)
-9. [Quick Reference](#quick-reference)
+10. [Quick Reference](#quick-reference)
 
 ## Overview
 
@@ -66,7 +68,7 @@ The Thread System framework provides a comprehensive set of classes for building
 - **Adaptive Queue System**: Automatic switching between mutex and lock-free strategies
 - **Enhanced Synchronization**: Comprehensive synchronization wrappers with timeout support
 - **Cancellation Support**: Cooperative cancellation with linked token hierarchies
-- **Service Registry**: Lightweight dependency injection container
+- **Dependency Injection**: Prefer `service_container` (thread-safe DI). `service_registry` is a lightweight header-only alternative.
 - **Error Handling**: Modern result<T> pattern for robust error management
 - **Interface-Based Design**: Clean separation of concerns through well-defined interfaces
 
@@ -289,49 +291,37 @@ while (!token.is_cancelled()) {
 }
 ```
 
+## Dependency Injection
+
+### service_container
+
+Preferred DI for Thread System: thread-safe container with singleton/factory lifetimes.
+
+```cpp
+#include "interfaces/service_container.h"
+#include "interfaces/thread_context.h"
+
+// Register services globally
+auto& container = thread_module::service_container::global();
+container.register_singleton<thread_module::logger_interface>(my_logger);
+container.register_singleton<monitoring_interface::monitoring_interface>(my_monitoring);
+
+// Resolve via thread_context (pools/workers use this context)
+thread_module::thread_context ctx; // resolves from global container
+```
+
 ### service_registry
 
-Lightweight dependency injection container for managing service instances.
+Lightweight header-only alternative for simple scenarios.
 
 ```cpp
 #include "core/base/include/service_registry.h"
 
-class service_registry {
-public:
-    // Register a service
-    template<typename Interface, typename Implementation>
-    void register_service(std::shared_ptr<Implementation> service);
-    
-    // Retrieve a service
-    template<typename Interface>
-    [[nodiscard]] std::shared_ptr<Interface> get_service() const;
-    
-    // Check if service is registered
-    template<typename Interface>
-    [[nodiscard]] bool has_service() const;
-    
-    // Unregister a service
-    template<typename Interface>
-    bool unregister_service();
-    
-    // Clear all services
-    void clear();
-};
+// Register a service instance
+thread_module::service_registry::register_service<MyInterface>(std::make_shared<MyImpl>());
 
-// Usage example
-service_registry registry;
-
-// Register services
-registry.register_service<logger_interface>(
-    std::make_shared<console_logger>());
-registry.register_service<monitoring_interface>(
-    std::make_shared<metrics_collector>());
-
-// Retrieve services
-auto logger = registry.get_service<logger_interface>();
-if (logger) {
-    logger->log("Service retrieved successfully");
-}
+// Retrieve a service instance
+auto svc = thread_module::service_registry::get_service<MyInterface>();
 ```
 
 ## Thread Pool Module (thread_pool_module)
@@ -580,16 +570,18 @@ The performance monitoring and metrics collection system is now a separate proje
 These external modules integrate seamlessly through the interface pattern:
 
 ```cpp
-// Example: Using external logger with thread pool
-#include "thread_pool.h"
-#include "logger_system/logger.h"  // External module
+// Example: Register external logger and create a pool
+#include "interfaces/service_container.h"
+#include "implementations/thread_pool/include/thread_pool.h"
+#include <logger_system/logger.h>  // External project
 
-service_registry registry;
-registry.register_service<thread_module::logger_interface>(
-    std::make_shared<logger_module::logger>());
+// Register logger with the global container
+thread_module::service_container::global()
+  .register_singleton<thread_module::logger_interface>(
+      std::make_shared<logger_module::logger>());
 
-auto pool = std::make_shared<thread_pool>();
-pool->set_logger(registry.get_service<thread_module::logger_interface>());
+// Create a pool (thread_context resolves logger automatically)
+auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
 ```
 
 ## Utilities Module (utility_module)
@@ -739,29 +731,23 @@ for (int i = 0; i < 1000; ++i) {
 pool->enqueue_batch(std::move(batch));
 ```
 
-### Using Service Registry
+### Using Service Container
 
 ```cpp
-#include "core/base/include/service_registry.h"
-
-// Create registry and register services
-service_registry registry;
+#include "interfaces/service_container.h"
+#include "implementations/thread_pool/include/thread_pool.h"
 
 // Register thread pool as executor service
-auto pool = std::make_shared<thread_pool>();
-registry.register_service<executor_interface>(pool);
+auto pool = std::make_shared<thread_pool_module::thread_pool>("AppPool");
+thread_module::service_container::global()
+  .register_singleton<thread_module::executor_interface>(pool);
 
-// Register external logger (if available)
-#ifdef HAS_LOGGER_SYSTEM
-registry.register_service<thread_module::logger_interface>(
-    std::make_shared<external_logger>());
-#endif
+// Optional: register external logger implementation
+// thread_module::service_container::global()
+//   .register_singleton<thread_module::logger_interface>(
+//       std::make_shared<external_logger>());
 
-// Use services throughout application
-auto executor = registry.get_service<executor_interface>();
-if (executor) {
-    executor->execute(std::make_unique<my_job>());
-}
+// Use services later via thread_context or resolve<>()
 ```
 
 ### Advanced Synchronization Example

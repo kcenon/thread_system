@@ -4,7 +4,7 @@
 06 Sep 2025 (Asia/Seoul)
 
 ## Overview
-This document presents a structured design improvement plan to address issues identified in NEED_TO_FIX.md.
+This document presents a structured design improvement plan to address issues tracked in the project's issue tracker.
 
 ## 1. Architecture Improvements
 

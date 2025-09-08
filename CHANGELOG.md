@@ -11,8 +11,8 @@ Note: No official releases have been published yet. All entries below are pre-re
 
 ### Changed
 - **Major Modularization** 🏗️
-  - Moved logger module to separate project (https://github.com/kcenon/logger)
-  - Moved monitoring module to separate project (https://github.com/kcenon/monitoring)
+  - Moved logger module to separate project (https://github.com/kcenon/logger_system)
+  - Moved monitoring module to separate project (https://github.com/kcenon/monitoring_system)
   - Removed ~8,700+ lines of code from core thread system
   - Core thread system now ~2,700 lines focused purely on threading
   - Created interface-based architecture for external module integration
@@ -48,8 +48,8 @@ Note: No official releases have been published yet. All entries below are pre-re
   - README.md reflects modular architecture
   - api-reference.md focuses on core APIs
   - architecture.md describes new modular design
-  - getting-started.md shows usage without external dependencies
-  - examples.md demonstrates both core-only and with-modules usage
+  - USER_GUIDE.md shows usage without external dependencies
+  - samples/ demonstrate both core-only and with-modules usage
   - performance.md updated with latest benchmarks
 
 ## [Unreleased: Milestone 2.1.0] - 2025-09-06
@@ -112,7 +112,7 @@ Note: No official releases have been published yet. All entries below are pre-re
   - Updated README.md to reflect removed components
   - Rewrote api-reference.md to match current codebase
   - Updated architecture.md with cleaner structure
-  - Updated getting-started.md examples
+  - Updated USER_GUIDE.md examples
   - Updated performance.md to focus on adaptive queues
   - All references to removed components cleaned up
 
