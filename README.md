@@ -12,9 +12,9 @@
 
 The Thread System Project is a comprehensive, production-ready C++20 multithreading framework designed to democratize concurrent programming. Built with a modular, interface-based architecture, it provides intuitive abstractions and robust implementations that empower developers of all skill levels to build high-performance, thread-safe applications without the typical complexity and pitfalls of manual thread management.
 
-> **🏗️ Modular Architecture**: Recently refactored to a clean, modular design with ~8,700+ lines of code removed. Logger and monitoring systems are now available as separate, optional projects for maximum flexibility.
+> **🏗️ Modular Architecture**: Streamlined to ~2,700 lines of highly optimized code through aggressive refactoring and coroutine removal. Logger and monitoring systems are available as separate, optional projects for maximum flexibility.
 
-> **🔄 Migration Status**: Currently migrating to a fully modular architecture. Phase 1 (Interface extraction) is complete. See [MIGRATION.md](MIGRATION.md) for details.
+> **✅ Latest Updates**: Enhanced synchronization primitives, improved cancellation tokens, service registry pattern, and comprehensive header inclusion fixes. All CI/CD pipelines green across platforms.
 
 ## 🔗 Project Ecosystem & Inter-Dependencies
 
@@ -165,8 +165,9 @@ This project addresses the fundamental challenge faced by developers worldwide: 
   - implementations/README.md
   - interfaces/README.md
 - Guides:
-  - docs/USER_GUIDE.md
-  - docs/INTERFACES.md
+  - docs/USER_GUIDE.md (build, quick starts, DI)
+  - docs/INTERFACES.md (API-level interface contracts)
+  - docs/ARCHITECTURE.md (ecosystem and modules)
 
 Build API docs with Doxygen (optional):
 
@@ -280,8 +281,21 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 ### 📁 **Directory Organization**
 
 ```
-thread_system/
-├── 📁 sources/                     # Core source code
+thread_system/ (~2,700 lines of optimized code)
+├── 📁 core/                        # Core threading foundation
+│   ├── 📁 base/                    # Base threading functionality
+│   │   ├── thread_base.h/cpp       # Abstract thread class
+│   │   ├── service_registry.h      # 🆕 Dependency injection
+│   │   └── thread_conditions.h     # Thread state management
+│   ├── 📁 jobs/                    # Job system
+│   │   ├── job.h/cpp               # Base job with cancellation
+│   │   ├── callback_job.h/cpp      # Function-based jobs
+│   │   └── job_queue.h/cpp         # Thread-safe queue
+│   └── 📁 sync/                    # Synchronization
+│       ├── sync_primitives.h       # 🆕 Enhanced wrappers
+│       ├── cancellation_token.h    # 🆕 Cancellation support
+│       └── error_handling.h        # Result<T> pattern
+├── 📁 implementations/             # Concrete implementations
 │   ├── 📁 thread_base/             # Base threading functionality
 │   │   ├── core/                   # Core classes (thread_base, thread_conditions)
 │   │   ├── jobs/                   # Job system (job, callback_job, job_queue)
@@ -429,19 +443,41 @@ build/
 
 ## Key Components
 
-### 1. [Thread Base (thread_module)](https://github.com/kcenon/thread_system/tree/main/sources/thread_base)
+### 1. [Core Threading Foundation (thread_module)](https://github.com/kcenon/thread_system/tree/main/core)
 
+#### Base Components
 - **`thread_base` class**: The foundational abstract class for all thread operations
   - Supports both `std::jthread` (C++20) and `std::thread` through conditional compilation
   - Provides lifecycle management (start/stop) and customizable hooks
-- **`job` class**: Abstract base class for units of work
+  - Thread condition monitoring and state management
+
+#### Job System
+- **`job` class**: Abstract base class for units of work with cancellation support
 - **`callback_job` class**: Concrete job implementation using `std::function`
 - **`job_queue` class**: Thread-safe queue for job management
-- **Adaptive components**:
-  - `adaptive_job_queue`: Dual-mode queue supporting both mutex and lock-free strategies
-  - `lockfree_job_queue`: Lock-free MPMC queue (utilized by adaptive mode)
-  - `hazard_pointer`: Safe memory reclamation for lock-free data structures
-  - `node_pool`: Memory pool for queue operations
+- **`cancellation_token`** 🆕: Enhanced cooperative cancellation mechanism
+  - Linked token creation for hierarchical cancellation
+  - Thread-safe callback registration
+  - Automatic propagation of cancellation signals
+
+#### Synchronization Primitives 🆕
+- **`sync_primitives.h`**: Enhanced synchronization wrappers
+  - `scoped_lock_guard`: RAII lock with timeout support
+  - `condition_variable_wrapper`: Enhanced condition variable with predicates
+  - `atomic_flag_wrapper`: Extended atomic operations with wait/notify
+  - `shared_mutex_wrapper`: Reader-writer lock implementation
+
+#### Service Infrastructure 🆕
+- **`service_registry`**: Lightweight dependency injection container
+  - Type-safe service registration and retrieval
+  - Thread-safe access with shared_mutex
+  - Automatic lifetime management via shared_ptr
+
+#### Adaptive Components
+- **`adaptive_job_queue`**: Dual-mode queue supporting both mutex and lock-free strategies
+- **`lockfree_job_queue`**: Lock-free MPMC queue (utilized by adaptive mode)
+- **`hazard_pointer`**: Safe memory reclamation for lock-free data structures
+- **`node_pool`**: Memory pool for efficient node allocation
 
 ### 2. [Logging System (Separate Project)](https://github.com/kcenon/logger)
 

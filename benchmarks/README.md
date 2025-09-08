@@ -22,12 +22,7 @@ Memory usage analysis:
 - Memory usage with different configurations
 - Platform-specific memory measurements
 
-#### 3. **logger_benchmark.cpp**
-Logger performance tests:
-- Throughput by log level
-- Latency analysis (P50, P90, P99, P99.9)
-- Concurrent logging performance
-- Performance with different output targets
+<!-- Logger benchmarks moved to external logger_system project -->
 
 ### Advanced Benchmarks
 
@@ -97,7 +92,6 @@ make run_advanced_benchmarks
 # Run individual benchmarks
 ./bin/thread_pool_benchmark      # Core performance
 ./bin/memory_benchmark          # Memory analysis
-./bin/logger_benchmark          # Logger performance
 ./bin/real_world_benchmark      # Real-world scenarios
 ./bin/stress_test_benchmark     # Stress tests
 ./bin/comparison_benchmark      # Library comparisons
@@ -109,7 +103,6 @@ make run_advanced_benchmarks
 ### Quick Tests (< 1 minute)
 - thread_pool_benchmark
 - memory_benchmark
-- logger_benchmark
 
 ### Comprehensive Tests (5-10 minutes)
 - real_world_benchmark
