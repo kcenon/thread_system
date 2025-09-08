@@ -75,27 +75,32 @@
 
 ## Logging Questions
 
+### Q: Where is logging implemented now?
+**A:** Thread System provides a logging interface (`logger_interface`) only. The concrete implementation lives in the separate project [logger_system](https://github.com/kcenon/logger_system). Integrate it by registering your logger implementation via `service_container` or `logger_registry`.
+
 ### Q: Is logging thread-safe?
-**A:** Yes, all logging operations in `log_module` are thread-safe and can be called from multiple threads simultaneously.
+**A:** Yes for the recommended `logger_system` implementation (thread-safe by design). If you provide your own logger, ensure it is thread-safe because logging may occur from multiple worker threads.
 
 ### Q: How do I configure where logs are written?
-**A:** Use the target methods to specify which log levels go to which outputs. For a complete logger initialization pattern, see the [patterns documentation](patterns.md#logger-initialization-pattern).
+**A:** Configuration is provided by your logger implementation (e.g., `logger_system`). In Thread System you inject the logger, e.g.:
+```cpp
+// Register global logger
+thread_module::service_container::global()
+  .register_singleton<thread_module::logger_interface>(my_logger);
+
+// or
+thread_module::logger_registry::set_logger(my_logger);
+```
+See the logger's own documentation for sinks/targets and levels.
 
 ### Q: How do I customize log formatting?
-**A:** Register a custom callback for log processing. For advanced logging patterns including thread ID tracking, see the [patterns documentation](patterns.md#using-logs-effectively).
+**A:** Use the facilities of your logger implementation (format strings, structured logging). Thread System forwards messages through `logger_interface` unchanged.
 
 ### Q: Does logging affect application performance?
-**A:** The logging system is designed to minimize performance impact by processing logs asynchronously. However, excessive logging in tight loops can still affect performance. Use appropriate log levels and consider reducing log volume in performance-critical sections.
+**A:** Use an asynchronous logger (like `logger_system`) and avoid heavy logging in tight loops. Choose appropriate log levels and consider sampling or aggregation for high-frequency events.
 
 ### Q: How do I handle log rotation?
-**A:** Use the `set_max_lines` and `set_use_backup` methods to configure log rotation:
-```cpp
-// Rotate logs after 10,000 lines
-log_module::set_max_lines(10000);
-
-// Keep backups of old log files
-log_module::set_use_backup(true);
-```
+**A:** Log rotation/retention is handled by the logger implementation. Refer to the `logger_system` documentation (or your chosen logger) for rotation policies and configuration.
 
 ## Performance Questions
 

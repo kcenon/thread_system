@@ -41,23 +41,39 @@ The threading ecosystem consists of four interconnected projects designed to pro
 
 ### 1. thread_system (Foundation)
 **Repository**: https://github.com/kcenon/thread_system  
-**Role**: Core threading framework and interface provider
+**Role**: Core threading framework and interface provider  
+**Code Size**: ~2,700 lines (streamlined from 8,700+ through coroutine removal)
 
 Responsibilities:
-- Interface Definitions: `logger_interface`, `monitoring_interface`
+- Interface Definitions: `logger_interface`, `monitoring_interface`, `executor_interface`
 - Core Threading: worker pools, job queues, thread management
-- Foundation APIs: base abstractions for concurrent programming
+- Synchronization Primitives: Enhanced wrappers and utilities
+- Service Infrastructure: Dependency injection and service registry
 - Cross-Platform Support: Windows, Linux, macOS
 
 Key Components:
 ```cpp
 namespace thread_module {
+    // Interfaces
     class logger_interface;           // Implemented by logger_system
     class monitoring_interface;       // Implemented by monitoring_system
+    class executor_interface;         // Job execution contract
+    
+    // Core Threading
     class thread_pool;                // Main thread pool implementation
     class thread_worker;              // Worker thread management
     class job_queue;                  // Thread-safe job distribution
     class callback_job;               // Job wrapper for callbacks
+    
+    // Synchronization (NEW)
+    class cancellation_token;         // Cooperative cancellation
+    class scoped_lock_guard;          // RAII lock with timeout
+    class condition_variable_wrapper; // Enhanced condition variable
+    class service_registry;           // Dependency injection container
+    
+    // Adaptive Components
+    class adaptive_job_queue;         // Dual-mode queue optimization
+    class hazard_pointer_manager;     // Lock-free memory reclamation
 }
 ```
 
@@ -136,15 +152,34 @@ Dependency Graph:
 
 ## 📁 Directory Structure (Overview)
 
-Project layout after modularization:
+Project layout after modularization (~2,700 lines):
 
 ```
 thread_system/
-├── core/
-│   ├── base/{include,src}
-│   ├── jobs/{include,src}
-│   └── sync/{include,src}
-├── interfaces/
+├── core/                          # Core threading foundation
+│   ├── base/                      # Thread base, service registry
+│   │   ├── include/
+│   │   │   ├── thread_base.h
+│   │   │   ├── service_registry.h  # 🆕 DI container
+│   │   │   └── thread_conditions.h
+│   │   └── src/
+│   ├── jobs/                      # Job system
+│   │   ├── include/
+│   │   │   ├── job.h               # With cancellation
+│   │   │   ├── callback_job.h
+│   │   │   └── job_queue.h
+│   │   └── src/
+│   └── sync/                      # Synchronization
+│       ├── include/
+│       │   ├── sync_primitives.h   # 🆕 Enhanced wrappers
+│       │   ├── cancellation_token.h # 🆕 Cooperative cancellation
+│       │   └── error_handling.h    # Result<T> pattern
+│       └── src/
+├── interfaces/                    # Public contracts
+│   ├── executor_interface.h
+│   ├── scheduler_interface.h
+│   ├── logger_interface.h
+│   └── monitoring_interface.h
 ├── implementations/
 │   ├── thread_pool/{include,src}
 │   ├── typed_thread_pool/{include,src}
@@ -160,3 +195,52 @@ Design rules:
 - core exposes public headers under `include/` and implementations under `src/`
 - implementations depend on core and interfaces
 - utilities is standalone; interfaces depend only on core/base
+
+---
+
+## 🚀 Recent Architectural Highlights
+
+### Enhanced Synchronization Primitives 🆕
+- **`sync_primitives.h`**: Comprehensive synchronization wrappers
+  - `scoped_lock_guard`: RAII with timeout support
+  - `condition_variable_wrapper`: Predicates and timeouts
+  - `atomic_flag_wrapper`: Wait/notify operations
+  - `shared_mutex_wrapper`: Reader-writer locks
+
+### Improved Cancellation Support 🆕
+- **`cancellation_token`**: Cooperative cancellation mechanism
+  - Linked token creation for hierarchical cancellation
+  - Thread-safe callback registration
+  - Automatic signal propagation
+  - Weak pointer usage to prevent cycles
+
+### Service Registry Pattern 🆕
+- **`service_registry`**: Lightweight dependency injection
+  - Type-safe service registration/retrieval
+  - Thread-safe with shared_mutex
+  - Automatic lifetime management
+  - Header-only implementation
+
+### Adaptive Job Queue
+- Runtime switching between mutex-based and lock-free MPMC strategies
+- Uses lightweight metrics (latency, contention ratio, operation count)
+- Automatic optimization based on workload characteristics
+- Up to 7.7x performance improvement under high contention
+
+### Interface-Driven Integration
+- `executor_interface` implemented by thread pools (`execute`, `shutdown`)
+- `scheduler_interface` implemented by job queues (enqueue/dequeue)
+- `monitoring_interface` provides pool/worker/system metrics
+- `logger_interface` keeps logging pluggable and optional
+
+### Error Handling Excellence
+- **`result<T>` pattern**: Modern error handling similar to C++23 std::expected
+  - Type-safe error codes
+  - Monadic operations (map, and_then)
+  - Zero-overhead abstractions
+  - Clear error propagation
+
+### Typed Thread Pool
+- Per-type queues with lock-free/adaptive variants
+- Priority/type-aware scheduling for heterogeneous workloads
+- Maintains 99%+ type accuracy under all conditions
