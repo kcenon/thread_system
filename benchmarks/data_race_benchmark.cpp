@@ -221,7 +221,7 @@ static void BM_ThreadPoolStress(benchmark::State& state) {
                             return result_void{};
                         }
                     ));
-                    if (!result.has_value()) {
+                    if (result.has_error()) {
                         failed_jobs++;
                     }
                 }

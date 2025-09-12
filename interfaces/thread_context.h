@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger_interface.h"
 #include "monitoring_interface.h"
 #include "service_container.h"
+#include "../common_interfaces/thread_context_interface.h"
 
 namespace thread_module {
 
@@ -46,7 +47,7 @@ namespace thread_module {
  * This class uses composition to provide thread system components
  * with optional access to logger and monitoring services.
  */
-class thread_context {
+class thread_context : public common_interfaces::interface_thread_context {
 public:
     /**
      * @brief Default constructor - resolves services from global container
@@ -164,9 +165,54 @@ public:
         return thread_context(logger_, monitoring_);
     }
 
+    // interface_thread_context implementation
+    auto get_logger() const -> std::shared_ptr<common_interfaces::interface_logger> override {
+        // TODO: Implement adapter or ensure logger_interface inherits from interface_logger
+        // For now, return nullptr to avoid compilation errors
+        return nullptr;
+    }
+
+    auto get_monitoring() const -> std::shared_ptr<common_interfaces::interface_monitoring> override {
+        // TODO: Implement adapter or ensure monitoring_interface inherits from interface_monitoring
+        // For now, return nullptr to avoid compilation errors  
+        return nullptr;
+    }
+
+    auto set_logger(std::shared_ptr<common_interfaces::interface_logger> logger) -> bool override {
+        // TODO: Implement adapter or ensure interface compatibility
+        // For now, return false to avoid compilation errors
+        (void)logger; // Suppress unused parameter warning
+        return false;
+    }
+
+    auto set_monitoring(std::shared_ptr<common_interfaces::interface_monitoring> monitoring) -> bool override {
+        // TODO: Implement adapter or ensure interface compatibility
+        // For now, return false to avoid compilation errors
+        (void)monitoring; // Suppress unused parameter warning
+        return false;
+    }
+
+    auto get_context_name() const -> std::string override {
+        return context_name_;
+    }
+
+    auto set_context_name(const std::string& name) -> bool override {
+        context_name_ = name;
+        return true;
+    }
+
+    auto has_logger() const -> bool override {
+        return logger_ != nullptr;
+    }
+
+    auto has_monitoring() const -> bool override {
+        return monitoring_ != nullptr;
+    }
+
 private:
     std::shared_ptr<logger_interface> logger_;
     std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
+    mutable std::string context_name_;
 };
 
 /**
