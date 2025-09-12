@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "detail/forward_declarations.h"
 #include "../../interfaces/executor_interface.h"
 #include "../../interfaces/thread_context.h"
+#include "../../../common_interfaces/threading_interface.h"
 #include "config.h"
 
 #include <tuple>
@@ -114,7 +115,9 @@ namespace thread_pool_module
 	 * @see job_queue The shared queue for storing pending jobs
 	 * @see typed_thread_pool_module::typed_thread_pool For a priority-based version
 	 */
-	class thread_pool : public std::enable_shared_from_this<thread_pool>, public thread_module::executor_interface
+	class thread_pool : public std::enable_shared_from_this<thread_pool>, 
+	                   public thread_module::executor_interface,
+	                   public common_interfaces::interface_thread_pool
 	{
 	public:
 		/**
@@ -239,6 +242,39 @@ namespace thread_pool_module
 		 * @return The thread context providing access to logging and monitoring services.
 		 */
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
+
+		// interface_thread_pool implementation
+		/**
+		 * @brief Submit a task to the thread pool
+		 * @param task The task to be executed
+		 * @return true if task was successfully submitted, false otherwise
+		 */
+		auto submit_task(std::function<void()> task) -> bool override;
+
+		/**
+		 * @brief Get the number of worker threads in the pool
+		 * @return Number of active worker threads
+		 */
+		auto get_thread_count() const -> std::size_t override;
+
+		/**
+		 * @brief Shutdown the thread pool
+		 * @param immediate If true, stop immediately; if false, wait for current tasks to complete
+		 * @return true if shutdown was successful, false otherwise
+		 */
+		auto shutdown_pool(bool immediate = false) -> bool override;
+
+		/**
+		 * @brief Check if the thread pool is currently running
+		 * @return true if the pool is active, false otherwise
+		 */
+		auto is_running() const -> bool override;
+
+		/**
+		 * @brief Get the number of pending tasks in the queue
+		 * @return Number of tasks waiting to be processed
+		 */
+		auto get_pending_task_count() const -> std::size_t override;
 
 	private:
 		/**

@@ -402,4 +402,47 @@ namespace thread_pool_module
 		// For now, return 0 to indicate no idle workers
 		return 0;
 	}
+
+	// interface_thread_pool implementation
+	auto thread_pool::submit_task(std::function<void()> task) -> bool
+	{
+		if (!task) 
+		{
+			return false;
+		}
+
+		auto callback_job = std::make_unique<thread_module::callback_job>(
+			[task = std::move(task)]() -> thread_module::result_void {
+				task();
+				return {};
+			});
+
+		auto result = enqueue(std::move(callback_job));
+		return result.has_error() == false;
+	}
+
+	auto thread_pool::get_thread_count() const -> std::size_t
+	{
+		return workers_.size();
+	}
+
+	auto thread_pool::shutdown_pool(bool immediate) -> bool
+	{
+		auto result = stop(immediate);
+		return result.has_error() == false;
+	}
+
+	auto thread_pool::is_running() const -> bool
+	{
+		return start_pool_.load();
+	}
+
+	auto thread_pool::get_pending_task_count() const -> std::size_t
+	{
+		if (job_queue_)
+		{
+			return job_queue_->size();
+		}
+		return 0;
+	}
 } // namespace thread_pool_module
