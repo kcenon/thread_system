@@ -30,7 +30,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/thread_system-targets.cmake")
 set(thread_system_COMPONENT_TARGETS
     thread_system::thread_pool
     thread_system::service_container
-    thread_system::thread_utilities
+    thread_system::utilities
     thread_system::thread_base
     thread_system::lockfree
 )
@@ -43,8 +43,8 @@ if(TARGET thread_system::thread_pool AND NOT TARGET ThreadSystem::thread_pool)
     add_library(ThreadSystem::thread_pool ALIAS thread_system::thread_pool)
 endif()
 
-if(TARGET thread_system::thread_utilities AND NOT TARGET ThreadSystem::utilities)
-    add_library(ThreadSystem::utilities ALIAS thread_system::thread_utilities)
+if(TARGET thread_system::utilities AND NOT TARGET ThreadSystem::utilities)
+    add_library(ThreadSystem::utilities ALIAS thread_system::utilities)
 endif()
 
 if(TARGET thread_system::thread_base AND NOT TARGET ThreadSystem::thread_base)
@@ -95,8 +95,8 @@ if(thread_system_FIND_COMPONENTS)
                 set(thread_system_${component}_FOUND FALSE)
                 set(thread_system_FOUND FALSE)
             endif()
-        elseif(component STREQUAL "thread_utilities")
-            if(TARGET thread_system::thread_utilities OR TARGET ThreadSystem::utilities)
+        elseif(component STREQUAL "thread_utilities" OR component STREQUAL "utilities")
+            if(TARGET thread_system::utilities OR TARGET ThreadSystem::utilities)
                 set(thread_system_${component}_FOUND TRUE)
             else()
                 set(thread_system_${component}_FOUND FALSE)
