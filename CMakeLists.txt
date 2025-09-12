@@ -673,7 +673,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   
-  # Install export targets
+  # Phase 2 T2.1: Install targets with standardized naming
+  install(EXPORT ThreadSystemTargets
+          FILE thread_system-targets.cmake
+          NAMESPACE ThreadSystem::
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system)
+          
+  # Legacy compatibility: also install with old naming
   install(EXPORT ThreadSystemTargets
           FILE ThreadSystemTargets.cmake
           NAMESPACE ThreadSystem::
@@ -682,6 +688,20 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   # Create and install config file
   include(CMakePackageConfigHelpers)
   
+  # Phase 2 T2.1: Standardized CMake config files with hyphenated names
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system-config-version.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  # Legacy compatibility: also generate old-style config files
   configure_package_config_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThreadSystemConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
@@ -694,6 +714,14 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     COMPATIBILITY SameMajorVersion
   )
   
+  # Install new standardized config files (Phase 2 T2.1)
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  # Install legacy config files for backward compatibility
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
