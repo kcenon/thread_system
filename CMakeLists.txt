@@ -627,38 +627,58 @@ endif()
 if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   include(GNUInstallDirs)
   
-  # Install header files with proper directory structure
-  # Install headers from new directory structure
-  install(DIRECTORY utilities/include/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
+  # Phase 2 T2.2: Install header files with priority to interface headers
+  
+  # Phase 2 T2.2: Priority installation of interface headers
+  
+  # Priority installation: Common interfaces first (public API)
+  install(DIRECTORY common_interfaces/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/common_interfaces
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
-
+  
+  # Core interface headers (essential for integration)
   install(DIRECTORY interfaces/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
+          COMPONENT Development
+          FILES_MATCHING PATTERN "*.h")
+  
+  # Utility headers (commonly used)
+  install(DIRECTORY utilities/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
 
+  # Core implementation headers (optional, for advanced usage)
   install(DIRECTORY core/base/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/base
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
 
   install(DIRECTORY core/jobs/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/jobs
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
 
   install(DIRECTORY core/sync/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/sync
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
 
+  # Implementation headers (optional, for advanced customization)
   install(DIRECTORY implementations/thread_pool/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/thread_pool
+          COMPONENT Implementation
           FILES_MATCHING PATTERN "*.h")
 
   install(DIRECTORY implementations/typed_thread_pool/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/typed_thread_pool
+          COMPONENT Implementation
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
 
   install(DIRECTORY implementations/lockfree/include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/lockfree
+          COMPONENT Implementation
           FILES_MATCHING PATTERN "*.h")
   
   # Monitoring headers disabled - moved to separate project
@@ -673,13 +693,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   
-  # Phase 2 T2.1: Install targets with standardized naming
+  # Phase 2 T2.2: Install targets with standardized namespace thread_system::
   install(EXPORT ThreadSystemTargets
           FILE thread_system-targets.cmake
-          NAMESPACE ThreadSystem::
+          NAMESPACE thread_system::
           DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system)
           
-  # Legacy compatibility: also install with old naming
+  # Legacy compatibility: also install with old naming and namespace
   install(EXPORT ThreadSystemTargets
           FILE ThreadSystemTargets.cmake
           NAMESPACE ThreadSystem::
@@ -726,6 +746,39 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
+  )
+  
+  # Phase 2 T2.2: Create and install pkg-config file
+  set(PKG_CONFIG_FEATURE_FLAGS "")
+  if(USE_STD_FORMAT)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_FORMAT")
+  endif()
+  if(USE_STD_JTHREAD)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_JTHREAD")
+  endif()
+  if(USE_STD_CHRONO_CURRENT_ZONE)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_CHRONO_CURRENT_ZONE")
+  endif()
+  
+  # Get Iconv libraries for pkg-config
+  if(TARGET Iconv::Iconv)
+    get_target_property(ICONV_LIBRARIES Iconv::Iconv INTERFACE_LINK_LIBRARIES)
+    if(NOT ICONV_LIBRARIES)
+      set(ICONV_LIBRARIES "")
+    endif()
+  else()
+    set(ICONV_LIBRARIES "")
+  endif()
+  
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
+    @ONLY
+  )
+  
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
   )
 endif()
 
