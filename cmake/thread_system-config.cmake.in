@@ -35,26 +35,29 @@ set(thread_system_COMPONENT_TARGETS
     thread_system::lockfree
 )
 
-# Legacy compatibility - map old names to new standardized names
-if(TARGET ThreadSystem::thread_pool AND NOT TARGET thread_system::thread_pool)
-    add_library(thread_system::thread_pool ALIAS ThreadSystem::thread_pool)
+# Phase 2 T2.2: Direct target mapping with thread_system:: namespace
+# The targets are now directly available with thread_system:: namespace from targets file
+
+# Legacy compatibility - create ThreadSystem:: aliases for backward compatibility  
+if(TARGET thread_system::thread_pool AND NOT TARGET ThreadSystem::thread_pool)
+    add_library(ThreadSystem::thread_pool ALIAS thread_system::thread_pool)
 endif()
 
-if(TARGET ThreadSystem::utilities AND NOT TARGET thread_system::thread_utilities)
-    add_library(thread_system::thread_utilities ALIAS ThreadSystem::utilities)
+if(TARGET thread_system::thread_utilities AND NOT TARGET ThreadSystem::utilities)
+    add_library(ThreadSystem::utilities ALIAS thread_system::thread_utilities)
 endif()
 
-if(TARGET ThreadSystem::thread_base AND NOT TARGET thread_system::service_container)
-    # Note: service_container is part of thread_base for now
-    add_library(thread_system::service_container ALIAS ThreadSystem::thread_base)
+if(TARGET thread_system::thread_base AND NOT TARGET ThreadSystem::thread_base)
+    add_library(ThreadSystem::thread_base ALIAS thread_system::thread_base)
 endif()
 
-if(TARGET ThreadSystem::thread_base AND NOT TARGET thread_system::thread_base)
-    add_library(thread_system::thread_base ALIAS ThreadSystem::thread_base)
+if(TARGET thread_system::lockfree AND NOT TARGET ThreadSystem::lockfree)
+    add_library(ThreadSystem::lockfree ALIAS thread_system::lockfree)
 endif()
 
-if(TARGET ThreadSystem::lockfree AND NOT TARGET thread_system::lockfree)
-    add_library(thread_system::lockfree ALIAS ThreadSystem::lockfree)
+# Service container is an alias to thread_base (contains service_registry)
+if(TARGET thread_system::thread_base AND NOT TARGET thread_system::service_container)
+    add_library(thread_system::service_container ALIAS thread_system::thread_base)
 endif()
 
 # Set up convenience variables for all components
