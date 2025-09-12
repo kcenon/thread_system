@@ -1,11 +1,17 @@
 <map id="thread_module::thread_context" name="thread_module::thread_context">
-<area shape="rect" id="Node000001" title="Context object that provides access to optional services." alt="" coords="129,460,323,769"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,317,204,397"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,396,148,443,143,446,121,398"/>
-<area shape="rect" id="Node000003" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="24,50,185,210"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,211,107,301,102,301,102,211"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="228,317,467,397"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="331,398,309,446,304,443,326,396"/>
-<area shape="rect" id="Node000005" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="250,5,445,255"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="350,255,350,301,345,301,345,255"/>
+<area shape="rect" id="Node000001" title="Context object that provides access to optional services." alt="" coords="327,460,522,769"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,317,183,397"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,403,329,536,326,540,153,408"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="207,317,405,397"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="326,396,348,443,344,446,322,398"/>
+<area shape="rect" id="Node000004" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="225,50,387,210"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="309,211,309,301,303,301,303,211"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="429,317,668,397"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="532,399,509,446,504,443,527,396"/>
+<area shape="rect" id="Node000006" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="450,5,645,255"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="551,255,551,301,546,301,545,255"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="693,325,772,390"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="696,392,537,524,533,520,693,388"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="669,90,799,170"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="736,184,736,325,730,325,731,184"/>
 </map>

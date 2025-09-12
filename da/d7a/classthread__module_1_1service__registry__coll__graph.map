@@ -1,7 +1,9 @@
 <map id="thread_module::service_registry" name="thread_module::service_registry">
-<area shape="rect" id="Node000001" title="Lightweight service registry for dependency lookup." alt="" coords="86,183,253,283"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,163,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,119,139,166,135,169,110,121"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="187,30,322,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,97,210,160,205,170,201,167,206,157,237,94"/>
+<area shape="rect" id="Node000001" title="Lightweight service registry for dependency lookup." alt="" coords="211,183,395,383"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,23,200,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,111,214,181,210,184,146,115"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="224,5,381,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="305,121,305,166,300,166,300,121"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="406,30,541,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="451,97,393,171,388,168,446,94"/>
 </map>

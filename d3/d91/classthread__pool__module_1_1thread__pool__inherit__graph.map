@@ -1,7 +1,9 @@
 <map id="thread_pool_module::thread_pool" name="thread_pool_module::thread_pool">
-<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="114,173,295,573"/>
+<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="218,173,399,573"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,25,196,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,117,139,172,134,174,116,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,115,220,237,216,240,132,118"/>
 <area shape="rect" id="Node000003" href="$dd/df7/classthread__module_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="221,5,397,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="287,139,275,174,270,172,282,138"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="311,139,311,173,306,173,306,139"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="421,25,577,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="470,118,402,228,397,225,466,115"/>
 </map>
