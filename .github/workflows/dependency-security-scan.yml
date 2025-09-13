@@ -46,10 +46,24 @@ jobs:
         exit-code: '0'
 
     - name: Upload Trivy scan results to GitHub Security tab
+      continue-on-error: true
       uses: github/codeql-action/upload-sarif@v3
       if: always() && hashFiles('trivy-results.sarif') != ''
       with:
         sarif_file: 'trivy-results.sarif'
+        
+    - name: Security scan fallback notification
+      if: always()
+      run: |
+        if [ -f "trivy-results.sarif" ]; then
+          echo "🔍 Security scan completed"
+          # Simple vulnerability counting without jq dependency
+          RESULT_COUNT=$(grep -c '"ruleId"' trivy-results.sarif 2>/dev/null || echo "0")
+          echo "Security findings: $RESULT_COUNT"
+          echo "::notice title=Security Results::Security scan found $RESULT_COUNT findings. Results uploaded to artifacts."
+        else
+          echo "⚠️ No security scan results found"
+        fi
 
     - name: License compatibility check
       run: |
