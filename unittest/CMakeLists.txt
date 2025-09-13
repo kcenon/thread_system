@@ -40,6 +40,11 @@ if(UNIX AND NOT WIN32)
   # Validates platform-specific features, atomic operations, and cache performance
   add_subdirectory(platform_test)
   
+  # Integration tests
+  # Validates dependency injection, interface compliance, and multi-thread safety
+  # Phase 4 T4.1 Task: Integration Test Enhancement
+  add_subdirectory(integration)
+  
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
