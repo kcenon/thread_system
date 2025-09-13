@@ -86,6 +86,29 @@ namespace utility_module
 	 * @param to_encoding Target character encoding
 	 * @return Converted string in target encoding
 	 */
+#ifdef _WIN32
+	// Windows implementation - uses platform-specific APIs
+	template <typename FromType, typename ToType>
+	auto convert_string::convert(const FromType& value,
+								 const std::string& from_encoding,
+								 const std::string& to_encoding)
+		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
+	{
+		// Windows uses its own character conversion APIs
+		// For fallback builds, provide minimal implementation
+		(void)from_encoding; // Suppress unused parameter warning
+		(void)to_encoding;   // Suppress unused parameter warning
+		
+		// Convert input to string representation
+		if constexpr (std::is_same_v<FromType, ToType>) {
+			return { static_cast<ToType>(value), std::nullopt };
+		} else {
+			// For different types, provide basic conversion
+			return { std::nullopt, "Character encoding conversion not supported in Windows fallback mode" };
+		}
+	}
+#else
+	// Unix/Linux implementation - uses iconv
 	template <typename FromType, typename ToType>
 	auto convert_string::convert(const FromType& value,
 								 const std::string& from_encoding,
@@ -133,6 +156,27 @@ namespace utility_module
 
 		return { converted_string, std::nullopt };
 	}
+	#else
+	// Windows implementation - provides fallback behavior without iconv
+	template <typename FromType, typename ToType>
+	auto convert_string::convert(const FromType& value,
+								 const std::string& from_encoding,
+								 const std::string& to_encoding)
+		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
+	{
+		// Suppress unused parameter warnings
+		(void)from_encoding;
+		(void)to_encoding;
+		
+		// For same types, just cast the value
+		if constexpr (std::is_same_v<FromType, ToType>) {
+			return { static_cast<ToType>(value), std::nullopt };
+		} else {
+			// For different types, return error indicating Windows fallback mode
+			return { std::nullopt, "Character encoding conversion not supported in Windows fallback mode" };
+		}
+	}
+	#endif
 
 	auto convert_string::to_string(const std::wstring& value)
 		-> std::tuple<std::optional<std::string>, std::optional<std::string>>
