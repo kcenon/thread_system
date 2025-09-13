@@ -1,0 +1,78 @@
+##################################################
+# Thread System Simple Integration Test (Debug)
+# 
+# This workflow replicates the original working configuration
+# to identify what caused the failures in the complex version
+##################################################
+
+name: Simple Integration Test (Debug)
+
+on:
+  push:
+    branches: [ phase4-testing-enhancement ]
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  simple-build:
+    name: Simple Build Test
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            compiler: gcc-12
+            
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        
+    - name: Setup build environment (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        # Install compiler
+        if [ "${{ matrix.compiler }}" = "gcc-12" ]; then
+          sudo apt-get install -y gcc-12 g++-12
+          echo "CC=gcc-12" >> $GITHUB_ENV
+          echo "CXX=g++-12" >> $GITHUB_ENV
+        fi
+        
+        # Install build tools
+        sudo apt-get install -y cmake ninja-build pkg-config
+        
+        # Install system development packages
+        sudo apt-get install -y libgtest-dev libgmock-dev libbenchmark-dev libfmt-dev
+        
+        # Check what we have
+        echo "=== Checking installed packages ==="
+        dpkg -l | grep -E "(gtest|benchmark|fmt)" || echo "No packages found"
+        echo "=== Checking library files ==="
+        find /usr -name "*gtest*" -o -name "*benchmark*" -o -name "*fmt*" 2>/dev/null | head -10
+        
+    - name: Configure CMake (Simple)
+      run: |
+        mkdir -p build
+        cd build
+        
+        CMAKE_ARGS="-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}"
+        CMAKE_ARGS="$CMAKE_ARGS -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
+        CMAKE_ARGS="$CMAKE_ARGS -DBUILD_DOCUMENTATION=ON"
+        
+        echo "CMake configuration: $CMAKE_ARGS"
+        cmake .. $CMAKE_ARGS -G Ninja
+        
+    - name: Build project
+      run: |
+        cd build
+        cmake --build . --parallel $(nproc)
+        
+    - name: Run unit tests
+      run: |
+        cd build
+        ctest --output-on-failure --parallel $(nproc)
