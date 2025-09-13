@@ -75,6 +75,9 @@ include(CompilerChecks)
 # Include coverage configuration
 include(Coverage)
 
+# Phase 3 T3.2: Include dependency conflict checker
+include(dependency_checker)
+
 # Perform compiler version check
 check_compiler_version()
 
@@ -586,6 +589,11 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
   endif()
 
+  # Phase 3 T3.2: Run dependency conflict checks if requested
+  if(CHECK_DEPENDENCIES)
+    check_dependency_conflicts()
+  endif()
+
   # Add subdirectories for new modularized source code, samples, and unit tests
   add_subdirectory(utilities)        # Utilities library
   add_subdirectory(interfaces)       # Public interfaces
@@ -779,6 +787,24 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+  )
+  
+  # Phase 3 T3.1: Install dependency documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/dependency_compatibility_matrix.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/license_compatibility.md
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}/dependencies
+    COMPONENT Documentation
+  )
+  
+  # Install main documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/DEPENDENCY_IMPROVEMENT_SRD.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}
+    COMPONENT Documentation
   )
 endif()
 

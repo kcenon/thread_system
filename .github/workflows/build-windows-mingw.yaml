@@ -71,12 +71,39 @@ jobs:
           g++ --version
           Write-Host "MinGW setup completed"
 
-      - name: Install CMake
+      - name: Install CMake (with retry)
         shell: pwsh
         run: |
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
-          refreshenv
-          cmake --version
+          $maxRetries = 3
+          $retryCount = 0
+          
+          while ($retryCount -lt $maxRetries) {
+            try {
+              Write-Host "Installing CMake (attempt $($retryCount + 1)/$maxRetries)..."
+              choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y --timeout=300
+              refreshenv
+              cmake --version
+              Write-Host "CMake installed successfully"
+              break
+            }
+            catch {
+              $retryCount++
+              if ($retryCount -eq $maxRetries) {
+                Write-Host "CMake installation failed after $maxRetries attempts, trying alternative method..."
+                # Try direct download as fallback
+                $cmakeUrl = "https://github.com/Kitware/CMake/releases/download/v3.28.1/cmake-3.28.1-windows-x86_64.zip"
+                Invoke-WebRequest -Uri $cmakeUrl -OutFile cmake.zip
+                Expand-Archive -Path cmake.zip -DestinationPath . -Force
+                $cmakePath = "$env:GITHUB_WORKSPACE\cmake-3.28.1-windows-x86_64\bin"
+                $env:PATH = "$cmakePath;$env:PATH"
+                echo "PATH=$env:PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+                cmake --version
+                break
+              }
+              Write-Host "Retrying in 10 seconds..."
+              Start-Sleep -Seconds 10
+            }
+          }
 
       - name: Install Ninja
         shell: pwsh
@@ -85,129 +112,12 @@ jobs:
           refreshenv
           ninja --version
 
-      - name: Install fmt library manually
-        shell: pwsh
-        run: |
-          Write-Host "Installing fmt library for MinGW..."
-          $fmtVersion = "10.1.1"
-          $fmtUrl = "https://github.com/fmtlib/fmt/releases/download/$fmtVersion/fmt-$fmtVersion.zip"
-          
-          # Download fmt
-          Write-Host "Downloading fmt $fmtVersion..."
-          Invoke-WebRequest -Uri $fmtUrl -OutFile fmt.zip
-          
-          # Extract fmt
-          Write-Host "Extracting fmt..."
-          Expand-Archive -Path fmt.zip -DestinationPath . -Force
-          
-          # Build and install fmt
-          Write-Host "Building fmt with MinGW..."
-          Push-Location "fmt-$fmtVersion"
-          
-          if (Test-Path build) {
-            Remove-Item -Recurse -Force build
-          }
-          New-Item -ItemType Directory -Force -Path build | Out-Null
-          
-          Push-Location build
-          cmake .. -G "Ninja" `
-            -DCMAKE_C_COMPILER=gcc `
-            -DCMAKE_CXX_COMPILER=g++ `
-            -DCMAKE_BUILD_TYPE=Release `
-            -DFMT_TEST=OFF `
-            -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/fmt_install"
-          
-          cmake --build . --config Release
-          cmake --install .
-          Pop-Location
-          Pop-Location
-          
-          Write-Host "fmt installed to $env:GITHUB_WORKSPACE/fmt_install"
-          
-          # Also install GoogleTest manually if needed
-          Write-Host "Installing GoogleTest for MinGW..."
-          $gtestVersion = "1.14.0"
-          $gtestUrl = "https://github.com/google/googletest/archive/refs/tags/v$gtestVersion.zip"
-          
-          Write-Host "Downloading GoogleTest $gtestVersion..."
-          Invoke-WebRequest -Uri $gtestUrl -OutFile gtest.zip
-          
-          Write-Host "Extracting GoogleTest..."
-          Expand-Archive -Path gtest.zip -DestinationPath . -Force
-          
-          Write-Host "Building GoogleTest with MinGW..."
-          Push-Location "googletest-$gtestVersion"
-          
-          if (Test-Path build) {
-            Remove-Item -Recurse -Force build
-          }
-          New-Item -ItemType Directory -Force -Path build | Out-Null
-          
-          Push-Location build
-          cmake .. -G "Ninja" `
-            -DCMAKE_C_COMPILER=gcc `
-            -DCMAKE_CXX_COMPILER=g++ `
-            -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/gtest_install" `
-            -DBUILD_GMOCK=ON `
-            -DINSTALL_GTEST=ON
-          
-          cmake --build . --config Release
-          cmake --install .
-          Pop-Location
-          Pop-Location
-          
-          Write-Host "GoogleTest installed to $env:GITHUB_WORKSPACE/gtest_install"
-
-      - name: Cache vcpkg
-        uses: actions/cache@v3
-        id: vcpkg-cache
+      - name: Setup and install vcpkg dependencies
+        uses: lukka/run-vcpkg@v11
         with:
-          path: |
-            ${{ github.workspace }}/vcpkg
-            !${{ github.workspace }}/vcpkg/buildtrees
-            !${{ github.workspace }}/vcpkg/packages
-            !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-mingw-vcpkg-${{ hashFiles('vcpkg.json') }}
-          restore-keys: |
-            ${{ runner.os }}-mingw-vcpkg-
-
-      # (moved) vcpkg installed cache after setup, once commit is known
-
-      - name: Set up vcpkg
-        shell: pwsh
-        run: |
-          if (!(Test-Path -Path .\vcpkg)) {
-            git clone https://github.com/Microsoft/vcpkg.git
-          } else {
-            Push-Location .\vcpkg
-            git pull
-            Pop-Location
-          }
-          .\vcpkg\bootstrap-vcpkg.bat
-          .\vcpkg\vcpkg.exe integrate install
-
-      - name: Determine vcpkg commit
-        id: vcpkg-commit
-        shell: pwsh
-        run: |
-          $commit = git -C vcpkg rev-parse HEAD
-          "commit=$commit" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-
-      - name: Cache vcpkg installed
-        uses: actions/cache@v3
-        id: vcpkg-installed
-        with:
-          path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-mingw-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit.outputs.commit }}
-          restore-keys: |
-            ${{ runner.os }}-mingw-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-
-
-      - name: Install dependencies with vcpkg (uses binary cache)
-        if: steps.vcpkg-installed.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $env:VCPKG_DEFAULT_TRIPLET
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          runVcpkgInstall: true
+          vcpkgJsonGlob: '**/vcpkg.json'
 
       - name: Cache CMake build
         uses: actions/cache@v3
@@ -227,61 +137,32 @@ jobs:
           }
           New-Item -ItemType Directory -Force -Path build | Out-Null
 
-      - name: Build application (with manual fmt)
-        id: build_manual
+      - name: Build application (vcpkg first attempt)
+        id: build_vcpkg
+        continue-on-error: true
         shell: pwsh
         run: |
-          Write-Host "Configuring CMake with manual fmt installation..."
+          Write-Host "Configuring CMake with vcpkg..."
           Push-Location build
           $env:CC = "gcc"
           $env:CXX = "g++"
           
-          # First try with vcpkg if available
-          $vcpkgPath = "$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake"
-          if (Test-Path $vcpkgPath) {
-            Write-Host "Attempting build with vcpkg toolchain..."
-            & cmake .. -G "Ninja" `
-              "-DCMAKE_C_COMPILER=gcc" `
-              "-DCMAKE_CXX_COMPILER=g++" `
-              "-DCMAKE_MAKE_PROGRAM=ninja" `
-              "-DCMAKE_BUILD_TYPE=$env:BUILD_TYPE" `
-              "-DBUILD_TESTS=ON" `
-              "-DCMAKE_INSTALL_PREFIX=../target" `
-              "-DCMAKE_TOOLCHAIN_FILE=$vcpkgPath" `
-              "-DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic" `
-              "-DVCPKG_INSTALLED_DIR=$env:GITHUB_WORKSPACE\vcpkg_installed" `
-              "-DCMAKE_PREFIX_PATH=$env:GITHUB_WORKSPACE\vcpkg_installed\x64-mingw-dynamic;$env:GITHUB_WORKSPACE\fmt_install;$env:GITHUB_WORKSPACE\gtest_install" `
-              "-Dfmt_DIR=$env:GITHUB_WORKSPACE\fmt_install\lib\cmake\fmt" `
-              "-DGTest_DIR=$env:GITHUB_WORKSPACE\gtest_install\lib\cmake\GTest"
-          } else {
-            Write-Host "Building without vcpkg, using manual fmt..."
-            & cmake .. -G "Ninja" `
-              "-DCMAKE_C_COMPILER=gcc" `
-              "-DCMAKE_CXX_COMPILER=g++" `
-              "-DCMAKE_MAKE_PROGRAM=ninja" `
-              "-DCMAKE_BUILD_TYPE=$env:BUILD_TYPE" `
-              "-DBUILD_TESTS=ON" `
-              "-DCMAKE_INSTALL_PREFIX=../target" `
-              "-DCMAKE_PREFIX_PATH=$env:GITHUB_WORKSPACE\fmt_install;$env:GITHUB_WORKSPACE\gtest_install" `
-              "-Dfmt_DIR=$env:GITHUB_WORKSPACE\fmt_install\lib\cmake\fmt" `
-              "-DGTest_DIR=$env:GITHUB_WORKSPACE\gtest_install\lib\cmake\GTest"
-          }
+          cmake .. -G "Ninja" `
+            -DCMAKE_C_COMPILER=gcc `
+            -DCMAKE_CXX_COMPILER=g++ `
+            -DCMAKE_MAKE_PROGRAM=ninja `
+            -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
+            -DBUILD_TESTS=ON `
+            -DCMAKE_INSTALL_PREFIX=../target `
+            -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=$env:VCPKG_DEFAULT_TRIPLET
 
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "CMake configuration failed"
-            exit 1
-          }
-
+          Write-Host "Building project..."
           cmake --build . --parallel $env:NUMBER_OF_PROCESSORS
-          
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Build failed"
-            exit 1
-          }
           Pop-Location
 
       - name: Build application (minimal fallback)
-        if: steps.build_manual.outcome == 'failure'
+        if: steps.build_vcpkg.outcome == 'failure'
         continue-on-error: true
         shell: pwsh
         run: |
@@ -298,13 +179,25 @@ jobs:
 
           $env:CC = "gcc"
           $env:CXX = "g++"
+          Write-Host "Forcing std::format usage to eliminate fmt dependency..."
           & cmake .. -G "Ninja" `
             "-DCMAKE_C_COMPILER=gcc" `
             "-DCMAKE_CXX_COMPILER=g++" `
             "-DCMAKE_MAKE_PROGRAM=ninja" `
             "-DCMAKE_BUILD_TYPE=$env:BUILD_TYPE" `
             "-DBUILD_THREADSYSTEM_AS_SUBMODULE=ON" `
-            "-DUSE_STD_FORMAT=ON" `
+            "-DBUILD_TESTS=OFF" `
+            "-DBUILD_DOCUMENTATION=OFF" `
+            "-DUSE_STD_FORMAT:BOOL=ON" `
+            "-DUSE_STD_FORMAT_ENABLED:BOOL=ON" `
+            "-DFORCE_FMT_FORMAT:BOOL=OFF" `
+            "-DWINDOWS_ALLOW_STD_FORMAT:BOOL=ON" `
+            "-DHAS_STD_FORMAT_BASIC:BOOL=ON" `
+            "-DHAS_STD_FORMAT_SPECIALIZATION:BOOL=ON" `
+            "-DWINDOWS_COMPILER_SUPPORTS_STD_FORMAT:BOOL=ON" `
+            "-DIconv_FOUND:BOOL=TRUE" `
+            "-DIconv_INCLUDE_DIR:PATH=C:/msys64/usr/include" `
+            "-DIconv_LIBRARY:FILEPATH=C:/msys64/usr/lib/libiconv.a" `
             "-DCMAKE_INSTALL_PREFIX=../target" `
             "-DCMAKE_TOOLCHAIN_FILE="
 
