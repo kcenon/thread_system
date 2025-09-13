@@ -5,7 +5,7 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-09-06
+## [Unreleased] - 2025-09-13
 
 Note: No official releases have been published yet. All entries below are pre-release milestones under Unreleased.
 
@@ -48,9 +48,14 @@ Note: No official releases have been published yet. All entries below are pre-re
   - README.md reflects modular architecture
   - api-reference.md focuses on core APIs
   - architecture.md describes new modular design
-  - USER_GUIDE.md shows usage without external dependencies
+  - USER_GUIDE.md enhanced with detailed build instructions and complete sample listing
+  - **NEW: PLATFORM_BUILD_GUIDE.md** - Comprehensive platform-specific build instructions
+  - dependency_compatibility_matrix.md updated with latest dependency versions
+  - MIGRATION.md updated with current status (2025-09-13)
+  - INTERFACES.md verified for consistency with current implementation
+  - Performance benchmarks updated to 2025-09-13
   - samples/ demonstrate both core-only and with-modules usage
-  - performance.md updated with latest benchmarks
+  - All documentation synchronized with current codebase structure
 
 ## [Unreleased: Milestone 2.1.0] - 2025-09-06
 
