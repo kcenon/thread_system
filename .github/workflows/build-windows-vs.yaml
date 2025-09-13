@@ -105,6 +105,7 @@ jobs:
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
                   -DUSE_STD_FORMAT=ON `
+                  -DWINDOWS_ALLOW_STD_FORMAT=ON `
                   -DCMAKE_TOOLCHAIN_FILE=""
           
           Write-Host "Building core libraries only..."

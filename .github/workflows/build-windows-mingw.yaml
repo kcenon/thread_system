@@ -186,6 +186,7 @@ jobs:
             "-DCMAKE_BUILD_TYPE=$env:BUILD_TYPE" `
             "-DBUILD_THREADSYSTEM_AS_SUBMODULE=ON" `
             "-DUSE_STD_FORMAT=ON" `
+            "-DWINDOWS_ALLOW_STD_FORMAT=ON" `
             "-DCMAKE_INSTALL_PREFIX=../target" `
             "-DCMAKE_TOOLCHAIN_FILE="
 
