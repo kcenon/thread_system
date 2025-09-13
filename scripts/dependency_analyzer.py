@@ -9,6 +9,7 @@ import sys
 import os
 import argparse
 import subprocess
+import shutil
 from pathlib import Path
 from typing import Dict, List, Set, Optional, Tuple
 import re
@@ -503,9 +504,16 @@ def main():
         
         # Try to generate PNG if graphviz is available
         try:
-            png_path = args.output_dir / 'dependency_graph.png'
-            subprocess.run(['dot', '-Tpng', str(graphviz_path), '-o', str(png_path)], check=True)
-            print(f"🖼️ PNG visualization generated: {png_path}")
+            dot_executable = shutil.which('dot')
+            if dot_executable:
+                png_path = args.output_dir / 'dependency_graph.png'
+                subprocess.run([dot_executable, '-Tpng', str(graphviz_path), '-o', str(png_path)], 
+                             check=True, timeout=30)
+                print(f"🖼️ PNG visualization generated: {png_path}")
+            else:
+                print("ℹ️ Graphviz 'dot' command not found in PATH")
+        except subprocess.TimeoutExpired:
+            print("⚠️ Graphviz PNG generation timed out (>30s)")
         except (subprocess.CalledProcessError, FileNotFoundError):
             print("ℹ️ Install graphviz to generate PNG: brew install graphviz (macOS) or apt-get install graphviz (Ubuntu)")
     

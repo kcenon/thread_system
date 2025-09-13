@@ -258,9 +258,16 @@ full_update() {
     python3 - <<EOF
 import json
 import subprocess
+import shutil
 import sys
 
 dry_run = "${DRY_RUN}" == "true"
+
+# Find vcpkg executable
+vcpkg_executable = shutil.which('vcpkg')
+if not vcpkg_executable:
+    print("❌ vcpkg not found in PATH")
+    sys.exit(1)
 
 try:
     with open("${VCPKG_JSON}", 'r') as f:
@@ -291,12 +298,14 @@ try:
         print(f"🔄 Updating {package}...")
         if not dry_run:
             try:
-                result = subprocess.run(['vcpkg', 'upgrade', package, '--no-dry-run'], 
-                                      capture_output=True, text=True)
+                result = subprocess.run([vcpkg_executable, 'upgrade', package, '--no-dry-run'], 
+                                      capture_output=True, text=True, timeout=300)
                 if result.returncode == 0:
                     print(f"✅ {package} updated successfully")
                 else:
                     print(f"⚠️  {package} update failed: {result.stderr}")
+            except subprocess.TimeoutExpired:
+                print(f"⚠️  {package} update timed out (>5min)")
             except Exception as e:
                 print(f"❌ Error updating {package}: {e}")
         else:
