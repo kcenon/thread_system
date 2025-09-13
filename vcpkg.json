@@ -1,11 +1,56 @@
 {
-  "name": "threadsystem",
+  "name": "thread-system",
   "version": "1.0.0",
+  "description": "High-performance thread management system with dependency injection and interface abstraction",
+  "homepage": "https://github.com/kcenon/thread_system",
+  "license": "MIT",
   "dependencies": [
-    "fmt",
-    "libiconv",
-    "gtest",
-    "benchmark",
-    "spdlog"
+    {
+      "name": "fmt",
+      "version>=": "10.0.0"
+    },
+    {
+      "name": "libiconv",
+      "platform": "!windows"
+    }
+  ],
+  "features": {
+    "testing": {
+      "description": "Enable testing dependencies",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "version>=": "1.14.0",
+          "features": ["gmock"]
+        },
+        {
+          "name": "benchmark",
+          "version>=": "1.8.0"
+        }
+      ]
+    },
+    "logging": {
+      "description": "Enable advanced logging capabilities",
+      "dependencies": [
+        {
+          "name": "spdlog",
+          "version>=": "1.12.0"
+        }
+      ]
+    },
+    "development": {
+      "description": "Enable development and debugging tools",
+      "dependencies": [
+        "gtest",
+        "benchmark",
+        "spdlog"
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "name": "fmt",
+      "version": "10.2.1"
+    }
   ]
 }

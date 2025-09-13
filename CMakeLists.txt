@@ -780,6 +780,24 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
   )
+  
+  # Phase 3 T3.1: Install dependency documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/dependency_compatibility_matrix.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/license_compatibility.md
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}/dependencies
+    COMPONENT Documentation
+  )
+  
+  # Install main documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/DEPENDENCY_IMPROVEMENT_SRD.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}
+    COMPONENT Documentation
+  )
 endif()
 
 ##################################################
