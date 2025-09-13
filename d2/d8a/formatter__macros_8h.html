@@ -131,6 +131,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ad353e070b78b0b1f98da791dfc46f0a1" id="r_ad353e070b78b0b1f98da791dfc46f0a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(CLASS_NAME)</td></tr>
 <tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates fmt::formatter specialization.  <br /></td></tr>
 <tr class="separator:ad353e070b78b0b1f98da791dfc46f0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89e5c8537c526ebf37cf441cd87296a1" id="r_a89e5c8537c526ebf37cf441cd87296a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#a89e5c8537c526ebf37cf441cd87296a1">DECLARE_FORMATTER_WITH_FUNCTION</a>(CLASS_NAME,  CONVERTER_FUNC)</td></tr>
+<tr class="memdesc:a89e5c8537c526ebf37cf441cd87296a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates fmt::formatter specialization using a converter function.  <br /></td></tr>
+<tr class="separator:a89e5c8537c526ebf37cf441cd87296a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29883d06f1fef46524299dfac3ebc518" id="r_a29883d06f1fef46524299dfac3ebc518"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#a29883d06f1fef46524299dfac3ebc518">DECLARE_CONDITIONAL_FORMATTER</a>(CLASS_NAME,  CONVERTER_FUNC)</td></tr>
+<tr class="memdesc:a29883d06f1fef46524299dfac3ebc518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditionally generates formatter specialization based on build configuration.  <br /></td></tr>
+<tr class="separator:a29883d06f1fef46524299dfac3ebc518"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides macros for generating formatter specializations. </p>
@@ -141,6 +147,62 @@ Macros</h2></td></tr>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a29883d06f1fef46524299dfac3ebc518" name="a29883d06f1fef46524299dfac3ebc518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29883d06f1fef46524299dfac3ebc518">&#9670;&#160;</a></span>DECLARE_CONDITIONAL_FORMATTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DECLARE_CONDITIONAL_FORMATTER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">CLASS_NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">CONVERTER_FUNC&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;CLASS_NAME&gt; : fmt::formatter&lt;std::string_view&gt;                     \</div>
+<div class="line">{                                                                                                     \</div>
+<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                                 \</div>
+<div class="line">    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                     \</div>
+<div class="line">    {                                                                                                 \</div>
+<div class="line">        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(CONVERTER_FUNC(item), ctx);                  \</div>
+<div class="line">    }                                                                                                 \</div>
+<div class="line">};</div>
+</div><!-- fragment -->
+<p>Conditionally generates formatter specialization based on build configuration. </p>
+<p>This macro automatically chooses between std::formatter and fmt::formatter based on the USE_STD_FORMAT preprocessor definition.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">CLASS_NAME</td><td>The fully qualified class name </td></tr>
+    <tr><td class="paramname">CONVERTER_FUNC</td><td>The function that converts the object to string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00153">153</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  154</span>                                            : fmt::formatter&lt;std::string_view&gt;                     \</div>
+<div class="line"><span class="lineno">  155</span>{                                                                                                     \</div>
+<div class="line"><span class="lineno">  156</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                                 \</div>
+<div class="line"><span class="lineno">  157</span>    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                     \</div>
+<div class="line"><span class="lineno">  158</span>    {                                                                                                 \</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(CONVERTER_FUNC(item), ctx);                  \</div>
+<div class="line"><span class="lineno">  160</span>    }                                                                                                 \</div>
+<div class="line"><span class="lineno">  161</span>};</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ad353e070b78b0b1f98da791dfc46f0a1" name="ad353e070b78b0b1f98da791dfc46f0a1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad353e070b78b0b1f98da791dfc46f0a1">&#9670;&#160;</a></span>DECLARE_FORMATTER</h2>
 
@@ -189,10 +251,66 @@ Macros</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a89e5c8537c526ebf37cf441cd87296a1" name="a89e5c8537c526ebf37cf441cd87296a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89e5c8537c526ebf37cf441cd87296a1">&#9670;&#160;</a></span>DECLARE_FORMATTER_WITH_FUNCTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DECLARE_FORMATTER_WITH_FUNCTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">CLASS_NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">CONVERTER_FUNC&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;CLASS_NAME&gt; : fmt::formatter&lt;std::string_view&gt;                      \</div>
+<div class="line">{                                                                                                     \</div>
+<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                                 \</div>
+<div class="line">    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                     \</div>
+<div class="line">    {                                                                                                 \</div>
+<div class="line">        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(CONVERTER_FUNC(item), ctx);                  \</div>
+<div class="line">    }                                                                                                 \</div>
+<div class="line">};</div>
+</div><!-- fragment -->
+<p>Generates fmt::formatter specialization using a converter function. </p>
+<p>This macro creates a formatter specialization for the fmt library that uses a converter function instead of a member method.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">CLASS_NAME</td><td>The fully qualified class name (including namespace if any) </td></tr>
+    <tr><td class="paramname">CONVERTER_FUNC</td><td>The function name that converts the object to string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00121">121</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  122</span>                                            : fmt::formatter&lt;std::string_view&gt;                      \</div>
+<div class="line"><span class="lineno">  123</span>{                                                                                                     \</div>
+<div class="line"><span class="lineno">  124</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                                 \</div>
+<div class="line"><span class="lineno">  125</span>    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                     \</div>
+<div class="line"><span class="lineno">  126</span>    {                                                                                                 \</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(CONVERTER_FUNC(item), ctx);                  \</div>
+<div class="line"><span class="lineno">  128</span>    }                                                                                                 \</div>
+<div class="line"><span class="lineno">  129</span>};</div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 13 2025 05:21:38 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Sep 13 2025 05:38:43 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
