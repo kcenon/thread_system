@@ -1,7 +1,9 @@
 <map id="thread_module::to_string" name="thread_module::to_string">
-<area shape="rect" id="Node000001" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="224,64,409,89"/>
-<area shape="rect" id="Node000002" href="$da/d34/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html#acf13d59c4d24220012590c4ac5a7210e" title="Formats a job_types value as a narrow string using {fmt}." alt="" coords="5,5,176,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,64,175,52,177,47,238,59"/>
-<area shape="rect" id="Node000003" href="$dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html#ac6ed7b3b17851d44c12b5e4a5468efe7" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="5,85,176,154"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,95,177,106,176,101,235,89"/>
+<area shape="rect" id="Node000001" title="Converts a thread_conditions value to its corresponding string representation." alt="" coords="256,99,441,124"/>
+<area shape="rect" id="Node000002" href="$da/ddd/structfmt_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html#a7bb2d90c292490c3dbadbf94b3d1f9a3" title="Formats a thread_conditions value as a string." alt="" coords="5,5,208,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,97,191,63,192,58,296,92"/>
+<area shape="rect" id="Node000003" href="$da/d34/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html#acf13d59c4d24220012590c4ac5a7210e" title="Formats a job_types value as a narrow string using {fmt}." alt="" coords="21,84,192,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,114,192,114,192,109,242,109"/>
+<area shape="rect" id="Node000004" href="$dd/de7/structfmt_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html#ac6ed7b3b17851d44c12b5e4a5468efe7" title="Formats a job_types value as a wide string using {fmt}." alt="" coords="21,163,192,233"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="300,131,193,170,191,165,298,126"/>
 </map>
