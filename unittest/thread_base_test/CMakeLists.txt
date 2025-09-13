@@ -5,16 +5,8 @@ file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 # Create the test executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-# Add GTest include path (if vcpkg is used)
-if(DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed")
-    if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
-        include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed/arm64-osx/include)
-    elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-        include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed/x64-osx/include)
-    elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-        include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../build/vcpkg_installed/x64-linux/include)
-    endif()
-endif()
+# vcpkg toolchain automatically handles include paths when CMAKE_TOOLCHAIN_FILE is set
+# No manual include directories needed for vcpkg packages
 
 # Include new core headers
 include_directories(
@@ -25,10 +17,7 @@ include_directories(
 )
 
 # Try to find GTest (vcpkg first, then system)
-find_package(GTest CONFIG)
-if(NOT GTest_FOUND)
-    find_package(GTest REQUIRED)
-endif()
+find_package(GTest CONFIG REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 

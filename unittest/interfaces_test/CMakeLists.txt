@@ -14,10 +14,7 @@ if(DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../bu
     endif()
 endif()
 
-find_package(GTest CONFIG)
-if(NOT GTest_FOUND)
-    find_package(GTest REQUIRED)
-endif()
+find_package(GTest CONFIG REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 

@@ -1,0 +1,176 @@
+##################################################
+# Reusable Workflow: vcpkg Setup and Dependency Management
+#
+# This workflow provides consistent vcpkg setup across all builds
+# Solves: inconsistent caching, missing dependencies, path issues
+##################################################
+
+name: Reusable vcpkg Setup
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: 'Operating system (ubuntu-latest, windows-latest, macos-latest)'
+      compiler:
+        required: false
+        type: string
+        default: 'default'
+        description: 'Compiler identifier for cache key'
+      build-type:
+        required: false
+        type: string
+        default: 'Release'
+        description: 'CMake build type'
+      enable-cache:
+        required: false
+        type: boolean
+        default: true
+        description: 'Enable vcpkg caching'
+    outputs:
+      vcpkg-root:
+        description: 'Path to vcpkg root directory'
+        value: ${{ jobs.setup.outputs.vcpkg-root }}
+      vcpkg-installed:
+        description: 'Path to vcpkg installed directory'
+        value: ${{ jobs.setup.outputs.vcpkg-installed }}
+      cmake-toolchain:
+        description: 'Path to vcpkg CMake toolchain file'
+        value: ${{ jobs.setup.outputs.cmake-toolchain }}
+      triplet:
+        description: 'vcpkg triplet for this platform'
+        value: ${{ jobs.setup.outputs.triplet }}
+
+jobs:
+  setup:
+    runs-on: ${{ inputs.os }}
+    outputs:
+      vcpkg-root: ${{ steps.paths.outputs.vcpkg-root }}
+      vcpkg-installed: ${{ steps.paths.outputs.vcpkg-installed }}
+      cmake-toolchain: ${{ steps.paths.outputs.cmake-toolchain }}
+      triplet: ${{ steps.triplet.outputs.triplet }}
+
+    env:
+      VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
+      VCPKG_FEATURE_FLAGS: "manifests,registries,versions,binarycaching"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Determine vcpkg triplet
+      id: triplet
+      shell: bash
+      run: |
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          echo "triplet=x64-windows" >> $GITHUB_OUTPUT
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then
+          if [[ "$(uname -m)" == "arm64" ]]; then
+            echo "triplet=arm64-osx" >> $GITHUB_OUTPUT
+          else
+            echo "triplet=x64-osx" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "triplet=x64-linux" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set output paths
+      id: paths
+      shell: bash
+      run: |
+        echo "vcpkg-root=${{ github.workspace }}/vcpkg" >> $GITHUB_OUTPUT
+        echo "vcpkg-installed=${{ github.workspace }}/vcpkg_installed" >> $GITHUB_OUTPUT
+        echo "cmake-toolchain=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" >> $GITHUB_OUTPUT
+
+    - name: Setup vcpkg binary caching
+      uses: actions/github-script@v7
+      with:
+        script: |
+          core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+          core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+    # Cache vcpkg itself
+    - name: Cache vcpkg installation
+      if: inputs.enable-cache
+      uses: actions/cache@v4
+      id: vcpkg-cache
+      with:
+        path: |
+          ${{ steps.paths.outputs.vcpkg-root }}
+          !${{ steps.paths.outputs.vcpkg-root }}/buildtrees
+          !${{ steps.paths.outputs.vcpkg-root }}/packages
+          !${{ steps.paths.outputs.vcpkg-root }}/downloads
+        key: vcpkg-installation-${{ runner.os }}-${{ hashFiles('.git/modules/vcpkg/HEAD') }}
+        restore-keys: |
+          vcpkg-installation-${{ runner.os }}-
+
+    - name: Setup vcpkg
+      shell: bash
+      run: |
+        if [ ! -d "${{ steps.paths.outputs.vcpkg-root }}" ]; then
+          git clone https://github.com/Microsoft/vcpkg.git ${{ steps.paths.outputs.vcpkg-root }}
+        fi
+
+        cd ${{ steps.paths.outputs.vcpkg-root }}
+        git fetch
+        git checkout 2024.08.23  # Pin to stable version
+
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          ./bootstrap-vcpkg.bat -disableMetrics
+        else
+          ./bootstrap-vcpkg.sh -disableMetrics
+        fi
+
+    # Cache installed packages
+    - name: Cache vcpkg packages
+      if: inputs.enable-cache
+      uses: actions/cache@v4
+      id: vcpkg-packages-cache
+      with:
+        path: ${{ steps.paths.outputs.vcpkg-installed }}
+        key: vcpkg-packages-${{ runner.os }}-${{ inputs.compiler }}-${{ steps.triplet.outputs.triplet }}-${{ hashFiles('vcpkg.json') }}-${{ inputs.build-type }}
+        restore-keys: |
+          vcpkg-packages-${{ runner.os }}-${{ inputs.compiler }}-${{ steps.triplet.outputs.triplet }}-${{ hashFiles('vcpkg.json') }}-
+          vcpkg-packages-${{ runner.os }}-${{ inputs.compiler }}-${{ steps.triplet.outputs.triplet }}-
+
+    - name: Install vcpkg dependencies
+      if: steps.vcpkg-packages-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        echo "Installing vcpkg dependencies for triplet: ${{ steps.triplet.outputs.triplet }}"
+
+        ${{ steps.paths.outputs.vcpkg-root }}/vcpkg install \
+          --x-manifest-root=${{ github.workspace }} \
+          --x-install-root=${{ steps.paths.outputs.vcpkg-installed }} \
+          --triplet=${{ steps.triplet.outputs.triplet }} \
+          --clean-after-build
+
+    - name: Verify vcpkg installation
+      shell: bash
+      run: |
+        echo "=== Installed vcpkg packages ==="
+        ${{ steps.paths.outputs.vcpkg-root }}/vcpkg list \
+          --x-install-root=${{ steps.paths.outputs.vcpkg-installed }}
+
+        echo ""
+        echo "=== Checking critical packages ==="
+        for pkg in gtest benchmark fmt; do
+          if ${{ steps.paths.outputs.vcpkg-root }}/vcpkg list \
+            --x-install-root=${{ steps.paths.outputs.vcpkg-installed }} | grep -q "^${pkg}:"; then
+            echo "✓ ${pkg} found"
+          else
+            echo "✗ ${pkg} NOT FOUND - This will cause build failures!"
+            exit 1
+          fi
+        done
+
+        echo ""
+        echo "=== vcpkg paths ==="
+        echo "VCPKG_ROOT: ${{ steps.paths.outputs.vcpkg-root }}"
+        echo "VCPKG_INSTALLED_DIR: ${{ steps.paths.outputs.vcpkg-installed }}"
+        echo "CMAKE_TOOLCHAIN_FILE: ${{ steps.paths.outputs.cmake-toolchain }}"
+        echo "VCPKG_TARGET_TRIPLET: ${{ steps.triplet.outputs.triplet }}"

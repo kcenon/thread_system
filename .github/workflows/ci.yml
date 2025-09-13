@@ -1,0 +1,110 @@
+##################################################
+# Main CI Workflow
+#
+# Uses reusable workflows for consistent builds across platforms
+##################################################
+
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, 'phase*', 'feature/*' ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Linux builds
+  linux-gcc-12:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: ubuntu-22.04
+      compiler: gcc-12
+      build-type: Release
+      enable-tests: true
+      enable-benchmarks: true
+      enable-sanitizers: true
+
+  linux-gcc-10:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: ubuntu-20.04
+      compiler: gcc-10
+      build-type: Debug
+      enable-tests: true
+      enable-benchmarks: false
+      enable-sanitizers: false
+
+  linux-clang-15:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: ubuntu-22.04
+      compiler: clang-15
+      build-type: Release
+      enable-tests: true
+      enable-benchmarks: false
+      enable-sanitizers: true
+
+  # macOS builds
+  macos-13:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: macos-13
+      compiler: clang
+      build-type: Release
+      enable-tests: true
+      enable-benchmarks: true
+      enable-sanitizers: false
+
+  macos-14:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: macos-14
+      compiler: clang
+      build-type: Debug
+      enable-tests: true
+      enable-benchmarks: false
+      enable-sanitizers: false
+
+  # Windows builds
+  windows-msvc:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: windows-2022
+      compiler: msvc
+      build-type: Release
+      enable-tests: true
+      enable-benchmarks: true
+      enable-sanitizers: false
+
+  windows-msvc-debug:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      os: windows-2022
+      compiler: msvc
+      build-type: Debug
+      enable-tests: true
+      enable-benchmarks: false
+      enable-sanitizers: false
+
+  # Summary job
+  ci-success:
+    needs: [linux-gcc-12, linux-gcc-10, linux-clang-15, macos-13, macos-14, windows-msvc, windows-msvc-debug]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Check CI status
+      run: |
+        if [[ "${{ contains(needs.*.result, 'failure') }}" == "true" ]]; then
+          echo "❌ CI failed - one or more jobs failed"
+          exit 1
+        elif [[ "${{ contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+          echo "⚠️ CI cancelled"
+          exit 1
+        else
+          echo "✅ CI passed - all jobs succeeded"
+        fi

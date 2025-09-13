@@ -1,0 +1,218 @@
+##################################################
+# Reusable Workflow: Build and Test
+#
+# This workflow provides consistent build and test process
+# Uses the vcpkg setup workflow for dependency management
+##################################################
+
+name: Reusable Build and Test
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      compiler:
+        required: true
+        type: string
+      build-type:
+        required: false
+        type: string
+        default: 'Release'
+      enable-tests:
+        required: false
+        type: boolean
+        default: true
+      enable-benchmarks:
+        required: false
+        type: boolean
+        default: false
+      enable-sanitizers:
+        required: false
+        type: boolean
+        default: false
+      generator:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  setup-vcpkg:
+    uses: ./.github/workflows/reusable-vcpkg-setup.yml
+    with:
+      os: ${{ inputs.os }}
+      compiler: ${{ inputs.compiler }}
+      build-type: ${{ inputs.build-type }}
+
+  build:
+    needs: setup-vcpkg
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 60
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup compiler environment
+      shell: bash
+      run: |
+        if [[ "${{ inputs.compiler }}" == "gcc-12" ]]; then
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y gcc-12 g++-12 ninja-build
+            echo "CC=gcc-12" >> $GITHUB_ENV
+            echo "CXX=g++-12" >> $GITHUB_ENV
+          fi
+        elif [[ "${{ inputs.compiler }}" == "gcc-10" ]]; then
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y gcc-10 g++-10 ninja-build
+            echo "CC=gcc-10" >> $GITHUB_ENV
+            echo "CXX=g++-10" >> $GITHUB_ENV
+          fi
+        elif [[ "${{ inputs.compiler }}" == "clang-15" ]]; then
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y clang-15 ninja-build
+            echo "CC=clang-15" >> $GITHUB_ENV
+            echo "CXX=clang++-15" >> $GITHUB_ENV
+          fi
+        elif [[ "${{ inputs.compiler }}" == "msvc" ]]; then
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            echo "Using MSVC from Visual Studio"
+          fi
+        elif [[ "${{ inputs.compiler }}" == "clang" ]]; then
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            echo "Using Apple Clang"
+            brew install ninja || true
+          fi
+        fi
+
+    - name: Setup MSVC environment
+      if: runner.os == 'Windows' && inputs.compiler == 'msvc'
+      uses: microsoft/setup-msbuild@v1.3
+
+    - name: Restore vcpkg from previous job
+      shell: bash
+      run: |
+        echo "Using vcpkg from setup job:"
+        echo "VCPKG_ROOT=${{ needs.setup-vcpkg.outputs.vcpkg-root }}"
+        echo "VCPKG_INSTALLED_DIR=${{ needs.setup-vcpkg.outputs.vcpkg-installed }}"
+        echo "CMAKE_TOOLCHAIN_FILE=${{ needs.setup-vcpkg.outputs.cmake-toolchain }}"
+        echo "VCPKG_TARGET_TRIPLET=${{ needs.setup-vcpkg.outputs.triplet }}"
+
+    - name: Determine CMake generator
+      id: generator
+      shell: bash
+      run: |
+        if [[ -n "${{ inputs.generator }}" ]]; then
+          echo "generator=${{ inputs.generator }}" >> $GITHUB_OUTPUT
+        elif [[ "${{ runner.os }}" == "Windows" ]]; then
+          if [[ "${{ inputs.compiler }}" == "msvc" ]]; then
+            echo "generator=Visual Studio 17 2022" >> $GITHUB_OUTPUT
+          else
+            echo "generator=MinGW Makefiles" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "generator=Ninja" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Configure CMake
+      shell: bash
+      run: |
+        mkdir -p build
+        cd build
+
+        CMAKE_ARGS=(
+          -G "${{ steps.generator.outputs.generator }}"
+          -DCMAKE_BUILD_TYPE="${{ inputs.build-type }}"
+          -DCMAKE_TOOLCHAIN_FILE="${{ needs.setup-vcpkg.outputs.cmake-toolchain }}"
+          -DVCPKG_TARGET_TRIPLET="${{ needs.setup-vcpkg.outputs.triplet }}"
+          -DVCPKG_INSTALLED_DIR="${{ needs.setup-vcpkg.outputs.vcpkg-installed }}"
+          -DBUILD_TESTS=${{ inputs.enable-tests && 'ON' || 'OFF' }}
+          -DBUILD_BENCHMARKS=${{ inputs.enable-benchmarks && 'ON' || 'OFF' }}
+          -DENABLE_SANITIZERS=${{ inputs.enable-sanitizers && 'ON' || 'OFF' }}
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        )
+
+        if [[ "${{ runner.os }}" == "Windows" && "${{ inputs.compiler }}" == "msvc" ]]; then
+          CMAKE_ARGS+=(-A x64)
+        fi
+
+        echo "CMake configuration:"
+        echo "  Generator: ${{ steps.generator.outputs.generator }}"
+        echo "  Build Type: ${{ inputs.build-type }}"
+        echo "  Triplet: ${{ needs.setup-vcpkg.outputs.triplet }}"
+        echo "  Tests: ${{ inputs.enable-tests }}"
+        echo "  Benchmarks: ${{ inputs.enable-benchmarks }}"
+        echo "  Sanitizers: ${{ inputs.enable-sanitizers }}"
+
+        cmake .. "${CMAKE_ARGS[@]}"
+
+    - name: Build project
+      shell: bash
+      run: |
+        cd build
+
+        if [[ "${{ runner.os }}" == "Windows" && "${{ inputs.compiler }}" == "msvc" ]]; then
+          cmake --build . --config ${{ inputs.build-type }} --parallel 4
+        else
+          NPROC=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+          cmake --build . --parallel $NPROC
+        fi
+
+    - name: List build artifacts
+      shell: bash
+      run: |
+        echo "=== Build artifacts ==="
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          find build -name "*.exe" -type f 2>/dev/null | head -20
+        else
+          find build -type f -executable 2>/dev/null | head -20
+        fi
+
+    - name: Run tests
+      if: inputs.enable-tests
+      shell: bash
+      run: |
+        cd build
+
+        echo "=== Running CTest ==="
+        if [[ "${{ runner.os }}" == "Windows" && "${{ inputs.compiler }}" == "msvc" ]]; then
+          ctest --output-on-failure -C ${{ inputs.build-type }} --parallel 4
+        else
+          NPROC=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+          ctest --output-on-failure --parallel $NPROC
+        fi
+
+    - name: Run benchmarks
+      if: inputs.enable-benchmarks
+      shell: bash
+      run: |
+        cd build
+
+        echo "=== Running benchmarks ==="
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          find . -name "*benchmark*.exe" -type f 2>/dev/null | while read bench; do
+            echo "Running: $bench"
+            "$bench" --benchmark_min_time=1 || true
+          done
+        else
+          find . -name "*benchmark*" -type f -executable 2>/dev/null | while read bench; do
+            echo "Running: $bench"
+            "$bench" --benchmark_min_time=1 || true
+          done
+        fi
+
+    - name: Upload test results
+      if: always() && inputs.enable-tests
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ inputs.os }}-${{ inputs.compiler }}-${{ inputs.build-type }}
+        path: |
+          build/Testing/
+          build/**/*.xml
+        retention-days: 7
