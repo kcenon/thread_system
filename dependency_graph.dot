@@ -1,0 +1,63 @@
+digraph DependencyGraph {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+    edge [arrowhead=open];
+
+    "thread-system" [fillcolor=lightgray, style=filled];
+
+    subgraph cluster_core {
+        label="Core Dependencies";
+        style=filled;
+        fillcolor="#4CAF5020";
+
+        "fmt" [label="fmt", fillcolor="#4CAF50", style=filled];
+        "thread-system" -> "fmt";
+        "libiconv" [label="libiconv (!windows)", fillcolor="#4CAF50", style=filled];
+        "thread-system" -> "libiconv";
+    }
+
+    subgraph cluster_testing {
+        label="Testing Dependencies";
+        style=filled;
+        fillcolor="#FF980020";
+
+        "gtest" [label="gtest", fillcolor="#FF9800", style=filled];
+        "thread-system" -> "gtest";
+        "benchmark" [label="benchmark", fillcolor="#FF9800", style=filled];
+        "thread-system" -> "benchmark";
+    }
+
+    subgraph cluster_logging {
+        label="Logging Dependencies";
+        style=filled;
+        fillcolor="#2196F320";
+
+        "spdlog" [label="spdlog", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "spdlog";
+    }
+
+    subgraph cluster_development {
+        label="Development Dependencies";
+        style=filled;
+        fillcolor="#2196F320";
+
+        "gtest" [label="gtest", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "gtest";
+        "benchmark" [label="benchmark", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "benchmark";
+        "spdlog" [label="spdlog", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "spdlog";
+    }
+
+    subgraph cluster_system {
+        label="System Dependencies";
+        style=filled;
+        fillcolor="#2196F320";
+
+        "Doxygen" [label="Doxygen vsystem", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "Doxygen";
+        "Threads" [label="Threads vsystem", fillcolor="#2196F3", style=filled];
+        "thread-system" -> "Threads";
+    }
+
+}

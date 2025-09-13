@@ -105,16 +105,21 @@ jobs:
           core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
           core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
     
-    - name: Set vcpkg triplet
+    - name: Set vcpkg triplet (Unix)
+      if: runner.os != 'Windows'
       run: |
         if [ "${{ runner.os }}" = "Linux" ]; then
           echo "VCPKG_DEFAULT_TRIPLET=x64-linux" >> $GITHUB_ENV
         elif [ "${{ runner.os }}" = "macOS" ]; then
           echo "VCPKG_DEFAULT_TRIPLET=x64-osx" >> $GITHUB_ENV
-        elif [ "${{ runner.os }}" = "Windows" ]; then
-          echo "VCPKG_DEFAULT_TRIPLET=x64-windows" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         fi
       shell: bash
+      
+    - name: Set vcpkg triplet (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        echo "VCPKG_DEFAULT_TRIPLET=x64-windows" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      shell: powershell
         
     - name: Cache vcpkg
       uses: actions/cache@v3
@@ -179,7 +184,7 @@ jobs:
           echo "CC=clang-15" >> $GITHUB_ENV
           echo "CXX=clang++-15" >> $GITHUB_ENV
         fi
-        sudo apt-get install -y cmake ninja-build pkg-config valgrind
+        sudo apt-get install -y cmake ninja-build pkg-config valgrind curl zip unzip tar
         
         # Install system packages as fallback for vcpkg dependencies
         sudo apt-get install -y libgtest-dev libgmock-dev libbenchmark-dev libspdlog-dev libfmt-dev || true

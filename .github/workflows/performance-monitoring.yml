@@ -50,6 +50,7 @@ jobs:
   performance-baseline:
     name: Establish Performance Baseline
     runs-on: ubuntu-22.04
+    timeout-minutes: 90
     if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     
     steps:
@@ -223,10 +224,12 @@ jobs:
         
         # Google Benchmark results
         thread_pool_results = process_google_benchmark_results('benchmark_results/thread_pool_*.json')
-        lockfree_results = process_google_benchmark_results('benchmark_results/lockfree_*.json')
+        typed_results = process_google_benchmark_results('benchmark_results/typed_*.json')
+        queue_results = process_google_benchmark_results('benchmark_results/queue_*.json')
         
         all_results.update(thread_pool_results)
-        all_results.update(lockfree_results)
+        all_results.update(typed_results)
+        all_results.update(queue_results)
         
         # Custom performance test results
         custom_results = process_custom_results('benchmark_results/custom_perf_*.txt')
@@ -281,6 +284,7 @@ jobs:
   performance-comparison:
     name: Performance Regression Check
     runs-on: ubuntu-22.04
+    timeout-minutes: 60
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
     
     steps:
