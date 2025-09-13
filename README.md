@@ -117,7 +117,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 > **🚀 Architecture Update**: Latest modular architecture (2025-07-25) removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
 
-#### Core Performance Metrics (Latest Benchmarks - 2025-07-09)
+#### Core Performance Metrics (Latest Benchmarks - 2025-09-13)
 - **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs - theoretical)
 - **Real-world Throughput**: 
   - Standard thread pool: 1.16M jobs/s (10 workers, proven in production)

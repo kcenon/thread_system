@@ -2,10 +2,39 @@
 
 ## Build
 
+### Prerequisites
+- CMake 3.16 or later
+- C++20 capable compiler (GCC 9+, Clang 10+, MSVC 2019+)
+- vcpkg package manager (automatically installed by dependency scripts)
+
+### Quick Build
 ```bash
+# Install dependencies via vcpkg
+./dependency.sh       # Linux/macOS
+# ./dependency.bat    # Windows
+
+# Build the project
+./build.sh           # Linux/macOS  
+# ./build.bat        # Windows
+
+# Or manual cmake build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
+
+### Build Options
+```bash
+# Build as submodule (libraries only, no samples/tests)
+cmake -S . -B build -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON
+
+# Enable documentation build
+cmake -S . -B build -DBUILD_DOCUMENTATION=ON
+
+# Debug build with sanitizers
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -DENABLE_UBSAN=ON
+```
+
+For detailed platform-specific build instructions, see [Platform Build Guide](./PLATFORM_BUILD_GUIDE.md).
 
 ## Modules
 
@@ -99,10 +128,35 @@ See also: `docs/INTERFACES.md` for API-level interface details.
 
 ## Samples
 
-- minimal_thread_pool: minimal pool usage
-- thread_pool_sample: end-to-end pool lifecycle
-- adaptive_queue_sample: adaptive vs lock-free vs mutex queue
-- typed_thread_pool_sample: typed/persistent priority routing
-- composition_example: DI with interfaces
-- integration_example: external logger/monitoring integration
-- multi_process_monitoring_integration: process-aware monitoring
+### Core Threading
+- **minimal_thread_pool**: Minimal thread pool usage
+- **thread_pool_sample**: Complete pool lifecycle management
+- **typed_thread_pool_sample**: Type-based priority routing
+- **typed_thread_pool_sample_2**: Advanced typed pool usage
+
+### Queue Systems
+- **adaptive_queue_sample**: Adaptive vs lock-free vs mutex comparison
+- **mpmc_queue_sample**: Multi-producer multi-consumer queue usage
+- **hierarchical_queue_sample**: Priority-based job queuing
+- **typed_job_queue_sample**: Type-specific job queue operations
+
+### Memory Management
+- **hazard_pointer_sample**: Safe memory reclamation for lock-free data structures
+- **node_pool_sample**: Memory pool operations
+- **memory_pooled_jobs_sample**: Job-specific memory pooling
+
+### Integration & Services
+- **composition_example**: Dependency injection with interfaces
+- **integration_example**: External logger/monitoring integration
+- **service_registry_sample**: Service container and registry usage
+- **multi_process_monitoring_integration**: Process-aware monitoring
+
+### Advanced Features
+- **builder_sample**: Thread pool builder pattern
+- **combined_optimizations_sample**: Multiple performance optimizations
+- **data_oriented_job_sample**: Data-oriented job processing
+- **crash_protection**: Error handling and recovery mechanisms
+
+### External Dependencies (Optional)
+- **logger_sample**: High-performance logging (requires separate logger_system)
+- **metrics_sample**: Real-time metrics collection (requires separate monitoring_system)
