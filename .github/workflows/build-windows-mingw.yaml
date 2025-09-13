@@ -187,6 +187,10 @@ jobs:
             "-DBUILD_THREADSYSTEM_AS_SUBMODULE=ON" `
             "-DBUILD_TESTS=OFF" `
             "-DBUILD_DOCUMENTATION=OFF" `
+            "-DUSE_STD_FORMAT:BOOL=TRUE" `
+            "-DIconv_FOUND:BOOL=TRUE" `
+            "-DIconv_INCLUDE_DIR:PATH=C:/msys64/usr/include" `
+            "-DIconv_LIBRARY:FILEPATH=C:/msys64/usr/lib/libiconv.a" `
             "-DCMAKE_INSTALL_PREFIX=../target" `
             "-DCMAKE_TOOLCHAIN_FILE="
 

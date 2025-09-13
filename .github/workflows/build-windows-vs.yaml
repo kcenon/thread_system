@@ -100,12 +100,17 @@ jobs:
             Remove-Item -Recurse -Force "CMakeFiles"
           }
 
+          # Force std::format usage and bypass external dependencies
           cmake .. -G "Visual Studio 17 2022" -A x64 `
                   -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
                   -DBUILD_TESTS=OFF `
                   -DBUILD_DOCUMENTATION=OFF `
+                  -DUSE_STD_FORMAT:BOOL=TRUE `
+                  -DIconv_FOUND:BOOL=TRUE `
+                  -DIconv_INCLUDE_DIR:PATH="C:/Windows/System32" `
+                  -DIconv_LIBRARY:FILEPATH="C:/Windows/System32/kernel32.lib" `
                   -DCMAKE_TOOLCHAIN_FILE=""
           
           Write-Host "Building core libraries only..."
