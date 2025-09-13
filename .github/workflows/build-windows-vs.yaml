@@ -100,14 +100,21 @@ jobs:
             Remove-Item -Recurse -Force "CMakeFiles"
           }
 
-          # Force std::format usage and bypass external dependencies
+          # Force std::format usage - completely bypass fmt dependency
+          Write-Host "Forcing std::format usage to eliminate fmt dependency..."
           cmake .. -G "Visual Studio 17 2022" -A x64 `
                   -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
                   -DBUILD_TESTS=OFF `
                   -DBUILD_DOCUMENTATION=OFF `
-                  -DUSE_STD_FORMAT:BOOL=TRUE `
+                  -DUSE_STD_FORMAT:BOOL=ON `
+                  -DUSE_STD_FORMAT_ENABLED:BOOL=ON `
+                  -DFORCE_FMT_FORMAT:BOOL=OFF `
+                  -DWINDOWS_ALLOW_STD_FORMAT:BOOL=ON `
+                  -DHAS_STD_FORMAT_BASIC:BOOL=ON `
+                  -DHAS_STD_FORMAT_SPECIALIZATION:BOOL=ON `
+                  -DWINDOWS_COMPILER_SUPPORTS_STD_FORMAT:BOOL=ON `
                   -DIconv_FOUND:BOOL=TRUE `
                   -DIconv_INCLUDE_DIR:PATH="C:/Windows/System32" `
                   -DIconv_LIBRARY:FILEPATH="C:/Windows/System32/kernel32.lib" `

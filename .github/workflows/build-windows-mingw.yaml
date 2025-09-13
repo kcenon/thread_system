@@ -179,6 +179,7 @@ jobs:
 
           $env:CC = "gcc"
           $env:CXX = "g++"
+          Write-Host "Forcing std::format usage to eliminate fmt dependency..."
           & cmake .. -G "Ninja" `
             "-DCMAKE_C_COMPILER=gcc" `
             "-DCMAKE_CXX_COMPILER=g++" `
@@ -187,7 +188,13 @@ jobs:
             "-DBUILD_THREADSYSTEM_AS_SUBMODULE=ON" `
             "-DBUILD_TESTS=OFF" `
             "-DBUILD_DOCUMENTATION=OFF" `
-            "-DUSE_STD_FORMAT:BOOL=TRUE" `
+            "-DUSE_STD_FORMAT:BOOL=ON" `
+            "-DUSE_STD_FORMAT_ENABLED:BOOL=ON" `
+            "-DFORCE_FMT_FORMAT:BOOL=OFF" `
+            "-DWINDOWS_ALLOW_STD_FORMAT:BOOL=ON" `
+            "-DHAS_STD_FORMAT_BASIC:BOOL=ON" `
+            "-DHAS_STD_FORMAT_SPECIALIZATION:BOOL=ON" `
+            "-DWINDOWS_COMPILER_SUPPORTS_STD_FORMAT:BOOL=ON" `
             "-DIconv_FOUND:BOOL=TRUE" `
             "-DIconv_INCLUDE_DIR:PATH=C:/msys64/usr/include" `
             "-DIconv_LIBRARY:FILEPATH=C:/msys64/usr/lib/libiconv.a" `
