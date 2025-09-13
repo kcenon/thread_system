@@ -32,6 +32,8 @@ jobs:
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        runVcpkgInstall: true
+        vcpkgJsonGlob: '**/vcpkg.json'
 
     - name: Dependency vulnerability scan
       uses: aquasecurity/trivy-action@master
