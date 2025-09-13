@@ -75,6 +75,9 @@ include(CompilerChecks)
 # Include coverage configuration
 include(Coverage)
 
+# Phase 3 T3.2: Include dependency conflict checker
+include(dependency_checker)
+
 # Perform compiler version check
 check_compiler_version()
 
@@ -584,6 +587,11 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     message(STATUS "To use vcpkg, provide -DCMAKE_TOOLCHAIN_FILE=<path_to_vcpkg_toolchain>")
   else()
     message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
+  endif()
+
+  # Phase 3 T3.2: Run dependency conflict checks if requested
+  if(CHECK_DEPENDENCIES)
+    check_dependency_conflicts()
   endif()
 
   # Add subdirectories for new modularized source code, samples, and unit tests
