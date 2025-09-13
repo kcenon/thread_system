@@ -28,14 +28,10 @@ jobs:
       with:
         submodules: true
 
-    - name: Setup vcpkg
+    - name: Setup and install vcpkg dependencies
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-
-    - name: Install dependencies
-      run: |
-        vcpkg install --triplet x64-linux
 
     - name: Dependency vulnerability scan
       uses: aquasecurity/trivy-action@master
