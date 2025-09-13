@@ -12,6 +12,13 @@
     {
       "name": "libiconv",
       "platform": "!windows"
+    },
+    {
+      "name": "gtest",
+      "features": ["gmock"]
+    },
+    {
+      "name": "benchmark"
     }
   ],
   "features": {
