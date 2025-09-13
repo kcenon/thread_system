@@ -33,13 +33,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "convert_string.h"
 
 #include "../include/formatter.h"
-#include "iconv.h"
 
 #include <stdexcept>
 #include <cstdint>
 
 #ifdef _WIN32
 #include <windows.h>
+#else
+#include "iconv.h"
 #endif
 
 /**
