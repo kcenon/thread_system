@@ -103,52 +103,32 @@ jobs:
           core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
           core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
     
-    - name: Setup vcpkg (Unix)
+    - name: Setup vcpkg (Unix) - Optional
       if: runner.os != 'Windows'
+      continue-on-error: true
       run: |
-        if [ ! -d "vcpkg" ]; then
-          git clone https://github.com/Microsoft/vcpkg.git
-          ./vcpkg/bootstrap-vcpkg.sh
-        else
-          echo "vcpkg already exists"
-        fi
-        echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
+        echo "Skipping vcpkg setup - using system packages for faster CI"
+        echo "VCPKG_DISABLED=true" >> $GITHUB_ENV
         
-    - name: Setup vcpkg (Windows)
+    - name: Setup vcpkg (Windows) - Optional  
       if: runner.os == 'Windows'
+      continue-on-error: true
       run: |
-        if (!(Test-Path "vcpkg")) {
-          git clone https://github.com/Microsoft/vcpkg.git
-          .\vcpkg\bootstrap-vcpkg.bat
-        } else {
-          Write-Host "vcpkg already exists"
-        }
-        echo "VCPKG_ROOT=$(pwd)/vcpkg" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        echo "Skipping vcpkg setup - Windows will use system packages where possible"
+        echo "VCPKG_DISABLED=true" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       shell: powershell
         
-    - name: Install vcpkg dependencies (Unix)
+    - name: Skip vcpkg dependencies (Unix)
       if: runner.os != 'Windows'
-      timeout-minutes: 15
       run: |
-        TRIPLET="x64-linux"
-        if [ "${{ runner.os }}" = "macOS" ]; then
-          TRIPLET="x64-osx"
-        fi
-        echo "Installing dependencies for triplet: $TRIPLET"
-        ./vcpkg/vcpkg install --x-manifest-root=. --triplet=$TRIPLET || {
-          echo "vcpkg install failed, attempting to use system packages"
-          exit 0
-        }
+        echo "Skipping vcpkg dependency installation - using system packages"
+        echo "This significantly reduces CI time and complexity"
         
-    - name: Install vcpkg dependencies (Windows)
+    - name: Skip vcpkg dependencies (Windows)
       if: runner.os == 'Windows'
-      timeout-minutes: 15
       run: |
-        echo "Installing dependencies for triplet: x64-windows"
-        .\vcpkg\vcpkg install --x-manifest-root=. --triplet=x64-windows || (
-          echo "vcpkg install failed, attempting to use system packages"
-          exit /b 0
-        )
+        echo "Skipping vcpkg dependency installation - using Visual Studio packages"
+        echo "This significantly reduces CI time and complexity"
       shell: cmd
         
     - name: Setup build environment (Linux)
@@ -192,20 +172,17 @@ jobs:
       if: runner.os == 'Windows'
       uses: microsoft/setup-msbuild@v1.3
       
-    - name: Configure CMake (Windows)
+    - name: Configure CMake (Windows) - Simplified
       if: runner.os == 'Windows'
       run: |
         mkdir build
         cd build
         
-        echo "Attempting CMake configuration with vcpkg..."
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -G "Visual Studio 17 2022" -A x64 || (
-          echo "CMake with vcpkg failed, trying without toolchain file"
-          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -G "Visual Studio 17 2022" -A x64
-        )
+        echo "CMake configuration (system packages): -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON"
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -G "Visual Studio 17 2022" -A x64
       shell: cmd
         
-    - name: Configure CMake (Unix)
+    - name: Configure CMake (Unix) - Simplified
       if: runner.os != 'Windows'
       run: |
         mkdir -p build
@@ -215,29 +192,12 @@ jobs:
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_DOCUMENTATION=ON"
         
-        # Try vcpkg first, then fallback to system packages
-        if [ -f "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" ]; then
-          CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
-          echo "Using vcpkg toolchain"
-        else
-          echo "vcpkg toolchain not found, using system packages"
-        fi
-        
         if [ "${{ matrix.enable_asan }}" = "true" ]; then
           CMAKE_ARGS="$CMAKE_ARGS -DENABLE_SANITIZERS=ON"
         fi
         
-        echo "CMake configuration: $CMAKE_ARGS"
-        cmake .. $CMAKE_ARGS -G Ninja || {
-          echo "CMake with vcpkg failed, trying without toolchain file"
-          CMAKE_ARGS_FALLBACK="-DCMAKE_BUILD_TYPE=${{ matrix.config }}"
-          CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
-          CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DBUILD_DOCUMENTATION=ON"
-          if [ "${{ matrix.enable_asan }}" = "true" ]; then
-            CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DENABLE_SANITIZERS=ON"
-          fi
-          cmake .. $CMAKE_ARGS_FALLBACK -G Ninja
-        }
+        echo "CMake configuration (system packages): $CMAKE_ARGS"
+        cmake .. $CMAKE_ARGS -G Ninja
       shell: bash
         
     - name: Build project (Windows)
