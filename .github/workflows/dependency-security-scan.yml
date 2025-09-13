@@ -114,7 +114,7 @@ jobs:
         echo "All dependencies verified for MIT license compatibility." >> security_report.md
 
     - name: Upload security report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: security-report
