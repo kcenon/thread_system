@@ -119,7 +119,16 @@ jobs:
       if: runner.os == 'Windows'
       uses: microsoft/setup-msbuild@v1.3
       
-    - name: Configure CMake
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -G "Visual Studio 17 2022" -A x64
+      shell: cmd
+        
+    - name: Configure CMake (Unix)
+      if: runner.os != 'Windows'
       run: |
         mkdir -p build
         cd build
@@ -128,49 +137,68 @@ jobs:
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_DOCUMENTATION=ON"
         
-        if [ "${{ matrix.enable_asan }}" = "true" ] && [ "${{ runner.os }}" != "Windows" ]; then
+        if [ "${{ matrix.enable_asan }}" = "true" ]; then
           CMAKE_ARGS="$CMAKE_ARGS -DENABLE_SANITIZERS=ON"
         fi
         
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          cmake .. $CMAKE_ARGS -G "Visual Studio 17 2022" -A x64
-        else
-          cmake .. $CMAKE_ARGS -G Ninja
-        fi
+        cmake .. $CMAKE_ARGS -G Ninja
+      shell: bash
         
-    - name: Build project
+    - name: Build project (Windows)
+      if: runner.os == 'Windows'
       run: |
         cd build
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          cmake --build . --config ${{ matrix.config }} --parallel 4
-        else
-          cmake --build . --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
-        fi
+        cmake --build . --config ${{ matrix.config }} --parallel 4
+      shell: cmd
         
-    - name: Run unit tests
+    - name: Build project (Unix)
+      if: runner.os != 'Windows'
+      run: |
+        cd build
+        cmake --build . --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+      shell: bash
+        
+    - name: Run unit tests (Windows)
+      if: runner.os == 'Windows'
       timeout-minutes: ${{ fromJson(inputs.test_timeout || '30') }}
       run: |
         cd build
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          ctest --output-on-failure --parallel 4 -C ${{ matrix.config }}
-        else
-          ctest --output-on-failure --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
-        fi
+        ctest --output-on-failure --parallel 4 -C ${{ matrix.config }}
+      shell: cmd
         
-    - name: Run integration tests
+    - name: Run unit tests (Unix)
+      if: runner.os != 'Windows'
       timeout-minutes: ${{ fromJson(inputs.test_timeout || '30') }}
       run: |
         cd build
-        if [ -f unittest/integration/integration_test_suite ] || [ -f unittest/integration/${{ matrix.config }}/integration_test_suite.exe ]; then
+        ctest --output-on-failure --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+      shell: bash
+        
+    - name: Run integration tests (Windows)
+      if: runner.os == 'Windows'
+      timeout-minutes: ${{ fromJson(inputs.test_timeout || '30') }}
+      run: |
+        cd build
+        if exist unittest\integration\${{ matrix.config }}\integration_test_suite.exe (
+          echo Running integration test suite...
+          .\unittest\integration\${{ matrix.config }}\integration_test_suite.exe --gtest_output=xml:integration_test_results.xml
+        ) else (
+          echo Integration test suite not found, skipping...
+        )
+      shell: cmd
+        
+    - name: Run integration tests (Unix)
+      if: runner.os != 'Windows'
+      timeout-minutes: ${{ fromJson(inputs.test_timeout || '30') }}
+      run: |
+        cd build
+        if [ -f unittest/integration/integration_test_suite ]; then
           echo "Running integration test suite..."
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            ./unittest/integration/${{ matrix.config }}/integration_test_suite.exe --gtest_output=xml:integration_test_results.xml
-          else
-            ./unittest/integration/integration_test_suite --gtest_output=xml:integration_test_results.xml
-          fi
+          ./unittest/integration/integration_test_suite --gtest_output=xml:integration_test_results.xml
         else
           echo "Integration test suite not found, skipping..."
         fi
+      shell: bash
         
     - name: Run memory tests (Linux only)
       if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc-12'
@@ -184,6 +212,7 @@ jobs:
                    --suppressions=../.github/valgrind.supp 2>/dev/null || true \
                    ./unittest/integration/integration_test_suite
         fi
+      shell: bash
         
     - name: Upload test results
       if: always()
