@@ -1,0 +1,95 @@
+# Valgrind Suppression File for Thread System
+# 
+# This file contains suppression rules for known false positives
+# and acceptable memory patterns in the thread system
+
+# Suppress glibc thread-related false positives
+{
+   glibc_thread_start_false_positive
+   Memcheck:Leak
+   fun:calloc
+   fun:allocate_dtv
+   fun:_dl_allocate_tls
+   fun:allocate_stack
+   fun:pthread_create@@GLIBC_*
+}
+
+{
+   glibc_pthread_create_false_positive
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_allocate_tls
+   fun:pthread_create@@GLIBC_*
+}
+
+# Suppress std::thread implementation details
+{
+   stdthread_implementation_details
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE
+}
+
+# Suppress vcpkg/fmt library internals
+{
+   fmt_library_internals
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:*fmt*
+}
+
+# Suppress Google Test framework
+{
+   gtest_framework_internals
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:*testing*
+}
+
+{
+   gtest_death_test_internals
+   Memcheck:Leak
+   fun:calloc
+   ...
+   fun:*DeathTest*
+}
+
+# Suppress libstdc++ static initialization
+{
+   libstdcpp_static_init
+   Memcheck:Leak
+   fun:malloc
+   fun:pool
+   fun:__static_initialization_and_destruction_0
+}
+
+# Suppress thread_local storage cleanup
+{
+   thread_local_cleanup
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:__tls_get_addr
+}
+
+# Suppress acceptable once_flag patterns  
+{
+   once_flag_pattern
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:*once_flag*
+}
+
+# Suppress atomic operations on some architectures
+{
+   atomic_operations_arch_specific
+   Memcheck:Race
+   ...
+   fun:*atomic*
+}
+
+# End of suppression file

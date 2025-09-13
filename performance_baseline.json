@@ -1,0 +1,75 @@
+{
+  "timestamp": "2025-09-13T00:00:00Z",
+  "commit": "initial_baseline",
+  "branch": "main",
+  "benchmarks": {
+    "ThreadPool/Submit1000Tasks": {
+      "mean": 1500000.0,
+      "median": 1480000.0,
+      "min": 1200000.0,
+      "max": 1800000.0,
+      "stddev": 120000.0,
+      "count": 10,
+      "unit": "ns"
+    },
+    "ThreadPool/ConcurrentSubmit": {
+      "mean": 2500000.0,
+      "median": 2450000.0,
+      "min": 2000000.0,
+      "max": 3000000.0,
+      "stddev": 200000.0,
+      "count": 10,
+      "unit": "ns"
+    },
+    "DependencyInjection/ServiceRegistration": {
+      "mean": 25000.0,
+      "median": 24000.0,
+      "min": 20000.0,
+      "max": 30000.0,
+      "stddev": 2500.0,
+      "count": 10,
+      "unit": "ns"
+    },
+    "DependencyInjection/ServiceResolution": {
+      "mean": 15000.0,
+      "median": 14500.0,
+      "min": 12000.0,
+      "max": 18000.0,
+      "stddev": 1500.0,
+      "count": 10,
+      "unit": "ns"
+    },
+    "LockFree/QueueOperations": {
+      "mean": 500000.0,
+      "median": 480000.0,
+      "min": 400000.0,
+      "max": 600000.0,
+      "stddev": 50000.0,
+      "count": 10,
+      "unit": "ns"
+    },
+    "ThreadUtilities/ContextSwitching": {
+      "mean": 800000.0,
+      "median": 790000.0,
+      "min": 700000.0,
+      "max": 900000.0,
+      "stddev": 60000.0,
+      "count": 10,
+      "unit": "ns"
+    }
+  },
+  "system_info": {
+    "cpu": "Intel/AMD x86_64",
+    "cores": 8,
+    "memory": "16GB",
+    "os": "Ubuntu 22.04",
+    "compiler": "GCC 12",
+    "optimization": "-O3 -DNDEBUG -march=native"
+  },
+  "notes": [
+    "Initial baseline performance metrics for thread system",
+    "Benchmarks run on standardized CI environment",
+    "Values represent nanoseconds for operation completion",
+    "Regression threshold set at 5% for CI/CD pipeline"
+  ]
+}

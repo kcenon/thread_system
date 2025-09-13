@@ -1,0 +1,473 @@
+##################################################
+# Thread System Performance Monitoring Workflow
+# 
+# Phase 4 T4.2: CI/CD Pipeline Improvement
+# This workflow provides continuous performance monitoring
+# with regression detection and alerting capabilities
+##################################################
+
+name: Performance Monitoring
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, ready_for_review]
+  schedule:
+    # Run performance monitoring daily at 04:00 UTC
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      benchmark_duration:
+        description: 'Benchmark duration in seconds'
+        required: false
+        default: '60'
+        type: string
+      regression_threshold:
+        description: 'Performance regression threshold (%)'
+        required: false
+        default: '5'
+        type: string
+      comparison_branch:
+        description: 'Branch to compare against'
+        required: false
+        default: 'main'
+        type: string
+
+env:
+  BUILD_TYPE: Release
+  BENCHMARK_ITERATIONS: 10
+  PERFORMANCE_DB_FILE: "performance_history.json"
+
+jobs:
+  performance-baseline:
+    name: Establish Performance Baseline
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+        
+    - name: Setup high-performance environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-12 g++-12 cmake ninja-build
+        echo "CC=gcc-12" >> $GITHUB_ENV
+        echo "CXX=g++-12" >> $GITHUB_ENV
+        
+        # Configure system for consistent benchmarking
+        echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
+        echo 0 | sudo tee /proc/sys/kernel/randomize_va_space || true
+        sudo sysctl -w kernel.perf_event_paranoid=1 || true
+        
+    - name: Build optimized release
+      run: |
+        mkdir -p build_perf
+        cd build_perf
+        cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja \
+                 -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -march=native -flto" \
+                 -DBUILD_BENCHMARKS=ON
+        cmake --build . --parallel $(nproc)
+        
+    - name: Run comprehensive benchmarks
+      timeout-minutes: ${{ fromJson(inputs.benchmark_duration || '60') }}
+      run: |
+        cd build_perf
+        
+        # Create benchmark results directory
+        mkdir -p benchmark_results
+        
+        echo "Running thread pool benchmarks..."
+        if [ -f benchmarks/thread_pool_benchmark ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            ./benchmarks/thread_pool_benchmark \
+              --benchmark_format=json \
+              --benchmark_out=benchmark_results/thread_pool_$i.json \
+              --benchmark_repetitions=3
+          done
+        fi
+        
+        echo "Running lockfree benchmarks..."
+        if [ -f benchmarks/lockfree_benchmark ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            ./benchmarks/lockfree_benchmark \
+              --benchmark_format=json \
+              --benchmark_out=benchmark_results/lockfree_$i.json \
+              --benchmark_repetitions=3
+          done
+        fi
+        
+        echo "Running dependency injection benchmarks..."
+        if [ -f unittest/integration/integration_test_suite ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            timeout 300 ./unittest/integration/integration_test_suite \
+              --gtest_filter="*PerformanceTest*" \
+              --gtest_output=json:benchmark_results/integration_perf_$i.json
+          done
+        fi
+        
+        echo "Running custom performance tests..."
+        if [ -f performance_test ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            timeout 300 ./performance_test > benchmark_results/custom_perf_$i.txt
+          done
+        fi
+        
+    - name: Process benchmark results
+      run: |
+        cd build_perf
+        
+        # Create performance analysis script
+        cat > process_benchmarks.py << 'EOF'
+        #!/usr/bin/env python3
+        import json
+        import glob
+        import statistics
+        import sys
+        from pathlib import Path
+        
+        def process_google_benchmark_results(pattern):
+            """Process Google Benchmark JSON results"""
+            results = {}
+            
+            for file_path in glob.glob(pattern):
+                try:
+                    with open(file_path, 'r') as f:
+                        data = json.load(f)
+                    
+                    for benchmark in data.get('benchmarks', []):
+                        name = benchmark['name']
+                        time_key = 'real_time' if 'real_time' in benchmark else 'cpu_time'
+                        time_value = benchmark.get(time_key, 0)
+                        
+                        if name not in results:
+                            results[name] = []
+                        results[name].append(time_value)
+                except Exception as e:
+                    print(f"Warning: Could not process {file_path}: {e}")
+            
+            return results
+        
+        def process_custom_results(pattern):
+            """Process custom performance test results"""
+            results = {}
+            
+            for file_path in glob.glob(pattern):
+                try:
+                    with open(file_path, 'r') as f:
+                        lines = f.readlines()
+                    
+                    for line in lines:
+                        if ':' in line and 'ms' in line:
+                            parts = line.strip().split(':')
+                            if len(parts) == 2:
+                                test_name = parts[0].strip()
+                                time_str = parts[1].strip().replace('ms', '').strip()
+                                try:
+                                    time_value = float(time_str)
+                                    if test_name not in results:
+                                        results[test_name] = []
+                                    results[test_name].append(time_value)
+                                except ValueError:
+                                    continue
+                except Exception as e:
+                    print(f"Warning: Could not process {file_path}: {e}")
+            
+            return results
+        
+        def calculate_statistics(values):
+            """Calculate statistical measures for benchmark values"""
+            if not values:
+                return {}
+            
+            return {
+                'mean': statistics.mean(values),
+                'median': statistics.median(values),
+                'min': min(values),
+                'max': max(values),
+                'stddev': statistics.stdev(values) if len(values) > 1 else 0,
+                'count': len(values)
+            }
+        
+        # Process all benchmark results
+        all_results = {}
+        
+        # Google Benchmark results
+        thread_pool_results = process_google_benchmark_results('benchmark_results/thread_pool_*.json')
+        lockfree_results = process_google_benchmark_results('benchmark_results/lockfree_*.json')
+        
+        all_results.update(thread_pool_results)
+        all_results.update(lockfree_results)
+        
+        # Custom performance test results
+        custom_results = process_custom_results('benchmark_results/custom_perf_*.txt')
+        all_results.update(custom_results)
+        
+        # Calculate statistics for each benchmark
+        performance_summary = {}
+        for test_name, values in all_results.items():
+            performance_summary[test_name] = calculate_statistics(values)
+        
+        # Save performance baseline
+        baseline_data = {
+            'timestamp': '${{ github.event.head_commit.timestamp || github.run_id }}',
+            'commit': '${{ github.sha }}',
+            'branch': '${{ github.ref_name }}',
+            'benchmarks': performance_summary
+        }
+        
+        with open('../${{ env.PERFORMANCE_DB_FILE }}', 'w') as f:
+            json.dump(baseline_data, f, indent=2)
+        
+        # Generate performance report
+        print("# Performance Baseline Report")
+        print(f"**Commit:** ${{ github.sha }}")
+        print(f"**Branch:** ${{ github.ref_name }}")
+        print(f"**Timestamp:** {baseline_data['timestamp']}")
+        print("")
+        print("| Benchmark | Mean (ns) | Median (ns) | Std Dev | Iterations |")
+        print("|-----------|-----------|-------------|---------|------------|")
+        
+        for test_name, stats in performance_summary.items():
+            if stats:
+                print(f"| {test_name} | {stats['mean']:.2f} | {stats['median']:.2f} | {stats['stddev']:.2f} | {stats['count']} |")
+        
+        print(f"\n📊 Processed {len(performance_summary)} benchmarks")
+        print(f"🔢 Total data points: {sum(len(values) for values in all_results.values())}")
+        EOF
+        
+        python3 process_benchmarks.py > performance_report.md
+        cat performance_report.md >> $GITHUB_STEP_SUMMARY
+        
+    - name: Upload baseline results
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-baseline
+        path: |
+          ${{ env.PERFORMANCE_DB_FILE }}
+          build_perf/performance_report.md
+          build_perf/benchmark_results/
+        retention-days: 90
+
+  performance-comparison:
+    name: Performance Regression Check
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
+    
+    steps:
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+        
+    - name: Setup high-performance environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-12 g++-12 cmake ninja-build
+        echo "CC=gcc-12" >> $GITHUB_ENV
+        echo "CXX=g++-12" >> $GITHUB_ENV
+        
+        # Configure system for consistent benchmarking
+        echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
+        echo 0 | sudo tee /proc/sys/kernel/randomize_va_space || true
+        sudo sysctl -w kernel.perf_event_paranoid=1 || true
+        
+    - name: Download baseline performance data
+      continue-on-error: true
+      run: |
+        # Try to get baseline from artifacts or create default
+        if ! wget -q "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" -O artifacts.json; then
+          echo "Could not fetch artifacts, creating default baseline"
+          echo '{"benchmarks": {}}' > ${{ env.PERFORMANCE_DB_FILE }}
+        else
+          echo "Creating default baseline for comparison"
+          echo '{"benchmarks": {}}' > ${{ env.PERFORMANCE_DB_FILE }}
+        fi
+        
+    - name: Build and run current benchmarks
+      timeout-minutes: ${{ fromJson(inputs.benchmark_duration || '30') }}
+      run: |
+        mkdir -p build_current
+        cd build_current
+        cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja \
+                 -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -march=native -flto" \
+                 -DBUILD_BENCHMARKS=ON
+        cmake --build . --parallel $(nproc)
+        
+        # Run current benchmarks (fewer iterations for PR checks)
+        mkdir -p benchmark_results
+        CURRENT_ITERATIONS=$((BENCHMARK_ITERATIONS / 2))
+        
+        if [ -f benchmarks/thread_pool_benchmark ]; then
+          for i in $(seq 1 $CURRENT_ITERATIONS); do
+            timeout 120 ./benchmarks/thread_pool_benchmark \
+              --benchmark_format=json \
+              --benchmark_out=benchmark_results/thread_pool_$i.json
+          done
+        fi
+        
+        if [ -f unittest/integration/integration_test_suite ]; then
+          for i in $(seq 1 $CURRENT_ITERATIONS); do
+            timeout 180 ./unittest/integration/integration_test_suite \
+              --gtest_filter="*PerformanceTest*" \
+              --gtest_output=json:benchmark_results/integration_perf_$i.json
+          done
+        fi
+        
+    - name: Compare performance results
+      run: |
+        cd build_current
+        
+        # Create performance comparison script
+        cat > compare_performance.py << 'EOF'
+        #!/usr/bin/env python3
+        import json
+        import glob
+        import statistics
+        import sys
+        
+        def load_baseline():
+            """Load baseline performance data"""
+            try:
+                with open('../${{ env.PERFORMANCE_DB_FILE }}', 'r') as f:
+                    return json.load(f)
+            except FileNotFoundError:
+                return {'benchmarks': {}}
+        
+        def process_current_results():
+            """Process current benchmark results"""
+            results = {}
+            
+            for file_path in glob.glob('benchmark_results/*.json'):
+                try:
+                    with open(file_path, 'r') as f:
+                        data = json.load(f)
+                    
+                    for benchmark in data.get('benchmarks', []):
+                        name = benchmark['name']
+                        time_key = 'real_time' if 'real_time' in benchmark else 'cpu_time'
+                        time_value = benchmark.get(time_key, 0)
+                        
+                        if name not in results:
+                            results[name] = []
+                        results[name].append(time_value)
+                except Exception as e:
+                    print(f"Warning: Could not process {file_path}: {e}")
+            
+            return results
+        
+        # Load data
+        baseline_data = load_baseline()
+        current_results = process_current_results()
+        
+        # Compare results
+        regression_threshold = float('${{ inputs.regression_threshold || '5' }}')
+        regressions = []
+        improvements = []
+        
+        print("# Performance Comparison Report")
+        print(f"**Regression Threshold:** {regression_threshold}%")
+        print(f"**Comparison Branch:** ${{ inputs.comparison_branch || 'main' }}")
+        print("")
+        print("| Benchmark | Baseline (ns) | Current (ns) | Change | Status |")
+        print("|-----------|---------------|--------------|--------|--------|")
+        
+        for test_name, current_values in current_results.items():
+            if not current_values:
+                continue
+                
+            current_mean = statistics.mean(current_values)
+            baseline_stats = baseline_data.get('benchmarks', {}).get(test_name, {})
+            baseline_mean = baseline_stats.get('mean', current_mean)
+            
+            if baseline_mean > 0:
+                change_pct = ((current_mean - baseline_mean) / baseline_mean) * 100
+                
+                if change_pct > regression_threshold:
+                    status = "❌ Regression"
+                    regressions.append((test_name, change_pct))
+                elif change_pct < -regression_threshold:
+                    status = "✅ Improvement"
+                    improvements.append((test_name, abs(change_pct)))
+                else:
+                    status = "✅ Stable"
+                
+                print(f"| {test_name} | {baseline_mean:.2f} | {current_mean:.2f} | {change_pct:+.1f}% | {status} |")
+        
+        print("")
+        
+        if regressions:
+            print("## ⚠️ Performance Regressions Detected")
+            for test_name, change in regressions:
+                print(f"- **{test_name}**: {change:.1f}% slower")
+            print("")
+            print("Please investigate and optimize before merging.")
+            
+        if improvements:
+            print("## 🚀 Performance Improvements")
+            for test_name, change in improvements:
+                print(f"- **{test_name}**: {change:.1f}% faster")
+            print("")
+            
+        if not regressions and not improvements:
+            print("## ✅ Performance Stable")
+            print("No significant performance changes detected.")
+        
+        # Exit with error if regressions found
+        if regressions:
+            sys.exit(1)
+        EOF
+        
+        python3 compare_performance.py > performance_comparison.md
+        cat performance_comparison.md >> $GITHUB_STEP_SUMMARY
+        
+    - name: Comment on PR (if applicable)
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('build_current/performance_comparison.md')) {
+            const comparison = fs.readFileSync('build_current/performance_comparison.md', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comparison
+            });
+          }
+          
+    - name: Upload comparison results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-comparison
+        path: |
+          build_current/performance_comparison.md
+          build_current/benchmark_results/
+        retention-days: 30
+
+  performance-notification:
+    name: Performance Alert
+    runs-on: ubuntu-latest
+    needs: [performance-comparison]
+    if: always() && needs.performance-comparison.result == 'failure'
+    
+    steps:
+    - name: Send performance regression alert
+      run: |
+        echo "🚨 Performance regression detected!" >> $GITHUB_STEP_SUMMARY
+        echo "Please check the performance comparison results and optimize before merging." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Actions to take:**" >> $GITHUB_STEP_SUMMARY
+        echo "1. Review the benchmark results in artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "2. Profile the code to identify bottlenecks" >> $GITHUB_STEP_SUMMARY
+        echo "3. Optimize the performance-critical sections" >> $GITHUB_STEP_SUMMARY
+        echo "4. Re-run the performance tests" >> $GITHUB_STEP_SUMMARY
