@@ -84,12 +84,62 @@ jobs:
         submodules: recursive
         fetch-depth: 0
         
+    - name: Cache vcpkg
+      uses: actions/cache@v4
+      with:
+        path: |
+          vcpkg
+          !vcpkg/buildtrees
+          !vcpkg/packages
+          !vcpkg/downloads
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-
+    
     - name: Setup vcpkg cache
       uses: actions/github-script@v7
       with:
         script: |
           core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
           core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+    
+    - name: Setup vcpkg (Unix)
+      if: runner.os != 'Windows'
+      run: |
+        if [ ! -d "vcpkg" ]; then
+          git clone https://github.com/Microsoft/vcpkg.git
+          ./vcpkg/bootstrap-vcpkg.sh
+        else
+          echo "vcpkg already exists"
+        fi
+        echo "VCPKG_ROOT=$(pwd)/vcpkg" >> $GITHUB_ENV
+        
+    - name: Setup vcpkg (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        if (!(Test-Path "vcpkg")) {
+          git clone https://github.com/Microsoft/vcpkg.git
+          .\vcpkg\bootstrap-vcpkg.bat
+        } else {
+          Write-Host "vcpkg already exists"
+        }
+        echo "VCPKG_ROOT=$(pwd)/vcpkg" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      shell: powershell
+        
+    - name: Install vcpkg dependencies (Unix)
+      if: runner.os != 'Windows'
+      run: |
+        TRIPLET="x64-linux"
+        if [ "${{ runner.os }}" = "macOS" ]; then
+          TRIPLET="x64-osx"
+        fi
+        ./vcpkg/vcpkg install --triplet=$TRIPLET
+        
+    - name: Install vcpkg dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        .\vcpkg\vcpkg install --triplet=x64-windows
+      shell: cmd
         
     - name: Setup build environment (Linux)
       if: runner.os == 'Linux'
@@ -124,7 +174,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -G "Visual Studio 17 2022" -A x64
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -G "Visual Studio 17 2022" -A x64
       shell: cmd
         
     - name: Configure CMake (Unix)
@@ -136,6 +186,7 @@ jobs:
         CMAKE_ARGS="-DCMAKE_BUILD_TYPE=${{ matrix.config }}"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_DOCUMENTATION=ON"
+        CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
         
         if [ "${{ matrix.enable_asan }}" = "true" ]; then
           CMAKE_ARGS="$CMAKE_ARGS -DENABLE_SANITIZERS=ON"
