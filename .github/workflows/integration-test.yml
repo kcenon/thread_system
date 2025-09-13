@@ -128,17 +128,27 @@ jobs:
         
     - name: Install vcpkg dependencies (Unix)
       if: runner.os != 'Windows'
+      timeout-minutes: 15
       run: |
         TRIPLET="x64-linux"
         if [ "${{ runner.os }}" = "macOS" ]; then
           TRIPLET="x64-osx"
         fi
-        ./vcpkg/vcpkg install --triplet=$TRIPLET
+        echo "Installing dependencies for triplet: $TRIPLET"
+        ./vcpkg/vcpkg install --x-manifest-root=. --triplet=$TRIPLET || {
+          echo "vcpkg install failed, attempting to use system packages"
+          exit 0
+        }
         
     - name: Install vcpkg dependencies (Windows)
       if: runner.os == 'Windows'
+      timeout-minutes: 15
       run: |
-        .\vcpkg\vcpkg install --triplet=x64-windows
+        echo "Installing dependencies for triplet: x64-windows"
+        .\vcpkg\vcpkg install --x-manifest-root=. --triplet=x64-windows || (
+          echo "vcpkg install failed, attempting to use system packages"
+          exit /b 0
+        )
       shell: cmd
         
     - name: Setup build environment (Linux)
@@ -160,10 +170,23 @@ jobs:
         fi
         sudo apt-get install -y cmake ninja-build pkg-config valgrind
         
+        # Install system packages as fallback for vcpkg dependencies
+        sudo apt-get install -y libgtest-dev libgmock-dev libbenchmark-dev libspdlog-dev libfmt-dev || true
+        
+        # Build gtest from source if package version is too old
+        if [ ! -f "/usr/lib/x86_64-linux-gnu/libgtest.a" ] && [ ! -f "/usr/lib/libgtest.a" ]; then
+          echo "Building GTest from source..."
+          cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp lib/*.a /usr/lib/ || true
+          cd $GITHUB_WORKSPACE
+        fi
+        
     - name: Setup build environment (macOS)
       if: runner.os == 'macOS'
       run: |
         brew install cmake ninja pkg-config
+        
+        # Install system packages as fallback for vcpkg dependencies
+        brew install googletest google-benchmark spdlog fmt || true
         
     - name: Setup build environment (Windows)
       if: runner.os == 'Windows'
@@ -174,7 +197,12 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -G "Visual Studio 17 2022" -A x64
+        
+        echo "Attempting CMake configuration with vcpkg..."
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -G "Visual Studio 17 2022" -A x64 || (
+          echo "CMake with vcpkg failed, trying without toolchain file"
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF -DBUILD_DOCUMENTATION=ON -G "Visual Studio 17 2022" -A x64
+        )
       shell: cmd
         
     - name: Configure CMake (Unix)
@@ -186,13 +214,30 @@ jobs:
         CMAKE_ARGS="-DCMAKE_BUILD_TYPE=${{ matrix.config }}"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
         CMAKE_ARGS="$CMAKE_ARGS -DBUILD_DOCUMENTATION=ON"
-        CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+        
+        # Try vcpkg first, then fallback to system packages
+        if [ -f "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" ]; then
+          CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+          echo "Using vcpkg toolchain"
+        else
+          echo "vcpkg toolchain not found, using system packages"
+        fi
         
         if [ "${{ matrix.enable_asan }}" = "true" ]; then
           CMAKE_ARGS="$CMAKE_ARGS -DENABLE_SANITIZERS=ON"
         fi
         
-        cmake .. $CMAKE_ARGS -G Ninja
+        echo "CMake configuration: $CMAKE_ARGS"
+        cmake .. $CMAKE_ARGS -G Ninja || {
+          echo "CMake with vcpkg failed, trying without toolchain file"
+          CMAKE_ARGS_FALLBACK="-DCMAKE_BUILD_TYPE=${{ matrix.config }}"
+          CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DBUILD_THREADSYSTEM_AS_SUBMODULE=OFF"
+          CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DBUILD_DOCUMENTATION=ON"
+          if [ "${{ matrix.enable_asan }}" = "true" ]; then
+            CMAKE_ARGS_FALLBACK="$CMAKE_ARGS_FALLBACK -DENABLE_SANITIZERS=ON"
+          fi
+          cmake .. $CMAKE_ARGS_FALLBACK -G Ninja
+        }
       shell: bash
         
     - name: Build project (Windows)

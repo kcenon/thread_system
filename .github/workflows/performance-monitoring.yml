@@ -89,21 +89,39 @@ jobs:
         mkdir -p benchmark_results
         
         echo "Running thread pool benchmarks..."
-        if [ -f benchmarks/thread_pool_benchmark ]; then
+        # Check for Google Benchmark based thread pool benchmark
+        if [ -f benchmarks/thread_pool_benchmarks/gbench_thread_pool ]; then
           for i in $(seq 1 $BENCHMARK_ITERATIONS); do
-            ./benchmarks/thread_pool_benchmark \
+            ./benchmarks/thread_pool_benchmarks/gbench_thread_pool \
               --benchmark_format=json \
-              --benchmark_out=benchmark_results/thread_pool_$i.json \
+              --benchmark_out=benchmark_results/thread_pool_gbench_$i.json \
               --benchmark_repetitions=3
           done
         fi
         
-        echo "Running lockfree benchmarks..."
-        if [ -f benchmarks/lockfree_benchmark ]; then
+        # Check for other thread pool benchmarks
+        if [ -f benchmarks/thread_pool_benchmarks/thread_pool_benchmark ]; then
           for i in $(seq 1 $BENCHMARK_ITERATIONS); do
-            ./benchmarks/lockfree_benchmark \
+            timeout 120 ./benchmarks/thread_pool_benchmarks/thread_pool_benchmark \
+              > benchmark_results/thread_pool_$i.txt
+          done
+        fi
+        
+        echo "Running typed thread pool benchmarks..."
+        if [ -f benchmarks/typed_thread_pool_benchmarks/typed_scheduling_benchmark_google ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            ./benchmarks/typed_thread_pool_benchmarks/typed_scheduling_benchmark_google \
               --benchmark_format=json \
-              --benchmark_out=benchmark_results/lockfree_$i.json \
+              --benchmark_out=benchmark_results/typed_scheduling_$i.json \
+              --benchmark_repetitions=3
+          done
+        fi
+        
+        if [ -f benchmarks/typed_thread_pool_benchmarks/queue_comparison_benchmark ]; then
+          for i in $(seq 1 $BENCHMARK_ITERATIONS); do
+            ./benchmarks/typed_thread_pool_benchmarks/queue_comparison_benchmark \
+              --benchmark_format=json \
+              --benchmark_out=benchmark_results/queue_comparison_$i.json \
               --benchmark_repetitions=3
           done
         fi
@@ -310,11 +328,21 @@ jobs:
         mkdir -p benchmark_results
         CURRENT_ITERATIONS=$((BENCHMARK_ITERATIONS / 2))
         
-        if [ -f benchmarks/thread_pool_benchmark ]; then
+        # Check for Google Benchmark based thread pool benchmark
+        if [ -f benchmarks/thread_pool_benchmarks/gbench_thread_pool ]; then
           for i in $(seq 1 $CURRENT_ITERATIONS); do
-            timeout 120 ./benchmarks/thread_pool_benchmark \
+            timeout 120 ./benchmarks/thread_pool_benchmarks/gbench_thread_pool \
               --benchmark_format=json \
-              --benchmark_out=benchmark_results/thread_pool_$i.json
+              --benchmark_out=benchmark_results/thread_pool_gbench_$i.json
+          done
+        fi
+        
+        # Check for typed thread pool benchmarks
+        if [ -f benchmarks/typed_thread_pool_benchmarks/typed_scheduling_benchmark_google ]; then
+          for i in $(seq 1 $CURRENT_ITERATIONS); do
+            timeout 120 ./benchmarks/typed_thread_pool_benchmarks/typed_scheduling_benchmark_google \
+              --benchmark_format=json \
+              --benchmark_out=benchmark_results/typed_scheduling_$i.json
           done
         fi
         
