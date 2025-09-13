@@ -226,27 +226,27 @@ check_cxx20_feature(std_format_specialization "
   }
 " HAS_STD_FORMAT_SPECIALIZATION)
 
-# Windows-specific policy: Force fmt usage for maximum compatibility
+# Windows-specific policy: Try std::format first, fallback to fmt if needed
 if(WIN32)
   message(STATUS "🪟 Windows platform detected")
   message(STATUS "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
   message(STATUS "Compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
   message(STATUS "Compiler path: ${CMAKE_CXX_COMPILER}")
   
-  # Force fmt::format on Windows for maximum stability and compatibility
-  set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT FALSE)
+  # Try std::format first on Windows
+  set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)
   
-  message(STATUS "🛡️  Windows Policy: Force using fmt::format for maximum compatibility")
-  message(STATUS "   Rationale:")
-  message(STATUS "   - Avoids std::format inconsistencies across different Windows compilers")
-  message(STATUS "   - Ensures consistent behavior between MSVC, MinGW, MSYS2, and Clang")
-  message(STATUS "   - Eliminates runtime compatibility issues with different Windows versions")
-  message(STATUS "   - Provides stable, well-tested formatting across all Windows environments")
+  message(STATUS "🎯 Windows Policy: Prefer std::format when available")
+  message(STATUS "   Strategy:")
+  message(STATUS "   - Use std::format if compiler and runtime support it")
+  message(STATUS "   - Fallback to fmt::format for maximum compatibility when needed")
+  message(STATUS "   - Maintain consistent behavior across different Windows environments")
+  message(STATUS "   - Use FORCE_FMT_FORMAT=ON to override and force fmt usage")
   
   if(MSVC)
-    message(STATUS "📊 MSVC ${MSVC_VERSION} detected - using fmt::format")
+    message(STATUS "📊 MSVC ${MSVC_VERSION} detected - testing std::format support")
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    message(STATUS "🐧 GCC ${CMAKE_CXX_COMPILER_VERSION} detected - using fmt::format")
+    message(STATUS "🐧 GCC ${CMAKE_CXX_COMPILER_VERSION} detected - testing std::format support")
     
     # Identify specific Windows GCC environments
     if(CMAKE_CXX_COMPILER MATCHES "msys2" OR CMAKE_CXX_COMPILER MATCHES "MSYS2")
@@ -258,7 +258,7 @@ if(WIN32)
     endif()
     
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    message(STATUS "🦙 Clang ${CMAKE_CXX_COMPILER_VERSION} detected - using fmt::format")
+    message(STATUS "🦙 Clang ${CMAKE_CXX_COMPILER_VERSION} detected - testing std::format support")
     
     if(CMAKE_CXX_COMPILER MATCHES "clang-cl")
       message(STATUS "🔧 clang-cl (MSVC-compatible mode) detected")
@@ -267,15 +267,15 @@ if(WIN32)
     endif()
     
   else()
-    message(STATUS "❓ Unknown Windows compiler: ${CMAKE_CXX_COMPILER_ID} - using fmt::format")
+    message(STATUS "❓ Unknown Windows compiler: ${CMAKE_CXX_COMPILER_ID} - testing std::format support")
   endif()
   
-  # Option to override Windows policy (for advanced users)
-  option(WINDOWS_ALLOW_STD_FORMAT "Allow std::format on Windows (not recommended)" OFF)
-  if(WINDOWS_ALLOW_STD_FORMAT)
-    message(STATUS "⚠️  WARNING: WINDOWS_ALLOW_STD_FORMAT enabled!")
-    message(STATUS "   This may cause compatibility issues. Use at your own risk.")
-    set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)
+  # Option to force fmt usage for guaranteed compatibility
+  option(FORCE_FMT_FORMAT "Force using fmt::format for maximum compatibility" OFF)
+  if(FORCE_FMT_FORMAT)
+    message(STATUS "🛡️  FORCE_FMT_FORMAT enabled - overriding to use fmt::format")
+    message(STATUS "   This ensures maximum compatibility across all environments.")
+    set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT FALSE)
   endif()
   
 else()
@@ -329,6 +329,7 @@ option(FORCE_FMT_FORMAT "Force use of fmt library instead of std::format on all 
 if(FORCE_FMT_FORMAT)
   set(USE_STD_FORMAT_ENABLED FALSE)
   message(STATUS "🔧 Global override: Forced to use fmt::format on all platforms")
+  message(STATUS "   This ensures maximum compatibility and consistent behavior")
 endif()
 
 # Apply the decision
@@ -342,12 +343,15 @@ if(USE_STD_FORMAT_ENABLED)
   message(STATUS "   - Compile test: ${STD_FORMAT_COMPILE_TEST}")
 else()
   set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-  if(WIN32)
-    message(STATUS "🛡️  Using fmt::format (Windows Policy)")
-    message(STATUS "   Windows builds use fmt::format for maximum compatibility")
+  if(FORCE_FMT_FORMAT)
+    message(STATUS "🛡️  Using fmt::format (Global Force Override)")
+    message(STATUS "   fmt::format forced for maximum compatibility across all platforms")
+  elseif(WIN32)
+    message(STATUS "🛡️  Using fmt::format (Windows Compatibility)")
+    message(STATUS "   std::format tests failed or forced override enabled")
     message(STATUS "   - Platform: ${CMAKE_SYSTEM_NAME}")
     message(STATUS "   - Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
-    message(STATUS "   - Policy override available: -DWINDOWS_ALLOW_STD_FORMAT=ON")
+    message(STATUS "   - Override options: -DFORCE_FMT_FORMAT=OFF")
   else()
     message(STATUS "❌ Using fmt::format fallback - std::format not fully supported")
     message(STATUS "   - Basic std::format: ${HAS_STD_FORMAT_BASIC}")
@@ -356,6 +360,7 @@ else()
     message(STATUS "   - Compile test: ${STD_FORMAT_COMPILE_TEST}")
     message(STATUS "   - Platform: ${CMAKE_SYSTEM_NAME}")
     message(STATUS "   - Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+    message(STATUS "   - Override options: -DFORCE_FMT_FORMAT=ON")
   endif()
 endif()
 

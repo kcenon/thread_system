@@ -109,4 +109,54 @@ template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>
     }                                                                                              \
 };
 
+/**
+ * @brief Generates fmt::formatter specialization using a converter function.
+ * 
+ * This macro creates a formatter specialization for the fmt library
+ * that uses a converter function instead of a member method.
+ * 
+ * @param CLASS_NAME The fully qualified class name (including namespace if any)
+ * @param CONVERTER_FUNC The function name that converts the object to string
+ */
+#define DECLARE_FORMATTER_WITH_FUNCTION(CLASS_NAME, CONVERTER_FUNC)                                    \
+template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>                      \
+{                                                                                                     \
+    template <typename FormatContext>                                                                 \
+    auto format(const CLASS_NAME& item, FormatContext& ctx) const                                     \
+    {                                                                                                 \
+        return fmt::formatter<std::string_view>::format(CONVERTER_FUNC(item), ctx);                  \
+    }                                                                                                 \
+};
+
 #endif // USE_STD_FORMAT
+
+/**
+ * @brief Conditionally generates formatter specialization based on build configuration.
+ * 
+ * This macro automatically chooses between std::formatter and fmt::formatter
+ * based on the USE_STD_FORMAT preprocessor definition.
+ * 
+ * @param CLASS_NAME The fully qualified class name
+ * @param CONVERTER_FUNC The function that converts the object to string
+ */
+#ifdef USE_STD_FORMAT
+#define DECLARE_CONDITIONAL_FORMATTER(CLASS_NAME, CONVERTER_FUNC)                                     \
+template <> struct std::formatter<CLASS_NAME> : std::formatter<std::string_view>                     \
+{                                                                                                     \
+    template <typename FormatContext>                                                                 \
+    auto format(const CLASS_NAME& item, FormatContext& ctx) const                                     \
+    {                                                                                                 \
+        return std::formatter<std::string_view>::format(CONVERTER_FUNC(item), ctx);                  \
+    }                                                                                                 \
+};
+#else
+#define DECLARE_CONDITIONAL_FORMATTER(CLASS_NAME, CONVERTER_FUNC)                                     \
+template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>                     \
+{                                                                                                     \
+    template <typename FormatContext>                                                                 \
+    auto format(const CLASS_NAME& item, FormatContext& ctx) const                                     \
+    {                                                                                                 \
+        return fmt::formatter<std::string_view>::format(CONVERTER_FUNC(item), ctx);                  \
+    }                                                                                                 \
+};
+#endif

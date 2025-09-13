@@ -198,31 +198,19 @@ struct std::formatter<thread_module::thread_conditions, wchar_t>
 #else // USE_STD_FORMAT
 
 /**
- * @brief Specialization of fmt::formatter for @c thread_module::thread_conditions.
+ * @brief Conditional formatter specialization for @c thread_module::thread_conditions.
  *
- * Allows @c thread_conditions enum values to be formatted as strings using the {fmt} library.
+ * Allows @c thread_conditions enum values to be formatted as strings using either 
+ * std::format (when available) or fmt::format library.
  *
  * ### Example
  * @code
  * auto cond = thread_module::thread_conditions::Working;
- * std::string output = fmt::format("Thread state is {}", cond); // "Thread state is working"
+ * // Works with both std::format and fmt::format:
+ * std::string output = utility_module::formatter::format("Thread state is {}", cond); 
+ * // Output: "Thread state is working"
  * @endcode
  */
-template <>
-struct fmt::formatter<thread_module::thread_conditions> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_conditions value as a string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param thread_condition The @c thread_conditions enum value to format.
-	 * @param ctx The format context for the output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const thread_module::thread_conditions& thread_condition, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(thread_module::to_string(thread_condition),
-														ctx);
-	}
-};
+DECLARE_CONDITIONAL_FORMATTER(thread_module::thread_conditions, thread_module::to_string)
+
 #endif
