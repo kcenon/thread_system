@@ -130,7 +130,7 @@ The project completed a structural migration and documentation pass:
 - Added public interfaces: executor_interface, scheduler_interface, monitorable_interface
 - job_queue implements scheduler_interface; thread_pool and typed_thread_pool implement executor_interface
 - Documentation added:
-  - docs/INTERFACES.md (interface overview)
+  - docs/API_REFERENCE.md (complete API documentation with interfaces)
   - docs/USER_GUIDE.md (build, usage, docs generation)
   - Module READMEs in core/, implementations/, interfaces/
 

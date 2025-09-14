@@ -28,18 +28,18 @@
 - Better manageability through state tracking
 
 ### Q: How do I create a custom worker thread?
-**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](patterns.md#worker-thread-pattern).
+**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](PATTERNS.md#worker-thread-pattern).
 
 ### Q: How do I make a worker thread wake up periodically?
-**A:** Use the `set_wake_interval` method. See the [patterns documentation](patterns.md#wake-interval-optimization) for optimization guidelines.
+**A:** Use the `set_wake_interval` method. See the [patterns documentation](PATTERNS.md#wake-interval-optimization) for optimization guidelines.
 
 ### Q: How do I handle errors in worker thread methods?
-**A:** Return the error using the `result_void` type. For comprehensive error handling patterns, see the [patterns documentation](patterns.md#best-practices).
+**A:** Return the error using the `result_void` type. For comprehensive error handling patterns, see the [patterns documentation](PATTERNS.md#best-practices).
 
 ## Thread Pool Questions
 
 ### Q: How many worker threads should I create in my thread pool?
-**A:** A good rule of thumb is to use the number of hardware threads available on the system. For detailed sizing guidelines for different workload types, see the [patterns documentation](patterns.md#thread-pool-sizing-guidelines).
+**A:** A good rule of thumb is to use the number of hardware threads available on the system. For detailed sizing guidelines for different workload types, see the [patterns documentation](PATTERNS.md#thread-pool-sizing-guidelines).
 
 ### Q: Can I reuse a thread pool for multiple tasks?
 **A:** Yes, thread pools are designed to be reused. You can keep submitting jobs to the pool, and the worker threads will process them as they become available.
@@ -68,7 +68,7 @@
 **A:** Yes, `typed_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's type system.
 
 ### Q: How do I assign workers to specific type levels?
-**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](patterns.md#type-based-job-execution-pattern).
+**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](PATTERNS.md#type-based-job-execution-pattern).
 
 ### Q: What happens if there are no workers for a specific type level?
 **A:** Jobs with that type level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.
@@ -124,7 +124,7 @@ For comprehensive troubleshooting guidance, including solutions to common concur
 - Performance issues
 - Debugging strategies
 
-Please refer to the [patterns documentation](patterns.md#troubleshooting-common-issues).
+Please refer to the [patterns documentation](PATTERNS.md#troubleshooting-common-issues).
 
 ## Build and Integration
 

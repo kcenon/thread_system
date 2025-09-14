@@ -418,7 +418,7 @@ RUN ./dependency.sh && ./build.sh --release
 - [vcpkg Documentation](https://vcpkg.io/)
 - [Compiler Support for C++20](https://en.cppreference.com/w/cpp/compiler_support)
 - [Thread System README](../README.md)
-- [API Reference](./api-reference.md)
+- [API Reference](./API_REFERENCE.md)
 
 ## Changelog
 

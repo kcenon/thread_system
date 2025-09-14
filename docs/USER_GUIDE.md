@@ -124,7 +124,7 @@ cmake --build build --target docs
 # Open thread_system/documents/html/index.html
 ```
 
-See also: `docs/INTERFACES.md` for API-level interface details.
+See also: `docs/API_REFERENCE.md` for complete API documentation including interface details.
 
 ## Samples
 
