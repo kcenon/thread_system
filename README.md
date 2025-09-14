@@ -166,7 +166,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
   - interfaces/README.md
 - Guides:
   - docs/USER_GUIDE.md (build, quick starts, DI)
-  - docs/INTERFACES.md (API-level interface contracts)
+  - docs/API_REFERENCE.md (complete API documentation with interfaces)
   - docs/ARCHITECTURE.md (ecosystem and modules)
 
 Build API docs with Doxygen (optional):
@@ -255,7 +255,7 @@ cmake --build build --target docs
 | 16      | 🟡 **1.0 μs** | 🟡 **4.2 MB** | 💛 **94%** | 🔋 Moderate |
 | 32      | 🟠 **2.0 μs** | 🟠 **7.4 MB** | 🟡 **88%** | 📊 Heavy |
 
-For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/performance.md).
+For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/PERFORMANCE.md).
 
 ## Technology Stack & Architecture
 
@@ -973,11 +973,11 @@ FetchContent_MakeAvailable(thread_system)
 
 ### Core API Reference
 
-- **[API Reference](./docs/api-reference.md)**: Complete API documentation
+- **[API Reference](./docs/API_REFERENCE.md)**: Complete API documentation with interfaces
 - **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and internals
-- **[Performance Guide](./docs/performance.md)**: Optimization tips and benchmarks
+- **[Performance Guide](./docs/PERFORMANCE.md)**: Optimization tips and benchmarks
 - **[User Guide](./docs/USER_GUIDE.md)**: Usage guide and examples
-- **[FAQ](./docs/faq.md)**: Frequently asked questions
+- **[FAQ](./docs/FAQ.md)**: Frequently asked questions
 
 ### Quick API Overview
 
@@ -1048,7 +1048,7 @@ namespace typed_thread_pool_module {
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./docs/contributing.md) for details.
+We welcome contributions! Please see our [Contributing Guide](./docs/CONTRIBUTING.md) for details.
 
 ### Development Setup
 
