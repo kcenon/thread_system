@@ -11,7 +11,7 @@
 #include <shared_mutex>
 #include <typeindex>
 #include <unordered_map>
-#include "../../../common_interfaces/service_container_interface.h"
+#include <kcenon/thread/interfaces/service_container.h>
 
 namespace kcenon::thread {
 

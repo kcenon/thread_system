@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "thread_pool.h"
-#include "../../lockfree/include/adaptive_job_queue.h"
+#include <kcenon/thread/core/job_queue.h>
 
-#include "../../interfaces/logger_interface.h"
-#include "../../utilities/include/formatter.h"
+#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/thread/utils/formatter.h>
 
 using namespace utility_module;
 

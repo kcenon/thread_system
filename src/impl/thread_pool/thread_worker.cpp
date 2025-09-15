@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_worker.h"
 
-#include "../../interfaces/logger_interface.h"
-#include "../../utilities/include/formatter.h"
+#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/thread/utils/formatter.h>
 
 #include <thread>
 
