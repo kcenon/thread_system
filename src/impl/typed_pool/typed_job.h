@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../core/jobs/include/job.h"
+#include <kcenon/thread/core/job.h>
 #include "job_types.h"
 
 using namespace kcenon::thread;

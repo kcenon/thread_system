@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/include/formatter.h"
-#include "../../utilities/include/convert_string.h"
+#include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/utils/convert_string.h>
 
 #include <string>
 #include <array>

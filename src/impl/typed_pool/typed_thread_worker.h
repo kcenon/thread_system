@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/include/formatter.h"
-#include "../../core/base/include/thread_base.h"
-#include "../../utilities/include/convert_string.h"
-#include "../../interfaces/thread_context.h"
+#include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/core/thread_base.h>
+#include <kcenon/thread/utils/convert_string.h>
+#include <kcenon/thread/interfaces/thread_context.h>
 #include "typed_job_queue.h"
 
 #include <memory>
