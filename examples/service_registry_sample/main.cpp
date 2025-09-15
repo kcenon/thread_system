@@ -7,10 +7,10 @@ BSD 3-Clause License
 #include <thread>
 #include <atomic>
 
-#include "service_registry.h"
-#include "thread_pool.h"
-#include "thread_worker.h"
-#include "callback_job.h"
+#include <kcenon/thread/core/service_registry.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
 using namespace thread_pool_module;
