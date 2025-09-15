@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "job.h"
+#include <kcenon/thread/core/job.h>
 
-#include "job_queue.h"
+#include <kcenon/thread/core/job_queue.h>
 
 using namespace utility_module;
 

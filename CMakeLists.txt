@@ -697,7 +697,10 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
 else()
   # When building as a submodule of another project:
   # Only build the core library (no samples or tests)
-  add_subdirectory(sources)
+  # Build core components with new structure
+  add_subdirectory(interfaces)
+  add_subdirectory(utilities)
+  add_subdirectory(core)
 endif()
 
 ##################################################
@@ -712,13 +715,13 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   
   # Phase 2 T2.2: Priority installation of interface headers
   
-  # Priority installation: Common interfaces first (public API)
-  install(DIRECTORY common_interfaces/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/common_interfaces
+  # Install headers from new structure
+  install(DIRECTORY include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
           COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
-  
-  # Core interface headers (essential for integration)
+
+  # Install legacy interfaces for backward compatibility
   install(DIRECTORY interfaces/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
           COMPONENT Development

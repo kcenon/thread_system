@@ -37,7 +37,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger_interface.h"
 #include "monitoring_interface.h"
 #include "service_container.h"
-#include "../common_interfaces/thread_context_interface.h"
 
 namespace kcenon::thread {
 
