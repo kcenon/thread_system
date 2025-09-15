@@ -79,7 +79,7 @@ namespace typed_thread_pool_module
 		 *
 		 * @return The @c job_type value that indicates this job's priority.
 		 */
-		[[nodiscard]] auto priority() const -> job_type;
+		[[nodiscard]] auto priority() const -> job_type { return priority_; }
 
 		/**
 		 * @brief Associates this job with a particular job queue.
@@ -91,7 +91,13 @@ namespace typed_thread_pool_module
 		 * @param job_queue A @c std::shared_ptr to the job queue that will manage
 		 *                  this job.
 		 */
-		auto set_job_queue(const std::shared_ptr<job_queue>& job_queue) -> void override;
+		auto set_job_queue(const std::shared_ptr<job_queue>& queue) -> void override {
+			job::set_job_queue(queue);
+			auto typed_queue = std::dynamic_pointer_cast<typed_job_queue_t<job_type>>(queue);
+			if (typed_queue) {
+				job_queue_ = typed_queue;
+			}
+		}
 
 		/**
 		 * @brief Gets the job queue that currently manages this job, if any.
@@ -102,7 +108,10 @@ namespace typed_thread_pool_module
 		 * @return A @c std::shared_ptr<job_queue> pointing to the job's managing queue,
 		 *         or an empty pointer if the queue has expired or was never set.
 		 */
-		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override;
+		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override {
+			auto typed_queue = job_queue_.lock();
+			return std::static_pointer_cast<job_queue>(typed_queue);
+		}
 
 	private:
 		/**
@@ -126,4 +135,4 @@ namespace typed_thread_pool_module
 
 } // namespace typed_thread_pool_module
 
-#include "typed_job.tpp"
+// Note: Template implementation moved inline or will be provided by explicit instantiation
