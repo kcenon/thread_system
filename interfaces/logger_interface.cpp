@@ -23,9 +23,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "logger_interface.h"
+#include <kcenon/thread/interfaces/logger_interface.h>
 
-namespace thread_module {
+namespace kcenon::thread {
 
 // Static member definitions
 std::shared_ptr<logger_interface> logger_registry::logger_;
@@ -46,4 +46,4 @@ void logger_registry::clear_logger() {
   logger_.reset();
 }
 
-} // namespace thread_module
+} // namespace kcenon::thread

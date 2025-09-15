@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "thread_pool.h"
+#include <kcenon/thread/core/thread_pool.h>
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 TEST(thread_pool_test, enqueue)
 {

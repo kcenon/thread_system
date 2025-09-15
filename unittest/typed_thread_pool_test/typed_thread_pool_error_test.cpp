@@ -4,12 +4,11 @@ BSD 3-Clause License
 
 #include "gtest/gtest.h"
 
-#include "typed_thread_pool.h"
-#include "typed_thread_worker.h"
-#include "error_handling.h"
+#include <kcenon/thread/core/typed_thread_pool.h>
+#include <kcenon/thread/core/typed_thread_worker.h>
+#include <kcenon/thread/utils/error_handling.h>
 
-using namespace typed_thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
 
 TEST(typed_thread_pool_error, start_without_workers)
 {

@@ -9,7 +9,7 @@
 #include "core/jobs/include/callback_job.h"
 
 using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
 
 // Performance test to measure interface overhead
 class performance_tester {
