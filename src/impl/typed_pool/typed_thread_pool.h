@@ -142,7 +142,7 @@ namespace typed_thread_pool_module
 	template <typename job_type = job_types>
 	class typed_thread_pool_t
 		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
-		, public thread_module::executor_interface
+		, public kcenon::thread::executor_interface
 	{
 	public:
 		/**

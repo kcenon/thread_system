@@ -44,6 +44,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../src/impl/typed_pool/callback_typed_job.h"
 
 using namespace kcenon::thread;
+using namespace thread_pool_module;
+using namespace typed_thread_pool_module;
 
 /**
  * @brief Simple console logger implementation
