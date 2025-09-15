@@ -32,7 +32,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../interfaces/logger_interface.h"
+#include <kcenon/thread/interfaces/logger_interface.h>
 #include <iostream>
 #include <mutex>
 #include <iomanip>
@@ -46,27 +46,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * #include <logger_system/logger.h>
  * using logger_module::logger;
  */
-class mock_logger : public thread_module::logger_interface {
+class mock_logger : public kcenon::thread::logger_interface {
 public:
-    mock_logger() : min_level_(thread_module::log_level::trace) {}
+    mock_logger() : min_level_(kcenon::thread::log_level::trace) {}
     
-    void log(thread_module::log_level level, const std::string& message) override {
+    void log(kcenon::thread::log_level level, const std::string& message) override {
         if (level < min_level_) return;
         
         std::lock_guard<std::mutex> lock(mutex_);
-        auto& stream = (level <= thread_module::log_level::error) ? std::cerr : std::cout;
+        auto& stream = (level <= kcenon::thread::log_level::error) ? std::cerr : std::cout;
         
         stream << "[" << format_time() << "] "
                << "[" << level_to_string(level) << "] "
                << message << std::endl;
     }
     
-    void log(thread_module::log_level level, const std::string& message,
+    void log(kcenon::thread::log_level level, const std::string& message,
              const std::string& file, int line, const std::string& function) override {
         if (level < min_level_) return;
         
         std::lock_guard<std::mutex> lock(mutex_);
-        auto& stream = (level <= thread_module::log_level::error) ? std::cerr : std::cout;
+        auto& stream = (level <= kcenon::thread::log_level::error) ? std::cerr : std::cout;
         
         stream << "[" << format_time() << "] "
                << "[" << level_to_string(level) << "] ";
@@ -80,7 +80,7 @@ public:
         stream << message << std::endl;
     }
     
-    bool is_enabled(thread_module::log_level level) const override {
+    bool is_enabled(kcenon::thread::log_level level) const override {
         return level >= min_level_;
     }
     
@@ -98,7 +98,7 @@ public:
         std::cout << "[MockLogger] Stopped" << std::endl;
     }
     
-    void set_min_level(thread_module::log_level level) {
+    void set_min_level(kcenon::thread::log_level level) {
         min_level_ = level;
     }
     
@@ -115,19 +115,19 @@ private:
         return oss.str();
     }
     
-    std::string level_to_string(thread_module::log_level level) const {
+    std::string level_to_string(kcenon::thread::log_level level) const {
         switch (level) {
-            case thread_module::log_level::critical: return "CRITICAL";
-            case thread_module::log_level::error:    return "ERROR";
-            case thread_module::log_level::warning:  return "WARNING";
-            case thread_module::log_level::info:     return "INFO";
-            case thread_module::log_level::debug:    return "DEBUG";
-            case thread_module::log_level::trace:    return "TRACE";
+            case kcenon::thread::log_level::critical: return "CRITICAL";
+            case kcenon::thread::log_level::error:    return "ERROR";
+            case kcenon::thread::log_level::warning:  return "WARNING";
+            case kcenon::thread::log_level::info:     return "INFO";
+            case kcenon::thread::log_level::debug:    return "DEBUG";
+            case kcenon::thread::log_level::trace:    return "TRACE";
         }
         return "UNKNOWN";
     }
     
 private:
-    thread_module::log_level min_level_;
+    kcenon::thread::log_level min_level_;
     mutable std::mutex mutex_;
 };

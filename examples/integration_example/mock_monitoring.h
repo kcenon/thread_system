@@ -32,7 +32,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "../../interfaces/monitoring_interface.h"
+#include <kcenon/thread/interfaces/monitoring_interface.h>
 #include <iostream>
 #include <deque>
 #include <mutex>
