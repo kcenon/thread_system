@@ -594,18 +594,91 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     check_dependency_conflicts()
   endif()
 
-  # Add subdirectories for new modularized source code, samples, and unit tests
-  add_subdirectory(utilities)        # Utilities library
-  add_subdirectory(interfaces)       # Public interfaces
-  add_subdirectory(core)             # Core (thread_base, jobs, sync)
-  add_subdirectory(implementations)  # Implementations (thread_pool, typed_thread_pool, lockfree)
-  add_subdirectory(samples)          # Example applications
-  add_subdirectory(unittest)         # Unit tests
-  
+  # Set up include directories for new structure
+  set(THREAD_SYSTEM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  set(THREAD_SYSTEM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+  # Add include directories for both new and old structures
+  include_directories(${THREAD_SYSTEM_INCLUDE_DIR})
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR})  # For legacy structure
+
+  # Check if we have the new structure or old structure
+  if(EXISTS ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread AND EXISTS ${THREAD_SYSTEM_SOURCE_DIR})
+    message(STATUS "Using new directory structure")
+
+    # Collect source files from new structure
+    file(GLOB_RECURSE THREAD_SYSTEM_HEADERS
+      ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread/*.h
+    )
+
+    file(GLOB_RECURSE THREAD_SYSTEM_SOURCES
+      ${THREAD_SYSTEM_SOURCE_DIR}/*.cpp
+    )
+
+    # If no sources found in new structure, this is a partial migration
+    list(LENGTH THREAD_SYSTEM_SOURCES SOURCE_COUNT)
+    if(SOURCE_COUNT LESS 10)
+      message(STATUS "New structure has limited sources, using hybrid approach")
+      set(USE_LEGACY_BUILD TRUE)
+    else()
+      # Create the main library with new structure
+      add_library(ThreadSystem STATIC
+        ${THREAD_SYSTEM_SOURCES}
+        ${THREAD_SYSTEM_HEADERS}
+      )
+
+      # Set target properties
+      target_include_directories(ThreadSystem
+        PUBLIC
+          $<BUILD_INTERFACE:${THREAD_SYSTEM_INCLUDE_DIR}>
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+          $<INSTALL_INTERFACE:include>
+      )
+      set(USE_LEGACY_BUILD FALSE)
+    endif()
+  else()
+    message(STATUS "New structure not complete, using legacy build")
+    set(USE_LEGACY_BUILD TRUE)
+  endif()
+
+  # Add legacy subdirectories if using legacy build
+  if(USE_LEGACY_BUILD)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/utilities)
+      add_subdirectory(utilities)        # Utilities library
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces)
+      add_subdirectory(interfaces)       # Public interfaces
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/core)
+      add_subdirectory(core)             # Core (thread_base, jobs, sync)
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations)
+      add_subdirectory(implementations)  # Implementations (thread_pool, typed_thread_pool, lockfree)
+    endif()
+  endif()
+
+  # Examples and tests
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+    add_subdirectory(examples)          # Example applications
+  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
+    add_subdirectory(samples)          # Legacy sample applications
+  endif()
+
+  # Tests
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
+    add_subdirectory(tests)             # New test structure
+  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest)
+    add_subdirectory(unittest)         # Legacy unit tests
+  endif()
+
   # Add benchmarks directory if requested
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
   if(BUILD_BENCHMARKS)
-    add_subdirectory(benchmarks)  # Performance benchmarks
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/benchmarks)
+      add_subdirectory(tests/benchmarks)  # New benchmark location
+    elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
+      add_subdirectory(benchmarks)  # Legacy benchmarks
+    endif()
   endif()
 
   # Documentation (Doxygen)
@@ -657,21 +730,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
           COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
 
-  # Core implementation headers (optional, for advanced usage)
-  install(DIRECTORY core/base/include/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/base
-          COMPONENT Development
-          FILES_MATCHING PATTERN "*.h")
-
-  install(DIRECTORY core/jobs/include/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/jobs
-          COMPONENT Development
-          FILES_MATCHING PATTERN "*.h")
-
-  install(DIRECTORY core/sync/include/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/core/sync
-          COMPONENT Development
-          FILES_MATCHING PATTERN "*.h")
+  # Core implementation headers are now in include/kcenon/thread/core/
 
   # Implementation headers (optional, for advanced customization)
   install(DIRECTORY implementations/thread_pool/include/
@@ -694,12 +753,46 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   #         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/monitoring
   #         FILES_MATCHING PATTERN "*.h")
   
-  # Install libraries
-  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool lockfree
-          EXPORT ThreadSystemTargets
-          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  # Install libraries based on what was built
+  if(USE_LEGACY_BUILD)
+    # Legacy targets
+    set(INSTALL_TARGETS "")
+    if(TARGET utilities)
+      list(APPEND INSTALL_TARGETS utilities)
+    endif()
+    if(TARGET interfaces)
+      list(APPEND INSTALL_TARGETS interfaces)
+    endif()
+    if(TARGET thread_base)
+      list(APPEND INSTALL_TARGETS thread_base)
+    endif()
+    if(TARGET thread_pool)
+      list(APPEND INSTALL_TARGETS thread_pool)
+    endif()
+    if(TARGET typed_thread_pool)
+      list(APPEND INSTALL_TARGETS typed_thread_pool)
+    endif()
+    if(TARGET lockfree)
+      list(APPEND INSTALL_TARGETS lockfree)
+    endif()
+
+    if(INSTALL_TARGETS)
+      install(TARGETS ${INSTALL_TARGETS}
+              EXPORT ThreadSystemTargets
+              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+  else()
+    # New structure - install ThreadSystem library
+    if(TARGET ThreadSystem)
+      install(TARGETS ThreadSystem
+              EXPORT ThreadSystemTargets
+              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+  endif()
   
   # Phase 2 T2.2: Install targets with standardized namespace thread_system::
   install(EXPORT ThreadSystemTargets

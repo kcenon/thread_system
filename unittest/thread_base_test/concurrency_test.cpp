@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "job_queue.h"
-#include "callback_job.h"
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 #include "thread_base.h"
-#include "lockfree_job_queue.h"
+#include <kcenon/thread/core/lockfree_job_queue.h>
 #include <thread>
 #include <chrono>
 #include <atomic>
@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <latch>
 #include <random>
 
-namespace thread_module {
+namespace kcenon::thread {
 namespace test {
 
 class ConcurrencyTest : public ::testing::Test {
@@ -498,4 +498,4 @@ TEST_F(ConcurrencyTest, SpuriousWakeupHandling) {
 }
 
 } // namespace test
-} // namespace thread_module
+} // namespace kcenon::thread

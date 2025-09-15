@@ -37,9 +37,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "gtest/gtest.h"
-#include "lockfree_job_queue.h"
-#include "adaptive_job_queue.h"
-#include "callback_job.h"
+#include <kcenon/thread/core/lockfree_job_queue.h>
+#include <kcenon/thread/core/adaptive_job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 #include <thread>
 #include <vector>
 #include <atomic>
@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <algorithm>
 
-using namespace thread_module;
+using namespace kcenon::thread;
 
 class MPMCQueueTest : public ::testing::Test
 {

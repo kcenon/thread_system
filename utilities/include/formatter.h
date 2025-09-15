@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iomanip>
 #endif
 
-namespace utility_module
+namespace kcenon::thread::utils
 {
 	/**
 	 * @class enum_formatter

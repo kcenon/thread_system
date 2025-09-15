@@ -4,11 +4,11 @@ BSD 3-Clause License
 
 #include <gtest/gtest.h>
 
-#include "job_queue.h"
-#include "callback_job.h"
-#include "error_handling.h"
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/utils/error_handling.h>
 
-using namespace thread_module;
+using namespace kcenon::thread;
 
 TEST(job_queue_error, enqueue_null)
 {
