@@ -10,7 +10,8 @@ file(GLOB_RECURSE CORE_HEADERS
 
 # Find sources in src directory
 file(GLOB_RECURSE CORE_SOURCES
-    ${CMAKE_SOURCE_DIR}/src/core/*.cpp)
+    ${CMAKE_SOURCE_DIR}/src/core/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/impl/thread_pool/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC
     ${CORE_HEADERS}
@@ -20,6 +21,7 @@ add_library(${PROJECT_NAME} STATIC
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/interfaces>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:include>
 )
 
