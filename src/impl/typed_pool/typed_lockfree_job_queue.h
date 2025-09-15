@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../lockfree/include/lockfree_job_queue.h"
+#include <kcenon/thread/core/job_queue.h>
 #include "typed_job.h"
 #include "job_types.h"
-#include "../../utilities/include/formatter.h"
-#include "../../utilities/include/span.h"
+#include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/utils/span.h>
 
 #include <unordered_map>
 #include <shared_mutex>
@@ -230,20 +230,23 @@ namespace typed_thread_pool_module
 		/**
 		 * @brief Extended statistics for typed queues
 		 */
-		struct typed_queue_statistics : public thread_module::lockfree_job_queue::queue_statistics
+		struct typed_queue_statistics
 		{
-			std::unordered_map<job_type, thread_module::lockfree_job_queue::queue_statistics> per_type_stats;
+			std::size_t total_enqueued = 0;
+			std::size_t total_dequeued = 0;
+			std::size_t current_size = 0;
+			std::unordered_map<job_type, std::size_t> per_type_stats;
 			uint64_t type_switch_count{0};
 			
 			[[nodiscard]] auto get_busiest_type() const -> std::optional<job_type>
 			{
 				if (per_type_stats.empty()) return std::nullopt;
-				
+
 				auto it = std::max_element(per_type_stats.begin(), per_type_stats.end(),
 					[](const auto& a, const auto& b) {
-						return a.second.enqueue_count < b.second.enqueue_count;
+						return a.second < b.second;
 					});
-				
+
 				return it->first;
 			}
 		};
@@ -266,7 +269,7 @@ namespace typed_thread_pool_module
 		
 	private:
 		// Type aliases
-		using lockfree_queue_ptr = std::unique_ptr<thread_module::lockfree_job_queue>;
+		using job_queue_ptr = std::unique_ptr<job_queue>;
 		using queue_map = std::unordered_map<job_type, lockfree_queue_ptr>;
 		
 		// Per-type queues
@@ -285,8 +288,8 @@ namespace typed_thread_pool_module
 		mutable std::atomic<job_type> last_dequeue_type_{};
 		
 		// Helper methods
-		auto get_or_create_queue(const job_type& type) -> thread_module::lockfree_job_queue*;
-		auto get_queue(const job_type& type) const -> thread_module::lockfree_job_queue*;
+		auto get_or_create_queue(const job_type& type) -> job_queue*;
+		auto get_queue(const job_type& type) const -> job_queue*;
 		auto update_priority_order() -> void;
 		auto should_update_priority_order() const -> bool;
 	};

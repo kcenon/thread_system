@@ -35,7 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/utils/span.h>
 #include <kcenon/thread/core/job_queue.h>
-#include <kcenon/thread/lockfree/lockfree_job_queue.h>
 #include "typed_job.h"
 #include <kcenon/thread/utils/convert_string.h>
 #include "job_types.h"
@@ -259,9 +258,9 @@ namespace typed_thread_pool_module
 
 	private:
 		/**
-		 * @brief A map of priority levels to lock-free MPMC queues that store jobs of that priority.
+		 * @brief A map of priority levels to job queues that store jobs of that priority.
 		 */
-		std::unordered_map<job_type, std::unique_ptr<lockfree_job_queue>> lockfree_queues_;
+		std::unordered_map<job_type, std::unique_ptr<job_queue>> job_queues_;
 
 		/**
 		 * @brief Mutex for protecting queue map modifications.
@@ -269,9 +268,9 @@ namespace typed_thread_pool_module
 		mutable std::shared_mutex queues_mutex_;
 
 		/**
-		 * @brief Get or create a lock-free queue for the specified type.
+		 * @brief Get or create a job queue for the specified type.
 		 */
-		auto get_or_create_queue(const job_type& type) -> lockfree_job_queue*;
+		auto get_or_create_queue(const job_type& type) -> job_queue*;
 	};
 
 	/// @brief Alias for a typed_job_queue using default job types.
