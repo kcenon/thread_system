@@ -28,8 +28,15 @@ if(UTIL_SOURCES)
 
     # Fallback to fmt when std::format is not used
     if(NOT USE_STD_FORMAT)
-        find_package(fmt CONFIG REQUIRED)
-        target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt-header-only)
+        find_package(fmt CONFIG QUIET)
+        if(fmt_FOUND)
+            target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt-header-only)
+            message(STATUS "✅ Found fmt library - using fmt::format")
+        else()
+            message(STATUS "⚠️ fmt library not found - relying on header-only implementation")
+            # Add FMT_HEADER_ONLY definition to use header-only mode if fmt is not installed
+            target_compile_definitions(${PROJECT_NAME} PUBLIC FMT_HEADER_ONLY=1)
+        endif()
     endif()
 
     # Iconv for string conversions
@@ -43,8 +50,15 @@ else()
 
     # Fallback to fmt when std::format is not used
     if(NOT USE_STD_FORMAT)
-        find_package(fmt CONFIG REQUIRED)
-        target_link_libraries(${PROJECT_NAME} INTERFACE fmt::fmt-header-only)
+        find_package(fmt CONFIG QUIET)
+        if(fmt_FOUND)
+            target_link_libraries(${PROJECT_NAME} INTERFACE fmt::fmt-header-only)
+            message(STATUS "✅ Found fmt library - using fmt::format (interface)")
+        else()
+            message(STATUS "⚠️ fmt library not found - relying on header-only implementation (interface)")
+            # Add FMT_HEADER_ONLY definition to use header-only mode if fmt is not installed
+            target_compile_definitions(${PROJECT_NAME} INTERFACE FMT_HEADER_ONLY=1)
+        endif()
     endif()
 
     # Iconv for string conversions
