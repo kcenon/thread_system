@@ -199,21 +199,21 @@ void demonstrate_composition() {
 }
 
 /*
-/**
  * @brief Demonstrate typed thread pool with composition
  * Temporarily disabled - requires typed_pool implementation
  */
+/*
 void demonstrate_typed_pool_composition() {
     std::cout << "\n=== Typed Thread Pool with Composition Demo ===\n" << std::endl;
-    
+
     // Use builder pattern for context
     auto context = thread_context_builder()
         .from_global_container()
         .build();
-    
+
     // Create typed thread pool with priority support
     auto pool = std::make_shared<typed_thread_pool_t<job_types>>("TypedPool", context);
-    
+
     // Add specialized workers
     for (auto priority : {job_types::RealTime, job_types::Batch, job_types::Background}) {
         auto worker = std::make_unique<typed_thread_worker_t<job_types>>();
@@ -224,7 +224,7 @@ void demonstrate_typed_pool_composition() {
             std::cerr << "enqueue worker failed: " << r.get_error().to_string() << std::endl;
         }
     }
-    
+
     {
         auto r = pool->start();
         if (r.has_error()) {
@@ -232,13 +232,13 @@ void demonstrate_typed_pool_composition() {
             return;
         }
     }
-    
+
     // Submit jobs with different priorities
     for (int i = 0; i < 5; ++i) {
         // Real-time job
         auto r1 = pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
             [i, &context]() -> result_void {
-                context.log(log_level::info, 
+                context.log(log_level::info,
                     "RealTime job " + std::to_string(i) + " executing");
                 return result_void();
             },
@@ -247,11 +247,11 @@ void demonstrate_typed_pool_composition() {
         if (r1.has_error()) {
             std::cerr << "enqueue realtime job failed: " << r1.get_error().to_string() << std::endl;
         }
-        
+
         // Background job
         auto r2 = pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
             [i, &context]() -> result_void {
-                context.log(log_level::debug, 
+                context.log(log_level::debug,
                     "Background job " + std::to_string(i) + " executing");
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                 return result_void();
@@ -262,7 +262,7 @@ void demonstrate_typed_pool_composition() {
             std::cerr << "enqueue background job failed: " << r2.get_error().to_string() << std::endl;
         }
     }
-    
+
     std::this_thread::sleep_for(std::chrono::seconds(1));
     {
         auto r = pool->stop();
