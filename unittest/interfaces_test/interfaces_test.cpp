@@ -4,18 +4,17 @@ BSD 3-Clause License
 
 #include <gtest/gtest.h>
 
-#include "executor_interface.h"
-#include "scheduler_interface.h"
-#include "monitorable_interface.h"
+#include <kcenon/thread/interfaces/executor_interface.h>
+#include <kcenon/thread/interfaces/scheduler_interface.h>
+#include <kcenon/thread/interfaces/monitorable_interface.h>
 
-#include "thread_pool.h"
-#include "job_queue.h"
-#include "callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 
-#include "service_registry.h"
+#include <kcenon/thread/interfaces/service_registry.h>
 
-using namespace thread_module;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 TEST(interfaces_test, scheduler_interface_job_queue)
 {

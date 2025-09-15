@@ -4,28 +4,25 @@
 
 project(thread_base)
 
-file(GLOB_RECURSE CORE_BASE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/base/include/*.h)
-file(GLOB_RECURSE CORE_BASE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/base/src/*.cpp)
+# Find headers in include directory
+file(GLOB_RECURSE CORE_HEADERS
+    ${CMAKE_SOURCE_DIR}/include/kcenon/thread/core/*.h)
 
-file(GLOB_RECURSE CORE_JOBS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/jobs/include/*.h)
-file(GLOB_RECURSE CORE_JOBS_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/jobs/src/*.cpp)
-
-file(GLOB_RECURSE CORE_SYNC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/sync/include/*.h)
+# Find sources in src directory
+file(GLOB_RECURSE CORE_SOURCES
+    ${CMAKE_SOURCE_DIR}/src/core/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/impl/thread_pool/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC
-    ${CORE_BASE_HEADERS} ${CORE_BASE_SOURCES}
-    ${CORE_JOBS_HEADERS} ${CORE_JOBS_SOURCES}
-    ${CORE_SYNC_HEADERS}
+    ${CORE_HEADERS}
+    ${CORE_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/base/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/jobs/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/sync/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/interfaces>
-    $<INSTALL_INTERFACE:include/thread_system/core/base>
-    $<INSTALL_INTERFACE:include/thread_system/core/jobs>
-    $<INSTALL_INTERFACE:include/thread_system/core/sync>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

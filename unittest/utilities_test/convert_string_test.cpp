@@ -35,9 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-#include "../../sources/utilities/conversion/convert_string.h"
+#include <kcenon/thread/utils/convert_string.h>
 
-using namespace utility_module;
+using namespace kcenon::thread::utils;
 
 class ConvertStringTest : public ::testing::Test
 {
