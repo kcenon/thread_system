@@ -1,20 +1,4 @@
 var searchData=
 [
-  ['parse_0',['parse',['../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1',1,'utility_module::enum_formatter']]],
-  ['performance_5fcomparison_5fexample_1',['performance_comparison_example',['../d0/d68/typed__job__queue__sample_8cpp.html#ae02d8cf8e89039528a2dac66c67534df',1,'typed_job_queue_sample.cpp']]],
-  ['performance_5fexample_2',['performance_example',['../d4/ddd/mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d',1,'mpmc_queue_sample.cpp']]],
-  ['performance_5fmonitoring_5fexample_3',['performance_monitoring_example',['../d6/d86/adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3',1,'adaptive_queue_sample.cpp']]],
-  ['pool_5ffuture_4',['pool_future',['../df/d38/classthread__pool__module_1_1pool__future.html#af6de2ed770c8a01c7ba2eb864b612eab',1,'thread_pool_module::pool_future']]],
-  ['pool_5fpromise_5',['pool_promise',['../d4/d02/classthread__pool__module_1_1pool__promise.html#a816fb460d0ff23ffca2a3f860ece3d45',1,'thread_pool_module::pool_promise']]],
-  ['poolchunk_6',['PoolChunk',['../db/da3/structthread__module_1_1node__pool_1_1PoolChunk.html#a5138c72307c76d76caa54f3463ce5eb3',1,'thread_module::node_pool::PoolChunk']]],
-  ['pop_7',['pop',['../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7',1,'LockFreeStack']]],
-  ['pop_5ffrom_5ffree_5flist_8',['pop_from_free_list',['../d8/dad/classthread__module_1_1node__pool.html#a7d6d09fada36729b9d837af09aef1359',1,'thread_module::node_pool']]],
-  ['potentially_5fcrashing_5ftask_9',['potentially_crashing_task',['../d8/dcb/crash__protection_2main_8cpp.html#a027682e9e092bf01548f6263219d1227',1,'main.cpp']]],
-  ['power_5fefficient_10',['power_efficient',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a6326704c791468e1cbed2d477907ceef',1,'thread_pool_module::worker_policy']]],
-  ['prepare_5fbatch_5fnodes_11',['prepare_batch_nodes',['../d1/de8/classthread__module_1_1lockfree__job__queue.html#a0e955f322bb4fcea49fba2693a57fe65',1,'thread_module::lockfree_job_queue']]],
-  ['priority_12',['priority',['../d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html#a88acbe2410c3ccef635b0e4d686a8914',1,'typed_thread_pool_module::typed_job_t::priority()'],['../d6/ddf/classthread__module_1_1jobs_1_1job__interface.html#ab1ede8912e6405da3c8d6961d76287bd',1,'thread_module::jobs::job_interface::priority()']]],
-  ['priority_5fcomparator_13',['priority_comparator',['../d7/d02/structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html#ac79224f2591a6eca5fa481f7144ee6ec',1,'typed_thread_pool_module::detail::priority_comparator']]],
-  ['protect_14',['protect',['../d5/d31/classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html#a1b9cd40dd0159aaafdaee7c681dffef0',1,'thread_module::hazard_pointer_manager::hazard_pointer']]],
-  ['push_15',['push',['../d0/d8f/classLockFreeStack.html#a5805194d42cf8202b1f8d81c446fe947',1,'LockFreeStack']]],
-  ['push_5fto_5ffree_5flist_16',['push_to_free_list',['../d8/dad/classthread__module_1_1node__pool.html#a5114460242d5680d18f19bf16285d169',1,'thread_module::node_pool']]]
+  ['parse_0',['parse',['../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html#a382acc020b04ec74119a4475b06b9a4b',1,'kcenon::thread::utils::enum_formatter']]]
 ];

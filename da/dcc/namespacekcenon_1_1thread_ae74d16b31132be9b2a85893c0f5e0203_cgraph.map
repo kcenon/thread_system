@@ -1,0 +1,11 @@
+<map id="kcenon::thread::result_to_pair" name="kcenon::thread::result_to_pair">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,69,169,109"/>
+<area shape="rect" id="Node000002" href="$d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd" title="Gets the error." alt="" coords="217,5,381,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,67,219,47,220,52,155,72"/>
+<area shape="rect" id="Node000003" href="$d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7" title="Converts the error to a string representation." alt="" coords="220,69,379,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,87,206,87,206,92,170,92"/>
+<area shape="rect" id="Node000005" href="$d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="217,133,381,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="155,107,220,127,219,132,154,112"/>
+<area shape="rect" id="Node000004" href="$da/dcc/namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="429,69,588,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="379,87,415,87,415,92,379,92"/>
+</map>

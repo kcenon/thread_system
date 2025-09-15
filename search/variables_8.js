@@ -1,21 +1,7 @@
 var searchData=
 [
-  ['id_0',['id',['../df/db2/structthread__module_1_1crash__handler_1_1callback__entry.html#aa35e981411584b978c50865d7cc678ab',1,'thread_module::crash_handler::callback_entry']]],
-  ['idle_5fsleep_5fduration_1',['idle_sleep_duration',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a16f717d0a3c2cde7265ae17ea4b1ac03',1,'thread_pool_module::worker_policy']]],
-  ['idle_5fthreads_2',['idle_threads',['../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a658c8655b491367af07d78d475ab4989',1,'monitoring_interface::thread_pool_metrics']]],
-  ['idle_5ftime_5fns_3',['idle_time_ns',['../d6/da4/structmonitoring__interface_1_1worker__metrics.html#a00bf2a7b1bd0a841cf2a54162d16e9e1',1,'monitoring_interface::worker_metrics']]],
-  ['idle_5ftimeout_4',['idle_timeout',['../d4/d53/structthread__pool__module_1_1worker__policy.html#a5c18c5ec0c0421e966726426cf677afd',1,'thread_pool_module::worker_policy']]],
-  ['initialized_5f_5',['initialized_',['../d6/d49/classthread__module_1_1crash__handler.html#aa9a07a98ddd510cb3cf21f81d6a9af76',1,'thread_module::crash_handler']]],
-  ['instance_6',['instance',['../d4/d0f/structthread__module_1_1service__container_1_1service__entry.html#a02c496f77e5e531aacc04c345c863a70',1,'thread_module::service_container::service_entry']]],
-  ['invoke_7',['invoke',['../da/d8f/structthread__pool__module_1_1detail_1_1callable__eraser_1_1vtable__t.html#a2a6177877a748670b1538deddfd4f673',1,'thread_pool_module::detail::callable_eraser::vtable_t']]],
-  ['is_5fcancelled_8',['is_cancelled',['../d5/d43/structthread__module_1_1cancellation__token_1_1token__state.html#acc343236f95dc839b89d9de5b3a15eac',1,'thread_module::cancellation_token::token_state']]],
-  ['is_5fcompatible_5fjob_5fv_9',['is_compatible_job_v',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#a8f92ebb14d79fe467122698c4a64f6e4',1,'typed_thread_pool_module::detail']]],
-  ['is_5fduration_5fv_10',['is_duration_v',['../da/d38/namespacethread__pool__module_1_1detail.html#a3293d08f1dacbfe246f5796c47af560c',1,'thread_pool_module::detail']]],
-  ['is_5fenum_11',['is_enum',['../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#abeb8eeb73c280444654bb80332f500bf',1,'typed_thread_pool_module::detail::job_type_traits']]],
-  ['is_5ffuture_5flike_5fv_12',['is_future_like_v',['../da/d38/namespacethread__pool__module_1_1detail.html#ae811f20f408711a532d21bd07213cc7b',1,'thread_pool_module::detail']]],
-  ['is_5fintegral_13',['is_integral',['../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a43df1fdfb3733d9b3e1578e7521b80c2',1,'typed_thread_pool_module::detail::job_type_traits']]],
-  ['is_5fnoexcept_14',['is_noexcept',['../de/d13/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html#a7a81c7003f9f88223c93fb4dcb456e50',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...) const &gt;::is_noexcept'],['../da/db8/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4.html#ae96e2770da0222c87df8d8cd27a61583',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...)&gt;::is_noexcept'],['../dc/d06/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_01noexcept_01_4.html#a5ad62857e4752a68726d9b98af73230c',1,'thread_pool_module::detail::function_traits&lt; R(*)(Args...) noexcept &gt;::is_noexcept'],['../de/dc4/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4.html#adf827efa4ea57a3bae7c0ce0d6e6fa8f',1,'thread_pool_module::detail::function_traits&lt; R(*)(Args...)&gt;::is_noexcept']]],
-  ['is_5fnothrow_5fcallable_5fv_15',['is_nothrow_callable_v',['../da/d38/namespacethread__pool__module_1_1detail.html#aba3d9f245c111cb2a13da1d3c426ca79',1,'thread_pool_module::detail']]],
-  ['is_5fsigned_16',['is_signed',['../dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#a7f8ede3f261b1dce59e37f7c34352ae5',1,'typed_thread_pool_module::detail::job_type_traits']]],
-  ['is_5fvalid_5fjob_5ftype_5fv_17',['is_valid_job_type_v',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#ad0c9db1c1993e512f9e784db721a9a93',1,'typed_thread_pool_module::detail']]]
+  ['size_5f_0',['size_',['../d8/d4f/classutility__module_1_1span.html#a598ef5e87aa78d9bb6596191853023d8',1,'utility_module::span']]],
+  ['state_5f_1',['state_',['../d6/d38/classkcenon_1_1thread_1_1cancellation__token.html#a55a909cc64a62c0d5e44abc8f16521d4',1,'kcenon::thread::cancellation_token']]],
+  ['stop_5frequested_5f_2',['stop_requested_',['../d0/dce/classkcenon_1_1thread_1_1detail_1_1thread__impl.html#a14753aa751a1b12a8b37c5ce7350571d',1,'kcenon::thread::detail::thread_impl']]],
+  ['success_5f_3',['success_',['../d0/d9a/classkcenon_1_1thread_1_1result_3_01void_01_4.html#a624194946cc339ba1ca2bf35b1ec9ac9',1,'kcenon::thread::result&lt; void &gt;']]]
 ];

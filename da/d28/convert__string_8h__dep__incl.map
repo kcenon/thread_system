@@ -1,7 +1,5 @@
 <map id="utilities/include/convert_string.h" name="utilities/include/convert_string.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="108,5,283,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="12,5,187,45"/>
 <area shape="rect" id="Node000002" href="$d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="5,93,193,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,57,122,95,119,91,162,53"/>
-<area shape="rect" id="Node000003" href="$d9/d86/convert__string_8cpp.html" title="Implementation of cross&#45;platform string conversion utilities." alt="" coords="218,93,365,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,53,272,91,268,95,225,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,59,102,93,97,93,97,59"/>
 </map>

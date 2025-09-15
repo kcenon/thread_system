@@ -82,7 +82,6 @@ $(function() {
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
-<code>#include &lt;fmt/format.h&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -90,19 +89,17 @@ Include dependency graph for formatter.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d0d/formatter_8h__incl.png" border="0" usemap="#autilities_2include_2formatter_8h" alt=""/></div>
 <map name="autilities_2include_2formatter_8h" id="autilities_2include_2formatter_8h">
-<area shape="rect" title=" " alt="" coords="218,5,417,31"/>
+<area shape="rect" title=" " alt="" coords="157,5,355,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,64,104"/>
-<area shape="poly" title=" " alt="" coords="270,33,78,81,77,76,269,28"/>
+<area shape="poly" title=" " alt="" coords="221,33,78,79,77,74,220,28"/>
 <area shape="rect" title=" " alt="" coords="89,79,186,104"/>
-<area shape="poly" title=" " alt="" coords="289,33,180,76,178,71,287,28"/>
+<area shape="poly" title=" " alt="" coords="238,33,170,74,167,69,236,28"/>
 <area shape="rect" title=" " alt="" coords="210,79,302,104"/>
-<area shape="poly" title=" " alt="" coords="309,33,277,70,273,66,305,29"/>
-<area shape="rect" title=" " alt="" coords="326,79,431,104"/>
-<area shape="poly" title=" " alt="" coords="329,29,362,66,358,70,325,33"/>
-<area shape="rect" title=" " alt="" coords="455,79,529,104"/>
-<area shape="poly" title=" " alt="" coords="346,28,452,71,450,76,344,33"/>
-<area shape="rect" title=" " alt="" coords="553,79,628,104"/>
-<area shape="poly" title=" " alt="" coords="362,28,541,74,539,79,361,33"/>
+<area shape="poly" title=" " alt="" coords="259,31,259,65,253,65,253,31"/>
+<area shape="rect" title=" " alt="" coords="327,79,401,104"/>
+<area shape="poly" title=" " alt="" coords="275,28,336,69,333,73,272,33"/>
+<area shape="rect" title=" " alt="" coords="425,79,500,104"/>
+<area shape="poly" title=" " alt="" coords="290,28,417,72,415,77,288,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -110,13 +107,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d58/formatter_8h__dep__incl.png" border="0" usemap="#autilities_2include_2formatter_8hdep" alt=""/></div>
 <map name="autilities_2include_2formatter_8hdep" id="autilities_2include_2formatter_8hdep">
-<area shape="rect" title=" " alt="" coords="219,5,418,31"/>
-<area shape="rect" href="../../d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="5,79,200,148"/>
-<area shape="poly" title=" " alt="" coords="281,38,182,81,179,76,279,34"/>
-<area shape="rect" href="../../d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="225,93,413,133"/>
-<area shape="poly" title=" " alt="" coords="321,44,321,93,316,93,316,44"/>
-<area shape="rect" href="../../d9/d86/convert__string_8cpp.html" title="Implementation of cross&#45;platform string conversion utilities." alt="" coords="437,93,584,133"/>
-<area shape="poly" title=" " alt="" coords="356,34,473,91,471,96,353,39"/>
+<area shape="rect" title=" " alt="" coords="5,5,204,31"/>
+<area shape="rect" href="../../d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="11,79,199,119"/>
+<area shape="poly" title=" " alt="" coords="107,44,107,79,102,79,102,44"/>
 </map>
 </div>
 </div>
@@ -124,23 +117,26 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter&lt; T, Converter &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generic formatter for enum types, using a user-provided converter functor.  <a href="../../d1/dec/classutility__module_1_1enum__formatter.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html">kcenon::thread::utils::enum_formatter&lt; T, Converter &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generic formatter for enum types, using a user-provided converter functor.  <a href="../../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/daf/classutility__module_1_1formatter.html">utility_module::formatter</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library.  <a href="../../d1/daf/classutility__module_1_1formatter.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dde/classkcenon_1_1thread_1_1utils_1_1formatter.html">kcenon::thread::utils::formatter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library.  <a href="../../db/dde/classkcenon_1_1thread_1_1utils_1_1formatter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:dd/d2a/namespaceutility__module" id="r_dd/d2a/namespaceutility__module"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2a/namespaceutility__module.html">utility_module</a></td></tr>
-<tr class="memdesc:dd/d2a/namespaceutility__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility components supporting the thread system library. <br /></td></tr>
+<tr class="memitem:d9/d03/namespacekcenon" id="r_d9/d03/namespacekcenon"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d03/namespacekcenon.html">kcenon</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:da/dcc/namespacekcenon_1_1thread" id="r_da/dcc/namespacekcenon_1_1thread"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:d8/df0/namespacekcenon_1_1thread_1_1utils" id="r_d8/df0/namespacekcenon_1_1thread_1_1utils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/df0/namespacekcenon_1_1thread_1_1utils.html">kcenon::thread::utils</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 15 2025 20:22:51 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Sep 15 2025 20:30:21 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

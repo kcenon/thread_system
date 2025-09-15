@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📈_20performance_20benchmarks_0',['📈 Performance Benchmarks',['../index.html#benchmarks',1,'']]]
+  ['📚_20comprehensive_20guides_0',['📚 Comprehensive Guides',['../index.html#guides',1,'']]]
 ];
