@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['operation_5fcanceled_0',['operation_canceled',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447cafd3d0bdcc9eb9e68534b7d055c5fe586',1,'thread_module']]],
-  ['operation_5ftimeout_1',['operation_timeout',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447caa09332d99869fd7d67c72c1e9187f8e1',1,'thread_module']]]
+  ['success_0',['success',['../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076',1,'kcenon::thread']]]
 ];

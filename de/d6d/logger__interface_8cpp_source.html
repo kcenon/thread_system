@@ -106,47 +106,35 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">// POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="../../d4/d79/logger__interface_8h.html">logger_interface.h</a>&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;kcenon/thread/interfaces/logger_interface.h&gt;</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a> {</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// Static member definitions</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>std::shared_ptr&lt;logger_interface&gt; <a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#aedd4a80fbf56635b488fa6a78fadf9dc">logger_registry::logger_</a>;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>std::mutex <a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#ae6c9185df830b7a53b52e70046970a43">logger_registry::mutex_</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>std::shared_ptr&lt;logger_interface&gt; logger_registry::logger_;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>std::mutex logger_registry::mutex_;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="../../d7/da8/classthread__module_1_1logger__registry.html#a5ae742232c4857fb260f8f1a0aee0890">   34</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d7/da8/classthread__module_1_1logger__registry.html#a5ae742232c4857fb260f8f1a0aee0890">logger_registry::set_logger</a>(std::shared_ptr&lt;logger_interface&gt; logger) {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#ae6c9185df830b7a53b52e70046970a43">mutex_</a>);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#aedd4a80fbf56635b488fa6a78fadf9dc">logger_</a> = logger;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">void</span> logger_registry::set_logger(std::shared_ptr&lt;logger_interface&gt; logger) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  logger_ = logger;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
-</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../d7/da8/classthread__module_1_1logger__registry.html#a646b7e196f49d356bb1b2f05908439e1">   39</a></span>std::shared_ptr&lt;logger_interface&gt; <a class="code hl_function" href="../../d7/da8/classthread__module_1_1logger__registry.html#a646b7e196f49d356bb1b2f05908439e1">logger_registry::get_logger</a>() {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#ae6c9185df830b7a53b52e70046970a43">mutex_</a>);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#aedd4a80fbf56635b488fa6a78fadf9dc">logger_</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>std::shared_ptr&lt;logger_interface&gt; logger_registry::get_logger() {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordflow">return</span> logger_;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
-</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../d7/da8/classthread__module_1_1logger__registry.html#a44bb7e56ebdffd98478fa52a74ac86ea">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d7/da8/classthread__module_1_1logger__registry.html#a44bb7e56ebdffd98478fa52a74ac86ea">logger_registry::clear_logger</a>() {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#ae6c9185df830b7a53b52e70046970a43">mutex_</a>);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_variable" href="../../d7/da8/classthread__module_1_1logger__registry.html#aedd4a80fbf56635b488fa6a78fadf9dc">logger_</a>.reset();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> logger_registry::clear_logger() {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  logger_.reset();</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
-</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>} <span class="comment">// namespace thread_module</span></div>
-<div class="ttc" id="aclassthread__module_1_1logger__registry_html_a44bb7e56ebdffd98478fa52a74ac86ea"><div class="ttname"><a href="../../d7/da8/classthread__module_1_1logger__registry.html#a44bb7e56ebdffd98478fa52a74ac86ea">thread_module::logger_registry::clear_logger</a></div><div class="ttdeci">static void clear_logger()</div><div class="ttdoc">Clear the global logger instance.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d6d/logger__interface_8cpp_source.html#l00044">logger_interface.cpp:44</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1logger__registry_html_a5ae742232c4857fb260f8f1a0aee0890"><div class="ttname"><a href="../../d7/da8/classthread__module_1_1logger__registry.html#a5ae742232c4857fb260f8f1a0aee0890">thread_module::logger_registry::set_logger</a></div><div class="ttdeci">static void set_logger(std::shared_ptr&lt; logger_interface &gt; logger)</div><div class="ttdoc">Set the global logger instance.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d6d/logger__interface_8cpp_source.html#l00034">logger_interface.cpp:34</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1logger__registry_html_a646b7e196f49d356bb1b2f05908439e1"><div class="ttname"><a href="../../d7/da8/classthread__module_1_1logger__registry.html#a646b7e196f49d356bb1b2f05908439e1">thread_module::logger_registry::get_logger</a></div><div class="ttdeci">static std::shared_ptr&lt; logger_interface &gt; get_logger()</div><div class="ttdoc">Get the global logger instance.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d6d/logger__interface_8cpp_source.html#l00039">logger_interface.cpp:39</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1logger__registry_html_ae6c9185df830b7a53b52e70046970a43"><div class="ttname"><a href="../../d7/da8/classthread__module_1_1logger__registry.html#ae6c9185df830b7a53b52e70046970a43">thread_module::logger_registry::mutex_</a></div><div class="ttdeci">static std::mutex mutex_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d79/logger__interface_8h_source.html#l00114">logger_interface.h:114</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1logger__registry_html_aedd4a80fbf56635b488fa6a78fadf9dc"><div class="ttname"><a href="../../d7/da8/classthread__module_1_1logger__registry.html#aedd4a80fbf56635b488fa6a78fadf9dc">thread_module::logger_registry::logger_</a></div><div class="ttdeci">static std::shared_ptr&lt; logger_interface &gt; logger_</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d79/logger__interface_8h_source.html#l00113">logger_interface.h:113</a></div></div>
-<div class="ttc" id="alogger__interface_8h_html"><div class="ttname"><a href="../../d4/d79/logger__interface_8h.html">logger_interface.h</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>} <span class="comment">// namespace kcenon::thread</span></div>
+<div class="ttc" id="anamespacekcenon_1_1thread_html"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></div><div class="ttdef"><b>Definition</b> <a href="../../d5/d68/thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 15 2025 20:20:31 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Sep 15 2025 20:21:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

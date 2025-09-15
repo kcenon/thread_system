@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['none_0',['none',['../de/d41/namespacethread__module_1_1lockfree.html#afbb4ac18565298efb3a6fd22636b5fffa334c4a4c42fdb79d7ebc3e73b517e6f8',1,'thread_module::lockfree']]],
-  ['normal_1',['normal',['../d2/dca/namespacethread__module_1_1jobs.html#aee9a7b3c53d29c84ac5dbb96077f2e54afea087517c26fadd409bd4b9dc642555',1,'thread_module::jobs']]],
-  ['not_5fimplemented_2',['not_implemented',['../de/d48/namespacethread__module.html#a215ffba45222b5527566469d33e4447ca63877363c706f5095d05a54f8b57b0ae',1,'thread_module']]]
+  ['resource_5fallocation_5ffailed_0',['resource_allocation_failed',['../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23acde679dc006944a4dcc197c13cf731e5',1,'kcenon::thread']]],
+  ['resource_5flimit_5freached_1',['resource_limit_reached',['../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a03273d60e581aa34c9f233314fe7ab24',1,'kcenon::thread']]]
 ];

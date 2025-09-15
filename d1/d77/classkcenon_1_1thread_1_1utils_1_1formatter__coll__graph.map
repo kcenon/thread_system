@@ -1,0 +1,3 @@
+<map id="kcenon::thread::utils::formatter" name="kcenon::thread::utils::formatter">
+<area shape="rect" id="Node000001" title="Provides convenience methods for string formatting using either C++20 &lt;format&gt; or {fmt} library." alt="" coords="5,5,152,245"/>
+</map>

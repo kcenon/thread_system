@@ -196,10 +196,10 @@ Design Principles</h1>
 Quick Start Guide</h1>
 <h2><a class="anchor" id="five_minute"></a>
 🚀 5-Minute Setup</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="d6/dfc/typed__thread__pool_8h.html">typed_thread_pool.h</a>&quot;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;typed_thread_pool.h&quot;</span></div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="d4/db9/namespacetyped__thread__pool__module.html">typed_thread_pool_module</a>;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="comment">// 1. Initialize logging</span></div>
 <div class="line">    log_module::start();</div>
 <div class="line">    </div>
@@ -214,8 +214,8 @@ Quick Start Guide</h1>
 <div class="line">    pool-&gt;start();</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// 5. Submit jobs with types</span></div>
-<div class="line">    pool-&gt;enqueue(std::make_unique&lt;<a class="code hl_class" href="d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">callback_typed_job_t&lt;job_types&gt;</a>&gt;(</div>
-<div class="line">        []() -&gt; <a class="code hl_class" href="dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">    pool-&gt;enqueue(std::make_unique&lt;callback_typed_job_t&lt;job_types&gt;&gt;(</div>
+<div class="line">        []() -&gt; result_void {</div>
 <div class="line">            log_module::write_info(<span class="stringliteral">&quot;Processing high-type task&quot;</span>);</div>
 <div class="line">            <span class="keywordflow">return</span> {};</div>
 <div class="line">        }, job_types::High));</div>
@@ -225,11 +225,7 @@ Quick Start Guide</h1>
 <div class="line">    log_module::stop();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aadaptive__queue__sample_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="d6/d86/adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">adaptive_queue_sample.cpp:443</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="d3/d11/error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
-<div class="ttc" id="aclasstyped__thread__pool__module_1_1callback__typed__job__t_html"><div class="ttname"><a href="d3/dea/classtyped__thread__pool__module_1_1callback__typed__job__t.html">typed_thread_pool_module::callback_typed_job_t</a></div><div class="ttdoc">A template for creating priority-based jobs that execute a user-defined callback.</div><div class="ttdef"><b>Definition</b> <a href="de/d90/callback__typed__job_8h_source.html#l00054">callback_typed_job.h:55</a></div></div>
-<div class="ttc" id="anamespacetyped__thread__pool__module_html"><div class="ttname"><a href="d4/db9/namespacetyped__thread__pool__module.html">typed_thread_pool_module</a></div><div class="ttdoc">Type-based thread pool implementation for job scheduling with types.</div><div class="ttdef"><b>Definition</b> <a href="d2/dbb/adaptive__typed__job__queue_8h_source.html#l00041">adaptive_typed_job_queue.h:42</a></div></div>
-<div class="ttc" id="atyped__thread__pool_8h_html"><div class="ttname"><a href="d6/dfc/typed__thread__pool_8h.html">typed_thread_pool.h</a></div></div>
+<div class="ttc" id="anamespacetyped__thread__pool__module_html"><div class="ttname"><a href="d4/db9/namespacetyped__thread__pool__module.html">typed_thread_pool_module</a></div><div class="ttdoc">Type-based thread pool implementation for job scheduling with custom types.</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="usage_examples"></a>
 Usage Examples</h1>
 <p>The library includes comprehensive sample code demonstrating:</p><ul>
@@ -352,7 +348,7 @@ Core Modules</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 15 2025 20:20:31 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Sep 15 2025 20:21:55 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

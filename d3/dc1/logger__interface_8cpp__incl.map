@@ -1,11 +1,5 @@
 <map id="interfaces/logger_interface.cpp" name="interfaces/logger_interface.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="27,5,251,31"/>
-<area shape="rect" id="Node000002" href="$d4/d79/logger__interface_8h.html" title=" " alt="" coords="69,79,209,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,31,141,65,136,65,136,31"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,83,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="125,106,72,146,69,141,122,102"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="107,152,171,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="141,104,141,138,136,138,136,104"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="195,152,253,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="154,102,201,141,198,145,151,106"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,229,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="25,79,209,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,31,120,65,115,65,115,31"/>
 </map>

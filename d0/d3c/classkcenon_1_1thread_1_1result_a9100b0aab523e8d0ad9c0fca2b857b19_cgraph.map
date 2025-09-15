@@ -1,0 +1,7 @@
+<map id="kcenon::thread::result::value_or_throw" name="kcenon::thread::result::value_or_throw">
+<area shape="rect" id="Node000001" title="Gets the value or throws an exception." alt="" coords="5,5,169,45"/>
+<area shape="rect" id="Node000002" href="$d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7" title="Converts the error to a string representation." alt="" coords="217,5,376,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,23,204,23,204,28,170,28"/>
+<area shape="rect" id="Node000003" href="$da/dcc/namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="424,5,583,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="376,23,410,23,410,28,376,28"/>
+</map>
