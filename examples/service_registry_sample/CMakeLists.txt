@@ -2,8 +2,7 @@ project(service_registry_sample)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
     thread_base
     interfaces
     utilities

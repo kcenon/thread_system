@@ -3,8 +3,8 @@ project(minimal_thread_pool)
 
 add_executable(${PROJECT_NAME} minimal_thread_pool.cpp)
 
-# Link only with thread_pool (which includes thread_base and interfaces)
-target_link_libraries(${PROJECT_NAME} PRIVATE thread_pool)
+# Link with thread_base (which includes core functionality)
+target_link_libraries(${PROJECT_NAME} PRIVATE thread_base)
 
 # Include new headers for core and thread_pool
 target_include_directories(${PROJECT_NAME} PRIVATE

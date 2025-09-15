@@ -4,9 +4,7 @@ project(composition_example)
 add_executable(${PROJECT_NAME} composition_example.cpp)
 
 # Link against required libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
-    typed_thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
     thread_base
     interfaces
     utilities

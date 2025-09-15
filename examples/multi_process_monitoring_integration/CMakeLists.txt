@@ -2,9 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 # Multi-process monitoring integration sample
 add_executable(multi_process_monitoring_integration multi_process_monitoring_integration.cpp)
-target_link_libraries(multi_process_monitoring_integration 
-    PRIVATE 
-        thread_pool
+target_link_libraries(multi_process_monitoring_integration
+    PRIVATE
         thread_base
         interfaces
         utilities

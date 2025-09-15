@@ -8,8 +8,7 @@ add_executable(${PROJECT_NAME}
 )
 
 # Link against required libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
     thread_base
     interfaces
     utilities
