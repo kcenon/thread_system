@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['✅_20comprehensive_20testing_0',['✅ Comprehensive Testing',['../index.html#testing',1,'']]]
+  ['🌟_20contributing_0',['🌟 Contributing',['../index.html#contributing',1,'']]]
 ];

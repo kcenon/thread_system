@@ -1,0 +1,15 @@
+<map id="kcenon::thread::error::to_string" name="kcenon::thread::error::to_string">
+<area shape="rect" id="Node000001" title="Converts the error to a string representation." alt="" coords="241,165,400,205"/>
+<area shape="rect" id="Node000002" href="$d6/d10/classkcenon_1_1thread_1_1error.html#afd0ec7a0a2a347643cf93dd9a1612de7" title="Implicit conversion to string." alt="" coords="20,5,179,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="294,156,250,107,222,82,192,60,169,48,172,43,195,55,225,77,253,103,298,153"/>
+<area shape="rect" id="Node000003" href="$da/dcc/namespacekcenon_1_1thread.html#a784252132673ec4a20586b2e30e95ce4" title=" " alt="" coords="17,69,181,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="270,161,192,124,162,112,164,107,194,119,272,156"/>
+<area shape="rect" id="Node000004" href="$da/dcc/namespacekcenon_1_1thread.html#ae74d16b31132be9b2a85893c0f5e0203" title=" " alt="" coords="17,133,181,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="227,175,181,168,182,163,228,169"/>
+<area shape="rect" id="Node000005" href="$d0/d3c/classkcenon_1_1thread_1_1result.html#a9100b0aab523e8d0ad9c0fca2b857b19" title="Gets the value or throws an exception." alt="" coords="17,197,181,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="228,201,182,208,181,203,227,196"/>
+<area shape="rect" id="Node000006" href="$d0/d9a/classkcenon_1_1thread_1_1result_3_01void_01_4.html#a9f3616e7ea5d6d49c1f3b31c5f8f3d19" title="Throws an exception if the result contains an error." alt="" coords="5,261,193,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="272,214,194,252,164,264,162,259,192,247,270,210"/>
+<area shape="rect" id="Node000007" href="$d0/d3c/classkcenon_1_1thread_1_1result.html#ae0c165f3508e75ab04189d91a68b3733" title="Gets the value or throws an exception." alt="" coords="17,325,181,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="298,218,253,268,225,293,195,316,172,327,169,323,192,311,222,289,250,264,294,214"/>
+</map>

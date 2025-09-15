@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['node_5fptr_0',['node_ptr',['../d1/de8/classthread__module_1_1lockfree__job__queue.html#a166b064679542d5e8c5296e286ae37e7',1,'thread_module::lockfree_job_queue']]]
+  ['unique_5flock_0',['unique_lock',['../db/d07/namespacekcenon_1_1thread_1_1sync.html#a39de1f1157b6d7240f32e510700e56e2',1,'kcenon::thread::sync']]]
 ];
