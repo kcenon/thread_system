@@ -198,8 +198,10 @@ void demonstrate_composition() {
     std::cout << "\n=== Basic Thread Pool Demo Complete ===\n" << std::endl;
 }
 
+/*
 /**
  * @brief Demonstrate typed thread pool with composition
+ * Temporarily disabled - requires typed_pool implementation
  */
 void demonstrate_typed_pool_composition() {
     std::cout << "\n=== Typed Thread Pool with Composition Demo ===\n" << std::endl;
@@ -268,9 +270,10 @@ void demonstrate_typed_pool_composition() {
             std::cerr << "typed pool stop failed: " << r.get_error().to_string() << std::endl;
         }
     }
-    
+
     std::cout << "\n=== Typed Thread Pool Demo Complete ===\n" << std::endl;
 }
+*/
 
 /**
  * @brief Demonstrate using thread pool without any services
