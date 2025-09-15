@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdexcept>
 #include <cstdint>
+#include <format>
 
 #ifdef _WIN32
 #include <windows.h>
