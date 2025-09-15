@@ -260,7 +260,7 @@ Note: No official releases have been published yet. All entries below are pre-re
 - **Priority Thread Pool System**: Advanced priority-based scheduling (renamed to Typed Thread Pool in later versions)
 
 ### Supported Platforms
-- Windows (MSVC 2019+, MinGW, MSYS2)
+- Windows (MSVC 2019+, MSYS2)
 - Linux (GCC 9+, Clang 10+)
 - macOS (Clang 10+)
 
