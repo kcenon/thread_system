@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "thread_pool.h"
+#include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/job_queue.h>
 
 #include <kcenon/thread/interfaces/logger_interface.h>
