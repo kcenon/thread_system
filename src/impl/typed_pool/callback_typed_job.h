@@ -118,4 +118,3 @@ namespace typed_thread_pool_module
 	using callback_typed_job = callback_typed_job_t<job_types>;
 } // namespace typed_thread_pool_module
 
-#include "callback_typed_job.tpp"

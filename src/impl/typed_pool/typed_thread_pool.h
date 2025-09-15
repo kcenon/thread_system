@@ -436,4 +436,3 @@ struct fmt::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
 };
 #endif
 
-#include "typed_thread_pool.tpp"

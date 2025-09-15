@@ -299,8 +299,6 @@ namespace typed_thread_pool_module
 	
 } // namespace typed_thread_pool_module
 
-// Include template implementation
-#include "typed_lockfree_job_queue.tpp"
 
 // Explicit instantiation for common types
 namespace typed_thread_pool_module {

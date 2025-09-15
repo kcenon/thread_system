@@ -194,4 +194,3 @@ namespace typed_thread_pool_module
 
 } // namespace typed_thread_pool_module
 
-#include "adaptive_typed_job_queue.tpp"

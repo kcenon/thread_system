@@ -367,4 +367,3 @@ struct fmt::formatter<typed_thread_pool_module::typed_job_queue_t<job_type>>
 };
 #endif
 
-#include "typed_job_queue.tpp"
