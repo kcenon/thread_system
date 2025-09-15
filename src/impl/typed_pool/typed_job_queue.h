@@ -32,12 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../../utilities/include/formatter.h"
-#include "../../utilities/include/span.h"
-#include "../../core/jobs/include/job_queue.h"
-#include "../../lockfree/include/lockfree_job_queue.h"
+#include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/utils/span.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/lockfree/lockfree_job_queue.h>
 #include "typed_job.h"
-#include "../../utilities/include/convert_string.h"
+#include <kcenon/thread/utils/convert_string.h>
 #include "job_types.h"
 #include "callback_typed_job.h"
 
