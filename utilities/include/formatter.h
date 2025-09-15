@@ -39,17 +39,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
-// Use fmt library as fallback when std::format is not available
-#ifdef FMT_HEADER_ONLY
-// Try to include fmt headers
-#include <fmt/format.h>
+// Fallback to basic string operations when std::format is not available
+// Note: We don't try to include fmt here as it may not be installed
 #include <sstream>
 #include <iomanip>
-#else
-// Fallback to basic string operations if fmt is not available
-#include <sstream>
-#include <iomanip>
-#endif
 #endif
 
 namespace kcenon::thread::utils

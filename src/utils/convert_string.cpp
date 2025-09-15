@@ -40,15 +40,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
-// Use fmt library as fallback when std::format is not available
-#ifdef FMT_HEADER_ONLY
-// Try to include fmt headers
-#include <fmt/format.h>
-#else
-// Fallback to basic string operations if fmt is not available
+// Fallback to basic string operations when std::format is not available
+// Note: We don't try to include fmt here as it may not be installed
 #include <sstream>
 #include <iomanip>
-#endif
 #endif
 
 #ifdef _WIN32
@@ -498,9 +493,6 @@ namespace utility_module
 #ifdef USE_STD_FORMAT
 			std::format_to(std::back_inserter(result), "{}{}",
 								 source.substr(last_offset, offset - last_offset), target);
-#elif defined(FMT_HEADER_ONLY)
-			fmt::format_to(std::back_inserter(result), "{}{}",
-								 source.substr(last_offset, offset - last_offset), target);
 #else
 			result += source.substr(last_offset, offset - last_offset);
 			result += target;
@@ -509,8 +501,6 @@ namespace utility_module
 
 #ifdef USE_STD_FORMAT
 		std::format_to(std::back_inserter(result), "{}", source.substr(last_offset));
-#elif defined(FMT_HEADER_ONLY)
-		fmt::format_to(std::back_inserter(result), "{}", source.substr(last_offset));
 #else
 		result += source.substr(last_offset);
 #endif

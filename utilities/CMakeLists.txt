@@ -33,9 +33,7 @@ if(UTIL_SOURCES)
             target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt-header-only)
             message(STATUS "✅ Found fmt library - using fmt::format")
         else()
-            message(STATUS "⚠️ fmt library not found - relying on header-only implementation")
-            # Add FMT_HEADER_ONLY definition to use header-only mode if fmt is not installed
-            target_compile_definitions(${PROJECT_NAME} PUBLIC FMT_HEADER_ONLY=1)
+            message(STATUS "⚠️ fmt library not found - using basic string operations fallback")
         endif()
     endif()
 
@@ -55,9 +53,7 @@ else()
             target_link_libraries(${PROJECT_NAME} INTERFACE fmt::fmt-header-only)
             message(STATUS "✅ Found fmt library - using fmt::format (interface)")
         else()
-            message(STATUS "⚠️ fmt library not found - relying on header-only implementation (interface)")
-            # Add FMT_HEADER_ONLY definition to use header-only mode if fmt is not installed
-            target_compile_definitions(${PROJECT_NAME} INTERFACE FMT_HEADER_ONLY=1)
+            message(STATUS "⚠️ fmt library not found - using basic string operations fallback (interface)")
         endif()
     endif()
 
