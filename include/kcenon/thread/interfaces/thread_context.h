@@ -164,47 +164,37 @@ public:
         return thread_context(logger_, monitoring_);
     }
 
-    // interface_thread_context implementation
-    auto get_logger() const -> std::shared_ptr<common_interfaces::interface_logger> override {
-        // TODO: Implement adapter or ensure logger_interface inherits from interface_logger
-        // For now, return nullptr to avoid compilation errors
-        return nullptr;
-    }
-
-    auto get_monitoring() const -> std::shared_ptr<common_interfaces::interface_monitoring> override {
-        // TODO: Implement adapter or ensure monitoring_interface inherits from interface_monitoring
-        // For now, return nullptr to avoid compilation errors  
-        return nullptr;
-    }
-
-    auto set_logger(std::shared_ptr<common_interfaces::interface_logger> logger) -> bool override {
-        // TODO: Implement adapter or ensure interface compatibility
-        // For now, return false to avoid compilation errors
-        (void)logger; // Suppress unused parameter warning
-        return false;
-    }
-
-    auto set_monitoring(std::shared_ptr<common_interfaces::interface_monitoring> monitoring) -> bool override {
-        // TODO: Implement adapter or ensure interface compatibility
-        // For now, return false to avoid compilation errors
-        (void)monitoring; // Suppress unused parameter warning
-        return false;
-    }
-
-    auto get_context_name() const -> std::string override {
+    /**
+     * @brief Get context name
+     * @return Context name
+     */
+    auto get_context_name() const -> std::string {
         return context_name_;
     }
 
-    auto set_context_name(const std::string& name) -> bool override {
+    /**
+     * @brief Set context name
+     * @param name New context name
+     * @return True if successful
+     */
+    auto set_context_name(const std::string& name) -> bool {
         context_name_ = name;
         return true;
     }
 
-    auto has_logger() const -> bool override {
+    /**
+     * @brief Check if logger is available
+     * @return True if logger is set
+     */
+    auto has_logger() const -> bool {
         return logger_ != nullptr;
     }
 
-    auto has_monitoring() const -> bool override {
+    /**
+     * @brief Check if monitoring is available
+     * @return True if monitoring is set
+     */
+    auto has_monitoring() const -> bool {
         return monitoring_ != nullptr;
     }
 

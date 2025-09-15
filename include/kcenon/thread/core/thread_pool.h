@@ -115,8 +115,7 @@ namespace thread_pool_module
 	 * @see typed_thread_pool_module::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>,
-	                   public kcenon::thread::executor_interface,
-	                   public common_interfaces::interface_thread_pool
+	                   public kcenon::thread::executor_interface
 	{
 	public:
 		/**

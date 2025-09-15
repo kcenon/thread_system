@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
+using namespace thread_pool_module;
 
 int main() {
     std::cout << "=== Minimal Thread Pool Sample (No Logger) ===" << std::endl;
