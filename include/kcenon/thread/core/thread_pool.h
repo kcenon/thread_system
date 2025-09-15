@@ -39,7 +39,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/executor_interface.h>
 #include <kcenon/thread/interfaces/thread_context.h>
-#include "../../../common_interfaces/threading_interface.h"
 #include "config.h"
 
 #include <tuple>
