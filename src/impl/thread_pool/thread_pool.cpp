@@ -73,7 +73,7 @@ namespace thread_pool_module
 		: thread_title_(thread_title), 
 		  pool_instance_id_(next_pool_instance_id_.fetch_add(1)),
 		  start_pool_(false), 
-		  job_queue_(thread_module::create_job_queue(thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE)),
+		  job_queue_(std::make_shared<kcenon::thread::job_queue>()),
 		  context_(context)
 	{
 		// Report initial pool registration if monitoring is available
@@ -411,8 +411,8 @@ namespace thread_pool_module
 			return false;
 		}
 
-		auto callback_job = std::make_unique<thread_module::callback_job>(
-			[task = std::move(task)]() -> thread_module::result_void {
+		auto callback_job = std::make_unique<kcenon::thread::callback_job>(
+			[task = std::move(task)]() -> kcenon::thread::result_void {
 				task();
 				return {};
 			});
