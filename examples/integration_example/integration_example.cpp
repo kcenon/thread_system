@@ -49,10 +49,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 
 // Thread system headers
-#include "../../interfaces/service_container.h"
-#include "../../interfaces/thread_context.h"
-#include "thread_pool.h"
-#include "callback_job.h"
+#include <kcenon/thread/interfaces/service_container.h>
+#include <kcenon/thread/interfaces/thread_context.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/callback_job.h>
 
 // External logger headers (would be from installed package)
 // #include <logger_system/logger.h>

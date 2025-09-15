@@ -40,8 +40,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/monitoring_interface.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
-#include "../../src/impl/typed_pool/typed_thread_pool.h"
-#include "../../src/impl/typed_pool/callback_typed_job.h"
+#include <kcenon/thread/impl/typed_thread_pool.h>
+#include <kcenon/thread/impl/callback_typed_job.h>
 
 using namespace kcenon::thread;
 using namespace thread_pool_module;

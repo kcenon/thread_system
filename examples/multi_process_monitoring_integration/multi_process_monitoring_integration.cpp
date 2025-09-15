@@ -16,12 +16,12 @@ All rights reserved.
  * - Integrate with process identification for multi-process scenarios
  */
 
-#include "thread_pool.h"
-#include "monitoring_interface.h"
-#include "thread_context.h"
-#include "callback_job.h"
-#include "thread_worker.h"
-#include "formatter.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/interfaces/monitoring_interface.h>
+#include <kcenon/thread/interfaces/thread_context.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/utils/formatter.h>
 
 #include <chrono>
 #include <thread>

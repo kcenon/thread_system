@@ -16,12 +16,13 @@
 #include <atomic>
 
 // Include crash protection headers
-#include "interfaces/crash_handler.h"
-#include "thread_pool/core/thread_pool.h"
-#include "thread_pool/workers/thread_worker.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/interfaces/crash_handler.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
+using namespace thread_pool_module;
 
 // Global state for demonstration
 std::atomic<bool> system_running{true};
