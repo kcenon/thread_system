@@ -22,18 +22,18 @@ This project is part of a modular ecosystem designed for high-performance concur
 
 ### Core Threading Framework
 - **[thread_system](https://github.com/kcenon/thread_system)** (This project): Core threading framework with worker pools, job queues, and thread management
-  - Provides: `logger_interface`, `monitoring_interface` for integration
+  - Provides: `kcenon::thread::interfaces::logger_interface`, `kcenon::thread::interfaces::monitoring_interface` for integration
   - Dependencies: None (standalone)
   - Usage: Core threading functionality, interfaces for other systems
 
 ### Optional Integration Components
 - **[logger_system](https://github.com/kcenon/logger_system)**: High-performance asynchronous logging
-  - Implements: `thread_module::logger_interface`
+  - Implements: `kcenon::thread::interfaces::logger_interface`
   - Dependencies: `thread_system` (for interfaces)
   - Integration: Seamless logging for thread operations and debugging
 
 - **[monitoring_system](https://github.com/kcenon/monitoring_system)**: Real-time metrics collection and performance monitoring
-  - Implements: `monitoring_interface::monitoring_interface`
+  - Implements: `kcenon::thread::interfaces::monitoring_interface`
   - Dependencies: `thread_system` (for interfaces)
   - Integration: Thread pool metrics, system performance tracking
 
@@ -281,94 +281,66 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 ### 📁 **Directory Organization**
 
 ```
-thread_system/ (~2,700 lines of optimized code)
-├── 📁 core/                        # Core threading foundation
-│   ├── 📁 base/                    # Base threading functionality
-│   │   ├── thread_base.h/cpp       # Abstract thread class
-│   │   ├── service_registry.h      # 🆕 Dependency injection
-│   │   └── thread_conditions.h     # Thread state management
-│   ├── 📁 jobs/                    # Job system
-│   │   ├── job.h/cpp               # Base job with cancellation
-│   │   ├── callback_job.h/cpp      # Function-based jobs
-│   │   └── job_queue.h/cpp         # Thread-safe queue
-│   └── 📁 sync/                    # Synchronization
-│       ├── sync_primitives.h       # 🆕 Enhanced wrappers
-│       ├── cancellation_token.h    # 🆕 Cancellation support
-│       └── error_handling.h        # Result<T> pattern
-├── 📁 implementations/             # Concrete implementations
-│   ├── 📁 thread_base/             # Base threading functionality
-│   │   ├── core/                   # Core classes (thread_base, thread_conditions)
-│   │   ├── jobs/                   # Job system (job, callback_job, job_queue)
-│   │   ├── lockfree/               # Lock-free queue implementations (for adaptive mode)
-│   │   │   ├── memory/             # Hazard pointers, node pools, memory reclamation
-│   │   │   └── queues/             # MPMC queue, adaptive queue, strategy selection
-│   │   └── sync/                   # Synchronization primitives, atomic operations
-│   ├── 📁 thread_pool/             # Thread pool implementations
-│   │   ├── core/                   # Pool classes
-│   │   │   ├── thread_pool.h/cpp   # Standard pool with adaptive queue support
-│   │   ├── workers/                # Worker implementations
-│   │   │   ├── thread_worker.h/cpp # Standard worker
-│   │   └── async/                  # Future-based tasks
-│   ├── 📁 typed_thread_pool/       # Type-based thread pool with adaptive queues
-│   │   ├── core/                   # Job types and interfaces (job_types.h, typed_job_interface.h)
-│   │   ├── jobs/                   # Typed job implementations
-│   │   │   ├── typed_job.h/tpp    # Base typed job template
-│   │   │   └── callback_typed_job.h/tpp # Lambda-based typed jobs
-│   │   ├── pool/                   # Thread pool implementations
-│   │   │   └── typed_thread_pool.h/tpp # Adaptive pool with automatic optimization
-│   │   └── scheduling/             # Job queues and workers
-│   │       ├── adaptive_typed_job_queue.h/tpp/cpp # Adaptive priority queue
-│   │       ├── typed_lockfree_job_queue.h/tpp/cpp # Lock-free queue (for adaptive mode)
-│   │       └── typed_thread_worker.h/tpp # Adaptive worker
-│   ├── 📁 logger/                  # Asynchronous logging system
-│   │   ├── core/                   # Logger implementation
-│   │   │   ├── logger_implementation.h/cpp # Standard mutex-based logger
-│   │   │   └── log_collector.h/cpp # Adaptive log collector
-│   │   ├── types/                  # Log types and formatters
-│   │   ├── writers/                # Console, file, callback writers
-│   │   └── jobs/                   # Log job processing
-│   └── 📁 utilities/               # Utility functions
-│       ├── core/                   # formatter, span
-│       ├── conversion/             # String conversions
-│       ├── time/                   # Date/time utilities
-│       └── io/                     # File handling
-├── 📁 samples/                     # Example applications
+thread_system/
+├── 📁 include/kcenon/thread/       # Public headers
+│   ├── 📁 core/                    # Core components
+│   │   ├── thread_base.h           # Abstract thread class
+│   │   ├── thread_pool.h           # Thread pool interface
+│   │   ├── thread_worker.h         # Worker thread
+│   │   ├── job.h                   # Job interface
+│   │   ├── callback_job.h          # Function-based jobs
+│   │   ├── job_queue.h             # Thread-safe queue
+│   │   ├── service_registry.h      # Dependency injection
+│   │   ├── cancellation_token.h    # Cancellation support
+│   │   ├── sync_primitives.h       # Synchronization wrappers
+│   │   └── error_handling.h        # Result<T> pattern
+│   ├── 📁 interfaces/              # Integration interfaces
+│   │   ├── logger_interface.h      # Logger abstraction
+│   │   ├── monitoring_interface.h  # Monitoring abstraction
+│   │   ├── thread_context.h        # Thread context
+│   │   └── service_container.h     # Service management
+│   ├── 📁 utils/                   # Utilities
+│   │   ├── formatter.h             # String formatting
+│   │   ├── convert_string.h        # String conversions
+│   │   └── span.h                  # Span utilities
+│   └── compatibility.h             # Backward compatibility
+├── 📁 src/                         # Implementation files
+│   ├── 📁 core/                    # Core implementations
+│   │   ├── thread_base.cpp         # Thread base implementation
+│   │   ├── job.cpp                 # Job implementation
+│   │   ├── callback_job.cpp        # Callback job implementation
+│   │   └── job_queue.cpp           # Queue implementation
+│   ├── 📁 impl/                    # Concrete implementations
+│   │   ├── 📁 thread_pool/         # Thread pool implementation
+│   │   │   ├── thread_pool.cpp     # Pool implementation
+│   │   │   └── thread_worker.cpp   # Worker implementation
+│   │   └── 📁 typed_pool/          # Typed thread pool
+│   │       ├── typed_thread_pool.h # Typed pool header
+│   │       ├── typed_job_queue.h   # Typed queue
+│   │       └── adaptive_typed_job_queue.cpp # Adaptive queue
+│   └── 📁 utils/                   # Utility implementations
+│       └── convert_string.cpp      # String conversion impl
+├── 📁 examples/                    # Example applications
 │   ├── thread_pool_sample/         # Basic thread pool usage
-│   ├── typed_thread_pool_sample/   # Mutex-based priority scheduling
-│   ├── typed_thread_pool_sample_2/        # Advanced typed pool usage
-│   ├── logger_sample/              # Logging examples (requires separate logger project)
-│   ├── monitoring_sample/          # Real-time metrics collection (requires separate monitoring project)
-│   ├── mpmc_queue_sample/          # Adaptive MPMC queue usage
-│   ├── hazard_pointer_sample/      # Memory reclamation demo
-│   ├── node_pool_sample/           # Memory pool operations
-│   ├── adaptive_queue_sample/      # Adaptive queue selection
-│   └── typed_thread_pool_sample_2/ # Custom job types
-├── 📁 unittest/                    # Unit tests (Google Test)
-│   ├── thread_base_test/           # Base thread functionality tests
-│   ├── thread_pool_test/           # Thread pool tests
-│   ├── typed_thread_pool_test/     # Typed pool tests
-│   └── utilities_test/             # Utility function tests
-├── 📁 benchmarks/                  # Performance benchmarks
-│   ├── thread_base_benchmarks/     # Core threading benchmarks
-│   ├── thread_pool_benchmarks/     # Pool performance tests
-│   │   ├── thread_pool_benchmark.cpp      # Core pool metrics
-│   │   ├── adaptive_comparison_benchmark.cpp # 🆕 Standard vs adaptive
-│   │   ├── memory_benchmark.cpp           # Memory usage patterns
-│   │   ├── real_world_benchmark.cpp       # Realistic workloads
-│   │   ├── stress_test_benchmark.cpp      # Extreme load testing
-│   │   ├── scalability_benchmark.cpp      # Multi-core scaling
-│   │   └── contention_benchmark.cpp       # Contention scenarios
-│   ├── typed_thread_pool_benchmarks/ # Typed pool benchmarks
-│   │   ├── typed_scheduling_benchmark.cpp # Priority scheduling
-│   │   ├── typed_lockfree_benchmark.cpp   # 🆕 Lock-free vs mutex
-│   │   └── queue_comparison_benchmark.cpp # 🆕 Queue performance
-│   ├── logger_benchmarks/          # Logging performance (requires separate logger project)
-│   └── monitoring_benchmarks/      # Monitoring overhead (requires separate monitoring project)
+│   ├── typed_thread_pool_sample/   # Priority scheduling
+│   ├── adaptive_queue_sample/      # Adaptive queue usage
+│   ├── hazard_pointer_sample/      # Memory reclamation
+│   └── integration_example/        # Integration examples
+├── 📁 tests/                       # All tests
+│   ├── 📁 unit/                    # Unit tests
+│   │   ├── thread_base_test/       # Base functionality
+│   │   ├── thread_pool_test/       # Pool tests
+│   │   ├── interfaces_test/        # Interface tests
+│   │   └── utilities_test/         # Utility tests
+│   └── 📁 benchmarks/              # Performance tests
+│       ├── thread_base_benchmarks/ # Core benchmarks
+│       ├── thread_pool_benchmarks/ # Pool benchmarks
+│       └── typed_thread_pool_benchmarks/ # Typed pool benchmarks
 ├── 📁 docs/                        # Documentation
 ├── 📁 cmake/                       # CMake modules
-├── 📄 CMakeLists.txt               # Main build configuration
-├── 📄 vcpkg.json                  # Dependencies
-└── 🔧 build.sh/.bat               # Build scripts
+├── 📄 CMakeLists.txt               # Build configuration
+├── 📄 STRUCTURE.md                 # Project structure guide
+└── 📄 vcpkg.json                   # Dependencies
 ```
 
 ### 📖 **Key Files and Their Purpose**
