@@ -1,5 +1,0 @@
-<map id="kcenon::thread::cancellation_token::throw_if_cancelled" name="kcenon::thread::cancellation_token::throw_if_cancelled">
-<area shape="rect" id="Node000001" title="Throws an exception if the token has been canceled." alt="" coords="5,5,212,45"/>
-<area shape="rect" id="Node000002" href="$d6/d38/classkcenon_1_1thread_1_1cancellation__token.html#ae6f752c51fe6a2a735313550812edbfc" title="Checks if the token has been canceled." alt="" coords="260,5,467,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
-</map>
