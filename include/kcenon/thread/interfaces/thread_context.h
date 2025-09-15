@@ -46,7 +46,7 @@ namespace kcenon::thread {
  * This class uses composition to provide thread system components
  * with optional access to logger and monitoring services.
  */
-class thread_context : public common_interfaces::interface_thread_context {
+class thread_context {
 public:
     /**
      * @brief Default constructor - resolves services from global container
