@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔧_20developer_20productivity_0',['🔧 Developer Productivity',['../index.html#productivity',1,'']]]
+  ['📚_20comprehensive_20guides_0',['📚 Comprehensive Guides',['../index.html#guides',1,'']]]
 ];

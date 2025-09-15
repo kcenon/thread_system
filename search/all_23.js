@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🤝_20getting_20help_0',['🤝 Getting Help',['../index.html#getting_help',1,'']]]
+  ['🛡️_20production_20grade_20reliability_0',['🛡️ Production-Grade Reliability',['../index.html#reliability',1,'']]]
 ];

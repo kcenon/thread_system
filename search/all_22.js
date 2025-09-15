@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🛡️_20production_20grade_20reliability_0',['🛡️ Production-Grade Reliability',['../index.html#reliability',1,'']]]
+  ['🛠️_20build_20instructions_0',['🛠️ Build Instructions',['../index.html#build',1,'']]]
 ];

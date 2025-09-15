@@ -1,5 +1,9 @@
 <map id="utilities/include/formatter.h" name="utilities/include/formatter.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,204,31"/>
-<area shape="rect" id="Node000002" href="$d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="11,79,199,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,44,107,79,102,79,102,44"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="219,5,418,31"/>
+<area shape="rect" id="Node000002" href="$d1/d4a/multi__process__monitoring__integration_8cpp.html" title="Example demonstrating integration with multi&#45;process monitoring system." alt="" coords="5,79,200,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,38,182,81,179,76,279,34"/>
+<area shape="rect" id="Node000003" href="$d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="225,93,413,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="321,44,321,93,316,93,316,44"/>
+<area shape="rect" id="Node000004" href="$d9/d86/convert__string_8cpp.html" title="Implementation of cross&#45;platform string conversion utilities." alt="" coords="437,93,584,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="356,34,473,91,471,96,353,39"/>
 </map>

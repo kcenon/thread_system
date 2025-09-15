@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['enum_5fformatter_0',['enum_formatter',['../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html',1,'kcenon::thread::utils']]],
-  ['error_1',['error',['../d6/d10/classkcenon_1_1thread_1_1error.html',1,'kcenon::thread']]]
+  ['default_5ferror_5fhandler_0',['default_error_handler',['../d1/d4a/classthread__module_1_1default__error__handler.html',1,'thread_module']]],
+  ['demo_5fservice_1',['demo_service',['../d4/d9c/structdemo__service.html',1,'']]]
 ];
