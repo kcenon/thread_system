@@ -46,7 +46,7 @@
 #include <vector>
 #include <string>
 
-namespace typed_thread_pool_module {
+namespace kcenon::thread {
     
     /**
      * @brief Builder class for constructing typed thread pools
@@ -197,4 +197,4 @@ namespace typed_thread_pool_module {
         return typed_thread_pool_builder<job_type>{};
     }
     
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread

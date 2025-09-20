@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_pool/core/thread_pool.h"
 
 using namespace utility_module;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 bool use_backup_ = false;
 uint32_t max_lines_ = 0;

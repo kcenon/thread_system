@@ -13,7 +13,7 @@ BSD 3-Clause License
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 struct demo_service {
     std::string name;

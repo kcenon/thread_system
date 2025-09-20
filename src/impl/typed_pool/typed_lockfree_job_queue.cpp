@@ -59,7 +59,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * - Type safety maintained through template parameter validation
  */
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @brief Explicit template instantiation for job_types enumeration.

@@ -46,7 +46,7 @@
 #include <chrono>
 #include <functional>
 
-namespace thread_pool_module {
+namespace kcenon::thread {
     
     using namespace kcenon::thread; // For result<T> types
     
@@ -267,4 +267,4 @@ namespace thread_pool_module {
         }
     }
     
-} // namespace thread_pool_module
+} // namespace kcenon::thread

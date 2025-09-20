@@ -66,7 +66,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "mock_monitoring.h"
 
 using namespace kcenon::thread;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 /**
  * @brief Example 1: Thread pool with external logger only

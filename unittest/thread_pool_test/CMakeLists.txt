@@ -24,8 +24,8 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    thread_base
     GTest::gtest
     GTest::gtest_main
     Threads::Threads

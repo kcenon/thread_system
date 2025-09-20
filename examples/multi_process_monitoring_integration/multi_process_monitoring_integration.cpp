@@ -29,7 +29,7 @@ All rights reserved.
 #include <vector>
 #include <random>
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 using namespace utility_module;
 

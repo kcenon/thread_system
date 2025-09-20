@@ -43,7 +43,7 @@
 #include <concepts>
 #include <string>
 
-namespace typed_thread_pool_module::detail {
+namespace typed_kcenon::thread::detail {
     
     /**
      * @brief Concept to validate job type parameters
@@ -149,4 +149,4 @@ namespace typed_thread_pool_module::detail {
     template<JobType T>
     using job_underlying_t = typename job_type_traits<T>::underlying_type;
     
-} // namespace typed_thread_pool_module::detail
+} // namespace typed_kcenon::thread::detail

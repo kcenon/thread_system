@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "typed_thread_pool.h"
 #include "typed_thread_worker.h"
 
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 TEST(typed_thread_pool_test, enqueue)

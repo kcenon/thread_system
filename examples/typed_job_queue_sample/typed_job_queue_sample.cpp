@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <random>
 #include <map>
 
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 using namespace log_module;
 using namespace std::chrono_literals;

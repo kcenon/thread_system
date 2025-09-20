@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace kcenon::thread;
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	template <typename job_type> class typed_job_queue_t;
 
@@ -133,6 +133,6 @@ namespace typed_thread_pool_module
 	 */
 	using typed_job = typed_job_t<job_types>;
 
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 
 // Note: Template implementation moved inline or will be provided by explicit instantiation

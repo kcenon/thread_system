@@ -8,7 +8,7 @@ BSD 3-Clause License
 #include "typed_thread_worker.h"
 #include "error_handling.h"
 
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 TEST(typed_thread_pool_error, start_without_workers)

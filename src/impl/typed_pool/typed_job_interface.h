@@ -45,7 +45,7 @@
 #include <string>
 #include <memory>
 
-namespace typed_thread_pool_module {
+namespace kcenon::thread {
     
     using namespace kcenon::thread; // For result_void
     
@@ -167,4 +167,4 @@ namespace typed_thread_pool_module {
         virtual void cleanup() noexcept {}
     };
     
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread

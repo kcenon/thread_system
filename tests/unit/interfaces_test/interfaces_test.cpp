@@ -15,7 +15,7 @@ BSD 3-Clause License
 #include "service_registry.h"
 
 using namespace kcenon::thread;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 TEST(interfaces_test, scheduler_interface_job_queue)
 {

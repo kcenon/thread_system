@@ -6,7 +6,7 @@ BSD 3-Clause License
 
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
-#include <kcenon/thread/utils/error_handling.h>
+#include <kcenon/thread/core/error_handling.h>
 
 using namespace kcenon::thread;
 

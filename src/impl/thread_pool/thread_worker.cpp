@@ -67,7 +67,7 @@ using namespace utility_module;
  * - Optional timing measurements for performance analysis
  */
 
-namespace thread_pool_module
+namespace kcenon::thread
 {
 	// Initialize static member
 	std::atomic<std::size_t> thread_worker::next_worker_id_{0};
@@ -307,4 +307,4 @@ namespace thread_pool_module
 	{
 		return worker_id_;
 	}
-} // namespace thread_pool_module
+} // namespace kcenon::thread
