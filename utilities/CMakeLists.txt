@@ -6,7 +6,7 @@ project(utilities)
 
 file(GLOB_RECURSE UTIL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
 # Source files are now in the main src/utils directory
-file(GLOB_RECURSE UTIL_SOURCES ${CMAKE_SOURCE_DIR}/src/utils/*.cpp)
+file(GLOB_RECURSE UTIL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../src/utils/*.cpp)
 
 # Only create library if we have sources
 if(UTIL_SOURCES)

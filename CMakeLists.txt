@@ -19,7 +19,14 @@ project(ThreadSystem
 # Option to control whether ThreadSystem is built as a standalone project or as a submodule
 # - OFF (default): Builds as standalone project with samples and tests
 # - ON: Builds only the core libraries for integration into other projects
-option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+# Automatically detect if we're being built as a submodule
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    # We're being built as a subdirectory, so default to submodule mode
+    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
+else()
+    # We're the top-level project, so default to standalone mode
+    option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+endif()
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 
 ##################################################
@@ -656,10 +663,12 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   endif()
 
   # Examples and tests
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-    add_subdirectory(examples)          # Example applications
-  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
-    add_subdirectory(samples)          # Legacy sample applications
+  if(NOT DEFINED BUILD_SAMPLES OR BUILD_SAMPLES)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+      add_subdirectory(examples)          # Example applications
+    elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
+      add_subdirectory(samples)          # Legacy sample applications
+    endif()
   endif()
 
   # Tests
