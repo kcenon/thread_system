@@ -145,15 +145,24 @@ namespace kcenon::thread
 		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
 
 		/**
-		 * @brief Dequeues a job from the queue in FIFO order.
+		 * @brief Dequeues a job from the queue in FIFO order (blocking operation).
 		 * @return A result<std::unique_ptr<job>> containing either a valid job
 		 *         or an error object.
 		 *
-		 * If the queue is empty, the caller may block depending on the internal
-		 * concurrency model (unless @c stop_ is set, in which case it may return
-		 * immediately).
+		 * If the queue is empty, the caller will block until a job becomes available
+		 * or the queue is stopped. Use try_dequeue() for non-blocking operation.
 		 */
 		[[nodiscard]] virtual auto dequeue(void) -> result<std::unique_ptr<job>>;
+
+		/**
+		 * @brief Attempts to dequeue a job from the queue without blocking.
+		 * @return A result<std::unique_ptr<job>> containing either a valid job
+		 *         or an error object.
+		 *
+		 * If the queue is empty, this method returns immediately with an error
+		 * instead of blocking. This is useful for polling-based consumers.
+		 */
+		[[nodiscard]] virtual auto try_dequeue(void) -> result<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Dequeues all remaining jobs from the queue without processing them.

@@ -108,9 +108,9 @@ TEST_F(MPMCQueueTest, BasicEnqueueDequeue)
 TEST_F(MPMCQueueTest, EmptyQueueDequeue)
 {
 	job_queue queue;
-	
-	// Try to dequeue from empty queue
-	auto result = queue.dequeue();
+
+	// Try to dequeue from empty queue (using non-blocking version)
+	auto result = queue.try_dequeue();
 	EXPECT_FALSE(result.has_value());
 	EXPECT_EQ(result.get_error().code(), error_code::queue_empty);
 }
