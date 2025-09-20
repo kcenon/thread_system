@@ -52,7 +52,7 @@ using namespace utility_module;
 using namespace kcenon::thread;
 
 /**
- * @namespace thread_pool_module
+ * @namespace kcenon::thread
  * @brief Thread pool implementation for managing worker threads.
  *
  * The thread_pool_module namespace provides a standard thread pool implementation
@@ -69,9 +69,9 @@ using namespace kcenon::thread;
  * - Limiting the total number of threads to control resource usage
  * - Providing a simple interface for async task execution
  *
- * @see typed_thread_pool_module for a more advanced implementation with job prioritization
+ * @see kcenon::thread for a more advanced implementation with job prioritization
  */
-namespace thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class thread_pool
@@ -112,7 +112,7 @@ namespace thread_pool_module
 	 *
 	 * @see thread_worker The worker thread class used by the pool
 	 * @see job_queue The shared queue for storing pending jobs
-	 * @see typed_thread_pool_module::typed_thread_pool For a priority-based version
+	 * @see typed_kcenon::thread::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>,
 	                   public kcenon::thread::executor_interface
@@ -323,7 +323,7 @@ namespace thread_pool_module
 		 */
 		thread_context context_;
 	};
-} // namespace thread_pool_module
+} // namespace kcenon::thread
 
 // ----------------------------------------------------------------------------
 // Formatter specializations for thread_pool
@@ -331,20 +331,20 @@ namespace thread_pool_module
 
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for @c thread_pool_module::thread_pool.
+ * @brief Specialization of std::formatter for @c kcenon::thread::thread_pool.
  *
  * Enables formatting of @c thread_pool objects as strings using the C++20 <format> library
  * (when @c USE_STD_FORMAT is defined).
  *
  * ### Example
  * @code
- * auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
  * std::string output = std::format("Pool Info: {}", *pool); // e.g. "Pool Info: [thread_pool:
  * MyPool]"
  * @endcode
  */
 template <>
-struct std::formatter<thread_pool_module::thread_pool> : std::formatter<std::string_view>
+struct std::formatter<kcenon::thread::thread_pool> : std::formatter<std::string_view>
 {
 	/**
 	 * @brief Formats a @c thread_pool object as a string.
@@ -354,19 +354,19 @@ struct std::formatter<thread_pool_module::thread_pool> : std::formatter<std::str
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character @c thread_pool_module::thread_pool.
+ * @brief Specialization of std::formatter for wide-character @c kcenon::thread::thread_pool.
  *
  * Allows wide-string formatting of @c thread_pool objects using the C++20 <format> library.
  */
 template <>
-struct std::formatter<thread_pool_module::thread_pool, wchar_t>
+struct std::formatter<kcenon::thread::thread_pool, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -377,7 +377,7 @@ struct std::formatter<thread_pool_module::thread_pool, wchar_t>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
 		auto wstr = convert_string::to_wstring(str);
@@ -388,19 +388,19 @@ struct std::formatter<thread_pool_module::thread_pool, wchar_t>
 #else // USE_STD_FORMAT
 
 /**
- * @brief Specialization of fmt::formatter for @c thread_pool_module::thread_pool.
+ * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_pool.
  *
  * Allows @c thread_pool objects to be formatted as strings using the {fmt} library.
  *
  * ### Example
  * @code
- * auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
  * pool->start();
  * std::string output = fmt::format("Pool Info: {}", *pool);
  * @endcode
  */
 template <>
-struct fmt::formatter<thread_pool_module::thread_pool> : fmt::formatter<std::string_view>
+struct fmt::formatter<kcenon::thread::thread_pool> : fmt::formatter<std::string_view>
 {
 	/**
 	 * @brief Formats a @c thread_pool object as a string using {fmt}.
@@ -410,7 +410,7 @@ struct fmt::formatter<thread_pool_module::thread_pool> : fmt::formatter<std::str
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_pool& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}

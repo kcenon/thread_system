@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace kcenon::thread;
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class callback_typed_job_t
@@ -116,5 +116,5 @@ namespace typed_thread_pool_module
 	 * priority type.
 	 */
 	using callback_typed_job = callback_typed_job_t<job_types>;
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 

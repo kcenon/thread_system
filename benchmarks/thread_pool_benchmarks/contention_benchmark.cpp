@@ -27,7 +27,7 @@ All rights reserved.
 #include "../../sources/thread_base/jobs/callback_job.h"
 #include "../../sources/utilities/core/formatter.h"
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 using namespace utility_module;
 

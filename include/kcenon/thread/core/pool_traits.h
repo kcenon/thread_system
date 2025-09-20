@@ -44,7 +44,7 @@
 #include <functional>
 #include <chrono>
 
-namespace thread_pool_module::detail {
+namespace kcenon::thread::detail {
     
     /**
      * @brief Concept to validate callable types for thread pool jobs
@@ -278,4 +278,4 @@ namespace thread_pool_module::detail {
         return "unknown_type";
     }
     
-} // namespace thread_pool_module::detail
+} // namespace kcenon::thread::detail

@@ -27,7 +27,7 @@ All rights reserved.
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
 #include "../../sources/utilities/core/formatter.h"
 
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 
 class priority_scheduling_benchmark {
 private:

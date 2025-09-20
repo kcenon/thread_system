@@ -58,8 +58,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/thread_base/jobs/callback_job.h"
 
-using namespace thread_pool_module;
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 /**

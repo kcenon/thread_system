@@ -46,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace utility_module;
 using namespace kcenon::thread;
 
-namespace thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class thread_worker
@@ -176,7 +176,7 @@ namespace thread_pool_module
 		 */
 		thread_context context_;
 	};
-} // namespace thread_pool_module
+} // namespace kcenon::thread
 
 // ----------------------------------------------------------------------------
 // Formatter specializations for thread_worker
@@ -184,19 +184,19 @@ namespace thread_pool_module
 
 #ifdef USE_STD_FORMAT
 /**
- * @brief Specialization of std::formatter for @c thread_pool_module::thread_worker.
+ * @brief Specialization of std::formatter for @c kcenon::thread::thread_worker.
  *
  * Allows @c thread_worker objects to be formatted as strings using the C++20 <format> library
  * (when @c USE_STD_FORMAT is defined).
  *
  * ### Example
  * @code
- * auto worker = std::make_unique<thread_pool_module::thread_worker>();
+ * auto worker = std::make_unique<kcenon::thread::thread_worker>();
  * std::string output = std::format("Worker status: {}", *worker);
  * @endcode
  */
 template <>
-struct std::formatter<thread_pool_module::thread_worker> : std::formatter<std::string_view>
+struct std::formatter<kcenon::thread::thread_worker> : std::formatter<std::string_view>
 {
 	/**
 	 * @brief Formats a @c thread_worker object as a string.
@@ -206,19 +206,19 @@ struct std::formatter<thread_pool_module::thread_worker> : std::formatter<std::s
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_worker& item, FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
 
 /**
- * @brief Specialization of std::formatter for wide-character @c thread_pool_module::thread_worker.
+ * @brief Specialization of std::formatter for wide-character @c kcenon::thread::thread_worker.
  *
  * Enables wide-string formatting of @c thread_worker objects using the C++20 <format> library.
  */
 template <>
-struct std::formatter<thread_pool_module::thread_worker, wchar_t>
+struct std::formatter<kcenon::thread::thread_worker, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -229,7 +229,7 @@ struct std::formatter<thread_pool_module::thread_worker, wchar_t>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_worker& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
 		auto wstr = convert_string::to_wstring(str);
@@ -240,18 +240,18 @@ struct std::formatter<thread_pool_module::thread_worker, wchar_t>
 #else // USE_STD_FORMAT
 
 /**
- * @brief Specialization of fmt::formatter for @c thread_pool_module::thread_worker.
+ * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_worker.
  *
  * Allows @c thread_worker objects to be formatted as strings using the {fmt} library.
  *
  * ### Example
  * @code
- * auto worker = std::make_unique<thread_pool_module::thread_worker>();
+ * auto worker = std::make_unique<kcenon::thread::thread_worker>();
  * std::string output = fmt::format("Worker status: {}", *worker);
  * @endcode
  */
 template <>
-struct fmt::formatter<thread_pool_module::thread_worker> : fmt::formatter<std::string_view>
+struct fmt::formatter<kcenon::thread::thread_worker> : fmt::formatter<std::string_view>
 {
 	/**
 	 * @brief Formats a @c thread_worker object as a string.
@@ -261,7 +261,7 @@ struct fmt::formatter<thread_pool_module::thread_worker> : fmt::formatter<std::s
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const thread_pool_module::thread_worker& item, FormatContext& ctx) const
+	auto format(const kcenon::thread::thread_worker& item, FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}

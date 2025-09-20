@@ -54,7 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <random>
 
 using namespace kcenon::thread;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 // Test worker that frequently accesses wake_interval
 class WakeIntervalTestWorker : public thread_base {

@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 #include <algorithm>
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @struct typed_queue_statistics
@@ -297,10 +297,10 @@ namespace typed_thread_pool_module
 	// Convenience type aliases
 	using typed_lockfree_job_queue = typed_lockfree_job_queue_t<job_types>;
 	
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 
 
 // Explicit instantiation for common types
-namespace typed_thread_pool_module {
+namespace kcenon::thread {
     extern template class typed_lockfree_job_queue_t<job_types>;
 }

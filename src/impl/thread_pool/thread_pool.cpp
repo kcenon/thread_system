@@ -47,7 +47,7 @@ using namespace utility_module;
  * adaptive queue strategies for optimal performance under varying load conditions.
  */
 
-namespace thread_pool_module
+namespace kcenon::thread
 {
 	// Initialize static member
 	std::atomic<std::uint32_t> thread_pool::next_pool_instance_id_{0};
@@ -445,4 +445,4 @@ namespace thread_pool_module
 		}
 		return 0;
 	}
-} // namespace thread_pool_module
+} // namespace kcenon::thread

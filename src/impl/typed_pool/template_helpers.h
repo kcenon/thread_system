@@ -45,7 +45,7 @@
 #include <tuple>
 #include <functional>
 
-namespace typed_thread_pool_module::detail {
+namespace typed_kcenon::thread::detail {
     
     /**
      * @brief SFINAE helper to detect if a type has a specific member function
@@ -268,4 +268,4 @@ namespace typed_thread_pool_module::detail {
         static constexpr bool value = true;
     };
     
-} // namespace typed_thread_pool_module::detail
+} // namespace typed_kcenon::thread::detail

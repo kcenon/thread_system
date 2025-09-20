@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * and prevent circular includes within the typed_thread_pool module.
  */
 
-namespace typed_thread_pool_module {
+namespace kcenon::thread {
     
     // Core types
     enum class job_types : uint8_t;
@@ -70,4 +70,4 @@ namespace typed_thread_pool_module {
     template<typename job_type>
     class typed_job_interface;
     
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread

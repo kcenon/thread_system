@@ -145,7 +145,7 @@ namespace kcenon::thread
 	 *
 	 * @see kcenon::thread::job For the work unit class processed by workers
 	 * @see kcenon::thread::job_queue For the thread-safe queue used with workers
-	 * @see thread_pool_module::thread_worker For a specialized worker implementation
+	 * @see kcenon::thread::thread_worker For a specialized worker implementation
 	 */
 	class thread_base
 	{
