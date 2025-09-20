@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/interfaces/thread_context.h>
 
 using namespace kcenon::thread;
 using namespace kcenon::thread;
@@ -46,14 +47,15 @@ int main() {
     std::cout << "=== Minimal Thread Pool Sample (No Logger) ===" << std::endl;
     
     // Create thread pool
-    auto pool = std::make_shared<thread_pool>("MinimalPool");
+    thread_context context;
+    auto pool = std::make_shared<thread_pool>("MinimalPool", context);
     
     // Create workers
     const size_t worker_count = 4;
     std::vector<std::unique_ptr<thread_worker>> workers;
     
     for (size_t i = 0; i < worker_count; ++i) {
-        workers.push_back(std::make_unique<thread_worker>(false));
+        workers.push_back(std::make_unique<thread_worker>(false, context));
     }
     
     // Add workers to pool
@@ -83,14 +85,15 @@ int main() {
             [i, &completed_jobs]() -> result_void {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                
+
                 // Print progress (thread-safe)
                 int current = completed_jobs.fetch_add(1) + 1;
-                std::cout << "Job " << i << " completed. Total: " 
+                std::cout << "Job " << i << " completed. Total: "
                          << current << "/" << total_jobs << std::endl;
-                
+
                 return result_void{};
-            }
+            },
+            "job_" + std::to_string(i)
         );
         
         result = pool->enqueue(std::move(job));
