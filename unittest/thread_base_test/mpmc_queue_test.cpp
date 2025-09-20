@@ -260,18 +260,24 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue)
 		threads.emplace_back([&queue, &total_dequeued]() {
 			size_t local_count = 0;
 			while (true) {
-				auto result = queue.dequeue();
+				auto result = queue.try_dequeue();
 				if (!result.has_value()) {
-					break; // Queue is empty
+					// Check if queue is really empty by trying a few more times
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+					auto retry_result = queue.try_dequeue();
+					if (!retry_result.has_value()) {
+						break; // Queue is really empty
+					}
+					result = std::move(retry_result);
 				}
 				auto work_result = result.value()->do_work();
-			(void)work_result;
+				(void)work_result;
 				local_count++;
 			}
 			total_dequeued.fetch_add(local_count);
 		});
 	}
-	
+
 	// Wait for all consumers
 	for (auto& t : threads) {
 		t.join();
@@ -551,7 +557,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance)
 		const size_t max_failures = 1000;
 		
 		while (consumed < num_jobs && consecutive_failures < max_failures) {
-			auto result = mpmc_queue.dequeue();
+			auto result = mpmc_queue.try_dequeue();
 			if (result.has_value() && result.value()) {
 				try {
 					auto work_result = result.value()->do_work();
@@ -628,7 +634,7 @@ TEST_F(MPMCQueueTest, MultipleProducerConsumer)
 	for (size_t c = 0; c < num_consumers; ++c) {
 		consumers.emplace_back([&, c]() {
 			while (!stop_consumers.load()) {
-				auto result = queue.dequeue();
+				auto result = queue.try_dequeue();
 				if (result.has_value()) {
 					try {
 						auto work_result = result.value()->do_work();
@@ -640,7 +646,7 @@ TEST_F(MPMCQueueTest, MultipleProducerConsumer)
 				} else {
 					std::this_thread::sleep_for(std::chrono::microseconds(10));
 				}
-				
+
 				// Check if we should stop
 				if (consumed.load() >= total_jobs) {
 					break;
