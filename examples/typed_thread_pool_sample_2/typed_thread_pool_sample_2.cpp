@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 using namespace utility_module;
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 bool use_backup_ = false;

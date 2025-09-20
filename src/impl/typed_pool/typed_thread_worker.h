@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace utility_module;
 using namespace kcenon::thread;
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class typed_thread_worker_t
@@ -237,7 +237,7 @@ namespace typed_thread_pool_module
 
 	/// Convenience typedef for a worker configured with default job_types.
 	using typed_thread_worker = typed_thread_worker_t<job_types>;
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 
 // Formatter specializations for typed_thread_worker_t<job_type>
 #ifdef USE_STD_FORMAT
@@ -252,7 +252,7 @@ namespace typed_thread_pool_module
  * The type representing the priority levels.
  */
 template <typename job_type>
-struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>>
+struct std::formatter<typed_kcenon::thread::typed_thread_worker_t<job_type>>
 	: std::formatter<std::string_view>
 {
 	/**
@@ -274,7 +274,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>>
 	 * An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_worker_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_worker_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -292,7 +292,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>>
  * The type representing the priority levels.
  */
 template <typename job_type>
-struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>, wchar_t>
+struct std::formatter<typed_kcenon::thread::typed_thread_worker_t<job_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -314,7 +314,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>,
 	 * An iterator to the end of the formatted wide-string output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_worker_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_worker_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
@@ -333,7 +333,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>,
  * The type representing the priority levels.
  */
 template <typename job_type>
-struct fmt::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>>
+struct fmt::formatter<typed_kcenon::thread::typed_thread_worker_t<job_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
@@ -355,7 +355,7 @@ struct fmt::formatter<typed_thread_pool_module::typed_thread_worker_t<job_type>>
 	 * An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_worker_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_worker_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);

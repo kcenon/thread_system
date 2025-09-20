@@ -8,7 +8,7 @@ BSD 3-Clause License
 #include "callback_job.h"
 #include "error_handling.h"
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 TEST(thread_pool_error, start_without_workers)

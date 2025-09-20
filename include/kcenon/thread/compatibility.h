@@ -13,8 +13,8 @@ namespace kcenon::thread {
 
 // Old namespace aliases (deprecated)
 namespace kcenon::thread = kcenon::thread;
-namespace thread_pool_module = kcenon::thread::impl;
-namespace typed_thread_pool_module = kcenon::thread::impl;
+namespace kcenon::thread = kcenon::thread::impl;
+namespace kcenon::thread = kcenon::thread::impl;
 namespace utility_module = kcenon::thread::utils;
 namespace monitoring_interface = kcenon::thread::interfaces;
 

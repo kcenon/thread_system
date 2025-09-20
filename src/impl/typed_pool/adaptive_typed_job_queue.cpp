@@ -60,7 +60,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * - Type safety maintained through template parameter validation
  */
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @brief Explicit instantiation of adaptive typed job queue for job_types.
@@ -94,4 +94,4 @@ namespace typed_thread_pool_module
 		adaptive_typed_job_queue_t<job_types>::queue_strategy, 
 		size_t) -> std::shared_ptr<typed_job_queue_t<job_types>>;
 
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread

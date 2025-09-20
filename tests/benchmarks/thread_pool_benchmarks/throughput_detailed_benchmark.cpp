@@ -64,19 +64,19 @@
 #include "../../sources/utilities/core/formatter.h"
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<thread_pool_module::thread_pool>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<kcenon::thread::thread_pool>, std::optional<std::string>>
 {
-    std::shared_ptr<thread_pool_module::thread_pool> pool;
+    std::shared_ptr<kcenon::thread::thread_pool> pool;
     try {
-        pool = std::make_shared<thread_pool_module::thread_pool>();
+        pool = std::make_shared<kcenon::thread::thread_pool>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
-    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    std::vector<std::unique_ptr<kcenon::thread::thread_worker>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+        workers.push_back(std::make_unique<kcenon::thread::thread_worker>());
     }
     
     auto enqueue_result = pool->enqueue_batch(std::move(workers));
@@ -91,19 +91,19 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>> pool;
+    std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<Type>>();
+        pool = std::make_shared<typed_kcenon::thread::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
-    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker_t<Type>>> workers;
+    std::vector<std::unique_ptr<typed_kcenon::thread::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<Type>>(std::vector<Type>{}, true));
+        workers.push_back(std::make_unique<typed_kcenon::thread::typed_thread_worker_t<Type>>(std::vector<Type>{}, true));
     }
     
     auto enqueue_result = pool->enqueue_batch(std::move(workers));
@@ -116,8 +116,8 @@ auto create_priority_default(const uint16_t& worker_counts)
 }
 
 using namespace std::chrono;
-using namespace thread_pool_module;
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
+using namespace kcenon::thread;
 
 // Job complexity levels
 enum class JobComplexity {
@@ -579,7 +579,7 @@ static void BM_PriorityImpact(benchmark::State& state) {
         // Submit jobs with different priorities
         for (size_t i = 0; i < jobs_per_priority; ++i) {
             for (auto priority : {Critical, High, Normal, Low, Background}) {
-                pool->enqueue(std::make_unique<typed_thread_pool_module::callback_typed_job_t<Priority>>([&completed, priority]() -> result_void {
+                pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<Priority>>([&completed, priority]() -> result_void {
                     execute_job_with_complexity(JobComplexity::Light);
                     completed[priority].fetch_add(1);
                     return result_void();

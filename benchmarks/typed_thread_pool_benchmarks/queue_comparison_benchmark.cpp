@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_base/lockfree/queues/lockfree_job_queue.h"
 #include "thread_base/jobs/job_queue.h"
 
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 // Simple job for benchmarking

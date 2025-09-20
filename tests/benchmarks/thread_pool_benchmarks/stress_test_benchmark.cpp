@@ -60,20 +60,20 @@
 #include "../../sources/utilities/core/formatter.h"
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<thread_pool_module::thread_pool>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<kcenon::thread::thread_pool>, std::optional<std::string>>
 {
-    std::shared_ptr<thread_pool_module::thread_pool> pool;
+    std::shared_ptr<kcenon::thread::thread_pool> pool;
     try {
-        pool = std::make_shared<thread_pool_module::thread_pool>();
+        pool = std::make_shared<kcenon::thread::thread_pool>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
     std::optional<std::string> error_message = std::nullopt;
-    std::vector<std::unique_ptr<thread_pool_module::thread_worker>> workers;
+    std::vector<std::unique_ptr<kcenon::thread::thread_worker>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<thread_pool_module::thread_worker>());
+        workers.push_back(std::make_unique<kcenon::thread::thread_worker>());
     }
     
     error_message = pool->enqueue_batch(std::move(workers));
@@ -88,19 +88,19 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_thread_pool_module::typed_thread_pool_t<Type>> pool;
+    std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_thread_pool_module::typed_thread_pool_t<Type>>();
+        pool = std::make_shared<typed_kcenon::thread::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
     
-    std::vector<std::unique_ptr<typed_thread_pool_module::typed_thread_worker_t<Type>>> workers;
+    std::vector<std::unique_ptr<typed_kcenon::thread::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_thread_pool_module::typed_thread_worker_t<Type>>(
+        workers.push_back(std::make_unique<typed_kcenon::thread::typed_thread_worker_t<Type>>(
             std::vector<Type>{}, true));
     }
     
@@ -113,8 +113,8 @@ auto create_priority_default(const uint16_t& worker_counts)
     return { pool, std::nullopt };
 }
 
-using namespace thread_pool_module;
-using namespace typed_thread_pool_module;
+using namespace kcenon::thread;
+using namespace kcenon::thread;
 using namespace utility_module;
 
 // Forward declare Type enum before using it

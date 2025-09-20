@@ -51,10 +51,10 @@ using namespace utility_module;
 using namespace kcenon::thread;
 
 /**
- * @namespace typed_thread_pool_module
+ * @namespace kcenon::thread
  * @brief Type-based thread pool implementation for job scheduling with types.
  *
- * The typed_thread_pool_module namespace extends the basic thread pool concept
+ * The kcenon::thread namespace extends the basic thread pool concept
  * with priority-based scheduling of jobs. It allows jobs to be processed according
  * to their importance or urgency rather than just their order of submission.
  *
@@ -72,7 +72,7 @@ using namespace kcenon::thread;
  *
  * @see thread_pool_module for the basic non-prioritized implementation
  */
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class typed_thread_pool_t
@@ -137,7 +137,7 @@ namespace typed_thread_pool_module
 	 * @see typed_thread_worker_t The worker thread class used by the pool
 	 * @see typed_job_t Jobs with priority information
 	 * @see typed_job_queue_t The queue that orders jobs by priority
-	 * @see thread_pool_module::thread_pool The non-prioritized thread pool implementation
+	 * @see kcenon::thread::thread_pool The non-prioritized thread pool implementation
 	 */
 	template <typename job_type = job_types>
 	class typed_thread_pool_t
@@ -350,7 +350,7 @@ namespace typed_thread_pool_module
 	/// Alias for a typed_thread_pool with the default job_types type.
 	using typed_thread_pool = typed_thread_pool_t<job_types>;
 
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 
 // Formatter specializations for typed_thread_pool_t<job_type>
 #ifdef USE_STD_FORMAT
@@ -361,7 +361,7 @@ namespace typed_thread_pool_module
  * using the standard library's format facilities (C++20 or later).
  */
 template <typename job_type>
-struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
+struct std::formatter<typed_kcenon::thread::typed_thread_pool_t<job_type>>
 	: std::formatter<std::string_view>
 {
 	/**
@@ -373,7 +373,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -388,7 +388,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
  * wide strings using the standard library's format facilities (C++20 or later).
  */
 template <typename job_type>
-struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>, wchar_t>
+struct std::formatter<typed_kcenon::thread::typed_thread_pool_t<job_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -400,7 +400,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>, w
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
@@ -416,7 +416,7 @@ struct std::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>, w
  * using the {fmt} library (https://github.com/fmtlib/fmt).
  */
 template <typename job_type>
-struct fmt::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
+struct fmt::formatter<typed_kcenon::thread::typed_thread_pool_t<job_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
@@ -428,7 +428,7 @@ struct fmt::formatter<typed_thread_pool_module::typed_thread_pool_t<job_type>>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_thread_pool_module::typed_thread_pool_t<job_type>& item,
+	auto format(const typed_kcenon::thread::typed_thread_pool_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);

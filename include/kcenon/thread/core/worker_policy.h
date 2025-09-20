@@ -44,7 +44,7 @@
 #include <chrono>
 #include <string>
 
-namespace thread_pool_module {
+namespace kcenon::thread {
     
     /**
      * @brief Enumeration of worker states
@@ -174,4 +174,4 @@ namespace thread_pool_module {
         }
     }
     
-} // namespace thread_pool_module
+} // namespace kcenon::thread

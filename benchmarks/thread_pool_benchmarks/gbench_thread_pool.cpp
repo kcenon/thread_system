@@ -42,7 +42,7 @@
 #include <memory>
 #include <vector>
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 // Helper function to create thread pool with workers

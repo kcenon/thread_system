@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * and prevent circular includes within the thread_pool module.
  */
 
-namespace thread_pool_module {
+namespace kcenon::thread {
     
     // Core types
     class thread_pool;
@@ -67,4 +67,4 @@ namespace thread_pool_module {
     class awaitable;
     #endif
     
-} // namespace thread_pool_module
+} // namespace kcenon::thread

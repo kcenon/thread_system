@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstddef>
 #include <chrono>
 
-namespace thread_pool_module::config {
+namespace kcenon::thread::config {
     
     // Thread management configuration
     constexpr size_t default_thread_count = 4;
@@ -87,4 +87,4 @@ namespace thread_pool_module::config {
                   "Queue size must be positive or unlimited");
     static_assert(max_queue_size > default_queue_size, "Max queue size must exceed default");
     
-} // namespace thread_pool_module::config
+} // namespace kcenon::thread::config

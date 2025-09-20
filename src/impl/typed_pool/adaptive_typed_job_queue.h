@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <thread>
 
-namespace typed_thread_pool_module
+namespace kcenon::thread
 {
 	/**
 	 * @class adaptive_typed_job_queue_t
@@ -192,5 +192,5 @@ namespace typed_thread_pool_module
 		size_t max_threads = 128
 	) -> std::shared_ptr<typed_job_queue_t<job_type>>;
 
-} // namespace typed_thread_pool_module
+} // namespace kcenon::thread
 

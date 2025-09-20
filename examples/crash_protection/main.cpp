@@ -22,7 +22,7 @@
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 // Global state for demonstration
 std::atomic<bool> system_running{true};
@@ -183,8 +183,8 @@ int main() {
     // Step 3: Create and configure thread pool with crash protection
     std::cout << "\n--- Step 3: Create Thread Pool ---" << std::endl;
     
-    using thread_pool_t = thread_pool_module::thread_pool;
-    using thread_worker_t = thread_pool_module::thread_worker;
+    using thread_pool_t = kcenon::thread::thread_pool;
+    using thread_worker_t = kcenon::thread::thread_worker;
     using thread_module::callback_job;
     
     auto thread_pool = std::make_shared<thread_pool_t>("MainPool");
