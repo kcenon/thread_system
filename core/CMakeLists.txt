@@ -6,12 +6,12 @@ project(thread_base)
 
 # Find headers in include directory
 file(GLOB_RECURSE CORE_HEADERS
-    ${CMAKE_SOURCE_DIR}/include/kcenon/thread/core/*.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/*.h)
 
 # Find sources in src directory
 file(GLOB_RECURSE CORE_SOURCES
-    ${CMAKE_SOURCE_DIR}/src/core/*.cpp
-    ${CMAKE_SOURCE_DIR}/src/impl/thread_pool/*.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC
     ${CORE_HEADERS}
@@ -19,9 +19,9 @@ add_library(${PROJECT_NAME} STATIC
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/interfaces>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../interfaces>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../src>
     $<INSTALL_INTERFACE:include>
 )
 
