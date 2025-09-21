@@ -29,8 +29,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
     thread_base
     interfaces
     utilities

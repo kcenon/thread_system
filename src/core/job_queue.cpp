@@ -264,6 +264,51 @@ namespace kcenon::thread
 	}
 
 	/**
+	 * @brief Attempts to dequeue a job without blocking (non-blocking operation).
+	 *
+	 * Implementation details:
+	 * - Never blocks, returns immediately regardless of queue state
+	 * - Returns error if queue is empty (vs blocking in dequeue())
+	 * - Uses scoped_lock for quick queue access and release
+	 * - Ideal for polling-based consumers or timeout-based operations
+	 *
+	 * Performance Benefits:
+	 * - No condition variable overhead
+	 * - No thread blocking/unblocking costs
+	 * - Suitable for high-frequency polling scenarios
+	 *
+	 * Use Cases:
+	 * - Non-blocking consumer threads
+	 * - Timeout-based dequeue operations
+	 * - Testing scenarios where blocking is undesirable
+	 *
+	 * @return Unique pointer to job on success, error if queue empty/stopped
+	 */
+	auto job_queue::try_dequeue() -> result<std::unique_ptr<job>>
+	{
+		// Early validation: check if queue is stopped
+		if (stop_.load())
+		{
+			return error{error_code::queue_stopped, "Job queue is stopped"};
+		}
+
+		// Critical section: check and potentially extract job
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		// Non-blocking check: return error if empty
+		if (queue_.empty())
+		{
+			return error{error_code::queue_empty, "there are no jobs to dequeue"};
+		}
+
+		// Efficiently extract first job from queue
+		auto value = std::move(queue_.front());
+		queue_.pop_front();
+
+		return value;  // Return moved job (caller takes ownership)
+	}
+
+	/**
 	 * @brief Removes and returns ALL jobs from the queue (non-blocking operation).
 	 * 
 	 * Implementation details:

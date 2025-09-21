@@ -12,7 +12,7 @@ BSD 3-Clause License
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
 
-#include <kcenon/thread/interfaces/service_registry.h>
+#include <kcenon/thread/core/service_registry.h>
 
 using namespace kcenon::thread;
 
