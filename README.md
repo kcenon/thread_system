@@ -112,11 +112,11 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 ### 📊 **Performance Benchmarks**
 
-*Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma, Apple Clang 17.0.0*
+*Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma*
 
-> **🚀 Architecture Update**: Latest modular architecture (2025-07-25) removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
+> **🚀 Architecture Update**: Latest modular architecture removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
 
-#### Core Performance Metrics (Latest Benchmarks - 2025-09-13)
+#### Core Performance Metrics (Latest Benchmarks)
 - **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs - theoretical)
 - **Real-world Throughput**: 
   - Standard thread pool: 1.16M jobs/s (10 workers, proven in production)
