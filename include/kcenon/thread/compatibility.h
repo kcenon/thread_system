@@ -1,21 +1,25 @@
 #ifndef KCENON_THREAD_COMPATIBILITY_H
 #define KCENON_THREAD_COMPATIBILITY_H
 
-// Backward compatibility namespace aliases
-// These will be removed in future versions
+// Forward declare canonical namespaces to allow aliasing without including
+// heavier headers.
+namespace kcenon {
+namespace thread {
+namespace core {}
+namespace interfaces {}
+namespace impl {}
+namespace utils {}
+namespace detail {}
+} // namespace thread
+} // namespace kcenon
 
-namespace kcenon::thread {
-    namespace core {}
-    namespace interfaces {}
-    namespace impl {}
-    namespace utils {}
-}
+// Legacy namespace aliases. These remain until dependent projects
+// migrate to the unified kcenon::thread namespace.
+namespace thread_system = kcenon::thread;
+namespace thread_module = kcenon::thread;
+namespace thread_namespace = kcenon::thread;
 
-// Old namespace aliases (deprecated)
-namespace kcenon::thread = kcenon::thread;
-namespace kcenon::thread = kcenon::thread::impl;
-namespace kcenon::thread = kcenon::thread::impl;
+// Legacy utility namespace names still expected by some consumers.
 namespace utility_module = kcenon::thread::utils;
-namespace monitoring_interface = kcenon::thread::interfaces;
 
 #endif // KCENON_THREAD_COMPATIBILITY_H
