@@ -28,7 +28,7 @@ else()
     option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
 endif()
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
-option(USE_COMMON_SYSTEM "Use common_system for standard interfaces" OFF)
+option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" OFF)
 
 ##################################################
 # C++ Standard Configuration
