@@ -4,7 +4,6 @@
   "description": "High-performance thread management system with dependency injection and interface abstraction",
   "homepage": "https://github.com/kcenon/thread_system",
   "license": "MIT",
-  "builtin-baseline": "62efe42f53b1886a20cbeb22ee9a27736d20f149",
   "dependencies": [
     {
       "name": "fmt"
@@ -43,11 +42,5 @@
         "spdlog"
       ]
     }
-  },
-  "overrides": [
-    {
-      "name": "fmt",
-      "version": "10.2.1"
-    }
-  ]
+  }
 }
