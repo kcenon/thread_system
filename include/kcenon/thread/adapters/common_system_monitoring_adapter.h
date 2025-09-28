@@ -10,7 +10,7 @@
 #include <unordered_map>
 
 // Check if common_system is available
-#ifdef USE_COMMON_SYSTEM
+#ifdef BUILD_WITH_COMMON_SYSTEM
 #include <kcenon/common/interfaces/monitoring_interface.h>
 #include <kcenon/common/patterns/result.h>
 #endif
@@ -20,7 +20,7 @@
 
 namespace kcenon::thread::adapters {
 
-#ifdef USE_COMMON_SYSTEM
+#ifdef BUILD_WITH_COMMON_SYSTEM
 
 /**
  * @brief Adapter to expose thread_system monitorable as common::interfaces::IMonitorable
@@ -206,6 +206,6 @@ private:
     std::shared_ptr<::common::interfaces::IMonitorable> monitorable_;
 };
 
-#endif // USE_COMMON_SYSTEM
+#endif // BUILD_WITH_COMMON_SYSTEM
 
 } // namespace kcenon::thread::adapters

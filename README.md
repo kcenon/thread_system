@@ -904,6 +904,10 @@ cd thread_system
 ./build.sh       # Linux/macOS
 ./build.bat      # Windows
 
+# Build with common_system integration (optional)
+cmake -B build -DBUILD_WITH_COMMON_SYSTEM=ON
+cmake --build build
+
 # Run samples
 ./build/bin/thread_pool_sample
 ./build/bin/typed_thread_pool_sample
