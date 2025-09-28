@@ -233,6 +233,9 @@ Design rules:
 - `monitoring_interface` provides pool/worker/system metrics
 - `logger_interface` keeps logging pluggable and optional
 
+Ecosystem Integration Note
+- network_system integrates with external thread pools via its `thread_integration_manager` and adapters; there is no hard compile-time dependency on thread_system.
+
 ### Error Handling Excellence
 - **`result<T>` pattern**: Modern error handling similar to C++23 std::expected
   - Type-safe error codes
