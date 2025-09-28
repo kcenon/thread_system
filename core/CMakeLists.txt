@@ -26,15 +26,15 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 # Add common_system support if available
-if(USE_COMMON_SYSTEM)
+if(BUILD_WITH_COMMON_SYSTEM)
     if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include")
         target_include_directories(${PROJECT_NAME} PUBLIC
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include>
         )
-        target_compile_definitions(${PROJECT_NAME} PUBLIC USE_COMMON_SYSTEM)
+        target_compile_definitions(${PROJECT_NAME} PUBLIC BUILD_WITH_COMMON_SYSTEM)
         message(STATUS "ThreadSystem: common_system support enabled")
     else()
-        message(WARNING "ThreadSystem: USE_COMMON_SYSTEM is ON but common_system not found")
+        message(WARNING "ThreadSystem: BUILD_WITH_COMMON_SYSTEM is ON but common_system not found")
     endif()
 endif()
 
