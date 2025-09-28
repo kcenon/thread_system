@@ -30,6 +30,21 @@ endif()
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" OFF)
 
+# Configure common_system integration
+if(BUILD_WITH_COMMON_SYSTEM)
+  # Add common_system include path
+  set(COMMON_SYSTEM_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../common_system/include" CACHE PATH "Path to common_system include directory")
+  if(EXISTS ${COMMON_SYSTEM_PATH})
+    include_directories(${COMMON_SYSTEM_PATH})
+    add_compile_definitions(BUILD_WITH_COMMON_SYSTEM)
+    message(STATUS "ThreadSystem: common_system support enabled")
+    message(STATUS "  Include path: ${COMMON_SYSTEM_PATH}")
+  else()
+    message(WARNING "common_system path not found: ${COMMON_SYSTEM_PATH}")
+    message(WARNING "Please set COMMON_SYSTEM_PATH to the correct location")
+  endif()
+endif()
+
 ##################################################
 # C++ Standard Configuration
 ##################################################
@@ -902,6 +917,15 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   )
   
   # Install main documentation
+  # Install adapter headers if BUILD_WITH_COMMON_SYSTEM is enabled
+  if(BUILD_WITH_COMMON_SYSTEM)
+    install(FILES
+      ${CMAKE_CURRENT_SOURCE_DIR}/include/thread_system/adapters/common_executor_adapter.h
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/adapters
+      COMPONENT Development
+    )
+  endif()
+
   install(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/README.md
     ${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md
