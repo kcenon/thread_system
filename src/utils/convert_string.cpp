@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "convert_string.h"
 
-#include "../include/formatter.h"
+#include <kcenon/thread/utils/formatter.h>
 
 #include <stdexcept>
 #include <cstdint>
