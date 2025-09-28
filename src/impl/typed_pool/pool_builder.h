@@ -39,7 +39,7 @@
  * with various configuration options in a fluent interface style.
  */
 
-#include "../detail/forward_declarations.h"
+#include "forward_declarations.h"
 #include "config.h"
 #include "job_types.h"
 #include <memory>

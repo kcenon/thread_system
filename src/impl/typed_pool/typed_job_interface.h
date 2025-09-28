@@ -39,8 +39,8 @@
  * providing a clean separation between interface and implementation.
  */
 
-#include "../detail/forward_declarations.h"
-#include "../detail/type_traits.h"
+#include "forward_declarations.h"
+#include "type_traits.h"
 #include <kcenon/thread/core/error_handling.h>
 #include <string>
 #include <memory>
