@@ -8,7 +8,18 @@
 #include <any>
 #include <chrono>
 
+#ifdef BUILD_WITH_COMMON_SYSTEM
+#include <kcenon/common/patterns/result.h>
+#endif
+
 namespace kcenon::shared {
+
+#ifdef BUILD_WITH_COMMON_SYSTEM
+// Use common::Result types when available
+using VoidResult = common::VoidResult;
+template<typename T>
+using Result = common::Result<T>;
+#endif
 
 /**
  * @brief Log level enumeration
@@ -33,20 +44,49 @@ public:
      * @brief Log a message with specified level
      * @param level Log level
      * @param message Message to log
+     * @return VoidResult indicating success or error
+     *
+     * @note Can fail due to I/O errors, disk space issues, or queue overflow
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult log(LogLevel level, std::string_view message) = 0;
+#else
     virtual void log(LogLevel level, std::string_view message) = 0;
+#endif
 
     /**
      * @brief Log a formatted message
      * @param level Log level
      * @param format Format string
      * @param args Arguments for formatting
+     * @return VoidResult indicating success or error
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    template<typename... Args>
+    VoidResult log_formatted(LogLevel level, std::string_view format, Args&&... args) {
+        // Default implementation - derived classes can override
+        return log(level, format); // Simplified for now
+    }
+
+    /**
+     * @brief Flush pending log entries
+     * @return VoidResult indicating success or error
+     *
+     * @note Can fail due to I/O errors during flush operation
+     */
+    virtual VoidResult flush() { return common::ok(); }
+#else
     template<typename... Args>
     void log_formatted(LogLevel level, std::string_view format, Args&&... args) {
         // Default implementation - derived classes can override
         log(level, format); // Simplified for now
     }
+
+    /**
+     * @brief Flush pending log entries
+     */
+    virtual void flush() {}
+#endif
 };
 
 /**
@@ -78,8 +118,15 @@ public:
     /**
      * @brief Enable or disable metrics collection
      * @param enabled True to enable, false to disable
+     * @return VoidResult indicating success or error
+     *
+     * @note Can fail if metrics system cannot be initialized or shutdown
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult set_metrics_enabled(bool enabled) = 0;
+#else
     virtual void set_metrics_enabled(bool enabled) = 0;
+#endif
 };
 
 /**
@@ -92,21 +139,47 @@ public:
     /**
      * @brief Execute a task asynchronously
      * @param task Task to execute
-     * @return Future for task completion
+     * @return Result<std::future<void>> indicating success or error
+     *
+     * @note Can fail if:
+     *       - Task queue is full
+     *       - Executor is shutting down
+     *       - System resources are exhausted
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual Result<std::future<void>> execute(std::function<void()> task) = 0;
+#else
     virtual std::future<void> execute(std::function<void()> task) = 0;
+#endif
 
     /**
      * @brief Execute a task with result
      * @tparam T Result type
      * @param task Task to execute
-     * @return Future with result
+     * @return Result<std::future<T>> or std::future<T> depending on BUILD_WITH_COMMON_SYSTEM
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    template<typename T>
+    Result<std::future<T>> execute_with_result(std::function<T()> task) {
+        // Default implementation using std::async
+        try {
+            return common::ok(std::async(std::launch::async, std::move(task)));
+        } catch (const std::exception& e) {
+            return common::error<std::future<T>>(
+                common::error_codes::THREAD_ERROR_BASE - 1,
+                "Failed to launch async task",
+                "IExecutor",
+                e.what()
+            );
+        }
+    }
+#else
     template<typename T>
     std::future<T> execute_with_result(std::function<T()> task) {
         // Default implementation using std::async
         return std::async(std::launch::async, std::move(task));
     }
+#endif
 
     /**
      * @brief Get executor capacity
@@ -130,14 +203,28 @@ public:
 
     /**
      * @brief Initialize the service
-     * @return True if successful
+     * @return VoidResult indicating success or failure with details
+     *
+     * @note Provides detailed error information about initialization failures
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult initialize() = 0;
+#else
+    [[deprecated("Use VoidResult version when BUILD_WITH_COMMON_SYSTEM is enabled")]]
     virtual bool initialize() = 0;
+#endif
 
     /**
      * @brief Shutdown the service
+     * @return VoidResult indicating success or error
+     *
+     * @note Can fail during resource cleanup
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult shutdown() = 0;
+#else
     virtual void shutdown() = 0;
+#endif
 
     /**
      * @brief Check if service is running
@@ -162,8 +249,15 @@ public:
     /**
      * @brief Apply configuration
      * @param config Configuration object (any type)
+     * @return VoidResult indicating success or error
+     *
+     * @note Can fail if configuration is invalid or cannot be applied
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult configure(const std::any& config) = 0;
+#else
     virtual void configure(const std::any& config) = 0;
+#endif
 
     /**
      * @brief Get current configuration
@@ -174,9 +268,16 @@ public:
     /**
      * @brief Validate configuration
      * @param config Configuration to validate
-     * @return True if valid
+     * @return VoidResult with error details if invalid
+     *
+     * @note Provides specific information about what makes the configuration invalid
      */
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    virtual VoidResult validate_configuration(const std::any& config) const = 0;
+#else
+    [[deprecated("Use VoidResult version when BUILD_WITH_COMMON_SYSTEM is enabled")]]
     virtual bool validate_configuration(const std::any& config) const = 0;
+#endif
 };
 
 } // namespace kcenon::shared
