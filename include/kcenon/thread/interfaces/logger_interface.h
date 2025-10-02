@@ -25,6 +25,35 @@
 
 #pragma once
 
+/**
+ * @file logger_interface.h
+ * @brief DEPRECATED: This interface is deprecated and will be removed in v2.0
+ *
+ * Phase 2: Logger Interface Unification
+ *
+ * This interface has been superseded by common::interfaces::ILogger.
+ * Please migrate to the unified logger interface in common_system:
+ *
+ * Migration:
+ *   OLD: #include <kcenon/thread/interfaces/logger_interface.h>
+ *        kcenon::thread::logger_interface* logger;
+ *
+ *   NEW: #include <kcenon/common/interfaces/logger_interface.h>
+ *        common::interfaces::ILogger* logger;
+ *
+ * The unified interface provides:
+ * - Result<T> based error handling
+ * - Consistent log_level ordering (trace=0...critical=5)
+ * - Extended configuration with ILoggerRegistry
+ * - Better integration across all systems
+ *
+ * Deprecation Timeline:
+ * - v1.x: Deprecated but functional (current)
+ * - v2.0: Removed entirely
+ *
+ * @deprecated Use common::interfaces::ILogger instead
+ */
+
 #include <memory>
 #include <mutex>
 #include <string>
@@ -33,6 +62,10 @@ namespace kcenon::thread {
 
 /**
  * @brief Log level enumeration
+ * @deprecated Use common::interfaces::log_level instead
+ *
+ * WARNING: This enumeration has inverted ordering (critical=0, trace=5).
+ * The unified interface uses standard ordering (trace=0, critical=5).
  */
 enum class log_level {
   critical = 0,
@@ -45,11 +78,17 @@ enum class log_level {
 
 /**
  * @brief Logger interface for thread system
+ * @deprecated Use common::interfaces::ILogger instead
  *
  * This interface allows the thread system to log messages without
  * depending on a specific logger implementation.
+ *
+ * MIGRATION: Replace with common::interfaces::ILogger which provides:
+ * - VoidResult return types for better error handling
+ * - Unified log_entry structure
+ * - Compatible method signatures
  */
-class logger_interface {
+class [[deprecated("Use common::interfaces::ILogger instead")]] logger_interface {
 public:
   virtual ~logger_interface() = default;
 
@@ -87,10 +126,16 @@ public:
 
 /**
  * @brief Global logger registry
+ * @deprecated Use common::interfaces::ILoggerRegistry instead
  *
  * Manages the global logger instance used by the thread system.
+ *
+ * MIGRATION: Use the unified ILoggerRegistry interface which provides:
+ * - Named logger support
+ * - Thread-safe registration
+ * - Default logger management
  */
-class logger_registry {
+class [[deprecated("Use common::interfaces::ILoggerRegistry instead")]] logger_registry {
 public:
   /**
    * @brief Set the global logger instance
