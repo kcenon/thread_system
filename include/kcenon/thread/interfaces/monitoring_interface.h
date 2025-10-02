@@ -1,5 +1,25 @@
 #pragma once
 
+/**
+ * @file monitoring_interface.h
+ * @brief DEPRECATED: Thread-specific monitoring interface
+ *
+ * ⚠️ DEPRECATION WARNING ⚠️
+ * This interface is deprecated and will be removed in version 2.0.0.
+ *
+ * Migration Path:
+ * - Use common::interfaces::IMonitor for monitoring implementations
+ * - Use common::interfaces::thread_pool_metrics for thread pool metrics
+ * - Use common::interfaces::worker_metrics for worker thread metrics
+ * - Use common::interfaces::system_metrics for system-level metrics
+ *
+ * Timeline:
+ * - Deprecated: 2025-10-02 (Phase 2)
+ * - Removal: Version 2.0.0
+ *
+ * See: common_system/include/kcenon/common/interfaces/monitoring_interface.h
+ */
+
 /*****************************************************************************
 BSD 3-Clause License
 
@@ -39,6 +59,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstdint>
 #include <string>
 
+/**
+ * @namespace monitoring_interface
+ * @brief DEPRECATED: Thread-specific monitoring types
+ *
+ * ⚠️ This namespace is deprecated. Use common::interfaces types instead.
+ *
+ * Replacement mapping:
+ * - monitoring_interface::thread_pool_metrics → common::interfaces::thread_pool_metrics
+ * - monitoring_interface::worker_metrics → common::interfaces::worker_metrics
+ * - monitoring_interface::system_metrics → common::interfaces::system_metrics
+ * - monitoring_interface::monitoring_interface → common::interfaces::IMonitor
+ */
 namespace monitoring_interface {
 
     // Forward declarations for multi-process support
@@ -51,6 +83,7 @@ namespace monitoring_interface {
     /**
      * @struct system_metrics
      * @brief System-level performance metrics interface.
+     * @deprecated Use common::interfaces::system_metrics instead
      */
     struct system_metrics {
         std::uint64_t cpu_usage_percent{0};
@@ -65,6 +98,7 @@ namespace monitoring_interface {
     /**
      * @struct thread_pool_metrics
      * @brief Thread pool performance metrics interface.
+     * @deprecated Use common::interfaces::thread_pool_metrics instead
      */
     struct thread_pool_metrics {
         std::uint64_t jobs_completed{0};
@@ -85,6 +119,7 @@ namespace monitoring_interface {
     /**
      * @struct worker_metrics
      * @brief Worker thread performance metrics interface.
+     * @deprecated Use common::interfaces::worker_metrics instead
      */
     struct worker_metrics {
         std::uint64_t jobs_processed{0};
@@ -99,6 +134,7 @@ namespace monitoring_interface {
     /**
      * @struct metrics_snapshot
      * @brief Complete snapshot of all metrics at a point in time.
+     * @deprecated Use common::interfaces::metrics_snapshot instead
      */
     struct metrics_snapshot {
         system_metrics system;
@@ -112,7 +148,8 @@ namespace monitoring_interface {
     /**
      * @class monitoring_interface
      * @brief Abstract interface for monitoring system.
-     * 
+     * @deprecated Use common::interfaces::IMonitor instead
+     *
      * This interface allows the thread system to report metrics
      * without depending on a specific monitoring implementation.
      */
@@ -178,7 +215,8 @@ namespace monitoring_interface {
     /**
      * @class null_monitoring
      * @brief No-op implementation of monitoring interface.
-     * 
+     * @deprecated This class will be removed in version 2.0.0
+     *
      * Used when monitoring is disabled or not configured.
      */
     class null_monitoring : public monitoring_interface {
