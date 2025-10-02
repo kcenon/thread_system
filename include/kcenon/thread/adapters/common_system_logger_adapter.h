@@ -12,6 +12,7 @@
 #ifdef BUILD_WITH_COMMON_SYSTEM
 #include <kcenon/common/interfaces/logger_interface.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/common/adapters/typed_adapter.h>
 #endif
 
 #include "../interfaces/logger_interface.h"
@@ -25,8 +26,15 @@ namespace kcenon::thread::adapters {
  *
  * This adapter allows thread_system's logger to be used
  * through the standard common_system logger interface.
+ *
+ * Now inherits from typed_adapter for:
+ * - Type safety and wrapper depth tracking
+ * - Automatic prevention of infinite adapter chains (max depth: 2)
+ * - Unwrap support to access underlying logger_interface
  */
-class common_system_logger_adapter : public ::common::interfaces::ILogger {
+class common_system_logger_adapter
+    : public ::common::adapters::typed_adapter<::common::interfaces::ILogger, logger_interface> {
+    using base_type = ::common::adapters::typed_adapter<::common::interfaces::ILogger, logger_interface>;
 public:
     /**
      * @brief Construct adapter with thread_system logger
@@ -34,7 +42,7 @@ public:
      */
     explicit common_system_logger_adapter(
         std::shared_ptr<logger_interface> logger)
-        : logger_(logger) {}
+        : base_type(logger) {}
 
     ~common_system_logger_adapter() override = default;
 
@@ -44,14 +52,14 @@ public:
     ::common::VoidResult log(
         ::common::interfaces::log_level level,
         const std::string& message) override {
-        if (!logger_) {
+        if (!this->impl_) {
             return ::common::VoidResult(
                 ::common::error_info(1, "Logger not initialized", "thread_system"));
         }
 
         // Convert common log level to thread_system log level
         auto thread_level = convert_level_to_thread(level);
-        logger_->log(thread_level, message);
+        this->impl_->log(thread_level, message);
         return ::common::VoidResult(std::monostate{});
     }
 
@@ -64,13 +72,13 @@ public:
         const std::string& file,
         int line,
         const std::string& function) override {
-        if (!logger_) {
+        if (!this->impl_) {
             return ::common::VoidResult(
                 ::common::error_info(1, "Logger not initialized", "thread_system"));
         }
 
         auto thread_level = convert_level_to_thread(level);
-        logger_->log(thread_level, message, file, line, function);
+        this->impl_->log(thread_level, message, file, line, function);
         return ::common::VoidResult(std::monostate{});
     }
 
@@ -79,13 +87,13 @@ public:
      */
     ::common::VoidResult log(
         const ::common::interfaces::log_entry& entry) override {
-        if (!logger_) {
+        if (!this->impl_) {
             return ::common::VoidResult(
                 ::common::error_info(1, "Logger not initialized", "thread_system"));
         }
 
         auto thread_level = convert_level_to_thread(entry.level);
-        logger_->log(thread_level, entry.message,
+        this->impl_->log(thread_level, entry.message,
                     entry.file, entry.line, entry.function);
         return ::common::VoidResult(std::monostate{});
     }
@@ -94,11 +102,11 @@ public:
      * @brief Check if logging is enabled for the specified level
      */
     bool is_enabled(::common::interfaces::log_level level) const override {
-        if (!logger_) {
+        if (!this->impl_) {
             return false;
         }
         auto thread_level = convert_level_to_thread(level);
-        return logger_->is_enabled(thread_level);
+        return this->impl_->is_enabled(thread_level);
     }
 
     /**
@@ -123,16 +131,15 @@ public:
      * @brief Flush any buffered log messages
      */
     ::common::VoidResult flush() override {
-        if (!logger_) {
+        if (!this->impl_) {
             return ::common::VoidResult(
                 ::common::error_info(1, "Logger not initialized", "thread_system"));
         }
-        logger_->flush();
+        this->impl_->flush();
         return ::common::VoidResult(std::monostate{});
     }
 
 private:
-    std::shared_ptr<logger_interface> logger_;
     ::common::interfaces::log_level min_level_ = ::common::interfaces::log_level::info;
 
     /**
