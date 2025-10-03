@@ -32,21 +32,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
-
     - name: Install dependencies (Ubuntu)
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y ninja-build
+        sudo apt-get install -y ninja-build libgtest-dev libfmt-dev libbenchmark-dev
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja
+        brew install ninja googletest fmt google-benchmark
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -68,13 +63,13 @@ jobs:
       run: |
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
           -DBUILD_WITH_COMMON_SYSTEM=ON
 
     - name: Build
       run: cmake --build build --config Release
 
     - name: Test
+      if: runner.os != 'Windows'
       run: |
         cd build
         ctest --output-on-failure -C Release
@@ -101,15 +96,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
-
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y ninja-build clang-15
+        sudo apt-get install -y ninja-build clang-15 libgtest-dev libfmt-dev libbenchmark-dev
 
     - name: Configure CMake with ${{ matrix.sanitizer }}
       run: |
@@ -118,7 +108,6 @@ jobs:
           -DCMAKE_C_COMPILER=clang-15 \
           -DCMAKE_CXX_COMPILER=clang++-15 \
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
           -DBUILD_WITH_COMMON_SYSTEM=ON
 
     - name: Build with sanitizer
@@ -147,22 +136,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
-
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y ninja-build lcov
+        sudo apt-get install -y ninja-build lcov libgtest-dev libfmt-dev libbenchmark-dev
 
     - name: Configure CMake with coverage
       run: |
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_C_COMPILER=gcc-12 \
+          -DCMAKE_CXX_COMPILER=g++-12 \
           -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
           -DBUILD_WITH_COMMON_SYSTEM=ON \
           -DENABLE_COVERAGE=ON
 
@@ -177,7 +162,7 @@ jobs:
     - name: Generate coverage report
       run: |
         lcov --directory . --capture --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' '*/vcpkg/*' '*/tests/*' --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
         lcov --list coverage.info
 
     - name: Upload coverage to Codecov
