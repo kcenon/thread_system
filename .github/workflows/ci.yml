@@ -81,7 +81,7 @@ jobs:
 
     - name: Upload build artifacts
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-${{ matrix.os }}-${{ matrix.compiler }}-logs
         path: |
@@ -134,7 +134,7 @@ jobs:
 
     - name: Upload sanitizer logs
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: sanitizer-${{ matrix.sanitizer }}-logs
         path: build/Testing/Temporary/
@@ -181,7 +181,7 @@ jobs:
         lcov --list coverage.info
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         files: ./coverage.info
         fail_ci_if_error: false
