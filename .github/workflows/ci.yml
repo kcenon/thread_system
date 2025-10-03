@@ -52,17 +52,25 @@ jobs:
     - name: Set up compiler (Clang)
       if: matrix.compiler == 'clang' && runner.os != 'Windows'
       run: |
-        echo "CC=clang-15" >> $GITHUB_ENV
-        echo "CXX=clang++-15" >> $GITHUB_ENV
+        echo "CC=clang" >> $GITHUB_ENV
+        echo "CXX=clang++" >> $GITHUB_ENV
 
     - name: Set up compiler (MSVC)
       if: matrix.compiler == 'msvc'
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Configure CMake
+    - name: Configure CMake (Unix)
+      if: runner.os != 'Windows'
       run: |
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_WITH_COMMON_SYSTEM=ON
+
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        cmake -B build -G Ninja `
+          -DCMAKE_BUILD_TYPE=Release `
           -DBUILD_WITH_COMMON_SYSTEM=ON
 
     - name: Build
@@ -99,14 +107,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y ninja-build clang-15 libgtest-dev libfmt-dev libbenchmark-dev
+        sudo apt-get install -y ninja-build clang libgtest-dev libfmt-dev libbenchmark-dev
 
     - name: Configure CMake with ${{ matrix.sanitizer }}
       run: |
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
-          -DCMAKE_C_COMPILER=clang-15 \
-          -DCMAKE_CXX_COMPILER=clang++-15 \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
           -DBUILD_WITH_COMMON_SYSTEM=ON
 
