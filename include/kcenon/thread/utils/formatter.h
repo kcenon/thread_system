@@ -40,7 +40,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <format>
 #else
 // Use fmt library as fallback when std::format is not available
+#ifdef HAS_FMT_LIBRARY
 #include <fmt/format.h>
+#endif
 #include <sstream>
 #include <iomanip>
 #endif

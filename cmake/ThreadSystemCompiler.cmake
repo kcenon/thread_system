@@ -12,7 +12,7 @@ function(setup_thread_system_compiler_flags)
   # Compiler-specific configuration
   if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     # For GCC and Clang compilers
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20" PARENT_SCOPE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wno-deprecated-declarations" PARENT_SCOPE)
 
     # Add additional flags for macOS
     if(APPLE)
@@ -21,7 +21,7 @@ function(setup_thread_system_compiler_flags)
     endif()
   elseif(MSVC)
     # For Microsoft Visual C++ compiler
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest /Zc:__cplusplus" PARENT_SCOPE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest /Zc:__cplusplus /wd4996" PARENT_SCOPE)
   endif()
 
   message(STATUS "Compiler flags configured for ${CMAKE_CXX_COMPILER_ID}")

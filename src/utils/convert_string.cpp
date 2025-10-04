@@ -49,7 +49,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef _WIN32
 #include <windows.h>
 #else
+#ifdef HAS_ICONV
 #include "iconv.h"
+#endif
 #endif
 
 /**
@@ -124,6 +126,7 @@ namespace utility_module
 								 const std::string& to_encoding)
 		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
 	{
+#ifdef HAS_ICONV
 		iconv_t cd = iconv_open(to_encoding.c_str(), from_encoding.c_str());
 		if (cd == (iconv_t)-1)
 		{
@@ -164,6 +167,17 @@ namespace utility_module
 								converted_size / sizeof(typename ToType::value_type));
 
 		return { converted_string, std::nullopt };
+#else
+		// Fallback when iconv is not available
+		(void)from_encoding;
+		(void)to_encoding;
+
+		if constexpr (std::is_same_v<FromType, ToType>) {
+			return { static_cast<ToType>(value), std::nullopt };
+		} else {
+			return { std::nullopt, "Character encoding conversion not supported without iconv" };
+		}
+#endif
 	}
 #endif
 

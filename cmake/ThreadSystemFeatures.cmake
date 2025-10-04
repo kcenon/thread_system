@@ -107,6 +107,8 @@ function(check_std_format_support)
     set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format" FORCE)
   else()
     set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
+    # When not using std::format, we should use fmt library
+    add_definitions(-DHAS_FMT_LIBRARY)
   endif()
 
   # Export result to parent scope
