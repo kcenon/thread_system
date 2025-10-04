@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <root name="."/>
+    <builddir>build/cppcheck</builddir>
+    <importproject>compile_commands.json</importproject>
+    <analyze-all-vs-configs>true</analyze-all-vs-configs>
+    <check-headers>true</check-headers>
+    <check-unused-templates>true</check-unused-templates>
+    <max-ctu-depth>4</max-ctu-depth>
+    <max-template-recursion>100</max-template-recursion>
+
+    <!-- Paths to check -->
+    <paths>
+        <dir name="include/"/>
+        <dir name="src/"/>
+        <dir name="core/"/>
+        <dir name="interfaces/"/>
+        <dir name="utilities/"/>
+    </paths>
+
+    <!-- Excluded paths -->
+    <exclude>
+        <path name="build/"/>
+        <path name="build-*/"/>
+        <path name="vcpkg/"/>
+        <path name="vcpkg_installed/"/>
+        <path name=".git/"/>
+        <path name="tests/"/>
+        <path name="samples/"/>
+        <path name="benchmarks/"/>
+    </exclude>
+
+    <!-- Suppressions for thread system -->
+    <suppressions>
+        <!-- Suppress performance warnings for interface adaptors -->
+        <suppression>passedByValue</suppression>
+
+        <!-- Suppress warnings about lock-free code patterns -->
+        <suppression>
+            <id>variableScope</id>
+            <fileName>lockfree/</fileName>
+        </suppression>
+
+        <!-- Suppress RAII warnings for thread management -->
+        <suppression>
+            <id>resourceLeak</id>
+            <fileName>core/thread_base.cpp</fileName>
+        </suppression>
+    </suppressions>
+
+    <!-- Enabled checks -->
+    <addon>threadsafety.py</addon>
+    <addon>cert.py</addon>
+</project>
