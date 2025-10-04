@@ -34,12 +34,12 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libgtest-dev libgmock-dev
+        sudo apt-get install -y cmake ninja-build g++ clang libgtest-dev libgmock-dev libfmt-dev
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja googletest
+        brew install ninja googletest fmt
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'

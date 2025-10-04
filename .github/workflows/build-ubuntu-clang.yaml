@@ -33,7 +33,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y cmake build-essential gdb pkg-config curl zip unzip tar clang autoconf automake autoconf-archive ninja-build
-          sudo apt install -y libgtest-dev libgmock-dev
+          sudo apt install -y libgtest-dev libgmock-dev libfmt-dev
 
       - name: Check architecture
         run: |
