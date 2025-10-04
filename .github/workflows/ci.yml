@@ -68,8 +68,9 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         git clone https://github.com/Microsoft/vcpkg.git
-        .\vcpkg\bootstrap-vcpkg.bat
-        .\vcpkg\vcpkg install fmt:x64-windows
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        .\vcpkg install fmt:x64-windows
 
     - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
@@ -91,9 +92,10 @@ jobs:
 
     - name: Test (Unix)
       if: runner.os != 'Windows'
+      timeout-minutes: 5
       run: |
         cd build
-        ctest -C Debug --output-on-failure --verbose || true
+        ctest -C Debug --output-on-failure --timeout 60 || true
 
     - name: Upload build artifacts
       if: failure()
