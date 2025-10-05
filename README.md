@@ -1047,6 +1047,48 @@ We welcome contributions! Please see our [Contributing Guide](./docs/CONTRIBUTIN
 - **Discussions**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **Email**: kcenon@naver.com
 
+## Phase 0: Foundation Status
+
+This project is undergoing systematic architecture improvements following a phased approach.
+
+### Current Phase: Phase 0 - Foundation and Tooling Setup
+
+#### Completed Tasks
+- ✅ **CI/CD Pipeline Enhancement**
+  - Sanitizer builds (ThreadSanitizer, AddressSanitizer, UBSanitizer)
+  - Multi-platform testing (Ubuntu GCC, Ubuntu Clang, Windows MSYS2, Windows VS)
+  - Automated test execution
+
+- ✅ **Test Coverage Analysis**
+  - lcov-based coverage reporting
+  - Codecov integration
+  - HTML coverage reports
+
+- ✅ **Static Analysis Baseline**
+  - Clang-tidy configuration
+  - Cppcheck integration
+  - Baseline warning collection
+
+- ✅ **Documentation of Current State**
+  - [Current State Documentation](docs/CURRENT_STATE.md)
+  - [Architecture Issues Catalog](docs/ARCHITECTURE_ISSUES.md)
+
+#### Metrics Baseline
+| Metric | Current Status | Phase 5 Target |
+|--------|---------------|----------------|
+| Test Coverage | ~70% | 80%+ |
+| Static Analysis | Baseline warnings collected | <10 warnings |
+| Sanitizer Issues | Baseline established | 0 warnings |
+| Documentation | 60% | 100% |
+
+#### Next Phase: Phase 1 - Thread Safety Verification
+- Adaptive queue strategy optimization
+- Service registry thread safety review
+- Cancellation token edge case validation
+- ThreadSanitizer compliance
+
+For detailed improvement plans, see the project's NEED_TO_FIX.md.
+
 ## License
 
 This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
