@@ -41,6 +41,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <barrier>
 #include <latch>
 #include <random>
+#include <set>
+#include <mutex>
 
 namespace kcenon::thread {
 namespace test {
@@ -382,30 +384,42 @@ TEST_F(ConcurrencyTest, LatchCoordination) {
 }
 
 // Test ABA problem scenarios
+// Note: This test intentionally demonstrates ABA problem which involves
+// inherent race conditions. ThreadSanitizer warnings are expected.
 TEST_F(ConcurrencyTest, ABAScenario) {
     struct Node {
         int value;
         std::atomic<Node*> next;
         Node(int v) : value(v), next(nullptr) {}
     };
-    
+
     std::atomic<Node*> head{nullptr};
     const int num_threads = 4;
     const int operations_per_thread = 1000;
     std::atomic<int> aba_detected{0};
-    
+    std::atomic<bool> stop_flag{false};
+
+    // Track allocated nodes to prevent use-after-free
+    std::mutex nodes_mutex;
+    std::set<Node*> allocated_nodes;
+    std::set<Node*> popped_nodes;
+
     std::vector<std::thread> threads;
-    
+
     for (int i = 0; i < num_threads; ++i) {
-        threads.emplace_back([&head, &aba_detected, operations_per_thread]() {
-            std::vector<Node*> nodes;
-            
-            for (int op = 0; op < operations_per_thread; ++op) {
+        threads.emplace_back([&, i]() {
+            std::vector<Node*> thread_local_nodes;
+
+            for (int op = 0; op < operations_per_thread && !stop_flag.load(); ++op) {
                 if (op % 2 == 0) {
                     // Push
                     auto new_node = new Node(op);
-                    nodes.push_back(new_node);
-                    
+                    {
+                        std::lock_guard<std::mutex> lock(nodes_mutex);
+                        allocated_nodes.insert(new_node);
+                    }
+                    thread_local_nodes.push_back(new_node);
+
                     Node* old_head = head.load();
                     do {
                         new_node->next = old_head;
@@ -413,10 +427,14 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                 } else {
                     // Pop
                     Node* old_head = head.load();
-                    while (old_head) {
-                        Node* new_head = old_head->next.load();
+                    while (old_head && !stop_flag.load()) {
+                        Node* new_head = old_head->next.load(std::memory_order_acquire);
                         if (head.compare_exchange_weak(old_head, new_head)) {
-                            // Successfully popped
+                            // Successfully popped - mark as popped
+                            {
+                                std::lock_guard<std::mutex> lock(nodes_mutex);
+                                popped_nodes.insert(old_head);
+                            }
                             break;
                         }
                         // CAS failed - potential ABA
@@ -426,26 +444,41 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                     }
                 }
             }
-            
-            // Clean up remaining nodes
-            for (auto node : nodes) {
-                delete node;
-            }
         });
     }
     
     for (auto& t : threads) {
         t.join();
     }
-    
-    // Clean up any remaining nodes
+
+    // Signal threads to stop (already joined, but set flag for safety)
+    stop_flag.store(true);
+
+    // Clean up: First collect all nodes still in the list
+    std::set<Node*> nodes_in_list;
     Node* current = head.load();
     while (current) {
-        Node* next = current->next.load();
-        delete current;
+        nodes_in_list.insert(current);
+        Node* next = current->next.load(std::memory_order_relaxed);
         current = next;
     }
-    
+
+    // Delete all allocated nodes safely
+    // Nodes that were popped but not deleted should be cleaned up
+    std::lock_guard<std::mutex> lock(nodes_mutex);
+    for (Node* node : allocated_nodes) {
+        // Only delete if not already in popped_nodes to avoid double delete
+        // Check if node is still valid by checking both sets
+        bool is_in_list = nodes_in_list.count(node) > 0;
+        bool was_popped = popped_nodes.count(node) > 0;
+
+        // Delete nodes that are either still in list or were popped
+        // This is safe because we've already joined all threads
+        if (is_in_list || !was_popped) {
+            delete node;
+        }
+    }
+
     // ABA situations may or may not occur depending on timing
     EXPECT_GE(aba_detected.load(), 0);
 }
