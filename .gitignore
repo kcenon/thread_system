@@ -61,7 +61,7 @@ documents/html/
 documents/latex/
 
 # Build artifacts
-build/
+build*/
 cmake-build-*/
 out/
 

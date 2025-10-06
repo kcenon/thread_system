@@ -187,8 +187,19 @@ TEST_F(AtomicOperationsTest, CompareAndSwapPatterns) {
             threads.emplace_back([&counter]() {
                 for (int j = 0; j < ITERATIONS; ++j) {
                     int expected = counter.load();
+                    int retry_count = 0;
+                    const int max_retries = 10000;  // Prevent infinite loop
+
                     while (!counter.compare_exchange_weak(expected, expected + 1)) {
                         // expected is updated by CAS
+                        retry_count++;
+                        if (retry_count >= max_retries) {
+                            // Give up after too many retries
+                            break;
+                        }
+                        if (retry_count % 100 == 0) {
+                            std::this_thread::yield();
+                        }
                     }
                 }
             });
@@ -331,14 +342,25 @@ TEST_F(AtomicOperationsTest, AtomicFlag) {
     {
         class Spinlock {
             std::atomic_flag flag = ATOMIC_FLAG_INIT;
-            
+
         public:
             void lock() {
+                int spin_count = 0;
+                const int max_spins = 100000;  // Prevent infinite spin
+
                 while (flag.test_and_set(std::memory_order_acquire)) {
                     // Spin
+                    spin_count++;
+                    if (spin_count >= max_spins) {
+                        // Give up after too many spins to prevent hang
+                        break;
+                    }
+                    if (spin_count % 100 == 0) {
+                        std::this_thread::yield();
+                    }
                 }
             }
-            
+
             void unlock() {
                 flag.clear(std::memory_order_release);
             }

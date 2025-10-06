@@ -71,7 +71,10 @@ public:
     auto get_metrics() -> ::monitoring_interface::metrics_snapshot override {
         return snapshot_;
     }
-    void reset_metrics() override { snapshot_ = {}; }
+    auto reset_metrics() -> common::VoidResult override {
+        snapshot_ = {};
+        return {};
+    }
 private:
     ::monitoring_interface::metrics_snapshot snapshot_{};
 };

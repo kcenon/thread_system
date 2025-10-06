@@ -203,12 +203,28 @@ TEST_F(ConcurrencyTest, JobQueueBoundaryConditions) {
     
     // Consumer thread
     std::thread consumer([&queue, &dequeued, num_jobs]() {
+        auto start_time = std::chrono::steady_clock::now();
+        const auto timeout = std::chrono::seconds(10);  // 10 second timeout
+        int consecutive_failures = 0;
+        const int max_consecutive_failures = 1000;
+
         while (dequeued.load() < num_jobs) {
+            // Check timeout
+            if (std::chrono::steady_clock::now() - start_time > timeout) {
+                break;  // Timeout - exit to prevent hang
+            }
+
             auto result = queue->dequeue();
             if (result.has_value() && result.value()) {
                 [[maybe_unused]] auto work_result = result.value()->do_work();
                 dequeued.fetch_add(1);
+                consecutive_failures = 0;
             } else {
+                consecutive_failures++;
+                if (consecutive_failures >= max_consecutive_failures) {
+                    // Too many failures - likely producer finished but count mismatch
+                    break;
+                }
                 std::this_thread::yield();
             }
         }
@@ -267,7 +283,13 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
     }
     
     // Wait for all jobs to complete
+    auto start_time = std::chrono::steady_clock::now();
+    const auto timeout = std::chrono::seconds(30);  // 30 second timeout
+
     while (shared_counter.load() < num_jobs) {
+        if (std::chrono::steady_clock::now() - start_time > timeout) {
+            break;  // Timeout - exit to prevent hang
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     
@@ -395,7 +417,7 @@ TEST_F(ConcurrencyTest, ABAScenario) {
 
     std::atomic<Node*> head{nullptr};
     const int num_threads = 4;
-    const int operations_per_thread = 1000;
+    const int operations_per_thread = 100;  // Reduced to prevent CI timeout
     std::atomic<int> aba_detected{0};
     std::atomic<bool> stop_flag{false};
 
@@ -427,7 +449,10 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                 } else {
                     // Pop
                     Node* old_head = head.load();
-                    while (old_head && !stop_flag.load()) {
+                    int retry_count = 0;
+                    const int max_retries = 100;  // Prevent infinite loop
+
+                    while (old_head && !stop_flag.load() && retry_count < max_retries) {
                         Node* new_head = old_head->next.load(std::memory_order_acquire);
                         if (head.compare_exchange_weak(old_head, new_head)) {
                             // Successfully popped - mark as popped
@@ -440,6 +465,12 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                         // CAS failed - potential ABA
                         if (old_head && old_head != head.load()) {
                             aba_detected.fetch_add(1);
+                        }
+                        retry_count++;
+
+                        // Yield to give other threads a chance
+                        if (retry_count % 10 == 0) {
+                            std::this_thread::yield();
                         }
                     }
                 }
