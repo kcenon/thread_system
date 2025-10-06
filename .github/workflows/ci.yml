@@ -72,19 +72,57 @@ jobs:
         runVcpkgInstall: true
         vcpkgJsonGlob: '**/vcpkg.json'
 
+    - name: Checkout common_system (optional dependency)
+      if: runner.os != 'Windows'
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
+        fi
+
     - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
       run: |
-        cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
-          -DBUILD_WITH_COMMON_SYSTEM=ON
+        # Check if common_system is available
+        if [ -d "../common_system" ]; then
+          echo "Building with common_system support"
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DBUILD_WITH_COMMON_SYSTEM=ON
+        else
+          echo "Building without common_system support"
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DBUILD_WITH_COMMON_SYSTEM=OFF
+        fi
+
+    - name: Checkout common_system (optional dependency - Windows)
+      if: runner.os == 'Windows'
+      continue-on-error: true
+      run: |
+        cd ..
+        if (-not (Test-Path "common_system")) {
+          git clone https://github.com/kcenon/common_system.git
+          if (-not $?) {
+            Write-Host "common_system not available, will build without it"
+          }
+        }
 
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
       run: |
+        # Check if common_system is available
+        $buildWithCommon = "OFF"
+        if (Test-Path "../common_system") {
+          Write-Host "Building with common_system support"
+          $buildWithCommon = "ON"
+        } else {
+          Write-Host "Building without common_system support"
+        }
         cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=Debug `
-          -DBUILD_WITH_COMMON_SYSTEM=ON `
+          -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
           -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
           -DVCPKG_TARGET_TRIPLET=x64-windows
 
@@ -151,14 +189,30 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y cmake ninja-build clang libgtest-dev libgmock-dev libfmt-dev
 
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
+        fi
+
     - name: Configure CMake with ${{ matrix.sanitizer }} sanitizer
       run: |
+        # Check if common_system is available
+        if [ -d "../common_system" ]; then
+          echo "Building with common_system support"
+          BUILD_WITH_COMMON="ON"
+        else
+          echo "Building without common_system support"
+          BUILD_WITH_COMMON="OFF"
+        fi
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_COMPILER=clang \
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
-          -DBUILD_WITH_COMMON_SYSTEM=ON
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
 
     - name: Build with sanitizer
       run: cmake --build build --config Debug
