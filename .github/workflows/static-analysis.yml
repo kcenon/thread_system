@@ -1,0 +1,149 @@
+name: Static Analysis
+
+on:
+  push:
+    branches: [ main, phase-* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  clang-tidy:
+    name: Clang-Tidy Analysis
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build clang clang-tidy libgtest-dev libgmock-dev
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+          -DCMAKE_CXX_COMPILER=clang++ \
+          -DCMAKE_C_COMPILER=clang \
+          -DBUILD_WITH_COMMON_SYSTEM=OFF \
+          -DBUILD_DOCUMENTATION=OFF
+
+    - name: Run clang-tidy
+      continue-on-error: true  # Phase 0: Allow failures, collect baseline
+      run: |
+        # Find all C++ source and header files
+        find include -name "*.h" -o -name "*.hpp" | while read file; do
+          echo "Analyzing: $file"
+          clang-tidy "$file" -p=build -- -std=c++20 || true
+        done > clang-tidy-results.txt 2>&1
+
+    - name: Count warnings by category
+      if: always()
+      run: |
+        echo "## Clang-Tidy Warning Summary" > clang-tidy-summary.md
+        echo "" >> clang-tidy-summary.md
+        echo "Phase 0 Baseline - $(date +%Y-%m-%d)" >> clang-tidy-summary.md
+        echo "" >> clang-tidy-summary.md
+
+        if [ -f clang-tidy-results.txt ]; then
+          # Count total warnings
+          TOTAL=$(grep -c "warning:" clang-tidy-results.txt || echo "0")
+          echo "Total warnings: $TOTAL" >> clang-tidy-summary.md
+          echo "" >> clang-tidy-summary.md
+
+          # Count by category
+          echo "### Warnings by Category" >> clang-tidy-summary.md
+          grep "warning:" clang-tidy-results.txt | \
+            sed 's/.*\[\(.*\)\]/\1/' | \
+            sort | uniq -c | sort -rn >> clang-tidy-summary.md || true
+        else
+          echo "No warnings file generated" >> clang-tidy-summary.md
+        fi
+
+        cat clang-tidy-summary.md
+
+    - name: Upload analysis results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: clang-tidy-baseline
+        path: |
+          clang-tidy-results.txt
+          clang-tidy-summary.md
+        retention-days: 90  # Keep baseline for reference
+
+    - name: Add summary to job
+      if: always()
+      run: |
+        if [ -f clang-tidy-summary.md ]; then
+          cat clang-tidy-summary.md >> $GITHUB_STEP_SUMMARY
+        fi
+
+  cppcheck:
+    name: Cppcheck Analysis
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install cppcheck
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cppcheck
+
+    - name: Run cppcheck
+      continue-on-error: true  # Phase 0: Allow failures, collect baseline
+      run: |
+        cppcheck --enable=all \
+          --std=c++20 \
+          --suppress=missingIncludeSystem \
+          --suppress=unusedFunction \
+          --suppress=unmatchedSuppression \
+          --inline-suppr \
+          --xml \
+          --xml-version=2 \
+          -I include \
+          include 2> cppcheck-results.xml || true
+
+    - name: Generate cppcheck report
+      if: always()
+      run: |
+        echo "## Cppcheck Analysis Summary" > cppcheck-summary.md
+        echo "" >> cppcheck-summary.md
+        echo "Phase 0 Baseline - $(date +%Y-%m-%d)" >> cppcheck-summary.md
+        echo "" >> cppcheck-summary.md
+
+        if [ -f cppcheck-results.xml ]; then
+          # Count errors by severity
+          echo "### Issues by Severity" >> cppcheck-summary.md
+          grep -oP 'severity="\K[^"]+' cppcheck-results.xml | \
+            sort | uniq -c | sort -rn >> cppcheck-summary.md || true
+        else
+          echo "No cppcheck results generated" >> cppcheck-summary.md
+        fi
+
+        cat cppcheck-summary.md
+
+    - name: Upload cppcheck results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cppcheck-baseline
+        path: |
+          cppcheck-results.xml
+          cppcheck-summary.md
+        retention-days: 90
+
+    - name: Add summary to job
+      if: always()
+      run: |
+        if [ -f cppcheck-summary.md ]; then
+          cat cppcheck-summary.md >> $GITHUB_STEP_SUMMARY
+        fi
