@@ -22,13 +22,29 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y cmake ninja-build g++ libgtest-dev libgmock-dev libfmt-dev lcov
 
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
+        fi
+
     - name: Configure CMake with coverage
       run: |
+        # Check if common_system is available
+        if [ -d "../common_system" ]; then
+          echo "Building with common_system support"
+          BUILD_WITH_COMMON="ON"
+        else
+          echo "Building without common_system support"
+          BUILD_WITH_COMMON="OFF"
+        fi
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
           -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
-          -DBUILD_WITH_COMMON_SYSTEM=ON
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
 
     - name: Build with coverage
       run: cmake --build build --config Debug
