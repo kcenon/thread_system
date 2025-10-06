@@ -454,29 +454,11 @@ TEST_F(ConcurrencyTest, ABAScenario) {
     // Signal threads to stop (already joined, but set flag for safety)
     stop_flag.store(true);
 
-    // Clean up: First collect all nodes still in the list
-    std::set<Node*> nodes_in_list;
-    Node* current = head.load();
-    while (current) {
-        nodes_in_list.insert(current);
-        Node* next = current->next.load(std::memory_order_relaxed);
-        current = next;
-    }
-
-    // Delete all allocated nodes safely
-    // Nodes that were popped but not deleted should be cleaned up
+    // Clean up: Delete all allocated nodes
+    // All threads have been joined, so it's safe to delete all nodes
     std::lock_guard<std::mutex> lock(nodes_mutex);
     for (Node* node : allocated_nodes) {
-        // Only delete if not already in popped_nodes to avoid double delete
-        // Check if node is still valid by checking both sets
-        bool is_in_list = nodes_in_list.count(node) > 0;
-        bool was_popped = popped_nodes.count(node) > 0;
-
-        // Delete nodes that are either still in list or were popped
-        // This is safe because we've already joined all threads
-        if (is_in_list || !was_popped) {
-            delete node;
-        }
+        delete node;
     }
 
     // ABA situations may or may not occur depending on timing
