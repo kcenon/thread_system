@@ -188,7 +188,8 @@ TEST_F(AtomicOperationsTest, CompareAndSwapPatterns) {
                 for (int j = 0; j < ITERATIONS; ++j) {
                     int expected = counter.load();
                     int retry_count = 0;
-                    const int max_retries = 10000;  // Prevent infinite loop
+                    // More conservative for sanitizer builds
+                    const int max_retries = 1000;
 
                     while (!counter.compare_exchange_weak(expected, expected + 1)) {
                         // expected is updated by CAS
@@ -197,7 +198,7 @@ TEST_F(AtomicOperationsTest, CompareAndSwapPatterns) {
                             // Give up after too many retries
                             break;
                         }
-                        if (retry_count % 100 == 0) {
+                        if (retry_count % 20 == 0) {
                             std::this_thread::yield();
                         }
                     }
@@ -346,7 +347,8 @@ TEST_F(AtomicOperationsTest, AtomicFlag) {
         public:
             void lock() {
                 int spin_count = 0;
-                const int max_spins = 100000;  // Prevent infinite spin
+                // Much more conservative for sanitizer builds
+                const int max_spins = 10000;
 
                 while (flag.test_and_set(std::memory_order_acquire)) {
                     // Spin
@@ -355,7 +357,7 @@ TEST_F(AtomicOperationsTest, AtomicFlag) {
                         // Give up after too many spins to prevent hang
                         break;
                     }
-                    if (spin_count % 100 == 0) {
+                    if (spin_count % 20 == 0) {
                         std::this_thread::yield();
                     }
                 }

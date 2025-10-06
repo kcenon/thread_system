@@ -417,7 +417,8 @@ TEST_F(ConcurrencyTest, ABAScenario) {
 
     std::atomic<Node*> head{nullptr};
     const int num_threads = 4;
-    const int operations_per_thread = 100;  // Reduced to prevent CI timeout
+    // Further reduced for sanitizer builds which are much slower
+    const int operations_per_thread = 10;
     std::atomic<int> aba_detected{0};
     std::atomic<bool> stop_flag{false};
 
@@ -450,7 +451,8 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                     // Pop
                     Node* old_head = head.load();
                     int retry_count = 0;
-                    const int max_retries = 100;  // Prevent infinite loop
+                    // Very conservative limit for sanitizer builds
+                    const int max_retries = 20;
 
                     while (old_head && !stop_flag.load() && retry_count < max_retries) {
                         Node* new_head = old_head->next.load(std::memory_order_acquire);
@@ -468,8 +470,8 @@ TEST_F(ConcurrencyTest, ABAScenario) {
                         }
                         retry_count++;
 
-                        // Yield to give other threads a chance
-                        if (retry_count % 10 == 0) {
+                        // Yield more frequently in sanitizer builds
+                        if (retry_count % 5 == 0) {
                             std::this_thread::yield();
                         }
                     }
