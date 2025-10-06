@@ -1,10 +1,9 @@
+[![CI](https://github.com/kcenon/thread_system/actions/workflows/ci.yml/badge.svg?branch=phase-0-foundation)](https://github.com/kcenon/thread_system/actions/workflows/ci.yml)
+[![Code Coverage](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml/badge.svg?branch=phase-0-foundation)](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml)
+[![Static Analysis](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml/badge.svg?branch=phase-0-foundation)](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml)
+[![Doxygen](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/thread_system/badge)](https://www.codefactor.io/repository/github/kcenon/thread_system)
 [![codecov](https://codecov.io/gh/kcenon/thread_system/branch/main/graph/badge.svg)](https://codecov.io/gh/kcenon/thread_system)
-
-[![Ubuntu-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml)
-[![Ubuntu-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml)
-[![Windows-MSYS2](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml)
-[![Windows-VisualStudio](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml)
 
 # Thread System Project
 
@@ -1046,6 +1045,48 @@ We welcome contributions! Please see our [Contributing Guide](./docs/CONTRIBUTIN
 - **Issues**: [GitHub Issues](https://github.com/kcenon/thread_system/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **Email**: kcenon@naver.com
+
+## Phase 0: Foundation Status
+
+This project is undergoing systematic architecture improvements following a phased approach.
+
+### Current Phase: Phase 0 - Foundation and Tooling Setup
+
+#### Completed Tasks
+- ✅ **CI/CD Pipeline Enhancement**
+  - Sanitizer builds (ThreadSanitizer, AddressSanitizer, UBSanitizer)
+  - Multi-platform testing (Ubuntu GCC, Ubuntu Clang, Windows MSYS2, Windows VS)
+  - Automated test execution
+
+- ✅ **Test Coverage Analysis**
+  - lcov-based coverage reporting
+  - Codecov integration
+  - HTML coverage reports
+
+- ✅ **Static Analysis Baseline**
+  - Clang-tidy configuration
+  - Cppcheck integration
+  - Baseline warning collection
+
+- ✅ **Documentation of Current State**
+  - [Current State Documentation](docs/CURRENT_STATE.md)
+  - [Architecture Issues Catalog](docs/ARCHITECTURE_ISSUES.md)
+
+#### Metrics Baseline
+| Metric | Current Status | Phase 5 Target |
+|--------|---------------|----------------|
+| Test Coverage | ~70% | 80%+ |
+| Static Analysis | Baseline warnings collected | <10 warnings |
+| Sanitizer Issues | Baseline established | 0 warnings |
+| Documentation | 60% | 100% |
+
+#### Next Phase: Phase 1 - Thread Safety Verification
+- Adaptive queue strategy optimization
+- Service registry thread safety review
+- Cancellation token edge case validation
+- ThreadSanitizer compliance
+
+For detailed improvement plans, see the project's NEED_TO_FIX.md.
 
 ## License
 

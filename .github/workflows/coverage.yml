@@ -1,0 +1,106 @@
+name: Code Coverage
+
+on:
+  push:
+    branches: [ main, phase-* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage:
+    name: Coverage Analysis
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build g++ libgtest-dev libgmock-dev libfmt-dev lcov
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
+        fi
+
+    - name: Configure CMake with coverage
+      run: |
+        # Check if common_system is available
+        if [ -d "../common_system" ]; then
+          echo "Building with common_system support"
+          BUILD_WITH_COMMON="ON"
+        else
+          echo "Building without common_system support"
+          BUILD_WITH_COMMON="OFF"
+        fi
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
+          -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
+
+    - name: Build with coverage
+      run: cmake --build build --config Debug
+
+    - name: Run tests
+      run: |
+        cd build
+        ctest -C Debug --output-on-failure --verbose || true
+
+    - name: Generate coverage report
+      run: |
+        cd build
+        # Capture coverage data
+        lcov --directory . --capture --output-file coverage.info || true
+
+        # Filter out system headers and test files
+        lcov --remove coverage.info '/usr/*' '*/test/*' '*/tests/*' '*/examples/*' --output-file coverage_filtered.info || true
+
+        # Generate HTML report
+        genhtml coverage_filtered.info --output-directory coverage_html || true
+
+        # Print summary
+        lcov --list coverage_filtered.info || true
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./build/coverage_filtered.info
+        flags: unittests
+        name: thread_system-coverage
+        fail_ci_if_error: false
+        verbose: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Upload coverage artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: |
+          build/coverage.info
+          build/coverage_filtered.info
+          build/coverage_html/
+        retention-days: 7
+
+    - name: Coverage summary
+      if: always()
+      run: |
+        echo "## Coverage Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ -f build/coverage_filtered.info ]; then
+          echo "Coverage data collected successfully." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Phase 0 Target: Establish baseline coverage" >> $GITHUB_STEP_SUMMARY
+          echo "Phase 5 Target: 80%+ coverage" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "No coverage data generated." >> $GITHUB_STEP_SUMMARY
+        fi

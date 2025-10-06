@@ -261,30 +261,29 @@ endfunction()
 function(check_std_concepts_support)
   option(SET_STD_CONCEPTS "Use std::concepts if available" ON)
 
-  check_cxx_source_compiles("
-    #include <concepts>
-    template<typename T>
-    concept Addable = requires(T a, T b) { a + b; };
-    int main() {
-      static_assert(Addable<int>);
-      return 0;
-    }
-  " HAS_STD_CONCEPTS)
+  if(NOT SET_STD_CONCEPTS)
+    message(STATUS "std::concepts support disabled by user")
+    return()
+  endif()
 
-  if(SET_STD_CONCEPTS AND HAS_STD_CONCEPTS)
-    try_compile(STD_CONCEPTS_COMPILE_TEST
-      ${CMAKE_BINARY_DIR}/concepts_test
-      SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_concepts.cpp
-      CXX_STANDARD 20
-      CXX_STANDARD_REQUIRED ON
-    )
+  # Try compile with a comprehensive test file
+  try_compile(STD_CONCEPTS_COMPILE_TEST
+    ${CMAKE_BINARY_DIR}/concepts_test
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_std_concepts.cpp
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    OUTPUT_VARIABLE CONCEPTS_COMPILE_OUTPUT
+  )
 
-    if(STD_CONCEPTS_COMPILE_TEST)
-      add_definitions(-DUSE_STD_CONCEPTS)
-      message(STATUS "✅ Using std::concepts")
-    else()
-      message(WARNING "⚠️  std::concepts compile test failed - build will continue without concepts support")
+  if(STD_CONCEPTS_COMPILE_TEST)
+    add_definitions(-DUSE_STD_CONCEPTS)
+    message(STATUS "✅ Using std::concepts")
+  else()
+    # Only show detailed error in verbose mode
+    if(CMAKE_VERBOSE_MAKEFILE)
+      message(STATUS "std::concepts compile output: ${CONCEPTS_COMPILE_OUTPUT}")
     endif()
+    message(STATUS "std::concepts not fully supported - continuing without concepts")
   endif()
 endfunction()
 
