@@ -35,7 +35,9 @@ enable_testing()
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
-add_custom_target(${PROJECT_NAME}_test ALL
-    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
-    DEPENDS ${PROJECT_NAME}
-)
+# Removed ALL flag to prevent tests from running during build
+# Tests will be executed explicitly via ctest in CI workflow
+# add_custom_target(${PROJECT_NAME}_test ALL
+#     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
+#     DEPENDS ${PROJECT_NAME}
+# )
