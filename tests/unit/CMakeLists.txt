@@ -39,7 +39,11 @@ if(UNIX AND NOT WIN32)
   # Platform-specific tests
   # Validates platform-specific features, atomic operations, and cache performance
   add_subdirectory(platform_test)
-  
+
+  # Thread safety tests (Phase 1 - Task 1.4)
+  # Validates concurrent access, race conditions, and thread safety guarantees
+  add_subdirectory(thread_safety_test)
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
