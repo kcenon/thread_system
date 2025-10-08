@@ -341,6 +341,14 @@ namespace kcenon::thread
 		// Only attempt to stop if thread is actually joinable
 		if (worker_thread_->joinable())
 		{
+			// Self-stop detection: prevent deadlock if thread tries to stop itself
+			// Calling join() from the same thread would cause deadlock
+			if (worker_thread_->get_id() == std::this_thread::get_id())
+			{
+				return result_void{error{error_code::invalid_argument,
+					"cannot stop thread from within itself - would cause deadlock"}};
+			}
+
 			// Step 1: Signal the thread to stop using platform-specific mechanism
 #ifdef USE_STD_JTHREAD
 			if (stop_source_.has_value())
