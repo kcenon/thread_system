@@ -312,8 +312,23 @@ namespace kcenon::thread
 		 * Each @c thread_worker typically runs in its own thread context, processing jobs
 		 * from @c job_queue_ or performing specialized logic. They are started together
 		 * when @c thread_pool::start() is called.
+		 *
+		 * Thread Safety:
+		 * - Protected by workers_mutex_ to prevent concurrent modification
+		 * - Accessed during enqueue_worker() and stop() operations
 		 */
 		std::vector<std::unique_ptr<thread_worker>> workers_;
+
+		/**
+		 * @brief Mutex protecting concurrent access to the workers_ vector.
+		 *
+		 * Synchronization Strategy:
+		 * - Guards all workers_ modifications (enqueue, stop)
+		 * - Prevents iterator invalidation during concurrent operations
+		 * - Uses scoped_lock for RAII-based protection
+		 * - Held briefly to minimize contention
+		 */
+		mutable std::mutex workers_mutex_;
 
 		/**
 		 * @brief The thread context providing access to logging and monitoring services.

@@ -102,16 +102,16 @@ public:
                 if (auto state = new_state_weak.lock()) {
                     // Directly set the cancelled flag and invoke callbacks
                     std::vector<std::function<void()>> callbacks_to_invoke;
-                    
+
                     {
                         std::lock_guard<std::mutex> lock(state->callback_mutex);
-                        bool was_cancelled = state->is_cancelled.exchange(true);
+                        bool was_cancelled = state->is_cancelled.exchange(true, std::memory_order_release);
                         if (!was_cancelled) {
                             callbacks_to_invoke = std::move(state->callbacks);
                             state->callbacks.clear();
                         }
                     }
-                    
+
                     for (const auto& callback : callbacks_to_invoke) {
                         callback();
                     }
@@ -126,34 +126,43 @@ public:
      * @brief Cancels the operation
      *
      * Sets the token to the canceled state and invokes all registered callbacks.
-     * 
+     *
+     * Memory Ordering:
+     * - Uses memory_order_release to ensure all prior writes are visible
+     *   to threads that subsequently observe the cancellation
+     *
      * @note This method is thread-safe and guarantees callbacks are invoked exactly once.
      */
     void cancel() {
         std::vector<std::function<void()>> callbacks_to_invoke;
-        
+
         {
             std::lock_guard<std::mutex> lock(state_->callback_mutex);
-            bool was_cancelled = state_->is_cancelled.exchange(true);
+            bool was_cancelled = state_->is_cancelled.exchange(true, std::memory_order_release);
             if (!was_cancelled) {
                 // Move callbacks to local vector to avoid holding lock during invocation
                 callbacks_to_invoke = std::move(state_->callbacks);
                 state_->callbacks.clear();
             }
         }
-        
+
         // Invoke callbacks outside the lock to prevent deadlock
         for (const auto& callback : callbacks_to_invoke) {
             callback();
         }
     }
-    
+
     /**
      * @brief Checks if the token has been canceled
+     *
+     * Memory Ordering:
+     * - Uses memory_order_acquire to ensure proper synchronization
+     *   with the cancellation thread's release operation
+     *
      * @return true if the token has been canceled, false otherwise
      */
     [[nodiscard]] bool is_cancelled() const {
-        return state_->is_cancelled.load();
+        return state_->is_cancelled.load(std::memory_order_acquire);
     }
     
     /**
@@ -171,19 +180,23 @@ public:
      * @param callback The function to call when the token is canceled
      *
      * If the token is already canceled, the callback is invoked immediately.
-     * 
+     *
+     * Memory Ordering:
+     * - Uses memory_order_acquire when checking cancellation status
+     *   to synchronize with the cancel() operation
+     *
      * @note This method is thread-safe and guarantees the callback is called exactly once.
      */
     void register_callback(std::function<void()> callback) {
         std::unique_lock<std::mutex> lock(state_->callback_mutex);
-        
+
         // Check cancellation state while holding the lock
-        if (state_->is_cancelled.load()) {
+        if (state_->is_cancelled.load(std::memory_order_acquire)) {
             lock.unlock();
             callback();
             return;
         }
-        
+
         // Add callback while still holding the lock
         state_->callbacks.push_back(std::move(callback));
     }

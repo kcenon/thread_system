@@ -138,6 +138,9 @@ namespace kcenon::thread
 	 */
     auto thread_pool::start(void) -> result_void
     {
+        // Acquire lock to check workers_ safely
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
+
         // Validate that workers have been added
         if (workers_.empty())
         {
@@ -263,16 +266,22 @@ namespace kcenon::thread
         worker->set_job_queue(job_queue_);
         worker->set_context(context_);
 
+        // Acquire lock before checking start_pool_ and adding worker
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+        // Check if pool is running while holding lock
         if (start_pool_.load())
         {
             auto start_result = worker->start();
             if (start_result.has_error())
             {
-                stop();
+                // Don't call stop() here - just return error
+                // Calling stop() while holding workers_mutex_ could cause issues
                 return start_result.get_error();
             }
         }
 
+        // Add worker to vector while holding lock
         workers_.emplace_back(std::move(worker));
 
         return {};
@@ -291,17 +300,21 @@ namespace kcenon::thread
             return error{error_code::resource_allocation_failed, "job queue is null"};
         }
 
+        // Acquire lock before processing workers
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
+
         for (auto& worker : workers)
         {
             worker->set_job_queue(job_queue_);
             worker->set_context(context_);
 
+            // Check if pool is running while holding lock
             if (start_pool_.load())
             {
                 auto start_result = worker->start();
                 if (start_result.has_error())
                 {
-                    stop();
+                    // Don't call stop() here - just return error
                     return start_result.get_error();
                 }
             }
@@ -319,6 +332,9 @@ namespace kcenon::thread
             return {};
         }
 
+        // Set start_pool_ to false FIRST to prevent new workers from being added
+        start_pool_.store(false);
+
         if (job_queue_ != nullptr)
         {
             job_queue_->stop_waiting_dequeue();
@@ -329,18 +345,21 @@ namespace kcenon::thread
             }
         }
 
+        // Stop workers while holding lock to ensure consistent iteration
+        // This is safe because worker->stop() only signals and joins threads,
+        // it does not call back into thread_pool methods
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
         for (auto& worker : workers_)
         {
             auto stop_result = worker->stop();
             if (stop_result.has_error())
             {
-                context_.log(log_level::error, 
+                context_.log(log_level::error,
                             formatter::format("error stopping worker: {}",
                                             stop_result.get_error().to_string()));
             }
         }
 
-        start_pool_.store(false);
         return {};
     }
 
@@ -352,6 +371,9 @@ namespace kcenon::thread
 							 start_pool_.load() ? "running" : "stopped");
 		formatter::format_to(std::back_inserter(format_string), "\tjob_queue: {}\n\n",
 							 (job_queue_ != nullptr ? job_queue_->to_string() : "nullptr"));
+
+		// Protect workers_ access with lock
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
 		formatter::format_to(std::back_inserter(format_string), "\tworkers: {}\n", workers_.size());
 		for (const auto& worker : workers_)
 		{
@@ -381,16 +403,22 @@ namespace kcenon::thread
 		monitoring_interface::thread_pool_metrics metrics;
 		metrics.pool_name = thread_title_;
 		metrics.pool_instance_id = pool_instance_id_;
-		metrics.worker_threads = workers_.size();
+
+		// Protect workers_ access with lock
+		{
+			std::scoped_lock<std::mutex> lock(workers_mutex_);
+			metrics.worker_threads = workers_.size();
+		}
+
 		metrics.idle_threads = get_idle_worker_count();
-		
+
 		if (job_queue_)
 		{
 			metrics.jobs_pending = job_queue_->size();
 		}
-		
+
 		metrics.timestamp = std::chrono::steady_clock::now();
-		
+
 		// Report metrics with pool identification
 		context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, metrics);
 	}
@@ -423,6 +451,7 @@ namespace kcenon::thread
 
 	auto thread_pool::get_thread_count() const -> std::size_t
 	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
 		return workers_.size();
 	}
 
