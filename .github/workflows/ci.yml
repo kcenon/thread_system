@@ -35,12 +35,12 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libgtest-dev libgmock-dev libfmt-dev
+        sudo apt-get install -y cmake ninja-build g++ clang
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja googletest fmt
+        brew install ninja
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -83,21 +83,23 @@ jobs:
 
     - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
           echo "Building with common_system support"
-          cmake -B build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DBUILD_WITH_COMMON_SYSTEM=ON \
-            -DBUILD_INTEGRATION_TESTS=ON
+          BUILD_WITH_COMMON="ON"
         else
           echo "Building without common_system support"
-          cmake -B build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DBUILD_WITH_COMMON_SYSTEM=OFF \
-            -DBUILD_INTEGRATION_TESTS=ON
+          BUILD_WITH_COMMON="OFF"
         fi
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
+          -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT:-$HOME/.vcpkg}/scripts/buildsystems/vcpkg.cmake
 
     - name: Checkout common_system (optional dependency - Windows)
       if: runner.os == 'Windows'
@@ -113,6 +115,8 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         $buildWithCommon = "OFF"
@@ -126,6 +130,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug `
           -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
           -DBUILD_INTEGRATION_TESTS=ON `
+          -DVCPKG_MANIFEST_FEATURES="testing" `
           -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
           -DVCPKG_TARGET_TRIPLET=x64-windows
 
@@ -190,7 +195,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang libgtest-dev libgmock-dev libfmt-dev
+        sudo apt-get install -y cmake ninja-build clang
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -201,6 +206,8 @@ jobs:
         fi
 
     - name: Configure CMake with ${{ matrix.sanitizer }} sanitizer
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
@@ -216,7 +223,9 @@ jobs:
           -DCMAKE_C_COMPILER=clang \
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DBUILD_INTEGRATION_TESTS=ON
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
+          -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT:-$HOME/.vcpkg}/scripts/buildsystems/vcpkg.cmake
 
     - name: Build with sanitizer
       run: cmake --build build --config Debug

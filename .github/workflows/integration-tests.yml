@@ -24,15 +24,22 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
           cmake \
           ninja-build \
-          libgtest-dev \
           ${{ matrix.compiler.cc }} \
           ${{ matrix.compiler.cxx }}
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -43,11 +50,18 @@ jobs:
       env:
         CC: ${{ matrix.compiler.cc }}
         CXX: ${{ matrix.compiler.cxx }}
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
         cmake -B build \
           -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
           -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
           -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Build
@@ -78,9 +92,17 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
-        brew install cmake ninja googletest
+        brew install cmake ninja
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -88,11 +110,19 @@ jobs:
         vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
 
     - name: Configure CMake
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
         cmake -B build \
           -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
           -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
           -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Build
@@ -123,16 +153,33 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if (-not (Test-Path "common_system")) {
+          git clone https://github.com/kcenon/common_system.git
+          if (-not $?) { Write-Host "common_system not available" }
+        }
+
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
 
     - name: Configure CMake
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
+        $buildWithCommon = "OFF"
+        if (Test-Path "../common_system") {
+          $buildWithCommon = "ON"
+        }
         cmake -B build `
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} `
           -DBUILD_INTEGRATION_TESTS=ON `
+          -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
+          -DVCPKG_MANIFEST_FEATURES="testing" `
           -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Build
@@ -160,16 +207,23 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
           cmake \
           ninja-build \
-          libgtest-dev \
           gcc-11 \
           g++-11 \
           lcov
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -180,12 +234,19 @@ jobs:
       env:
         CC: gcc-11
         CXX: g++-11
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
         cmake -B build \
           -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DENABLE_COVERAGE=ON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
           -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Build
@@ -217,15 +278,22 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
           cmake \
           ninja-build \
-          libgtest-dev \
           gcc-11 \
           g++-11
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -236,11 +304,18 @@ jobs:
       env:
         CC: gcc-11
         CXX: g++-11
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
         cmake -B build \
           -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
           -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Build

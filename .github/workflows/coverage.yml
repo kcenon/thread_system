@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ libgtest-dev libgmock-dev libfmt-dev lcov
+        sudo apt-get install -y cmake ninja-build g++ lcov
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -31,6 +31,8 @@ jobs:
         fi
 
     - name: Configure CMake with coverage
+      env:
+        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
@@ -45,7 +47,9 @@ jobs:
           -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
           -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DBUILD_INTEGRATION_TESTS=ON
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DVCPKG_MANIFEST_FEATURES="testing" \
+          -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT:-$HOME/.vcpkg}/scripts/buildsystems/vcpkg.cmake
 
     - name: Build with coverage
       run: cmake --build build --config Debug
