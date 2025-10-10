@@ -45,6 +45,16 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
+    - name: Cache FetchContent dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/_deps
+        key: ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-
+          ${{ runner.os }}-${{ matrix.compiler.name }}-fetchcontent-gtest-v1.14.0-
+
     - name: Configure CMake
       env:
         CC: ${{ matrix.compiler.cc }}
@@ -83,10 +93,11 @@ jobs:
           exit 1
         }
 
-    - name: Run Integration Tests
+    - name: Run Smoke and Integration Tests
       working-directory: build
       run: |
-        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+        echo "=== Running Fast Tests (Smoke + Integration) ==="
+        ctest --output-on-failure -L "smoke|integration" -C ${{ matrix.build-type }}
 
     - name: Upload test results
       if: failure()
@@ -121,6 +132,16 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
+    - name: Cache FetchContent dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/_deps
+        key: ${{ runner.os }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-
+          ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
+
     - name: Configure CMake
       run: |
         BUILD_WITH_COMMON="OFF"
@@ -149,10 +170,11 @@ jobs:
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}
 
-    - name: Run Integration Tests
+    - name: Run Smoke and Integration Tests
       working-directory: build
       run: |
-        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+        echo "=== Running Fast Tests (Smoke + Integration) ==="
+        ctest --output-on-failure -L "smoke|integration" -C ${{ matrix.build-type }}
 
     - name: Upload test results
       if: failure()
@@ -206,10 +228,11 @@ jobs:
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}
 
-    - name: Run Integration Tests
+    - name: Run Smoke and Integration Tests
       working-directory: build
       run: |
-        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+        echo "=== Running Fast Tests (Smoke + Integration) ==="
+        ctest --output-on-failure -L "smoke|integration" -C ${{ matrix.build-type }}
 
     - name: Upload test results
       if: failure()
@@ -248,6 +271,16 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
+    - name: Cache FetchContent dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/_deps
+        key: ${{ runner.os }}-gcc-Debug-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-gcc-Debug-fetchcontent-gtest-v1.14.0-
+          ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
+
     - name: Configure CMake with Coverage
       env:
         CC: gcc-11
@@ -272,7 +305,8 @@ jobs:
       run: |
         cd build
         lcov --directory . --zerocounters
-        ctest --output-on-failure -L integration
+        echo "=== Running tests for coverage (smoke + integration) ==="
+        ctest --output-on-failure -L "smoke|integration"
         lcov --directory . --capture --output-file coverage/all.info
         lcov --remove coverage/all.info \
           '/usr/*' \
@@ -296,9 +330,10 @@ jobs:
         flags: integration-tests
         name: integration-tests-coverage
 
-  performance-baseline:
-    name: Performance Baseline Check
+  performance-tests:
+    name: Performance Benchmarks
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[perf]') || contains(github.event.head_commit.message, '[bench]')
 
     steps:
     - name: Checkout code
@@ -325,6 +360,16 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
+    - name: Cache FetchContent dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/_deps
+        key: ${{ runner.os }}-gcc-Release-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-gcc-Release-fetchcontent-gtest-v1.14.0-
+          ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
+
     - name: Configure CMake
       env:
         CC: gcc-11
@@ -339,21 +384,29 @@ jobs:
           -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_PERFORMANCE_TESTS=ON \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build
       run: cmake --build build
 
-    - name: Run Performance Tests
+    - name: Run Performance Benchmarks
       working-directory: build
+      timeout-minutes: 15
       env:
         CI: true
       run: |
-        ./bin/integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
+        echo "=== Running Performance Benchmarks ==="
+        ctest --output-on-failure -L "performance" -V
+
+        echo "=== Generating JSON results ==="
+        ./bin/performance_tests --gtest_output=json:performance-results.json
 
     - name: Upload performance results
       uses: actions/upload-artifact@v4
       with:
-        name: performance-baseline
-        path: build/performance-results.json
+        name: performance-benchmark-results
+        path: |
+          build/performance-results.json
+          build/Testing/Temporary/LastTest.log
