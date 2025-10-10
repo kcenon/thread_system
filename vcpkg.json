@@ -18,13 +18,8 @@
     "testing": {
       "description": "Enable testing dependencies",
       "dependencies": [
-        {
-          "name": "gtest",
-          "features": ["gmock"]
-        },
-        {
-          "name": "benchmark"
-        }
+        "gtest",
+        "benchmark"
       ]
     },
     "logging": {
