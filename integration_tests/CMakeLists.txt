@@ -33,7 +33,6 @@ target_include_directories(integration_tests PRIVATE
 target_link_libraries(integration_tests PRIVATE
     GTest::gtest
     GTest::gtest_main
-    thread_pool
     thread_base
     utilities
 )
