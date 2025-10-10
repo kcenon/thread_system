@@ -31,6 +31,7 @@ endif()
 ##################################################
 
 option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" ON)
+option(BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
