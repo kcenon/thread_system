@@ -92,11 +92,21 @@ jobs:
           echo "Building without common_system support"
           BUILD_WITH_COMMON="OFF"
         fi
+
+        echo "=== Build Configuration ==="
+        echo "Compiler: $CC / $CXX"
+        echo "Common System: $BUILD_WITH_COMMON"
+        echo "==========================="
+
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
-          -DCMAKE_PREFIX_PATH="/usr;/usr/local"
+          -DCMAKE_PREFIX_PATH="/usr;/usr/local" || {
+            echo "::error::CMake configuration failed"
+            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No error log found"
+            exit 1
+          }
 
     - name: Checkout common_system (optional dependency - Windows)
       if: runner.os == 'Windows'
@@ -212,6 +222,12 @@ jobs:
           echo "Building without common_system support"
           BUILD_WITH_COMMON="OFF"
         fi
+
+        echo "=== Build Configuration ==="
+        echo "Sanitizer: ${{ matrix.sanitizer }}"
+        echo "Common System: $BUILD_WITH_COMMON"
+        echo "==========================="
+
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_COMPILER=clang++ \
@@ -219,7 +235,11 @@ jobs:
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
-          -DCMAKE_PREFIX_PATH="/usr"
+          -DCMAKE_PREFIX_PATH="/usr" || {
+            echo "::error::CMake configuration failed for ${{ matrix.sanitizer }} sanitizer"
+            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No error log found"
+            exit 1
+          }
 
     - name: Build with sanitizer
       run: cmake --build build --config Debug
