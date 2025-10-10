@@ -146,7 +146,7 @@ namespace kcenon::thread
  * @endcode
  */
 template <>
-struct std::formatter<typed_kcenon::thread::job_types>
+struct std::formatter<kcenon::thread::job_types>
 	: std::formatter<std::string_view>
 {
 	/**
@@ -157,11 +157,11 @@ struct std::formatter<typed_kcenon::thread::job_types>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::job_types& job_type,
+	auto format(const kcenon::thread::job_types& job_type,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(
-			typed_kcenon::thread::to_string(job_type), ctx);
+			kcenon::thread::to_string(job_type), ctx);
 	}
 };
 
@@ -175,7 +175,7 @@ struct std::formatter<typed_kcenon::thread::job_types>
  * @endcode
  */
 template <>
-struct std::formatter<typed_kcenon::thread::job_types, wchar_t>
+struct std::formatter<kcenon::thread::job_types, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -186,10 +186,10 @@ struct std::formatter<typed_kcenon::thread::job_types, wchar_t>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::job_types& job_type,
+	auto format(const kcenon::thread::job_types& job_type,
 				FormatContext& ctx) const
 	{
-		auto str = typed_kcenon::thread::to_string(job_type);
+		auto str = kcenon::thread::to_string(job_type);
 		auto wstr = convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
@@ -206,7 +206,7 @@ struct std::formatter<typed_kcenon::thread::job_types, wchar_t>
  * @endcode
  */
 template <>
-struct fmt::formatter<typed_kcenon::thread::job_types>
+struct fmt::formatter<kcenon::thread::job_types>
 	: fmt::formatter<std::string_view>
 {
 	/**
@@ -217,11 +217,11 @@ struct fmt::formatter<typed_kcenon::thread::job_types>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::job_types& job_type,
+	auto format(const kcenon::thread::job_types& job_type,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(
-			typed_kcenon::thread::to_string(job_type), ctx);
+			kcenon::thread::to_string(job_type), ctx);
 	}
 };
 
@@ -234,7 +234,7 @@ struct fmt::formatter<typed_kcenon::thread::job_types>
  * @endcode
  */
 template <>
-struct fmt::formatter<typed_kcenon::thread::job_types, wchar_t>
+struct fmt::formatter<kcenon::thread::job_types, wchar_t>
 	: fmt::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -245,10 +245,10 @@ struct fmt::formatter<typed_kcenon::thread::job_types, wchar_t>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::job_types& job_type,
+	auto format(const kcenon::thread::job_types& job_type,
 				FormatContext& ctx) const
 	{
-		auto str = typed_kcenon::thread::to_string(job_type);
+		auto str = kcenon::thread::to_string(job_type);
 		auto wstr = convert_string::to_wstring(str);
 		return fmt::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}

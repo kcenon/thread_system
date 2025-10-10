@@ -290,7 +290,7 @@ namespace kcenon::thread
  * @tparam job_type The type representing priority levels.
  */
 template <typename job_type>
-struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>>
+struct std::formatter<kcenon::thread::typed_job_queue_t<job_type>>
 	: std::formatter<std::string_view>
 {
 	/**
@@ -301,7 +301,7 @@ struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::typed_job_queue_t<job_type>& item,
+	auto format(const kcenon::thread::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return std::formatter<std::string_view>::format(item.to_string(), ctx);
@@ -318,7 +318,7 @@ struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>>
  * @tparam job_type The type representing priority levels.
  */
 template <typename job_type>
-struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>, wchar_t>
+struct std::formatter<kcenon::thread::typed_job_queue_t<job_type>, wchar_t>
 	: std::formatter<std::wstring_view, wchar_t>
 {
 	/**
@@ -329,7 +329,7 @@ struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>, wchar_t
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::typed_job_queue_t<job_type>& item,
+	auto format(const kcenon::thread::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		auto str = item.to_string();
@@ -348,7 +348,7 @@ struct std::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>, wchar_t
  * @tparam job_type The type representing priority levels.
  */
 template <typename job_type>
-struct fmt::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>>
+struct fmt::formatter<kcenon::thread::typed_job_queue_t<job_type>>
 	: fmt::formatter<std::string_view>
 {
 	/**
@@ -359,7 +359,7 @@ struct fmt::formatter<typed_kcenon::thread::typed_job_queue_t<job_type>>
 	 * @return An iterator to the end of the formatted output.
 	 */
 	template <typename FormatContext>
-	auto format(const typed_kcenon::thread::typed_job_queue_t<job_type>& item,
+	auto format(const kcenon::thread::typed_job_queue_t<job_type>& item,
 				FormatContext& ctx) const
 	{
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
