@@ -33,7 +33,10 @@ jobs:
           ${{ matrix.compiler.cc }} \
           ${{ matrix.compiler.cxx }} \
           libc++-14-dev \
-          libc++abi-14-dev
+          libc++abi-14-dev \
+          libgtest-dev \
+          libgmock-dev \
+          libfmt-dev
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -96,7 +99,7 @@ jobs:
 
     - name: Install system dependencies
       run: |
-        brew install cmake ninja
+        brew install cmake ninja googletest fmt
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -217,7 +220,10 @@ jobs:
           ninja-build \
           gcc-11 \
           g++-11 \
-          lcov
+          lcov \
+          libgtest-dev \
+          libgmock-dev \
+          libfmt-dev
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -299,7 +305,10 @@ jobs:
           cmake \
           ninja-build \
           gcc-11 \
-          g++-11
+          g++-11 \
+          libgtest-dev \
+          libgmock-dev \
+          libfmt-dev
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true

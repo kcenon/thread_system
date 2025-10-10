@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ lcov
+        sudo apt-get install -y cmake ninja-build g++ lcov libgtest-dev libgmock-dev libfmt-dev
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
