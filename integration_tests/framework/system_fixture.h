@@ -40,7 +40,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <functional>
 
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/core/typed_thread_pool.h>
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/core/error_handling.h>
