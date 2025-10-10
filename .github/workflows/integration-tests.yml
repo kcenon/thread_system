@@ -46,16 +46,10 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
-    - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
-
     - name: Configure CMake
       env:
         CC: ${{ matrix.compiler.cc }}
         CXX: ${{ matrix.compiler.cxx }}
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -66,8 +60,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}
@@ -109,14 +102,7 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
-    - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
-
     - name: Configure CMake
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -126,9 +112,7 @@ jobs:
           -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
           -DBUILD_INTEGRATION_TESTS=ON \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
 
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}
@@ -233,16 +217,10 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
-    - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
-
     - name: Configure CMake with Coverage
       env:
         CC: gcc-11
         CXX: g++-11
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -254,8 +232,7 @@ jobs:
           -DBUILD_INTEGRATION_TESTS=ON \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DENABLE_COVERAGE=ON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build
       run: cmake --build build
@@ -318,16 +295,10 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
         fi
 
-    - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
-
     - name: Configure CMake
       env:
         CC: gcc-11
         CXX: g++-11
-        VCPKG_FEATURE_FLAGS: manifests
         CI: true
       run: |
         BUILD_WITH_COMMON="OFF"
@@ -339,8 +310,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build
       run: cmake --build build

@@ -83,8 +83,6 @@ jobs:
 
     - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
@@ -98,8 +96,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT:-$HOME/.vcpkg}/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_PREFIX_PATH="/usr;/usr/local"
 
     - name: Checkout common_system (optional dependency - Windows)
       if: runner.os == 'Windows'
@@ -206,8 +203,6 @@ jobs:
         fi
 
     - name: Configure CMake with ${{ matrix.sanitizer }} sanitizer
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
@@ -224,8 +219,7 @@ jobs:
           -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
-          -DVCPKG_MANIFEST_FEATURES="testing" \
-          -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT:-$HOME/.vcpkg}/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build with sanitizer
       run: cmake --build build --config Debug
