@@ -356,12 +356,13 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress)
 				if (all_produced.load() && queue.empty()) {
 					break;
 				}
-				
+
 				if (consumed.load() >= total_jobs) {
 					break;
 				}
-				
-				auto result = queue.dequeue();
+
+				// Use try_dequeue to avoid blocking indefinitely
+				auto result = queue.try_dequeue();
 				if (result.has_value() && result.value()) {
 					try {
 						auto work_result = result.value()->do_work();
@@ -375,12 +376,12 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress)
 				} else {
 					consecutive_failures++;
 					if (consecutive_failures >= max_consecutive_failures) {
-						std::cout << "Consumer " << c << " stopping after " << max_consecutive_failures 
+						std::cout << "Consumer " << c << " stopping after " << max_consecutive_failures
 								  << " consecutive failures" << std::endl;
 						break;
 					}
-					// Small delay to reduce CPU usage
-					std::this_thread::sleep_for(std::chrono::microseconds(1));
+					// Small delay to reduce CPU usage when queue is empty
+					std::this_thread::sleep_for(std::chrono::microseconds(10));
 				}
 			}
 		});
