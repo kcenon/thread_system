@@ -156,18 +156,29 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Determines if the worker should continue processing jobs.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Used by thread_base to control the work loop
 	 * - Returns false if no job queue is set (prevents infinite loop)
-	 * - Returns false if job queue is empty (allows worker to exit)
+	 * - Returns true while queue is not stopped (even if empty)
+	 * - Actual job waiting is handled by blocking dequeue() in do_work()
 	 * - Thread-safe operation (job_queue methods are thread-safe)
-	 * 
+	 *
 	 * Work Loop Control:
-	 * - Called repeatedly by thread_base work loop
-	 * - Worker exits gracefully when this returns false
-	 * - Prevents CPU spinning when no work is available
-	 * 
+	 * - Worker continues until queue is explicitly stopped
+	 * - Empty queue does NOT cause worker exit - dequeue() will wait for jobs
+	 * - This prevents premature worker termination before jobs arrive
+	 * - Worker exits gracefully only when queue is stopped
+	 *
+	 * Design Rationale:
+	 * - Thread_base's condition variable and job_queue's condition variable are separate
+	 * - If should_continue_work() returns false on empty queue:
+	 *   1. thread_base waits on its own condition variable
+	 *   2. job enqueue notifies job_queue's condition variable (different object!)
+	 *   3. Worker never wakes up - deadlock situation
+	 * - By returning true until stopped, worker enters do_work() immediately
+	 * - do_work()'s blocking dequeue() then waits on correct condition variable
+	 *
 	 * @return true if worker should continue processing, false to exit
 	 */
 	auto thread_worker::should_continue_work() const -> bool
@@ -177,7 +188,8 @@ namespace kcenon::thread
 			return false;
 		}
 
-		return !job_queue_->empty();
+		// Continue while queue is not stopped - dequeue() handles waiting for jobs
+		return !job_queue_->is_stopped();
 	}
 
 	/**
