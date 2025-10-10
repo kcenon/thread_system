@@ -31,7 +31,9 @@ jobs:
           cmake \
           ninja-build \
           ${{ matrix.compiler.cc }} \
-          ${{ matrix.compiler.cxx }}
+          ${{ matrix.compiler.cxx }} \
+          libc++-14-dev \
+          libc++abi-14-dev
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -180,7 +182,7 @@ jobs:
           -DBUILD_INTEGRATION_TESTS=ON `
           -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
           -DVCPKG_MANIFEST_FEATURES="testing" `
-          -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake"
 
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}
@@ -252,19 +254,31 @@ jobs:
     - name: Build
       run: cmake --build build
 
-    - name: Run Integration Tests
-      working-directory: build
-      run: |
-        ctest --output-on-failure -L integration
-
     - name: Generate Coverage Report
       run: |
-        cmake --build build --target coverage
+        cd build
+        lcov --directory . --zerocounters
+        ctest --output-on-failure -L integration
+        lcov --directory . --capture --output-file coverage/all.info
+        lcov --remove coverage/all.info \
+          '/usr/*' \
+          '*/vcpkg/*' \
+          '*/build/*' \
+          '*/unittest/*' \
+          '*/benchmarks/*' \
+          '*/samples/*' \
+          '*/test/*' \
+          --output-file coverage/all.cleaned.info
+        genhtml --demangle-cpp --num-spaces 2 --sort \
+          --title "Thread System Integration Coverage" \
+          --function-coverage --branch-coverage \
+          --output-directory coverage/html \
+          coverage/all.cleaned.info
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-        files: build/coverage.info
+        files: build/coverage/all.cleaned.info
         flags: integration-tests
         name: integration-tests-coverage
 
@@ -305,6 +319,7 @@ jobs:
         CC: gcc-11
         CXX: g++-11
         VCPKG_FEATURE_FLAGS: manifests
+        CI: true
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -323,6 +338,8 @@ jobs:
 
     - name: Run Performance Tests
       working-directory: build
+      env:
+        CI: true
       run: |
         ./bin/integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
 

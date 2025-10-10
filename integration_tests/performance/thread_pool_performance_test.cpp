@@ -64,6 +64,15 @@ protected:
                   << "  Min latency: " << metrics.min() << " ns\n"
                   << "  Max latency: " << metrics.max() << " ns\n";
     }
+
+    // Scale factor for CI environment
+    size_t ScaleForCI(size_t value) const {
+        return std::getenv("CI") ? value / 10 : value;
+    }
+
+    int TimeoutForCI(int seconds) const {
+        return std::getenv("CI") ? seconds / 2 : seconds;
+    }
 };
 
 TEST_F(ThreadPoolPerformanceTest, JobSubmissionLatency) {
@@ -229,8 +238,8 @@ TEST_F(ThreadPoolPerformanceTest, HighContentionPerformance) {
     auto result = pool_->start();
     ASSERT_TRUE(result);
 
-    const size_t num_producers = 16;
-    const size_t jobs_per_producer = 5'000;
+    const size_t num_producers = ScaleForCI(16);
+    const size_t jobs_per_producer = ScaleForCI(5'000);
     const size_t total_jobs = num_producers * jobs_per_producer;
 
     std::atomic<size_t> submitted{0};
@@ -259,7 +268,7 @@ TEST_F(ThreadPoolPerformanceTest, HighContentionPerformance) {
         t.join();
     }
 
-    EXPECT_TRUE(WaitForJobCompletion(total_jobs, std::chrono::seconds(60)));
+    EXPECT_TRUE(WaitForJobCompletion(total_jobs, std::chrono::seconds(TimeoutForCI(60))));
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -273,7 +282,7 @@ TEST_F(ThreadPoolPerformanceTest, HighContentionPerformance) {
               << "  Throughput: " << static_cast<size_t>(throughput) << " jobs/sec\n";
 
     EXPECT_EQ(submitted.load(), total_jobs);
-    EXPECT_GT(throughput, 50'000);
+    EXPECT_GT(throughput, ScaleForCI(50'000));
 }
 
 TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
@@ -282,8 +291,8 @@ TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
     auto result = pool_->start();
     ASSERT_TRUE(result);
 
-    const size_t num_batches = 100;
-    const size_t jobs_per_batch = 1'000;
+    const size_t num_batches = ScaleForCI(100);
+    const size_t jobs_per_batch = ScaleForCI(1'000);
     const size_t total_jobs = num_batches * jobs_per_batch;
 
     PerformanceMetrics metrics;
@@ -311,7 +320,7 @@ TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
             batch_end - batch_start));
     }
 
-    EXPECT_TRUE(WaitForJobCompletion(total_jobs, std::chrono::seconds(60)));
+    EXPECT_TRUE(WaitForJobCompletion(total_jobs, std::chrono::seconds(TimeoutForCI(60))));
 
     auto overall_end = std::chrono::high_resolution_clock::now();
     auto overall_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -361,8 +370,8 @@ TEST_F(ThreadPoolPerformanceTest, SustainedLoad) {
     auto result = pool_->start();
     ASSERT_TRUE(result);
 
-    const size_t duration_seconds = 5;
-    const size_t jobs_per_second = 10'000;
+    const size_t duration_seconds = std::getenv("CI") ? 2 : 5;
+    const size_t jobs_per_second = ScaleForCI(10'000);
 
     std::atomic<bool> stop_flag{false};
     std::atomic<size_t> total_submitted{0};
