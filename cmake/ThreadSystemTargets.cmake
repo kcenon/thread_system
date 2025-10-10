@@ -120,6 +120,15 @@ function(add_tests_subdirectory)
     add_subdirectory(unittest)
     message(STATUS "Added unittest subdirectory (legacy)")
   endif()
+
+  # Add integration tests if they exist
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
+    option(BUILD_INTEGRATION_TESTS "Build integration tests" ON)
+    if(BUILD_INTEGRATION_TESTS)
+      add_subdirectory(integration_tests)
+      message(STATUS "Added integration_tests subdirectory")
+    endif()
+  endif()
 endfunction()
 
 ##################################################

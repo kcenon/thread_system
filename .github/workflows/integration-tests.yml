@@ -1,0 +1,258 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, feat/phase5-integration-testing ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  integration-tests-ubuntu:
+    name: Integration Tests (Ubuntu)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build-type: [Debug, Release]
+        compiler:
+          - { name: GCC, cc: gcc-11, cxx: g++-11 }
+          - { name: Clang, cc: clang-14, cxx: clang++-14 }
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          libgtest-dev \
+          ${{ matrix.compiler.cc }} \
+          ${{ matrix.compiler.cxx }}
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Configure CMake
+      env:
+        CC: ${{ matrix.compiler.cc }}
+        CXX: ${{ matrix.compiler.cxx }}
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build-type }}
+
+    - name: Run Integration Tests
+      working-directory: build
+      run: |
+        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+
+    - name: Upload test results
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: integration-test-results-ubuntu-${{ matrix.compiler.name }}-${{ matrix.build-type }}
+        path: build/Testing/Temporary/LastTest.log
+
+  integration-tests-macos:
+    name: Integration Tests (macOS)
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        build-type: [Debug, Release]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        brew install cmake ninja googletest
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Configure CMake
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build-type }}
+
+    - name: Run Integration Tests
+      working-directory: build
+      run: |
+        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+
+    - name: Upload test results
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: integration-test-results-macos-${{ matrix.build-type }}
+        path: build/Testing/Temporary/LastTest.log
+
+  integration-tests-windows:
+    name: Integration Tests (Windows)
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build-type: [Debug, Release]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Configure CMake
+      run: |
+        cmake -B build `
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} `
+          -DBUILD_INTEGRATION_TESTS=ON `
+          -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build-type }}
+
+    - name: Run Integration Tests
+      working-directory: build
+      run: |
+        ctest --output-on-failure -L integration -C ${{ matrix.build-type }}
+
+    - name: Upload test results
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: integration-test-results-windows-${{ matrix.build-type }}
+        path: build/Testing/Temporary/LastTest.log
+
+  coverage:
+    name: Integration Test Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          libgtest-dev \
+          gcc-11 \
+          g++-11 \
+          lcov
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Configure CMake with Coverage
+      env:
+        CC: gcc-11
+        CXX: g++-11
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DENABLE_COVERAGE=ON \
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run Integration Tests
+      working-directory: build
+      run: |
+        ctest --output-on-failure -L integration
+
+    - name: Generate Coverage Report
+      run: |
+        cmake --build build --target coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: build/coverage.info
+        flags: integration-tests
+        name: integration-tests-coverage
+
+  performance-baseline:
+    name: Performance Baseline Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          libgtest-dev \
+          gcc-11 \
+          g++-11
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Configure CMake
+      env:
+        CC: gcc-11
+        CXX: g++-11
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run Performance Tests
+      working-directory: build
+      run: |
+        ./integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
+
+    - name: Upload performance results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-baseline
+        path: build/performance-results.json
