@@ -237,7 +237,7 @@ TEST_F(ErrorHandlingTest, ConcurrentErrorPropagation) {
         pool_->enqueue(std::move(job));
     }
 
-    EXPECT_TRUE(WaitForCondition([&completed_jobs_, &error_count, job_count]() {
+    EXPECT_TRUE(WaitForCondition([this, &error_count, job_count]() {
         return (completed_jobs_.load() + error_count.load()) >= job_count;
     }));
 

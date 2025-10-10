@@ -93,7 +93,7 @@ TEST_F(JobQueueIntegrationTest, FIFOOrdering) {
     for (size_t i = 0; i < job_count; ++i) {
         auto result = queue->try_dequeue();
         ASSERT_TRUE(result);
-        auto job_result = result.value()->execute();
+        auto job_result = result.value()->do_work();
         EXPECT_TRUE(job_result);
     }
 
@@ -222,7 +222,8 @@ TEST_F(JobQueueIntegrationTest, BatchDequeue) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
             []() -> kcenon::thread::result_void { return {}; }
         );
-        queue->enqueue(std::move(job));
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_TRUE(result);
     }
 
     auto dequeued_jobs = queue->dequeue_batch();
@@ -238,7 +239,8 @@ TEST_F(JobQueueIntegrationTest, QueueClear) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
             []() -> kcenon::thread::result_void { return {}; }
         );
-        queue->enqueue(std::move(job));
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_TRUE(result);
     }
 
     EXPECT_EQ(queue->size(), 100);
@@ -319,7 +321,8 @@ TEST_F(JobQueueIntegrationTest, QueueStateConsistency) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
             []() -> kcenon::thread::result_void { return {}; }
         );
-        queue->enqueue(std::move(job));
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_TRUE(result);
     }
 
     EXPECT_EQ(queue->size(), 50);
@@ -339,7 +342,8 @@ TEST_F(JobQueueIntegrationTest, QueueStateConsistency) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
             []() -> kcenon::thread::result_void { return {}; }
         );
-        queue->enqueue(std::move(job));
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_TRUE(result);
     }
 
     EXPECT_EQ(queue->size(), 60);
