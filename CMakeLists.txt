@@ -120,6 +120,9 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     # Add examples/samples
     add_examples_and_samples()
 
+    # Enable CTest
+    enable_testing()
+
     # Add tests
     add_tests_subdirectory()
 
