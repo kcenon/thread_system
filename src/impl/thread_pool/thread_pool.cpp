@@ -141,6 +141,12 @@ namespace kcenon::thread
         // Acquire lock to check workers_ safely
         std::scoped_lock<std::mutex> lock(workers_mutex_);
 
+        // Check if pool is already running
+        if (start_pool_.load())
+        {
+            return error{error_code::thread_already_running, "thread pool is already running"};
+        }
+
         // Validate that workers have been added
         if (workers_.empty())
         {
