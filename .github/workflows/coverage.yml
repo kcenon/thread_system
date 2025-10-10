@@ -20,7 +20,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ lcov libgtest-dev libgmock-dev libfmt-dev
+        sudo apt-get install -y cmake ninja-build g++ lcov libfmt-dev
+        # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true

@@ -35,12 +35,14 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libgtest-dev libgmock-dev libfmt-dev
+        sudo apt-get install -y cmake ninja-build g++ clang libfmt-dev
+        # GTest is now fetched via CMake FetchContent
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja googletest fmt
+        brew install ninja fmt
+        # GTest is now fetched via CMake FetchContent
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -202,7 +204,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang libgtest-dev libgmock-dev libfmt-dev
+        sudo apt-get install -y cmake ninja-build clang libfmt-dev
+        # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true

@@ -6,8 +6,8 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-# Find dependencies
-find_package(GTest REQUIRED)
+# GTest is now provided by parent CMakeLists via FetchContent
+# No need to find_package here - targets are already available
 
 # Collect all integration test source files
 file(GLOB SCENARIO_TESTS scenarios/*.cpp)

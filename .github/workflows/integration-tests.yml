@@ -34,9 +34,8 @@ jobs:
           ${{ matrix.compiler.cxx }} \
           libc++-14-dev \
           libc++abi-14-dev \
-          libgtest-dev \
-          libgmock-dev \
           libfmt-dev
+        # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -60,9 +59,7 @@ jobs:
         echo "Compiler: ${{ matrix.compiler.name }}"
         echo "Build Type: ${{ matrix.build-type }}"
         echo "Common System: $BUILD_WITH_COMMON"
-        echo "GTest packages available:"
-        dpkg -l | grep -i gtest || echo "  (using pkg-config)"
-        pkg-config --modversion gtest 2>/dev/null || echo "  (GTest not found via pkg-config)"
+        echo "GTest: Will be fetched via FetchContent if needed"
         echo "==========================="
 
         cmake -B build \
@@ -113,7 +110,8 @@ jobs:
 
     - name: Install system dependencies
       run: |
-        brew install cmake ninja googletest fmt
+        brew install cmake ninja fmt
+        # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -133,9 +131,7 @@ jobs:
         echo "=== Build Configuration ==="
         echo "Build Type: ${{ matrix.build-type }}"
         echo "Common System: $BUILD_WITH_COMMON"
-        echo "GTest packages available:"
-        brew list googletest 2>/dev/null || echo "  (GTest not found via brew)"
-        pkg-config --modversion gtest 2>/dev/null || echo "  (GTest not found via pkg-config)"
+        echo "GTest: Will be fetched via FetchContent if needed"
         echo "==========================="
 
         cmake -B build \
@@ -241,9 +237,8 @@ jobs:
           gcc-11 \
           g++-11 \
           lcov \
-          libgtest-dev \
-          libgmock-dev \
           libfmt-dev
+        # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -319,9 +314,8 @@ jobs:
           ninja-build \
           gcc-11 \
           g++-11 \
-          libgtest-dev \
-          libgmock-dev \
           libfmt-dev
+        # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
