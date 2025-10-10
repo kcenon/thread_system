@@ -249,7 +249,7 @@ jobs:
     - name: Run Performance Tests
       working-directory: build
       run: |
-        ./integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
+        ./bin/integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
 
     - name: Upload performance results
       uses: actions/upload-artifact@v3
