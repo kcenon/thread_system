@@ -44,7 +44,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
 
     - name: Configure CMake
       env:
@@ -74,7 +74,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: integration-test-results-ubuntu-${{ matrix.compiler.name }}-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -107,7 +107,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
 
     - name: Configure CMake
       env:
@@ -135,7 +135,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: integration-test-results-macos-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -165,7 +165,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
 
     - name: Configure CMake
       env:
@@ -192,7 +192,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: integration-test-results-windows-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -228,7 +228,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
 
     - name: Configure CMake with Coverage
       env:
@@ -298,7 +298,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
 
     - name: Configure CMake
       env:
@@ -327,7 +327,7 @@ jobs:
         ./bin/integration_tests --gtest_filter=*Performance* --gtest_output=json:performance-results.json
 
     - name: Upload performance results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: performance-baseline
         path: build/performance-results.json
