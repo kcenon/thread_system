@@ -19,7 +19,7 @@ endif()
 # Try to find GTest (vcpkg first, then system)
 find_package(GTest CONFIG)
 if(NOT GTest_FOUND)
-    find_package(GTest REQUIRED)
+    find_package(GTest)  # GTest provided by parent CMakeLists
 endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
