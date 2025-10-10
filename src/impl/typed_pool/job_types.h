@@ -126,7 +126,7 @@ namespace kcenon::thread
 	 * // BACKGROUND
 	 * @endcode
 	 */
-	[[nodiscard]] inline auto all_types(void) -> std::vector<job_types>
+	[[nodiscard]] inline auto get_all_job_types(void) -> std::vector<job_types>
 	{
 		return { job_types::RealTime, job_types::Batch, job_types::Background };
 	}

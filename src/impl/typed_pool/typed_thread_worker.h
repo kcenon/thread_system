@@ -113,7 +113,7 @@ namespace kcenon::thread
 		 * The \c use_time_tag feature may be leveraged by derived classes or
 		 * additional logging mechanisms if time-based processing is required.
 		 */
-		typed_thread_worker_t(std::vector<job_type> types = all_types(),
+		typed_thread_worker_t(std::vector<job_type> types = get_all_job_types(),
 								 const bool& use_time_tag = true,
 								 const thread_context& context = thread_context());
 
