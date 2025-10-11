@@ -153,6 +153,19 @@ namespace kcenon::thread
             return error{error_code::invalid_argument, "no workers to start"};
         }
 
+        // Create fresh job queue for restart scenarios
+        // Stopped queues cannot accept new jobs, so we must create a new instance
+        if (job_queue_ == nullptr || job_queue_->is_stopped())
+        {
+            job_queue_ = std::make_shared<kcenon::thread::job_queue>();
+
+            // Update all workers with the new queue reference
+            for (auto& worker : workers_)
+            {
+                worker->set_job_queue(job_queue_);
+            }
+        }
+
         // Attempt to start each worker
         for (auto& worker : workers_)
         {
