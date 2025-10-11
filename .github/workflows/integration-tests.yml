@@ -328,6 +328,10 @@ jobs:
         CC: gcc
         CXX: g++
       run: |
+        # Force clean build to ensure coverage flags are applied
+        # CMake cache can prevent new compiler flags from being picked up
+        rm -rf build
+
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
           BUILD_WITH_COMMON="ON"
@@ -341,7 +345,13 @@ jobs:
           -DCMAKE_PREFIX_PATH="/usr"
 
     - name: Build
-      run: cmake --build build
+      run: |
+        echo "=== Building with coverage instrumentation ==="
+        echo "First 50 lines of verbose build to verify flags:"
+        cmake --build build --verbose 2>&1 | head -50
+        echo "..."
+        echo "=== Running full build ==="
+        cmake --build build
 
     - name: Generate Coverage Report
       timeout-minutes: 10  # Allow more time for coverage tests
