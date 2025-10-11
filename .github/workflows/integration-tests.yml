@@ -15,8 +15,8 @@ jobs:
       matrix:
         build-type: [Debug, Release]
         compiler:
-          - { name: GCC, cc: gcc-11, cxx: g++-11 }
-          - { name: Clang, cc: clang-14, cxx: clang++-14 }
+          - { name: GCC, cc: gcc, cxx: g++ }
+          - { name: Clang, cc: clang, cxx: clang++ }
 
     steps:
     - name: Checkout code
@@ -32,8 +32,6 @@ jobs:
           ninja-build \
           ${{ matrix.compiler.cc }} \
           ${{ matrix.compiler.cxx }} \
-          libc++-14-dev \
-          libc++abi-14-dev \
           libfmt-dev
         # GTest is now fetched via CMake FetchContent - no system package needed
 
@@ -257,8 +255,8 @@ jobs:
         sudo apt-get install -y \
           cmake \
           ninja-build \
-          gcc-11 \
-          g++-11 \
+          gcc \
+          g++ \
           lcov \
           libfmt-dev
         # GTest is now fetched via CMake FetchContent - no system package needed
@@ -283,8 +281,8 @@ jobs:
 
     - name: Configure CMake with Coverage
       env:
-        CC: gcc-11
-        CXX: g++-11
+        CC: gcc
+        CXX: g++
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -347,8 +345,8 @@ jobs:
         sudo apt-get install -y \
           cmake \
           ninja-build \
-          gcc-11 \
-          g++-11 \
+          gcc \
+          g++ \
           libfmt-dev
         # GTest is now fetched via CMake FetchContent - no system package needed
 
@@ -372,8 +370,8 @@ jobs:
 
     - name: Configure CMake
       env:
-        CC: gcc-11
-        CXX: g++-11
+        CC: gcc
+        CXX: g++
         CI: true
       run: |
         BUILD_WITH_COMMON="OFF"
