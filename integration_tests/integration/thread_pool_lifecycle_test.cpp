@@ -229,12 +229,12 @@ TEST_F(ThreadPoolLifecycleTest, QueueSizeTracking) {
     const size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
         SubmitJob([]() {
-            WorkSimulator::simulate_work(std::chrono::milliseconds(10));
+            WorkSimulator::simulate_work(std::chrono::microseconds(100));
         });
     }
 
-    // Queue should have pending tasks (check immediately before worker catches up)
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    // Queue should have pending tasks
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     size_t pending = pool_->get_pending_task_count();
     EXPECT_GT(pending, 0);
 
