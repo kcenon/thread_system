@@ -128,7 +128,7 @@ namespace kcenon::thread
 	 * }
 	 * @endcode
 	 */
-	[[nodiscard]] inline auto all_types(void) -> std::vector<thread_conditions>
+	[[nodiscard]] inline auto get_all_thread_conditions(void) -> std::vector<thread_conditions>
 	{
 		return { thread_conditions::Created, thread_conditions::Waiting, thread_conditions::Working,
 				 thread_conditions::Stopping, thread_conditions::Stopped };

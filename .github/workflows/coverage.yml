@@ -20,7 +20,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ libgtest-dev libgmock-dev libfmt-dev lcov
+        sudo apt-get install -y cmake ninja-build g++ lcov libfmt-dev
+        # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
       continue-on-error: true
@@ -40,11 +41,23 @@ jobs:
           echo "Building without common_system support"
           BUILD_WITH_COMMON="OFF"
         fi
+
+        echo "=== Build Configuration ==="
+        echo "Build Mode: Debug with Coverage"
+        echo "Common System: $BUILD_WITH_COMMON"
+        echo "==========================="
+
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
           -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DCMAKE_PREFIX_PATH="/usr" || {
+            echo "::error::CMake configuration failed for coverage build"
+            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No error log found"
+            exit 1
+          }
 
     - name: Build with coverage
       run: cmake --build build --config Debug

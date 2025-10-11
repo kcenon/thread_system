@@ -8,7 +8,10 @@ if(ENABLE_COVERAGE)
         message(STATUS "Configuring code coverage...")
         
         # Add coverage compiler flags
-        set(COVERAGE_COMPILER_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage"
+        # -fprofile-update=atomic: Thread-safe coverage counters for multi-threaded code
+        # Without this flag, concurrent updates to coverage counters cause race conditions
+        # resulting in "Unexpected negative count" errors from lcov/geninfo
+        set(COVERAGE_COMPILER_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage -fprofile-update=atomic"
             CACHE INTERNAL "")
         
         # Add coverage linker flags

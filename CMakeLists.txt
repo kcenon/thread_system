@@ -31,6 +31,7 @@ endif()
 ##################################################
 
 option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" ON)
+option(BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
@@ -119,6 +120,9 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
 
     # Add examples/samples
     add_examples_and_samples()
+
+    # Enable CTest
+    enable_testing()
 
     # Add tests
     add_tests_subdirectory()

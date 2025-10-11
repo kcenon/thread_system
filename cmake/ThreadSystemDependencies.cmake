@@ -143,6 +143,52 @@ function(find_threading_library)
 endfunction()
 
 ##################################################
+# Find or fetch GTest for testing
+##################################################
+function(find_or_fetch_gtest)
+  # Skip if not building tests
+  if(NOT BUILD_INTEGRATION_TESTS AND NOT BUILD_TESTING)
+    return()
+  endif()
+
+  message(STATUS "Setting up GoogleTest...")
+
+  # Try to find system GTest first (for faster local builds)
+  find_package(GTest QUIET)
+
+  if(GTest_FOUND)
+    message(STATUS "✅ Using system GTest: ${GTest_VERSION}")
+    set(GTEST_FOUND TRUE PARENT_SCOPE)
+    return()
+  endif()
+
+  # Fallback: Use FetchContent to download and build GTest
+  message(STATUS "System GTest not found - fetching from source...")
+
+  include(FetchContent)
+
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0
+    GIT_SHALLOW TRUE
+    GIT_PROGRESS TRUE
+  )
+
+  # Configure GTest options
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  set(BUILD_GMOCK ON CACHE BOOL "" FORCE)
+  set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+
+  # Make GTest available
+  FetchContent_MakeAvailable(googletest)
+
+  message(STATUS "✅ GTest fetched and configured (v1.14.0)")
+  set(GTEST_FOUND TRUE PARENT_SCOPE)
+  set(GTEST_FROM_SOURCE TRUE PARENT_SCOPE)
+endfunction()
+
+##################################################
 # Main function to find all dependencies
 ##################################################
 function(find_thread_system_dependencies)
@@ -151,6 +197,7 @@ function(find_thread_system_dependencies)
   find_common_system_dependency()
   find_fmt_library()
   find_threading_library()
+  find_or_fetch_gtest()
 
   message(STATUS "Dependency detection complete")
 endfunction()
