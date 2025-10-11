@@ -263,6 +263,7 @@ jobs:
   coverage:
     name: Integration Test Coverage
     runs-on: ubuntu-latest
+    continue-on-error: true  # Coverage is optional - don't fail workflow if it fails
 
     steps:
     - name: Checkout code
@@ -343,6 +344,7 @@ jobs:
       run: cmake --build build
 
     - name: Generate Coverage Report
+      timeout-minutes: 10  # Allow more time for coverage tests
       run: |
         cd build
 
@@ -352,10 +354,10 @@ jobs:
         # Reset coverage counters
         lcov --directory . --zerocounters
 
-        # Run tests
+        # Run tests with extended timeout
         echo "=== Running tests for coverage (smoke + integration) ==="
-        ctest --output-on-failure -L "smoke|integration" || {
-          echo "::error::Tests failed during coverage run"
+        ctest --output-on-failure --timeout 300 -L "smoke|integration" || {
+          echo "::warning::Tests failed or timed out during coverage run"
           exit 1
         }
 

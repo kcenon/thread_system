@@ -271,7 +271,13 @@ namespace kcenon::thread
 			// Queue is currently empty - sleep briefly to avoid CPU spinning
 			// should_continue_work() will determine if we should exit (on queue stop)
 			// This polling approach is more reliable than blocking on wrong CV
-			std::this_thread::sleep_for(std::chrono::microseconds(100));
+			//
+			// Polling Interval Strategy:
+			// - 1ms is optimal for CI environments (balance between responsiveness and overhead)
+			// - Too short (100μs): excessive CPU usage and context switching in CI
+			// - Too long (10ms+): noticeable latency in job pickup
+			// - 1ms provides <1ms average latency while minimizing overhead
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			return result_void{};  // Success - will be called again
 		}
 
