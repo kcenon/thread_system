@@ -26,13 +26,34 @@ jobs:
 
     - name: Install system dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          cmake \
-          ninja-build \
-          ${{ matrix.compiler.cc }} \
-          ${{ matrix.compiler.cxx }} \
-          libfmt-dev
+        # Retry logic for apt-get to handle transient failures
+        for i in 1 2 3; do
+          echo "Attempt $i: Updating package list..."
+          sudo apt-get update && break || {
+            echo "apt-get update failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Install dependencies with retry
+        for i in 1 2 3; do
+          echo "Attempt $i: Installing dependencies..."
+          sudo apt-get install -y \
+            cmake \
+            ninja-build \
+            ${{ matrix.compiler.cc }} \
+            ${{ matrix.compiler.cxx }} \
+            libfmt-dev && break || {
+            echo "apt-get install failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Verify installation
+        ${{ matrix.compiler.cc }} --version
+        ${{ matrix.compiler.cxx }} --version
+        cmake --version
+        ninja --version
         # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
@@ -251,14 +272,36 @@ jobs:
 
     - name: Install system dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          cmake \
-          ninja-build \
-          gcc \
-          g++ \
-          lcov \
-          libfmt-dev
+        # Retry logic for apt-get to handle transient failures
+        for i in 1 2 3; do
+          echo "Attempt $i: Updating package list..."
+          sudo apt-get update && break || {
+            echo "apt-get update failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Install dependencies with retry
+        for i in 1 2 3; do
+          echo "Attempt $i: Installing dependencies..."
+          sudo apt-get install -y \
+            cmake \
+            ninja-build \
+            gcc \
+            g++ \
+            lcov \
+            libfmt-dev && break || {
+            echo "apt-get install failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Verify installation
+        gcc --version
+        g++ --version
+        cmake --version
+        ninja --version
+        lcov --version
         # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
@@ -302,10 +345,27 @@ jobs:
     - name: Generate Coverage Report
       run: |
         cd build
+
+        # Create coverage directory
+        mkdir -p coverage/html
+
+        # Reset coverage counters
         lcov --directory . --zerocounters
+
+        # Run tests
         echo "=== Running tests for coverage (smoke + integration) ==="
-        ctest --output-on-failure -L "smoke|integration"
-        lcov --directory . --capture --output-file coverage/all.info
+        ctest --output-on-failure -L "smoke|integration" || {
+          echo "::error::Tests failed during coverage run"
+          exit 1
+        }
+
+        # Capture coverage data
+        lcov --directory . --capture --output-file coverage/all.info || {
+          echo "::error::Failed to capture coverage data"
+          exit 1
+        }
+
+        # Filter coverage data
         lcov --remove coverage/all.info \
           '/usr/*' \
           '*/vcpkg/*' \
@@ -314,12 +374,20 @@ jobs:
           '*/benchmarks/*' \
           '*/samples/*' \
           '*/test/*' \
-          --output-file coverage/all.cleaned.info
+          --output-file coverage/all.cleaned.info || {
+          echo "::error::Failed to filter coverage data"
+          exit 1
+        }
+
+        # Generate HTML report
         genhtml --demangle-cpp --num-spaces 2 --sort \
           --title "Thread System Integration Coverage" \
           --function-coverage --branch-coverage \
           --output-directory coverage/html \
-          coverage/all.cleaned.info
+          coverage/all.cleaned.info || {
+          echo "::error::Failed to generate HTML coverage report"
+          exit 1
+        }
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -341,13 +409,34 @@ jobs:
 
     - name: Install system dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          cmake \
-          ninja-build \
-          gcc \
-          g++ \
-          libfmt-dev
+        # Retry logic for apt-get to handle transient failures
+        for i in 1 2 3; do
+          echo "Attempt $i: Updating package list..."
+          sudo apt-get update && break || {
+            echo "apt-get update failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Install dependencies with retry
+        for i in 1 2 3; do
+          echo "Attempt $i: Installing dependencies..."
+          sudo apt-get install -y \
+            cmake \
+            ninja-build \
+            gcc \
+            g++ \
+            libfmt-dev && break || {
+            echo "apt-get install failed, retrying in 10 seconds..."
+            sleep 10
+          }
+        done
+
+        # Verify installation
+        gcc --version
+        g++ --version
+        cmake --version
+        ninja --version
         # GTest is now fetched via CMake FetchContent - no system package needed
 
     - name: Checkout common_system (optional dependency)
