@@ -143,7 +143,6 @@ inline std::optional<::common::error_info> enqueue_job(
     const std::shared_ptr<kcenon::thread::thread_pool>& pool,
     const std::shared_ptr<std::promise<void>>& promise,
     std::function<kcenon::thread::result_void()> body) {
-
     if (!pool) {
         auto info = unexpected_pool_error();
         promise->set_exception(to_exception(info));
