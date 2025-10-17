@@ -1,3 +1,8 @@
+/*
+ * BSD 3-Clause License
+ * Copyright (c) 2025, thread_system contributors
+ */
+
 /**
  * @file common_executor_adapter.h
  * @brief Adapter to bridge thread_system pools with common IExecutor interface.
@@ -37,9 +42,7 @@ using IExecutor = ::common::interfaces::IExecutor;
 #include <functional>
 #include <future>
 #include <memory>
-#include <mutex>
 #include <optional>
-#include <variant>
 #include <sstream>
 #include <string>
 #include <thread>

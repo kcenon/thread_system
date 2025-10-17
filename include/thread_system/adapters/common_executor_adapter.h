@@ -1,3 +1,8 @@
+/*
+ * BSD 3-Clause License
+ * Copyright (c) 2025, thread_system contributors
+ */
+
 #pragma once
 
 #ifdef BUILD_WITH_COMMON_SYSTEM
