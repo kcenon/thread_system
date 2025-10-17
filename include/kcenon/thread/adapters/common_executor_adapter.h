@@ -1,215 +1,366 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2025, 🍀☀🌕🌥 🌊
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 /**
  * @file common_executor_adapter.h
- * @brief Adapter to bridge thread_system with common IExecutor interface
- *
- * This adapter enables thread_system's thread_pool to work with the
- * common executor interface, promoting loose coupling between modules.
+ * @brief Adapter to bridge thread_system pools with common IExecutor interface.
  */
 
 #pragma once
 
 #if __has_include(<kcenon/common/interfaces/executor_interface.h>)
 #include <kcenon/common/interfaces/executor_interface.h>
+#include <kcenon/common/patterns/result.h>
 #elif __has_include(<common/interfaces/executor_interface.h>)
 #include <common/interfaces/executor_interface.h>
+#include <common/patterns/result.h>
 #ifndef KCENON_COMMON_EXECUTOR_FALLBACK_DEFINED
 #define KCENON_COMMON_EXECUTOR_FALLBACK_DEFINED
 namespace kcenon {
 namespace common {
+using ::common::Result;
+using ::common::VoidResult;
 namespace interfaces {
-using ::common::interfaces::IExecutor;
-using ::common::interfaces::ExecutorFactory;
-using ::common::interfaces::IExecutorProvider;
-} // namespace interfaces
+using IExecutor = ::common::interfaces::IExecutor;
+}
 } // namespace common
 } // namespace kcenon
-#endif // KCENON_COMMON_EXECUTOR_FALLBACK_DEFINED
+#endif
 #else
 #error "Unable to locate common executor interface header."
 #endif
-#include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/core/typed_thread_pool.h>
 
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/error_handling.h>
+#include <kcenon/thread/core/thread_pool.h>
+
+#include <atomic>
 #include <chrono>
-#include <future>
+#include <exception>
 #include <functional>
+#include <future>
 #include <memory>
-#include <stdexcept>
+#include <optional>
+#include <sstream>
+#include <string>
 #include <thread>
-#include <type_traits>
 #include <utility>
 
-namespace kcenon {
-namespace thread {
-namespace adapters {
+namespace kcenon::thread::adapters {
 
-/**
- * @class thread_pool_to_common_executor
- * @brief Adapts thread_pool to kcenon::common::interfaces::IExecutor
- *
- * This adapter allows thread_system's thread_pool to be used
- * wherever the common IExecutor interface is expected.
- */
-class thread_pool_to_common_executor : public kcenon::common::interfaces::IExecutor {
-public:
-    explicit thread_pool_to_common_executor(std::shared_ptr<thread_pool> pool)
-        : pool_(std::move(pool)) {
-        if (!pool_) {
-            throw std::invalid_argument("Thread pool cannot be null");
-        }
+namespace detail {
+
+inline ::common::error_info make_error_info(const kcenon::thread::error& err) {
+    return ::common::error_info{
+        static_cast<int>(err.code()),
+        err.message(),
+        "thread_system"
+    };
+}
+
+inline ::common::error_info make_error_info(int code, std::string message, std::string module = "thread_system") {
+    return ::common::error_info{code, std::move(message), std::move(module)};
+}
+
+inline std::exception_ptr to_exception(const ::common::error_info& info) {
+    std::ostringstream ss;
+    ss << "[" << info.module << "] " << info.message << " (code=" << info.code << ")";
+    if (info.details) {
+        ss << ": " << *info.details;
+    }
+    return std::make_exception_ptr(std::runtime_error(ss.str()));
+}
+
+inline kcenon::thread::result_void make_thread_error(const ::common::error_info& info) {
+    return kcenon::thread::result_void(kcenon::thread::error{
+        static_cast<kcenon::thread::error_code>(info.code),
+        info.message
+    });
+}
+
+inline kcenon::thread::result_void make_thread_error(kcenon::thread::error_code code, std::string message) {
+    return kcenon::thread::result_void(kcenon::thread::error{code, std::move(message)});
+}
+
+inline ::common::error_info unexpected_pool_error() {
+    return make_error_info(-1, "Thread pool unavailable");
+}
+
+inline kcenon::thread::result_void wrap_user_task(const std::function<void()>& task) {
+    try {
+        task();
+        return kcenon::thread::result_void{};
+    } catch (const std::exception& ex) {
+        return make_thread_error(kcenon::thread::error_code::job_execution_failed, ex.what());
+    } catch (...) {
+        return make_thread_error(kcenon::thread::error_code::job_execution_failed,
+                                 "Unknown exception while executing task");
+    }
+}
+
+inline ::common::VoidResult convert_result(kcenon::thread::result_void result) {
+    if (result.has_error()) {
+        const auto& err = result.get_error();
+        return ::common::error_info{
+            static_cast<int>(err.code()),
+            err.message(),
+            "thread_system"
+        };
+    }
+    return ::common::VoidResult(std::monostate{});
+}
+
+inline std::optional<::common::error_info> enqueue_job(
+    const std::shared_ptr<kcenon::thread::thread_pool>& pool,
+    const std::shared_ptr<std::promise<void>>& promise,
+    std::function<kcenon::thread::result_void()> body) {
+    if (!pool) {
+        auto info = unexpected_pool_error();
+        promise->set_exception(to_exception(info));
+        return info;
     }
 
-    // IExecutor implementation
+    auto completion_flag = std::make_shared<std::atomic<bool>>(false);
+
+    auto job = std::make_unique<kcenon::thread::callback_job>(
+        [promise, completion_flag, body = std::move(body)]() mutable -> kcenon::thread::result_void {
+            try {
+                auto result = body();
+                if (result.has_error()) {
+                    auto info = make_error_info(result.get_error());
+                    if (!completion_flag->exchange(true)) {
+                        promise->set_exception(to_exception(info));
+                    }
+                    return result;
+                }
+                if (!completion_flag->exchange(true)) {
+                    promise->set_value();
+                }
+                return result;
+            } catch (const std::exception& ex) {
+                auto info = make_error_info(kcenon::thread::error{
+                    kcenon::thread::error_code::job_execution_failed,
+                    ex.what()
+                });
+                if (!completion_flag->exchange(true)) {
+                    promise->set_exception(to_exception(info));
+                }
+                return make_thread_error(info);
+            } catch (...) {
+                auto info = make_error_info(kcenon::thread::error{
+                    kcenon::thread::error_code::job_execution_failed,
+                    "Unhandled exception while executing job"
+                });
+                if (!completion_flag->exchange(true)) {
+                    promise->set_exception(to_exception(info));
+                }
+                return make_thread_error(info);
+            }
+        });
+
+    auto enqueue_result = pool->enqueue(std::move(job));
+    if (enqueue_result.has_error()) {
+        const auto& err = enqueue_result.get_error();
+        auto info = make_error_info(err);
+        if (!completion_flag->exchange(true)) {
+            promise->set_exception(to_exception(info));
+        }
+        return info;
+    }
+
+    return std::nullopt;
+}
+
+inline ::common::Result<std::future<void>> schedule_task(
+    const std::shared_ptr<kcenon::thread::thread_pool>& pool,
+    std::function<kcenon::thread::result_void()> body) {
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+
+    if (auto error = enqueue_job(pool, promise, std::move(body))) {
+        return ::common::Result<std::future<void>>(*error);
+    }
+
+    return ::common::Result<std::future<void>>::ok(std::move(future));
+}
+
+inline void schedule_task_async(
+    std::shared_ptr<kcenon::thread::thread_pool> pool,
+    std::shared_ptr<std::promise<void>> promise,
+    std::function<kcenon::thread::result_void()> body,
+    std::chrono::milliseconds delay) {
+    std::thread([pool = std::move(pool), promise = std::move(promise),
+                 body = std::move(body), delay]() mutable {
+        try {
+            if (delay.count() > 0) {
+                std::this_thread::sleep_for(delay);
+            }
+            if (!pool) {
+                promise->set_exception(to_exception(unexpected_pool_error()));
+                return;
+            }
+            (void)enqueue_job(pool, promise, std::move(body));
+        } catch (...) {
+            promise->set_exception(std::current_exception());
+        }
+    }).detach();
+}
+
+} // namespace detail
+
+/**
+ * @brief Adapter exposing thread_pool through common::interfaces::IExecutor.
+ */
+class thread_pool_executor_adapter : public ::common::interfaces::IExecutor {
+public:
+    explicit thread_pool_executor_adapter(std::shared_ptr<kcenon::thread::thread_pool> pool)
+        : pool_(std::move(pool)) {}
+
     std::future<void> submit(std::function<void()> task) override {
-        return pool_->submit(std::move(task));
+        auto result = detail::schedule_task(pool_, [task = std::move(task)]() mutable {
+            return detail::wrap_user_task(task);
+        });
+
+        if (result.is_ok()) {
+            return std::move(result.unwrap());
+        }
+
+        std::promise<void> failed;
+        failed.set_exception(detail::to_exception(result.error()));
+        return failed.get_future();
     }
 
     std::future<void> submit_delayed(std::function<void()> task,
-                                    std::chrono::milliseconds delay) override {
-        return pool_->submit_delayed(std::move(task), delay);
+                                     std::chrono::milliseconds delay) override {
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+
+        detail::schedule_task_async(pool_, promise,
+            [task = std::move(task)]() mutable {
+                return detail::wrap_user_task(task);
+            },
+            delay);
+
+        return future;
+    }
+
+    ::common::Result<std::future<void>> execute(std::unique_ptr<::common::interfaces::IJob>&& job) override {
+        return detail::schedule_task(pool_,
+            [job = std::move(job)]() mutable -> kcenon::thread::result_void {
+                try {
+                    auto result = job->execute();
+                    if (result.is_err()) {
+                        return detail::make_thread_error(result.error());
+                    }
+                    return kcenon::thread::result_void{};
+                } catch (const std::exception& ex) {
+                    return detail::make_thread_error(
+                        kcenon::thread::error_code::job_execution_failed,
+                        ex.what());
+                } catch (...) {
+                    return detail::make_thread_error(
+                        kcenon::thread::error_code::job_execution_failed,
+                        "Unknown exception while executing common job");
+                }
+            });
+    }
+
+    ::common::Result<std::future<void>> execute_delayed(
+        std::unique_ptr<::common::interfaces::IJob>&& job,
+        std::chrono::milliseconds delay) override {
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+
+        detail::schedule_task_async(pool_, promise,
+            [job = std::move(job)]() mutable -> kcenon::thread::result_void {
+                try {
+                    auto result = job->execute();
+                    if (result.is_err()) {
+                        return detail::make_thread_error(result.error());
+                    }
+                    return kcenon::thread::result_void{};
+                } catch (const std::exception& ex) {
+                    return detail::make_thread_error(
+                        kcenon::thread::error_code::job_execution_failed,
+                        ex.what());
+                } catch (...) {
+                    return detail::make_thread_error(
+                        kcenon::thread::error_code::job_execution_failed,
+                        "Unknown exception while executing common job");
+                }
+            },
+            delay);
+
+        return ::common::Result<std::future<void>>::ok(std::move(future));
     }
 
     size_t worker_count() const override {
-        return pool_->get_thread_count();
+        return pool_ ? pool_->get_thread_count() : 0U;
     }
 
     bool is_running() const override {
-        return pool_->is_running();
+        return pool_ && pool_->is_running();
     }
 
     size_t pending_tasks() const override {
-        return pool_->get_queue_size();
+        return pool_ ? pool_->get_pending_task_count() : 0U;
     }
 
     void shutdown(bool wait_for_completion = true) override {
-        if (wait_for_completion) {
-            pool_->wait_for_all();
+        if (!pool_) {
+            return;
         }
-        pool_->stop();
+
+        auto stop_result = pool_->stop(!wait_for_completion);
+        if (stop_result.has_error()) {
+            // Best effort: surface error via exception to aid debugging.
+            throw std::runtime_error(stop_result.get_error().to_string());
+        }
     }
 
-    // Access underlying thread_pool
-    std::shared_ptr<thread_pool> get_thread_pool() const {
+    std::shared_ptr<kcenon::thread::thread_pool> get_thread_pool() const {
         return pool_;
     }
 
 private:
-    std::shared_ptr<thread_pool> pool_;
+    std::shared_ptr<kcenon::thread::thread_pool> pool_;
 };
 
-/**
- * @class typed_pool_to_common_executor
- * @brief Adapts typed_thread_pool to kcenon::common::interfaces::IExecutor
- *
- * This adapter allows typed_thread_pool to be used with the common interface.
- */
-template<typename ReturnType>
-class typed_pool_to_common_executor : public kcenon::common::interfaces::IExecutor {
+class common_executor_factory {
 public:
-    explicit typed_pool_to_common_executor(
-        std::shared_ptr<typed_thread_pool<ReturnType>> pool)
-        : pool_(std::move(pool)) {
-        if (!pool_) {
-            throw std::invalid_argument("Typed thread pool cannot be null");
-        }
+    static std::shared_ptr<::common::interfaces::IExecutor> create_from_thread_pool(
+        std::shared_ptr<kcenon::thread::thread_pool> pool) {
+        return std::make_shared<thread_pool_executor_adapter>(std::move(pool));
     }
-
-    // IExecutor implementation (void tasks only)
-    std::future<void> submit(std::function<void()> task) override {
-        // Wrap void task to return ReturnType (requires specialization or default)
-        if constexpr (std::is_void_v<ReturnType>) {
-            return pool_->submit(std::move(task));
-        } else {
-            // For non-void return types, we need to adapt the task
-            auto promise = std::make_shared<std::promise<void>>();
-            auto future = promise->get_future();
-
-            pool_->submit([task = std::move(task), promise]() -> ReturnType {
-                task();
-                promise->set_value();
-                if constexpr (!std::is_void_v<ReturnType>) {
-                    return ReturnType{};
-                }
-            });
-
-            return future;
-        }
-    }
-
-    std::future<void> submit_delayed(std::function<void()> task,
-                                    std::chrono::milliseconds delay) override {
-        // Note: typed_thread_pool may not support delayed submission directly
-        // This would need implementation in the base class or workaround
-        std::this_thread::sleep_for(delay);
-        return submit(std::move(task));
-    }
-
-    size_t worker_count() const override {
-        return pool_->get_thread_count();
-    }
-
-    bool is_running() const override {
-        return pool_->is_running();
-    }
-
-    size_t pending_tasks() const override {
-        return pool_->get_queue_size();
-    }
-
-    void shutdown(bool wait_for_completion = true) override {
-        if (wait_for_completion) {
-            pool_->wait_for_all();
-        }
-        pool_->stop();
-    }
-
-private:
-    std::shared_ptr<typed_thread_pool<ReturnType>> pool_;
 };
 
-/**
- * @class common_executor_provider
- * @brief Provides thread_system executors as common IExecutor instances
- */
-class common_executor_provider : public kcenon::common::interfaces::IExecutorProvider {
-public:
-    common_executor_provider(size_t default_worker_count = std::thread::hardware_concurrency())
-        : default_worker_count_(default_worker_count) {}
-
-    std::shared_ptr<kcenon::common::interfaces::IExecutor> get_executor() override {
-        if (!default_executor_) {
-            default_executor_ = create_executor(default_worker_count_);
-        }
-        return default_executor_;
-    }
-
-    std::shared_ptr<kcenon::common::interfaces::IExecutor> create_executor(size_t worker_count) override {
-        auto pool = std::make_shared<thread_pool>(worker_count);
-        return std::make_shared<thread_pool_to_common_executor>(pool);
-    }
-
-private:
-    size_t default_worker_count_;
-    std::shared_ptr<kcenon::common::interfaces::IExecutor> default_executor_;
-};
-
-/**
- * @brief Factory function to create an IExecutor from thread_pool
- */
-inline std::shared_ptr<kcenon::common::interfaces::IExecutor> make_common_executor(
-    std::shared_ptr<thread_pool> pool) {
-    return std::make_shared<thread_pool_to_common_executor>(std::move(pool));
-}
-
-/**
- * @brief Factory function to create an IExecutor from typed_thread_pool
- */
-template<typename ReturnType>
-inline std::shared_ptr<kcenon::common::interfaces::IExecutor> make_common_executor(
-    std::shared_ptr<typed_thread_pool<ReturnType>> pool) {
-    return std::make_shared<typed_pool_to_common_executor<ReturnType>>(std::move(pool));
-}
-
-} // namespace adapters
-} // namespace thread
-} // namespace kcenon
+} // namespace kcenon::thread::adapters
