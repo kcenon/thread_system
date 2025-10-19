@@ -128,14 +128,30 @@ public:
         if (result.is_ok()) {
             metrics_.total_enqueued.fetch_add(1, std::memory_order_relaxed);
 
-            // Update peak size
+            // Update peak size with retry limit to prevent infinite loops
             auto current_size = size();
-            auto peak = metrics_.peak_size.load(std::memory_order_relaxed);
-            while (current_size > peak &&
-                   !metrics_.peak_size.compare_exchange_weak(
-                       peak, current_size, std::memory_order_relaxed)) {
-                // Retry if CAS failed
+            auto peak = metrics_.peak_size.load(std::memory_order_acquire);
+
+            // Limit retries to prevent infinite loop in case of high contention
+            // or spurious failures with compare_exchange_weak
+            constexpr size_t max_retries = 10;
+            size_t retry_count = 0;
+
+            while (current_size > peak && retry_count < max_retries) {
+                // Use compare_exchange_strong to avoid spurious failures
+                // Use acq_rel ordering to ensure proper synchronization
+                if (metrics_.peak_size.compare_exchange_strong(
+                        peak, current_size,
+                        std::memory_order_acq_rel,
+                        std::memory_order_acquire)) {
+                    break;  // Successfully updated peak
+                }
+                ++retry_count;
+                // Peak was updated by another thread, reload and retry if still smaller
             }
+
+            // If we hit max retries, it's not critical - peak tracking is best-effort
+            // The metric might be slightly inaccurate but won't cause infinite loops
         }
 
         return result;
