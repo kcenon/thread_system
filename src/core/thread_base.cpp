@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/core/thread_base.h>
+#include <kcenon/thread/core/thread_logger.h>
 
 /**
  * @file thread_base.cpp
@@ -265,14 +266,22 @@ namespace kcenon::thread
 							work_result = do_work();
 							if (work_result.has_error())
 							{
-								std::cerr << "error doing work on " << thread_title_ << " : "
-										  << work_result.get_error().to_string() << std::endl;
+								// Use structured logger instead of raw std::cerr
+								kcenon::thread::thread_logger::instance().log(
+									kcenon::thread::log_level::error,
+									thread_title_,
+									"Work execution failed",
+									work_result.get_error().to_string());
 							}
 						}
 						catch (const std::exception& e)
 						{
 							// Log any unhandled exceptions from do_work() but continue running
-							std::cerr << "exception in " << thread_title_ << ": " << e.what() << '\n';
+							kcenon::thread::thread_logger::instance().log(
+								kcenon::thread::log_level::error,
+								thread_title_,
+								"Unhandled exception in worker thread",
+								e.what());
 						}
 					}
 
@@ -280,8 +289,11 @@ namespace kcenon::thread
 					work_result = after_stop();
 					if (work_result.has_error())
 					{
-						std::cerr << "error after stop: " << work_result.get_error().to_string()
-								  << std::endl;
+						kcenon::thread::thread_logger::instance().log(
+							kcenon::thread::log_level::error,
+							thread_title_,
+							"Error during cleanup",
+							work_result.get_error().to_string());
 					}
 				});  // End of lambda function passed to thread constructor
 		}
