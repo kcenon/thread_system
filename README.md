@@ -428,6 +428,12 @@ build/
 - **`job` class**: Abstract base class for units of work with cancellation support
 - **`callback_job` class**: Concrete job implementation using `std::function`
 - **`job_queue` class**: Thread-safe queue for job management
+- **`bounded_job_queue`** 🆕: Production-ready queue with backpressure support
+  - Maximum queue size enforcement (prevents memory exhaustion)
+  - Backpressure signaling when queue nears capacity
+  - Timeout support for enqueue operations
+  - Comprehensive metrics (total enqueued/dequeued/rejected/timeouts, peak size)
+  - Ideal for production systems with bounded resource constraints
 - **`cancellation_token`** 🆕: Enhanced cooperative cancellation mechanism
   - Linked token creation for hierarchical cancellation
   - Thread-safe callback registration
@@ -564,12 +570,156 @@ The framework provides two distinct typed thread pool implementations optimized 
 - **Runtime configuration**: JSON-based configuration for deployment flexibility
 - **Compile-time optimization**: Conditional feature compilation for minimal overhead
 - **Builder pattern**: Fluent API for easy thread pool construction
+- **Worker policy system** 🆕: Fine-grained control over worker behavior
+  - **Scheduling policies**: FIFO, LIFO, Priority, Work-stealing
+  - **Idle behavior**: Configurable timeout, yield, or sleep strategies
+  - **Performance tuning**: CPU pinning, batch size configuration
+  - **Predefined policies**: `default_policy()`, `high_performance()`, `low_latency()`, `power_efficient()`
+  - **Custom policies**: Define application-specific worker behaviors
 
 ### 🔒 **Safety & Reliability**
 - **Exception safety**: Strong exception safety guarantees throughout the framework
 - **Resource leak prevention**: Automatic cleanup using RAII principles
 - **Deadlock prevention**: Careful lock ordering and timeout mechanisms
 - **Memory corruption protection**: Smart pointer usage and bounds checking
+
+## 📖 API Reference
+
+### Thread Pool API
+
+The `thread_pool` class provides a comprehensive API for concurrent job execution:
+
+#### Lifecycle Management
+```cpp
+auto pool = std::make_shared<thread_pool>("PoolName");
+auto result = pool->start();           // Start processing
+result = pool->stop(false);            // Stop gracefully (wait for current jobs)
+result = pool->stop(true);             // Stop immediately
+bool running = pool->is_running();     // Check if pool is active
+```
+
+#### Job Submission
+```cpp
+// Convenience API - submit simple tasks
+bool success = pool->submit_task([]() {
+    // Your task code here
+});
+
+// Job-based API - for advanced features (cancellation, result handling)
+auto job = std::make_unique<callback_job>([]() -> result_void {
+    // Your job code here
+    return {};
+});
+pool->enqueue(std::move(job));
+
+// Batch submission
+std::vector<std::unique_ptr<job>> jobs;
+// ... populate jobs vector
+pool->enqueue_batch(std::move(jobs));
+```
+
+#### Worker Management
+```cpp
+// Add individual worker
+auto worker = std::make_unique<thread_worker>();
+pool->enqueue(std::move(worker));
+
+// Add multiple workers
+std::vector<std::unique_ptr<thread_worker>> workers;
+for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    workers.push_back(std::make_unique<thread_worker>());
+}
+pool->enqueue_batch(std::move(workers));
+```
+
+#### Monitoring & Status
+```cpp
+size_t workers = pool->get_thread_count();        // Number of worker threads
+size_t pending = pool->get_pending_task_count();  // Queued tasks waiting
+size_t idle = pool->get_idle_worker_count();      // Workers not processing jobs
+pool->report_metrics();                            // Report to monitoring system
+```
+
+#### Shutdown
+```cpp
+// Graceful shutdown (wait for tasks to complete)
+bool success = pool->shutdown_pool(false);
+
+// Immediate shutdown (may interrupt tasks)
+success = pool->shutdown_pool(true);
+```
+
+### Bounded Job Queue API
+
+The `bounded_job_queue` class provides production-ready queue with backpressure support:
+
+```cpp
+#include <kcenon/thread/core/bounded_job_queue.h>
+
+// Create bounded queue with max capacity
+auto queue = std::make_shared<bounded_job_queue>(1000);  // Max 1000 jobs
+
+// Enqueue with timeout
+auto timeout = std::chrono::milliseconds(100);
+auto result = queue->enqueue(std::move(job), timeout);
+if (!result) {
+    // Handle timeout or rejection
+}
+
+// Get metrics
+auto metrics = queue->get_metrics();
+std::cout << "Total enqueued: " << metrics.total_enqueued << "\n";
+std::cout << "Total rejected: " << metrics.total_rejected << "\n";
+std::cout << "Peak size: " << metrics.peak_size << "\n";
+std::cout << "Timeout count: " << metrics.timeout_count << "\n";
+```
+
+### Worker Policy API
+
+Configure worker behavior with predefined or custom policies:
+
+```cpp
+#include <kcenon/thread/core/worker_policy.h>
+
+// Use predefined policies
+auto policy = worker_policy::high_performance();  // Minimal latency
+policy = worker_policy::power_efficient();        // Lower CPU usage
+policy = worker_policy::low_latency();            // Fastest response
+policy = worker_policy::default_policy();         // Balanced
+
+// Custom policy
+worker_policy custom;
+custom.scheduling = scheduling_policy::priority;
+custom.idle_strategy = idle_strategy::yield;
+custom.max_batch_size = 64;
+
+// Apply to worker (if using typed_thread_pool with policy support)
+auto worker = std::make_unique<thread_worker>();
+// Note: Standard thread_worker doesn't expose policy configuration
+```
+
+### Cancellation Token API
+
+Cooperative cancellation for long-running jobs:
+
+```cpp
+#include <kcenon/thread/core/cancellation_token.h>
+
+auto token = std::make_shared<cancellation_token>();
+
+// In producer thread
+pool->submit_task([token]() {
+    for (int i = 0; i < 1000000; ++i) {
+        if (token->is_cancelled()) {
+            return;  // Exit early
+        }
+        // Do work
+    }
+});
+
+// From another thread
+token->cancel();  // Request cancellation
+```
 
 ## Quick Start & Usage Examples
 
@@ -578,77 +728,63 @@ The framework provides two distinct typed thread pool implementations optimized 
 #### Adaptive High-Performance Example
 
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
-// Optional: #include "logger/core/logger.h" // If using separate logger project
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
+#include <atomic>
+#include <iostream>
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
 
 int main() {
-    // 1. Start the logger (if using separate logger project)
-    // log_module::start();
-    
-    // 2. Create a high-performance adaptive thread pool
-    auto pool = std::make_shared<thread_pool>();
-    
-    // 3. Add workers with adaptive queue optimization
+    // 1. Create a thread pool
+    auto pool = std::make_shared<thread_pool>("HighPerformancePool");
+
+    // 2. Add workers
     std::vector<std::unique_ptr<thread_worker>> workers;
-    for (int i = 0; i < std::thread::hardware_concurrency(); ++i) {
-        auto worker = std::make_unique<thread_worker>();
-        worker->set_batch_processing(true, 32);  // Process up to 32 jobs at once
-        workers.push_back(std::move(worker));
+    for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+        workers.push_back(std::make_unique<thread_worker>());
     }
     pool->enqueue_batch(std::move(workers));
-    
-    // 4. Start processing
+
+    // 3. Start processing
     pool->start();
-    
-    // 5. Submit jobs - adaptive pool handles varying contention efficiently
+
+    // 4. Submit jobs using the convenience API
     std::atomic<int> counter{0};
     const int total_jobs = 100000;
-    
+
     for (int i = 0; i < total_jobs; ++i) {
-        pool->enqueue(std::make_unique<callback_job>(
-            [&counter, i]() -> result_void {
-                counter.fetch_add(1);
-                if (i % 10000 == 0) {
-                    // Optional logging: log_module::write_information("Processed {} jobs", i);
-                    std::cout << "Processed " << i << " jobs\n";
-                }
-                return {};
+        pool->submit_task([&counter, i]() {
+            counter.fetch_add(1);
+            if (i % 10000 == 0) {
+                std::cout << "Processed " << i << " jobs\n";
             }
-        ));
+        });
     }
-    
-    // 6. Wait for completion with progress monitoring
+
+    // 5. Monitor progress
     auto start_time = std::chrono::high_resolution_clock::now();
     while (counter.load() < total_jobs) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::cout << "Status: " << pool->get_pending_task_count() << " pending, "
+                  << pool->get_thread_count() << " workers, "
+                  << pool->get_idle_worker_count() << " idle\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     auto end_time = std::chrono::high_resolution_clock::now();
-    
-    // 7. Get comprehensive performance statistics
+
+    // 6. Display performance results
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     auto throughput = static_cast<double>(total_jobs) / duration.count() * 1000.0;
-    
-    // Optional logging (or use std::cout)
+
     std::cout << "Performance Results:\n";
     std::cout << "- Total jobs: " << total_jobs << "\n";
     std::cout << "- Execution time: " << duration.count() << " ms\n";
-    std::cout << "- Throughput: " << std::fixed << std::setprecision(2) << throughput << " jobs/second\n";
-    
-    auto workers_list = pool->get_workers();
-    for (size_t i = 0; i < workers_list.size(); ++i) {
-        auto stats = static_cast<thread_worker*>(workers_list[i].get())->get_statistics();
-        std::cout << "Worker " << i << ": " << stats.jobs_processed << " jobs, avg time: " 
-                  << stats.avg_processing_time_ns << " ns, " << stats.batch_operations << " batch ops\n";
-    }
-    
-    // 8. Clean shutdown
-    pool->stop();
-    // log_module::stop(); // If using logger
-    
+    std::cout << "- Throughput: " << std::fixed << std::setprecision(2)
+              << throughput << " jobs/second\n";
+
+    // 7. Clean shutdown
+    pool->shutdown_pool(false);  // Wait for current tasks to complete
+
     return 0;
 }
 ```
@@ -659,76 +795,67 @@ int main() {
 
 #### Standard Thread Pool (Low Contention)
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
 
 // Create a simple thread pool for low-contention workloads
 auto pool = std::make_shared<thread_pool>("StandardPool");
 
 // Add workers
 std::vector<std::unique_ptr<thread_worker>> workers;
-for (int i = 0; i < 4; ++i) {  // Few workers for simple tasks
+for (size_t i = 0; i < 4; ++i) {  // Few workers for simple tasks
     workers.push_back(std::make_unique<thread_worker>());
 }
 pool->enqueue_batch(std::move(workers));
 pool->start();
 
-// Submit jobs
+// Submit jobs using the job-based API
 for (int i = 0; i < 100; ++i) {
     pool->enqueue(std::make_unique<callback_job>(
         [i]() -> result_void {
             // Process data
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            log_module::write_debug("Processed item {}", i);
+            std::cout << "Processed item " << i << "\n";
             return {};
         }
     ));
 }
 ```
 
-#### Adaptive Thread Pool (High Contention)
+#### High-Contention Multi-Producer Example
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
+#include <thread>
+#include <vector>
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
 
-// Create adaptive pool for high-contention scenarios
-auto pool = std::make_shared<thread_pool>("AdaptivePool");
+// Create pool for high-contention scenarios
+auto pool = std::make_shared<thread_pool>("HighContentionPool");
 
-// Configure workers for maximum throughput
+// Add workers
 std::vector<std::unique_ptr<thread_worker>> workers;
-for (int i = 0; i < std::thread::hardware_concurrency(); ++i) {
-    auto worker = std::make_unique<thread_worker>();
-    
-    // Enable batch processing for better throughput
-    worker->set_batch_processing(true, 64);
-    
-    workers.push_back(std::move(worker));
+for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    workers.push_back(std::make_unique<thread_worker>());
 }
 pool->enqueue_batch(std::move(workers));
 pool->start();
 
-// Submit jobs from multiple threads (high contention)
-// Adaptive queues will automatically switch to lock-free mode when beneficial
+// Submit jobs from multiple producer threads
 std::vector<std::thread> producers;
 for (int t = 0; t < 8; ++t) {
     producers.emplace_back([&pool, t]() {
         for (int i = 0; i < 10000; ++i) {
-            pool->enqueue(std::make_unique<callback_job>(
-                [t, i]() -> result_void {
-                    // Fast job execution
-                    std::atomic<int> sum{0};
-                    for (int j = 0; j < 100; ++j) {
-                        sum.fetch_add(j);
-                    }
-                    return {};
+            pool->submit_task([t, i]() {
+                // Fast job execution
+                std::atomic<int> sum{0};
+                for (int j = 0; j < 100; ++j) {
+                    sum.fetch_add(j);
                 }
-            ));
+            });
         }
     });
 }
@@ -738,18 +865,13 @@ for (auto& t : producers) {
     t.join();
 }
 
-// Get detailed statistics
-auto workers_vec = pool->get_workers();
-for (size_t i = 0; i < workers_vec.size(); ++i) {
-    auto stats = static_cast<thread_worker*>(
-        workers_vec[i].get())->get_statistics();
-    log_module::write_information(
-        "Worker {}: {} jobs, {} μs avg, {} batch ops",
-        i, stats.jobs_processed,
-        stats.avg_processing_time_ns / 1000,
-        stats.batch_operations
-    );
+// Wait for all jobs to complete
+while (pool->get_pending_task_count() > 0) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
+
+std::cout << "All jobs completed. Total workers: "
+          << pool->get_thread_count() << "\n";
 ```
 
 #### Asynchronous Logging
