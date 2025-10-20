@@ -1205,9 +1205,8 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 
 ## Acknowledgments
 
-- Thanks to all contributors who have helped improve this project
-- Special thanks to the C++ community for continuous feedback and support
 - Inspired by modern concurrent programming patterns and best practices
+- Maintained by kcenon@naver.com
 
 ---
 

@@ -413,7 +413,7 @@ RUN ./dependency.sh && ./build.sh --release
 | macOS 11+ | x64, Apple Silicon | ✅ 완전 지원 | CI에서 테스트 비활성화 |
 | Windows 10/11 | x64 | ✅ 완전 지원 | MSVC 권장 |
 | Alpine Linux | x64 | ⚠️ 실험적 | musl libc 호환성 |
-| FreeBSD | x64 | ⚠️ 실험적 | 커뮤니티 지원 |
+| FreeBSD | x64 | ⚠️ 실험적 | 유지보수 지원 |
 
 ## 추가 리소스
 
