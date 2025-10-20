@@ -427,3 +427,6 @@ RUN ./dependency.sh && ./build.sh --release
 - **2025-09-13**: Initial platform build guide created
 - **2025-09-13**: Added troubleshooting section
 - **2025-09-13**: Added performance optimization tips
+---
+
+*Last Updated: 2025-10-20*

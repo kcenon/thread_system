@@ -2,6 +2,60 @@
 
 > **Language:** [English](DESIGN_IMPROVEMENTS.md) | **한국어**
 
+## 목차
+
+- [날짜](#날짜)
+- [개요](#개요)
+- [1. 아키텍처 개선](#1-아키텍처-개선)
+  - [1.1 디렉토리 구조 재구성](#11-디렉토리-구조-재구성)
+    - [현재 문제](#현재-문제)
+    - [제안된 구조](#제안된-구조)
+  - [1.2 Module 의존성 명확화](#12-module-의존성-명확화)
+    - [의존성 그래프](#의존성-그래프)
+    - [의존성 규칙](#의존성-규칙)
+- [2. Interface Layer 강화](#2-interface-layer-강화)
+  - [2.1 새로운 Interface Set](#21-새로운-interface-set)
+    - [Core Interface](#core-interface)
+  - [2.2 Service Registry 패턴](#22-service-registry-패턴)
+    - [구현 접근 방식](#구현-접근-방식)
+- [3. 문서화 시스템 개선](#3-문서화-시스템-개선)
+  - [3.1 자동 문서 생성](#31-자동-문서-생성)
+    - [Doxygen 통합](#doxygen-통합)
+  - [3.2 문서 구조 표준화](#32-문서-구조-표준화)
+    - [Module별 README Template](#module별-readme-template)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [API Reference](#api-reference)
+- [Examples](#examples)
+- [Performance Characteristics](#performance-characteristics)
+- [Dependencies](#dependencies)
+- [4. 테스팅 및 품질 보증](#4-테스팅-및-품질-보증)
+  - [4.1 Coverage Target](#41-coverage-target)
+    - [Coverage 기준](#coverage-기준)
+    - [테스트 자동화](#테스트-자동화)
+  - [4.2 Benchmark 자동화](#42-benchmark-자동화)
+    - [Benchmark Framework](#benchmark-framework)
+- [5. 빌드 시스템 개선](#5-빌드-시스템-개선)
+  - [5.1 Modular CMake 구성](#51-modular-cmake-구성)
+    - [Module별 CMakeLists.txt](#module별-cmakeliststxt)
+  - [5.2 Packaging](#52-packaging)
+    - [CMake Package 파일](#cmake-package-파일)
+- [6. 코딩 표준 통일](#6-코딩-표준-통일)
+  - [6.1 명명 규칙](#61-명명-규칙)
+    - [통일 규칙](#통일-규칙)
+  - [6.2 Code Formatter 설정](#62-code-formatter-설정)
+    - [.clang-format 파일](#clang-format-파일)
+- [7. 실행 계획](#7-실행-계획)
+  - [Phase 1: 기초 (1주)](#phase-1-기초-1주)
+  - [Phase 2: Interface 개선 (2주)](#phase-2-interface-개선-2주)
+  - [Phase 3: 문서화 (1주)](#phase-3-문서화-1주)
+  - [Phase 4: 품질 보증 (2주)](#phase-4-품질-보증-2주)
+  - [Phase 5: 최종화 (1주)](#phase-5-최종화-1주)
+- [8. 예상 이점](#8-예상-이점)
+- [9. 위험 관리](#9-위험-관리)
+  - [잠재적 위험](#잠재적-위험)
+- [10. 결론](#10-결론)
+
 ## 날짜
 2025년 9월 6일 (Asia/Seoul)
 
@@ -368,3 +422,7 @@ BreakConstructorInitializers: BeforeComma
 ## 10. 결론
 
 이 계획은 thread_system 프로젝트의 구조적 문제를 해결하고 장기적인 유지 보수성과 확장성을 보장하기 위한 체계적인 접근 방식을 제공합니다. 단계적 실행을 통해 위험을 최소화하면서 전반적인 품질을 개선할 수 있습니다.
+
+---
+
+*Last Updated: 2025-10-20*

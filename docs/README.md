@@ -1,5 +1,7 @@
 # Thread System Documentation
 
+> **Language:** **English** | [한국어](README_KO.md)
+
 Welcome to the comprehensive documentation for the Thread System framework. This guide helps you navigate to the right documentation based on your role and needs.
 
 ## 📖 Quick Start
@@ -119,3 +121,6 @@ This documentation covers the core `thread_system` project. For related projects
 ---
 
 *This documentation is maintained by the Thread System team. For updates or corrections, please see the [Contributing Guide](CONTRIBUTING.md).*
+---
+
+*Last Updated: 2025-10-20*

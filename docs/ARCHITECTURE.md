@@ -2,6 +2,25 @@
 
 > **Language:** **English** | [한국어](ARCHITECTURE_KO.md)
 
+## Table of Contents
+
+- [🏗️ Ecosystem Overview](#-ecosystem-overview)
+- [📋 Project Roles & Responsibilities](#-project-roles-responsibilities)
+  - [1. thread_system (Foundation)](#1-thread_system-foundation)
+  - [2. logger_system (Logging)](#2-logger_system-logging)
+  - [3. monitoring_system (Metrics)](#3-monitoring_system-metrics)
+  - [4. integrated_thread_system (Integration Hub)](#4-integrated_thread_system-integration-hub)
+- [🔄 Dependency Flow & Interface Contracts](#-dependency-flow-interface-contracts)
+- [📁 Directory Structure (Overview)](#-directory-structure-overview)
+- [🚀 Recent Architectural Highlights](#-recent-architectural-highlights)
+  - [Enhanced Synchronization Primitives 🆕](#enhanced-synchronization-primitives-)
+  - [Improved Cancellation Support 🆕](#improved-cancellation-support-)
+  - [Service Registry Pattern 🆕](#service-registry-pattern-)
+  - [Adaptive Job Queue](#adaptive-job-queue)
+  - [Interface-Driven Integration](#interface-driven-integration)
+  - [Error Handling Excellence](#error-handling-excellence)
+  - [Typed Thread Pool](#typed-thread-pool)
+
 A comprehensive overview of the modular threading ecosystem and inter-project relationships.
 
 ## 🏗️ Ecosystem Overview
@@ -249,3 +268,7 @@ Ecosystem Integration Note
 - Per-type queues with lock-free/adaptive variants
 - Priority/type-aware scheduling for heterogeneous workloads
 - Maintains 99%+ type accuracy under all conditions
+
+---
+
+*Last Updated: 2025-10-20*

@@ -106,3 +106,7 @@ cppcheck-htmlreport --file=cppcheck.xml --report-dir=build/cppcheck-report
 - Phase 1에서 초기 경고를 수정한 후 기준선이 업데이트됩니다
 - 목표는 지속적인 개선과 퇴보 제로입니다
 - 모든 새로운 코드는 정적 분석 검사를 통과해야 합니다
+
+---
+
+*Last Updated: 2025-10-20*

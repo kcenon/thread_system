@@ -162,3 +162,7 @@ cmake --build build --target docs
 ### 외부 의존성 (선택적)
 - **logger_sample**: 고성능 로깅 (별도의 logger_system 필요)
 - **metrics_sample**: 실시간 메트릭 수집 (별도의 monitoring_system 필요)
+
+---
+
+*Last Updated: 2025-10-20*

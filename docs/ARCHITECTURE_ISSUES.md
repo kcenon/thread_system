@@ -2,6 +2,34 @@
 
 > **Language:** **English** | [한국어](ARCHITECTURE_ISSUES_KO.md)
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Issue Categories](#issue-categories)
+  - [1. Concurrency & Thread Safety](#1-concurrency-thread-safety)
+    - [Issue ARC-001: Adaptive Queue Strategy Selection Optimization](#issue-arc-001-adaptive-queue-strategy-selection-optimization)
+    - [Issue ARC-002: Service Registry Thread Safety](#issue-arc-002-service-registry-thread-safety)
+    - [Issue ARC-003: Cancellation Token Edge Cases](#issue-arc-003-cancellation-token-edge-cases)
+  - [2. Performance](#2-performance)
+    - [Issue ARC-004: Lock-Free Queue Memory Reclamation](#issue-arc-004-lock-free-queue-memory-reclamation)
+    - [Issue ARC-005: Worker Batch Processing Optimization](#issue-arc-005-worker-batch-processing-optimization)
+  - [3. Documentation](#3-documentation)
+    - [Issue ARC-006: Incomplete API Documentation](#issue-arc-006-incomplete-api-documentation)
+    - [Issue ARC-007: Missing Performance Guidance](#issue-arc-007-missing-performance-guidance)
+  - [4. Testing](#4-testing)
+    - [Issue ARC-008: Coverage Gaps](#issue-arc-008-coverage-gaps)
+    - [Issue ARC-009: Benchmark Suite Completeness](#issue-arc-009-benchmark-suite-completeness)
+  - [5. Integration](#5-integration)
+    - [Issue ARC-010: Common System Integration](#issue-arc-010-common-system-integration)
+- [Issue Tracking](#issue-tracking)
+  - [Phase 0 Actions](#phase-0-actions)
+  - [Phase 1 Actions](#phase-1-actions)
+  - [Phase 2 Actions](#phase-2-actions)
+  - [Phase 3 Actions](#phase-3-actions)
+  - [Phase 6 Actions](#phase-6-actions)
+- [Risk Assessment](#risk-assessment)
+- [References](#references)
+
 **Document Version**: 1.0
 **Date**: 2025-10-05
 **System**: thread_system
@@ -202,3 +230,7 @@ This document catalogs known architectural issues in thread_system identified du
 
 **Document Maintainer**: Architecture Team
 **Next Review**: After each phase completion
+
+---
+
+*Last Updated: 2025-10-20*

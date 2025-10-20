@@ -154,3 +154,7 @@ Please refer to the [patterns documentation](PATTERNS.md#troubleshooting-common-
 
 ### Q: Can I use Thread System in a non-CMake project?
 **A:** Yes, but you'll need to configure your build system to include the appropriate source files and set the required compilation flags (C++20 support, thread library linking, etc.).
+
+---
+
+*Last Updated: 2025-10-20*

@@ -1298,3 +1298,7 @@ Thread System framework는 간소화된 adaptive 아키텍처로 탁월한 성�
    - 자동 최적화 신뢰
 
 이 포괄적인 성능 가이드의 지침과 기법을 따르면 특정 애플리케이션 요구 사항에 대한 최적 성능을 달성할 수 있습니다. 간소화된 adaptive 아키텍처는 Thread System framework의 단순성과 안정성을 유지하면서 강력한 최적화 기능을 제공합니다.
+
+---
+
+*Last Updated: 2025-10-20*

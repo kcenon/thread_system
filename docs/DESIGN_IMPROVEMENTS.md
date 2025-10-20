@@ -2,6 +2,60 @@
 
 > **Language:** **English** | [한국어](DESIGN_IMPROVEMENTS_KO.md)
 
+## Table of Contents
+
+- [Date](#date)
+- [Overview](#overview)
+- [1. Architecture Improvements](#1-architecture-improvements)
+  - [1.1 Directory Structure Reorganization](#11-directory-structure-reorganization)
+    - [Current Issues](#current-issues)
+    - [Proposed Structure](#proposed-structure)
+  - [1.2 Clarify Module Dependencies](#12-clarify-module-dependencies)
+    - [Dependency Graph](#dependency-graph)
+    - [Dependency Rules](#dependency-rules)
+- [2. Interface Layer Reinforcement](#2-interface-layer-reinforcement)
+  - [2.1 New Interface Set](#21-new-interface-set)
+    - [Core Interfaces](#core-interfaces)
+  - [2.2 Service Registry Pattern](#22-service-registry-pattern)
+    - [Implementation Approach](#implementation-approach)
+- [3. Documentation System Improvements](#3-documentation-system-improvements)
+  - [3.1 Automated Documentation Generation](#31-automated-documentation-generation)
+    - [Doxygen Integration](#doxygen-integration)
+  - [3.2 Documentation Structure Standardization](#32-documentation-structure-standardization)
+    - [Per-Module README Template](#per-module-readme-template)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [API Reference](#api-reference)
+- [Examples](#examples)
+- [Performance Characteristics](#performance-characteristics)
+- [Dependencies](#dependencies)
+- [4. Testing and Quality Assurance](#4-testing-and-quality-assurance)
+  - [4.1 Coverage Targets](#41-coverage-targets)
+    - [Coverage Criteria](#coverage-criteria)
+    - [Test Automation](#test-automation)
+  - [4.2 Benchmark Automation](#42-benchmark-automation)
+    - [Benchmark Framework](#benchmark-framework)
+- [5. Build System Improvements](#5-build-system-improvements)
+  - [5.1 Modular CMake Configuration](#51-modular-cmake-configuration)
+    - [Per-Module CMakeLists.txt](#per-module-cmakeliststxt)
+  - [5.2 Packaging](#52-packaging)
+    - [CMake Package File](#cmake-package-file)
+- [6. Coding Standards Unification](#6-coding-standards-unification)
+  - [6.1 Naming Rules](#61-naming-rules)
+    - [Unified Rules](#unified-rules)
+  - [6.2 Code Formatter Settings](#62-code-formatter-settings)
+    - [.clang-format File](#clang-format-file)
+- [7. Execution Plan](#7-execution-plan)
+  - [Phase 1: Foundation (1 week)](#phase-1-foundation-1-week)
+  - [Phase 2: Interface Improvements (2 weeks)](#phase-2-interface-improvements-2-weeks)
+  - [Phase 3: Documentation (1 week)](#phase-3-documentation-1-week)
+  - [Phase 4: Quality Assurance (2 weeks)](#phase-4-quality-assurance-2-weeks)
+  - [Phase 5: Finalization (1 week)](#phase-5-finalization-1-week)
+- [8. Expected Benefits](#8-expected-benefits)
+- [9. Risk Management](#9-risk-management)
+  - [Potential Risks](#potential-risks)
+- [10. Conclusion](#10-conclusion)
+
 ## Date
 06 Sep 2025 (Asia/Seoul)
 
@@ -368,3 +422,7 @@ BreakConstructorInitializers: BeforeComma
 ## 10. Conclusion
 
 This plan addresses structural issues in the thread_system project and provides a systematic approach to ensure long-term maintainability and extensibility. Through phased execution, we can minimize risk while improving overall quality.
+
+---
+
+*Last Updated: 2025-10-20*
