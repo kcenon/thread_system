@@ -428,6 +428,12 @@ build/
 - **`job` 클래스**: Cancellation 지원이 있는 작업 단위의 추상 기본 클래스
 - **`callback_job` 클래스**: `std::function`을 사용하는 구체적인 job 구현
 - **`job_queue` 클래스**: Job 관리를 위한 thread-safe queue
+- **`bounded_job_queue`** 🆕: Backpressure 지원이 있는 프로덕션급 queue
+  - 최대 queue 크기 강제 (메모리 고갈 방지)
+  - Queue가 용량에 근접할 때 backpressure 신호 전달
+  - Enqueue 작업에 대한 timeout 지원
+  - 포괄적인 metric (총 enqueue/dequeue/거부/timeout, 최대 크기)
+  - 리소스 제약이 있는 프로덕션 시스템에 이상적
 - **`cancellation_token`** 🆕: 향상된 협력적 cancellation 메커니즘
   - 계층적 cancellation을 위한 연결된 token 생성
   - Thread-safe callback 등록
@@ -564,12 +570,156 @@ Framework는 다양한 시나리오에 최적화된 두 가지 별개의 typed t
 - **런타임 구성**: 배포 유연성을 위한 JSON 기반 구성
 - **컴파일 타임 최적화**: 최소 오버헤드를 위한 조건부 기능 컴파일
 - **Builder 패턴**: 쉬운 thread pool 구성을 위한 fluent API
+- **Worker policy 시스템** 🆕: Worker 동작에 대한 세밀한 제어
+  - **Scheduling policy**: FIFO, LIFO, Priority, Work-stealing
+  - **Idle 동작**: 구성 가능한 timeout, yield 또는 sleep 전략
+  - **성능 튜닝**: CPU pinning, batch 크기 구성
+  - **사전 정의된 policy**: `default_policy()`, `high_performance()`, `low_latency()`, `power_efficient()`
+  - **사용자 정의 policy**: 애플리케이션별 worker 동작 정의
 
 ### 🔒 **안전성 및 신뢰성**
 - **Exception safety**: Framework 전체에 걸쳐 강력한 exception safety 보장
 - **리소스 누수 방지**: RAII 원칙을 사용한 자동 정리
 - **Deadlock 방지**: 신중한 lock 순서 지정 및 시간 초과 메커니즘
 - **메모리 손상 보호**: Smart pointer 사용 및 경계 검사
+
+## 📖 API 참조
+
+### Thread Pool API
+
+`thread_pool` 클래스는 동시 작업 실행을 위한 포괄적인 API를 제공합니다:
+
+#### 생명 주기 관리
+```cpp
+auto pool = std::make_shared<thread_pool>("PoolName");
+auto result = pool->start();           // 처리 시작
+result = pool->stop(false);            // 우아한 종료 (현재 작업 대기)
+result = pool->stop(true);             // 즉시 종료
+bool running = pool->is_running();     // Pool 활성 상태 확인
+```
+
+#### Job 제출
+```cpp
+// 편의 API - 간단한 작업 제출
+bool success = pool->submit_task([]() {
+    // 작업 코드
+});
+
+// Job 기반 API - 고급 기능용 (cancellation, 결과 처리)
+auto job = std::make_unique<callback_job>([]() -> result_void {
+    // Job 코드
+    return {};
+});
+pool->enqueue(std::move(job));
+
+// Batch 제출
+std::vector<std::unique_ptr<job>> jobs;
+// ... jobs vector 채우기
+pool->enqueue_batch(std::move(jobs));
+```
+
+#### Worker 관리
+```cpp
+// 개별 worker 추가
+auto worker = std::make_unique<thread_worker>();
+pool->enqueue(std::move(worker));
+
+// 여러 worker 추가
+std::vector<std::unique_ptr<thread_worker>> workers;
+for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    workers.push_back(std::make_unique<thread_worker>());
+}
+pool->enqueue_batch(std::move(workers));
+```
+
+#### Monitoring 및 상태
+```cpp
+size_t workers = pool->get_thread_count();        // Worker thread 수
+size_t pending = pool->get_pending_task_count();  // 대기 중인 작업
+size_t idle = pool->get_idle_worker_count();      // Job 처리 중이지 않은 worker
+pool->report_metrics();                            // Monitoring 시스템에 보고
+```
+
+#### 종료
+```cpp
+// 우아한 종료 (작업 완료 대기)
+bool success = pool->shutdown_pool(false);
+
+// 즉시 종료 (작업 중단 가능)
+success = pool->shutdown_pool(true);
+```
+
+### Bounded Job Queue API
+
+`bounded_job_queue` 클래스는 backpressure 지원이 있는 프로덕션급 queue를 제공합니다:
+
+```cpp
+#include <kcenon/thread/core/bounded_job_queue.h>
+
+// 최대 용량으로 bounded queue 생성
+auto queue = std::make_shared<bounded_job_queue>(1000);  // 최대 1000개 job
+
+// Timeout으로 enqueue
+auto timeout = std::chrono::milliseconds(100);
+auto result = queue->enqueue(std::move(job), timeout);
+if (!result) {
+    // Timeout 또는 거부 처리
+}
+
+// Metric 가져오기
+auto metrics = queue->get_metrics();
+std::cout << "총 enqueue: " << metrics.total_enqueued << "\n";
+std::cout << "총 거부: " << metrics.total_rejected << "\n";
+std::cout << "최대 크기: " << metrics.peak_size << "\n";
+std::cout << "Timeout 횟수: " << metrics.timeout_count << "\n";
+```
+
+### Worker Policy API
+
+사전 정의된 또는 사용자 정의 policy로 worker 동작 구성:
+
+```cpp
+#include <kcenon/thread/core/worker_policy.h>
+
+// 사전 정의된 policy 사용
+auto policy = worker_policy::high_performance();  // 최소 지연 시간
+policy = worker_policy::power_efficient();        // 낮은 CPU 사용량
+policy = worker_policy::low_latency();            // 가장 빠른 응답
+policy = worker_policy::default_policy();         // 균형잡힌
+
+// 사용자 정의 policy
+worker_policy custom;
+custom.scheduling = scheduling_policy::priority;
+custom.idle_strategy = idle_strategy::yield;
+custom.max_batch_size = 64;
+
+// Worker에 적용 (policy 지원이 있는 typed_thread_pool 사용 시)
+auto worker = std::make_unique<thread_worker>();
+// 참고: 표준 thread_worker는 policy 구성을 노출하지 않음
+```
+
+### Cancellation Token API
+
+장시간 실행되는 job을 위한 협력적 cancellation:
+
+```cpp
+#include <kcenon/thread/core/cancellation_token.h>
+
+auto token = std::make_shared<cancellation_token>();
+
+// Producer thread에서
+pool->submit_task([token]() {
+    for (int i = 0; i < 1000000; ++i) {
+        if (token->is_cancelled()) {
+            return;  // 조기 종료
+        }
+        // 작업 수행
+    }
+});
+
+// 다른 thread에서
+token->cancel();  // Cancellation 요청
+```
 
 ## 빠른 시작 및 사용 예제
 
@@ -578,12 +728,12 @@ Framework는 다양한 시나리오에 최적화된 두 가지 별개의 typed t
 #### Adaptive 고성능 예제
 
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
 // Optional: #include "logger/core/logger.h" // 별도 logger 프로젝트 사용 시
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
+
 
 int main() {
     // 1. Logger 시작 (별도 logger 프로젝트 사용 시)
@@ -596,7 +746,7 @@ int main() {
     std::vector<std::unique_ptr<thread_worker>> workers;
     for (int i = 0; i < std::thread::hardware_concurrency(); ++i) {
         auto worker = std::make_unique<thread_worker>();
-        worker->set_batch_processing(true, 32);  // 한 번에 최대 32개의 job 처리
+        
         workers.push_back(std::move(worker));
     }
     pool->enqueue_batch(std::move(workers));
@@ -659,11 +809,11 @@ int main() {
 
 #### Standard Thread Pool (낮은 경합)
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
+
 
 // 낮은 경합 워크로드를 위한 간단한 thread pool 생성
 auto pool = std::make_shared<thread_pool>("StandardPool");
@@ -691,11 +841,11 @@ for (int i = 0; i < 100; ++i) {
 
 #### Adaptive Thread Pool (높은 경합)
 ```cpp
-#include "thread_pool/core/thread_pool.h"
-#include "thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/jobs/callback_job.h>
 
-using namespace thread_pool_module;
-using namespace thread_module;
+using namespace kcenon::thread;
+
 
 // 높은 경합 시나리오를 위한 adaptive pool 생성
 auto pool = std::make_shared<thread_pool>("AdaptivePool");
@@ -706,7 +856,7 @@ for (int i = 0; i < std::thread::hardware_concurrency(); ++i) {
     auto worker = std::make_unique<thread_worker>();
 
     // 더 나은 처리량을 위한 배치 처리 활성화
-    worker->set_batch_processing(true, 64);
+    
 
     workers.push_back(std::move(worker));
 }
@@ -827,10 +977,10 @@ log_module::stop();
 #### 실시간 성능 Monitoring
 ```cpp
 #include "monitoring/core/metrics_collector.h"
-#include "thread_pool/core/thread_pool.h"
+#include <kcenon/thread/core/thread_pool.h>
 
 using namespace monitoring_module;
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 // Monitoring system 시작
 monitoring_config config;
