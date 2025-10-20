@@ -1,5 +1,7 @@
 # Thread System - Performance Baseline Metrics
 
+**English** | [한국어](BASELINE_KO.md)
+
 **Version**: 1.0.0
 **Date**: 2025-10-09
 **Phase**: Phase 0 - Foundation

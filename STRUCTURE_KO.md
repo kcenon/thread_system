@@ -1,8 +1,8 @@
-# Thread System - New Structure
+# Thread System - 새로운 구조
 
-**English** | [한국어](STRUCTURE_KO.md)
+[English](STRUCTURE.md) | **한국어**
 
-## Directory Layout
+## 디렉토리 구조
 
 ```
 thread_system/
@@ -25,17 +25,17 @@ thread_system/
 └── CMakeLists.txt             # Build configuration
 ```
 
-## Namespace Structure
+## Namespace 구조
 
-- Root: `kcenon::thread`
-- Core functionality: `kcenon::thread::core`
-- Interfaces: `kcenon::thread::interfaces`
-- Implementation details: `kcenon::thread::impl`
-- Utilities: `kcenon::thread::utils`
+- 루트: `kcenon::thread`
+- 핵심 기능: `kcenon::thread::core`
+- 인터페이스: `kcenon::thread::interfaces`
+- 구현 세부사항: `kcenon::thread::impl`
+- 유틸리티: `kcenon::thread::utils`
 
-## Migration Notes
+## 마이그레이션 노트
 
-1. Old structure backed up in `old_structure/` directory
-2. Compatibility header provided at `include/kcenon/thread/compatibility.h`
-3. Run `./migrate_namespaces.sh` to update all namespaces
-4. Update CMakeLists.txt to reflect new structure
+1. 기존 구조는 `old_structure/` 디렉토리에 백업됨
+2. 호환성 헤더는 `include/kcenon/thread/compatibility.h`에서 제공됨
+3. 모든 namespace를 업데이트하려면 `./migrate_namespaces.sh` 실행
+4. 새로운 구조를 반영하도록 CMakeLists.txt 업데이트
