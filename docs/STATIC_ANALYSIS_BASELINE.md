@@ -1,5 +1,7 @@
 # Static Analysis Baseline - thread_system
 
+> **Language:** **English** | [한국어](STATIC_ANALYSIS_BASELINE_KO.md)
+
 **Date**: 2025-10-03  
 **Version**: 1.0.0  
 **Tool Versions**:

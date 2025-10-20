@@ -1,5 +1,7 @@
 # Thread System User Guide
 
+> **Language:** **English** | [한국어](USER_GUIDE_KO.md)
+
 ## Build
 
 ### Prerequisites
