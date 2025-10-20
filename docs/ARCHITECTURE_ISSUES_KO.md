@@ -2,6 +2,34 @@
 
 > **Language:** [English](ARCHITECTURE_ISSUES.md) | **한국어**
 
+## 목차
+
+- [개요](#개요)
+- [문제 카테고리](#문제-카테고리)
+  - [1. 동시성 및 Thread Safety](#1-동시성-및-thread-safety)
+    - [문제 ARC-001: Adaptive Queue Strategy 선택 최적화](#문제-arc-001-adaptive-queue-strategy-선택-최적화)
+    - [문제 ARC-002: Service Registry Thread Safety](#문제-arc-002-service-registry-thread-safety)
+    - [문제 ARC-003: Cancellation Token Edge Case](#문제-arc-003-cancellation-token-edge-case)
+  - [2. 성능](#2-성능)
+    - [문제 ARC-004: Lock-Free Queue Memory 회수](#문제-arc-004-lock-free-queue-memory-회수)
+    - [문제 ARC-005: Worker Batch 처리 최적화](#문제-arc-005-worker-batch-처리-최적화)
+  - [3. 문서화](#3-문서화)
+    - [문제 ARC-006: 불완전한 API 문서화](#문제-arc-006-불완전한-api-문서화)
+    - [문제 ARC-007: 성능 가이드 누락](#문제-arc-007-성능-가이드-누락)
+  - [4. 테스팅](#4-테스팅)
+    - [문제 ARC-008: Coverage Gap](#문제-arc-008-coverage-gap)
+    - [문제 ARC-009: Benchmark Suite 완전성](#문제-arc-009-benchmark-suite-완전성)
+  - [5. 통합](#5-통합)
+    - [문제 ARC-010: Common System 통합](#문제-arc-010-common-system-통합)
+- [문제 추적](#문제-추적)
+  - [Phase 0 작업](#phase-0-작업)
+  - [Phase 1 작업](#phase-1-작업)
+  - [Phase 2 작업](#phase-2-작업)
+  - [Phase 3 작업](#phase-3-작업)
+  - [Phase 6 작업](#phase-6-작업)
+- [위험 평가](#위험-평가)
+- [참조](#참조)
+
 **문서 버전**: 1.0
 **날짜**: 2025-10-05
 **시스템**: thread_system
@@ -202,3 +230,7 @@
 
 **문서 담당자**: Architecture Team
 **다음 검토**: 각 phase 완료 후
+
+---
+
+*Last Updated: 2025-10-20*

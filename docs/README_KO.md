@@ -121,3 +121,7 @@ Thread System 프레임워크에 대한 포괄적인 문서에 오신 것을 환
 ---
 
 *이 문서는 Thread System 팀에서 관리합니다. 업데이트 또는 수정 사항은 [기여 가이드](CONTRIBUTING_KO.md)를 참조하세요.*
+
+---
+
+*Last Updated: 2025-10-20*

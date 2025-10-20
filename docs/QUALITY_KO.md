@@ -61,3 +61,7 @@ python3 scripts/benchmark_compare.py baseline.json current.json
 cmake -S . -B build -DENABLE_CLANG_TIDY=ON -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
+
+---
+
+*Last Updated: 2025-10-20*

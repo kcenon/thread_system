@@ -2,6 +2,25 @@
 
 > **Language:** [English](ARCHITECTURE.md) | **한국어**
 
+## 목차
+
+- [🏗️ 생태계 개요](#-생태계-개요)
+- [📋 프로젝트 역할 및 책임](#-프로젝트-역할-및-책임)
+  - [1. thread_system (Foundation)](#1-thread_system-foundation)
+  - [2. logger_system (Logging)](#2-logger_system-logging)
+  - [3. monitoring_system (Metrics)](#3-monitoring_system-metrics)
+  - [4. integrated_thread_system (Integration Hub)](#4-integrated_thread_system-integration-hub)
+- [🔄 의존성 흐름 및 Interface Contract](#-의존성-흐름-및-interface-contract)
+- [📁 디렉토리 구조 (개요)](#-디렉토리-구조-개요)
+- [🚀 최근 아키텍처 하이라이트](#-최근-아키텍처-하이라이트)
+  - [향상된 동기화 Primitive 🆕](#향상된-동기화-primitive-)
+  - [개선된 Cancellation 지원 🆕](#개선된-cancellation-지원-)
+  - [Service Registry 패턴 🆕](#service-registry-패턴-)
+  - [Adaptive Job Queue](#adaptive-job-queue)
+  - [Interface 기반 통합](#interface-기반-통합)
+  - [탁월한 에러 처리](#탁월한-에러-처리)
+  - [Typed Thread Pool](#typed-thread-pool)
+
 modular threading 생태계와 프로젝트 간 관계에 대한 포괄적인 개요입니다.
 
 ## 🏗️ 생태계 개요
@@ -249,3 +268,7 @@ thread_system/
 - lock-free/adaptive 변형이 있는 타입별 queue
 - 이기종 워크로드를 위한 우선순위/타입 인식 스케줄링
 - 모든 조건에서 99%+ 타입 정확도 유지
+
+---
+
+*Last Updated: 2025-10-20*

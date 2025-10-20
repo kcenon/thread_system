@@ -2,6 +2,26 @@
 
 > **Language:** **English** | [한국어](MIGRATION_KO.md)
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Migration Status](#migration-status)
+  - [Phase 1: Interface Extraction and Cleanup ✅ COMPLETE](#phase-1-interface-extraction-and-cleanup-complete)
+  - [Phase 2: Create New Repository Structure ✅ COMPLETE](#phase-2-create-new-repository-structure-complete)
+  - [Phase 3: Component Migration ✅ COMPLETE](#phase-3-component-migration-complete)
+  - [Phase 4: Integration Testing ✅ COMPLETE](#phase-4-integration-testing-complete)
+  - [2025-09 Updates (Phase 2–3)](#2025-09-updates-phase-23)
+  - [Phase 5: Gradual Deployment 🔄 PENDING](#phase-5-gradual-deployment-pending)
+- [Breaking Changes](#breaking-changes)
+  - [API Changes](#api-changes)
+  - [Build System Changes](#build-system-changes)
+- [Migration Instructions for Users](#migration-instructions-for-users)
+  - [Current Users (Phase 1)](#current-users-phase-1)
+  - [Future Migration (Phase 2-5)](#future-migration-phase-2-5)
+- [Timeline](#timeline)
+  - [Current Status (2025-09-13)](#current-status-2025-09-13)
+  - [Detailed Status Log](#detailed-status-log)
+
 ## Overview
 
 This document tracks the migration of the thread_system from a monolithic architecture to a modular ecosystem.
@@ -198,3 +218,7 @@ The migration is complete with the modular structure in place and interfaces int
 ### Detailed Status Log
 
 The previously separate status document (MIGRATION_STATUS.md) has been merged into this section to keep migration guidance and current state together.
+
+---
+
+*Last Updated: 2025-10-20*
