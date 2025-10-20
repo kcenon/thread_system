@@ -1,5 +1,7 @@
 # Thread System Performance Guide
 
+> **Language:** **English** | [한국어](PERFORMANCE_KO.md)
+
 This comprehensive guide covers performance benchmarks, tuning strategies, and optimization techniques for the Thread System framework. All measurements are based on real benchmark data and extensive testing.
 
 ## Table of Contents

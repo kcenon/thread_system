@@ -1,53 +1,53 @@
-# Thread System — Design Improvement Plan
+# Thread System — 설계 개선 계획
 
-> **Language:** **English** | [한국어](DESIGN_IMPROVEMENTS_KO.md)
+> **Language:** [English](DESIGN_IMPROVEMENTS.md) | **한국어**
 
-## Date
-06 Sep 2025 (Asia/Seoul)
+## 날짜
+2025년 9월 6일 (Asia/Seoul)
 
-## Overview
-This document presents a structured design improvement plan to address issues tracked in the project's issue tracker.
+## 개요
+이 문서는 프로젝트의 issue tracker에서 추적되는 문제를 해결하기 위한 구조화된 설계 개선 계획을 제시합니다.
 
-## 1. Architecture Improvements
+## 1. 아키텍처 개선
 
-### 1.1 Directory Structure Reorganization
+### 1.1 디렉토리 구조 재구성
 
-#### Current Issues
-- The `sources` and `modular_structure` directories are mixed
-- The role of the `interfaces` directory is unclear
-- Dependencies between modules are not explicit
+#### 현재 문제
+- `sources`와 `modular_structure` 디렉토리가 혼재
+- `interfaces` 디렉토리의 역할이 불명확
+- Module 간 의존성이 명시적이지 않음
 
-#### Proposed Structure
+#### 제안된 구조
 ```
 thread_system/
 ├── core/                        # Core module
-│   ├── base/                   # thread_base related
+│   ├── base/                   # thread_base 관련
 │   │   ├── include/
 │   │   └── src/
 │   ├── jobs/                   # job system
 │   │   ├── include/
 │   │   └── src/
-│   └── sync/                   # synchronization primitives
+│   └── sync/                   # 동기화 primitive
 │       ├── include/
 │       └── src/
-├── interfaces/                  # public interfaces
+├── interfaces/                  # public interface
 │   ├── logger_interface.h
 │   ├── monitoring_interface.h
 │   └── thread_context.h
-├── implementations/             # concrete implementations
+├── implementations/             # 구체적 구현
 │   ├── thread_pool/
 │   ├── typed_thread_pool/
 │   └── lockfree/
-├── utilities/                   # utilities
-├── tests/                       # tests
-├── benchmarks/                  # benchmarks
-├── samples/                     # examples
-└── docs/                        # documentation
+├── utilities/                   # 유틸리티
+├── tests/                       # 테스트
+├── benchmarks/                  # 벤치마크
+├── samples/                     # 예제
+└── docs/                        # 문서
 ```
 
-### 1.2 Clarify Module Dependencies
+### 1.2 Module 의존성 명확화
 
-#### Dependency Graph
+#### 의존성 그래프
 ```mermaid
 graph TD
     A[utilities] --> B[core/base]
@@ -61,16 +61,16 @@ graph TD
     H --> F
 ```
 
-#### Dependency Rules
-1. Lower layers must not depend on higher layers
-2. Circular dependencies are prohibited
-3. Prefer dependency injection via interfaces
+#### 의존성 규칙
+1. 하위 레이어는 상위 레이어에 의존하지 않아야 함
+2. 순환 의존성 금지
+3. Interface를 통한 의존성 주입 선호
 
-## 2. Interface Layer Reinforcement
+## 2. Interface Layer 강화
 
-### 2.1 New Interface Set
+### 2.1 새로운 Interface Set
 
-#### Core Interfaces
+#### Core Interface
 ```cpp
 namespace thread_system {
     // Executor interface
@@ -99,9 +99,9 @@ namespace thread_system {
 }
 ```
 
-### 2.2 Service Registry Pattern
+### 2.2 Service Registry 패턴
 
-#### Implementation Approach
+#### 구현 접근 방식
 ```cpp
 class service_registry {
 private:
@@ -127,24 +127,24 @@ public:
 };
 ```
 
-## 3. Documentation System Improvements
+## 3. 문서화 시스템 개선
 
-### 3.1 Automated Documentation Generation
+### 3.1 자동 문서 생성
 
-#### Doxygen Integration
+#### Doxygen 통합
 ```cmake
-# CMakeLists.txt additions
+# CMakeLists.txt 추가 사항
 option(BUILD_DOCUMENTATION "Build documentation" ON)
 
 if(BUILD_DOCUMENTATION)
     find_package(Doxygen REQUIRED)
-    
+
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
     set(DOXYGEN_EXTRACT_ALL YES)
     set(DOXYGEN_EXTRACT_PRIVATE YES)
-    
+
     doxygen_add_docs(
         docs
         ${CMAKE_CURRENT_SOURCE_DIR}/sources
@@ -153,47 +153,47 @@ if(BUILD_DOCUMENTATION)
 endif()
 ```
 
-### 3.2 Documentation Structure Standardization
+### 3.2 문서 구조 표준화
 
-#### Per-Module README Template
+#### Module별 README Template
 ```markdown
 # Module Name
 
 ## Overview
-Describe the purpose of the module and its key features.
+Module의 목적과 주요 기능을 설명합니다.
 
 ## Architecture
-Internal structure of the module and design principles.
+Module의 내부 구조와 설계 원칙.
 
 ## API Reference
-Describe the main classes and functions.
+주요 클래스와 함수를 설명합니다.
 
 ## Examples
-Real usage code examples.
+실제 사용 코드 예제.
 
 ## Performance Characteristics
-Benchmark results and optimization tips.
+벤치마크 결과 및 최적화 팁.
 
 ## Dependencies
-Required modules and external libraries.
+필요한 module 및 외부 라이브러리.
 ```
 
-## 4. Testing and Quality Assurance
+## 4. 테스팅 및 품질 보증
 
-### 4.1 Coverage Targets
+### 4.1 Coverage Target
 
-#### Coverage Criteria
-- Code coverage: at least 80%
-- Branch coverage: at least 70%
-- Core module (core): 90% or higher
+#### Coverage 기준
+- Code coverage: 최소 80%
+- Branch coverage: 최소 70%
+- Core module (core): 90% 이상
 
-#### Test Automation
+#### 테스트 자동화
 ```cmake
-# Coverage measurement
+# Coverage 측정
 if(ENABLE_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-    
+
     add_custom_target(coverage
         COMMAND lcov --capture --directory . --output-file coverage.info
         COMMAND lcov --remove coverage.info '/usr/*' --output-file coverage.info
@@ -204,7 +204,7 @@ if(ENABLE_COVERAGE)
 endif()
 ```
 
-### 4.2 Benchmark Automation
+### 4.2 Benchmark 자동화
 
 #### Benchmark Framework
 ```cpp
@@ -220,14 +220,14 @@ public:
     template<typename Func>
     static auto run(const std::string& name, Func&& func, size_t iterations = 1000000) -> result {
         auto start = std::chrono::high_resolution_clock::now();
-        
+
         for (size_t i = 0; i < iterations; ++i) {
             func();
         }
-        
+
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-        
+
         return {
             .name = name,
             .throughput = static_cast<double>(iterations) / duration.count() * 1e9,
@@ -238,11 +238,11 @@ public:
 };
 ```
 
-## 5. Build System Improvements
+## 5. 빌드 시스템 개선
 
-### 5.1 Modular CMake Configuration
+### 5.1 Modular CMake 구성
 
-#### Per-Module CMakeLists.txt
+#### Module별 CMakeLists.txt
 ```cmake
 # core/CMakeLists.txt
 add_library(thread_system_core STATIC)
@@ -262,7 +262,7 @@ target_include_directories(thread_system_core
         $<INSTALL_INTERFACE:include>
 )
 
-# Install rules
+# Install 규칙
 install(TARGETS thread_system_core
     EXPORT thread_system_targets
     LIBRARY DESTINATION lib
@@ -273,7 +273,7 @@ install(TARGETS thread_system_core
 
 ### 5.2 Packaging
 
-#### CMake Package File
+#### CMake Package 파일
 ```cmake
 # ThreadSystemConfig.cmake.in
 @PACKAGE_INIT@
@@ -282,7 +282,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/ThreadSystemTargets.cmake")
 
 check_required_components(ThreadSystem)
 
-# Provided components
+# 제공되는 component
 set(ThreadSystem_COMPONENTS
     Core
     ThreadPool
@@ -291,20 +291,20 @@ set(ThreadSystem_COMPONENTS
 )
 ```
 
-## 6. Coding Standards Unification
+## 6. 코딩 표준 통일
 
-### 6.1 Naming Rules
+### 6.1 명명 규칙
 
-#### Unified Rules
-- Classes: `snake_case` (e.g., `thread_base`)
-- Functions: `snake_case` (e.g., `get_worker_count`)
-- Member variables: `snake_case_` (e.g., `worker_count_`)
-- Template classes: `snake_case` (no suffix required)
-- Interfaces: `snake_case_interface` (e.g., `logger_interface`)
+#### 통일 규칙
+- 클래스: `snake_case` (예: `thread_base`)
+- 함수: `snake_case` (예: `get_worker_count`)
+- Member 변수: `snake_case_` (예: `worker_count_`)
+- Template 클래스: `snake_case` (접미사 불필요)
+- Interface: `snake_case_interface` (예: `logger_interface`)
 
-### 6.2 Code Formatter Settings
+### 6.2 Code Formatter 설정
 
-#### .clang-format File
+#### .clang-format 파일
 ```yaml
 BasedOnStyle: Google
 IndentWidth: 4
@@ -317,54 +317,54 @@ AllowShortFunctionsOnASingleLine: Empty
 BreakConstructorInitializers: BeforeComma
 ```
 
-## 7. Execution Plan
+## 7. 실행 계획
 
-### Phase 1: Foundation (1 week)
-1. Restructure directory layout
-2. Improve CMake build system
-3. Create base documentation templates
+### Phase 1: 기초 (1주)
+1. 디렉토리 레이아웃 재구성
+2. CMake 빌드 시스템 개선
+3. 기본 문서 template 생성
 
-### Phase 2: Interface Improvements (2 weeks)
-1. Define new interfaces
-2. Implement service registry
-3. Refactor existing code
+### Phase 2: Interface 개선 (2주)
+1. 새로운 interface 정의
+2. Service registry 구현
+3. 기존 코드 리팩토링
 
-### Phase 3: Documentation (1 week)
-1. Integrate Doxygen
-2. Write per-module READMEs
-3. Generate API documentation
+### Phase 3: 문서화 (1주)
+1. Doxygen 통합
+2. Module별 README 작성
+3. API 문서 생성
 
-### Phase 4: Quality Assurance (2 weeks)
-1. Establish coverage measurement system
-2. Automate benchmarks
-3. Improve CI/CD pipeline
+### Phase 4: 품질 보증 (2주)
+1. Coverage 측정 시스템 구축
+2. Benchmark 자동화
+3. CI/CD pipeline 개선
 
-### Phase 5: Finalization (1 week)
-1. Code review and fixes
-2. Final documentation review
-3. Release preparation
+### Phase 5: 최종화 (1주)
+1. 코드 리뷰 및 수정
+2. 최종 문서 검토
+3. 릴리스 준비
 
-## 8. Expected Benefits
+## 8. 예상 이점
 
-1. **Maintainability**: Clear module structure and dependency management
-2. **Scalability**: Interface-based design makes it easy to add new implementations
-3. **Documentation Quality**: Automated generation and standardized templates
-4. **Test Reliability**: Coverage measurement and automated testing
-5. **Performance Transparency**: Automated benchmarks and continuous monitoring
-6. **Developer Productivity**: Clear guidelines and tooling support
+1. **유지 보수성**: 명확한 module 구조와 의존성 관리
+2. **확장성**: Interface 기반 설계로 새로운 구현 추가 용이
+3. **문서 품질**: 자동 생성 및 표준화된 template
+4. **테스트 신뢰성**: Coverage 측정 및 자동화된 테스트
+5. **성능 투명성**: 자동화된 benchmark 및 지속적 모니터링
+6. **개발자 생산성**: 명확한 가이드라인 및 도구 지원
 
-## 9. Risk Management
+## 9. 위험 관리
 
-### Potential Risks
-1. **API changes**: Compatibility issues with existing user code
-   - Mitigation: Provide a migration guide; use deprecated markings
-   
-2. **Performance degradation**: Overhead from additional interfaces
-   - Mitigation: Inline optimizations; leverage templates
-   
-3. **Increased build complexity**: Longer build times due to modularization
-   - Mitigation: Precompiled headers; parallel build optimizations
+### 잠재적 위험
+1. **API 변경**: 기존 사용자 코드와의 호환성 문제
+   - 완화: 마이그레이션 가이드 제공; deprecated 표시 사용
 
-## 10. Conclusion
+2. **성능 저하**: 추가 interface로 인한 오버헤드
+   - 완화: Inline 최적화; template 활용
 
-This plan addresses structural issues in the thread_system project and provides a systematic approach to ensure long-term maintainability and extensibility. Through phased execution, we can minimize risk while improving overall quality.
+3. **빌드 복잡도 증가**: Modularization으로 인한 빌드 시간 증가
+   - 완화: Precompiled header; 병렬 빌드 최적화
+
+## 10. 결론
+
+이 계획은 thread_system 프로젝트의 구조적 문제를 해결하고 장기적인 유지 보수성과 확장성을 보장하기 위한 체계적인 접근 방식을 제공합니다. 단계적 실행을 통해 위험을 최소화하면서 전반적인 품질을 개선할 수 있습니다.

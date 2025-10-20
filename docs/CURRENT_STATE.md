@@ -1,5 +1,7 @@
 # System Current State - Phase 0 Baseline
 
+> **Language:** **English** | [한국어](CURRENT_STATE_KO.md)
+
 **Document Version**: 1.0
 **Date**: 2025-10-05
 **Phase**: Phase 0 - Foundation and Tooling Setup

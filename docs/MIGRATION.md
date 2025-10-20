@@ -1,5 +1,7 @@
 # Thread System Migration Guide
 
+> **Language:** **English** | [한국어](MIGRATION_KO.md)
+
 ## Overview
 
 This document tracks the migration of the thread_system from a monolithic architecture to a modular ecosystem.

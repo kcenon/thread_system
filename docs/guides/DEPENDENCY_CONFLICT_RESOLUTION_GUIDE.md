@@ -1,5 +1,7 @@
 # Dependency Conflict Resolution Guide
 
+> **Language:** **English** | [한국어](DEPENDENCY_CONFLICT_RESOLUTION_GUIDE_KO.md)
+
 ## Overview
 
 This guide helps developers identify, understand, and resolve dependency conflicts in the thread_system project. It provides step-by-step solutions for common issues and preventive measures.

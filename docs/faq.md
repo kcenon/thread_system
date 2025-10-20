@@ -1,5 +1,7 @@
 # Frequently Asked Questions (FAQ)
 
+> **Language:** **English** | [한국어](faq_KO.md)
+
 ## General Questions
 
 ### Q: What is Thread System?

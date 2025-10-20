@@ -1,12 +1,12 @@
 # Thread System API Reference
 
-> **Language:** **English** | [한국어](API_REFERENCE_KO.md)
+> **Language:** [English](API_REFERENCE.md) | **한국어**
 
-Complete API documentation for the Thread System framework.
+Thread System framework의 완전한 API 문서입니다.
 
-## Table of Contents
+## 목차
 
-1. [Overview](#overview)
+1. [개요](#개요)
 2. [Core Module](#core-module-thread_module)
    - [thread_base Class](#thread_base-class)
    - [job Class](#job-class)
@@ -26,7 +26,7 @@ Complete API documentation for the Thread System framework.
    - [typed_thread_worker_t Template](#typed_thread_worker_t-template)
    - [job_types Enumeration](#job_types-enumeration)
 7. [Interfaces](#interfaces)
-   - [Overview](#interfaces-overview)
+   - [개요](#interfaces-overview)
    - [Executor Interface](#executor-interface)
    - [Scheduler Interface](#scheduler-interface)
    - [Logging Interface](#logging-interface-and-registry)
@@ -42,68 +42,68 @@ Complete API documentation for the Thread System framework.
 9. [Utilities Module](#utilities-module-utility_module)
    - [formatter_macros](#formatter-macros)
    - [convert_string](#convert_string)
-10. [Quick Reference](#quick-reference)
+10. [빠른 참조](#빠른-참조)
 
-## Overview
+## 개요
 
-The Thread System framework provides a comprehensive set of classes for building multi-threaded applications with adaptive performance optimization.
+Thread System framework는 적응형 성능 최적화를 갖춘 멀티스레드 애플리케이션을 구축하기 위한 포괄적인 클래스 세트를 제공합니다.
 
-### Core Components
+### 핵심 구성 요소
 
 - **Core Classes** (`thread_module` namespace)
-  - `thread_base` - Abstract base class for all workers
-  - `job` - Unit of work representation
+  - `thread_base` - 모든 worker의 추상 기본 클래스
+  - `job` - 작업 단위 표현
   - `job_queue` - Thread-safe job queue
-  - `result<T>` - Error handling type
-  - `callback_job` - Job implementation with lambda support
+  - `result<T>` - 오류 처리 타입
+  - `callback_job` - lambda 지원이 있는 job 구현
 
-### Thread Pool Components
+### Thread Pool 구성 요소
 
 - **Standard Thread Pool** (`thread_pool_module` namespace)
-  - `thread_pool` - Thread pool with adaptive queue optimization
-  - `thread_worker` - Worker thread implementation
+  - `thread_pool` - 적응형 queue 최적화를 갖춘 thread pool
+  - `thread_worker` - Worker thread 구현
 
-### Typed Thread Pool Components
+### Typed Thread Pool 구성 요소
 
 - **Type-based Priority Pool** (`typed_thread_pool_module` namespace)
-  - `typed_thread_pool_t<T>` - Template-based priority pool
-  - `typed_thread_worker_t<T>` - Priority-aware worker
-  - `typed_job_t<T>` - Job with type information
-  - `job_types` - Default priority enumeration (RealTime, Batch, Background)
+  - `typed_thread_pool_t<T>` - Template 기반 우선순위 pool
+  - `typed_thread_worker_t<T>` - 우선순위 인식 worker
+  - `typed_job_t<T>` - 타입 정보가 있는 job
+  - `job_types` - 기본 우선순위 열거형 (RealTime, Batch, Background)
 
-### Advanced Features
+### 고급 기능
 
-- **Adaptive Queue System**: Automatic switching between mutex and lock-free strategies
-- **Enhanced Synchronization**: Comprehensive synchronization wrappers with timeout support
-- **Cancellation Support**: Cooperative cancellation with linked token hierarchies
-- **Dependency Injection**: Prefer `service_container` (thread-safe DI). `service_registry` is a lightweight header-only alternative.
-- **Error Handling**: Modern result<T> pattern for robust error management
-- **Interface-Based Design**: Clean separation of concerns through well-defined interfaces
+- **Adaptive Queue System**: mutex와 lock-free 전략 간 자동 전환
+- **Enhanced Synchronization**: timeout 지원이 있는 포괄적인 동기화 래퍼
+- **Cancellation Support**: 연결된 token 계층 구조를 사용한 협력적 취소
+- **Dependency Injection**: thread-safe DI를 위한 `service_container` 권장. `service_registry`는 경량 header-only 대안
+- **Error Handling**: 강력한 오류 관리를 위한 현대적 result<T> 패턴
+- **Interface-Based Design**: 잘 정의된 interface를 통한 깔끔한 관심사 분리
 
 ## Core Module (thread_module)
 
 ### thread_base Class
 
-Abstract base class for all worker threads in the system.
+시스템의 모든 worker thread를 위한 추상 기본 클래스입니다.
 
 ```cpp
 class thread_base {
 public:
     thread_base(const std::string& thread_title = "thread_base");
     virtual ~thread_base();
-    
+
     // Thread control
     auto start() -> result_void;
     auto stop() -> result_void;
-    
+
     // Configuration
     auto set_wake_interval(const std::optional<std::chrono::milliseconds>& interval) -> void;
     auto get_wake_interval() const -> std::optional<std::chrono::milliseconds>;
-    
+
     // Status
     auto is_running() const -> bool;
     auto get_thread_title() const -> std::string;
-    
+
 protected:
     // Override in derived classes
     virtual auto before_start() -> result_void { return {}; }
@@ -115,7 +115,7 @@ protected:
 
 ### job Class
 
-Base class for all work units.
+모든 작업 단위를 위한 기본 클래스입니다.
 
 ```cpp
 class job {
@@ -123,18 +123,18 @@ public:
     job(const std::string& name = "job");
     job(const std::vector<uint8_t>& data, const std::string& name = "data_job");
     virtual ~job();
-    
+
     // Core functionality
     virtual auto do_work() -> result_void;
-    
+
     // Cancellation support
     virtual auto set_cancellation_token(const cancellation_token& token) -> void;
     virtual auto get_cancellation_token() const -> cancellation_token;
-    
+
     // Queue association
     virtual auto set_job_queue(const std::shared_ptr<job_queue>& queue) -> void;
     virtual auto get_job_queue() const -> std::shared_ptr<job_queue>;
-    
+
     // Metadata
     auto get_name() const -> std::string;
     virtual auto to_string() const -> std::string;
@@ -143,29 +143,29 @@ public:
 
 ### job_queue Class
 
-Thread-safe queue for job management.
+job 관리를 위한 thread-safe queue입니다.
 
 ```cpp
 class job_queue : public std::enable_shared_from_this<job_queue> {
 public:
     job_queue();
     virtual ~job_queue();
-    
+
     // Queue operations
     [[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value) -> result_void;
     [[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
     [[nodiscard]] virtual auto dequeue() -> result<std::unique_ptr<job>>;
     [[nodiscard]] virtual auto dequeue_batch() -> std::deque<std::unique_ptr<job>>;
-    
+
     // State management
     virtual auto clear() -> void;
     auto stop_waiting_dequeue() -> void;
-    
+
     // Status
     [[nodiscard]] auto empty() const -> bool;
     [[nodiscard]] auto size() const -> std::size_t;
     [[nodiscard]] auto is_stopped() const -> bool;
-    
+
     // Configuration
     auto set_notify(bool notify) -> void;
 };
@@ -173,7 +173,7 @@ public:
 
 ### result<T> Template
 
-Error handling type based on `std::expected` pattern.
+`std::expected` 패턴 기반 오류 처리 타입입니다.
 
 ```cpp
 template<typename T>
@@ -202,7 +202,7 @@ enum class error_code {
 
 ### sync_primitives
 
-Comprehensive synchronization wrapper utilities providing enhanced functionality over standard library primitives.
+표준 라이브러리 primitive보다 향상된 기능을 제공하는 포괄적인 동기화 래퍼 유틸리티입니다.
 
 ```cpp
 #include "core/sync/include/sync_primitives.h"
@@ -211,9 +211,9 @@ Comprehensive synchronization wrapper utilities providing enhanced functionality
 class scoped_lock_guard {
 public:
     template<typename Mutex>
-    explicit scoped_lock_guard(Mutex& mutex, 
+    explicit scoped_lock_guard(Mutex& mutex,
                               std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
-    
+
     [[nodiscard]] bool owns_lock() const noexcept;
     explicit operator bool() const noexcept;
 };
@@ -223,12 +223,12 @@ class condition_variable_wrapper {
 public:
     template<typename Predicate>
     void wait(std::unique_lock<std::mutex>& lock, Predicate pred);
-    
+
     template<typename Rep, typename Period, typename Predicate>
     bool wait_for(std::unique_lock<std::mutex>& lock,
                   const std::chrono::duration<Rep, Period>& rel_time,
                   Predicate pred);
-    
+
     void notify_one() noexcept;
     void notify_all() noexcept;
 };
@@ -257,7 +257,7 @@ public:
 
 ### cancellation_token
 
-Provides cooperative cancellation mechanism for long-running operations.
+장시간 실행되는 작업을 위한 협력적 취소 메커니즘을 제공합니다.
 
 ```cpp
 #include "core/sync/include/cancellation_token.h"
@@ -266,20 +266,20 @@ class cancellation_token {
 public:
     // Create a new cancellation token
     static cancellation_token create();
-    
+
     // Create a linked token (cancelled when any parent is cancelled)
     static cancellation_token create_linked(
         std::initializer_list<cancellation_token> tokens);
-    
+
     // Cancel the operation
     void cancel();
-    
+
     // Check cancellation status
     [[nodiscard]] bool is_cancelled() const;
-    
+
     // Throw if cancelled
     void throw_if_cancelled() const;
-    
+
     // Register callback for cancellation
     void register_callback(std::function<void()> callback);
 };
@@ -303,7 +303,7 @@ while (!token.is_cancelled()) {
 
 ### service_container
 
-Preferred DI for Thread System: thread-safe container with singleton/factory lifetimes.
+Thread System의 권장 DI: singleton/factory lifetime을 갖춘 thread-safe container입니다.
 
 ```cpp
 #include "interfaces/service_container.h"
@@ -320,7 +320,7 @@ thread_module::thread_context ctx; // resolves from global container
 
 ### service_registry
 
-Lightweight header-only alternative for simple scenarios.
+간단한 시나리오를 위한 경량 header-only 대안입니다.
 
 ```cpp
 #include "core/base/include/service_registry.h"
@@ -336,26 +336,26 @@ auto svc = thread_module::service_registry::get_service<MyInterface>();
 
 ### thread_pool Class
 
-Main thread pool implementation with adaptive queue optimization.
+적응형 queue 최적화를 갖춘 메인 thread pool 구현입니다.
 
 ```cpp
 class thread_pool : public std::enable_shared_from_this<thread_pool> {
 public:
     thread_pool(const std::string& thread_title = "thread_pool");
     virtual ~thread_pool();
-    
+
     // Pool control
     auto start() -> std::optional<std::string>;
     auto stop(const bool& immediately_stop = false) -> void;
-    
+
     // Job management
     auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
     auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
-    
+
     // Worker management
     auto enqueue(std::unique_ptr<thread_worker>&& worker) -> std::optional<std::string>;
     auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers) -> std::optional<std::string>;
-    
+
     // Access
     auto get_job_queue() -> std::shared_ptr<job_queue>;
     auto get_workers() const -> const std::vector<std::unique_ptr<thread_worker>>&;
@@ -364,7 +364,7 @@ public:
 
 ### thread_worker Class
 
-Worker thread implementation with adaptive capabilities.
+적응형 기능을 갖춘 worker thread 구현입니다.
 
 ```cpp
 class thread_worker : public thread_base {
@@ -375,16 +375,16 @@ public:
         uint64_t batch_operations;
         uint64_t avg_processing_time_ns;
     };
-    
+
     thread_worker(const std::string& name = "thread_worker");
-    
+
     // Configuration
     auto set_batch_processing(bool enabled, size_t batch_size = 32) -> void;
     auto get_statistics() const -> worker_statistics;
-    
+
     // Queue association
     auto set_job_queue(const std::shared_ptr<job_queue>& queue) -> void;
-    
+
 protected:
     auto do_work() -> result_void override;
 };
@@ -394,26 +394,26 @@ protected:
 
 ### typed_thread_pool_t Template
 
-Priority-based thread pool with per-type queues.
+타입별 queue를 갖춘 우선순위 기반 thread pool입니다.
 
 ```cpp
 template<typename T>
 class typed_thread_pool_t : public std::enable_shared_from_this<typed_thread_pool_t<T>> {
 public:
     typed_thread_pool_t(const std::string& name = "typed_thread_pool");
-    
+
     // Pool control
     auto start() -> result_void;
     auto stop(bool clear_queue = false) -> result_void;
-    
+
     // Job management
     auto enqueue(std::unique_ptr<typed_job_t<T>>&& job) -> result_void;
     auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<T>>>&& jobs) -> result_void;
-    
+
     // Worker management
     auto add_worker(std::unique_ptr<typed_thread_worker_t<T>>&& worker) -> result_void;
     auto add_workers(std::vector<std::unique_ptr<typed_thread_worker_t<T>>>&& workers) -> result_void;
-    
+
     // Queue strategy (adaptive mode)
     auto set_queue_strategy(queue_strategy strategy) -> void;
 };
@@ -421,18 +421,18 @@ public:
 
 ### typed_thread_worker_t Template
 
-Worker with type-based job handling.
+타입 기반 job 처리를 갖춘 worker입니다.
 
 ```cpp
 template<typename T>
 class typed_thread_worker_t : public thread_base {
 public:
     typed_thread_worker_t(const std::string& name = "typed_worker");
-    
+
     // Type responsibilities
     auto set_responsibilities(const std::vector<T>& types) -> void;
     auto get_responsibilities() const -> std::vector<T>;
-    
+
     // Queue association
     auto set_job_queue(const std::shared_ptr<typed_job_queue_t<T>>& queue) -> void;
 };
@@ -440,7 +440,7 @@ public:
 
 ### job_types Enumeration
 
-Default priority levels for typed pools.
+typed pool을 위한 기본 우선순위 레벨입니다.
 
 ```cpp
 enum class job_types : uint8_t {
@@ -452,17 +452,17 @@ enum class job_types : uint8_t {
 
 ## Interfaces
 
-This section provides a comprehensive overview of the public interfaces that decouple components in the Thread System and enable dependency injection.
+이 섹션은 Thread System의 컴포넌트를 분리하고 dependency injection을 가능하게 하는 공용 interface의 포괄적인 개요를 제공합니다.
 
 ### Interfaces Overview
 
-The thread system uses interface-based design for clean separation of concerns and easy extensibility. These interfaces enable dependency injection and allow components to be easily replaced or extended.
+thread system은 깔끔한 관심사 분리와 쉬운 확장성을 위해 interface 기반 설계를 사용합니다. 이러한 interface는 dependency injection을 가능하게 하고 컴포넌트를 쉽게 교체하거나 확장할 수 있게 합니다.
 
 ### Executor Interface
 
 Header: `interfaces/executor_interface.h`
 
-Base interface for all executor implementations (thread pools).
+모든 executor 구현(thread pool)을 위한 기본 interface입니다.
 
 ```cpp
 #include "interfaces/executor_interface.h"
@@ -470,24 +470,24 @@ Base interface for all executor implementations (thread pools).
 class executor_interface {
 public:
     virtual ~executor_interface() = default;
-    
+
     // Execute a job
     virtual auto execute(std::unique_ptr<thread_module::job>&& work) -> thread_module::result_void = 0;
-    
+
     // Execute multiple jobs
     virtual auto execute_batch(std::vector<std::unique_ptr<job>> jobs) -> result_void = 0;
-    
+
     // Shutdown the executor
     virtual auto shutdown() -> thread_module::result_void = 0;
-    
+
     // Check if executor is running
     [[nodiscard]] virtual auto is_running() const -> bool = 0;
 };
 ```
 
-Implemented by: `implementations/thread_pool/thread_pool`
+구현: `implementations/thread_pool/thread_pool`
 
-Example:
+예제:
 ```cpp
 auto pool = std::make_shared<thread_pool_module::thread_pool>("pool");
 pool->enqueue_batch({std::make_unique<thread_pool_module::thread_worker>(false)});
@@ -500,7 +500,7 @@ pool->shutdown();
 
 Header: `interfaces/scheduler_interface.h`
 
-Interface for job scheduling strategies.
+job 스케줄링 전략을 위한 interface입니다.
 
 ```cpp
 #include "interfaces/scheduler_interface.h"
@@ -508,19 +508,19 @@ Interface for job scheduling strategies.
 class scheduler_interface {
 public:
     virtual ~scheduler_interface() = default;
-    
+
     // Schedule a job
     virtual auto schedule(std::unique_ptr<thread_module::job>&& work) -> thread_module::result_void = 0;
-    
+
     // Get next job to execute
     virtual auto get_next_job() -> thread_module::result<std::unique_ptr<thread_module::job>> = 0;
-    
+
     // Check if there are pending jobs
     [[nodiscard]] virtual auto has_pending() const -> bool = 0;
 };
 ```
 
-Implemented by: `core/jobs/job_queue` and its derivatives (`lockfree_job_queue`, `adaptive_job_queue`).
+구현: `core/jobs/job_queue` 및 파생 클래스 (`lockfree_job_queue`, `adaptive_job_queue`)
 
 ### Logging Interface and Registry
 
@@ -528,26 +528,26 @@ Header: `interfaces/logger_interface.h`
 
 - `logger_interface::log(level, message[, file, line, function])`
 - `logger_registry::set_logger(std::shared_ptr<logger_interface>)`
-- Convenience macros: `THREAD_LOG_INFO("message")`, etc.
+- 편의 매크로: `THREAD_LOG_INFO("message")` 등
 
 ### Monitoring Interface
 
 Header: `interfaces/monitoring_interface.h`
 
-Data structures:
-- `system_metrics`, `thread_pool_metrics` (supports `pool_name`/`pool_instance_id`), `worker_metrics`
+데이터 구조:
+- `system_metrics`, `thread_pool_metrics` (`pool_name`/`pool_instance_id` 지원), `worker_metrics`
 - `metrics_snapshot`
 
-Key methods:
+주요 메서드:
 - `update_system_metrics(const system_metrics&)`
 - `update_thread_pool_metrics(const thread_pool_metrics&)`
 - `update_thread_pool_metrics(const std::string& pool_name, std::uint32_t pool_instance_id, const thread_pool_metrics&)`
 - `update_worker_metrics(std::size_t worker_id, const worker_metrics&)`
 - `get_current_snapshot()`, `get_recent_snapshots(size_t)`
 
-Utility:
-- `null_monitoring` — no-op implementation
-- `scoped_timer(std::atomic<std::uint64_t>& target)` — RAII measurement helper
+유틸리티:
+- `null_monitoring` — no-op 구현
+- `scoped_timer(std::atomic<std::uint64_t>& target)` — RAII 측정 helper
 
 ### Monitorable Interface
 
@@ -556,78 +556,78 @@ Header: `interfaces/monitorable_interface.h`
 - `auto get_metrics() -> monitoring_interface::metrics_snapshot`
 - `void reset_metrics()`
 
-Use to expose component metrics uniformly.
+컴포넌트 metric을 균일하게 노출하는 데 사용합니다.
 
 ### Thread Context and Service Container
 
 Headers: `interfaces/thread_context.h`, `interfaces/service_container.h`
 
-`thread_context` provides access to:
+`thread_context`는 다음에 대한 접근을 제공합니다:
 - `std::shared_ptr<logger_interface> logger()`
 - `std::shared_ptr<monitoring_interface::monitoring_interface> monitoring()`
-- Helper methods to log and update metrics safely when services are available
+- 서비스를 사용할 수 있을 때 안전하게 로그 및 metric을 업데이트하는 helper 메서드
 
-`service_container` is a thread-safe DI container:
+`service_container`는 thread-safe DI container입니다:
 - `register_singleton<Interface>(std::shared_ptr<Interface>)`
 - `register_factory<Interface>(std::function<std::shared_ptr<Interface>()>, lifetime)`
 - `resolve<Interface>() -> std::shared_ptr<Interface>`
 
-Use `scoped_service<Interface>` to register within a scope.
+범위 내에서 등록하려면 `scoped_service<Interface>`를 사용합니다.
 
 ### Error Handling
 
 Header: `core/sync/include/error_handling.h`, `interfaces/error_handler.h`
 
-- Strongly typed `error_code`, `error`, `result<T>`/`result_void`
-- `error_handler` interface and `default_error_handler` implementation
+- 강력한 타입의 `error_code`, `error`, `result<T>`/`result_void`
+- `error_handler` interface 및 `default_error_handler` 구현
 
 ### Crash Handling
 
 Header: `interfaces/crash_handler.h`
 
-- Global `crash_handler::instance()` with registration of crash callbacks and cleanup routines
-- Configurable safety level, core dumps, stack trace, and log path
+- crash callback 및 cleanup routine 등록이 있는 전역 `crash_handler::instance()`
+- 구성 가능한 안전 수준, core dump, stack trace 및 로그 경로
 - RAII helper `scoped_crash_callback`
 
 ### Typed Thread Pool Interfaces
 
-Headers under `implementations/typed_thread_pool/include`:
+`implementations/typed_thread_pool/include` 아래의 Header:
 - `typed_job_interface`, `job_types`, `type_traits`
-- Lock-free/adaptive typed queues and typed workers/pools
+- Lock-free/adaptive typed queue 및 typed worker/pool
 
-These enable per-type routing and priority scheduling for heterogeneous workloads.
+이를 통해 이기종 workload에 대한 타입별 라우팅 및 우선순위 스케줄링이 가능합니다.
 
 ## External Modules
 
-The following modules have been moved to separate projects for better modularity and reusability:
+더 나은 모듈성과 재사용성을 위해 다음 모듈이 별도 프로젝트로 이동되었습니다:
 
 ### Logger System
 
 **Repository**: https://github.com/kcenon/logger_system
 
-The asynchronous logging functionality is now available as a separate project that implements the `logger_interface`. It provides:
+비동기 로깅 기능은 이제 `logger_interface`를 구현하는 별도 프로젝트로 제공됩니다. 다음을 제공합니다:
 
-- **High-performance asynchronous logging** with multiple output targets
-- **Structured logging** with type-safe formatting
-- **Log level filtering** with bitwise-enabled categories
-- **File rotation** and compression support
-- **Thread-safe operations** with minimal performance impact
+- **고성능 비동기 로깅**: 여러 출력 대상 지원
+- **구조화된 로깅**: type-safe 형식 지정
+- **로그 레벨 필터링**: bitwise 활성화 카테고리
+- **파일 rotation**: 압축 지원
+- **Thread-safe 작업**: 최소한의 성능 영향
 
 ### Monitoring System
 
 **Repository**: https://github.com/kcenon/monitoring_system
 
-The performance monitoring and metrics collection system is now a separate project that implements the `monitoring_interface`. It offers:
+성능 모니터링 및 metric 수집 시스템은 이제 `monitoring_interface`를 구현하는 별도 프로젝트입니다. 다음을 제공합니다:
 
-- **Real-time performance metrics** collection and analysis
-- **System resource monitoring** (CPU, memory, thread usage)
-- **Thread pool statistics** tracking and reporting
-- **Historical data retention** with configurable duration
-- **Extensible metrics framework** for custom measurements
+- **실시간 성능 metric**: 수집 및 분석
+- **시스템 리소스 모니터링**: CPU, 메모리, thread 사용량
+- **Thread pool 통계**: 추적 및 보고
+- **기록 데이터 보존**: 구성 가능한 기간
+- **확장 가능한 metric framework**: 사용자 정의 측정
 
 ### Integration with Thread System
 
-These external modules integrate seamlessly through the interface pattern:
+이러한 외부 모듈은 interface 패턴을 통해 원활하게 통합됩니다:
 
 ```cpp
 // Example: Register external logger and create a pool
@@ -648,7 +648,7 @@ auto pool = std::make_shared<thread_pool_module::thread_pool>("MyPool");
 
 ### formatter_macros
 
-Macros for reducing formatter code duplication.
+formatter 코드 중복을 줄이기 위한 매크로입니다.
 
 ```cpp
 #include "utilities/core/formatter_macros.h"
@@ -659,7 +659,7 @@ DECLARE_FORMATTER(my_namespace::my_class)
 
 ### convert_string
 
-String conversion utilities.
+문자열 변환 유틸리티입니다.
 
 ```cpp
 namespace convert_string {
@@ -670,9 +670,9 @@ namespace convert_string {
 }
 ```
 
-## Quick Reference
+## 빠른 참조
 
-### Creating a Basic Thread Pool
+### 기본 Thread Pool 생성
 
 ```cpp
 #include "implementations/thread_pool/include/thread_pool.h"
@@ -708,7 +708,7 @@ token.cancel();
 pool->stop();
 ```
 
-### Using Typed Thread Pool
+### Typed Thread Pool 사용
 
 ```cpp
 // Create typed pool with priorities
@@ -733,13 +733,13 @@ auto priority_job = std::make_unique<callback_typed_job<job_types>>(
 typed_pool->enqueue(std::move(priority_job));
 ```
 
-### Error Handling Example
+### 오류 처리 예제
 
 ```cpp
 // Using result type for error handling
 auto process_with_result() -> result_void {
     auto pool = std::make_shared<thread_pool>();
-    
+
     // Start pool with error checking
     if (auto error = pool->start(); error.has_value()) {
         return thread_module::error{
@@ -747,7 +747,7 @@ auto process_with_result() -> result_void {
             *error
         };
     }
-    
+
     // Submit job with error handling
     auto job = std::make_unique<callback_job>([]() -> result_void {
         // Simulate potential failure
@@ -759,19 +759,19 @@ auto process_with_result() -> result_void {
         }
         return {}; // Success
     });
-    
+
     if (auto error = pool->enqueue(std::move(job)); error.has_value()) {
         return thread_module::error{
             thread_module::error_code::queue_full,
             *error
         };
     }
-    
+
     return {}; // Success
 }
 ```
 
-### Batch Processing Example
+### Batch 처리 예제
 
 ```cpp
 // Configure worker for batch processing
@@ -791,7 +791,7 @@ for (int i = 0; i < 1000; ++i) {
 pool->enqueue_batch(std::move(batch));
 ```
 
-### Using Service Container
+### Service Container 사용
 
 ```cpp
 #include "interfaces/service_container.h"
@@ -810,7 +810,7 @@ thread_module::service_container::global()
 // Use services later via thread_context or resolve<>()
 ```
 
-### Advanced Synchronization Example
+### 고급 동기화 예제
 
 ```cpp
 #include "core/sync/include/sync_primitives.h"

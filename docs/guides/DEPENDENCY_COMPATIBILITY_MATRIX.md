@@ -1,5 +1,7 @@
 # Dependency Version Compatibility Matrix
 
+> **Language:** **English** | [한국어](DEPENDENCY_COMPATIBILITY_MATRIX_KO.md)
+
 ## Core Dependencies
 
 | Package | Minimum Version | Tested Versions | Compatibility Notes |

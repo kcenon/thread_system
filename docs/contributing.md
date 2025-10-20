@@ -1,5 +1,7 @@
 # Contributing to Thread System
 
+> **Language:** **English** | [한국어](CONTRIBUTING_KO.md)
+
 Thank you for your interest in contributing to the Thread System project! This document provides guidelines and information for contributors.
 
 ## Getting Started
