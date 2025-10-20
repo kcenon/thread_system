@@ -120,7 +120,7 @@ This documentation covers the core `thread_system` project. For related projects
 
 ---
 
-*This documentation is maintained by the Thread System team. For updates or corrections, please see the [Contributing Guide](CONTRIBUTING.md).*
+*This documentation is maintained by the Thread System. For updates or corrections, please see the [Contributing Guide](CONTRIBUTING.md).*
 ---
 
 *Last Updated: 2025-10-20*
