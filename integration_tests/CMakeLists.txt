@@ -15,10 +15,14 @@ cmake_minimum_required(VERSION 3.16)
 ##################################################
 
 # Try to find GTest (vcpkg first, then system)
-find_package(GTest CONFIG)
+# Note: If not found, parent CMakeLists.txt will provide it via FetchContent
+find_package(GTest CONFIG QUIET)
 if(NOT GTest_FOUND)
-    find_package(GTest REQUIRED)
+    find_package(GTest QUIET)
 endif()
+
+# GTest targets (GTest::gtest, GTest::gtest_main) should be available
+# either from find_package above or from parent CMakeLists via FetchContent
 
 ##################################################
 # Test Source Collections
