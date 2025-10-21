@@ -31,9 +31,19 @@ endif()
 ##################################################
 
 option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" ON)
-option(BUILD_INTEGRATION_TESTS "Build integration tests" ON)
+option(THREAD_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
+
+# Respect global BUILD_INTEGRATION_TESTS flag if set
+if(DEFINED BUILD_INTEGRATION_TESTS)
+    if(BUILD_INTEGRATION_TESTS)
+        set(_THREAD_BUILD_IT_VALUE ON)
+    else()
+        set(_THREAD_BUILD_IT_VALUE OFF)
+    endif()
+    set(THREAD_BUILD_INTEGRATION_TESTS ${_THREAD_BUILD_IT_VALUE} CACHE BOOL "Build integration tests" FORCE)
+endif()
 
 ##################################################
 # C++ Standard Configuration

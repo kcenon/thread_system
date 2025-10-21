@@ -147,7 +147,7 @@ endfunction()
 ##################################################
 function(find_or_fetch_gtest)
   # Skip if not building tests
-  if(NOT BUILD_INTEGRATION_TESTS AND NOT BUILD_TESTING)
+  if(NOT THREAD_BUILD_INTEGRATION_TESTS AND NOT BUILD_TESTING)
     return()
   endif()
 

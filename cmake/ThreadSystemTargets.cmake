@@ -122,8 +122,8 @@ function(add_tests_subdirectory)
   endif()
 
   # Add integration tests if they exist
-  # Note: BUILD_INTEGRATION_TESTS is defined in top-level CMakeLists.txt
-  if(BUILD_INTEGRATION_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
+  # Note: THREAD_BUILD_INTEGRATION_TESTS is defined in top-level CMakeLists.txt
+  if(THREAD_BUILD_INTEGRATION_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
     add_subdirectory(integration_tests)
     message(STATUS "Added integration_tests subdirectory")
   endif()
