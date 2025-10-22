@@ -17,10 +17,16 @@ else()
 endif()
 
 if(UTIL_SOURCES)
+    # Add both utilities/include and root include (for kcenon/thread/utils/formatter.h)
     target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
         $<INSTALL_INTERFACE:include/thread_system/utilities>
+    )
+    # Also add parent include directory for accessing formatter.h via <kcenon/thread/utils/formatter.h>
+    get_filename_component(THREAD_SYSTEM_ROOT_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/../include" ABSOLUTE)
+    target_include_directories(${PROJECT_NAME} PUBLIC
+        $<BUILD_INTERFACE:${THREAD_SYSTEM_ROOT_INCLUDE}>
+        $<INSTALL_INTERFACE:include>
     )
 
     if(COMMAND set_compiler_warnings)
@@ -49,10 +55,16 @@ if(UTIL_SOURCES)
         message(STATUS "⚠️ Iconv not found - some string conversion features may be limited")
     endif()
 else()
+    # Interface library case - add both utilities/include and root include
     target_include_directories(${PROJECT_NAME} INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
         $<INSTALL_INTERFACE:include/thread_system/utilities>
+    )
+    # Also add parent include directory
+    get_filename_component(THREAD_SYSTEM_ROOT_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/../include" ABSOLUTE)
+    target_include_directories(${PROJECT_NAME} INTERFACE
+        $<BUILD_INTERFACE:${THREAD_SYSTEM_ROOT_INCLUDE}>
+        $<INSTALL_INTERFACE:include>
     )
 
     # Fallback to fmt when std::format is not used
