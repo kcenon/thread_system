@@ -107,8 +107,9 @@ function(check_std_format_support)
     set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format" FORCE)
   else()
     set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    # When not using std::format, we should use fmt library
-    add_definitions(-DHAS_FMT_LIBRARY)
+    # When not using std::format, try to use fmt library if available
+    # Note: HAS_FMT_LIBRARY should only be defined if fmt is actually found
+    # This is handled in utilities/CMakeLists.txt
   endif()
 
   # Export result to parent scope
