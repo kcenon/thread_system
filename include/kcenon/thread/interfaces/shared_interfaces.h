@@ -165,7 +165,7 @@ public:
         try {
             return common::ok(std::async(std::launch::async, std::move(task)));
         } catch (const std::exception& e) {
-            return common::error<std::future<T>>(
+            return common::make_error<std::future<T>>(
                 common::error_codes::THREAD_ERROR_BASE - 1,
                 "Failed to launch async task",
                 "IExecutor",
