@@ -435,7 +435,6 @@ jobs:
   performance-tests:
     name: Performance Benchmarks
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[perf]') || contains(github.event.head_commit.message, '[bench]')
 
     steps:
     - name: Checkout code
