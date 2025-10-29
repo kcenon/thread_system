@@ -459,6 +459,6 @@ namespace kcenon::thread
 	 */
 	auto job_queue::to_string(void) const -> std::string
 	{
-		return formatter::format("contained {} jobs", size());
+		return utility_module::formatter::format("contained {} jobs", size());
 	}
 } // namespace kcenon::thread

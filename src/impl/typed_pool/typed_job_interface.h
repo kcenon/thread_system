@@ -46,9 +46,7 @@
 #include <memory>
 
 namespace kcenon::thread {
-    
-    using namespace kcenon::thread; // For result_void
-    
+
     /**
      * @brief Base interface for all typed jobs
      * 

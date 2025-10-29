@@ -434,6 +434,6 @@ namespace kcenon::thread
 	 */
 	auto thread_base::to_string(void) const -> std::string
 	{
-		return formatter::format("{} is {}", thread_title_, thread_condition_.load());
+		return utility_module::formatter::format("{} is {}", thread_title_, thread_condition_.load());
 	}
 } // namespace kcenon::thread

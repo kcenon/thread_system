@@ -40,8 +40,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstdint>
 #include <string_view>
 
-using namespace utility_module;
-
 namespace kcenon::thread
 {
 	/**
@@ -190,7 +188,7 @@ struct std::formatter<kcenon::thread::thread_conditions, wchar_t>
 	auto format(const kcenon::thread::thread_conditions& thread_condition, FormatContext& ctx) const
 	{
 		auto str = kcenon::thread::to_string(thread_condition);
-		auto wstr = convert_string::to_wstring(str);
+		auto wstr = utility_module::convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
