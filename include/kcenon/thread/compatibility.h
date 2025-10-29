@@ -1,5 +1,4 @@
-#ifndef KCENON_THREAD_COMPATIBILITY_H
-#define KCENON_THREAD_COMPATIBILITY_H
+#pragma once
 
 // Forward declare canonical namespaces to allow aliasing without including
 // heavier headers.
@@ -21,5 +20,3 @@ namespace thread_namespace = kcenon::thread;
 
 // Legacy utility namespace names still expected by some consumers.
 namespace utility_module = kcenon::thread::utils;
-
-#endif // KCENON_THREAD_COMPATIBILITY_H

@@ -34,8 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "typed_job.h"
 
-using namespace kcenon::thread;
-
 namespace kcenon::thread
 {
 	/**

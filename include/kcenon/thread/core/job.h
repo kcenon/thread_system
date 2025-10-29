@@ -46,8 +46,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <chrono>
 
-using namespace utility_module;
-
 namespace kcenon::thread
 {
 	class job_queue;

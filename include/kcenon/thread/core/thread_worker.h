@@ -43,9 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <vector>
 
-using namespace utility_module;
-using namespace kcenon::thread;
-
 namespace kcenon::thread
 {
 	/**
@@ -232,7 +229,7 @@ struct std::formatter<kcenon::thread::thread_worker, wchar_t>
 	auto format(const kcenon::thread::thread_worker& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		auto wstr = convert_string::to_wstring(str);
+		auto wstr = utility_module::convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

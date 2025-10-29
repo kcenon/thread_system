@@ -51,8 +51,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stop_token>
 #endif
 
-using namespace utility_module;
-
 /**
  * @namespace kcenon::thread
  * @brief Core threading foundation of the thread system library.

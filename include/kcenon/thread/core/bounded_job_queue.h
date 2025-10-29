@@ -7,11 +7,12 @@ All rights reserved.
 
 #pragma once
 
-#include "job_queue.h"
-#include "job.h"
 #include <atomic>
 #include <chrono>
 #include <optional>
+
+#include "job.h"
+#include "job_queue.h"
 
 namespace kcenon::thread {
 

@@ -7,11 +7,12 @@ All rights reserved.
 
 #pragma once
 
-#include "job.h"
-#include "cancellation_token.h"
 #include <atomic>
-#include <functional>
 #include <chrono>
+#include <functional>
+
+#include "cancellation_token.h"
+#include "job.h"
 
 namespace kcenon::thread {
 

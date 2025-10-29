@@ -87,6 +87,12 @@ enum class log_level {
  * - VoidResult return types for better error handling
  * - Unified log_entry structure
  * - Compatible method signatures
+ *
+ * ### Thread Safety
+ * Implementations must ensure all methods are thread-safe:
+ * - log() must be safely callable from multiple threads concurrently
+ * - is_enabled() must provide consistent results across threads
+ * - flush() must be safely callable alongside log operations
  */
 class [[deprecated("Use common::interfaces::ILogger instead")]] logger_interface {
 public:
@@ -96,6 +102,8 @@ public:
    * @brief Log a message with specified level
    * @param level Log level
    * @param message Log message
+   *
+   * Thread Safety: Must be thread-safe
    */
   virtual void log(log_level level, const std::string& message) = 0;
 
@@ -106,6 +114,8 @@ public:
    * @param file Source file name
    * @param line Source line number
    * @param function Function name
+   *
+   * Thread Safety: Must be thread-safe
    */
   virtual void log(log_level level, const std::string& message,
                    const std::string& file, int line,
@@ -115,11 +125,15 @@ public:
    * @brief Check if logging is enabled for the specified level
    * @param level Log level to check
    * @return true if logging is enabled for this level
+   *
+   * Thread Safety: Must be thread-safe
    */
   virtual bool is_enabled(log_level level) const = 0;
 
   /**
    * @brief Flush any buffered log messages
+   *
+   * Thread Safety: Must be thread-safe
    */
   virtual void flush() = 0;
 };

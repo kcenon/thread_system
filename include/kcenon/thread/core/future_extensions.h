@@ -47,9 +47,7 @@
 #include <functional>
 
 namespace kcenon::thread {
-    
-    using namespace kcenon::thread; // For result<T> types
-    
+
     /**
      * @brief A future that can be scheduled on a thread pool
      * 
