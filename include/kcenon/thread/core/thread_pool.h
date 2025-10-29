@@ -48,9 +48,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <optional>
 
-using namespace utility_module;
-using namespace kcenon::thread;
-
 /**
  * @namespace kcenon::thread
  * @brief Thread pool implementation for managing worker threads.
@@ -395,7 +392,7 @@ struct std::formatter<kcenon::thread::thread_pool, wchar_t>
 	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
 	{
 		auto str = item.to_string();
-		auto wstr = convert_string::to_wstring(str);
+		auto wstr = utility_module::convert_string::to_wstring(str);
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };

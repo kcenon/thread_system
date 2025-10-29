@@ -32,13 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "job.h"
-
 #include <functional>
+#include <memory>
 #include <optional>
 #include <string>
 #include <vector>
-#include <memory>
+
+#include "job.h"
 
 namespace kcenon::thread
 {

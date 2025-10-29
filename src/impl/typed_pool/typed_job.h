@@ -35,8 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/job.h>
 #include "job_types.h"
 
-using namespace kcenon::thread;
-
 namespace kcenon::thread
 {
 	template <typename job_type> class typed_job_queue_t;
