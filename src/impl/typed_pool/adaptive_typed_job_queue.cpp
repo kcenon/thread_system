@@ -64,11 +64,11 @@ namespace kcenon::thread
 {
 	/**
 	 * @brief Explicit instantiation of adaptive typed job queue for job_types.
-	 * 
+	 *
 	 * This instantiation creates a concrete implementation of the adaptive
 	 * typed job queue template for the job_types enumeration, enabling
 	 * efficient job categorization and routing in typed thread pools.
-	 * 
+	 *
 	 * Features instantiated:
 	 * - Lock-free and mutex-based queue implementations
 	 * - Adaptive strategy selection based on contention
@@ -76,22 +76,5 @@ namespace kcenon::thread
 	 * - High-performance concurrent access patterns
 	 */
 	template class adaptive_typed_job_queue_t<job_types>;
-	
-	/**
-	 * @brief Explicit instantiation of typed job queue factory function.
-	 * 
-	 * This instantiation provides the factory function for creating
-	 * typed job queues with specified strategies and configurations.
-	 * The factory handles queue strategy selection and initialization.
-	 * 
-	 * Parameters instantiated:
-	 * - queue_strategy: Strategy selection (lock-free, mutex, adaptive)
-	 * - size_t: Maximum queue capacity or thread count
-	 * 
-	 * @return Shared pointer to initialized typed job queue
-	 */
-	template auto create_typed_job_queue<job_types>(
-		adaptive_typed_job_queue_t<job_types>::queue_strategy, 
-		size_t) -> std::shared_ptr<typed_job_queue_t<job_types>>;
 
 } // namespace kcenon::thread

@@ -270,6 +270,7 @@ namespace kcenon::thread
 	private:
 		// Type aliases
 		using job_queue_ptr = std::unique_ptr<job_queue>;
+		using lockfree_queue_ptr = std::unique_ptr<job_queue>;
 		using queue_map = std::unordered_map<job_type, lockfree_queue_ptr>;
 		
 		// Per-type queues
