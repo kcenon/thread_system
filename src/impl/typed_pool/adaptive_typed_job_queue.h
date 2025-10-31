@@ -75,12 +75,12 @@ namespace kcenon::thread
 		virtual ~adaptive_typed_job_queue_t();
 		
 		// typed_job_queue_t interface implementation
-		[[nodiscard]] auto enqueue(std::unique_ptr<thread_module::job>&& value) -> thread_module::result_void override;
-		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> thread_module::result_void;
-		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<thread_module::job>>&& jobs) -> thread_module::result_void override;
-		[[nodiscard]] auto dequeue() -> thread_module::result<std::unique_ptr<thread_module::job>> override;
-		[[nodiscard]] auto dequeue_batch() -> std::deque<std::unique_ptr<thread_module::job>> override;
-		[[nodiscard]] auto dequeue(const std::vector<job_type>& types) -> thread_module::result<std::unique_ptr<typed_job_t<job_type>>>;
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override;
+		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> result_void;
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void override;
+		[[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override;
+		[[nodiscard]] auto dequeue_batch() -> std::deque<std::unique_ptr<job>> override;
+		[[nodiscard]] auto dequeue(const std::vector<job_type>& types) -> result<std::unique_ptr<typed_job_t<job_type>>>;
 		auto clear() -> void override;
 		[[nodiscard]] auto empty(const std::vector<job_type>& types) const -> bool;
 		[[nodiscard]] auto size(const std::vector<job_type>& types) const -> std::size_t;

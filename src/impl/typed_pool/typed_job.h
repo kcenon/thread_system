@@ -89,13 +89,7 @@ namespace kcenon::thread
 		 * @param job_queue A @c std::shared_ptr to the job queue that will manage
 		 *                  this job.
 		 */
-		auto set_job_queue(const std::shared_ptr<job_queue>& queue) -> void override {
-			job::set_job_queue(queue);
-			auto typed_queue = std::dynamic_pointer_cast<typed_job_queue_t<job_type>>(queue);
-			if (typed_queue) {
-				job_queue_ = typed_queue;
-			}
-		}
+		auto set_job_queue(const std::shared_ptr<job_queue>& queue) -> void override;
 
 		/**
 		 * @brief Gets the job queue that currently manages this job, if any.
@@ -106,10 +100,7 @@ namespace kcenon::thread
 		 * @return A @c std::shared_ptr<job_queue> pointing to the job's managing queue,
 		 *         or an empty pointer if the queue has expired or was never set.
 		 */
-		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override {
-			auto typed_queue = job_queue_.lock();
-			return std::static_pointer_cast<job_queue>(typed_queue);
-		}
+		[[nodiscard]] auto get_job_queue(void) const -> std::shared_ptr<job_queue> override;
 
 	private:
 		/**

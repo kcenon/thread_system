@@ -11,7 +11,12 @@ file(GLOB_RECURSE CORE_HEADERS
 # Find sources in src directory
 file(GLOB_RECURSE CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/*.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/callback_typed_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job_queue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_worker.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_pool.cpp)
 
 add_library(${PROJECT_NAME} STATIC
     ${CORE_HEADERS}

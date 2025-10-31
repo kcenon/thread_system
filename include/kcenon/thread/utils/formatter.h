@@ -40,8 +40,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <format>
 #else
 // Use fmt library as fallback when std::format is not available
-#ifdef HAS_FMT_LIBRARY
+// Only include if the header actually exists
+#if __has_include(<fmt/format.h>)
 #include <fmt/format.h>
+#define HAS_FMT_AVAILABLE
 #endif
 #include <sstream>
 #include <iomanip>
