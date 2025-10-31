@@ -10,9 +10,11 @@ All rights reserved.
 #include <atomic>
 #include <chrono>
 #include <optional>
+#include <thread>
 
 #include "job.h"
 #include "job_queue.h"
+#include "error_handling.h"
 
 namespace kcenon::thread {
 
@@ -26,6 +28,30 @@ struct queue_metrics {
     std::atomic<uint64_t> total_rejected{0};
     std::atomic<uint64_t> total_timeouts{0};
     std::atomic<uint64_t> peak_size{0};
+
+    // Default constructor
+    queue_metrics() = default;
+
+    // Copy constructor (atomics can't be copied, must load/store)
+    queue_metrics(const queue_metrics& other) {
+        total_enqueued.store(other.total_enqueued.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        total_dequeued.store(other.total_dequeued.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        total_rejected.store(other.total_rejected.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        total_timeouts.store(other.total_timeouts.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        peak_size.store(other.peak_size.load(std::memory_order_relaxed), std::memory_order_relaxed);
+    }
+
+    // Copy assignment operator
+    queue_metrics& operator=(const queue_metrics& other) {
+        if (this != &other) {
+            total_enqueued.store(other.total_enqueued.load(std::memory_order_relaxed), std::memory_order_relaxed);
+            total_dequeued.store(other.total_dequeued.load(std::memory_order_relaxed), std::memory_order_relaxed);
+            total_rejected.store(other.total_rejected.load(std::memory_order_relaxed), std::memory_order_relaxed);
+            total_timeouts.store(other.total_timeouts.load(std::memory_order_relaxed), std::memory_order_relaxed);
+            peak_size.store(other.peak_size.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        }
+        return *this;
+    }
 
     void reset() {
         total_enqueued = 0;
@@ -118,15 +144,11 @@ public:
     [[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override {
         if (max_size_ > 0 && size() >= max_size_) {
             metrics_.total_rejected.fetch_add(1, std::memory_order_relaxed);
-            return error_handling::make_error(
-                error_codes::thread_system::queue_full,
-                "Job queue is at maximum capacity",
-                "bounded_job_queue"
-            );
+            return result_void(error(error_code::queue_full, "Job queue is at maximum capacity"));
         }
 
         auto result = job_queue::enqueue(std::move(value));
-        if (result.is_ok()) {
+        if (!result.has_error()) {
             metrics_.total_enqueued.fetch_add(1, std::memory_order_relaxed);
 
             // Update peak size with retry limit to prevent infinite loops
@@ -180,11 +202,7 @@ public:
             auto elapsed = std::chrono::steady_clock::now() - start;
             if (elapsed >= timeout) {
                 metrics_.total_timeouts.fetch_add(1, std::memory_order_relaxed);
-                return error_handling::make_error(
-                    error_codes::thread_system::job_timeout,
-                    "Enqueue operation timed out",
-                    "bounded_job_queue"
-                );
+                return result_void(error(error_code::operation_timeout, "Enqueue operation timed out"));
             }
 
             // Wait a bit before retry
@@ -197,7 +215,7 @@ public:
      */
     [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override {
         auto result = job_queue::dequeue();
-        if (result.is_ok()) {
+        if (!!result.has_value()) {
             metrics_.total_dequeued.fetch_add(1, std::memory_order_relaxed);
         }
         return result;

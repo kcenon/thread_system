@@ -100,7 +100,7 @@ namespace kcenon::thread
 	 *       traditional mutex-based queues would become a bottleneck.
 	 */
 	template <typename job_type = job_types>
-	class typed_lockfree_job_queue_t : public thread_module::job_queue
+	class typed_lockfree_job_queue_t : public job_queue
 	{
 	public:
 		/**
@@ -108,81 +108,81 @@ namespace kcenon::thread
 		 * @param max_threads Maximum number of threads that will access the queue
 		 */
 		explicit typed_lockfree_job_queue_t(size_t max_threads = 128);
-		
+
 		/**
 		 * @brief Destructor
 		 */
 		virtual ~typed_lockfree_job_queue_t();
-		
+
 		// Delete copy operations
 		typed_lockfree_job_queue_t(const typed_lockfree_job_queue_t&) = delete;
 		typed_lockfree_job_queue_t& operator=(const typed_lockfree_job_queue_t&) = delete;
-		
+
 		// Delete move operations for now
 		typed_lockfree_job_queue_t(typed_lockfree_job_queue_t&&) = delete;
 		typed_lockfree_job_queue_t& operator=(typed_lockfree_job_queue_t&&) = delete;
-		
+
 		/**
 		 * @brief Enqueues a typed job with priority
 		 * @param value Unique pointer to a typed job
 		 * @return Success or error result
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) 
-			-> thread_module::result_void;
-		
+		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
+			-> result_void;
+
 		/**
 		 * @brief Enqueues a generic job (attempts to cast to typed_job)
 		 * @param value Unique pointer to a job
 		 * @return Success or error result
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<thread_module::job>&& value) 
-			-> thread_module::result_void override;
-		
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value)
+			-> result_void override;
+
 		/**
 		 * @brief Enqueues multiple typed jobs
 		 * @param jobs Vector of typed jobs to enqueue
 		 * @return Success or error result
 		 */
 		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
-			-> thread_module::result_void;
-		
+			-> result_void;
+
 		/**
 		 * @brief Enqueues multiple generic jobs
 		 * @param jobs Vector of jobs to enqueue
 		 * @return Success or error result
 		 */
-		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<thread_module::job>>&& jobs)
-			-> thread_module::result_void override;
-		
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
+			-> result_void override;
+
 		/**
 		 * @brief Dequeues a job with highest priority
 		 * @return The dequeued job or error
 		 */
-		[[nodiscard]] auto dequeue() 
-			-> thread_module::result<std::unique_ptr<thread_module::job>> override;
-		
+		[[nodiscard]] auto dequeue()
+			-> result<std::unique_ptr<job>> override;
+
 		/**
 		 * @brief Dequeues a job of specific type
 		 * @param type The job type to dequeue
 		 * @return The dequeued job or error
 		 */
 		[[nodiscard]] auto dequeue(const job_type& type)
-			-> thread_module::result<std::unique_ptr<typed_job_t<job_type>>>;
-		
+			-> result<std::unique_ptr<typed_job_t<job_type>>>;
+
 		/**
 		 * @brief Dequeues jobs from multiple types
 		 * @param types Span of job types to consider
 		 * @return The dequeued job or error
 		 */
 		[[nodiscard]] auto dequeue(utility_module::span<const job_type> types)
-			-> thread_module::result<std::unique_ptr<typed_job_t<job_type>>>;
-		
+			-> result<std::unique_ptr<typed_job_t<job_type>>>;
+
 		/**
 		 * @brief Dequeues all available jobs
 		 * @return Deque containing all dequeued jobs
 		 */
 		[[nodiscard]] auto dequeue_batch()
-			-> std::deque<std::unique_ptr<thread_module::job>> override;
+			-> std::deque<std::unique_ptr<job>> override;
 		
 		/**
 		 * @brief Clears all jobs from all priority queues
@@ -270,6 +270,7 @@ namespace kcenon::thread
 	private:
 		// Type aliases
 		using job_queue_ptr = std::unique_ptr<job_queue>;
+		using lockfree_queue_ptr = std::unique_ptr<job_queue>;
 		using queue_map = std::unordered_map<job_type, lockfree_queue_ptr>;
 		
 		// Per-type queues

@@ -120,6 +120,36 @@ function(find_fmt_library)
 endfunction()
 
 ##################################################
+# Find iconv library (optional, improves conversions)
+##################################################
+function(find_iconv_library)
+  message(STATUS "Looking for iconv library...")
+
+  find_package(Iconv QUIET)
+
+  if(Iconv_FOUND)
+    message(STATUS "Found iconv: ${Iconv_LIBRARIES}")
+    set(THREAD_SYSTEM_ICONV_FOUND TRUE PARENT_SCOPE)
+
+    if(TARGET Iconv::Iconv)
+      set(THREAD_SYSTEM_ICONV_TARGET Iconv::Iconv PARENT_SCOPE)
+    else()
+      set(THREAD_SYSTEM_ICONV_TARGET "" PARENT_SCOPE)
+      set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS "${Iconv_INCLUDE_DIRS}" PARENT_SCOPE)
+      set(THREAD_SYSTEM_ICONV_LIBRARIES "${Iconv_LIBRARIES}" PARENT_SCOPE)
+    endif()
+
+    return()
+  endif()
+
+  message(WARNING "⚠️ Iconv not found - wide/narrow string conversion will use limited fallback")
+  set(THREAD_SYSTEM_ICONV_FOUND FALSE PARENT_SCOPE)
+  set(THREAD_SYSTEM_ICONV_TARGET "" PARENT_SCOPE)
+  set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS "" PARENT_SCOPE)
+  set(THREAD_SYSTEM_ICONV_LIBRARIES "" PARENT_SCOPE)
+endfunction()
+
+##################################################
 # Find threading library
 ##################################################
 function(find_threading_library)
@@ -196,8 +226,38 @@ function(find_thread_system_dependencies)
 
   find_common_system_dependency()
   find_fmt_library()
+  find_iconv_library()
   find_threading_library()
   find_or_fetch_gtest()
+
+  if(DEFINED FMT_FOUND)
+    set(FMT_FOUND ${FMT_FOUND} PARENT_SCOPE)
+  endif()
+  if(DEFINED FMT_TARGET)
+    set(FMT_TARGET ${FMT_TARGET} PARENT_SCOPE)
+  endif()
+  if(DEFINED FMT_INCLUDE_DIR)
+    set(FMT_INCLUDE_DIR ${FMT_INCLUDE_DIR} PARENT_SCOPE)
+  endif()
+  if(DEFINED FMT_LIBRARY)
+    set(FMT_LIBRARY ${FMT_LIBRARY} PARENT_SCOPE)
+  endif()
+  if(DEFINED FMT_HEADER_ONLY)
+    set(FMT_HEADER_ONLY ${FMT_HEADER_ONLY} PARENT_SCOPE)
+  endif()
+
+  if(DEFINED THREAD_SYSTEM_ICONV_FOUND)
+    set(THREAD_SYSTEM_ICONV_FOUND ${THREAD_SYSTEM_ICONV_FOUND} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_ICONV_TARGET)
+    set(THREAD_SYSTEM_ICONV_TARGET ${THREAD_SYSTEM_ICONV_TARGET} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_ICONV_INCLUDE_DIRS)
+    set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS ${THREAD_SYSTEM_ICONV_INCLUDE_DIRS} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_ICONV_LIBRARIES)
+    set(THREAD_SYSTEM_ICONV_LIBRARIES ${THREAD_SYSTEM_ICONV_LIBRARIES} PARENT_SCOPE)
+  endif()
 
   message(STATUS "Dependency detection complete")
 endfunction()

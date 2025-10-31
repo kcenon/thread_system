@@ -1,9 +1,18 @@
 ##################################################
 # ThreadSystem Samples CMakeLists.txt
-# 
+#
 # This script builds sample applications demonstrating the ThreadSystem library usage.
 # Each sample focuses on a specific component or feature of the library.
 ##################################################
+
+# Set up library aliases for backward compatibility
+# When using new unified structure, map legacy names to ThreadSystem
+if(TARGET ThreadSystem)
+    set(thread_base ThreadSystem)
+    set(utilities ThreadSystem)
+    set(interfaces ThreadSystem)
+    message(STATUS "Examples: Using ThreadSystem as unified library")
+endif()
 
 # Minimal thread pool sample without logger
 # Demonstrates basic thread pool usage without logger dependency
