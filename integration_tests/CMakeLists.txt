@@ -10,6 +10,15 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+# Set up library aliases for backward compatibility
+# When using new unified structure, map legacy names to ThreadSystem
+if(TARGET ThreadSystem)
+    set(thread_base ThreadSystem)
+    set(utilities ThreadSystem)
+    set(interfaces ThreadSystem)
+    message(STATUS "Integration tests: Using ThreadSystem as unified library")
+endif()
+
 ##################################################
 # Find GTest
 ##################################################

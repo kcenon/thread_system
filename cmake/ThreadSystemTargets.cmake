@@ -60,8 +60,14 @@ function(create_thread_system_targets)
           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
           $<INSTALL_INTERFACE:include>
       )
+
+      # Create aliases for backward compatibility with legacy code
+      add_library(thread_base ALIAS ThreadSystem)
+      add_library(utilities ALIAS ThreadSystem)
+      add_library(interfaces ALIAS ThreadSystem)
+
       set(USE_LEGACY_BUILD FALSE PARENT_SCOPE)
-      message(STATUS "Created ThreadSystem library target")
+      message(STATUS "Created ThreadSystem library target with legacy aliases (thread_base, utilities, interfaces)")
     endif()
   else()
     message(STATUS "New structure not complete, using legacy build")
