@@ -238,6 +238,15 @@ namespace kcenon::thread
             return error{error_code::resource_allocation_failed, "job queue is null"};
         }
 
+        // Check if queue has been explicitly stopped (via stop_waiting_dequeue())
+        // This prevents race conditions during shutdown where stop() has been called
+        // but jobs might still be submitted. Note: We check the queue's stopped state
+        // rather than start_pool_ to allow jobs to be enqueued before start() is called.
+        if (job_queue_->is_stopped())
+        {
+            return error{error_code::queue_stopped, "thread pool is stopped"};
+        }
+
         // Delegate to adaptive queue for optimal processing
         auto enqueue_result = job_queue_->enqueue(std::move(job));
         if (enqueue_result.has_error())
@@ -259,6 +268,12 @@ namespace kcenon::thread
         if (job_queue_ == nullptr)
         {
             return error{error_code::resource_allocation_failed, "job queue is null"};
+        }
+
+        // Check if queue has been explicitly stopped
+        if (job_queue_->is_stopped())
+        {
+            return error{error_code::queue_stopped, "thread pool is stopped"};
         }
 
         auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
@@ -346,13 +361,20 @@ namespace kcenon::thread
 
     auto thread_pool::stop(const bool& immediately_stop) -> result_void
     {
-        if (!start_pool_.load())
+        // Use compare_exchange_strong to atomically check and set state
+        // This prevents TOCTOU (Time-Of-Check-Time-Of-Use) race conditions
+        // where multiple threads might call stop() simultaneously
+        bool expected = true;
+        if (!start_pool_.compare_exchange_strong(expected, false,
+                                                  std::memory_order_acq_rel,
+                                                  std::memory_order_acquire))
         {
+            // Pool is already stopped or being stopped by another thread
             return {};
         }
 
-        // Set start_pool_ to false FIRST to prevent new workers from being added
-        start_pool_.store(false);
+        // At this point, we've atomically transitioned from running to stopped
+        // and only this thread will execute the shutdown sequence
 
         if (job_queue_ != nullptr)
         {
