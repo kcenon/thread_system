@@ -174,17 +174,28 @@ namespace kcenon::thread
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::stop(bool clear_queue) -> result_void
 	{
+		// Use compare_exchange_strong to atomically check and set state
+		// This prevents race conditions during concurrent stop() calls
 		bool expected = true;
-		if (!start_pool_.compare_exchange_strong(expected, false))
+		if (!start_pool_.compare_exchange_strong(expected, false,
+												  std::memory_order_acq_rel,
+												  std::memory_order_acquire))
 		{
-			return {}; // Already stopped
+			return {}; // Already stopped or being stopped by another thread
 		}
 
-		// Clear queue if requested
-		if (clear_queue && job_queue_)
+		// Always stop the queue to prevent new jobs from being enqueued
+		// This ensures consistent behavior with thread_pool and prevents
+		// race conditions where jobs might be added after stop() is called
+		if (job_queue_)
 		{
 			job_queue_->stop();
-			job_queue_->clear();
+
+			// Optionally clear pending jobs for immediate shutdown
+			if (clear_queue)
+			{
+				job_queue_->clear();
+			}
 		}
 
 		// Stop all workers
