@@ -100,7 +100,8 @@ namespace kcenon::thread
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::execute(std::unique_ptr<job>&& work) -> result_void
 	{
-		if (!start_pool_.load())
+		// Use acquire to ensure we see the latest pool state
+		if (!start_pool_.load(std::memory_order_acquire))
 		{
 			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
 		}
@@ -112,7 +113,8 @@ namespace kcenon::thread
 	auto typed_thread_pool_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& job)
 		-> result_void
 	{
-		if (!start_pool_.load())
+		// Use acquire to ensure we see the latest pool state
+		if (!start_pool_.load(std::memory_order_acquire))
 		{
 			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
 		}
@@ -124,7 +126,8 @@ namespace kcenon::thread
 	auto typed_thread_pool_t<job_type>::enqueue_batch(
 		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> result_void
 	{
-		if (!start_pool_.load())
+		// Use acquire to ensure we see the latest pool state
+		if (!start_pool_.load(std::memory_order_acquire))
 		{
 			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
 		}
@@ -145,13 +148,25 @@ namespace kcenon::thread
 		worker->set_job_queue(job_queue_);
 		worker->set_context(context_);
 
-		// Start the worker if the pool is already started
-		if (start_pool_.load())
-		{
-			worker->start();
-		}
+		// Add worker first, then start if pool is running
+		// This ensures stop() will see and stop this worker if called concurrently
+		// Use acquire to synchronize with start_pool_ release in start()
+		bool is_running = start_pool_.load(std::memory_order_acquire);
 
 		workers_.push_back(std::move(worker));
+
+		// Start the worker if the pool is already started
+		if (is_running)
+		{
+			auto start_result = workers_.back()->start();
+			if (start_result.has_error())
+			{
+				// Remove the worker we just added since it failed to start
+				workers_.pop_back();
+				return start_result;
+			}
+		}
+
 		return {};
 	}
 
