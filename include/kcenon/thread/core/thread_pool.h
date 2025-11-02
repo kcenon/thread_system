@@ -144,8 +144,25 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
 
-		// executor_interface
+		// ============================================================================
+		// executor_interface implementation
+		// ============================================================================
+		// These methods implement the executor_interface for polymorphic usage.
+		// They delegate to the primary API methods below.
+
+		/**
+		 * @brief Executes a job (executor_interface implementation)
+		 * @param work The job to execute
+		 * @return result_void indicating success or error
+		 * @note This delegates to enqueue()
+		 */
 		auto execute(std::unique_ptr<job>&& work) -> result_void override;
+
+		/**
+		 * @brief Shuts down the executor (executor_interface implementation)
+		 * @return result_void indicating success or error
+		 * @note This delegates to stop(false)
+		 */
 		auto shutdown() -> result_void override;
 
         /**
@@ -238,11 +255,18 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
-		// Public API methods
+		// ============================================================================
+		// Simplified Public API (bool return type for convenience)
+		// ============================================================================
+		// These methods provide a simplified interface with bool return types
+		// for easier integration with code that doesn't use result<T> types.
+		// For detailed error information, prefer using the result_void methods above.
+
 		/**
-		 * @brief Submit a task to the thread pool
+		 * @brief Submit a task to the thread pool (simplified API)
 		 * @param task The task to be executed
 		 * @return true if task was successfully submitted, false otherwise
+		 * @note For detailed error information, use enqueue() instead
 		 */
 		auto submit_task(std::function<void()> task) -> bool;
 
@@ -253,9 +277,10 @@ namespace kcenon::thread
 		auto get_thread_count() const -> std::size_t;
 
 		/**
-		 * @brief Shutdown the thread pool
+		 * @brief Shutdown the thread pool (simplified API)
 		 * @param immediate If true, stop immediately; if false, wait for current tasks to complete
 		 * @return true if shutdown was successful, false otherwise
+		 * @note For detailed error information, use stop() instead
 		 */
 		auto shutdown_pool(bool immediate = false) -> bool;
 

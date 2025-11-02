@@ -68,7 +68,7 @@ namespace kcenon::thread
 	 * 2. Enqueue @c job objects (or derived types) using @c enqueue().
 	 * 3. One or more worker threads repeatedly call @c dequeue() to retrieve jobs
 	 *    and process them.
-	 * 4. Call @c stop_waiting_dequeue() and possibly @c clear() to shut down the queue
+	 * 4. Call @c stop() and possibly @c clear() to shut down the queue
 	 *    gracefully when all jobs are done or when the system is stopping.
 	 */
 	class job_queue : public std::enable_shared_from_this<job_queue>, public scheduler_interface
@@ -203,7 +203,16 @@ namespace kcenon::thread
 		 * Sets the @c stop_ flag to @c true and notifies any threads that might be
 		 * blocked in @c dequeue(). This allows worker threads to exit gracefully
 		 * rather than remain blocked indefinitely.
+		 *
+		 * This method provides a consistent API with thread_pool and thread_base classes.
 		 */
+		auto stop(void) -> void;
+
+		/**
+		 * @brief Deprecated: Use stop() instead.
+		 * @deprecated This method will be removed in a future version. Use stop() for consistency.
+		 */
+		[[deprecated("Use stop() instead for API consistency")]]
 		auto stop_waiting_dequeue(void) -> void;
 
 		/**

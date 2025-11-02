@@ -219,44 +219,56 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Removes and returns the first job from the queue (blocking operation).
-	 * 
+	 *
 	 * Implementation details:
 	 * - Uses unique_lock (required by condition_variable)
 	 * - Blocks until a job is available OR queue is stopped
 	 * - Returns error if queue is empty after waking up (indicates stop condition)
 	 * - Efficiently moves job out of queue (zero-copy transfer)
 	 * - Automatically unlocks mutex when function exits
-	 * 
+	 *
 	 * Blocking Behavior:
 	 * - Waits indefinitely until job available or stop requested
 	 * - Uses condition variable for efficient waiting (no busy polling)
 	 * - Multiple threads can wait concurrently (fair wake-up via notify_one)
-	 * 
+	 *
 	 * Stop Coordination:
 	 * - Wakes up when stop_.load() becomes true
 	 * - Returns error instead of blocking indefinitely during shutdown
-	 * 
+	 *
 	 * Thread Safety:
 	 * - Safe for concurrent access with other dequeue/enqueue operations
 	 * - Uses proper synchronization primitives
-	 * 
+	 * - Handles race with clear() by re-checking queue state
+	 *
+	 * Race Condition Fix:
+	 * - Prevents TOCTOU bug between condition.wait() and queue access
+	 * - Even if wait() returns with !queue_.empty(), another thread could
+	 *   call clear() before we access queue_.front()
+	 * - Solution: Re-check queue_.empty() while still holding the lock
+	 *
 	 * @return Unique pointer to job on success, error if queue empty/stopped
 	 */
 	auto job_queue::dequeue() -> result<std::unique_ptr<job>>
 	{
 		// Use unique_lock for condition variable operations
 		std::unique_lock<std::mutex> lock(mutex_);
-		
+
 		// Block until job available OR queue stopped
 		condition_.wait(lock, [this]() { return !queue_.empty() || stop_.load(); });
 
-		// Check if we woke up due to stop condition (queue empty after stop)
+		// CRITICAL: Re-check queue state while still holding lock
+		// This prevents race with clear() that could empty the queue
+		// between wait() return and queue access (TOCTOU bug)
 		if (queue_.empty())
 		{
 			return error{error_code::queue_empty, "there are no jobs to dequeue"};
 		}
 
 		// Efficiently extract first job from queue
+		// At this point, we're guaranteed queue is not empty because:
+		// 1. We hold the mutex continuously from wait() return
+		// 2. We just verified !queue_.empty() above
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
 
@@ -400,24 +412,24 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Signals the queue to stop accepting jobs and wake waiting threads.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Sets atomic stop flag to prevent new enqueue operations
 	 * - Wakes all threads waiting in dequeue() operations
 	 * - Those threads will then return with error instead of blocking
 	 * - Used for coordinated shutdown of producer-consumer systems
-	 * 
+	 *
 	 * Shutdown Sequence:
 	 * 1. Set stop flag (prevents new jobs)
 	 * 2. Notify all waiting consumers
 	 * 3. Waiting dequeue() calls return with error
 	 * 4. Threads can then complete their shutdown process
-	 * 
+	 *
 	 * Thread Safety:
 	 * - Safe to call from any thread
 	 * - Idempotent operation (safe to call multiple times)
 	 */
-	auto job_queue::stop_waiting_dequeue(void) -> void
+	auto job_queue::stop(void) -> void
 	{
 		// Critical section: set stop flag and notify waiters
 		std::scoped_lock<std::mutex> lock(mutex_);
@@ -427,6 +439,15 @@ namespace kcenon::thread
 
 		// Wake all threads waiting in dequeue()
 		condition_.notify_all();
+	}
+
+	/**
+	 * @brief Deprecated: Use stop() instead.
+	 * @deprecated Maintained for backward compatibility. Will be removed in future version.
+	 */
+	auto job_queue::stop_waiting_dequeue(void) -> void
+	{
+		stop();
 	}
 
 	/**

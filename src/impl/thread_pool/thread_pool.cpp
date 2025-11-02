@@ -238,7 +238,7 @@ namespace kcenon::thread
             return error{error_code::resource_allocation_failed, "job queue is null"};
         }
 
-        // Check if queue has been explicitly stopped (via stop_waiting_dequeue())
+        // Check if queue has been explicitly stopped (via stop())
         // This prevents race conditions during shutdown where stop() has been called
         // but jobs might still be submitted. Note: We check the queue's stopped state
         // rather than start_pool_ to allow jobs to be enqueued before start() is called.
@@ -378,7 +378,7 @@ namespace kcenon::thread
 
         if (job_queue_ != nullptr)
         {
-            job_queue_->stop_waiting_dequeue();
+            job_queue_->stop();
 
             if (immediately_stop)
             {
