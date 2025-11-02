@@ -38,8 +38,7 @@ if(UNIX AND NOT WIN32)
   
   # Typed thread pool tests
   # Validates type-based scheduling, task routing, and edge cases
-  # TEMPORARILY DISABLED: typed_thread_pool implementation not available in current branch
-  # add_subdirectory(typed_thread_pool_test)
+  add_subdirectory(typed_thread_pool_test)
   
   # Monitoring tests
   # Validates metrics collection, ring buffer, and monitoring functionality
