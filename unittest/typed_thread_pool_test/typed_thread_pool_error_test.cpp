@@ -15,7 +15,9 @@ TEST(typed_thread_pool_error, start_without_workers)
     auto pool = std::make_shared<typed_thread_pool>();
     auto r = pool->start();
     ASSERT_TRUE(r.has_error());
-    EXPECT_EQ(r.get_error().code(), error_code::thread_start_failure);
+    // Starting a pool without workers returns invalid_argument, not thread_start_failure
+    // because the validation happens before attempting to start any threads
+    EXPECT_EQ(r.get_error().code(), error_code::invalid_argument);
 }
 
 TEST(typed_thread_pool_error, enqueue_null_worker)
