@@ -142,7 +142,8 @@ namespace kcenon::thread
         std::scoped_lock<std::mutex> lock(workers_mutex_);
 
         // Check if pool is already running
-        if (start_pool_.load())
+        // Use acquire to ensure we see all previous modifications to pool state
+        if (start_pool_.load(std::memory_order_acquire))
         {
             return error{error_code::thread_already_running, "thread pool is already running"};
         }
@@ -179,7 +180,9 @@ namespace kcenon::thread
         }
 
         // Mark pool as successfully started
-        start_pool_.store(true);
+        // Use release to ensure all previous modifications (worker starts, queue setup)
+        // are visible to other threads before they see start_pool_ == true
+        start_pool_.store(true, std::memory_order_release);
 
         return {};
     }
@@ -301,22 +304,31 @@ namespace kcenon::thread
         worker->set_context(context_);
 
         // Acquire lock before checking start_pool_ and adding worker
+        // This prevents race condition with stop():
+        // - stop() acquires workers_mutex_ after atomically setting start_pool_ to false
+        // - If we check start_pool_ while holding the lock, we ensure consistent state
         std::scoped_lock<std::mutex> lock(workers_mutex_);
 
-        // Check if pool is running while holding lock
-        if (start_pool_.load())
+        // Use memory_order_acquire to ensure we see all previous modifications
+        // made by the thread that set start_pool_ to true (in start())
+        bool is_running = start_pool_.load(std::memory_order_acquire);
+
+        // Add worker to vector first, before starting
+        // This ensures stop() will see and stop this worker if called concurrently
+        workers_.emplace_back(std::move(worker));
+
+        // Only start the worker if pool is running
+        // Since we hold workers_mutex_, stop() cannot proceed until we release it
+        if (is_running)
         {
-            auto start_result = worker->start();
+            auto start_result = workers_.back()->start();
             if (start_result.has_error())
             {
-                // Don't call stop() here - just return error
-                // Calling stop() while holding workers_mutex_ could cause issues
+                // Remove the worker we just added since it failed to start
+                workers_.pop_back();
                 return start_result.get_error();
             }
         }
-
-        // Add worker to vector while holding lock
-        workers_.emplace_back(std::move(worker));
 
         return {};
     }
@@ -335,25 +347,34 @@ namespace kcenon::thread
         }
 
         // Acquire lock before processing workers
+        // This ensures atomic check-and-add operation with respect to stop()
         std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+        // Check pool running state once with acquire semantics
+        bool is_running = start_pool_.load(std::memory_order_acquire);
+
+        // Track the starting index for rollback in case of error
+        std::size_t start_index = workers_.size();
 
         for (auto& worker : workers)
         {
             worker->set_job_queue(job_queue_);
             worker->set_context(context_);
 
-            // Check if pool is running while holding lock
-            if (start_pool_.load())
+            // Add worker to vector first
+            workers_.emplace_back(std::move(worker));
+
+            // Only start if pool is running
+            if (is_running)
             {
-                auto start_result = worker->start();
+                auto start_result = workers_.back()->start();
                 if (start_result.has_error())
                 {
-                    // Don't call stop() here - just return error
+                    // Rollback: remove all workers added in this batch
+                    workers_.erase(workers_.begin() + start_index, workers_.end());
                     return start_result.get_error();
                 }
             }
-
-            workers_.emplace_back(std::move(worker));
         }
 
         return {};
@@ -408,8 +429,10 @@ namespace kcenon::thread
 	{
 		std::string format_string;
 
+		// Use relaxed memory order for diagnostic/logging purposes
+		// Exact state ordering is not critical for debug output
 		formatter::format_to(std::back_inserter(format_string), "{} is {},\n", thread_title_,
-							 start_pool_.load() ? "running" : "stopped");
+							 start_pool_.load(std::memory_order_relaxed) ? "running" : "stopped");
 		formatter::format_to(std::back_inserter(format_string), "\tjob_queue: {}\n\n",
 							 (job_queue_ != nullptr ? job_queue_->to_string() : "nullptr"));
 
@@ -504,7 +527,9 @@ namespace kcenon::thread
 
 	auto thread_pool::is_running() const -> bool
 	{
-		return start_pool_.load();
+		// Use acquire to ensure we see the latest pool state
+		// This is important for callers making decisions based on running state
+		return start_pool_.load(std::memory_order_acquire);
 	}
 
 	auto thread_pool::get_pending_task_count() const -> std::size_t
