@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_base.h>
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/cancellation_token.h>
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/thread_context.h>
@@ -42,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 #include <vector>
+#include <atomic>
 
 namespace kcenon::thread
 {
@@ -137,6 +139,19 @@ namespace kcenon::thread
 		 */
 		auto do_work() -> result_void override;
 
+		/**
+		 * @brief Called when the worker is requested to stop.
+		 *
+		 * Overrides the base class hook to propagate cancellation to the currently
+		 * executing job (if any). This allows jobs to cooperatively cancel when the
+		 * worker thread is stopped.
+		 *
+		 * Thread Safety:
+		 * - Called from thread requesting stop (not worker thread)
+		 * - Safe concurrent access with do_work() via atomic operations
+		 */
+		auto on_stop_requested() -> void override;
+
 	private:
 		/**
 		 * @brief Static counter for generating unique worker IDs.
@@ -172,6 +187,30 @@ namespace kcenon::thread
 		 * through the configured services.
 		 */
 		thread_context context_;
+
+		/**
+		 * @brief Cancellation token for this worker.
+		 *
+		 * This token is propagated to jobs during execution, allowing them to
+		 * cooperatively cancel when the worker is stopped. The token is cancelled
+		 * in on_stop_requested().
+		 */
+		cancellation_token worker_cancellation_token_;
+
+		/**
+		 * @brief Pointer to the currently executing job.
+		 *
+		 * This is set atomically at the start of job execution and cleared when
+		 * the job completes. Used by on_stop_requested() to cancel the running job.
+		 *
+		 * Memory Ordering:
+		 * - Release when storing (ensures job state visible to cancellation thread)
+		 * - Acquire when loading (ensures we see the correct job state)
+		 *
+		 * @note Raw pointer used because we don't own the job (it's owned by unique_ptr
+		 *       in do_work()). Safe because job lifetime is guaranteed during execution.
+		 */
+		std::atomic<job*> current_job_{nullptr};
 	};
 } // namespace kcenon::thread
 

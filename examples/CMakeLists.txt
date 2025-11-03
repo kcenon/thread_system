@@ -18,6 +18,10 @@ endif()
 # Demonstrates basic thread pool usage without logger dependency
 add_subdirectory(minimal_thread_pool)
 
+# Job cancellation system example
+# Demonstrates cooperative cancellation, worker-level and pool-level cancellation
+add_subdirectory(job_cancellation_example)
+
 # Composition-based design sample
 # Demonstrates modern dependency injection and composition patterns
 add_subdirectory(composition_example)

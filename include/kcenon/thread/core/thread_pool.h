@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/cancellation_token.h>
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/executor_interface.h>
@@ -359,6 +360,24 @@ namespace kcenon::thread
 		 * enabling consistent logging and monitoring throughout the pool.
 		 */
 		thread_context context_;
+
+		/**
+		 * @brief Pool-level cancellation token.
+		 *
+		 * This token is used to propagate cancellation to all workers and jobs
+		 * when the pool is stopped. Each worker receives a linked token that
+		 * combines this pool token with its own worker token, creating a
+		 * hierarchical cancellation structure.
+		 *
+		 * Cancellation Hierarchy:
+		 * - Pool stop() → cancels pool_cancellation_token_
+		 * - Pool token cancellation → propagates to all linked worker tokens
+		 * - Worker token cancellation → propagates to running jobs
+		 *
+		 * @note This token is reset when the pool is restarted to allow
+		 *       fresh job execution without stale cancellation state.
+		 */
+		cancellation_token pool_cancellation_token_;
 	};
 } // namespace kcenon::thread
 
