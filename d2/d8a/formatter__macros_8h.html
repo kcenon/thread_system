@@ -126,8 +126,10 @@ Include dependency graph for formatter_macros.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a09ac6066fba09ec3f0e925a42ece4f93" id="r_a09ac6066fba09ec3f0e925a42ece4f93"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#a09ac6066fba09ec3f0e925a42ece4f93">NO_FORMATTER_SUPPORT</a></td></tr>
+<tr class="separator:a09ac6066fba09ec3f0e925a42ece4f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad353e070b78b0b1f98da791dfc46f0a1" id="r_ad353e070b78b0b1f98da791dfc46f0a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(CLASS_NAME)</td></tr>
-<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates fmt::formatter specialization.  <br /></td></tr>
+<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty formatter macro when no formatting library is available.  <br /></td></tr>
 <tr class="separator:ad353e070b78b0b1f98da791dfc46f0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -135,7 +137,7 @@ Macros</h2></td></tr>
 <p>This file contains macros that generate formatter specializations for custom types to work with both std::format (C++20) and fmt library. The macros eliminate code duplication by generating the necessary boilerplate code for formatter specializations.</p>
 <p>Usage example: </p><div class="fragment"><div class="line"><span class="comment">// In your header file after class definition:</span></div>
 <div class="line"><a class="code hl_define" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(my_namespace::my_class)</div>
-<div class="ttc" id="aformatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Generates fmt::formatter specialization.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d8a/formatter__macros_8h_source.html#l00102">formatter_macros.h:102</a></div></div>
+<div class="ttc" id="aformatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Empty formatter macro when no formatting library is available.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d8a/formatter__macros_8h_source.html#l00133">formatter_macros.h:133</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -154,20 +156,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;CLASS_NAME&gt; : fmt::formatter&lt;std::string_view&gt;                   \</div>
-<div class="line">{                                                                                                  \</div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                  \</div>
-<div class="line">    {                                                                                              \</div>
-<div class="line">        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.to_string(), ctx);                   \</div>
-<div class="line">    }                                                                                              \</div>
-<div class="line">};</div>
-</div><!-- fragment -->
-<p>Generates fmt::formatter specialization. </p>
-<p>This macro creates a formatter specialization for the fmt library.</p>
-<p>Requirements:</p><ul>
-<li>The class must have a to_string() method that returns std::string</li>
-</ul>
+
+<p>Empty formatter macro when no formatting library is available. </p>
+<p>When neither std::format nor fmt library is available, this macro expands to nothing. The class can still use to_string() method for string conversion.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">CLASS_NAME</td><td>The fully qualified class name (including namespace if any) </td></tr>
@@ -175,22 +166,30 @@ Macros</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00102">102</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  103</span>                                            : fmt::formatter&lt;std::string_view&gt;                   \</div>
-<div class="line"><span class="lineno">  104</span>{                                                                                                  \</div>
-<div class="line"><span class="lineno">  105</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                              \</div>
-<div class="line"><span class="lineno">  106</span>    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                  \</div>
-<div class="line"><span class="lineno">  107</span>    {                                                                                              \</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.to_string(), ctx);                   \</div>
-<div class="line"><span class="lineno">  109</span>    }                                                                                              \</div>
-<div class="line"><span class="lineno">  110</span>};</div>
-</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00133">133</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+
+</div>
+</div>
+<a id="a09ac6066fba09ec3f0e925a42ece4f93" name="a09ac6066fba09ec3f0e925a42ece4f93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ac6066fba09ec3f0e925a42ece4f93">&#9670;&#160;</a></span>NO_FORMATTER_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NO_FORMATTER_SUPPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00061">61</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 3 2025 13:56:37 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Nov 3 2025 14:23:53 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
