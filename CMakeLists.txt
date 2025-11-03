@@ -88,16 +88,16 @@ check_required_headers()
 check_cpp_stdlib_features()
 
 ##################################################
-# Dependency Detection
-##################################################
-
-find_thread_system_dependencies()
-
-##################################################
-# Feature Detection
+# Feature Detection (must run before dependency detection)
 ##################################################
 
 check_thread_system_features()
+
+##################################################
+# Dependency Detection (depends on feature detection results)
+##################################################
+
+find_thread_system_dependencies()
 
 ##################################################
 # Build Configuration
