@@ -50,6 +50,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "formatter.h"
 #include "convert_string.h"
 
+// Check if we can use formatting at all
+#if defined(USE_STD_FORMAT)
+// Use std::format
+#elif __has_include(<fmt/format.h>)
+// fmt library available
+#define HAS_FMT_FALLBACK
+#else
+// No formatting library available - disable formatter specializations
+#define NO_FORMATTER_SUPPORT
+#endif
+
 #ifdef USE_STD_FORMAT
 
 /**
@@ -87,16 +98,16 @@ struct std::formatter<CLASS_NAME, wchar_t> : std::formatter<std::wstring_view, w
     }                                                                                              \
 };
 
-#else // USE_STD_FORMAT
+#elif defined(HAS_FMT_FALLBACK)
 
 /**
  * @brief Generates fmt::formatter specialization.
- * 
+ *
  * This macro creates a formatter specialization for the fmt library.
- * 
+ *
  * Requirements:
  * - The class must have a to_string() method that returns std::string
- * 
+ *
  * @param CLASS_NAME The fully qualified class name (including namespace if any)
  */
 #define DECLARE_FORMATTER(CLASS_NAME)                                                              \
@@ -108,5 +119,17 @@ template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>
         return fmt::formatter<std::string_view>::format(item.to_string(), ctx);                   \
     }                                                                                              \
 };
+
+#else // NO_FORMATTER_SUPPORT
+
+/**
+ * @brief Empty formatter macro when no formatting library is available.
+ *
+ * When neither std::format nor fmt library is available, this macro expands to nothing.
+ * The class can still use to_string() method for string conversion.
+ *
+ * @param CLASS_NAME The fully qualified class name (including namespace if any)
+ */
+#define DECLARE_FORMATTER(CLASS_NAME) // No formatter support available
 
 #endif // USE_STD_FORMAT

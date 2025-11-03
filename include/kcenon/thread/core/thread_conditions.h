@@ -193,7 +193,7 @@ struct std::formatter<kcenon::thread::thread_conditions, wchar_t>
 	}
 };
 
-#else // USE_STD_FORMAT
+#elif __has_include(<fmt/format.h>)
 
 /**
  * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_conditions.
@@ -223,4 +223,4 @@ struct fmt::formatter<kcenon::thread::thread_conditions> : fmt::formatter<std::s
 														ctx);
 	}
 };
-#endif
+#endif // USE_STD_FORMAT

@@ -273,7 +273,7 @@ struct std::formatter<kcenon::thread::thread_worker, wchar_t>
 	}
 };
 
-#else // USE_STD_FORMAT
+#elif __has_include(<fmt/format.h>)
 
 /**
  * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_worker.
@@ -302,4 +302,4 @@ struct fmt::formatter<kcenon::thread::thread_worker> : fmt::formatter<std::strin
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
-#endif
+#endif  // USE_STD_FORMAT
