@@ -53,28 +53,30 @@ namespace kcenon::thread
 	std::atomic<std::uint32_t> thread_pool::next_pool_instance_id_{0};
 	/**
 	 * @brief Constructs a thread pool with adaptive job queue.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Initializes with provided thread title for identification
 	 * - Creates adaptive job queue that automatically optimizes based on contention
 	 * - Pool starts in stopped state (start_pool_ = false)
 	 * - No workers are initially assigned (workers_ is empty)
 	 * - Stores thread context for logging and monitoring
-	 * 
+	 * - Creates pool-level cancellation token for hierarchical cancellation
+	 *
 	 * Adaptive Queue Strategy:
 	 * - ADAPTIVE mode automatically switches between mutex and lock-free implementations
 	 * - Provides optimal performance across different contention levels
 	 * - Eliminates need for manual queue strategy selection
-	 * 
+	 *
 	 * @param thread_title Descriptive name for this thread pool instance
 	 * @param context Thread context providing logging and monitoring services
 	 */
 	thread_pool::thread_pool(const std::string& thread_title, const thread_context& context)
-		: thread_title_(thread_title), 
+		: thread_title_(thread_title),
 		  pool_instance_id_(next_pool_instance_id_.fetch_add(1)),
-		  start_pool_(false), 
+		  start_pool_(false),
 		  job_queue_(std::make_shared<kcenon::thread::job_queue>()),
-		  context_(context)
+		  context_(context),
+		  pool_cancellation_token_(cancellation_token::create())
 	{
 		// Report initial pool registration if monitoring is available
 		if (context_.monitoring())
@@ -166,6 +168,10 @@ namespace kcenon::thread
                 worker->set_job_queue(job_queue_);
             }
         }
+
+        // Create fresh pool cancellation token for restart scenarios
+        // This ensures workers start with a non-cancelled token
+        pool_cancellation_token_ = cancellation_token::create();
 
         // Attempt to start each worker
         for (auto& worker : workers_)
@@ -396,6 +402,12 @@ namespace kcenon::thread
 
         // At this point, we've atomically transitioned from running to stopped
         // and only this thread will execute the shutdown sequence
+
+        // Cancel pool-level token to propagate cancellation to all workers and jobs
+        // This triggers hierarchical cancellation:
+        // 1. Pool token cancelled → linked worker tokens cancelled
+        // 2. Worker tokens cancelled → running jobs receive cancellation signal
+        pool_cancellation_token_.cancel();
 
         if (job_queue_ != nullptr)
         {

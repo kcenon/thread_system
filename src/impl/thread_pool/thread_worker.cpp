@@ -73,28 +73,31 @@ namespace kcenon::thread
 	std::atomic<std::size_t> thread_worker::next_worker_id_{0};
 	/**
 	 * @brief Constructs a worker thread with optional timing capabilities.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Inherits from thread_base to get thread management functionality
 	 * - Sets descriptive name "thread_worker" for debugging and logging
 	 * - Initializes timing flag for optional performance measurement
 	 * - Job queue is not set initially (must be set before starting work)
 	 * - Stores thread context for logging and monitoring
-	 * 
+	 * - Creates a cancellation token for job cancellation support
+	 *
 	 * Performance Timing:
 	 * - When enabled, measures execution time for each job
 	 * - Uses high_resolution_clock for precise measurements
 	 * - Minimal overhead when disabled (single boolean check)
-	 * 
+	 *
 	 * @param use_time_tag If true, enables timing measurements for job execution
 	 * @param context Thread context providing logging and monitoring services
 	 */
 	thread_worker::thread_worker(const bool& use_time_tag, const thread_context& context)
-		: thread_base("thread_worker"), 
+		: thread_base("thread_worker"),
 		  worker_id_(next_worker_id_.fetch_add(1)),
-		  use_time_tag_(use_time_tag), 
+		  use_time_tag_(use_time_tag),
 		  job_queue_(nullptr),
-		  context_(context)
+		  context_(context),
+		  worker_cancellation_token_(cancellation_token::create()),
+		  current_job_(nullptr)
 	{
 	}
 
@@ -298,12 +301,25 @@ namespace kcenon::thread
 
 		// Associate the job with its source queue for potential re-submission
 		current_job->set_job_queue(job_queue_);
-		
+
+		// Set cancellation token on the job for cooperative cancellation
+		// This allows the job to check if it should cancel during execution
+		current_job->set_cancellation_token(worker_cancellation_token_);
+
+		// Track currently executing job atomically for on_stop_requested()
+		// Use release ordering to ensure job state is visible to cancellation thread
+		current_job_.store(current_job.get(), std::memory_order_release);
+
 		// Execute the job's work method and capture the result
 		auto work_result = current_job->do_work();
+
+		// Clear current job tracking after execution completes
+		// Use release ordering for consistency with store above
+		current_job_.store(nullptr, std::memory_order_release);
+
 		if (work_result.has_error())
 		{
-			return error{error_code::job_execution_failed, 
+			return error{error_code::job_execution_failed,
 				formatter::format("error executing job: {}", work_result.get_error().to_string())};
 		}
 
@@ -344,5 +360,59 @@ namespace kcenon::thread
 	std::size_t thread_worker::get_worker_id() const
 	{
 		return worker_id_;
+	}
+
+	/**
+	 * @brief Propagates cancellation signal to the currently executing job.
+	 *
+	 * Implementation details:
+	 * - Called from thread_base::stop() when worker shutdown is requested
+	 * - First cancels the worker's cancellation token (affects all future jobs)
+	 * - Then directly cancels the current job's token if a job is running
+	 * - Uses atomic operations for thread-safe access to current_job_
+	 *
+	 * Cancellation Propagation:
+	 * 1. Cancel worker_cancellation_token_ (prevents new jobs from starting)
+	 * 2. Load current_job_ atomically with acquire ordering
+	 * 3. If a job is running, get its cancellation token and cancel it
+	 * 4. Job will detect cancellation on its next is_cancelled() check
+	 *
+	 * Thread Safety:
+	 * - Called from stop() thread (not worker thread)
+	 * - Safe concurrent access with do_work() via atomic current_job_
+	 * - Acquire ordering ensures we see the correct job pointer
+	 * - Job's cancellation token is thread-safe
+	 *
+	 * Memory Ordering:
+	 * - Acquire when loading current_job_ (synchronizes with release store in do_work())
+	 * - Ensures we see all job state modifications before the store
+	 *
+	 * @note This implements cooperative cancellation - the job must check
+	 *       its cancellation token periodically to actually stop execution.
+	 */
+	auto thread_worker::on_stop_requested() -> void
+	{
+		// Cancel the worker's token first
+		// This ensures any future jobs will see cancellation immediately
+		worker_cancellation_token_.cancel();
+
+		// Load the currently executing job pointer atomically
+		// Use acquire ordering to synchronize with the release store in do_work()
+		auto* job_ptr = current_job_.load(std::memory_order_acquire);
+
+		// If a job is currently executing, cancel it directly
+		if (job_ptr != nullptr)
+		{
+			// Get the job's cancellation token and cancel it
+			// This provides redundancy in case the job cached its token before
+			// we cancelled worker_cancellation_token_
+			auto job_token = job_ptr->get_cancellation_token();
+			job_token.cancel();
+
+			// Log cancellation attempt for debugging
+			context_.log(log_level::debug,
+			            formatter::format("Cancellation requested for job: {} on worker {}",
+			                            job_ptr->get_name(), worker_id_));
+		}
 	}
 } // namespace kcenon::thread
