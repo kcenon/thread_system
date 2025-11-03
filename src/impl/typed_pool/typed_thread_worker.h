@@ -256,7 +256,7 @@ struct std::formatter<kcenon::thread::typed_thread_worker_t<job_type>>
 	 * @brief Formats a \c typed_thread_worker_t<job_type> instance to a string.
 	 *
 	 * Internally calls \c item.to_string(), which should provide a string
-	 * representation of the worker’s state or identity.
+	 * representation of the worker's state or identity.
 	 *
 	 * @tparam FormatContext
 	 * The type of the formatting context (provided by \c std::format).
@@ -319,7 +319,7 @@ struct std::formatter<kcenon::thread::typed_thread_worker_t<job_type>, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
+#elif __has_include(<fmt/format.h>)
 /**
  * @brief Specialization of fmt::formatter for \c typed_thread_worker_t<job_type>.
  *
@@ -337,7 +337,7 @@ struct fmt::formatter<kcenon::thread::typed_thread_worker_t<job_type>>
 	 * @brief Formats a \c typed_thread_worker_t<job_type> instance as a string.
 	 *
 	 * Internally calls \c item.to_string(), which should provide a string
-	 * representation of the worker’s state or identity.
+	 * representation of the worker's state or identity.
 	 *
 	 * @tparam FormatContext
 	 * The format context type provided by the {fmt} library.
@@ -358,5 +358,5 @@ struct fmt::formatter<kcenon::thread::typed_thread_worker_t<job_type>>
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
-#endif
+#endif  // USE_STD_FORMAT
 

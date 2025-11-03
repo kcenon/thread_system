@@ -25,9 +25,9 @@ endfunction()
 ##################################################
 function(check_std_format_support)
   # Options to control feature usage
-  option(SET_STD_FORMAT "Use std::format if available" ON)
+  # Changed default: Always use std::format (C++20 standard) unless explicitly disabled
+  option(USE_STD_FORMAT "Use std::format (C++20 standard)" ON)
   option(FORCE_FMT_FORMAT "Force use of fmt library instead of std::format" OFF)
-  option(WINDOWS_ALLOW_STD_FORMAT "Allow std::format on Windows (not recommended)" OFF)
 
   # First check basic std::format availability
   check_cxx20_feature(std_format_basic "
@@ -66,22 +66,18 @@ function(check_std_format_support)
     }
   " HAS_STD_FORMAT_SPECIALIZATION)
 
-  # Windows policy: Force fmt usage for maximum compatibility
-  set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT FALSE)
-  if(WIN32)
-    message(STATUS "🪟 Windows platform detected - using fmt::format for maximum compatibility")
-    if(WINDOWS_ALLOW_STD_FORMAT)
-      message(STATUS "⚠️  WARNING: WINDOWS_ALLOW_STD_FORMAT enabled - may cause compatibility issues")
-      set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)
-    endif()
-  else()
-    set(WINDOWS_COMPILER_SUPPORTS_STD_FORMAT TRUE)
+  # If user explicitly wants fmt, skip std::format checks
+  if(FORCE_FMT_FORMAT)
+    message(STATUS "⚙️  FORCE_FMT_FORMAT enabled - using fmt library")
+    set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
+    set(USE_STD_FORMAT ${USE_STD_FORMAT} PARENT_SCOPE)
+    return()
   endif()
 
-  # Determine if we should use std::format
-  set(USE_STD_FORMAT_ENABLED FALSE)
+  # Determine if we should use std::format (default: ON)
+  set(USE_STD_FORMAT_ENABLED ${USE_STD_FORMAT})
 
-  if(HAS_STD_FORMAT_BASIC AND HAS_STD_FORMAT_SPECIALIZATION AND WINDOWS_COMPILER_SUPPORTS_STD_FORMAT AND NOT FORCE_FMT_FORMAT)
+  if(USE_STD_FORMAT_ENABLED AND HAS_STD_FORMAT_BASIC AND HAS_STD_FORMAT_SPECIALIZATION)
     # Final verification: compile test
     try_compile(STD_FORMAT_COMPILE_TEST
       ${CMAKE_BINARY_DIR}/format_test
@@ -93,23 +89,24 @@ function(check_std_format_support)
 
     if(STD_FORMAT_COMPILE_TEST)
       set(USE_STD_FORMAT_ENABLED TRUE)
-      message(STATUS "✅ Using std::format - all compatibility checks passed")
+      message(STATUS "✅ Using std::format (C++20 standard)")
     else()
-      message(STATUS "❌ std::format compile test failed - using fmt::format fallback")
+      message(STATUS "❌ std::format compile test failed - fallback to fmt library if available")
+      set(USE_STD_FORMAT_ENABLED FALSE)
     endif()
-  else()
-    message(STATUS "Using fmt::format fallback")
+  elseif(USE_STD_FORMAT_ENABLED)
+    message(STATUS "⚠️  std::format requested but not fully supported - fallback to fmt library if available")
+    set(USE_STD_FORMAT_ENABLED FALSE)
   endif()
 
   # Apply the decision
   if(USE_STD_FORMAT_ENABLED)
     add_definitions(-DUSE_STD_FORMAT)
-    set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format" FORCE)
+    set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
+    message(STATUS "std::format enabled - fmt library not required")
   else()
     set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    # When not using std::format, try to use fmt library if available
-    # Note: HAS_FMT_LIBRARY should only be defined if fmt is actually found
-    # This is handled in utilities/CMakeLists.txt
+    message(STATUS "std::format disabled - fmt library will be searched if needed")
   endif()
 
   # Export result to parent scope

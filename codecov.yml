@@ -1,0 +1,51 @@
+# Codecov Configuration for thread_system
+# https://docs.codecov.io/docs/codecov-yaml
+
+# Coverage thresholds
+coverage:
+  status:
+    project:
+      default:
+        # Allow coverage to decrease slightly for build configuration changes
+        # that don't modify source code logic
+        threshold: 1%
+        target: auto
+        if_ci_failed: error
+    patch:
+      default:
+        target: 80%
+        if_ci_failed: error
+
+# Ignore files and directories
+ignore:
+  - "tests/**"
+  - "unittest/**"
+  - "benchmarks/**"
+  - "examples/**"
+  - "samples/**"
+  - "integration_tests/**"
+  - "docs/**"
+  - "cmake/**"
+  - "*.md"
+  - "build/**"
+  - "build_test/**"
+
+# Comment configuration
+comment:
+  layout: "header, diff, files, footer"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+
+# Flags for different test types
+flags:
+  unit_tests:
+    paths:
+      - core/
+      - utilities/
+      - interfaces/
+  integration_tests:
+    paths:
+      - core/
+      - utilities/
