@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/utils/formatter_macros.h>
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/cancellation_token.h>
@@ -441,7 +442,7 @@ struct std::formatter<kcenon::thread::thread_pool, wchar_t>
 	}
 };
 
-#else // USE_STD_FORMAT
+#elif __has_include(<fmt/format.h>)
 
 /**
  * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_pool.
@@ -471,4 +472,4 @@ struct fmt::formatter<kcenon::thread::thread_pool> : fmt::formatter<std::string_
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
-#endif
+#endif  // USE_STD_FORMAT

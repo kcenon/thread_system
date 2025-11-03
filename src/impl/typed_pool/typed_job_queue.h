@@ -335,7 +335,7 @@ struct std::formatter<kcenon::thread::typed_job_queue_t<job_type>, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
+#elif __has_include(<fmt/format.h>)
 /**
  * @brief Specialization of fmt::formatter for typed_job_queue_t<job_type> when using the
  * {fmt} library.
@@ -363,5 +363,5 @@ struct fmt::formatter<kcenon::thread::typed_job_queue_t<job_type>>
 		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
 	}
 };
-#endif
+#endif  // USE_STD_FORMAT
 

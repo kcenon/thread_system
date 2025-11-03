@@ -47,16 +47,17 @@ function(find_common_system_dependency)
 endfunction()
 
 ##################################################
-# Find fmt library (optional, fallback to std::format)
+# Find fmt library (optional, only when std::format is not available)
 ##################################################
 function(find_fmt_library)
-  # Skip if using std::format
+  # Skip if using std::format (C++20 standard)
   if(USE_STD_FORMAT)
-    message(STATUS "Using std::format - skipping fmt library search")
+    message(STATUS "✅ std::format is enabled - skipping fmt library search")
+    set(FMT_FOUND FALSE PARENT_SCOPE)
     return()
   endif()
 
-  message(STATUS "Looking for fmt library...")
+  message(STATUS "std::format not available - searching for fmt library...")
 
   # Try CMake config mode first
   find_package(fmt CONFIG QUIET)

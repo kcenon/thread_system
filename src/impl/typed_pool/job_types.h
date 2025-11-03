@@ -193,7 +193,7 @@ struct std::formatter<kcenon::thread::job_types, wchar_t>
 	}
 };
 
-#else // USE_STD_FORMAT
+#elif __has_include(<fmt/format.h>)
 
 /**
  * @brief Specialization of fmt::formatter for @c job_types using narrow strings.
@@ -251,4 +251,4 @@ struct fmt::formatter<kcenon::thread::job_types, wchar_t>
 		return fmt::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#endif
+#endif  // USE_STD_FORMAT
