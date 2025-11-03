@@ -278,6 +278,25 @@ namespace kcenon::thread
 		 */
 		virtual auto after_stop(void) -> result_void { return {}; }
 
+		/**
+		 * @brief Called when stop() is requested, before the thread actually stops.
+		 *
+		 * This hook allows derived classes to perform cancellation-related operations,
+		 * such as signaling running jobs to cancel. This is called from the thread
+		 * requesting the stop (not from the worker thread itself).
+		 *
+		 * The default implementation does nothing. Override this to propagate
+		 * cancellation signals to any active work items.
+		 *
+		 * Thread Safety:
+		 * - Called from the thread calling stop()
+		 * - May be called concurrently with do_work()
+		 * - Implementations must be thread-safe
+		 *
+		 * @note This is called after the stop flag is set but before joining the thread
+		 */
+		virtual auto on_stop_requested(void) -> void {}
+
 	protected:
 		/**
 		 * @brief Interval at which the thread is optionally awakened.

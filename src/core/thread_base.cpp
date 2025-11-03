@@ -371,6 +371,10 @@ namespace kcenon::thread
 			stop_requested_ = true;  // Atomic flag for legacy mode
 #endif
 
+			// Step 1.5: Call derived class hook for cancellation propagation
+			// This allows derived classes (e.g., thread_worker) to cancel running jobs
+			on_stop_requested();
+
 			// Step 2: Wake up the thread if it's waiting on condition variable
 			{
 				std::scoped_lock<std::mutex> lock(cv_mutex_);
