@@ -86,12 +86,25 @@ public:
             return promise.get_future();
         }
 
-        // Schedule delayed execution
+        // Use the thread pool itself to handle delayed execution
+        // This avoids creating an extra thread via std::async
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
         auto pool = this->impl_;
-        return std::async(std::launch::async, [pool, task = std::move(task), delay]() {
-            std::this_thread::sleep_for(delay);
-            pool->enqueue(std::move(task)).wait();
+
+        pool->enqueue([pool, promise, task = std::move(task), delay]() mutable {
+            try {
+                if (delay.count() > 0) {
+                    std::this_thread::sleep_for(delay);
+                }
+                task();
+                promise->set_value();
+            } catch (...) {
+                promise->set_exception(std::current_exception());
+            }
         });
+
+        return future;
     }
 
     /**
@@ -129,6 +142,78 @@ public:
             }
             this->impl_->stop();
         }
+    }
+
+    /**
+     * @brief Execute a job with Result-based error handling
+     * @param job The job to execute
+     * @return Result containing future or error
+     */
+    ::common::Result<std::future<void>> execute(std::unique_ptr<::common::interfaces::IJob>&& job) override {
+        if (!this->impl_) {
+            return ::common::make_error<std::future<void>>(
+                -1, "Thread pool not initialized", "thread_system");
+        }
+
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+        auto pool = this->impl_;
+
+        pool->enqueue([promise, job = std::move(job)]() mutable {
+            try {
+                auto result = job->execute();
+                if (result.is_err()) {
+                    auto& err = result.get_error();
+                    promise->set_exception(std::make_exception_ptr(
+                        std::runtime_error(err.message)));
+                } else {
+                    promise->set_value();
+                }
+            } catch (...) {
+                promise->set_exception(std::current_exception());
+            }
+        });
+
+        return ::common::Result<std::future<void>>::ok(std::move(future));
+    }
+
+    /**
+     * @brief Execute a job with delay
+     * @param job The job to execute
+     * @param delay The delay before execution
+     * @return Result containing future or error
+     */
+    ::common::Result<std::future<void>> execute_delayed(
+        std::unique_ptr<::common::interfaces::IJob>&& job,
+        std::chrono::milliseconds delay) override {
+        if (!this->impl_) {
+            return ::common::make_error<std::future<void>>(
+                -1, "Thread pool not initialized", "thread_system");
+        }
+
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+        auto pool = this->impl_;
+
+        pool->enqueue([pool, promise, job = std::move(job), delay]() mutable {
+            try {
+                if (delay.count() > 0) {
+                    std::this_thread::sleep_for(delay);
+                }
+                auto result = job->execute();
+                if (result.is_err()) {
+                    auto& err = result.get_error();
+                    promise->set_exception(std::make_exception_ptr(
+                        std::runtime_error(err.message)));
+                } else {
+                    promise->set_value();
+                }
+            } catch (...) {
+                promise->set_exception(std::current_exception());
+            }
+        });
+
+        return ::common::Result<std::future<void>>::ok(std::move(future));
     }
 
     /**
