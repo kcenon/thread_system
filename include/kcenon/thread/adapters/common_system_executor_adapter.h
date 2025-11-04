@@ -86,12 +86,25 @@ public:
             return promise.get_future();
         }
 
-        // Schedule delayed execution
+        // Use the thread pool itself to handle delayed execution
+        // This avoids creating an extra thread via std::async
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
         auto pool = this->impl_;
-        return std::async(std::launch::async, [pool, task = std::move(task), delay]() {
-            std::this_thread::sleep_for(delay);
-            pool->enqueue(std::move(task)).wait();
+
+        pool->enqueue([pool, promise, task = std::move(task), delay]() mutable {
+            try {
+                if (delay.count() > 0) {
+                    std::this_thread::sleep_for(delay);
+                }
+                task();
+                promise->set_value();
+            } catch (...) {
+                promise->set_exception(std::current_exception());
+            }
         });
+
+        return future;
     }
 
     /**
