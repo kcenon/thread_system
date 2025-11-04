@@ -20,7 +20,7 @@ jobs:
             compiler: gcc
           - os: ubuntu-22.04
             compiler: clang
-          - os: macos-13
+          - os: macos-latest
             compiler: clang
           - os: windows-2022
             compiler: msvc

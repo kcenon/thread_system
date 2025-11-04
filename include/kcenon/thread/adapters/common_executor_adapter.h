@@ -218,21 +218,35 @@ inline void schedule_task_async(
     std::shared_ptr<std::promise<void>> promise,
     std::function<kcenon::thread::result_void()> body,
     std::chrono::milliseconds delay) {
-    std::thread([pool = std::move(pool), promise = std::move(promise),
-                 body = std::move(body), delay]() mutable {
-        try {
-            if (delay.count() > 0) {
-                std::this_thread::sleep_for(delay);
+    // Use the thread pool itself to handle delayed execution
+    // This avoids creating detached threads or extra std::async threads
+    if (!pool) {
+        promise->set_exception(to_exception(unexpected_pool_error()));
+        return;
+    }
+
+    // Create a wrapper job that handles delay and then enqueues the actual task
+    auto delayed_job = std::make_unique<kcenon::thread::callback_job>(
+        [pool, promise, body = std::move(body), delay]() mutable -> kcenon::thread::result_void {
+            try {
+                if (delay.count() > 0) {
+                    std::this_thread::sleep_for(delay);
+                }
+                // Enqueue the actual job after the delay
+                (void)enqueue_job(pool, promise, std::move(body));
+                return kcenon::thread::result_void{};
+            } catch (...) {
+                promise->set_exception(std::current_exception());
+                return make_thread_error(kcenon::thread::error_code::job_execution_failed,
+                                       "Exception during delayed task scheduling");
             }
-            if (!pool) {
-                promise->set_exception(to_exception(unexpected_pool_error()));
-                return;
-            }
-            (void)enqueue_job(pool, promise, std::move(body));
-        } catch (...) {
-            promise->set_exception(std::current_exception());
-        }
-    }).detach();
+        });
+
+    // Enqueue the delayed job to the pool
+    auto enqueue_result = pool->enqueue(std::move(delayed_job));
+    if (enqueue_result.has_error()) {
+        promise->set_exception(to_exception(make_error_info(enqueue_result.get_error())));
+    }
 }
 
 } // namespace detail

@@ -245,8 +245,10 @@ namespace kcenon::thread {
      */
     template<typename... Futures>
     size_t wait_for_any(Futures&... futures) {
-        // Implementation would require a more complex approach
-        // This is a simplified version
+        // Use short timeout-based polling instead of busy-wait
+        // This significantly reduces CPU usage while maintaining responsiveness
+        constexpr auto poll_interval = std::chrono::microseconds(100);
+
         size_t index = 0;
         auto check_future = [&](auto& future) {
             if (future.is_ready()) {
@@ -255,13 +257,14 @@ namespace kcenon::thread {
             ++index;
             return false;
         };
-        
+
         while (true) {
             index = 0;
             if ((check_future(futures) || ...)) {
                 return index;
             }
-            std::this_thread::yield();
+            // Sleep briefly to reduce CPU usage instead of busy-waiting
+            std::this_thread::sleep_for(poll_interval);
         }
     }
     
