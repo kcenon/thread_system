@@ -114,7 +114,19 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 ### 📊 **Performance Benchmarks**
 
-*Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma*
+<!-- PERFORMANCE_METRICS_START -->
+
+**Latest CI Performance**
+
+*Automated benchmarks will be displayed here after CI/CD integration is complete.*
+
+> 📊 Performance metrics are automatically measured in our CI pipeline. See [BASELINE.md](BASELINE.md) for detailed performance analysis.
+
+<!-- PERFORMANCE_METRICS_END -->
+
+---
+
+*Reference Performance - Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma*
 
 > **🚀 Architecture Update**: Latest modular architecture removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
 
