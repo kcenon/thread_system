@@ -175,6 +175,25 @@ jobs:
             --output .github/badges/performance.json
         fi
 
+    - name: Generate performance dashboard
+      if: github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        mkdir -p gh-pages
+        python3 scripts/generate_performance_dashboard.py \
+          --data-dir build/benchmark-results \
+          --baseline BASELINE.md \
+          --output gh-pages/index.html
+
+    - name: Publish to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./gh-pages
+        destination_dir: performance
+        keep_files: true
+
     - name: Store baseline for comparison
       if: github.ref == 'refs/heads/main'
       continue-on-error: true
