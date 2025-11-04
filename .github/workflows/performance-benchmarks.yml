@@ -16,6 +16,11 @@ jobs:
     name: Run Performance Benchmarks
     runs-on: ubuntu-22.04
     timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      pages: write
 
     steps:
     - name: Checkout code

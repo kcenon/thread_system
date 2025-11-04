@@ -12,6 +12,9 @@ jobs:
   update-readme:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      actions: read
 
     steps:
     - name: Checkout code
