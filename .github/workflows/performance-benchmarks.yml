@@ -1,0 +1,226 @@
+name: Performance Benchmarks
+
+on:
+  push:
+    branches: [ main, phase-*, feature/ci-performance-metrics ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # 매일 자정(UTC)에 실행하여 성능 트렌드 추적
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    # 수동 실행 지원
+
+jobs:
+  benchmark:
+    name: Run Performance Benchmarks
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      pages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 전체 히스토리 가져오기 (트렌드 분석용)
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build g++ libfmt-dev libbenchmark-dev python3 python3-pip
+
+    - name: Checkout common_system (optional)
+      continue-on-error: true
+      run: |
+        cd ..
+        git clone https://github.com/kcenon/common_system.git || true
+
+    - name: Configure CMake (Release build for accurate benchmarks)
+      run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
+
+        # Temporarily rename unittest directory to prevent it from being added
+        if [ -d "unittest" ]; then
+          mv unittest unittest.disabled
+        fi
+
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -march=native" \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DBUILD_INTEGRATION_TESTS=OFF
+
+        # Restore unittest directory
+        if [ -d "unittest.disabled" ]; then
+          mv unittest.disabled unittest
+        fi
+
+    - name: Build benchmarks
+      run: cmake --build build --config Release || true
+
+    - name: Collect system information
+      run: |
+        echo "## System Information" > system-info.md
+        echo "" >> system-info.md
+        echo "- **CPU**: $(lscpu | grep 'Model name' | cut -d: -f2 | xargs)" >> system-info.md
+        echo "- **Cores**: $(nproc)" >> system-info.md
+        echo "- **Memory**: $(free -h | awk '/^Mem:/ {print $2}')" >> system-info.md
+        echo "- **OS**: $(lsb_release -d | cut -d: -f2 | xargs)" >> system-info.md
+        echo "- **Kernel**: $(uname -r)" >> system-info.md
+        echo "- **Compiler**: $(g++ --version | head -n1)" >> system-info.md
+        echo "- **Build Date**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> system-info.md
+        cat system-info.md
+
+    - name: Run baseline benchmarks
+      run: |
+        cd build
+        mkdir -p benchmark-results
+
+        # baseline_metrics 벤치마크 실행 (있는 경우)
+        if [ -f "bin/baseline_metrics" ]; then
+          echo "Running baseline_metrics..."
+          ./bin/baseline_metrics \
+            --benchmark_format=json \
+            --benchmark_out=benchmark-results/baseline.json \
+            --benchmark_repetitions=3 \
+            --benchmark_report_aggregates_only=true || echo "baseline_metrics not available"
+        else
+          echo "baseline_metrics benchmark not found, skipping"
+        fi
+
+    - name: Run detailed benchmarks
+      continue-on-error: true
+      run: |
+        cd build
+        mkdir -p benchmark-results
+
+        # 모든 벤치마크 실행
+        for bench in bin/*benchmark* bin/*_bench; do
+          if [ -x "$bench" ] && [ -f "$bench" ]; then
+            name=$(basename "$bench")
+            echo "Running $name..."
+            "$bench" \
+              --benchmark_format=json \
+              --benchmark_out="benchmark-results/${name}.json" \
+              --benchmark_repetitions=3 \
+              --benchmark_report_aggregates_only=true || echo "$name failed, continuing..."
+          fi
+        done
+
+    - name: Generate performance report
+      run: |
+        if [ -d "build/benchmark-results" ] && [ "$(ls -A build/benchmark-results/*.json 2>/dev/null)" ]; then
+          python3 scripts/generate_performance_report.py \
+            --input build/benchmark-results \
+            --baseline BASELINE.md \
+            --output performance-report.md \
+            --system-info system-info.md
+        else
+          echo "No benchmark results found, creating empty report"
+          echo "# Performance Benchmark Report" > performance-report.md
+          echo "No benchmark data available." >> performance-report.md
+        fi
+
+    - name: Check for performance regression
+      id: regression_check
+      continue-on-error: true
+      run: |
+        if [ -f "baseline-reference.json" ] && [ -f "build/benchmark-results/baseline.json" ]; then
+          python3 scripts/check_performance_regression.py \
+            --current build/benchmark-results/baseline.json \
+            --baseline baseline-reference.json \
+            --threshold 5.0 \
+            --output regression-report.md
+        else
+          echo "## ℹ️ No baseline reference available" > regression-report.md
+          echo "This is the first benchmark run or baseline file is missing." >> regression-report.md
+        fi
+
+    - name: Upload benchmark results
+      uses: actions/upload-artifact@v4
+      with:
+        name: benchmark-results-${{ github.sha }}
+        path: |
+          build/benchmark-results/*.json
+          performance-report.md
+          regression-report.md
+          system-info.md
+        retention-days: 90
+
+    - name: Comment PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+
+          let report = '';
+          if (fs.existsSync('performance-report.md')) {
+            report = fs.readFileSync('performance-report.md', 'utf8');
+          }
+
+          let regression = '';
+          if (fs.existsSync('regression-report.md')) {
+            regression = fs.readFileSync('regression-report.md', 'utf8');
+          }
+
+          const body = `## 📊 Performance Benchmark Results\n\n${report}\n\n${regression}`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          });
+
+    - name: Update performance badge
+      if: github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        if [ -f "build/benchmark-results/baseline.json" ]; then
+          python3 scripts/update_performance_badge.py \
+            --input build/benchmark-results/baseline.json \
+            --output .github/badges/performance.json
+        fi
+
+    - name: Generate performance dashboard
+      if: github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        mkdir -p gh-pages
+        python3 scripts/generate_performance_dashboard.py \
+          --data-dir build/benchmark-results \
+          --baseline BASELINE.md \
+          --output gh-pages/index.html
+
+    - name: Publish to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./gh-pages
+        destination_dir: performance
+        keep_files: true
+
+    - name: Store baseline for comparison
+      if: github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        if [ -f "build/benchmark-results/baseline.json" ]; then
+          cp build/benchmark-results/baseline.json baseline-reference.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add baseline-reference.json
+          if [ -f ".github/badges/performance.json" ]; then
+            git add .github/badges/performance.json
+          fi
+          git commit -m "chore: update performance baseline [skip ci]" || true
+          git push || true
+        fi
