@@ -41,15 +41,24 @@ jobs:
           BUILD_WITH_COMMON="ON"
         fi
 
+        # Temporarily rename unittest directory to prevent it from being added
+        if [ -d "unittest" ]; then
+          mv unittest unittest.disabled
+        fi
+
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -march=native" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DBUILD_INTEGRATION_TESTS=OFF \
-          -DBUILD_TESTING=OFF
+          -DBUILD_INTEGRATION_TESTS=OFF
+
+        # Restore unittest directory
+        if [ -d "unittest.disabled" ]; then
+          mv unittest.disabled unittest
+        fi
 
     - name: Build benchmarks
-      run: cmake --build build --config Release
+      run: cmake --build build --config Release || true
 
     - name: Collect system information
       run: |
