@@ -273,15 +273,36 @@ namespace kcenon::thread
 									"Work execution failed",
 									work_result.get_error().to_string());
 							}
+
+							// Reset consecutive failures counter on successful completion
+							consecutive_failures_.store(0, std::memory_order_relaxed);
 						}
 						catch (const std::exception& e)
 						{
-							// Log any unhandled exceptions from do_work() but continue running
+							// Track consecutive failures to prevent infinite error loops
+							int failures = consecutive_failures_.fetch_add(1, std::memory_order_relaxed) + 1;
+
 							kcenon::thread::thread_logger::instance().log(
 								kcenon::thread::log_level::error,
 								thread_title_,
-								"Unhandled exception in worker thread",
+								"Unhandled exception in worker thread (failure " + std::to_string(failures) + ")",
 								e.what());
+
+							// Stop thread if too many consecutive failures occur
+							if (failures >= max_consecutive_failures)
+							{
+								kcenon::thread::thread_logger::instance().log(
+									kcenon::thread::log_level::critical,
+									thread_title_,
+									"Too many consecutive failures, stopping thread",
+									"");
+								break;  // Exit the main loop
+							}
+
+							// Exponential backoff: 100ms, 200ms, 400ms, ..., max 10 seconds
+							// This prevents CPU spinning and log flooding while giving time for transient issues to resolve
+							auto backoff_ms = std::min(100 * (1 << std::min(failures - 1, 10)), 10000);
+							std::this_thread::sleep_for(std::chrono::milliseconds(backoff_ms));
 						}
 					}
 

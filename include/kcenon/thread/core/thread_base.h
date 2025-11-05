@@ -303,12 +303,28 @@ namespace kcenon::thread
 		 *
 		 * If set, the worker thread can wake periodically (in addition to any other wake
 		 * conditions) to perform tasks at regular intervals.
-		 * 
+		 *
 		 * @note Access to this member must be synchronized using wake_interval_mutex_
 		 */
 		std::optional<std::chrono::milliseconds> wake_interval_;
 
 	private:
+		/**
+		 * @brief Counter for consecutive failures in do_work() execution.
+		 *
+		 * This counter is incremented each time do_work() throws an exception.
+		 * It is reset to 0 when do_work() completes successfully.
+		 * Used to implement exponential backoff and prevent infinite error loops.
+		 */
+		std::atomic<int> consecutive_failures_{0};
+
+		/**
+		 * @brief Maximum number of consecutive failures before stopping the thread.
+		 *
+		 * If do_work() throws exceptions this many times in a row, the thread
+		 * will stop automatically to prevent infinite error loops and resource exhaustion.
+		 */
+		static constexpr int max_consecutive_failures = 10;
 		/**
 		 * @brief Mutex for synchronizing access to the wake_interval_ member.
 		 * 
