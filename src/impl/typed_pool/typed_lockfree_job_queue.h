@@ -88,16 +88,31 @@ namespace kcenon::thread
 	/**
 	 * @class typed_lockfree_job_queue_t
 	 * @brief High-performance lock-free priority-based job queue
-	 * 
+	 *
 	 * This class provides a lock-free implementation of a typed job queue that
 	 * manages jobs with distinct priority levels. It maintains separate lock-free
 	 * queues for each job type/priority, ensuring thread-safe operations with
 	 * minimal contention.
-	 * 
+	 *
 	 * @tparam job_type The type used to represent job priority levels. Defaults to job_types.
-	 * 
+	 *
 	 * @note This implementation is optimized for high-concurrency scenarios where
 	 *       traditional mutex-based queues would become a bottleneck.
+	 *
+	 * @warning ABA Problem Mitigation:
+	 *          This lock-free implementation currently relies on the following strategies
+	 *          to mitigate the ABA problem:
+	 *          1. Node pooling: Reduces memory reuse frequency
+	 *          2. Unique pointer semantics: Prevents direct pointer reuse
+	 *          3. C++ memory model guarantees: std::atomic operations
+	 *
+	 *          Future enhancements may include:
+	 *          - Hazard pointers (for complete ABA protection)
+	 *          - Epoch-based reclamation
+	 *          - Tagged pointers with version counters
+	 *
+	 *          For production use in extremely high-contention scenarios (>1M ops/s),
+	 *          consider enabling ThreadSanitizer during testing to detect data races.
 	 */
 	template <typename job_type = job_types>
 	class typed_lockfree_job_queue_t : public job_queue
