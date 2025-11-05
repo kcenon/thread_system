@@ -48,7 +48,7 @@ if(UNIX AND NOT WIN32)
   # Platform-specific tests
   # Validates platform-specific features, atomic operations, and cache performance
   add_subdirectory(platform_test)
-  
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")

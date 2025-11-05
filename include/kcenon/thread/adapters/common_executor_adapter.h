@@ -149,40 +149,40 @@ inline std::optional<::common::error_info> enqueue_job(
         return info;
     }
 
-    auto completion_flag = std::make_shared<std::atomic<bool>>(false);
+    auto completion_once = std::make_shared<std::once_flag>();
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        [promise, completion_flag, body = std::move(body)]() mutable -> kcenon::thread::result_void {
+        [promise, completion_once, body = std::move(body)]() mutable -> kcenon::thread::result_void {
             try {
                 auto result = body();
                 if (result.has_error()) {
                     auto info = make_error_info(result.get_error());
-                    if (!completion_flag->exchange(true)) {
+                    std::call_once(*completion_once, [&]() {
                         promise->set_exception(to_exception(info));
-                    }
+                    });
                     return result;
                 }
-                if (!completion_flag->exchange(true)) {
+                std::call_once(*completion_once, [&]() {
                     promise->set_value();
-                }
+                });
                 return result;
             } catch (const std::exception& ex) {
                 auto info = make_error_info(kcenon::thread::error{
                     kcenon::thread::error_code::job_execution_failed,
                     ex.what()
                 });
-                if (!completion_flag->exchange(true)) {
+                std::call_once(*completion_once, [&]() {
                     promise->set_exception(to_exception(info));
-                }
+                });
                 return make_thread_error(info);
             } catch (...) {
                 auto info = make_error_info(kcenon::thread::error{
                     kcenon::thread::error_code::job_execution_failed,
                     "Unhandled exception while executing job"
                 });
-                if (!completion_flag->exchange(true)) {
+                std::call_once(*completion_once, [&]() {
                     promise->set_exception(to_exception(info));
-                }
+                });
                 return make_thread_error(info);
             }
         });
@@ -191,9 +191,9 @@ inline std::optional<::common::error_info> enqueue_job(
     if (enqueue_result.has_error()) {
         const auto& err = enqueue_result.get_error();
         auto info = make_error_info(err);
-        if (!completion_flag->exchange(true)) {
+        std::call_once(*completion_once, [&]() {
             promise->set_exception(to_exception(info));
-        }
+        });
         return info;
     }
 
@@ -225,18 +225,24 @@ inline void schedule_task_async(
         return;
     }
 
+    // Create once_flag to protect against race between delayed_job exception and enqueue failure
+    auto completion_once = std::make_shared<std::once_flag>();
+
     // Create a wrapper job that handles delay and then enqueues the actual task
     auto delayed_job = std::make_unique<kcenon::thread::callback_job>(
-        [pool, promise, body = std::move(body), delay]() mutable -> kcenon::thread::result_void {
+        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> kcenon::thread::result_void {
             try {
                 if (delay.count() > 0) {
                     std::this_thread::sleep_for(delay);
                 }
                 // Enqueue the actual job after the delay
+                // Note: enqueue_job has its own once_flag protection internally
                 (void)enqueue_job(pool, promise, std::move(body));
                 return kcenon::thread::result_void{};
             } catch (...) {
-                promise->set_exception(std::current_exception());
+                std::call_once(*completion_once, [&]() {
+                    promise->set_exception(std::current_exception());
+                });
                 return make_thread_error(kcenon::thread::error_code::job_execution_failed,
                                        "Exception during delayed task scheduling");
             }
@@ -245,7 +251,9 @@ inline void schedule_task_async(
     // Enqueue the delayed job to the pool
     auto enqueue_result = pool->enqueue(std::move(delayed_job));
     if (enqueue_result.has_error()) {
-        promise->set_exception(to_exception(make_error_info(enqueue_result.get_error())));
+        std::call_once(*completion_once, [&]() {
+            promise->set_exception(to_exception(make_error_info(enqueue_result.get_error())));
+        });
     }
 }
 
