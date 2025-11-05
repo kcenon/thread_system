@@ -1207,6 +1207,25 @@ thread_system delivers production-ready concurrent programming capabilities with
 - 70+ thread safety tests covering all concurrent scenarios
 - ThreadSanitizer compliance verified across all components
 - Zero data race warnings in production use
+
+**Running ThreadSanitizer for Lock-Free Queue Validation**
+```bash
+# Build with ThreadSanitizer enabled
+cmake -B build -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1"
+cmake --build build
+
+# Run tests to detect data races
+cd build && ctest --verbose
+
+# For lock-free queue specific testing
+./bin/typed_thread_pool_test  # Focus on high-contention scenarios
+```
+
+**Note on ABA Problem**: The lock-free queue implementation currently uses node pooling
+and unique pointer semantics to mitigate ABA issues. For complete protection in
+extremely high-contention scenarios (>1M ops/s), future enhancements may include
+hazard pointers or epoch-based reclamation.
 - Adaptive queue strategy with automatic contention optimization
 - Service registry and cancellation token edge cases validated
 
