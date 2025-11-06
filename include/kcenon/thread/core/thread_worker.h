@@ -83,7 +83,7 @@ namespace kcenon::thread
 		 * timestamps, or any other time-related features in your job processing.
 		 * The context provides access to logging and monitoring services.
 		 */
-		thread_worker(const bool& use_time_tag = true, 
+		thread_worker(const bool& use_time_tag = true,
 		             const thread_context& context = thread_context());
 
 		/**
@@ -117,6 +117,22 @@ namespace kcenon::thread
 		 * @return The thread context providing access to logging and monitoring services.
 		 */
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
+
+		/**
+		 * @brief Checks if the worker is currently idle (not processing a job).
+		 * @return @c true if the worker is idle (waiting for jobs), @c false if actively processing.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic operations for lock-free access
+		 * - Provides snapshot of current state (may change immediately after return)
+		 *
+		 * Use Cases:
+		 * - Thread pool statistics and monitoring
+		 * - Load balancing decisions
+		 * - Performance analysis
+		 */
+		[[nodiscard]] bool is_idle() const noexcept;
 
 	protected:
 		/**
@@ -211,6 +227,20 @@ namespace kcenon::thread
 		 *       in do_work()). Safe because job lifetime is guaranteed during execution.
 		 */
 		std::atomic<job*> current_job_{nullptr};
+
+		/**
+		 * @brief Indicates whether the worker is currently idle (not processing a job).
+		 *
+		 * This flag is set to true when the worker is waiting for jobs and false
+		 * when actively processing a job. Updated atomically for thread-safe access.
+		 *
+		 * Memory Ordering:
+		 * - Relaxed ordering sufficient (no synchronization dependencies)
+		 * - Value is advisory only (race conditions between check and state change are acceptable)
+		 *
+		 * @note Used by thread pool for statistics and monitoring purposes.
+		 */
+		std::atomic<bool> is_idle_{true};
 	};
 } // namespace kcenon::thread
 

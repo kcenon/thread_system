@@ -501,10 +501,14 @@ namespace kcenon::thread
 
 	std::size_t thread_pool::get_idle_worker_count() const
 	{
-		// TODO: Implement proper idle worker counting
-		// This would require workers to expose their current state
-		// For now, return 0 to indicate no idle workers
-		return 0;
+		// Count idle workers by checking each worker's idle state
+		// Thread safety: workers_mutex_ protects access to workers_ vector
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+		return std::count_if(workers_.begin(), workers_.end(),
+			[](const std::unique_ptr<thread_worker>& worker) {
+				return worker && worker->is_idle();
+			});
 	}
 
 	// interface_thread_pool implementation
