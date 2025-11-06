@@ -298,6 +298,46 @@ namespace kcenon::thread
 		 */
 		auto get_pending_task_count() const -> std::size_t;
 
+		/**
+		 * @brief Check health of all worker threads and restart failed workers
+		 *
+		 * This method performs health monitoring on all worker threads:
+		 * - Detects workers that have stopped unexpectedly (consecutive failures)
+		 * - Removes dead workers from the pool
+		 * - Optionally restarts failed workers to maintain pool capacity
+		 *
+		 * Use Cases:
+		 * - Periodic health checks (e.g., from a watchdog thread)
+		 * - Recovery from worker failures in long-running processes
+		 * - Maintaining consistent thread pool capacity
+		 *
+		 * Thread Safety:
+		 * - Thread-safe: can be called from any thread
+		 * - Acquires workers_mutex_ for safe access to workers vector
+		 *
+		 * @param restart_failed If true, creates new workers to replace failed ones
+		 * @return Number of workers that were detected as failed/unhealthy
+		 *
+		 * Example:
+		 * @code
+		 * // Periodic health check with auto-restart
+		 * auto failed_count = pool.check_worker_health(true);
+		 * if (failed_count > 0) {
+		 *     LOG_WARNING("Restarted {} failed workers", failed_count);
+		 * }
+		 * @endcode
+		 */
+		auto check_worker_health(bool restart_failed = true) -> std::size_t;
+
+		/**
+		 * @brief Get the current number of active (running) workers
+		 * @return Number of workers currently in running state
+		 *
+		 * This differs from the total worker count as it only counts
+		 * workers that are actively running, not stopped or stopping.
+		 */
+		auto get_active_worker_count() const -> std::size_t;
+
 	private:
 		/**
 		 * @brief Static counter for generating unique pool instance IDs.

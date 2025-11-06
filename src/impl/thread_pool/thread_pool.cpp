@@ -552,4 +552,65 @@ namespace kcenon::thread
 		}
 		return 0;
 	}
+
+	auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t
+	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+		std::size_t failed_count = 0;
+
+		// Remove dead workers using erase-remove idiom
+		auto remove_iter = std::remove_if(
+			workers_.begin(),
+			workers_.end(),
+			[&failed_count](const std::unique_ptr<thread_worker>& worker) {
+				if (!worker || !worker->is_running()) {
+					++failed_count;
+					return true;  // Remove this worker
+				}
+				return false;  // Keep this worker
+			}
+		);
+
+		workers_.erase(remove_iter, workers_.end());
+
+		// Restart workers if requested and pool is running
+		if (restart_failed && failed_count > 0 && is_running())
+		{
+			// Create new workers to replace failed ones
+			for (std::size_t i = 0; i < failed_count; ++i)
+			{
+				// Create worker with default settings and context
+				auto worker = std::make_unique<thread_worker>(true, context_);
+
+				// Set job queue
+				worker->set_job_queue(job_queue_);
+
+				// Start the new worker
+				auto start_result = worker->start();
+				if (start_result.has_error())
+				{
+					// Failed to start, skip this worker
+					continue;
+				}
+
+				workers_.push_back(std::move(worker));
+			}
+		}
+
+		return failed_count;
+	}
+
+	auto thread_pool::get_active_worker_count() const -> std::size_t
+	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+		return std::count_if(
+			workers_.begin(),
+			workers_.end(),
+			[](const std::unique_ptr<thread_worker>& worker) {
+				return worker && worker->is_running();
+			}
+		);
+	}
 } // namespace kcenon::thread
