@@ -552,4 +552,91 @@ namespace kcenon::thread
 		}
 		return 0;
 	}
+
+	auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t
+	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+		std::size_t failed_count = 0;
+		std::size_t initial_worker_count = workers_.size();
+
+		// Remove dead workers using erase-remove idiom
+		auto remove_iter = std::remove_if(
+			workers_.begin(),
+			workers_.end(),
+			[&failed_count](const std::unique_ptr<thread_worker>& worker) {
+				if (!worker || !worker->is_running()) {
+					++failed_count;
+					return true;  // Remove this worker
+				}
+				return false;  // Keep this worker
+			}
+		);
+
+		workers_.erase(remove_iter, workers_.end());
+
+		// Restart workers if requested and pool is running
+		if (restart_failed && failed_count > 0 && is_running())
+		{
+			auto logger = context_.get_logger();
+			if (logger)
+			{
+				logger->write(
+					log_types::information,
+					formatter::format("Worker health check: restarting {} failed workers (pool: {})",
+						failed_count, thread_title_)
+				);
+			}
+
+			// Create new workers to replace failed ones
+			for (std::size_t i = 0; i < failed_count; ++i)
+			{
+				auto worker = std::make_unique<thread_worker>(
+					formatter::format("{}_worker_{}", thread_title_, workers_.size()),
+					job_queue_,
+					context_
+				);
+
+				// Link worker cancellation token to pool token
+				if (pool_cancellation_token_)
+				{
+					worker->set_cancellation_token(
+						cancellation_token::create_linked(pool_cancellation_token_)
+					);
+				}
+
+				// Start the new worker
+				auto start_result = worker->start();
+				if (start_result.has_error())
+				{
+					if (logger)
+					{
+						logger->write(
+							log_types::error,
+							formatter::format("Failed to start replacement worker: {}",
+								start_result.error().message())
+						);
+					}
+					continue;  // Skip this worker, don't add to pool
+				}
+
+				workers_.push_back(std::move(worker));
+			}
+		}
+
+		return failed_count;
+	}
+
+	auto thread_pool::get_active_worker_count() const -> std::size_t
+	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+		return std::count_if(
+			workers_.begin(),
+			workers_.end(),
+			[](const std::unique_ptr<thread_worker>& worker) {
+				return worker && worker->is_running();
+			}
+		);
+	}
 } // namespace kcenon::thread
