@@ -458,3 +458,163 @@ TEST_F(ThreadSystemThreadSafetyTest, MemorySafetyTest) {
 
     EXPECT_EQ(total_errors.load(), 0);
 }
+
+// Test 11: Cancellation token hierarchical propagation
+TEST_F(ThreadSystemThreadSafetyTest, CancellationTokenHierarchy) {
+    const int depth = 10;
+    const int operations_per_level = 100;
+    std::atomic<int> cancelled_operations{0};
+    std::atomic<int> errors{0};
+
+    // Create a deep chain of linked cancellation tokens
+    std::vector<std::shared_ptr<cancellation_token>> tokens;
+    tokens.push_back(std::make_shared<cancellation_token>());
+
+    for (int i = 1; i < depth; ++i) {
+        tokens.push_back(std::make_shared<cancellation_token>(*tokens[i-1]));
+    }
+
+    // Register callbacks at each level
+    std::vector<cancellation_registration> registrations;
+    for (int i = 0; i < depth; ++i) {
+        auto reg = tokens[i]->register_callback([&, level = i]() {
+            ++cancelled_operations;
+        });
+        registrations.push_back(std::move(reg));
+    }
+
+    // Spawn threads that check cancellation at different levels
+    std::vector<std::thread> threads;
+    for (int i = 0; i < depth; ++i) {
+        threads.emplace_back([&, level = i]() {
+            for (int j = 0; j < operations_per_level; ++j) {
+                try {
+                    if (tokens[level]->is_cancelled()) {
+                        ++cancelled_operations;
+                    }
+                    std::this_thread::sleep_for(std::chrono::microseconds(50));
+                } catch (...) {
+                    ++errors;
+                }
+            }
+        });
+    }
+
+    // Cancel the root token after some time
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    tokens[0]->cancel();
+
+    for (auto& t : threads) {
+        t.join();
+    }
+
+    // All tokens should be cancelled
+    for (const auto& token : tokens) {
+        EXPECT_TRUE(token->is_cancelled());
+    }
+
+    EXPECT_EQ(errors.load(), 0);
+    EXPECT_GT(cancelled_operations.load(), 0);
+}
+
+// Test 12: Concurrent cancellation token registration and cancellation
+TEST_F(ThreadSystemThreadSafetyTest, ConcurrentCancellationOperations) {
+    const int num_threads = 20;
+    const int operations_per_thread = 200;
+    std::atomic<int> callback_invocations{0};
+    std::atomic<int> errors{0};
+
+    cancellation_token token;
+    std::vector<std::thread> threads;
+
+    // Half the threads register callbacks
+    for (int i = 0; i < num_threads / 2; ++i) {
+        threads.emplace_back([&]() {
+            for (int j = 0; j < operations_per_thread; ++j) {
+                try {
+                    auto reg = token.register_callback([&]() {
+                        ++callback_invocations;
+                    });
+                    std::this_thread::sleep_for(std::chrono::microseconds(100));
+                } catch (...) {
+                    ++errors;
+                }
+            }
+        });
+    }
+
+    // Other half check cancellation status
+    for (int i = 0; i < num_threads / 2; ++i) {
+        threads.emplace_back([&]() {
+            for (int j = 0; j < operations_per_thread; ++j) {
+                try {
+                    volatile bool cancelled = token.is_cancelled();
+                    std::this_thread::sleep_for(std::chrono::microseconds(100));
+                } catch (...) {
+                    ++errors;
+                }
+            }
+        });
+    }
+
+    // Cancel after some registrations
+    std::this_thread::sleep_for(std::chrono::milliseconds(150));
+    token.cancel();
+
+    for (auto& t : threads) {
+        t.join();
+    }
+
+    EXPECT_TRUE(token.is_cancelled());
+    EXPECT_EQ(errors.load(), 0);
+    EXPECT_GT(callback_invocations.load(), 0);
+}
+
+// Test 13: Cancellation during job execution
+TEST_F(ThreadSystemThreadSafetyTest, CancellationDuringExecution) {
+    auto pool = thread_pool::create(8);
+    cancellation_token token;
+
+    const int num_jobs = 1000;
+    std::atomic<int> jobs_started{0};
+    std::atomic<int> jobs_completed{0};
+    std::atomic<int> jobs_cancelled{0};
+
+    std::vector<std::future<void>> futures;
+
+    // Submit jobs that respect cancellation
+    for (int i = 0; i < num_jobs; ++i) {
+        auto result = pool->submit([&, job_id = i]() {
+            ++jobs_started;
+
+            for (int step = 0; step < 10; ++step) {
+                if (token.is_cancelled()) {
+                    ++jobs_cancelled;
+                    return;
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            }
+
+            ++jobs_completed;
+        });
+
+        if (result.is_ok()) {
+            futures.push_back(std::move(result.value()));
+        }
+    }
+
+    // Cancel after jobs have started
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    token.cancel();
+
+    // Wait for all jobs
+    for (auto& f : futures) {
+        f.wait();
+    }
+
+    pool->shutdown();
+
+    EXPECT_TRUE(token.is_cancelled());
+    EXPECT_EQ(jobs_started.load(), jobs_completed.load() + jobs_cancelled.load());
+    EXPECT_GT(jobs_cancelled.load(), 0);
+}
