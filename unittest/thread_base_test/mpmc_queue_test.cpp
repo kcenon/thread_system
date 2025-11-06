@@ -4,11 +4,30 @@ BSD 3-Clause License
 Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 
-IMPLEMENTATION NOTE:
-The MPMC queue implementation is functional but has a known issue with 
-test fixture cleanup that causes segmentation faults when running multiple 
-tests in sequence. Individual tests pass when run separately. This is likely 
-related to thread-local storage cleanup in the node pool implementation.
+IMPLEMENTATION NOTE - KNOWN ISSUE:
+The MPMC queue implementation is functional but has a critical issue with
+thread-local storage (TLS) cleanup that causes segmentation faults when
+running multiple tests in sequence. Individual tests pass when run separately.
+
+ROOT CAUSE:
+The lock-free node pool uses thread-local storage for per-thread caches.
+When test fixtures are destroyed, TLS destructors may access memory from
+the node pool that has already been freed, causing segmentation faults.
+
+CURRENT STATUS:
+- P0 Critical Issue: Must be resolved before production use
+- Workaround: TearDown() includes forced delays to allow TLS cleanup
+- This is a timing-dependent race condition
+
+RECOMMENDED SOLUTIONS (Priority Order):
+1. Implement hazard pointers for safe memory reclamation (3 weeks)
+2. Use epoch-based reclamation (EBR) for deterministic cleanup (2 weeks)
+3. Redesign node pool lifetime management to outlive all threads (1 week)
+
+TEMPORARY MITIGATION:
+The test suite includes cleanup delays in TearDown() to reduce the likelihood
+of segfaults, but this is NOT a permanent solution and does NOT guarantee
+safety in all scenarios.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
