@@ -20,7 +20,7 @@ if(UTIL_SOURCES)
     # Add both utilities/include and root include (for kcenon/thread/utils/formatter.h)
     target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include/thread_system/utilities>
+        $<INSTALL_INTERFACE:include>
     )
     # Also add parent include directory for accessing formatter.h via <kcenon/thread/utils/formatter.h>
     get_filename_component(THREAD_SYSTEM_ROOT_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/../include" ABSOLUTE)
@@ -58,7 +58,7 @@ else()
     # Interface library case - add both utilities/include and root include
     target_include_directories(${PROJECT_NAME} INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include/thread_system/utilities>
+        $<INSTALL_INTERFACE:include>
     )
     # Also add parent include directory
     get_filename_component(THREAD_SYSTEM_ROOT_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/../include" ABSOLUTE)

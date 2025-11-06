@@ -207,16 +207,8 @@ endfunction()
 # Install documentation files
 ##################################################
 function(install_documentation_files)
-  # Install adapter headers if BUILD_WITH_COMMON_SYSTEM is enabled
-  if(BUILD_WITH_COMMON_SYSTEM)
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/include/thread_system/adapters/common_executor_adapter.h)
-      install(FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/thread_system/adapters/common_executor_adapter.h
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/adapters
-        COMPONENT Development
-      )
-    endif()
-  endif()
+  # Adapter headers are now installed from include/kcenon/thread/adapters/
+  # via the main header installation in install_thread_system_headers()
 
   # Install dependency documentation
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/docs/dependency_compatibility_matrix.md)
