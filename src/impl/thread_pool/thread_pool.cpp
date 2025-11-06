@@ -558,7 +558,6 @@ namespace kcenon::thread
 		std::scoped_lock<std::mutex> lock(workers_mutex_);
 
 		std::size_t failed_count = 0;
-		std::size_t initial_worker_count = workers_.size();
 
 		// Remove dead workers using erase-remove idiom
 		auto remove_iter = std::remove_if(
@@ -578,46 +577,21 @@ namespace kcenon::thread
 		// Restart workers if requested and pool is running
 		if (restart_failed && failed_count > 0 && is_running())
 		{
-			auto logger = context_.get_logger();
-			if (logger)
-			{
-				logger->write(
-					log_types::information,
-					formatter::format("Worker health check: restarting {} failed workers (pool: {})",
-						failed_count, thread_title_)
-				);
-			}
-
 			// Create new workers to replace failed ones
 			for (std::size_t i = 0; i < failed_count; ++i)
 			{
-				auto worker = std::make_unique<thread_worker>(
-					formatter::format("{}_worker_{}", thread_title_, workers_.size()),
-					job_queue_,
-					context_
-				);
+				// Create worker with default settings and context
+				auto worker = std::make_unique<thread_worker>(true, context_);
 
-				// Link worker cancellation token to pool token
-				if (pool_cancellation_token_)
-				{
-					worker->set_cancellation_token(
-						cancellation_token::create_linked(pool_cancellation_token_)
-					);
-				}
+				// Set job queue
+				worker->set_job_queue(job_queue_);
 
 				// Start the new worker
 				auto start_result = worker->start();
 				if (start_result.has_error())
 				{
-					if (logger)
-					{
-						logger->write(
-							log_types::error,
-							formatter::format("Failed to start replacement worker: {}",
-								start_result.error().message())
-						);
-					}
-					continue;  // Skip this worker, don't add to pool
+					// Failed to start, skip this worker
+					continue;
 				}
 
 				workers_.push_back(std::move(worker));
