@@ -39,9 +39,9 @@ The Thread System is a production-ready C++20 high-performance threading framewo
    - executor_interface, scheduler_interface for component abstraction
    - Zero circular dependencies through interface-only dependencies
 
-3. **Adaptive by Default**: Intelligent runtime optimization
-   - Automatic queue strategy selection (mutex vs. lock-free)
-   - Dynamic contention detection and mitigation
+3. **Robust and Reliable**: Production-ready implementation
+   - Thread-safe mutex-based job queue
+   - Dynamic contention handling
    - Workload-aware scheduling policies
 
 4. **Performance First**: Optimized for production workloads
@@ -106,10 +106,10 @@ The Thread System is a production-ready C++20 high-performance threading framewo
 │  │ Thread Pools:    │  │ Job Queues:      │  │ Workers:   │ │
 │  │ • thread_pool    │  │ • job_queue      │  │ • thread_  │ │
 │  │   (standard)     │  │   (mutex-based)  │  │   worker   │ │
-│  │ • typed_thread_  │  │ • adaptive_queue │  │ • typed_   │ │
-│  │   pool (priority)│  │   (dual-mode)    │  │   worker   │ │
-│  │                  │  │ • lockfree_queue │  │            │ │
-│  │                  │  │   (MPMC)         │  │            │ │
+│  │ • typed_thread_  │  │                  │  │ • typed_   │ │
+│  │   pool (priority)│  │                  │  │   worker   │ │
+│  │                  │  │                  │  │            │ │
+│  │                  │  │                  │  │            │ │
 │  └──────────────────┘  └──────────────────┘  └────────────┘ │
 └───────────────────────────┬──────────────────────────────────┘
                             │
@@ -245,52 +245,9 @@ public:
 
 ---
 
-### 4. adaptive_job_queue (`core/jobs/include/adaptive_job_queue.h`)
+### 4. Thread Pool (`implementations/thread_pool/`)
 
-**Purpose**: Dual-mode queue with automatic strategy selection
-
-**Key Methods**:
-```cpp
-class adaptive_job_queue {
-public:
-    enum class queue_strategy { MUTEX, LOCKFREE, ADAPTIVE };
-
-    adaptive_job_queue(queue_strategy strategy = queue_strategy::ADAPTIVE);
-
-    // Same interface as job_queue
-    auto enqueue(std::unique_ptr<job>&& value) -> result_void;
-    auto dequeue() -> result<std::unique_ptr<job>>;
-
-    // Performance metrics
-    struct queue_statistics {
-        uint64_t total_enqueues{0};
-        uint64_t total_dequeues{0};
-        uint64_t failed_enqueues{0};
-        uint64_t avg_enqueue_latency_ns{0};
-        uint64_t avg_dequeue_latency_ns{0};
-        queue_strategy current_strategy{queue_strategy::MUTEX};
-    };
-
-    auto get_statistics() const -> queue_statistics;
-};
-```
-
-**Optimization Strategy**:
-1. **Low contention (1-2 threads)**: Uses mutex-based queue (96ns latency)
-2. **Medium contention (4 threads)**: Adaptive mode (+8.2% faster)
-3. **High contention (8+ threads)**: Lock-free MPMC queue (320ns, +37% faster)
-4. **Automatic switching**: Based on contention ratio and latency metrics
-
-**Performance**:
-- Up to **7.7x faster** enqueue under high contention
-- **Dynamic optimization** based on workload patterns
-- **Minimal overhead** when contention is low
-
----
-
-### 5. Thread Pool (`implementations/thread_pool/`)
-
-**Purpose**: Standard thread pool with adaptive queue support
+**Purpose**: Standard thread pool with mutex-based job queue
 
 ```cpp
 class thread_pool : public executor_interface {
@@ -332,7 +289,7 @@ public:
 - **Real-world throughput**: 1.16M jobs/second (10 workers)
 - **Job scheduling latency**: 77 nanoseconds average
 - **Linear scaling**: 96% efficiency up to 8 workers
-- **Memory baseline**: < 1MB with adaptive queues
+- **Memory baseline**: < 1MB with mutex-based queues
 
 ---
 
@@ -375,7 +332,7 @@ public:
 
 **Scheduling Strategy**:
 1. **Priority ordering**: RealTime > Batch > Background
-2. **Per-type queues**: Separate adaptive queue for each type
+2. **Per-type queues**: Separate job queue for each type
 3. **Worker specialization**: Responsibility lists define what each worker handles
 4. **FIFO within type**: Strict ordering within same priority level
 
@@ -739,20 +696,17 @@ public:
 | **Real-world throughput (typed)** | 1.24M jobs/s | +6.9% faster (6 workers) |
 | **Peak throughput** | 13.0M jobs/s | Theoretical max (empty jobs) |
 | **Job scheduling latency (P50)** | 77 ns | 15.7x lower than alternatives |
-| **Adaptive queue (low contention)** | 96 ns | Mutex strategy |
-| **Adaptive queue (high contention)** | 320 ns | Lock-free, 7.7x faster |
+| **Job queue (mutex-based)** | 96 ns | Thread-safe operation |
 | **Worker scaling efficiency (8 workers)** | 96% | Near-linear scaling |
-| **Memory baseline** | < 1MB | With adaptive queues |
+| **Memory baseline** | < 1MB | With mutex-based queues |
 | **Thread creation overhead** | 24.5 μs | Measured on M1 |
 
 ### Optimization Techniques
 
-1. **Adaptive Queuing**: Runtime strategy selection (mutex vs. lock-free)
+1. **Efficient Mutex Usage**: Well-optimized mutex-based synchronization
 2. **Batch Processing**: Process multiple jobs per worker iteration
 3. **Zero-Copy**: Move semantics for job transfer
 4. **Cache-Line Alignment**: Prevent false sharing in concurrent data structures
-5. **Lock-Free Operations**: MPMC queue for high contention scenarios
-6. **Hazard Pointers**: Safe memory reclamation without locks
 7. **Node Pooling**: Reduce allocation overhead
 
 ---
