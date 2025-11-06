@@ -271,7 +271,10 @@ namespace kcenon::thread
 		auto dequeue_result = job_queue_->try_dequeue();
 		if (!dequeue_result.has_value())
 		{
-			// Queue is currently empty - sleep briefly to avoid CPU spinning
+			// Queue is currently empty - mark as idle
+			is_idle_.store(true, std::memory_order_relaxed);
+
+			// Sleep briefly to avoid CPU spinning
 			// should_continue_work() will determine if we should exit (on queue stop)
 			// This polling approach is more reliable than blocking on wrong CV
 			//
@@ -290,6 +293,9 @@ namespace kcenon::thread
 		{
 			return error{error_code::job_invalid, "error executing job: nullptr"};
 		}
+
+		// Mark worker as busy (processing a job)
+		is_idle_.store(false, std::memory_order_relaxed);
 
 		// Initialize timing measurement if performance monitoring is enabled
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
@@ -360,6 +366,21 @@ namespace kcenon::thread
 	std::size_t thread_worker::get_worker_id() const
 	{
 		return worker_id_;
+	}
+
+	/**
+	 * @brief Checks if the worker is currently idle (not processing a job).
+	 *
+	 * Implementation details:
+	 * - Returns current state of is_idle_ flag
+	 * - Relaxed memory ordering sufficient (advisory-only value)
+	 * - No synchronization needed (snapshot of current state)
+	 *
+	 * @return true if worker is idle, false if actively processing a job
+	 */
+	bool thread_worker::is_idle() const noexcept
+	{
+		return is_idle_.load(std::memory_order_relaxed);
 	}
 
 	/**
