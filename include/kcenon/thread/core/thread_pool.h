@@ -83,9 +83,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace kcenon::thread
 {
 	// Support both old (namespace common) and new (namespace kcenon::common) versions
-	// via backward compatibility alias in common_system
+	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
 #ifdef THREAD_HAS_COMMON_EXECUTOR
-	namespace common_ns = ::common;
+	namespace common_ns = common;
 #endif
 
 	/**
@@ -365,10 +365,10 @@ namespace kcenon::thread
 		auto shutdown_pool(bool immediate = false) -> bool;
 
 		/**
-		 * @brief Check if the thread pool is currently running
+		 * @brief Check if the thread pool is currently running (IExecutor)
 		 * @return true if the pool is active, false otherwise
 		 */
-		auto is_running() const -> bool;
+		auto is_running() const -> bool override;
 
 		/**
 		 * @brief Get the number of pending tasks in the queue

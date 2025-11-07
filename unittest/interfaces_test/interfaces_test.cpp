@@ -18,7 +18,8 @@ using namespace kcenon::thread;
 
 #ifdef BUILD_WITH_COMMON_SYSTEM
 // Support both old (namespace common) and new (namespace kcenon::common) versions
-namespace common_test = ::common;
+// At global scope, need to use kcenon::common directly
+namespace common_test = kcenon::common;
 #endif
 
 TEST(interfaces_test, scheduler_interface_job_queue)

@@ -50,8 +50,9 @@ using namespace utility_module;
 namespace kcenon::thread
 {
 	// Support both old (namespace common) and new (namespace kcenon::common) versions
+	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
 #ifdef THREAD_HAS_COMMON_EXECUTOR
-	namespace common_ns = ::common;
+	namespace common_ns = common;
 #endif
 
 	// Initialize static member
