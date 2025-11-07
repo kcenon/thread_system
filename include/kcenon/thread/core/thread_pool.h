@@ -41,6 +41,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/executor_interface.h>
 #include <kcenon/thread/interfaces/thread_context.h>
+
+// Common system unified interfaces
+#if __has_include(<kcenon/common/interfaces/executor_interface.h>)
+#include <kcenon/common/interfaces/executor_interface.h>
+#define THREAD_HAS_COMMON_EXECUTOR 1
+#endif
+
 #include "config.h"
 
 #include <tuple>
@@ -115,6 +122,9 @@ namespace kcenon::thread
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>,
 	                   public kcenon::thread::executor_interface
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	                   , public kcenon::common::interfaces::IExecutor
+#endif
 	{
 	public:
 		/**
@@ -166,6 +176,65 @@ namespace kcenon::thread
 		 * @note This delegates to stop(false)
 		 */
 		auto shutdown() -> result_void override;
+
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	// ============================================================================
+	// IExecutor interface implementation (common_system)
+	// ============================================================================
+
+	/**
+	 * @brief Submit a task for immediate execution (IExecutor)
+	 * @param task The function to execute
+	 * @return Future representing the task result
+	 */
+	std::future<void> submit(std::function<void()> task) override;
+
+	/**
+	 * @brief Submit a task for delayed execution (IExecutor)
+	 * @param task The function to execute
+	 * @param delay The delay before execution
+	 * @return Future representing the task result
+	 */
+	std::future<void> submit_delayed(
+		std::function<void()> task,
+		std::chrono::milliseconds delay) override;
+
+	/**
+	 * @brief Execute a job with Result-based error handling (IExecutor)
+	 * @param job The job to execute
+	 * @return Result containing future or error
+	 */
+	kcenon::common::Result<std::future<void>> execute(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& job) override;
+
+	/**
+	 * @brief Execute a job with delay (IExecutor)
+	 * @param job The job to execute
+	 * @param delay The delay before execution
+	 * @return Result containing future or error
+	 */
+	kcenon::common::Result<std::future<void>> execute_delayed(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& job,
+		std::chrono::milliseconds delay) override;
+
+	/**
+	 * @brief Get the number of worker threads (IExecutor)
+	 * @return Number of available workers
+	 */
+	size_t worker_count() const override;
+
+	/**
+	 * @brief Get the number of pending tasks (IExecutor)
+	 * @return Number of tasks waiting to be executed
+	 */
+	size_t pending_tasks() const override;
+
+	/**
+	 * @brief Shutdown the executor gracefully (IExecutor)
+	 * @param wait_for_completion Wait for all pending tasks to complete
+	 */
+	void shutdown(bool wait_for_completion) override;
+#endif // THREAD_HAS_COMMON_EXECUTOR
 
         /**
          * @brief Starts the thread pool and all associated workers.

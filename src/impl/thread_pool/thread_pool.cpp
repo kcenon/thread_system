@@ -617,4 +617,168 @@ namespace kcenon::thread
 			}
 		);
 	}
+
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	// ============================================================================
+	// IExecutor interface implementation
+	// ============================================================================
+
+	std::future<void> thread_pool::submit(std::function<void()> task)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto job_ptr = std::make_unique<callback_job>([task = std::move(task), promise]() mutable {
+			try {
+				task();
+				promise->set_value();
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		});
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			// Set exception in promise if enqueue failed
+			try {
+				throw std::runtime_error("Failed to enqueue task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	std::future<void> thread_pool::submit_delayed(
+		std::function<void()> task,
+		std::chrono::milliseconds delay)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		// Create a delayed task that waits before executing
+		auto delayed_task = [task = std::move(task), delay, promise]() mutable {
+			std::this_thread::sleep_for(delay);
+			try {
+				task();
+				promise->set_value();
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		};
+
+		auto job_ptr = std::make_unique<callback_job>(std::move(delayed_task));
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			try {
+				throw std::runtime_error("Failed to enqueue delayed task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	kcenon::common::Result<std::future<void>> thread_pool::execute(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job)
+	{
+		if (!common_job) {
+			return kcenon::common::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		// Wrap common::IJob into thread::job
+		auto job_ptr = std::make_unique<callback_job>([
+			common_job = std::move(common_job),
+			promise
+		]() mutable {
+			auto result = common_job->execute();
+			if (result.is_ok()) {
+				promise->set_value();
+			} else {
+				try {
+					throw std::runtime_error("Job execution failed: " + result.error().message);
+				} catch (...) {
+					promise->set_exception(std::current_exception());
+				}
+			}
+		});
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return kcenon::common::Result<std::future<void>>(std::move(future));
+	}
+
+	kcenon::common::Result<std::future<void>> thread_pool::execute_delayed(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job,
+		std::chrono::milliseconds delay)
+	{
+		if (!common_job) {
+			return kcenon::common::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		// Wrap common::IJob with delay
+		auto job_ptr = std::make_unique<callback_job>([
+			common_job = std::move(common_job),
+			delay,
+			promise
+		]() mutable {
+			std::this_thread::sleep_for(delay);
+			auto result = common_job->execute();
+			if (result.is_ok()) {
+				promise->set_value();
+			} else {
+				try {
+					throw std::runtime_error("Job execution failed: " + result.error().message);
+				} catch (...) {
+					promise->set_exception(std::current_exception());
+				}
+			}
+		});
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return kcenon::common::Result<std::future<void>>(std::move(future));
+	}
+
+	size_t thread_pool::worker_count() const
+	{
+		std::scoped_lock<std::mutex> lock(workers_mutex_);
+		return workers_.size();
+	}
+
+	size_t thread_pool::pending_tasks() const
+	{
+		return get_pending_task_count();
+	}
+
+	void thread_pool::shutdown(bool wait_for_completion)
+	{
+		stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
+	}
+#endif // THREAD_HAS_COMMON_EXECUTOR
+
 } // namespace kcenon::thread
