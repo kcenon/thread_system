@@ -16,6 +16,16 @@ The Thread System Project is a comprehensive, production-ready C++20 multithread
 
 > **✅ Latest Updates**: Enhanced synchronization primitives, improved cancellation tokens, service registry pattern, and comprehensive header inclusion fixes. All CI/CD pipelines green across platforms.
 
+## ⚠️ Critical Production Warning
+
+> **IMPORTANT**: The lock-free MPMC queue (`typed_lockfree_job_queue_t`) has a **CRITICAL** thread-local storage (TLS) destructor bug that causes segmentation faults during shutdown. **DO NOT USE IN PRODUCTION**.
+>
+> **Safe Alternative**: Use the mutex-based `job_queue` class for all production deployments.
+>
+> **Details**: See [KNOWN_ISSUES.md](KNOWN_ISSUES.md) for complete analysis, reproduction steps, and resolution roadmap.
+>
+> **Status**: Active development - hazard pointers implementation planned (3 weeks ETA).
+
 ## 🔗 Project Ecosystem & Inter-Dependencies
 
 This project is part of a modular ecosystem designed for high-performance concurrent applications:

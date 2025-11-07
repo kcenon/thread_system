@@ -96,6 +96,25 @@ namespace kcenon::thread
 	 *
 	 * @tparam job_type The type used to represent job priority levels. Defaults to job_types.
 	 *
+	 * @warning PRODUCTION UNSAFE - DO NOT USE IN PRODUCTION
+	 *
+	 * This implementation has a CRITICAL thread-local storage (TLS) destructor ordering bug
+	 * that causes segmentation faults during shutdown. The issue occurs when:
+	 * 1. TLS destructors run after the node pool is freed
+	 * 2. TLS destructors attempt to return nodes to the already-freed pool
+	 * 3. Access to freed memory causes segfault
+	 *
+	 * Symptoms:
+	 * - Tests pass individually but fail when run in sequence
+	 * - Random segfaults during application shutdown
+	 * - Crashes in TLS destructor cleanup
+	 *
+	 * This bug is tracked in KNOWN_ISSUES.md. Use mutex-based job_queue instead
+	 * until hazard pointers or epoch-based reclamation is implemented.
+	 *
+	 * @see KNOWN_ISSUES.md for detailed analysis and proposed solutions
+	 * @see job_queue.h for production-safe alternative
+	 *
 	 * @note This implementation is optimized for high-concurrency scenarios where
 	 *       traditional mutex-based queues would become a bottleneck.
 	 *
