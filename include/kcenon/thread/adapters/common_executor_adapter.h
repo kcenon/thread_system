@@ -101,10 +101,8 @@ inline std::exception_ptr to_exception(const ::common::error_info& info) {
 }
 
 inline kcenon::thread::result_void make_thread_error(const ::common::error_info& info) {
-    return kcenon::thread::result_void(kcenon::thread::error{
-        static_cast<kcenon::thread::error_code>(info.code),
-        info.message
-    });
+    // Use unified conversion from error_handling.h
+    return kcenon::thread::detail::from_common_result(::common::VoidResult(info));
 }
 
 inline kcenon::thread::result_void make_thread_error(kcenon::thread::error_code code, std::string message) {
@@ -128,15 +126,8 @@ inline kcenon::thread::result_void wrap_user_task(const std::function<void()>& t
 }
 
 inline ::common::VoidResult convert_result(kcenon::thread::result_void result) {
-    if (result.has_error()) {
-        const auto& err = result.get_error();
-        return ::common::error_info{
-            static_cast<int>(err.code()),
-            err.message(),
-            "thread_system"
-        };
-    }
-    return ::common::VoidResult(std::monostate{});
+    // Use unified conversion from error_handling.h
+    return kcenon::thread::detail::to_common_result(result);
 }
 
 inline std::optional<::common::error_info> enqueue_job(
