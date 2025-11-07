@@ -628,13 +628,14 @@ namespace kcenon::thread
 		auto promise = std::make_shared<std::promise<void>>();
 		auto future = promise->get_future();
 
-		auto job_ptr = std::make_unique<callback_job>([task = std::move(task), promise]() mutable {
+		auto job_ptr = std::make_unique<callback_job>([task = std::move(task), promise]() mutable -> result_void {
 			try {
 				task();
 				promise->set_value();
 			} catch (...) {
 				promise->set_exception(std::current_exception());
 			}
+			return result_void{};
 		});
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
@@ -659,7 +660,7 @@ namespace kcenon::thread
 		auto future = promise->get_future();
 
 		// Create a delayed task that waits before executing
-		auto delayed_task = [task = std::move(task), delay, promise]() mutable {
+		auto delayed_task = [task = std::move(task), delay, promise]() mutable -> result_void {
 			std::this_thread::sleep_for(delay);
 			try {
 				task();
@@ -667,6 +668,7 @@ namespace kcenon::thread
 			} catch (...) {
 				promise->set_exception(std::current_exception());
 			}
+			return result_void{};
 		};
 
 		auto job_ptr = std::make_unique<callback_job>(std::move(delayed_task));
@@ -697,12 +699,13 @@ namespace kcenon::thread
 		auto promise = std::make_shared<std::promise<void>>();
 		auto future = promise->get_future();
 
-		// Wrap common::IJob into thread::job
+		// Wrap common::IJob into thread::job - use shared_ptr for copyable lambda
+		auto shared_job = std::shared_ptr<kcenon::common::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_job>([
-			common_job = std::move(common_job),
+			shared_job,
 			promise
-		]() mutable {
-			auto result = common_job->execute();
+		]() -> result_void {
+			auto result = shared_job->execute();
 			if (result.is_ok()) {
 				promise->set_value();
 			} else {
@@ -712,6 +715,7 @@ namespace kcenon::thread
 					promise->set_exception(std::current_exception());
 				}
 			}
+			return result_void{};
 		});
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
@@ -737,14 +741,15 @@ namespace kcenon::thread
 		auto promise = std::make_shared<std::promise<void>>();
 		auto future = promise->get_future();
 
-		// Wrap common::IJob with delay
+		// Wrap common::IJob with delay - use shared_ptr for copyable lambda
+		auto shared_job = std::shared_ptr<kcenon::common::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_job>([
-			common_job = std::move(common_job),
+			shared_job,
 			delay,
 			promise
-		]() mutable {
+		]() -> result_void {
 			std::this_thread::sleep_for(delay);
-			auto result = common_job->execute();
+			auto result = shared_job->execute();
 			if (result.is_ok()) {
 				promise->set_value();
 			} else {
@@ -754,6 +759,7 @@ namespace kcenon::thread
 					promise->set_exception(std::current_exception());
 				}
 			}
+			return result_void{};
 		});
 
 		auto enqueue_result = enqueue(std::move(job_ptr));

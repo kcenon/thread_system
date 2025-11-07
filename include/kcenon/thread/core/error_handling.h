@@ -47,6 +47,11 @@
 #include <functional>
 #include <stdexcept>
 
+#if __has_include(<kcenon/common/patterns/result.h>)
+#define THREAD_HAS_COMMON_RESULT 1
+#include <kcenon/common/patterns/result.h>
+#endif
+
 namespace kcenon::thread {
 
 /**
@@ -591,10 +596,7 @@ std::pair<std::optional<T>, std::optional<std::string>> result_to_pair(const res
 // Migration to common::Result - Phase 1: Type Mapping and Conversion
 // ============================================================================
 
-#if __has_include(<kcenon/common/patterns/result.h>)
-#define THREAD_HAS_COMMON_RESULT 1
-#include <kcenon/common/patterns/result.h>
-
+#ifdef THREAD_HAS_COMMON_RESULT
 namespace detail {
 
 /**

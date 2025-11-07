@@ -73,7 +73,7 @@ public:
     }
 
 #ifdef BUILD_WITH_COMMON_SYSTEM
-    auto reset_metrics() -> common::VoidResult override {
+    auto reset_metrics() -> kcenon::common::VoidResult override {
         snapshot_ = {};
         return {};
     }

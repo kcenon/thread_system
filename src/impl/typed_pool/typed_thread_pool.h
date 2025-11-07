@@ -266,6 +266,12 @@ namespace kcenon::thread
 		size_t pending_tasks() const override;
 
 		/**
+		 * @brief Check if the executor is running (IExecutor)
+		 * @return true if the executor is running, false otherwise
+		 */
+		bool is_running() const override;
+
+		/**
 		 * @brief Shutdown the executor gracefully (IExecutor)
 		 * @param wait_for_completion Wait for all pending tasks to complete
 		 */
