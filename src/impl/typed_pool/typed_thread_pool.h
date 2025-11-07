@@ -40,6 +40,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "typed_thread_worker.h"
 #include <kcenon/thread/interfaces/executor_interface.h>
 
+// Common system unified interfaces
+// THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
+#if defined(THREAD_HAS_COMMON_EXECUTOR) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/interfaces/executor_interface.h>))
+#ifndef THREAD_HAS_COMMON_EXECUTOR
+#define THREAD_HAS_COMMON_EXECUTOR 1
+#endif
+#include <kcenon/common/interfaces/executor_interface.h>
+#endif
+
 #include <tuple>
 #include <string>
 #include <memory>
@@ -71,6 +80,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 namespace kcenon::thread
 {
+	// Support both old (namespace common) and new (namespace kcenon::common) versions
+	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	namespace common_ns = common;
+#endif
+
 	/**
 	 * @class typed_thread_pool_t
 	 * @brief A thread pool that schedules and executes jobs based on their priority levels.
@@ -140,6 +155,9 @@ namespace kcenon::thread
 	class typed_thread_pool_t
 		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
 		, public kcenon::thread::executor_interface
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+		, public common_ns::interfaces::IExecutor
+#endif
 	{
 	public:
 		/**
@@ -203,6 +221,71 @@ namespace kcenon::thread
 		// executor_interface
 		auto execute(std::unique_ptr<job>&& work) -> result_void override;
 		auto shutdown() -> result_void override { return stop(false); }
+
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+		// ============================================================================
+		// IExecutor interface implementation (common_system)
+		// ============================================================================
+
+		/**
+		 * @brief Submit a task for immediate execution (IExecutor)
+		 * @param task The function to execute
+		 * @return Future representing the task result
+		 */
+		std::future<void> submit(std::function<void()> task) override;
+
+		/**
+		 * @brief Submit a task for delayed execution (IExecutor)
+		 * @param task The function to execute
+		 * @param delay The delay before execution
+		 * @return Future representing the task result
+		 */
+		std::future<void> submit_delayed(
+			std::function<void()> task,
+			std::chrono::milliseconds delay) override;
+
+		/**
+		 * @brief Execute a job with Result-based error handling (IExecutor)
+		 * @param job The job to execute
+		 * @return Result containing future or error
+		 */
+		common_ns::Result<std::future<void>> execute(
+			std::unique_ptr<common_ns::interfaces::IJob>&& job) override;
+
+		/**
+		 * @brief Execute a job with delay (IExecutor)
+		 * @param job The job to execute
+		 * @param delay The delay before execution
+		 * @return Result containing future or error
+		 */
+		common_ns::Result<std::future<void>> execute_delayed(
+			std::unique_ptr<common_ns::interfaces::IJob>&& job,
+			std::chrono::milliseconds delay) override;
+
+		/**
+		 * @brief Get the number of worker threads (IExecutor)
+		 * @return Number of available workers
+		 */
+		size_t worker_count() const override;
+
+		/**
+		 * @brief Get the number of pending tasks (IExecutor)
+		 * @return Number of tasks waiting to be executed
+		 */
+		size_t pending_tasks() const override;
+
+		/**
+		 * @brief Check if the executor is running (IExecutor)
+		 * @return true if the executor is running, false otherwise
+		 */
+		bool is_running() const override;
+
+		/**
+		 * @brief Shutdown the executor gracefully (IExecutor)
+		 * @param wait_for_completion Wait for all pending tasks to complete
+		 */
+		void shutdown(bool wait_for_completion) override;
+#endif // THREAD_HAS_COMMON_EXECUTOR
 
 		/**
 		 * @brief Enqueues a priority job into the thread pool's job queue.

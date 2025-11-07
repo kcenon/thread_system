@@ -33,10 +33,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "typed_thread_pool.h"
 #include "typed_thread_worker.h"
 #include "typed_job_queue.h"
+#include "callback_typed_job.h"
 #include <sstream>
 
 namespace kcenon::thread
 {
+	// Support both old (namespace common) and new (namespace kcenon::common) versions
+	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	namespace common_ns = common;
+#endif
+
 	template <typename job_type>
 	typed_thread_pool_t<job_type>::typed_thread_pool_t(
 		const std::string& thread_title,
@@ -259,6 +266,191 @@ namespace kcenon::thread
 	{
 		return context_;
 	}
+
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	// ============================================================================
+	// IExecutor interface implementation
+	// ============================================================================
+
+	template <typename job_type>
+	std::future<void> typed_thread_pool_t<job_type>::submit(std::function<void()> task)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
+			[task = std::move(task), promise]() mutable -> result_void {
+				try {
+					task();
+					promise->set_value();
+				} catch (...) {
+					promise->set_exception(std::current_exception());
+				}
+				return result_void{};
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			try {
+				throw std::runtime_error("Failed to enqueue task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	template <typename job_type>
+	std::future<void> typed_thread_pool_t<job_type>::submit_delayed(
+		std::function<void()> task,
+		std::chrono::milliseconds delay)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto delayed_task = [task = std::move(task), delay, promise]() mutable -> result_void {
+			std::this_thread::sleep_for(delay);
+			try {
+				task();
+				promise->set_value();
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+			return result_void{};
+		};
+
+		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
+			std::move(delayed_task),
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			try {
+				throw std::runtime_error("Failed to enqueue delayed task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	template <typename job_type>
+	common_ns::Result<std::future<void>> typed_thread_pool_t<job_type>::execute(
+		std::unique_ptr<common_ns::interfaces::IJob>&& common_job)
+	{
+		if (!common_job) {
+			return common_ns::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"typed_thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		// Use shared_ptr for copyable lambda
+		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
+		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
+			[shared_job, promise]() -> result_void {
+				auto result = shared_job->execute();
+				if (result.is_ok()) {
+					promise->set_value();
+				} else {
+					try {
+						throw std::runtime_error("Job execution failed: " + result.error().message);
+					} catch (...) {
+						promise->set_exception(std::current_exception());
+					}
+				}
+				return result_void{};
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return common_ns::Result<std::future<void>>(std::move(future));
+	}
+
+	template <typename job_type>
+	common_ns::Result<std::future<void>> typed_thread_pool_t<job_type>::execute_delayed(
+		std::unique_ptr<common_ns::interfaces::IJob>&& common_job,
+		std::chrono::milliseconds delay)
+	{
+		if (!common_job) {
+			return common_ns::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"typed_thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		// Use shared_ptr for copyable lambda
+		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
+		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
+			[shared_job, delay, promise]() -> result_void {
+				std::this_thread::sleep_for(delay);
+				auto result = shared_job->execute();
+				if (result.is_ok()) {
+					promise->set_value();
+				} else {
+					try {
+						throw std::runtime_error("Job execution failed: " + result.error().message);
+					} catch (...) {
+						promise->set_exception(std::current_exception());
+					}
+				}
+				return result_void{};
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return common_ns::Result<std::future<void>>(std::move(future));
+	}
+
+	template <typename job_type>
+	size_t typed_thread_pool_t<job_type>::worker_count() const
+	{
+		return workers_.size();
+	}
+
+	template <typename job_type>
+	size_t typed_thread_pool_t<job_type>::pending_tasks() const
+	{
+		return job_queue_ ? job_queue_->size() : 0;
+	}
+
+	template <typename job_type>
+	bool typed_thread_pool_t<job_type>::is_running() const
+	{
+		return start_pool_.load(std::memory_order_acquire);
+	}
+
+	template <typename job_type>
+	void typed_thread_pool_t<job_type>::shutdown(bool wait_for_completion)
+	{
+		stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
+	}
+#endif // THREAD_HAS_COMMON_EXECUTOR
 
 	// Explicit template instantiation for job_types
 	template class typed_thread_pool_t<job_types>;
