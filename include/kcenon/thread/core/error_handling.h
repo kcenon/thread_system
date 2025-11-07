@@ -587,4 +587,117 @@ std::pair<std::optional<T>, std::optional<std::string>> result_to_pair(const res
     return {std::nullopt, res.get_error().to_string()};
 }
 
+// ============================================================================
+// Migration to common::Result - Phase 1: Type Mapping and Conversion
+// ============================================================================
+
+#if __has_include(<kcenon/common/patterns/result.h>)
+#define THREAD_HAS_COMMON_RESULT 1
+#include <kcenon/common/patterns/result.h>
+
+namespace detail {
+
+/**
+ * @brief Convert thread::error to common::error_info
+ *
+ * This function facilitates the migration from thread-specific error types
+ * to the unified common::error_info type.
+ */
+inline kcenon::common::error_info to_common_error(const error& err) {
+    return kcenon::common::error_info{
+        static_cast<int>(err.code()),
+        err.message(),
+        "thread_system"  // module name
+    };
+}
+
+/**
+ * @brief Convert thread::error_code to common::error_info
+ */
+inline kcenon::common::error_info to_common_error(error_code code, const std::string& message = "") {
+    return kcenon::common::error_info{
+        static_cast<int>(code),
+        message.empty() ? error_code_to_string(code) : message,
+        "thread_system"
+    };
+}
+
+/**
+ * @brief Convert common::error_info to thread::error
+ *
+ * Used for backward compatibility during migration.
+ */
+inline error from_common_error(const kcenon::common::error_info& info) {
+    return error{
+        static_cast<error_code>(info.code),
+        info.message
+    };
+}
+
+/**
+ * @brief Convert thread::result_void to common::VoidResult
+ */
+inline kcenon::common::VoidResult to_common_result(const result_void& res) {
+    if (res.has_error()) {
+        return kcenon::common::VoidResult(to_common_error(res.get_error()));
+    }
+    return kcenon::common::ok();
+}
+
+/**
+ * @brief Convert thread::result<T> to common::Result<T>
+ */
+template<typename T>
+kcenon::common::Result<T> to_common_result(const result<T>& res) {
+    if (!res) {
+        return kcenon::common::Result<T>(to_common_error(res.get_error()));
+    }
+    return kcenon::common::Result<T>(res.value());
+}
+
+/**
+ * @brief Convert common::VoidResult to thread::result_void
+ */
+inline result_void from_common_result(const kcenon::common::VoidResult& res) {
+    if (res.is_err()) {
+        return result_void(from_common_error(res.error()));
+    }
+    return result_void{};
+}
+
+/**
+ * @brief Convert common::Result<T> to thread::result<T>
+ */
+template<typename T>
+result<T> from_common_result(const kcenon::common::Result<T>& res) {
+    if (res.is_err()) {
+        return result<T>(from_common_error(res.error()));
+    }
+    return result<T>(res.value());
+}
+
+} // namespace detail
+
+// ============================================================================
+// Migration Phase 2: Unified Type Aliases (Planned)
+// ============================================================================
+//
+// Once all code is migrated, these aliases will replace the thread-specific
+// result types. Currently commented out to maintain existing code.
+//
+// WARNING: These are transition typedefs. The long-term plan is to:
+// 1. Migrate all code to use common::Result directly
+// 2. Remove thread-specific result/result_void classes
+// 3. Remove these typedefs
+//
+// For new code, prefer using kcenon::common::Result<T> and
+// kcenon::common::VoidResult directly.
+
+// Uncomment these when ready for phase 2 migration:
+// using ResultVoid = kcenon::common::VoidResult;
+// template<typename T>
+// using Result = kcenon::common::Result<T>;
+
+#endif // THREAD_HAS_COMMON_RESULT
+
 } // namespace kcenon::thread
