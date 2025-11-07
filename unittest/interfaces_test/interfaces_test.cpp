@@ -16,6 +16,11 @@ BSD 3-Clause License
 
 using namespace kcenon::thread;
 
+#ifdef BUILD_WITH_COMMON_SYSTEM
+// Support both old (namespace common) and new (namespace kcenon::common) versions
+namespace common_test = ::common;
+#endif
+
 TEST(interfaces_test, scheduler_interface_job_queue)
 {
     job_queue queue;
@@ -73,7 +78,7 @@ public:
     }
 
 #ifdef BUILD_WITH_COMMON_SYSTEM
-    auto reset_metrics() -> kcenon::common::VoidResult override {
+    auto reset_metrics() -> common_test::VoidResult override {
         snapshot_ = {};
         return {};
     }

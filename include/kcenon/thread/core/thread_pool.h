@@ -82,6 +82,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 namespace kcenon::thread
 {
+	// Support both old (namespace common) and new (namespace kcenon::common) versions
+	// via backward compatibility alias in common_system
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	namespace common_ns = ::common;
+#endif
+
 	/**
 	 * @class thread_pool
 	 * @brief A thread pool for concurrent execution of jobs using multiple worker threads.
@@ -126,7 +132,7 @@ namespace kcenon::thread
 	class thread_pool : public std::enable_shared_from_this<thread_pool>,
 	                   public kcenon::thread::executor_interface
 #ifdef THREAD_HAS_COMMON_EXECUTOR
-	                   , public kcenon::common::interfaces::IExecutor
+	                   , public common_ns::interfaces::IExecutor
 #endif
 	{
 	public:
@@ -207,8 +213,8 @@ namespace kcenon::thread
 	 * @param job The job to execute
 	 * @return Result containing future or error
 	 */
-	kcenon::common::Result<std::future<void>> execute(
-		std::unique_ptr<kcenon::common::interfaces::IJob>&& job) override;
+	common_ns::Result<std::future<void>> execute(
+		std::unique_ptr<common_ns::interfaces::IJob>&& job) override;
 
 	/**
 	 * @brief Execute a job with delay (IExecutor)
@@ -216,8 +222,8 @@ namespace kcenon::thread
 	 * @param delay The delay before execution
 	 * @return Result containing future or error
 	 */
-	kcenon::common::Result<std::future<void>> execute_delayed(
-		std::unique_ptr<kcenon::common::interfaces::IJob>&& job,
+	common_ns::Result<std::future<void>> execute_delayed(
+		std::unique_ptr<common_ns::interfaces::IJob>&& job,
 		std::chrono::milliseconds delay) override;
 
 	/**

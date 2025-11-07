@@ -49,6 +49,11 @@ using namespace utility_module;
 
 namespace kcenon::thread
 {
+	// Support both old (namespace common) and new (namespace kcenon::common) versions
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	namespace common_ns = ::common;
+#endif
+
 	// Initialize static member
 	std::atomic<std::uint32_t> thread_pool::next_pool_instance_id_{0};
 	/**
@@ -685,11 +690,11 @@ namespace kcenon::thread
 		return future;
 	}
 
-	kcenon::common::Result<std::future<void>> thread_pool::execute(
-		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job)
+	common_ns::Result<std::future<void>> thread_pool::execute(
+		std::unique_ptr<common_ns::interfaces::IJob>&& common_job)
 	{
 		if (!common_job) {
-			return kcenon::common::error_info{
+			return common_ns::error_info{
 				static_cast<int>(error_code::job_invalid),
 				"Null job provided",
 				"thread_pool"
@@ -700,7 +705,7 @@ namespace kcenon::thread
 		auto future = promise->get_future();
 
 		// Wrap common::IJob into thread::job - use shared_ptr for copyable lambda
-		auto shared_job = std::shared_ptr<kcenon::common::interfaces::IJob>(std::move(common_job));
+		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_job>([
 			shared_job,
 			promise
@@ -723,15 +728,15 @@ namespace kcenon::thread
 			return detail::to_common_error(enqueue_result.get_error());
 		}
 
-		return kcenon::common::Result<std::future<void>>(std::move(future));
+		return common_ns::Result<std::future<void>>(std::move(future));
 	}
 
-	kcenon::common::Result<std::future<void>> thread_pool::execute_delayed(
-		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job,
+	common_ns::Result<std::future<void>> thread_pool::execute_delayed(
+		std::unique_ptr<common_ns::interfaces::IJob>&& common_job,
 		std::chrono::milliseconds delay)
 	{
 		if (!common_job) {
-			return kcenon::common::error_info{
+			return common_ns::error_info{
 				static_cast<int>(error_code::job_invalid),
 				"Null job provided",
 				"thread_pool"
@@ -742,7 +747,7 @@ namespace kcenon::thread
 		auto future = promise->get_future();
 
 		// Wrap common::IJob with delay - use shared_ptr for copyable lambda
-		auto shared_job = std::shared_ptr<kcenon::common::interfaces::IJob>(std::move(common_job));
+		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_job>([
 			shared_job,
 			delay,
@@ -767,7 +772,7 @@ namespace kcenon::thread
 			return detail::to_common_error(enqueue_result.get_error());
 		}
 
-		return kcenon::common::Result<std::future<void>>(std::move(future));
+		return common_ns::Result<std::future<void>>(std::move(future));
 	}
 
 	size_t thread_pool::worker_count() const

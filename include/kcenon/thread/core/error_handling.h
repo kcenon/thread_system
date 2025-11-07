@@ -603,14 +603,18 @@ std::pair<std::optional<T>, std::optional<std::string>> result_to_pair(const res
 #ifdef THREAD_HAS_COMMON_RESULT
 namespace detail {
 
+// Use unqualified 'common::' to support both old (namespace common)
+// and new (namespace kcenon::common) versions via backward compatibility alias
+using namespace common;
+
 /**
  * @brief Convert thread::error to common::error_info
  *
  * This function facilitates the migration from thread-specific error types
  * to the unified common::error_info type.
  */
-inline kcenon::common::error_info to_common_error(const error& err) {
-    return kcenon::common::error_info{
+inline error_info to_common_error(const error& err) {
+    return error_info{
         static_cast<int>(err.code()),
         err.message(),
         "thread_system"  // module name
@@ -620,8 +624,8 @@ inline kcenon::common::error_info to_common_error(const error& err) {
 /**
  * @brief Convert thread::error_code to common::error_info
  */
-inline kcenon::common::error_info to_common_error(error_code code, const std::string& message = "") {
-    return kcenon::common::error_info{
+inline error_info to_common_error(error_code code, const std::string& message = "") {
+    return error_info{
         static_cast<int>(code),
         message.empty() ? error_code_to_string(code) : message,
         "thread_system"
@@ -633,7 +637,7 @@ inline kcenon::common::error_info to_common_error(error_code code, const std::st
  *
  * Used for backward compatibility during migration.
  */
-inline error from_common_error(const kcenon::common::error_info& info) {
+inline error from_common_error(const error_info& info) {
     return error{
         static_cast<error_code>(info.code),
         info.message
@@ -643,28 +647,28 @@ inline error from_common_error(const kcenon::common::error_info& info) {
 /**
  * @brief Convert thread::result_void to common::VoidResult
  */
-inline kcenon::common::VoidResult to_common_result(const result_void& res) {
+inline VoidResult to_common_result(const result_void& res) {
     if (res.has_error()) {
-        return kcenon::common::VoidResult(to_common_error(res.get_error()));
+        return VoidResult(to_common_error(res.get_error()));
     }
-    return kcenon::common::ok();
+    return ok();
 }
 
 /**
  * @brief Convert thread::result<T> to common::Result<T>
  */
 template<typename T>
-kcenon::common::Result<T> to_common_result(const result<T>& res) {
+Result<T> to_common_result(const result<T>& res) {
     if (!res) {
-        return kcenon::common::Result<T>(to_common_error(res.get_error()));
+        return Result<T>(to_common_error(res.get_error()));
     }
-    return kcenon::common::Result<T>(res.value());
+    return Result<T>(res.value());
 }
 
 /**
  * @brief Convert common::VoidResult to thread::result_void
  */
-inline result_void from_common_result(const kcenon::common::VoidResult& res) {
+inline result_void from_common_result(const VoidResult& res) {
     if (res.is_err()) {
         return result_void(from_common_error(res.error()));
     }
@@ -675,7 +679,7 @@ inline result_void from_common_result(const kcenon::common::VoidResult& res) {
  * @brief Convert common::Result<T> to thread::result<T>
  */
 template<typename T>
-result<T> from_common_result(const kcenon::common::Result<T>& res) {
+result<T> from_common_result(const Result<T>& res) {
     if (res.is_err()) {
         return result<T>(from_common_error(res.error()));
     }
