@@ -41,9 +41,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/executor_interface.h>
 
 // Common system unified interfaces
-#if __has_include(<kcenon/common/interfaces/executor_interface.h>)
-#include <kcenon/common/interfaces/executor_interface.h>
+// THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
+#if defined(THREAD_HAS_COMMON_EXECUTOR) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/interfaces/executor_interface.h>))
+#ifndef THREAD_HAS_COMMON_EXECUTOR
 #define THREAD_HAS_COMMON_EXECUTOR 1
+#endif
+#include <kcenon/common/interfaces/executor_interface.h>
 #endif
 
 #include <tuple>

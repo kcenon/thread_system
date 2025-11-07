@@ -47,8 +47,12 @@
 #include <functional>
 #include <stdexcept>
 
-#if __has_include(<kcenon/common/patterns/result.h>)
+// THREAD_HAS_COMMON_RESULT is defined by CMake when common_system is available
+// This is more reliable than __has_include alone, which may not respect build configuration
+#if defined(THREAD_HAS_COMMON_RESULT) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/patterns/result.h>))
+#ifndef THREAD_HAS_COMMON_RESULT
 #define THREAD_HAS_COMMON_RESULT 1
+#endif
 #include <kcenon/common/patterns/result.h>
 #endif
 
