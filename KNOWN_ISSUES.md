@@ -1,6 +1,23 @@
 # Known Issues
 
+**Version**: 1.1
+**Last Updated**: 2025-11-08
+**Status**: Active Tracking
+
 This document tracks critical known issues in thread_system that require resolution before production deployment.
+
+## ⚠️ Production Deployment Checklist
+
+Before deploying thread_system to production, verify the following:
+
+- [ ] **MPMC Queue NOT Used**: Confirm no code paths use `typed_lockfree_job_queue_t`
+- [ ] **Mutex-Based Queues Only**: All job queues use `job_queue` (mutex-based)
+- [ ] **Test Suite Passes**: All tests pass in sequence without segfaults
+- [ ] **ThreadSanitizer Clean**: No data races detected by ThreadSanitizer
+- [ ] **AddressSanitizer Clean**: No memory errors detected by AddressSanitizer
+- [ ] **Valgrind Clean**: No memory leaks in extended runs
+
+If MPMC queue must be used, ensure hazard pointers or EBR is implemented first.
 
 ## P0 Critical Issues
 
@@ -70,15 +87,37 @@ void TearDown() override {
 **WARNING**: This is NOT a production-safe solution. Delays only reduce probability, do not eliminate the race condition.
 
 **Action Items**:
-- [ ] Choose solution approach (recommend hazard pointers)
-- [ ] Implement chosen solution
-- [ ] Add comprehensive concurrency tests
-- [ ] Run under ThreadSanitizer to verify fix
-- [ ] Remove workaround delays from tests
+- [ ] **Decision**: Choose solution approach (recommend hazard pointers)
+  - Evaluate effort/benefit for each solution
+  - Consider team expertise and timeline
+  - Document decision rationale
+- [ ] **Implementation**: Implement chosen solution
+  - Add hazard pointer domain if chosen
+  - Implement reclamation logic
+  - Update node pool lifecycle
+- [ ] **Testing**: Add comprehensive concurrency tests
+  - Multi-threaded stress tests
+  - Shutdown sequence tests
+  - Memory leak tests under high load
+- [ ] **Validation**: Run under ThreadSanitizer to verify fix
+  - No data races
+  - No use-after-free
+  - Clean shutdown sequence
+- [ ] **Cleanup**: Remove workaround delays from tests
+  - Remove TearDown() delays
+  - Verify tests pass reliably
+  - Update documentation
+
+**Estimated Effort**:
+- Hazard Pointers: 3 weeks (1 week design, 1.5 weeks implementation, 0.5 weeks testing)
+- Epoch-Based Reclamation: 2 weeks (0.5 weeks design, 1 week implementation, 0.5 weeks testing)
+- Lifetime Redesign: 1 week (0.5 weeks design, 0.5 weeks implementation, immediate testing)
 
 **References**:
 - File: `unittest/thread_base_test/mpmc_queue_test.cpp:7-30`
+- Header: `src/impl/typed_pool/typed_lockfree_job_queue.h`
 - Original Analysis: Architecture review 2025-11-07
+- Related: [Hazard Pointers Paper](https://www.research.ibm.com/people/m/michael/ieeetpds-2004.pdf)
 
 ---
 
