@@ -260,6 +260,177 @@ namespace kcenon::thread
 		return context_;
 	}
 
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+	// ============================================================================
+	// IExecutor interface implementation
+	// ============================================================================
+
+	template <typename job_type>
+	std::future<void> typed_thread_pool_t<job_type>::submit(std::function<void()> task)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto job_ptr = std::make_unique<callback_typed_job<job_type>>(
+			[task = std::move(task), promise]() mutable {
+				try {
+					task();
+					promise->set_value();
+				} catch (...) {
+					promise->set_exception(std::current_exception());
+				}
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			try {
+				throw std::runtime_error("Failed to enqueue task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	template <typename job_type>
+	std::future<void> typed_thread_pool_t<job_type>::submit_delayed(
+		std::function<void()> task,
+		std::chrono::milliseconds delay)
+	{
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto delayed_task = [task = std::move(task), delay, promise]() mutable {
+			std::this_thread::sleep_for(delay);
+			try {
+				task();
+				promise->set_value();
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		};
+
+		auto job_ptr = std::make_unique<callback_typed_job<job_type>>(
+			std::move(delayed_task),
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			try {
+				throw std::runtime_error("Failed to enqueue delayed task: " +
+					enqueue_result.get_error().to_string());
+			} catch (...) {
+				promise->set_exception(std::current_exception());
+			}
+		}
+
+		return future;
+	}
+
+	template <typename job_type>
+	kcenon::common::Result<std::future<void>> typed_thread_pool_t<job_type>::execute(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job)
+	{
+		if (!common_job) {
+			return kcenon::common::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"typed_thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto job_ptr = std::make_unique<callback_typed_job<job_type>>(
+			[common_job = std::move(common_job), promise]() mutable {
+				auto result = common_job->execute();
+				if (result.is_ok()) {
+					promise->set_value();
+				} else {
+					try {
+						throw std::runtime_error("Job execution failed: " + result.error().message);
+					} catch (...) {
+						promise->set_exception(std::current_exception());
+					}
+				}
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return kcenon::common::Result<std::future<void>>(std::move(future));
+	}
+
+	template <typename job_type>
+	kcenon::common::Result<std::future<void>> typed_thread_pool_t<job_type>::execute_delayed(
+		std::unique_ptr<kcenon::common::interfaces::IJob>&& common_job,
+		std::chrono::milliseconds delay)
+	{
+		if (!common_job) {
+			return kcenon::common::error_info{
+				static_cast<int>(error_code::job_invalid),
+				"Null job provided",
+				"typed_thread_pool"
+			};
+		}
+
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto job_ptr = std::make_unique<callback_typed_job<job_type>>(
+			[common_job = std::move(common_job), delay, promise]() mutable {
+				std::this_thread::sleep_for(delay);
+				auto result = common_job->execute();
+				if (result.is_ok()) {
+					promise->set_value();
+				} else {
+					try {
+						throw std::runtime_error("Job execution failed: " + result.error().message);
+					} catch (...) {
+						promise->set_exception(std::current_exception());
+					}
+				}
+			},
+			job_type{} // Default priority
+		);
+
+		auto enqueue_result = enqueue(std::move(job_ptr));
+		if (enqueue_result.has_error()) {
+			return detail::to_common_error(enqueue_result.get_error());
+		}
+
+		return kcenon::common::Result<std::future<void>>(std::move(future));
+	}
+
+	template <typename job_type>
+	size_t typed_thread_pool_t<job_type>::worker_count() const
+	{
+		return workers_.size();
+	}
+
+	template <typename job_type>
+	size_t typed_thread_pool_t<job_type>::pending_tasks() const
+	{
+		return get_pending_task_count();
+	}
+
+	template <typename job_type>
+	void typed_thread_pool_t<job_type>::shutdown(bool wait_for_completion)
+	{
+		stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
+	}
+#endif // THREAD_HAS_COMMON_EXECUTOR
+
 	// Explicit template instantiation for job_types
 	template class typed_thread_pool_t<job_types>;
 
