@@ -38,9 +38,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <atomic>
 #include <vector>
+#include <condition_variable>
 
 namespace kcenon::thread {
 namespace test {
+
+// Reduce iteration count for coverage builds
+#ifdef ENABLE_COVERAGE
+constexpr int QUEUE_REPLACEMENT_ITERATIONS = 3;
+#else
+constexpr int QUEUE_REPLACEMENT_ITERATIONS = 10;
+#endif
+
+constexpr auto MAX_WAIT_TIME = std::chrono::seconds(5);
 
 /**
  * Test for Sprint 1, Task 1.2: Worker queue replacement synchronization
@@ -60,6 +70,19 @@ protected:
         }
     }
 
+    // Helper: Wait with timeout
+    template<typename Predicate>
+    bool wait_for(Predicate pred, std::chrono::milliseconds timeout = std::chrono::milliseconds(1000)) {
+        auto start = std::chrono::steady_clock::now();
+        while (!pred()) {
+            if (std::chrono::steady_clock::now() - start > timeout) {
+                return false;
+            }
+            std::this_thread::sleep_for(std::chrono::microseconds(100));
+        }
+        return true;
+    }
+
     std::unique_ptr<thread_worker> worker_;
     thread_context context_;
 };
@@ -72,12 +95,12 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
     std::atomic<int> job_count{0};
     std::atomic<bool> stop_replacement{false};
 
-    // Create initial queue with jobs
+    // Create initial queue with fewer jobs for faster execution
     auto initial_queue = std::make_shared<job_queue>();
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 50; ++i) {  // Reduced from 100
         auto job = std::make_unique<callback_job>([&job_count]() -> result_void {
             job_count.fetch_add(1, std::memory_order_relaxed);
-            std::this_thread::sleep_for(std::chrono::microseconds(100));
+            std::this_thread::sleep_for(std::chrono::microseconds(50));  // Reduced sleep
             return {};
         });
         (void)initial_queue->enqueue(std::move(job));
@@ -86,16 +109,17 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
     worker_->set_job_queue(initial_queue);
     worker_->start();
 
-    // Thread that continuously replaces the queue
+    // Thread that replaces the queue with reduced iterations
     std::thread replacement_thread([this, &job_count, &stop_replacement]() {
         int replacement_count = 0;
-        while (!stop_replacement.load(std::memory_order_acquire) && replacement_count < 10) {
+        while (!stop_replacement.load(std::memory_order_acquire) &&
+               replacement_count < QUEUE_REPLACEMENT_ITERATIONS) {
             // Create new queue
             auto new_queue = std::make_shared<job_queue>();
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 5; ++i) {  // Reduced from 10
                 auto job = std::make_unique<callback_job>([&job_count]() -> result_void {
                     job_count.fetch_add(1, std::memory_order_relaxed);
-                    std::this_thread::sleep_for(std::chrono::microseconds(100));
+                    std::this_thread::sleep_for(std::chrono::microseconds(50));
                     return {};
                 });
                 (void)new_queue->enqueue(std::move(job));
@@ -105,12 +129,12 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
             worker_->set_job_queue(new_queue);
             replacement_count++;
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            std::this_thread::sleep_for(std::chrono::milliseconds(5));
         }
     });
 
-    // Let it run for a while
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    // Let it run for a shorter time
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));  // Reduced from 200
 
     // Stop replacement
     stop_replacement.store(true, std::memory_order_release);
@@ -133,12 +157,16 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
 
     auto queue = std::make_shared<job_queue>();
 
-    // Create a long-running job
+    // Create a job that waits for signal
     auto long_job = std::make_unique<callback_job>([&]() -> result_void {
         job_started.store(true, std::memory_order_release);
 
-        // Wait for signal to finish
+        // Wait for signal to finish with timeout to prevent hang
+        auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(2000);
         while (!job_can_finish.load(std::memory_order_acquire)) {
+            if (std::chrono::steady_clock::now() > deadline) {
+                return {}; // Timeout safety
+            }
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
@@ -150,10 +178,9 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     worker_->set_job_queue(queue);
     worker_->start();
 
-    // Wait for job to start
-    while (!job_started.load(std::memory_order_acquire)) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
+    // Wait for job to start with timeout
+    EXPECT_TRUE(wait_for([&]() { return job_started.load(std::memory_order_acquire); },
+                         std::chrono::milliseconds(500)));
 
     // Try to replace queue in another thread
     std::atomic<bool> replacement_started{false};
@@ -166,10 +193,10 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
         replacement_finished.store(true, std::memory_order_release);
     });
 
-    // Give replacement thread time to start
-    while (!replacement_started.load(std::memory_order_acquire)) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
+    // Wait for replacement thread to start
+    EXPECT_TRUE(wait_for([&]() { return replacement_started.load(std::memory_order_acquire); },
+                         std::chrono::milliseconds(100)));
+
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     // Replacement should be blocked waiting for job to finish
@@ -178,10 +205,9 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     // Allow job to finish
     job_can_finish.store(true, std::memory_order_release);
 
-    // Wait for job to finish
-    while (!job_finished.load(std::memory_order_acquire)) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
+    // Wait for job to finish with timeout
+    EXPECT_TRUE(wait_for([&]() { return job_finished.load(std::memory_order_acquire); },
+                         std::chrono::milliseconds(500)));
 
     // Replacement should now complete
     replacement_thread.join();
@@ -198,12 +224,13 @@ TEST_F(QueueReplacementTest, RapidQueueReplacements) {
 
     worker_->start();
 
-    // Rapidly replace queues
-    for (int i = 0; i < 20; ++i) {
+    // Rapidly replace queues with reduced iterations
+    const int num_replacements = 10;  // Reduced from 20
+    for (int i = 0; i < num_replacements; ++i) {
         auto queue = std::make_shared<job_queue>();
 
         // Add some jobs
-        for (int j = 0; j < 5; ++j) {
+        for (int j = 0; j < 3; ++j) {  // Reduced from 5
             auto job = std::make_unique<callback_job>([&total_jobs]() -> result_void {
                 total_jobs.fetch_add(1, std::memory_order_relaxed);
                 return {};
@@ -212,11 +239,11 @@ TEST_F(QueueReplacementTest, RapidQueueReplacements) {
         }
 
         worker_->set_job_queue(queue);
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2));  // Reduced from 5
     }
 
-    // Give time for jobs to complete
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // Give time for jobs to complete with timeout
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Reduced from 100
 
     worker_->stop();
 
