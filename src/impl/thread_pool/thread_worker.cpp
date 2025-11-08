@@ -285,13 +285,8 @@ namespace kcenon::thread
 	 */
 	auto thread_worker::do_work() -> result_void
 	{
-		// Acquire lock to safely check queue state
+		// Acquire lock to safely get queue pointer
 		std::unique_lock<std::mutex> lock(queue_mutex_);
-
-		// Wait if queue replacement is in progress
-		queue_cv_.wait(lock, [this] {
-			return !queue_being_replaced_;
-		});
 
 		// Validate that job queue is available for processing
 		if (job_queue_ == nullptr)
@@ -301,7 +296,8 @@ namespace kcenon::thread
 		}
 
 		// Make a local copy of the queue pointer while holding the lock
-		// This ensures the queue won't be replaced while we're using it
+		// The shared_ptr keeps the queue alive even if set_job_queue() replaces it
+		// No need to wait for !queue_being_replaced_ - the local copy is safe to use
 		std::shared_ptr<job_queue> local_queue = job_queue_;
 
 		// Release lock before dequeuing to allow other operations
@@ -362,12 +358,16 @@ namespace kcenon::thread
 		auto work_result = current_job->do_work();
 
 		// Clear current job tracking after execution completes
-		// Use release ordering for consistency with store above
-		current_job_.store(nullptr, std::memory_order_release);
+		// Reacquire lock to prevent lost wakeup race with set_job_queue()
+		{
+			std::lock_guard<std::mutex> notify_lock(queue_mutex_);
+			current_job_.store(nullptr, std::memory_order_release);
 
-		// Notify any waiting set_job_queue() that job has completed
-		// This allows queue replacement to proceed safely
-		queue_cv_.notify_all();
+			// Notify any waiting set_job_queue() that job has completed
+			// This allows queue replacement to proceed safely
+			// Lock is held to prevent lost wakeup between predicate check and wait
+			queue_cv_.notify_all();
+		}
 
 		if (work_result.has_error())
 		{
