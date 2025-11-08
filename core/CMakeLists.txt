@@ -32,30 +32,25 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 # Add common_system support if available
 if(BUILD_WITH_COMMON_SYSTEM)
-    # Priority: Local Sources/ directory first, then relative paths
-    set(_THREAD_COMMON_SEARCH_PATHS
-        "/Users/dongcheolshin/Sources/common_system/include"      # macOS development (HIGHEST PRIORITY)
-        "/home/${USER}/Sources/common_system/include"              # Linux development
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include"  # Sibling directory (fallback)
+    # Search for common_system using environment variable or relative paths
+    find_path(COMMON_SYSTEM_INCLUDE_DIR
+        NAMES kcenon/common/patterns/result.h
+        HINTS
+            $ENV{COMMON_SYSTEM_ROOT}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../common_system/include
+        DOC "Path to common_system include directory"
     )
 
-    set(_THREAD_COMMON_SYSTEM_PATH "")
-    foreach(_path ${_THREAD_COMMON_SEARCH_PATHS})
-        if(EXISTS "${_path}")
-            message(STATUS "Found common_system at: ${_path}")
-            set(_THREAD_COMMON_SYSTEM_PATH "${_path}")
-            break()
-        endif()
-    endforeach()
-
-    if(_THREAD_COMMON_SYSTEM_PATH)
+    if(COMMON_SYSTEM_INCLUDE_DIR)
         target_include_directories(${PROJECT_NAME} PUBLIC
-            $<BUILD_INTERFACE:${_THREAD_COMMON_SYSTEM_PATH}>
+            $<BUILD_INTERFACE:${COMMON_SYSTEM_INCLUDE_DIR}>
         )
         target_compile_definitions(${PROJECT_NAME} PUBLIC BUILD_WITH_COMMON_SYSTEM)
-        message(STATUS "ThreadSystem: common_system support enabled from ${_THREAD_COMMON_SYSTEM_PATH}")
+        message(STATUS "ThreadSystem: common_system support enabled from ${COMMON_SYSTEM_INCLUDE_DIR}")
     else()
-        message(WARNING "ThreadSystem: BUILD_WITH_COMMON_SYSTEM is ON but common_system not found in any search path")
+        message(WARNING "ThreadSystem: BUILD_WITH_COMMON_SYSTEM is ON but common_system not found")
+        message(WARNING "  Set COMMON_SYSTEM_ROOT environment variable or place common_system as sibling directory")
     endif()
 endif()
 

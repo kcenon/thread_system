@@ -44,6 +44,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <vector>
 #include <atomic>
+#include <mutex>
+#include <condition_variable>
 
 namespace kcenon::thread
 {
@@ -241,6 +243,29 @@ namespace kcenon::thread
 		 * @note Used by thread pool for statistics and monitoring purposes.
 		 */
 		std::atomic<bool> is_idle_{true};
+
+		/**
+		 * @brief Mutex protecting job queue replacement.
+		 *
+		 * This mutex synchronizes access to job_queue_ during replacement operations
+		 * to prevent race conditions between do_work() and set_job_queue().
+		 */
+		std::mutex queue_mutex_;
+
+		/**
+		 * @brief Condition variable for queue replacement synchronization.
+		 *
+		 * Used to wait for current job completion before replacing the queue.
+		 */
+		std::condition_variable queue_cv_;
+
+		/**
+		 * @brief Indicates whether queue replacement is in progress.
+		 *
+		 * When true, the worker thread should wait before accessing the queue.
+		 * Protected by queue_mutex_.
+		 */
+		bool queue_being_replaced_{false};
 	};
 } // namespace kcenon::thread
 

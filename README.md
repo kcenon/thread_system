@@ -1053,6 +1053,10 @@ cd thread_system
 cmake -B build -DBUILD_WITH_COMMON_SYSTEM=ON
 cmake --build build
 
+# ⚠️  UNSAFE: Enable lock-free queue (TESTING ONLY - has critical TLS bug)
+# cmake -B build -DTHREAD_ENABLE_LOCKFREE_QUEUE=ON
+# See KNOWN_ISSUES.md for details. Default is OFF (uses safe mutex-based queue)
+
 # Run samples
 ./build/bin/thread_pool_sample
 ./build/bin/typed_thread_pool_sample
