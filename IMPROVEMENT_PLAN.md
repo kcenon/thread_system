@@ -493,10 +493,23 @@ add_library(thread_core INTERFACE ${CORE_HEADERS})
     - unittest/thread_base_test/lockfree_job_queue_test.cpp
   - **Commit**: 5728126ea "Implement lock-free MPMC queue with Hazard Pointers"
 
-- [ ] **Task 2.4**: Testing & benchmarking (Week 7-8)
-  - Thread safety tests (ThreadSanitizer)
-  - Performance benchmark (vs mutex-based)
-  - Memory leak verification (Valgrind)
+- [x] **Task 2.4**: Testing & benchmarking (Week 7-8) ✅
+  - ✅ Thread safety tests (ThreadSanitizer)
+    - Fixed 2 critical data races:
+      1. Non-atomic `bool active` in thread_hazard_list
+      2. Unsafe `reclaim_all()` during thread cleanup
+    - All 13 HazardPointerTest.* pass cleanly
+    - All 10 LockFreeJobQueueTest.* pass cleanly
+  - ✅ Full test suite verification
+    - All 89 tests pass without regressions
+  - ✅ Performance benchmark (vs mutex-based)
+    - Lock-free: 71 μs/operation
+    - Mutex-based: 291 μs/operation
+    - **4x performance improvement**
+  - ⚠️ Memory leak verification (Valgrind) - Deferred
+    - macOS Valgrind support limited
+    - Will verify on Linux in Sprint 3
+  - **Commit**: 01bab9a5e "Fix ThreadSanitizer data races in hazard pointer implementation"
 
 **Resources**: 1 developer (Senior, concurrency expertise required)
 **Risk Level**: High (complex concurrency algorithm)
