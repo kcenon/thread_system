@@ -66,8 +66,11 @@ namespace kcenon::thread
 		/**
 		 * @brief Constructor
 		 * @param initial_strategy Initial queue strategy
+		 * @note Default changed to FORCE_LEGACY due to lock-free queue TLS bug.
+		 *       See KNOWN_ISSUES.md for details. Only use FORCE_LOCKFREE or
+		 *       AUTO_DETECT in testing environments until hazard pointers are implemented.
 		 */
-		explicit adaptive_typed_job_queue_t(queue_strategy initial_strategy = queue_strategy::AUTO_DETECT);
+		explicit adaptive_typed_job_queue_t(queue_strategy initial_strategy = queue_strategy::FORCE_LEGACY);
 		
 		/**
 		 * @brief Destructor
