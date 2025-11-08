@@ -239,42 +239,67 @@ private:
 /**
  * @class result
  * @brief A template class representing either a value or an error
- * 
+ *
  * This class is similar to std::expected from C++23, but can be used with C++20.
  * It holds either a value of type T or an error.
+ *
+ * @note Phase 1 Migration: When THREAD_HAS_COMMON_RESULT is defined, this class
+ *       uses common::Result<T> internally for unified error handling.
+ *
+ * @deprecated This class will be replaced by kcenon::common::Result<T> in the next
+ *             major version. New code should use kcenon::common::Result<T> directly.
+ *             See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions.
  */
 template <typename T>
 class result {
 public:
     using value_type = T;
     using error_type = error;
-    
+
     /**
      * @brief Constructs a result with a value
      * @param value The value to store
      */
-    result(T value) : has_value_(true), value_(std::move(value)), error_(error_code::success, "") {}
-    
+    result(T value)
+#ifdef THREAD_HAS_COMMON_RESULT
+        : impl_(common::Result<T>::ok(std::move(value))) {}
+#else
+        : has_value_(true), value_(std::move(value)), error_(error_code::success, "") {}
+#endif
+
     /**
      * @brief Constructs a result with an error
      * @param err The error to store
      */
-    result(error err) : has_value_(false), error_(std::move(err)) {}
-    
+    result(error err)
+#ifdef THREAD_HAS_COMMON_RESULT
+        : impl_(common::error_info{static_cast<int>(err.code()), err.message(), "thread_system"}) {}
+#else
+        : has_value_(false), error_(std::move(err)) {}
+#endif
+
     /**
      * @brief Checks if the result contains a value
      * @return true if the result contains a value, false if it contains an error
      */
     [[nodiscard]] explicit operator bool() const noexcept {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.is_ok();
+#else
         return has_value_;
+#endif
     }
-    
+
     /**
      * @brief Checks if the result contains a value
      * @return true if the result contains a value, false if it contains an error
      */
     [[nodiscard]] bool has_value() const noexcept {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.is_ok();
+#else
         return has_value_;
+#endif
     }
     
     /**
@@ -283,34 +308,55 @@ public:
      * @throws std::runtime_error if the result contains an error
      */
     [[nodiscard]] T& value() & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (!impl_.is_ok()) {
+            throw std::runtime_error("Cannot access value of an error result");
+        }
+        return const_cast<T&>(impl_.value());
+#else
         if (!has_value_) {
             throw std::runtime_error("Cannot access value of an error result");
         }
         return value_;
+#endif
     }
-    
+
     /**
      * @brief Gets the value
      * @return A const reference to the contained value
      * @throws std::runtime_error if the result contains an error
      */
     [[nodiscard]] const T& value() const & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (!impl_.is_ok()) {
+            throw std::runtime_error("Cannot access value of an error result");
+        }
+        return impl_.value();
+#else
         if (!has_value_) {
             throw std::runtime_error("Cannot access value of an error result");
         }
         return value_;
+#endif
     }
-    
+
     /**
      * @brief Gets the value
      * @return An rvalue reference to the contained value
      * @throws std::runtime_error if the result contains an error
      */
     [[nodiscard]] T&& value() && {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (!impl_.is_ok()) {
+            throw std::runtime_error("Cannot access value of an error result");
+        }
+        return std::move(const_cast<T&>(impl_.value()));
+#else
         if (!has_value_) {
             throw std::runtime_error("Cannot access value of an error result");
         }
         return std::move(value_);
+#endif
     }
     
     /**
@@ -319,34 +365,69 @@ public:
      * @throws std::runtime_error if the result contains a value
      */
     [[nodiscard]] error& get_error() & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_ok()) {
+            throw std::runtime_error("Cannot get error from successful result");
+        }
+        // Convert common::error_info to thread::error on demand
+        cached_error_ = error{
+            static_cast<error_code>(impl_.error().code),
+            impl_.error().message
+        };
+        return cached_error_;
+#else
         if (has_value_) {
             throw std::runtime_error("Cannot get error from successful result");
         }
         return error_;
+#endif
     }
-    
+
     /**
      * @brief Gets the error
      * @return A const reference to the contained error
      * @throws std::runtime_error if the result contains a value
      */
     [[nodiscard]] const error& get_error() const & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_ok()) {
+            throw std::runtime_error("Cannot get error from successful result");
+        }
+        // Convert common::error_info to thread::error on demand
+        cached_error_ = error{
+            static_cast<error_code>(impl_.error().code),
+            impl_.error().message
+        };
+        return cached_error_;
+#else
         if (has_value_) {
             throw std::runtime_error("Cannot get error from successful result");
         }
         return error_;
+#endif
     }
-    
+
     /**
      * @brief Gets the error
      * @return An rvalue reference to the contained error
      * @throws std::runtime_error if the result contains a value
      */
     [[nodiscard]] error&& get_error() && {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_ok()) {
+            throw std::runtime_error("Cannot get error from successful result");
+        }
+        cached_error_ = error{
+            static_cast<error_code>(impl_.error().code),
+            impl_.error().message
+        };
+        return std::move(cached_error_);
+#else
         if (has_value_) {
             throw std::runtime_error("Cannot get error from successful result");
         }
         return std::move(error_);
+#endif
     }
     
     /**
@@ -356,12 +437,16 @@ public:
      */
     template <typename U>
     [[nodiscard]] T value_or(U&& default_value) const & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.value_or(static_cast<T>(std::forward<U>(default_value)));
+#else
         if (has_value_) {
             return value_;
         }
         return static_cast<T>(std::forward<U>(default_value));
+#endif
     }
-    
+
     /**
      * @brief Gets the value or a default
      * @param default_value The value to return if the result contains an error
@@ -369,34 +454,52 @@ public:
      */
     template <typename U>
     [[nodiscard]] T value_or(U&& default_value) && {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.value_or(static_cast<T>(std::forward<U>(default_value)));
+#else
         if (has_value_) {
             return std::move(value_);
         }
         return static_cast<T>(std::forward<U>(default_value));
+#endif
     }
-    
+
     /**
      * @brief Gets the value or throws an exception
      * @return The contained value
      * @throws std::runtime_error with the error message if the result contains an error
      */
     [[nodiscard]] T value_or_throw() const & {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_err()) {
+            throw std::runtime_error(impl_.error().message);
+        }
+        return impl_.value();
+#else
         if (has_value_) {
             return value_;
         }
         throw std::runtime_error(error_.to_string());
+#endif
     }
-    
+
     /**
      * @brief Gets the value or throws an exception
      * @return The contained value
      * @throws std::runtime_error with the error message if the result contains an error
      */
     [[nodiscard]] T value_or_throw() && {
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_err()) {
+            throw std::runtime_error(impl_.error().message);
+        }
+        return std::move(const_cast<T&>(impl_.value()));
+#else
         if (has_value_) {
             return std::move(value_);
         }
         throw std::runtime_error(error_.to_string());
+#endif
     }
     
     /**
@@ -407,11 +510,22 @@ public:
     template <typename Fn>
     [[nodiscard]] auto map(Fn&& fn) const -> result<std::invoke_result_t<Fn, const T&>> {
         using ResultType = result<std::invoke_result_t<Fn, const T&>>;
-        
+
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_ok()) {
+            return ResultType(std::invoke(std::forward<Fn>(fn), impl_.value()));
+        }
+        // Convert common::error_info to thread::error
+        return ResultType(error{
+            static_cast<error_code>(impl_.error().code),
+            impl_.error().message
+        });
+#else
         if (has_value_) {
             return ResultType(std::invoke(std::forward<Fn>(fn), value_));
         }
         return ResultType(error_);
+#endif
     }
     
     /**
@@ -423,17 +537,33 @@ public:
     [[nodiscard]] auto and_then(Fn&& fn) const -> std::invoke_result_t<Fn, const T&> {
         using ResultType = std::invoke_result_t<Fn, const T&>;
         static_assert(std::is_same_v<typename ResultType::error_type, error>, "Function must return a result with the same error type");
-        
+
+#ifdef THREAD_HAS_COMMON_RESULT
+        if (impl_.is_ok()) {
+            return std::invoke(std::forward<Fn>(fn), impl_.value());
+        }
+        // Convert common::error_info to thread::error
+        return ResultType(error{
+            static_cast<error_code>(impl_.error().code),
+            impl_.error().message
+        });
+#else
         if (has_value_) {
             return std::invoke(std::forward<Fn>(fn), value_);
         }
         return ResultType(error_);
+#endif
     }
-    
+
 private:
+#ifdef THREAD_HAS_COMMON_RESULT
+    common::Result<T> impl_;
+    mutable error cached_error_{error_code::success, ""};  // For get_error() conversion
+#else
     bool has_value_ = false;
     T value_{};
     error error_{error_code::success, ""};
+#endif
 };
 
 /**
