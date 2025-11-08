@@ -459,10 +459,20 @@ add_library(thread_core INTERFACE ${CORE_HEADERS})
   - **Performance Goals**: Defined latency/throughput targets
   - **Commit**: 2a813d6f7 "Add Hazard Pointer design document"
 
-- [ ] **Task 2.2**: Basic implementation (Week 3-4)
-  - `hazard_pointer_domain<T>` class
-  - Thread-local hazard pointer list
-  - Retire list management
+- [x] **Task 2.2**: Basic implementation (Week 3-4) ✅ **COMPLETED**
+  - **Status**: Core implementation complete with full test coverage
+  - **Implementation**: hazard_pointer and hazard_pointer_domain<T> classes
+  - **Features**:
+    - Thread-local hazard arrays (4 slots per thread)
+    - Slot ownership tracking with SLOT_OWNED_MARKER
+    - Automatic reclamation (threshold: 64 objects)
+    - Statistics tracking (retired/reclaimed/scan count)
+  - **Testing**: 13 unit tests, all passing (100%)
+  - **Files**:
+    - include/kcenon/thread/core/hazard_pointer.h
+    - src/core/hazard_pointer.cpp
+    - unittest/thread_base_test/hazard_pointer_test.cpp
+  - **Commit**: e1972ed43 "Implement Hazard Pointer for safe lock-free queue"
 
 - [ ] **Task 2.3**: Lock-free queue integration (Week 5-6)
   - Apply HP to `pop()` operation
