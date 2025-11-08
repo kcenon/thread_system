@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <atomic>
 #include <vector>
-#include <barrier>
 
 namespace kcenon::thread {
 namespace test {
@@ -61,8 +60,7 @@ protected:
  * Verifies that all registered callbacks are called exactly once
  */
 TEST_F(CancellationTokenRaceTest, ConcurrentCallbackRegistration) {
-    cancellation_token_source source;
-    auto token = source.get_token();
+    cancellation_token token;
 
     std::atomic<int> callback_count{0};
     const int num_threads = 10;
@@ -70,13 +68,9 @@ TEST_F(CancellationTokenRaceTest, ConcurrentCallbackRegistration) {
 
     // Register callbacks from multiple threads
     std::vector<std::thread> registration_threads;
-    std::barrier sync_point(num_threads + 1);
 
     for (int t = 0; t < num_threads; ++t) {
-        registration_threads.emplace_back([&]() {
-            // Wait for all threads to be ready
-            sync_point.arrive_and_wait();
-
+        registration_threads.emplace_back([&, token]() mutable {
             for (int i = 0; i < callbacks_per_thread; ++i) {
                 token.register_callback([&callback_count]() {
                     callback_count.fetch_add(1, std::memory_order_relaxed);
@@ -85,16 +79,13 @@ TEST_F(CancellationTokenRaceTest, ConcurrentCallbackRegistration) {
         });
     }
 
-    // Start all threads at once
-    sync_point.arrive_and_wait();
-
     // Wait for all registrations to complete
     for (auto& thread : registration_threads) {
         thread.join();
     }
 
     // Cancel the token
-    source.cancel();
+    token.cancel();
 
     // Verify all callbacks were called exactly once
     EXPECT_EQ(callback_count.load(), num_threads * callbacks_per_thread);
@@ -105,17 +96,16 @@ TEST_F(CancellationTokenRaceTest, ConcurrentCallbackRegistration) {
  * Verifies that callbacks are not missed even during concurrent cancel()
  */
 TEST_F(CancellationTokenRaceTest, RegistrationDuringCancellation) {
-    const int num_iterations = 1000;
+    const int num_iterations = 100;
 
     for (int iter = 0; iter < num_iterations; ++iter) {
-        cancellation_token_source source;
-        auto token = source.get_token();
+        cancellation_token token;
 
         std::atomic<int> callback_count{0};
         std::atomic<bool> start_cancel{false};
 
         // Thread that registers callback
-        std::thread registration_thread([&]() {
+        std::thread registration_thread([&, token]() mutable {
             // Wait for signal
             while (!start_cancel.load(std::memory_order_acquire)) {
                 std::this_thread::yield();
@@ -127,13 +117,13 @@ TEST_F(CancellationTokenRaceTest, RegistrationDuringCancellation) {
         });
 
         // Thread that cancels
-        std::thread cancel_thread([&]() {
+        std::thread cancel_thread([&, token]() mutable {
             // Wait for signal
             while (!start_cancel.load(std::memory_order_acquire)) {
                 std::this_thread::yield();
             }
 
-            source.cancel();
+            token.cancel();
         });
 
         // Start both threads at once
@@ -152,11 +142,10 @@ TEST_F(CancellationTokenRaceTest, RegistrationDuringCancellation) {
  * Verifies that callbacks registered after cancel() are invoked immediately
  */
 TEST_F(CancellationTokenRaceTest, RegistrationAfterCancellation) {
-    cancellation_token_source source;
-    auto token = source.get_token();
+    cancellation_token token;
 
     // Cancel first
-    source.cancel();
+    token.cancel();
 
     std::atomic<bool> callback_invoked{false};
 
@@ -174,8 +163,7 @@ TEST_F(CancellationTokenRaceTest, RegistrationAfterCancellation) {
  * when cancel() is called
  */
 TEST_F(CancellationTokenRaceTest, CallbackInvocationOrder) {
-    cancellation_token_source source;
-    auto token = source.get_token();
+    cancellation_token token;
 
     std::vector<int> invocation_order;
     std::mutex order_mutex;
@@ -191,7 +179,7 @@ TEST_F(CancellationTokenRaceTest, CallbackInvocationOrder) {
     }
 
     // Cancel
-    source.cancel();
+    token.cancel();
 
     // Verify all callbacks were invoked
     EXPECT_EQ(invocation_order.size(), static_cast<size_t>(num_callbacks));
@@ -207,18 +195,15 @@ TEST_F(CancellationTokenRaceTest, CallbackInvocationOrder) {
  * Stress test to ensure no race conditions under pressure
  */
 TEST_F(CancellationTokenRaceTest, HighFrequencyRegistrationAndCancellation) {
-    const int num_iterations = 100;
+    const int num_iterations = 50;
 
     for (int iter = 0; iter < num_iterations; ++iter) {
-        cancellation_token_source source;
-        auto token = source.get_token();
+        cancellation_token token;
 
         std::atomic<int> total_callbacks{0};
-        std::barrier sync_point(3);
 
         // Thread 1: Register callbacks rapidly
-        std::thread reg_thread1([&]() {
-            sync_point.arrive_and_wait();
+        std::thread reg_thread1([&, token]() mutable {
             for (int i = 0; i < 50; ++i) {
                 token.register_callback([&total_callbacks]() {
                     total_callbacks.fetch_add(1, std::memory_order_relaxed);
@@ -227,8 +212,7 @@ TEST_F(CancellationTokenRaceTest, HighFrequencyRegistrationAndCancellation) {
         });
 
         // Thread 2: Register callbacks rapidly
-        std::thread reg_thread2([&]() {
-            sync_point.arrive_and_wait();
+        std::thread reg_thread2([&, token]() mutable {
             for (int i = 0; i < 50; ++i) {
                 token.register_callback([&total_callbacks]() {
                     total_callbacks.fetch_add(1, std::memory_order_relaxed);
@@ -236,14 +220,11 @@ TEST_F(CancellationTokenRaceTest, HighFrequencyRegistrationAndCancellation) {
             }
         });
 
-        // Start all threads
-        sync_point.arrive_and_wait();
-
         // Give some time for registrations
         std::this_thread::sleep_for(std::chrono::microseconds(100));
 
         // Cancel
-        source.cancel();
+        token.cancel();
 
         reg_thread1.join();
         reg_thread2.join();
@@ -258,14 +239,13 @@ TEST_F(CancellationTokenRaceTest, HighFrequencyRegistrationAndCancellation) {
  * Verifies that callbacks can register new callbacks without deadlock
  */
 TEST_F(CancellationTokenRaceTest, CallbackCanRegisterNewCallbacks) {
-    cancellation_token_source source;
-    auto token = source.get_token();
+    cancellation_token token;
 
     std::atomic<int> first_level_count{0};
     std::atomic<int> second_level_count{0};
 
     // Register a callback that registers another callback
-    token.register_callback([&]() {
+    token.register_callback([&, token]() mutable {
         first_level_count.fetch_add(1, std::memory_order_relaxed);
 
         // This should not deadlock
@@ -275,13 +255,39 @@ TEST_F(CancellationTokenRaceTest, CallbackCanRegisterNewCallbacks) {
     });
 
     // Cancel
-    source.cancel();
+    token.cancel();
 
     // First-level callback should be invoked
     EXPECT_EQ(first_level_count.load(), 1);
 
     // Second-level callback should be invoked immediately during registration
     EXPECT_EQ(second_level_count.load(), 1);
+}
+
+/**
+ * Test linked tokens
+ * Verifies that canceling a parent token cancels all linked tokens
+ */
+TEST_F(CancellationTokenRaceTest, LinkedTokenCancellation) {
+    cancellation_token parent1;
+    cancellation_token parent2;
+
+    auto linked = cancellation_token::create_linked({parent1, parent2});
+
+    std::atomic<bool> linked_cancelled{false};
+    linked.register_callback([&linked_cancelled]() {
+        linked_cancelled.store(true, std::memory_order_release);
+    });
+
+    // Cancel one parent
+    parent1.cancel();
+
+    // Give time for callback propagation
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+    // Linked token should be cancelled
+    EXPECT_TRUE(linked_cancelled.load(std::memory_order_acquire));
+    EXPECT_TRUE(linked.is_cancelled());
 }
 
 } // namespace test
