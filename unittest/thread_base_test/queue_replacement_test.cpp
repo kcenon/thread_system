@@ -107,6 +107,9 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
     // Give worker time to start
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
+    // Create final queue for replacements
+    auto final_queue = std::make_shared<job_queue>();
+
     // Perform queue replacements
     for (int i = 0; i < QUEUE_REPLACEMENT_ITERATIONS; ++i) {
         auto new_queue = std::make_shared<job_queue>();
@@ -120,10 +123,14 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
 
         // Replace queue - should complete without deadlock
         worker_->set_job_queue(new_queue);
+        final_queue = new_queue;  // Keep reference to last queue
 
         // Brief delay to allow job processing
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
+
+    // Stop the queue to allow worker to exit
+    final_queue->stop();
 
     // Stop worker
     worker_->stop();
@@ -177,10 +184,10 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     // Try to replace queue in another thread
     std::atomic<bool> replacement_started{false};
     std::atomic<bool> replacement_finished{false};
+    auto new_queue = std::make_shared<job_queue>();
 
     std::thread replacement_thread([&]() {
         replacement_started.store(true, std::memory_order_release);
-        auto new_queue = std::make_shared<job_queue>();
         worker_->set_job_queue(new_queue);
         replacement_finished.store(true, std::memory_order_release);
     });
@@ -211,6 +218,8 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     // Join the thread (should be immediate since replacement_finished is true)
     replacement_thread.join();
 
+    // Stop the new queue before stopping worker
+    new_queue->stop();
     worker_->stop();
 }
 
@@ -220,7 +229,12 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
 TEST_F(QueueReplacementTest, RapidQueueReplacements) {
     std::atomic<int> total_jobs{0};
 
+    // Start with initial queue
+    auto initial_queue = std::make_shared<job_queue>();
+    worker_->set_job_queue(initial_queue);
     worker_->start();
+
+    std::shared_ptr<job_queue> last_queue;
 
     // Rapidly replace queues with reduced iterations
     const int num_replacements = 10;  // Reduced from 20
@@ -237,12 +251,17 @@ TEST_F(QueueReplacementTest, RapidQueueReplacements) {
         }
 
         worker_->set_job_queue(queue);
+        last_queue = queue;
         std::this_thread::sleep_for(std::chrono::milliseconds(2));  // Reduced from 5
     }
 
     // Give time for jobs to complete with timeout
     std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Reduced from 100
 
+    // Stop queue before stopping worker
+    if (last_queue) {
+        last_queue->stop();
+    }
     worker_->stop();
 
     // Verify some jobs were processed (exact count may vary due to rapid replacement)
