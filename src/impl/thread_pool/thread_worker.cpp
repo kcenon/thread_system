@@ -113,23 +113,48 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Associates this worker with a job queue for processing.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Stores shared pointer to enable job dequeuing
-	 * - Must be called before starting the worker thread
-	 * - Thread-safe operation (atomic pointer assignment)
+	 * - Thread-safe queue replacement with proper synchronization
+	 * - Waits for current job completion before replacing queue
 	 * - Multiple workers can share the same job queue
-	 * 
-	 * Queue Relationship:
-	 * - Worker holds shared ownership of the queue
-	 * - Queue lifetime is managed by thread pool
-	 * - Worker can safely access queue throughout its lifetime
-	 * 
+	 *
+	 * Queue Replacement Synchronization:
+	 * - Acquires mutex to prevent concurrent do_work() access
+	 * - Sets replacement flag to prevent new job processing
+	 * - Waits for current job to complete (current_job_ == nullptr)
+	 * - Replaces queue pointer atomically
+	 * - Notifies worker thread to resume
+	 *
+	 * Thread Safety:
+	 * - Safe to call from any thread
+	 * - Coordinates with do_work() via mutex and condition variable
+	 * - Prevents use-after-free during queue replacement
+	 *
 	 * @param job_queue Shared pointer to the job queue for this worker
 	 */
 	auto thread_worker::set_job_queue(std::shared_ptr<job_queue> job_queue) -> void
 	{
-		job_queue_ = job_queue;
+		std::unique_lock<std::mutex> lock(queue_mutex_);
+
+		// Signal that queue replacement is in progress
+		queue_being_replaced_ = true;
+
+		// Wait for current job to complete
+		// Predicate ensures we don't proceed while a job is executing
+		queue_cv_.wait(lock, [this] {
+			return current_job_.load(std::memory_order_acquire) == nullptr;
+		});
+
+		// Replace the queue pointer
+		job_queue_ = std::move(job_queue);
+
+		// Clear replacement flag
+		queue_being_replaced_ = false;
+
+		// Notify worker thread that replacement is complete
+		queue_cv_.notify_all();
 	}
 
 	/**
@@ -260,15 +285,31 @@ namespace kcenon::thread
 	 */
 	auto thread_worker::do_work() -> result_void
 	{
+		// Acquire lock to safely check queue state
+		std::unique_lock<std::mutex> lock(queue_mutex_);
+
+		// Wait if queue replacement is in progress
+		queue_cv_.wait(lock, [this] {
+			return !queue_being_replaced_;
+		});
+
 		// Validate that job queue is available for processing
 		if (job_queue_ == nullptr)
 		{
+			lock.unlock();
 			return error{error_code::resource_allocation_failed, "there is no job_queue"};
 		}
 
+		// Make a local copy of the queue pointer while holding the lock
+		// This ensures the queue won't be replaced while we're using it
+		std::shared_ptr<job_queue> local_queue = job_queue_;
+
+		// Release lock before dequeuing to allow other operations
+		lock.unlock();
+
 		// Use non-blocking try_dequeue to avoid condition variable deadlock
 		// This eliminates the two-level CV problem by never blocking
-		auto dequeue_result = job_queue_->try_dequeue();
+		auto dequeue_result = local_queue->try_dequeue();
 		if (!dequeue_result.has_value())
 		{
 			// Queue is currently empty - mark as idle
@@ -306,7 +347,8 @@ namespace kcenon::thread
 		}
 
 		// Associate the job with its source queue for potential re-submission
-		current_job->set_job_queue(job_queue_);
+		// Use local_queue to avoid race with set_job_queue()
+		current_job->set_job_queue(local_queue);
 
 		// Set cancellation token on the job for cooperative cancellation
 		// This allows the job to check if it should cancel during execution
@@ -322,6 +364,10 @@ namespace kcenon::thread
 		// Clear current job tracking after execution completes
 		// Use release ordering for consistency with store above
 		current_job_.store(nullptr, std::memory_order_release);
+
+		// Notify any waiting set_job_queue() that job has completed
+		// This allows queue replacement to proceed safely
+		queue_cv_.notify_all();
 
 		if (work_result.has_error())
 		{
