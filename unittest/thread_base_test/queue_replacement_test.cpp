@@ -75,12 +75,12 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
     // Create initial queue with jobs
     auto initial_queue = std::make_shared<job_queue>();
     for (int i = 0; i < 100; ++i) {
-        auto job = std::make_shared<callback_job>([&job_count]() -> result_void {
+        auto job = std::make_unique<callback_job>([&job_count]() -> result_void {
             job_count.fetch_add(1, std::memory_order_relaxed);
             std::this_thread::sleep_for(std::chrono::microseconds(100));
             return {};
         });
-        initial_queue->push(job);
+        (void)initial_queue->enqueue(std::move(job));
     }
 
     worker_->set_job_queue(initial_queue);
@@ -93,12 +93,12 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
             // Create new queue
             auto new_queue = std::make_shared<job_queue>();
             for (int i = 0; i < 10; ++i) {
-                auto job = std::make_shared<callback_job>([&job_count]() -> result_void {
+                auto job = std::make_unique<callback_job>([&job_count]() -> result_void {
                     job_count.fetch_add(1, std::memory_order_relaxed);
                     std::this_thread::sleep_for(std::chrono::microseconds(100));
                     return {};
                 });
-                new_queue->push(job);
+                (void)new_queue->enqueue(std::move(job));
             }
 
             // Replace queue (should coordinate with worker)
@@ -134,7 +134,7 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     auto queue = std::make_shared<job_queue>();
 
     // Create a long-running job
-    auto long_job = std::make_shared<callback_job>([&]() -> result_void {
+    auto long_job = std::make_unique<callback_job>([&]() -> result_void {
         job_started.store(true, std::memory_order_release);
 
         // Wait for signal to finish
@@ -146,7 +146,7 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
         return {};
     });
 
-    queue->push(long_job);
+    (void)queue->enqueue(std::move(long_job));
     worker_->set_job_queue(queue);
     worker_->start();
 
@@ -204,11 +204,11 @@ TEST_F(QueueReplacementTest, RapidQueueReplacements) {
 
         // Add some jobs
         for (int j = 0; j < 5; ++j) {
-            auto job = std::make_shared<callback_job>([&total_jobs]() -> result_void {
+            auto job = std::make_unique<callback_job>([&total_jobs]() -> result_void {
                 total_jobs.fetch_add(1, std::memory_order_relaxed);
                 return {};
             });
-            queue->push(job);
+            (void)queue->enqueue(std::move(job));
         }
 
         worker_->set_job_queue(queue);
