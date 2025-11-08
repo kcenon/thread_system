@@ -434,9 +434,10 @@ add_library(thread_core INTERFACE ${CORE_HEADERS})
   - Unit test (concurrent queue replacement) - created queue_replacement_test.cpp
   - **Status**: Implementation verified, synchronization uses queue_mutex_, queue_cv_, and queue_being_replaced_ flag
 
-- [ ] **Task 1.3**: Fix cancellation token race
-  - Double-check locking pattern
-  - Unit test (concurrent registration)
+- [x] **Task 1.3**: Fix cancellation token race ✅ **COMPLETED**
+  - Lock-based synchronization (already implemented in cancellation_token.h:190-202)
+  - Unit test (concurrent registration) - created cancellation_token_race_test.cpp
+  - **Status**: Implementation verified, uses callback_mutex to prevent race between register_callback() and cancel()
 
 - [x] **Task 1.4**: Remove hardcoded paths ✅ **COMPLETED**
   - CMake `find_path` usage
