@@ -452,10 +452,12 @@ add_library(thread_core INTERFACE ${CORE_HEADERS})
 ### Sprint 2-4: Hazard Pointers Implementation (Week 2-8)
 **Goal**: Enable safe lock-free queue usage
 
-- [ ] **Task 2.1**: Hazard Pointer design (Week 2)
-  - Algorithm selection (Maged Michael's HP)
-  - API design
-  - Performance goals
+- [x] **Task 2.1**: Hazard Pointer design (Week 2) ✅ **COMPLETED**
+  - **Status**: Design document created (docs/HAZARD_POINTER_DESIGN.md)
+  - **Algorithm**: Selected Maged Michael's Hazard Pointers
+  - **API**: Designed hazard_pointer and hazard_pointer_domain<T>
+  - **Performance Goals**: Defined latency/throughput targets
+  - **Commit**: 2a813d6f7 "Add Hazard Pointer design document"
 
 - [ ] **Task 2.2**: Basic implementation (Week 3-4)
   - `hazard_pointer_domain<T>` class
