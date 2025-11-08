@@ -59,8 +59,8 @@ void hazard_pointer_registry::mark_inactive() {
             h.store(nullptr, std::memory_order_release);
         }
 
-        // Mark as inactive
-        thread_list->active = false;
+        // Mark as inactive (using release to ensure visibility)
+        thread_list->active.store(false, std::memory_order_release);
         thread_count_.fetch_sub(1, std::memory_order_relaxed);
     }
 }
@@ -77,7 +77,7 @@ std::vector<void*> hazard_pointer_registry::scan_hazard_pointers() {
     thread_hazard_list* curr = head_.load(std::memory_order_acquire);
 
     while (curr) {
-        if (curr->active) {
+        if (curr->active.load(std::memory_order_acquire)) {
             // Scan this thread's hazard pointers
             for (auto& hazard : curr->hazards) {
                 void* ptr = hazard.load(std::memory_order_acquire);

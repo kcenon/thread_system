@@ -20,8 +20,8 @@ struct thread_hazard_list {
     static constexpr size_t MAX_HAZARDS_PER_THREAD = 4;
 
     std::atomic<void*> hazards[MAX_HAZARDS_PER_THREAD];
-    thread_hazard_list* next;  // Linked list of all thread lists
-    bool active;               // Is this thread still active?
+    thread_hazard_list* next;       // Linked list of all thread lists
+    std::atomic<bool> active;       // Is this thread still active?
 
     thread_hazard_list() : next(nullptr), active(true) {
         for (auto& h : hazards) {
@@ -287,14 +287,35 @@ size_t hazard_pointer_domain<T>::thread_retire_list::scan_and_reclaim(
 
 template<typename T>
 void hazard_pointer_domain<T>::thread_retire_list::reclaim_all() {
-    while (head) {
-        detail::retire_node* node = head;
-        head = head->next;
+    // Even during thread cleanup, we must respect hazard pointers from other threads
+    // Scan hazard pointers and only reclaim unprotected objects
+    auto& registry = detail::hazard_pointer_registry::instance();
+    auto protected_ptrs = registry.scan_hazard_pointers();
 
-        node->deleter(node->ptr);
-        delete node;
+    detail::retire_node** curr = &head;
+    while (*curr) {
+        // Check if this pointer is protected by any thread
+        bool is_protected = false;
+        for (void* protected_ptr : protected_ptrs) {
+            if ((*curr)->ptr == protected_ptr) {
+                is_protected = true;
+                break;
+            }
+        }
+
+        if (!is_protected) {
+            // Safe to reclaim
+            detail::retire_node* to_delete = *curr;
+            *curr = (*curr)->next;
+
+            to_delete->deleter(to_delete->ptr);
+            delete to_delete;
+            --count;
+        } else {
+            // Keep in list - will leak on thread exit, but safe
+            curr = &(*curr)->next;
+        }
     }
-    count = 0;
 }
 
 template<typename T>
