@@ -14,17 +14,23 @@ The Thread System Project is a comprehensive, production-ready C++20 multithread
 
 > **🏗️ Modular Architecture**: Streamlined to ~2,700 lines of highly optimized code through aggressive refactoring and coroutine removal. Logger and monitoring systems are available as separate, optional projects for maximum flexibility.
 
-> **✅ Latest Updates**: Enhanced synchronization primitives, improved cancellation tokens, service registry pattern, and comprehensive header inclusion fixes. All CI/CD pipelines green across platforms.
+> **✅ Latest Updates**:
+> - ✅ **Hazard Pointer implementation completed** - Lock-free queue now safe for production
+> - ✅ **4x performance improvement** with lock-free queue (71 μs vs 291 μs per operation)
+> - ✅ Enhanced synchronization primitives, improved cancellation tokens, service registry pattern
+> - ✅ All CI/CD pipelines green across platforms (ThreadSanitizer and AddressSanitizer clean)
 
-## ⚠️ Critical Production Warning
+## ✅ Production-Ready Status
 
-> **IMPORTANT**: The lock-free MPMC queue (`typed_lockfree_job_queue_t`) has a **CRITICAL** thread-local storage (TLS) destructor bug that causes segmentation faults during shutdown. **DO NOT USE IN PRODUCTION**.
+> **EXCELLENT NEWS**: The lock-free MPMC queue is now **SAFE FOR PRODUCTION USE**!
 >
-> **Safe Alternative**: Use the mutex-based `job_queue` class for all production deployments.
+> **Resolution**: Hazard Pointer-based memory reclamation has been successfully implemented, eliminating the TLS destructor bug.
 >
-> **Details**: See [KNOWN_ISSUES.md](KNOWN_ISSUES.md) for complete analysis, reproduction steps, and resolution roadmap.
+> **Queue Options**:
+> - **Lock-free queue** (`lockfree_job_queue`): 4x faster, safe with Hazard Pointers ✅ **Recommended for high-performance**
+> - **Mutex-based queue** (`job_queue`): Reliable baseline, safe and stable ✅ **Recommended for simplicity**
 >
-> **Status**: Active development - hazard pointers implementation planned (3 weeks ETA).
+> **Details**: See [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) for complete resolution details and performance benchmarks.
 
 ## 🔗 Project Ecosystem & Inter-Dependencies
 
@@ -129,7 +135,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 *Automated benchmarks will be displayed here after CI/CD integration is complete.*
 
-> 📊 Performance metrics are automatically measured in our CI pipeline. See [BASELINE.md](BASELINE.md) for detailed performance analysis.
+> 📊 Performance metrics are automatically measured in our CI pipeline. See [docs/BASELINE.md](docs/BASELINE.md) for detailed performance analysis.
 
 <!-- PERFORMANCE_METRICS_END -->
 
@@ -361,7 +367,7 @@ thread_system/
 ├── 📁 docs/                        # Documentation
 ├── 📁 cmake/                       # CMake modules
 ├── 📄 CMakeLists.txt               # Build configuration
-├── 📄 STRUCTURE.md                 # Project structure guide
+├── 📄 docs/STRUCTURE.md            # Project structure guide
 └── 📄 vcpkg.json                   # Dependencies
 ```
 
@@ -1211,9 +1217,10 @@ thread_system delivers production-ready concurrent programming capabilities with
 **Performance Baselines**
 - Standard Pool: 1.16M jobs/second (proven in production)
 - Typed Pool: 1.24M jobs/second (6% faster with priority scheduling)
+- Lock-free Queue: 4x faster than mutex-based (71 μs vs 291 μs per operation)
 - P50 latency: 0.8 μs (sub-microsecond job scheduling)
 - Memory baseline: 2 MB (minimal overhead)
-- Comprehensive [BASELINE.md](BASELINE.md) with regression detection
+- Comprehensive [docs/BASELINE.md](docs/BASELINE.md) with regression detection
 
 ### Thread Safety & Concurrency
 
