@@ -560,22 +560,39 @@ add_library(thread_core INTERFACE ${CORE_HEADERS})
 ### Sprint 4-5: Documentation & Cleanup (Week 9-12)
 **Goal**: Improve code quality, address technical debt
 
-- [ ] **Task 4.1**: Thread safety documentation
-  - Add `@thread_safety` tags to all public methods
-  - Document synchronization contracts
-  - Provide example code
+- [x] **Task 4.1**: Thread safety documentation ✅ **COMPLETED** (2025-11-09)
+  - **Status**: Enhanced service_registry.h with comprehensive thread safety documentation
+  - **Changes**:
+    - Added `@thread_safety` tags to class and all public methods
+    - Documented synchronization behavior (shared vs exclusive locks)
+    - Added usage examples and warnings
+    - Improved error handling with try-catch for any_cast
+  - **Commit**: d87c30e "Improve code documentation and build system maintainability"
 
-- [ ] **Task 4.2**: CMake improvements
-  - Remove GLOB
-  - Explicit file lists
-  - Clean up build options
+- [x] **Task 4.2**: CMake improvements ✅ **COMPLETED** (2025-11-09)
+  - **Status**: Replaced GLOB with explicit file lists in core/CMakeLists.txt
+  - **Changes**:
+    - Converted GLOB_RECURSE to explicit set() for headers (26 files)
+    - Converted GLOB_RECURSE to explicit set() for sources (14 files)
+    - Added comments explaining rationale
+    - CMake will now properly detect when files are added/removed
+  - **Build**: Successfully tested and verified
+  - **Commit**: d87c30e
 
-- [ ] **Task 4.3**: Deprecated interface cleanup
-  - Finalize `executor_interface`, `logger_interface` status
-  - Plan for next major version removal
+- [x] **Task 4.3**: Deprecated interface cleanup ✅ **ALREADY COMPLETED**
+  - **Status**: executor_interface and logger_interface already properly deprecated
+  - **Files**:
+    - include/kcenon/thread/interfaces/executor_interface.h
+    - include/kcenon/thread/interfaces/logger_interface.h
+  - **Features**:
+    - [[deprecated]] attributes applied
+    - Comprehensive migration guides included
+    - Removal planned for v2.0
+    - Timeline documented (minimum 6-month deprecation period)
 
 **Resources**: 1 developer (Junior)
 **Risk Level**: Low
+**Status**: ✅ **SPRINT 4-5 COMPLETED** (2025-11-09)
 
 ---
 
