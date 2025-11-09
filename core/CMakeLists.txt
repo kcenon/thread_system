@@ -4,19 +4,55 @@
 
 project(thread_base)
 
-# Find headers in include directory
-file(GLOB_RECURSE CORE_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/*.h)
+# Explicit header file list (do not use GLOB - CMake won't detect new files automatically)
+set(CORE_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/bounded_job_queue.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/callback_job.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellable_job.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellation_token.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/configuration_manager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/error_handling.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/event_bus.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/forward_declarations.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/future_extensions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/hazard_pointer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_queue.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_types.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/pool_traits.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/service_registry.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/sync_primitives.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_base.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_conditions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_impl.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_logger.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_pool.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_worker.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/typed_thread_pool.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/typed_thread_worker.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/worker_policy.h
+)
 
-# Find sources in src directory
-file(GLOB_RECURSE CORE_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job.cpp
+# Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
+set(CORE_SOURCES
+    # Core implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/callback_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/hazard_pointer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job_queue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/thread_base.cpp
+    # Thread pool implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_pool.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_worker.cpp
+    # Typed pool implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/adaptive_typed_job_queue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/callback_typed_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job_queue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_worker.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_pool.cpp)
+)
 
 add_library(${PROJECT_NAME} STATIC
     ${CORE_HEADERS}
