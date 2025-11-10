@@ -217,10 +217,19 @@ namespace kcenon::thread
 	 * - Worker sees stopped flag and exits cleanly
 	 * - No dependency on operation ordering
 	 *
+	 * Thread Safety:
+	 * - Synchronizes access to job_queue_ with queue_mutex_
+	 * - Prevents race conditions with set_job_queue() and do_work()
+	 * - Uses lock_guard for RAII-based exception safety
+	 * - Mutex marked mutable to allow locking in const method
+	 *
 	 * @return true if worker should continue processing, false to exit
 	 */
 	auto thread_worker::should_continue_work() const -> bool
 	{
+		// Synchronize access to job_queue_ with set_job_queue() and do_work()
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+
 		if (job_queue_ == nullptr)
 		{
 			return false;
