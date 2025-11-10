@@ -136,47 +136,4 @@ struct std::formatter<test_priority, wchar_t> : std::formatter<std::wstring_view
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#else
-/**
- * @brief Specialization of fmt::formatter for test_priority.
- * Enables formatting of test_priority enum values using the fmt library.
- */
-template <> struct fmt::formatter<test_priority> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a test_priority value as a string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The test_priority enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const test_priority& priority, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(to_string(priority), ctx);
-	}
-};
-
-/**
- * @brief Specialization of fmt::formatter for wide-character test_priority.
- * Allows test_priority enum values to be formatted as wide strings in the standard library format.
- */
-template <>
-struct fmt::formatter<test_priority, wchar_t> : fmt::formatter<std::wstring_view, wchar_t>
-{
-	/**
-	 * @brief Formats a test_priority value as a wide string.
-	 * @tparam FormatContext Type of the format context.
-	 * @param priority The test_priority enum value to format.
-	 * @param ctx Format context for the output.
-	 * @return Iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const test_priority& priority, FormatContext& ctx) const
-	{
-		auto str = to_string(priority);
-		auto wstr = convert_string::to_wstring(str);
-		return fmt::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
-	}
-};
 #endif

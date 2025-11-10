@@ -39,12 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
-// Use fmt library as fallback when std::format is not available
-// Only include if the header actually exists
-#if __has_include(<fmt/format.h>)
-#include <fmt/format.h>
-#define HAS_FMT_AVAILABLE
-#endif
+// Fallback to basic string operations when std::format is not available
 #include <sstream>
 #include <iomanip>
 #endif

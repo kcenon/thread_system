@@ -488,31 +488,5 @@ struct std::formatter<kcenon::thread::typed_thread_pool_t<job_type>, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#elif __has_include(<fmt/format.h>)
-/**
- * @brief Specialization of fmt::formatter for typed_thread_pool_t<job_type>.
- *
- * Allows formatting of typed_thread_pool_t<job_type> objects as strings
- * using the {fmt} library (https://github.com/fmtlib/fmt).
- */
-template <typename job_type>
-struct fmt::formatter<kcenon::thread::typed_thread_pool_t<job_type>>
-	: fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a typed_thread_pool_t<job_type> object as a string.
-	 *
-	 * @tparam FormatContext Type of the format context.
-	 * @param item The typed_thread_pool_t<job_type> object to format.
-	 * @param ctx The format context for the output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::typed_thread_pool_t<job_type>& item,
-				FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
 #endif  // USE_STD_FORMAT
 

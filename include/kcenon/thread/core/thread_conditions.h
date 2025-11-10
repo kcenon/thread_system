@@ -193,34 +193,4 @@ struct std::formatter<kcenon::thread::thread_conditions, wchar_t>
 	}
 };
 
-#elif __has_include(<fmt/format.h>)
-
-/**
- * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_conditions.
- *
- * Allows @c thread_conditions enum values to be formatted as strings using the {fmt} library.
- *
- * ### Example
- * @code
- * auto cond = kcenon::thread::thread_conditions::Working;
- * std::string output = fmt::format("Thread state is {}", cond); // "Thread state is working"
- * @endcode
- */
-template <>
-struct fmt::formatter<kcenon::thread::thread_conditions> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_conditions value as a string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param thread_condition The @c thread_conditions enum value to format.
-	 * @param ctx The format context for the output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_conditions& thread_condition, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(kcenon::thread::to_string(thread_condition),
-														ctx);
-	}
-};
 #endif // USE_STD_FORMAT

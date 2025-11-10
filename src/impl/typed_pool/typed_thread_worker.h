@@ -319,44 +319,5 @@ struct std::formatter<kcenon::thread::typed_thread_worker_t<job_type>, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#elif __has_include(<fmt/format.h>)
-/**
- * @brief Specialization of fmt::formatter for \c typed_thread_worker_t<job_type>.
- *
- * Enables formatting of \c typed_thread_worker_t<job_type> objects using
- * the {fmt} library (https://github.com/fmtlib/fmt).
- *
- * @tparam job_type
- * The type representing the priority levels.
- */
-template <typename job_type>
-struct fmt::formatter<kcenon::thread::typed_thread_worker_t<job_type>>
-	: fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a \c typed_thread_worker_t<job_type> instance as a string.
-	 *
-	 * Internally calls \c item.to_string(), which should provide a string
-	 * representation of the worker's state or identity.
-	 *
-	 * @tparam FormatContext
-	 * The format context type provided by the {fmt} library.
-	 *
-	 * @param item
-	 * The \c typed_thread_worker_t<job_type> instance to format.
-	 *
-	 * @param ctx
-	 * The {fmt} format context.
-	 *
-	 * @return
-	 * An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::typed_thread_worker_t<job_type>& item,
-				FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
 #endif  // USE_STD_FORMAT
 

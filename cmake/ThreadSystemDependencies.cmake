@@ -52,78 +52,9 @@ function(find_common_system_dependency)
 endfunction()
 
 ##################################################
-# Find fmt library (optional, only when std::format is not available)
+# Note: fmt library support has been removed
+# ThreadSystem now requires C++20 std::format
 ##################################################
-function(find_fmt_library)
-  # Skip if using std::format (C++20 standard)
-  if(USE_STD_FORMAT)
-    message(STATUS "✅ std::format is enabled - skipping fmt library search")
-    set(FMT_FOUND FALSE PARENT_SCOPE)
-    return()
-  endif()
-
-  message(STATUS "std::format not available - searching for fmt library...")
-
-  # Try CMake config mode first
-  find_package(fmt CONFIG QUIET)
-
-  if(fmt_FOUND)
-    message(STATUS "Found fmt via CMake config")
-    add_definitions(-DHAS_FMT_LIBRARY)
-    set(FMT_FOUND TRUE PARENT_SCOPE)
-    set(FMT_TARGET fmt::fmt PARENT_SCOPE)
-    return()
-  endif()
-
-  # Try pkgconfig
-  find_package(PkgConfig QUIET)
-  if(PkgConfig_FOUND)
-    pkg_check_modules(FMT QUIET IMPORTED_TARGET fmt)
-    if(FMT_FOUND)
-      message(STATUS "Found fmt via pkgconfig: ${FMT_VERSION}")
-      add_definitions(-DHAS_FMT_LIBRARY)
-      set(FMT_FOUND TRUE PARENT_SCOPE)
-      set(FMT_TARGET PkgConfig::FMT PARENT_SCOPE)
-      return()
-    endif()
-  endif()
-
-  # Manual search
-  find_path(FMT_INCLUDE_DIR
-    NAMES fmt/format.h
-    PATHS
-      /opt/homebrew/include
-      /usr/local/include
-      /usr/include
-  )
-
-  find_library(FMT_LIBRARY
-    NAMES fmt
-    PATHS
-      /opt/homebrew/lib
-      /usr/local/lib
-      /usr/lib
-  )
-
-  if(FMT_INCLUDE_DIR)
-    message(STATUS "Found fmt include dir: ${FMT_INCLUDE_DIR}")
-    add_definitions(-DHAS_FMT_LIBRARY)
-    if(FMT_LIBRARY)
-      message(STATUS "Found fmt library: ${FMT_LIBRARY}")
-      set(FMT_FOUND TRUE PARENT_SCOPE)
-      set(FMT_INCLUDE_DIR ${FMT_INCLUDE_DIR} PARENT_SCOPE)
-      set(FMT_LIBRARY ${FMT_LIBRARY} PARENT_SCOPE)
-    else()
-      message(STATUS "Using fmt as header-only")
-      set(FMT_FOUND TRUE PARENT_SCOPE)
-      set(FMT_INCLUDE_DIR ${FMT_INCLUDE_DIR} PARENT_SCOPE)
-      set(FMT_HEADER_ONLY TRUE PARENT_SCOPE)
-    endif()
-  else()
-    message(WARNING "⚠️ fmt library not found - using basic string operations fallback")
-    set(FMT_FOUND FALSE PARENT_SCOPE)
-  endif()
-endfunction()
 
 ##################################################
 # Find iconv library (optional, improves conversions)
@@ -231,26 +162,9 @@ function(find_thread_system_dependencies)
   message(STATUS "Finding ThreadSystem dependencies...")
 
   find_common_system_dependency()
-  find_fmt_library()
   find_iconv_library()
   find_threading_library()
   find_or_fetch_gtest()
-
-  if(DEFINED FMT_FOUND)
-    set(FMT_FOUND ${FMT_FOUND} PARENT_SCOPE)
-  endif()
-  if(DEFINED FMT_TARGET)
-    set(FMT_TARGET ${FMT_TARGET} PARENT_SCOPE)
-  endif()
-  if(DEFINED FMT_INCLUDE_DIR)
-    set(FMT_INCLUDE_DIR ${FMT_INCLUDE_DIR} PARENT_SCOPE)
-  endif()
-  if(DEFINED FMT_LIBRARY)
-    set(FMT_LIBRARY ${FMT_LIBRARY} PARENT_SCOPE)
-  endif()
-  if(DEFINED FMT_HEADER_ONLY)
-    set(FMT_HEADER_ONLY ${FMT_HEADER_ONLY} PARENT_SCOPE)
-  endif()
 
   if(DEFINED THREAD_SYSTEM_ICONV_FOUND)
     set(THREAD_SYSTEM_ICONV_FOUND ${THREAD_SYSTEM_ICONV_FOUND} PARENT_SCOPE)

@@ -335,33 +335,5 @@ struct std::formatter<kcenon::thread::typed_job_queue_t<job_type>, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-#elif __has_include(<fmt/format.h>)
-/**
- * @brief Specialization of fmt::formatter for typed_job_queue_t<job_type> when using the
- * {fmt} library.
- *
- * This allows a typed_job_queue_t<job_type> to be formatted using the {fmt} library,
- * by invoking the @c to_string() method on the instance.
- *
- * @tparam job_type The type representing priority levels.
- */
-template <typename job_type>
-struct fmt::formatter<kcenon::thread::typed_job_queue_t<job_type>>
-	: fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a typed_job_queue_t<job_type> into a string view for {fmt}.
-	 * @tparam FormatContext The context type provided by {fmt}.
-	 * @param item The typed_job_queue_t instance to format.
-	 * @param ctx The {fmt} context where the output will be appended.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::typed_job_queue_t<job_type>& item,
-				FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
 #endif  // USE_STD_FORMAT
 

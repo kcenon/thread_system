@@ -24,10 +24,9 @@ endfunction()
 # Check std::format support
 ##################################################
 function(check_std_format_support)
-  # Options to control feature usage
-  # Changed default: Always use std::format (C++20 standard) unless explicitly disabled
+  # ThreadSystem requires C++20 std::format
+  # This function verifies that std::format is available and working
   option(USE_STD_FORMAT "Use std::format (C++20 standard)" ON)
-  option(FORCE_FMT_FORMAT "Force use of fmt library instead of std::format" OFF)
 
   # First check basic std::format availability
   check_cxx20_feature(std_format_basic "
@@ -66,14 +65,6 @@ function(check_std_format_support)
     }
   " HAS_STD_FORMAT_SPECIALIZATION)
 
-  # If user explicitly wants fmt, skip std::format checks
-  if(FORCE_FMT_FORMAT)
-    message(STATUS "⚙️  FORCE_FMT_FORMAT enabled - using fmt library")
-    set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    set(USE_STD_FORMAT ${USE_STD_FORMAT} PARENT_SCOPE)
-    return()
-  endif()
-
   # Determine if we should use std::format (default: ON)
   set(USE_STD_FORMAT_ENABLED ${USE_STD_FORMAT})
 
@@ -91,22 +82,19 @@ function(check_std_format_support)
       set(USE_STD_FORMAT_ENABLED TRUE)
       message(STATUS "✅ Using std::format (C++20 standard)")
     else()
-      message(STATUS "❌ std::format compile test failed - fallback to fmt library if available")
-      set(USE_STD_FORMAT_ENABLED FALSE)
+      message(FATAL_ERROR "❌ std::format compile test failed - ThreadSystem requires C++20 std::format support")
     endif()
   elseif(USE_STD_FORMAT_ENABLED)
-    message(STATUS "⚠️  std::format requested but not fully supported - fallback to fmt library if available")
-    set(USE_STD_FORMAT_ENABLED FALSE)
+    message(FATAL_ERROR "⚠️  std::format requested but not fully supported - ThreadSystem requires C++20 std::format support")
   endif()
 
   # Apply the decision
   if(USE_STD_FORMAT_ENABLED)
     add_definitions(-DUSE_STD_FORMAT)
     set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
-    message(STATUS "std::format enabled - fmt library not required")
+    message(STATUS "std::format enabled")
   else()
-    set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    message(STATUS "std::format disabled - fmt library will be searched if needed")
+    message(FATAL_ERROR "std::format disabled - ThreadSystem requires C++20 std::format support. Please use a compiler with full C++20 support.")
   endif()
 
   # Export result to parent scope

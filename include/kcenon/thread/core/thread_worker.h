@@ -331,33 +331,4 @@ struct std::formatter<kcenon::thread::thread_worker, wchar_t>
 	}
 };
 
-#elif __has_include(<fmt/format.h>)
-
-/**
- * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_worker.
- *
- * Allows @c thread_worker objects to be formatted as strings using the {fmt} library.
- *
- * ### Example
- * @code
- * auto worker = std::make_unique<kcenon::thread::thread_worker>();
- * std::string output = fmt::format("Worker status: {}", *worker);
- * @endcode
- */
-template <>
-struct fmt::formatter<kcenon::thread::thread_worker> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_worker object as a string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param item The @c thread_worker to format.
-	 * @param ctx  The format context for output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_worker& item, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
 #endif  // USE_STD_FORMAT

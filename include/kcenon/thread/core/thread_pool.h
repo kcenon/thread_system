@@ -560,34 +560,4 @@ struct std::formatter<kcenon::thread::thread_pool, wchar_t>
 	}
 };
 
-#elif __has_include(<fmt/format.h>)
-
-/**
- * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_pool.
- *
- * Allows @c thread_pool objects to be formatted as strings using the {fmt} library.
- *
- * ### Example
- * @code
- * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
- * pool->start();
- * std::string output = fmt::format("Pool Info: {}", *pool);
- * @endcode
- */
-template <>
-struct fmt::formatter<kcenon::thread::thread_pool> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_pool object as a string using {fmt}.
-	 * @tparam FormatContext The type of the format context.
-	 * @param item The @c thread_pool to format.
-	 * @param ctx  The format context for output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
 #endif  // USE_STD_FORMAT
