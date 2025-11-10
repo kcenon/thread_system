@@ -50,13 +50,15 @@ function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
     OUTPUT_VARIABLE COMPILE_OUTPUT
   )
 
-  # Debug: print compilation output if failed
+  # Debug: print compilation output if failed (always for std::format tests)
   if(NOT ${RESULT_VAR})
-    if(CMAKE_VERBOSE_MAKEFILE OR THREAD_SYSTEM_DEBUG_FEATURES)
-      message(STATUS "Compilation of ${FEATURE_NAME} failed:")
-      message(STATUS "  Compiler: ${CMAKE_CXX_COMPILER}")
-      message(STATUS "  Flags: ${TEST_CXX_FLAGS}")
-      message(STATUS "  Output: ${COMPILE_OUTPUT}")
+    message(WARNING "❌ C++20 feature test '${FEATURE_NAME}' failed")
+    message(WARNING "  Compiler: ${CMAKE_CXX_COMPILER}")
+    message(WARNING "  Flags: ${TEST_CXX_FLAGS}")
+    message(WARNING "  Test file: ${TEST_FILE}")
+    if(CMAKE_VERBOSE_MAKEFILE OR THREAD_SYSTEM_DEBUG_FEATURES OR FEATURE_NAME MATCHES "format")
+      message(WARNING "  Full output:")
+      message(WARNING "${COMPILE_OUTPUT}")
     endif()
   endif()
 

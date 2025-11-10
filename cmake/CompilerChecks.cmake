@@ -130,6 +130,14 @@ endfunction()
 include(CheckIncludeFileCXX)
 
 function(check_required_headers)
+    # Set required flags for header checks to use C++20
+    set(CMAKE_REQUIRED_FLAGS_SAVE "${CMAKE_REQUIRED_FLAGS}")
+    if(MSVC)
+        set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} /std:c++20")
+    else()
+        set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++20")
+    endif()
+
     # C++ Standard headers
     set(REQUIRED_HEADERS
         algorithm
@@ -191,6 +199,9 @@ function(check_required_headers)
             message(STATUS "C++20 header <${header}> not found - will use fallback")
         endif()
     endforeach()
+
+    # Restore original CMAKE_REQUIRED_FLAGS
+    set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_SAVE}")
 endfunction()
 
 ##################################################
