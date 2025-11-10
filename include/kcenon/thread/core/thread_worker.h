@@ -248,9 +248,12 @@ namespace kcenon::thread
 		 * @brief Mutex protecting job queue replacement.
 		 *
 		 * This mutex synchronizes access to job_queue_ during replacement operations
-		 * to prevent race conditions between do_work() and set_job_queue().
+		 * to prevent race conditions between do_work(), set_job_queue(), and should_continue_work().
+		 *
+		 * @note Marked mutable to allow locking in const methods like should_continue_work().
+		 * The const qualifier applies to the logical state, not the mutex itself.
 		 */
-		std::mutex queue_mutex_;
+		mutable std::mutex queue_mutex_;
 
 		/**
 		 * @brief Condition variable for queue replacement synchronization.
