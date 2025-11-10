@@ -11,24 +11,34 @@ include(CheckCXXSourceCompiles)
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
   # Write test code to a temporary file
   set(TEST_FILE "${CMAKE_BINARY_DIR}/cxx20_feature_test_${FEATURE_NAME}.cpp")
-  file(WRITE "${TEST_FILE}" "
-    #include <cstddef>
-    #include <cstdint>
-    #include <utility>
-    ${TEST_CODE}
-  ")
+  file(WRITE "${TEST_FILE}" "${TEST_CODE}")
 
-  # Use try_compile with explicit C++20 standard
+  # Prepare compiler-specific C++20 flags
+  set(CXX20_FLAGS "")
+  if(MSVC)
+    set(CXX20_FLAGS "/std:c++20")
+  else()
+    set(CXX20_FLAGS "-std=c++20")
+  endif()
+
+  # Use try_compile with explicit C++20 standard and flags
   try_compile(${RESULT_VAR}
     ${CMAKE_BINARY_DIR}/cxx20_tests
     SOURCES "${TEST_FILE}"
     CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+    CMAKE_FLAGS "-DCMAKE_CXX_FLAGS=${CXX20_FLAGS}"
     OUTPUT_VARIABLE COMPILE_OUTPUT
   )
 
-  # Clean up test file
-  file(REMOVE "${TEST_FILE}")
+  # Debug: print compilation output if failed
+  if(NOT ${RESULT_VAR})
+    if(CMAKE_VERBOSE_MAKEFILE OR THREAD_SYSTEM_DEBUG_FEATURES)
+      message(STATUS "Compilation of ${FEATURE_NAME} failed:")
+      message(STATUS "${COMPILE_OUTPUT}")
+    endif()
+  endif()
 
   # Export result to parent scope
   set(${RESULT_VAR} ${${RESULT_VAR}} PARENT_SCOPE)
