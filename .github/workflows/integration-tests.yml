@@ -15,8 +15,8 @@ jobs:
       matrix:
         build-type: [Debug, Release]
         compiler:
-          - { name: GCC, cc: gcc, cxx: g++ }
-          - { name: Clang, cc: clang, cxx: clang++ }
+          - { name: GCC, cc: gcc-13, cxx: g++-13 }
+          - { name: Clang, cc: clang-15, cxx: clang++-15 }
 
     steps:
     - name: Checkout code
@@ -42,12 +42,16 @@ jobs:
             cmake \
             ninja-build \
             ${{ matrix.compiler.cc }} \
-            ${{ matrix.compiler.cxx }} \
-            libfmt-dev && break || {
+            ${{ matrix.compiler.cxx }} && break || {
             echo "apt-get install failed, retrying in 10 seconds..."
             sleep 10
           }
         done
+
+        # Install libc++ for Clang
+        if [[ "${{ matrix.compiler.name }}" == "Clang" ]]; then
+          sudo apt-get install -y libc++-15-dev libc++abi-15-dev
+        fi
 
         # Verify installation
         ${{ matrix.compiler.cc }} --version
@@ -288,18 +292,17 @@ jobs:
           sudo apt-get install -y \
             cmake \
             ninja-build \
-            gcc \
-            g++ \
-            lcov \
-            libfmt-dev && break || {
+            gcc-13 \
+            g++-13 \
+            lcov && break || {
             echo "apt-get install failed, retrying in 10 seconds..."
             sleep 10
           }
         done
 
         # Verify installation
-        gcc --version
-        g++ --version
+        gcc-13 --version
+        g++-13 --version
         cmake --version
         ninja --version
         lcov --version
@@ -459,17 +462,16 @@ jobs:
           sudo apt-get install -y \
             cmake \
             ninja-build \
-            gcc \
-            g++ \
-            libfmt-dev && break || {
+            gcc-13 \
+            g++-13 && break || {
             echo "apt-get install failed, retrying in 10 seconds..."
             sleep 10
           }
         done
 
         # Verify installation
-        gcc --version
-        g++ --version
+        gcc-13 --version
+        g++-13 --version
         cmake --version
         ninja --version
         # GTest is now fetched via CMake FetchContent - no system package needed

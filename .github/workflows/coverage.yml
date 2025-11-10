@@ -20,7 +20,10 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ lcov libfmt-dev
+        # Install GCC-13 for C++20 std::format support
+        sudo apt-get install -y cmake ninja-build gcc-13 g++-13 lcov
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)

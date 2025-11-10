@@ -35,14 +35,19 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libfmt-dev
+        sudo apt-get install -y cmake ninja-build clang
+        # Install GCC-13 for C++20 std::format support
+        sudo apt-get install -y gcc-13 g++-13
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
         # GTest is now fetched via CMake FetchContent
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja fmt
+        brew install ninja
         # GTest is now fetched via CMake FetchContent
+        # Note: macOS uses Apple Clang which supports std::format
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -204,7 +209,10 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang libfmt-dev
+        # Install Clang-15 for C++20 std::format support
+        sudo apt-get install -y cmake ninja-build clang-15 libc++-15-dev libc++abi-15-dev
+        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
