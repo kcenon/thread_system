@@ -9,7 +9,16 @@ include(CheckCXXSourceCompiles)
 
 # Function to test for C++20 features at configure time
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
+  # Ensure C++20 standard is enabled for feature detection
   set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS}")
+
+  # Add C++20 flag based on compiler
+  if(MSVC)
+    set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} /std:c++20")
+  else()
+    set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++20")
+  endif()
+
   set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
 
   check_cxx_source_compiles("

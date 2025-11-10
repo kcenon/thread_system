@@ -36,6 +36,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake ninja-build clang
+        # Add ubuntu-toolchain-r PPA for GCC-13
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update
         # Install GCC-13 for C++20 std::format support
         sudo apt-get install -y gcc-13 g++-13
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
@@ -208,6 +211,10 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo apt-get update
+        # Add LLVM repository for Clang-15
+        wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+        sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main" -y
         sudo apt-get update
         # Install Clang-15 for C++20 std::format support
         sudo apt-get install -y cmake ninja-build clang-15 libc++-15-dev libc++abi-15-dev

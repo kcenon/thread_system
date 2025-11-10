@@ -31,6 +31,9 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
+        # Add ubuntu-toolchain-r PPA for GCC-13
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update
         # Install GCC-13 for C++20 std::format support
         sudo apt-get install -y cmake ninja-build gcc-13 g++-13 libbenchmark-dev python3 python3-pip
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100

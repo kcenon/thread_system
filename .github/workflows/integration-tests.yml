@@ -26,6 +26,14 @@ jobs:
 
     - name: Install system dependencies
       run: |
+        # Add repositories for GCC-13 and Clang-15
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+
+        if [[ "${{ matrix.compiler.name }}" == "Clang" ]]; then
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main" -y
+        fi
+
         # Retry logic for apt-get to handle transient failures
         for i in 1 2 3; do
           echo "Attempt $i: Updating package list..."
