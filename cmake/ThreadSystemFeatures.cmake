@@ -21,14 +21,32 @@ function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
     set(CXX20_FLAGS "-std=c++20")
   endif()
 
-  # Use try_compile with explicit C++20 standard and flags
+  # Preserve existing flags and append C++20
+  # This is critical for sanitizer builds and other configurations
+  set(TEST_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX20_FLAGS}")
+
+  # Prepare CMAKE_FLAGS list for try_compile
+  set(CMAKE_FLAGS_LIST)
+
+  # Pass compiler if explicitly set
+  if(CMAKE_CXX_COMPILER)
+    list(APPEND CMAKE_FLAGS_LIST "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}")
+  endif()
+  if(CMAKE_C_COMPILER)
+    list(APPEND CMAKE_FLAGS_LIST "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
+  endif()
+
+  # Pass combined flags
+  list(APPEND CMAKE_FLAGS_LIST "-DCMAKE_CXX_FLAGS=${TEST_CXX_FLAGS}")
+
+  # Use try_compile with explicit C++20 standard and all necessary flags/compilers
   try_compile(${RESULT_VAR}
     ${CMAKE_BINARY_DIR}/cxx20_tests
     SOURCES "${TEST_FILE}"
     CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
-    CMAKE_FLAGS "-DCMAKE_CXX_FLAGS=${CXX20_FLAGS}"
+    CMAKE_FLAGS ${CMAKE_FLAGS_LIST}
     OUTPUT_VARIABLE COMPILE_OUTPUT
   )
 
@@ -36,7 +54,9 @@ function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
   if(NOT ${RESULT_VAR})
     if(CMAKE_VERBOSE_MAKEFILE OR THREAD_SYSTEM_DEBUG_FEATURES)
       message(STATUS "Compilation of ${FEATURE_NAME} failed:")
-      message(STATUS "${COMPILE_OUTPUT}")
+      message(STATUS "  Compiler: ${CMAKE_CXX_COMPILER}")
+      message(STATUS "  Flags: ${TEST_CXX_FLAGS}")
+      message(STATUS "  Output: ${COMPILE_OUTPUT}")
     endif()
   endif()
 
