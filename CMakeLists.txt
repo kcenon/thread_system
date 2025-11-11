@@ -64,10 +64,14 @@ endif()
 # C++ Standard Configuration
 ##################################################
 
-set(CMAKE_CXX_STANDARD 20)
+# C++17 minimum requirement with optional C++20 feature detection
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Detect if compiler supports C++20 features
+# Features will be auto-detected in ThreadSystemFeatures.cmake
 
 ##################################################
 # Include CMake Modules

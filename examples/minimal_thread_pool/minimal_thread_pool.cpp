@@ -82,7 +82,7 @@ int main() {
     
     for (int i = 0; i < total_jobs; ++i) {
         auto job = std::make_unique<callback_job>(
-            [i, &completed_jobs]() -> result_void {
+            [i, &completed_jobs, total_jobs]() -> result_void {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
