@@ -2,14 +2,16 @@
 # ThreadSystemFeatures.cmake
 #
 # Feature detection module for ThreadSystem
-# Detects C++20 standard library features
+# Detects C++17/C++20 standard library features
+# Strategy: C++17 minimum, C++20 optional
 ##################################################
 
 include(CheckCXXSourceCompiles)
 
 # Function to test for C++20 features at configure time
+# Note: This will fail gracefully in C++17 mode and use fallback implementations
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
-  set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS}")
+  set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
   set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
 
   check_cxx_source_compiles("
