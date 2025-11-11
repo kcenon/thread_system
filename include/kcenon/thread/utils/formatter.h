@@ -91,11 +91,12 @@ namespace utility_module
 		 * @brief Internal helper that dispatches to @c std::format or {fmt} based on character
 		 * type.
 		 * @tparam CharT The character type (@c char or @c wchar_t).
+		 * @tparam OutputIt The output iterator type.
 		 * @param out An output iterator to which formatted text is appended.
 		 * @param value The enum value to be converted to string and then formatted.
 		 * @return An iterator pointing to the end of the inserted sequence.
 		 */
-		template <typename CharT> static auto do_format(auto& out, const T& value)
+		template <typename CharT, typename OutputIt> static auto do_format(OutputIt& out, const T& value)
 		{
 #ifdef USE_STD_FORMAT
 			if constexpr (std::is_same_v<CharT, wchar_t>)
@@ -116,13 +117,15 @@ namespace utility_module
 	public:
 		/**
 		 * @brief A no-op parse function required by the formatting library.
+		 * @tparam ParseContext The parse context type.
 		 * @param context The format parse context.
 		 * @return An iterator pointing to the end of @p context.
 		 *
 		 * The formatter does not accept any custom formatting specifiers,
 		 * so it simply returns @c context.begin().
 		 */
-		constexpr auto parse(auto& context) { return context.begin(); }
+		template <typename ParseContext>
+		constexpr auto parse(ParseContext& context) { return context.begin(); }
 
 		/**
 		 * @brief Formats the enum value into a provided format context.

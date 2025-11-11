@@ -2,14 +2,16 @@
 # ThreadSystemFeatures.cmake
 #
 # Feature detection module for ThreadSystem
-# Detects C++20 standard library features
+# Detects C++17/C++20 standard library features
+# Strategy: C++17 minimum, C++20 optional
 ##################################################
 
 include(CheckCXXSourceCompiles)
 
 # Function to test for C++20 features at configure time
+# Note: This will fail gracefully in C++17 mode and use fallback implementations
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
-  set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS}")
+  set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
   set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
 
   check_cxx_source_compiles("
@@ -133,6 +135,54 @@ function(check_std_jthread_support)
     message(STATUS "✅ Using std::jthread")
   else()
     message(STATUS "Using std::thread fallback")
+  endif()
+endfunction()
+
+##################################################
+# Check std::latch and std::barrier support
+##################################################
+function(check_std_latch_support)
+  option(SET_STD_LATCH "Use std::latch and std::barrier if available" ON)
+
+  check_cxx20_feature(std_latch "
+    #include <latch>
+    #include <barrier>
+    int main() {
+      std::latch l(1);
+      std::barrier b(1);
+      return 0;
+    }
+  " HAS_STD_LATCH)
+
+  if(HAS_STD_LATCH AND SET_STD_LATCH)
+    add_definitions(-DHAS_STD_LATCH)
+    message(STATUS "✅ Using std::latch and std::barrier")
+  else()
+    message(STATUS "Using custom latch/barrier implementation")
+  endif()
+endfunction()
+
+##################################################
+# Check std::atomic::wait support
+##################################################
+function(check_std_atomic_wait_support)
+  option(SET_STD_ATOMIC_WAIT "Use std::atomic::wait if available" ON)
+
+  check_cxx20_feature(std_atomic_wait "
+    #include <atomic>
+    int main() {
+      std::atomic<int> a{0};
+      a.wait(0);
+      a.notify_one();
+      return 0;
+    }
+  " HAS_STD_ATOMIC_WAIT)
+
+  if(HAS_STD_ATOMIC_WAIT AND SET_STD_ATOMIC_WAIT)
+    add_definitions(-DHAS_STD_ATOMIC_WAIT)
+    message(STATUS "✅ Using std::atomic::wait/notify")
+  else()
+    message(STATUS "Using custom atomic wait/notify implementation")
   endif()
 endfunction()
 
@@ -293,6 +343,8 @@ function(check_thread_system_features)
 
   check_std_format_support()
   check_std_jthread_support()
+  check_std_latch_support()
+  check_std_atomic_wait_support()
   check_std_chrono_current_zone_support()
   check_std_span_support()
   check_std_filesystem_support()

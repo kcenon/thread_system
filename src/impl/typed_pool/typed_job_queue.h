@@ -117,9 +117,9 @@ namespace kcenon::thread
 		 * @param value A unique pointer to the derived job to enqueue.
 		 * @return @c result_void containing an error if the operation fails, or a success value.
 		 */
-		template<typename DerivedJob>
+		template<typename DerivedJob, typename = std::enable_if_t<std::is_base_of_v<typed_job_t<job_type>, DerivedJob>>>
 		[[nodiscard]] auto enqueue(std::unique_ptr<DerivedJob>&& value) -> result_void
-			requires std::is_base_of_v<typed_job_t<job_type>, DerivedJob>
+			
 		{
 			return enqueue(std::unique_ptr<typed_job_t<job_type>>(std::move(value)));
 		}

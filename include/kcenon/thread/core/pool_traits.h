@@ -40,53 +40,97 @@
  */
 
 #include <type_traits>
+#ifdef USE_STD_CONCEPTS
 #include <concepts>
+#endif
 #include <functional>
 #include <chrono>
 
 namespace kcenon::thread::detail {
-    
+
+#ifdef USE_STD_CONCEPTS
     /**
      * @brief Concept to validate callable types for thread pool jobs
      */
     template<typename F>
     concept Callable = std::is_invocable_v<F>;
-    
+
     /**
      * @brief Concept for callable types that return void
      */
     template<typename F>
     concept VoidCallable = Callable<F> && std::is_void_v<std::invoke_result_t<F>>;
-    
+
     /**
      * @brief Concept for callable types that return a result
      */
     template<typename F>
     concept ReturningCallable = Callable<F> && !std::is_void_v<std::invoke_result_t<F>>;
-    
+
     /**
      * @brief Concept for callables with specific argument types
      */
     template<typename F, typename... Args>
     concept CallableWith = std::is_invocable_v<F, Args...>;
-    
-    /**
-     * @brief Type trait to detect if a type is a duration
-     */
-    template<typename T>
-    struct is_duration : std::false_type {};
-    
-    template<typename Rep, typename Period>
-    struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type {};
-    
-    template<typename T>
-    constexpr bool is_duration_v = is_duration<T>::value;
-    
+
     /**
      * @brief Concept for duration types
      */
     template<typename T>
     concept Duration = is_duration_v<T>;
+
+    /**
+     * @brief Concept for future-like types
+     */
+    template<typename T>
+    concept FutureLike = is_future_like_v<T>;
+
+    /**
+     * @brief Concept for valid thread pool job types
+     */
+    template<typename Job>
+    concept PoolJob = Callable<Job> && (
+        VoidCallable<Job> ||
+        std::is_convertible_v<callable_return_type_t<Job>, bool>
+    );
+#else
+    // C++17 fallback: Use constexpr bool instead of concepts
+    template<typename F>
+    constexpr bool Callable = std::is_invocable_v<F>;
+
+    template<typename F>
+    constexpr bool VoidCallable = std::is_invocable_v<F> && std::is_void_v<std::invoke_result_t<F>>;
+
+    template<typename F>
+    constexpr bool ReturningCallable = std::is_invocable_v<F> && !std::is_void_v<std::invoke_result_t<F>>;
+
+    template<typename F, typename... Args>
+    constexpr bool CallableWith = std::is_invocable_v<F, Args...>;
+
+    template<typename T>
+    constexpr bool Duration = is_duration_v<T>;
+
+    template<typename T>
+    constexpr bool FutureLike = is_future_like_v<T>;
+
+    template<typename Job>
+    constexpr bool PoolJob = std::is_invocable_v<Job> && (
+        (std::is_invocable_v<Job> && std::is_void_v<std::invoke_result_t<Job>>) ||
+        std::is_convertible_v<std::invoke_result_t<Job>, bool>
+    );
+#endif
+
+    /**
+     * @brief Type trait to detect if a type is a duration
+     */
+    template<typename T>
+    struct is_duration : std::false_type {};
+
+    template<typename Rep, typename Period>
+    struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type {};
+
+    template<typename T>
+    constexpr bool is_duration_v = is_duration<T>::value;
     
     /**
      * @brief Type trait to extract return type from callable
@@ -132,13 +176,7 @@ namespace kcenon::thread::detail {
     
     template<typename T>
     constexpr bool is_future_like_v = is_future_like<T>::value;
-    
-    /**
-     * @brief Concept for future-like types
-     */
-    template<typename T>
-    concept FutureLike = is_future_like_v<T>;
-    
+
     /**
      * @brief Type trait for function signature analysis
      */
@@ -222,9 +260,14 @@ namespace kcenon::thread::detail {
      */
     class callable_eraser {
     public:
-        template<typename F>
-        callable_eraser(F&& f) 
-            requires Callable<F>
+        template<typename F
+#ifdef USE_STD_CONCEPTS
+            , typename = std::enable_if_t<Callable<F>>
+#else
+            , typename = std::enable_if_t<Callable<F>>
+#endif
+        >
+        callable_eraser(F&& f)
             : vtable_(&vtable_for<std::decay_t<F>>)
             , storage_(std::forward<F>(f)) {}
         

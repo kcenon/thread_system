@@ -38,6 +38,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <array>
 #include <cstring>
 
+// Include custom atomic wait/notify implementation
+#include "kcenon/thread/utils/atomic_wait.h"
+
 namespace platform_test {
 
 class AtomicOperationsTest : public ::testing::Test {
@@ -464,27 +467,52 @@ TEST_F(AtomicOperationsTest, PerformanceCharacteristics) {
     EXPECT_GT(cas_time + fetch_add_time + store_time + load_time, 0);
 }
 
-// Test wait/notify operations (C++20)
+// Test wait/notify operations (C++17 compatible with custom implementation)
 TEST_F(AtomicOperationsTest, WaitNotifyOperations) {
+#ifdef HAS_STD_ATOMIC_WAIT
+    // C++20: Use std::atomic directly
     std::atomic<int> value{0};
     bool consumer_done = false;
-    
+
     std::thread consumer([&value, &consumer_done]() {
         // Wait for value to become non-zero
         value.wait(0);
         EXPECT_NE(value.load(), 0);
         consumer_done = true;
     });
-    
+
     // Give consumer time to start waiting
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    
+
     // Change value and notify
     value.store(42);
     value.notify_one();
-    
+
     consumer.join();
     EXPECT_TRUE(consumer_done);
+#else
+    // C++17: Use custom implementation
+    std::atomic<int> value{0};
+    kcenon::thread::atomic_wait_helper<int> waiter;
+    bool consumer_done = false;
+
+    std::thread consumer([&value, &waiter, &consumer_done]() {
+        // Wait for value to become non-zero
+        waiter.wait(value, 0);
+        EXPECT_NE(value.load(), 0);
+        consumer_done = true;
+    });
+
+    // Give consumer time to start waiting
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+    // Change value and notify
+    value.store(42, std::memory_order_release);
+    waiter.notify_one();
+
+    consumer.join();
+    EXPECT_TRUE(consumer_done);
+#endif
 }
 
 // Test custom atomic types

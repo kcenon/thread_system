@@ -31,6 +31,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Threads::Threads
 )
 
+# Tests require C++20 for consistency
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
+
 # Include new headers for thread_pool and core
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include

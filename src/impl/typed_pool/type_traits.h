@@ -40,39 +40,60 @@
  */
 
 #include <type_traits>
+#ifdef USE_STD_CONCEPTS
 #include <concepts>
+#endif
 #include <string>
 
 namespace kcenon::thread::detail {
-    
+
+#ifdef USE_STD_CONCEPTS
     /**
      * @brief Concept to validate job type parameters
-     * 
+     *
      * A valid job type must be either an enumeration or an integral type
      * (excluding bool for clarity). This ensures job types can be used
      * for priority comparison and categorization.
      */
     template<typename T>
-    concept JobType = std::is_enum_v<T> || 
+    concept JobType = std::is_enum_v<T> ||
                      (std::is_integral_v<T> && !std::is_same_v<T, bool>);
-    
+
     /**
      * @brief Concept for callable job functions
-     * 
+     *
      * Validates that a type can be used as a job callback function.
      */
     template<typename F>
-    concept JobCallable = std::is_invocable_v<F> && 
+    concept JobCallable = std::is_invocable_v<F> &&
                          (std::is_void_v<std::invoke_result_t<F>> ||
                           std::is_same_v<std::invoke_result_t<F>, bool> ||
                           std::is_convertible_v<std::invoke_result_t<F>, std::string>);
-    
+#else
+    // C++17 fallback: Use constexpr bool instead of concepts
+    template<typename T>
+    constexpr bool JobType = std::is_enum_v<T> ||
+                             (std::is_integral_v<T> && !std::is_same_v<T, bool>);
+
+    template<typename F>
+    constexpr bool JobCallable = std::is_invocable_v<F> &&
+                                 (std::is_void_v<std::invoke_result_t<F>> ||
+                                  std::is_same_v<std::invoke_result_t<F>, bool> ||
+                                  std::is_convertible_v<std::invoke_result_t<F>, std::string>);
+#endif
+
     /**
      * @brief Type traits for job types
-     * 
+     *
      * Provides compile-time information about job type characteristics.
      */
-    template<JobType T>
+    template<typename T
+#ifdef USE_STD_CONCEPTS
+        , typename = std::enable_if_t<JobType<T>>
+#else
+        , typename = std::enable_if_t<JobType<T>>
+#endif
+    >
     struct job_type_traits {
         using type = T;
         using underlying_type = std::conditional_t<std::is_enum_v<T>, 

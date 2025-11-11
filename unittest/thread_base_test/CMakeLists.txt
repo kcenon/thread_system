@@ -41,6 +41,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Threads::Threads
 )
 
+# Tests require C++20 for std::latch and std::barrier
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
+
 enable_testing()
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
