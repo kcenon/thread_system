@@ -163,6 +163,30 @@ function(check_std_latch_support)
 endfunction()
 
 ##################################################
+# Check std::atomic::wait support
+##################################################
+function(check_std_atomic_wait_support)
+  option(SET_STD_ATOMIC_WAIT "Use std::atomic::wait if available" ON)
+
+  check_cxx20_feature(std_atomic_wait "
+    #include <atomic>
+    int main() {
+      std::atomic<int> a{0};
+      a.wait(0);
+      a.notify_one();
+      return 0;
+    }
+  " HAS_STD_ATOMIC_WAIT)
+
+  if(HAS_STD_ATOMIC_WAIT AND SET_STD_ATOMIC_WAIT)
+    add_definitions(-DHAS_STD_ATOMIC_WAIT)
+    message(STATUS "✅ Using std::atomic::wait/notify")
+  else()
+    message(STATUS "Using custom atomic wait/notify implementation")
+  endif()
+endfunction()
+
+##################################################
 # Check std::chrono::current_zone support
 ##################################################
 function(check_std_chrono_current_zone_support)
@@ -320,6 +344,7 @@ function(check_thread_system_features)
   check_std_format_support()
   check_std_jthread_support()
   check_std_latch_support()
+  check_std_atomic_wait_support()
   check_std_chrono_current_zone_support()
   check_std_span_support()
   check_std_filesystem_support()
