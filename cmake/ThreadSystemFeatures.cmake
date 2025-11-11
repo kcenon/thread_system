@@ -139,6 +139,30 @@ function(check_std_jthread_support)
 endfunction()
 
 ##################################################
+# Check std::latch and std::barrier support
+##################################################
+function(check_std_latch_support)
+  option(SET_STD_LATCH "Use std::latch and std::barrier if available" ON)
+
+  check_cxx20_feature(std_latch "
+    #include <latch>
+    #include <barrier>
+    int main() {
+      std::latch l(1);
+      std::barrier b(1);
+      return 0;
+    }
+  " HAS_STD_LATCH)
+
+  if(HAS_STD_LATCH AND SET_STD_LATCH)
+    add_definitions(-DHAS_STD_LATCH)
+    message(STATUS "✅ Using std::latch and std::barrier")
+  else()
+    message(STATUS "Using custom latch/barrier implementation")
+  endif()
+endfunction()
+
+##################################################
 # Check std::chrono::current_zone support
 ##################################################
 function(check_std_chrono_current_zone_support)
@@ -295,6 +319,7 @@ function(check_thread_system_features)
 
   check_std_format_support()
   check_std_jthread_support()
+  check_std_latch_support()
   check_std_chrono_current_zone_support()
   check_std_span_support()
   check_std_filesystem_support()
