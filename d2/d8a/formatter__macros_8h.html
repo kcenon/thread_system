@@ -79,7 +79,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Provides macros for generating std::formatter specializations.  
+<p>Provides macros for generating formatter specializations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../de/d52/formatter_8h_source.html">formatter.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d1/d46/convert__string_8h_source.html">convert_string.h</a>&quot;</code><br />
@@ -88,7 +88,7 @@ Include dependency graph for formatter_macros.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d8c/formatter__macros_8h__incl.png" border="0" usemap="#autilities_2include_2formatter__macros_8h" alt=""/></div>
 <map name="autilities_2include_2formatter__macros_8h" id="autilities_2include_2formatter__macros_8h">
-<area shape="rect" title="Provides macros for generating std::formatter specializations." alt="" coords="501,5,689,45"/>
+<area shape="rect" title="Provides macros for generating formatter specializations." alt="" coords="501,5,689,45"/>
 <area shape="rect" href="../../de/d52/formatter_8h.html" title=" " alt="" coords="799,93,893,119"/>
 <area shape="poly" title=" " alt="" coords="656,43,797,87,796,92,655,48"/>
 <area shape="rect" href="../../d1/d46/convert__string_8h.html" title=" " alt="" coords="393,93,520,119"/>
@@ -126,16 +126,18 @@ Include dependency graph for formatter_macros.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a09ac6066fba09ec3f0e925a42ece4f93" id="r_a09ac6066fba09ec3f0e925a42ece4f93"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#a09ac6066fba09ec3f0e925a42ece4f93">NO_FORMATTER_SUPPORT</a></td></tr>
+<tr class="separator:a09ac6066fba09ec3f0e925a42ece4f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad353e070b78b0b1f98da791dfc46f0a1" id="r_ad353e070b78b0b1f98da791dfc46f0a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(CLASS_NAME)</td></tr>
-<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty formatter macro when std::format is not available.  <br /></td></tr>
+<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty formatter macro when no formatting library is available.  <br /></td></tr>
 <tr class="separator:ad353e070b78b0b1f98da791dfc46f0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides macros for generating std::formatter specializations. </p>
-<p>This file contains macros that generate formatter specializations for custom types to work with C++20 std::format. The macros eliminate code duplication by generating the necessary boilerplate code for formatter specializations.</p>
+<div class="textblock"><p>Provides macros for generating formatter specializations. </p>
+<p>This file contains macros that generate formatter specializations for custom types to work with both std::format (C++20) and fmt library. The macros eliminate code duplication by generating the necessary boilerplate code for formatter specializations.</p>
 <p>Usage example: </p><div class="fragment"><div class="line"><span class="comment">// In your header file after class definition:</span></div>
 <div class="line"><a class="code hl_define" href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(my_namespace::my_class)</div>
-<div class="ttc" id="aformatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Empty formatter macro when std::format is not available.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d8a/formatter__macros_8h_source.html#l00100">formatter_macros.h:100</a></div></div>
+<div class="ttc" id="aformatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d2/d8a/formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Empty formatter macro when no formatting library is available.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d8a/formatter__macros_8h_source.html#l00133">formatter_macros.h:133</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -155,8 +157,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Empty formatter macro when std::format is not available. </p>
-<p>When std::format is not available, this macro expands to nothing. The class can still use to_string() method for string conversion.</p>
+<p>Empty formatter macro when no formatting library is available. </p>
+<p>When neither std::format nor fmt library is available, this macro expands to nothing. The class can still use to_string() method for string conversion.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">CLASS_NAME</td><td>The fully qualified class name (including namespace if any) </td></tr>
@@ -164,14 +166,30 @@ Macros</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00100">100</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00133">133</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+
+</div>
+</div>
+<a id="a09ac6066fba09ec3f0e925a42ece4f93" name="a09ac6066fba09ec3f0e925a42ece4f93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ac6066fba09ec3f0e925a42ece4f93">&#9670;&#160;</a></span>NO_FORMATTER_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NO_FORMATTER_SUPPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html#l00061">61</a> of file <a class="el" href="../../d2/d8a/formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 10 2025 17:01:51 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Nov 11 2025 04:21:24 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
