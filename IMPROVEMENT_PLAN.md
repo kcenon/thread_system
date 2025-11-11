@@ -498,4 +498,514 @@ minimal, well-documented, and introduces no performance regression.
 **Last Updated**: 2025-11-10
 **Responsibility**: Senior Developer (Concurrency Expert)
 **Priority**: Medium - Test reliability improvement, not production blocker
+
+---
+
+## 🟡 Sprint 2: C++17 Migration (Phase 3)
+
+**Date**: 2025-11-11
+**Status**: ⏳ Planning Phase
+**Priority**: High - Platform Compatibility
+**Effort**: 3-4 weeks
+
+### Overview
+
+thread_system uses the **most extensive C++20 features** of all systems:
+- std::format (extensive usage with custom formatters)
+- std::jthread (core threading primitive - CRITICAL)
+- std::stop_token (cancellation mechanism)
+- std::span (multiple uses)
+- std::ranges (sort, find, range concepts)
+- Concepts (JobType, JobCallable, Callable, etc.)
+- Requires clauses (template constraints)
+
+**Migration Effort**: **HIGH** (3-4 weeks, 2 developers)
+
+---
+
+### Task 2.1: Replace std::format with fmt::format (Week 1, 5 days)
+
+**Severity**: P1 (High)
+**Impact**: Build compatibility
+**Effort**: 5 days
+
+**Affected Files**:
+1. `include/kcenon/thread/utils/formatter.h` - Replace `<format>` with `<fmt/format.h>`
+2. `utilities/include/formatter.h` - Replace `<format>` with `<fmt/format.h>`
+3. `src/utils/convert_string.cpp:508,517` - Replace `std::format_to` → `fmt::format_to`
+
+**Custom std::formatter Specializations** (5 files):
+1. `typed_job_queue.h:291-305` - `std::formatter<typed_job_queue_t>` → `fmt::formatter<typed_job_queue_t>`
+2. `typed_thread_pool.h:444-459` - `std::formatter<typed_thread_pool_t>` → `fmt::formatter<typed_thread_pool_t>`
+3. `job_types.h:147-161` - `std::formatter<job_types>` → `fmt::formatter<job_types>`
+4. `typed_thread_worker.h:252-277` - `std::formatter<typed_thread_worker_t>` → `fmt::formatter<typed_thread_worker_t>`
+5. `thread_worker.h:293-305` - `std::formatter<thread_worker>` → `fmt::formatter<thread_worker>`
+
+**Migration Pattern**:
+```cpp
+// Before (C++20)
+#include <format>
+
+template<>
+struct std::formatter<MyType> {
+    constexpr auto parse(std::format_parse_context& ctx) { ... }
+    auto format(const MyType& value, std::format_context& ctx) const { ... }
+};
+
+// After (C++17 with fmt)
+#include <fmt/format.h>
+
+template<>
+struct fmt::formatter<MyType> {
+    constexpr auto parse(fmt::format_parse_context& ctx) { ... }
+    auto format(const MyType& value, fmt::format_context& ctx) const { ... }
+};
+```
+
+**CMakeLists.txt Update**:
+```cmake
+# Add fmt library
+find_package(fmt CONFIG QUIET)
+if(NOT fmt_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+        GIT_TAG 10.2.1
+    )
+    FetchContent_MakeAvailable(fmt)
+endif()
+
+target_link_libraries(thread_system PRIVATE fmt::fmt)
+```
+
+---
+
+### Task 2.2: Replace std::jthread with std::thread (Week 2-3, 8 days) ⚠️ **CRITICAL**
+
+**Severity**: P0 (Critical)
+**Impact**: Core threading functionality
+**Effort**: 8 days (most complex task)
+
+**Affected Files**:
+1. `src/core/thread_base.cpp:184` - jthread construction
+2. `include/kcenon/thread/core/thread_base.h:358` - `std::unique_ptr<std::jthread> worker_thread_`
+3. `include/kcenon/thread/core/thread_impl.h:54` - `using thread_type = std::jthread`
+4. `include/kcenon/thread/core/thread_impl.h:55` - `using stop_token_type = std::stop_token`
+
+**Key Differences**:
+- std::jthread: Automatic join on destruction, cooperative cancellation via stop_token
+- std::thread: Manual join/detach, no built-in cancellation
+
+**Migration Strategy**:
+
+**Option A: Custom jthread wrapper** (Recommended):
+```cpp
+// include/kcenon/thread/utils/jthread_compat.h
+#if __cplusplus >= 202002L && __has_include(<thread>)
+    #include <thread>
+    namespace kcenon::thread {
+        using jthread = std::jthread;
+        using stop_token = std::stop_token;
+        using stop_source = std::stop_source;
+    }
+#else
+    #include <thread>
+    #include <atomic>
+
+    namespace kcenon::thread {
+        class stop_source {
+        public:
+            bool request_stop() noexcept {
+                return !stop_requested_.exchange(true);
+            }
+            bool stop_requested() const noexcept {
+                return stop_requested_.load();
+            }
+        private:
+            std::atomic<bool> stop_requested_{false};
+        };
+
+        class stop_token {
+        public:
+            stop_token() = default;
+            explicit stop_token(const stop_source& source) : source_(&source) {}
+            bool stop_requested() const noexcept {
+                return source_ && source_->stop_requested();
+            }
+        private:
+            const stop_source* source_{nullptr};
+        };
+
+        class jthread {
+        public:
+            template<typename Func, typename... Args>
+            explicit jthread(Func&& func, Args&&... args)
+                : thread_(std::forward<Func>(func), std::forward<Args>(args)...) {}
+
+            ~jthread() {
+                if (thread_.joinable()) {
+                    stop_source_.request_stop();
+                    thread_.join();
+                }
+            }
+
+            jthread(jthread&&) noexcept = default;
+            jthread& operator=(jthread&&) noexcept = default;
+
+            bool joinable() const noexcept { return thread_.joinable(); }
+            void join() { thread_.join(); }
+            void detach() { thread_.detach(); }
+
+            bool request_stop() noexcept {
+                return stop_source_.request_stop();
+            }
+
+            stop_token get_stop_token() const noexcept {
+                return stop_token{stop_source_};
+            }
+
+        private:
+            std::thread thread_;
+            stop_source stop_source_;
+        };
+    }
+#endif
+```
+
+**Files to update**:
+- Create `include/kcenon/thread/utils/jthread_compat.h`
+- Update all files using std::jthread to include jthread_compat.h
+- Change namespace from std:: to kcenon::thread:: for jthread/stop_token
+
+**Testing**:
+- Verify automatic joining on destruction
+- Verify stop_requested() propagation
+- Verify thread lifecycle (start, stop, join)
+
+---
+
+### Task 2.3: Replace std::span with Custom Implementation (Week 3, 2 days)
+
+**Severity**: P1 (High)
+**Impact**: Data view functionality
+**Effort**: 2 days
+
+**Affected Files**:
+1. `include/kcenon/thread/utils/span.h:55` - `using span = std::span<T, Extent>`
+2. `cmake/test_std_span.cpp` - Full span test
+
+**Migration Strategy**:
+
+**Option A: Use gsl::span** (Recommended if using Microsoft GSL):
+```cmake
+find_package(Microsoft.GSL CONFIG QUIET)
+if(Microsoft.GSL_FOUND)
+    target_link_libraries(thread_system PRIVATE Microsoft.GSL::GSL)
+endif()
+```
+
+```cpp
+#if __cplusplus >= 202002L && __has_include(<span>)
+    #include <span>
+    namespace kcenon::thread {
+        template<typename T, size_t Extent = std::dynamic_extent>
+        using span = std::span<T, Extent>;
+    }
+#else
+    #include <gsl/span>
+    namespace kcenon::thread {
+        template<typename T, size_t Extent = gsl::dynamic_extent>
+        using span = gsl::span<T, Extent>;
+    }
+#endif
+```
+
+**Option B: Custom minimal span implementation**:
+```cpp
+// include/kcenon/thread/utils/span.h
+namespace kcenon::thread {
+    template<typename T>
+    class span {
+    public:
+        using element_type = T;
+        using size_type = std::size_t;
+        using pointer = T*;
+        using reference = T&;
+        using iterator = T*;
+
+        constexpr span() noexcept : data_(nullptr), size_(0) {}
+        constexpr span(pointer ptr, size_type size) noexcept
+            : data_(ptr), size_(size) {}
+
+        template<std::size_t N>
+        constexpr span(element_type (&arr)[N]) noexcept
+            : data_(arr), size_(N) {}
+
+        constexpr iterator begin() const noexcept { return data_; }
+        constexpr iterator end() const noexcept { return data_ + size_; }
+        constexpr size_type size() const noexcept { return size_; }
+        constexpr bool empty() const noexcept { return size_ == 0; }
+        constexpr reference operator[](size_type idx) const { return data_[idx]; }
+        constexpr pointer data() const noexcept { return data_; }
+
+    private:
+        pointer data_;
+        size_type size_;
+    };
+}
+```
+
+---
+
+### Task 2.4: Replace std::ranges with Standard Algorithms (Week 3, 2 days)
+
+**Severity**: P2 (Medium)
+**Impact**: Algorithm usage
+**Effort**: 2 days
+
+**Affected Files**:
+1. `cmake/test_std_ranges.cpp:46-51` - Full ranges test
+
+**Migration Pattern**:
+```cpp
+// Before (C++20 ranges)
+#include <ranges>
+#include <algorithm>
+
+std::ranges::sort(vec);
+auto it = std::ranges::find(vec, value);
+static_assert(std::ranges::range<Container>);
+static_assert(std::ranges::forward_range<Container>);
+
+// After (C++17 algorithms)
+#include <algorithm>
+
+std::sort(vec.begin(), vec.end());
+auto it = std::find(vec.begin(), vec.end(), value);
+// Remove static_asserts or replace with SFINAE
+```
+
+**Files to update**:
+- Search for `std::ranges::` usage and replace with std:: equivalents
+- Remove or rewrite range concept checks
+
+---
+
+### Task 2.5: Replace Concepts with SFINAE (Week 4, 3 days)
+
+**Severity**: P1 (High)
+**Impact**: Template constraints
+**Effort**: 3 days
+
+**Affected Files**:
+1. `src/impl/typed_pool/type_traits.h:56` - `concept JobType`
+2. `src/impl/typed_pool/type_traits.h:65` - `concept JobCallable`
+3. `include/kcenon/thread/core/pool_traits.h:53-227` - Multiple concepts:
+   - Callable, VoidCallable, ReturningCallable
+   - CallableWith, Duration, FutureLike
+4. `cmake/test_std_concepts.cpp:39-43` - Concept testing
+
+**Migration Pattern**:
+
+**Before (C++20 Concepts)**:
+```cpp
+template<typename T>
+concept JobType = std::is_base_of_v<job_interface, T> &&
+                  requires(T t) {
+                      { t.execute() } -> std::same_as<void>;
+                  };
+
+template<JobType T>
+class job_queue { ... };
+```
+
+**After (C++17 SFINAE)**:
+```cpp
+template<typename T>
+struct is_job_type : std::conjunction<
+    std::is_base_of<job_interface, T>,
+    std::is_invocable_r<void, decltype(&T::execute), T>
+> {};
+
+template<typename T>
+inline constexpr bool is_job_type_v = is_job_type<T>::value;
+
+template<typename T,
+         typename = std::enable_if_t<is_job_type_v<T>>>
+class job_queue { ... };
+```
+
+**Requires Clauses Replacement**:
+```cpp
+// Before (C++20)
+template<typename F>
+requires Callable<F>
+auto schedule(F&& func);
+
+// After (C++17)
+template<typename F>
+std::enable_if_t<is_callable_v<F>, void>
+schedule(F&& func);
+
+// Or with trailing return type
+template<typename F>
+auto schedule(F&& func) -> std::enable_if_t<is_callable_v<F>>;
+```
+
+**Files to update**:
+- Convert all concept definitions to type traits
+- Replace concept constraints with enable_if
+- Update all template signatures using requires clauses
+
+---
+
+### Task 2.6: Update Build System (Week 4, 1 day)
+
+**Effort**: 1 day
+
+**CMakeLists.txt**:
+```cmake
+# Line 67-68
+set(CMAKE_CXX_STANDARD 17)  # Changed from 20
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Add fmt library
+find_package(fmt CONFIG QUIET)
+if(NOT fmt_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+        GIT_TAG 10.2.1
+    )
+    FetchContent_MakeAvailable(fmt)
+endif()
+
+# Optional: Add Microsoft GSL for span
+find_package(Microsoft.GSL CONFIG QUIET)
+if(Microsoft.GSL_FOUND)
+    target_link_libraries(thread_system PRIVATE Microsoft.GSL::GSL)
+endif()
+
+target_link_libraries(thread_system PRIVATE fmt::fmt)
+```
+
+**cmake/ThreadSystemFeatures.cmake**: Remove or update C++20 feature detection
+
+---
+
+### Task 2.7: Update Documentation (Week 4, 1 day)
+
+**Effort**: 1 day
+
+**Files to update**:
+1. **README.md**:
+   - Line 13: "C++20" → "C++17"
+   - Line 291: Update "C++20 features" section
+   - Line 450: Update jthread mention
+   - Line 583-584: Update jthread/stop_token mention
+   - Line 1040: Update compiler requirements (GCC 7+, Clang 5+, MSVC 2017+)
+
+2. Remove or update C++20 feature claims throughout documentation
+
+---
+
+## 📊 Sprint 2 Success Metrics
+
+| Metric | Current (C++20) | Target (C++17) | Priority |
+|--------|----------------|----------------|----------|
+| **C++ Standard** | 20 | 17 | P0 |
+| **std::format uses** | ~20+ | 0 (fmt::format) | P1 |
+| **std::jthread uses** | Core | 0 (custom impl) | P0 |
+| **std::span uses** | Multiple | 0 (custom/GSL) | P1 |
+| **std::ranges uses** | Some | 0 (std algorithms) | P2 |
+| **Concepts** | 10+ | 0 (SFINAE) | P1 |
+| **Compiler Support** | GCC 10+, Clang 10+, MSVC 2019+ | GCC 7+, Clang 5+, MSVC 2017+ | P1 |
+
+---
+
+## 🎯 Risk Management
+
+### Critical Risks
+
+#### jthread Compatibility
+- **Risk**: Custom jthread may not match std::jthread behavior exactly
+- **Impact**: HIGH - Core threading primitive
+- **Mitigation**:
+  - Extensive testing with thread_base_unit tests
+  - ThreadSanitizer verification
+  - Gradual rollout with feature flags
+  - Keep std::jthread path available for C++20 builds
+
+#### Performance Regression
+- **Risk**: Custom implementations may be slower than std::
+- **Impact**: MEDIUM
+- **Mitigation**:
+  - Benchmark before/after
+  - Profile hot paths
+  - Optimize critical sections
+
+### High Risks
+
+#### Concepts to SFINAE Complexity
+- **Risk**: SFINAE is more verbose and error-prone
+- **Impact**: MEDIUM - Developer experience
+- **Mitigation**:
+  - Create helper type traits
+  - Provide clear examples
+  - Document migration patterns
+
+#### Test Coverage
+- **Risk**: C++20 tests may not work with C++17
+- **Impact**: MEDIUM
+- **Mitigation**:
+  - Review all tests for C++20 dependencies
+  - Add C++17-specific tests
+  - Maintain both C++17 and C++20 CI jobs
+
+---
+
+## ✅ Acceptance Criteria
+
+Sprint 2 Complete When:
+- [ ] All code compiles with C++17 (CMAKE_CXX_STANDARD=17)
+- [ ] All std::format replaced with fmt::format
+- [ ] All std::jthread replaced with custom jthread (backward compatible)
+- [ ] All std::span replaced with custom span or gsl::span
+- [ ] All std::ranges replaced with standard algorithms
+- [ ] All concepts replaced with SFINAE
+- [ ] All 89 tests pass with C++17
+- [ ] ThreadSanitizer clean with C++17 build
+- [ ] AddressSanitizer clean with C++17 build
+- [ ] Performance benchmarks show <5% regression
+- [ ] Documentation updated (README, API docs)
+- [ ] CMakeLists.txt updated to C++17
+- [ ] GitHub About updated
+
+**Testing**:
+```bash
+# Verify C++17 compilation
+mkdir build-cpp17 && cd build-cpp17
+cmake -DCMAKE_CXX_STANDARD=17 ..
+cmake --build .
+ctest --output-on-failure
+
+# Verify no C++20 features remain
+grep -r "std::format" include/ src/
+grep -r "std::jthread" include/ src/
+grep -r "std::span" include/ src/
+grep -r "std::ranges" include/ src/
+grep -r "concept " include/ src/
+grep -r "requires " include/ src/
+```
+
+---
+
+**Review Status**: ⏳ **PLANNING**
+**Created**: 2025-11-11
+**Estimated Start**: TBD
+**Estimated Completion**: +3-4 weeks from start
+**Resources**: 2 developers (1 Senior Concurrency + 1 Mid-level)
+**Priority**: High - Largest C++20 migration effort of all systems
 **Next Step**: Create pull request
