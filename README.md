@@ -1048,12 +1048,12 @@ git clone https://github.com/kcenon/thread_system.git
 cd thread_system
 
 # Install dependencies via vcpkg
-./dependency.sh  # Linux/macOS
-./dependency.bat # Windows
+./scripts/dependency.sh  # Linux/macOS
+./scripts/dependency.bat # Windows
 
 # Build the project
-./build.sh       # Linux/macOS
-./build.bat      # Windows
+./scripts/build.sh       # Linux/macOS
+./scripts/build.bat      # Windows
 
 # Build with common_system integration (optional)
 cmake -B build -DBUILD_WITH_COMMON_SYSTEM=ON
