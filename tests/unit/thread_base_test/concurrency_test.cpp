@@ -163,11 +163,11 @@ TEST_F(ConcurrencyTest, JobQueueExtremeConcurrency) {
     
     // Let consumers drain the queue
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    
+
     // Stop consumers
     stop_consumers.store(true);
-    queue->stop_waiting_dequeue();
-    
+    queue->stop();
+
     for (auto& t : consumers) {
         t.join();
     }
@@ -269,10 +269,10 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
     while (shared_counter.load() < num_jobs) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-    
+
     stop_workers.store(true);
-    queue->stop_waiting_dequeue();
-    
+    queue->stop();
+
     for (auto& t : workers) {
         t.join();
     }

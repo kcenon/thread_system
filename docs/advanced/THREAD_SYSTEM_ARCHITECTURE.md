@@ -228,7 +228,7 @@ public:
 
     // State management
     auto clear() -> void;
-    auto stop_waiting_dequeue() -> void;
+    auto stop() -> void;
 
     // Status
     [[nodiscard]] auto empty() const -> bool;
