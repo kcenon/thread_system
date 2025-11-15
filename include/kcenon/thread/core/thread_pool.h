@@ -368,7 +368,11 @@ namespace kcenon::thread
 		 * @brief Check if the thread pool is currently running (IExecutor)
 		 * @return true if the pool is active, false otherwise
 		 */
+#ifdef THREAD_HAS_COMMON_EXECUTOR
+		auto is_running() const -> bool override;
+#else
 		auto is_running() const -> bool;
+#endif
 
 		/**
 		 * @brief Get the number of pending tasks in the queue
