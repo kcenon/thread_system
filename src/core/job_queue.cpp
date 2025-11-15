@@ -441,14 +441,6 @@ namespace kcenon::thread
 		condition_.notify_all();
 	}
 
-	/**
-	 * @brief Deprecated: Use stop() instead.
-	 * @deprecated Maintained for backward compatibility. Will be removed in future version.
-	 */
-	auto job_queue::stop_waiting_dequeue(void) -> void
-	{
-		stop();
-	}
 
 	/**
 	 * @brief Returns the current number of jobs in the queue.

@@ -156,11 +156,11 @@ public:
     [[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
     [[nodiscard]] virtual auto dequeue() -> result<std::unique_ptr<job>>;
     [[nodiscard]] virtual auto dequeue_batch() -> std::deque<std::unique_ptr<job>>;
-    
+
     // State management
     virtual auto clear() -> void;
-    auto stop_waiting_dequeue() -> void;
-    
+    auto stop() -> void;
+
     // Status
     [[nodiscard]] auto empty() const -> bool;
     [[nodiscard]] auto size() const -> std::size_t;

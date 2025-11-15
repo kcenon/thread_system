@@ -70,7 +70,7 @@ TEST(job_queue_error, enqueue_batch_contains_null)
 TEST(job_queue_error, dequeue_after_stop)
 {
     job_queue q;
-    q.stop_waiting_dequeue();
+    q.stop();
     auto r = q.dequeue();
     ASSERT_FALSE(r.has_value());
     EXPECT_EQ(r.get_error().code(), error_code::queue_empty);
@@ -86,12 +86,12 @@ TEST(job_queue_error, dequeue_after_stop_new_api)
     EXPECT_EQ(r.get_error().code(), error_code::queue_empty);
 }
 
-// Test that deprecated and new methods behave identically
+// Test that stop() method works correctly
 TEST(job_queue_error, stop_methods_equivalence)
 {
-    // Test deprecated method
+    // Test stop method
     job_queue q1;
-    q1.stop_waiting_dequeue();
+    q1.stop();
     EXPECT_TRUE(q1.is_stopped());
 
     // Test new method

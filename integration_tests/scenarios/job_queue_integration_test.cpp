@@ -265,7 +265,7 @@ TEST_F(JobQueueIntegrationTest, StopWaitingDequeue) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     // Signal to stop waiting
-    queue->stop_waiting_dequeue();
+    queue->stop();
 
     // Consumer should return shortly
     consumer.join();

@@ -70,7 +70,7 @@ TEST(job_queue_error, enqueue_batch_contains_null)
 TEST(job_queue_error, dequeue_after_stop)
 {
     job_queue q;
-    q.stop_waiting_dequeue();
+    q.stop();
     auto r = q.dequeue();
     ASSERT_FALSE(r.has_value());
     EXPECT_EQ(r.get_error().code(), error_code::queue_empty);

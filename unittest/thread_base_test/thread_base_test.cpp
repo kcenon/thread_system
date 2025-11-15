@@ -187,7 +187,7 @@ TEST_F(ThreadBaseTest, JobQueueStopWaiting)
 {
     // Test that we can signal the queue to stop waiting
     EXPECT_NO_THROW({
-        job_queue_instance->stop_waiting_dequeue();
+        job_queue_instance->stop();
     });
 }
 
