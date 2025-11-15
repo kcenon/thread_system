@@ -209,13 +209,6 @@ namespace kcenon::thread
 		auto stop(void) -> void;
 
 		/**
-		 * @brief Deprecated: Use stop() instead.
-		 * @deprecated This method will be removed in a future version. Use stop() for consistency.
-		 */
-		[[deprecated("Use stop() instead for API consistency")]]
-		auto stop_waiting_dequeue(void) -> void;
-
-		/**
 		 * @brief Returns a string representation of this job_queue.
 		 * @return A std::string describing the state of the queue (e.g., size, flags).
 		 *
