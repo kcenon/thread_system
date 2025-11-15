@@ -196,7 +196,7 @@ namespace kcenon::thread
 	 * @param task The function to execute
 	 * @return Future representing the task result
 	 */
-	std::future<void> submit(std::function<void()> task) override;
+	std::future<void> submit(std::function<void()> task);
 
 	/**
 	 * @brief Submit a task for delayed execution (IExecutor)
@@ -206,7 +206,7 @@ namespace kcenon::thread
 	 */
 	std::future<void> submit_delayed(
 		std::function<void()> task,
-		std::chrono::milliseconds delay) override;
+		std::chrono::milliseconds delay);
 
 	/**
 	 * @brief Execute a job with Result-based error handling (IExecutor)
