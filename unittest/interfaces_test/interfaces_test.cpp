@@ -110,7 +110,7 @@ public:
 #ifdef BUILD_WITH_COMMON_SYSTEM
     auto reset_metrics() -> common_test::VoidResult override {
         snapshot_ = {};
-        return {};
+        return common_test::VoidResult::success();
     }
 #else
     void reset_metrics() override {
