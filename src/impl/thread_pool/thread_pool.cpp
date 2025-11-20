@@ -82,7 +82,8 @@ namespace kcenon::thread
 		  start_pool_(false),
 		  job_queue_(std::make_shared<kcenon::thread::job_queue>()),
 		  context_(context),
-		  pool_cancellation_token_(cancellation_token::create())
+		  pool_cancellation_token_(cancellation_token::create()),
+		  metrics_(std::make_shared<metrics::ThreadPoolMetrics>())
 	{
 		// Report initial pool registration if monitoring is available
 		if (context_.monitoring())
@@ -178,6 +179,7 @@ namespace kcenon::thread
         // Create fresh pool cancellation token for restart scenarios
         // This ensures workers start with a non-cancelled token
         pool_cancellation_token_ = cancellation_token::create();
+        metrics_->reset();
 
         // Attempt to start each worker
         for (auto& worker : workers_)
@@ -210,6 +212,16 @@ namespace kcenon::thread
 	 * @return Shared pointer to the job queue
 	 */
 	auto thread_pool::get_job_queue(void) -> std::shared_ptr<job_queue> { return job_queue_; }
+
+	const metrics::ThreadPoolMetrics& thread_pool::metrics() const noexcept
+	{
+		return *metrics_;
+	}
+
+	void thread_pool::reset_metrics()
+	{
+		metrics_->reset();
+	}
 
 	// executor_interface
 	auto thread_pool::execute(std::unique_ptr<job>&& work) -> result_void
@@ -263,12 +275,14 @@ namespace kcenon::thread
         }
 
         // Delegate to adaptive queue for optimal processing
+        metrics_->record_submission();
         auto enqueue_result = job_queue_->enqueue(std::move(job));
         if (enqueue_result.has_error())
         {
             return enqueue_result.get_error();
         }
 
+        metrics_->record_enqueue();
         return {};
     }
 
@@ -291,12 +305,14 @@ namespace kcenon::thread
             return error{error_code::queue_stopped, "thread pool is stopped"};
         }
 
+        metrics_->record_submission(jobs.size());
         auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
         if (enqueue_result.has_error())
         {
             return enqueue_result.get_error();
         }
 
+        metrics_->record_enqueue(jobs.size());
         return {};
     }
 
@@ -314,6 +330,7 @@ namespace kcenon::thread
 
         worker->set_job_queue(job_queue_);
         worker->set_context(context_);
+        worker->set_metrics(metrics_);
 
         // Acquire lock before checking start_pool_ and adding worker
         // This prevents race condition with stop():
@@ -372,6 +389,7 @@ namespace kcenon::thread
         {
             worker->set_job_queue(job_queue_);
             worker->set_context(context_);
+            worker->set_metrics(metrics_);
 
             // Add worker to vector first
             workers_.emplace_back(std::move(worker));
