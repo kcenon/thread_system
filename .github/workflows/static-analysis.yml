@@ -22,6 +22,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y cmake ninja-build clang clang-tidy libgtest-dev libgmock-dev
 
+    - name: Checkout common_system (required dependency)
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git
+        fi
+
     - name: Configure CMake
       run: |
         cmake -B build -G Ninja \
@@ -29,7 +36,7 @@ jobs:
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_COMPILER=clang \
-          -DBUILD_WITH_COMMON_SYSTEM=OFF \
+          -DBUILD_WITH_COMMON_SYSTEM=ON \
           -DBUILD_DOCUMENTATION=OFF
 
     - name: Run clang-tidy

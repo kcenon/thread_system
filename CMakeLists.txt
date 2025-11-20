@@ -38,6 +38,10 @@ option(ENABLE_COVERAGE "Enable code coverage" OFF)
 # Lock-free queue option (UNSAFE - see KNOWN_ISSUES.md)
 option(THREAD_ENABLE_LOCKFREE_QUEUE "Enable lock-free queue (UNSAFE - TLS bug exists)" OFF)
 
+if(NOT BUILD_WITH_COMMON_SYSTEM)
+    message(FATAL_ERROR "ThreadSystem now requires common_system. Set BUILD_WITH_COMMON_SYSTEM=ON.")
+endif()
+
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(WARNING "")
     message(WARNING "========================================")

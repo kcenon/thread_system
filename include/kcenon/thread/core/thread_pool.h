@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/executor_interface.h>
 #include <kcenon/thread/interfaces/thread_context.h>
+#include <kcenon/thread/metrics/thread_pool_metrics.h>
 
 // Common system unified interfaces
 // THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
@@ -263,6 +264,16 @@ namespace kcenon::thread
 		 * can concurrently dequeue and process jobs.
 		 */
 		[[nodiscard]] auto get_job_queue(void) -> std::shared_ptr<job_queue>;
+
+        /**
+         * @brief Access aggregated runtime metrics (read-only reference).
+         */
+        [[nodiscard]] const metrics::ThreadPoolMetrics& metrics() const noexcept;
+
+        /**
+         * @brief Reset accumulated metrics.
+         */
+        void reset_metrics();
 
         /**
          * @brief Enqueues a new job into the shared @c job_queue.
@@ -501,6 +512,11 @@ namespace kcenon::thread
 		 *       fresh job execution without stale cancellation state.
 		 */
 		cancellation_token pool_cancellation_token_;
+
+        /**
+         * @brief Shared metrics collector used by workers.
+         */
+        std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
 	};
 } // namespace kcenon::thread
 
