@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/forward_declarations.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include "worker_policy.h"
+#include <kcenon/thread/metrics/thread_pool_metrics.h>
 
 #include <memory>
 #include <vector>
@@ -107,6 +108,11 @@ namespace kcenon::thread
 		 * @param context The thread context providing access to logging and monitoring services.
 		 */
 		auto set_context(const thread_context& context) -> void;
+
+        /**
+         * @brief Provide shared metrics storage for this worker.
+         */
+        void set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metrics);
 
 		/**
 		 * @brief Get the worker ID.
@@ -205,6 +211,11 @@ namespace kcenon::thread
 		 * through the configured services.
 		 */
 		thread_context context_;
+
+        /**
+         * @brief Shared metrics aggregator provided by the owning thread pool.
+         */
+        std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
 
 		/**
 		 * @brief Cancellation token for this worker.

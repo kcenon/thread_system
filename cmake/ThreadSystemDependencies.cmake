@@ -10,7 +10,7 @@
 ##################################################
 function(find_common_system_dependency)
   if(NOT BUILD_WITH_COMMON_SYSTEM)
-    return()
+    message(FATAL_ERROR "ThreadSystem requires common_system. BUILD_WITH_COMMON_SYSTEM must remain ON.")
   endif()
 
   message(STATUS "Looking for common_system...")
@@ -46,9 +46,7 @@ function(find_common_system_dependency)
     endif()
   endforeach()
 
-  message(WARNING "common_system not found - integration disabled")
-  set(BUILD_WITH_COMMON_SYSTEM OFF PARENT_SCOPE)
-  set(COMMON_SYSTEM_FOUND FALSE PARENT_SCOPE)
+  message(FATAL_ERROR "common_system not found - set COMMON_SYSTEM_DIR or add as dependency.")
 endfunction()
 
 ##################################################

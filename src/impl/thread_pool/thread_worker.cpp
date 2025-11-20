@@ -167,10 +167,15 @@ namespace kcenon::thread
 	 * 
 	 * @param context Thread context with logging and monitoring services
 	 */
-	auto thread_worker::set_context(const thread_context& context) -> void
-	{
-		context_ = context;
-	}
+auto thread_worker::set_context(const thread_context& context) -> void
+{
+	context_ = context;
+}
+
+void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metrics)
+{
+	metrics_ = std::move(metrics);
+}
 
 	/**
 	 * @brief Gets the thread context for this worker.
@@ -330,6 +335,10 @@ namespace kcenon::thread
 			// - Too long (10ms+): noticeable latency in job pickup
 			// - 1ms provides <1ms average latency while minimizing overhead
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			if (metrics_)
+			{
+				metrics_->record_idle_time(1'000'000ULL);
+			}
 			return result_void{};  // Success - will be called again
 		}
 
@@ -365,6 +374,14 @@ namespace kcenon::thread
 
 		// Execute the job's work method and capture the result
 		auto work_result = current_job->do_work();
+		std::uint64_t execution_duration_ns = 0;
+		if (started_time_point.has_value())
+		{
+			auto end_time = std::chrono::high_resolution_clock::now();
+			execution_duration_ns = static_cast<std::uint64_t>(
+				std::chrono::duration_cast<std::chrono::nanoseconds>(
+					end_time - started_time_point.value()).count());
+		}
 
 		// Clear current job tracking after execution completes
 		// Reacquire lock to prevent lost wakeup race with set_job_queue()
@@ -380,6 +397,10 @@ namespace kcenon::thread
 
 		if (work_result.has_error())
 		{
+			if (metrics_)
+			{
+				metrics_->record_execution(0, false);
+			}
 			return error{error_code::job_execution_failed,
 				formatter::format("error executing job: {}", work_result.get_error().to_string())};
 		}
@@ -395,24 +416,25 @@ namespace kcenon::thread
 		else
 		{
 			// Enhanced logging with execution timing information
-			auto end_time = std::chrono::high_resolution_clock::now();
-			auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
-				end_time - started_time_point.value()).count();
-			
 			context_.log(log_level::debug,
 			            formatter::format("job executed successfully: {} on thread_worker ({}ns)",
-			                            current_job->get_name(), duration));
+			                            current_job->get_name(), execution_duration_ns));
 			
 			// Update worker metrics if monitoring is available
 			if (context_.monitoring())
 			{
 				monitoring_interface::worker_metrics metrics;
 				metrics.jobs_processed = 1;
-				metrics.total_processing_time_ns = static_cast<std::uint64_t>(duration);
+				metrics.total_processing_time_ns = execution_duration_ns;
 				metrics.timestamp = std::chrono::steady_clock::now();
 				// Use proper worker ID instead of thread hash
 				context_.update_worker_metrics(worker_id_, metrics);
 			}
+		}
+
+		if (metrics_)
+		{
+			metrics_->record_execution(execution_duration_ns, true);
 		}
 
 		return result_void{};
