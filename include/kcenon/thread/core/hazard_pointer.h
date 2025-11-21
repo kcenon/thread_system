@@ -193,7 +193,20 @@ private:
         detail::retire_node* head = nullptr;
         size_t count = 0;
 
-        static constexpr size_t RECLAIM_THRESHOLD = 64;  // Configurable threshold
+        // Adaptive threshold: scales with active thread count
+        // Base threshold: 64 objects
+        // Scaling factor: 16 objects per active thread
+        // This prevents excessive memory usage under high thread churn
+        static constexpr size_t BASE_RECLAIM_THRESHOLD = 64;
+        static constexpr size_t RECLAIM_THRESHOLD_PER_THREAD = 16;
+
+        size_t get_adaptive_threshold() const {
+            auto& registry = detail::hazard_pointer_registry::instance();
+            size_t active_threads = registry.get_active_thread_count();
+            // Clamp between 64 and 512 to prevent extremes
+            return std::min(size_t(512),
+                          BASE_RECLAIM_THRESHOLD + active_threads * RECLAIM_THRESHOLD_PER_THREAD);
+        }
 
         void add(T* ptr);
         size_t scan_and_reclaim(const std::vector<void*>& protected_ptrs);
@@ -224,8 +237,9 @@ void hazard_pointer_domain<T>::retire(T* ptr) {
     retire_list.add(ptr);
     objects_retired_.fetch_add(1, std::memory_order_relaxed);
 
-    // Check if we should run reclamation
-    if (retire_list.count >= thread_retire_list::RECLAIM_THRESHOLD) {
+    // Check if we should run reclamation using adaptive threshold
+    // Threshold scales with active thread count to prevent excessive memory
+    if (retire_list.count >= retire_list.get_adaptive_threshold()) {
         reclaim();
     }
 }

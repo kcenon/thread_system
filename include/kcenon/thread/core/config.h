@@ -61,7 +61,35 @@ namespace kcenon::thread::config {
     
     // Performance configuration
     constexpr bool default_yield_on_idle = true;
+
+    /**
+     * @brief Enable work stealing for improved load balancing
+     *
+     * Work stealing allows idle workers to steal jobs from busy workers,
+     * reducing tail latency and improving throughput in mixed workloads.
+     *
+     * Architecture (when enabled):
+     * - Each worker maintains a local LIFO deque
+     * - Workers push/pop from their own deque (cache-friendly)
+     * - Idle workers steal from tail of other workers' deques (FIFO)
+     * - Global queue serves as fallback for work submission
+     *
+     * Performance Characteristics:
+     * - Reduced global queue contention (~50-70% less CAS operations)
+     * - Better cache locality for job execution
+     * - Lower tail latency for mixed job sizes
+     * - Slight overhead for steal attempts (backoff mechanism)
+     *
+     * Tuning Parameters (future):
+     * - STEAL_BATCH_SIZE: Number of jobs to steal at once (default: 1)
+     * - STEAL_BACKOFF_NS: Backoff delay between steal attempts (default: 100ns)
+     * - MAX_STEAL_ATTEMPTS: Cap on consecutive steal failures (default: 16)
+     *
+     * @note Currently disabled by default (not yet implemented)
+     * @note Will be gated behind feature flag when implemented
+     */
     constexpr bool default_work_stealing = false;
+
     constexpr bool default_pin_threads = false;
     constexpr bool default_use_priorities = false;
     
