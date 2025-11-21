@@ -173,6 +173,29 @@ namespace kcenon::thread
 		[[nodiscard]] virtual auto dequeue_batch(void) -> std::deque<std::unique_ptr<job>>;
 
 		/**
+		 * @brief Dequeues up to N jobs in a single operation (micro-batching).
+		 * @param max_count Maximum number of jobs to dequeue (typically 4-8)
+		 * @return A @c std::deque of unique_ptr<job> containing dequeued jobs
+		 *
+		 * This method implements micro-batching to reduce mutex contention:
+		 * - Acquires lock once for multiple jobs (vs N separate dequeues)
+		 * - Reduces overhead under high contention scenarios
+		 * - Provides better cache locality for job processing
+		 * - Returns fewer jobs if queue has less than max_count
+		 *
+		 * Recommended batch sizes:
+		 * - Light load: 4 jobs (balance latency and throughput)
+		 * - Heavy contention: 8 jobs (amortize lock overhead)
+		 *
+		 * Use Cases:
+		 * - High-throughput scenarios with many producers/consumers
+		 * - Reducing lock contention in multi-threaded workloads
+		 * - Improving cache efficiency for batch processing
+		 */
+		[[nodiscard]] virtual auto dequeue_batch_limited(std::size_t max_count)
+			-> std::deque<std::unique_ptr<job>>;
+
+		/**
 		 * @brief Removes all jobs currently in the queue without processing them.
 		 *
 		 * This operation is thread-safe and can be used to discard pending jobs,
