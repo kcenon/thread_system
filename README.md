@@ -111,6 +111,11 @@ int main() {
 - **Synchronization Primitives**: Enhanced wrappers with timeouts and predicates
 - **Worker Policies**: Fine-grained control (scheduling, idle behavior, CPU affinity)
 
+### Error Handling
+- `thread::result<T>` and `thread::result_void` wrap `common::Result` but keep thread-specific helpers (see `include/kcenon/thread/core/error_handling.h`).
+- Use `result.has_error()` / `result.get_error()` when working inside the thread_system repo, and convert to `common::error_info` via `detail::to_common_error(...)` when crossing module boundaries.
+- When updating shared documentation, call out that the thread-specific wrappers intentionally expose `.get_error()` for backward compatibility even though other systems rely on `.error()`.
+
 **📚 [Detailed Features →](docs/FEATURES.md)**
 
 ---

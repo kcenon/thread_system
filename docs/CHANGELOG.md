@@ -1,0 +1,155 @@
+# thread_system Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+- Documentation standardization compliance
+- README.md, ARCHITECTURE.md, CHANGELOG.md
+
+---
+
+## [2.0.0] - 2025-11-15
+
+### Added
+- **typed_thread_pool**: Type-safe thread pool implementation
+  - Compile-time type safety
+  - Custom process functions
+  - Auto type deduction
+- **adaptive_queue**: Dynamic resizing queue
+  - Automatic load-based scaling
+  - Configurable thresholds
+  - Memory-efficient
+- **hazard_pointer**: Safe memory reclamation for lock-free structures
+  - ABA problem mitigation
+  - Automatic garbage collection
+- **Service Infrastructure**: Service lifecycle management
+  - service_registry for dependency injection
+  - service_base abstract class
+  - Automatic cleanup
+
+### Changed
+- **thread_pool**: Major performance improvements
+  - Work-stealing algorithm implementation
+  - 4.5x throughput improvement (1.2M ops/sec)
+  - Reduced latency to 0.8 μs
+  - Near-linear scaling up to 16 cores
+- **mpmc_queue**: Lock-free optimization
+  - 5.2x performance improvement (2.1M ops/sec)
+  - Better cache locality
+  - Reduced false sharing
+- **thread_base**: Enhanced lifecycle management
+  - C++20 jthread support
+  - Improved error handling
+  - Better monitoring capabilities
+
+### Fixed
+- **Issue #45**: Race condition in thread_pool shutdown
+  - Added proper synchronization
+  - Ensured all tasks complete before shutdown
+- **Issue #38**: Memory leak in mpmc_queue
+  - Implemented hazard pointer
+  - Fixed node cleanup logic
+- **Issue #29**: Deadlock in service_registry
+  - Removed circular dependencies
+  - Added deadlock detection
+
+### Performance
+- **thread_pool**: 4.5x improvement
+  - Before: 267K ops/sec
+  - After: 1.2M ops/sec
+  - Latency: 3.6 μs → 0.8 μs
+- **mpmc_queue**: 5.2x improvement
+  - Before: 404K ops/sec
+  - After: 2.1M ops/sec
+  - Latency: 2.5 μs → 0.5 μs
+- **typed_thread_pool**: 3.8x improvement over basic implementation
+  - 980K ops/sec
+  - Type safety with zero runtime cost
+
+---
+
+## [1.5.0] - 2025-10-22
+
+### Added
+- **spsc_queue**: Single-producer single-consumer queue
+  - Lock-free circular buffer
+  - 3.5M ops/sec throughput
+- **Read-Write Lock**: Optimized for read-heavy workloads
+  - Writer starvation prevention
+  - Configurable fairness
+
+### Changed
+- **thread_pool**: Priority-based task execution
+  - 3-level priority system
+  - Fair scheduling algorithm
+- **thread_base**: Enhanced thread naming
+  - Automatic ID generation
+  - Custom name support
+
+### Fixed
+- **Issue #22**: Spurious wakeups in condition variables
+- **Issue #18**: Exception safety in task execution
+
+---
+
+## [1.0.0] - 2025-09-15
+
+### Added
+- Initial release of thread_system
+- **thread_base**: Foundation thread abstraction
+  - Start/stop lifecycle
+  - Condition monitoring
+  - State management
+- **thread_pool**: Basic thread pool implementation
+  - Fixed-size worker pool
+  - Task queue
+  - Future/Promise pattern
+- **mpmc_queue**: Basic MPMC queue
+  - Mutex-based implementation
+  - Thread-safe operations
+- **Synchronization primitives**:
+  - spinlock
+  - Basic locking mechanisms
+
+### Performance
+- thread_pool: 267K ops/sec
+- mpmc_queue: 404K ops/sec
+- Basic functionality verified
+
+---
+
+## 버전 규칙
+
+### Major Version (X.0.0)
+- API 호환성이 깨지는 변경
+- 아키텍처 대규모 변경
+- 필수 의존성 주요 업데이트
+
+### Minor Version (0.X.0)
+- 새로운 기능 추가 (하위 호환성 유지)
+- 성능 개선
+- 내부 리팩토링
+
+### Patch Version (0.0.X)
+- 버그 수정
+- 문서 업데이트
+- 마이너한 개선
+
+---
+
+## 참조
+
+- [프로젝트 이슈](https://github.com/kcenon/thread_system/issues)
+- [마일스톤](https://github.com/kcenon/thread_system/milestones)
+
+---
+
+[Unreleased]: https://github.com/kcenon/thread_system/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/kcenon/thread_system/compare/v1.5.0...v2.0.0
+[1.5.0]: https://github.com/kcenon/thread_system/compare/v1.0.0...v1.5.0
+[1.0.0]: https://github.com/kcenon/thread_system/releases/tag/v1.0.0
