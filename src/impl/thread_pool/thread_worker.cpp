@@ -317,33 +317,55 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		// Release lock before dequeuing to allow other operations
 		lock.unlock();
 
-		// Use non-blocking try_dequeue to avoid condition variable deadlock
-		// This eliminates the two-level CV problem by never blocking
-		auto dequeue_result = local_queue->try_dequeue();
-		if (!dequeue_result.has_value())
-		{
-			// Queue is currently empty - mark as idle
-			is_idle_.store(true, std::memory_order_relaxed);
+		// Hybrid wait strategy: short spin followed by blocking dequeue
+		// This approach provides:
+		// - Sub-ms pickup latency (via spin loop)
+		// - Near-zero idle CPU usage (via blocking dequeue)
+		// - No busy-waiting overhead
 
-			// Sleep briefly to avoid CPU spinning
-			// should_continue_work() will determine if we should exit (on queue stop)
-			// This polling approach is more reliable than blocking on wrong CV
-			//
-			// Polling Interval Strategy:
-			// - 1ms is optimal for CI environments (balance between responsiveness and overhead)
-			// - Too short (100μs): excessive CPU usage and context switching in CI
-			// - Too long (10ms+): noticeable latency in job pickup
-			// - 1ms provides <1ms average latency while minimizing overhead
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			if (metrics_)
+		// Phase 1: Short bounded spin (16 iterations)
+		// Optimized for scenarios where jobs arrive quickly
+		std::unique_ptr<job> current_job;
+		constexpr int spin_count = 16;
+		for (int i = 0; i < spin_count; ++i)
+		{
+			auto dequeue_result = local_queue->try_dequeue();
+			if (dequeue_result.has_value())
 			{
-				metrics_->record_idle_time(1'000'000ULL);
+				// Job found during spin - fast path
+				current_job = std::move(dequeue_result.value());
+				break;
 			}
-			return result_void{};  // Success - will be called again
+
+			// CPU pause hint to reduce contention and power consumption
+			// On x86: PAUSE instruction
+			// On ARM: YIELD instruction
+			#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+				__builtin_ia32_pause();
+			#elif defined(__aarch64__) || defined(__arm__)
+				__asm__ __volatile__("yield");
+			#else
+				std::this_thread::yield();
+			#endif
 		}
 
-		// Extract the job from the result and validate it
-		auto current_job = std::move(dequeue_result.value());
+		// Phase 2: Blocking dequeue if spin didn't find a job
+		// This eliminates CPU usage when idle
+		if (!current_job)
+		{
+			is_idle_.store(true, std::memory_order_relaxed);
+
+			auto dequeue_result = local_queue->dequeue();
+			if (!dequeue_result.has_value())
+			{
+				// Queue is stopped or error occurred
+				return result_void{};  // Success - should_continue_work() will determine exit
+			}
+
+			current_job = std::move(dequeue_result.value());
+		}
+
+		// Validate job pointer
 		if (current_job == nullptr)
 		{
 			return error{error_code::job_invalid, "error executing job: nullptr"};
