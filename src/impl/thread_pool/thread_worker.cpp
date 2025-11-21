@@ -371,6 +371,14 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		// This eliminates CPU usage when idle
 		if (!current_job)
 		{
+			// Check if queue is stopped before blocking
+			// This prevents hanging on shutdown when queue is empty but not stopped
+			if (local_queue->is_stopped())
+			{
+				// Queue is stopped, exit immediately without blocking
+				return result_void{};
+			}
+
 			is_idle_.store(true, std::memory_order_relaxed);
 
 			auto dequeue_result = local_queue->dequeue();
