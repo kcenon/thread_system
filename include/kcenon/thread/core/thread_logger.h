@@ -165,9 +165,40 @@ private:
         }
     }
 
+    // Default to warning level to minimize overhead in production
+    // Use set_level(log_level::info) or set_level(log_level::debug) for verbose logging
     bool enabled_ = true;
-    log_level min_level_ = log_level::info;
+    log_level min_level_ = log_level::warning;
     std::mutex mutex_;
+
+    // Lightweight mode: disable structured logging entirely
+    // When enabled, logging becomes a no-op with minimal overhead
+    bool lightweight_mode_ = false;
+
+public:
+    /**
+     * @brief Enable lightweight mode (disables all logging for maximum performance)
+     *
+     * In lightweight mode, all log calls become no-ops with minimal overhead.
+     * Useful for performance-critical production deployments where diagnostics
+     * are handled externally.
+     *
+     * @param enabled true to enable lightweight mode, false to use normal logging
+     */
+    void set_lightweight_mode(bool enabled) {
+        lightweight_mode_ = enabled;
+        // Disable logging when in lightweight mode
+        if (enabled) {
+            enabled_ = false;
+        }
+    }
+
+    /**
+     * @brief Check if in lightweight mode
+     */
+    bool is_lightweight_mode() const {
+        return lightweight_mode_;
+    }
 };
 
 // Convenience macros
