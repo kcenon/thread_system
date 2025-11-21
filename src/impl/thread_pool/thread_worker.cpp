@@ -37,6 +37,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <thread>
 
+// Platform-specific CPU pause intrinsics
+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+	#include <emmintrin.h>  // For _mm_pause()
+#endif
+
 using namespace utility_module;
 
 /**
@@ -338,12 +343,25 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			}
 
 			// CPU pause hint to reduce contention and power consumption
-			// On x86: PAUSE instruction
-			// On ARM: YIELD instruction
-			#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
-				__builtin_ia32_pause();
-			#elif defined(__aarch64__) || defined(__arm__)
-				__asm__ __volatile__("yield");
+			// Different intrinsics per compiler and architecture
+			#if defined(_MSC_VER)
+				// MSVC: Use _mm_pause() for x86/x64, YieldProcessor() for ARM
+				#if defined(_M_IX86) || defined(_M_X64)
+					_mm_pause();
+				#elif defined(_M_ARM) || defined(_M_ARM64)
+					__yield();
+				#else
+					std::this_thread::yield();
+				#endif
+			#elif defined(__GNUC__) || defined(__clang__)
+				// GCC/Clang: Use builtin functions
+				#if defined(__x86_64__) || defined(__i386__)
+					__builtin_ia32_pause();
+				#elif defined(__aarch64__) || defined(__arm__)
+					__asm__ __volatile__("yield");
+				#else
+					std::this_thread::yield();
+				#endif
 			#else
 				std::this_thread::yield();
 			#endif

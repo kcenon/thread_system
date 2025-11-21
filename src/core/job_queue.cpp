@@ -551,11 +551,12 @@ namespace kcenon::thread
 		constexpr std::size_t ptr_size = sizeof(std::unique_ptr<job>);
 		constexpr std::size_t node_overhead = 40;  // Conservative estimate
 
-		return memory_stats{
-			.queue_size_bytes = (ptr_size + node_overhead) * job_count,
-			.pending_job_count = job_count,
-			.node_overhead_bytes = node_overhead * job_count
-		};
+		// Use traditional aggregate initialization for C++17 compatibility
+		memory_stats stats;
+		stats.queue_size_bytes = (ptr_size + node_overhead) * job_count;
+		stats.pending_job_count = job_count;
+		stats.node_overhead_bytes = node_overhead * job_count;
+		return stats;
 	}
 
 	/**
