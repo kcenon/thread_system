@@ -31,6 +31,7 @@
 
 #include <algorithm>
 #include <mutex>
+#include <stdexcept>
 
 namespace kcenon::thread {
 
@@ -48,19 +49,36 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
     static thread_local thread_hazard_list* thread_list = nullptr;
 
     if (thread_list == nullptr) {
-        // Allocate new hazard list for this thread
-        thread_list = new thread_hazard_list();
+        // Try to reuse an inactive list first to prevent unbounded memory growth
+        thread_hazard_list* curr = head_.load(std::memory_order_acquire);
+        while (curr) {
+            bool expected = false;
+            // Try to claim an inactive list
+            if (curr->active.compare_exchange_strong(expected, true,
+                std::memory_order_acquire, std::memory_order_relaxed)) {
+                
+                thread_list = curr;
+                thread_count_.fetch_add(1, std::memory_order_relaxed);
+                break;
+            }
+            curr = curr->next;
+        }
 
-        // Add to global linked list
-        thread_hazard_list* old_head = head_.load(std::memory_order_relaxed);
-        do {
-            thread_list->next = old_head;
-        } while (!head_.compare_exchange_weak(
-            old_head, thread_list,
-            std::memory_order_release,
-            std::memory_order_relaxed));
+        // If no inactive list found, allocate a new one
+        if (thread_list == nullptr) {
+            thread_list = new thread_hazard_list();
 
-        thread_count_.fetch_add(1, std::memory_order_relaxed);
+            // Add to global linked list
+            thread_hazard_list* old_head = head_.load(std::memory_order_relaxed);
+            do {
+                thread_list->next = old_head;
+            } while (!head_.compare_exchange_weak(
+                old_head, thread_list,
+                std::memory_order_release,
+                std::memory_order_relaxed));
+
+            thread_count_.fetch_add(1, std::memory_order_relaxed);
+        }
 
         // Register thread cleanup
         static thread_local struct thread_cleanup {
@@ -186,8 +204,7 @@ hazard_pointer::hazard_pointer()
         }
     }
 
-    // All slots in use - this should be rare
-    // In a production system, might want to dynamically allocate more
+    throw std::runtime_error("Hazard pointer slots exhausted");
 }
 
 hazard_pointer::hazard_pointer(hazard_pointer&& other) noexcept

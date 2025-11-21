@@ -66,9 +66,21 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> result_void 
     // Allocate new node with the job
     node* new_node = new node(std::move(job_ptr));
 
+    // Acquire hazard pointer for tail protection
+    auto hp_tail = node_hp_domain::global().acquire();
+
     while (true) {
         // Read current tail
         node* tail = tail_.load(std::memory_order_acquire);
+
+        // Protect tail to ensure it's not reclaimed while we read next
+        hp_tail.protect(tail);
+
+        // Verify tail hasn't changed (if it changed, our protection might be on the wrong node)
+        if (tail != tail_.load(std::memory_order_acquire)) {
+            continue;
+        }
+
         node* next = tail->next.load(std::memory_order_acquire);
 
         // Check if tail is still consistent
