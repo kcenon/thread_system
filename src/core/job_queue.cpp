@@ -519,13 +519,53 @@ namespace kcenon::thread
 	}
 
 	/**
+	 * @brief Get memory footprint statistics for debugging and monitoring.
+	 *
+	 * Implementation details:
+	 * - Estimates total memory used by jobs in queue
+	 * - Includes deque node overhead (platform-dependent)
+	 * - Assumes average job size for pointer storage
+	 * - Thread-safe operation using mutex
+	 *
+	 * Memory Estimation:
+	 * - Job pointer: sizeof(std::unique_ptr<job>) per job
+	 * - Deque node: ~40 bytes overhead per node (typical for std::deque)
+	 * - Total = (pointer_size + node_overhead) * job_count
+	 *
+	 * Use Cases:
+	 * - Detecting memory leaks (growing queue size)
+	 * - Monitoring queue memory pressure
+	 * - Setting memory-based thresholds for backpressure
+	 *
+	 * @return Structure containing memory usage estimates
+	 */
+	auto job_queue::get_memory_stats() const -> memory_stats
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		std::size_t job_count = queue_.size();
+
+		// Estimate memory usage
+		// std::unique_ptr<job> typically 8 bytes (pointer size)
+		// std::deque node overhead varies by platform, typically 32-48 bytes
+		constexpr std::size_t ptr_size = sizeof(std::unique_ptr<job>);
+		constexpr std::size_t node_overhead = 40;  // Conservative estimate
+
+		return memory_stats{
+			.queue_size_bytes = (ptr_size + node_overhead) * job_count,
+			.pending_job_count = job_count,
+			.node_overhead_bytes = node_overhead * job_count
+		};
+	}
+
+	/**
 	 * @brief Provides a string representation of the queue's current state.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Uses size() method to get current job count
 	 * - Formats output using the formatter utility
 	 * - Useful for logging and debugging purposes
-	 * 
+	 *
 	 * @return Formatted string showing current job count
 	 */
 	auto job_queue::to_string(void) const -> std::string

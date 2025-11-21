@@ -215,10 +215,26 @@ namespace kcenon::thread
 		/**
 		 * @brief Returns the current number of jobs in the queue.
 		 * @return The number of pending jobs.
-		 * 
+		 *
 		 * @note This method is thread-safe.
 		 */
 		[[nodiscard]] auto size(void) const -> std::size_t;
+
+		/**
+		 * @brief Get memory footprint statistics for the queue.
+		 *
+		 * Provides estimated memory usage for debugging and monitoring.
+		 * Useful for detecting memory leaks or excessive queue growth.
+		 *
+		 * @return Structure containing memory usage estimates
+		 */
+		struct memory_stats {
+			std::size_t queue_size_bytes;      // Estimated queue memory usage
+			std::size_t pending_job_count;     // Number of jobs in queue
+			std::size_t node_overhead_bytes;   // Deque node overhead estimate
+		};
+
+		[[nodiscard]] auto get_memory_stats() const -> memory_stats;
 
 		/**
 		 * @brief Signals the queue to stop waiting for new jobs (e.g., during shutdown).
