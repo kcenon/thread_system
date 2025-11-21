@@ -367,28 +367,20 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			#endif
 		}
 
-		// Phase 2: Blocking dequeue if spin didn't find a job
-		// This eliminates CPU usage when idle
+		// Phase 2: Polling with longer sleep if spin didn't find a job
+		// Use longer sleep (10ms) instead of blocking to avoid hang issues
+		// This provides near-zero CPU usage while maintaining responsiveness
 		if (!current_job)
 		{
-			// Check if queue is stopped before blocking
-			// This prevents hanging on shutdown when queue is empty but not stopped
-			if (local_queue->is_stopped())
-			{
-				// Queue is stopped, exit immediately without blocking
-				return result_void{};
-			}
-
 			is_idle_.store(true, std::memory_order_relaxed);
 
-			auto dequeue_result = local_queue->dequeue();
-			if (!dequeue_result.has_value())
-			{
-				// Queue is stopped or error occurred
-				return result_void{};  // Success - should_continue_work() will determine exit
-			}
+			// Sleep longer than spin to reduce CPU usage
+			// 10ms provides good balance between latency and efficiency
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-			current_job = std::move(dequeue_result.value());
+			// Return immediately - will be called again by thread_base loop
+			// should_continue_work() will determine when to exit
+			return result_void{};
 		}
 
 		// Validate job pointer
