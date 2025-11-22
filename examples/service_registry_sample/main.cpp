@@ -56,7 +56,7 @@ int main() {
     auto got = service_registry::get_service<demo_service>();
     std::cout << "service name = " << (got ? got->name : "<null>") << "\n";
 
-    // Use executor_interface via thread_pool
+    // Use thread_pool for task execution
     auto pool = std::make_shared<thread_pool>("svc_pool");
     std::vector<std::unique_ptr<thread_worker>> workers;
     workers.push_back(std::make_unique<thread_worker>(false));
