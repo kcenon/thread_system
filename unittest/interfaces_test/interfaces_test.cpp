@@ -33,7 +33,6 @@ BSD 3-Clause License
 
 #include <gtest/gtest.h>
 
-#include <kcenon/thread/interfaces/executor_interface.h>
 #include <kcenon/thread/interfaces/scheduler_interface.h>
 #include <kcenon/thread/interfaces/monitorable_interface.h>
 
@@ -69,7 +68,7 @@ TEST(interfaces_test, scheduler_interface_job_queue)
     EXPECT_EQ(count.load(), 1);
 }
 
-TEST(interfaces_test, executor_interface_thread_pool)
+TEST(interfaces_test, thread_pool_execute)
 {
     auto pool = std::make_shared<thread_pool>("ifx_pool");
     // add one worker
@@ -82,8 +81,8 @@ TEST(interfaces_test, executor_interface_thread_pool)
     ASSERT_TRUE(pool->enqueue_batch(std::move(workers)));
 
     std::atomic<int> count{0};
-    executor_interface* exec = pool.get();
-    auto r = exec->execute(std::make_unique<callback_job>([&count]() -> result_void {
+    // Use thread_pool's enqueue method directly instead of deprecated executor_interface
+    auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> result_void {
         count.fetch_add(1);
         return result_void();
     }));
@@ -97,7 +96,7 @@ TEST(interfaces_test, executor_interface_thread_pool)
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     EXPECT_EQ(count.load(), 1);
-    EXPECT_TRUE(exec->shutdown());
+    EXPECT_TRUE(pool->stop());
 }
 
 namespace {

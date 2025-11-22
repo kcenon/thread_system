@@ -54,9 +54,8 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
         while (curr) {
             bool expected = false;
             // Try to claim an inactive list
-            if (curr->active.compare_exchange_strong(expected, true,
-                std::memory_order_acquire, std::memory_order_relaxed)) {
-                
+            if (curr->active.compare_exchange_strong(expected, true, std::memory_order_acquire,
+                                                     std::memory_order_relaxed)) {
                 thread_list = curr;
                 thread_count_.fetch_add(1, std::memory_order_relaxed);
                 break;
@@ -72,10 +71,8 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
             thread_hazard_list* old_head = head_.load(std::memory_order_relaxed);
             do {
                 thread_list->next = old_head;
-            } while (!head_.compare_exchange_weak(
-                old_head, thread_list,
-                std::memory_order_release,
-                std::memory_order_relaxed));
+            } while (!head_.compare_exchange_weak(old_head, thread_list, std::memory_order_release,
+                                                  std::memory_order_relaxed));
 
             thread_count_.fetch_add(1, std::memory_order_relaxed);
         }
@@ -97,8 +94,7 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
 
 // Mark current thread's list as inactive
 void hazard_pointer_registry::mark_inactive() {
-    static thread_local thread_hazard_list* thread_list =
-        get_thread_list();
+    static thread_local thread_hazard_list* thread_list = get_thread_list();
 
     if (thread_list) {
         // Clear all hazard pointers
@@ -128,7 +124,6 @@ std::vector<void*> hazard_pointer_registry::scan_hazard_pointers() {
 
     // Traverse all thread lists
     thread_hazard_list* curr = head_.load(std::memory_order_acquire);
-    thread_hazard_list* prev = nullptr;
     size_t inactive_count = 0;
 
     while (curr) {
@@ -143,7 +138,6 @@ std::vector<void*> hazard_pointer_registry::scan_hazard_pointers() {
                     protected_ptrs.push_back(ptr);
                 }
             }
-            prev = curr;
         } else {
             // Skip inactive threads - optimization to reduce scan time
             ++inactive_count;
@@ -166,9 +160,8 @@ std::vector<void*> hazard_pointer_registry::scan_hazard_pointers() {
 
     // Remove duplicates to minimize search space
     // Multiple threads may protect the same pointer
-    protected_ptrs.erase(
-        std::unique(protected_ptrs.begin(), protected_ptrs.end()),
-        protected_ptrs.end());
+    protected_ptrs.erase(std::unique(protected_ptrs.begin(), protected_ptrs.end()),
+                         protected_ptrs.end());
 
     return protected_ptrs;
 }
@@ -178,14 +171,11 @@ size_t hazard_pointer_registry::get_active_thread_count() const {
     return thread_count_.load(std::memory_order_relaxed);
 }
 
-} // namespace detail
+}  // namespace detail
 
 // hazard_pointer implementation
 
-hazard_pointer::hazard_pointer()
-    : slot_(nullptr)
-    , slot_index_(0) {
-
+hazard_pointer::hazard_pointer() : slot_(nullptr), slot_index_(0) {
     auto* thread_list = detail::hazard_pointer_registry::instance().get_thread_list();
 
     // Find an available slot (slot value is nullptr means available)
@@ -193,10 +183,8 @@ hazard_pointer::hazard_pointer()
         void* expected = nullptr;
         // Try to claim this slot with SLOT_OWNED_MARKER
         if (thread_list->hazards[i].compare_exchange_strong(
-            expected, const_cast<void*>(SLOT_OWNED_MARKER),
-            std::memory_order_acquire,
-            std::memory_order_relaxed)) {
-
+                expected, const_cast<void*>(SLOT_OWNED_MARKER), std::memory_order_acquire,
+                std::memory_order_relaxed)) {
             slot_ = &thread_list->hazards[i];
             slot_index_ = i;
             // Slot is now owned with SLOT_OWNED_MARKER
@@ -208,9 +196,7 @@ hazard_pointer::hazard_pointer()
 }
 
 hazard_pointer::hazard_pointer(hazard_pointer&& other) noexcept
-    : slot_(other.slot_)
-    , slot_index_(other.slot_index_) {
-
+    : slot_(other.slot_), slot_index_(other.slot_index_) {
     other.slot_ = nullptr;
     other.slot_index_ = 0;
 }
@@ -259,4 +245,4 @@ void* hazard_pointer::get_protected() const noexcept {
     return (ptr == SLOT_OWNED_MARKER) ? nullptr : ptr;
 }
 
-} // namespace kcenon::thread
+}  // namespace kcenon::thread
