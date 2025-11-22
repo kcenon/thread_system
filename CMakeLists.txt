@@ -91,7 +91,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CompilerChecks)
 include(Coverage)
 include(dependency_checker)
-include(FindOrFetch)
 
 # Include new modular CMake files
 include(ThreadSystemCompiler)
