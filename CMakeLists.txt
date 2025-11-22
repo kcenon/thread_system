@@ -43,15 +43,19 @@ if(NOT BUILD_WITH_COMMON_SYSTEM)
 endif()
 
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
-    message(WARNING "")
-    message(WARNING "========================================")
-    message(WARNING "THREAD_ENABLE_LOCKFREE_QUEUE is ENABLED")
-    message(WARNING "")
-    message(WARNING "The lock-free queue has a CRITICAL TLS bug that causes segmentation faults.")
-    message(WARNING "DO NOT USE IN PRODUCTION. This option is for TESTING ONLY.")
-    message(WARNING "See KNOWN_ISSUES.md for details.")
-    message(WARNING "========================================")
-    message(WARNING "")
+    if(NOT THREAD_ALLOW_UNSAFE_LOCKFREE_QUEUE)
+        message(FATAL_ERROR "THREAD_ENABLE_LOCKFREE_QUEUE is enabled but UNSAFE. The lock-free queue has a CRITICAL TLS bug. Set THREAD_ALLOW_UNSAFE_LOCKFREE_QUEUE=ON to force enable it for testing.")
+    else()
+        message(WARNING "")
+        message(WARNING "========================================")
+        message(WARNING "THREAD_ENABLE_LOCKFREE_QUEUE is ENABLED (Forced)")
+        message(WARNING "")
+        message(WARNING "The lock-free queue has a CRITICAL TLS bug that causes segmentation faults.")
+        message(WARNING "DO NOT USE IN PRODUCTION. This option is for TESTING ONLY.")
+        message(WARNING "See KNOWN_ISSUES.md for details.")
+        message(WARNING "========================================")
+        message(WARNING "")
+    endif()
 endif()
 
 # Respect global BUILD_INTEGRATION_TESTS flag if set
@@ -68,8 +72,8 @@ endif()
 # C++ Standard Configuration
 ##################################################
 
-# C++17 minimum requirement with optional C++20 feature detection
-set(CMAKE_CXX_STANDARD 17)
+# C++20 minimum requirement
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -87,6 +91,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CompilerChecks)
 include(Coverage)
 include(dependency_checker)
+include(FindOrFetch)
 
 # Include new modular CMake files
 include(ThreadSystemCompiler)
