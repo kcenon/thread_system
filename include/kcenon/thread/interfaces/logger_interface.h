@@ -96,14 +96,7 @@ namespace kcenon::thread {
  * WARNING: This enumeration has inverted ordering (critical=0, trace=5).
  * The unified interface uses standard ordering (trace=0, critical=5).
  */
-enum class log_level {
-  critical = 0,
-  error = 1,
-  warning = 2,
-  info = 3,
-  debug = 4,
-  trace = 5
-};
+enum class log_level { critical = 0, error = 1, warning = 2, info = 3, debug = 4, trace = 5 };
 
 /**
  * @brief Logger interface for thread system
@@ -125,46 +118,45 @@ enum class log_level {
  */
 class [[deprecated("Use common::interfaces::ILogger instead")]] logger_interface {
 public:
-  virtual ~logger_interface() = default;
+    virtual ~logger_interface() = default;
 
-  /**
-   * @brief Log a message with specified level
-   * @param level Log level
-   * @param message Log message
-   *
-   * Thread Safety: Must be thread-safe
-   */
-  virtual void log(log_level level, const std::string& message) = 0;
+    /**
+     * @brief Log a message with specified level
+     * @param level Log level
+     * @param message Log message
+     *
+     * Thread Safety: Must be thread-safe
+     */
+    virtual void log(log_level level, const std::string& message) = 0;
 
-  /**
-   * @brief Log a message with source location information
-   * @param level Log level
-   * @param message Log message
-   * @param file Source file name
-   * @param line Source line number
-   * @param function Function name
-   *
-   * Thread Safety: Must be thread-safe
-   */
-  virtual void log(log_level level, const std::string& message,
-                   const std::string& file, int line,
-                   const std::string& function) = 0;
+    /**
+     * @brief Log a message with source location information
+     * @param level Log level
+     * @param message Log message
+     * @param file Source file name
+     * @param line Source line number
+     * @param function Function name
+     *
+     * Thread Safety: Must be thread-safe
+     */
+    virtual void log(log_level level, const std::string& message, const std::string& file, int line,
+                     const std::string& function) = 0;
 
-  /**
-   * @brief Check if logging is enabled for the specified level
-   * @param level Log level to check
-   * @return true if logging is enabled for this level
-   *
-   * Thread Safety: Must be thread-safe
-   */
-  virtual bool is_enabled(log_level level) const = 0;
+    /**
+     * @brief Check if logging is enabled for the specified level
+     * @param level Log level to check
+     * @return true if logging is enabled for this level
+     *
+     * Thread Safety: Must be thread-safe
+     */
+    virtual bool is_enabled(log_level level) const = 0;
 
-  /**
-   * @brief Flush any buffered log messages
-   *
-   * Thread Safety: Must be thread-safe
-   */
-  virtual void flush() = 0;
+    /**
+     * @brief Flush any buffered log messages
+     *
+     * Thread Safety: Must be thread-safe
+     */
+    virtual void flush() = 0;
 };
 
 /**
@@ -180,49 +172,67 @@ public:
  */
 class [[deprecated("Use common::interfaces::ILoggerRegistry instead")]] logger_registry {
 public:
-  /**
-   * @brief Set the global logger instance
-   * @param logger Logger implementation
-   */
-  static void set_logger(std::shared_ptr<logger_interface> logger);
+    /**
+     * @brief Set the global logger instance
+     * @param logger Logger implementation
+     */
+    static void set_logger(std::shared_ptr<logger_interface> logger);
 
-  /**
-   * @brief Get the global logger instance
-   * @return Current logger instance, may be nullptr
-   */
-  static std::shared_ptr<logger_interface> get_logger();
+    /**
+     * @brief Get the global logger instance
+     * @return Current logger instance, may be nullptr
+     */
+    static std::shared_ptr<logger_interface> get_logger();
 
-  /**
-   * @brief Clear the global logger instance
-   */
-  static void clear_logger();
+    /**
+     * @brief Clear the global logger instance
+     */
+    static void clear_logger();
 
 private:
-  static std::shared_ptr<logger_interface> logger_;
-  static std::mutex mutex_;
+    static std::shared_ptr<logger_interface> logger_;
+    static std::mutex mutex_;
 };
 
 // Convenience macros for logging
-#define THREAD_LOG_IF_ENABLED(level, message)                                  \
-  do {                                                                         \
-    if (auto logger = kcenon::thread::logger_registry::get_logger()) {         \
-      if (logger->is_enabled(level)) {                                        \
-        logger->log(level, message, __FILE__, __LINE__, __FUNCTION__);        \
-      }                                                                        \
-    }                                                                          \
-  } while (0)
+#ifndef THREAD_LOG_IF_ENABLED
+    #define THREAD_LOG_IF_ENABLED(level, message)                                  \
+        do {                                                                       \
+            if (auto logger = kcenon::thread::logger_registry::get_logger()) {     \
+                if (logger->is_enabled(level)) {                                   \
+                    logger->log(level, message, __FILE__, __LINE__, __FUNCTION__); \
+                }                                                                  \
+            }                                                                      \
+        } while (0)
+#endif
 
-#define THREAD_LOG_CRITICAL(message)                                          \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::critical, message)
-#define THREAD_LOG_ERROR(message)                                             \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::error, message)
-#define THREAD_LOG_WARNING(message)                                           \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::warning, message)
-#define THREAD_LOG_INFO(message)                                              \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::info, message)
-#define THREAD_LOG_DEBUG(message)                                             \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::debug, message)
-#define THREAD_LOG_TRACE(message)                                             \
-  THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::trace, message)
+#ifndef THREAD_LOG_CRITICAL
+    #define THREAD_LOG_CRITICAL(message) \
+        THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::critical, message)
+#endif
 
-} // namespace kcenon::thread
+#ifndef THREAD_LOG_ERROR
+    #define THREAD_LOG_ERROR(message) \
+        THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::error, message)
+#endif
+
+#ifndef THREAD_LOG_WARNING
+    #define THREAD_LOG_WARNING(message) \
+        THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::warning, message)
+#endif
+
+#ifndef THREAD_LOG_INFO
+    #define THREAD_LOG_INFO(message) THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::info, message)
+#endif
+
+#ifndef THREAD_LOG_DEBUG
+    #define THREAD_LOG_DEBUG(message) \
+        THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::debug, message)
+#endif
+
+#ifndef THREAD_LOG_TRACE
+    #define THREAD_LOG_TRACE(message) \
+        THREAD_LOG_IF_ENABLED(kcenon::thread::log_level::trace, message)
+#endif
+
+}  // namespace kcenon::thread

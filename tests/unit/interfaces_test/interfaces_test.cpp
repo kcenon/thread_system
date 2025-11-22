@@ -43,7 +43,6 @@ BSD 3-Clause License
 #include "service_registry.h"
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
 
 TEST(interfaces_test, scheduler_interface_job_queue)
 {
@@ -76,6 +75,7 @@ TEST(interfaces_test, thread_pool_execute)
     ASSERT_TRUE(pool->enqueue_batch(std::move(workers)));
 
     std::atomic<int> count{0};
+    // Use thread_pool's enqueue method directly instead of deprecated executor_interface
     auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> result_void {
         count.fetch_add(1);
         return result_void();

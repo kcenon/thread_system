@@ -42,7 +42,6 @@ BSD 3-Clause License
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
 
 struct demo_service {
     std::string name;
@@ -56,7 +55,7 @@ int main() {
     auto got = service_registry::get_service<demo_service>();
     std::cout << "service name = " << (got ? got->name : "<null>") << "\n";
 
-    // Use thread_pool for task execution
+    // Use thread_pool directly (not via deprecated executor_interface)
     auto pool = std::make_shared<thread_pool>("svc_pool");
     std::vector<std::unique_ptr<thread_worker>> workers;
     workers.push_back(std::make_unique<thread_worker>(false));
@@ -70,7 +69,7 @@ int main() {
     }
 
     std::atomic<int> count{0};
-    if (auto r = pool->execute(std::make_unique<callback_job>([&count]() -> result_void {
+    if (auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> result_void {
             count.fetch_add(1);
             return result_void();
         })); r.has_error()) {
@@ -79,6 +78,6 @@ int main() {
 
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     std::cout << "executed jobs = " << count.load() << "\n";
-    pool->shutdown();
+    pool->stop();
     return 0;
 }
