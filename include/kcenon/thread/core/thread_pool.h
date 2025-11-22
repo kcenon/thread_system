@@ -39,7 +39,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/cancellation_token.h>
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/core/forward_declarations.h>
-#include <kcenon/thread/interfaces/executor_interface.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 
@@ -130,8 +129,7 @@ namespace kcenon::thread
 	 * @see job_queue The shared queue for storing pending jobs
 	 * @see typed_kcenon::thread::typed_thread_pool For a priority-based version
 	 */
-	class thread_pool : public std::enable_shared_from_this<thread_pool>,
-	                   public kcenon::thread::executor_interface
+	class thread_pool : public std::enable_shared_from_this<thread_pool>
 #ifdef THREAD_HAS_COMMON_EXECUTOR
 	                   , public common_ns::interfaces::IExecutor
 #endif
@@ -165,27 +163,6 @@ namespace kcenon::thread
 		 * within member functions to avoid storing a separate shared pointer.
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
-
-		// ============================================================================
-		// executor_interface implementation
-		// ============================================================================
-		// These methods implement the executor_interface for polymorphic usage.
-		// They delegate to the primary API methods below.
-
-		/**
-		 * @brief Executes a job (executor_interface implementation)
-		 * @param work The job to execute
-		 * @return result_void indicating success or error
-		 * @note This delegates to enqueue()
-		 */
-		auto execute(std::unique_ptr<job>&& work) -> result_void override;
-
-		/**
-		 * @brief Shuts down the executor (executor_interface implementation)
-		 * @return result_void indicating success or error
-		 * @note This delegates to stop(false)
-		 */
-		auto shutdown() -> result_void override;
 
 #ifdef THREAD_HAS_COMMON_EXECUTOR
 	// ============================================================================

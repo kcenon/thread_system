@@ -38,7 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include "typed_job_queue.h"
 #include "typed_thread_worker.h"
-#include <kcenon/thread/interfaces/executor_interface.h>
 
 // Common system unified interfaces
 // THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
@@ -154,7 +153,6 @@ namespace kcenon::thread
 	template <typename job_type = job_types>
 	class typed_thread_pool_t
 		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
-		, public kcenon::thread::executor_interface
 #ifdef THREAD_HAS_COMMON_EXECUTOR
 		, public common_ns::interfaces::IExecutor
 #endif
@@ -218,9 +216,9 @@ namespace kcenon::thread
 		[[nodiscard]] auto get_job_queue(void)
 			-> std::shared_ptr<typed_job_queue_t<job_type>>;
 
-		// executor_interface
-		auto execute(std::unique_ptr<job>&& work) -> result_void override;
-		auto shutdown() -> result_void override { return stop(false); }
+		// Job execution methods
+		auto execute(std::unique_ptr<job>&& work) -> result_void;
+		auto shutdown() -> result_void { return stop(false); }
 
 #ifdef THREAD_HAS_COMMON_EXECUTOR
 		// ============================================================================

@@ -213,15 +213,6 @@ void thread_pool::reset_metrics() {
     metrics_->reset();
 }
 
-// executor_interface
-auto thread_pool::execute(std::unique_ptr<job>&& work) -> result_void {
-    return enqueue(std::move(work));
-}
-
-auto thread_pool::shutdown() -> result_void {
-    return stop(false);
-}
-
 /**
  * @brief Adds a single job to the thread pool for processing.
  *

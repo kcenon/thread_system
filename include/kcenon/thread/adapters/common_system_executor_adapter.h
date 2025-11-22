@@ -17,7 +17,6 @@
 #endif
 
 #include "../core/thread_pool.h"
-#include "../interfaces/executor_interface.h"
 
 namespace kcenon::thread::adapters {
 
