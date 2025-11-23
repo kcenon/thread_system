@@ -69,7 +69,7 @@ jobs:
       with:
         path: |
           build/_deps
-        key: ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('**/CMakeLists.txt', 'cmake/*.cmake') }}
         restore-keys: |
           ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-
           ${{ runner.os }}-${{ matrix.compiler.name }}-fetchcontent-gtest-v1.14.0-
@@ -156,7 +156,7 @@ jobs:
       with:
         path: |
           build/_deps
-        key: ${{ runner.os }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        key: ${{ runner.os }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-${{ hashFiles('**/CMakeLists.txt', 'cmake/*.cmake') }}
         restore-keys: |
           ${{ runner.os }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0-
           ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
