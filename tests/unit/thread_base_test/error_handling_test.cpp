@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "error_handling.h"
-#include "job_queue.h"
-#include "callback_job.h"
-#include "thread_base.h"
+#include <kcenon/thread/core/error_handling.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_base.h>
 #include <thread>
 #include <chrono>
 

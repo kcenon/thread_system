@@ -19,17 +19,20 @@ endif()
 # Try to find GTest (vcpkg first, then system)
 find_package(GTest CONFIG)
 if(NOT GTest_FOUND)
-    find_package(GTest REQUIRED)
+    find_package(GTest)  # GTest provided by parent CMakeLists
 endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    typed_thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    ThreadSystem
     GTest::gtest
     GTest::gtest_main
     Threads::Threads
 )
+
+# Tests require C++20 for consistency
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
 # Include new headers for typed thread pool and core
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -46,10 +49,12 @@ enable_testing()
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
-add_custom_target(${PROJECT_NAME}_test ALL
-    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
-    DEPENDS ${PROJECT_NAME}
-)
+# Removed ALL flag to prevent tests from running during build
+# Tests will be executed explicitly via ctest in CI workflow
+# add_custom_target(${PROJECT_NAME}_test ALL
+#     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
+#     DEPENDS ${PROJECT_NAME}
+# )
 
 # Apply sanitizers if enabled
 if(COMMAND apply_sanitizers)
