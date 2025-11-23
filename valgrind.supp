@@ -1,0 +1,146 @@
+# Valgrind Suppressions for thread_system
+# This file contains suppressions for known false positives
+
+# =============================================================================
+# Google Test Framework
+# =============================================================================
+{
+   gtest_static_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*testing*internal*
+}
+
+{
+   gtest_type_info
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*type_info*
+}
+
+# =============================================================================
+# C++ Standard Library
+# =============================================================================
+{
+   std_string_ctor
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*basic_string*
+}
+
+{
+   std_locale
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*std*locale*
+}
+
+{
+   std_iostream_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*ios_base*Init*
+}
+
+# =============================================================================
+# pthread / Thread-related
+# =============================================================================
+{
+   pthread_create
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:pthread_create*
+}
+
+{
+   pthread_once
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:pthread_once*
+}
+
+{
+   thread_local_storage
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*__tls_*
+}
+
+# =============================================================================
+# dlopen / Dynamic Loading
+# =============================================================================
+{
+   dl_open
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlopen*
+}
+
+{
+   dl_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_*
+}
+
+# =============================================================================
+# Glibc
+# =============================================================================
+{
+   glibc_getaddrinfo
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:getaddrinfo
+}
+
+{
+   glibc_nss
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libnss_*.so*
+}
+
+# =============================================================================
+# fmt library
+# =============================================================================
+{
+   fmt_format
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:*fmt*
+}
+
+# =============================================================================
+# Hazard Pointer specific
+# Note: Hazard pointer implementation may show "possibly lost" due to
+# deferred reclamation. These are false positives as memory is eventually
+# reclaimed.
+# =============================================================================
+{
+   hazard_pointer_tls
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:*hazard_pointer*
+}
+
+{
+   hazard_pointer_domain
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:*hp_domain*
+}
