@@ -33,16 +33,22 @@ BSD 3-Clause License
 
 #include <gtest/gtest.h>
 
-#include "scheduler_interface.h"
-#include "monitorable_interface.h"
+#include <kcenon/thread/interfaces/scheduler_interface.h>
+#include <kcenon/thread/interfaces/monitorable_interface.h>
 
-#include "thread_pool.h"
-#include "job_queue.h"
-#include "callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 
-#include "service_registry.h"
+#include <kcenon/thread/core/service_registry.h>
 
 using namespace kcenon::thread;
+
+#ifdef BUILD_WITH_COMMON_SYSTEM
+// Support both old (namespace common) and new (namespace kcenon::common) versions
+// At global scope, need to use kcenon::common directly
+namespace common_test = kcenon::common;
+#endif
 
 TEST(interfaces_test, scheduler_interface_job_queue)
 {
@@ -99,7 +105,18 @@ public:
     auto get_metrics() -> ::monitoring_interface::metrics_snapshot override {
         return snapshot_;
     }
-    void reset_metrics() override { snapshot_ = {}; }
+
+#ifdef BUILD_WITH_COMMON_SYSTEM
+    auto reset_metrics() -> common_test::VoidResult override {
+        snapshot_ = {};
+        return common_test::ok();
+    }
+#else
+    void reset_metrics() override {
+        snapshot_ = {};
+    }
+#endif
+
 private:
     ::monitoring_interface::metrics_snapshot snapshot_{};
 };

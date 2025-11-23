@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "thread_pool.h"
+#include <kcenon/thread/core/thread_pool.h>
 
 using namespace kcenon::thread;
 
@@ -154,4 +154,123 @@ TEST(thread_pool_test, start_and_one_sec_job_and_stop)
 
 	auto stop_result = pool->stop(false);
 	EXPECT_FALSE(stop_result.has_error());
+}
+
+// Test for Problem 1: enqueue after stop should fail
+TEST(thread_pool_test, enqueue_after_stop_should_fail)
+{
+	auto pool = std::make_shared<thread_pool>();
+
+	auto worker = std::make_unique<thread_worker>();
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
+
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// Stop the pool
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
+
+	// Try to enqueue a job after stop - should fail
+	auto job = std::make_unique<callback_job>(
+		[](void) -> result_void { return result_void(); },
+		"test job");
+	result = pool->enqueue(std::move(job));
+	EXPECT_TRUE(result.has_error());
+	EXPECT_EQ(result.get_error().code(), error_code::queue_stopped);
+}
+
+// Test for Problem 1: enqueue_batch after stop should fail
+TEST(thread_pool_test, enqueue_batch_after_stop_should_fail)
+{
+	auto pool = std::make_shared<thread_pool>();
+
+	auto worker = std::make_unique<thread_worker>();
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
+
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// Stop the pool
+	auto stop_result = pool->stop(true);
+	EXPECT_FALSE(stop_result.has_error());
+
+	// Try to enqueue batch of jobs after stop - should fail
+	std::vector<std::unique_ptr<job>> jobs;
+	jobs.push_back(std::make_unique<callback_job>(
+		[](void) -> result_void { return result_void(); },
+		"test job 1"));
+	jobs.push_back(std::make_unique<callback_job>(
+		[](void) -> result_void { return result_void(); },
+		"test job 2"));
+
+	result = pool->enqueue_batch(std::move(jobs));
+	EXPECT_TRUE(result.has_error());
+	EXPECT_EQ(result.get_error().code(), error_code::queue_stopped);
+}
+
+// Test for Problem 2: concurrent stop calls should be safe
+TEST(thread_pool_test, concurrent_stop_calls_should_be_safe)
+{
+	auto pool = std::make_shared<thread_pool>();
+
+	auto worker = std::make_unique<thread_worker>();
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
+
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// Call stop from multiple threads simultaneously
+	std::atomic<int> stop_success_count{0};
+	std::vector<std::thread> threads;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		threads.emplace_back([&pool, &stop_success_count]()
+		{
+			auto stop_result = pool->stop(false);
+			// Only one thread should successfully execute stop logic
+			// Others should return immediately without error
+			if (!stop_result.has_error())
+			{
+				stop_success_count++;
+			}
+		});
+	}
+
+	for (auto& thread : threads)
+	{
+		thread.join();
+	}
+
+	// All stop calls should succeed (idempotent)
+	EXPECT_EQ(stop_success_count.load(), 5);
+}
+
+// Test for Problem 2: stop can be called multiple times safely
+TEST(thread_pool_test, multiple_stop_calls_are_idempotent)
+{
+	auto pool = std::make_shared<thread_pool>();
+
+	auto worker = std::make_unique<thread_worker>();
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
+
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// First stop should succeed
+	auto stop_result1 = pool->stop(false);
+	EXPECT_FALSE(stop_result1.has_error());
+
+	// Second stop should also succeed (idempotent)
+	auto stop_result2 = pool->stop(false);
+	EXPECT_FALSE(stop_result2.has_error());
+
+	// Third stop with immediate flag should also succeed
+	auto stop_result3 = pool->stop(true);
+	EXPECT_FALSE(stop_result3.has_error());
 }
