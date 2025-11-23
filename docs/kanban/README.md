@@ -14,10 +14,10 @@ This folder contains tickets for tracking improvement work on the Thread System.
 |----------|-------|------|-------------|---------|
 | CORE | 4 | 0 | 0 | 4 |
 | TEST | 3 | 0 | 0 | 3 |
-| BUILD | 6 | 0 | 0 | 6 |
-| DOC | 7 | 0 | 0 | 7 |
-| MAINT | 3 | 0 | 0 | 3 |
-| **Total** | **23** | **0** | **0** | **23** |
+| BUILD | 3 | 0 | 0 | 3 |
+| **Total** | **10** | **0** | **0** | **10** |
+
+> Note: 10 actionable tickets have been created. Additional DOC/MAINT tickets can be created as needed.
 
 ---
 
@@ -57,63 +57,50 @@ Unify test structure and optimize CI.
 | ID | Title | Priority | Est. Duration | Dependencies | Status |
 |----|-------|----------|---------------|--------------|--------|
 | [THR-008](THR-008-test-unify.md) | Unify unittest and tests Directories | MEDIUM | 5-6d | - | TODO |
-| [THR-009](THR-009-cmake-refactor.md) | Refactor CMake Build System | MEDIUM | 6-8d | - | TODO |
+| [THR-009](THR-009-cmake-refactor.md) | Refactor CMake Build System | MEDIUM | 6-8d | THR-008 | TODO |
 | [THR-010](THR-010-platform-code.md) | Separate & Clean Platform-specific Code | MEDIUM | 4-5d | - | TODO |
-| [THR-011](THR-011-examples.md) | Organize & Document Example Projects | MEDIUM | 3-4d | - | TODO |
-| [THR-012](THR-012-ci-optimize.md) | Optimize GitHub Actions Workflow Performance | MEDIUM | 3-4d | - | TODO |
-| [THR-013](THR-013-cross-platform.md) | Automate Cross-platform Performance Benchmark Comparison | MEDIUM | 4-5d | - | TODO |
 
 ---
 
-### DOC: Documentation Improvement
+### Future Tickets (Not Yet Created)
 
-Improve documentation verification and diagrams.
+The following tickets are planned but not yet detailed:
 
-| ID | Title | Priority | Est. Duration | Dependencies | Status |
-|----|-------|----------|---------------|--------------|--------|
-| [THR-014](THR-014-win-arm64.md) | Verify & Document Windows ARM64 Support | MEDIUM | 2-3d | - | TODO |
-| [THR-015](THR-015-doc-verify.md) | Automate Documentation Link & Consistency Verification | LOW | 2-3d | - | TODO |
-| [THR-016](THR-016-i18n.md) | Organize Korean/English Document Version Management | LOW | 3-4d | - | TODO |
-| [THR-017](THR-017-doxygen.md) | Automate Doxygen Documentation Generation & Hosting | LOW | 2-3d | - | TODO |
-| [THR-018](THR-018-diagrams.md) | Make Architecture Diagrams Interactive | LOW | 4-5d | - | TODO |
-| [THR-019](THR-019-lockfree-docs.md) | Enhance Lock-free Implementation Documentation | LOW | 3-4d | - | TODO |
-| [THR-020](THR-020-adaptive-docs.md) | Document Adaptive Queue Operation Principles | LOW | 2-3d | - | TODO |
+#### DOC: Documentation Improvement
+- THR-014: Verify & Document Windows ARM64 Support
+- THR-015: Automate Documentation Link & Consistency Verification
+- THR-016: Organize Korean/English Document Version Management
+- THR-017: Automate Doxygen Documentation Generation & Hosting
 
----
+#### BUILD (Additional)
+- THR-011: Organize & Document Example Projects
+- THR-012: Optimize GitHub Actions Workflow Performance
+- THR-013: Automate Cross-platform Performance Benchmark Comparison
 
-### MAINT: Maintenance
-
-Manage ecosystem integration and benchmark updates.
-
-| ID | Title | Priority | Est. Duration | Dependencies | Status |
-|----|-------|----------|---------------|--------------|--------|
-| [THR-021](THR-021-typed-pool.md) | Type-based Thread Pool Routing Optimization Guide | LOW | 2-3d | - | TODO |
-| [THR-022](THR-022-common-integration.md) | Strengthen common_system Integration | LOW | 4-5d | - | TODO |
-| [THR-023](THR-023-baseline.md) | Regular Performance Benchmark Baseline Updates | LOW | 1-2d | - | TODO |
+#### MAINT: Maintenance
+- THR-021: Type-based Thread Pool Routing Optimization Guide
+- THR-022: Strengthen common_system Integration
+- THR-023: Regular Performance Benchmark Baseline Updates
 
 ---
 
 ## Execution Plan
 
-### Phase 1: Production Completion (Weeks 1-2)
-1. THR-001: Valgrind Verification & CI Integration
-2. THR-002: Platform Edge Case Tests
-3. THR-003: Error System Migration
-4. THR-004: Log Level Unification
+### Phase 1: Production Completion (HIGH Priority)
+1. **THR-001**: Valgrind Verification & CI Integration
+2. **THR-002**: Platform Edge Case Tests
+3. **THR-003**: Error System Migration
+4. **THR-004**: Log Level Unification
 
-### Phase 2: Test Enhancement (Weeks 2-3)
-1. THR-005: Achieve 80% Coverage
-2. THR-006: Stress Test Automation
-3. THR-007: Performance Regression Detection
+### Phase 2: Test Enhancement (HIGH Priority)
+1. **THR-005**: Achieve 80% Coverage
+2. **THR-006**: Stress Test Automation
+3. **THR-007**: Performance Regression Detection
 
-### Phase 3: Structural Improvement (Weeks 3-4)
-1. THR-008: Unify Test Directories
-2. THR-009: CMake Refactoring
-3. THR-010: Platform Code Separation
-
-### Phase 4: CI/CD & Documentation (Week 4+)
-1. THR-011~014: Examples, CI Optimization, Documentation
-2. THR-015~023: Documentation and Maintenance
+### Phase 3: Structural Improvement (MEDIUM Priority)
+1. **THR-008**: Unify Test Directories
+2. **THR-009**: CMake Refactoring (depends on THR-008)
+3. **THR-010**: Platform Code Separation
 
 ---
 
@@ -123,6 +110,26 @@ Manage ecosystem integration and benchmark updates.
 - **IN_PROGRESS**: Work in progress
 - **REVIEW**: Awaiting code review
 - **DONE**: Completed
+
+---
+
+## Created Ticket Files
+
+```
+kanban/
+├── README.md
+├── PRIORITY_DIRECTIVE.md
+├── THR-001-valgrind.md
+├── THR-002-platform-tests.md
+├── THR-003-error-migration.md
+├── THR-004-log-level.md
+├── THR-005-coverage-80.md
+├── THR-006-stress-test.md
+├── THR-007-perf-regression.md
+├── THR-008-test-unify.md
+├── THR-009-cmake-refactor.md
+└── THR-010-platform-code.md
+```
 
 ---
 
