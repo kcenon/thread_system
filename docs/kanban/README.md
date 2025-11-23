@@ -13,9 +13,9 @@ This folder contains tickets for tracking improvement work on the Thread System.
 | Category | Total | Done | In Progress | Pending |
 |----------|-------|------|-------------|---------|
 | CORE | 4 | 4 | 0 | 0 |
-| TEST | 3 | 0 | 0 | 3 |
-| BUILD | 3 | 0 | 0 | 3 |
-| **Total** | **10** | **4** | **0** | **6** |
+| TEST | 3 | 3 | 0 | 0 |
+| BUILD | 3 | 3 | 0 | 0 |
+| **Total** | **10** | **10** | **0** | **0** |
 
 > Note: 10 actionable tickets have been created. Additional DOC/MAINT tickets can be created as needed.
 
@@ -44,9 +44,9 @@ Enhance test coverage and stress tests.
 
 | ID | Title | Priority | Est. Duration | Dependencies | Status |
 |----|-------|----------|---------------|--------------|--------|
-| [THR-005](THR-005-coverage-80.md) | Achieve 80% Integration Test Coverage | HIGH | 5-6d | - | TODO |
-| [THR-006](THR-006-stress-test.md) | Automate Stress Tests & Result Collection | HIGH | 4-5d | - | TODO |
-| [THR-007](THR-007-perf-regression.md) | Automate Performance Regression Detection | HIGH | 3-4d | - | TODO |
+| [THR-005](THR-005-coverage-80.md) | Achieve 80% Integration Test Coverage | HIGH | 5-6d | - | DONE |
+| [THR-006](THR-006-stress-test.md) | Automate Stress Tests & Result Collection | HIGH | 4-5d | - | DONE |
+| [THR-007](THR-007-perf-regression.md) | Automate Performance Regression Detection | HIGH | 3-4d | - | DONE |
 
 ---
 
@@ -56,9 +56,9 @@ Unify test structure and optimize CI.
 
 | ID | Title | Priority | Est. Duration | Dependencies | Status |
 |----|-------|----------|---------------|--------------|--------|
-| [THR-008](THR-008-test-unify.md) | Unify unittest and tests Directories | MEDIUM | 5-6d | - | TODO |
-| [THR-009](THR-009-cmake-refactor.md) | Refactor CMake Build System | MEDIUM | 6-8d | THR-008 | TODO |
-| [THR-010](THR-010-platform-code.md) | Separate & Clean Platform-specific Code | MEDIUM | 4-5d | - | TODO |
+| [THR-008](THR-008-test-unify.md) | Unify unittest and tests Directories | MEDIUM | 5-6d | - | DONE |
+| [THR-009](THR-009-cmake-refactor.md) | Refactor CMake Build System | MEDIUM | 6-8d | THR-008 | DONE |
+| [THR-010](THR-010-platform-code.md) | Separate & Clean Platform-specific Code | MEDIUM | 4-5d | - | DONE |
 
 ---
 
