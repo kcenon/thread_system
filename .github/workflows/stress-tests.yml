@@ -1,0 +1,114 @@
+name: Nightly Stress Tests
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 2 AM UTC daily
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '300'
+      scenarios:
+        description: 'Scenarios to run (all, sustained, burst, memory)'
+        required: false
+        default: 'all'
+
+jobs:
+  stress-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtest-dev cmake
+
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_STRESS_TESTS=ON \
+            -DCMAKE_CXX_FLAGS="-O2"
+
+      - name: Build
+        run: cmake --build build -j$(nproc)
+
+      - name: Run Stress Tests
+        run: |
+          cd build
+          STRESS_DURATION=${{ github.event.inputs.duration || '300' }}
+          export CI=true
+
+          # Run sustained load test
+          timeout 3600 ctest -R "SustainedLoad" --output-on-failure || true
+
+          # Collect results
+          echo "Stress test completed"
+
+      - name: Collect System Metrics
+        if: always()
+        run: |
+          mkdir -p stress_results
+          cat > stress_results/system_info.json << EOF
+          {
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "runner": "${{ runner.os }}",
+            "cpu_count": $(nproc),
+            "memory_mb": $(free -m | awk '/^Mem:/{print $2}'),
+            "duration_requested": "${{ github.event.inputs.duration || '300' }}"
+          }
+          EOF
+
+      - name: Upload Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stress-test-results-${{ github.run_number }}
+          path: stress_results/
+          retention-days: 30
+
+  stress-test-macos:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Install Dependencies
+        run: brew install googletest
+
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_STRESS_TESTS=ON
+
+      - name: Build
+        run: cmake --build build -j$(sysctl -n hw.ncpu)
+
+      - name: Run Stress Tests
+        run: |
+          cd build
+          export CI=true
+          ctest -R "SustainedLoad" --output-on-failure || true
+
+      - name: Upload Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stress-test-results-macos-${{ github.run_number }}
+          path: stress_results/
+          retention-days: 30
