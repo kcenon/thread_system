@@ -6,10 +6,9 @@ coverage:
   status:
     project:
       default:
-        # Allow coverage to decrease slightly for build configuration changes
-        # that don't modify source code logic
+        # Enforce minimum 80% code coverage
         threshold: 1%
-        target: auto
+        target: 80%
         if_ci_failed: error
     patch:
       default:
