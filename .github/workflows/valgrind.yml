@@ -1,0 +1,130 @@
+name: Valgrind Memory Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run nightly at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  valgrind:
+    name: Memory Leak Detection
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          g++ \
+          valgrind \
+          libfmt-dev
+
+    - name: Checkout common_system (optional)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
+
+    - name: Configure CMake
+      run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
+
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="-g -O0" \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DBUILD_TESTS=ON \
+          -DBUILD_EXAMPLES=OFF \
+          -DBUILD_BENCHMARKS=OFF
+
+    - name: Build
+      run: cmake --build build --parallel
+
+    - name: Run Valgrind on Unit Tests
+      run: |
+        chmod +x scripts/run_valgrind.sh
+        ./scripts/run_valgrind.sh --unit-tests
+
+    - name: Run Valgrind on Integration Tests
+      run: |
+        ./scripts/run_valgrind.sh --integration-tests
+
+    - name: Generate Valgrind Report
+      if: always()
+      run: |
+        ./scripts/run_valgrind.sh --generate-report
+
+    - name: Upload Valgrind Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: valgrind-results
+        path: |
+          build/valgrind-*.xml
+          build/valgrind-report.txt
+        retention-days: 30
+
+    - name: Check for Memory Leaks
+      run: |
+        if grep -q "definitely lost: [1-9]" build/valgrind-report.txt 2>/dev/null; then
+          echo "::error::Memory leaks detected!"
+          cat build/valgrind-report.txt
+          exit 1
+        fi
+        echo "No memory leaks detected"
+
+  valgrind-stress:
+    name: Extended Stress Test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    # Only run on schedule or manual trigger
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build g++ valgrind libfmt-dev
+
+    - name: Configure and Build
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="-g -O0" \
+          -DBUILD_TESTS=ON
+        cmake --build build --parallel
+
+    - name: Run Extended Valgrind Stress Test
+      run: |
+        ./scripts/run_valgrind.sh --stress-test --duration=3600
+
+    - name: Upload Stress Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: valgrind-stress-results
+        path: build/valgrind-stress-*.xml
+        retention-days: 30

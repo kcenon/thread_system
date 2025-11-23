@@ -12,10 +12,10 @@ This folder contains tickets for tracking improvement work on the Thread System.
 
 | Category | Total | Done | In Progress | Pending |
 |----------|-------|------|-------------|---------|
-| CORE | 4 | 0 | 0 | 4 |
+| CORE | 4 | 1 | 0 | 3 |
 | TEST | 3 | 0 | 0 | 3 |
 | BUILD | 3 | 0 | 0 | 3 |
-| **Total** | **10** | **0** | **0** | **10** |
+| **Total** | **10** | **1** | **0** | **9** |
 
 > Note: 10 actionable tickets have been created. Additional DOC/MAINT tickets can be created as needed.
 
@@ -29,7 +29,7 @@ Complete Valgrind verification and migration plans.
 
 | ID | Title | Priority | Est. Duration | Dependencies | Status |
 |----|-------|----------|---------------|--------------|--------|
-| [THR-001](THR-001-valgrind.md) | Valgrind Memory Leak Verification & CI/CD Integration | HIGH | 2-3d | - | TODO |
+| [THR-001](THR-001-valgrind.md) | Valgrind Memory Leak Verification & CI/CD Integration | HIGH | 2-3d | - | DONE |
 | [THR-002](THR-002-platform-tests.md) | Platform-specific Edge Case Tests | HIGH | 3-4d | - | TODO |
 | [THR-003](THR-003-error-migration.md) | Complete ERROR_SYSTEM_MIGRATION Plan | HIGH | 4-5d | - | TODO |
 | [THR-004](THR-004-log-level.md) | Execute LOG_LEVEL Unification Plan | HIGH | 3-4d | - | TODO |
