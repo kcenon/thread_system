@@ -69,7 +69,8 @@ TEST_F(ErrorHandlingTest, ResultWithValue) {
 }
 
 TEST_F(ErrorHandlingTest, ResultWithError) {
-    result<int> res(error(error_code::queue_empty));
+    auto err = error{error_code::queue_empty};
+    result<int> res{err};
 
     EXPECT_FALSE(res.has_value());
     EXPECT_FALSE(static_cast<bool>(res));
@@ -77,16 +78,18 @@ TEST_F(ErrorHandlingTest, ResultWithError) {
 }
 
 TEST_F(ErrorHandlingTest, ResultValueOr) {
-    result<int> success_res(42);
-    result<int> error_res(error(error_code::queue_empty));
+    result<int> success_res{42};
+    auto err = error{error_code::queue_empty};
+    result<int> error_res{err};
 
     EXPECT_EQ(success_res.value_or(0), 42);
     EXPECT_EQ(error_res.value_or(0), 0);
 }
 
 TEST_F(ErrorHandlingTest, ResultValueOrThrow) {
-    result<int> success_res(42);
-    result<int> error_res(error(error_code::queue_empty));
+    result<int> success_res{42};
+    auto err = error{error_code::queue_empty};
+    result<int> error_res{err};
 
     EXPECT_EQ(success_res.value_or_throw(), 42);
     EXPECT_THROW(error_res.value_or_throw(), std::runtime_error);
@@ -101,7 +104,8 @@ TEST_F(ErrorHandlingTest, ResultMap) {
 }
 
 TEST_F(ErrorHandlingTest, ResultMapError) {
-    result<int> res(error(error_code::queue_empty));
+    auto err = error{error_code::queue_empty};
+    result<int> res{err};
     auto mapped = res.map([](int v) { return v * 2; });
 
     EXPECT_FALSE(mapped.has_value());
@@ -120,7 +124,8 @@ TEST_F(ErrorHandlingTest, VoidResultSuccess) {
 }
 
 TEST_F(ErrorHandlingTest, VoidResultError) {
-    result<void> res(error(error_code::mutex_error));
+    auto err = error{error_code::mutex_error};
+    result<void> res{err};
 
     EXPECT_FALSE(res.has_value());
     EXPECT_EQ(res.get_error().code(), error_code::mutex_error);
@@ -128,7 +133,8 @@ TEST_F(ErrorHandlingTest, VoidResultError) {
 
 TEST_F(ErrorHandlingTest, VoidResultValueOrThrow) {
     result<void> success_res;
-    result<void> error_res(error(error_code::mutex_error));
+    auto err = error{error_code::mutex_error};
+    result<void> error_res{err};
 
     EXPECT_NO_THROW(success_res.value_or_throw());
     EXPECT_THROW(error_res.value_or_throw(), std::runtime_error);
@@ -199,7 +205,8 @@ TEST_F(ErrorHandlingTest, ResultVoidSuccess) {
 }
 
 TEST_F(ErrorHandlingTest, ResultVoidError) {
-    result_void res(error(error_code::io_error));
+    auto err = error{error_code::io_error};
+    result_void res{err};
 
     EXPECT_TRUE(res.has_error());
     EXPECT_FALSE(static_cast<bool>(res));
@@ -225,7 +232,8 @@ TEST_F(ErrorHandlingTest, OptionalErrorToResult) {
 
 TEST_F(ErrorHandlingTest, ResultToOptionalError) {
     result<void> success;
-    result<void> failure(error(error_code::io_error));
+    auto err = error{error_code::io_error};
+    result<void> failure{err};
 
     auto opt1 = result_to_optional_error(success);
     auto opt2 = result_to_optional_error(failure);
