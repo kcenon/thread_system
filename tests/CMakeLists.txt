@@ -8,10 +8,19 @@
 #   └── stress/        - Stress tests (optional)
 ##################################################
 
-# Add unit tests
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit/CMakeLists.txt)
-    add_subdirectory(unit)
-    message(STATUS "Added tests/unit subdirectory")
+# Add unit tests only when testing is enabled and GTest is available
+if(BUILD_TESTING)
+    find_package(GTest QUIET)
+    if(GTest_FOUND OR TARGET GTest::gtest)
+        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit/CMakeLists.txt)
+            add_subdirectory(unit)
+            message(STATUS "Added tests/unit subdirectory")
+        endif()
+    else()
+        message(STATUS "GTest not found - skipping unit tests")
+    endif()
+else()
+    message(STATUS "BUILD_TESTING is OFF - skipping unit tests")
 endif()
 
 # Add stress tests if enabled
