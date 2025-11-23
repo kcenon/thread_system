@@ -46,6 +46,7 @@
 #include <ostream>
 #include <functional>
 #include <stdexcept>
+#include <system_error>
 
 // THREAD_HAS_COMMON_RESULT is defined by CMake when common_system is available
 // This is more reliable than __has_include alone, which may not respect build configuration
@@ -840,4 +841,96 @@ result<T> from_common_result(const Result<T>& res) {
 
 #endif // THREAD_HAS_COMMON_RESULT
 
+// ============================================================================
+// std::error_code Integration
+// ============================================================================
+
+/**
+ * @class thread_error_category
+ * @brief std::error_category implementation for thread_system errors
+ *
+ * This allows thread_system error_code to be used with std::error_code,
+ * enabling seamless integration with standard library error handling.
+ */
+class thread_error_category : public std::error_category {
+public:
+    /**
+     * @brief Returns the name of the error category
+     */
+    [[nodiscard]] const char* name() const noexcept override {
+        return "thread_system";
+    }
+
+    /**
+     * @brief Returns a message for the given error code
+     * @param ev The error value
+     * @return Human-readable error message
+     */
+    [[nodiscard]] std::string message(int ev) const override {
+        return error_code_to_string(static_cast<error_code>(ev));
+    }
+
+    /**
+     * @brief Returns the equivalent std::errc for certain error codes
+     * @param ev The error value
+     * @param condition The std::error_condition to compare against
+     * @return true if the error is equivalent to the condition
+     */
+    [[nodiscard]] bool equivalent(int ev, const std::error_condition& condition) const noexcept override {
+        switch (static_cast<error_code>(ev)) {
+            case error_code::invalid_argument:
+                return condition == std::errc::invalid_argument;
+            case error_code::resource_allocation_failed:
+            case error_code::resource_limit_reached:
+                return condition == std::errc::not_enough_memory;
+            case error_code::operation_timeout:
+                return condition == std::errc::timed_out;
+            case error_code::deadlock_detected:
+                return condition == std::errc::resource_deadlock_would_occur;
+            default:
+                return false;
+        }
+    }
+};
+
+/**
+ * @brief Gets the singleton instance of thread_error_category
+ * @return Reference to the thread_error_category singleton
+ */
+inline const std::error_category& thread_category() noexcept {
+    static thread_error_category instance;
+    return instance;
+}
+
+/**
+ * @brief Creates a std::error_code from a thread_system error_code
+ * @param e The thread_system error_code
+ * @return std::error_code representing the error
+ */
+inline std::error_code make_error_code(error_code e) noexcept {
+    return std::error_code(static_cast<int>(e), thread_category());
+}
+
+/**
+ * @brief Creates a std::error_condition from a thread_system error_code
+ * @param e The thread_system error_code
+ * @return std::error_condition representing the error
+ */
+inline std::error_condition make_error_condition(error_code e) noexcept {
+    return std::error_condition(static_cast<int>(e), thread_category());
+}
+
 } // namespace kcenon::thread
+
+// ============================================================================
+// std::error_code specialization (required to be in global namespace)
+// ============================================================================
+
+namespace std {
+/**
+ * @brief Specialization to enable implicit conversion of thread_system::error_code
+ *        to std::error_code
+ */
+template <>
+struct is_error_code_enum<kcenon::thread::error_code> : true_type {};
+} // namespace std
