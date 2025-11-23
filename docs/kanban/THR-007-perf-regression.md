@@ -3,7 +3,7 @@
 **ID**: THR-007
 **Category**: TEST
 **Priority**: HIGH
-**Status**: TODO
+**Status**: DONE
 **Estimated Duration**: 3-4 days
 **Dependencies**: THR-006 (optional)
 **Completed**: 2025-11-23
