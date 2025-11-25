@@ -27,6 +27,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// IMPORTANT: This implementation has memory ordering issues (TICKET-002).
+// This macro enables the code for library builds while maintaining the header guard.
+// For production code, use safe_hazard_pointer.h or atomic_shared_ptr.h instead.
+#define HAZARD_POINTER_FORCE_ENABLE
+
 #include "kcenon/thread/core/hazard_pointer.h"
 
 #include <algorithm>
