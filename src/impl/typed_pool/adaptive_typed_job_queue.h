@@ -33,7 +33,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "typed_job_queue.h"
+
+// Lock-free queue is disabled by default due to TLS bug (TICKET-001).
+// Only include when explicitly enabled for testing/debugging.
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
 #include "typed_lockfree_job_queue.h"
+#endif
+
 #include <atomic>
 #include <chrono>
 #include <thread>
@@ -137,10 +143,12 @@ namespace kcenon::thread
 			LOCKFREE,
 			HYBRID
 		};
-		
+
 		// Queue implementations
 		std::unique_ptr<typed_job_queue_t<job_type>> legacy_queue_;
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
 		std::unique_ptr<typed_lockfree_job_queue_t<job_type>> lockfree_queue_;
+#endif
 		
 		// Current state
 		std::atomic<queue_type> current_type_;
