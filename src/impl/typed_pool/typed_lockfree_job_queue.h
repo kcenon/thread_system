@@ -32,6 +32,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+// =============================================================================
+// CRITICAL SECURITY WARNING - TICKET-001
+// =============================================================================
+// This lock-free queue implementation has a Thread-Local Storage (TLS)
+// initialization order bug that causes:
+//   - Use-After-Free (CWE-416, CVSS 9.8 Critical)
+//   - Data corruption and segmentation faults during thread destruction
+//   - Unpredictable crashes in production environments
+//
+// DO NOT USE THIS IN PRODUCTION CODE.
+// Use typed_job_queue (mutex-based) or adaptive_typed_job_queue_t with
+// FORCE_LEGACY strategy instead.
+//
+// To enable for testing/debugging ONLY, define TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+// before including this header.
+//
+// See: docs/tickets/TICKET-001-LOCKFREE-QUEUE-TLS-BUG.md
+// =============================================================================
+#ifndef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+    #error "CRITICAL: typed_lockfree_job_queue has TLS initialization bug (TICKET-001, CVSS 9.8). " \
+           "DO NOT USE IN PRODUCTION. Use typed_job_queue or adaptive_typed_job_queue_t with FORCE_LEGACY instead. " \
+           "Define TYPED_LOCKFREE_QUEUE_FORCE_ENABLE only for testing/debugging."
+#endif
+
 #include <kcenon/thread/core/job_queue.h>
 #include "typed_job.h"
 #include "job_types.h"
