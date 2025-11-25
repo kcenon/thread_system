@@ -72,3 +72,6 @@ test_data_race_*
 \!test_data_race_*.cpp
 test_data_race_*.dSYM/
 EOF < /dev/nulldocs/api/
+
+# cache
+.cache/
