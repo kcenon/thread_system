@@ -30,6 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
+// Only compile when lock-free queue is explicitly enabled for testing
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+
 #include "typed_lockfree_job_queue.h"
 
 /**
@@ -77,3 +80,5 @@ namespace kcenon::thread
 	 */
 	template class typed_lockfree_job_queue_t<job_types>;
 }
+
+#endif // TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
