@@ -27,6 +27,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// IMPORTANT: This test uses the legacy hazard_pointer which has memory ordering issues.
+// This macro enables the code for testing purposes only.
+// For production code, use safe_hazard_pointer.h or atomic_shared_ptr.h instead.
+// See TICKET-002 for details.
+#define HAZARD_POINTER_FORCE_ENABLE
+
 #include <gtest/gtest.h>
 
 #include "kcenon/thread/core/hazard_pointer.h"

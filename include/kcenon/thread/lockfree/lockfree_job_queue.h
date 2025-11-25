@@ -33,6 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <kcenon/thread/core/job.h>
+
+// TICKET-002: Enable hazard_pointer for internal library use.
+// This code has memory ordering issues on weak memory model architectures.
+// For new code, prefer safe_hazard_pointer.h or atomic_shared_ptr.h.
+#define HAZARD_POINTER_FORCE_ENABLE
 #include <kcenon/thread/core/hazard_pointer.h>
 #include <kcenon/thread/core/error_handling.h>
 

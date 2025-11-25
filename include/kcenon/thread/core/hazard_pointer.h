@@ -2,6 +2,29 @@
 //
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 //
+// =============================================================================
+// CRITICAL SECURITY WARNING (TICKET-002)
+// =============================================================================
+// This hazard pointer implementation has memory ordering issues that can cause:
+// - Data races under high concurrency
+// - Memory leaks (non-reclaimable pointers)
+// - ABA problems leading to undefined behavior
+//
+// CVSS Score: 8.5 (High) - Affects weak memory model architectures (ARM)
+//
+// Use one of these safe alternatives:
+// - kcenon::thread::safe_hazard_pointer (safe_hazard_pointer.h)
+// - kcenon::thread::atomic_shared_ptr<T> (atomic_shared_ptr.h)
+// - std::atomic<std::shared_ptr<T>> (C++20)
+//
+// To enable this code for debugging only, define HAZARD_POINTER_FORCE_ENABLE
+// =============================================================================
+#ifndef HAZARD_POINTER_FORCE_ENABLE
+#error "CRITICAL: hazard_pointer has memory ordering issues (TICKET-002). " \
+       "Use safe_hazard_pointer.h or atomic_shared_ptr.h instead. " \
+       "Define HAZARD_POINTER_FORCE_ENABLE only for debugging."
+#endif
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //
