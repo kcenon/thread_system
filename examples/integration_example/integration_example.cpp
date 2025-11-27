@@ -53,6 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/log_level.h>
 
 // External logger headers (would be from installed package)
 // #include <logger_system/logger.h>
@@ -112,7 +113,7 @@ void thread_pool_with_logger_example() {
         auto r = pool->enqueue(std::make_unique<callback_job>(
             [i, &context]() -> result_void {
                 // Job logs through context
-                context.log(log_level::info, 
+                context.log(log_level_v2::info,
                     "Executing job " + std::to_string(i));
                 
                 // Simulate work
@@ -245,7 +246,7 @@ void complete_integration_example() {
     auto pool = std::make_shared<thread_pool>("IntegratedPool", context);
     
     // Log that we're starting
-    context.log(log_level::info, "Starting integrated thread pool example");
+    context.log(log_level_v2::info, "Starting integrated thread pool example");
     
     // 4. Configure pool
     std::vector<std::unique_ptr<thread_worker>> workers;
@@ -276,19 +277,19 @@ void complete_integration_example() {
         auto r = pool->enqueue(std::make_unique<callback_job>(
             [i, &context]() -> result_void {
                 // Log job start
-                context.log(log_level::debug, 
+                context.log(log_level_v2::debug,
                     "Job " + std::to_string(i) + " started");
-                
+
                 // Simulate work
                 auto work_time = 20 + (i % 30);
                 std::this_thread::sleep_for(std::chrono::milliseconds(work_time));
-                
+
                 // Simulate occasional warnings
                 if (i % 10 == 0) {
-                    context.log(log_level::warning, 
+                    context.log(log_level_v2::warn,
                         "Job " + std::to_string(i) + " took longer than expected");
                 }
-                
+
                 return result_void();
             }
         ));
@@ -302,9 +303,9 @@ void complete_integration_example() {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         
         auto snapshot = monitor->get_current_snapshot();
-        context.log(log_level::info, 
-            "Progress: " + std::to_string(snapshot.thread_pool.jobs_completed) + 
-            " jobs completed, " + std::to_string(snapshot.thread_pool.jobs_pending) + 
+        context.log(log_level_v2::info,
+            "Progress: " + std::to_string(snapshot.thread_pool.jobs_completed) +
+            " jobs completed, " + std::to_string(snapshot.thread_pool.jobs_pending) +
             " pending");
     }
     
@@ -320,7 +321,7 @@ void complete_integration_example() {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
         workload_end - workload_start);
     
-    context.log(log_level::info, 
+    context.log(log_level_v2::info,
         "Workload completed in " + std::to_string(duration.count()) + " ms");
     
     // 8. Final metrics
@@ -394,7 +395,7 @@ void dynamic_service_example() {
     for (int i = 5; i < 10; ++i) {
         auto r2 = pool->enqueue(std::make_unique<callback_job>(
             [i, &new_context]() -> result_void {
-                new_context.log(log_level::info, 
+                new_context.log(log_level_v2::info,
                     "Job " + std::to_string(i) + " with dynamic logger");
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                 return result_void();
