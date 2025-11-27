@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/thread/core/log_level.h>
 #include <iostream>
 #include <mutex>
 #include <iomanip>
@@ -116,15 +117,8 @@ private:
     }
     
     std::string level_to_string(kcenon::thread::log_level level) const {
-        switch (level) {
-            case kcenon::thread::log_level::critical: return "CRITICAL";
-            case kcenon::thread::log_level::error:    return "ERROR";
-            case kcenon::thread::log_level::warning:  return "WARNING";
-            case kcenon::thread::log_level::info:     return "INFO";
-            case kcenon::thread::log_level::debug:    return "DEBUG";
-            case kcenon::thread::log_level::trace:    return "TRACE";
-        }
-        return "UNKNOWN";
+        // Convert to log_level_v2 and use its to_string
+        return std::string(kcenon::thread::to_string(kcenon::thread::to_v2(level)));
     }
     
 private:

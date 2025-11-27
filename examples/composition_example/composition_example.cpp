@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/monitoring_interface.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/log_level.h>
 // #include "../../src/impl/typed_pool/typed_thread_pool.h"
 // #include "../../src/impl/typed_pool/callback_typed_job.h"
 
@@ -73,15 +74,8 @@ public:
     
 private:
     std::string level_to_string(log_level level) const {
-        switch (level) {
-            case log_level::critical: return "CRITICAL";
-            case log_level::error: return "ERROR";
-            case log_level::warning: return "WARNING";
-            case log_level::info: return "INFO";
-            case log_level::debug: return "DEBUG";
-            case log_level::trace: return "TRACE";
-        }
-        return "UNKNOWN";
+        // Convert to log_level_v2 and use its to_string
+        return std::string(to_string(to_v2(level)));
     }
 };
 
@@ -170,7 +164,7 @@ void demonstrate_composition() {
     for (int i = 0; i < 10; ++i) {
         auto r = pool->enqueue(std::make_unique<callback_job>(
             [i, &context]() -> result_void {
-                context.log(log_level::info, 
+                context.log(log_level_v2::info,
                     "Processing job " + std::to_string(i));
                 
                 // Simulate work

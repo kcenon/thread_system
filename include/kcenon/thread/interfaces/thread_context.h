@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logger_interface.h"
 #include "monitoring_interface.h"
 #include "service_container.h"
+#include <kcenon/thread/core/log_level.h>
 
 namespace kcenon::thread {
 
@@ -88,10 +89,22 @@ public:
      * @brief Log a message if logger is available
      * @param level Log level
      * @param message Log message
+     * @deprecated Use log(log_level_v2, const std::string&) instead
      */
     void log(log_level level, const std::string& message) const {
         if (logger_) {
             logger_->log(level, message);
+        }
+    }
+
+    /**
+     * @brief Log a message if logger is available (v2 API)
+     * @param level Log level (v2 with ascending order)
+     * @param message Log message
+     */
+    void log(log_level_v2 level, const std::string& message) const {
+        if (logger_) {
+            logger_->log(from_v2(level), message);
         }
     }
 
@@ -102,11 +115,27 @@ public:
      * @param file Source file
      * @param line Source line
      * @param function Function name
+     * @deprecated Use log(log_level_v2, ...) instead
      */
     void log(log_level level, const std::string& message,
              const std::string& file, int line, const std::string& function) const {
         if (logger_) {
             logger_->log(level, message, file, line, function);
+        }
+    }
+
+    /**
+     * @brief Log a message with source information if logger is available (v2 API)
+     * @param level Log level (v2 with ascending order)
+     * @param message Log message
+     * @param file Source file
+     * @param line Source line
+     * @param function Function name
+     */
+    void log(log_level_v2 level, const std::string& message,
+             const std::string& file, int line, const std::string& function) const {
+        if (logger_) {
+            logger_->log(from_v2(level), message, file, line, function);
         }
     }
 
