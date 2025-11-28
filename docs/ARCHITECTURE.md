@@ -1,60 +1,62 @@
-# thread_system 아키텍처
+# thread_system Architecture
 
-## 목차
+> **Language:** **English** | [한국어](ARCHITECTURE_KO.md)
 
-1. [개요](#개요)
-2. [시스템 구조](#시스템-구조)
-3. [핵심 컴포넌트](#핵심-컴포넌트)
-4. [동시성 모델](#동시성-모델)
-5. [설계 원칙](#설계-원칙)
-6. [성능 최적화](#성능-최적화)
+## Table of Contents
 
----
-
-## 개요
-
-### 목적
-
-thread_system은 고성능 멀티스레드 애플리케이션 개발을 위한 현대적인 C++ 스레드 관리 라이브러리입니다.
-
-### 설계 목표
-
-- **성능**: Lock-free 알고리즘을 활용한 최고 수준의 처리량
-- **확장성**: 수십~수백 코어까지 선형 확장
-- **사용성**: 직관적이고 타입 안전한 API
-- **안정성**: 포괄적인 에러 처리 및 복구 메커니즘
+1. [Overview](#overview)
+2. [System Structure](#system-structure)
+3. [Core Components](#core-components)
+4. [Concurrency Model](#concurrency-model)
+5. [Design Principles](#design-principles)
+6. [Performance Optimization](#performance-optimization)
 
 ---
 
-## 시스템 구조
+## Overview
 
-### 계층 구조
+### Purpose
+
+thread_system is a modern C++ thread management library designed for high-performance multithreaded application development.
+
+### Design Goals
+
+- **Performance**: Top-tier throughput using lock-free algorithms
+- **Scalability**: Linear scaling up to tens or hundreds of cores
+- **Usability**: Intuitive and type-safe API
+- **Stability**: Comprehensive error handling and recovery mechanisms
+
+---
+
+## System Structure
+
+### Layer Structure
 
 ```
 thread_system/
-├── core/                  # 핵심 로직
-│   ├── thread_base.h      # 기본 스레드 추상화
-│   ├── thread_pool.h      # 작업 기반 스레드 풀
-│   └── typed_thread_pool.h # 타입 안전 스레드 풀
-├── interfaces/            # 공개 인터페이스
-│   └── i_executor.h       # 실행자 인터페이스
-├── queues/                # 동시성 큐
+├── core/                  # Core logic
+│   ├── thread_base.h      # Base thread abstraction
+│   ├── thread_pool.h      # Task-based thread pool
+│   └── typed_thread_pool.h # Type-safe thread pool
+├── interfaces/            # Public interfaces
+│   └── i_executor.h       # Executor interface
+├── queues/                # Concurrent queues
 │   ├── mpmc_queue.h       # Multi-Producer Multi-Consumer
 │   ├── spsc_queue.h       # Single-Producer Single-Consumer
-│   └── adaptive_queue.h   # 적응형 큐
-├── sync/                  # 동기화 원시 타입
+│   └── adaptive_queue.h   # Adaptive queue
+├── sync/                  # Synchronization primitives
 │   ├── spinlock.h
 │   ├── rw_lock.h
 │   └── hazard_pointer.h
-├── services/              # 서비스 인프라
+├── services/              # Service infrastructure
 │   ├── service_registry.h
 │   └── service_base.h
-└── utilities/             # 유틸리티
+└── utilities/             # Utilities
     ├── thread_pool_executor.h
     └── job_traits.h
 ```
 
-### 의존성 다이어그램
+### Dependency Diagram
 
 ```
 thread_system
@@ -66,41 +68,41 @@ thread_system
 
 ---
 
-## 핵심 컴포넌트
+## Core Components
 
 ### 1. thread_base
 
-**역할**: 모든 스레드 클래스의 기본 추상화
+**Role**: Base abstraction for all thread classes
 
-**주요 클래스**:
-- `thread_base`: 스레드 라이프사이클 관리
+**Key Classes**:
+- `thread_base`: Thread lifecycle management
 
-**책임**:
-- 스레드 시작/정지
-- 상태 모니터링
-- 조건 대기 메커니즘
-- C++20 jthread 지원
+**Responsibilities**:
+- Thread start/stop
+- State monitoring
+- Condition wait mechanism
+- C++20 jthread support
 
-**설계 패턴**:
+**Design Patterns**:
 - Template Method Pattern (lifecycle hooks)
-- RAII (자동 정리)
+- RAII (automatic cleanup)
 
 ---
 
 ### 2. thread_pool
 
-**역할**: 작업 기반 스레드 풀 구현
+**Role**: Task-based thread pool implementation
 
-**주요 클래스**:
-- `thread_pool`: 고성능 작업 큐
+**Key Classes**:
+- `thread_pool`: High-performance task queue
 
-**특징**:
-- Work-stealing queue (작업 도둑 큐)
-- Dynamic worker scaling (동적 워커 조정)
-- Priority-based task execution (우선순위 기반)
-- Future/Promise 패턴
+**Features**:
+- Work-stealing queue
+- Dynamic worker scaling
+- Priority-based task execution
+- Future/Promise pattern
 
-**성능**:
+**Performance**:
 - Throughput: 1.2M ops/sec
 - Latency: 0.8 μs
 - Scalability: Near-linear up to 16 cores
@@ -109,20 +111,20 @@ thread_system
 
 ### 3. typed_thread_pool
 
-**역할**: 타입 안전 스레드 풀
+**Role**: Type-safe thread pool
 
-**주요 클래스**:
-- `typed_thread_pool<T>`: 특정 타입 작업 처리
+**Key Classes**:
+- `typed_thread_pool<T>`: Specific type task processing
 
-**특징**:
-- Compile-time type safety (컴파일 타임 타입 안전성)
-- Automatic type deduction (자동 타입 추론)
-- Custom process function (커스텀 처리 함수)
+**Features**:
+- Compile-time type safety
+- Automatic type deduction
+- Custom process function
 
-**사용 사례**:
-- 데이터 파이프라인
-- 이벤트 처리
-- 스트림 프로세싱
+**Use Cases**:
+- Data pipelines
+- Event processing
+- Stream processing
 
 ---
 
@@ -130,27 +132,27 @@ thread_system
 
 #### mpmc_queue (Multi-Producer Multi-Consumer)
 
-**알고리즘**: Lock-free ring buffer
-**성능**: 2.1M ops/sec
-**사용 사례**: 고처리량 작업 큐
+**Algorithm**: Lock-free ring buffer
+**Performance**: 2.1M ops/sec
+**Use Cases**: High-throughput task queues
 
 #### spsc_queue (Single-Producer Single-Consumer)
 
-**알고리즘**: Lock-free circular buffer
-**성능**: 3.5M ops/sec
-**사용 사례**: 파이프라인, 로그 버퍼
+**Algorithm**: Lock-free circular buffer
+**Performance**: 3.5M ops/sec
+**Use Cases**: Pipelines, log buffers
 
 #### adaptive_queue
 
-**알고리즘**: Dynamic resizing queue
-**성능**: 1.5M ops/sec
-**사용 사례**: 가변 부하 시스템
+**Algorithm**: Dynamic resizing queue
+**Performance**: 1.5M ops/sec
+**Use Cases**: Variable load systems
 
 ---
 
-## 동시성 모델
+## Concurrency Model
 
-### Work-Stealing 알고리즘
+### Work-Stealing Algorithm
 
 ```
 Worker Thread Pool
@@ -165,12 +167,12 @@ Worker Thread Pool
            Global Queue
 ```
 
-**장점**:
-- Load balancing (부하 분산)
-- Cache locality (캐시 지역성)
-- Reduced contention (경합 감소)
+**Advantages**:
+- Load balancing
+- Cache locality
+- Reduced contention
 
-### Task 라이프사이클
+### Task Lifecycle
 
 ```mermaid
 stateDiagram-v2
@@ -184,146 +186,146 @@ stateDiagram-v2
 
 ---
 
-## 설계 원칙
+## Design Principles
 
-### 1. SOLID 원칙 적용
+### 1. SOLID Principles Application
 
 #### Single Responsibility
 ```cpp
-// ✅ 단일 책임
+// Single responsibility
 class thread_pool {
-    // 오직 스레드 풀 관리만 담당
+    // Only handles thread pool management
 };
 
 class mpmc_queue {
-    // 오직 동시성 큐 관리만 담당
+    // Only handles concurrent queue management
 };
 ```
 
 #### Open/Closed
 ```cpp
-// ✅ 확장에 열려있고 수정에 닫혀있음
+// Open for extension, closed for modification
 template <typename T>
 class typed_thread_pool : public thread_base {
-    // 새로운 타입으로 확장 가능
+    // Extensible with new types
 };
 ```
 
 #### Dependency Inversion
 ```cpp
-// ✅ 인터페이스에 의존
+// Depend on interfaces
 class thread_pool_executor : public kcenon::common::IExecutor {
-    // 구체 클래스가 아닌 인터페이스에 의존
+    // Depends on interface, not concrete class
 };
 ```
 
-### 2. Lock-Free 프로그래밍
+### 2. Lock-Free Programming
 
-**원칙**:
-- Atomic operations (원자적 연산)
-- Memory ordering (메모리 순서)
-- ABA problem mitigation (ABA 문제 완화)
+**Principles**:
+- Atomic operations
+- Memory ordering
+- ABA problem mitigation
 
-**구현**:
+**Implementation**:
 ```cpp
-// Hazard pointer를 사용한 안전한 메모리 재사용
+// Safe memory reuse with hazard pointers
 template <typename T>
 class hazard_pointer {
     std::atomic<T*> ptr;
-    // ABA 문제 방지
+    // ABA problem prevention
 };
 ```
 
 ### 3. Zero-Cost Abstraction
 
-**목표**: 추상화 비용 제로
+**Goal**: Zero abstraction cost
 
-**구현**:
+**Implementation**:
 - Template metaprogramming
 - Constexpr functions
 - Inline optimization
 
 ---
 
-## 성능 최적화
+## Performance Optimization
 
-### 1. Cache 최적화
+### 1. Cache Optimization
 
-**기법**:
-- False sharing 방지 (캐시 라인 패딩)
-- Data locality 개선 (데이터 지역성)
-- Prefetching (사전 캐싱)
+**Techniques**:
+- False sharing prevention (cache line padding)
+- Data locality improvement
+- Prefetching
 
 ```cpp
-// False sharing 방지
+// False sharing prevention
 struct alignas(64) WorkerThread {
     std::deque<task> queue;
     char padding[64 - sizeof(std::deque<task>)];
 };
 ```
 
-### 2. 동시성 최적화
+### 2. Concurrency Optimization
 
-**전략**:
-- Lock-free 알고리즘 사용
-- Fine-grained locking (세밀한 잠금)
-- Read-write lock 활용
+**Strategies**:
+- Lock-free algorithm usage
+- Fine-grained locking
+- Read-write lock utilization
 
 ### 3. Memory Allocation
 
-**전략**:
-- Object pooling (객체 풀)
-- Custom allocators (커스텀 할당자)
-- Memory mapping (메모리 매핑)
+**Strategies**:
+- Object pooling
+- Custom allocators
+- Memory mapping
 
 ---
 
-## 확장성
+## Scalability
 
-### 수평 확장
+### Horizontal Scaling
 
-**방법**:
-- Worker thread 수 증가
-- Work-stealing으로 부하 분산
+**Methods**:
+- Increase worker thread count
+- Work-stealing for load distribution
 
-**제약**:
-- Contention at 32+ cores (32코어 이상에서 경합)
-- NUMA 고려 필요
+**Constraints**:
+- Contention at 32+ cores
+- NUMA considerations required
 
-### 수직 확장
+### Vertical Scaling
 
-**방법**:
-- Batch processing (배치 처리)
-- Vectorization (벡터화)
-- SIMD 활용
+**Methods**:
+- Batch processing
+- Vectorization
+- SIMD utilization
 
 ---
 
-## 보안 고려사항
+## Security Considerations
 
 ### Thread Safety
 
-- **모든 공개 API**: 스레드 안전 보장
-- **내부 구현**: Lock-free 또는 fine-grained locking
+- **All public APIs**: Thread-safe guaranteed
+- **Internal implementation**: Lock-free or fine-grained locking
 
 ### Exception Safety
 
-- **Strong guarantee**: 예외 발생 시 상태 복구
-- **No-throw operations**: 중요 경로에서 예외 미발생
+- **Strong guarantee**: State recovery on exception
+- **No-throw operations**: No exceptions in critical paths
 
 ---
 
-## 향후 개선 사항
+## Future Improvements
 
-- [ ] Coroutine 지원 (C++20)
-- [ ] Execution policy 통합 (C++17)
+- [ ] Coroutine support (C++20)
+- [ ] Execution policy integration (C++17)
 - [ ] NUMA-aware scheduling
 - [ ] GPU task offloading
 - [ ] Heterogeneous computing support
 
 ---
 
-## 참조
+## References
 
 - [Intel TBB](https://software.intel.com/content/www/us/en/develop/tools/threading-building-blocks.html)
 - [Folly](https://github.com/facebook/folly)
@@ -331,6 +333,6 @@ struct alignas(64) WorkerThread {
 
 ---
 
-**작성일**: 2025-11-21
-**버전**: 2.0
-**작성자**: kcenon@naver.com
+**Date**: 2025-11-21
+**Version**: 2.0
+**Author**: kcenon@naver.com
