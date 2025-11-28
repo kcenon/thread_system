@@ -633,4 +633,4 @@ auto future = pool.enqueue(task);
 
 **Created**: 2025-11-21
 **Version**: 2.0
-**Author**: thread_system team
+**Author**: kcenon@naver.com
