@@ -335,7 +335,7 @@ cmake --build build
 - ✅ **Zero ThreadSanitizer Warnings** in production code
 - ✅ **Zero AddressSanitizer Leaks** - 100% RAII compliance
 - ✅ **Multi-Platform Support**: Linux, macOS, Windows
-- ✅ **Multiple Compilers**: GCC 9+, Clang 10+, MSVC 2019+
+- ✅ **Multiple Compilers**: GCC 11+, Clang 14+, MSVC 2022+
 
 ### Thread Safety
 
@@ -368,9 +368,9 @@ cmake --build build
 
 | Platform | Compilers | Status |
 |----------|-----------|--------|
-| **Linux** | GCC 9+, Clang 10+ | ✅ Fully supported |
+| **Linux** | GCC 11+, Clang 14+ | ✅ Fully supported |
 | **macOS** | Apple Clang 14+, GCC 11+ | ✅ Fully supported |
-| **Windows** | MSVC 2019+, MSYS2 GCC | ✅ Fully supported |
+| **Windows** | MSVC 2022+ | ✅ Fully supported |
 
 ### Architecture Support
 
@@ -424,7 +424,7 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 ## Acknowledgments
 
 - Inspired by modern concurrent programming patterns and best practices
-- Built with C++20 features for maximum performance and safety
+- Built with C++20 features (GCC 11+, Clang 14+, MSVC 2022+) for maximum performance and safety
 - Maintained by kcenon@naver.com
 
 ---
