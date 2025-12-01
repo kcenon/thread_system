@@ -20,7 +20,8 @@
 // To enable this code for debugging only, define HAZARD_POINTER_FORCE_ENABLE
 // =============================================================================
 #ifndef HAZARD_POINTER_FORCE_ENABLE
-#error "CRITICAL: hazard_pointer has memory ordering issues (TICKET-002). " \
+    #error \
+        "CRITICAL: hazard_pointer has memory ordering issues (TICKET-002). " \
        "Use safe_hazard_pointer.h or atomic_shared_ptr.h instead. " \
        "Define HAZARD_POINTER_FORCE_ENABLE only for debugging."
 #endif
@@ -61,7 +62,7 @@
 namespace kcenon::thread {
 
 // Forward declarations
-template<typename T>
+template <typename T>
 class hazard_pointer_domain;
 
 namespace detail {
@@ -72,8 +73,8 @@ struct thread_hazard_list {
     static constexpr size_t MAX_HAZARDS_PER_THREAD = 4;
 
     std::atomic<void*> hazards[MAX_HAZARDS_PER_THREAD];
-    thread_hazard_list* next;       // Linked list of all thread lists
-    std::atomic<bool> active;       // Is this thread still active?
+    thread_hazard_list* next;  // Linked list of all thread lists
+    std::atomic<bool> active;  // Is this thread still active?
 
     thread_hazard_list() : next(nullptr), active(true) {
         for (auto& h : hazards) {
@@ -117,7 +118,32 @@ private:
     std::atomic<size_t> thread_count_{0};
 };
 
-} // namespace detail
+/// Global manager for orphaned nodes from terminated threads
+class global_reclamation_manager {
+public:
+    static global_reclamation_manager& instance();
+
+    /// Add a list of retired nodes to the global orphanage
+    /// @param head Head of the linked list of retired nodes
+    /// @param count Number of nodes in the list
+    void add_orphaned_nodes(retire_node* head, size_t count);
+
+    /// Reclaim orphaned nodes that are no longer protected
+    /// @param protected_ptrs List of currently protected pointers
+    /// @return Number of nodes reclaimed
+    size_t reclaim(const std::vector<void*>& protected_ptrs);
+
+    /// Get statistics
+    size_t get_orphaned_count() const;
+
+private:
+    global_reclamation_manager() = default;
+
+    std::atomic<retire_node*> head_{nullptr};
+    std::atomic<size_t> count_{0};
+};
+
+}  // namespace detail
 
 /// Single hazard pointer that protects one object from reclamation
 /// Uses RAII pattern - automatically releases protection on destruction
@@ -143,7 +169,7 @@ public:
     /// @param ptr Pointer to protect
     /// @note Thread-safe, can be called concurrently
     /// @note Uses memory_order_release to ensure visibility
-    template<typename T>
+    template <typename T>
     void protect(T* ptr) noexcept {
         if (slot_) {
             slot_->store(static_cast<void*>(ptr), std::memory_order_release);
@@ -171,7 +197,7 @@ private:
 
 /// Domain managing hazard pointers and retirement for a specific type
 /// @tparam T Type of objects protected by this domain
-template<typename T>
+template <typename T>
 class hazard_pointer_domain {
 public:
     /// Get the global domain instance for type T
@@ -228,7 +254,7 @@ private:
             size_t active_threads = registry.get_active_thread_count();
             // Clamp between 64 and 512 to prevent extremes
             return std::min(size_t(512),
-                          BASE_RECLAIM_THRESHOLD + active_threads * RECLAIM_THRESHOLD_PER_THREAD);
+                            BASE_RECLAIM_THRESHOLD + active_threads * RECLAIM_THRESHOLD_PER_THREAD);
         }
 
         void add(T* ptr);
@@ -250,7 +276,7 @@ private:
 
 // Template implementations
 
-template<typename T>
+template <typename T>
 void hazard_pointer_domain<T>::retire(T* ptr) {
     if (!ptr) {
         return;
@@ -267,7 +293,7 @@ void hazard_pointer_domain<T>::retire(T* ptr) {
     }
 }
 
-template<typename T>
+template <typename T>
 size_t hazard_pointer_domain<T>::reclaim() {
     scan_count_.fetch_add(1, std::memory_order_relaxed);
 
@@ -279,57 +305,54 @@ size_t hazard_pointer_domain<T>::reclaim() {
     auto& retire_list = get_thread_retire_list();
     size_t reclaimed = retire_list.scan_and_reclaim(protected_ptrs);
 
+    // Also try to reclaim from global orphanage
+    // We can do this every time or periodically. Doing it every time ensures faster cleanup.
+    reclaimed += detail::global_reclamation_manager::instance().reclaim(protected_ptrs);
+
     objects_reclaimed_.fetch_add(reclaimed, std::memory_order_relaxed);
     return reclaimed;
 }
 
-template<typename T>
+template <typename T>
 auto hazard_pointer_domain<T>::get_stats() const -> stats {
     auto& registry = detail::hazard_pointer_registry::instance();
 
-    return stats{
-        .hazard_pointers_allocated =
-            registry.get_active_thread_count() * detail::thread_hazard_list::MAX_HAZARDS_PER_THREAD,
-        .objects_retired = objects_retired_.load(std::memory_order_relaxed),
-        .objects_reclaimed = objects_reclaimed_.load(std::memory_order_relaxed),
-        .scan_count = scan_count_.load(std::memory_order_relaxed)
-    };
+    return stats{.hazard_pointers_allocated = registry.get_active_thread_count() *
+                                              detail::thread_hazard_list::MAX_HAZARDS_PER_THREAD,
+                 .objects_retired = objects_retired_.load(std::memory_order_relaxed),
+                 .objects_reclaimed = objects_reclaimed_.load(std::memory_order_relaxed),
+                 .scan_count = scan_count_.load(std::memory_order_relaxed)};
 }
 
-template<typename T>
+template <typename T>
 hazard_pointer_domain<T>::~hazard_pointer_domain() {
     // Ensure all objects are reclaimed before domain destruction
     auto& retire_list = get_thread_retire_list();
     retire_list.reclaim_all();
 }
 
-template<typename T>
+template <typename T>
 void hazard_pointer_domain<T>::thread_retire_list::add(T* ptr) {
-    auto* node = new detail::retire_node(
-        static_cast<void*>(ptr),
-        [](void* p) { delete static_cast<T*>(p); }
-    );
+    auto* node = new detail::retire_node(static_cast<void*>(ptr),
+                                         [](void* p) { delete static_cast<T*>(p); });
 
     node->next = head;
     head = node;
     ++count;
 }
 
-template<typename T>
+template <typename T>
 size_t hazard_pointer_domain<T>::thread_retire_list::scan_and_reclaim(
     const std::vector<void*>& protected_ptrs) {
-
     size_t reclaimed = 0;
     detail::retire_node** curr = &head;
 
     while (*curr) {
         // Check if this pointer is protected
         bool is_protected = false;
-        for (void* protected_ptr : protected_ptrs) {
-            if ((*curr)->ptr == protected_ptr) {
-                is_protected = true;
-                break;
-            }
+        // Binary search since protected_ptrs is sorted
+        if (std::binary_search(protected_ptrs.begin(), protected_ptrs.end(), (*curr)->ptr)) {
+            is_protected = true;
         }
 
         if (!is_protected) {
@@ -351,42 +374,27 @@ size_t hazard_pointer_domain<T>::thread_retire_list::scan_and_reclaim(
     return reclaimed;
 }
 
-template<typename T>
+template <typename T>
 void hazard_pointer_domain<T>::thread_retire_list::reclaim_all() {
-    // Even during thread cleanup, we must respect hazard pointers from other threads
-    // Scan hazard pointers and only reclaim unprotected objects
+    // 1. Try to reclaim what we can locally
     auto& registry = detail::hazard_pointer_registry::instance();
     auto protected_ptrs = registry.scan_hazard_pointers();
+    scan_and_reclaim(protected_ptrs);
 
-    detail::retire_node** curr = &head;
-    while (*curr) {
-        // Check if this pointer is protected by any thread
-        bool is_protected = false;
-        for (void* protected_ptr : protected_ptrs) {
-            if ((*curr)->ptr == protected_ptr) {
-                is_protected = true;
-                break;
-            }
-        }
-
-        if (!is_protected) {
-            // Safe to reclaim
-            detail::retire_node* to_delete = *curr;
-            *curr = (*curr)->next;
-
-            to_delete->deleter(to_delete->ptr);
-            delete to_delete;
-            --count;
-        } else {
-            // Keep in list - will leak on thread exit, but safe
-            curr = &(*curr)->next;
-        }
+    // 2. Transfer ANY remaining nodes to GlobalReclamationManager
+    // These are nodes that are still protected by other threads.
+    // Instead of leaking them (or force deleting them which causes UAF),
+    // we give them to the global manager to clean up later.
+    if (head) {
+        detail::global_reclamation_manager::instance().add_orphaned_nodes(head, count);
+        head = nullptr;
+        count = 0;
     }
 }
 
-template<typename T>
+template <typename T>
 hazard_pointer_domain<T>::thread_retire_list::~thread_retire_list() {
     reclaim_all();
 }
 
-} // namespace kcenon::thread
+}  // namespace kcenon::thread
