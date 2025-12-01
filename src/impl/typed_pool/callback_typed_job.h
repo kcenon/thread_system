@@ -114,5 +114,32 @@ namespace kcenon::thread
 	 * priority type.
 	 */
 	using callback_typed_job = callback_typed_job_t<job_types>;
-} // namespace kcenon::thread
 
+	// Template definitions are provided in-header to support external priority types.
+	template <typename job_type>
+	callback_typed_job_t<job_type>::callback_typed_job_t(
+		const std::function<result_void(void)>& callback,
+		job_type priority,
+		const std::string& name)
+		: typed_job_t<job_type>(priority, name)
+		, callback_(callback)
+	{
+	}
+
+	template <typename job_type>
+	callback_typed_job_t<job_type>::~callback_typed_job_t() = default;
+
+	template <typename job_type>
+	auto callback_typed_job_t<job_type>::do_work() -> result_void
+	{
+		if (!callback_)
+		{
+			return result_void(error(error_code::invalid_argument, "Callback is null"));
+		}
+
+		return callback_();
+	}
+
+	// Keep a single explicit instantiation for the default job_types in the .cpp translation unit.
+	extern template class callback_typed_job_t<job_types>;
+} // namespace kcenon::thread

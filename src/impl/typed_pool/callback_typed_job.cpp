@@ -34,33 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread
 {
-	template <typename job_type>
-	callback_typed_job_t<job_type>::callback_typed_job_t(
-		const std::function<result_void(void)>& callback,
-		job_type priority,
-		const std::string& name)
-		: typed_job_t<job_type>(priority, name)
-		, callback_(callback)
-	{
-	}
-
-	template <typename job_type>
-	callback_typed_job_t<job_type>::~callback_typed_job_t()
-	{
-	}
-
-	template <typename job_type>
-	auto callback_typed_job_t<job_type>::do_work() -> result_void
-	{
-		if (!callback_)
-		{
-			return result_void(error(error_code::invalid_argument, "Callback is null"));
-		}
-
-		return callback_();
-	}
-
 	// Explicit template instantiation for job_types
 	template class callback_typed_job_t<job_types>;
-
 } // namespace kcenon::thread
