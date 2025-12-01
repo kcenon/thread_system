@@ -1,69 +1,168 @@
 {
     "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 16,
+        "patch": 0
+    },
     "configurePresets": [
         {
-            "name": "dev-debug",
-            "displayName": "Development Debug (Core Libraries Only)",
-            "description": "Debug configuration for development, builds core libraries without external dependencies",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/dev-debug",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON",
-                "USE_STD_FORMAT": "ON",
-                "CMAKE_TOOLCHAIN_FILE": ""
-            },
-            "environment": {
-                "USE_STD_FORMAT": "1"
-            }
-        },
-        {
-            "name": "dev-release",
-            "displayName": "Development Release (Core Libraries Only)",
-            "description": "Release configuration for development, builds core libraries without external dependencies",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/dev-release",
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build using system-installed external packages",
+            "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON",
-                "USE_STD_FORMAT": "ON",
-                "CMAKE_TOOLCHAIN_FILE": ""
-            },
-            "environment": {
-                "USE_STD_FORMAT": "1"
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF",
+                "THREAD_BUILD_INTEGRATION_TESTS": "OFF"
             }
         },
         {
-            "name": "full-vcpkg-debug",
-            "displayName": "Full Build with vcpkg (Debug)",
-            "description": "Complete build including tests and samples using vcpkg dependencies",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/full-debug",
+            "name": "debug",
+            "displayName": "Debug",
+            "description": "Debug build with tests enabled",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake",
-                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF"
-            },
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Linux"
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF",
+                "THREAD_BUILD_INTEGRATION_TESTS": "ON",
+                "ENABLE_COVERAGE": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "description": "Optimized release build",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF",
+                "THREAD_BUILD_INTEGRATION_TESTS": "OFF"
+            }
+        },
+        {
+            "name": "core-debug",
+            "displayName": "Core Debug",
+            "description": "Debug build of core libraries only (fastest)",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build-core-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON"
+            }
+        },
+        {
+            "name": "core-release",
+            "displayName": "Core Release",
+            "description": "Release build of core libraries only",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build-core-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON"
+            }
+        },
+        {
+            "name": "asan",
+            "displayName": "AddressSanitizer",
+            "description": "Build with AddressSanitizer",
+            "inherits": "debug",
+            "binaryDir": "${sourceDir}/build-asan",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-fsanitize=address -fno-omit-frame-pointer",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address"
+            }
+        },
+        {
+            "name": "tsan",
+            "displayName": "ThreadSanitizer",
+            "description": "Build with ThreadSanitizer",
+            "inherits": "debug",
+            "binaryDir": "${sourceDir}/build-tsan",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-fsanitize=thread",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=thread"
+            }
+        },
+        {
+            "name": "ubsan",
+            "displayName": "UndefinedBehaviorSanitizer",
+            "description": "Build with UndefinedBehaviorSanitizer",
+            "inherits": "debug",
+            "binaryDir": "${sourceDir}/build-ubsan",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-fsanitize=undefined",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=undefined"
+            }
+        },
+        {
+            "name": "ci",
+            "displayName": "CI Build",
+            "description": "Configuration for continuous integration",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build-ci",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF",
+                "THREAD_BUILD_INTEGRATION_TESTS": "ON"
             }
         }
     ],
     "buildPresets": [
         {
-            "name": "dev-debug",
-            "configurePreset": "dev-debug",
-            "displayName": "Build Development Debug"
+            "name": "default",
+            "configurePreset": "default"
         },
         {
-            "name": "dev-release",
-            "configurePreset": "dev-release",
-            "displayName": "Build Development Release"
+            "name": "debug",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "core-debug",
+            "configurePreset": "core-debug"
+        },
+        {
+            "name": "core-release",
+            "configurePreset": "core-release"
+        },
+        {
+            "name": "asan",
+            "configurePreset": "asan"
+        },
+        {
+            "name": "tsan",
+            "configurePreset": "tsan"
+        },
+        {
+            "name": "ubsan",
+            "configurePreset": "ubsan"
+        },
+        {
+            "name": "ci",
+            "configurePreset": "ci"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci",
+            "configurePreset": "ci",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            }
         }
     ]
 }
