@@ -176,6 +176,89 @@ size_t hazard_pointer_registry::get_active_thread_count() const {
     return thread_count_.load(std::memory_order_relaxed);
 }
 
+// Global reclamation manager implementation
+global_reclamation_manager& global_reclamation_manager::instance() {
+    static global_reclamation_manager manager;
+    return manager;
+}
+
+void global_reclamation_manager::add_orphaned_nodes(retire_node* head, size_t count) {
+    if (!head)
+        return;
+
+    // Find tail of the new list
+    retire_node* tail = head;
+    while (tail->next) {
+        tail = tail->next;
+    }
+
+    // Atomically prepend to the global list
+    retire_node* old_head = head_.load(std::memory_order_relaxed);
+    do {
+        tail->next = old_head;
+    } while (!head_.compare_exchange_weak(old_head, head, std::memory_order_release,
+                                          std::memory_order_relaxed));
+
+    count_.fetch_add(count, std::memory_order_relaxed);
+}
+
+size_t global_reclamation_manager::reclaim(const std::vector<void*>& protected_ptrs) {
+    // Take the entire list to process
+    retire_node* curr = head_.exchange(nullptr, std::memory_order_acquire);
+    if (!curr)
+        return 0;
+
+    // Reset count (we'll add back whatever we don't reclaim)
+    count_.store(0, std::memory_order_relaxed);
+
+    size_t reclaimed = 0;
+    retire_node* keep_head = nullptr;
+    retire_node* keep_tail = nullptr;
+    size_t keep_count = 0;
+
+    while (curr) {
+        retire_node* next = curr->next;
+        bool is_protected = false;
+
+        // Check if protected
+        // Binary search since protected_ptrs is sorted
+        if (std::binary_search(protected_ptrs.begin(), protected_ptrs.end(), curr->ptr)) {
+            is_protected = true;
+        }
+
+        if (!is_protected) {
+            // Safe to delete
+            curr->deleter(curr->ptr);
+            delete curr;
+            ++reclaimed;
+        } else {
+            // Keep node
+            if (!keep_head) {
+                keep_head = curr;
+                keep_tail = curr;
+            } else {
+                keep_tail->next = curr;
+                keep_tail = curr;
+            }
+            curr->next = nullptr;
+            ++keep_count;
+        }
+
+        curr = next;
+    }
+
+    // Add back kept nodes
+    if (keep_head) {
+        add_orphaned_nodes(keep_head, keep_count);
+    }
+
+    return reclaimed;
+}
+
+size_t global_reclamation_manager::get_orphaned_count() const {
+    return count_.load(std::memory_order_relaxed);
+}
+
 }  // namespace detail
 
 // hazard_pointer implementation
