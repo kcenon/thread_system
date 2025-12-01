@@ -196,6 +196,17 @@ else()
     add_subdirectory(interfaces)
     add_subdirectory(utilities)
     add_subdirectory(core)
+    # Provide unified aliases for parent projects when building as a submodule.
+    # This allows dependents to link against ThreadSystem/thread_system even
+    # though only the legacy targets (thread_base/utilities/interfaces) exist.
+    if(TARGET thread_base)
+        if(NOT TARGET ThreadSystem)
+            add_library(ThreadSystem ALIAS thread_base)
+        endif()
+        if(NOT TARGET thread_system)
+            add_library(thread_system ALIAS thread_base)
+        endif()
+    endif()
     message(STATUS "ThreadSystem building as submodule - samples and tests disabled")
 endif()
 
