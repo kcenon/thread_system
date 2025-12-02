@@ -1,7 +1,7 @@
 # Known Issues
 
 **Version**: 2.0
-**Last Updated**: 2025-11-09
+**Last Updated**: 2025-12-02
 **Status**: Active Tracking
 
 This document tracks known issues in thread_system that require attention.
@@ -60,6 +60,38 @@ The original lock-free MPMC queue implementation used thread-local storage (TLS)
 - Lock-Free Queue: `include/kcenon/thread/lockfree/lockfree_job_queue.h`
 - Design Document: `docs/HAZARD_POINTER_DESIGN.md`
 - Tests: `unittest/thread_base_test/hazard_pointer_test.cpp`, `unittest/thread_base_test/lockfree_job_queue_test.cpp`
+
+### 2. Typed Lock-Free Queue TLS Bug ✅ RESOLVED
+
+**Component**: typed_lockfree_job_queue_t
+**Severity**: P0 (Critical - Blocks Production Use)
+**Status**: ✅ **RESOLVED** (2025-12-02)
+**Discovered**: GitHub Issue #217
+**Resolution**: Refactored to use lockfree_job_queue internally
+
+**Original Description**:
+The typed_lockfree_job_queue_t implementation was blocked by `#error` directive due to TLS destructor ordering bugs. The class had incomplete implementation and could not be safely used.
+
+**Resolution Details**:
+1. **Removed #error directive** from typed_lockfree_job_queue.h
+2. **Implemented complete template methods** using lockfree_job_queue internally
+   - Each job type gets its own lockfree_job_queue instance
+   - All memory reclamation handled by Hazard Pointers
+   - GlobalReclamationManager handles orphaned nodes
+3. **Updated CMakeLists.txt**
+   - Enabled lock-free queue by default (THREAD_ENABLE_LOCKFREE_QUEUE=ON)
+   - Removed THREAD_ALLOW_UNSAFE_LOCKFREE_QUEUE flag requirement
+4. **Added thread churn tests**
+   - ThreadChurnTest: Short-lived producers, long-running consumers
+   - ThreadChurnHighContention: Batch operations under contention
+   - Validates no Use-After-Free during thread exits
+
+**Production Status**: ✅ **Safe for production use**
+
+**References**:
+- Typed Lock-Free Queue: `src/impl/typed_pool/typed_lockfree_job_queue.h`
+- Tests: `tests/unit/thread_base_test/typed_lockfree_job_queue_test.cpp`
+- GitHub Issue: #217
 
 ---
 
@@ -121,5 +153,5 @@ When reporting a new issue, please include:
 
 ---
 
-Last Updated: 2025-11-09
+Last Updated: 2025-12-02
 Maintainer: Architecture Review Team
