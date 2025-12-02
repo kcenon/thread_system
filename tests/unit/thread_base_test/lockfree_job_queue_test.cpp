@@ -411,3 +411,123 @@ TEST_F(LockFreeJobQueueTest, StressTest) {
     EXPECT_EQ(total_enqueued.load(), total_dequeued.load());
     EXPECT_TRUE(queue.empty());
 }
+
+// =============================================================================
+// TICKET-001 Verification: Thread Churn Test
+// =============================================================================
+// This test validates that the TLS bug has been fixed by reproducing the
+// original failure scenario: short-lived producer threads pushing items
+// while a long-running consumer thread pops them.
+//
+// Previous failure mode:
+// 1. Thread A pushes a node and exits (TLS destroyed)
+// 2. Thread B (still running) tries to pop the node
+// 3. CRASH: Use-After-Free because node memory was reclaimed
+//
+// With Hazard Pointers:
+// - Nodes are protected during access
+// - GlobalReclamationManager handles orphaned nodes safely
+// - No crash, no data loss
+
+TEST_F(LockFreeJobQueueTest, ThreadChurnTest) {
+    lockfree_job_queue queue;
+
+    constexpr int TOTAL_ITEMS = 1000;  // Reduced for faster test execution
+    std::atomic<int> consumed{0};
+    std::atomic<bool> producers_done{false};
+
+    // Consumer thread (long-running)
+    std::thread consumer([&]() {
+        while (consumed.load(std::memory_order_relaxed) < TOTAL_ITEMS) {
+            auto result = queue.dequeue();
+            if (result.has_value()) {
+                auto& job_ptr = result.value();
+                auto exec_result = job_ptr->do_work();
+                EXPECT_FALSE(exec_result.has_error());
+                consumed.fetch_add(1, std::memory_order_relaxed);
+            } else if (producers_done.load(std::memory_order_acquire)) {
+                // If producers are done and queue is empty, we're done
+                break;
+            } else {
+                // Yield to avoid busy waiting
+                std::this_thread::yield();
+            }
+        }
+    });
+
+    // Short-lived producer threads
+    for (int i = 0; i < TOTAL_ITEMS; ++i) {
+        std::thread producer([&queue, i]() {
+            auto job = std::make_unique<callback_job>([i]() -> result_void {
+                // Simple work
+                return result_void();
+            });
+
+            auto result = queue.enqueue(std::move(job));
+            EXPECT_FALSE(result.has_error());
+            // Thread exits immediately after push, triggering TLS destruction
+        });
+        producer.join();  // Wait for producer to finish (and TLS to be destroyed)
+    }
+
+    producers_done.store(true, std::memory_order_release);
+    consumer.join();
+
+    // All items must be consumed without crash
+    EXPECT_EQ(consumed.load(), TOTAL_ITEMS);
+    EXPECT_TRUE(queue.empty());
+}
+
+// Thread Churn Test with High Contention
+// Tests multiple short-lived threads under high contention
+TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
+    lockfree_job_queue queue;
+
+    constexpr int NUM_BATCHES = 10;
+    constexpr int THREADS_PER_BATCH = 50;
+    std::atomic<int> total_enqueued{0};
+    std::atomic<int> total_dequeued{0};
+
+    for (int batch = 0; batch < NUM_BATCHES; ++batch) {
+        std::vector<std::thread> producers;
+
+        // Launch batch of short-lived producers
+        for (int t = 0; t < THREADS_PER_BATCH; ++t) {
+            producers.emplace_back([&queue, &total_enqueued]() {
+                auto job = std::make_unique<callback_job>([]() -> result_void {
+                    return result_void();
+                });
+
+                auto result = queue.enqueue(std::move(job));
+                if (!result.has_error()) {
+                    total_enqueued.fetch_add(1, std::memory_order_relaxed);
+                }
+            });
+        }
+
+        // Wait for all producers to finish
+        for (auto& p : producers) {
+            p.join();
+        }
+
+        // Drain some items between batches
+        for (int i = 0; i < THREADS_PER_BATCH / 2; ++i) {
+            auto result = queue.dequeue();
+            if (result.has_value()) {
+                auto& job_ptr = result.value();
+                job_ptr->do_work();
+                total_dequeued.fetch_add(1, std::memory_order_relaxed);
+            }
+        }
+    }
+
+    // Drain remaining items
+    while (auto result = queue.dequeue()) {
+        auto& job_ptr = result.value();
+        job_ptr->do_work();
+        total_dequeued.fetch_add(1, std::memory_order_relaxed);
+    }
+
+    EXPECT_EQ(total_enqueued.load(), total_dequeued.load());
+    EXPECT_TRUE(queue.empty());
+}
