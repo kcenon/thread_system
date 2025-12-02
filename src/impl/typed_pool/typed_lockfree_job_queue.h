@@ -307,8 +307,7 @@ namespace kcenon::thread
 		
 	private:
 		// Type aliases
-		using job_queue_ptr = std::unique_ptr<job_queue>;
-		using lockfree_queue_ptr = std::unique_ptr<job_queue>;
+		using lockfree_queue_ptr = std::unique_ptr<lockfree_job_queue>;
 		using queue_map = std::unordered_map<job_type, lockfree_queue_ptr>;
 		
 		// Per-type queues
@@ -327,8 +326,8 @@ namespace kcenon::thread
 		mutable std::atomic<job_type> last_dequeue_type_{};
 		
 		// Helper methods
-		auto get_or_create_queue(const job_type& type) -> job_queue*;
-		auto get_queue(const job_type& type) const -> job_queue*;
+		auto get_or_create_queue(const job_type& type) -> lockfree_job_queue*;
+		auto get_queue(const job_type& type) const -> lockfree_job_queue*;
 		auto update_priority_order() -> void;
 		auto should_update_priority_order() const -> bool;
 	};
@@ -354,7 +353,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_lockfree_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> job_queue*
+	auto typed_lockfree_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> lockfree_job_queue*
 	{
 		auto it = typed_queues_.find(type);
 		if (it != typed_queues_.end())
@@ -374,7 +373,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_lockfree_job_queue_t<job_type>::get_queue(const job_type& type) const -> job_queue*
+	auto typed_lockfree_job_queue_t<job_type>::get_queue(const job_type& type) const -> lockfree_job_queue*
 	{
 		auto it = typed_queues_.find(type);
 		if (it != typed_queues_.end())
@@ -515,14 +514,14 @@ namespace kcenon::thread
 				error(error_code::queue_empty, "No queue for specified type"));
 		}
 
-		auto result = it->second->dequeue();
-		if (!result.has_value())
+		auto dequeue_result = it->second->dequeue();
+		if (!dequeue_result.has_value())
 		{
 			return result<std::unique_ptr<typed_job_t<job_type>>>(
 				error(error_code::queue_empty, "Queue empty for specified type"));
 		}
 
-		auto job = std::move(result.value());
+		auto job = std::move(dequeue_result.value());
 		auto* typed_job_ptr = static_cast<typed_job_t<job_type>*>(job.release());
 		return std::unique_ptr<typed_job_t<job_type>>(typed_job_ptr);
 	}
@@ -538,10 +537,10 @@ namespace kcenon::thread
 			auto it = typed_queues_.find(type);
 			if (it != typed_queues_.end())
 			{
-				auto result = it->second->dequeue();
-				if (result.has_value())
+				auto dequeue_result = it->second->dequeue();
+				if (dequeue_result.has_value())
 				{
-					auto job = std::move(result.value());
+					auto job = std::move(dequeue_result.value());
 					auto* typed_job_ptr = static_cast<typed_job_t<job_type>*>(job.release());
 					return std::unique_ptr<typed_job_t<job_type>>(typed_job_ptr);
 				}
@@ -560,12 +559,12 @@ namespace kcenon::thread
 
 		while (true)
 		{
-			auto result = dequeue();
-			if (!result.has_value())
+			auto dequeue_result = dequeue();
+			if (!dequeue_result.has_value())
 			{
 				break;
 			}
-			results.push_back(std::move(result.value()));
+			results.push_back(std::move(dequeue_result.value()));
 		}
 
 		return results;
@@ -576,9 +575,13 @@ namespace kcenon::thread
 	{
 		std::unique_lock lock(queues_mutex_);
 
+		// Drain all queues (lockfree_job_queue doesn't have clear())
 		for (auto& [type, queue] : typed_queues_)
 		{
-			queue->clear();
+			while (!queue->empty())
+			{
+				queue->dequeue();
+			}
 		}
 		typed_queues_.clear();
 

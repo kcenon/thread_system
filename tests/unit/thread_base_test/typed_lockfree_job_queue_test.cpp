@@ -66,13 +66,14 @@ TEST_F(TypedLockFreeJobQueueTest, BasicEnqueueDequeue) {
     typed_lockfree_job_queue_t<job_types> queue;
 
     std::atomic<int> counter{0};
-    auto typed_job = std::make_unique<callback_typed_job_t<job_types>>(
-        job_types::normal,
-        [&counter]() -> result_void {
-            counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
-        }
-    );
+    std::unique_ptr<typed_job_t<job_types>> typed_job =
+        std::make_unique<callback_typed_job_t<job_types>>(
+            [&counter]() -> result_void {
+                counter.fetch_add(1, std::memory_order_relaxed);
+                return result_void();
+            },
+            job_types::Batch
+        );
 
     // Enqueue
     auto enqueue_result = queue.enqueue(std::move(typed_job));
@@ -106,31 +107,34 @@ TEST_F(TypedLockFreeJobQueueTest, MultipleTypes) {
     typed_lockfree_job_queue_t<job_types> queue;
 
     // Enqueue jobs of different types
-    auto high_job = std::make_unique<callback_typed_job_t<job_types>>(
-        job_types::high,
-        []() -> result_void { return result_void(); }
-    );
+    std::unique_ptr<typed_job_t<job_types>> realtime_job =
+        std::make_unique<callback_typed_job_t<job_types>>(
+            []() -> result_void { return result_void(); },
+            job_types::RealTime
+        );
 
-    auto normal_job = std::make_unique<callback_typed_job_t<job_types>>(
-        job_types::normal,
-        []() -> result_void { return result_void(); }
-    );
+    std::unique_ptr<typed_job_t<job_types>> batch_job =
+        std::make_unique<callback_typed_job_t<job_types>>(
+            []() -> result_void { return result_void(); },
+            job_types::Batch
+        );
 
-    auto low_job = std::make_unique<callback_typed_job_t<job_types>>(
-        job_types::low,
-        []() -> result_void { return result_void(); }
-    );
+    std::unique_ptr<typed_job_t<job_types>> background_job =
+        std::make_unique<callback_typed_job_t<job_types>>(
+            []() -> result_void { return result_void(); },
+            job_types::Background
+        );
 
-    queue.enqueue(std::move(low_job));
-    queue.enqueue(std::move(normal_job));
-    queue.enqueue(std::move(high_job));
+    (void)queue.enqueue(std::move(background_job));
+    (void)queue.enqueue(std::move(batch_job));
+    (void)queue.enqueue(std::move(realtime_job));
 
     EXPECT_EQ(queue.size(), 3);
 
     // Dequeue all
     int count = 0;
     while (auto result = queue.dequeue()) {
-        result.value()->do_work();
+        (void)result.value()->do_work();
         ++count;
     }
 
@@ -150,13 +154,14 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentEnqueue) {
     for (int t = 0; t < NUM_THREADS; ++t) {
         threads.emplace_back([&queue, &counter]() {
             for (int i = 0; i < JOBS_PER_THREAD; ++i) {
-                auto job = std::make_unique<callback_typed_job_t<job_types>>(
-                    job_types::normal,
-                    [&counter]() -> result_void {
-                        counter.fetch_add(1, std::memory_order_relaxed);
-                        return result_void();
-                    }
-                );
+                std::unique_ptr<typed_job_t<job_types>> job =
+                    std::make_unique<callback_typed_job_t<job_types>>(
+                        [&counter]() -> result_void {
+                            counter.fetch_add(1, std::memory_order_relaxed);
+                            return result_void();
+                        },
+                        job_types::Batch
+                    );
 
                 auto result = queue.enqueue(std::move(job));
                 EXPECT_FALSE(result.has_error());
@@ -172,7 +177,7 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentEnqueue) {
     int dequeued = 0;
     while (auto result = queue.dequeue()) {
         auto& job_ptr = result.value();
-        job_ptr->do_work();
+        (void)job_ptr->do_work();
         ++dequeued;
     }
 
@@ -196,7 +201,7 @@ TEST_F(TypedLockFreeJobQueueTest, ThreadChurnTest) {
             auto result = queue.dequeue();
             if (result.has_value()) {
                 auto& job_ptr = result.value();
-                job_ptr->do_work();
+                (void)job_ptr->do_work();
                 consumed.fetch_add(1, std::memory_order_relaxed);
             } else if (producers_done.load(std::memory_order_acquire)) {
                 break;
@@ -209,12 +214,13 @@ TEST_F(TypedLockFreeJobQueueTest, ThreadChurnTest) {
     // Short-lived producer threads
     for (int i = 0; i < TOTAL_ITEMS; ++i) {
         std::thread producer([&queue, i]() {
-            auto job = std::make_unique<callback_typed_job_t<job_types>>(
-                static_cast<job_types>(i % 3),  // Rotate through types
-                []() -> result_void {
-                    return result_void();
-                }
-            );
+            std::unique_ptr<typed_job_t<job_types>> job =
+                std::make_unique<callback_typed_job_t<job_types>>(
+                    []() -> result_void {
+                        return result_void();
+                    },
+                    static_cast<job_types>(i % 3)  // Rotate through types
+                );
 
             auto result = queue.enqueue(std::move(job));
             EXPECT_FALSE(result.has_error());
@@ -247,10 +253,11 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentMPMC) {
     for (int t = 0; t < NUM_PRODUCERS; ++t) {
         threads.emplace_back([&]() {
             for (int i = 0; i < JOBS_PER_PRODUCER; ++i) {
-                auto job = std::make_unique<callback_typed_job_t<job_types>>(
-                    job_types::normal,
-                    []() -> result_void { return result_void(); }
-                );
+                std::unique_ptr<typed_job_t<job_types>> job =
+                    std::make_unique<callback_typed_job_t<job_types>>(
+                        []() -> result_void { return result_void(); },
+                        job_types::Batch
+                    );
 
                 auto result = queue.enqueue(std::move(job));
                 if (!result.has_error()) {
@@ -268,7 +275,7 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentMPMC) {
             while (true) {
                 auto result = queue.dequeue();
                 if (result.has_value()) {
-                    result.value()->do_work();
+                    (void)result.value()->do_work();
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else if (producers_done.load(std::memory_order_acquire)) {
                     break;
@@ -301,26 +308,28 @@ TEST_F(TypedLockFreeJobQueueTest, Statistics) {
     typed_lockfree_job_queue_t<job_types> queue;
 
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_typed_job_t<job_types>>(
-            job_types::high,
-            []() -> result_void { return result_void(); }
-        );
-        queue.enqueue(std::move(job));
+        std::unique_ptr<typed_job_t<job_types>> job =
+            std::make_unique<callback_typed_job_t<job_types>>(
+                []() -> result_void { return result_void(); },
+                job_types::RealTime
+            );
+        (void)queue.enqueue(std::move(job));
     }
 
     for (int i = 0; i < 5; ++i) {
-        auto job = std::make_unique<callback_typed_job_t<job_types>>(
-            job_types::normal,
-            []() -> result_void { return result_void(); }
-        );
-        queue.enqueue(std::move(job));
+        std::unique_ptr<typed_job_t<job_types>> job =
+            std::make_unique<callback_typed_job_t<job_types>>(
+                []() -> result_void { return result_void(); },
+                job_types::Batch
+            );
+        (void)queue.enqueue(std::move(job));
     }
 
     EXPECT_EQ(queue.size(), 15);
-    EXPECT_EQ(queue.size(job_types::high), 10);
-    EXPECT_EQ(queue.size(job_types::normal), 5);
+    EXPECT_EQ(queue.size(job_types::RealTime), 10);
+    EXPECT_EQ(queue.size(job_types::Batch), 5);
 
     auto sizes = queue.get_sizes();
-    EXPECT_EQ(sizes[job_types::high], 10);
-    EXPECT_EQ(sizes[job_types::normal], 5);
+    EXPECT_EQ(sizes.at(job_types::RealTime), 10);
+    EXPECT_EQ(sizes.at(job_types::Batch), 5);
 }
