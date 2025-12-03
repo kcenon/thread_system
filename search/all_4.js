@@ -9,7 +9,7 @@ var searchData=
   ['detect_5fendian_6',['detect_endian',['../d1/d53/classutility__module_1_1convert__string.html#ab598c238c91d13edbde4bc6e9d898306',1,'utility_module::convert_string::detect_endian(const std::u16string &amp;value) -&gt; endian_types'],['../d1/d53/classutility__module_1_1convert__string.html#aa124751630c3a103f01de1a58a9fb78e',1,'utility_module::convert_string::detect_endian(const std::u32string &amp;value) -&gt; endian_types']]],
   ['developer_20productivity_7',['🔧 Developer Productivity',['../index.html#productivity',1,'']]],
   ['difference_5ftype_8',['difference_type',['../d8/d4f/classutility__module_1_1span.html#a7fb21fa5aeef269f0069978583038be9',1,'utility_module::span']]],
-  ['do_5fformat_9',['do_format',['../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html#ab1067daa67936a43c9ca18dcb40dec47',1,'kcenon::thread::utils::enum_formatter']]],
+  ['do_5fformat_9',['do_format',['../d1/dec/classutility__module_1_1enum__formatter.html#a3de86eb0b29eb3d6afdfe73d89afe260',1,'utility_module::enum_formatter']]],
   ['documentation_10',['Thread System Documentation',['../index.html',1,'']]],
   ['documentation_20resources_11',['Documentation Resources',['../index.html#documentation_resources',1,'']]],
   ['dynamic_5fextent_12',['dynamic_extent',['../d8/d4f/classutility__module_1_1span.html#a5145a6c64518a9a6a22be1e30ca045e8',1,'utility_module::span']]]

@@ -1,5 +1,5 @@
 <map id="utilities/include/formatter.h" name="utilities/include/formatter.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,5,204,31"/>
-<area shape="rect" id="Node000002" href="$d2/d8a/formatter__macros_8h.html" title="Provides macros for generating formatter specializations." alt="" coords="11,79,199,119"/>
+<area shape="rect" id="Node000002" href="$d2/d8a/formatter__macros_8h.html" title="Provides macros for generating std::formatter specializations." alt="" coords="11,79,199,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,44,107,79,102,79,102,44"/>
 </map>

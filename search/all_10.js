@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parse_0',['parse',['../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html#a382acc020b04ec74119a4475b06b9a4b',1,'kcenon::thread::utils::enum_formatter']]],
+  ['parse_0',['parse',['../d1/dec/classutility__module_1_1enum__formatter.html#a85f5841dff99441f444e2b29eddada7f',1,'utility_module::enum_formatter']]],
   ['performance_20benchmarks_1',['📈 Performance Benchmarks',['../index.html#benchmarks',1,'']]],
   ['performance_20characteristics_2',['Performance Characteristics',['../index.html#performance_characteristics',1,'']]],
   ['performance_20excellence_3',['🚀 Performance Excellence',['../index.html#performance',1,'']]],
