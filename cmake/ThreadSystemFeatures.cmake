@@ -11,13 +11,18 @@ include(CheckCXXSourceCompiles)
 # Function to test for C++20 features at configure time
 # Note: This will fail gracefully in C++17 mode and use fallback implementations
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
-  # Set appropriate C++20 flag for each compiler
-  if(MSVC)
-    set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS} /std:c++20")
-  else()
-    set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
-  endif()
+  # Use CMAKE_CXX_STANDARD for standard selection (more reliable across compilers)
+  set(CMAKE_REQUIRED_FLAGS "")
   set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
+
+  # Set C++20 standard requirement
+  if(MSVC)
+    # MSVC requires explicit /std:c++20 flag
+    set(CMAKE_REQUIRED_FLAGS "/std:c++20 /EHsc")
+  else()
+    # GCC/Clang use -std=c++20
+    set(CMAKE_REQUIRED_FLAGS "-std=c++20 ${CMAKE_CXX_FLAGS}")
+  endif()
 
   check_cxx_source_compiles("
     #include <cstddef>
