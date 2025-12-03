@@ -56,6 +56,10 @@ jobs:
         # GTest is now fetched via CMake FetchContent
         # Note: MSVC 19.29+ has full std::format support (version-based detection)
 
+    - name: Setup MSVC Developer Command Prompt
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
       run: |
