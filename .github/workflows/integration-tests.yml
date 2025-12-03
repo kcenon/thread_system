@@ -14,9 +14,8 @@ jobs:
     strategy:
       matrix:
         build-type: [Debug, Release]
-        compiler:
-          - { name: GCC, cc: gcc, cxx: g++ }
-          - { name: Clang, cc: clang, cxx: clang++ }
+        # Note: Clang removed due to transient apt package conflicts on GitHub runners
+        # Main CI (ci.yml) still tests Clang with proper libc++ support
 
     steps:
     - name: Checkout code
@@ -42,18 +41,16 @@ jobs:
           sudo apt-get install -y \
             cmake \
             ninja-build \
-            ${{ matrix.compiler.cc }} \
-            ${{ matrix.compiler.cxx }} \
-            libc++-dev \
-            libc++abi-dev && break || {
+            gcc \
+            g++ && break || {
             echo "apt-get install failed, retrying in 10 seconds..."
             sleep 10
           }
         done
 
         # Verify installation
-        ${{ matrix.compiler.cc }} --version
-        ${{ matrix.compiler.cxx }} --version
+        gcc --version
+        g++ --version
         cmake --version
         ninja --version
         # GTest is now fetched via CMake FetchContent - no system package needed
@@ -71,15 +68,15 @@ jobs:
       with:
         path: |
           build/_deps
-        key: ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
+        key: ${{ runner.os }}-gcc-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
         restore-keys: |
-          ${{ runner.os }}-${{ matrix.compiler.name }}-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
-          ${{ runner.os }}-${{ matrix.compiler.name }}-fetchcontent-gtest-v1.14.0
+          ${{ runner.os }}-gcc-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
+          ${{ runner.os }}-gcc-fetchcontent-gtest-v1.14.0
 
     - name: Configure CMake
       env:
-        CC: ${{ matrix.compiler.cc }}
-        CXX: ${{ matrix.compiler.cxx }}
+        CC: gcc
+        CXX: g++
       run: |
         BUILD_WITH_COMMON="OFF"
         if [ -d "../common_system" ]; then
@@ -87,50 +84,30 @@ jobs:
         fi
 
         echo "=== Build Configuration ==="
-        echo "Compiler: ${{ matrix.compiler.name }}"
+        echo "Compiler: GCC"
         echo "Build Type: ${{ matrix.build-type }}"
         echo "Common System: $BUILD_WITH_COMMON"
         echo "GTest: Will be fetched via FetchContent if needed"
         echo "==========================="
 
-        # Configure CMake with appropriate flags
-        # Note: For Clang on Linux, use stdlib=libc++ for std::format support
-        # We set it after initial compiler detection to avoid ABI detection issues
-        if [ "${{ matrix.compiler.name }}" = "Clang" ]; then
-          cmake -B build \
-            -G Ninja \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-            -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
-            -DCMAKE_EXE_LINKER_FLAGS="-lc++" \
-            -DBUILD_INTEGRATION_TESTS=ON \
-            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-            -DCMAKE_PREFIX_PATH="/usr" \
-            --debug-find || {
-              echo "::error::CMake configuration failed"
-              echo "CMake logs:"
-              cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
-              exit 1
-            }
-        else
-          cmake -B build \
-            -G Ninja \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-            -DBUILD_INTEGRATION_TESTS=ON \
-            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-            -DCMAKE_PREFIX_PATH="/usr" \
-            --debug-find || {
-              echo "::error::CMake configuration failed"
-              echo "CMake logs:"
-              cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
-              exit 1
-            }
-        fi
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DCMAKE_PREFIX_PATH="/usr" \
+          --debug-find || {
+            echo "::error::CMake configuration failed"
+            echo "CMake logs:"
+            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
+            exit 1
+          }
 
     - name: Build
       run: |
-        echo "=== Building with ${{ matrix.compiler.name }} ==="
+        echo "=== Building with GCC ==="
         cmake --build build --config ${{ matrix.build-type }} --verbose || {
-          echo "::error::Build failed with ${{ matrix.compiler.name }}"
+          echo "::error::Build failed"
           exit 1
         }
 
@@ -144,7 +121,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: integration-test-results-ubuntu-${{ matrix.compiler.name }}-${{ matrix.build-type }}
+        name: integration-test-results-ubuntu-gcc-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
 
   integration-tests-macos:
