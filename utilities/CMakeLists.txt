@@ -33,17 +33,8 @@ if(UTIL_SOURCES)
         set_compiler_warnings(${PROJECT_NAME})
     endif()
 
-    # Fallback to fmt when std::format is not used
-    if(NOT USE_STD_FORMAT)
-        find_package(fmt CONFIG QUIET)
-        if(fmt_FOUND)
-            target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt-header-only)
-            target_compile_definitions(${PROJECT_NAME} PUBLIC HAS_FMT_LIBRARY)
-            message(STATUS "✅ Found fmt library - using fmt::format")
-        else()
-            message(STATUS "⚠️ fmt library not found - using basic string operations fallback")
-        endif()
-    endif()
+    # Note: fmt library is no longer used - using C++20 std::format exclusively
+    # The fmt fallback logic has been removed as part of issue #219
 
     # Iconv for string conversions (optional)
     find_package(Iconv QUIET)
@@ -67,17 +58,8 @@ else()
         $<INSTALL_INTERFACE:include>
     )
 
-    # Fallback to fmt when std::format is not used
-    if(NOT USE_STD_FORMAT)
-        find_package(fmt CONFIG QUIET)
-        if(fmt_FOUND)
-            target_link_libraries(${PROJECT_NAME} INTERFACE fmt::fmt-header-only)
-            target_compile_definitions(${PROJECT_NAME} INTERFACE HAS_FMT_LIBRARY)
-            message(STATUS "✅ Found fmt library - using fmt::format (interface)")
-        else()
-            message(STATUS "⚠️ fmt library not found - using basic string operations fallback (interface)")
-        endif()
-    endif()
+    # Note: fmt library is no longer used - using C++20 std::format exclusively
+    # The fmt fallback logic has been removed as part of issue #219
 
     # Iconv for string conversions (optional)
     find_package(Iconv QUIET)

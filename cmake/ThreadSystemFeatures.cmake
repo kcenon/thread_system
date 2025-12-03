@@ -26,10 +26,8 @@ endfunction()
 # Check std::format support
 ##################################################
 function(check_std_format_support)
-  # Options to control feature usage
-  # Changed default: Always use std::format (C++20 standard) unless explicitly disabled
-  option(USE_STD_FORMAT "Use std::format (C++20 standard)" ON)
-  option(FORCE_FMT_FORMAT "Force use of fmt library instead of std::format" OFF)
+  # C++20 std::format is required - no fallback to fmt library
+  # This project requires C++20 compliant compilers (GCC 13+, Clang 14+, MSVC 19.29+)
 
   # First check basic std::format availability
   check_cxx20_feature(std_format_basic "
@@ -68,18 +66,7 @@ function(check_std_format_support)
     }
   " HAS_STD_FORMAT_SPECIALIZATION)
 
-  # If user explicitly wants fmt, skip std::format checks
-  if(FORCE_FMT_FORMAT)
-    message(STATUS "⚙️  FORCE_FMT_FORMAT enabled - using fmt library")
-    set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    set(USE_STD_FORMAT ${USE_STD_FORMAT} PARENT_SCOPE)
-    return()
-  endif()
-
-  # Determine if we should use std::format (default: ON)
-  set(USE_STD_FORMAT_ENABLED ${USE_STD_FORMAT})
-
-  if(USE_STD_FORMAT_ENABLED AND HAS_STD_FORMAT_BASIC AND HAS_STD_FORMAT_SPECIALIZATION)
+  if(HAS_STD_FORMAT_BASIC AND HAS_STD_FORMAT_SPECIALIZATION)
     # Final verification: compile test
     try_compile(STD_FORMAT_COMPILE_TEST
       ${CMAKE_BINARY_DIR}/format_test
@@ -90,29 +77,27 @@ function(check_std_format_support)
     )
 
     if(STD_FORMAT_COMPILE_TEST)
-      set(USE_STD_FORMAT_ENABLED TRUE)
+      add_definitions(-DUSE_STD_FORMAT)
+      set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
       message(STATUS "✅ Using std::format (C++20 standard)")
     else()
-      message(STATUS "❌ std::format compile test failed - fallback to fmt library if available")
-      set(USE_STD_FORMAT_ENABLED FALSE)
+      message(FATAL_ERROR "❌ std::format compile test failed. This project requires C++20 std::format support.\n"
+        "Please use a compatible compiler:\n"
+        "  - GCC 13 or later\n"
+        "  - Clang 14 or later\n"
+        "  - MSVC 19.29 or later (Visual Studio 2019 16.10+)\n"
+        "Compile output: ${COMPILE_OUTPUT}")
     endif()
-  elseif(USE_STD_FORMAT_ENABLED)
-    message(STATUS "⚠️  std::format requested but not fully supported - fallback to fmt library if available")
-    set(USE_STD_FORMAT_ENABLED FALSE)
-  endif()
-
-  # Apply the decision
-  if(USE_STD_FORMAT_ENABLED)
-    add_definitions(-DUSE_STD_FORMAT)
-    set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
-    message(STATUS "std::format enabled - fmt library not required")
   else()
-    set(USE_STD_FORMAT FALSE CACHE BOOL "Not using std::format" FORCE)
-    message(STATUS "std::format disabled - fmt library will be searched if needed")
+    message(FATAL_ERROR "❌ std::format is not available. This project requires C++20 std::format support.\n"
+      "Please use a compatible compiler:\n"
+      "  - GCC 13 or later\n"
+      "  - Clang 14 or later\n"
+      "  - MSVC 19.29 or later (Visual Studio 2019 16.10+)")
   endif()
 
   # Export result to parent scope
-  set(USE_STD_FORMAT ${USE_STD_FORMAT} PARENT_SCOPE)
+  set(USE_STD_FORMAT TRUE PARENT_SCOPE)
 endfunction()
 
 ##################################################
