@@ -34,46 +34,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
  * @file formatter_macros.h
- * @brief Provides macros for generating formatter specializations.
- * 
- * This file contains macros that generate formatter specializations for custom types
- * to work with both std::format (C++20) and fmt library. The macros eliminate code
- * duplication by generating the necessary boilerplate code for formatter specializations.
- * 
+ * @brief Provides macros for generating std::formatter specializations.
+ *
+ * This file contains macros that generate std::formatter specializations for custom types
+ * to work with C++20 std::format. The macros eliminate code duplication by generating
+ * the necessary boilerplate code for formatter specializations.
+ *
  * Usage example:
  * @code
  * // In your header file after class definition:
  * DECLARE_FORMATTER(my_namespace::my_class)
  * @endcode
+ *
+ * @note This project requires C++20 std::format support. The fmt library fallback
+ *       has been removed as of issue #219.
  */
 
 #include "formatter.h"
 #include "convert_string.h"
 
-// Check if we can use formatting at all
-#if defined(USE_STD_FORMAT)
-// Use std::format
-#elif __has_include(<fmt/format.h>)
-// fmt library available
-#define HAS_FMT_FALLBACK
-#else
-// No formatting library available - disable formatter specializations
-#define NO_FORMATTER_SUPPORT
-#endif
-
-#ifdef USE_STD_FORMAT
+#include <format>
 
 /**
  * @brief Generates std::formatter specializations for narrow and wide characters.
- * 
+ *
  * This macro creates two formatter specializations:
  * 1. std::formatter<CLASS_NAME> for narrow character formatting
  * 2. std::formatter<CLASS_NAME, wchar_t> for wide character formatting
- * 
+ *
  * Requirements:
  * - The class must have a to_string() method that returns std::string
  * - The convert_string::to_wstring function must be available
- * 
+ *
  * @param CLASS_NAME The fully qualified class name (including namespace if any)
  */
 #define DECLARE_FORMATTER(CLASS_NAME)                                                              \
@@ -82,7 +74,7 @@ template <> struct std::formatter<CLASS_NAME> : std::formatter<std::string_view>
     template <typename FormatContext>                                                              \
     auto format(const CLASS_NAME& item, FormatContext& ctx) const                                  \
     {                                                                                              \
-        return std::formatter<std::string_view>::format(item.to_string(), ctx);                   \
+        return std::formatter<std::string_view>::format(item.to_string(), ctx);                    \
     }                                                                                              \
 };                                                                                                 \
                                                                                                    \
@@ -94,42 +86,6 @@ struct std::formatter<CLASS_NAME, wchar_t> : std::formatter<std::wstring_view, w
     {                                                                                              \
         auto str = item.to_string();                                                               \
         auto wstr = utility_module::convert_string::to_wstring(str);                               \
-        return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);                     \
+        return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);                      \
     }                                                                                              \
 };
-
-#elif defined(HAS_FMT_FALLBACK)
-
-/**
- * @brief Generates fmt::formatter specialization.
- *
- * This macro creates a formatter specialization for the fmt library.
- *
- * Requirements:
- * - The class must have a to_string() method that returns std::string
- *
- * @param CLASS_NAME The fully qualified class name (including namespace if any)
- */
-#define DECLARE_FORMATTER(CLASS_NAME)                                                              \
-template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>                   \
-{                                                                                                  \
-    template <typename FormatContext>                                                              \
-    auto format(const CLASS_NAME& item, FormatContext& ctx) const                                  \
-    {                                                                                              \
-        return fmt::formatter<std::string_view>::format(item.to_string(), ctx);                   \
-    }                                                                                              \
-};
-
-#else // NO_FORMATTER_SUPPORT
-
-/**
- * @brief Empty formatter macro when no formatting library is available.
- *
- * When neither std::format nor fmt library is available, this macro expands to nothing.
- * The class can still use to_string() method for string conversion.
- *
- * @param CLASS_NAME The fully qualified class name (including namespace if any)
- */
-#define DECLARE_FORMATTER(CLASS_NAME) // No formatter support available
-
-#endif // USE_STD_FORMAT

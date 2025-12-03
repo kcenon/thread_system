@@ -32,24 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <format>
 #include <string>
 #include <string_view>
 #include <type_traits>
 
-#ifdef USE_STD_FORMAT
-#include <format>
-#else
-// Use fmt library as fallback when std::format is not available
-// Only include if the header actually exists
-#if __has_include(<fmt/format.h>)
-#include <fmt/format.h>
-#define HAS_FMT_AVAILABLE
-#endif
-#include <sstream>
-#include <iomanip>
-#endif
-
-namespace utility_module
+namespace kcenon::thread::utils
 {
 	/**
 	 * @class enum_formatter
@@ -57,8 +45,7 @@ namespace utility_module
 	 *
 	 * The @c enum_formatter template allows formatting an enum value by converting
 	 * it to a string (via a custom @c Converter functor) and then passing that string
-	 * to either C++20's @c std::format or the {fmt} library, depending on the build
-	 * configuration.
+	 * to C++20's @c std::format.
 	 *
 	 * @tparam T The enum type to be formatted.
 	 * @tparam Converter A callable object (e.g., a functor or lambda) that accepts
@@ -88,17 +75,14 @@ namespace utility_module
 	{
 	private:
 		/**
-		 * @brief Internal helper that dispatches to @c std::format or {fmt} based on character
-		 * type.
+		 * @brief Internal helper that dispatches to @c std::format based on character type.
 		 * @tparam CharT The character type (@c char or @c wchar_t).
-		 * @tparam OutputIt The output iterator type.
 		 * @param out An output iterator to which formatted text is appended.
 		 * @param value The enum value to be converted to string and then formatted.
 		 * @return An iterator pointing to the end of the inserted sequence.
 		 */
-		template <typename CharT, typename OutputIt> static auto do_format(OutputIt& out, const T& value)
+		template <typename CharT> static auto do_format(auto& out, const T& value)
 		{
-#ifdef USE_STD_FORMAT
 			if constexpr (std::is_same_v<CharT, wchar_t>)
 			{
 				return std::format_to(out, L"{}", Converter{}(value));
@@ -107,30 +91,22 @@ namespace utility_module
 			{
 				return std::format_to(out, "{}", Converter{}(value));
 			}
-#else
-			// Fallback implementation using std::to_string
-			auto converted = Converter{}(value);
-			return std::copy(converted.begin(), converted.end(), out);
-#endif
 		}
 
 	public:
 		/**
 		 * @brief A no-op parse function required by the formatting library.
-		 * @tparam ParseContext The parse context type.
 		 * @param context The format parse context.
 		 * @return An iterator pointing to the end of @p context.
 		 *
 		 * The formatter does not accept any custom formatting specifiers,
 		 * so it simply returns @c context.begin().
 		 */
-		template <typename ParseContext>
-		constexpr auto parse(ParseContext& context) { return context.begin(); }
+		constexpr auto parse(auto& context) { return context.begin(); }
 
 		/**
 		 * @brief Formats the enum value into a provided format context.
-		 * @tparam FormatContext The type of the format context (provided by either std::format or
-		 * {fmt}).
+		 * @tparam FormatContext The type of the format context (provided by std::format).
 		 * @param value The enum value to format.
 		 * @param context The format context, which holds the output iterator and additional state.
 		 * @return An iterator pointing to the end of the formatted output.
@@ -148,12 +124,10 @@ namespace utility_module
 
 	/**
 	 * @class formatter
-	 * @brief Provides convenience methods for string formatting using either C++20 <format> or
-	 * {fmt} library.
+	 * @brief Provides convenience methods for string formatting using C++20 <format>.
 	 *
 	 * The @c formatter class offers static functions to format strings (both narrow and wide)
-	 * into a @c std::string / @c std::wstring, or directly to an output iterator. Which underlying
-	 * implementation is used depends on whether @c USE_STD_FORMAT is defined.
+	 * into a @c std::string / @c std::wstring, or directly to an output iterator.
 	 *
 	 * ### Example
 	 * @code
@@ -175,89 +149,13 @@ namespace utility_module
 		 * @param formats A format string (e.g. "Name: {}, Age: {}").
 		 * @param args The arguments to substitute into @p formats.
 		 * @return A @c std::string containing the formatted result.
-		 *
-		 * If @c USE_STD_FORMAT is defined, uses C++20's @c std::format API.
-		 * Otherwise, falls back to the {fmt} library.
 		 */
 		template <typename... FormatArgs>
 		static auto format(const char* formats, const FormatArgs&... args) -> std::string
 		{
-#ifdef USE_STD_FORMAT
 			return std::vformat(formats, std::make_format_args(args...));
-#else
-			// Fallback implementation using ostringstream
-			std::ostringstream oss;
-			format_impl(oss, formats, args...);
-			return oss.str();
-#endif
 		}
 
-	private:
-		// Helper to output arguments with proper conversion
-		template <typename Stream, typename T>
-		static void output_arg(Stream& stream, const T& arg) {
-			if constexpr (std::is_same_v<T, std::string> || std::is_same_v<T, std::string_view> ||
-						 std::is_same_v<T, const char*>) {
-				stream << arg;
-			} else if constexpr (std::is_same_v<T, std::wstring> || std::is_same_v<T, std::wstring_view> ||
-							 std::is_same_v<T, const wchar_t*>) {
-				stream << arg;
-			} else if constexpr (std::is_array_v<T> && std::is_same_v<std::remove_extent_t<T>, char>) {
-				// Handle char arrays (string literals)
-				stream << arg;
-			} else if constexpr (std::is_array_v<T> && std::is_same_v<std::remove_extent_t<T>, wchar_t>) {
-				// Handle wchar_t arrays (wide string literals)
-				stream << arg;
-			} else if constexpr (std::is_arithmetic_v<T>) {
-				stream << arg;
-			} else if constexpr (std::is_enum_v<T>) {
-				// For enum types, try to use to_string function
-				stream << to_string(arg);
-			} else {
-				// For other custom types with to_string method
-				stream << arg.to_string();
-			}
-		}
-
-		// Simple fallback formatting implementation
-		template <typename Stream>
-		static void format_impl(Stream& stream, const char* format) {
-			stream << format;
-		}
-
-		template <typename Stream, typename T, typename... Args>
-		static void format_impl(Stream& stream, const char* format, const T& arg, const Args&... args) {
-			while (*format) {
-				if (*format == '{' && *(format + 1) == '}') {
-					output_arg(stream, arg);
-					format += 2;
-					format_impl(stream, format, args...);
-					return;
-				}
-				stream << *format++;
-			}
-		}
-
-		// Wide character version
-		template <typename Stream>
-		static void wformat_impl(Stream& stream, const wchar_t* format) {
-			stream << format;
-		}
-
-		template <typename Stream, typename T, typename... Args>
-		static void wformat_impl(Stream& stream, const wchar_t* format, const T& arg, const Args&... args) {
-			while (*format) {
-				if (*format == L'{' && *(format + 1) == L'}') {
-					output_arg(stream, arg);
-					format += 2;
-					wformat_impl(stream, format, args...);
-					return;
-				}
-				stream << *format++;
-			}
-		}
-
-			public:
 		/**
 		 * @brief Formats a wide-character string with the given arguments.
 		 * @tparam FormatArgs Parameter pack of argument types.
@@ -268,14 +166,7 @@ namespace utility_module
 		template <typename... FormatArgs>
 		static auto format(const wchar_t* formats, const FormatArgs&... args) -> std::wstring
 		{
-#ifdef USE_STD_FORMAT
 			return std::vformat(formats, std::make_wformat_args(args...));
-#else
-			// Fallback implementation using wostringstream
-			std::wostringstream woss;
-			wformat_impl(woss, formats, args...);
-			return woss.str();
-#endif
 		}
 
 		/**
@@ -293,13 +184,7 @@ namespace utility_module
 		static auto format_to(OutputIt out, const char* formats, const FormatArgs&... args)
 			-> OutputIt
 		{
-#ifdef USE_STD_FORMAT
 			return std::vformat_to(out, formats, std::make_format_args(args...));
-#else
-			// Fallback implementation
-			std::string result = format(formats, args...);
-			return std::copy(result.begin(), result.end(), out);
-#endif
 		}
 
 		/**
@@ -315,13 +200,7 @@ namespace utility_module
 		static auto format_to(OutputIt out, const wchar_t* formats, const FormatArgs&... args)
 			-> OutputIt
 		{
-#ifdef USE_STD_FORMAT
 			return std::vformat_to(out, formats, std::make_wformat_args(args...));
-#else
-			// Fallback implementation
-			std::wstring result = format(formats, args...);
-			return std::copy(result.begin(), result.end(), out);
-#endif
 		}
 	};
-} // namespace utility_module
+} // namespace kcenon::thread::utils
