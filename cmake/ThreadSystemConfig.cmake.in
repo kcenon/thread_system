@@ -19,25 +19,56 @@ else()
     find_dependency(fmt CONFIG QUIET)
 endif()
 
-find_dependency(Iconv)
+find_dependency(Iconv QUIET)
 
 # Include the targets file
 include("${CMAKE_CURRENT_LIST_DIR}/ThreadSystemTargets.cmake")
 
-# Set up convenience variables
-set(ThreadSystem_LIBRARIES 
-    ThreadSystem::utilities
-    ThreadSystem::thread_base
-    ThreadSystem::logger
-    ThreadSystem::thread_pool
-    ThreadSystem::typed_thread_pool
-)
+# Determine available target structure
+# New unified build exports ThreadSystem::ThreadSystem as a single library
+# Legacy build exports individual component libraries
+if(TARGET ThreadSystem::ThreadSystem)
+    # Unified library mode - create component aliases for compatibility
+    set(_THREAD_SYSTEM_UNIFIED_MODE TRUE)
+    set(_THREAD_SYSTEM_MAIN_TARGET ThreadSystem::ThreadSystem)
 
-# Verify that all targets exist
-foreach(target ${ThreadSystem_LIBRARIES})
-    if(NOT TARGET ${target})
-        message(FATAL_ERROR "ThreadSystem target '${target}' not found")
+    # Create component aliases pointing to the unified library
+    if(NOT TARGET ThreadSystem::utilities)
+        add_library(ThreadSystem::utilities ALIAS ThreadSystem::ThreadSystem)
     endif()
-endforeach()
+    if(NOT TARGET ThreadSystem::thread_base)
+        add_library(ThreadSystem::thread_base ALIAS ThreadSystem::ThreadSystem)
+    endif()
+    if(NOT TARGET ThreadSystem::interfaces)
+        add_library(ThreadSystem::interfaces ALIAS ThreadSystem::ThreadSystem)
+    endif()
+    if(NOT TARGET ThreadSystem::thread_pool)
+        add_library(ThreadSystem::thread_pool ALIAS ThreadSystem::ThreadSystem)
+    endif()
+    if(NOT TARGET ThreadSystem::typed_thread_pool)
+        add_library(ThreadSystem::typed_thread_pool ALIAS ThreadSystem::ThreadSystem)
+    endif()
+    if(NOT TARGET ThreadSystem::logger)
+        add_library(ThreadSystem::logger ALIAS ThreadSystem::ThreadSystem)
+    endif()
+
+    # Set convenience variable to main target
+    set(ThreadSystem_LIBRARIES ThreadSystem::ThreadSystem)
+else()
+    # Legacy component mode - individual libraries
+    set(_THREAD_SYSTEM_UNIFIED_MODE FALSE)
+    set(ThreadSystem_LIBRARIES "")
+
+    # Collect available component targets
+    foreach(_component utilities thread_base interfaces thread_pool typed_thread_pool logger)
+        if(TARGET ThreadSystem::${_component})
+            list(APPEND ThreadSystem_LIBRARIES ThreadSystem::${_component})
+        endif()
+    endforeach()
+
+    if(NOT ThreadSystem_LIBRARIES)
+        message(FATAL_ERROR "No ThreadSystem targets found. Installation may be corrupted.")
+    endif()
+endif()
 
 check_required_components(ThreadSystem)
