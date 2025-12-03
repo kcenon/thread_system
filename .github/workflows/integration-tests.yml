@@ -93,28 +93,38 @@ jobs:
         echo "GTest: Will be fetched via FetchContent if needed"
         echo "==========================="
 
-        # Set libc++ flags for Clang to enable std::format support
-        EXTRA_CXX_FLAGS=""
-        EXTRA_LINKER_FLAGS=""
+        # Configure CMake with appropriate flags
+        # Note: For Clang on Linux, use stdlib=libc++ for std::format support
+        # We set it after initial compiler detection to avoid ABI detection issues
         if [ "${{ matrix.compiler.name }}" = "Clang" ]; then
-          EXTRA_CXX_FLAGS="-stdlib=libc++"
-          EXTRA_LINKER_FLAGS="-stdlib=libc++ -lc++abi"
+          cmake -B build \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+            -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+            -DCMAKE_EXE_LINKER_FLAGS="-lc++" \
+            -DBUILD_INTEGRATION_TESTS=ON \
+            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+            -DCMAKE_PREFIX_PATH="/usr" \
+            --debug-find || {
+              echo "::error::CMake configuration failed"
+              echo "CMake logs:"
+              cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
+              exit 1
+            }
+        else
+          cmake -B build \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+            -DBUILD_INTEGRATION_TESTS=ON \
+            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+            -DCMAKE_PREFIX_PATH="/usr" \
+            --debug-find || {
+              echo "::error::CMake configuration failed"
+              echo "CMake logs:"
+              cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
+              exit 1
+            }
         fi
-
-        cmake -B build \
-          -G Ninja \
-          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-          -DCMAKE_CXX_FLAGS="$EXTRA_CXX_FLAGS" \
-          -DCMAKE_EXE_LINKER_FLAGS="$EXTRA_LINKER_FLAGS" \
-          -DBUILD_INTEGRATION_TESTS=ON \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
-          -DCMAKE_PREFIX_PATH="/usr" \
-          --debug-find || {
-            echo "::error::CMake configuration failed"
-            echo "CMake logs:"
-            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMakeError.log found"
-            exit 1
-          }
 
     - name: Build
       run: |
