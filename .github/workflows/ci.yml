@@ -136,9 +136,12 @@ jobs:
         }
         # Build without vcpkg to ensure proper C++20 std::format detection
         # Testing dependencies are fetched via CMake FetchContent
+        # MSVC flags: /Zc:__cplusplus is needed for correct __cplusplus value,
+        # /permissive- enables strict conformance mode
         cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=Debug `
           -DCMAKE_CXX_STANDARD=20 `
+          -DCMAKE_CXX_FLAGS="/EHsc /Zc:__cplusplus /permissive-" `
           -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
           -DBUILD_INTEGRATION_TESTS=ON
 

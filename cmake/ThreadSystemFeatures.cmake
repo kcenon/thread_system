@@ -17,8 +17,12 @@ function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
 
   # Set C++20 standard requirement
   if(MSVC)
-    # MSVC requires explicit /std:c++20 flag
-    set(CMAKE_REQUIRED_FLAGS "/std:c++20 /EHsc")
+    # MSVC requires explicit C++20 flags:
+    # - /std:c++20: Enable C++20 standard
+    # - /EHsc: Enable C++ exception handling
+    # - /Zc:__cplusplus: Make __cplusplus report correct value (needed for feature detection)
+    # - /permissive-: Enable strict standards conformance mode
+    set(CMAKE_REQUIRED_FLAGS "/std:c++20 /EHsc /Zc:__cplusplus /permissive-")
   else()
     # GCC/Clang use -std=c++20
     set(CMAKE_REQUIRED_FLAGS "-std=c++20 ${CMAKE_CXX_FLAGS}")
