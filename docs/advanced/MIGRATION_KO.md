@@ -108,7 +108,7 @@ modular_structure/
 3. 빌드 시스템 개선:
    - Core module이 C++20 표준으로 빌드
    - 플랫폼별 지원 추가 (macOS용 iconv)
-   - fmt를 사용할 수 없을 때 자동 USE_STD_FORMAT
+   - C++20 std::format 독점 사용 (fmt 라이브러리 제거됨)
    - 깨끗한 CMake export 구성
 
 4. 호환성:
@@ -165,7 +165,7 @@ downstream 통합을 위한 작업 항목:
 - 커스텀 logger 구현이 thread_context와 작동
 - 커스텀 monitoring 구현이 메트릭을 올바르게 캡처
 - Job queue enqueue/dequeue 작업이 제대로 작동
-- fmt를 사용할 수 없을 때 USE_STD_FORMAT으로 module 사용 가능
+- C++20 std::format 독점 사용 (외부 format 라이브러리 의존성 없음)
 
 ### Phase 5: 점진적 배포 🔄 대기 중
 

@@ -11,8 +11,9 @@
 
 | Package | License | Compatibility | Notes |
 |---------|---------|---------------|-------|
-| fmt | MIT | ✅ Compatible | Identical license, no restrictions |
 | libiconv | LGPL-2.1+ | ✅ Compatible | LGPL allows dynamic linking without copyleft obligations |
+
+> **Note**: As of this release, thread_system uses C++20 `std::format` exclusively. No external formatting library dependency exists.
 
 ### Testing Dependencies
 
@@ -39,7 +40,7 @@
 | License | Attribution Required | Share Alike | Patent Grant | Commercial Use |
 |---------|---------------------|-------------|--------------|----------------|
 | MIT (our project) | ✅ | ❌ | ❌ | ✅ |
-| MIT (fmt, spdlog) | ✅ | ❌ | ❌ | ✅ |
+| MIT (spdlog - optional) | ✅ | ❌ | ❌ | ✅ |
 | BSD-3-Clause (gtest) | ✅ | ❌ | ❌ | ✅ |
 | Apache-2.0 (benchmark) | ✅ | ❌ | ✅ | ✅ |
 | LGPL-2.1+ (libiconv) | ✅ | ⚠️ (Dynamic only) | ❌ | ✅ |
@@ -52,10 +53,9 @@ All dependencies require attribution in distributed software:
 ```
 This software uses the following open source packages:
 
-- fmt (MIT License) - Copyright (c) 2012 - present, Victor Zverovich
 - gtest (BSD-3-Clause) - Copyright 2008, Google Inc.
 - benchmark (Apache 2.0) - Copyright 2015 Google Inc.
-- spdlog (MIT License) - Copyright (c) 2016 Gabi Melman
+- spdlog (MIT License, optional) - Copyright (c) 2016 Gabi Melman
 - libiconv (LGPL-2.1+) - Copyright (C) 1999-2003 Free Software Foundation, Inc.
 ```
 
@@ -74,7 +74,7 @@ This software uses the following open source packages:
 ## Risk Assessment
 
 ### Low Risk ✅
-- **MIT Dependencies** (fmt, spdlog): Identical license, no conflicts
+- **MIT Dependencies** (spdlog - optional): Identical license, no conflicts
 - **BSD Dependencies** (gtest): Very permissive, widely compatible
 - **Apache 2.0 Dependencies** (benchmark): Patent protection, commercial friendly
 
