@@ -70,7 +70,7 @@ Advanced type-based task scheduling:
 Essential infrastructure components:
 - **String conversion**: Unicode and cross-platform text handling
 - **Error handling**: Modern result<T> pattern for robust error management
-- **Formatting**: Cross-platform support for std::format and fmt::format
+- **Formatting**: C++20 std::format for type-safe string formatting
 - **Date/time helpers**: Time zone aware timestamp generation
 - See namespace \ref utility_module for utility functions
 

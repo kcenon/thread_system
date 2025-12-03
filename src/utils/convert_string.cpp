@@ -36,15 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdexcept>
 #include <cstdint>
-
-#ifdef USE_STD_FORMAT
 #include <format>
-#else
-// Fallback to basic string operations when std::format is not available
-// Note: We don't try to include fmt here as it may not be installed
-#include <sstream>
-#include <iomanip>
-#endif
 
 #ifdef _WIN32
 #include <windows.h>
@@ -504,20 +496,11 @@ namespace utility_module
 		for (size_t offset = source.find(token, last_offset); offset != std::string::npos;
 			 last_offset = offset + token.size(), offset = source.find(token, last_offset))
 		{
-#ifdef USE_STD_FORMAT
 			std::format_to(std::back_inserter(result), "{}{}",
 								 source.substr(last_offset, offset - last_offset), target);
-#else
-			result += source.substr(last_offset, offset - last_offset);
-			result += target;
-#endif
 		}
 
-#ifdef USE_STD_FORMAT
 		std::format_to(std::back_inserter(result), "{}", source.substr(last_offset));
-#else
-		result += source.substr(last_offset);
-#endif
 
 		return { result, std::nullopt };
 	}

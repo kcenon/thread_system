@@ -11,8 +11,9 @@
 
 | Package | License | Compatibility | Notes |
 |---------|---------|---------------|-------|
-| fmt | MIT | ✅ 호환 | 동일한 라이선스, 제한 없음 |
 | libiconv | LGPL-2.1+ | ✅ 호환 | LGPL은 카피레프트 의무 없이 동적 링킹 허용 |
+
+> **참고**: 이 릴리스부터 thread_system은 C++20 `std::format`을 독점적으로 사용합니다. 외부 포매팅 라이브러리 의존성이 없습니다.
 
 ### 테스팅 의존성
 
@@ -39,7 +40,7 @@
 | License | Attribution Required | Share Alike | Patent Grant | Commercial Use |
 |---------|---------------------|-------------|--------------|----------------|
 | MIT (our project) | ✅ | ❌ | ❌ | ✅ |
-| MIT (fmt, spdlog) | ✅ | ❌ | ❌ | ✅ |
+| MIT (spdlog - 선택적) | ✅ | ❌ | ❌ | ✅ |
 | BSD-3-Clause (gtest) | ✅ | ❌ | ❌ | ✅ |
 | Apache-2.0 (benchmark) | ✅ | ❌ | ✅ | ✅ |
 | LGPL-2.1+ (libiconv) | ✅ | ⚠️ (동적만) | ❌ | ✅ |
@@ -52,10 +53,9 @@
 ```
 This software uses the following open source packages:
 
-- fmt (MIT License) - Copyright (c) 2012 - present, Victor Zverovich
 - gtest (BSD-3-Clause) - Copyright 2008, Google Inc.
 - benchmark (Apache 2.0) - Copyright 2015 Google Inc.
-- spdlog (MIT License) - Copyright (c) 2016 Gabi Melman
+- spdlog (MIT License, optional) - Copyright (c) 2016 Gabi Melman
 - libiconv (LGPL-2.1+) - Copyright (C) 1999-2003 Free Software Foundation, Inc.
 ```
 
@@ -74,7 +74,7 @@ This software uses the following open source packages:
 ## 위험 평가
 
 ### 낮은 위험 ✅
-- **MIT 의존성** (fmt, spdlog): 동일한 라이선스, 충돌 없음
+- **MIT 의존성** (spdlog - 선택적): 동일한 라이선스, 충돌 없음
 - **BSD 의존성** (gtest): 매우 허용적, 널리 호환됨
 - **Apache 2.0 의존성** (benchmark): 특허 보호, 상업적으로 친화적
 

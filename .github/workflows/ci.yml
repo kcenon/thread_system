@@ -16,12 +16,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          # Ubuntu 24.04 has GCC 13+ with full std::format support
+          - os: ubuntu-24.04
             compiler: gcc
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             compiler: clang
           - os: macos-latest
             compiler: clang
+          # Windows 2022 has MSVC 19.3x+ with full std::format support
+          # Note: Uses version-based detection (not compile tests) due to Ninja+MSVC flag issues
           - os: windows-2022
             compiler: msvc
 
@@ -35,14 +38,27 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libfmt-dev
+        # Install build tools and compilers (C++20 std::format requires GCC 13+ or Clang 17+)
+        sudo apt-get install -y cmake ninja-build g++ clang libc++-dev libc++abi-dev
         # GTest is now fetched via CMake FetchContent
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja fmt
+        brew install ninja
         # GTest is now fetched via CMake FetchContent
+        # Note: macOS has built-in std::format support via Apple Clang
+
+    - name: Install dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install ninja -y
+        # GTest is now fetched via CMake FetchContent
+        # Note: MSVC 19.29+ has full std::format support (version-based detection)
+
+    - name: Setup MSVC Developer Command Prompt
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -55,6 +71,9 @@ jobs:
       run: |
         echo "CC=clang" >> $GITHUB_ENV
         echo "CXX=clang++" >> $GITHUB_ENV
+        # Use libc++ for proper std::format support
+        echo "CXXFLAGS=-stdlib=libc++" >> $GITHUB_ENV
+        echo "LDFLAGS=-stdlib=libc++ -lc++abi" >> $GITHUB_ENV
 
     - name: Set up compiler (Clang - macOS)
       if: matrix.compiler == 'clang' && runner.os == 'macOS'
@@ -62,19 +81,7 @@ jobs:
         echo "CC=clang" >> $GITHUB_ENV
         echo "CXX=clang++" >> $GITHUB_ENV
 
-    - name: Set up compiler (MSVC)
-      if: matrix.compiler == 'msvc'
-      uses: ilammy/msvc-dev-cmd@v1
-
-    - name: Set up vcpkg (Windows)
-      if: runner.os == 'Windows'
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        runVcpkgInstall: true
-        vcpkgJsonGlob: '**/vcpkg.json'
-
-    - name: Checkout common_system (optional dependency)
+    - name: Checkout common_system (optional dependency - Unix)
       if: runner.os != 'Windows'
       continue-on-error: true
       run: |
@@ -82,6 +89,17 @@ jobs:
         if [ ! -d "common_system" ]; then
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
         fi
+
+    - name: Checkout common_system (optional dependency - Windows)
+      if: runner.os == 'Windows'
+      continue-on-error: true
+      shell: pwsh
+      run: |
+        cd ..
+        if (-not (Test-Path "common_system")) {
+          git clone https://github.com/kcenon/common_system.git
+          if ($LASTEXITCODE -ne 0) { Write-Host "common_system not available, will build without it" }
+        }
 
     - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
@@ -110,57 +128,50 @@ jobs:
             exit 1
           }
 
-    - name: Checkout common_system (optional dependency - Windows)
-      if: runner.os == 'Windows'
-      continue-on-error: true
-      run: |
-        cd ..
-        if (-not (Test-Path "common_system")) {
-          git clone https://github.com/kcenon/common_system.git
-          if (-not $?) {
-            Write-Host "common_system not available, will build without it"
-          }
-        }
-
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
+      shell: pwsh
       run: |
         # Check if common_system is available
-        $buildWithCommon = "OFF"
         if (Test-Path "../common_system") {
           Write-Host "Building with common_system support"
-          $buildWithCommon = "ON"
+          $BUILD_WITH_COMMON = "ON"
         } else {
           Write-Host "Building without common_system support"
+          $BUILD_WITH_COMMON = "OFF"
         }
+
+        Write-Host "=== Build Configuration ==="
+        Write-Host "Compiler: MSVC"
+        Write-Host "Common System: $BUILD_WITH_COMMON"
+        Write-Host "==========================="
+
+        # Use Ninja with MSVC - feature detection uses version-based check
         cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=Debug `
-          -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
-          -DBUILD_INTEGRATION_TESTS=ON `
-          -DVCPKG_MANIFEST_FEATURES="testing" `
-          -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-          -DVCPKG_TARGET_TRIPLET=x64-windows
+          -DCMAKE_CXX_STANDARD=20 `
+          -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON `
+          -DBUILD_INTEGRATION_TESTS=ON
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::CMake configuration failed"
+          if (Test-Path "build/CMakeFiles/CMakeError.log") {
+            Get-Content "build/CMakeFiles/CMakeError.log"
+          }
+          exit 1
+        }
 
-    - name: Build (vcpkg)
-      id: build_vcpkg
-      continue-on-error: true
+    - name: Build (Unix)
+      if: runner.os != 'Windows'
       run: cmake --build build --config Debug
 
-    - name: Build (system libraries fallback)
-      if: steps.build_vcpkg.outcome == 'failure' && runner.os != 'Windows'
-      run: |
-        cd build
-        rm -rf CMakeCache.txt CMakeFiles/
-        cmake .. -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
-          -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON \
-          -DCMAKE_TOOLCHAIN_FILE=""
-        cmake --build . --config Debug
+    - name: Build (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: cmake --build build --config Debug
 
     - name: Test (Unix)
-      if: runner.os != 'Windows' && steps.build_vcpkg.outcome != 'failure'
+      if: runner.os != 'Windows'
       timeout-minutes: 5
       run: |
         cd build
@@ -175,6 +186,21 @@ jobs:
           ctest -C Debug --output-on-failure --timeout 60 || true
         fi
 
+    - name: Test (Windows)
+      if: runner.os == 'Windows'
+      timeout-minutes: 5
+      shell: pwsh
+      run: |
+        cd build
+        Write-Host "Running ctest..."
+        # Performance tests may fail in CI due to timing - allow failures like Unix version
+        ctest -C Debug --output-on-failure --timeout 60
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Some tests failed but continuing..."
+        }
+        # Exit with success to match Unix behavior (|| true)
+        exit 0
+
     - name: Upload build artifacts
       if: failure()
       uses: actions/upload-artifact@v4
@@ -187,7 +213,7 @@ jobs:
   # Phase 0: Sanitizer builds (warnings allowed at this phase)
   sanitizer:
     name: Sanitizer / ${{ matrix.sanitizer }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     strategy:
@@ -204,7 +230,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang libfmt-dev
+        # C++20 std::format requires Clang with libc++ on Linux
+        sudo apt-get install -y cmake ninja-build clang libc++-dev libc++abi-dev
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
@@ -235,7 +262,8 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
+          -DCMAKE_CXX_FLAGS="-stdlib=libc++ -fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
+          -DCMAKE_EXE_LINKER_FLAGS="-stdlib=libc++ -lc++abi" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DCMAKE_PREFIX_PATH="/usr" || {

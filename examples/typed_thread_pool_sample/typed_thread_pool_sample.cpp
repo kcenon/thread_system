@@ -39,11 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "utilities/core/formatter.h"
 #include "typed_thread_pool/pool/typed_thread_pool.h"
 
-#ifdef USE_STD_FORMAT
 #include <format>
-#else
-#include <fmt/format.h>
-#endif
 
 using namespace utility_module;
 using namespace kcenon::thread;

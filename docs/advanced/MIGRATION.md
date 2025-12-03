@@ -108,7 +108,7 @@ modular_structure/
 3. Build system improvements:
    - Core module builds with C++20 standard
    - Added platform-specific support (iconv for macOS)
-   - Automatic USE_STD_FORMAT when fmt not available
+   - C++20 std::format used exclusively (fmt library removed)
    - Clean CMake export configuration
 
 4. Compatibility:
@@ -165,7 +165,7 @@ Action items for downstream integrations:
 - Custom logger implementation works with thread_context
 - Custom monitoring implementation captures metrics correctly
 - Job queue enqueue/dequeue operations function properly
-- Module can be used with USE_STD_FORMAT when fmt not available
+- Module uses C++20 std::format exclusively (no external format library dependency)
 
 ### Phase 5: Gradual Deployment 🔄 PENDING
 

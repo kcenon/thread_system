@@ -14,7 +14,7 @@
 **A:** Yes, Thread System works on Windows, macOS, and Linux. Platform-specific optimizations are included for each platform, and the build system is designed to work across environments.
 
 ### Q: Does Thread System require external dependencies?
-**A:** Thread System depends on the {fmt} library if `std::format` is not available on your compiler. For unit tests, it uses GoogleTest. These dependencies are managed through vcpkg.
+**A:** Thread System requires a C++20 compiler with `std::format` support (GCC 13+, Clang 14+, MSVC 19.29+). For unit tests, it uses GoogleTest. These dependencies are managed through vcpkg.
 
 ### Q: Is Thread System thread-safe?
 **A:** Yes, all public interfaces in Thread System are designed to be thread-safe. Internal data structures use appropriate synchronization mechanisms to ensure thread safety.

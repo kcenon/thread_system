@@ -6,8 +6,9 @@
 
 | Package | Minimum Version | Tested Versions | Compatibility Notes |
 |---------|----------------|-----------------|-------------------|
-| fmt | 10.0.0 | 10.0.0, 10.1.1, 10.2.1 | Header-only formatting library. Version 10+ required for C++20 support |
 | libiconv | latest | system default | Platform dependency (excluded on Windows) |
+
+> **Note**: As of this release, thread_system uses C++20 `std::format` exclusively. The fmt library is no longer required. Minimum compiler requirements: GCC 13+, Clang 14+, MSVC 19.29+.
 
 ## Testing Dependencies (Feature: testing)
 
@@ -20,14 +21,13 @@
 
 | Package | Minimum Version | Tested Versions | Compatibility Notes |
 |---------|----------------|-----------------|-------------------|
-| spdlog | 1.12.0 | 1.12.0, 1.13.0, 1.14.0 | Fast C++ logging library. Version 1.12+ required for fmt 10+ compatibility |
+| spdlog | 1.12.0 | 1.12.0, 1.13.0, 1.14.0 | Fast C++ logging library (optional external logging). Version 1.12+ recommended |
 
 ## Version Compatibility Rules
 
-### fmt Library
-- **10.0.0+**: Required for C++20 format support
-- **10.2.1**: Pinned version for consistency (override specified)
-- **Breaking Changes**: fmt 9.x to 10.x API changes handled in codebase
+### C++20 std::format (Built-in)
+- **Compiler Requirements**: GCC 13+, Clang 14+, MSVC 19.29+
+- **Note**: The project now uses C++20 `std::format` exclusively. No external formatting library is required.
 
 ### Testing Framework
 - **gtest 1.14.0+**: Required for C++20 compatibility and modern CMake integration
@@ -35,7 +35,7 @@
 - **Compatibility**: Both packages work together without conflicts
 
 ### Logging Framework
-- **spdlog 1.12.0+**: Required for fmt 10+ compatibility
+- **spdlog 1.12.0+**: Recommended for external logging (optional)
 - **Header-only Mode**: Preferred for minimal dependency footprint
 - **Performance**: Asynchronous logging support verified
 
@@ -59,9 +59,8 @@
 ## Conflict Resolution
 
 ### Common Issues
-1. **fmt version conflicts**: Use override to pin to specific version
+1. **C++20 compiler support**: Ensure your compiler supports `std::format` (GCC 13+, Clang 14+, MSVC 19.29+)
 2. **gtest/benchmark conflicts**: Ensure both use same C++ standard
-3. **spdlog/fmt conflicts**: Use compatible versions (spdlog 1.12+ with fmt 10+)
 
 ### Resolution Strategy
 1. Check version compatibility matrix

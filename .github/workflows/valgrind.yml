@@ -13,7 +13,7 @@ on:
 jobs:
   valgrind:
     name: Memory Leak Detection
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
 
     steps:
@@ -25,12 +25,12 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
+        # GCC 13+ on Ubuntu 24.04 has full std::format support
         sudo apt-get install -y \
           cmake \
           ninja-build \
           g++ \
-          valgrind \
-          libfmt-dev
+          valgrind
 
     - name: Checkout common_system (optional)
       continue-on-error: true
@@ -93,7 +93,7 @@ jobs:
 
   valgrind-stress:
     name: Extended Stress Test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 120
     # Only run on schedule or manual trigger
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -107,7 +107,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ valgrind libfmt-dev
+        # GCC 13+ on Ubuntu 24.04 has full std::format support
+        sudo apt-get install -y cmake ninja-build g++ valgrind
 
     - name: Configure and Build
       run: |

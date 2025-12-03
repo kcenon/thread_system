@@ -137,12 +137,10 @@ namespace kcenon::thread
 // Formatter specializations for thread_conditions
 // ----------------------------------------------------------------------------
 
-#ifdef USE_STD_FORMAT
 /**
  * @brief Specialization of std::formatter for @c kcenon::thread::thread_conditions.
  *
- * Allows @c thread_conditions enum values to be formatted as strings using the C++20 <format>
- * library (when @c USE_STD_FORMAT is defined).
+ * Allows @c thread_conditions enum values to be formatted as strings using C++20 std::format.
  *
  * ### Example
  * @code
@@ -171,7 +169,7 @@ struct std::formatter<kcenon::thread::thread_conditions> : std::formatter<std::s
 /**
  * @brief Specialization of std::formatter for wide-character @c kcenon::thread::thread_conditions.
  *
- * Enables wide-string formatting of @c thread_conditions values using the C++20 <format> library.
+ * Enables wide-string formatting of @c thread_conditions values using C++20 std::format.
  */
 template <>
 struct std::formatter<kcenon::thread::thread_conditions, wchar_t>
@@ -192,35 +190,3 @@ struct std::formatter<kcenon::thread::thread_conditions, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-
-#elif __has_include(<fmt/format.h>)
-
-/**
- * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_conditions.
- *
- * Allows @c thread_conditions enum values to be formatted as strings using the {fmt} library.
- *
- * ### Example
- * @code
- * auto cond = kcenon::thread::thread_conditions::Working;
- * std::string output = fmt::format("Thread state is {}", cond); // "Thread state is working"
- * @endcode
- */
-template <>
-struct fmt::formatter<kcenon::thread::thread_conditions> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_conditions value as a string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param thread_condition The @c thread_conditions enum value to format.
-	 * @param ctx The format context for the output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_conditions& thread_condition, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(kcenon::thread::to_string(thread_condition),
-														ctx);
-	}
-};
-#endif // USE_STD_FORMAT
