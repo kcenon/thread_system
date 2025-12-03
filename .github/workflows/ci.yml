@@ -16,9 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          # Ubuntu 24.04 has GCC 13+ with full std::format support
+          - os: ubuntu-24.04
             compiler: gcc
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             compiler: clang
           - os: macos-latest
             compiler: clang
@@ -35,14 +36,16 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ clang libfmt-dev
+        # Install build tools and compilers (C++20 std::format requires GCC 13+ or Clang 17+)
+        sudo apt-get install -y cmake ninja-build g++ clang libc++-dev libc++abi-dev
         # GTest is now fetched via CMake FetchContent
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja fmt
+        brew install ninja
         # GTest is now fetched via CMake FetchContent
+        # Note: macOS has built-in std::format support via Apple Clang
 
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
@@ -55,6 +58,9 @@ jobs:
       run: |
         echo "CC=clang" >> $GITHUB_ENV
         echo "CXX=clang++" >> $GITHUB_ENV
+        # Use libc++ for proper std::format support
+        echo "CXXFLAGS=-stdlib=libc++" >> $GITHUB_ENV
+        echo "LDFLAGS=-stdlib=libc++ -lc++abi" >> $GITHUB_ENV
 
     - name: Set up compiler (Clang - macOS)
       if: matrix.compiler == 'clang' && runner.os == 'macOS'
@@ -187,7 +193,7 @@ jobs:
   # Phase 0: Sanitizer builds (warnings allowed at this phase)
   sanitizer:
     name: Sanitizer / ${{ matrix.sanitizer }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     strategy:
@@ -204,7 +210,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang libfmt-dev
+        # C++20 std::format requires Clang with libc++ on Linux
+        sudo apt-get install -y cmake ninja-build clang libc++-dev libc++abi-dev
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
@@ -235,7 +242,8 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
+          -DCMAKE_CXX_FLAGS="-stdlib=libc++ -fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
+          -DCMAKE_EXE_LINKER_FLAGS="-stdlib=libc++ -lc++abi" \
           -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DCMAKE_PREFIX_PATH="/usr" || {

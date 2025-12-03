@@ -73,17 +73,17 @@ jobs:
         print("=" * 60)
         
         # Known licenses for our dependencies
+        # Note: fmt is no longer a dependency (using C++20 std::format)
         known_licenses = {
-            'fmt': 'MIT',
-            'gtest': 'BSD-3-Clause', 
+            'gtest': 'BSD-3-Clause',
             'benchmark': 'Apache-2.0',
             'spdlog': 'MIT',
             'libiconv': 'LGPL-2.1+'
         }
-        
+
         all_compatible = True
-        
-        for dep_name in ['fmt', 'gtest', 'benchmark', 'spdlog', 'libiconv']:
+
+        for dep_name in ['gtest', 'benchmark', 'spdlog', 'libiconv']:
             if dep_name in known_licenses:
                 license_name = known_licenses[dep_name]
                 compatible = license_name in COMPATIBLE_LICENSES
