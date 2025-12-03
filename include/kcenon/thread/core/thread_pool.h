@@ -501,18 +501,15 @@ namespace kcenon::thread
 // Formatter specializations for thread_pool
 // ----------------------------------------------------------------------------
 
-#ifdef USE_STD_FORMAT
 /**
  * @brief Specialization of std::formatter for @c kcenon::thread::thread_pool.
  *
- * Enables formatting of @c thread_pool objects as strings using the C++20 <format> library
- * (when @c USE_STD_FORMAT is defined).
+ * Enables formatting of @c thread_pool objects as strings using C++20 std::format.
  *
  * ### Example
  * @code
  * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
- * std::string output = std::format("Pool Info: {}", *pool); // e.g. "Pool Info: [thread_pool:
- * MyPool]"
+ * std::string output = std::format("Pool Info: {}", *pool); // e.g. "Pool Info: [thread_pool: MyPool]"
  * @endcode
  */
 template <>
@@ -535,7 +532,7 @@ struct std::formatter<kcenon::thread::thread_pool> : std::formatter<std::string_
 /**
  * @brief Specialization of std::formatter for wide-character @c kcenon::thread::thread_pool.
  *
- * Allows wide-string formatting of @c thread_pool objects using the C++20 <format> library.
+ * Allows wide-string formatting of @c thread_pool objects using C++20 std::format.
  */
 template <>
 struct std::formatter<kcenon::thread::thread_pool, wchar_t>
@@ -556,35 +553,3 @@ struct std::formatter<kcenon::thread::thread_pool, wchar_t>
 		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
 	}
 };
-
-#elif __has_include(<fmt/format.h>)
-
-/**
- * @brief Specialization of fmt::formatter for @c kcenon::thread::thread_pool.
- *
- * Allows @c thread_pool objects to be formatted as strings using the {fmt} library.
- *
- * ### Example
- * @code
- * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
- * pool->start();
- * std::string output = fmt::format("Pool Info: {}", *pool);
- * @endcode
- */
-template <>
-struct fmt::formatter<kcenon::thread::thread_pool> : fmt::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_pool object as a string using {fmt}.
-	 * @tparam FormatContext The type of the format context.
-	 * @param item The @c thread_pool to format.
-	 * @param ctx  The format context for output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
-	{
-		return fmt::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
-#endif  // USE_STD_FORMAT

@@ -9,7 +9,7 @@ on:
 jobs:
   clang-tidy:
     name: Clang-Tidy Analysis
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout code
@@ -20,7 +20,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build clang clang-tidy libgtest-dev libgmock-dev
+        # Clang with libc++ for std::format support
+        sudo apt-get install -y cmake ninja-build clang clang-tidy libgtest-dev libgmock-dev libc++-dev libc++abi-dev
 
     - name: Checkout common_system (required dependency)
       run: |
@@ -36,6 +37,8 @@ jobs:
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+          -DCMAKE_EXE_LINKER_FLAGS="-stdlib=libc++ -lc++abi" \
           -DBUILD_WITH_COMMON_SYSTEM=ON \
           -DBUILD_DOCUMENTATION=OFF
 
@@ -92,7 +95,7 @@ jobs:
 
   cppcheck:
     name: Cppcheck Analysis
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout code

@@ -4,16 +4,15 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Define minimum required versions for our dependencies
+# Note: fmt library has been removed - using C++20 std::format exclusively (issue #219)
 set(THREAD_SYSTEM_MIN_VERSIONS
-    "fmt;10.0.0"
-    "gtest;1.14.0"  
+    "gtest;1.14.0"
     "benchmark;1.8.0"
     "spdlog;1.12.0"
 )
 
 # Define known compatibility issues
 set(THREAD_SYSTEM_INCOMPATIBLE_COMBINATIONS
-    "fmt;<10.0.0;spdlog;>=1.12.0;fmt version too old for spdlog 1.12+"
     "gtest;<1.14.0;benchmark;>=1.8.0;gtest version incompatible with modern benchmark"
 )
 
@@ -98,13 +97,9 @@ function(check_dependency_conflicts)
             list(GET dep_info_list 1 min_version)
             
             # Get current version based on package
+            # Note: fmt library has been removed - using C++20 std::format exclusively (issue #219)
             set(current_version "")
-            if(package_name STREQUAL "fmt")
-                if(TARGET fmt::fmt)
-                    get_target_property(FMT_VERSION fmt::fmt VERSION)
-                    set(current_version ${FMT_VERSION})
-                endif()
-            elseif(package_name STREQUAL "gtest")
+            if(package_name STREQUAL "gtest")
                 if(TARGET GTest::gtest)
                     set(current_version "1.14.0")  # Assume recent version if found
                 endif()
@@ -198,13 +193,12 @@ function(generate_dependency_report)
     file(APPEND ${REPORT_FILE} "| Package | Status | Version | Minimum Required |\n")
     file(APPEND ${REPORT_FILE} "|---------|--------|---------|------------------|\n")
     
+    # Note: fmt library has been removed - using C++20 std::format exclusively (issue #219)
     foreach(dep_info IN LISTS THREAD_SYSTEM_MIN_VERSIONS)
         list(GET dep_info 0 package_name)
         list(GET dep_info 1 min_version)
-        
-        if(TARGET fmt::fmt AND package_name STREQUAL "fmt")
-            file(APPEND ${REPORT_FILE} "| fmt | ✅ Found | System | ${min_version} |\n")
-        elseif(TARGET GTest::gtest AND package_name STREQUAL "gtest")
+
+        if(TARGET GTest::gtest AND package_name STREQUAL "gtest")
             file(APPEND ${REPORT_FILE} "| gtest | ✅ Found | System | ${min_version} |\n")
         elseif(TARGET benchmark::benchmark AND package_name STREQUAL "benchmark")
             file(APPEND ${REPORT_FILE} "| benchmark | ✅ Found | System | ${min_version} |\n")

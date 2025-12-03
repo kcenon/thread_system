@@ -9,7 +9,7 @@ on:
 jobs:
   coverage:
     name: Coverage Analysis
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout code
@@ -20,7 +20,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build g++ lcov libfmt-dev
+        # GCC 13+ on Ubuntu 24.04 has full std::format support
+        sudo apt-get install -y cmake ninja-build g++ lcov
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)

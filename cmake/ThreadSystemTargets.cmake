@@ -66,20 +66,8 @@ function(create_thread_system_targets)
       add_library(utilities ALIAS ThreadSystem)
       add_library(interfaces ALIAS ThreadSystem)
 
-      if(DEFINED FMT_FOUND AND FMT_FOUND)
-        target_compile_definitions(ThreadSystem PUBLIC HAS_FMT_LIBRARY)
-
-        if(DEFINED FMT_TARGET AND FMT_TARGET)
-          target_link_libraries(ThreadSystem PUBLIC ${FMT_TARGET})
-        else()
-          if(DEFINED FMT_INCLUDE_DIR AND FMT_INCLUDE_DIR)
-            target_include_directories(ThreadSystem PUBLIC ${FMT_INCLUDE_DIR})
-          endif()
-          if(DEFINED FMT_LIBRARY AND FMT_LIBRARY)
-            target_link_libraries(ThreadSystem PUBLIC ${FMT_LIBRARY})
-          endif()
-        endif()
-      endif()
+      # Note: fmt library is no longer used - using C++20 std::format exclusively
+      # The HAS_FMT_LIBRARY definition and fmt linking have been removed
 
       if(DEFINED THREAD_SYSTEM_ICONV_FOUND AND THREAD_SYSTEM_ICONV_FOUND)
         if(DEFINED THREAD_SYSTEM_ICONV_TARGET AND THREAD_SYSTEM_ICONV_TARGET)

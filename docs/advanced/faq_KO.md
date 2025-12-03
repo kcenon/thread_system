@@ -14,7 +14,7 @@
 **A:** 예, Thread System은 Windows, macOS, Linux에서 작동합니다. 각 플랫폼별 최적화가 포함되어 있으며 빌드 시스템은 모든 환경에서 작동하도록 설계되었습니다.
 
 ### Q: Thread System은 외부 의존성이 필요한가요?
-**A:** Thread System은 컴파일러에서 `std::format`을 사용할 수 없는 경우 {fmt} 라이브러리에 의존합니다. 단위 테스트를 위해서는 GoogleTest를 사용합니다. 이러한 의존성은 vcpkg를 통해 관리됩니다.
+**A:** Thread System은 `std::format` 지원이 있는 C++20 컴파일러가 필요합니다 (GCC 13+, Clang 14+, MSVC 19.29+). 단위 테스트를 위해서는 GoogleTest를 사용합니다. 이러한 의존성은 vcpkg를 통해 관리됩니다.
 
 ### Q: Thread System은 thread-safe한가요?
 **A:** 예, Thread System의 모든 public interface는 thread-safe하게 설계되었습니다. 내부 데이터 구조는 thread safety를 보장하기 위해 적절한 동기화 메커니즘을 사용합니다.
