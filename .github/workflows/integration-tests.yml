@@ -247,25 +247,22 @@ jobs:
           if (-not $?) { Write-Host "common_system not available" }
         }
 
-    - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: '50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2'
+    # Note: vcpkg is removed to ensure proper C++20 std::format detection with MSVC
+    # Testing dependencies are now fetched via CMake FetchContent
 
     - name: Configure CMake
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         $buildWithCommon = "OFF"
         if (Test-Path "../common_system") {
           $buildWithCommon = "ON"
         }
-        cmake -B build `
+        # Build without vcpkg to ensure proper C++20 std::format detection
+        # Testing dependencies are fetched via CMake FetchContent
+        cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} `
+          -DCMAKE_CXX_STANDARD=20 `
           -DBUILD_INTEGRATION_TESTS=ON `
-          -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
-          -DVCPKG_MANIFEST_FEATURES="testing" `
-          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake"
+          -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon
 
     - name: Build
       run: cmake --build build --config ${{ matrix.build-type }}

@@ -72,13 +72,8 @@ jobs:
       if: matrix.compiler == 'msvc'
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Set up vcpkg (Windows)
-      if: runner.os == 'Windows'
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        runVcpkgInstall: true
-        vcpkgJsonGlob: '**/vcpkg.json'
+    # Note: vcpkg is removed to ensure proper C++20 std::format detection with MSVC
+    # Testing dependencies are now fetched via CMake FetchContent
 
     - name: Checkout common_system (optional dependency)
       if: runner.os != 'Windows'
@@ -130,8 +125,6 @@ jobs:
 
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
-      env:
-        VCPKG_FEATURE_FLAGS: manifests
       run: |
         # Check if common_system is available
         $buildWithCommon = "OFF"
@@ -141,32 +134,19 @@ jobs:
         } else {
           Write-Host "Building without common_system support"
         }
+        # Build without vcpkg to ensure proper C++20 std::format detection
+        # Testing dependencies are fetched via CMake FetchContent
         cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_CXX_STANDARD=20 `
           -DBUILD_WITH_COMMON_SYSTEM=$buildWithCommon `
-          -DBUILD_INTEGRATION_TESTS=ON `
-          -DVCPKG_MANIFEST_FEATURES="testing" `
-          -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-          -DVCPKG_TARGET_TRIPLET=x64-windows
+          -DBUILD_INTEGRATION_TESTS=ON
 
-    - name: Build (vcpkg)
-      id: build_vcpkg
-      continue-on-error: true
+    - name: Build
       run: cmake --build build --config Debug
 
-    - name: Build (system libraries fallback)
-      if: steps.build_vcpkg.outcome == 'failure' && runner.os != 'Windows'
-      run: |
-        cd build
-        rm -rf CMakeCache.txt CMakeFiles/
-        cmake .. -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
-          -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON \
-          -DCMAKE_TOOLCHAIN_FILE=""
-        cmake --build . --config Debug
-
     - name: Test (Unix)
-      if: runner.os != 'Windows' && steps.build_vcpkg.outcome != 'failure'
+      if: runner.os != 'Windows'
       timeout-minutes: 5
       run: |
         cd build
