@@ -204,3 +204,11 @@ namespace kcenon::thread::utils
 		}
 	};
 } // namespace kcenon::thread::utils
+
+// Backward compatibility: provide aliases in utility_module namespace
+namespace utility_module
+{
+	using formatter = kcenon::thread::utils::formatter;
+	template <typename T, typename Converter>
+	using enum_formatter = kcenon::thread::utils::enum_formatter<T, Converter>;
+} // namespace utility_module
