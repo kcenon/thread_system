@@ -43,6 +43,25 @@ function(check_std_format_support)
   # C++20 std::format is required - no fallback to fmt library
   # This project requires C++20 compliant compilers (GCC 13+, Clang 14+, MSVC 19.29+)
 
+  # MSVC: Use version-based detection instead of compile tests
+  # Reason: CMake's check_cxx_source_compiles has issues with Ninja generator
+  # because MSVC flags like /Zc:__cplusplus aren't properly propagated
+  # MSVC 19.29+ (VS 2019 16.10+) has full std::format support
+  if(MSVC)
+    if(MSVC_VERSION GREATER_EQUAL 1929)
+      message(STATUS "MSVC ${MSVC_VERSION} detected - using version-based std::format detection")
+      add_definitions(-DUSE_STD_FORMAT)
+      set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
+      message(STATUS "✅ Using std::format (MSVC ${MSVC_VERSION} - version check)")
+      set(USE_STD_FORMAT TRUE PARENT_SCOPE)
+      return()
+    else()
+      message(FATAL_ERROR "❌ MSVC ${MSVC_VERSION} does not support std::format.\n"
+        "Please use MSVC 19.29 or later (Visual Studio 2019 16.10+)")
+    endif()
+  endif()
+
+  # GCC/Clang: Use compile tests for feature detection
   # First check basic std::format availability
   check_cxx20_feature(std_format_basic "
     #include <format>

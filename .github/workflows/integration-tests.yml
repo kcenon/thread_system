@@ -202,9 +202,103 @@ jobs:
         name: integration-test-results-macos-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
 
-  # Note: Windows Integration Tests removed - CMake feature detection for std::format
-  # fails with Ninja generator due to flag propagation issues.
-  # Windows support requires Visual Studio generator or vcpkg workarounds.
+  integration-tests-windows:
+    name: Integration Tests (Windows)
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        build-type: [Debug, Release]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install system dependencies
+      shell: pwsh
+      run: |
+        choco install ninja -y
+        # GTest is now fetched via CMake FetchContent - no system package needed
+        # Note: MSVC 19.29+ has full std::format support (version-based detection)
+
+    - name: Checkout common_system (optional dependency)
+      continue-on-error: true
+      shell: pwsh
+      run: |
+        cd ..
+        if (-not (Test-Path "common_system")) {
+          git clone https://github.com/kcenon/common_system.git
+          if ($LASTEXITCODE -ne 0) { Write-Host "common_system not available" }
+        }
+
+    - name: Cache FetchContent dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/_deps
+        key: ${{ runner.os }}-msvc-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
+        restore-keys: |
+          ${{ runner.os }}-msvc-${{ matrix.build-type }}-fetchcontent-gtest-v1.14.0
+          ${{ runner.os }}-msvc-fetchcontent-gtest-v1.14.0
+
+    - name: Configure CMake
+      shell: pwsh
+      run: |
+        # Check if common_system is available
+        if (Test-Path "../common_system") {
+          Write-Host "Building with common_system support"
+          $BUILD_WITH_COMMON = "ON"
+        } else {
+          Write-Host "Building without common_system support"
+          $BUILD_WITH_COMMON = "OFF"
+        }
+
+        Write-Host "=== Build Configuration ==="
+        Write-Host "Compiler: MSVC"
+        Write-Host "Build Type: ${{ matrix.build-type }}"
+        Write-Host "Common System: $BUILD_WITH_COMMON"
+        Write-Host "GTest: Will be fetched via FetchContent if needed"
+        Write-Host "==========================="
+
+        # Use Ninja with MSVC - feature detection uses version-based check
+        cmake -B build -G Ninja `
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} `
+          -DCMAKE_CXX_STANDARD=20 `
+          -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
+          -DBUILD_INTEGRATION_TESTS=ON `
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::CMake configuration failed"
+          if (Test-Path "build/CMakeFiles/CMakeError.log") {
+            Get-Content "build/CMakeFiles/CMakeError.log"
+          }
+          exit 1
+        }
+
+    - name: Build
+      shell: pwsh
+      run: |
+        Write-Host "=== Building with MSVC ==="
+        cmake --build build --config ${{ matrix.build-type }} --verbose
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::Build failed"
+          exit 1
+        }
+
+    - name: Run Smoke and Integration Tests
+      working-directory: build
+      shell: pwsh
+      run: |
+        Write-Host "=== Running Fast Tests (Smoke + Integration) ==="
+        ctest --output-on-failure -L "smoke|integration" -C ${{ matrix.build-type }}
+
+    - name: Upload test results
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration-test-results-windows-${{ matrix.build-type }}
+        path: build/Testing/Temporary/LastTest.log
 
   coverage:
     name: Integration Test Coverage

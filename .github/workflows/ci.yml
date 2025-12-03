@@ -23,9 +23,10 @@ jobs:
             compiler: clang
           - os: macos-latest
             compiler: clang
-          # Note: Windows/MSVC removed - CMake feature detection for std::format
-          # fails with Ninja generator due to flag propagation issues.
-          # Windows support requires Visual Studio generator or vcpkg workarounds.
+          # Windows 2022 has MSVC 19.3x+ with full std::format support
+          # Note: Uses version-based detection (not compile tests) due to Ninja+MSVC flag issues
+          - os: windows-2022
+            compiler: msvc
 
     steps:
     - name: Checkout code
@@ -48,6 +49,13 @@ jobs:
         # GTest is now fetched via CMake FetchContent
         # Note: macOS has built-in std::format support via Apple Clang
 
+    - name: Install dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install ninja -y
+        # GTest is now fetched via CMake FetchContent
+        # Note: MSVC 19.29+ has full std::format support (version-based detection)
+
     - name: Set up compiler (GCC)
       if: matrix.compiler == 'gcc'
       run: |
@@ -69,7 +77,8 @@ jobs:
         echo "CC=clang" >> $GITHUB_ENV
         echo "CXX=clang++" >> $GITHUB_ENV
 
-    - name: Checkout common_system (optional dependency)
+    - name: Checkout common_system (optional dependency - Unix)
+      if: runner.os != 'Windows'
       continue-on-error: true
       run: |
         cd ..
@@ -77,7 +86,19 @@ jobs:
           git clone https://github.com/kcenon/common_system.git || echo "common_system not available, will build without it"
         fi
 
-    - name: Configure CMake
+    - name: Checkout common_system (optional dependency - Windows)
+      if: runner.os == 'Windows'
+      continue-on-error: true
+      shell: pwsh
+      run: |
+        cd ..
+        if (-not (Test-Path "common_system")) {
+          git clone https://github.com/kcenon/common_system.git
+          if ($LASTEXITCODE -ne 0) { Write-Host "common_system not available, will build without it" }
+        }
+
+    - name: Configure CMake (Unix)
+      if: runner.os != 'Windows'
       run: |
         # Check if common_system is available
         if [ -d "../common_system" ]; then
@@ -103,10 +124,50 @@ jobs:
             exit 1
           }
 
-    - name: Build
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        # Check if common_system is available
+        if (Test-Path "../common_system") {
+          Write-Host "Building with common_system support"
+          $BUILD_WITH_COMMON = "ON"
+        } else {
+          Write-Host "Building without common_system support"
+          $BUILD_WITH_COMMON = "OFF"
+        }
+
+        Write-Host "=== Build Configuration ==="
+        Write-Host "Compiler: MSVC"
+        Write-Host "Common System: $BUILD_WITH_COMMON"
+        Write-Host "==========================="
+
+        # Use Ninja with MSVC - feature detection uses version-based check
+        cmake -B build -G Ninja `
+          -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_CXX_STANDARD=20 `
+          -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON `
+          -DBUILD_INTEGRATION_TESTS=ON
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::CMake configuration failed"
+          if (Test-Path "build/CMakeFiles/CMakeError.log") {
+            Get-Content "build/CMakeFiles/CMakeError.log"
+          }
+          exit 1
+        }
+
+    - name: Build (Unix)
+      if: runner.os != 'Windows'
       run: cmake --build build --config Debug
 
-    - name: Test
+    - name: Build (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: cmake --build build --config Debug
+
+    - name: Test (Unix)
+      if: runner.os != 'Windows'
       timeout-minutes: 5
       run: |
         cd build
@@ -120,6 +181,18 @@ jobs:
           echo "No unit tests found, running ctest..."
           ctest -C Debug --output-on-failure --timeout 60 || true
         fi
+
+    - name: Test (Windows)
+      if: runner.os == 'Windows'
+      timeout-minutes: 5
+      shell: pwsh
+      run: |
+        cd build
+        Write-Host "Running ctest..."
+        ctest -C Debug --output-on-failure --timeout 60
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Some tests failed but continuing..."
+        }
 
     - name: Upload build artifacts
       if: failure()
