@@ -415,7 +415,7 @@ jobs:
         cmake --build build
 
     - name: Generate Coverage Report
-      timeout-minutes: 10  # Allow more time for coverage tests
+      timeout-minutes: 15  # Coverage tests run 5-10x slower due to instrumentation
       run: |
         cd build
 
@@ -426,8 +426,9 @@ jobs:
         lcov --directory . --zerocounters
 
         # Run tests with extended timeout
+        # Coverage instrumentation makes tests 5-10x slower, so use 600s timeout
         echo "=== Running tests for coverage (smoke + integration) ==="
-        ctest --output-on-failure --timeout 300 -L "smoke|integration" || {
+        ctest --output-on-failure --timeout 600 -L "smoke|integration" || {
           echo "::warning::Tests failed or timed out during coverage run"
           exit 1
         }
