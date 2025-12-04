@@ -22,6 +22,7 @@ integration_tests/
 │   ├── adaptive_queue_integration_test.cpp
 │   ├── error_recovery_test.cpp
 │   ├── job_queue_concurrency_test.cpp
+│   ├── queue_factory_integration_test.cpp
 │   └── thread_pool_lifecycle_test.cpp
 ├── scenarios/              # Additional scenarios
 │   ├── thread_pool_lifecycle_test.cpp
@@ -60,6 +61,14 @@ integration_tests/
 - Policy enforcement (accuracy_first, performance_first, manual, balanced)
 - High concurrency stress test with mode switching
 - Statistics accuracy verification
+
+### Queue Factory Integration Tests (18 tests)
+- Requirements satisfaction under concurrent load (exact_size, lock_free, atomic_empty, batch, blocking_wait)
+- Requirement conflicts verification (exact_size prioritized over lock_free)
+- Optimal selection based on environment (CPU architecture, core count)
+- Functional verification of all factory methods
+- Concurrent load testing with requirements-based queues
+- Capability guarantees verification under real conditions
 
 ### Error Handling Tests (10 tests)
 - Result<T> pattern success/failure
@@ -102,6 +111,9 @@ cd build && ctest -L integration --output-on-failure
 
 # Run only adaptive queue tests
 ./build/integration_tests --gtest_filter=AdaptiveQueueIntegrationTest.*
+
+# Run only queue factory tests
+./build/integration_tests --gtest_filter=QueueFactoryIntegrationTest.*
 
 # Run only performance tests
 ./build/integration_tests --gtest_filter=*Performance*
@@ -221,7 +233,7 @@ barrier.arrive_and_wait();  // Synchronizes all threads
 ## Coverage Goals
 
 - **Overall coverage**: 80%+ of thread_system codebase
-- **Integration scenarios**: 46+ tests
+- **Integration scenarios**: 64+ tests
 - **Performance benchmarks**: 8+ tests
 - **Failure scenarios**: 10+ tests
 
