@@ -40,6 +40,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define HAZARD_POINTER_FORCE_ENABLE
 #include <kcenon/thread/core/hazard_pointer.h>
 #include <kcenon/thread/core/error_handling.h>
+#include <kcenon/thread/interfaces/scheduler_interface.h>
+#include <kcenon/thread/interfaces/queue_capabilities_interface.h>
 
 #include <atomic>
 #include <memory>
@@ -80,7 +82,8 @@ namespace kcenon::thread {
  *
  * @see lockfree_job_queue_test.cpp for usage examples
  */
-class lockfree_job_queue {
+class lockfree_job_queue : public scheduler_interface,
+                           public queue_capabilities_interface {
 public:
     /**
      * @brief Constructs an empty lock-free job queue
@@ -166,6 +169,65 @@ public:
      */
     [[nodiscard]] auto size() const -> std::size_t;
 
+    // ============================================
+    // scheduler_interface implementation
+    // ============================================
+
+    /**
+     * @brief Schedule a job (delegates to enqueue)
+     *
+     * @param work Job to schedule
+     * @return result_void Success or error
+     *
+     * @note Part of scheduler_interface
+     */
+    auto schedule(std::unique_ptr<job>&& work) -> result_void override {
+        return enqueue(std::move(work));
+    }
+
+    /**
+     * @brief Get next job (delegates to dequeue)
+     *
+     * @return result<std::unique_ptr<job>> The dequeued job or error
+     *
+     * @note Part of scheduler_interface
+     */
+    auto get_next_job() -> result<std::unique_ptr<job>> override {
+        return dequeue();
+    }
+
+    // ============================================
+    // queue_capabilities_interface implementation
+    // ============================================
+
+    /**
+     * @brief Returns capabilities of lockfree_job_queue
+     *
+     * @return queue_capabilities with lock-free characteristics
+     *
+     * @warning size() is APPROXIMATE, empty() is NON-ATOMIC
+     *
+     * Capabilities:
+     * - exact_size: false (approximate only due to concurrent modifications)
+     * - atomic_empty_check: false (snapshot view, may change immediately)
+     * - lock_free: true (uses lock-free Michael-Scott algorithm)
+     * - wait_free: false (enqueue is wait-free, dequeue is lock-free)
+     * - supports_batch: false (no batch operations available)
+     * - supports_blocking_wait: false (spin-wait only via try_dequeue)
+     * - supports_stop: false (no stop() method available)
+     */
+    [[nodiscard]] auto get_capabilities() const -> queue_capabilities override {
+        return queue_capabilities{
+            .exact_size = false,             // Approximate only
+            .atomic_empty_check = false,     // Non-atomic
+            .lock_free = true,               // Lock-free implementation
+            .wait_free = false,              // Not wait-free
+            .supports_batch = false,         // No batch operations
+            .supports_blocking_wait = false, // Spin-wait only
+            .supports_stop = false           // No stop() method
+        };
+    }
+
 private:
     /**
      * @brief Internal queue node structure
@@ -191,6 +253,9 @@ private:
 
     // Statistics (for monitoring, relaxed memory order)
     mutable std::atomic<std::size_t> approximate_size_{0};
+
+    // Shutdown flag for safe destruction
+    std::atomic<bool> shutdown_{false};
 };
 
 } // namespace kcenon::thread

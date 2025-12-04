@@ -45,16 +45,23 @@ lockfree_job_queue::lockfree_job_queue() {
     approximate_size_.store(0, std::memory_order_relaxed);
 }
 
-// Destructor: Drain queue and delete all nodes
+// Destructor: Drain queue and delete all nodes safely
 lockfree_job_queue::~lockfree_job_queue() {
+    // Signal shutdown to prevent new operations
+    shutdown_.store(true, std::memory_order_release);
+
     // Drain remaining jobs (release ownership)
     while (auto result = dequeue()) {
         // Jobs are destroyed when unique_ptr goes out of scope
     }
 
-    // Delete the dummy node
-    node* dummy = head_.load(std::memory_order_relaxed);
-    delete dummy;
+    // Safe cleanup: acquire semantics ensure we see all writes
+    node* dummy = head_.load(std::memory_order_acquire);
+
+    // Use hazard pointer domain for safe reclamation of dummy node
+    // This ensures the node is only deleted when no other thread
+    // holds a hazard pointer to it
+    node_hp_domain::global().retire(dummy);
 }
 
 // Enqueue operation (Michael-Scott algorithm)
