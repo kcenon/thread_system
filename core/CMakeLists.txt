@@ -34,6 +34,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/worker_policy.h
     # Queue module
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/queue/adaptive_job_queue.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/queue/queue_factory.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -48,6 +49,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/lockfree/lockfree_job_queue.cpp
     # Queue module implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/queue/adaptive_job_queue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/queue/queue_factory.cpp
     # Thread pool implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_worker.cpp
