@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "adaptive_typed_job_queue.h"
+#include <kcenon/thread/impl/typed_pool/adaptive_typed_job_queue.h>
 
 /**
  * @file adaptive_typed_job_queue.cpp

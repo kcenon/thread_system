@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "callback_typed_job.h"
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
 
 namespace kcenon::thread
 {
