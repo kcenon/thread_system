@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved IDE/tooling compatibility and static analyzer support
 
 ### Added
+- **Issue #231**: Phase 2 - Mutex-based Queue Implementation
+  - Extended `job_queue` to inherit from `queue_capabilities_interface`
+  - Implemented `get_capabilities()` override returning mutex-based capabilities
+  - Added convenience methods: `has_exact_size()`, `is_lock_free()`, etc.
+  - 100% backward compatible - all existing tests pass unchanged
+  - Unit tests for job_queue capability queries
 - **Issue #230**: Phase 1 - Queue Capabilities Infrastructure
   - `queue_capabilities` struct for runtime capability description
   - `queue_capabilities_interface` mixin for capability introspection
