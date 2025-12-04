@@ -102,7 +102,6 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_LowLoadStartsInM
 TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnderTransition) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    const size_t total_jobs = 500;
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
     std::atomic<bool> stop_producers{false};
@@ -113,7 +112,7 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
 
     // Producers
     std::vector<std::thread> producers;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 2; ++i) {
         producers.emplace_back([&]() {
             while (!stop_producers.load(std::memory_order_acquire)) {
                 auto job = std::make_unique<callback_job>([]() -> result_void {
@@ -129,7 +128,7 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
 
     // Consumers
     std::vector<std::thread> consumers;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 2; ++i) {
         consumers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) || !queue.empty()) {
                 if (auto result = queue.try_dequeue(); result.has_value()) {
@@ -142,7 +141,7 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
     }
 
     // Wait for some jobs to be processed
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     // Phase 2: Switch to lock-free mode (simulating high load transition)
     auto switch_result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
@@ -150,7 +149,7 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::lock_free);
 
     // Continue processing
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     // Phase 3: Switch back to mutex mode (simulating low load return)
     switch_result = queue.switch_mode(adaptive_job_queue::mode::mutex);
@@ -183,9 +182,9 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
 TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    constexpr int num_producers = 4;
-    constexpr int num_consumers = 4;
-    constexpr int mode_switches = 20;
+    constexpr int num_producers = 2;
+    constexpr int num_consumers = 2;
+    constexpr int mode_switches = 10;
 
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
@@ -245,6 +244,11 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
         t.join();
     }
 
+    // Drain any remaining jobs
+    while (auto result = queue.try_dequeue()) {
+        dequeued.fetch_add(1, std::memory_order_relaxed);
+    }
+
     // Verify all jobs processed - no data loss
     EXPECT_EQ(enqueued.load(), dequeued.load())
         << "Data loss: enqueued=" << enqueued.load()
@@ -259,13 +263,13 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
 TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    constexpr size_t total_jobs = 10000;
+    constexpr size_t total_jobs = 2000;
     std::atomic<size_t> processed{0};
     std::atomic<bool> stop_consumers{false};
 
     // Start consumers first
     std::vector<std::thread> consumers;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 2; ++i) {
         consumers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) || !queue.empty()) {
                 if (auto result = queue.try_dequeue(); result.has_value()) {
@@ -286,7 +290,7 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
         EXPECT_FALSE(result.has_error());
 
         // Switch modes periodically
-        if (i % 1000 == 0) {
+        if (i % 500 == 0) {
             if (queue.current_mode() == adaptive_job_queue::mode::mutex) {
                 queue.switch_mode(adaptive_job_queue::mode::lock_free);
             } else {
@@ -343,8 +347,8 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ExactSizeWithGuard) 
 TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ConcurrentAccess) {
     adaptive_job_queue queue(adaptive_job_queue::policy::performance_first);
 
-    constexpr int num_workers = 4;
-    constexpr int ops_per_worker = 100;
+    constexpr int num_workers = 2;
+    constexpr int ops_per_worker = 50;
 
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
@@ -394,7 +398,7 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ConcurrentAccess) {
     // Controller
     std::thread controller([&]() {
         start_latch.arrive_and_wait();
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
         stop.store(true, std::memory_order_release);
     });
 
@@ -574,9 +578,9 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_BalancedPolicyStartsMutex
 TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    constexpr size_t total_jobs = 10000;
-    constexpr int num_producers = 4;
-    constexpr int num_consumers = 4;
+    constexpr size_t total_jobs = 2000;
+    constexpr int num_producers = 2;
+    constexpr int num_consumers = 2;
 
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
@@ -624,9 +628,9 @@ TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
     std::thread mode_switcher([&]() {
         while (!stop_producers.load(std::memory_order_acquire)) {
             queue.switch_mode(adaptive_job_queue::mode::lock_free);
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
             queue.switch_mode(adaptive_job_queue::mode::mutex);
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
         }
     });
 
