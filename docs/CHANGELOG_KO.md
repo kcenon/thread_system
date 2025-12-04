@@ -16,6 +16,12 @@
   - IDE/툴링 호환성 및 정적 분석기 지원 개선
 
 ### 추가됨
+- **이슈 #231**: Phase 2 - 뮤텍스 기반 큐 구현
+  - `job_queue`가 `queue_capabilities_interface`를 상속하도록 확장
+  - 뮤텍스 기반 역량을 반환하는 `get_capabilities()` 오버라이드 구현
+  - 편의 메서드 추가: `has_exact_size()`, `is_lock_free()` 등
+  - 100% 하위 호환성 유지 - 모든 기존 테스트 변경 없이 통과
+  - job_queue 역량 쿼리에 대한 유닛 테스트
 - **이슈 #230**: Phase 1 - 큐 역량 인프라스트럭처
   - 런타임 역량 기술을 위한 `queue_capabilities` 구조체
   - 역량 조회를 위한 `queue_capabilities_interface` 믹스인

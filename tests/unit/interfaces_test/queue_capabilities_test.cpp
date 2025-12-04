@@ -35,6 +35,7 @@ BSD 3-Clause License
 
 #include <kcenon/thread/interfaces/queue_capabilities.h>
 #include <kcenon/thread/interfaces/queue_capabilities_interface.h>
+#include <kcenon/thread/core/job_queue.h>
 
 using namespace kcenon::thread;
 
@@ -218,4 +219,77 @@ TEST(queue_capabilities_test, constexpr_construction)
 
     // Runtime check to ensure constexpr works
     EXPECT_TRUE(caps.exact_size);
+}
+
+// =============================================================================
+// Phase 2: job_queue capabilities tests
+// =============================================================================
+
+// Test job_queue returns correct capabilities
+TEST(job_queue_capabilities_test, get_capabilities_returns_correct_values)
+{
+    auto queue = std::make_shared<job_queue>();
+    auto caps = queue->get_capabilities();
+
+    // job_queue provides exact, mutex-based operations
+    EXPECT_TRUE(caps.exact_size);
+    EXPECT_TRUE(caps.atomic_empty_check);
+    EXPECT_FALSE(caps.lock_free);
+    EXPECT_FALSE(caps.wait_free);
+    EXPECT_TRUE(caps.supports_batch);
+    EXPECT_TRUE(caps.supports_blocking_wait);
+    EXPECT_TRUE(caps.supports_stop);
+}
+
+// Test job_queue convenience methods work correctly
+TEST(job_queue_capabilities_test, convenience_methods_work)
+{
+    auto queue = std::make_shared<job_queue>();
+
+    EXPECT_TRUE(queue->has_exact_size());
+    EXPECT_TRUE(queue->has_atomic_empty());
+    EXPECT_FALSE(queue->is_lock_free());
+    EXPECT_FALSE(queue->is_wait_free());
+    EXPECT_TRUE(queue->supports_batch());
+    EXPECT_TRUE(queue->supports_blocking_wait());
+    EXPECT_TRUE(queue->supports_stop());
+}
+
+// Test job_queue can be cast to queue_capabilities_interface
+TEST(job_queue_capabilities_test, dynamic_cast_to_interface)
+{
+    auto queue = std::make_shared<job_queue>();
+
+    // Cast to capabilities interface
+    auto* cap = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(cap, nullptr);
+
+    // Verify capabilities through interface
+    EXPECT_TRUE(cap->has_exact_size());
+    EXPECT_FALSE(cap->is_lock_free());
+}
+
+// Test job_queue still works as scheduler_interface
+TEST(job_queue_capabilities_test, scheduler_interface_still_works)
+{
+    auto queue = std::make_shared<job_queue>();
+
+    // Cast to scheduler_interface (backward compatibility)
+    scheduler_interface* scheduler = queue.get();
+    ASSERT_NE(scheduler, nullptr);
+
+    // Basic operations should still work
+    EXPECT_TRUE(queue->empty());
+    EXPECT_EQ(queue->size(), 0);
+}
+
+// Test that job_queue capabilities are consistent across multiple calls
+TEST(job_queue_capabilities_test, capabilities_are_consistent)
+{
+    auto queue = std::make_shared<job_queue>();
+
+    auto caps1 = queue->get_capabilities();
+    auto caps2 = queue->get_capabilities();
+
+    EXPECT_EQ(caps1, caps2);
 }
