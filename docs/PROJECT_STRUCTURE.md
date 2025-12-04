@@ -63,8 +63,6 @@ thread_system/
 │   │   ├── callback_job.h          # Function-based jobs
 │   │   ├── job_queue.h             # Thread-safe queue
 │   │   ├── bounded_job_queue.h     # Queue with backpressure
-│   │   ├── lockfree_job_queue.h    # Lock-free MPMC queue
-│   │   ├── adaptive_job_queue.h    # Adaptive dual-mode queue
 │   │   ├── hazard_pointer.h        # Memory reclamation
 │   │   ├── node_pool.h             # Memory pool
 │   │   ├── service_registry.h      # Dependency injection
@@ -72,6 +70,10 @@ thread_system/
 │   │   ├── sync_primitives.h       # Synchronization wrappers
 │   │   ├── error_handling.h        # Result<T> pattern
 │   │   └── worker_policy.h         # Worker configuration
+│   ├── 📁 lockfree/                # Lock-free implementations
+│   │   └── lockfree_job_queue.h    # Lock-free MPMC queue
+│   ├── 📁 queue/                   # Advanced queue module
+│   │   └── adaptive_job_queue.h    # Adaptive dual-mode queue
 │   ├── 📁 interfaces/              # Integration interfaces
 │   │   ├── logger_interface.h      # Logger abstraction
 │   │   ├── monitoring_interface.h  # Monitoring abstraction
@@ -90,11 +92,13 @@ thread_system/
 │   │   ├── callback_job.cpp        # Callback job implementation
 │   │   ├── job_queue.cpp           # Queue implementation
 │   │   ├── bounded_job_queue.cpp   # Bounded queue impl
-│   │   ├── lockfree_job_queue.cpp  # Lock-free queue impl
-│   │   ├── adaptive_job_queue.cpp  # Adaptive queue impl
 │   │   ├── hazard_pointer.cpp      # Hazard pointer impl
 │   │   ├── node_pool.cpp           # Memory pool impl
 │   │   └── cancellation_token.cpp  # Cancellation impl
+│   ├── 📁 lockfree/                # Lock-free implementations
+│   │   └── lockfree_job_queue.cpp  # Lock-free queue impl
+│   ├── 📁 queue/                   # Advanced queue implementations
+│   │   └── adaptive_job_queue.cpp  # Adaptive queue impl
 │   ├── 📁 impl/                    # Concrete implementations
 │   │   ├── 📁 thread_pool/         # Thread pool implementation
 │   │   │   ├── thread_pool.cpp     # Pool implementation
