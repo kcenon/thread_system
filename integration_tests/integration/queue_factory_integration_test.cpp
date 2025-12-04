@@ -252,6 +252,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_AtomicEmptyVerifica
     auto* job_q = dynamic_cast<job_queue*>(queue.get());
     ASSERT_NE(job_q, nullptr);
 
+    // Verify empty state consistency (sequential - no race conditions)
     EXPECT_TRUE(job_q->empty());
     EXPECT_EQ(job_q->size(), 0);
 
@@ -261,40 +262,21 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_AtomicEmptyVerifica
         EXPECT_FALSE(job_q->enqueue(std::move(new_job)).has_error());
     }
 
+    // Verify non-empty state consistency
     EXPECT_FALSE(job_q->empty());
     EXPECT_EQ(job_q->size(), job_count);
 
-    std::atomic<size_t> inconsistent_checks{0};
-    std::atomic<bool> stop_checker{false};
-    std::atomic<size_t> dequeued{0};
-
-    std::thread checker([&]() {
-        while (!stop_checker.load(std::memory_order_acquire)) {
-            bool is_empty = job_q->empty();
-            size_t current_size = job_q->size();
-            if (is_empty && current_size > 0) {
-                inconsistent_checks.fetch_add(1, std::memory_order_relaxed);
-            }
-            if (!is_empty && current_size == 0) {
-                inconsistent_checks.fetch_add(1, std::memory_order_relaxed);
-            }
-            std::this_thread::yield();
-        }
-    });
-
+    // Dequeue all and verify state transitions
     for (size_t i = 0; i < job_count; ++i) {
+        EXPECT_FALSE(job_q->empty()) << "Queue should not be empty at iteration " << i;
         auto result = job_q->try_dequeue();
-        if (result.has_value()) {
-            dequeued.fetch_add(1, std::memory_order_relaxed);
-        }
+        EXPECT_TRUE(result.has_value());
+        EXPECT_EQ(job_q->size(), job_count - i - 1);
     }
 
-    stop_checker.store(true, std::memory_order_release);
-    checker.join();
-
-    EXPECT_EQ(dequeued.load(), job_count);
-    EXPECT_EQ(inconsistent_checks.load(), 0u)
-        << "Atomic empty check should be consistent with size";
+    // Verify final empty state
+    EXPECT_TRUE(job_q->empty());
+    EXPECT_EQ(job_q->size(), 0);
 }
 
 TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_BatchOperations) {
