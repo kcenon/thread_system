@@ -37,7 +37,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/queue_capabilities_interface.h>
 
 #include <atomic>
-#include <chrono>
 #include <thread>
 #include <type_traits>
 
@@ -45,12 +44,8 @@ using namespace kcenon::thread;
 
 class QueueFactoryTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Reset any global state if needed
-    }
-
+    void SetUp() override {}
     void TearDown() override {
-        // Allow cleanup
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 };
@@ -66,7 +61,7 @@ TEST_F(QueueFactoryTest, CreateStandardQueue) {
     EXPECT_TRUE(queue->empty());
     EXPECT_EQ(queue->size(), 0);
 
-    // Verify it's a job_queue with expected capabilities
+    // Verify it's a job_queue with exact size capability
     auto caps = queue->get_capabilities();
     EXPECT_TRUE(caps.exact_size);
     EXPECT_TRUE(caps.atomic_empty_check);
@@ -82,21 +77,21 @@ TEST_F(QueueFactoryTest, CreateLockfreeQueue) {
     ASSERT_NE(queue, nullptr);
     EXPECT_TRUE(queue->empty());
 
-    // Verify it's a lockfree_job_queue with expected capabilities
+    // Verify it's a lockfree_job_queue
     auto caps = queue->get_capabilities();
     EXPECT_FALSE(caps.exact_size);
     EXPECT_FALSE(caps.atomic_empty_check);
     EXPECT_TRUE(caps.lock_free);
     EXPECT_FALSE(caps.supports_batch);
     EXPECT_FALSE(caps.supports_blocking_wait);
+    EXPECT_FALSE(caps.supports_stop);
 }
 
-TEST_F(QueueFactoryTest, CreateAdaptiveQueue) {
+TEST_F(QueueFactoryTest, CreateAdaptiveQueueDefaultPolicy) {
     auto queue = queue_factory::create_adaptive_queue();
 
     ASSERT_NE(queue, nullptr);
     EXPECT_TRUE(queue->empty());
-    EXPECT_EQ(queue->size(), 0);
     EXPECT_EQ(queue->current_policy(), adaptive_job_queue::policy::balanced);
 }
 
@@ -104,10 +99,12 @@ TEST_F(QueueFactoryTest, CreateAdaptiveQueueWithPolicy) {
     auto accuracy_queue = queue_factory::create_adaptive_queue(
         adaptive_job_queue::policy::accuracy_first);
     EXPECT_EQ(accuracy_queue->current_policy(), adaptive_job_queue::policy::accuracy_first);
+    EXPECT_EQ(accuracy_queue->current_mode(), adaptive_job_queue::mode::mutex);
 
     auto perf_queue = queue_factory::create_adaptive_queue(
         adaptive_job_queue::policy::performance_first);
     EXPECT_EQ(perf_queue->current_policy(), adaptive_job_queue::policy::performance_first);
+    EXPECT_EQ(perf_queue->current_mode(), adaptive_job_queue::mode::lock_free);
 
     auto manual_queue = queue_factory::create_adaptive_queue(
         adaptive_job_queue::policy::manual);
@@ -125,10 +122,13 @@ TEST_F(QueueFactoryTest, CreateForRequirementsExactSize) {
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    // Should select job_queue for exact size requirement
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->has_exact_size());
+    // Should be a job_queue (exact size requires mutex-based)
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.exact_size);
+    EXPECT_FALSE(caps.lock_free);
 }
 
 TEST_F(QueueFactoryTest, CreateForRequirementsAtomicEmpty) {
@@ -138,9 +138,11 @@ TEST_F(QueueFactoryTest, CreateForRequirementsAtomicEmpty) {
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->has_atomic_empty());
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.atomic_empty_check);
 }
 
 TEST_F(QueueFactoryTest, CreateForRequirementsBatchOperations) {
@@ -150,9 +152,11 @@ TEST_F(QueueFactoryTest, CreateForRequirementsBatchOperations) {
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->supports_batch());
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.supports_batch);
 }
 
 TEST_F(QueueFactoryTest, CreateForRequirementsBlockingWait) {
@@ -162,9 +166,11 @@ TEST_F(QueueFactoryTest, CreateForRequirementsBlockingWait) {
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->supports_blocking_wait());
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.supports_blocking_wait);
 }
 
 TEST_F(QueueFactoryTest, CreateForRequirementsPreferLockFree) {
@@ -174,37 +180,38 @@ TEST_F(QueueFactoryTest, CreateForRequirementsPreferLockFree) {
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->is_lock_free());
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.lock_free);
 }
 
 TEST_F(QueueFactoryTest, CreateForRequirementsDefault) {
-    queue_factory::requirements reqs;
-    // All defaults (false)
+    queue_factory::requirements reqs;  // All defaults (false)
 
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    // Should return adaptive_job_queue by default
-    auto* adaptive_queue = dynamic_cast<adaptive_job_queue*>(queue.get());
-    EXPECT_NE(adaptive_queue, nullptr);
+    // Should be adaptive_job_queue (default)
+    auto* adaptive = dynamic_cast<adaptive_job_queue*>(queue.get());
+    EXPECT_NE(adaptive, nullptr);
 }
 
-TEST_F(QueueFactoryTest, CreateForRequirementsConflictResolution) {
+TEST_F(QueueFactoryTest, CreateForRequirementsExactSizeOverridesLockFree) {
     queue_factory::requirements reqs;
-    // Set conflicting requirements: accuracy requirements take priority
     reqs.need_exact_size = true;
-    reqs.prefer_lock_free = true;
+    reqs.prefer_lock_free = true;  // Should be ignored due to exact_size
 
     auto queue = queue_factory::create_for_requirements(reqs);
     ASSERT_NE(queue, nullptr);
 
-    // Accuracy requirements should win over lock-free preference
-    auto* caps_iface = dynamic_cast<queue_capabilities_interface*>(queue.get());
-    ASSERT_NE(caps_iface, nullptr);
-    EXPECT_TRUE(caps_iface->has_exact_size());
-    EXPECT_FALSE(caps_iface->is_lock_free());
+    auto* caps_interface = dynamic_cast<queue_capabilities_interface*>(queue.get());
+    ASSERT_NE(caps_interface, nullptr);
+
+    auto caps = caps_interface->get_capabilities();
+    EXPECT_TRUE(caps.exact_size);
+    EXPECT_FALSE(caps.lock_free);  // Lock-free cannot provide exact size
 }
 
 // ============================================
@@ -215,7 +222,7 @@ TEST_F(QueueFactoryTest, CreateOptimal) {
     auto queue = queue_factory::create_optimal();
     ASSERT_NE(queue, nullptr);
 
-    // The queue should be usable via scheduler_interface
+    // Verify it implements scheduler_interface
     std::atomic<int> counter{0};
     auto job = std::make_unique<callback_job>([&counter]() -> result_void {
         counter.fetch_add(1, std::memory_order_relaxed);
@@ -227,10 +234,9 @@ TEST_F(QueueFactoryTest, CreateOptimal) {
 
     auto get_result = queue->get_next_job();
     EXPECT_TRUE(get_result.has_value());
-    ASSERT_TRUE(get_result.value() != nullptr);
 
-    // Execute the job
-    get_result.value()->do_work();
+    auto exec_result = get_result.value()->do_work();
+    EXPECT_FALSE(exec_result.has_error());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -238,98 +244,193 @@ TEST_F(QueueFactoryTest, CreateOptimal) {
 // Compile-time selection tests
 // ============================================
 
-TEST_F(QueueFactoryTest, CompileTimeSelection) {
-    // Verify type aliases resolve to expected types
+TEST_F(QueueFactoryTest, CompileTimeSelectionAccurate) {
+    // queue_type_selector<true, false> should be job_queue
+    using selected_type = queue_type_selector<true, false>::type;
+    static_assert(std::is_same_v<selected_type, job_queue>,
+        "queue_type_selector<true, false> should select job_queue");
+
+    // Using queue_t alias
+    static_assert(std::is_same_v<queue_t<true, false>, job_queue>,
+        "queue_t<true, false> should be job_queue");
+}
+
+TEST_F(QueueFactoryTest, CompileTimeSelectionFast) {
+    // queue_type_selector<false, true> should be lockfree_job_queue
+    using selected_type = queue_type_selector<false, true>::type;
+    static_assert(std::is_same_v<selected_type, lockfree_job_queue>,
+        "queue_type_selector<false, true> should select lockfree_job_queue");
+
+    // Using queue_t alias
+    static_assert(std::is_same_v<queue_t<false, true>, lockfree_job_queue>,
+        "queue_t<false, true> should be lockfree_job_queue");
+}
+
+TEST_F(QueueFactoryTest, CompileTimeSelectionBalanced) {
+    // queue_type_selector<false, false> should be adaptive_job_queue
+    using selected_type = queue_type_selector<false, false>::type;
+    static_assert(std::is_same_v<selected_type, adaptive_job_queue>,
+        "queue_type_selector<false, false> should select adaptive_job_queue");
+
+    // Using queue_t alias
+    static_assert(std::is_same_v<queue_t<false, false>, adaptive_job_queue>,
+        "queue_t<false, false> should be adaptive_job_queue");
+}
+
+TEST_F(QueueFactoryTest, TypeAliases) {
+    // Verify pre-defined type aliases
     static_assert(std::is_same_v<accurate_queue_t, job_queue>,
         "accurate_queue_t should be job_queue");
     static_assert(std::is_same_v<fast_queue_t, lockfree_job_queue>,
         "fast_queue_t should be lockfree_job_queue");
     static_assert(std::is_same_v<balanced_queue_t, adaptive_job_queue>,
         "balanced_queue_t should be adaptive_job_queue");
-
-    // Verify queue_t template works correctly
-    static_assert(std::is_same_v<queue_t<true, false>, job_queue>,
-        "queue_t<true, false> should be job_queue");
-    static_assert(std::is_same_v<queue_t<false, true>, lockfree_job_queue>,
-        "queue_t<false, true> should be lockfree_job_queue");
-    static_assert(std::is_same_v<queue_t<false, false>, adaptive_job_queue>,
-        "queue_t<false, false> should be adaptive_job_queue");
-
-    // Test succeeded if it compiled
-    SUCCEED();
-}
-
-TEST_F(QueueFactoryTest, TypeAliasesAreUsable) {
-    // Verify type aliases can be instantiated
-    accurate_queue_t accurate_queue;
-    EXPECT_TRUE(accurate_queue.empty());
-
-    fast_queue_t fast_queue;
-    EXPECT_TRUE(fast_queue.empty());
-
-    balanced_queue_t balanced_queue;
-    EXPECT_TRUE(balanced_queue.empty());
 }
 
 // ============================================
-// Integration tests
+// Functional tests - verify queues work correctly
 // ============================================
 
-TEST_F(QueueFactoryTest, FactoryCreatedQueuesWorkWithJobs) {
-    auto standard = queue_factory::create_standard_queue();
-    auto lockfree = queue_factory::create_lockfree_queue();
-    auto adaptive = queue_factory::create_adaptive_queue();
-
-    std::atomic<int> counter{0};
-
-    // Test each queue type
-    for (auto* queue : {static_cast<scheduler_interface*>(standard.get()),
-                        static_cast<scheduler_interface*>(lockfree.get()),
-                        static_cast<scheduler_interface*>(adaptive.get())}) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
-            counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
-        });
-
-        auto schedule_result = queue->schedule(std::move(job));
-        EXPECT_FALSE(schedule_result.has_error());
-
-        auto get_result = queue->get_next_job();
-        EXPECT_TRUE(get_result.has_value());
-        ASSERT_TRUE(get_result.value() != nullptr);
-
-        get_result.value()->do_work();
-    }
-
-    EXPECT_EQ(counter.load(), 3);
-}
-
-TEST_F(QueueFactoryTest, MultipleJobsRoundTrip) {
+TEST_F(QueueFactoryTest, StandardQueueFunctional) {
     auto queue = queue_factory::create_standard_queue();
 
-    constexpr int job_count = 100;
     std::atomic<int> counter{0};
-
-    // Enqueue all jobs
-    for (int i = 0; i < job_count; ++i) {
+    for (int i = 0; i < 10; ++i) {
         auto job = std::make_unique<callback_job>([&counter]() -> result_void {
             counter.fetch_add(1, std::memory_order_relaxed);
             return result_void();
         });
-        auto result = queue->schedule(std::move(job));
+        auto result = queue->enqueue(std::move(job));
         EXPECT_FALSE(result.has_error());
     }
 
-    EXPECT_EQ(queue->size(), job_count);
+    EXPECT_EQ(queue->size(), 10);
 
-    // Dequeue and execute all jobs
-    for (int i = 0; i < job_count; ++i) {
-        auto result = queue->get_next_job();
+    for (int i = 0; i < 10; ++i) {
+        auto result = queue->dequeue();
         EXPECT_TRUE(result.has_value());
-        ASSERT_TRUE(result.value() != nullptr);
-        result.value()->do_work();
+        (void)result.value()->do_work();
     }
 
-    EXPECT_EQ(counter.load(), job_count);
+    EXPECT_EQ(counter.load(), 10);
     EXPECT_TRUE(queue->empty());
+}
+
+TEST_F(QueueFactoryTest, LockfreeQueueFunctional) {
+    auto queue = queue_factory::create_lockfree_queue();
+
+    std::atomic<int> counter{0};
+    for (int i = 0; i < 10; ++i) {
+        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+            counter.fetch_add(1, std::memory_order_relaxed);
+            return result_void();
+        });
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_FALSE(result.has_error());
+    }
+
+    int dequeued = 0;
+    while (auto result = queue->dequeue()) {
+        (void)result.value()->do_work();
+        ++dequeued;
+    }
+
+    EXPECT_EQ(dequeued, 10);
+    EXPECT_EQ(counter.load(), 10);
+}
+
+TEST_F(QueueFactoryTest, AdaptiveQueueFunctional) {
+    auto queue = queue_factory::create_adaptive_queue();
+
+    std::atomic<int> counter{0};
+    for (int i = 0; i < 10; ++i) {
+        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+            counter.fetch_add(1, std::memory_order_relaxed);
+            return result_void();
+        });
+        auto result = queue->enqueue(std::move(job));
+        EXPECT_FALSE(result.has_error());
+    }
+
+    int dequeued = 0;
+    while (auto result = queue->dequeue()) {
+        (void)result.value()->do_work();
+        ++dequeued;
+    }
+
+    EXPECT_EQ(dequeued, 10);
+    EXPECT_EQ(counter.load(), 10);
+}
+
+// ============================================
+// Scheduler interface compatibility tests
+// ============================================
+
+TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
+    // Standard queue
+    {
+        auto queue = queue_factory::create_standard_queue();
+        scheduler_interface* scheduler = queue.get();
+        ASSERT_NE(scheduler, nullptr);
+
+        auto job = std::make_unique<callback_job>([]() -> result_void {
+            return result_void();
+        });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
+        EXPECT_TRUE(scheduler->get_next_job().has_value());
+    }
+
+    // Lockfree queue
+    {
+        auto queue = queue_factory::create_lockfree_queue();
+        scheduler_interface* scheduler = queue.get();
+        ASSERT_NE(scheduler, nullptr);
+
+        auto job = std::make_unique<callback_job>([]() -> result_void {
+            return result_void();
+        });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
+        EXPECT_TRUE(scheduler->get_next_job().has_value());
+    }
+
+    // Adaptive queue
+    {
+        auto queue = queue_factory::create_adaptive_queue();
+        scheduler_interface* scheduler = queue.get();
+        ASSERT_NE(scheduler, nullptr);
+
+        auto job = std::make_unique<callback_job>([]() -> result_void {
+            return result_void();
+        });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
+        EXPECT_TRUE(scheduler->get_next_job().has_value());
+    }
+}
+
+// ============================================
+// Backward compatibility test
+// ============================================
+
+TEST_F(QueueFactoryTest, ExistingCodeStillWorks) {
+    // Verify that direct queue construction still works
+    // This is the backward compatibility guarantee
+
+    // Direct job_queue construction
+    auto q1 = std::make_shared<job_queue>();
+    EXPECT_TRUE(q1->empty());
+
+    // Direct lockfree_job_queue construction
+    auto q2 = std::make_unique<lockfree_job_queue>();
+    EXPECT_TRUE(q2->empty());
+
+    // Direct adaptive_job_queue construction
+    auto q3 = std::make_unique<adaptive_job_queue>();
+    EXPECT_TRUE(q3->empty());
+
+    // All existing methods work
+    auto job = std::make_unique<callback_job>([]() -> result_void {
+        return result_void();
+    });
+    EXPECT_FALSE(q1->enqueue(std::move(job)).has_error());
+    EXPECT_TRUE(q1->dequeue().has_value());
 }

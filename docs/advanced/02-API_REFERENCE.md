@@ -11,6 +11,9 @@ Complete API documentation for the Thread System framework.
    - [thread_base Class](#thread_base-class)
    - [job Class](#job-class)
    - [job_queue Class](#job_queue-class)
+   - [lockfree_job_queue Class](#lockfree_job_queue-class)
+   - [adaptive_job_queue Class](#adaptive_job_queue-class)
+   - [queue_factory Class](#queue_factory-class)
    - [result Template](#resultt-template)
 3. [Synchronization Module](#synchronization-module)
    - [sync_primitives](#sync_primitives)
@@ -169,6 +172,141 @@ public:
     // Configuration
     auto set_notify(bool notify) -> void;
 };
+```
+
+### lockfree_job_queue Class
+
+Lock-free Multi-Producer Multi-Consumer (MPMC) job queue using the Michael-Scott algorithm.
+
+```cpp
+class lockfree_job_queue : public scheduler_interface,
+                           public queue_capabilities_interface {
+public:
+    lockfree_job_queue();
+    ~lockfree_job_queue();
+
+    // Queue operations
+    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+    [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto try_dequeue() -> result<std::unique_ptr<job>>;
+
+    // Status (approximate values due to concurrent modifications)
+    [[nodiscard]] auto empty() const -> bool;
+    [[nodiscard]] auto size() const -> std::size_t;
+
+    // scheduler_interface implementation
+    auto schedule(std::unique_ptr<job>&& work) -> result_void override;
+    auto get_next_job() -> result<std::unique_ptr<job>> override;
+
+    // Capabilities: lock_free=true, exact_size=false, supports_batch=false
+    [[nodiscard]] auto get_capabilities() const -> queue_capabilities override;
+};
+```
+
+### adaptive_job_queue Class
+
+Adaptive queue that switches between mutex and lock-free modes based on requirements.
+
+```cpp
+class adaptive_job_queue : public scheduler_interface,
+                           public queue_capabilities_interface {
+public:
+    enum class mode { mutex, lock_free };
+    enum class policy { accuracy_first, performance_first, balanced, manual };
+
+    explicit adaptive_job_queue(policy p = policy::balanced);
+    ~adaptive_job_queue();
+
+    // Queue operations
+    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& j) -> result_void;
+    [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto try_dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto empty() const -> bool;
+    [[nodiscard]] auto size() const -> std::size_t;
+    auto clear() -> void;
+    auto stop() -> void;
+    [[nodiscard]] auto is_stopped() const -> bool;
+
+    // Adaptive-specific API
+    [[nodiscard]] auto current_mode() const -> mode;
+    [[nodiscard]] auto current_policy() const -> policy;
+    auto switch_mode(mode m) -> result_void;  // Only if policy is manual
+    [[nodiscard]] auto get_stats() const -> stats;
+
+    // RAII guard for temporary accuracy mode
+    [[nodiscard]] auto require_accuracy() -> accuracy_guard;
+
+    // Capabilities change based on current mode
+    [[nodiscard]] auto get_capabilities() const -> queue_capabilities override;
+};
+```
+
+### queue_factory Class
+
+Factory for creating queue instances based on requirements.
+
+```cpp
+class queue_factory {
+public:
+    /// Queue selection requirements
+    struct requirements {
+        bool need_exact_size = false;       ///< Require exact size()
+        bool need_atomic_empty = false;     ///< Require atomic empty()
+        bool prefer_lock_free = false;      ///< Prefer lock-free if possible
+        bool need_batch_operations = false; ///< Require batch enqueue/dequeue
+        bool need_blocking_wait = false;    ///< Require blocking dequeue
+    };
+
+    // Convenience factory methods
+    [[nodiscard]] static auto create_standard_queue() -> std::shared_ptr<job_queue>;
+    [[nodiscard]] static auto create_lockfree_queue() -> std::unique_ptr<lockfree_job_queue>;
+    [[nodiscard]] static auto create_adaptive_queue(
+        adaptive_job_queue::policy policy = adaptive_job_queue::policy::balanced)
+        -> std::unique_ptr<adaptive_job_queue>;
+
+    // Requirements-based factory
+    [[nodiscard]] static auto create_for_requirements(const requirements& reqs)
+        -> std::unique_ptr<scheduler_interface>;
+
+    // Environment-optimized auto-selection
+    [[nodiscard]] static auto create_optimal() -> std::unique_ptr<scheduler_interface>;
+};
+
+// Compile-time type selection
+template<bool NeedExactSize, bool PreferLockFree = false>
+struct queue_type_selector {
+    using type = /* job_queue | lockfree_job_queue | adaptive_job_queue */;
+};
+
+template<bool NeedExactSize, bool PreferLockFree = false>
+using queue_t = typename queue_type_selector<NeedExactSize, PreferLockFree>::type;
+
+// Pre-defined type aliases
+using accurate_queue_t = queue_t<true, false>;   // job_queue
+using fast_queue_t = queue_t<false, true>;       // lockfree_job_queue
+using balanced_queue_t = queue_t<false, false>;  // adaptive_job_queue
+```
+
+**Usage Examples:**
+
+```cpp
+// Direct factory methods
+auto standard = queue_factory::create_standard_queue();
+auto lockfree = queue_factory::create_lockfree_queue();
+auto adaptive = queue_factory::create_adaptive_queue();
+
+// Requirements-based creation
+queue_factory::requirements reqs;
+reqs.need_exact_size = true;
+auto queue = queue_factory::create_for_requirements(reqs);  // Returns job_queue
+
+// Environment-optimized selection
+auto optimal = queue_factory::create_optimal();
+
+// Compile-time selection
+accurate_queue_t accurate;   // job_queue
+fast_queue_t fast;           // lockfree_job_queue
+balanced_queue_t balanced;   // adaptive_job_queue
 ```
 
 ### result<T> Template

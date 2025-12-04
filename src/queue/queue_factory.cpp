@@ -45,7 +45,7 @@ auto queue_factory::create_for_requirements(const requirements& reqs)
         return std::make_unique<job_queue>();
     }
 
-    // If lock-free is preferred and no accuracy requirements
+    // If lock-free is preferred and no accuracy needs
     if (reqs.prefer_lock_free) {
         return std::make_unique<lockfree_job_queue>();
     }
@@ -57,38 +57,25 @@ auto queue_factory::create_for_requirements(const requirements& reqs)
 auto queue_factory::create_optimal() -> std::unique_ptr<scheduler_interface>
 {
     // Check architecture for memory model strength
-    #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
-        constexpr bool strong_memory_model = true;
-    #else
-        // ARM, RISC-V, and other architectures have weaker memory models
-        constexpr bool strong_memory_model = false;
-    #endif
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+    constexpr bool strong_memory_model = true;
+#else
+    // ARM and other architectures have weaker memory models
+    constexpr bool strong_memory_model = false;
+#endif
 
     // ARM and other weak memory model architectures: prefer mutex for safety
-    // Lock-free code is more prone to subtle bugs on weak memory models
     if (!strong_memory_model) {
         return std::make_unique<job_queue>();
     }
 
-    // Get hardware concurrency (number of logical CPUs)
-    unsigned int core_count = std::thread::hardware_concurrency();
-
-    // If hardware_concurrency() returns 0, it means detection failed
-    // Default to conservative choice (mutex-based)
-    if (core_count == 0) {
-        return std::make_unique<job_queue>();
-    }
-
-    // Low core count: mutex-based queue is efficient enough
-    // Lock-free overhead may not be worth it with few cores
+    // Low core count: mutex is efficient enough
+    const auto core_count = std::thread::hardware_concurrency();
     if (core_count <= 2) {
         return std::make_unique<job_queue>();
     }
 
-    // Default: adaptive queue provides best of both worlds
-    // - Automatically adjusts based on runtime conditions
-    // - Can switch to accurate mode when needed
-    // - Falls back to mutex mode for safety when appropriate
+    // Default: adaptive for best of both worlds
     return std::make_unique<adaptive_job_queue>();
 }
 

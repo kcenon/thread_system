@@ -38,29 +38,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/scheduler_interface.h>
 
 #include <memory>
-#include <thread>
 #include <type_traits>
 
 namespace kcenon::thread {
 
 /**
  * @class queue_factory
- * @brief Factory for creating queue instances based on requirements.
+ * @brief Factory for creating queue instances
  *
- * This class provides convenient methods for queue creation based on requirements.
- * It is a NEW utility class that does not modify any existing code.
+ * Provides convenient methods for queue creation based on requirements.
+ * This is a NEW utility class that does not break any existing code.
  *
- * @note This is an additive utility. Existing code that creates queues directly
- *       continues to work unchanged:
+ * @note Existing code that creates queues directly continues to work unchanged:
  * @code
  * // These still work exactly as before:
  * auto q1 = std::make_shared<job_queue>();
  * auto q2 = std::make_unique<lockfree_job_queue>();
  * @endcode
  *
- * ### Usage Examples
+ * ### Factory Usage
  * @code
- * // Convenience factory methods
+ * // Convenience methods
  * auto standard = queue_factory::create_standard_queue();
  * auto lockfree = queue_factory::create_lockfree_queue();
  * auto adaptive = queue_factory::create_adaptive_queue();
@@ -70,22 +68,22 @@ namespace kcenon::thread {
  * reqs.need_exact_size = true;
  * auto queue = queue_factory::create_for_requirements(reqs);
  *
- * // Environment-optimized creation
+ * // Environment-optimized
  * auto optimal = queue_factory::create_optimal();
  * @endcode
  */
 class queue_factory {
 public:
     /**
-     * @brief Queue selection requirements specification.
+     * @brief Queue selection requirements
      *
-     * Use this struct to specify what capabilities you need from a queue.
-     * The factory will select the most appropriate queue type based on these requirements.
+     * Specifies what features are required from the queue.
+     * Used by create_for_requirements() to select the appropriate implementation.
      */
     struct requirements {
-        bool need_exact_size = false;       ///< Require exact size() return value
-        bool need_atomic_empty = false;     ///< Require atomic empty() check
-        bool prefer_lock_free = false;      ///< Prefer lock-free if requirements allow
+        bool need_exact_size = false;       ///< Require exact size()
+        bool need_atomic_empty = false;     ///< Require atomic empty()
+        bool prefer_lock_free = false;      ///< Prefer lock-free if possible
         bool need_batch_operations = false; ///< Require batch enqueue/dequeue
         bool need_blocking_wait = false;    ///< Require blocking dequeue
     };
@@ -95,48 +93,48 @@ public:
     // ============================================
 
     /**
-     * @brief Create standard mutex-based job_queue.
-     * @return Shared pointer to new job_queue
+     * @brief Create standard job_queue
+     * @return Shared pointer to new job_queue (same as std::make_shared<job_queue>())
      *
-     * @note Same as std::make_shared<job_queue>(), provided for API consistency.
-     *
-     * Characteristics:
-     * - Exact size() and empty()
-     * - Blocking dequeue support
-     * - Batch operations support
-     * - ~300K ops/sec throughput
+     * Use this when you need:
+     * - Exact size() and empty() checks
+     * - Batch operations
+     * - Blocking dequeue
      */
     [[nodiscard]] static auto create_standard_queue() -> std::shared_ptr<job_queue> {
         return std::make_shared<job_queue>();
     }
 
     /**
-     * @brief Create lock-free queue.
+     * @brief Create lock-free queue
      * @return Unique pointer to new lockfree_job_queue
      *
-     * Characteristics:
-     * - Approximate size() (may drift under contention)
-     * - Non-atomic empty() (snapshot view)
-     * - No blocking wait (spin-wait via try_dequeue)
-     * - ~1.2M ops/sec throughput
+     * Use this when you need:
+     * - Maximum throughput (>500K ops/sec)
+     * - Many concurrent producers/consumers
+     * - Non-blocking try_dequeue() pattern
+     *
+     * @note size() returns approximate values, empty() is non-atomic
      */
     [[nodiscard]] static auto create_lockfree_queue() -> std::unique_ptr<lockfree_job_queue> {
         return std::make_unique<lockfree_job_queue>();
     }
 
     /**
-     * @brief Create adaptive queue with specified policy.
-     * @param p Adaptation policy (default: balanced)
+     * @brief Create adaptive queue
+     * @param policy Adaptation policy (default: balanced)
      * @return Unique pointer to new adaptive_job_queue
      *
-     * The adaptive queue automatically switches between mutex and lock-free modes
-     * based on the policy and usage patterns.
+     * Use this when you:
+     * - Want automatic optimization
+     * - Need temporary accuracy sometimes
+     * - Are unsure which implementation to choose
      */
     [[nodiscard]] static auto create_adaptive_queue(
-        adaptive_job_queue::policy p = adaptive_job_queue::policy::balanced)
+        adaptive_job_queue::policy policy = adaptive_job_queue::policy::balanced)
         -> std::unique_ptr<adaptive_job_queue>
     {
-        return std::make_unique<adaptive_job_queue>(p);
+        return std::make_unique<adaptive_job_queue>(policy);
     }
 
     // ============================================
@@ -144,22 +142,15 @@ public:
     // ============================================
 
     /**
-     * @brief Create queue based on requirements specification.
+     * @brief Create queue based on requirements
      * @param reqs Requirements specification
      * @return Scheduler interface pointer to appropriate queue type
      *
      * Selection logic:
-     * - If need_exact_size, need_atomic_empty, need_batch_operations,
+     * - If need_exact_size or need_atomic_empty or need_batch_operations
      *   or need_blocking_wait: returns job_queue
      * - If prefer_lock_free and no accuracy needs: returns lockfree_job_queue
      * - Otherwise: returns adaptive_job_queue
-     *
-     * @code
-     * queue_factory::requirements reqs;
-     * reqs.need_exact_size = true;
-     * auto queue = queue_factory::create_for_requirements(reqs);
-     * // Returns job_queue because exact_size was requested
-     * @endcode
      */
     [[nodiscard]] static auto create_for_requirements(const requirements& reqs)
         -> std::unique_ptr<scheduler_interface>;
@@ -169,22 +160,20 @@ public:
     // ============================================
 
     /**
-     * @brief Create optimal queue for current environment.
+     * @brief Create optimal queue for current environment
      * @return Scheduler interface pointer to queue
      *
      * Considers:
      * - CPU architecture (x86 vs ARM memory model)
      * - Number of CPU cores
+     * - Default: adaptive_job_queue for flexibility
      *
-     * Selection logic:
-     * - ARM/weak memory model: returns job_queue (safer)
-     * - Low core count (<=2): returns job_queue (mutex is efficient)
-     * - Otherwise: returns adaptive_job_queue (best of both worlds)
+     * Selection:
+     * - ARM/weak memory model: job_queue (safety)
+     * - Low core count (<=2): job_queue (mutex efficient enough)
+     * - Otherwise: adaptive_job_queue (best of both worlds)
      */
     [[nodiscard]] static auto create_optimal() -> std::unique_ptr<scheduler_interface>;
-
-    // Prevent instantiation - all methods are static
-    queue_factory() = delete;
 };
 
 // ============================================
@@ -192,24 +181,25 @@ public:
 // ============================================
 
 /**
- * @brief Compile-time queue type selector.
+ * @brief Compile-time queue type selector
  * @tparam NeedExactSize If true, selects job_queue
  * @tparam PreferLockFree If true and NeedExactSize is false, selects lockfree_job_queue
  *
  * This template allows compile-time selection of queue types based on requirements.
- * Invalid combinations (both exact size AND lock-free) are caught at compile time.
+ * Invalid combinations (exact size + lock-free) trigger a static_assert.
  *
  * @code
  * // Compile-time selection
- * queue_t<true, false> accurate;  // job_queue
- * queue_t<false, true> fast;      // lockfree_job_queue
- * queue_t<false, false> balanced; // adaptive_job_queue
+ * queue_type_selector<true, false>::type accurate_queue;   // job_queue
+ * queue_type_selector<false, true>::type fast_queue;       // lockfree_job_queue
+ * queue_type_selector<false, false>::type balanced_queue;  // adaptive_job_queue
  * @endcode
  */
 template<bool NeedExactSize, bool PreferLockFree = false>
 struct queue_type_selector {
     static_assert(!(NeedExactSize && PreferLockFree),
-        "Cannot require both exact size AND lock-free. These are mutually exclusive.");
+        "Cannot require both exact size AND lock-free. These are mutually exclusive. "
+        "Lock-free queues cannot provide exact size due to concurrent modifications.");
 
     using type = std::conditional_t<
         NeedExactSize,
@@ -219,7 +209,7 @@ struct queue_type_selector {
 };
 
 /**
- * @brief Convenience alias for queue type selection.
+ * @brief Convenience alias for queue type selection
  * @tparam NeedExactSize If true, selects job_queue
  * @tparam PreferLockFree If true and NeedExactSize is false, selects lockfree_job_queue
  */
@@ -227,38 +217,16 @@ template<bool NeedExactSize, bool PreferLockFree = false>
 using queue_t = typename queue_type_selector<NeedExactSize, PreferLockFree>::type;
 
 // ============================================
-// Pre-defined type aliases for common cases
+// Pre-defined type aliases
 // ============================================
 
-/**
- * @brief Queue type for accuracy-first use cases.
- *
- * Use when you need:
- * - Exact size() values
- * - Atomic empty() checks
- * - Batch operations
- * - Blocking wait
- */
-using accurate_queue_t = queue_t<true, false>;   // job_queue
+/// @brief Queue type for accurate size/empty operations (job_queue)
+using accurate_queue_t = queue_t<true, false>;
 
-/**
- * @brief Queue type for performance-first use cases.
- *
- * Use when you need:
- * - Maximum throughput (>500K ops/sec)
- * - Lock-free operations
- * - Don't need exact size/empty
- */
-using fast_queue_t = queue_t<false, true>;       // lockfree_job_queue
+/// @brief Queue type for maximum throughput (lockfree_job_queue)
+using fast_queue_t = queue_t<false, true>;
 
-/**
- * @brief Queue type for balanced/adaptive use cases.
- *
- * Use when you:
- * - Want automatic optimization
- * - Need temporary accuracy sometimes
- * - Are unsure which to choose
- */
-using balanced_queue_t = queue_t<false, false>;  // adaptive_job_queue
+/// @brief Queue type for balanced performance (adaptive_job_queue)
+using balanced_queue_t = queue_t<false, false>;
 
 } // namespace kcenon::thread
