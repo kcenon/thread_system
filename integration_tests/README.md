@@ -18,7 +18,12 @@ integration_tests/
 ├── framework/              # Test infrastructure
 │   ├── system_fixture.h    # Base test fixtures
 │   └── test_helpers.h      # Testing utilities
-├── scenarios/              # Integration test scenarios
+├── integration/            # Integration test scenarios
+│   ├── adaptive_queue_integration_test.cpp
+│   ├── error_recovery_test.cpp
+│   ├── job_queue_concurrency_test.cpp
+│   └── thread_pool_lifecycle_test.cpp
+├── scenarios/              # Additional scenarios
 │   ├── thread_pool_lifecycle_test.cpp
 │   └── job_queue_integration_test.cpp
 ├── performance/            # Performance benchmarks
@@ -46,6 +51,15 @@ integration_tests/
 - Queue state consistency
 - High throughput scenarios
 - Stop waiting mechanisms
+
+### Adaptive Queue Integration Tests (13 tests)
+- Balanced policy under variable load
+- Data integrity during mode transitions
+- Mode switching with concurrent operations
+- Accuracy guard under concurrent load
+- Policy enforcement (accuracy_first, performance_first, manual, balanced)
+- High concurrency stress test with mode switching
+- Statistics accuracy verification
 
 ### Error Handling Tests (10 tests)
 - Result<T> pattern success/failure
@@ -85,6 +99,9 @@ cd build && ctest -L integration --output-on-failure
 ```bash
 # Run only lifecycle tests
 ./build/integration_tests --gtest_filter=ThreadPoolLifecycleTest.*
+
+# Run only adaptive queue tests
+./build/integration_tests --gtest_filter=AdaptiveQueueIntegrationTest.*
 
 # Run only performance tests
 ./build/integration_tests --gtest_filter=*Performance*
@@ -204,7 +221,7 @@ barrier.arrive_and_wait();  // Synchronizes all threads
 ## Coverage Goals
 
 - **Overall coverage**: 80%+ of thread_system codebase
-- **Integration scenarios**: 40+ tests
+- **Integration scenarios**: 46+ tests
 - **Performance benchmarks**: 8+ tests
 - **Failure scenarios**: 10+ tests
 
