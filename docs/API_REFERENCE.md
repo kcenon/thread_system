@@ -241,6 +241,92 @@ pool.stop();    // Stop (complete in-progress tasks first)
 
 ---
 
+## Queue Factory
+
+### queue_factory
+
+**Header**: `#include <kcenon/thread/queue/queue_factory.h>`
+
+**Description**: Factory utility for creating queue instances based on requirements
+
+**Key Features**:
+- Convenience methods for standard, lock-free, and adaptive queues
+- Requirements-based queue selection
+- Environment-optimized auto-selection
+- Compile-time queue type selectors
+
+#### Usage Examples
+
+```cpp
+#include <kcenon/thread/queue/queue_factory.h>
+
+using namespace kcenon::thread;
+
+// Convenience factory methods
+auto standard = queue_factory::create_standard_queue();   // job_queue
+auto lockfree = queue_factory::create_lockfree_queue();   // lockfree_job_queue
+auto adaptive = queue_factory::create_adaptive_queue();   // adaptive_job_queue
+
+// Requirements-based creation
+queue_factory::requirements reqs;
+reqs.need_exact_size = true;    // Need accurate size()
+reqs.need_blocking_wait = true; // Need blocking dequeue
+auto queue = queue_factory::create_for_requirements(reqs);
+// Returns job_queue because accuracy was requested
+
+// Environment-optimized creation
+auto optimal = queue_factory::create_optimal();
+// Considers CPU architecture and core count
+
+// Compile-time type selection
+accurate_queue_t accurate;   // job_queue
+fast_queue_t fast;           // lockfree_job_queue
+balanced_queue_t balanced;   // adaptive_job_queue
+
+// Template-based selection
+queue_t<true, false> must_be_accurate;   // job_queue
+queue_t<false, true> prefer_fast;        // lockfree_job_queue
+```
+
+#### Core Methods
+
+```cpp
+// Convenience factory methods
+static auto create_standard_queue() -> std::shared_ptr<job_queue>;
+static auto create_lockfree_queue() -> std::unique_ptr<lockfree_job_queue>;
+static auto create_adaptive_queue(policy p = policy::balanced)
+    -> std::unique_ptr<adaptive_job_queue>;
+
+// Requirements-based selection
+static auto create_for_requirements(const requirements& reqs)
+    -> std::unique_ptr<scheduler_interface>;
+
+// Environment-optimized selection
+static auto create_optimal() -> std::unique_ptr<scheduler_interface>;
+```
+
+#### requirements Struct
+
+```cpp
+struct requirements {
+    bool need_exact_size = false;       // Require exact size()
+    bool need_atomic_empty = false;     // Require atomic empty()
+    bool prefer_lock_free = false;      // Prefer lock-free if possible
+    bool need_batch_operations = false; // Require batch enqueue/dequeue
+    bool need_blocking_wait = false;    // Require blocking dequeue
+};
+```
+
+#### Type Aliases
+
+| Alias | Resolves To | Use Case |
+|-------|-------------|----------|
+| `accurate_queue_t` | `job_queue` | Accuracy-first |
+| `fast_queue_t` | `lockfree_job_queue` | Performance-first |
+| `balanced_queue_t` | `adaptive_job_queue` | Balanced/adaptive |
+
+---
+
 ## Lock-Free Queues
 
 ### mpmc_queue
