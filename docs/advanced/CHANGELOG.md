@@ -7,9 +7,36 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-09-13
+## [Unreleased] - 2025-12-04
 
 Note: No official releases have been published yet. All entries below are pre-release milestones under Unreleased.
+
+### Added
+- **Queue Capabilities System** (Phase 1-6)
+  - `queue_capabilities` struct for runtime-queryable queue properties
+  - `queue_capabilities_interface` mixin for capability introspection
+  - `lockfree_job_queue` now implements `scheduler_interface`
+  - `adaptive_job_queue` class for automatic mode switching (mutex/lock-free)
+  - `queue_factory` utility for requirements-based queue creation
+  - Compile-time queue selection templates (`queue_t<>`, `accurate_queue_t`, etc.)
+  - RAII `accuracy_guard` for temporary exact-size mode in adaptive queue
+
+### Changed
+- **Queue Implementations** (Backward Compatible)
+  - `job_queue` now inherits from `queue_capabilities_interface` (additive)
+  - `lockfree_job_queue` now inherits from `scheduler_interface` (additive)
+  - No breaking changes to existing APIs
+
+### Documentation
+- **Queue Documentation** 📚
+  - New `docs/QUEUE_BACKWARD_COMPATIBILITY.md` - compatibility guarantees
+  - New `docs/advanced/QUEUE_SELECTION_GUIDE.md` - queue selection guide
+  - Updated `docs/advanced/02-API_REFERENCE.md` - new interface documentation
+  - Updated `ARCHITECTURE_DIAGRAM.md` - queue capabilities architecture diagram
+
+---
+
+## [Unreleased: Major Modularization] - 2025-09-13
 
 ### Changed
 - **Major Modularization** 🏗️

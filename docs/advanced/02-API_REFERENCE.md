@@ -660,6 +660,60 @@ public:
 
 Implemented by: `core/jobs/job_queue` and its derivatives (`lockfree_job_queue`, `adaptive_job_queue`).
 
+### Queue Capabilities Interface
+
+Header: `interfaces/queue_capabilities_interface.h`
+
+Mixin interface for queue capability introspection. Enables runtime queries about queue characteristics.
+
+```cpp
+#include "interfaces/queue_capabilities_interface.h"
+
+/// Runtime-queryable queue capabilities descriptor
+struct queue_capabilities {
+    bool exact_size = true;          ///< size() returns exact value
+    bool atomic_empty_check = true;  ///< empty() is atomic
+    bool lock_free = false;          ///< Uses lock-free algorithms
+    bool wait_free = false;          ///< Uses wait-free algorithms
+    bool supports_batch = true;      ///< Supports batch operations
+    bool supports_blocking_wait = true; ///< Supports blocking dequeue
+    bool supports_stop = true;       ///< Supports stop() method
+};
+
+class queue_capabilities_interface {
+public:
+    virtual ~queue_capabilities_interface() = default;
+
+    /// Get capabilities of this queue implementation
+    [[nodiscard]] virtual auto get_capabilities() const -> queue_capabilities;
+
+    /// Convenience methods
+    [[nodiscard]] auto has_exact_size() const -> bool;
+    [[nodiscard]] auto has_atomic_empty() const -> bool;
+    [[nodiscard]] auto is_lock_free() const -> bool;
+    [[nodiscard]] auto is_wait_free() const -> bool;
+    [[nodiscard]] auto supports_batch() const -> bool;
+    [[nodiscard]] auto supports_blocking_wait() const -> bool;
+    [[nodiscard]] auto supports_stop() const -> bool;
+};
+```
+
+Implemented by: `job_queue`, `lockfree_job_queue`, `adaptive_job_queue`
+
+Example:
+```cpp
+// Check capabilities at runtime
+if (auto* cap = dynamic_cast<queue_capabilities_interface*>(queue.get())) {
+    if (cap->has_exact_size()) {
+        // Safe to use size() for decisions
+        auto count = queue->size();
+    }
+    if (cap->is_lock_free()) {
+        // Queue uses lock-free algorithms
+    }
+}
+```
+
 ### Logging Interface and Registry
 
 Header: `interfaces/logger_interface.h`
