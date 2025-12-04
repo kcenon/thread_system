@@ -103,6 +103,8 @@ int main() {
 - **Bounded Queue**: Production-ready with backpressure and capacity limits
 - **Lock-Free Queue**: 4x faster MPMC queue with hazard pointers
 - **Adaptive Queue**: Automatic strategy selection (mutex ↔ lock-free)
+- **Queue Factory**: Requirements-based queue creation with compile-time selection
+- **Capability Introspection**: Runtime query for queue characteristics (exact_size, lock_free, etc.)
 
 ### Advanced Features
 - **Hazard Pointers**: Safe memory reclamation for lock-free structures
@@ -223,6 +225,8 @@ Optional Integration Projects (Separate Repos):
 - 🛡️ [Production Quality](docs/PRODUCTION_QUALITY.md) - CI/CD, testing, quality metrics
 - 📁 [Project Structure](docs/PROJECT_STRUCTURE.md) - Detailed codebase organization
 - ⚠️ [Known Issues](docs/advanced/KNOWN_ISSUES.md) - Current limitations and workarounds
+- 📗 [Queue Selection Guide](docs/advanced/QUEUE_SELECTION_GUIDE.md) - Choosing the right queue
+- 🔄 [Queue Backward Compatibility](docs/QUEUE_BACKWARD_COMPATIBILITY.md) - Migration and compatibility
 
 ### Development
 - 🤝 [Contributing](docs/contributing/CONTRIBUTING.md) - How to contribute

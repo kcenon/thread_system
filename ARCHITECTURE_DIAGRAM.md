@@ -207,7 +207,74 @@
          result             result           cycles...└───┘
 ```
 
-## 4. Queue Implementation Strategy Comparison
+## 4. Queue Capabilities Architecture
+
+This diagram shows the interface hierarchy for queue implementations after Phase 1-5 enhancements.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                Queue Architecture (v2.0)                         │
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │            scheduler_interface (UNCHANGED)                  ││
+│  │  + schedule(job) -> result_void                             ││
+│  │  + get_next_job() -> result<unique_ptr<job>>                ││
+│  │  + has_pending() -> bool                                    ││
+│  └────────────────────────────┬────────────────────────────────┘│
+│                               │                                  │
+│  ┌────────────────────────────┴────────────────────────────────┐│
+│  │         queue_capabilities_interface (NEW - MIXIN)          ││
+│  │  + get_capabilities() -> queue_capabilities                 ││
+│  │  + has_exact_size() / has_atomic_empty() / is_lock_free()   ││
+│  │  + supports_batch() / supports_blocking_wait()              ││
+│  └────────────────────────────┬────────────────────────────────┘│
+│                               │                                  │
+│          ┌────────────────────┼────────────────────┐            │
+│          │                    │                    │            │
+│          ▼                    ▼                    ▼            │
+│  ┌─────────────┐      ┌─────────────┐      ┌─────────────┐     │
+│  │  job_queue  │      │  lockfree_  │      │  adaptive_  │     │
+│  │ (UNCHANGED) │      │  job_queue  │      │  job_queue  │     │
+│  │             │      │ (EXTENDED)  │      │   (NEW)     │     │
+│  ├─────────────┤      ├─────────────┤      ├─────────────┤     │
+│  │ exact_size  │      │ lock_free   │      │ auto-tune   │     │
+│  │ ~300K ops/s │      │ ~1.2M ops/s │      │ best-of-both│     │
+│  │ batch: yes  │      │ batch: no   │      │ policy-based│     │
+│  │ blocking:yes│      │ blocking:no │      │ RAII guard  │     │
+│  └─────────────┘      └─────────────┘      └─────────────┘     │
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │             queue_factory (NEW - OPTIONAL)                  ││
+│  │  + create_standard_queue() -> shared_ptr<job_queue>         ││
+│  │  + create_lockfree_queue() -> unique_ptr<lockfree_job_queue>││
+│  │  + create_adaptive_queue() -> unique_ptr<adaptive_job_queue>││
+│  │  + create_for_requirements(reqs) -> unique_ptr<scheduler>   ││
+│  │  + create_optimal() -> unique_ptr<scheduler_interface>      ││
+│  └─────────────────────────────────────────────────────────────┘│
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │          Compile-Time Type Selection (NEW)                  ││
+│  │                                                             ││
+│  │  queue_t<true, false>   → job_queue (exact size)            ││
+│  │  queue_t<false, true>   → lockfree_job_queue (fast)         ││
+│  │  queue_t<false, false>  → adaptive_job_queue (balanced)     ││
+│  │                                                             ││
+│  │  Type Aliases:                                              ││
+│  │  - accurate_queue_t = queue_t<true, false>                  ││
+│  │  - fast_queue_t = queue_t<false, true>                      ││
+│  │  - balanced_queue_t = queue_t<false, false>                 ││
+│  └─────────────────────────────────────────────────────────────┘│
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key Points:**
+- All existing queue classes remain backward compatible
+- `queue_capabilities_interface` is a mixin (additive inheritance)
+- `queue_factory` is optional utility for convenient queue creation
+- Compile-time selection provides zero runtime overhead
+
+## 5. Queue Implementation Strategy Comparison
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -291,7 +358,7 @@
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-## 5. Type-Based Thread Pool Architecture
+## 6. Type-Based Thread Pool Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -345,7 +412,7 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 6. Hazard Pointer Memory Reclamation Flow
+## 7. Hazard Pointer Memory Reclamation Flow
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -416,7 +483,7 @@
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-## 7. Cancellation Token Hierarchy
+## 8. Cancellation Token Hierarchy
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -477,7 +544,7 @@
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-## 8. Error Handling Flow
+## 9. Error Handling Flow
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -578,5 +645,5 @@
 
 ---
 
-*Last Updated: 2025-11-14*
+*Last Updated: 2025-12-04*
 *Visual diagrams for Thread System architecture and key mechanisms*
