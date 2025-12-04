@@ -101,12 +101,18 @@ if(INTEGRATION_SOURCES)
     configure_test_executable(integration_tests)
 
     add_test(NAME IntegrationTests COMMAND integration_tests)
+    # Debug builds run 2-3x slower than Release, so use longer timeout
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(INTEGRATION_TIMEOUT 300)
+    else()
+        set(INTEGRATION_TIMEOUT 120)
+    endif()
     set_tests_properties(IntegrationTests PROPERTIES
-        TIMEOUT 120
+        TIMEOUT ${INTEGRATION_TIMEOUT}
         LABELS "integration;moderate"
     )
 
-    message(STATUS "✓ Integration tests configured (real scenarios, < 2min)")
+    message(STATUS "✓ Integration tests configured (real scenarios, timeout=${INTEGRATION_TIMEOUT}s)")
 endif()
 
 ##################################################

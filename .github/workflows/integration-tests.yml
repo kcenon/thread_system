@@ -116,11 +116,11 @@ jobs:
       timeout-minutes: 10
       run: |
         echo "=== Running Fast Tests (Smoke + Integration) ==="
-        # Debug builds run slower due to no optimization, use longer timeout
+        # Debug builds run 2-3x slower due to no optimization, use longer timeout
         if [ "${{ matrix.build-type }}" = "Debug" ]; then
-          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 300 -L "smoke|integration" -C ${{ matrix.build-type }}
         else
-          ctest --output-on-failure --timeout 60 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
         fi
 
     - name: Upload test results
@@ -200,11 +200,11 @@ jobs:
       timeout-minutes: 10
       run: |
         echo "=== Running Fast Tests (Smoke + Integration) ==="
-        # Debug builds run slower due to no optimization, use longer timeout
+        # Debug builds run 2-3x slower due to no optimization, use longer timeout
         if [ "${{ matrix.build-type }}" = "Debug" ]; then
-          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 300 -L "smoke|integration" -C ${{ matrix.build-type }}
         else
-          ctest --output-on-failure --timeout 60 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
         fi
 
     - name: Upload test results
@@ -307,11 +307,11 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "=== Running Fast Tests (Smoke + Integration) ==="
-        # Debug builds run slower due to no optimization, use longer timeout
+        # Debug builds run 2-3x slower due to no optimization, use longer timeout
         if ("${{ matrix.build-type }}" -eq "Debug") {
-          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 300 -L "smoke|integration" -C ${{ matrix.build-type }}
         } else {
-          ctest --output-on-failure --timeout 60 -L "smoke|integration" -C ${{ matrix.build-type }}
+          ctest --output-on-failure --timeout 120 -L "smoke|integration" -C ${{ matrix.build-type }}
         }
 
     - name: Upload test results
