@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Static assertions for memory alignment verification
   - Individual vs batch worker enqueue comparison
 
+### Fixed
+- **Issue #225**: EXC_BAD_ACCESS on macOS ARM64 with batch worker enqueue (follow-up to #223)
+  - Root cause: Data race between `on_stop_requested()` and job destruction in `do_work()`
+  - The race occurred when `on_stop_requested()` accessed a job's virtual method while
+    `do_work()` was simultaneously destroying the job object
+  - Solution: Added mutex synchronization to protect job access during destruction
+  - `on_stop_requested()` now acquires `queue_mutex_` before accessing current job
+  - `do_work()` now destroys job while holding `queue_mutex_`
+  - Verified with ThreadSanitizer and AddressSanitizer (all 28 tests pass)
+
 ---
 
 ## [2.0.0] - 2025-11-15

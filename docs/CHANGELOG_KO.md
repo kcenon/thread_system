@@ -16,6 +16,16 @@
   - 메모리 정렬 검증을 위한 정적 단언문
   - 개별 vs 배치 worker 등록 비교
 
+### 수정됨
+- **이슈 #225**: macOS ARM64에서 배치 worker 등록 시 EXC_BAD_ACCESS 발생 (#223 후속)
+  - 근본 원인: `on_stop_requested()`와 `do_work()`의 job 파괴 간 데이터 레이스
+  - `on_stop_requested()`가 job의 가상 메서드를 호출하는 동안 `do_work()`가
+    동시에 job 객체를 파괴하면서 레이스 발생
+  - 해결: job 파괴 중 접근을 보호하기 위한 뮤텍스 동기화 추가
+  - `on_stop_requested()`가 현재 job 접근 전 `queue_mutex_` 획득
+  - `do_work()`가 `queue_mutex_`를 보유한 상태에서 job 파괴
+  - ThreadSanitizer 및 AddressSanitizer로 검증 (28개 테스트 모두 통과)
+
 ---
 
 ## [2.0.0] - 2025-11-15

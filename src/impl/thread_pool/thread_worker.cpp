@@ -423,11 +423,21 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 					end_time - started_time_point.value()).count());
 		}
 
-		// Clear current job tracking after execution completes
-		// Reacquire lock to prevent lost wakeup race with set_job_queue()
+		// Capture job name before clearing (for logging after job destruction)
+		std::string job_name = current_job->get_name();
+
+		// Clear current job tracking and destroy job under mutex protection
+		// This prevents race condition with on_stop_requested() (Issue #225)
+		// The mutex ensures job is not accessed while being destroyed
 		{
 			std::lock_guard<std::mutex> notify_lock(queue_mutex_);
 			current_job_.store(nullptr, std::memory_order_release);
+
+			// Explicitly destroy the job while holding the mutex
+			// This is critical for thread safety - on_stop_requested() acquires
+			// the same mutex before accessing current_job_, ensuring it cannot
+			// access a job that is being destroyed
+			current_job.reset();
 
 			// Notify any waiting set_job_queue() that job has completed
 			// This allows queue replacement to proceed safely
@@ -446,20 +456,21 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		}
 
 		// Log successful job completion based on timing configuration
+		// Note: Using captured job_name since job is already destroyed
 		if (!started_time_point.has_value())
 		{
 			// Standard logging without timing information
 			context_.log(log_level::debug,
 			            formatter::format("job executed successfully: {} on thread_worker",
-			                            current_job->get_name()));
+			                            job_name));
 		}
 		else
 		{
 			// Enhanced logging with execution timing information
 			context_.log(log_level::debug,
 			            formatter::format("job executed successfully: {} on thread_worker ({}ns)",
-			                            current_job->get_name(), execution_duration_ns));
-			
+			                            job_name, execution_duration_ns));
+
 			// Update worker metrics if monitoring is available
 			if (context_.monitoring())
 			{
@@ -507,23 +518,24 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 	 * - Called from thread_base::stop() when worker shutdown is requested
 	 * - First cancels the worker's cancellation token (affects all future jobs)
 	 * - Then directly cancels the current job's token if a job is running
-	 * - Uses atomic operations for thread-safe access to current_job_
+	 * - Uses mutex synchronization to prevent use-after-free race condition
 	 *
 	 * Cancellation Propagation:
 	 * 1. Cancel worker_cancellation_token_ (prevents new jobs from starting)
-	 * 2. Load current_job_ atomically with acquire ordering
+	 * 2. Acquire queue_mutex_ to safely access current job
 	 * 3. If a job is running, get its cancellation token and cancel it
 	 * 4. Job will detect cancellation on its next is_cancelled() check
 	 *
-	 * Thread Safety:
+	 * Thread Safety (Issue #225 fix):
 	 * - Called from stop() thread (not worker thread)
-	 * - Safe concurrent access with do_work() via atomic current_job_
-	 * - Acquire ordering ensures we see the correct job pointer
-	 * - Job's cancellation token is thread-safe
+	 * - Uses queue_mutex_ to synchronize with do_work() job destruction
+	 * - Prevents data race between job destructor and virtual method call
+	 * - This fixes EXC_BAD_ACCESS on ARM64 caused by use-after-free
 	 *
-	 * Memory Ordering:
-	 * - Acquire when loading current_job_ (synchronizes with release store in do_work())
-	 * - Ensures we see all job state modifications before the store
+	 * Race Condition Fixed:
+	 * - Before: on_stop_requested() could access job while do_work() was destroying it
+	 * - After: queue_mutex_ ensures job is not destroyed while being accessed
+	 * - do_work() now destroys job while holding the mutex
 	 *
 	 * @note This implements cooperative cancellation - the job must check
 	 *       its cancellation token periodically to actually stop execution.
@@ -532,10 +544,14 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 	{
 		// Cancel the worker's token first
 		// This ensures any future jobs will see cancellation immediately
+		// Jobs receive this token via set_cancellation_token() in do_work()
 		worker_cancellation_token_.cancel();
 
+		// Acquire mutex to safely access current job
+		// This prevents race condition with do_work() job destruction (Issue #225)
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+
 		// Load the currently executing job pointer atomically
-		// Use acquire ordering to synchronize with the release store in do_work()
 		auto* job_ptr = current_job_.load(std::memory_order_acquire);
 
 		// If a job is currently executing, cancel it directly
