@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #227**: Move typed_pool implementation headers to public include path
+  - Relocated 14 header files from `src/impl/typed_pool/` to `include/kcenon/thread/impl/typed_pool/`
+  - Updated forwarding headers to use stable `<kcenon/thread/impl/typed_pool/...>` includes
+  - Eliminated brittle `../../../../src/impl/` relative path dependencies
+  - Headers are now properly installed alongside other public headers
+  - Improved IDE/tooling compatibility and static analyzer support
+
 ### Added
 - Documentation standardization compliance
 - README.md, ARCHITECTURE.md, CHANGELOG.md
