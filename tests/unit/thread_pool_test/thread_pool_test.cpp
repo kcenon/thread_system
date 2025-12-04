@@ -33,8 +33,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gtest/gtest.h"
 
 #include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/job_queue.h>
 
 using namespace kcenon::thread;
+
+// Static assertions for ARM64 compatibility (Issue #223)
+// These compile-time checks verify memory alignment requirements
+// that are critical for ARM64 architectures which have stricter
+// alignment requirements than x86/x64.
+
+// Verify thread_worker alignment for ARM64 compatibility
+static_assert(alignof(thread_worker) >= alignof(void*),
+	"thread_worker must be at least pointer-aligned for ARM64");
+
+// Verify job_queue alignment for ARM64 compatibility
+static_assert(alignof(job_queue) >= alignof(void*),
+	"job_queue must be at least pointer-aligned for ARM64");
+
+// Verify thread_pool alignment for ARM64 compatibility
+static_assert(alignof(thread_pool) >= alignof(void*),
+	"thread_pool must be at least pointer-aligned for ARM64");
+
+// Verify atomic types meet alignment requirements
+static_assert(alignof(std::atomic<bool>) >= 1,
+	"std::atomic<bool> alignment must be at least 1");
+static_assert(alignof(std::atomic<size_t>) >= alignof(size_t),
+	"std::atomic<size_t> alignment must be at least size_t alignment");
 
 TEST(thread_pool_test, enqueue)
 {
@@ -273,4 +297,149 @@ TEST(thread_pool_test, multiple_stop_calls_are_idempotent)
 	// Third stop with immediate flag should also succeed
 	auto stop_result3 = pool->stop(true);
 	EXPECT_FALSE(stop_result3.has_error());
+}
+
+// Test for Issue #223: Manual worker creation and batch enqueue on ARM64
+// This pattern was reported to crash with SIGILL/SIGSEGV on macOS ARM64
+TEST(thread_pool_test, manual_worker_batch_enqueue_arm64)
+{
+	// Create thread pool
+	auto pool = std::make_shared<thread_pool>("test_pool_arm64");
+
+	// Manual worker creation (this pattern was crashing on ARM64)
+	thread_context context;
+	std::vector<std::unique_ptr<thread_worker>> workers;
+
+	for (size_t i = 0; i < 4; ++i)
+	{
+		workers.push_back(std::make_unique<thread_worker>(false, context));
+	}
+
+	// Enqueue workers to pool - should not crash
+	auto result = pool->enqueue_batch(std::move(workers));
+	EXPECT_FALSE(result.has_error());
+
+	// Start pool - should not crash
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// Submit job - should not crash
+	std::atomic<int> counter{0};
+	bool submit_result = pool->submit_task([&counter]()
+	{
+		counter++;
+	});
+	EXPECT_TRUE(submit_result);
+
+	// Allow job to complete
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Stop pool
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
+
+	// Verify job was executed
+	EXPECT_EQ(counter.load(), 1);
+}
+
+// Test for Issue #223: Multiple manual workers with concurrent job submission
+TEST(thread_pool_test, manual_workers_concurrent_job_submission_arm64)
+{
+	auto pool = std::make_shared<thread_pool>("test_pool_concurrent");
+
+	// Create multiple workers manually
+	thread_context context;
+	std::vector<std::unique_ptr<thread_worker>> workers;
+	const size_t worker_count = 8;
+
+	for (size_t i = 0; i < worker_count; ++i)
+	{
+		workers.push_back(std::make_unique<thread_worker>(true, context));
+	}
+
+	auto result = pool->enqueue_batch(std::move(workers));
+	EXPECT_FALSE(result.has_error());
+
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
+
+	// Submit multiple jobs concurrently
+	std::atomic<int> counter{0};
+	const int job_count = 100;
+
+	for (int i = 0; i < job_count; ++i)
+	{
+		bool submit_result = pool->submit_task([&counter]()
+		{
+			counter++;
+		});
+		EXPECT_TRUE(submit_result);
+	}
+
+	// Wait for all jobs to complete
+	int timeout_ms = 5000;
+	while (counter.load() < job_count && timeout_ms > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		timeout_ms -= 10;
+	}
+
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
+
+	EXPECT_EQ(counter.load(), job_count);
+}
+
+// Test for Issue #223: Worker enqueue one by one vs batch
+TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
+{
+	// Test individual enqueue
+	{
+		auto pool = std::make_shared<thread_pool>("test_individual");
+		thread_context context;
+
+		for (size_t i = 0; i < 4; ++i)
+		{
+			auto worker = std::make_unique<thread_worker>(false, context);
+			auto result = pool->enqueue(std::move(worker));
+			EXPECT_FALSE(result.has_error());
+		}
+
+		auto start_result = pool->start();
+		EXPECT_FALSE(start_result.has_error());
+
+		std::atomic<int> counter{0};
+		pool->submit_task([&counter]() { counter++; });
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+		pool->stop(false);
+		EXPECT_GE(counter.load(), 1);
+	}
+
+	// Test batch enqueue
+	{
+		auto pool = std::make_shared<thread_pool>("test_batch");
+		thread_context context;
+		std::vector<std::unique_ptr<thread_worker>> workers;
+
+		for (size_t i = 0; i < 4; ++i)
+		{
+			workers.push_back(std::make_unique<thread_worker>(false, context));
+		}
+
+		auto result = pool->enqueue_batch(std::move(workers));
+		EXPECT_FALSE(result.has_error());
+
+		auto start_result = pool->start();
+		EXPECT_FALSE(start_result.has_error());
+
+		std::atomic<int> counter{0};
+		pool->submit_task([&counter]() { counter++; });
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+		pool->stop(false);
+		EXPECT_GE(counter.load(), 1);
+	}
 }
