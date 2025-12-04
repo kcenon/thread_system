@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Documentation standardization compliance
 - README.md, ARCHITECTURE.md, CHANGELOG.md
+- **ARM64 compatibility tests**: Comprehensive tests for macOS Apple Silicon (#223)
+  - Manual worker batch enqueue validation
+  - Concurrent job submission with multiple workers
+  - Static assertions for memory alignment verification
+  - Individual vs batch worker enqueue comparison
 
 ---
 

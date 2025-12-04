@@ -10,6 +10,11 @@
 ### 추가됨
 - 문서 표준화 준수
 - README.md, ARCHITECTURE.md, CHANGELOG.md
+- **ARM64 호환성 테스트**: macOS Apple Silicon을 위한 종합 테스트 (#223)
+  - 수동 worker 배치 등록 검증
+  - 다중 worker를 사용한 동시 작업 제출
+  - 메모리 정렬 검증을 위한 정적 단언문
+  - 개별 vs 배치 worker 등록 비교
 
 ---
 
