@@ -531,3 +531,238 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
     EXPECT_EQ(total_enqueued.load(), total_dequeued.load());
     EXPECT_TRUE(queue.empty());
 }
+
+// =============================================================================
+// Phase 3: scheduler_interface and queue_capabilities_interface tests
+// =============================================================================
+
+// Test that lockfree_job_queue implements scheduler_interface
+TEST_F(LockFreeJobQueueTest, ImplementsSchedulerInterface) {
+    lockfree_job_queue queue;
+
+    // Cast to scheduler_interface
+    scheduler_interface* scheduler = &queue;
+    ASSERT_NE(scheduler, nullptr);
+
+    std::atomic<int> counter{0};
+    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        counter.fetch_add(1, std::memory_order_relaxed);
+        return result_void();
+    });
+
+    // Use scheduler_interface methods
+    auto schedule_result = scheduler->schedule(std::move(job));
+    EXPECT_FALSE(schedule_result.has_error());
+
+    auto get_job_result = scheduler->get_next_job();
+    EXPECT_TRUE(get_job_result.has_value());
+
+    // Execute the job
+    auto& job_ptr = get_job_result.value();
+    auto exec_result = job_ptr->do_work();
+    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_EQ(counter.load(), 1);
+}
+
+// Test schedule() delegates to enqueue()
+TEST_F(LockFreeJobQueueTest, ScheduleDelegatesToEnqueue) {
+    lockfree_job_queue queue;
+
+    std::atomic<int> counter{0};
+    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        counter.fetch_add(1, std::memory_order_relaxed);
+        return result_void();
+    });
+
+    // Use schedule() method
+    auto result = queue.schedule(std::move(job));
+    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(queue.empty());
+
+    // Verify job was enqueued by dequeuing it
+    auto dequeue_result = queue.dequeue();
+    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(queue.empty());
+}
+
+// Test get_next_job() delegates to dequeue()
+TEST_F(LockFreeJobQueueTest, GetNextJobDelegatesToDequeue) {
+    lockfree_job_queue queue;
+
+    // First enqueue a job
+    auto job = std::make_unique<callback_job>([]() -> result_void {
+        return result_void();
+    });
+    auto enqueue_result = queue.enqueue(std::move(job));
+    EXPECT_FALSE(enqueue_result.has_error());
+
+    // Use get_next_job() method
+    auto result = queue.get_next_job();
+    EXPECT_TRUE(result.has_value());
+    EXPECT_TRUE(queue.empty());
+}
+
+// Test get_next_job() returns error when queue is empty
+TEST_F(LockFreeJobQueueTest, GetNextJobReturnsErrorWhenEmpty) {
+    lockfree_job_queue queue;
+
+    EXPECT_TRUE(queue.empty());
+
+    auto result = queue.get_next_job();
+    EXPECT_FALSE(result.has_value());
+}
+
+// Test schedule() rejects null job
+TEST_F(LockFreeJobQueueTest, ScheduleRejectsNullJob) {
+    lockfree_job_queue queue;
+
+    auto result = queue.schedule(nullptr);
+    EXPECT_TRUE(result.has_error());
+}
+
+// Test queue_capabilities_interface implementation
+TEST_F(LockFreeJobQueueTest, ImplementsQueueCapabilitiesInterface) {
+    lockfree_job_queue queue;
+
+    // Cast to queue_capabilities_interface
+    queue_capabilities_interface* cap = &queue;
+    ASSERT_NE(cap, nullptr);
+
+    // Verify capabilities
+    auto caps = cap->get_capabilities();
+    EXPECT_FALSE(caps.exact_size);
+    EXPECT_FALSE(caps.atomic_empty_check);
+    EXPECT_TRUE(caps.lock_free);
+    EXPECT_FALSE(caps.wait_free);
+    EXPECT_FALSE(caps.supports_batch);
+    EXPECT_FALSE(caps.supports_blocking_wait);
+    EXPECT_FALSE(caps.supports_stop);
+}
+
+// Test get_capabilities() returns correct values
+TEST_F(LockFreeJobQueueTest, GetCapabilitiesReturnsCorrectValues) {
+    lockfree_job_queue queue;
+    auto caps = queue.get_capabilities();
+
+    // Verify lock-free queue characteristics
+    EXPECT_FALSE(caps.exact_size);            // Approximate only
+    EXPECT_FALSE(caps.atomic_empty_check);    // Non-atomic
+    EXPECT_TRUE(caps.lock_free);              // Lock-free implementation
+    EXPECT_FALSE(caps.wait_free);             // Not wait-free
+    EXPECT_FALSE(caps.supports_batch);        // No batch operations
+    EXPECT_FALSE(caps.supports_blocking_wait);// Spin-wait only
+    EXPECT_FALSE(caps.supports_stop);         // No stop() method
+}
+
+// Test convenience methods from queue_capabilities_interface
+TEST_F(LockFreeJobQueueTest, ConvenienceMethodsWork) {
+    lockfree_job_queue queue;
+
+    EXPECT_FALSE(queue.has_exact_size());
+    EXPECT_FALSE(queue.has_atomic_empty());
+    EXPECT_TRUE(queue.is_lock_free());
+    EXPECT_FALSE(queue.is_wait_free());
+    EXPECT_FALSE(queue.supports_batch());
+    EXPECT_FALSE(queue.supports_blocking_wait());
+    EXPECT_FALSE(queue.supports_stop());
+}
+
+// Test capabilities are consistent across multiple calls
+TEST_F(LockFreeJobQueueTest, CapabilitiesAreConsistent) {
+    lockfree_job_queue queue;
+
+    auto caps1 = queue.get_capabilities();
+    auto caps2 = queue.get_capabilities();
+
+    EXPECT_EQ(caps1, caps2);
+}
+
+// Test polymorphic use through scheduler_interface
+TEST_F(LockFreeJobQueueTest, PolymorphicUse) {
+    auto queue = std::make_unique<lockfree_job_queue>();
+
+    // Use through scheduler_interface pointer
+    scheduler_interface* scheduler = queue.get();
+
+    constexpr int JOB_COUNT = 10;
+    std::atomic<int> counter{0};
+
+    // Schedule multiple jobs through interface
+    for (int i = 0; i < JOB_COUNT; ++i) {
+        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+            counter.fetch_add(1, std::memory_order_relaxed);
+            return result_void();
+        });
+
+        auto result = scheduler->schedule(std::move(job));
+        EXPECT_FALSE(result.has_error());
+    }
+
+    // Get and execute all jobs through interface
+    for (int i = 0; i < JOB_COUNT; ++i) {
+        auto result = scheduler->get_next_job();
+        EXPECT_TRUE(result.has_value());
+
+        auto& job_ptr = result.value();
+        auto exec_result = job_ptr->do_work();
+        EXPECT_FALSE(exec_result.has_error());
+    }
+
+    EXPECT_EQ(counter.load(), JOB_COUNT);
+}
+
+// Test dynamic_cast to queue_capabilities_interface
+TEST_F(LockFreeJobQueueTest, DynamicCastToCapabilitiesInterface) {
+    lockfree_job_queue queue;
+
+    // Cast from scheduler_interface to queue_capabilities_interface
+    scheduler_interface* scheduler = &queue;
+    auto* cap = dynamic_cast<queue_capabilities_interface*>(scheduler);
+
+    ASSERT_NE(cap, nullptr);
+    EXPECT_TRUE(cap->is_lock_free());
+    EXPECT_FALSE(cap->has_exact_size());
+}
+
+// Test destructor safety with concurrent operations (stress test)
+TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
+    constexpr int ITERATIONS = 100;
+
+    for (int iter = 0; iter < ITERATIONS; ++iter) {
+        auto queue = std::make_unique<lockfree_job_queue>();
+
+        std::atomic<bool> stop{false};
+
+        // Producer thread
+        std::thread producer([&queue, &stop]() {
+            while (!stop.load(std::memory_order_relaxed)) {
+                auto job = std::make_unique<callback_job>([]() -> result_void {
+                    return result_void();
+                });
+                queue->enqueue(std::move(job));
+            }
+        });
+
+        // Consumer thread
+        std::thread consumer([&queue, &stop]() {
+            while (!stop.load(std::memory_order_relaxed)) {
+                queue->dequeue();
+            }
+        });
+
+        // Run for a short time
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+        // Signal stop
+        stop.store(true, std::memory_order_relaxed);
+
+        // Wait for threads
+        producer.join();
+        consumer.join();
+
+        // Queue is destroyed here - must be safe
+    }
+
+    // If we reach here without crash, destructor is safe
+    SUCCEED();
+}
