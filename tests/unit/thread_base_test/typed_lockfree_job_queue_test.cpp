@@ -40,8 +40,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtest/gtest.h>
 
-#include "src/impl/typed_pool/typed_lockfree_job_queue.h"
-#include "src/impl/typed_pool/callback_typed_job.h"
+#include <kcenon/thread/impl/typed_pool/typed_lockfree_job_queue.h>
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
 
 #include <atomic>
 #include <chrono>

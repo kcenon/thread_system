@@ -528,14 +528,28 @@ thread_system/
 
 ---
 
-### Typed Thread Pool (`src/impl/typed_pool/`)
+### Typed Thread Pool
+
+**Headers** (`include/kcenon/thread/impl/typed_pool/`):
 
 | File | Purpose | Lines | Complexity |
 |------|---------|-------|------------|
 | typed_thread_pool.h | Typed pool template header | ~300 | High |
 | typed_job_queue.h | Typed queue template | ~250 | Medium |
 | adaptive_typed_job_queue.h | Adaptive typed queue header | ~200 | High |
-| adaptive_typed_job_queue.cpp | Implementation | ~150 | High |
+| typed_lockfree_job_queue.h | Lock-free typed queue | ~400 | High |
+| typed_thread_worker.h | Typed worker template | ~180 | Medium |
+| typed_job.h | Typed job base | ~100 | Low |
+| job_types.h | Job type definitions | ~120 | Low |
+| config.h | Configuration types | ~80 | Low |
+
+**Implementation** (`src/impl/typed_pool/`):
+
+| File | Purpose | Lines | Complexity |
+|------|---------|-------|------------|
+| typed_thread_pool.cpp | Typed pool instantiation | ~400 | High |
+| typed_job_queue.cpp | Queue implementation | ~250 | Medium |
+| adaptive_typed_job_queue.cpp | Adaptive queue impl | ~150 | High |
 
 **Total Typed Pool Lines**: ~900 lines
 
