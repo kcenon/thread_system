@@ -7,6 +7,14 @@
 
 ## [미출시]
 
+### 변경됨
+- **이슈 #227**: typed_pool 구현 헤더를 공개 include 경로로 이동
+  - 14개 헤더 파일을 `src/impl/typed_pool/`에서 `include/kcenon/thread/impl/typed_pool/`로 이전
+  - 포워딩 헤더가 안정적인 `<kcenon/thread/impl/typed_pool/...>` include 사용하도록 업데이트
+  - 취약한 `../../../../src/impl/` 상대 경로 의존성 제거
+  - 헤더가 다른 공개 헤더들과 함께 적절히 설치됨
+  - IDE/툴링 호환성 및 정적 분석기 지원 개선
+
 ### 추가됨
 - 문서 표준화 준수
 - README.md, ARCHITECTURE.md, CHANGELOG.md

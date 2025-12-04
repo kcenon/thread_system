@@ -89,7 +89,7 @@ The typed_lockfree_job_queue_t implementation was blocked by `#error` directive 
 **Production Status**: ✅ **Safe for production use**
 
 **References**:
-- Typed Lock-Free Queue: `src/impl/typed_pool/typed_lockfree_job_queue.h`
+- Typed Lock-Free Queue: `include/kcenon/thread/impl/typed_pool/typed_lockfree_job_queue.h`
 - Tests: `tests/unit/thread_base_test/typed_lockfree_job_queue_test.cpp`
 - GitHub Issue: #217
 

@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "typed_lockfree_job_queue.h"
+#include <kcenon/thread/impl/typed_pool/typed_lockfree_job_queue.h>
 
 /**
  * @file typed_lockfree_job_queue.cpp
