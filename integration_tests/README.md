@@ -24,7 +24,8 @@ integration_tests/
 │   ├── job_queue_concurrency_test.cpp
 │   ├── queue_factory_integration_test.cpp
 │   └── thread_pool_lifecycle_test.cpp
-├── scenarios/              # Additional scenarios
+├── scenarios/              # Real-world scenario tests
+│   ├── mode_transition_scenario_test.cpp  # Mode transition scenarios
 │   ├── thread_pool_lifecycle_test.cpp
 │   └── job_queue_integration_test.cpp
 ├── performance/            # Performance benchmarks
@@ -61,6 +62,15 @@ integration_tests/
 - Policy enforcement (accuracy_first, performance_first, manual, balanced)
 - High concurrency stress test with mode switching
 - Statistics accuracy verification
+
+### Mode Transition Scenario Tests (7 tests)
+- Web server request handling simulation (traffic spikes, mode transitions)
+- Batch processing simulation (mutex→lock-free→mutex for accuracy)
+- Mixed workload simulation (accuracy guards for critical sections)
+- Long-running stability test (30s continuous mode switching)
+- Rapid mode transitions (data integrity verification)
+- Accuracy guard nesting behavior
+- Concurrent accuracy guards (thread safety)
 
 ### Queue Factory Integration Tests (18 tests)
 - Requirements satisfaction under concurrent load (exact_size, lock_free, atomic_empty, batch, blocking_wait)
@@ -114,6 +124,9 @@ cd build && ctest -L integration --output-on-failure
 
 # Run only queue factory tests
 ./build/integration_tests --gtest_filter=QueueFactoryIntegrationTest.*
+
+# Run only mode transition scenario tests
+./build/integration_tests --gtest_filter=ModeTransitionScenarioTest.*
 
 # Run only performance tests
 ./build/integration_tests --gtest_filter=*Performance*
@@ -233,7 +246,7 @@ barrier.arrive_and_wait();  // Synchronizes all threads
 ## Coverage Goals
 
 - **Overall coverage**: 80%+ of thread_system codebase
-- **Integration scenarios**: 64+ tests
+- **Integration scenarios**: 71+ tests (including 7 mode transition scenarios)
 - **Performance benchmarks**: 8+ tests
 - **Failure scenarios**: 10+ tests
 
