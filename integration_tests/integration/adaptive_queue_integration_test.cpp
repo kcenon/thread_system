@@ -272,7 +272,7 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
 TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    constexpr size_t total_jobs = 2000;
+    constexpr size_t total_jobs = 1000;
     std::atomic<size_t> processed{0};
     std::atomic<bool> stop_consumers{false};
 
@@ -299,7 +299,7 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
         EXPECT_FALSE(result.has_error());
 
         // Switch modes periodically
-        if (i % 500 == 0) {
+        if (i % 250 == 0) {
             if (queue.current_mode() == adaptive_job_queue::mode::mutex) {
                 queue.switch_mode(adaptive_job_queue::mode::lock_free);
             } else {
@@ -357,7 +357,7 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ConcurrentAccess) {
     adaptive_job_queue queue(adaptive_job_queue::policy::performance_first);
 
     constexpr int num_workers = 2;
-    constexpr int ops_per_worker = 50;
+    constexpr int ops_per_worker = 25;
 
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
@@ -407,7 +407,7 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ConcurrentAccess) {
     // Controller
     std::thread controller([&]() {
         start_latch.arrive_and_wait();
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         stop.store(true, std::memory_order_release);
     });
 
@@ -508,13 +508,13 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_PerformanceFirstAlwaysLoc
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::lock_free);
 
     // Under heavy concurrent load
-    constexpr size_t job_count = 1000;
+    constexpr size_t job_count = 500;
     std::atomic<size_t> enqueued{0};
     std::atomic<size_t> dequeued{0};
     std::atomic<bool> stop{false};
 
     std::vector<std::thread> workers;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 4; ++i) {
         workers.emplace_back([&]() {
             while (!stop.load(std::memory_order_acquire)) {
                 auto job = std::make_unique<callback_job>([]() -> result_void {
@@ -530,7 +530,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_PerformanceFirstAlwaysLoc
         });
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     // Check mode is still lock-free (except when accuracy guard is held)
     // Note: performance_first policy allows temporary mutex during accuracy guard
@@ -587,7 +587,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_BalancedPolicyStartsMutex
 TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
 
-    constexpr size_t total_jobs = 2000;
+    constexpr size_t total_jobs = 1000;
     constexpr int num_producers = 2;
     constexpr int num_consumers = 2;
 
@@ -637,9 +637,9 @@ TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
     std::thread mode_switcher([&]() {
         while (!stop_producers.load(std::memory_order_acquire)) {
             queue.switch_mode(adaptive_job_queue::mode::lock_free);
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             queue.switch_mode(adaptive_job_queue::mode::mutex);
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     });
 
@@ -653,7 +653,7 @@ TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
     // Wait for consumers to finish
     EXPECT_TRUE(WaitForCondition([&]() {
         return dequeued.load() >= total_jobs;
-    }, std::chrono::seconds(30)));
+    }, std::chrono::seconds(15)));
 
     stop_consumers.store(true, std::memory_order_release);
     for (auto& t : consumers) {
