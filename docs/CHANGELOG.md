@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved IDE/tooling compatibility and static analyzer support
 
 ### Added
+- **Issue #230**: Phase 1 - Queue Capabilities Infrastructure
+  - `queue_capabilities` struct for runtime capability description
+  - `queue_capabilities_interface` mixin for capability introspection
+  - Non-breaking additive interface for gradual adoption
+  - Unit tests for all capability queries
 - Documentation standardization compliance
 - README.md, ARCHITECTURE.md, CHANGELOG.md
 - **ARM64 compatibility tests**: Comprehensive tests for macOS Apple Silicon (#223)

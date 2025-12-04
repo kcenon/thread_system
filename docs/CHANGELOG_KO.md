@@ -16,6 +16,11 @@
   - IDE/툴링 호환성 및 정적 분석기 지원 개선
 
 ### 추가됨
+- **이슈 #230**: Phase 1 - 큐 역량 인프라스트럭처
+  - 런타임 역량 기술을 위한 `queue_capabilities` 구조체
+  - 역량 조회를 위한 `queue_capabilities_interface` 믹스인
+  - 점진적 도입을 위한 비파괴적 추가 인터페이스
+  - 모든 역량 쿼리에 대한 유닛 테스트
 - 문서 표준화 준수
 - README.md, ARCHITECTURE.md, CHANGELOG.md
 - **ARM64 호환성 테스트**: macOS Apple Silicon을 위한 종합 테스트 (#223)
