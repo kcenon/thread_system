@@ -43,6 +43,12 @@ file(GLOB SMOKE_SOURCES smoke/*.cpp)
 # Integration tests (moderate - always run)
 file(GLOB INTEGRATION_SOURCES integration/*.cpp)
 
+# Scenario tests (real-world integration scenarios)
+# Only include mode_transition_scenario_test.cpp to avoid duplicates with integration/
+set(SCENARIO_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/scenarios/mode_transition_scenario_test.cpp
+)
+
 # Performance benchmarks (slower - optional)
 file(GLOB PERFORMANCE_SOURCES performance/*.cpp)
 
@@ -96,8 +102,8 @@ endif()
 # Layer 2: Integration Tests (Always Built)
 ##################################################
 
-if(INTEGRATION_SOURCES)
-    add_executable(integration_tests ${INTEGRATION_SOURCES})
+if(INTEGRATION_SOURCES OR SCENARIO_SOURCES)
+    add_executable(integration_tests ${INTEGRATION_SOURCES} ${SCENARIO_SOURCES})
     configure_test_executable(integration_tests)
 
     add_test(NAME IntegrationTests COMMAND integration_tests)
