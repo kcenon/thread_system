@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved IDE/tooling compatibility and static analyzer support
 
 ### Added
+- **Issue #233**: Phase 4 - Adaptive Queue Implementation
+  - New `adaptive_job_queue` class wrapping both mutex-based and lock-free queues
+  - Support for multiple selection policies: `accuracy_first`, `performance_first`, `balanced`, `manual`
+  - RAII `accuracy_guard` for temporary accuracy mode switching
+  - Thread-safe mode switching with automatic data migration between queues
+  - Statistics tracking for mode switches and time spent in each mode
+  - Full `scheduler_interface` and `queue_capabilities_interface` support
+  - Capabilities reflect current mode (exact_size in mutex, lock_free in performance mode)
+  - 100% backward compatible - new class, existing queues unchanged
+  - Comprehensive unit tests (22 tests) including concurrent access tests
 - **Issue #232**: Phase 3 - Lock-free Queue Improvements
   - Extended `lockfree_job_queue` to implement `scheduler_interface`
   - Extended `lockfree_job_queue` to implement `queue_capabilities_interface`
