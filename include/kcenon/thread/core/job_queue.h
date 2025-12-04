@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/convert_string.h>
 #include "error_handling.h"
 #include <kcenon/thread/interfaces/scheduler_interface.h>
+#include <kcenon/thread/interfaces/queue_capabilities_interface.h>
 
 #include <mutex>
 #include <deque>
@@ -71,7 +72,9 @@ namespace kcenon::thread
 	 * 4. Call @c stop() and possibly @c clear() to shut down the queue
 	 *    gracefully when all jobs are done or when the system is stopping.
 	 */
-	class job_queue : public std::enable_shared_from_this<job_queue>, public scheduler_interface
+	class job_queue : public std::enable_shared_from_this<job_queue>,
+	                  public scheduler_interface,
+	                  public queue_capabilities_interface
 	{
 	public:
 		/**
@@ -255,6 +258,30 @@ namespace kcenon::thread
 		 * this to include additional diagnostic information.
 		 */
 		[[nodiscard]] virtual auto to_string(void) const -> std::string;
+
+		/**
+		 * @brief Returns capabilities of this job_queue implementation.
+		 * @return Queue capabilities struct describing this implementation.
+		 *
+		 * job_queue provides:
+		 * - Exact size: size() returns precise count (mutex-protected)
+		 * - Atomic empty check: empty() is consistent (mutex-protected)
+		 * - Not lock-free: Uses mutex for synchronization
+		 * - Batch operations: Supports enqueue_batch/dequeue_batch
+		 * - Blocking wait: Supports blocking dequeue()
+		 * - Stop support: Supports stop() for graceful shutdown
+		 */
+		[[nodiscard]] auto get_capabilities() const -> queue_capabilities override {
+			return queue_capabilities{
+				.exact_size = true,
+				.atomic_empty_check = true,
+				.lock_free = false,
+				.wait_free = false,
+				.supports_batch = true,
+				.supports_blocking_wait = true,
+				.supports_stop = true
+			};
+		}
 
 	protected:
 		/**
