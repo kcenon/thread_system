@@ -71,7 +71,7 @@ namespace detail {
 /// Thread-local hazard pointer list
 /// Each thread maintains a small array of hazard pointers
 struct thread_hazard_list {
-    static constexpr size_t MAX_HAZARDS_PER_THREAD = 4;
+    static constexpr size_t MAX_HAZARDS_PER_THREAD = 8;
 
     std::atomic<void*> hazards[MAX_HAZARDS_PER_THREAD];
     thread_hazard_list* next;  // Linked list of all thread lists
