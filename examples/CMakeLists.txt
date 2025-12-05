@@ -54,8 +54,7 @@ add_subdirectory(composition_example)
 
 # Adaptive queue sample
 # Shows adaptive queue strategy selection and usage
-# TEMPORARILY DISABLED: Uses logger directly, needs update to use interface
-# add_subdirectory(adaptive_queue_sample)
+add_subdirectory(adaptive_queue_sample)
 
 # Typed job queue sample
 # Demonstrates typed job queue usage patterns
