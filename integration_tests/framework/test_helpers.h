@@ -33,8 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <chrono>
+#include <condition_variable>
 #include <thread>
 #include <atomic>
+#include <mutex>
 #include <vector>
 #include <functional>
 #include <random>
