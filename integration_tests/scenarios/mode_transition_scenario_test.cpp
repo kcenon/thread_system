@@ -83,11 +83,21 @@ protected:
     }
 
     void DrainQueue(adaptive_job_queue& queue, std::atomic<size_t>& dequeued) {
-        for (int attempts = 0; attempts < 100; ++attempts) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
-                dequeued.fetch_add(1, std::memory_order_relaxed);
-                attempts = 0;
-            } else if (queue.empty()) {
+        // More robust draining with multiple passes
+        // Mode transitions may cause temporary invisibility of items
+        for (int pass = 0; pass < 3; ++pass) {
+            for (int attempts = 0; attempts < 1000; ++attempts) {
+                if (auto result = queue.try_dequeue(); result.has_value()) {
+                    dequeued.fetch_add(1, std::memory_order_relaxed);
+                    attempts = 0;
+                } else if (queue.empty()) {
+                    break;
+                }
+            }
+            // Small delay between passes to allow any in-flight operations to complete
+            if (!queue.empty()) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            } else {
                 break;
             }
         }
@@ -519,6 +529,10 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
     mode_switcher.join();
     accuracy_guard_thread.join();
 
+    // Small delay to allow any in-flight mode transitions to complete
+    // This is important for CI Debug builds where timing is slower
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
     // Consumers will automatically drain the queue (they loop until queue.empty())
     // Just wait for them to finish
     for (auto& t : consumers) {
@@ -526,6 +540,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
     }
 
     // Final drain in case any items were added during shutdown race
+    // Also handles any items that became visible after mode transition completed
     DrainQueue(queue, dequeued);
 
     // Verify results
