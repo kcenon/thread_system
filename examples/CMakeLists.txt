@@ -60,6 +60,10 @@ add_subdirectory(adaptive_queue_sample)
 # Demonstrates queue_factory usage for convenient queue creation
 add_subdirectory(queue_factory_sample)
 
+# Queue capabilities sample
+# Demonstrates queue_capabilities_interface usage for runtime capability introspection
+add_subdirectory(queue_capabilities_sample)
+
 # Typed job queue sample
 # Demonstrates typed job queue usage patterns
 # TEMPORARILY DISABLED: Uses logger directly, needs update to use interface
