@@ -170,7 +170,9 @@ std::cout << "Mode switches: " << stats.mode_switches << "\n";
 
 ## Queue Factory
 
-Use `queue_factory` for convenient queue creation:
+Use `queue_factory` for convenient queue creation.
+
+> **See also:** [`examples/queue_factory_sample/`](../../examples/queue_factory_sample/) for a complete working example.
 
 ### Direct Creation
 
@@ -375,4 +377,4 @@ This might indicate a workload with varied characteristics. Consider using `manu
 
 ---
 
-*Last Updated: 2025-12-04*
+*Last Updated: 2025-12-05*

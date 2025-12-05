@@ -56,6 +56,10 @@ add_subdirectory(composition_example)
 # Shows adaptive queue strategy selection and usage
 add_subdirectory(adaptive_queue_sample)
 
+# Queue factory sample
+# Demonstrates queue_factory usage for convenient queue creation
+add_subdirectory(queue_factory_sample)
+
 # Typed job queue sample
 # Demonstrates typed job queue usage patterns
 # TEMPORARILY DISABLED: Uses logger directly, needs update to use interface
