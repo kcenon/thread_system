@@ -313,6 +313,8 @@ target_link_libraries(your_target PRIVATE thread_system)
 - **[thread_pool_sample](examples/thread_pool_sample)**: Basic thread pool usage with adaptive queues
 - **[typed_thread_pool_sample](examples/typed_thread_pool_sample)**: Priority-based task scheduling
 - **[adaptive_queue_sample](examples/adaptive_queue_sample)**: Queue performance comparison
+- **[queue_factory_sample](examples/queue_factory_sample)**: Requirements-based queue creation
+- **[queue_capabilities_sample](examples/queue_capabilities_sample)**: Runtime capability introspection
 - **[hazard_pointer_sample](examples/hazard_pointer_sample)**: Lock-free memory reclamation
 - **[integration_example](examples/integration_example)**: Full integration with logger/monitoring
 

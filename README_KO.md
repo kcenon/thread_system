@@ -324,6 +324,8 @@ thread_system/
 │   ├── thread_pool_sample/         # 기본 thread pool 사용
 │   ├── typed_thread_pool_sample/   # Priority scheduling
 │   ├── adaptive_queue_sample/      # Adaptive queue 사용
+│   ├── queue_factory_sample/       # 요구사항 기반 queue 생성
+│   ├── queue_capabilities_sample/  # Runtime capability 조회
 │   ├── hazard_pointer_sample/      # 메모리 회수
 │   └── integration_example/        # 통합 예제
 ├── 📁 tests/                       # 모든 테스트
