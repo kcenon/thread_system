@@ -203,5 +203,345 @@ namespace kcenon::thread
 		size_t max_threads = 128
 	) -> std::shared_ptr<typed_job_queue_t<job_type>>;
 
+	// =============================================================================
+	// Template Implementation
+	// =============================================================================
+
+	template <typename job_type>
+	adaptive_typed_job_queue_t<job_type>::adaptive_typed_job_queue_t(queue_strategy initial_strategy)
+		: typed_job_queue_t<job_type>()
+		, legacy_queue_(std::make_unique<typed_job_queue_t<job_type>>())
+		, current_type_(queue_type::LEGACY_MUTEX)
+		, strategy_(initial_strategy)
+	{
+		metrics_.last_evaluation = std::chrono::steady_clock::now();
+		initialize_strategy();
+	}
+
+	template <typename job_type>
+	adaptive_typed_job_queue_t<job_type>::~adaptive_typed_job_queue_t()
+	{
+		stop_performance_monitor();
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::initialize_strategy() -> void
+	{
+		switch (strategy_)
+		{
+		case queue_strategy::FORCE_LOCKFREE:
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+			lockfree_queue_ = std::make_unique<typed_lockfree_job_queue_t<job_type>>();
+			current_type_.store(queue_type::LOCKFREE, std::memory_order_release);
+#else
+			// Fall back to legacy if lock-free is not enabled
+			current_type_.store(queue_type::LEGACY_MUTEX, std::memory_order_release);
+#endif
+			break;
+
+		case queue_strategy::ADAPTIVE:
+			// Start with legacy, may switch based on metrics
+			current_type_.store(queue_type::LEGACY_MUTEX, std::memory_order_release);
+			start_performance_monitor();
+			break;
+
+		case queue_strategy::AUTO_DETECT:
+		case queue_strategy::FORCE_LEGACY:
+		default:
+			current_type_.store(queue_type::LEGACY_MUTEX, std::memory_order_release);
+			break;
+		}
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::get_current_impl() -> typed_job_queue_t<job_type>*
+	{
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+		if (current_type_.load(std::memory_order_acquire) == queue_type::LOCKFREE)
+		{
+			return lockfree_queue_.get();
+		}
+#endif
+		return legacy_queue_.get();
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::get_current_impl() const -> const typed_job_queue_t<job_type>*
+	{
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+		if (current_type_.load(std::memory_order_acquire) == queue_type::LOCKFREE)
+		{
+			return lockfree_queue_.get();
+		}
+#endif
+		return legacy_queue_.get();
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value) -> result_void
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->enqueue(std::move(value));
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> result_void
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->enqueue(std::move(value));
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->enqueue_batch(std::move(jobs));
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::dequeue() -> result<std::unique_ptr<job>>
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->dequeue();
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::dequeue_batch() -> std::deque<std::unique_ptr<job>>
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->dequeue_batch();
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::dequeue(const std::vector<job_type>& types)
+		-> result<std::unique_ptr<typed_job_t<job_type>>>
+	{
+		auto start = std::chrono::steady_clock::now();
+		auto result = get_current_impl()->dequeue(types);
+		auto duration = std::chrono::steady_clock::now() - start;
+		update_metrics(std::chrono::duration_cast<std::chrono::nanoseconds>(duration), false);
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::clear() -> void
+	{
+		get_current_impl()->clear();
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::empty(const std::vector<job_type>& types) const -> bool
+	{
+		return get_current_impl()->empty(types);
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::size(const std::vector<job_type>& types) const -> std::size_t
+	{
+		// This is an approximate size - exact counting would require draining the queue
+		// For now, we return 0 if empty, or estimate based on metrics
+		bool all_empty = true;
+		for (const auto& type : types)
+		{
+			std::vector<job_type> single_type = { type };
+			if (!get_current_impl()->empty(single_type))
+			{
+				all_empty = false;
+				break;
+			}
+		}
+
+		if (all_empty)
+		{
+			return 0;
+		}
+
+		// Return a non-zero value if not empty
+		// The exact count is not easily available without draining the queue
+		return metrics_.operation_count.load(std::memory_order_acquire) > 0 ? 1 : 0;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::to_string() const -> std::string
+	{
+		return "adaptive_typed_job_queue[" + get_current_type() + "]";
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::get_current_type() const -> std::string
+	{
+		switch (current_type_.load(std::memory_order_acquire))
+		{
+		case queue_type::LOCKFREE:
+			return "lockfree";
+		case queue_type::HYBRID:
+			return "hybrid";
+		case queue_type::LEGACY_MUTEX:
+		default:
+			return "legacy_mutex";
+		}
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::get_metrics() const -> performance_metrics
+	{
+		performance_metrics result;
+		result.operation_count = metrics_.operation_count.load(std::memory_order_acquire);
+		result.total_latency_ns = metrics_.total_latency_ns.load(std::memory_order_acquire);
+		result.contention_count = metrics_.contention_count.load(std::memory_order_acquire);
+		result.switch_count = metrics_.switch_count.load(std::memory_order_acquire);
+		result.last_evaluation = metrics_.last_evaluation;
+		return result;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::evaluate_and_switch() -> void
+	{
+		// Only evaluate if we have enough data
+		if (metrics_.operation_count.load(std::memory_order_acquire) < MIN_OPERATIONS_FOR_SWITCH)
+		{
+			return;
+		}
+
+		// Check if we should switch
+		if (should_switch_to_lockfree())
+		{
+			migrate_to_lockfree();
+		}
+		else if (should_switch_to_legacy())
+		{
+			migrate_to_legacy();
+		}
+
+		metrics_.last_evaluation = std::chrono::steady_clock::now();
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::update_metrics(std::chrono::nanoseconds duration, bool had_contention) -> void
+	{
+		metrics_.operation_count.fetch_add(1, std::memory_order_relaxed);
+		metrics_.total_latency_ns.fetch_add(duration.count(), std::memory_order_relaxed);
+		if (had_contention)
+		{
+			metrics_.contention_count.fetch_add(1, std::memory_order_relaxed);
+		}
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::start_performance_monitor() -> void
+	{
+		// Performance monitoring is optional for now
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::stop_performance_monitor() -> void
+	{
+		stop_monitor_.store(true, std::memory_order_release);
+		if (monitor_thread_ && monitor_thread_->joinable())
+		{
+			monitor_thread_->join();
+		}
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::monitor_performance() -> void
+	{
+		// Placeholder for performance monitoring logic
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::should_switch_to_lockfree() const -> bool
+	{
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+		if (current_type_.load(std::memory_order_acquire) == queue_type::LOCKFREE)
+		{
+			return false;
+		}
+
+		auto ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_acquire)) /
+					 static_cast<double>(metrics_.operation_count.load(std::memory_order_acquire));
+		return ratio > CONTENTION_THRESHOLD_HIGH;
+#else
+		return false;
+#endif
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::should_switch_to_legacy() const -> bool
+	{
+		if (current_type_.load(std::memory_order_acquire) == queue_type::LEGACY_MUTEX)
+		{
+			return false;
+		}
+
+		auto ratio = static_cast<double>(metrics_.contention_count.load(std::memory_order_acquire)) /
+					 static_cast<double>(metrics_.operation_count.load(std::memory_order_acquire));
+		return ratio < CONTENTION_THRESHOLD_LOW;
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::migrate_to_lockfree() -> void
+	{
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+		if (!lockfree_queue_)
+		{
+			lockfree_queue_ = std::make_unique<typed_lockfree_job_queue_t<job_type>>();
+		}
+
+		// Migrate all jobs from legacy to lock-free
+		while (auto result = legacy_queue_->dequeue())
+		{
+			lockfree_queue_->enqueue(std::move(result.value()));
+		}
+
+		current_type_.store(queue_type::LOCKFREE, std::memory_order_release);
+		metrics_.switch_count.fetch_add(1, std::memory_order_relaxed);
+#endif
+	}
+
+	template <typename job_type>
+	auto adaptive_typed_job_queue_t<job_type>::migrate_to_legacy() -> void
+	{
+#ifdef TYPED_LOCKFREE_QUEUE_FORCE_ENABLE
+		if (!legacy_queue_)
+		{
+			legacy_queue_ = std::make_unique<typed_job_queue_t<job_type>>();
+		}
+
+		// Migrate all jobs from lock-free to legacy
+		while (auto result = lockfree_queue_->dequeue())
+		{
+			legacy_queue_->enqueue(std::move(result.value()));
+		}
+#endif
+
+		current_type_.store(queue_type::LEGACY_MUTEX, std::memory_order_release);
+		metrics_.switch_count.fetch_add(1, std::memory_order_relaxed);
+	}
+
+	template <typename job_type>
+	auto create_typed_job_queue(
+		typename adaptive_typed_job_queue_t<job_type>::queue_strategy strategy,
+		[[maybe_unused]] size_t max_threads
+	) -> std::shared_ptr<typed_job_queue_t<job_type>>
+	{
+		return std::make_shared<adaptive_typed_job_queue_t<job_type>>(strategy);
+	}
+
 } // namespace kcenon::thread
 
