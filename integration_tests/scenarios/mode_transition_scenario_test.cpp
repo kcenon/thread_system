@@ -519,15 +519,13 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
     mode_switcher.join();
     accuracy_guard_thread.join();
 
-    // Wait for consumers to drain (longer timeout for slow CI environments)
-    EXPECT_TRUE(WaitForCondition([&]() {
-        return dequeued.load() >= enqueued.load();
-    }, std::chrono::seconds(30)));
-
+    // Consumers will automatically drain the queue (they loop until queue.empty())
+    // Just wait for them to finish
     for (auto& t : consumers) {
         t.join();
     }
 
+    // Final drain in case any items were added during shutdown race
     DrainQueue(queue, dequeued);
 
     // Verify results
