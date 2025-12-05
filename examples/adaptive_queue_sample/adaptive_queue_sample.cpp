@@ -30,52 +30,61 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "thread_base/lockfree/queues/adaptive_job_queue.h"
-#include "thread_base/jobs/callback_job.h"
-#include "logger/core/logger.h"
+#include <kcenon/thread/queue/adaptive_job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 
 #include <thread>
 #include <vector>
 #include <atomic>
 #include <chrono>
 #include <random>
+#include <iostream>
+#include <iomanip>
 
 using namespace kcenon::thread;
-using namespace log_module;
 using namespace std::chrono_literals;
 
-// Example 1: Basic queue strategies comparison
-void strategy_comparison_example()
+// Helper to convert mode to string
+std::string mode_to_string(adaptive_job_queue::mode m) {
+    switch (m) {
+        case adaptive_job_queue::mode::mutex: return "mutex";
+        case adaptive_job_queue::mode::lock_free: return "lock_free";
+    }
+    return "unknown";
+}
+
+// Example 1: Basic queue policies comparison
+void policy_comparison_example()
 {
-    write_information("[Example 1] Queue Strategy Comparison");
-    
+    std::cout << "[Example 1] Queue Policy Comparison" << std::endl;
+
     const int num_jobs = 10000;
     const int num_producers = 4;
     const int num_consumers = 4;
-    
-    // Test each strategy
-    for (auto strategy : {adaptive_job_queue::queue_strategy::FORCE_LEGACY,
-                         adaptive_job_queue::queue_strategy::FORCE_LOCKFREE,
-                         adaptive_job_queue::queue_strategy::ADAPTIVE})
+
+    // Test each policy
+    for (auto policy : {adaptive_job_queue::policy::accuracy_first,
+                        adaptive_job_queue::policy::performance_first,
+                        adaptive_job_queue::policy::balanced})
     {
-        adaptive_job_queue queue(strategy);
+        adaptive_job_queue queue(policy);
         std::atomic<int> produced{0};
         std::atomic<int> consumed{0};
-        
+
         auto start = std::chrono::high_resolution_clock::now();
-        
+
         std::vector<std::thread> producers;
         std::vector<std::thread> consumers;
-        
+
         // Start producers
         for (int p = 0; p < num_producers; ++p) {
-            producers.emplace_back([&queue, &produced, p, num_jobs]() {
+            producers.emplace_back([&queue, &produced, p, num_jobs, num_producers]() {
                 for (int i = 0; i < num_jobs / num_producers; ++i) {
                     auto job = std::make_unique<callback_job>(
                         [p, i]() -> result_void {
                             return result_void();
                         });
-                    
+
                     while (true) {
                         auto r = queue.enqueue(std::move(job));
                         if (!r.has_error()) break;
@@ -88,7 +97,7 @@ void strategy_comparison_example()
                 }
             });
         }
-        
+
         // Start consumers
         for (int c = 0; c < num_consumers; ++c) {
             consumers.emplace_back([&queue, &consumed, num_jobs]() {
@@ -105,61 +114,62 @@ void strategy_comparison_example()
                 }
             });
         }
-        
+
         // Wait for completion
         for (auto& t : producers) t.join();
         for (auto& t : consumers) t.join();
-        
+
         auto duration = std::chrono::high_resolution_clock::now() - start;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        
-        std::string strategy_name;
-        switch (strategy) {
-            case adaptive_job_queue::queue_strategy::FORCE_LEGACY:
-                strategy_name = "Mutex-based";
+
+        std::string policy_name;
+        switch (policy) {
+            case adaptive_job_queue::policy::accuracy_first:
+                policy_name = "Accuracy (Mutex)";
                 break;
-            case adaptive_job_queue::queue_strategy::FORCE_LOCKFREE:
-                strategy_name = "Lock-free";
+            case adaptive_job_queue::policy::performance_first:
+                policy_name = "Performance (Lock-free)";
                 break;
-            case adaptive_job_queue::queue_strategy::ADAPTIVE:
-                strategy_name = "Adaptive";
+            case adaptive_job_queue::policy::balanced:
+                policy_name = "Balanced (Adaptive)";
                 break;
-            case adaptive_job_queue::queue_strategy::AUTO_DETECT:
-                strategy_name = "Auto-detect";
+            case adaptive_job_queue::policy::manual:
+                policy_name = "Manual";
                 break;
         }
-        
-        write_information("{} strategy: {} jobs in {} ms = {} ops/sec",
-                strategy_name, num_jobs, ms, 
-                num_jobs * 1000.0 / ms);
+
+        double ops_per_sec = (ms > 0) ? (num_jobs * 1000.0 / ms) : 0;
+        std::cout << policy_name << " policy: " << num_jobs << " jobs in "
+                  << ms << " ms = " << std::fixed << std::setprecision(0)
+                  << ops_per_sec << " ops/sec" << std::endl;
     }
 }
 
 // Example 2: Adaptive strategy behavior under varying contention
 void adaptive_behavior_example()
 {
-    write_information("\n[Example 2] Adaptive Strategy Behavior");
-    
-    adaptive_job_queue queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
-    
+    std::cout << "\n[Example 2] Balanced Policy Behavior" << std::endl;
+
+    adaptive_job_queue queue(adaptive_job_queue::policy::balanced);
+
     // Low contention phase (1 producer, 1 consumer)
-    write_information("Phase 1: Low contention (1P-1C)");
+    std::cout << "Phase 1: Low contention (1P-1C)" << std::endl;
     {
         std::atomic<bool> running{true};
         std::atomic<int> jobs_processed{0};
-        
+
         std::thread producer([&queue, &running]() {
             while (running) {
                 auto job = std::make_unique<callback_job>(
                     []() -> result_void { return result_void(); });
                 auto enqueue_result = queue.enqueue(std::move(job));
                 if (enqueue_result.has_error()) {
-                    write_error("enqueue failed: {}", enqueue_result.get_error().message());
+                    std::cerr << "enqueue failed: " << enqueue_result.get_error().message() << std::endl;
                 }
                 std::this_thread::sleep_for(1ms);
             }
         });
-        
+
         std::thread consumer([&queue, &running, &jobs_processed]() {
             while (running) {
                 auto result = queue.dequeue();
@@ -171,33 +181,31 @@ void adaptive_behavior_example()
                 std::this_thread::sleep_for(1ms);
             }
         });
-        
+
         std::this_thread::sleep_for(2s);
         running = false;
         producer.join();
         consumer.join();
-        
-        auto current_type = queue.get_current_type();
-        write_information(
-            "  Current type: {}, Jobs processed: {}",
-                current_type,
-                jobs_processed.load());
+
+        auto current_mode = queue.current_mode();
+        std::cout << "  Current mode: " << mode_to_string(current_mode)
+                  << ", Jobs processed: " << jobs_processed.load() << std::endl;
     }
-    
+
     // High contention phase (8 producers, 8 consumers)
-    write_information("Phase 2: High contention (8P-8C)");
+    std::cout << "Phase 2: High contention (8P-8C)" << std::endl;
     {
         std::atomic<bool> running{true};
         std::atomic<int> jobs_processed{0};
         std::vector<std::thread> threads;
-        
+
         // Start producers
         for (int i = 0; i < 8; ++i) {
             threads.emplace_back([&queue, &running]() {
                 std::random_device rd;
                 std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dist(0, 100);
-                
+
                 while (running) {
                     auto job = std::make_unique<callback_job>(
                         []() -> result_void { return result_void(); });
@@ -211,7 +219,7 @@ void adaptive_behavior_example()
                 }
             });
         }
-        
+
         // Start consumers
         for (int i = 0; i < 8; ++i) {
             threads.emplace_back([&queue, &running, &jobs_processed]() {
@@ -225,96 +233,98 @@ void adaptive_behavior_example()
                 }
             });
         }
-        
+
         std::this_thread::sleep_for(2s);
         running = false;
         for (auto& t : threads) t.join();
-        
-        auto current_type = queue.get_current_type();
-        write_information(
-            "  Current type: {}, Jobs processed: {}",
-                current_type,
-                jobs_processed.load());
+
+        auto current_mode = queue.current_mode();
+        std::cout << "  Current mode: " << mode_to_string(current_mode)
+                  << ", Jobs processed: " << jobs_processed.load() << std::endl;
     }
 }
 
-// Example 3: Different queue strategies
-void different_strategies_example()
+// Example 3: Different queue policies
+void different_policies_example()
 {
-    write_information("\n[Example 3] Different Queue Strategies");
-    
-    // Create queue with forced mutex-based strategy
-    adaptive_job_queue mutex_queue(adaptive_job_queue::queue_strategy::FORCE_LEGACY);
-    write_information(
-        "Mutex-based queue type: {}",
-            mutex_queue.get_current_type());
-    
+    std::cout << "\n[Example 3] Different Queue Policies" << std::endl;
+
+    // Create queue with accuracy-first policy (mutex mode)
+    adaptive_job_queue mutex_queue(adaptive_job_queue::policy::accuracy_first);
+    std::cout << "Accuracy-first queue mode: " << mode_to_string(mutex_queue.current_mode()) << std::endl;
+
     // Perform some operations
     std::vector<std::unique_ptr<job>> jobs;
     for (int i = 0; i < 100; ++i) {
         jobs.push_back(std::make_unique<callback_job>(
             [i]() -> result_void {
-                write_information("Job {} executed", i);
+                // Job executed silently for batch demo
                 return result_void(); // Success
             }));
     }
-    
-    auto enqueue_result = mutex_queue.enqueue_batch(std::move(jobs));
-    if (enqueue_result.has_error()) {
-        write_error("Batch enqueue failed: {}", enqueue_result.get_error().message());
-    } else {
-        write_information("Batch enqueue successful");
-    }
-    
-    // Create queue with forced lock-free strategy
-    adaptive_job_queue lockfree_queue(adaptive_job_queue::queue_strategy::FORCE_LOCKFREE);
-    write_information(
-        "Lock-free queue type: {}",
-            lockfree_queue.get_current_type());
-    
-    // Dequeue jobs from mutex queue
-    auto dequeued = mutex_queue.dequeue_batch();
-    write_information(
-        "Dequeued {} jobs from mutex queue", dequeued.size());
-    
-    // Process dequeued jobs
-    for (auto& job : dequeued) {
-        auto result = job->do_work();
-        if (!result) {
-            // Job executed successfully
-        } else {
-            write_error("Job failed: {}", result.get_error().message());
+
+    // Enqueue jobs one by one
+    int enqueue_count = 0;
+    for (auto& job : jobs) {
+        auto result = mutex_queue.enqueue(std::move(job));
+        if (!result.has_error()) {
+            enqueue_count++;
         }
     }
+    std::cout << "Enqueued " << enqueue_count << " jobs" << std::endl;
+
+    // Create queue with performance-first policy (lock-free mode)
+    adaptive_job_queue lockfree_queue(adaptive_job_queue::policy::performance_first);
+    std::cout << "Performance-first queue mode: " << mode_to_string(lockfree_queue.current_mode()) << std::endl;
+
+    // Dequeue and process jobs from mutex queue
+    int success_count = 0;
+    int fail_count = 0;
+    while (!mutex_queue.empty()) {
+        auto result = mutex_queue.dequeue();
+        if (result.has_value()) {
+            auto work_result = result.value()->do_work();
+            if (!work_result) {
+                success_count++;
+            } else {
+                fail_count++;
+                std::cerr << "Job failed: " << work_result.get_error().message() << std::endl;
+            }
+        }
+    }
+    std::cout << "Processed " << success_count << " jobs successfully, "
+              << fail_count << " failed" << std::endl;
 }
 
 // Example 4: Performance monitoring
 void performance_monitoring_example()
 {
-    write_information("\n[Example 4] Performance Monitoring");
-    
-    adaptive_job_queue queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
-    
+    std::cout << "\n[Example 4] Performance Monitoring" << std::endl;
+
+    adaptive_job_queue queue(adaptive_job_queue::policy::balanced);
+
     const int num_operations = 50000;
     std::atomic<bool> running{true};
     std::atomic<int> enqueued{0};
     std::atomic<int> dequeued{0};
-    
+
     // Producer thread
-    std::thread producer([&queue, &running, &enqueued, num_operations]() {
+    std::thread producer([&queue, &enqueued, num_operations]() {
         for (int i = 0; i < num_operations; ++i) {
             auto job = std::make_unique<callback_job>(
                 []() -> result_void { return result_void(); });
-            
-            while (!queue.enqueue(std::move(job))) {
+
+            while (queue.enqueue(std::move(job)).has_error()) {
                 std::this_thread::yield();
+                job = std::make_unique<callback_job>(
+                    []() -> result_void { return result_void(); });
             }
             enqueued.fetch_add(1);
         }
     });
-    
+
     // Consumer thread
-    std::thread consumer([&queue, &running, &dequeued, num_operations]() {
+    std::thread consumer([&queue, &dequeued, num_operations]() {
         while (dequeued.load() < num_operations) {
             auto result = queue.dequeue();
             if (result.has_value()) {
@@ -324,48 +334,53 @@ void performance_monitoring_example()
             }
         }
     });
-    
+
     // Monitor thread
     std::thread monitor([&queue, &running, &enqueued, &dequeued, num_operations]() {
         auto start = std::chrono::steady_clock::now();
-        
+
         while (dequeued.load() < num_operations) {
             std::this_thread::sleep_for(500ms);
-            
+
             auto now = std::chrono::steady_clock::now();
             auto elapsed = std::chrono::duration<double>(now - start).count();
-            
-            auto current_type = queue.get_current_type();
-            
-            write_information(
-                "Status: {} type, Enqueued: {}, Dequeued: {}, Rate: {:.0f} ops/sec",
-                    current_type, enqueued.load(), dequeued.load(),
-                    dequeued.load() / elapsed);
+
+            auto current_mode = queue.current_mode();
+            double rate = (elapsed > 0) ? (dequeued.load() / elapsed) : 0;
+
+            std::cout << "Status: " << mode_to_string(current_mode) << " mode, Enqueued: "
+                      << enqueued.load() << ", Dequeued: " << dequeued.load()
+                      << ", Rate: " << std::fixed << std::setprecision(0)
+                      << rate << " ops/sec" << std::endl;
         }
     });
-    
+
     producer.join();
     consumer.join();
     running = false;
     monitor.join();
-    
-    write_information(
-        "Completed {} operations", num_operations);
+
+    // Print statistics
+    auto stats = queue.get_stats();
+    std::cout << "Completed " << num_operations << " operations" << std::endl;
+    std::cout << "Statistics: mode_switches=" << stats.mode_switches
+              << ", enqueues=" << stats.enqueue_count
+              << ", dequeues=" << stats.dequeue_count << std::endl;
 }
 
 // Example 5: Real-world scenario - Web server simulation
 void web_server_simulation()
 {
-    write_information("\n[Example 5] Web Server Simulation");
-    
-    adaptive_job_queue request_queue(adaptive_job_queue::queue_strategy::ADAPTIVE);
+    std::cout << "\n[Example 5] Web Server Simulation" << std::endl;
+
+    adaptive_job_queue request_queue(adaptive_job_queue::policy::balanced);
     std::atomic<bool> server_running{true};
     std::atomic<int> requests_handled{0};
     std::atomic<int> requests_failed{0};
-    
+
     // Request types
     enum class request_type { GET, POST, PUT, DELETE };
-    
+
     // Simulate incoming requests
     std::vector<std::thread> clients;
     for (int client_id = 0; client_id < 5; ++client_id) {
@@ -374,37 +389,26 @@ void web_server_simulation()
             std::mt19937 gen(rd());
             std::uniform_int_distribution<> type_dist(0, 3);
             std::uniform_int_distribution<> delay_dist(10, 100);
-            
+
             while (server_running) {
                 auto type = static_cast<request_type>(type_dist(gen));
-                
+
                 auto request = std::make_unique<callback_job>(
-                    [client_id, type]() -> result_void {
+                    [type]() -> result_void {
                         // Simulate request processing
                         std::this_thread::sleep_for(std::chrono::microseconds(
                             type == request_type::GET ? 10 : 50));
-                        
-                        std::string type_str;
-                        switch (type) {
-                            case request_type::GET: type_str = "GET"; break;
-                            case request_type::POST: type_str = "POST"; break;
-                            case request_type::PUT: type_str = "PUT"; break;
-                            case request_type::DELETE: type_str = "DELETE"; break;
-                        }
-                        
-                        write_information("Client {} {} request completed", 
-                            client_id, type_str);
                         return result_void(); // Success
                     });
-                
+
                 auto r = request_queue.enqueue(std::move(request));
                 if (r.has_error()) requests_failed.fetch_add(1);
-                
+
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_dist(gen)));
             }
         });
     }
-    
+
     // Worker threads (server handlers)
     std::vector<std::thread> workers;
     for (int worker_id = 0; worker_id < 3; ++worker_id) {
@@ -417,8 +421,8 @@ void web_server_simulation()
                         // Request processed successfully
                         requests_handled.fetch_add(1);
                     } else {
-                        write_error("Worker {} request failed: {}", 
-                            worker_id, result.get_error().message());
+                        std::cerr << "Worker " << worker_id << " request failed: "
+                                  << result.get_error().message() << std::endl;
                     }
                 } else {
                     std::this_thread::sleep_for(1ms);
@@ -426,42 +430,42 @@ void web_server_simulation()
             }
         });
     }
-    
+
     // Run simulation for 5 seconds
     std::this_thread::sleep_for(5s);
     server_running = false;
-    
+
     // Cleanup
     for (auto& t : clients) t.join();
     for (auto& t : workers) t.join();
-    
-    write_information(
-        "Server simulation complete: {} requests handled, {} failed",
-            requests_handled.load(), requests_failed.load());
+
+    std::cout << "Server simulation complete: " << requests_handled.load()
+              << " requests handled, " << requests_failed.load() << " failed" << std::endl;
+
+    // Print final statistics
+    auto stats = request_queue.get_stats();
+    std::cout << "Final stats: mode_switches=" << stats.mode_switches
+              << ", time_in_mutex=" << stats.time_in_mutex_ms << "ms"
+              << ", time_in_lockfree=" << stats.time_in_lockfree_ms << "ms" << std::endl;
 }
 
 int main()
 {
-    log_module::start();
-    log_module::console_target(log_types::Debug);
-    
-    write_information(
-        "Adaptive Job Queue Sample\n"
-        "=========================");
-    
+    std::cout << "Adaptive Job Queue Sample" << std::endl;
+    std::cout << "=========================" << std::endl;
+
     try {
-        strategy_comparison_example();
+        policy_comparison_example();
         adaptive_behavior_example();
-        different_strategies_example();
+        different_policies_example();
         performance_monitoring_example();
         web_server_simulation();
     } catch (const std::exception& e) {
-        write_error(
-            "Exception: {}", e.what());
+        std::cerr << "Exception: " << e.what() << std::endl;
+        return 1;
     }
-    
-    write_information("\nAll examples completed!");
-    
-    log_module::stop();
+
+    std::cout << "\nAll examples completed!" << std::endl;
+
     return 0;
 }
