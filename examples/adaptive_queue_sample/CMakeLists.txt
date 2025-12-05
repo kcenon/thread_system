@@ -1,17 +1,18 @@
+# Adaptive queue sample without logger dependency
 project(adaptive_queue_sample)
 
-file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+add_executable(${PROJECT_NAME} adaptive_queue_sample.cpp)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# Link with thread_base (which includes core functionality)
+target_link_libraries(${PROJECT_NAME} PRIVATE thread_base)
 
-# Explicitly add include directories for Windows compatibility
+# Include headers from the new structure
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include
 )
 
-# Link required libraries - utilities contains formatter
-if(APPLE)
-    target_link_libraries(${PROJECT_NAME} PRIVATE thread_pool logger utilities "-framework CoreFoundation")
-else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE thread_pool logger utilities)
-endif()
+# Set as a sample application
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    FOLDER "samples"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)

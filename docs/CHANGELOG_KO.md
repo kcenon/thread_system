@@ -7,6 +7,13 @@
 
 ## [미출시]
 
+### 추가됨
+- **이슈 #246**: adaptive_queue_sample 예제 재활성화
+  - adaptive_queue_sample.cpp에서 logger 의존성 제거
+  - write_information/write_error를 std::cout/std::cerr로 교체
+  - 새로운 kcenon/thread 헤더 구조 및 정책 기반 API로 업데이트
+  - 5가지 포괄적 예제 시연: 정책 비교, 적응형 동작, 다양한 정책, 성능 모니터링, 웹 서버 시뮬레이션
+
 ### 변경됨
 - **이슈 #227**: typed_pool 구현 헤더를 공개 include 경로로 이동
   - 14개 헤더 파일을 `src/impl/typed_pool/`에서 `include/kcenon/thread/impl/typed_pool/`로 이전

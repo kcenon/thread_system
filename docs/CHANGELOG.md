@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Issue #246**: Re-enable adaptive_queue_sample example
+  - Removed logger dependency from adaptive_queue_sample.cpp
+  - Replaced write_information/write_error with std::cout/std::cerr
+  - Updated to use new kcenon/thread header structure and policy-based API
+  - Demonstrates 5 comprehensive examples: policy comparison, adaptive behavior, different policies, performance monitoring, and web server simulation
+
 ### Changed
 - **Issue #227**: Move typed_pool implementation headers to public include path
   - Relocated 14 header files from `src/impl/typed_pool/` to `include/kcenon/thread/impl/typed_pool/`

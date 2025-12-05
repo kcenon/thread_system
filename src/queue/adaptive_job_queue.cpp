@@ -119,10 +119,19 @@ auto adaptive_job_queue::dequeue() -> result<std::unique_ptr<job>> {
     result<std::unique_ptr<job>> result(error(error_code::queue_empty, "Queue is empty"));
     mode current = current_mode_.load(std::memory_order_acquire);
 
+    // Try current mode first
     if (current == mode::mutex) {
         result = mutex_queue_->try_dequeue();
+        // If current mode is empty, also check other queue for race condition handling
+        if (!result.has_value()) {
+            result = lockfree_queue_->dequeue();
+        }
     } else {
         result = lockfree_queue_->dequeue();
+        // If current mode is empty, also check other queue for race condition handling
+        if (!result.has_value()) {
+            result = mutex_queue_->try_dequeue();
+        }
     }
 
     if (result.has_value()) {
@@ -141,10 +150,19 @@ auto adaptive_job_queue::try_dequeue() -> result<std::unique_ptr<job>> {
     result<std::unique_ptr<job>> result(error(error_code::queue_empty, "Queue is empty"));
     mode current = current_mode_.load(std::memory_order_acquire);
 
+    // Try current mode first
     if (current == mode::mutex) {
         result = mutex_queue_->try_dequeue();
+        // If current mode is empty, also check other queue for race condition handling
+        if (!result.has_value()) {
+            result = lockfree_queue_->try_dequeue();
+        }
     } else {
         result = lockfree_queue_->try_dequeue();
+        // If current mode is empty, also check other queue for race condition handling
+        if (!result.has_value()) {
+            result = mutex_queue_->try_dequeue();
+        }
     }
 
     if (result.has_value()) {
@@ -156,13 +174,9 @@ auto adaptive_job_queue::try_dequeue() -> result<std::unique_ptr<job>> {
 }
 
 auto adaptive_job_queue::empty() const -> bool {
-    mode current = current_mode_.load(std::memory_order_acquire);
-
-    if (current == mode::mutex) {
-        return mutex_queue_->empty();
-    } else {
-        return lockfree_queue_->empty();
-    }
+    // Check both queues to handle race conditions during mode transitions
+    // During migration, items may temporarily exist in either queue
+    return mutex_queue_->empty() && lockfree_queue_->empty();
 }
 
 auto adaptive_job_queue::size() const -> std::size_t {
