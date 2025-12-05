@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #251**: Add error handling and edge case tests for adaptive_job_queue
+  - 22 comprehensive test cases covering error handling and edge cases
+  - Mode switch error handling tests (5 tests): non-manual policy rejection, concurrent mode switching
+  - Accuracy guard edge case tests (3 tests): deep nesting, concurrent release, manual policy
+  - Data integrity stress tests (2 tests): mode switching during operations, multi-producer/consumer scenarios
+  - Empty queue operation tests (4 tests): empty dequeue, mode switch, size/empty checks, clear
+  - Null/invalid job handling tests (2 tests): rejection in both mutex and lock-free modes
+  - Statistics accuracy tests (2 tests): mode switch counting, time tracking
+  - Stop/shutdown edge case tests (4 tests): operations after stop, mode switch after stop
 - **Issue #246**: Re-enable adaptive_queue_sample example
   - Removed logger dependency from adaptive_queue_sample.cpp
   - Replaced write_information/write_error with std::cout/std::cerr
