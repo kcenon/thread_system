@@ -38,12 +38,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/common/interfaces/global_logger_registry.h>
 #include "monitoring_interface.h"
 #include "service_container.h"
+#include <kcenon/thread/core/log_level.h>
 
 namespace kcenon::thread {
 
-// Type aliases for common_system logger types
+// Type alias for common_system ILogger
 using ILogger = common::interfaces::ILogger;
-using log_level = common::interfaces::log_level;
 
 /**
  * @brief Context object that provides access to optional services
@@ -99,9 +99,22 @@ public:
      *
      * @note Issue #261: Now uses common_system's ILogger interface.
      */
-    void log(log_level level, const std::string& message) const {
+    void log(common::interfaces::log_level level, const std::string& message) const {
         if (logger_) {
             logger_->log(level, message);
+        }
+    }
+
+    /**
+     * @brief Log a message if logger is available (v2 API with conversion)
+     * @param level Log level (log_level_v2 with ascending order)
+     * @param message Log message
+     *
+     * @note Provides backward compatibility for code using log_level_v2.
+     */
+    void log(log_level_v2 level, const std::string& message) const {
+        if (logger_) {
+            logger_->log(to_common_level(level), message);
         }
     }
 
@@ -113,7 +126,7 @@ public:
      *
      * @note Issue #261: Now uses common_system's ILogger with source_location support.
      */
-    void log(log_level level,
+    void log(common::interfaces::log_level level,
              std::string_view message,
              const common::source_location& loc = common::source_location::current()) const {
         if (logger_) {
@@ -213,6 +226,22 @@ private:
     std::shared_ptr<ILogger> logger_;
     std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
     mutable std::string context_name_;
+
+    /**
+     * @brief Convert log_level_v2 to common::interfaces::log_level
+     */
+    static common::interfaces::log_level to_common_level(log_level_v2 level) {
+        switch (level) {
+            case log_level_v2::trace: return common::interfaces::log_level::trace;
+            case log_level_v2::debug: return common::interfaces::log_level::debug;
+            case log_level_v2::info: return common::interfaces::log_level::info;
+            case log_level_v2::warn: return common::interfaces::log_level::warning;
+            case log_level_v2::error: return common::interfaces::log_level::error;
+            case log_level_v2::critical: return common::interfaces::log_level::critical;
+            case log_level_v2::off: return common::interfaces::log_level::off;
+            default: return common::interfaces::log_level::info;
+        }
+    }
 };
 
 /**

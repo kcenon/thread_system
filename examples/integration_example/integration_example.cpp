@@ -67,7 +67,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "mock_monitoring.h"
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
+using ILogger = kcenon::common::interfaces::ILogger;
 
 /**
  * @brief Example 1: Thread pool with external logger only
@@ -80,7 +80,7 @@ void thread_pool_with_logger_example() {
     logger->start();
     
     // 2. Register logger in service container
-    service_container::global().register_singleton<logger_interface>(logger);
+    service_container::global().register_singleton<ILogger>(logger);
     
     // 3. Create thread pool - it will automatically use the logger
     thread_context context; // Resolves from global container
@@ -238,7 +238,7 @@ void complete_integration_example() {
     monitor->start();
     
     // 2. Register both services
-    service_container::global().register_singleton<logger_interface>(logger);
+    service_container::global().register_singleton<ILogger>(logger);
     service_container::global().register_singleton<monitoring_interface::monitoring_interface>(monitor);
     
     // 3. Create fully integrated thread pool
@@ -386,7 +386,7 @@ void dynamic_service_example() {
     std::cout << "\nAdding logger service dynamically..." << std::endl;
     auto logger = std::make_shared<mock_logger>();
     logger->start();
-    service_container::global().register_singleton<logger_interface>(logger);
+    service_container::global().register_singleton<ILogger>(logger);
     
     // Create new context that will pick up the logger
     thread_context new_context;

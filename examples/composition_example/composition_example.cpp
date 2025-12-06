@@ -36,47 +36,86 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/interfaces/service_container.h>
 #include <kcenon/thread/interfaces/thread_context.h>
-#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 #include <kcenon/thread/interfaces/monitoring_interface.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/core/log_level.h>
-// #include "../../src/impl/typed_pool/typed_thread_pool.h"
-// #include "../../src/impl/typed_pool/callback_typed_job.h"
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
-// using namespace kcenon::thread;
+using log_level = kcenon::common::interfaces::log_level;
 
 /**
- * @brief Simple console logger implementation
+ * @brief Simple console logger implementation using common_system ILogger
+ *
+ * @note Issue #261: Updated to use common_system's ILogger interface.
  */
-class console_logger : public logger_interface {
+class console_logger : public kcenon::common::interfaces::ILogger {
 public:
-    void log(log_level level, const std::string& message) override {
+    using VoidResult = kcenon::common::VoidResult;
+    using log_entry = kcenon::common::interfaces::log_entry;
+    using source_location = kcenon::common::source_location;
+
+    VoidResult log(log_level level, const std::string& message) override {
         std::cout << "[" << level_to_string(level) << "] " << message << std::endl;
+        return VoidResult::ok({});
     }
-    
-    void log(log_level level, const std::string& message,
-             const std::string& file, int line, const std::string& function) override {
-        std::cout << "[" << level_to_string(level) << "] " 
-                  << file << ":" << line << " (" << function << ") - " 
+
+    VoidResult log(log_level level,
+                   std::string_view message,
+                   const source_location& loc = source_location::current()) override {
+        std::cout << "[" << level_to_string(level) << "] "
+                  << loc.file_name() << ":" << loc.line() << " (" << loc.function_name() << ") - "
                   << message << std::endl;
+        return VoidResult::ok({});
     }
-    
-    bool is_enabled(log_level level) const override {
+
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
+    VoidResult log(log_level level, const std::string& message,
+                   const std::string& file, int line, const std::string& function) override {
+        std::cout << "[" << level_to_string(level) << "] "
+                  << file << ":" << line << " (" << function << ") - "
+                  << message << std::endl;
+        return VoidResult::ok({});
+    }
+
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+#endif
+
+    VoidResult log(const log_entry& entry) override {
+        return log(entry.level, entry.message, entry.file, entry.line, entry.function);
+    }
+
+    bool is_enabled(log_level /*level*/) const override {
         return true; // Enable all levels for demo
     }
-    
-    void flush() override {
-        std::cout.flush();
+
+    VoidResult set_level(log_level level) override {
+        min_level_ = level;
+        return VoidResult::ok({});
     }
-    
+
+    log_level get_level() const override {
+        return min_level_;
+    }
+
+    VoidResult flush() override {
+        std::cout.flush();
+        return VoidResult::ok({});
+    }
+
 private:
     std::string level_to_string(log_level level) const {
-        // Convert to log_level_v2 and use its to_string
-        return std::string(to_string(to_v2(level)));
+        return std::string(kcenon::common::interfaces::to_string(level));
     }
+
+    log_level min_level_ = log_level::trace;
 };
 
 /**
@@ -127,7 +166,7 @@ void demonstrate_composition() {
     auto& container = service_container::global();
     
     // Register logger service
-    container.register_singleton<logger_interface>(
+    container.register_singleton<kcenon::common::interfaces::ILogger>(
         std::make_shared<console_logger>());
     
     // Register monitoring service

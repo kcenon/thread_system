@@ -32,8 +32,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <kcenon/thread/interfaces/logger_interface.h>
-#include <kcenon/thread/core/log_level.h>
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 #include <iostream>
 #include <mutex>
 #include <iomanip>
@@ -42,86 +42,149 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
  * @brief Mock logger implementation for demonstration
- * 
- * In a real application, this would be replaced with:
- * #include <logger_system/logger.h>
- * using logger_module::logger;
+ *
+ * Implements common::interfaces::ILogger for use in examples.
+ * In a real application, this would be replaced with logger_system.
+ *
+ * @note Issue #261: Updated to use common_system's ILogger interface.
  */
-class mock_logger : public kcenon::thread::logger_interface {
+class mock_logger : public kcenon::common::interfaces::ILogger {
 public:
-    mock_logger() : min_level_(kcenon::thread::log_level::trace) {}
-    
-    void log(kcenon::thread::log_level level, const std::string& message) override {
-        if (level < min_level_) return;
-        
+    using log_level = kcenon::common::interfaces::log_level;
+    using log_entry = kcenon::common::interfaces::log_entry;
+    using VoidResult = kcenon::common::VoidResult;
+    using source_location = kcenon::common::source_location;
+
+    mock_logger() : min_level_(log_level::trace) {}
+
+    VoidResult log(log_level level, const std::string& message) override {
+        if (!is_enabled(level)) {
+            return VoidResult::ok({});
+        }
+
         std::lock_guard<std::mutex> lock(mutex_);
-        auto& stream = (level <= kcenon::thread::log_level::error) ? std::cerr : std::cout;
-        
+        auto& stream = (level >= log_level::error) ? std::cerr : std::cout;
+
         stream << "[" << format_time() << "] "
                << "[" << level_to_string(level) << "] "
                << message << std::endl;
+
+        return VoidResult::ok({});
     }
-    
-    void log(kcenon::thread::log_level level, const std::string& message,
-             const std::string& file, int line, const std::string& function) override {
-        if (level < min_level_) return;
-        
+
+    VoidResult log(log_level level,
+                   std::string_view message,
+                   const source_location& loc = source_location::current()) override {
+        if (!is_enabled(level)) {
+            return VoidResult::ok({});
+        }
+
         std::lock_guard<std::mutex> lock(mutex_);
-        auto& stream = (level <= kcenon::thread::log_level::error) ? std::cerr : std::cout;
-        
+        auto& stream = (level >= log_level::error) ? std::cerr : std::cout;
+
         stream << "[" << format_time() << "] "
                << "[" << level_to_string(level) << "] ";
-        
+
+        std::string file = loc.file_name();
+        if (!file.empty()) {
+            size_t pos = file.find_last_of("/\\");
+            std::string filename = (pos != std::string::npos) ? file.substr(pos + 1) : file;
+            stream << filename << ":" << loc.line() << " (" << loc.function_name() << ") ";
+        }
+
+        stream << message << std::endl;
+
+        return VoidResult::ok({});
+    }
+
+// Suppress deprecation warning for implementing the deprecated interface method
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+    #pragma warning(push)
+    #pragma warning(disable: 4996)
+#endif
+
+    VoidResult log(log_level level, const std::string& message,
+                   const std::string& file, int line, const std::string& function) override {
+        if (!is_enabled(level)) {
+            return VoidResult::ok({});
+        }
+
+        std::lock_guard<std::mutex> lock(mutex_);
+        auto& stream = (level >= log_level::error) ? std::cerr : std::cout;
+
+        stream << "[" << format_time() << "] "
+               << "[" << level_to_string(level) << "] ";
+
         if (!file.empty()) {
             size_t pos = file.find_last_of("/\\");
             std::string filename = (pos != std::string::npos) ? file.substr(pos + 1) : file;
             stream << filename << ":" << line << " (" << function << ") ";
         }
-        
+
         stream << message << std::endl;
+
+        return VoidResult::ok({});
     }
-    
-    bool is_enabled(kcenon::thread::log_level level) const override {
-        return level >= min_level_;
+
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+    #pragma warning(pop)
+#endif
+
+    VoidResult log(const log_entry& entry) override {
+        return log(entry.level, entry.message, entry.file, entry.line, entry.function);
     }
-    
-    void flush() override {
+
+    bool is_enabled(log_level level) const override {
+        return static_cast<int>(level) >= static_cast<int>(min_level_);
+    }
+
+    VoidResult set_level(log_level level) override {
+        min_level_ = level;
+        return VoidResult::ok({});
+    }
+
+    log_level get_level() const override {
+        return min_level_;
+    }
+
+    VoidResult flush() override {
         std::cout.flush();
         std::cerr.flush();
+        return VoidResult::ok({});
     }
-    
+
     void start() {
         std::cout << "[MockLogger] Started" << std::endl;
     }
-    
+
     void stop() {
         flush();
         std::cout << "[MockLogger] Stopped" << std::endl;
     }
-    
-    void set_min_level(kcenon::thread::log_level level) {
-        min_level_ = level;
-    }
-    
+
 private:
     std::string format_time() const {
         auto now = std::chrono::system_clock::now();
         auto time_t = std::chrono::system_clock::to_time_t(now);
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
             now.time_since_epoch()) % 1000;
-        
+
         std::ostringstream oss;
         oss << std::put_time(std::localtime(&time_t), "%H:%M:%S");
         oss << "." << std::setfill('0') << std::setw(3) << ms.count();
         return oss.str();
     }
-    
-    std::string level_to_string(kcenon::thread::log_level level) const {
-        // Convert to log_level_v2 and use its to_string
-        return std::string(kcenon::thread::to_string(kcenon::thread::to_v2(level)));
+
+    std::string level_to_string(log_level level) const {
+        return std::string(kcenon::common::interfaces::to_string(level));
     }
-    
+
 private:
-    kcenon::thread::log_level min_level_;
+    log_level min_level_;
     mutable std::mutex mutex_;
 };

@@ -405,7 +405,7 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
     for (auto& worker : workers_) {
         auto stop_result = worker->stop();
         if (stop_result.has_error()) {
-            context_.log(log_level::error, formatter::format("error stopping worker: {}",
+            context_.log(common::interfaces::log_level::error, formatter::format("error stopping worker: {}",
                                                              stop_result.get_error().to_string()));
         }
     }

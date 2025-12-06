@@ -459,14 +459,14 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		if (!started_time_point.has_value())
 		{
 			// Standard logging without timing information
-			context_.log(log_level::debug,
+			context_.log(common::interfaces::log_level::debug,
 			            formatter::format("job executed successfully: {} on thread_worker",
 			                            job_name));
 		}
 		else
 		{
 			// Enhanced logging with execution timing information
-			context_.log(log_level::debug,
+			context_.log(common::interfaces::log_level::debug,
 			            formatter::format("job executed successfully: {} on thread_worker ({}ns)",
 			                            job_name, execution_duration_ns));
 
@@ -563,7 +563,7 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			job_token.cancel();
 
 			// Log cancellation attempt for debugging
-			context_.log(log_level::debug,
+			context_.log(common::interfaces::log_level::debug,
 			            formatter::format("Cancellation requested for job: {} on worker {}",
 			                            job_ptr->get_name(), worker_id_));
 		}
