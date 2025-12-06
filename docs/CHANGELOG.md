@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #262**: Add LoggerSystemAdapter for runtime binding
+  - New `logger_system_adapter` class bridging logger_system to common_system's ILogger interface
+  - Implements all ILogger methods with proper log level conversion
+  - Supports C++20 source_location and legacy file/line/function parameters
+  - Uses typed_adapter base for type safety and wrapper depth tracking (max depth: 2)
+  - Thread-safe operation verified with concurrent writer tests
+  - Conditional compilation with BUILD_WITH_COMMON_SYSTEM and BUILD_WITH_LOGGER_SYSTEM flags
+  - Comprehensive unit test suite covering all methods and error scenarios
 - **Issue #251**: Add error handling and edge case tests for adaptive_job_queue
   - 22 comprehensive test cases covering error handling and edge cases
   - Mode switch error handling tests (5 tests): non-manual policy rejection, concurrent mode switching
