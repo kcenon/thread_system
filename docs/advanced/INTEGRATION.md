@@ -230,29 +230,38 @@ Integrate thread_system with logger_system for comprehensive logging of thread o
 
 ### Logger Interface Implementation
 
-The logger_system implements the `logger_interface` defined in thread_system:
+The logger_system implements the `ILogger` interface defined in common_system:
 
 ```cpp
-#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 #include <kcenon/logger/core/logger.h>
 
-// Logger system implements thread system's logger interface
-class logger_adapter : public kcenon::thread::interfaces::logger_interface {
+// Logger system implements common_system's ILogger interface
+// This allows seamless integration with thread_system
+class logger_adapter : public kcenon::common::interfaces::ILogger {
 private:
     std::shared_ptr<kcenon::logger::logger> logger_;
+    using log_level = kcenon::common::interfaces::log_level;
+    using VoidResult = kcenon::common::VoidResult;
 
 public:
     explicit logger_adapter(std::shared_ptr<kcenon::logger::logger> logger)
         : logger_(std::move(logger)) {}
 
-    void log(log_level level, const std::string& message) override {
+    VoidResult log(log_level level, const std::string& message) override {
         logger_->log(convert_log_level(level), message);
+        return VoidResult::ok({});
     }
 
-    void log(log_level level, const std::string& message,
-            const std::source_location& location) override {
-        logger_->log(convert_log_level(level), message, location);
+    VoidResult log(log_level level,
+                   std::string_view message,
+                   const kcenon::common::source_location& loc) override {
+        logger_->log(convert_log_level(level), std::string(message), loc);
+        return VoidResult::ok({});
     }
+
+    // ... implement other ILogger methods
 
 private:
     kcenon::logger::log_level convert_log_level(log_level level) {
@@ -260,13 +269,17 @@ private:
             case log_level::trace: return kcenon::logger::log_level::trace;
             case log_level::debug: return kcenon::logger::log_level::debug;
             case log_level::info:  return kcenon::logger::log_level::info;
-            case log_level::warn:  return kcenon::logger::log_level::warn;
+            case log_level::warning: return kcenon::logger::log_level::warn;
             case log_level::error: return kcenon::logger::log_level::error;
-            case log_level::fatal: return kcenon::logger::log_level::fatal;
+            case log_level::critical: return kcenon::logger::log_level::fatal;
             default: return kcenon::logger::log_level::info;
         }
     }
 };
+
+// Register with GlobalLoggerRegistry for automatic thread_system integration
+auto logger = std::make_shared<logger_adapter>(my_logger);
+kcenon::common::interfaces::GlobalLoggerRegistry::instance().set_default_logger(logger);
 ```
 
 ### Injecting Logger into Thread Pool

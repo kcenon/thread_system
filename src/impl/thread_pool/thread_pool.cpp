@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/interfaces/logger_interface.h>
 #include <kcenon/thread/utils/formatter.h>
 
 using namespace utility_module;
@@ -406,7 +405,7 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
     for (auto& worker : workers_) {
         auto stop_result = worker->stop();
         if (stop_result.has_error()) {
-            context_.log(log_level::error, formatter::format("error stopping worker: {}",
+            context_.log(common::interfaces::log_level::error, formatter::format("error stopping worker: {}",
                                                              stop_result.get_error().to_string()));
         }
     }

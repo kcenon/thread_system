@@ -45,34 +45,11 @@ constexpr std::string_view to_string(log_level_v2 level) noexcept {
 }
 
 // ============================================================================
-// Legacy log_level compatibility (from thread_logger.h)
+// Legacy log_level compatibility
 // ============================================================================
-
-// Forward declaration of legacy log_level (defined in thread_logger.h)
-enum class log_level;
-
-/**
- * @brief Convert legacy log_level to log_level_v2
- *
- * Legacy log_level uses implicit enum values (trace=0, debug=1, etc.)
- * which happens to match log_level_v2, so conversion is straightforward.
- */
-constexpr log_level_v2 to_v2(log_level old_level) noexcept {
-    // Legacy: trace=0, debug=1, info=2, warning=3, error=4, critical=5
-    // New:    trace=0, debug=1, info=2, warn=3,    error=4, critical=5
-    return static_cast<log_level_v2>(static_cast<uint8_t>(old_level));
-}
-
-/**
- * @brief Convert log_level_v2 to legacy log_level
- */
-constexpr log_level from_v2(log_level_v2 new_level) noexcept {
-    // off level doesn't exist in legacy, map to critical
-    if (new_level == log_level_v2::off) {
-        return static_cast<log_level>(5); // critical
-    }
-    return static_cast<log_level>(static_cast<uint8_t>(new_level));
-}
+// Note: Legacy log_level from thread_logger.h is deprecated.
+// Use log_level_v2 or common::interfaces::log_level instead.
+// See Issue #261 for migration details.
 
 /**
  * @brief Check if a log level should be logged given a minimum level
