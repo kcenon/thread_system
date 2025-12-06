@@ -49,6 +49,12 @@ if(UNIX AND NOT WIN32)
   # Validates platform-specific features, atomic operations, and cache performance
   add_subdirectory(platform_test)
 
+  # Adapter tests
+  # Validates adapters that bridge thread_system components to common_system interfaces
+  if(BUILD_WITH_COMMON_SYSTEM AND BUILD_WITH_LOGGER_SYSTEM)
+    add_subdirectory(adapters_test)
+  endif()
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
