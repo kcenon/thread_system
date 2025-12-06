@@ -96,7 +96,15 @@ namespace kcenon::thread {
  * WARNING: This enumeration has inverted ordering (critical=0, trace=5).
  * The unified interface uses standard ordering (trace=0, critical=5).
  */
-enum class log_level { critical = 0, error = 1, warning = 2, info = 3, debug = 4, trace = 5 };
+enum class [[deprecated("Use common::interfaces::log_level instead. Note: ordering differs - "
+                         "common_system uses trace=0...critical=5")]] log_level {
+    critical = 0,
+    error = 1,
+    warning = 2,
+    info = 3,
+    debug = 4,
+    trace = 5
+};
 
 /**
  * @brief Logger interface for thread system
