@@ -34,36 +34,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 #include <optional>
-#include "logger_interface.h"
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 #include "monitoring_interface.h"
 #include "service_container.h"
-#include <kcenon/thread/core/log_level.h>
 
 namespace kcenon::thread {
+
+// Type aliases for common_system logger types
+using ILogger = common::interfaces::ILogger;
+using log_level = common::interfaces::log_level;
 
 /**
  * @brief Context object that provides access to optional services
  *
  * This class uses composition to provide thread system components
  * with optional access to logger and monitoring services.
+ *
+ * @note Issue #261: Migrated to use common_system's ILogger interface.
+ *       The context now uses GlobalLoggerRegistry for default logger resolution.
  */
 class thread_context {
 public:
     /**
-     * @brief Default constructor - resolves services from global container
+     * @brief Default constructor - resolves services from global registry
      */
-    thread_context() 
-        : logger_(service_container::global().resolve<logger_interface>())
+    thread_context()
+        : logger_(common::interfaces::GlobalLoggerRegistry::instance().get_default_logger())
         , monitoring_(service_container::global().resolve<monitoring_interface::monitoring_interface>()) {
     }
 
     /**
      * @brief Constructor with explicit service injection
-     * @param logger Optional logger service
+     * @param logger Optional logger service (ILogger from common_system)
      * @param monitoring Optional monitoring service
      */
     explicit thread_context(
-        std::shared_ptr<logger_interface> logger,
+        std::shared_ptr<ILogger> logger,
         std::shared_ptr<monitoring_interface::monitoring_interface> monitoring = nullptr)
         : logger_(std::move(logger))
         , monitoring_(std::move(monitoring)) {
@@ -73,7 +80,7 @@ public:
      * @brief Get the logger service
      * @return Logger service or nullptr if not available
      */
-    std::shared_ptr<logger_interface> logger() const {
+    std::shared_ptr<ILogger> logger() const {
         return logger_;
     }
 
@@ -87,9 +94,10 @@ public:
 
     /**
      * @brief Log a message if logger is available
-     * @param level Log level
+     * @param level Log level (common::interfaces::log_level)
      * @param message Log message
-     * @deprecated Use log(log_level_v2, const std::string&) instead
+     *
+     * @note Issue #261: Now uses common_system's ILogger interface.
      */
     void log(log_level level, const std::string& message) const {
         if (logger_) {
@@ -98,44 +106,18 @@ public:
     }
 
     /**
-     * @brief Log a message if logger is available (v2 API)
-     * @param level Log level (v2 with ascending order)
+     * @brief Log a message with source location if logger is available
+     * @param level Log level (common::interfaces::log_level)
      * @param message Log message
+     * @param loc Source location (automatically captured)
+     *
+     * @note Issue #261: Now uses common_system's ILogger with source_location support.
      */
-    void log(log_level_v2 level, const std::string& message) const {
+    void log(log_level level,
+             std::string_view message,
+             const common::source_location& loc = common::source_location::current()) const {
         if (logger_) {
-            logger_->log(from_v2(level), message);
-        }
-    }
-
-    /**
-     * @brief Log a message with source information if logger is available
-     * @param level Log level
-     * @param message Log message
-     * @param file Source file
-     * @param line Source line
-     * @param function Function name
-     * @deprecated Use log(log_level_v2, ...) instead
-     */
-    void log(log_level level, const std::string& message,
-             const std::string& file, int line, const std::string& function) const {
-        if (logger_) {
-            logger_->log(level, message, file, line, function);
-        }
-    }
-
-    /**
-     * @brief Log a message with source information if logger is available (v2 API)
-     * @param level Log level (v2 with ascending order)
-     * @param message Log message
-     * @param file Source file
-     * @param line Source line
-     * @param function Function name
-     */
-    void log(log_level_v2 level, const std::string& message,
-             const std::string& file, int line, const std::string& function) const {
-        if (logger_) {
-            logger_->log(from_v2(level), message, file, line, function);
+            logger_->log(level, message, loc);
         }
     }
 
@@ -228,17 +210,19 @@ public:
     }
 
 private:
-    std::shared_ptr<logger_interface> logger_;
+    std::shared_ptr<ILogger> logger_;
     std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
     mutable std::string context_name_;
 };
 
 /**
  * @brief Builder for thread_context with fluent interface
+ *
+ * @note Issue #261: Updated to use common_system's ILogger interface.
  */
 class thread_context_builder {
 public:
-    thread_context_builder& with_logger(std::shared_ptr<logger_interface> logger) {
+    thread_context_builder& with_logger(std::shared_ptr<ILogger> logger) {
         logger_ = std::move(logger);
         return *this;
     }
@@ -249,8 +233,8 @@ public:
         return *this;
     }
 
-    thread_context_builder& from_global_container() {
-        logger_ = service_container::global().resolve<logger_interface>();
+    thread_context_builder& from_global_registry() {
+        logger_ = common::interfaces::GlobalLoggerRegistry::instance().get_default_logger();
         monitoring_ = service_container::global().resolve<monitoring_interface::monitoring_interface>();
         return *this;
     }
@@ -260,7 +244,7 @@ public:
     }
 
 private:
-    std::shared_ptr<logger_interface> logger_;
+    std::shared_ptr<ILogger> logger_;
     std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
 };
 
