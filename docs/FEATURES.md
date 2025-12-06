@@ -738,17 +738,24 @@ if (result.has_error()) {
 
 ### Logger Integration (Optional)
 
-Seamless integration with separate logger project.
+Seamless integration with separate logger project using common_system's ILogger interface.
 
 ```cpp
-#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 
-class my_logger : public logger_interface {
-    // Implement interface
+// Implement the ILogger interface from common_system
+class my_logger : public kcenon::common::interfaces::ILogger {
+    // Implement interface methods
 };
 
-// Use with thread pool
-pool->set_logger(std::make_shared<my_logger>());
+// Register with GlobalLoggerRegistry for thread_system integration
+auto logger = std::make_shared<my_logger>();
+kcenon::common::interfaces::GlobalLoggerRegistry::instance().set_default_logger(logger);
+
+// thread_context will automatically use the registered logger
+kcenon::thread::thread_context context;
+context.log(kcenon::common::interfaces::log_level::info, "Ready");
 ```
 
 ---
