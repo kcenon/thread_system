@@ -7,6 +7,15 @@
 
 ## [미출시]
 
+### Deprecated
+- **이슈 #263**: thread-local logger_interface를 deprecated로 표시
+  - `logger_interface.h`의 `log_level` enum에 `[[deprecated]]` 속성 추가
+  - `logger_interface`와 `logger_registry` 클래스는 이미 deprecation 속성 보유
+  - deprecated 타입 사용 시 컴파일러 경고 발생
+  - 포괄적인 마이그레이션 가이드 생성: `docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md`
+  - 마이그레이션 경로: common_system의 `common::interfaces::ILogger` 사용
+  - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
+
 ### 추가됨
 - **이슈 #246**: adaptive_queue_sample 예제 재활성화
   - adaptive_queue_sample.cpp에서 logger 의존성 제거
