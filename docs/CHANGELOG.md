@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Deprecated
+- **Issue #263**: Mark thread-local logger_interface as deprecated
+  - Added `[[deprecated]]` attribute to `log_level` enum in `logger_interface.h`
+  - `logger_interface` and `logger_registry` classes already had deprecation attributes
+  - Compiler warnings now generated when using deprecated types
+  - Created comprehensive migration guide: `docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md`
+  - Migration path: Use `common::interfaces::ILogger` from common_system instead
+  - **Timeline**: Deprecated in v1.x, to be removed in v2.0
+
 ### Added
 - **Issue #262**: Add LoggerSystemAdapter for runtime binding
   - New `logger_system_adapter` class bridging logger_system to common_system's ILogger interface
