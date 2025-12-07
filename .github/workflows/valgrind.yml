@@ -110,11 +110,25 @@ jobs:
         # GCC 13+ on Ubuntu 24.04 has full std::format support
         sudo apt-get install -y cmake ninja-build g++ valgrind
 
+    - name: Checkout common_system (optional)
+      continue-on-error: true
+      run: |
+        cd ..
+        if [ ! -d "common_system" ]; then
+          git clone https://github.com/kcenon/common_system.git || echo "common_system not available"
+        fi
+
     - name: Configure and Build
       run: |
+        BUILD_WITH_COMMON="OFF"
+        if [ -d "../common_system" ]; then
+          BUILD_WITH_COMMON="ON"
+        fi
+
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_FLAGS="-g -O0" \
+          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_TESTS=ON
         cmake --build build --parallel
 
