@@ -31,10 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-
-#include <kcenon/thread/queue/queue_factory.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/interfaces/queue_capabilities_interface.h>
+#include <kcenon/thread/queue/queue_factory.h>
 
 #include <atomic>
 #include <thread>
@@ -46,7 +45,7 @@ class QueueFactoryTest : public ::testing::Test {
 protected:
     void SetUp() override {}
     void TearDown() override {
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        // Hazard pointer cleanup happens deterministically when pointers go out of scope
     }
 };
 
@@ -96,18 +95,17 @@ TEST_F(QueueFactoryTest, CreateAdaptiveQueueDefaultPolicy) {
 }
 
 TEST_F(QueueFactoryTest, CreateAdaptiveQueueWithPolicy) {
-    auto accuracy_queue = queue_factory::create_adaptive_queue(
-        adaptive_job_queue::policy::accuracy_first);
+    auto accuracy_queue =
+        queue_factory::create_adaptive_queue(adaptive_job_queue::policy::accuracy_first);
     EXPECT_EQ(accuracy_queue->current_policy(), adaptive_job_queue::policy::accuracy_first);
     EXPECT_EQ(accuracy_queue->current_mode(), adaptive_job_queue::mode::mutex);
 
-    auto perf_queue = queue_factory::create_adaptive_queue(
-        adaptive_job_queue::policy::performance_first);
+    auto perf_queue =
+        queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
     EXPECT_EQ(perf_queue->current_policy(), adaptive_job_queue::policy::performance_first);
     EXPECT_EQ(perf_queue->current_mode(), adaptive_job_queue::mode::lock_free);
 
-    auto manual_queue = queue_factory::create_adaptive_queue(
-        adaptive_job_queue::policy::manual);
+    auto manual_queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::manual);
     EXPECT_EQ(manual_queue->current_policy(), adaptive_job_queue::policy::manual);
 }
 
@@ -248,43 +246,43 @@ TEST_F(QueueFactoryTest, CompileTimeSelectionAccurate) {
     // queue_type_selector<true, false> should be job_queue
     using selected_type = queue_type_selector<true, false>::type;
     static_assert(std::is_same_v<selected_type, job_queue>,
-        "queue_type_selector<true, false> should select job_queue");
+                  "queue_type_selector<true, false> should select job_queue");
 
     // Using queue_t alias
     static_assert(std::is_same_v<queue_t<true, false>, job_queue>,
-        "queue_t<true, false> should be job_queue");
+                  "queue_t<true, false> should be job_queue");
 }
 
 TEST_F(QueueFactoryTest, CompileTimeSelectionFast) {
     // queue_type_selector<false, true> should be lockfree_job_queue
     using selected_type = queue_type_selector<false, true>::type;
     static_assert(std::is_same_v<selected_type, lockfree_job_queue>,
-        "queue_type_selector<false, true> should select lockfree_job_queue");
+                  "queue_type_selector<false, true> should select lockfree_job_queue");
 
     // Using queue_t alias
     static_assert(std::is_same_v<queue_t<false, true>, lockfree_job_queue>,
-        "queue_t<false, true> should be lockfree_job_queue");
+                  "queue_t<false, true> should be lockfree_job_queue");
 }
 
 TEST_F(QueueFactoryTest, CompileTimeSelectionBalanced) {
     // queue_type_selector<false, false> should be adaptive_job_queue
     using selected_type = queue_type_selector<false, false>::type;
     static_assert(std::is_same_v<selected_type, adaptive_job_queue>,
-        "queue_type_selector<false, false> should select adaptive_job_queue");
+                  "queue_type_selector<false, false> should select adaptive_job_queue");
 
     // Using queue_t alias
     static_assert(std::is_same_v<queue_t<false, false>, adaptive_job_queue>,
-        "queue_t<false, false> should be adaptive_job_queue");
+                  "queue_t<false, false> should be adaptive_job_queue");
 }
 
 TEST_F(QueueFactoryTest, TypeAliases) {
     // Verify pre-defined type aliases
     static_assert(std::is_same_v<accurate_queue_t, job_queue>,
-        "accurate_queue_t should be job_queue");
+                  "accurate_queue_t should be job_queue");
     static_assert(std::is_same_v<fast_queue_t, lockfree_job_queue>,
-        "fast_queue_t should be lockfree_job_queue");
+                  "fast_queue_t should be lockfree_job_queue");
     static_assert(std::is_same_v<balanced_queue_t, adaptive_job_queue>,
-        "balanced_queue_t should be adaptive_job_queue");
+                  "balanced_queue_t should be adaptive_job_queue");
 }
 
 // ============================================
@@ -373,9 +371,7 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
-        });
+        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
         EXPECT_TRUE(scheduler->get_next_job().has_value());
     }
@@ -386,9 +382,7 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
-        });
+        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
         EXPECT_TRUE(scheduler->get_next_job().has_value());
     }
@@ -399,9 +393,7 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
-        });
+        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
         EXPECT_TRUE(scheduler->get_next_job().has_value());
     }
@@ -428,9 +420,7 @@ TEST_F(QueueFactoryTest, ExistingCodeStillWorks) {
     EXPECT_TRUE(q3->empty());
 
     // All existing methods work
-    auto job = std::make_unique<callback_job>([]() -> result_void {
-        return result_void();
-    });
+    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
     EXPECT_FALSE(q1->enqueue(std::move(job)).has_error());
     EXPECT_TRUE(q1->dequeue().has_value());
 }
