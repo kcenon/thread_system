@@ -31,9 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-
-#include <kcenon/thread/lockfree/lockfree_job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/lockfree/lockfree_job_queue.h>
 
 #include <atomic>
 #include <chrono>
@@ -49,8 +48,7 @@ protected:
     }
 
     void TearDown() override {
-        // Allow hazard pointer cleanup
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        // Hazard pointer cleanup happens deterministically when pointers go out of scope
     }
 };
 
@@ -314,9 +312,8 @@ TEST_F(LockFreeJobQueueTest, HazardPointerReclamation) {
     for (int iter = 0; iter < NUM_ITERATIONS; ++iter) {
         // Enqueue jobs
         for (int i = 0; i < JOBS_PER_ITERATION; ++i) {
-            auto job = std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
-            });
+            auto job =
+                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 
             auto result = queue.enqueue(std::move(job));
             EXPECT_FALSE(result.has_error());
@@ -330,8 +327,8 @@ TEST_F(LockFreeJobQueueTest, HazardPointerReclamation) {
 
         EXPECT_TRUE(queue.empty());
 
-        // Allow hazard pointer reclamation
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        // Hazard pointer reclamation happens deterministically
+        // No sleep needed - the queue is empty and all hazard pointers are released
     }
 
     // If we reach here without segfault, hazard pointers are working
@@ -344,9 +341,8 @@ TEST_F(LockFreeJobQueueTest, DestructionWithPendingJobs) {
         lockfree_job_queue queue;
 
         for (int i = 0; i < 100; ++i) {
-            auto job = std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
-            });
+            auto job =
+                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 
             auto result = queue.enqueue(std::move(job));
             EXPECT_FALSE(result.has_error());
@@ -378,9 +374,8 @@ TEST_F(LockFreeJobQueueTest, StressTest) {
             for (int i = 0; i < OPERATIONS_PER_THREAD; ++i) {
                 if ((t + i) % 2 == 0) {
                     // Enqueue
-                    auto job = std::make_unique<callback_job>([]() -> result_void {
-                        return result_void();
-                    });
+                    auto job = std::make_unique<callback_job>(
+                        []() -> result_void { return result_void(); });
 
                     auto result = queue.enqueue(std::move(job));
                     if (!result.has_error()) {
@@ -494,9 +489,8 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
         // Launch batch of short-lived producers
         for (int t = 0; t < THREADS_PER_BATCH; ++t) {
             producers.emplace_back([&queue, &total_enqueued]() {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
-                });
+                auto job =
+                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
 
                 auto result = queue.enqueue(std::move(job));
                 if (!result.has_error()) {
@@ -590,9 +584,7 @@ TEST_F(LockFreeJobQueueTest, GetNextJobDelegatesToDequeue) {
     lockfree_job_queue queue;
 
     // First enqueue a job
-    auto job = std::make_unique<callback_job>([]() -> result_void {
-        return result_void();
-    });
+    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
     auto enqueue_result = queue.enqueue(std::move(job));
     EXPECT_FALSE(enqueue_result.has_error());
 
@@ -645,13 +637,13 @@ TEST_F(LockFreeJobQueueTest, GetCapabilitiesReturnsCorrectValues) {
     auto caps = queue.get_capabilities();
 
     // Verify lock-free queue characteristics
-    EXPECT_FALSE(caps.exact_size);            // Approximate only
-    EXPECT_FALSE(caps.atomic_empty_check);    // Non-atomic
-    EXPECT_TRUE(caps.lock_free);              // Lock-free implementation
-    EXPECT_FALSE(caps.wait_free);             // Not wait-free
-    EXPECT_FALSE(caps.supports_batch);        // No batch operations
-    EXPECT_FALSE(caps.supports_blocking_wait);// Spin-wait only
-    EXPECT_FALSE(caps.supports_stop);         // No stop() method
+    EXPECT_FALSE(caps.exact_size);              // Approximate only
+    EXPECT_FALSE(caps.atomic_empty_check);      // Non-atomic
+    EXPECT_TRUE(caps.lock_free);                // Lock-free implementation
+    EXPECT_FALSE(caps.wait_free);               // Not wait-free
+    EXPECT_FALSE(caps.supports_batch);          // No batch operations
+    EXPECT_FALSE(caps.supports_blocking_wait);  // Spin-wait only
+    EXPECT_FALSE(caps.supports_stop);           // No stop() method
 }
 
 // Test convenience methods from queue_capabilities_interface
@@ -736,9 +728,8 @@ TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
         // Producer thread
         std::thread producer([&queue, &stop]() {
             while (!stop.load(std::memory_order_relaxed)) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
-                });
+                auto job =
+                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
                 queue->enqueue(std::move(job));
             }
         });
