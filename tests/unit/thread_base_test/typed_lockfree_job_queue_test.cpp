@@ -57,7 +57,7 @@ protected:
 
     void TearDown() override {
         // Allow hazard pointer cleanup
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        // Hazard pointer cleanup happens deterministically when pointers go out of scope
     }
 };
 
