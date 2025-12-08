@@ -31,15 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-
-#include <kcenon/thread/queue/adaptive_job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/queue/adaptive_job_queue.h>
 
 #include <atomic>
 #include <chrono>
+#include <latch>
 #include <thread>
 #include <vector>
-#include <latch>
 
 using namespace kcenon::thread;
 
@@ -50,8 +49,7 @@ protected:
     }
 
     void TearDown() override {
-        // Allow cleanup
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        // Hazard pointer cleanup happens deterministically when pointers go out of scope
     }
 };
 
@@ -133,9 +131,7 @@ TEST_F(AdaptiveJobQueueTest, TryDequeue) {
     EXPECT_FALSE(empty_result.has_value());
 
     // Add job
-    auto job = std::make_unique<callback_job>([]() -> result_void {
-        return result_void();
-    });
+    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
     queue.enqueue(std::move(job));
 
     // Non-empty queue
@@ -148,9 +144,7 @@ TEST_F(AdaptiveJobQueueTest, Clear) {
 
     // Add multiple jobs
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
-        });
+        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         queue.enqueue(std::move(job));
     }
 
@@ -166,9 +160,7 @@ TEST_F(AdaptiveJobQueueTest, StopQueue) {
     adaptive_job_queue queue;
 
     // Add a job
-    auto job = std::make_unique<callback_job>([]() -> result_void {
-        return result_void();
-    });
+    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
     queue.enqueue(std::move(job));
 
     // Stop
@@ -176,9 +168,8 @@ TEST_F(AdaptiveJobQueueTest, StopQueue) {
     EXPECT_TRUE(queue.is_stopped());
 
     // Enqueue should fail
-    auto another_job = std::make_unique<callback_job>([]() -> result_void {
-        return result_void();
-    });
+    auto another_job =
+        std::make_unique<callback_job>([]() -> result_void { return result_void(); });
     auto result = queue.enqueue(std::move(another_job));
     EXPECT_TRUE(result.has_error());
 
@@ -365,9 +356,7 @@ TEST_F(AdaptiveJobQueueTest, StatisticsTracking) {
 
     // Enqueue some jobs
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
-        });
+        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
         queue.enqueue(std::move(job));
     }
 
@@ -437,9 +426,8 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentEnqueueDequeue) {
         producers.emplace_back([&]() {
             start_latch.arrive_and_wait();
             for (int j = 0; j < jobs_per_producer; ++j) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
-                });
+                auto job =
+                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
                 if (!queue.enqueue(std::move(job)).has_error()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
@@ -452,8 +440,7 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentEnqueueDequeue) {
     for (int i = 0; i < num_consumers; ++i) {
         consumers.emplace_back([&]() {
             start_latch.arrive_and_wait();
-            while (!stop_consumers.load(std::memory_order_acquire) ||
-                   !queue.empty()) {
+            while (!stop_consumers.load(std::memory_order_acquire) || !queue.empty()) {
                 if (auto result = queue.try_dequeue(); result.has_value()) {
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
@@ -491,9 +478,8 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentModeSwitchWithOperations) {
     // Worker thread doing enqueue/dequeue
     std::thread worker([&]() {
         while (!stop.load(std::memory_order_acquire)) {
-            auto job = std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
-            });
+            auto job =
+                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
             if (!queue.enqueue(std::move(job)).has_error()) {
                 successful_ops.fetch_add(1, std::memory_order_relaxed);
             }
