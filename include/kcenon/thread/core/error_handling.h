@@ -734,9 +734,12 @@ std::pair<std::optional<T>, std::optional<std::string>> result_to_pair(const res
 #ifdef THREAD_HAS_COMMON_RESULT
 namespace detail {
 
-// Use unqualified 'common::' to support both old (namespace common)
-// and new (namespace kcenon::common) versions via backward compatibility alias
-using namespace common;
+// Explicit using declarations for common_system types
+// This avoids namespace pollution while maintaining compatibility
+using kcenon::common::error_info;
+using kcenon::common::Result;
+using kcenon::common::VoidResult;
+using kcenon::common::ok;
 
 /**
  * @brief Convert thread::error to common::error_info
