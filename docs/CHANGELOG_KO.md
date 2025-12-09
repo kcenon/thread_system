@@ -7,6 +7,13 @@
 
 ## [미출시]
 
+### 변경됨
+- **이슈 #275**: atomic_wait.h를 C++20 concepts로 리팩토링
+  - `std::enable_if<std::is_integral<U>::value>` SFINAE 패턴을 `requires std::integral<T>` 절로 교체
+  - `USE_STD_CONCEPTS` 정의 시 `<concepts>` 헤더 include 추가
+  - `#else` 블록 내 기존 SFINAE 패턴으로 C++17 폴백 유지
+  - 더 깔끔한 템플릿 선언과 개선된 컴파일 타임 에러 메시지
+
 ### Deprecated
 - **이슈 #263**: thread-local logger_interface를 deprecated로 표시
   - `logger_interface.h`의 `log_level` enum에 `[[deprecated]]` 속성 추가
