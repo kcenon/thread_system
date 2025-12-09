@@ -354,6 +354,85 @@ function(check_std_concepts_support)
 endfunction()
 
 ##################################################
+# Check common_system C++20 Concepts support
+##################################################
+function(check_common_concepts_support)
+  option(SET_COMMON_CONCEPTS "Use common_system C++20 concepts if available" ON)
+
+  if(NOT SET_COMMON_CONCEPTS)
+    message(STATUS "common_system concepts support disabled by user")
+    return()
+  endif()
+
+  if(NOT BUILD_WITH_COMMON_SYSTEM)
+    message(STATUS "common_system not enabled - skipping concepts check")
+    return()
+  endif()
+
+  # Check compiler version requirements for C++20 concepts:
+  # - GCC 10+
+  # - Clang 10+
+  # - Apple Clang 12+
+  # - MSVC 2019 16.3+ (19.23+)
+  set(_COMPILER_SUPPORTS_CONCEPTS FALSE)
+
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "10.0")
+      set(_COMPILER_SUPPORTS_CONCEPTS TRUE)
+    endif()
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "10.0")
+      set(_COMPILER_SUPPORTS_CONCEPTS TRUE)
+    endif()
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "12.0")
+      set(_COMPILER_SUPPORTS_CONCEPTS TRUE)
+    endif()
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(MSVC_VERSION GREATER_EQUAL 1923)
+      set(_COMPILER_SUPPORTS_CONCEPTS TRUE)
+    endif()
+  endif()
+
+  if(NOT _COMPILER_SUPPORTS_CONCEPTS)
+    message(STATUS "Compiler does not meet minimum version for C++20 concepts")
+    message(STATUS "  Required: GCC 10+, Clang 10+, Apple Clang 12+, MSVC 19.23+")
+    return()
+  endif()
+
+  # Check if common_system concepts header exists
+  set(_COMMON_CONCEPTS_PATHS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../common_system/include/kcenon/common/concepts/concepts.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include/kcenon/common/concepts/concepts.h"
+    "${COMMON_SYSTEM_INCLUDE_DIR}/kcenon/common/concepts/concepts.h"
+  )
+
+  set(_COMMON_CONCEPTS_FOUND FALSE)
+  foreach(_path ${_COMMON_CONCEPTS_PATHS})
+    if(EXISTS "${_path}")
+      set(_COMMON_CONCEPTS_FOUND TRUE)
+      message(STATUS "Found common_system concepts at: ${_path}")
+      break()
+    endif()
+  endforeach()
+
+  if(_COMMON_CONCEPTS_FOUND)
+    add_definitions(-DTHREAD_HAS_COMMON_CONCEPTS=1)
+    set(THREAD_HAS_COMMON_CONCEPTS TRUE CACHE BOOL "common_system C++20 concepts available" FORCE)
+    message(STATUS "✅ Using common_system C++20 concepts")
+    message(STATUS "   Available concept categories:")
+    message(STATUS "   - Core: Resultable, Unwrappable, Mappable, Chainable")
+    message(STATUS "   - Callable: VoidCallable, Predicate, JobLike, ExecutorLike")
+    message(STATUS "   - Event: EventType, EventHandler, EventFilter")
+    message(STATUS "   - Service: ServiceInterface, ServiceImplementation")
+    message(STATUS "   - Container: SequenceContainer, AssociativeContainer")
+  else()
+    message(STATUS "common_system concepts header not found - concepts not available")
+    set(THREAD_HAS_COMMON_CONCEPTS FALSE CACHE BOOL "common_system C++20 concepts available" FORCE)
+  endif()
+endfunction()
+
+##################################################
 # Main function to check all features
 ##################################################
 function(check_thread_system_features)
@@ -368,6 +447,7 @@ function(check_thread_system_features)
   check_std_filesystem_support()
   check_std_ranges_support()
   check_std_concepts_support()
+  check_common_concepts_support()
 
   message(STATUS "Feature detection complete")
 endfunction()
