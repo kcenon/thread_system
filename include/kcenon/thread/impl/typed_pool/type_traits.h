@@ -2,23 +2,23 @@
 
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2024, DongCheol Shin
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,78 +33,44 @@
 
 /**
  * @file type_traits.h
- * @brief Type traits and concepts for typed_thread_pool module
- * 
- * This file contains type traits, concepts, and compile-time utilities
- * that help ensure type safety and provide better error messages.
+ * @brief Type traits for typed_thread_pool module
+ *
+ * This file contains type traits and compile-time utilities for the typed
+ * thread pool. Concept definitions (JobType, JobCallable) are imported from
+ * thread_concepts.h to avoid duplication.
  */
 
+#include <kcenon/thread/concepts/thread_concepts.h>
+
 #include <type_traits>
-#ifdef USE_STD_CONCEPTS
-#include <concepts>
-#endif
 #include <string>
 
 namespace kcenon::thread::detail {
 
-#ifdef USE_STD_CONCEPTS
-    /**
-     * @brief Concept to validate job type parameters
-     *
-     * A valid job type must be either an enumeration or an integral type
-     * (excluding bool for clarity). This ensures job types can be used
-     * for priority comparison and categorization.
-     */
-    template<typename T>
-    concept JobType = std::is_enum_v<T> ||
-                     (std::is_integral_v<T> && !std::is_same_v<T, bool>);
-
-    /**
-     * @brief Concept for callable job functions
-     *
-     * Validates that a type can be used as a job callback function.
-     */
-    template<typename F>
-    concept JobCallable = std::is_invocable_v<F> &&
-                         (std::is_void_v<std::invoke_result_t<F>> ||
-                          std::is_same_v<std::invoke_result_t<F>, bool> ||
-                          std::is_convertible_v<std::invoke_result_t<F>, std::string>);
-#else
-    // C++17 fallback: Use constexpr bool instead of concepts
-    template<typename T>
-    constexpr bool JobType = std::is_enum_v<T> ||
-                             (std::is_integral_v<T> && !std::is_same_v<T, bool>);
-
-    template<typename F>
-    constexpr bool JobCallable = std::is_invocable_v<F> &&
-                                 (std::is_void_v<std::invoke_result_t<F>> ||
-                                  std::is_same_v<std::invoke_result_t<F>, bool> ||
-                                  std::is_convertible_v<std::invoke_result_t<F>, std::string>);
-#endif
+    // JobType and JobCallable concepts are now imported from thread_concepts.h
+    // via the using declarations in that header's detail namespace section
 
     /**
      * @brief Type traits for job types
      *
      * Provides compile-time information about job type characteristics.
      */
-    template<typename T
 #ifdef USE_STD_CONCEPTS
-        , typename = std::enable_if_t<JobType<T>>
+    template<JobType T>
 #else
-        , typename = std::enable_if_t<JobType<T>>
+    template<typename T, typename = std::enable_if_t<JobType<T>>>
 #endif
-    >
     struct job_type_traits {
         using type = T;
-        using underlying_type = std::conditional_t<std::is_enum_v<T>, 
-                                                  std::underlying_type_t<T>, 
-                                                  T>;
-        
+        using underlying_type = std::conditional_t<std::is_enum_v<T>,
+                                                    std::underlying_type_t<T>,
+                                                    T>;
+
         static constexpr bool is_enum = std::is_enum_v<T>;
         static constexpr bool is_integral = std::is_integral_v<T>;
         static constexpr bool has_ordering = true;
         static constexpr bool is_signed = std::is_signed_v<underlying_type>;
-        
+
         /**
          * @brief Converts job type to its underlying representation
          */
@@ -115,7 +81,7 @@ namespace kcenon::thread::detail {
                 return value;
             }
         }
-        
+
         /**
          * @brief Creates job type from underlying representation
          */
@@ -127,20 +93,7 @@ namespace kcenon::thread::detail {
             }
         }
     };
-    
-    /**
-     * @brief SFINAE helper for optional job type validation
-     */
-    template<typename T, typename = void>
-    struct is_valid_job_type : std::false_type {};
-    
-    template<typename T>
-    struct is_valid_job_type<T, std::void_t<std::enable_if_t<JobType<T>>>> 
-        : std::true_type {};
-    
-    template<typename T>
-    constexpr bool is_valid_job_type_v = is_valid_job_type<T>::value;
-    
+
     /**
      * @brief Helper to determine if a type can be used as a job priority
      */
@@ -152,22 +105,31 @@ namespace kcenon::thread::detail {
         }
         return false;
     }
-    
+
     /**
      * @brief Compile-time priority comparison
      */
+#ifdef USE_STD_CONCEPTS
     template<JobType T>
+#else
+    template<typename T, typename = std::enable_if_t<JobType<T>>>
+#endif
     constexpr bool higher_priority(T lhs, T rhs) noexcept {
         using traits = job_type_traits<T>;
-        
+
         // Assume lower numerical values = higher priority
         return traits::to_underlying(lhs) < traits::to_underlying(rhs);
     }
-    
+
     /**
      * @brief Type alias for job type conversion
      */
+#ifdef USE_STD_CONCEPTS
     template<JobType T>
     using job_underlying_t = typename job_type_traits<T>::underlying_type;
-    
+#else
+    template<typename T, typename = std::enable_if_t<JobType<T>>>
+    using job_underlying_t = typename job_type_traits<T, void>::underlying_type;
+#endif
+
 } // namespace kcenon::thread::detail
