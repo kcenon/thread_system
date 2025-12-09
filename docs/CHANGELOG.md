@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #275**: Refactor atomic_wait.h to use C++20 concepts
+  - Replace `std::enable_if<std::is_integral<U>::value>` SFINAE patterns with `requires std::integral<T>` clauses
+  - Add `<concepts>` header include when `USE_STD_CONCEPTS` is defined
+  - Maintain C++17 fallback using original SFINAE pattern within `#else` block
+  - Cleaner template declarations with improved compile-time error messages
+
 ### Deprecated
 - **Issue #263**: Mark thread-local logger_interface as deprecated
   - Added `[[deprecated]]` attribute to `log_level` enum in `logger_interface.h`

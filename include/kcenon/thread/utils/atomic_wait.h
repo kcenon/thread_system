@@ -49,6 +49,11 @@
 #include <condition_variable>
 #include <thread>
 #include <chrono>
+#include <type_traits>
+
+#ifdef USE_STD_CONCEPTS
+#include <concepts>
+#endif
 
 #ifdef HAS_STD_ATOMIC_WAIT
 // C++20: std::atomic already has wait/notify
@@ -245,6 +250,44 @@ public:
     }
 
     // Atomic arithmetic operations (for integral types)
+#ifdef USE_STD_CONCEPTS
+    T fetch_add(T arg, std::memory_order order = std::memory_order_seq_cst) noexcept
+        requires std::integral<T>
+    {
+        return value_.fetch_add(arg, order);
+    }
+
+    T fetch_sub(T arg, std::memory_order order = std::memory_order_seq_cst) noexcept
+        requires std::integral<T>
+    {
+        return value_.fetch_sub(arg, order);
+    }
+
+    T operator++() noexcept
+        requires std::integral<T>
+    {
+        return fetch_add(1) + 1;
+    }
+
+    T operator++(int) noexcept
+        requires std::integral<T>
+    {
+        return fetch_add(1);
+    }
+
+    T operator--() noexcept
+        requires std::integral<T>
+    {
+        return fetch_sub(1) - 1;
+    }
+
+    T operator--(int) noexcept
+        requires std::integral<T>
+    {
+        return fetch_sub(1);
+    }
+#else
+    // C++17 fallback using SFINAE
     template<typename U = T>
     typename std::enable_if<std::is_integral<U>::value, U>::type
     fetch_add(T arg, std::memory_order order = std::memory_order_seq_cst) noexcept {
@@ -280,6 +323,7 @@ public:
     operator--(int) noexcept {
         return fetch_sub(1);
     }
+#endif
 
 private:
     std::atomic<T> value_;
