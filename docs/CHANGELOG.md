@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #271**: Apply updated common_system with C++20 Concepts
+  - New `include/kcenon/thread/concepts/thread_concepts.h` header unifying all C++20 Concepts
+  - Concepts for callable validation: `Callable`, `VoidCallable`, `ReturningCallable`, `CallableWith`
+  - Concepts for job type constraints: `JobType`, `JobCallable`, `PoolJob`
+  - Type detection concepts: `Duration`, `FutureLike`
+  - Type traits: `is_duration_v`, `is_future_like_v`, `callable_return_type_t`, `is_valid_job_type_v`
+  - Full C++17 fallback support using `constexpr bool` when concepts unavailable
+  - Re-exported to `detail` namespace for backward compatibility
 - **Issue #276**: Add CMake configuration for C++20 Concepts feature detection
   - New `check_common_concepts_support()` function in `ThreadSystemFeatures.cmake`
   - Detects `common_system` C++20 concepts header availability
@@ -17,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Part of parent issue #271 (Apply updated common_system with C++20 Concepts)
 
 ### Changed
+- **Issue #271**: Refactor pool_traits.h and type_traits.h
+  - Removed duplicated concept definitions from `pool_traits.h` (#273)
+  - Removed duplicated concept definitions from `type_traits.h` (#274)
+  - Both files now import from centralized `thread_concepts.h`
+  - Use `requires` clauses for C++20 concepts where applicable
+  - ~30% reduction in code duplication
+  - Improved template error messages with clearer concept constraints
 - **Issue #275**: Refactor atomic_wait.h to use C++20 concepts
   - Replace `std::enable_if<std::is_integral<U>::value>` SFINAE patterns with `requires std::integral<T>` clauses
   - Add `<concepts>` header include when `USE_STD_CONCEPTS` is defined

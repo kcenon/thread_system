@@ -2,23 +2,23 @@
 
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2024, DongCheol Shin
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -34,155 +34,30 @@
 /**
  * @file pool_traits.h
  * @brief Type traits and metaprogramming utilities for thread pool
- * 
- * This file contains type traits, concepts, and compile-time utilities
- * that help ensure type safety and provide better error messages.
+ *
+ * This file contains type traits and compile-time utilities that help ensure
+ * type safety and provide better error messages. Concept definitions have been
+ * moved to thread_concepts.h to avoid duplication.
  */
 
+#include <kcenon/thread/concepts/thread_concepts.h>
+
 #include <type_traits>
-#ifdef USE_STD_CONCEPTS
-#include <concepts>
-#endif
 #include <functional>
 #include <chrono>
+#include <algorithm>
 
 namespace kcenon::thread::detail {
 
-#ifdef USE_STD_CONCEPTS
-    /**
-     * @brief Concept to validate callable types for thread pool jobs
-     */
-    template<typename F>
-    concept Callable = std::is_invocable_v<F>;
-
-    /**
-     * @brief Concept for callable types that return void
-     */
-    template<typename F>
-    concept VoidCallable = Callable<F> && std::is_void_v<std::invoke_result_t<F>>;
-
-    /**
-     * @brief Concept for callable types that return a result
-     */
-    template<typename F>
-    concept ReturningCallable = Callable<F> && !std::is_void_v<std::invoke_result_t<F>>;
-
-    /**
-     * @brief Concept for callables with specific argument types
-     */
-    template<typename F, typename... Args>
-    concept CallableWith = std::is_invocable_v<F, Args...>;
-
-    /**
-     * @brief Concept for duration types
-     */
-    template<typename T>
-    concept Duration = is_duration_v<T>;
-
-    /**
-     * @brief Concept for future-like types
-     */
-    template<typename T>
-    concept FutureLike = is_future_like_v<T>;
-
-    /**
-     * @brief Concept for valid thread pool job types
-     */
-    template<typename Job>
-    concept PoolJob = Callable<Job> && (
-        VoidCallable<Job> ||
-        std::is_convertible_v<callable_return_type_t<Job>, bool>
-    );
-#else
-    // C++17 fallback: Use constexpr bool instead of concepts
-    template<typename F>
-    constexpr bool Callable = std::is_invocable_v<F>;
-
-    template<typename F>
-    constexpr bool VoidCallable = std::is_invocable_v<F> && std::is_void_v<std::invoke_result_t<F>>;
-
-    template<typename F>
-    constexpr bool ReturningCallable = std::is_invocable_v<F> && !std::is_void_v<std::invoke_result_t<F>>;
-
-    template<typename F, typename... Args>
-    constexpr bool CallableWith = std::is_invocable_v<F, Args...>;
-
-    template<typename T>
-    constexpr bool Duration = is_duration_v<T>;
-
-    template<typename T>
-    constexpr bool FutureLike = is_future_like_v<T>;
-
-    template<typename Job>
-    constexpr bool PoolJob = std::is_invocable_v<Job> && (
-        (std::is_invocable_v<Job> && std::is_void_v<std::invoke_result_t<Job>>) ||
-        std::is_convertible_v<std::invoke_result_t<Job>, bool>
-    );
-#endif
-
-    /**
-     * @brief Type trait to detect if a type is a duration
-     */
-    template<typename T>
-    struct is_duration : std::false_type {};
-
-    template<typename Rep, typename Period>
-    struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type {};
-
-    template<typename T>
-    constexpr bool is_duration_v = is_duration<T>::value;
-    
-    /**
-     * @brief Type trait to extract return type from callable
-     */
-    template<typename F>
-    struct callable_return_type {
-        using type = std::invoke_result_t<F>;
-    };
-    
-    template<typename F>
-    using callable_return_type_t = typename callable_return_type<F>::type;
-    
-    /**
-     * @brief Type trait to check if a callable is noexcept
-     */
-    template<typename F>
-    struct is_nothrow_callable : std::bool_constant<std::is_nothrow_invocable_v<F>> {};
-    
-    template<typename F>
-    constexpr bool is_nothrow_callable_v = is_nothrow_callable<F>::value;
-    
-    /**
-     * @brief SFINAE helper to detect if a type has a specific member
-     */
-    template<typename T, typename = void>
-    struct has_get_method : std::false_type {};
-    
-    template<typename T>
-    struct has_get_method<T, std::void_t<decltype(std::declval<T>().get())>> 
-        : std::true_type {};
-    
-    template<typename T>
-    constexpr bool has_get_method_v = has_get_method<T>::value;
-    
-    /**
-     * @brief SFINAE helper to detect future-like types
-     */
-    template<typename T>
-    struct is_future_like : std::bool_constant<
-        has_get_method_v<T> && 
-        std::is_same_v<decltype(std::declval<T>().wait()), void>
-    > {};
-    
-    template<typename T>
-    constexpr bool is_future_like_v = is_future_like<T>::value;
+    // Concepts are now imported from thread_concepts.h via the using declarations
+    // in that header's detail namespace section
 
     /**
      * @brief Type trait for function signature analysis
      */
     template<typename F>
     struct function_traits;
-    
+
     // Specialization for function pointers
     template<typename R, typename... Args>
     struct function_traits<R(*)(Args...)> {
@@ -191,7 +66,7 @@ namespace kcenon::thread::detail {
         static constexpr size_t arity = sizeof...(Args);
         static constexpr bool is_noexcept = false;
     };
-    
+
     // Specialization for noexcept function pointers
     template<typename R, typename... Args>
     struct function_traits<R(*)(Args...) noexcept> {
@@ -200,7 +75,7 @@ namespace kcenon::thread::detail {
         static constexpr size_t arity = sizeof...(Args);
         static constexpr bool is_noexcept = true;
     };
-    
+
     // Specialization for member function pointers
     template<typename C, typename R, typename... Args>
     struct function_traits<R(C::*)(Args...)> {
@@ -210,7 +85,7 @@ namespace kcenon::thread::detail {
         static constexpr size_t arity = sizeof...(Args);
         static constexpr bool is_noexcept = false;
     };
-    
+
     // Specialization for const member function pointers
     template<typename C, typename R, typename... Args>
     struct function_traits<R(C::*)(Args...) const> {
@@ -220,23 +95,23 @@ namespace kcenon::thread::detail {
         static constexpr size_t arity = sizeof...(Args);
         static constexpr bool is_noexcept = false;
     };
-    
+
     // Specialization for function objects and lambdas
     template<typename F>
     struct function_traits : function_traits<decltype(&F::operator())> {};
-    
+
     /**
      * @brief Helper to get function traits
      */
     template<typename F>
     using function_return_t = typename function_traits<F>::return_type;
-    
+
     template<typename F>
     using function_args_t = typename function_traits<F>::argument_types;
-    
+
     template<typename F>
     constexpr size_t function_arity_v = function_traits<F>::arity;
-    
+
     /**
      * @brief Compile-time validation for thread pool configuration
      */
@@ -246,60 +121,89 @@ namespace kcenon::thread::detail {
         static_assert(ThreadCount <= 1024, "Thread count is unreasonably high");
         static constexpr bool value = true;
     };
-    
+
     /**
      * @brief Template helper for perfect forwarding with type constraints
      */
+#ifdef USE_STD_CONCEPTS
+    template<typename T>
+        requires Callable<T>
+    constexpr auto forward_if_callable(T&& t) -> T&& {
+        return std::forward<T>(t);
+    }
+#else
     template<typename T>
     constexpr auto forward_if_callable(T&& t) -> std::enable_if_t<Callable<T>, T&&> {
         return std::forward<T>(t);
     }
-    
+#endif
+
     /**
      * @brief Type eraser for heterogeneous callable storage
      */
     class callable_eraser {
     public:
-        template<typename F
 #ifdef USE_STD_CONCEPTS
-            , typename = std::enable_if_t<Callable<F>>
+        template<Callable F>
 #else
-            , typename = std::enable_if_t<Callable<F>>
+        template<typename F, typename = std::enable_if_t<Callable<F>>>
 #endif
-        >
         callable_eraser(F&& f)
             : vtable_(&vtable_for<std::decay_t<F>>)
-            , storage_(std::forward<F>(f)) {}
-        
-        void operator()() {
-            vtable_->invoke(storage_);
+        {
+            static_assert(sizeof(std::decay_t<F>) <= sizeof(storage_),
+                          "Callable is too large for inline storage");
+            new (&storage_) std::decay_t<F>(std::forward<F>(f));
         }
-        
+
+        void operator()() {
+            vtable_->invoke(&storage_);
+        }
+
+        ~callable_eraser() {
+            if (vtable_) {
+                vtable_->destroy(&storage_);
+            }
+        }
+
+        callable_eraser(const callable_eraser&) = delete;
+        callable_eraser& operator=(const callable_eraser&) = delete;
+
+        callable_eraser(callable_eraser&& other) noexcept
+            : vtable_(other.vtable_)
+        {
+            std::copy_n(other.storage_, sizeof(storage_), storage_);
+            other.vtable_ = nullptr;
+        }
+
+        callable_eraser& operator=(callable_eraser&& other) noexcept {
+            if (this != &other) {
+                if (vtable_) {
+                    vtable_->destroy(&storage_);
+                }
+                vtable_ = other.vtable_;
+                std::copy_n(other.storage_, sizeof(storage_), storage_);
+                other.vtable_ = nullptr;
+            }
+            return *this;
+        }
+
     private:
         struct vtable_t {
             void (*invoke)(void*);
             void (*destroy)(void*);
         };
-        
+
         template<typename F>
         static constexpr vtable_t vtable_for = {
             [](void* ptr) { (*static_cast<F*>(ptr))(); },
             [](void* ptr) { static_cast<F*>(ptr)->~F(); }
         };
-        
+
         const vtable_t* vtable_;
         alignas(std::max_align_t) char storage_[64];
     };
-    
-    /**
-     * @brief Concept for valid thread pool job types
-     */
-    template<typename Job>
-    concept PoolJob = Callable<Job> && (
-        VoidCallable<Job> || 
-        std::is_convertible_v<callable_return_type_t<Job>, bool>
-    );
-    
+
     /**
      * @brief Compile-time string for template error messages
      */
@@ -310,7 +214,7 @@ namespace kcenon::thread::detail {
         }
         char value[N];
     };
-    
+
     /**
      * @brief Template for generating descriptive error messages
      */
@@ -320,5 +224,18 @@ namespace kcenon::thread::detail {
         // For now, return a generic message
         return "unknown_type";
     }
-    
+
+    /**
+     * @brief SFINAE helper to detect if a type has a specific member
+     */
+    template<typename T, typename = void>
+    struct has_get_method : std::false_type {};
+
+    template<typename T>
+    struct has_get_method<T, std::void_t<decltype(std::declval<T>().get())>>
+        : std::true_type {};
+
+    template<typename T>
+    constexpr bool has_get_method_v = has_get_method<T>::value;
+
 } // namespace kcenon::thread::detail
