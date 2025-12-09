@@ -254,7 +254,36 @@ cmake -S . -B build \
 cmake -S . -B build \
     -DDISABLE_STD_FORMAT=ON \
     -DDISABLE_STD_JTHREAD=ON
+
+# common_system C++20 concepts 비활성화
+cmake -S . -B build \
+    -DSET_COMMON_CONCEPTS=OFF
 ```
+
+### C++20 Concepts 지원
+
+`common_system`과 함께 빌드할 때, 다음 조건이 충족되면 빌드 시스템이 자동으로 C++20 concepts를 감지하고 활성화합니다:
+- `BUILD_WITH_COMMON_SYSTEM=ON` (기본값)
+- 컴파일러가 최소 버전 요구사항 충족
+- `common_system` concepts 헤더가 사용 가능
+
+**C++20 Concepts를 위한 컴파일러 요구사항:**
+
+| 컴파일러 | 최소 버전 |
+|----------|-----------|
+| GCC | 10.0+ |
+| Clang | 10.0+ |
+| Apple Clang | 12.0+ |
+| MSVC | 19.23+ (VS 2019 16.3+) |
+
+**활성화 시 사용 가능한 Concept 카테고리:**
+- Core: `Resultable`, `Unwrappable`, `Mappable`, `Chainable`
+- Callable: `VoidCallable`, `Predicate`, `JobLike`, `ExecutorLike`
+- Event: `EventType`, `EventHandler`, `EventFilter`
+- Service: `ServiceInterface`, `ServiceImplementation`
+- Container: `SequenceContainer`, `AssociativeContainer`
+
+concepts가 사용 가능할 때 `THREAD_HAS_COMMON_CONCEPTS` 매크로가 정의됩니다.
 
 ### 컴파일러 선택
 

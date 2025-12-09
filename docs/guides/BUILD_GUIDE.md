@@ -253,7 +253,36 @@ cmake -S . -B build \
 cmake -S . -B build \
     -DDISABLE_STD_FORMAT=ON \
     -DDISABLE_STD_JTHREAD=ON
+
+# Disable common_system C++20 concepts
+cmake -S . -B build \
+    -DSET_COMMON_CONCEPTS=OFF
 ```
+
+### C++20 Concepts Support
+
+When building with `common_system`, the build system automatically detects and enables C++20 concepts if:
+- `BUILD_WITH_COMMON_SYSTEM=ON` (default)
+- Compiler meets minimum version requirements
+- `common_system` concepts header is available
+
+**Compiler Requirements for C++20 Concepts:**
+
+| Compiler | Minimum Version |
+|----------|-----------------|
+| GCC | 10.0+ |
+| Clang | 10.0+ |
+| Apple Clang | 12.0+ |
+| MSVC | 19.23+ (VS 2019 16.3+) |
+
+**Available Concept Categories (when enabled):**
+- Core: `Resultable`, `Unwrappable`, `Mappable`, `Chainable`
+- Callable: `VoidCallable`, `Predicate`, `JobLike`, `ExecutorLike`
+- Event: `EventType`, `EventHandler`, `EventFilter`
+- Service: `ServiceInterface`, `ServiceImplementation`
+- Container: `SequenceContainer`, `AssociativeContainer`
+
+The `THREAD_HAS_COMMON_CONCEPTS` macro is defined when concepts are available.
 
 ### Compiler Selection
 

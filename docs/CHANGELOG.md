@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Type traits: `is_duration_v`, `is_future_like_v`, `callable_return_type_t`, `is_valid_job_type_v`
   - Full C++17 fallback support using `constexpr bool` when concepts unavailable
   - Re-exported to `detail` namespace for backward compatibility
+- **Issue #276**: Add CMake configuration for C++20 Concepts feature detection
+  - New `check_common_concepts_support()` function in `ThreadSystemFeatures.cmake`
+  - Detects `common_system` C++20 concepts header availability
+  - Verifies compiler version requirements (GCC 10+, Clang 10+, Apple Clang 12+, MSVC 19.23+)
+  - Defines `THREAD_HAS_COMMON_CONCEPTS` macro when concepts are available
+  - Displays available concept categories during CMake configuration
+  - Part of parent issue #271 (Apply updated common_system with C++20 Concepts)
 
 ### Changed
 - **Issue #271**: Refactor pool_traits.h and type_traits.h
