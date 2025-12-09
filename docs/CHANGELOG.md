@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Issue #276**: Add CMake configuration for C++20 Concepts feature detection
+  - New `check_common_concepts_support()` function in `ThreadSystemFeatures.cmake`
+  - Detects `common_system` C++20 concepts header availability
+  - Verifies compiler version requirements (GCC 10+, Clang 10+, Apple Clang 12+, MSVC 19.23+)
+  - Defines `THREAD_HAS_COMMON_CONCEPTS` macro when concepts are available
+  - Displays available concept categories during CMake configuration
+  - Part of parent issue #271 (Apply updated common_system with C++20 Concepts)
+
 ### Changed
 - **Issue #275**: Refactor atomic_wait.h to use C++20 concepts
   - Replace `std::enable_if<std::is_integral<U>::value>` SFINAE patterns with `requires std::integral<T>` clauses
