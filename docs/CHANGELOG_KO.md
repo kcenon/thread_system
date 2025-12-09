@@ -7,6 +7,15 @@
 
 ## [미출시]
 
+### 추가됨
+- **이슈 #276**: C++20 Concepts 기능 감지를 위한 CMake 설정 추가
+  - `ThreadSystemFeatures.cmake`에 새로운 `check_common_concepts_support()` 함수 추가
+  - `common_system` C++20 concepts 헤더 사용 가능 여부 감지
+  - 컴파일러 버전 요구사항 검증 (GCC 10+, Clang 10+, Apple Clang 12+, MSVC 19.23+)
+  - concepts 사용 가능 시 `THREAD_HAS_COMMON_CONCEPTS` 매크로 정의
+  - CMake 설정 중 사용 가능한 concept 카테고리 표시
+  - 상위 이슈 #271의 일부 (Apply updated common_system with C++20 Concepts)
+
 ### 변경됨
 - **이슈 #275**: atomic_wait.h를 C++20 concepts로 리팩토링
   - `std::enable_if<std::is_integral<U>::value>` SFINAE 패턴을 `requires std::integral<T>` 절로 교체
