@@ -334,5 +334,5 @@ struct alignas(64) WorkerThread {
 ---
 
 **Date**: 2025-11-21
-**Version**: 2.0
+**Version**: 0.2.0
 **Author**: kcenon@naver.com

@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # Define the project
 project(ThreadSystem
-    VERSION 1.0.0
+    VERSION 0.1.0.0
     DESCRIPTION "High-performance C++20 multithreading framework"
     HOMEPAGE_URL "https://github.com/kcenon/thread_system"
     LANGUAGES CXX
