@@ -1,6 +1,6 @@
 # Error System Migration Guide
 
-**Version:** 1.0
+**Version:** 0.1.0
 **Date:** 2025-11-09
 **Status:** Phase 1 Complete
 

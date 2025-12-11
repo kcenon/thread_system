@@ -2,7 +2,7 @@
 
 > **Language:** **English** | [한국어](LOG_LEVEL_MIGRATION_GUIDE_KO.md)
 
-**Version:** 1.0
+**Version:** 0.1.0
 **Date:** 2025-11-26
 **Applies to:** thread_system v2.x and later
 

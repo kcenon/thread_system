@@ -1,6 +1,6 @@
 # Thread System 프로젝트 구조
 
-**버전**: 2.0
+**버전**: 0.2.0
 **최종 업데이트**: 2025-11-28
 **언어**: [English](PROJECT_STRUCTURE.md) | **한국어**
 

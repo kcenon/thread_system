@@ -487,5 +487,5 @@ rm -rf build vcpkg_installed && cmake -B build
 ---
 
 **Last Updated**: 2025-09-13
-**Version**: 1.0
+**Version**: 0.1.0
 **Maintainer**: DevOps Team

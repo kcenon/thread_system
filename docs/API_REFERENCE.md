@@ -1,6 +1,6 @@
 # thread_system API Reference
 
-> **Version**: 2.0
+> **Version**: 0.2.0
 > **Last Updated**: 2025-11-21
 > **Language**: [English]
 
@@ -718,5 +718,5 @@ auto future = pool.enqueue(task);
 ---
 
 **Created**: 2025-11-21
-**Version**: 2.0
+**Version**: 0.2.0
 **Author**: kcenon@naver.com

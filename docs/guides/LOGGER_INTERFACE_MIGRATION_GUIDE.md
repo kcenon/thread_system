@@ -2,9 +2,9 @@
 
 > **Language:** **English** | [한국어](LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
 
-**Version:** 1.0
+**Version:** 0.1.0
 **Date:** 2025-12-06
-**Applies to:** thread_system v1.x and later
+**Applies to:** thread_system v0.1.x and later
 
 ## Overview
 

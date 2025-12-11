@@ -1,6 +1,6 @@
 # thread_system API 레퍼런스
 
-> **버전**: 2.0
+> **버전**: 0.2.0
 > **최종 업데이트**: 2025-11-21
 > **언어**: [English](API_REFERENCE.md) | [한국어]
 
@@ -535,5 +535,5 @@ auto future = pool.enqueue(task);
 ---
 
 **작성일**: 2025-11-21
-**버전**: 2.0
+**버전**: 0.2.0
 **관리자**: kcenon@naver.com

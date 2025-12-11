@@ -6,7 +6,7 @@
 
 The Thread System is a production-ready C++20 high-performance threading framework designed with modular, interface-based architecture for concurrent applications. Built with zero external dependencies (except standard library), it provides intuitive abstractions and robust implementations that democratize concurrent programming.
 
-**Version:** 1.0.0
+**Version:** 0.1.0.0
 **Last Updated:** 2025-10-22
 
 ---
@@ -842,5 +842,5 @@ See `core/sync/include/error_handling.h` for complete error code listing.
 ---
 
 **Last Updated:** 2025-10-22
-**Version:** 1.0.0
+**Version:** 0.1.0.0
 **Maintainer:** kcenon@naver.com

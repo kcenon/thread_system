@@ -6,7 +6,7 @@
 
 This comprehensive guide describes how to integrate thread_system with other modules in the ecosystem. Thread System provides the foundational threading framework and interfaces that enable seamless integration with logger_system, monitoring_system, and other application components.
 
-**Version:** 2.0.0
+**Version:** 0.2.0.0
 **Last Updated:** 2025-10-22
 **Architecture**: Modular, Interface-Based Design
 
@@ -989,4 +989,4 @@ make
 
 **Last Updated**: 2025-10-22
 **Maintainer**: kcenon@naver.com
-**Version**: 2.0.0
+**Version**: 0.2.0.0

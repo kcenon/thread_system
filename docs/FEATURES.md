@@ -1,6 +1,6 @@
 # Thread System Features
 
-**Version**: 2.0
+**Version**: 0.2.0
 **Last Updated**: 2025-11-15
 **Language**: [English] | [한국어](FEATURES_KO.md)
 
