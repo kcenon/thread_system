@@ -597,7 +597,7 @@ worker->set_batch_processing(true, 32);  // Process 32 jobs at once
 
 ### Key Takeaways
 
-1. **Production-Ready Performance**
+1. **Strong Performance**
    - 1.16M jobs/s baseline throughput
    - Sub-microsecond P50 latency
    - Minimal memory footprint (<3 MB)

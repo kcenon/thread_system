@@ -281,7 +281,7 @@ thread_system/
 
 #### bounded_job_queue.h
 
-**Purpose**: Production-ready queue with backpressure
+**Purpose**: Well-tested queue with backpressure
 
 **Key Components**:
 - `bounded_job_queue` class: Capacity-limited queue

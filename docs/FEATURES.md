@@ -94,7 +94,7 @@ public:
 
 ### 2. Bounded Job Queue
 
-Production-ready queue with backpressure support and capacity limits.
+Well-tested queue with backpressure support and capacity limits.
 
 ```cpp
 class bounded_job_queue {
@@ -780,7 +780,7 @@ pool->report_metrics();  // Automatic reporting
 
 ## Summary
 
-The thread_system provides a comprehensive, production-ready threading framework with:
+The thread_system provides a comprehensive threading framework with:
 
 - **Multiple queue implementations** for different scenarios
 - **Adaptive components** that automatically optimize
