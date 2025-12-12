@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Thread System is a production-ready C++20 multithreading framework (~2,700 lines of optimized code) that provides comprehensive abstractions for concurrent programming. It's designed as a modular, interface-based ecosystem that allows other systems to leverage its threading capabilities without tight coupling.
+The Thread System is a modern C++20 multithreading framework (~2,700 lines of optimized code) that provides comprehensive abstractions for concurrent programming. It's designed as a modular, interface-based ecosystem that allows other systems to leverage its threading capabilities without tight coupling.
 
 **Key Achievement**: Reduced from 8,700+ lines through aggressive refactoring and removal of logging/monitoring from core system - these are now optional separate projects.
 
@@ -78,7 +78,7 @@ The Thread System is a production-ready C++20 multithreading framework (~2,700 l
 | Component | Algorithm | Performance | Use Case |
 |-----------|-----------|-------------|----------|
 | `job_queue` | Mutex + Condition Variable | Baseline (reliable) | General purpose, simple scenarios |
-| `lockfree_job_queue` | Michael-Scott + Hazard Pointers | 4x faster ops (71 μs vs 291 μs) | High contention, production-ready |
+| `lockfree_job_queue` | Michael-Scott + Hazard Pointers | 4x faster ops (71 μs vs 291 μs) | High contention, well-tested |
 | `adaptive_job_queue` | Auto-switching (mutex ↔ lock-free) | Dynamic optimization | Variable load patterns |
 | `bounded_job_queue` | Ring buffer + size limits | Memory-bounded | Fixed-size queue scenarios |
 

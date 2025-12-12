@@ -113,7 +113,7 @@ namespace kcenon::thread
 	 *
 	 * ## Thread Safety
 	 *
-	 * This implementation is thread-safe and production-ready. It uses:
+	 * This implementation is thread-safe and well-tested. It uses:
 	 * - lockfree_job_queue internally for each type-specific queue
 	 * - Hazard Pointers for safe memory reclamation
 	 * - GlobalReclamationManager for handling orphaned nodes from terminated threads

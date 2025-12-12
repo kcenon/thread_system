@@ -47,7 +47,7 @@ This guide helps you migrate to thread_system from previous threading solutions,
 
 ### Background
 
-Standard library threading requires manual thread management, synchronization, and workload distribution. thread_system provides automatic thread pooling, adaptive queuing, and production-ready features.
+Standard library threading requires manual thread management, synchronization, and workload distribution. thread_system provides automatic thread pooling, adaptive queuing, and comprehensive features.
 
 ### Step 1: Update CMakeLists.txt
 
@@ -310,7 +310,7 @@ std::cout << "Improvement: " << (1.0 - double(thread_system_duration.count()) / 
 
 ### Overview
 
-Migrating from OpenMP or Intel TBB to thread_system provides better C++ integration, adaptive performance, and production-ready features.
+Migrating from OpenMP or Intel TBB to thread_system provides better C++ integration, adaptive performance, and comprehensive features.
 
 ### From OpenMP
 
@@ -634,7 +634,7 @@ pool->shutdown();
 - **Automatic optimization**: Adaptive queue selects best strategy
 - **No manual CV management**: Built-in synchronization
 - **Better performance**: 7.7x faster under high contention
-- **Production-ready**: Error handling, monitoring, logging
+- **Comprehensive**: Error handling, monitoring, logging
 
 #### Pattern 2: Thread Pool with Priority
 

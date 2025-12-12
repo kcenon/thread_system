@@ -7,16 +7,16 @@
 
 > **Language:** **English** | [한국어](README_KO.md)
 
-A production-ready C++20 multithreading framework designed to democratize concurrent programming.
+A modern C++20 multithreading framework designed to democratize concurrent programming.
 
 ---
 
 ## Overview
 
-Thread System is a comprehensive, production-ready multithreading framework that provides intuitive abstractions and robust implementations for building high-performance, thread-safe applications.
+Thread System is a comprehensive multithreading framework that provides intuitive abstractions and robust implementations for building high-performance, thread-safe applications.
 
 **Key Value Propositions**:
-- **Production-Ready**: 95%+ CI/CD success rate, zero ThreadSanitizer warnings, 72% code coverage
+- **Well-Tested**: 95%+ CI/CD success rate, zero ThreadSanitizer warnings, 72% code coverage
 - **High Performance**: 1.16M jobs/second baseline, 4x faster lock-free queues, adaptive optimization
 - **Developer Friendly**: Intuitive API, comprehensive documentation, rich examples
 - **Flexible Architecture**: Modular design with optional logger/monitoring integration
@@ -100,7 +100,7 @@ int main() {
 
 ### Queue Implementations
 - **Standard Queue**: Mutex-based FIFO with reliable performance
-- **Bounded Queue**: Production-ready with backpressure and capacity limits
+- **Bounded Queue**: Well-tested with backpressure and capacity limits
 - **Lock-Free Queue**: 4x faster MPMC queue with hazard pointers
 - **Adaptive Queue**: Automatic strategy selection (mutex ↔ lock-free)
 - **Queue Factory**: Requirements-based queue creation with compile-time selection
