@@ -10,7 +10,7 @@
 
 ## 개요
 
-Thread System Project는 동시성 프로그래밍의 민주화를 목표로 설계된 포괄적이고 프로덕션 준비가 완료된 C++20 멀티스레딩 프레임워크입니다. 모듈식 인터페이스 기반 아키텍처로 구축되어 직관적인 추상화와 견고한 구현을 제공하며, 모든 수준의 개발자가 일반적인 수동 thread 관리의 복잡성과 함정 없이 고성능의 thread-safe 애플리케이션을 구축할 수 있도록 지원합니다.
+Thread System Project는 동시성 프로그래밍의 민주화를 목표로 설계된 포괄적인 C++20 멀티스레딩 프레임워크입니다. 모듈식 인터페이스 기반 아키텍처로 구축되어 직관적인 추상화와 견고한 구현을 제공하며, 모든 수준의 개발자가 일반적인 수동 thread 관리의 복잡성과 함정 없이 고성능의 thread-safe 애플리케이션을 구축할 수 있도록 지원합니다.
 
 > **🏗️ Modular Architecture**: 공격적인 리팩토링과 coroutine 제거를 통해 약 2,700줄의 고도로 최적화된 코드로 간소화되었습니다. Logger와 monitoring system은 최대한의 유연성을 위해 별도의 선택적 프로젝트로 제공됩니다.
 
@@ -61,7 +61,7 @@ logger_system    monitoring_system
 
 ## 프로젝트 목적 및 미션
 
-이 프로젝트는 전 세계 개발자들이 직면한 근본적인 과제를 해결합니다: **동시성 프로그래밍을 접근 가능하고, 안전하며, 효율적으로 만드는 것**. 전통적인 threading 접근 방식은 종종 복잡한 코드, 디버그하기 어려운 race condition, 성능 병목 현상으로 이어집니다. 우리의 미션은 다음을 제공하는 포괄적인 솔루션을 제공하는 것입니다:
+이 프로젝트는 전 세계 개발자들이 직면한 근본적인 과제를 해결합니다: **동시성 프로그래밍을 접근 가능하고, 안전하며, 효율적으로 만드는 것**. 전통적인 threading 접근 방식은 종종 복잡한 코드, 디버그하기 어려운 race condition, 성능 병목 현상으로 이어집니다. 우리의 미션은 다음을 제공하는 것입니다:
 
 - **Threading 복잡성 제거** - 직관적이고 고수준의 추상화를 통해
 - **Thread safety 보장** - 설계 단계에서 일반적인 동시성 버그 방지
@@ -77,7 +77,7 @@ logger_system    monitoring_system
 - **Adaptive scheduling**: type 기반 job 처리로 최적의 리소스 활용
 - **확장 가능한 아키텍처**: 하드웨어 thread 수에 따른 선형 성능 확장
 
-### 🛡️ **프로덕션급 신뢰성**
+### 🛡️ **안정적인 신뢰성**
 - **Thread-safe by design**: 모든 구성 요소가 안전한 동시 액세스 보장
 - **포괄적인 오류 처리**: 견고한 오류 보고 및 복구 메커니즘
 - **메모리 안전성**: RAII 원칙과 smart pointer로 메모리 누수 및 손상 방지
@@ -445,12 +445,12 @@ build/
 - **`job` 클래스**: Cancellation 지원이 있는 작업 단위의 추상 기본 클래스
 - **`callback_job` 클래스**: `std::function`을 사용하는 구체적인 job 구현
 - **`job_queue` 클래스**: Job 관리를 위한 thread-safe queue
-- **`bounded_job_queue`** 🆕: Backpressure 지원이 있는 프로덕션급 queue
+- **`bounded_job_queue`** 🆕: Backpressure 지원이 있는 고품질 queue
   - 최대 queue 크기 강제 (메모리 고갈 방지)
   - Queue가 용량에 근접할 때 backpressure 신호 전달
   - Enqueue 작업에 대한 timeout 지원
   - 포괄적인 metric (총 enqueue/dequeue/거부/timeout, 최대 크기)
-  - 리소스 제약이 있는 프로덕션 시스템에 이상적
+  - 리소스 제약이 있는 시스템에 이상적
 - **`cancellation_token`** 🆕: 향상된 협력적 cancellation 메커니즘
   - 계층적 cancellation을 위한 연결된 token 생성
   - Thread-safe callback 등록
@@ -668,7 +668,7 @@ success = pool->shutdown_pool(true);
 
 ### Bounded Job Queue API
 
-`bounded_job_queue` 클래스는 backpressure 지원이 있는 프로덕션급 queue를 제공합니다:
+`bounded_job_queue` 클래스는 backpressure 지원이 있는 고품질 queue를 제공합니다:
 
 ```cpp
 #include <kcenon/thread/core/bounded_job_queue.h>
@@ -1215,9 +1215,9 @@ namespace typed_thread_pool_module {
 - **토론**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **이메일**: kcenon@naver.com
 
-## 프로덕션 품질 및 아키텍처
+## 품질 및 아키텍처
 
-thread_system은 포괄적인 품질 보증 및 성능 최적화를 통해 프로덕션 준비가 완료된 동시 프로그래밍 기능을 제공합니다.
+thread_system은 포괄적인 품질 보증 및 성능 최적화를 통해 고품질의 동시 프로그래밍 기능을 제공합니다.
 
 ### 빌드 및 테스트 인프라
 
@@ -1264,7 +1264,7 @@ thread_system은 포괄적인 품질 보증 및 성능 최적화를 통해 프�
 - 자동 worker 생명 주기 관리
 - Exception-safe job queue 작업
 
-### 오류 처리 (프로덕션 준비 - 95% 완료)
+### 오류 처리 (개발 중 - 95% 완료)
 
 thread_system은 Rust의 Result 또는 C++23의 expected와 유사한 Result<T> 패턴을 사용하여 모든 핵심 API에서 type-safe 오류 처리를 제공합니다.
 
@@ -1303,7 +1303,7 @@ if (!pool->submit_task([]() { do_work(); })) {
 - Exception 오버헤드 없는 명시적 오류 처리
 - 계층화된 API는 상세 검사와 간단한 성공/실패 확인을 모두 허용
 - 신속한 개발을 위한 편의 wrapper (`submit_task`, `shutdown_pool`)
-- 포괄적인 테스트 적용 범위로 프로덕션 준비 완료
+- 포괄적인 테스트 적용 범위
 
 자세한 구현 참고 사항은 [PHASE_3_PREPARATION.md](docs/PHASE_3_PREPARATION.md)를 참조하세요.
 

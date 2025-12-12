@@ -264,7 +264,7 @@ size_t workers = std::thread::hardware_concurrency() * 1.5;
 
 ### 핵심 결론
 
-1. **프로덕션 레디 성능**
+1. **고성능 처리**
    - 1.16M jobs/s 기준 처리량
    - 서브 마이크로초 P50 지연시간
    - 최소 메모리 사용량 (<3 MB)
