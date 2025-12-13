@@ -11,15 +11,22 @@ Thread System을 5분 안에 시작해보세요.
 - CMake 3.16 이상
 - C++20 지원 컴파일러 (GCC 11+, Clang 14+, MSVC 2022+)
 - Git
+- **[common_system](https://github.com/kcenon/common_system)** - 필수 종속성 (thread_system과 같은 위치에 클론 필요)
 
 ## 설치
 
 ### 1. 저장소 복제
 
 ```bash
+# common_system 먼저 클론 (필수 종속성)
+git clone https://github.com/kcenon/common_system.git
+
+# thread_system을 common_system과 같은 위치에 클론
 git clone https://github.com/kcenon/thread_system.git
 cd thread_system
 ```
+
+> **참고:** 빌드가 올바르게 작동하려면 두 저장소가 같은 부모 디렉토리에 있어야 합니다.
 
 ### 2. 의존성 설치
 

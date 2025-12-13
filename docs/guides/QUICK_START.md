@@ -11,15 +11,22 @@ Get up and running with Thread System in 5 minutes.
 - CMake 3.16 or later
 - C++20 capable compiler (GCC 11+, Clang 14+, MSVC 2022+)
 - Git
+- **[common_system](https://github.com/kcenon/common_system)** - Required dependency (must be cloned alongside thread_system)
 
 ## Installation
 
-### 1. Clone the Repository
+### 1. Clone the Repositories
 
 ```bash
+# Clone common_system first (required dependency)
+git clone https://github.com/kcenon/common_system.git
+
+# Clone thread_system alongside common_system
 git clone https://github.com/kcenon/thread_system.git
 cd thread_system
 ```
+
+> **Note:** Both repositories must be in the same parent directory for the build to work correctly.
 
 ### 2. Install Dependencies
 
