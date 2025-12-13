@@ -85,7 +85,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: kcenon/common_system
-        path: ../common_system
+        path: common_system
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Configure CMake (Unix)
@@ -208,7 +208,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: kcenon/common_system
-        path: ../common_system
+        path: common_system
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Configure CMake with ${{ matrix.sanitizer }} sanitizer
