@@ -6,7 +6,7 @@
 ##################################################
 
 ##################################################
-# Find common_system (optional)
+# Find common_system (required)
 ##################################################
 function(find_common_system_dependency)
   if(NOT BUILD_WITH_COMMON_SYSTEM)
@@ -14,6 +14,17 @@ function(find_common_system_dependency)
   endif()
 
   message(STATUS "Looking for common_system...")
+
+  # Check if COMMON_SYSTEM_INCLUDE_DIR is already set (e.g., by parent project via FetchContent)
+  if(COMMON_SYSTEM_INCLUDE_DIR AND EXISTS "${COMMON_SYSTEM_INCLUDE_DIR}/kcenon/common/patterns/result.h")
+    message(STATUS "Found common_system via pre-set COMMON_SYSTEM_INCLUDE_DIR: ${COMMON_SYSTEM_INCLUDE_DIR}")
+    add_compile_definitions(BUILD_WITH_COMMON_SYSTEM)
+    add_compile_definitions(THREAD_HAS_COMMON_RESULT=1)
+    add_compile_definitions(THREAD_HAS_COMMON_EXECUTOR=1)
+    include_directories(${COMMON_SYSTEM_INCLUDE_DIR})
+    set(COMMON_SYSTEM_FOUND TRUE PARENT_SCOPE)
+    return()
+  endif()
 
   # Try CMake config mode first
   find_package(common_system CONFIG QUIET)
@@ -46,7 +57,7 @@ function(find_common_system_dependency)
     endif()
   endforeach()
 
-  message(FATAL_ERROR "common_system not found - set COMMON_SYSTEM_DIR or add as dependency.")
+  message(FATAL_ERROR "common_system not found - set COMMON_SYSTEM_INCLUDE_DIR or add as dependency.")
 endfunction()
 
 ##################################################
