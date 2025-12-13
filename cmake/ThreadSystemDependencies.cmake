@@ -40,6 +40,7 @@ function(find_common_system_dependency)
 
   # Fallback to path-based search
   set(_COMMON_PATHS
+    "${CMAKE_CURRENT_SOURCE_DIR}/common_system/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../common_system/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../common_system/include"
   )

@@ -23,7 +23,7 @@ Thread System Project는 동시성 프로그래밍의 민주화를 목표로 설
 ### Core Threading Framework
 - **[thread_system](https://github.com/kcenon/thread_system)** (이 프로젝트): worker pool, job queue, thread 관리를 포함하는 핵심 threading framework
   - 제공: 통합을 위한 `kcenon::thread::interfaces::logger_interface`, `kcenon::thread::interfaces::monitoring_interface`
-  - 의존성: 없음 (독립 실행형)
+  - 의존성: **[common_system](https://github.com/kcenon/common_system)** (필수 - C++20 Concepts 및 공통 유틸리티)
   - 용도: 핵심 threading 기능, 다른 시스템을 위한 interface
 
 ### Optional Integration Components
@@ -44,6 +44,8 @@ Thread System Project는 동시성 프로그래밍의 민주화를 목표로 설
 
 ### Dependency Flow
 ```
+common_system (C++20 Concepts, utilities)
+    ↑
 thread_system (core interfaces)
     ↑                    ↑
 logger_system    monitoring_system
@@ -1054,28 +1056,26 @@ metrics::stop_global_monitoring();
 ### 🛠️ **빌드 및 통합**
 
 #### 전제 조건
-- CMake 3.16 이상
-- C++20 지원 컴파일러 (GCC 9+, Clang 10+, MSVC 2019+)
+- CMake 3.20 이상
+- C++20 지원 컴파일러 (GCC 13+, Clang 17+, MSVC 2022+)
+- **[common_system](https://github.com/kcenon/common_system)**: 필수 의존성 (thread_system과 같은 위치에 복제 필요)
 - vcpkg 패키지 관리자 (의존성 스크립트에 의해 자동 설치)
 
 #### 빌드 단계
 
 ```bash
-# 저장소 복제
+# 저장소 복제 (common_system 필수)
+git clone https://github.com/kcenon/common_system.git
 git clone https://github.com/kcenon/thread_system.git
 cd thread_system
 
 # vcpkg를 통해 의존성 설치
-./dependency.sh  # Linux/macOS
-./dependency.bat # Windows
+./scripts/dependency.sh  # Linux/macOS
+./scripts/dependency.bat # Windows
 
 # 프로젝트 빌드
-./build.sh       # Linux/macOS
-./build.bat      # Windows
-
-# common_system 통합으로 빌드 (선택 사항)
-cmake -B build -DBUILD_WITH_COMMON_SYSTEM=ON
-cmake --build build
+./scripts/build.sh       # Linux/macOS
+./scripts/build.bat      # Windows
 
 # 샘플 실행
 ./build/bin/thread_pool_sample
