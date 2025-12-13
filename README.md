@@ -32,10 +32,17 @@ Thread System is a comprehensive multithreading framework that provides intuitiv
 
 ## Quick Start
 
+### Requirements
+
+- **C++20 Compiler**: GCC 13+ / Clang 17+ / MSVC 2022+
+- **CMake 3.20+**
+- **[common_system](https://github.com/kcenon/common_system)**: Required dependency (must be cloned alongside thread_system)
+
 ### Installation
 
 ```bash
-# Clone repository
+# Clone repositories (common_system is required)
+git clone https://github.com/kcenon/common_system.git
 git clone https://github.com/kcenon/thread_system.git
 cd thread_system
 
