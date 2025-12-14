@@ -122,16 +122,28 @@ if (result.has_value()) { ... }  // Also works
 
 ## API Mapping
 
-| thread::result<T> | common::Result<T> |
-|-------------------|-------------------|
-| `has_value()` | `is_ok()` or `has_value()` |
-| N/A | `is_err()` |
-| `value()` | `value()` |
-| `get_error()` | `error()` |
-| `value_or(default)` | `value_or(default)` or `unwrap_or(default)` |
-| `value_or_throw()` | `value()` (throws automatically) |
-| `map(fn)` | `map(fn)` |
-| `and_then(fn)` | `and_then(fn)` |
+| thread::result<T> | common::Result<T> | Notes |
+|-------------------|-------------------|-------|
+| `has_value()` | `is_ok()` or `has_value()` | Both supported |
+| `is_ok()` | `is_ok()` | ✅ Now unified |
+| `is_error()` | `is_err()` | ✅ Now unified |
+| `value()` | `value()` | |
+| `get_error()` | `error()` | |
+| `value_or(default)` | `value_or(default)` or `unwrap_or(default)` | |
+| `value_or_throw()` | `value()` (throws automatically) | |
+| `map(fn)` | `map(fn)` | |
+| `and_then(fn)` | `and_then(fn)` | |
+
+### result_void API Mapping
+
+| thread::result_void | common::VoidResult | Notes |
+|--------------------|-------------------|-------|
+| `has_error()` | `is_err()` | Original API |
+| `has_value()` | `is_ok()` | ✅ Added for compatibility |
+| `is_ok()` | `is_ok()` | ✅ Added for compatibility |
+| `is_error()` | `is_err()` | ✅ Added for compatibility |
+| `get_error()` | `error()` | |
+| `operator bool()` | `operator bool()` | Returns true if success |
 
 ## Error Code Mapping
 
