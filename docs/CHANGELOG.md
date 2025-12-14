@@ -136,6 +136,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Individual vs batch worker enqueue comparison
 
 ### Fixed
+- **Issue #291**: pthread.h not found error on Windows MSVC builds
+  - Added `gtest_disable_pthreads ON` option to `find_or_fetch_gtest()` function
+  - Fixes build failure when using thread_system as a subdirectory on Windows MSVC
+  - Windows MSVC does not provide pthread.h by default, so GTest's pthread support must be disabled
 - **Issue #225**: EXC_BAD_ACCESS on macOS ARM64 with batch worker enqueue (follow-up to #223)
   - Root cause: Data race between `on_stop_requested()` and job destruction in `do_work()`
   - The race occurred when `on_stop_requested()` accessed a job's virtual method while

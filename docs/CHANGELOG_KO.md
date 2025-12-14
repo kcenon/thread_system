@@ -68,6 +68,10 @@
   - 개별 vs 배치 worker 등록 비교
 
 ### 수정됨
+- **이슈 #291**: Windows MSVC 빌드에서 pthread.h 파일을 찾을 수 없는 오류
+  - `find_or_fetch_gtest()` 함수에 `gtest_disable_pthreads ON` 옵션 추가
+  - Windows MSVC에서 thread_system을 하위 디렉토리로 사용할 때 빌드 실패 수정
+  - Windows MSVC는 기본적으로 pthread.h를 제공하지 않으므로 GTest의 pthread 지원을 비활성화해야 함
 - **이슈 #225**: macOS ARM64에서 배치 worker 등록 시 EXC_BAD_ACCESS 발생 (#223 후속)
   - 근본 원인: `on_stop_requested()`와 `do_work()`의 job 파괴 간 데이터 레이스
   - `on_stop_requested()`가 job의 가상 메서드를 호출하는 동안 `do_work()`가
