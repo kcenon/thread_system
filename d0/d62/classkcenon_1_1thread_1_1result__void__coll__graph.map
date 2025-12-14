@@ -1,7 +1,7 @@
 <map id="kcenon::thread::result_void" name="kcenon::thread::result_void">
-<area shape="rect" id="Node000001" title="Wrapper for void result." alt="" coords="5,471,196,616"/>
+<area shape="rect" id="Node000001" title="Wrapper for void result." alt="" coords="5,471,196,676"/>
 <area shape="rect" id="Node000002" href="$d6/d10/classkcenon_1_1thread_1_1error.html" title="Represents an error in the thread system." alt="" coords="19,263,182,408"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,408,103,454,98,454,98,408"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,409,103,454,98,454,98,409"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="61,135,140,200"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,200,103,246,98,246,98,200"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="35,5,166,85"/>

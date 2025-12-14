@@ -122,6 +122,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8e25bd72212bd159e41c1c153bc73785" id="r_a8e25bd72212bd159e41c1c153bc73785"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a8e25bd72212bd159e41c1c153bc73785">has_value</a> () const noexcept</td></tr>
 <tr class="memdesc:a8e25bd72212bd159e41c1c153bc73785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the result contains a value.  <br /></td></tr>
 <tr class="separator:a8e25bd72212bd159e41c1c153bc73785"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaca0a73803bbc9f7d4dfc29e40b4f5b" id="r_abaca0a73803bbc9f7d4dfc29e40b4f5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b">is_ok</a> () const noexcept</td></tr>
+<tr class="memdesc:abaca0a73803bbc9f7d4dfc29e40b4f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the result is successful.  <br /></td></tr>
+<tr class="separator:abaca0a73803bbc9f7d4dfc29e40b4f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c63baacc079b3610e58b9dab27017f3" id="r_a4c63baacc079b3610e58b9dab27017f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a4c63baacc079b3610e58b9dab27017f3">is_error</a> () const noexcept</td></tr>
+<tr class="memdesc:a4c63baacc079b3610e58b9dab27017f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the result contains an error.  <br /></td></tr>
+<tr class="separator:a4c63baacc079b3610e58b9dab27017f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eef58a71fe0672d5a3c428e0a7c3f31" id="r_a6eef58a71fe0672d5a3c428e0a7c3f31"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31">value</a> () &amp;</td></tr>
 <tr class="memdesc:a6eef58a71fe0672d5a3c428e0a7c3f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value.  <br /></td></tr>
 <tr class="separator:a6eef58a71fe0672d5a3c428e0a7c3f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,7 +183,7 @@ Private Attributes</h2></td></tr>
 class kcenon::thread::result&lt; T &gt;</div><p>A template class representing either a value or an error. </p>
 <p>This class is similar to std::expected from C++23, but can be used with C++20. It holds either a value of type T or an error. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00238">238</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00259">259</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a45b4d2322c768026a72176e99eda3f4a" name="a45b4d2322c768026a72176e99eda3f4a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45b4d2322c768026a72176e99eda3f4a">&#9670;&#160;</a></span>error_type</h2>
@@ -193,7 +199,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00241">241</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00262">262</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +217,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00240">240</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00261">261</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
@@ -250,12 +256,12 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00247">247</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  247</span>: <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>(<span class="keyword">true</span>), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>(std::move(<a class="code hl_function" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31">value</a>)), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>(<a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076">error_code::success</a>, <span class="stringliteral">&quot;&quot;</span>) {}</div>
-<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a262d4345d3775e8859d8acf43c827ca4"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">kcenon::thread::result::error_</a></div><div class="ttdeci">error error_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00427">error_handling.h:427</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a29fb822726259e86edf48520578e81bb"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">kcenon::thread::result::value_</a></div><div class="ttdeci">T value_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00426">error_handling.h:426</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a6eef58a71fe0672d5a3c428e0a7c3f31"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31">kcenon::thread::result::value</a></div><div class="ttdeci">T &amp; value() &amp;</div><div class="ttdoc">Gets the value.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00276">error_handling.h:276</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_afddb55e11a88ea4f5afe28ef609d6e64"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">kcenon::thread::result::has_value_</a></div><div class="ttdeci">bool has_value_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00425">error_handling.h:425</a></div></div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00268">268</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  268</span>: <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>(<span class="keyword">true</span>), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>(std::move(<a class="code hl_function" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31">value</a>)), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>(<a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076">error_code::success</a>, <span class="stringliteral">&quot;&quot;</span>) {}</div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a262d4345d3775e8859d8acf43c827ca4"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">kcenon::thread::result::error_</a></div><div class="ttdeci">error error_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00466">error_handling.h:466</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a29fb822726259e86edf48520578e81bb"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">kcenon::thread::result::value_</a></div><div class="ttdeci">T value_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00465">error_handling.h:465</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a6eef58a71fe0672d5a3c428e0a7c3f31"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31">kcenon::thread::result::value</a></div><div class="ttdeci">T &amp; value() &amp;</div><div class="ttdoc">Gets the value.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00315">error_handling.h:315</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_afddb55e11a88ea4f5afe28ef609d6e64"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">kcenon::thread::result::has_value_</a></div><div class="ttdeci">bool has_value_</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00464">error_handling.h:464</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1thread_html_a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076">kcenon::thread::error_code::success</a></div><div class="ttdeci">@ success</div></div>
 </div><!-- fragment -->
 </div>
@@ -294,8 +300,8 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00253">253</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>: <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>(<span class="keyword">false</span>), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>(std::move(err)) {}</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00274">274</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>: <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>(<span class="keyword">false</span>), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>(std::move(err)) {}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -337,16 +343,16 @@ template&lt;typename Fn &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A new result with the mapped value or the original error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00414">414</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  414</span>                                                                                   {</div>
-<div class="line"><span class="lineno">  415</span>        <span class="keyword">using </span>ResultType = std::invoke_result_t&lt;Fn, const T&amp;&gt;;</div>
-<div class="line"><span class="lineno">  416</span>        <span class="keyword">static_assert</span>(std::is_same_v&lt;typename ResultType::error_type, error&gt;, <span class="stringliteral">&quot;Function must return a result with the same error type&quot;</span>);</div>
-<div class="line"><span class="lineno">  417</span>        </div>
-<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  419</span>            <span class="keywordflow">return</span> std::invoke(std::forward&lt;Fn&gt;(fn), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
-<div class="line"><span class="lineno">  420</span>        }</div>
-<div class="line"><span class="lineno">  421</span>        <span class="keywordflow">return</span> ResultType(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
-<div class="line"><span class="lineno">  422</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00453">453</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  453</span>                                                                                   {</div>
+<div class="line"><span class="lineno">  454</span>        <span class="keyword">using </span>ResultType = std::invoke_result_t&lt;Fn, const T&amp;&gt;;</div>
+<div class="line"><span class="lineno">  455</span>        <span class="keyword">static_assert</span>(std::is_same_v&lt;typename ResultType::error_type, error&gt;, <span class="stringliteral">&quot;Function must return a result with the same error type&quot;</span>);</div>
+<div class="line"><span class="lineno">  456</span>        </div>
+<div class="line"><span class="lineno">  457</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  458</span>            <span class="keywordflow">return</span> std::invoke(std::forward&lt;Fn&gt;(fn), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
+<div class="line"><span class="lineno">  459</span>        }</div>
+<div class="line"><span class="lineno">  460</span>        <span class="keywordflow">return</span> ResultType(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
+<div class="line"><span class="lineno">  461</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -384,13 +390,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00312">312</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  312</span>                                       {</div>
-<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  314</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
-<div class="line"><span class="lineno">  315</span>        }</div>
-<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>;</div>
-<div class="line"><span class="lineno">  317</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00351">351</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span>                                       {</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  353</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
+<div class="line"><span class="lineno">  354</span>        }</div>
+<div class="line"><span class="lineno">  355</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>;</div>
+<div class="line"><span class="lineno">  356</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -440,13 +446,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00336">336</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  336</span>                                         {</div>
-<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
-<div class="line"><span class="lineno">  339</span>        }</div>
-<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
-<div class="line"><span class="lineno">  341</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00375">375</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  375</span>                                         {</div>
+<div class="line"><span class="lineno">  376</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  377</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
+<div class="line"><span class="lineno">  378</span>        }</div>
+<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
+<div class="line"><span class="lineno">  380</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -484,13 +490,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00324">324</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  324</span>                                                   {</div>
-<div class="line"><span class="lineno">  325</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
-<div class="line"><span class="lineno">  327</span>        }</div>
-<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>;</div>
-<div class="line"><span class="lineno">  329</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00363">363</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  363</span>                                                   {</div>
+<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  365</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot get error from successful result&quot;</span>);</div>
+<div class="line"><span class="lineno">  366</span>        }</div>
+<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>;</div>
+<div class="line"><span class="lineno">  368</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -522,10 +528,82 @@ template&lt;typename T &gt; </div>
 <p>Checks if the result contains a value. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the result contains a value, false if it contains an error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00267">267</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  267</span>                                                  {</div>
-<div class="line"><span class="lineno">  268</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
-<div class="line"><span class="lineno">  269</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00288">288</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  288</span>                                                  {</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
+<div class="line"><span class="lineno">  290</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4c63baacc079b3610e58b9dab27017f3" name="a4c63baacc079b3610e58b9dab27017f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c63baacc079b3610e58b9dab27017f3">&#9670;&#160;</a></span>is_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">kcenon::thread::result</a>&lt; T &gt;::is_error </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the result contains an error. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the result contains an error, false if it contains a value </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Added for API compatibility with common::Result </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00306">306</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  306</span>                                                 {</div>
+<div class="line"><span class="lineno">  307</span>        <span class="keywordflow">return</span> !<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
+<div class="line"><span class="lineno">  308</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abaca0a73803bbc9f7d4dfc29e40b4f5b" name="abaca0a73803bbc9f7d4dfc29e40b4f5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaca0a73803bbc9f7d4dfc29e40b4f5b">&#9670;&#160;</a></span>is_ok()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">kcenon::thread::result</a>&lt; T &gt;::is_ok </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the result is successful. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the result contains a value, false if it contains an error </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Added for API compatibility with common::Result </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00297">297</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  297</span>                                              {</div>
+<div class="line"><span class="lineno">  298</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
+<div class="line"><span class="lineno">  299</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -566,15 +644,15 @@ template&lt;typename Fn &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A new result with the mapped value or the original error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00399">399</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  399</span>                                                                                      {</div>
-<div class="line"><span class="lineno">  400</span>        <span class="keyword">using </span>ResultType = result&lt;std::invoke_result_t&lt;Fn, const T&amp;&gt;&gt;;</div>
-<div class="line"><span class="lineno">  401</span>        </div>
-<div class="line"><span class="lineno">  402</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  403</span>            <span class="keywordflow">return</span> ResultType(std::invoke(std::forward&lt;Fn&gt;(fn), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>));</div>
-<div class="line"><span class="lineno">  404</span>        }</div>
-<div class="line"><span class="lineno">  405</span>        <span class="keywordflow">return</span> ResultType(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
-<div class="line"><span class="lineno">  406</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00438">438</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  438</span>                                                                                      {</div>
+<div class="line"><span class="lineno">  439</span>        <span class="keyword">using </span>ResultType = result&lt;std::invoke_result_t&lt;Fn, const T&amp;&gt;&gt;;</div>
+<div class="line"><span class="lineno">  440</span>        </div>
+<div class="line"><span class="lineno">  441</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  442</span>            <span class="keywordflow">return</span> ResultType(std::invoke(std::forward&lt;Fn&gt;(fn), <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>));</div>
+<div class="line"><span class="lineno">  443</span>        }</div>
+<div class="line"><span class="lineno">  444</span>        <span class="keywordflow">return</span> ResultType(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>);</div>
+<div class="line"><span class="lineno">  445</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -606,10 +684,10 @@ template&lt;typename T &gt; </div>
 <p>Checks if the result contains a value. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the result contains a value, false if it contains an error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00259">259</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  259</span>                                                          {</div>
-<div class="line"><span class="lineno">  260</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
-<div class="line"><span class="lineno">  261</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00280">280</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  280</span>                                                          {</div>
+<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>;</div>
+<div class="line"><span class="lineno">  282</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -647,13 +725,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00276">276</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  276</span>                               {</div>
-<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
-<div class="line"><span class="lineno">  279</span>        }</div>
-<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
-<div class="line"><span class="lineno">  281</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00315">315</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  315</span>                               {</div>
+<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
+<div class="line"><span class="lineno">  318</span>        }</div>
+<div class="line"><span class="lineno">  319</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
+<div class="line"><span class="lineno">  320</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -701,13 +779,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00300">300</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  300</span>                                 {</div>
-<div class="line"><span class="lineno">  301</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  302</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
-<div class="line"><span class="lineno">  303</span>        }</div>
-<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
-<div class="line"><span class="lineno">  305</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00339">339</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span>                                 {</div>
+<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  341</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
+<div class="line"><span class="lineno">  342</span>        }</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
+<div class="line"><span class="lineno">  344</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -745,13 +823,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00288">288</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  288</span>                                           {</div>
-<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  290</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
-<div class="line"><span class="lineno">  291</span>        }</div>
-<div class="line"><span class="lineno">  292</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
-<div class="line"><span class="lineno">  293</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00327">327</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  327</span>                                           {</div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot access value of an error result&quot;</span>);</div>
+<div class="line"><span class="lineno">  330</span>        }</div>
+<div class="line"><span class="lineno">  331</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
+<div class="line"><span class="lineno">  332</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -792,13 +870,13 @@ template&lt;typename U &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The contained value or the default </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00362">362</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  362</span>                                                   {</div>
-<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  364</span>            <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
-<div class="line"><span class="lineno">  365</span>        }</div>
-<div class="line"><span class="lineno">  366</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(std::forward&lt;U&gt;(default_value));</div>
-<div class="line"><span class="lineno">  367</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00401">401</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  401</span>                                                   {</div>
+<div class="line"><span class="lineno">  402</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  403</span>            <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
+<div class="line"><span class="lineno">  404</span>        }</div>
+<div class="line"><span class="lineno">  405</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(std::forward&lt;U&gt;(default_value));</div>
+<div class="line"><span class="lineno">  406</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -839,13 +917,13 @@ template&lt;typename U &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The contained value or the default </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00349">349</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  349</span>                                                        {</div>
-<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  351</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
-<div class="line"><span class="lineno">  352</span>        }</div>
-<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(std::forward&lt;U&gt;(default_value));</div>
-<div class="line"><span class="lineno">  354</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00388">388</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  388</span>                                                        {</div>
+<div class="line"><span class="lineno">  389</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  390</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
+<div class="line"><span class="lineno">  391</span>        }</div>
+<div class="line"><span class="lineno">  392</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(std::forward&lt;U&gt;(default_value));</div>
+<div class="line"><span class="lineno">  393</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -883,13 +961,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00386">386</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  386</span>                                        {</div>
-<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  388</span>            <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
-<div class="line"><span class="lineno">  389</span>        }</div>
-<div class="line"><span class="lineno">  390</span>        <span class="keywordflow">throw</span> std::runtime_error(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>.<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>());</div>
-<div class="line"><span class="lineno">  391</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00425">425</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  425</span>                                        {</div>
+<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  427</span>            <span class="keywordflow">return</span> std::move(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>);</div>
+<div class="line"><span class="lineno">  428</span>        }</div>
+<div class="line"><span class="lineno">  429</span>        <span class="keywordflow">throw</span> std::runtime_error(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>.<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>());</div>
+<div class="line"><span class="lineno">  430</span>    }</div>
 <div class="ttc" id="aclasskcenon_1_1thread_1_1error_html_a6e4a9f5204c0146f631a8a54d54da4f7"><div class="ttname"><a href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">kcenon::thread::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d11/error__handling_8h_source.html#l00165">error_handling.h:165</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -940,13 +1018,13 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00374">374</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  374</span>                                             {</div>
-<div class="line"><span class="lineno">  375</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
-<div class="line"><span class="lineno">  376</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
-<div class="line"><span class="lineno">  377</span>        }</div>
-<div class="line"><span class="lineno">  378</span>        <span class="keywordflow">throw</span> std::runtime_error(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>.<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>());</div>
-<div class="line"><span class="lineno">  379</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00413">413</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  413</span>                                             {</div>
+<div class="line"><span class="lineno">  414</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#afddb55e11a88ea4f5afe28ef609d6e64">has_value_</a>) {</div>
+<div class="line"><span class="lineno">  415</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a29fb822726259e86edf48520578e81bb">value_</a>;</div>
+<div class="line"><span class="lineno">  416</span>        }</div>
+<div class="line"><span class="lineno">  417</span>        <span class="keywordflow">throw</span> std::runtime_error(<a class="code hl_variable" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a262d4345d3775e8859d8acf43c827ca4">error_</a>.<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>());</div>
+<div class="line"><span class="lineno">  418</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -985,8 +1063,8 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00427">427</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  427</span>{<a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076">error_code::success</a>, <span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00466">466</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  466</span>{<a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a20e1d8b59344b87a5dc3a46603607a23a260ca9dd8a4577fc00b7bd5810298076">error_code::success</a>, <span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1012,7 +1090,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00425">425</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00464">464</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
 
 </div>
 </div>
@@ -1038,8 +1116,8 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00426">426</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  426</span>{};</div>
+<p class="definition">Definition at line <a class="el" href="../../d3/d11/error__handling_8h_source.html#l00465">465</a> of file <a class="el" href="../../d3/d11/error__handling_8h_source.html">error_handling.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  465</span>{};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1049,7 +1127,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 13 2025 18:08:23 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Dec 14 2025 02:02:44 for Thread System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
