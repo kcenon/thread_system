@@ -156,6 +156,7 @@ function(find_or_fetch_gtest)
 
   # Configure GTest options
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  set(gtest_disable_pthreads ON CACHE BOOL "Disable pthreads for Windows" FORCE)
   set(BUILD_GMOCK ON CACHE BOOL "" FORCE)
   set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 
