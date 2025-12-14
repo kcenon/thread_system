@@ -218,19 +218,40 @@ public:
      * @brief Checks if the result contains an error
      * @return true if the result contains an error, false otherwise
      */
-    [[nodiscard]] bool has_error() const { return has_error_; }
-    
+    [[nodiscard]] bool has_error() const noexcept { return has_error_; }
+
+    /**
+     * @brief Checks if the result is successful (has a value)
+     * @return true if successful, false if it contains an error
+     * @note Added for API compatibility with common::Result and result<T>
+     */
+    [[nodiscard]] bool has_value() const noexcept { return !has_error_; }
+
+    /**
+     * @brief Checks if the result is successful
+     * @return true if successful, false if it contains an error
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_ok() const noexcept { return !has_error_; }
+
+    /**
+     * @brief Checks if the result contains an error
+     * @return true if the result contains an error, false otherwise
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_error() const noexcept { return has_error_; }
+
     /**
      * @brief Gets the error
      * @return A reference to the contained error
      */
     [[nodiscard]] const error& get_error() const { return error_; }
-    
+
     /**
      * @brief Converts to bool for condition checking
      * @return true if successful (no error), false otherwise
      */
-    explicit operator bool() const { return !has_error_; }
+    explicit operator bool() const noexcept { return !has_error_; }
     
 private:
     bool has_error_ = false;
@@ -302,7 +323,33 @@ public:
         return has_value_;
 #endif
     }
-    
+
+    /**
+     * @brief Checks if the result is successful
+     * @return true if the result contains a value, false if it contains an error
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_ok() const noexcept {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.is_ok();
+#else
+        return has_value_;
+#endif
+    }
+
+    /**
+     * @brief Checks if the result contains an error
+     * @return true if the result contains an error, false if it contains a value
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_error() const noexcept {
+#ifdef THREAD_HAS_COMMON_RESULT
+        return impl_.is_err();
+#else
+        return !has_value_;
+#endif
+    }
+
     /**
      * @brief Gets the value
      * @return A reference to the contained value
@@ -607,7 +654,25 @@ public:
     [[nodiscard]] bool has_value() const noexcept {
         return success_;
     }
-    
+
+    /**
+     * @brief Checks if the result is successful
+     * @return true if the result is successful, false if it contains an error
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_ok() const noexcept {
+        return success_;
+    }
+
+    /**
+     * @brief Checks if the result contains an error
+     * @return true if the result contains an error, false if successful
+     * @note Added for API compatibility with common::Result
+     */
+    [[nodiscard]] bool is_error() const noexcept {
+        return !success_;
+    }
+
     /**
      * @brief Gets the error
      * @return A reference to the contained error
@@ -619,7 +684,7 @@ public:
         }
         return error_;
     }
-    
+
     /**
      * @brief Gets the error
      * @return A const reference to the contained error

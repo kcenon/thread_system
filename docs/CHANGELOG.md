@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #289**: Unify Result type API across common_system and thread_system
+  - Added `has_value()`, `is_ok()`, `is_error()` methods to `result_void` class
+  - Added `is_ok()` and `is_error()` methods to `result<T>` and `result<void>` classes
+  - Updated both `include/kcenon/thread/core/error_handling.h` and `core/sync/include/error_handling.h`
+  - API now consistent across `result_void`, `result<T>`, `result<void>`, and `common::Result<T>`
+  - Added unit tests for new compatibility methods
+  - Updated ERROR_SYSTEM_MIGRATION_GUIDE.md with new API mapping
+  - 100% backward compatible - all existing code continues to work
 - **Issue #271**: Apply updated common_system with C++20 Concepts
   - New `include/kcenon/thread/concepts/thread_concepts.h` header unifying all C++20 Concepts
   - Concepts for callable validation: `Callable`, `VoidCallable`, `ReturningCallable`, `CallableWith`

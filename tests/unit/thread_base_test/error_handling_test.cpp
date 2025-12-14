@@ -70,35 +70,83 @@ TEST_F(ErrorHandlingTest, ErrorCodeToString) {
 
 TEST_F(ErrorHandlingTest, ResultVoidSuccess) {
     result_void success_result;
-    
+
     EXPECT_FALSE(success_result.has_error());
     EXPECT_TRUE(static_cast<bool>(success_result));
+    // Test compatibility methods
+    EXPECT_TRUE(success_result.has_value());
+    EXPECT_TRUE(success_result.is_ok());
+    EXPECT_FALSE(success_result.is_error());
 }
 
 TEST_F(ErrorHandlingTest, ResultVoidError) {
     error test_error{error_code::unknown_error, "Test error message"};
     result_void error_result{test_error};
-    
+
     EXPECT_TRUE(error_result.has_error());
     EXPECT_FALSE(static_cast<bool>(error_result));
     EXPECT_EQ(error_result.get_error().code(), error_code::unknown_error);
     EXPECT_EQ(error_result.get_error().message(), "Test error message");
+    // Test compatibility methods
+    EXPECT_FALSE(error_result.has_value());
+    EXPECT_FALSE(error_result.is_ok());
+    EXPECT_TRUE(error_result.is_error());
+}
+
+TEST_F(ErrorHandlingTest, ResultVoidAPICompatibility) {
+    // Test that result_void API is compatible with result<T> and common::Result
+    result_void success;
+    result_void failure{error{error_code::unknown_error, "Error"}};
+
+    // Verify all three methods are consistent for success case
+    EXPECT_EQ(success.has_value(), !success.has_error());
+    EXPECT_EQ(success.is_ok(), !success.has_error());
+    EXPECT_EQ(success.is_error(), success.has_error());
+
+    // Verify all three methods are consistent for error case
+    EXPECT_EQ(failure.has_value(), !failure.has_error());
+    EXPECT_EQ(failure.is_ok(), !failure.has_error());
+    EXPECT_EQ(failure.is_error(), failure.has_error());
 }
 
 TEST_F(ErrorHandlingTest, ResultWithValue) {
     // Success case
     result<int> success_result{42};
-    
+
     EXPECT_TRUE(success_result.has_value());
     EXPECT_TRUE(static_cast<bool>(success_result));
     EXPECT_EQ(success_result.value(), 42);
-    
+    // Test compatibility methods
+    EXPECT_TRUE(success_result.is_ok());
+    EXPECT_FALSE(success_result.is_error());
+
     // Error case
     result<int> error_result{error{error_code::invalid_argument, "Invalid value"}};
-    
+
     EXPECT_FALSE(error_result.has_value());
     EXPECT_FALSE(static_cast<bool>(error_result));
     EXPECT_EQ(error_result.get_error().code(), error_code::invalid_argument);
+    // Test compatibility methods
+    EXPECT_FALSE(error_result.is_ok());
+    EXPECT_TRUE(error_result.is_error());
+}
+
+TEST_F(ErrorHandlingTest, ResultVoidSpecialization) {
+    // Test result<void> specialization
+    result<void> success;
+    result<void> failure{error{error_code::unknown_error, "Error"}};
+
+    // Success case
+    EXPECT_TRUE(success.has_value());
+    EXPECT_TRUE(success.is_ok());
+    EXPECT_FALSE(success.is_error());
+    EXPECT_TRUE(static_cast<bool>(success));
+
+    // Error case
+    EXPECT_FALSE(failure.has_value());
+    EXPECT_FALSE(failure.is_ok());
+    EXPECT_TRUE(failure.is_error());
+    EXPECT_FALSE(static_cast<bool>(failure));
 }
 
 TEST_F(ErrorHandlingTest, ResultValueOr) {
