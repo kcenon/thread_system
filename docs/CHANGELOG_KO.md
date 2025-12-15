@@ -33,6 +33,12 @@
   - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
 
 ### 수정됨
+- **이슈 #295**: thread_pool 소멸자와 stop() 메서드의 SDOF 방지
+  - 정적 소멸 중 로깅 없이 종료하는 `stop_unsafe()` private 메서드 추가
+  - 소멸자에서 `stop()` 호출 전 `thread_logger::is_shutting_down()` 체크 추가
+  - 모든 `thread_context::log()` 메서드 오버로드에 종료 체크 추가
+  - 정적 소멸 단계에서 thread_pool 파괴 시 발생하던 `free(): invalid pointer` 오류 방지
+  - 관련 이슈 #293 (thread_logger Intentional Leak 패턴)
 - **이슈 #293**: thread_logger의 정적 소멸 순서 문제 방지
   - `instance()`를 의도적 누수 패턴으로 변경 (`new`로 할당, 삭제 안 함)
   - 프로세스 종료 시 로깅을 건너뛰기 위한 `is_shutting_down_` 원자적 플래그 추가

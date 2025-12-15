@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_logger.h>
 #include <kcenon/thread/utils/formatter.h>
 
 using namespace utility_module;
@@ -96,12 +97,24 @@ thread_pool::thread_pool(const std::string& thread_title, const thread_context& 
  * @brief Destroys the thread pool, ensuring all workers are stopped.
  *
  * Implementation details:
- * - Automatically calls stop() to ensure clean shutdown
+ * - Checks if static destruction is in progress to avoid SDOF
+ * - Uses stop_unsafe() during static destruction (no logging)
+ * - Uses regular stop() during normal destruction
  * - Workers will complete current jobs before terminating
  * - Prevents resource leaks from running threads
+ *
+ * @see stop_unsafe() for the logging-free shutdown variant
+ * @see thread_logger::is_shutting_down() for shutdown detection
  */
 thread_pool::~thread_pool() {
-    stop();
+    // Check if we're in static destruction phase
+    // During static destruction, logger/monitoring singletons may already be destroyed
+    if (thread_logger::is_shutting_down()) {
+        // Minimal cleanup without logging to avoid SDOF
+        stop_unsafe();
+    } else {
+        stop();
+    }
 }
 
 /**
@@ -408,6 +421,54 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
             context_.log(common::interfaces::log_level::error, formatter::format("error stopping worker: {}",
                                                              stop_result.get_error().to_string()));
         }
+    }
+
+    return {};
+}
+
+/**
+ * @brief Stops the thread pool without logging (for use during static destruction).
+ *
+ * This method performs the same shutdown sequence as stop() but without
+ * any logging operations. It is specifically designed to be called from
+ * the destructor when static destruction is in progress, preventing
+ * Static Destruction Order Fiasco (SDOF) by avoiding access to potentially
+ * destroyed logger/monitoring singletons.
+ *
+ * Implementation details:
+ * - Same atomic state transition as stop()
+ * - Cancels pool-level token for hierarchical cancellation
+ * - Stops job queue without clearing (graceful shutdown)
+ * - Stops all workers without logging errors
+ * - noexcept guarantee for safe destructor use
+ *
+ * @return @c result_void containing an error on failure, or success value on success.
+ */
+auto thread_pool::stop_unsafe() noexcept -> result_void {
+    // Use compare_exchange_strong to atomically check and set state
+    // Same atomic transition as stop() to prevent race conditions
+    bool expected = true;
+    if (!start_pool_.compare_exchange_strong(expected, false, std::memory_order_acq_rel,
+                                             std::memory_order_acquire)) {
+        // Pool is already stopped or being stopped by another thread
+        return {};
+    }
+
+    // Cancel pool-level token to propagate cancellation to all workers and jobs
+    pool_cancellation_token_.cancel();
+
+    // Stop job queue if it exists
+    if (job_queue_ != nullptr) {
+        job_queue_->stop();
+    }
+
+    // Stop workers while holding lock to ensure consistent iteration
+    // No logging to avoid accessing potentially destroyed singletons
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+    for (auto& worker : workers_) {
+        // Stop worker without checking result to avoid any potential exceptions
+        // during static destruction
+        worker->stop();
     }
 
     return {};

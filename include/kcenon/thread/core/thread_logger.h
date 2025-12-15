@@ -38,6 +38,7 @@
 #include <mutex>
 #include <iostream>
 #include <atomic>
+#include <cstdlib>
 
 namespace kcenon::thread {
 
@@ -74,11 +75,26 @@ public:
      * Uses intentional leak pattern to avoid static destruction order issues.
      * The logger may be accessed during other singletons' destruction,
      * so we intentionally leak to ensure it remains valid.
+     *
+     * Automatically registers an atexit handler on first call to set the
+     * shutdown flag before static object destruction begins. This ensures
+     * SDOF protection is always active without requiring manual intervention.
+     *
+     * @note The atexit handler is called BEFORE static object destructors,
+     *       guaranteeing that is_shutting_down() returns true during the
+     *       destruction phase of any static thread_pool instances.
      */
     static thread_logger& instance() {
         // Intentionally leak to avoid static destruction order issues
         // Logger may be accessed during other singletons' destruction
-        static thread_logger* logger = new thread_logger();
+        static thread_logger* logger = []() {
+            auto* ptr = new thread_logger();
+            // Register atexit handler to set shutdown flag before static destruction
+            // atexit handlers are called BEFORE static object destructors (C++ standard)
+            // This ensures is_shutting_down() returns true during destruction phase
+            std::atexit(prepare_shutdown);
+            return ptr;
+        }();
         return *logger;
     }
 

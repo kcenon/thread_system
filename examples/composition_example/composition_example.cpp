@@ -43,8 +43,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/core/log_level.h>
 
+// Use explicit namespace to avoid ambiguity with kcenon::thread::log_level
+// from thread_logger.h (included via thread_context.h)
 using namespace kcenon::thread;
-using log_level = kcenon::common::interfaces::log_level;
+using common_log_level = kcenon::common::interfaces::log_level;
 
 /**
  * @brief Simple console logger implementation using common_system ILogger
@@ -57,12 +59,12 @@ public:
     using log_entry = kcenon::common::interfaces::log_entry;
     using source_location = kcenon::common::source_location;
 
-    VoidResult log(log_level level, const std::string& message) override {
+    VoidResult log(common_log_level level, const std::string& message) override {
         std::cout << "[" << level_to_string(level) << "] " << message << std::endl;
         return VoidResult::ok({});
     }
 
-    VoidResult log(log_level level,
+    VoidResult log(common_log_level level,
                    std::string_view message,
                    const source_location& loc = source_location::current()) override {
         std::cout << "[" << level_to_string(level) << "] "
@@ -76,7 +78,7 @@ public:
     #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-    VoidResult log(log_level level, const std::string& message,
+    VoidResult log(common_log_level level, const std::string& message,
                    const std::string& file, int line, const std::string& function) override {
         std::cout << "[" << level_to_string(level) << "] "
                   << file << ":" << line << " (" << function << ") - "
@@ -92,16 +94,16 @@ public:
         return log(entry.level, entry.message, entry.file, entry.line, entry.function);
     }
 
-    bool is_enabled(log_level /*level*/) const override {
+    bool is_enabled(common_log_level /*level*/) const override {
         return true; // Enable all levels for demo
     }
 
-    VoidResult set_level(log_level level) override {
+    VoidResult set_level(common_log_level level) override {
         min_level_ = level;
         return VoidResult::ok({});
     }
 
-    log_level get_level() const override {
+    common_log_level get_level() const override {
         return min_level_;
     }
 
@@ -111,11 +113,11 @@ public:
     }
 
 private:
-    std::string level_to_string(log_level level) const {
+    std::string level_to_string(common_log_level level) const {
         return std::string(kcenon::common::interfaces::to_string(level));
     }
 
-    log_level min_level_ = log_level::trace;
+    common_log_level min_level_ = common_log_level::trace;
 };
 
 /**

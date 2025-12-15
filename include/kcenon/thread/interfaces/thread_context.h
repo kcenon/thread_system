@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "monitoring_interface.h"
 #include "service_container.h"
 #include <kcenon/thread/core/log_level.h>
+#include <kcenon/thread/core/thread_logger.h>
 
 namespace kcenon::thread {
 
@@ -98,8 +99,13 @@ public:
      * @param message Log message
      *
      * @note Issue #261: Now uses common_system's ILogger interface.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(common::interfaces::log_level level, const std::string& message) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(level, message);
         }
@@ -111,8 +117,13 @@ public:
      * @param message Log message
      *
      * @note Provides backward compatibility for code using log_level_v2.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(log_level_v2 level, const std::string& message) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(to_common_level(level), message);
         }
@@ -125,10 +136,15 @@ public:
      * @param loc Source location (automatically captured)
      *
      * @note Issue #261: Now uses common_system's ILogger with source_location support.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(common::interfaces::log_level level,
              std::string_view message,
              const common::source_location& loc = common::source_location::current()) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(level, message, loc);
         }
@@ -137,8 +153,14 @@ public:
     /**
      * @brief Update system metrics if monitoring is available
      * @param metrics System metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_system_metrics(const monitoring_interface::system_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_system_metrics(metrics);
         }
@@ -147,8 +169,14 @@ public:
     /**
      * @brief Update thread pool metrics if monitoring is available
      * @param metrics Thread pool metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_thread_pool_metrics(const monitoring_interface::thread_pool_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_thread_pool_metrics(metrics);
         }
@@ -159,10 +187,16 @@ public:
      * @param pool_name Name of the thread pool
      * @param pool_instance_id Instance ID for multiple pools
      * @param metrics Thread pool metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_thread_pool_metrics(const std::string& pool_name,
                                    std::uint32_t pool_instance_id,
                                    const monitoring_interface::thread_pool_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_thread_pool_metrics(pool_name, pool_instance_id, metrics);
         }
@@ -172,9 +206,15 @@ public:
      * @brief Update worker metrics if monitoring is available
      * @param worker_id Worker identifier
      * @param metrics Worker metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
-    void update_worker_metrics(std::size_t worker_id, 
+    void update_worker_metrics(std::size_t worker_id,
                               const monitoring_interface::worker_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_worker_metrics(worker_id, metrics);
         }
