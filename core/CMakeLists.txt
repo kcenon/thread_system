@@ -45,6 +45,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job_queue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/thread_base.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/thread_logger_init.cpp
     # Lock-free implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/lockfree/lockfree_job_queue.cpp
     # Queue module implementation
