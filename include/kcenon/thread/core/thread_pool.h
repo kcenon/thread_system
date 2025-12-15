@@ -490,6 +490,21 @@ namespace kcenon::thread
 		 */
 		cancellation_token pool_cancellation_token_;
 
+		/**
+		 * @brief Stops the thread pool without logging (for use during static destruction).
+		 *
+		 * This method performs the same shutdown sequence as stop() but without
+		 * any logging operations. It is specifically designed to be called from
+		 * the destructor when static destruction is in progress, preventing
+		 * Static Destruction Order Fiasco (SDOF) by avoiding access to potentially
+		 * destroyed logger/monitoring singletons.
+		 *
+		 * @return @c result_void containing an error on failure, or success value on success.
+		 *
+		 * @note This method should only be called from the destructor during static destruction.
+		 */
+		auto stop_unsafe() noexcept -> result_void;
+
         /**
          * @brief Shared metrics collector used by workers.
          */
