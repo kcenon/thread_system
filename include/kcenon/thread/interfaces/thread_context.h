@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "monitoring_interface.h"
 #include "service_container.h"
 #include <kcenon/thread/core/log_level.h>
+#include <kcenon/thread/core/thread_logger.h>
 
 namespace kcenon::thread {
 
@@ -98,8 +99,13 @@ public:
      * @param message Log message
      *
      * @note Issue #261: Now uses common_system's ILogger interface.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(common::interfaces::log_level level, const std::string& message) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(level, message);
         }
@@ -111,8 +117,13 @@ public:
      * @param message Log message
      *
      * @note Provides backward compatibility for code using log_level_v2.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(log_level_v2 level, const std::string& message) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(to_common_level(level), message);
         }
@@ -125,10 +136,15 @@ public:
      * @param loc Source location (automatically captured)
      *
      * @note Issue #261: Now uses common_system's ILogger with source_location support.
+     * @note Issue #295: Skips logging during static destruction to prevent SDOF.
      */
     void log(common::interfaces::log_level level,
              std::string_view message,
              const common::source_location& loc = common::source_location::current()) const {
+        // Skip logging during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (logger_) {
             logger_->log(level, message, loc);
         }
