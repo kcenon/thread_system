@@ -56,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Timeline**: Deprecated in v1.x, to be removed in v2.0
 
 ### Fixed
+- **Issue #295**: Prevent SDOF in thread_pool destructor and stop() method
+  - Added `stop_unsafe()` private method for logging-free shutdown during static destruction
+  - Modified destructor to check `thread_logger::is_shutting_down()` before calling `stop()`
+  - Added shutdown checks to all `thread_context::log()` method overloads
+  - Prevents `free(): invalid pointer` error when thread_pool is destroyed during static destruction
+  - Related to #293 (thread_logger Intentional Leak pattern)
 - **Issue #293**: Prevent static destruction order issues in thread_logger
   - Changed `instance()` to use intentional leak pattern (allocate with `new`, never delete)
   - Added `is_shutting_down_` atomic flag to skip logging during process termination
