@@ -32,6 +32,14 @@
   - 마이그레이션 경로: common_system의 `common::interfaces::ILogger` 사용
   - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
 
+### 수정됨
+- **이슈 #293**: thread_logger의 정적 소멸 순서 문제 방지
+  - `instance()`를 의도적 누수 패턴으로 변경 (`new`로 할당, 삭제 안 함)
+  - 프로세스 종료 시 로깅을 건너뛰기 위한 `is_shutting_down_` 원자적 플래그 추가
+  - 명시적 종료 신호를 위한 `prepare_shutdown()` 메서드 추가
+  - Ubuntu의 network_system CI 테스트에서 발생하던 `free(): invalid pointer` 오류 수정
+  - API 호환성 유지 - 순수하게 내부 구현 수정
+
 ### 추가됨
 - **이슈 #246**: adaptive_queue_sample 예제 재활성화
   - adaptive_queue_sample.cpp에서 logger 의존성 제거

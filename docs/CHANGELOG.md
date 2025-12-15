@@ -55,6 +55,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Migration path: Use `common::interfaces::ILogger` from common_system instead
   - **Timeline**: Deprecated in v1.x, to be removed in v2.0
 
+### Fixed
+- **Issue #293**: Prevent static destruction order issues in thread_logger
+  - Changed `instance()` to use intentional leak pattern (allocate with `new`, never delete)
+  - Added `is_shutting_down_` atomic flag to skip logging during process termination
+  - Added `prepare_shutdown()` method for explicit shutdown signaling
+  - Fixes `free(): invalid pointer` error in network_system CI tests on Ubuntu
+  - No API breaking changes - purely internal implementation fix
+
 ### Added
 - **Issue #262**: Add LoggerSystemAdapter for runtime binding
   - New `logger_system_adapter` class bridging logger_system to common_system's ILogger interface

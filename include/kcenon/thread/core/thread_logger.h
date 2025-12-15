@@ -37,6 +37,7 @@
 #include <thread>
 #include <mutex>
 #include <iostream>
+#include <atomic>
 
 namespace kcenon::thread {
 
@@ -69,10 +70,34 @@ class thread_logger {
 public:
     /**
      * @brief Get singleton instance
+     *
+     * Uses intentional leak pattern to avoid static destruction order issues.
+     * The logger may be accessed during other singletons' destruction,
+     * so we intentionally leak to ensure it remains valid.
      */
     static thread_logger& instance() {
-        static thread_logger logger;
-        return logger;
+        // Intentionally leak to avoid static destruction order issues
+        // Logger may be accessed during other singletons' destruction
+        static thread_logger* logger = new thread_logger();
+        return *logger;
+    }
+
+    /**
+     * @brief Prepare for process shutdown
+     *
+     * Call this before process termination to prevent log calls
+     * during static destruction. Once called, all log operations
+     * become no-ops.
+     */
+    static void prepare_shutdown() {
+        is_shutting_down_.store(true, std::memory_order_release);
+    }
+
+    /**
+     * @brief Check if shutdown is in progress
+     */
+    static bool is_shutting_down() {
+        return is_shutting_down_.load(std::memory_order_acquire);
     }
 
     /**
@@ -106,6 +131,11 @@ public:
      */
     void log(log_level level, std::string_view thread_name,
              std::string_view message, std::string_view context = "") {
+        // Early return during shutdown to avoid accessing potentially destroyed resources
+        if (is_shutting_down_.load(std::memory_order_acquire)) {
+            return;
+        }
+
         if (!enabled_ || level < min_level_) {
             return;
         }
@@ -138,7 +168,10 @@ public:
      */
     template<typename ErrorType>
     void log_error(std::string_view thread_name, const ErrorType& error) {
-        if (!enabled_) return;
+        // Early return during shutdown
+        if (is_shutting_down_.load(std::memory_order_acquire) || !enabled_) {
+            return;
+        }
 
         std::ostringstream oss;
         oss << "Error code: " << error.code()
@@ -148,6 +181,10 @@ public:
     }
 
 private:
+    // Static shutdown flag - checked before any logging operation
+    // Uses inline to allow definition in header (C++17)
+    static inline std::atomic<bool> is_shutting_down_{false};
+
     thread_logger() = default;
     ~thread_logger() = default;
     thread_logger(const thread_logger&) = delete;
