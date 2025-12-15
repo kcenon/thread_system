@@ -33,6 +33,13 @@
   - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
 
 ### 수정됨
+- **이슈 #297**: SDOF 방지를 위한 atexit 핸들러 등록 타이밍 개선
+  - 조기 atexit 핸들러 등록을 위한 `thread_logger_init.cpp` 추가
+  - 플랫폼별 초기화 사용 (GCC/Clang `__attribute__((constructor(101)))`, MSVC CRT 섹션)
+  - 정적 소멸 단계에서 `is_shutting_down()`이 true를 반환하도록 보장
+  - 포괄적인 SDOF 방지 테스트 추가
+  - 크로스 플랫폼 지원: Linux, macOS, Windows
+  - 관련 이슈 #295, #296 (초기 SDOF 방지), network_system#301
 - **이슈 #295**: thread_pool 소멸자와 stop() 메서드의 SDOF 방지
   - 정적 소멸 중 로깅 없이 종료하는 `stop_unsafe()` private 메서드 추가
   - 소멸자에서 `stop()` 호출 전 `thread_logger::is_shutting_down()` 체크 추가
