@@ -153,8 +153,14 @@ public:
     /**
      * @brief Update system metrics if monitoring is available
      * @param metrics System metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_system_metrics(const monitoring_interface::system_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_system_metrics(metrics);
         }
@@ -163,8 +169,14 @@ public:
     /**
      * @brief Update thread pool metrics if monitoring is available
      * @param metrics Thread pool metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_thread_pool_metrics(const monitoring_interface::thread_pool_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_thread_pool_metrics(metrics);
         }
@@ -175,10 +187,16 @@ public:
      * @param pool_name Name of the thread pool
      * @param pool_instance_id Instance ID for multiple pools
      * @param metrics Thread pool metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
     void update_thread_pool_metrics(const std::string& pool_name,
                                    std::uint32_t pool_instance_id,
                                    const monitoring_interface::thread_pool_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_thread_pool_metrics(pool_name, pool_instance_id, metrics);
         }
@@ -188,9 +206,15 @@ public:
      * @brief Update worker metrics if monitoring is available
      * @param worker_id Worker identifier
      * @param metrics Worker metrics to record
+     *
+     * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
      */
-    void update_worker_metrics(std::size_t worker_id, 
+    void update_worker_metrics(std::size_t worker_id,
                               const monitoring_interface::worker_metrics& metrics) const {
+        // Skip monitoring during static destruction to prevent SDOF
+        if (thread_logger::is_shutting_down()) {
+            return;
+        }
         if (monitoring_) {
             monitoring_->update_worker_metrics(worker_id, metrics);
         }
