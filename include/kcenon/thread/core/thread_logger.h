@@ -66,6 +66,14 @@ enum class log_level {
  * - All methods are thread-safe
  * - Uses mutex for synchronized output
  * - Lock-free in disabled state
+ *
+ * SDOF Prevention:
+ * - The shutdown handler is registered early during program initialization
+ *   via thread_logger_init.cpp, ensuring it runs after all user static
+ *   object destructors complete (atexit handlers run in LIFO order)
+ * - This guarantees is_shutting_down() returns true during static destruction
+ *
+ * @see thread_logger_init.cpp for early registration implementation
  */
 class thread_logger {
 public:
@@ -76,22 +84,23 @@ public:
      * The logger may be accessed during other singletons' destruction,
      * so we intentionally leak to ensure it remains valid.
      *
-     * Automatically registers an atexit handler on first call to set the
-     * shutdown flag before static object destruction begins. This ensures
-     * SDOF protection is always active without requiring manual intervention.
+     * @note The atexit handler for SDOF protection is registered early during
+     *       program initialization by thread_logger_init.cpp, not here.
+     *       This ensures the handler runs after all user static object
+     *       destructors complete, guaranteeing is_shutting_down() returns
+     *       true during the destruction phase.
      *
-     * @note The atexit handler is called BEFORE static object destructors,
-     *       guaranteeing that is_shutting_down() returns true during the
-     *       destruction phase of any static thread_pool instances.
+     * @see thread_logger_init.cpp
      */
     static thread_logger& instance() {
         // Intentionally leak to avoid static destruction order issues
         // Logger may be accessed during other singletons' destruction
         static thread_logger* logger = []() {
             auto* ptr = new thread_logger();
-            // Register atexit handler to set shutdown flag before static destruction
-            // atexit handlers are called BEFORE static object destructors (C++ standard)
-            // This ensures is_shutting_down() returns true during destruction phase
+            // Note: atexit handler is registered early by thread_logger_init.cpp
+            // We register here as well for safety (multiple calls to atexit with
+            // the same function are safe per C++ standard - they just add multiple
+            // entries, and prepare_shutdown() is idempotent)
             std::atexit(prepare_shutdown);
             return ptr;
         }();
