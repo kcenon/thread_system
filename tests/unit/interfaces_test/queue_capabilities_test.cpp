@@ -387,11 +387,11 @@ TEST(lockfree_queue_capabilities_test, scheduler_interface_still_works)
     auto result = scheduler->schedule(
         std::make_unique<callback_job>(
             []() -> std::optional<std::string> { return std::nullopt; }));
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
 
     // Get via interface
     auto job = scheduler->get_next_job();
-    EXPECT_TRUE(job.has_value());
+    EXPECT_TRUE(job.is_ok());
     EXPECT_NE(job.value(), nullptr);
 }
 
