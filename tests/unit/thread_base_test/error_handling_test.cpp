@@ -209,38 +209,38 @@ TEST_F(ErrorHandlingTest, ResultValueOrThrow) {
 TEST_F(ErrorHandlingTest, JobQueueErrorStates) {
     // Test queue operations
     auto queue = std::make_unique<job_queue>();
-    
+
     // Enqueue a job
-    auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+    auto job = std::make_unique<callback_job>([]() -> common::VoidResult { return common::ok(); });
     auto result = queue->enqueue(std::move(job));
-    EXPECT_FALSE(result.has_error());
-    
+    EXPECT_TRUE(result.is_ok());
+
     // Test dequeue
     auto dequeue_result = queue->dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_NE(dequeue_result.value(), nullptr);
 }
 
 TEST_F(ErrorHandlingTest, JobExecutionErrors) {
     auto queue = std::make_unique<job_queue>();
-    
+
     // Job that returns an error
-    auto error_job = std::make_unique<callback_job>([]() -> result_void {
-        return error{error_code::job_execution_failed, "Simulated failure"};
+    auto error_job = std::make_unique<callback_job>([]() -> common::VoidResult {
+        return common::error_info{error_code::job_execution_failed, "Simulated failure", "error_handling_test"};
     });
-    
+
     auto enqueue_result = queue->enqueue(std::move(error_job));
-    EXPECT_FALSE(enqueue_result.has_error());
-    
+    EXPECT_TRUE(enqueue_result.is_ok());
+
     // Dequeue and execute
     auto dequeue_result = queue->dequeue();
-    ASSERT_TRUE(dequeue_result.has_value());
+    ASSERT_TRUE(dequeue_result.is_ok());
     auto dequeued = std::move(dequeue_result.value());
     ASSERT_NE(dequeued, nullptr);
-    
+
     auto result = dequeued->do_work();
-    EXPECT_TRUE(result.has_error());
-    EXPECT_EQ(result.get_error().code(), error_code::job_execution_failed);
+    EXPECT_TRUE(result.is_err());
+    EXPECT_EQ(result.error().code, static_cast<int>(error_code::job_execution_failed));
 }
 
 TEST_F(ErrorHandlingTest, ThreadBaseStartStop) {
@@ -252,14 +252,14 @@ TEST_F(ErrorHandlingTest, ThreadBaseStartStop) {
         std::atomic<bool> error_occurred{false};
         
     protected:
-        result_void do_work() override {
+        common::VoidResult do_work() override {
             work_count.fetch_add(1);
             if (work_count.load() >= 3) {
                 error_occurred.store(true);
-                return error{error_code::unknown_error, "Test error"};
+                return common::error_info{error_code::unknown_error, "Test error", "error_handling_test"};
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
-            return {};
+            return common::ok();
         }
     };
     
