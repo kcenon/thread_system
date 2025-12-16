@@ -59,11 +59,11 @@ TEST_F(ThreadPoolLifecycleTest, StartAndStopPool) {
     CreateThreadPool(4, "lifecycle_pool");
 
     auto result = pool_->start();
-    ASSERT_TRUE(result) << "Failed to start pool: " << result.get_error().to_string();
+    ASSERT_TRUE(result.is_ok()) << "Failed to start pool: " << result.error().message;
     EXPECT_TRUE(pool_->is_running());
 
     result = pool_->stop();
-    ASSERT_TRUE(result) << "Failed to stop pool: " << result.get_error().to_string();
+    ASSERT_TRUE(result.is_ok()) << "Failed to stop pool: " << result.error().message;
     EXPECT_FALSE(pool_->is_running());
 }
 
@@ -71,7 +71,7 @@ TEST_F(ThreadPoolLifecycleTest, SubmitJobsAfterStart) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
@@ -93,7 +93,7 @@ TEST_F(ThreadPoolLifecycleTest, SubmitJobsBeforeStart) {
 
     // Now start the pool
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     EXPECT_TRUE(WaitForJobCompletion(job_count));
     EXPECT_EQ(completed_jobs_.load(), job_count);
@@ -103,7 +103,7 @@ TEST_F(ThreadPoolLifecycleTest, ImmediateShutdown) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Submit many jobs
     for (size_t i = 0; i < 1000; ++i) {
@@ -114,7 +114,7 @@ TEST_F(ThreadPoolLifecycleTest, ImmediateShutdown) {
 
     // Immediate shutdown should succeed
     result = pool_->stop(true);
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
     EXPECT_FALSE(pool_->is_running());
 }
 
@@ -122,7 +122,7 @@ TEST_F(ThreadPoolLifecycleTest, GracefulShutdown) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
@@ -133,7 +133,7 @@ TEST_F(ThreadPoolLifecycleTest, GracefulShutdown) {
     EXPECT_TRUE(WaitForJobCompletion(job_count));
 
     result = pool_->stop(false);
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
     EXPECT_FALSE(pool_->is_running());
 }
 
@@ -145,17 +145,17 @@ TEST_F(ThreadPoolLifecycleTest, AddWorkersAfterCreation) {
     for (size_t i = 0; i < 2; ++i) {
         auto worker = std::make_unique<kcenon::thread::thread_worker>();
         auto result = pool_->enqueue(std::move(worker));
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
     }
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Add 2 more workers dynamically
     for (size_t i = 0; i < 2; ++i) {
         auto worker = std::make_unique<kcenon::thread::thread_worker>();
         result = pool_->enqueue(std::move(worker));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(pool_->get_thread_count(), 4);
@@ -166,7 +166,7 @@ TEST_F(ThreadPoolLifecycleTest, MultipleStartStopCycles) {
 
     for (int cycle = 0; cycle < 3; ++cycle) {
         auto result = pool_->start();
-        ASSERT_TRUE(result) << "Failed to start in cycle " << cycle;
+        ASSERT_TRUE(result.is_ok()) << "Failed to start in cycle " << cycle;
 
         for (size_t i = 0; i < 50; ++i) {
             SubmitCountingJob();
@@ -176,7 +176,7 @@ TEST_F(ThreadPoolLifecycleTest, MultipleStartStopCycles) {
         EXPECT_TRUE(WaitForJobCompletion(expected));
 
         result = pool_->stop();
-        ASSERT_TRUE(result) << "Failed to stop in cycle " << cycle;
+        ASSERT_TRUE(result.is_ok()) << "Failed to stop in cycle " << cycle;
     }
 
     EXPECT_EQ(completed_jobs_.load(), 150);
@@ -189,7 +189,7 @@ TEST_F(ThreadPoolLifecycleTest, VerifyWorkerCount) {
     EXPECT_EQ(pool_->get_thread_count(), worker_count);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     EXPECT_EQ(pool_->get_thread_count(), worker_count);
 }
@@ -198,22 +198,22 @@ TEST_F(ThreadPoolLifecycleTest, SubmitBatchJobs) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     std::vector<std::unique_ptr<kcenon::thread::job>> jobs;
     const size_t batch_size = 100;
 
     for (size_t i = 0; i < batch_size; ++i) {
         jobs.push_back(std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         ));
     }
 
     result = pool_->enqueue_batch(std::move(jobs));
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
 
     EXPECT_TRUE(WaitForJobCompletion(batch_size));
     EXPECT_EQ(completed_jobs_.load(), batch_size);
@@ -223,7 +223,7 @@ TEST_F(ThreadPoolLifecycleTest, QueueSizeTracking) {
     CreateThreadPool(1); // Single worker to control execution
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Submit jobs faster than they can be processed
     const size_t job_count = 100;
@@ -245,7 +245,7 @@ TEST_F(ThreadPoolLifecycleTest, ConcurrentJobSubmission) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t threads = 4;
     const size_t jobs_per_thread = 100;
@@ -271,24 +271,24 @@ TEST_F(ThreadPoolLifecycleTest, ErrorHandlingInJobs) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     std::atomic<size_t> exceptions_caught{0};
 
     for (size_t i = 0; i < 50; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this, &exceptions_caught]() -> kcenon::thread::result_void {
+            [this, &exceptions_caught]() -> kcenon::common::VoidResult {
                 try {
                     throw std::runtime_error("Test exception");
                 } catch (...) {
                     exceptions_caught.fetch_add(1);
                 }
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto submit_result = pool_->enqueue(std::move(job));
-        EXPECT_TRUE(submit_result);
+        EXPECT_TRUE(submit_result.is_ok());
     }
 
     EXPECT_TRUE(WaitForJobCompletion(50));
@@ -302,16 +302,16 @@ TEST_F(ThreadPoolLifecycleTest, PoolResourceCleanup) {
         for (size_t i = 0; i < 4; ++i) {
             auto worker = std::make_unique<kcenon::thread::thread_worker>();
             auto result = pool->enqueue(std::move(worker));
-            ASSERT_TRUE(result);
+            ASSERT_TRUE(result.is_ok());
         }
 
         auto result = pool->start();
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         for (size_t i = 0; i < 100; ++i) {
             auto job = std::make_unique<kcenon::thread::callback_job>(
-                []() -> kcenon::thread::result_void {
-                    return {};
+                []() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
                 }
             );
             pool->enqueue(std::move(job));
@@ -329,7 +329,7 @@ TEST_F(ThreadPoolLifecycleTest, StressTestStartStop) {
 
     for (int i = 0; i < 10; ++i) {
         auto result = pool_->start();
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
 
         for (size_t j = 0; j < 10; ++j) {
             SubmitCountingJob();
@@ -338,6 +338,6 @@ TEST_F(ThreadPoolLifecycleTest, StressTestStartStop) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
         result = pool_->stop(true);
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 }
