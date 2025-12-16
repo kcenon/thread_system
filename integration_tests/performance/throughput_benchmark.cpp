@@ -54,7 +54,7 @@ TEST_F(ThroughputBenchmark, ThroughputEmptyJobs) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = ScaleForCI(10'000);  // Reduced from 100k
 
@@ -62,9 +62,9 @@ TEST_F(ThroughputBenchmark, ThroughputEmptyJobs) {
 
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));
@@ -90,7 +90,7 @@ TEST_F(ThroughputBenchmark, ThroughputWithWork) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = ScaleForCI(1'000);  // Reduced from 10k
     const auto work_duration = std::chrono::microseconds(10);
@@ -99,10 +99,10 @@ TEST_F(ThroughputBenchmark, ThroughputWithWork) {
 
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this, work_duration]() -> kcenon::thread::result_void {
+            [this, work_duration]() -> kcenon::common::VoidResult {
                 WorkSimulator::simulate_work(work_duration);
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));
@@ -137,10 +137,10 @@ TEST_F(ThroughputBenchmark, QueueThroughput) {
         auto job_start = std::chrono::high_resolution_clock::now();
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         auto job_end = std::chrono::high_resolution_clock::now();
         metrics.add_sample(std::chrono::duration_cast<std::chrono::nanoseconds>(

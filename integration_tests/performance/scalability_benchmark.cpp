@@ -60,7 +60,7 @@ TEST_F(ScalabilityBenchmark, WorkerScalability) {
         CreateThreadPool(workers);
 
         auto result = pool_->start();
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         completed_jobs_.store(0);
 
@@ -68,10 +68,10 @@ TEST_F(ScalabilityBenchmark, WorkerScalability) {
 
         for (size_t i = 0; i < job_count; ++i) {
             auto job = std::make_unique<kcenon::thread::callback_job>(
-                [this]() -> kcenon::thread::result_void {
+                [this]() -> kcenon::common::VoidResult {
                     WorkSimulator::simulate_work(std::chrono::microseconds(1));
                     completed_jobs_.fetch_add(1);
-                    return {};
+                    return kcenon::common::ok();
                 }
             );
             pool_->enqueue(std::move(job));
@@ -98,7 +98,7 @@ TEST_F(ScalabilityBenchmark, ConcurrentProducerScalability) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t jobs_per_producer = ScaleForCI(500);  // Reduced
     std::vector<size_t> producer_counts = {1, 2, 4};  // Reduced from {1,2,4,8}
@@ -117,9 +117,9 @@ TEST_F(ScalabilityBenchmark, ConcurrentProducerScalability) {
             producers.emplace_back([this, jobs_per_producer]() {
                 for (size_t i = 0; i < jobs_per_producer; ++i) {
                     auto job = std::make_unique<kcenon::thread::callback_job>(
-                        [this]() -> kcenon::thread::result_void {
+                        [this]() -> kcenon::common::VoidResult {
                             completed_jobs_.fetch_add(1);
-                            return {};
+                            return kcenon::common::ok();
                         }
                     );
                     pool_->enqueue(std::move(job));
