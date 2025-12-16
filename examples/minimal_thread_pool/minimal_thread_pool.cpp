@@ -60,15 +60,15 @@ int main() {
     
     // Add workers to pool
     auto result = pool->enqueue_batch(std::move(workers));
-    if (result.has_error()) {
-        std::cerr << "Error adding workers: " << result.get_error().to_string() << std::endl;
+    if (result.is_err()) {
+        std::cerr << "Error adding workers: " << result.error().message << std::endl;
         return 1;
     }
-    
+
     // Start the pool
     result = pool->start();
-    if (result.has_error()) {
-        std::cerr << "Error starting pool: " << result.get_error().to_string() << std::endl;
+    if (result.is_err()) {
+        std::cerr << "Error starting pool: " << result.error().message << std::endl;
         return 1;
     }
     
@@ -82,7 +82,7 @@ int main() {
     
     for (int i = 0; i < total_jobs; ++i) {
         auto job = std::make_unique<callback_job>(
-            [i, &completed_jobs, total_jobs]() -> result_void {
+            [i, &completed_jobs, total_jobs]() -> kcenon::common::VoidResult {
                 // Simulate some work
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
@@ -91,14 +91,14 @@ int main() {
                 std::cout << "Job " << i << " completed. Total: "
                          << current << "/" << total_jobs << std::endl;
 
-                return result_void{};
+                return kcenon::common::ok();
             },
             "job_" + std::to_string(i)
         );
-        
+
         result = pool->enqueue(std::move(job));
-        if (result.has_error()) {
-            std::cerr << "Error enqueuing job: " << result.get_error().to_string() << std::endl;
+        if (result.is_err()) {
+            std::cerr << "Error enqueuing job: " << result.error().message << std::endl;
         }
     }
     
@@ -112,8 +112,8 @@ int main() {
     
     // Stop the pool
     auto stop_result = pool->stop();
-    if (stop_result.has_error()) {
-        std::cerr << "Error stopping pool: " << stop_result.get_error().to_string() << std::endl;
+    if (stop_result.is_err()) {
+        std::cerr << "Error stopping pool: " << stop_result.error().message << std::endl;
     }
     std::cout << "Thread pool stopped." << std::endl;
     

@@ -84,26 +84,26 @@ TEST_F(AdaptiveJobQueueTest, BasicEnqueueDequeue) {
     adaptive_job_queue queue;
 
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     // Enqueue
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_FALSE(enqueue_result.has_error());
+    EXPECT_TRUE(enqueue_result.is_ok());
     EXPECT_FALSE(queue.empty());
     EXPECT_EQ(queue.size(), 1);
 
     // Dequeue
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_TRUE(queue.empty());
 
     // Execute job
     auto& job_ptr = dequeue_result.value();
     auto exec_result = job_ptr->do_work();
-    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_TRUE(exec_result.is_ok());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -113,14 +113,14 @@ TEST_F(AdaptiveJobQueueTest, DequeueEmpty) {
     EXPECT_TRUE(queue.empty());
 
     auto result = queue.dequeue();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 }
 
 TEST_F(AdaptiveJobQueueTest, NullJobRejection) {
     adaptive_job_queue queue;
 
     auto result = queue.enqueue(nullptr);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 TEST_F(AdaptiveJobQueueTest, TryDequeue) {
@@ -128,15 +128,15 @@ TEST_F(AdaptiveJobQueueTest, TryDequeue) {
 
     // Empty queue
     auto empty_result = queue.try_dequeue();
-    EXPECT_FALSE(empty_result.has_value());
+    EXPECT_FALSE(empty_result.is_ok());
 
     // Add job
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
     queue.enqueue(std::move(job));
 
     // Non-empty queue
     auto result = queue.try_dequeue();
-    EXPECT_TRUE(result.has_value());
+    EXPECT_TRUE(result.is_ok());
 }
 
 TEST_F(AdaptiveJobQueueTest, Clear) {
@@ -144,7 +144,7 @@ TEST_F(AdaptiveJobQueueTest, Clear) {
 
     // Add multiple jobs
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
         queue.enqueue(std::move(job));
     }
 
@@ -160,7 +160,7 @@ TEST_F(AdaptiveJobQueueTest, StopQueue) {
     adaptive_job_queue queue;
 
     // Add a job
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
     queue.enqueue(std::move(job));
 
     // Stop
@@ -169,13 +169,13 @@ TEST_F(AdaptiveJobQueueTest, StopQueue) {
 
     // Enqueue should fail
     auto another_job =
-        std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+        std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
     auto result = queue.enqueue(std::move(another_job));
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 
     // Dequeue should also fail
     auto dequeue_result = queue.dequeue();
-    EXPECT_FALSE(dequeue_result.has_value());
+    EXPECT_FALSE(dequeue_result.is_ok());
 }
 
 // ============================================
@@ -189,12 +189,12 @@ TEST_F(AdaptiveJobQueueTest, ManualModeSwitch) {
 
     // Switch to lock-free
     auto result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::lock_free);
 
     // Switch back to mutex
     result = queue.switch_mode(adaptive_job_queue::mode::mutex);
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
 }
 
@@ -202,7 +202,7 @@ TEST_F(AdaptiveJobQueueTest, ModeSwitchNotAllowedWithoutManualPolicy) {
     adaptive_job_queue queue(adaptive_job_queue::policy::balanced);
 
     auto result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 TEST_F(AdaptiveJobQueueTest, ModeSwitchPreservesJobs) {
@@ -211,9 +211,9 @@ TEST_F(AdaptiveJobQueueTest, ModeSwitchPreservesJobs) {
     // Add jobs in mutex mode
     std::atomic<int> counter{0};
     for (int i = 0; i < 5; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
         queue.enqueue(std::move(job));
     }
@@ -229,7 +229,11 @@ TEST_F(AdaptiveJobQueueTest, ModeSwitchPreservesJobs) {
 
     // Dequeue and execute all jobs
     int dequeued = 0;
-    while (auto result = queue.dequeue()) {
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         result.value()->do_work();
         ++dequeued;
     }
@@ -356,7 +360,7 @@ TEST_F(AdaptiveJobQueueTest, StatisticsTracking) {
 
     // Enqueue some jobs
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
         queue.enqueue(std::move(job));
     }
 
@@ -386,19 +390,19 @@ TEST_F(AdaptiveJobQueueTest, SchedulerInterface) {
     adaptive_job_queue queue;
 
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     // Use scheduler_interface methods
     scheduler_interface& scheduler = queue;
 
     auto schedule_result = scheduler.schedule(std::move(job));
-    EXPECT_FALSE(schedule_result.has_error());
+    EXPECT_FALSE(schedule_result.is_err());
 
     auto get_result = scheduler.get_next_job();
-    EXPECT_TRUE(get_result.has_value());
+    EXPECT_TRUE(get_result.is_ok());
 
     get_result.value()->do_work();
     EXPECT_EQ(counter.load(), 1);
@@ -427,8 +431,8 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentEnqueueDequeue) {
             start_latch.arrive_and_wait();
             for (int j = 0; j < jobs_per_producer; ++j) {
                 auto job =
-                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-                if (!queue.enqueue(std::move(job)).has_error()) {
+                    std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+                if (!queue.enqueue(std::move(job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -441,7 +445,7 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentEnqueueDequeue) {
         consumers.emplace_back([&]() {
             start_latch.arrive_and_wait();
             while (!stop_consumers.load(std::memory_order_acquire) || !queue.empty()) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
                     std::this_thread::yield();
@@ -479,11 +483,11 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentModeSwitchWithOperations) {
     std::thread worker([&]() {
         while (!stop.load(std::memory_order_acquire)) {
             auto job =
-                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-            if (!queue.enqueue(std::move(job)).has_error()) {
+                std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+            if (!queue.enqueue(std::move(job)).is_err()) {
                 successful_ops.fetch_add(1, std::memory_order_relaxed);
             }
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 successful_ops.fetch_add(1, std::memory_order_relaxed);
             }
         }

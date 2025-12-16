@@ -119,11 +119,11 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_ExactSizeUnderLoad)
     for (size_t p = 0; p < producer_count; ++p) {
         producers.emplace_back([&]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
-                auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+                auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                     completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                    return {};
+                    return kcenon::common::ok();
                 });
-                if (!job_q->enqueue(std::move(new_job)).has_error()) {
+                if (!job_q->enqueue(std::move(new_job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -135,7 +135,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_ExactSizeUnderLoad)
         consumers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) ||
                    dequeued.load() < enqueued.load()) {
-                if (auto result = job_q->try_dequeue(); result.has_value()) {
+                if (auto result = job_q->try_dequeue(); result.is_ok()) {
                     (void)result.value()->do_work();
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
@@ -192,11 +192,11 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_LockFreeUnderLoad) 
     for (size_t p = 0; p < producer_count; ++p) {
         producers.emplace_back([&]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
-                auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+                auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                     completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                    return {};
+                    return kcenon::common::ok();
                 });
-                if (!lockfree_q->enqueue(std::move(new_job)).has_error()) {
+                if (!lockfree_q->enqueue(std::move(new_job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -208,7 +208,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_LockFreeUnderLoad) 
         consumers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) ||
                    dequeued.load() < enqueued.load()) {
-                if (auto result = lockfree_q->try_dequeue(); result.has_value()) {
+                if (auto result = lockfree_q->try_dequeue(); result.is_ok()) {
                     (void)result.value()->do_work();
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
@@ -258,8 +258,8 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_AtomicEmptyVerifica
 
     constexpr size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        EXPECT_FALSE(job_q->enqueue(std::move(new_job)).has_error());
+        auto new_job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(job_q->enqueue(std::move(new_job)).is_err());
     }
 
     // Verify non-empty state consistency
@@ -270,7 +270,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_AtomicEmptyVerifica
     for (size_t i = 0; i < job_count; ++i) {
         EXPECT_FALSE(job_q->empty()) << "Queue should not be empty at iteration " << i;
         auto result = job_q->try_dequeue();
-        EXPECT_TRUE(result.has_value());
+        EXPECT_TRUE(result.is_ok());
         EXPECT_EQ(job_q->size(), job_count - i - 1);
     }
 
@@ -298,14 +298,14 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_BatchOperations) {
     constexpr size_t batch_size = 50;
     std::vector<std::unique_ptr<job>> jobs;
     for (size_t i = 0; i < batch_size; ++i) {
-        jobs.push_back(std::make_unique<callback_job>([&]() -> result_void {
+        jobs.push_back(std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         }));
     }
 
     auto batch_result = job_q->enqueue_batch(std::move(jobs));
-    EXPECT_FALSE(batch_result.has_error()) << "Batch enqueue should succeed";
+    EXPECT_FALSE(batch_result.is_err()) << "Batch enqueue should succeed";
 
     EXPECT_EQ(job_q->size(), batch_size);
 
@@ -341,7 +341,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_BlockingWait) {
     std::thread consumer([&]() {
         consumer_started.store(true, std::memory_order_release);
         auto result = job_q->dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             (void)result.value()->do_work();
             job_received.store(true, std::memory_order_release);
         }
@@ -354,11 +354,11 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_BlockingWait) {
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     EXPECT_FALSE(job_received.load()) << "Consumer should be blocked waiting";
 
-    auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+    auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
         completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-        return {};
+        return kcenon::common::ok();
     });
-    EXPECT_FALSE(job_q->enqueue(std::move(new_job)).has_error());
+    EXPECT_FALSE(job_q->enqueue(std::move(new_job)).is_err());
 
     EXPECT_TRUE(WaitForCondition([&]() {
         return job_received.load(std::memory_order_acquire);
@@ -395,15 +395,15 @@ TEST_F(QueueFactoryIntegrationTest, RequirementConflicts_ExactSizePrioritizedOve
 
     constexpr size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        EXPECT_FALSE(job_q->enqueue(std::move(new_job)).has_error());
+        auto new_job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(job_q->enqueue(std::move(new_job)).is_err());
     }
 
     EXPECT_EQ(job_q->size(), job_count) << "Exact size should be accurate";
 
     for (size_t i = 0; i < job_count; ++i) {
         auto result = job_q->try_dequeue();
-        EXPECT_TRUE(result.has_value());
+        EXPECT_TRUE(result.is_ok());
         EXPECT_EQ(job_q->size(), job_count - i - 1) << "Size should decrement accurately";
     }
 }
@@ -514,11 +514,11 @@ TEST_F(QueueFactoryIntegrationTest, OptimalSelection_FunctionalUnderLoad) {
     for (size_t p = 0; p < producer_count; ++p) {
         producers.emplace_back([&]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
-                auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+                auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                     completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                    return {};
+                    return kcenon::common::ok();
                 });
-                if (!queue->schedule(std::move(new_job)).has_error()) {
+                if (!queue->schedule(std::move(new_job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -532,17 +532,17 @@ TEST_F(QueueFactoryIntegrationTest, OptimalSelection_FunctionalUnderLoad) {
                    dequeued.load() < enqueued.load()) {
                 bool got_job = false;
                 if (job_q != nullptr) {
-                    if (auto result = job_q->try_dequeue(); result.has_value()) {
+                    if (auto result = job_q->try_dequeue(); result.is_ok()) {
                         (void)result.value()->do_work();
                         got_job = true;
                     }
                 } else if (lockfree_q != nullptr) {
-                    if (auto result = lockfree_q->try_dequeue(); result.has_value()) {
+                    if (auto result = lockfree_q->try_dequeue(); result.is_ok()) {
                         (void)result.value()->do_work();
                         got_job = true;
                     }
                 } else if (adaptive_q != nullptr) {
-                    if (auto result = adaptive_q->try_dequeue(); result.has_value()) {
+                    if (auto result = adaptive_q->try_dequeue(); result.is_ok()) {
                         (void)result.value()->do_work();
                         got_job = true;
                     }
@@ -617,14 +617,16 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_StandardQueue) {
     std::atomic<size_t> dequeued{0};
 
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+        auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
-        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).has_error());
+        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).is_err());
     }
 
-    while (auto result = queue->try_dequeue()) {
+    while (true) {
+        auto result = queue->try_dequeue();
+        if (result.is_err()) break;
         (void)result.value()->do_work();
         dequeued.fetch_add(1, std::memory_order_relaxed);
     }
@@ -647,14 +649,16 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_LockfreeQueue) {
     std::atomic<size_t> dequeued{0};
 
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+        auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
-        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).has_error());
+        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).is_err());
     }
 
-    while (auto result = queue->try_dequeue()) {
+    while (true) {
+        auto result = queue->try_dequeue();
+        if (result.is_err()) break;
         (void)result.value()->do_work();
         dequeued.fetch_add(1, std::memory_order_relaxed);
     }
@@ -677,14 +681,16 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_AdaptiveQueue) {
     std::atomic<size_t> dequeued{0};
 
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+        auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
-        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).has_error());
+        EXPECT_FALSE(scheduler->schedule(std::move(new_job)).is_err());
     }
 
-    while (auto result = queue->try_dequeue()) {
+    while (true) {
+        auto result = queue->try_dequeue();
+        if (result.is_err()) break;
         (void)result.value()->do_work();
         dequeued.fetch_add(1, std::memory_order_relaxed);
     }
@@ -708,14 +714,16 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_RequirementsBasedQueu
     std::atomic<size_t> dequeued{0};
 
     for (size_t i = 0; i < job_count; ++i) {
-        auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+        auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
-        EXPECT_FALSE(queue->schedule(std::move(new_job)).has_error());
+        EXPECT_FALSE(queue->schedule(std::move(new_job)).is_err());
     }
 
-    while (auto result = adaptive_q->try_dequeue()) {
+    while (true) {
+        auto result = adaptive_q->try_dequeue();
+        if (result.is_err()) break;
         (void)result.value()->do_work();
         dequeued.fetch_add(1, std::memory_order_relaxed);
     }
@@ -748,15 +756,15 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_ConcurrentLoad) {
 
             for (size_t i = 0; i < ops_per_thread; ++i) {
                 if (t % 2 == 0) {
-                    auto new_job = std::make_unique<callback_job>([&]() -> result_void {
+                    auto new_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                         completed_jobs_.fetch_add(1, std::memory_order_relaxed);
-                        return {};
+                        return kcenon::common::ok();
                     });
-                    if (!job_q->enqueue(std::move(new_job)).has_error()) {
+                    if (!job_q->enqueue(std::move(new_job)).is_err()) {
                         successful_enqueues.fetch_add(1, std::memory_order_relaxed);
                     }
                 } else {
-                    if (auto result = job_q->try_dequeue(); result.has_value()) {
+                    if (auto result = job_q->try_dequeue(); result.is_ok()) {
                         (void)result.value()->do_work();
                         successful_dequeues.fetch_add(1, std::memory_order_relaxed);
                     }
@@ -771,7 +779,7 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_ConcurrentLoad) {
 
     while (!job_q->empty()) {
         auto result = job_q->try_dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             (void)result.value()->do_work();
             successful_dequeues.fetch_add(1, std::memory_order_relaxed);
         }

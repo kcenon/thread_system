@@ -53,11 +53,11 @@ TEST_F(JobQueueIntegrationTest, BasicEnqueueDequeue) {
     queue->set_notify(true);
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        []() -> kcenon::thread::result_void { return {}; }
+        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
     );
 
     auto result = queue->enqueue(std::move(job));
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
     EXPECT_EQ(queue->size(), 1);
     EXPECT_FALSE(queue->empty());
 
@@ -77,14 +77,14 @@ TEST_F(JobQueueIntegrationTest, FIFOOrdering) {
     const size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [&execution_order, &order_mutex, i]() -> kcenon::thread::result_void {
+            [&execution_order, &order_mutex, i]() -> kcenon::common::VoidResult {
                 std::lock_guard<std::mutex> lock(order_mutex);
                 execution_order.push_back(static_cast<int>(i));
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto result = queue->enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue->size(), job_count);
@@ -92,9 +92,9 @@ TEST_F(JobQueueIntegrationTest, FIFOOrdering) {
     // Dequeue and execute in order
     for (size_t i = 0; i < job_count; ++i) {
         auto result = queue->try_dequeue();
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
         auto job_result = result.value()->do_work();
-        EXPECT_TRUE(job_result);
+        EXPECT_TRUE(job_result.is_ok());
     }
 
     // Verify FIFO order
@@ -117,10 +117,10 @@ TEST_F(JobQueueIntegrationTest, ConcurrentEnqueue) {
         producers.emplace_back([&queue, &total_enqueued, jobs_per_thread]() {
             for (size_t i = 0; i < jobs_per_thread; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    []() -> kcenon::thread::result_void { return {}; }
+                    []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
                 );
                 auto result = queue->enqueue(std::move(job));
-                if (result) {
+                if (result.is_ok()) {
                     total_enqueued.fetch_add(1);
                 }
             }
@@ -153,10 +153,10 @@ TEST_F(JobQueueIntegrationTest, ConcurrentEnqueueDequeue) {
         producers.emplace_back([&queue, &enqueued, jobs_per_producer]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    []() -> kcenon::thread::result_void { return {}; }
+                    []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
                 );
                 auto result = queue->enqueue(std::move(job));
-                if (result) {
+                if (result.is_ok()) {
                     enqueued.fetch_add(1);
                 }
             }
@@ -170,7 +170,7 @@ TEST_F(JobQueueIntegrationTest, ConcurrentEnqueueDequeue) {
                                num_producers, jobs_per_producer]() {
             while (!producers_done.load() || !queue->empty()) {
                 auto result = queue->try_dequeue();
-                if (result) {
+                if (result.is_ok()) {
                     dequeued.fetch_add(1);
                 } else {
                     std::this_thread::yield();
@@ -204,12 +204,12 @@ TEST_F(JobQueueIntegrationTest, BatchEnqueue) {
 
     for (size_t i = 0; i < batch_size; ++i) {
         jobs.push_back(std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         ));
     }
 
     auto result = queue->enqueue_batch(std::move(jobs));
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
     EXPECT_EQ(queue->size(), batch_size);
 }
 
@@ -220,10 +220,10 @@ TEST_F(JobQueueIntegrationTest, BatchDequeue) {
     const size_t job_count = 500;
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     auto dequeued_jobs = queue->dequeue_batch();
@@ -237,10 +237,10 @@ TEST_F(JobQueueIntegrationTest, QueueClear) {
 
     for (size_t i = 0; i < 100; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue->size(), 100);
@@ -285,10 +285,10 @@ TEST_F(JobQueueIntegrationTest, HighThroughputEnqueue) {
         auto job_start = std::chrono::high_resolution_clock::now();
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         auto job_end = std::chrono::high_resolution_clock::now();
         metrics.add_sample(std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -319,10 +319,10 @@ TEST_F(JobQueueIntegrationTest, QueueStateConsistency) {
     // Add jobs
     for (size_t i = 0; i < 50; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue->size(), 50);
@@ -331,7 +331,7 @@ TEST_F(JobQueueIntegrationTest, QueueStateConsistency) {
     // Remove some jobs
     for (size_t i = 0; i < 20; ++i) {
         auto result = queue->try_dequeue();
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue->size(), 30);
@@ -340,10 +340,10 @@ TEST_F(JobQueueIntegrationTest, QueueStateConsistency) {
     // Add more jobs
     for (size_t i = 0; i < 30; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            []() -> kcenon::thread::result_void { return {}; }
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
         );
         auto result = queue->enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue->size(), 60);

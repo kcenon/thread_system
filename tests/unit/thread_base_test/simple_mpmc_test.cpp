@@ -50,12 +50,12 @@ TEST(SimpleMPMCTest, SingleEnqueue)
 {
 	job_queue queue;
 	
-	auto job = std::make_unique<callback_job>([]() -> result_void {
-		return result_void();
+	auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+		return kcenon::common::ok();
 	});
 	
 	auto result = queue.enqueue(std::move(job));
-	EXPECT_TRUE(result);
+	EXPECT_TRUE(result.is_ok());
 }
 
 // Test 3: Create, enqueue and dequeue one item, destroy
@@ -63,15 +63,15 @@ TEST(SimpleMPMCTest, SingleEnqueueDequeue)
 {
 	job_queue queue;
 	
-	auto job = std::make_unique<callback_job>([]() -> result_void {
-		return result_void();
+	auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+		return kcenon::common::ok();
 	});
 	
 	auto enqueue_result = queue.enqueue(std::move(job));
-	EXPECT_TRUE(enqueue_result);
-	
+	EXPECT_TRUE(enqueue_result.is_ok());
+
 	auto dequeue_result = queue.dequeue();
-	EXPECT_TRUE(dequeue_result.has_value());
+	EXPECT_TRUE(dequeue_result.is_ok());
 }
 
 // Test 4: Multiple queues in sequence
@@ -79,16 +79,16 @@ TEST(SimpleMPMCTest, MultipleQueues)
 {
 	for (int i = 0; i < 3; ++i) {
 		job_queue queue;
-		
-		auto job = std::make_unique<callback_job>([]() -> result_void {
-			return result_void();
+
+		auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
 		});
-		
+
 		auto enqueue_result = queue.enqueue(std::move(job));
-		EXPECT_TRUE(enqueue_result);
+		EXPECT_TRUE(enqueue_result.is_ok());
 		
 		auto dequeue_result = queue.dequeue();
-		EXPECT_TRUE(dequeue_result.has_value());
+		EXPECT_TRUE(dequeue_result.is_ok());
 	}
 }
 
@@ -98,8 +98,8 @@ TEST(SimpleMPMCTest, ThreadAccess)
 	job_queue queue;
 	
 	std::thread t([&queue]() {
-		auto job = std::make_unique<callback_job>([]() -> result_void {
-			return result_void();
+		auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
 		});
 		
 		auto result = queue.enqueue(std::move(job));

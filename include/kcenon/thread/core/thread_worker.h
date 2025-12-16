@@ -155,13 +155,13 @@ namespace kcenon::thread
 
 		/**
 		 * @brief Processes one or more jobs from the queue.
-		 * @return @c result_void containing an error if the work fails, or success value otherwise.
+		 * @return @c common::VoidResult containing an error if the work fails, or success value otherwise.
 		 *
 		 * This method fetches a job from the queue (if available), executes it, and
 		 * may repeat depending on the implementation. If any job fails, an error
 		 * is returned. Otherwise, return a success value.
 		 */
-		auto do_work() -> result_void override;
+		auto do_work() -> common::VoidResult override;
 
 		/**
 		 * @brief Called when the worker is requested to stop.

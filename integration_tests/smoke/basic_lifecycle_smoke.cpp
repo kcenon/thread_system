@@ -53,11 +53,11 @@ TEST_F(BasicLifecycleSmoke, CanStartAndStopPool) {
     CreateThreadPool(2);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result) << "Failed to start pool";
+    ASSERT_TRUE(result.is_ok()) << "Failed to start pool";
     EXPECT_TRUE(pool_->is_running());
 
     result = pool_->stop();
-    ASSERT_TRUE(result) << "Failed to stop pool";
+    ASSERT_TRUE(result.is_ok()) << "Failed to stop pool";
     EXPECT_FALSE(pool_->is_running());
 }
 
@@ -65,7 +65,7 @@ TEST_F(BasicLifecycleSmoke, CanSubmitSingleJob) {
     CreateThreadPool(2);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     SubmitCountingJob();
 

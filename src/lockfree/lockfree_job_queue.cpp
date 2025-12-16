@@ -51,7 +51,11 @@ lockfree_job_queue::~lockfree_job_queue() {
     shutdown_.store(true, std::memory_order_release);
 
     // Drain remaining jobs (release ownership)
-    while (auto result = dequeue()) {
+    while (true) {
+        auto result = dequeue();
+        if (result.is_err()) {
+            break;
+        }
         // Jobs are destroyed when unique_ptr goes out of scope
     }
 
@@ -65,9 +69,9 @@ lockfree_job_queue::~lockfree_job_queue() {
 }
 
 // Enqueue operation (Michael-Scott algorithm)
-auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> result_void {
+auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::VoidResult {
     if (!job_ptr) {
-        return result_void(error(error_code::invalid_argument, "Cannot enqueue null job"));
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "Cannot enqueue null job", "thread_system"};
     }
 
     // Allocate new node with the job
@@ -108,7 +112,7 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> result_void 
                     // Update size (relaxed - just for monitoring)
                     approximate_size_.fetch_add(1, std::memory_order_relaxed);
 
-                    return result_void();  // Success
+                    return common::ok();  // Success
                 }
             } else {
                 // Tail is behind, try to advance it
@@ -122,7 +126,7 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> result_void 
 }
 
 // Dequeue operation (Michael-Scott algorithm with Hazard Pointers)
-auto lockfree_job_queue::dequeue() -> result<std::unique_ptr<job>> {
+auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
     // Acquire hazard pointers for protecting nodes
     auto hp_head = node_hp_domain::global().acquire();
     auto hp_next = node_hp_domain::global().acquire();
@@ -161,8 +165,7 @@ auto lockfree_job_queue::dequeue() -> result<std::unique_ptr<job>> {
             if (head == tail) {
                 if (next == nullptr) {
                     // Queue is empty
-                    return result<std::unique_ptr<job>>(
-                        error(error_code::queue_empty, "Queue is empty"));
+                    return common::error_info{static_cast<int>(error_code::queue_empty), "Queue is empty", "thread_system"};
                 }
 
                 // Tail is behind, try to advance it
@@ -193,7 +196,7 @@ auto lockfree_job_queue::dequeue() -> result<std::unique_ptr<job>> {
                     approximate_size_.fetch_sub(1, std::memory_order_relaxed);
 
                     // Return the job data
-                    return result<std::unique_ptr<job>>(std::move(job_data));
+                    return std::move(job_data);
                 }
             }
         }

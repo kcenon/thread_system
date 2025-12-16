@@ -87,7 +87,7 @@ protected:
         // Mode transitions may cause temporary invisibility of items
         for (int pass = 0; pass < 3; ++pass) {
             for (int attempts = 0; attempts < 1000; ++attempts) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                     attempts = 0;
                 } else if (queue.empty()) {
@@ -132,7 +132,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario1_WebServerRequestHandling) {
     for (size_t i = 0; i < num_handlers; ++i) {
         handlers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) || !queue.empty()) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
                     std::this_thread::yield();
@@ -145,8 +145,8 @@ TEST_F(ModeTransitionScenarioTest, Scenario1_WebServerRequestHandling) {
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
     constexpr size_t low_traffic_requests = 50;
     for (size_t i = 0; i < low_traffic_requests; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        if (!queue.enqueue(std::move(job)).has_error()) {
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        if (!queue.enqueue(std::move(job)).is_err()) {
             enqueued.fetch_add(1, std::memory_order_relaxed);
         }
         std::this_thread::sleep_for(std::chrono::microseconds(100));
@@ -162,8 +162,8 @@ TEST_F(ModeTransitionScenarioTest, Scenario1_WebServerRequestHandling) {
     for (size_t c = 0; c < num_spike_clients; ++c) {
         spike_producers.emplace_back([&]() {
             for (size_t i = 0; i < spike_requests / num_spike_clients; ++i) {
-                auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-                if (!queue.enqueue(std::move(job)).has_error()) {
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+                if (!queue.enqueue(std::move(job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -180,8 +180,8 @@ TEST_F(ModeTransitionScenarioTest, Scenario1_WebServerRequestHandling) {
 
     constexpr size_t recovery_requests = 50;
     for (size_t i = 0; i < recovery_requests; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        if (!queue.enqueue(std::move(job)).has_error()) {
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        if (!queue.enqueue(std::move(job)).is_err()) {
             enqueued.fetch_add(1, std::memory_order_relaxed);
         }
         std::this_thread::sleep_for(std::chrono::microseconds(100));
@@ -236,11 +236,11 @@ TEST_F(ModeTransitionScenarioTest, Scenario2_BatchProcessingSimulation) {
 
     constexpr size_t batch_size = 5000;
     for (size_t i = 0; i < batch_size; ++i) {
-        auto job = std::make_unique<callback_job>([&]() -> result_void {
+        auto job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
             jobs_processed.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
-        ASSERT_FALSE(queue.enqueue(std::move(job)).has_error());
+        ASSERT_FALSE(queue.enqueue(std::move(job)).is_err());
         jobs_created.fetch_add(1, std::memory_order_relaxed);
     }
 
@@ -253,7 +253,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario2_BatchProcessingSimulation) {
     for (size_t i = 0; i < num_processors; ++i) {
         processors.emplace_back([&]() {
             while (!stop_processing.load(std::memory_order_acquire) || !queue.empty()) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     auto job = std::move(result.value());
                     (void)job->do_work();
                 } else {
@@ -328,7 +328,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario3_MixedWorkloadSimulation) {
     for (size_t i = 0; i < num_workers; ++i) {
         workers.emplace_back([&]() {
             while (!stop_workers.load(std::memory_order_acquire) || !queue.empty()) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     auto job = std::move(result.value());
                     (void)job->do_work();
                 } else {
@@ -351,11 +351,11 @@ TEST_F(ModeTransitionScenarioTest, Scenario3_MixedWorkloadSimulation) {
             // Enqueue critical jobs (simulating financial transactions)
             constexpr size_t critical_count = 5;
             for (size_t i = 0; i < critical_count; ++i) {
-                auto job = std::make_unique<callback_job>([&]() -> result_void {
+                auto job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                     critical_jobs_processed.fetch_add(1, std::memory_order_relaxed);
-                    return {};
+                    return kcenon::common::ok();
                 });
-                if (!queue.enqueue(std::move(job)).has_error()) {
+                if (!queue.enqueue(std::move(job)).is_err()) {
                     critical_jobs_enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -367,11 +367,11 @@ TEST_F(ModeTransitionScenarioTest, Scenario3_MixedWorkloadSimulation) {
 
         // Regular non-critical jobs (logging, analytics)
         for (size_t i = 0; i < jobs_per_iteration; ++i) {
-            auto job = std::make_unique<callback_job>([&]() -> result_void {
+            auto job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
                 non_critical_jobs_processed.fetch_add(1, std::memory_order_relaxed);
-                return {};
+                return kcenon::common::ok();
             });
-            if (!queue.enqueue(std::move(job)).has_error()) {
+            if (!queue.enqueue(std::move(job)).is_err()) {
                 non_critical_jobs_enqueued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -439,8 +439,8 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
             std::uniform_int_distribution<> delay_dist(0, 100);
 
             while (!stop_all.load(std::memory_order_acquire)) {
-                auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-                if (!queue.enqueue(std::move(job)).has_error()) {
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+                if (!queue.enqueue(std::move(job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
 
@@ -457,7 +457,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
     for (size_t i = 0; i < num_consumers; ++i) {
         consumers.emplace_back([&]() {
             while (!stop_all.load(std::memory_order_acquire) || !queue.empty()) {
-                if (auto result = queue.try_dequeue(); result.has_value()) {
+                if (auto result = queue.try_dequeue(); result.is_ok()) {
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
                     std::this_thread::yield();
@@ -477,7 +477,7 @@ TEST_F(ModeTransitionScenarioTest, Scenario4_LongRunningStability) {
                 ? adaptive_job_queue::mode::mutex
                 : adaptive_job_queue::mode::lock_free;
 
-            if (!queue.switch_mode(target_mode).has_error()) {
+            if (!queue.switch_mode(target_mode).is_err()) {
                 mode_switch_count.fetch_add(1, std::memory_order_relaxed);
             }
 
@@ -587,7 +587,7 @@ TEST_F(ModeTransitionScenarioTest, RapidModeTransitions_NoDataLoss) {
     // Consumer thread
     std::thread consumer([&]() {
         while (!stop.load(std::memory_order_acquire) || !queue.empty()) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
             } else {
                 std::this_thread::yield();
@@ -597,8 +597,8 @@ TEST_F(ModeTransitionScenarioTest, RapidModeTransitions_NoDataLoss) {
 
     // Producer with interleaved mode switches
     for (size_t i = 0; i < total_jobs; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        if (!queue.enqueue(std::move(job)).has_error()) {
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        if (!queue.enqueue(std::move(job)).is_err()) {
             enqueued.fetch_add(1, std::memory_order_relaxed);
         }
 

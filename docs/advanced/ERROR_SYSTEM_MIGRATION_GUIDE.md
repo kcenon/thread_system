@@ -23,6 +23,11 @@ When `THREAD_HAS_COMMON_RESULT` is defined (i.e., when common_system is availabl
 
 **Status:** 🔄 In Progress
 
+**Phase 2a - Internal Migration:** ✅ Complete
+- All core library headers now use `common::Result<T>` internally
+- All unit tests, integration tests, and examples updated to new API
+- 14 example files updated to demonstrate new patterns
+
 The following types are now marked with `[[deprecated]]` attribute when `THREAD_HAS_COMMON_RESULT` is defined:
 - `thread::result<T>` - Use `common::Result<T>` instead
 - `thread::result_void` - Use `common::VoidResult` instead
@@ -119,16 +124,14 @@ return Result<int>(error_info{
 if (result.has_value()) { ... }
 
 // After
-if (result.is_ok()) { ... }  // Preferred
-// or
-if (result.has_value()) { ... }  // Also works
+if (result.is_ok()) { ... }
 ```
 
 ## API Mapping
 
 | thread::result<T> | common::Result<T> | Notes |
 |-------------------|-------------------|-------|
-| `has_value()` | `is_ok()` or `has_value()` | Both supported |
+| `has_value()` | `is_ok()` | Use is_ok() instead |
 | `is_ok()` | `is_ok()` | ✅ Now unified |
 | `is_error()` | `is_err()` | ✅ Now unified |
 | `value()` | `value()` | |
@@ -143,9 +146,9 @@ if (result.has_value()) { ... }  // Also works
 | thread::result_void | common::VoidResult | Notes |
 |--------------------|-------------------|-------|
 | `has_error()` | `is_err()` | Original API |
-| `has_value()` | `is_ok()` | ✅ Added for compatibility |
-| `is_ok()` | `is_ok()` | ✅ Added for compatibility |
-| `is_error()` | `is_err()` | ✅ Added for compatibility |
+| `has_value()` | `is_ok()` | Use is_ok() instead |
+| `is_ok()` | `is_ok()` | ✅ Unified |
+| `is_error()` | `is_err()` | ✅ Unified |
 | `get_error()` | `error()` | |
 | `operator bool()` | `operator bool()` | Returns true if success |
 

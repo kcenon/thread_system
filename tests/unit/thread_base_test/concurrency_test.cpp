@@ -69,20 +69,20 @@ TEST_F(ConcurrencyTest, ThreadBaseRapidStartStop) {
         std::atomic<int> stop_calls{0};
 
     protected:
-        result_void before_start() override {
+        kcenon::common::VoidResult before_start() override {
             start_calls.fetch_add(1);
-            return {};
+            return kcenon::common::ok();
         }
 
-        result_void do_work() override {
+        kcenon::common::VoidResult do_work() override {
             work_cycles.fetch_add(1);
             std::this_thread::sleep_for(std::chrono::microseconds(10));
-            return {};
+            return kcenon::common::ok();
         }
 
-        result_void after_stop() override {
+        kcenon::common::VoidResult after_stop() override {
             stop_calls.fetch_add(1);
-            return {};
+            return kcenon::common::ok();
         }
     };
 
@@ -96,7 +96,7 @@ TEST_F(ConcurrencyTest, ThreadBaseRapidStartStop) {
     for (int i = 0; i < num_cycles; ++i) {
         // Start the thread
         auto result = worker->start();
-        EXPECT_FALSE(result.has_error());
+        EXPECT_TRUE(result.is_ok());
 
         // Wait until at least one work cycle has completed
         auto start_time = std::chrono::steady_clock::now();
@@ -142,7 +142,7 @@ TEST_F(ConcurrencyTest, JobQueueExtremeConcurrency) {
         consumers.emplace_back([&queue, &dequeued, &stop_consumers]() {
             while (!stop_consumers.load()) {
                 auto result = queue->dequeue();
-                if (result.has_value() && result.value()) {
+                if (result.is_ok() && result.value()) {
                     [[maybe_unused]] auto work_result = result.value()->do_work();
                     dequeued.fetch_add(1);
                 }
@@ -155,9 +155,9 @@ TEST_F(ConcurrencyTest, JobQueueExtremeConcurrency) {
     for (int i = 0; i < num_producers; ++i) {
         producers.emplace_back([&queue, &enqueued, &enqueue_failures, jobs_per_producer]() {
             for (int j = 0; j < jobs_per_producer; ++j) {
-                auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                 auto result = queue->enqueue(std::move(job));
-                if (!result.has_error()) {
+                if (!result.is_err()) {
                     enqueued.fetch_add(1);
                 } else {
                     enqueue_failures.fetch_add(1);
@@ -206,13 +206,14 @@ TEST_F(ConcurrencyTest, JobQueueBoundaryConditions) {
     // Producer thread
     std::thread producer([&queue, &enqueued, num_jobs]() {
         for (int i = 0; i < num_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([i]() -> result_void {
+            auto job = std::make_unique<callback_job>([i]() -> kcenon::common::VoidResult {
                 // Simple job that does nothing
-                return {};
+                (void)i;
+                return kcenon::common::ok();
             });
 
             auto result = queue->enqueue(std::move(job));
-            if (!result.has_error()) {
+            if (!result.is_err()) {
                 enqueued.fetch_add(1);
             }
         }
@@ -232,7 +233,7 @@ TEST_F(ConcurrencyTest, JobQueueBoundaryConditions) {
             }
 
             auto result = queue->dequeue();
-            if (result.has_value() && result.value()) {
+            if (result.is_ok() && result.value()) {
                 [[maybe_unused]] auto work_result = result.value()->do_work();
                 dequeued.fetch_add(1);
                 consecutive_failures = 0;
@@ -266,7 +267,7 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
     // and check for race conditions
     for (int i = 0; i < num_jobs; ++i) {
         auto job =
-            std::make_unique<callback_job>([&shared_counter, &race_detected]() -> result_void {
+            std::make_unique<callback_job>([&shared_counter, &race_detected]() -> kcenon::common::VoidResult {
                 int old_value = shared_counter.load();
                 std::this_thread::yield();  // Increase chance of race
                 int new_value = old_value + 1;
@@ -278,7 +279,7 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
                     shared_counter.fetch_add(1);
                 }
 
-                return {};
+                return kcenon::common::ok();
             });
         [[maybe_unused]] auto enqueue_result = queue->enqueue(std::move(job));
     }
@@ -292,7 +293,7 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
         workers.emplace_back([&queue, &stop_workers]() {
             while (!stop_workers.load()) {
                 auto result = queue->dequeue();
-                if (result.has_value() && result.value()) {
+                if (result.is_ok() && result.value()) {
                     [[maybe_unused]] auto work_result = result.value()->do_work();
                 } else {
                     std::this_thread::yield();

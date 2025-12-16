@@ -81,17 +81,17 @@ void policy_comparison_example()
             producers.emplace_back([&queue, &produced, p, num_jobs, num_producers]() {
                 for (int i = 0; i < num_jobs / num_producers; ++i) {
                     auto job = std::make_unique<callback_job>(
-                        [p, i]() -> result_void {
-                            return result_void();
+                        [p, i]() -> kcenon::common::VoidResult {
+                            return kcenon::common::ok();
                         });
 
                     while (true) {
                         auto r = queue.enqueue(std::move(job));
-                        if (!r.has_error()) break;
+                        if (!r.is_err()) break;
                         std::this_thread::yield();
                         // Recreate moved job for retry
                         job = std::make_unique<callback_job>(
-                            [p, i]() -> result_void { return result_void(); });
+                            [p, i]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                     }
                     produced.fetch_add(1);
                 }
@@ -103,7 +103,7 @@ void policy_comparison_example()
             consumers.emplace_back([&queue, &consumed, num_jobs]() {
                 while (consumed.load() < num_jobs) {
                     auto result = queue.dequeue();
-                    if (result.has_value()) {
+                    if (result.is_ok()) {
                         auto& job = result.value();
                         auto work_result = job->do_work();
                         (void)work_result; // Ignore result for sample
@@ -161,10 +161,10 @@ void adaptive_behavior_example()
         std::thread producer([&queue, &running]() {
             while (running) {
                 auto job = std::make_unique<callback_job>(
-                    []() -> result_void { return result_void(); });
+                    []() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                 auto enqueue_result = queue.enqueue(std::move(job));
-                if (enqueue_result.has_error()) {
-                    std::cerr << "enqueue failed: " << enqueue_result.get_error().message() << std::endl;
+                if (enqueue_result.is_err()) {
+                    std::cerr << "enqueue failed: " << enqueue_result.error().message << std::endl;
                 }
                 std::this_thread::sleep_for(1ms);
             }
@@ -173,7 +173,7 @@ void adaptive_behavior_example()
         std::thread consumer([&queue, &running, &jobs_processed]() {
             while (running) {
                 auto result = queue.dequeue();
-                if (result.has_value()) {
+                if (result.is_ok()) {
                     auto work_result = result.value()->do_work();
                     (void)work_result; // Ignore result for sample
                     jobs_processed.fetch_add(1);
@@ -208,9 +208,9 @@ void adaptive_behavior_example()
 
                 while (running) {
                     auto job = std::make_unique<callback_job>(
-                        []() -> result_void { return result_void(); });
+                        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                     auto enqueue_result = queue.enqueue(std::move(job));
-                    if (enqueue_result.has_error()) {
+                    if (enqueue_result.is_err()) {
                         // Best-effort: ignore for demo
                     }
                     if (dist(gen) < 10) {  // 10% chance of sleep
@@ -225,7 +225,7 @@ void adaptive_behavior_example()
             threads.emplace_back([&queue, &running, &jobs_processed]() {
                 while (running) {
                     auto result = queue.dequeue();
-                    if (result.has_value()) {
+                    if (result.is_ok()) {
                         auto work_result = result.value()->do_work();
                         (void)work_result; // Ignore result for sample
                         jobs_processed.fetch_add(1);
@@ -257,9 +257,9 @@ void different_policies_example()
     std::vector<std::unique_ptr<job>> jobs;
     for (int i = 0; i < 100; ++i) {
         jobs.push_back(std::make_unique<callback_job>(
-            [i]() -> result_void {
+            [i]() -> kcenon::common::VoidResult {
                 // Job executed silently for batch demo
-                return result_void(); // Success
+                return kcenon::common::ok(); // Success
             }));
     }
 
@@ -267,7 +267,7 @@ void different_policies_example()
     int enqueue_count = 0;
     for (auto& job : jobs) {
         auto result = mutex_queue.enqueue(std::move(job));
-        if (!result.has_error()) {
+        if (result.is_ok()) {
             enqueue_count++;
         }
     }
@@ -282,13 +282,13 @@ void different_policies_example()
     int fail_count = 0;
     while (!mutex_queue.empty()) {
         auto result = mutex_queue.dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             auto work_result = result.value()->do_work();
-            if (!work_result) {
+            if (work_result.is_ok()) {
                 success_count++;
             } else {
                 fail_count++;
-                std::cerr << "Job failed: " << work_result.get_error().message() << std::endl;
+                std::cerr << "Job failed: " << work_result.error().message << std::endl;
             }
         }
     }
@@ -312,12 +312,12 @@ void performance_monitoring_example()
     std::thread producer([&queue, &enqueued, num_operations]() {
         for (int i = 0; i < num_operations; ++i) {
             auto job = std::make_unique<callback_job>(
-                []() -> result_void { return result_void(); });
+                []() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
-            while (queue.enqueue(std::move(job)).has_error()) {
+            while (queue.enqueue(std::move(job)).is_err()) {
                 std::this_thread::yield();
                 job = std::make_unique<callback_job>(
-                    []() -> result_void { return result_void(); });
+                    []() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
             }
             enqueued.fetch_add(1);
         }
@@ -327,7 +327,7 @@ void performance_monitoring_example()
     std::thread consumer([&queue, &dequeued, num_operations]() {
         while (dequeued.load() < num_operations) {
             auto result = queue.dequeue();
-            if (result.has_value()) {
+            if (result.is_ok()) {
                 auto work_result = result.value()->do_work();
                 (void)work_result; // Ignore result for sample
                 dequeued.fetch_add(1);
@@ -394,15 +394,15 @@ void web_server_simulation()
                 auto type = static_cast<request_type>(type_dist(gen));
 
                 auto request = std::make_unique<callback_job>(
-                    [type]() -> result_void {
+                    [type]() -> kcenon::common::VoidResult {
                         // Simulate request processing
                         std::this_thread::sleep_for(std::chrono::microseconds(
                             type == request_type::GET ? 10 : 50));
-                        return result_void(); // Success
+                        return kcenon::common::ok(); // Success
                     });
 
                 auto r = request_queue.enqueue(std::move(request));
-                if (r.has_error()) requests_failed.fetch_add(1);
+                if (r.is_err()) requests_failed.fetch_add(1);
 
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_dist(gen)));
             }
@@ -415,14 +415,14 @@ void web_server_simulation()
         workers.emplace_back([&request_queue, &server_running, &requests_handled, worker_id]() {
             while (server_running) {
                 auto request = request_queue.dequeue();
-                if (request.has_value()) {
+                if (request.is_ok()) {
                     auto result = request.value()->do_work();
-                    if (!result) {
+                    if (result.is_ok()) {
                         // Request processed successfully
                         requests_handled.fetch_add(1);
                     } else {
                         std::cerr << "Worker " << worker_id << " request failed: "
-                                  << result.get_error().message() << std::endl;
+                                  << result.error().message << std::endl;
                     }
                 } else {
                     std::this_thread::sleep_for(1ms);

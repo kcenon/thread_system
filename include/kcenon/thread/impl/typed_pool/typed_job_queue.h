@@ -78,9 +78,9 @@ namespace kcenon::thread
 		 * low-priority manner, depending on the implementation.
 		 *
 		 * @param value A unique pointer to the base job to enqueue.
-		 * @return @c result_void containing an error if the operation fails, or a success value.
+		 * @return @c common::VoidResult containing an error if the operation fails, or a success value.
 		 */
-		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override;
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> common::VoidResult override;
 
 		/**
 		 * @brief Enqueues a batch of jobs into the queue.
@@ -95,31 +95,31 @@ namespace kcenon::thread
 		// This method accepts job references (different from base class which takes rvalue
 		// references)
 		[[nodiscard]] auto enqueue_batch_ref(std::vector<std::unique_ptr<job>>& jobs)
-			-> result_void;
+			-> common::VoidResult;
 
 		// Override from base class
 		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
-			-> result_void override;
+			-> common::VoidResult override;
 
 		/**
 		 * @brief Enqueues a priority job into the appropriate priority queue.
 		 *
 		 * @param value A unique pointer to the priority job to enqueue.
-		 * @return @c result_void containing an error if the operation fails, or a success value.
+		 * @return @c common::VoidResult containing an error if the operation fails, or a success value.
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a derived typed job (like callback_typed_job) into the appropriate priority queue.
 		 *
 		 * @tparam DerivedJob A type that derives from typed_job_t<job_type>
 		 * @param value A unique pointer to the derived job to enqueue.
-		 * @return @c result_void containing an error if the operation fails, or a success value.
+		 * @return @c common::VoidResult containing an error if the operation fails, or a success value.
 		 */
 		template<typename DerivedJob, typename = std::enable_if_t<std::is_base_of_v<typed_job_t<job_type>, DerivedJob>>>
-		[[nodiscard]] auto enqueue(std::unique_ptr<DerivedJob>&& value) -> result_void
-			
+		[[nodiscard]] auto enqueue(std::unique_ptr<DerivedJob>&& value) -> common::VoidResult
+
 		{
 			return enqueue(std::unique_ptr<typed_job_t<job_type>>(std::move(value)));
 		}
@@ -132,10 +132,10 @@ namespace kcenon::thread
 		 * to enqueue.
 		 *
 		 * @param jobs A vector of unique pointers to priority jobs to enqueue.
-		 * @return @c result_void containing an error if the operation fails, or a success value.
+		 * @return @c common::VoidResult containing an error if the operation fails, or a success value.
 		 */
 		[[nodiscard]] auto enqueue_batch(
-			std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> result_void;
+			std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> common::VoidResult;
 
 		/**
 		 * @brief Dequeues the next available job (of any type or priority).
@@ -143,9 +143,9 @@ namespace kcenon::thread
 		 * This method attempts to dequeue from the front of any internal priority queue
 		 * that may contain a job, typically checking in an unspecified priority order.
 		 *
-		 * @return A result<std::unique_ptr<job>> containing either the dequeued job or an error.
+		 * @return A common::Result<std::unique_ptr<job>> containing either the dequeued job or an error.
 		 */
-		[[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override;
+		[[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>> override;
 
 		/**
 		 * @brief Dequeues a job with one of the specified types.
@@ -154,12 +154,12 @@ namespace kcenon::thread
 		 * in an implementation-defined sequence and removes the first job found.
 		 *
 		 * @param types A list of priority levels from which to attempt a dequeue.
-		 * @return A result<std::unique_ptr<typed_job_t<job_type>>> containing either
+		 * @return A common::Result<std::unique_ptr<typed_job_t<job_type>>> containing either
 		 *         the dequeued job or an error.
 		 */
 		[[nodiscard]] auto dequeue(const std::vector<job_type>& types)
-			-> result<std::unique_ptr<typed_job_t<job_type>>>;
-			
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
+
 		/**
 		 * @brief Dequeues a job with one of the specified types using span.
 		 *
@@ -168,11 +168,11 @@ namespace kcenon::thread
 		 * This overload accepts a span to avoid copying the types collection.
 		 *
 		 * @param types A span of priority levels from which to attempt a dequeue.
-		 * @return A result<std::unique_ptr<typed_job_t<job_type>>> containing either
+		 * @return A common::Result<std::unique_ptr<typed_job_t<job_type>>> containing either
 		 *         the dequeued job or an error.
 		 */
 		[[nodiscard]] auto dequeue(utility_module::span<const job_type> types)
-			-> result<std::unique_ptr<typed_job_t<job_type>>>;
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
 
 		/**
 		 * @brief Removes all jobs from all priority queues.

@@ -301,7 +301,7 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 	 *
 	 * @return result_void indicating success or detailed error information
 	 */
-	auto thread_worker::do_work() -> result_void
+	auto thread_worker::do_work() -> common::VoidResult
 	{
 		// Acquire lock to safely get queue pointer
 		std::unique_lock<std::mutex> lock(queue_mutex_);
@@ -310,7 +310,7 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		if (job_queue_ == nullptr)
 		{
 			lock.unlock();
-			return error{error_code::resource_allocation_failed, "there is no job_queue"};
+			return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "there is no job_queue", "thread_system"};
 		}
 
 		// Make a local copy of the queue pointer while holding the lock
@@ -334,7 +334,7 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		for (int i = 0; i < spin_count; ++i)
 		{
 			auto dequeue_result = local_queue->try_dequeue();
-			if (dequeue_result.has_value())
+			if (dequeue_result.is_ok())
 			{
 				// Job found during spin - fast path
 				current_job = std::move(dequeue_result.value());
@@ -379,13 +379,13 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 
 			// Return immediately - will be called again by thread_base loop
 			// should_continue_work() will determine when to exit
-			return result_void{};
+			return common::ok();
 		}
 
 		// Validate job pointer
 		if (current_job == nullptr)
 		{
-			return error{error_code::job_invalid, "error executing job: nullptr"};
+			return common::error_info{static_cast<int>(error_code::job_invalid), "error executing job: nullptr", "thread_system"};
 		}
 
 		// Mark worker as busy (processing a job)
@@ -444,14 +444,14 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			queue_cv_.notify_all();
 		}
 
-		if (work_result.has_error())
+		if (work_result.is_err())
 		{
 			if (metrics_)
 			{
 				metrics_->record_execution(0, false);
 			}
-			return error{error_code::job_execution_failed,
-				formatter::format("error executing job: {}", work_result.get_error().to_string())};
+			return common::error_info{static_cast<int>(error_code::job_execution_failed),
+				formatter::format("error executing job: {}", work_result.error().message), "thread_system"};
 		}
 
 		// Log successful job completion based on timing configuration
@@ -487,7 +487,7 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			metrics_->record_execution(execution_duration_ns, true);
 		}
 
-		return result_void{};
+		return common::ok();
 	}
 
 	std::size_t thread_worker::get_worker_id() const

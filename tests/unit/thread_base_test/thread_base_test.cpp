@@ -65,16 +65,16 @@ TEST_F(ThreadBaseTest, JobQueueBasicOperations)
     
     // Create and enqueue a job
     auto test_job = std::make_unique<callback_job>(
-        [this]() -> result_void
+        [this]() -> kcenon::common::VoidResult
         {
             execution_counter.fetch_add(1);
-            return result_void();
+            return kcenon::common::ok();
         },
         "test_job"
     );
     
     auto error = job_queue_instance->enqueue(std::move(test_job));
-    EXPECT_FALSE(error.has_error());
+    EXPECT_FALSE(error.is_err());
     EXPECT_FALSE(job_queue_instance->empty());
 }
 
@@ -82,27 +82,27 @@ TEST_F(ThreadBaseTest, JobQueueDequeue)
 {
     // Enqueue a job
     auto test_job = std::make_unique<callback_job>(
-        [this]() -> result_void
+        [this]() -> kcenon::common::VoidResult
         {
             execution_counter.fetch_add(1);
-            return result_void();
+            return kcenon::common::ok();
         },
         "dequeue_test_job"
     );
     
     auto error = job_queue_instance->enqueue(std::move(test_job));
-    EXPECT_FALSE(error.has_error());
+    EXPECT_FALSE(error.is_err());
     
     // Dequeue and execute
     auto dequeued_job = job_queue_instance->dequeue();
-    EXPECT_TRUE(static_cast<bool>(dequeued_job));
-    if (dequeued_job.has_value()) {
+    EXPECT_TRUE(dequeued_job.is_ok());
+    if (dequeued_job.is_ok()) {
         EXPECT_NE(dequeued_job.value(), nullptr);
         EXPECT_TRUE(job_queue_instance->empty());
         
         // Execute the dequeued job using do_work()
         auto execution_result = dequeued_job.value()->do_work();
-        EXPECT_FALSE(execution_result.has_error()); // No error
+        EXPECT_FALSE(execution_result.is_err()); // No error
         EXPECT_EQ(execution_counter.load(), 1);
     }
 }
@@ -115,16 +115,16 @@ TEST_F(ThreadBaseTest, JobQueueMultipleJobs)
     for (int i = 0; i < job_count; ++i)
     {
         auto job = std::make_unique<callback_job>(
-            [this, i]() -> result_void
+            [this, i]() -> kcenon::common::VoidResult
             {
                 execution_counter.fetch_add(i + 1);
-                return result_void();
+                return kcenon::common::ok();
             },
             "job_" + std::to_string(i)
         );
         
         auto error = job_queue_instance->enqueue(std::move(job));
-        EXPECT_FALSE(error.has_error());
+        EXPECT_FALSE(error.is_err());
     }
     
     // Dequeue and execute all jobs
@@ -132,11 +132,11 @@ TEST_F(ThreadBaseTest, JobQueueMultipleJobs)
     for (int i = 0; i < job_count; ++i)
     {
         auto job = job_queue_instance->dequeue();
-        EXPECT_TRUE(static_cast<bool>(job));
+        EXPECT_TRUE(job.is_ok());
         
-        if (job.has_value()) {
+        if (job.is_ok()) {
             auto result = job.value()->do_work();
-            EXPECT_FALSE(result.has_error()); // No error
+            EXPECT_FALSE(result.is_err()); // No error
             expected_sum += (i + 1);
         }
     }
@@ -151,11 +151,11 @@ TEST_F(ThreadBaseTest, CallbackJobExecution)
     std::string job_result;
     
     auto callback_job_instance = std::make_unique<callback_job>(
-        [&job_executed, &job_result]() -> result_void
+        [&job_executed, &job_result]() -> kcenon::common::VoidResult
         {
             job_executed = true;
             job_result = "job completed successfully";
-            return result_void();
+            return kcenon::common::ok();
         },
         "callback_test_job"
     );
@@ -163,7 +163,7 @@ TEST_F(ThreadBaseTest, CallbackJobExecution)
     EXPECT_FALSE(job_executed);
     
     auto result = callback_job_instance->do_work();
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_TRUE(job_executed);
     EXPECT_EQ(job_result, "job completed successfully");
 }
@@ -171,16 +171,16 @@ TEST_F(ThreadBaseTest, CallbackJobExecution)
 TEST_F(ThreadBaseTest, CallbackJobWithError)
 {
     auto callback_job_instance = std::make_unique<callback_job>(
-        []() -> result_void
+        []() -> kcenon::common::VoidResult
         {
-            return error{error_code::job_execution_failed, "job failed with error"};
+            return kcenon::common::error_info{error_code::job_execution_failed, "job failed with error", "thread_base_test"};
         },
         "error_test_job"
     );
     
     auto result = callback_job_instance->do_work();
-    EXPECT_TRUE(result.has_error());
-    EXPECT_EQ(result.get_error().message(), "job failed with error");
+    EXPECT_TRUE(result.is_err());
+    EXPECT_EQ(result.error().message, "job failed with error");
 }
 
 TEST_F(ThreadBaseTest, JobQueueStopWaiting)
@@ -197,16 +197,16 @@ TEST_F(ThreadBaseTest, ClearQueue)
     for (int i = 0; i < 3; ++i)
     {
         auto job = std::make_unique<callback_job>(
-            [this]() -> result_void
+            [this]() -> kcenon::common::VoidResult
             {
                 execution_counter.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             },
             "clear_test_job_" + std::to_string(i)
         );
         
         auto error = job_queue_instance->enqueue(std::move(job));
-        EXPECT_FALSE(error.has_error());
+        EXPECT_FALSE(error.is_err());
     }
     
     EXPECT_FALSE(job_queue_instance->empty());
@@ -228,17 +228,17 @@ TEST_F(ThreadBaseTest, ThreadBaseBasicOperations)
         std::atomic<bool> continue_work;
     
     protected:
-        virtual auto do_work() -> result_void override
+        virtual auto do_work() -> kcenon::common::VoidResult override
         {
             execution_count.fetch_add(1);
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            
+
             // Stop after a few iterations
             if (execution_count.load() >= 3) {
                 continue_work.store(false);
             }
-            
-            return {};
+
+            return kcenon::common::ok();
         }
         
         virtual auto should_continue_work() const -> bool override
@@ -252,13 +252,13 @@ TEST_F(ThreadBaseTest, ThreadBaseBasicOperations)
     // Test start and stop
     EXPECT_NO_THROW({
         auto start_result = test_thread->start();
-        EXPECT_FALSE(start_result.has_error());
+        EXPECT_FALSE(start_result.is_err());
         
         // Give it some time to run and complete work
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         
         auto stop_result = test_thread->stop();
-        EXPECT_FALSE(stop_result.has_error());
+        EXPECT_FALSE(stop_result.is_err());
     });
     
     EXPECT_GT(test_thread->execution_count.load(), 0);

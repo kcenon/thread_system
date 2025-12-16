@@ -72,7 +72,7 @@ protected:
         // Clean up thread pool if still running
         if (pool_ && pool_->is_running()) {
             auto result = pool_->stop(true);
-            EXPECT_TRUE(result) << "Failed to stop pool: " << result.get_error().to_string();
+            EXPECT_TRUE(result.is_ok()) << "Failed to stop pool: " << result.error().message;
         }
 
         pool_.reset();
@@ -90,7 +90,7 @@ protected:
         for (size_t i = 0; i < worker_count; ++i) {
             auto worker = std::make_unique<kcenon::thread::thread_worker>();
             auto result = pool_->enqueue(std::move(worker));
-            ASSERT_TRUE(result) << "Failed to add worker: " << result.get_error().to_string();
+            ASSERT_TRUE(result.is_ok()) << "Failed to add worker: " << result.error().message;
         }
     }
 
@@ -115,13 +115,13 @@ protected:
      */
     void SubmitCountingJob() {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto result = pool_->enqueue(std::move(job));
-        EXPECT_TRUE(result) << "Failed to enqueue job: " << result.get_error().to_string();
+        EXPECT_TRUE(result.is_ok()) << "Failed to enqueue job: " << result.error().message;
     }
 
     /**
@@ -129,22 +129,23 @@ protected:
      */
     void SubmitJob(std::function<void()> work) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this, work = std::move(work)]() -> kcenon::thread::result_void {
+            [this, work = std::move(work)]() -> kcenon::common::VoidResult {
                 try {
                     work();
                     completed_jobs_.fetch_add(1);
-                    return {};
+                    return kcenon::common::ok();
                 } catch (...) {
                     failed_jobs_.fetch_add(1);
-                    return kcenon::thread::error{
+                    return kcenon::common::error_info{
                         kcenon::thread::error_code::job_execution_failed,
-                        "Job execution threw exception"
+                        "Job execution threw exception",
+                        "system_fixture"
                     };
                 }
             }
         );
         auto result = pool_->enqueue(std::move(job));
-        EXPECT_TRUE(result) << "Failed to enqueue job: " << result.get_error().to_string();
+        EXPECT_TRUE(result.is_ok()) << "Failed to enqueue job: " << result.error().message;
     }
 
     /**
@@ -198,7 +199,7 @@ protected:
             for (size_t j = 0; j < workers_per_pool; ++j) {
                 auto worker = std::make_unique<kcenon::thread::thread_worker>();
                 auto result = pool->enqueue(std::move(worker));
-                ASSERT_TRUE(result) << "Failed to add worker to pool " << i;
+                ASSERT_TRUE(result.is_ok()) << "Failed to add worker to pool " << i;
             }
 
             pools_.push_back(std::move(pool));
@@ -211,7 +212,7 @@ protected:
     void StartAllPools() {
         for (auto& pool : pools_) {
             auto result = pool->start();
-            ASSERT_TRUE(result) << "Failed to start pool";
+            ASSERT_TRUE(result.is_ok()) << "Failed to start pool";
         }
     }
 

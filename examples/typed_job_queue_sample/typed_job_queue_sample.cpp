@@ -76,20 +76,20 @@ void basic_typed_queue_example()
             
             // Create callback_typed_job directly with lambda and type
             auto typed_job_ptr = std::make_unique<callback_typed_job>(
-                [counter, i, type]() -> result_void {
+                [counter, i, type]() -> kcenon::common::VoidResult {
                     counter->fetch_add(1);
                     std::string type_str = type == job_types::RealTime ? "RealTime" : 
                                          (type == job_types::Batch ? "Batch" : "Background");
                     write_information("{} priority job {} completed", type_str, i);
-                    return result_void(); // Success
+                    return kcenon::common::ok(); // Success
                 },
                 type
             );
             
             auto result = queue.enqueue(std::move(typed_job_ptr));
-            if (result.has_error()) {
+            if (result.is_err()) {
                 write_error(
-                    "Failed to enqueue job {}: {}", i, result.get_error().message());
+                    "Failed to enqueue job {}: {}", i, result.error().message);
             }
             
             std::this_thread::sleep_for(10ms);
@@ -107,11 +107,11 @@ void basic_typed_queue_example()
             
             if (job.has_value()) {
                 auto result = job.value()->do_work();
-                if (!result.has_error()) {
+                if (!result.is_err()) {
                     // Job executed successfully
                     total_consumed++;
                 } else {
-                    write_error("Job failed: {}", result.get_error().message());
+                    write_error("Job failed: {}", result.error().message);
                 }
             } else {
                 std::this_thread::sleep_for(5ms);
@@ -160,13 +160,13 @@ void mpmc_typed_queue_example()
                 job_types type = static_cast<job_types>(type_dist(gen));
                 
                 auto job = std::make_unique<callback_typed_job>(
-                    [p, i, type]() -> result_void {
+                    [p, i, type]() -> kcenon::common::VoidResult {
                         // Simulate work based on priority
                         std::this_thread::sleep_for(std::chrono::microseconds(
                             type == job_types::RealTime ? 10 : 
                             (type == job_types::Batch ? 50 : 100)));
                         write_information("Producer {} job {} (type: {})", p, i, static_cast<int>(type));
-                        return result_void();
+                        return kcenon::common::ok();
                     },
                     type
                 );
@@ -174,7 +174,7 @@ void mpmc_typed_queue_example()
                 // Retry on failure with lock-free queue
                 while (true) {
                     auto result = queue.enqueue(std::move(job));
-                    if (!result.has_error()) {
+                    if (!result.is_err()) {
                         total_produced.fetch_add(1);
                         type_counts[type].fetch_add(1);
                         break;
@@ -182,13 +182,13 @@ void mpmc_typed_queue_example()
                     std::this_thread::yield();
                     // Re-create job since it was moved
                     job = std::make_unique<callback_typed_job>(
-                        [p, i, type]() -> result_void {
+                        [p, i, type]() -> kcenon::common::VoidResult {
                             // Simulate work based on priority
                             std::this_thread::sleep_for(std::chrono::microseconds(
                                 type == job_types::RealTime ? 10 : 
                                 (type == job_types::Batch ? 50 : 100)));
                             write_information("Producer {} job {} (type: {})", p, i, static_cast<int>(type));
-                            return result_void();
+                            return kcenon::common::ok();
                         },
                         type
                     );
@@ -222,12 +222,12 @@ void mpmc_typed_queue_example()
                 
                 if (job.has_value()) {
                     auto result = job.value()->do_work();
-                    if (!result) {
+                    if (result.is_ok()) {
                         // Job executed successfully
                         total_consumed.fetch_add(1);
                     } else {
-                        write_error("Consumer {} job failed: {}", 
-                            c, result.get_error().message());
+                        write_error("Consumer {} job failed: {}",
+                            c, result.error().message);
                     }
                 } else {
                     std::this_thread::sleep_for(1ms);
@@ -272,21 +272,21 @@ void performance_comparison_example()
         for (int i = 0; i < num_jobs; ++i) {
             job_types type = static_cast<job_types>(i % 3);
             auto job = std::make_unique<callback_typed_job>(
-                [&completed]() -> result_void {
+                [&completed]() -> kcenon::common::VoidResult {
                     completed.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 },
                 type
             );
             
             auto enqueue_result = queue.enqueue(std::move(job));
-            while (enqueue_result.has_error()) {
+            while (enqueue_result.is_err()) {
                 std::this_thread::yield();
                 // Re-create job since it was moved
                 job = std::make_unique<callback_typed_job>(
-                    [&completed]() -> result_void {
+                    [&completed]() -> kcenon::common::VoidResult {
                         completed.fetch_add(1);
-                        return result_void();
+                        return kcenon::common::ok();
                     },
                     type
                 );
@@ -351,7 +351,7 @@ void task_scheduling_example()
             auto creation_time = std::chrono::high_resolution_clock::now();
             
             auto task = std::make_unique<callback_typed_job>(
-                [type, creation_time, &stats]() -> result_void {
+                [type, creation_time, &stats]() -> kcenon::common::VoidResult {
                         auto start_time = std::chrono::high_resolution_clock::now();
                         auto latency = std::chrono::duration_cast<std::chrono::microseconds>(
                             start_time - creation_time).count();
@@ -367,13 +367,13 @@ void task_scheduling_example()
                         
                         write_information("Task completed - Type: {}, Latency: {} μs",
                             static_cast<int>(type), latency);
-                        return result_void(); // Success
+                        return kcenon::common::ok(); // Success
                     },
                     type
             );
             
             auto enqueue_result = task_queue.enqueue(std::move(task));
-            if (!enqueue_result.has_error()) {
+            if (!enqueue_result.is_err()) {
                 stats[type].created.fetch_add(1);
             } else {
                 stats[type].failed.fetch_add(1);
@@ -392,11 +392,11 @@ void task_scheduling_example()
             auto task = task_queue.dequeue({job_types::RealTime});
             if (task.has_value()) {
                 auto result = task.value()->do_work();
-                if (!result) {
+                if (result.is_ok()) {
                     // Task executed successfully
                 } else {
-                    write_error("High priority task failed: {}", 
-                        result.get_error().message());
+                    write_error("High priority task failed: {}",
+                        result.error().message);
                 }
             } else {
                 std::this_thread::sleep_for(1ms);
@@ -411,11 +411,11 @@ void task_scheduling_example()
                 auto task = task_queue.dequeue({job_types::Batch, job_types::Background, job_types::RealTime});
                 if (task.has_value()) {
                     auto result = task.value()->do_work();
-                    if (!result) {
+                    if (result.is_ok()) {
                         // Task executed successfully
                     } else {
-                        write_error("General worker {} task failed: {}", 
-                            i, result.get_error().message());
+                        write_error("General worker {} task failed: {}",
+                            i, result.error().message);
                     }
                 } else {
                     std::this_thread::sleep_for(2ms);
@@ -470,21 +470,21 @@ void stress_test_example()
                 for (int i = 0; i < ops_per_thread; ++i) {
                     job_types type = static_cast<job_types>((t + i) % 3);
                     auto job = std::make_unique<callback_typed_job>(
-                        [&total_ops]() -> result_void {
+                        [&total_ops]() -> kcenon::common::VoidResult {
                             total_ops.fetch_add(1);
-                            return result_void();
+                            return kcenon::common::ok();
                         },
                         type
                     );
                     
                     auto enqueue_result = queue.enqueue(std::move(job));
-                    while (enqueue_result.has_error()) {
+                    while (enqueue_result.is_err()) {
                         std::this_thread::yield();
                         // Re-create job since it was moved
                         job = std::make_unique<callback_typed_job>(
-                            [&total_ops]() -> result_void {
+                            [&total_ops]() -> kcenon::common::VoidResult {
                                 total_ops.fetch_add(1);
-                                return result_void();
+                                return kcenon::common::ok();
                             },
                             type
                         );

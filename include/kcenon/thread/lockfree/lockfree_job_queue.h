@@ -120,12 +120,12 @@ public:
      * Time Complexity: O(1) amortized
      * Memory Ordering: release semantics for visibility
      */
-    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
 
     /**
      * @brief Dequeues a job from the queue (thread-safe)
      *
-     * @return result<std::unique_ptr<job>> The dequeued job or error
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or error
      *
      * @note Lock-free operation (system-wide progress guaranteed)
      * @note Returns empty result if queue is empty (not an error)
@@ -135,17 +135,17 @@ public:
      * Time Complexity: O(1) amortized
      * Memory Ordering: acquire/release semantics
      */
-    [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>>;
 
     /**
      * @brief Tries to dequeue a job without blocking
      *
-     * @return result<std::unique_ptr<job>> The dequeued job or empty
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or empty
      *
      * @note Alias for dequeue() (lock-free queues never block)
      * @note Provided for API compatibility with mutex-based queue
      */
-    [[nodiscard]] auto try_dequeue() -> result<std::unique_ptr<job>> {
+    [[nodiscard]] auto try_dequeue() -> common::Result<std::unique_ptr<job>> {
         return dequeue();
     }
 
@@ -177,22 +177,22 @@ public:
      * @brief Schedule a job (delegates to enqueue)
      *
      * @param work Job to schedule
-     * @return result_void Success or error
+     * @return common::VoidResult Success or error
      *
      * @note Part of scheduler_interface
      */
-    auto schedule(std::unique_ptr<job>&& work) -> result_void override {
+    auto schedule(std::unique_ptr<job>&& work) -> common::VoidResult override {
         return enqueue(std::move(work));
     }
 
     /**
      * @brief Get next job (delegates to dequeue)
      *
-     * @return result<std::unique_ptr<job>> The dequeued job or error
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or error
      *
      * @note Part of scheduler_interface
      */
-    auto get_next_job() -> result<std::unique_ptr<job>> override {
+    auto get_next_job() -> common::Result<std::unique_ptr<job>> override {
         return dequeue();
     }
 

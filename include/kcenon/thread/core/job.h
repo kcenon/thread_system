@@ -79,14 +79,14 @@ namespace kcenon::thread
 	 * public:
 	 *     my_job() : job("my_custom_job") {}
 	 *
-	 *     result_void do_work() override
+	 *     common::VoidResult do_work() override
 	 *     {
 	 *         // Execute custom logic:
 	 *         bool success = perform_operation();
 	 *         if (!success)
-	 *             return error{error_code::job_execution_failed, "Operation failed in my_custom_job"};
+	 *             return common::error_info{static_cast<int>(error_code::job_execution_failed), "Operation failed in my_custom_job"};
 	 *
-	 *         return result_void{}; // success
+	 *         return common::ok(); // success
 	 *     }
 	 * };
 	 *
@@ -167,9 +167,9 @@ namespace kcenon::thread
 		/**
 	 * @brief The core task execution method to be overridden by derived classes.
 	 *
-	 * @return A @c result_void indicating success or error:
-	 * - A success result (constructed with result_void{}) if no error occurred.
-	 * - An error result (constructed with error{error_code, message}) on failure.
+	 * @return A @c common::VoidResult indicating success or error:
+	 * - A success result (constructed with common::ok()) if no error occurred.
+	 * - An error result (constructed with common::error_info{code, message}) on failure.
 	 *
 	 * #### Default Behavior
 	 * The base class implementation simply returns a success result.
@@ -182,7 +182,7 @@ namespace kcenon::thread
 	 * - This method should check the cancellation token if one is set and return
 	 *   an error with code operation_canceled if the token is cancelled.
 	 */
-	[[nodiscard]] virtual auto do_work(void) -> result_void;
+	[[nodiscard]] virtual auto do_work(void) -> common::VoidResult;
 	
 	/**
 	 * @brief Sets a cancellation token that can be used to cancel the job.

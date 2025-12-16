@@ -59,21 +59,21 @@ int main() {
     auto pool = std::make_shared<thread_pool>("svc_pool");
     std::vector<std::unique_ptr<thread_worker>> workers;
     workers.push_back(std::make_unique<thread_worker>(false));
-    if (auto r = pool->enqueue_batch(std::move(workers)); r.has_error()) {
-        std::cerr << r.get_error().to_string() << "\n";
+    if (auto r = pool->enqueue_batch(std::move(workers)); r.is_err()) {
+        std::cerr << r.error().message << "\n";
         return 1;
     }
-    if (auto r = pool->start(); r.has_error()) {
-        std::cerr << r.get_error().to_string() << "\n";
+    if (auto r = pool->start(); r.is_err()) {
+        std::cerr << r.error().message << "\n";
         return 1;
     }
 
     std::atomic<int> count{0};
-    if (auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> result_void {
+    if (auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> kcenon::common::VoidResult {
             count.fetch_add(1);
-            return result_void();
-        })); r.has_error()) {
-        std::cerr << r.get_error().to_string() << "\n";
+            return kcenon::common::ok();
+        })); r.is_err()) {
+        std::cerr << r.error().message << "\n";
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
