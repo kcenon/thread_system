@@ -90,24 +90,24 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_thread_worker_t<job_type>::do_work() -> result_void
+	auto typed_thread_worker_t<job_type>::do_work() -> common::VoidResult
 	{
 		if (!job_queue_)
 		{
-			return {}; // No queue available
+			return common::ok(); // No queue available
 		}
 
 		// Dequeue a job matching the worker's priority levels
 		auto job_result = job_queue_->dequeue(types_);
-		if (!job_result.has_value())
+		if (job_result.is_err())
 		{
-			return {}; // No job available or error occurred
+			return common::ok(); // No job available or error occurred
 		}
 
 		auto job = std::move(job_result.value());
 		if (!job)
 		{
-			return {}; // No job to process
+			return common::ok(); // No job to process
 		}
 
 		// Execute the job

@@ -166,7 +166,7 @@ namespace kcenon::thread
 		 * @return Success or error result
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a generic job (attempts to cast to typed_job)
@@ -174,7 +174,7 @@ namespace kcenon::thread
 		 * @return Success or error result
 		 */
 		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value)
-			-> result_void override;
+			-> common::VoidResult override;
 
 		/**
 		 * @brief Enqueues multiple typed jobs
@@ -182,7 +182,7 @@ namespace kcenon::thread
 		 * @return Success or error result
 		 */
 		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Enqueues multiple generic jobs
@@ -190,14 +190,14 @@ namespace kcenon::thread
 		 * @return Success or error result
 		 */
 		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs)
-			-> result_void override;
+			-> common::VoidResult override;
 
 		/**
 		 * @brief Dequeues a job with highest priority
 		 * @return The dequeued job or error
 		 */
 		[[nodiscard]] auto dequeue()
-			-> result<std::unique_ptr<job>> override;
+			-> common::Result<std::unique_ptr<job>> override;
 
 		/**
 		 * @brief Dequeues a job of specific type
@@ -205,7 +205,7 @@ namespace kcenon::thread
 		 * @return The dequeued job or error
 		 */
 		[[nodiscard]] auto dequeue(const job_type& type)
-			-> result<std::unique_ptr<typed_job_t<job_type>>>;
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
 
 		/**
 		 * @brief Dequeues jobs from multiple types
@@ -213,7 +213,7 @@ namespace kcenon::thread
 		 * @return The dequeued job or error
 		 */
 		[[nodiscard]] auto dequeue(utility_module::span<const job_type> types)
-			-> result<std::unique_ptr<typed_job_t<job_type>>>;
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
 
 		/**
 		 * @brief Dequeues all available jobs
@@ -404,11 +404,11 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
-		-> result_void
+		-> common::VoidResult
 	{
 		if (!value)
 		{
-			return result_void(error(error_code::invalid_argument, "Null job"));
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "Null job", "thread_system"};
 		}
 
 		auto priority = value->priority();
@@ -422,12 +422,12 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value)
-		-> result_void
+		-> common::VoidResult
 	{
 		auto* typed_job_ptr = dynamic_cast<typed_job_t<job_type>*>(value.get());
 		if (!typed_job_ptr)
 		{
-			return result_void(error(error_code::invalid_argument, "Job is not a typed job"));
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "Job is not a typed job", "thread_system"};
 		}
 
 		value.release();
@@ -436,41 +436,41 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::enqueue_batch(
-		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> result_void
+		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> common::VoidResult
 	{
 		for (auto& job : jobs)
 		{
 			if (!job) continue;
 
 			auto result = enqueue(std::move(job));
-			if (result.has_error())
+			if (result.is_err())
 			{
 				return result;
 			}
 		}
-		return result_void();
+		return common::ok();
 	}
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::enqueue_batch(
-		std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+		std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult
 	{
 		for (auto& job : jobs)
 		{
 			if (!job) continue;
 
 			auto result = enqueue(std::move(job));
-			if (result.has_error())
+			if (result.is_err())
 			{
 				return result;
 			}
 		}
-		return result_void();
+		return common::ok();
 	}
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::dequeue()
-		-> result<std::unique_ptr<job>>
+		-> common::Result<std::unique_ptr<job>>
 	{
 		std::shared_lock lock(queues_mutex_);
 
@@ -484,7 +484,7 @@ namespace kcenon::thread
 			if (it != typed_queues_.end())
 			{
 				auto result = it->second->dequeue();
-				if (result.has_value())
+				if (result.is_ok())
 				{
 					// Track type switches for statistics
 					auto last_type = last_dequeue_type_.load(std::memory_order_relaxed);
@@ -493,32 +493,30 @@ namespace kcenon::thread
 						type_switch_count_.fetch_add(1, std::memory_order_relaxed);
 						last_dequeue_type_.store(type, std::memory_order_relaxed);
 					}
-					return result;
+					return std::move(result.value());
 				}
 			}
 		}
 
-		return result<std::unique_ptr<job>>(error(error_code::queue_empty, "No jobs available"));
+		return common::error_info{static_cast<int>(error_code::queue_empty), "No jobs available", "thread_system"};
 	}
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::dequeue(const job_type& type)
-		-> result<std::unique_ptr<typed_job_t<job_type>>>
+		-> common::Result<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		std::shared_lock lock(queues_mutex_);
 
 		auto it = typed_queues_.find(type);
 		if (it == typed_queues_.end())
 		{
-			return result<std::unique_ptr<typed_job_t<job_type>>>(
-				error(error_code::queue_empty, "No queue for specified type"));
+			return common::error_info{static_cast<int>(error_code::queue_empty), "No queue for specified type", "thread_system"};
 		}
 
 		auto dequeue_result = it->second->dequeue();
-		if (!dequeue_result.has_value())
+		if (dequeue_result.is_err())
 		{
-			return result<std::unique_ptr<typed_job_t<job_type>>>(
-				error(error_code::queue_empty, "Queue empty for specified type"));
+			return common::error_info{static_cast<int>(error_code::queue_empty), "Queue empty for specified type", "thread_system"};
 		}
 
 		auto job = std::move(dequeue_result.value());
@@ -528,7 +526,7 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_lockfree_job_queue_t<job_type>::dequeue(utility_module::span<const job_type> types)
-		-> result<std::unique_ptr<typed_job_t<job_type>>>
+		-> common::Result<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		std::shared_lock lock(queues_mutex_);
 
@@ -538,7 +536,7 @@ namespace kcenon::thread
 			if (it != typed_queues_.end())
 			{
 				auto dequeue_result = it->second->dequeue();
-				if (dequeue_result.has_value())
+				if (dequeue_result.is_ok())
 				{
 					auto job = std::move(dequeue_result.value());
 					auto* typed_job_ptr = static_cast<typed_job_t<job_type>*>(job.release());
@@ -547,8 +545,7 @@ namespace kcenon::thread
 			}
 		}
 
-		return result<std::unique_ptr<typed_job_t<job_type>>>(
-			error(error_code::queue_empty, "No jobs available for specified types"));
+		return common::error_info{static_cast<int>(error_code::queue_empty), "No jobs available for specified types", "thread_system"};
 	}
 
 	template <typename job_type>
@@ -560,7 +557,7 @@ namespace kcenon::thread
 		while (true)
 		{
 			auto dequeue_result = dequeue();
-			if (!dequeue_result.has_value())
+			if (dequeue_result.is_err())
 			{
 				break;
 			}

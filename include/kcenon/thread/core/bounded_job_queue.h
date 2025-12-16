@@ -141,14 +141,14 @@ public:
      * @param value Job to enqueue
      * @return Result indicating success or queue_full error
      */
-    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override {
+    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> common::VoidResult override {
         if (max_size_ > 0 && size() >= max_size_) {
             metrics_.total_rejected.fetch_add(1, std::memory_order_relaxed);
-            return result_void(error(error_code::queue_full, "Job queue is at maximum capacity"));
+            return common::error_info{static_cast<int>(error_code::queue_full), "Job queue is at maximum capacity", "thread_system"};
         }
 
         auto result = job_queue::enqueue(std::move(value));
-        if (!result.has_error()) {
+        if (result.is_ok()) {
             metrics_.total_enqueued.fetch_add(1, std::memory_order_relaxed);
 
             // Update peak size with retry limit to prevent infinite loops
@@ -189,7 +189,7 @@ public:
     [[nodiscard]] auto enqueue_with_timeout(
         std::unique_ptr<job>&& value,
         std::chrono::milliseconds timeout
-    ) -> result_void {
+    ) -> common::VoidResult {
         auto start = std::chrono::steady_clock::now();
 
         while (true) {
@@ -202,7 +202,7 @@ public:
             auto elapsed = std::chrono::steady_clock::now() - start;
             if (elapsed >= timeout) {
                 metrics_.total_timeouts.fetch_add(1, std::memory_order_relaxed);
-                return result_void(error(error_code::operation_timeout, "Enqueue operation timed out"));
+                return common::error_info{static_cast<int>(error_code::operation_timeout), "Enqueue operation timed out", "thread_system"};
             }
 
             // Wait a bit before retry
@@ -213,9 +213,9 @@ public:
     /**
      * @brief Dequeue job and update metrics
      */
-    [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override {
+    [[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>> override {
         auto result = job_queue::dequeue();
-        if (!!result.has_value()) {
+        if (result.is_ok()) {
             metrics_.total_dequeued.fetch_add(1, std::memory_order_relaxed);
         }
         return result;

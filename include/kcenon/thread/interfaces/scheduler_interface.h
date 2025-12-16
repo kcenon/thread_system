@@ -37,7 +37,7 @@ namespace kcenon::thread {
  * // Thread 2: Retrieve and process jobs
  * auto job_result = scheduler->get_next_job();
  * if (job_result.is_ok()) {
- *     auto job = job_result.take_value();
+ *     auto job = std::move(job_result).value();
  *     job->execute();
  * }
  * @endcode
@@ -49,19 +49,19 @@ public:
     /**
      * @brief Enqueue a job for processing.
      * @param work Job to schedule for execution
-     * @return result_void indicating success or error
+     * @return common::VoidResult indicating success or error
      *
      * Thread Safety: Must be thread-safe, callable from any thread
      */
-    virtual auto schedule(std::unique_ptr<job>&& work) -> result_void = 0;
+    virtual auto schedule(std::unique_ptr<job>&& work) -> common::VoidResult = 0;
 
     /**
      * @brief Dequeue the next available job.
-     * @return result containing the next job or error if queue is empty/stopped
+     * @return common::Result containing the next job or error if queue is empty/stopped
      *
      * Thread Safety: Must be thread-safe, callable from multiple worker threads
      */
-    virtual auto get_next_job() -> result<std::unique_ptr<job>> = 0;
+    virtual auto get_next_job() -> common::Result<std::unique_ptr<job>> = 0;
 };
 
 } // namespace kcenon::thread

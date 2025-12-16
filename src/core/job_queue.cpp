@@ -125,18 +125,18 @@ namespace kcenon::thread
 	 * @param value Unique pointer to job (moved into queue)
 	 * @return Empty result on success, error on failure
 	 */
-	auto job_queue::enqueue(std::unique_ptr<job>&& value) -> result_void
+	auto job_queue::enqueue(std::unique_ptr<job>&& value) -> common::VoidResult
 	{
 		// Early validation: check if queue is still accepting jobs
 		if (stop_.load())
 		{
-			return error{error_code::queue_stopped, "Job queue is stopped"};
+			return common::error_info{static_cast<int>(error_code::queue_stopped), "Job queue is stopped", "thread_system"};
 		}
 
 		// Validate input: null jobs are not allowed
 		if (value == nullptr)
 		{
-			return error{error_code::invalid_argument, "cannot enqueue null job"};
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "cannot enqueue null job", "thread_system"};
 		}
 
 		// Critical section: modify queue with proper synchronization
@@ -151,7 +151,7 @@ namespace kcenon::thread
 			condition_.notify_one();  // Wake exactly one waiting thread
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	/**
@@ -176,18 +176,18 @@ namespace kcenon::thread
 	 * @param jobs Vector of unique pointers to jobs (moved into queue)
 	 * @return Empty result on success, error on failure
 	 */
-	auto job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+	auto job_queue::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult
 	{
 		// Early validation: check if queue is still accepting jobs
 		if (stop_.load())
 		{
-			return error{error_code::queue_stopped, "Job queue is stopped"};
+			return common::error_info{static_cast<int>(error_code::queue_stopped), "Job queue is stopped", "thread_system"};
 		}
 
 		// Validate batch: empty batches are not allowed
 		if (jobs.empty())
 		{
-			return error{error_code::invalid_argument, "cannot enqueue empty batch"};
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "cannot enqueue empty batch", "thread_system"};
 		}
 
 		// Pre-validate all jobs before modifying queue (ensures atomicity)
@@ -195,7 +195,7 @@ namespace kcenon::thread
 		{
 			if (job == nullptr)
 			{
-				return error{error_code::invalid_argument, "cannot enqueue null job in batch"};
+				return common::error_info{static_cast<int>(error_code::invalid_argument), "cannot enqueue null job in batch", "thread_system"};
 			}
 		}
 
@@ -214,7 +214,7 @@ namespace kcenon::thread
 			condition_.notify_one();  // Wake one thread to process batch
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	/**
@@ -249,7 +249,7 @@ namespace kcenon::thread
 	 *
 	 * @return Unique pointer to job on success, error if queue empty/stopped
 	 */
-	auto job_queue::dequeue() -> result<std::unique_ptr<job>>
+	auto job_queue::dequeue() -> common::Result<std::unique_ptr<job>>
 	{
 		// Use unique_lock for condition variable operations
 		std::unique_lock<std::mutex> lock(mutex_);
@@ -262,7 +262,7 @@ namespace kcenon::thread
 		// between wait() return and queue access (TOCTOU bug)
 		if (queue_.empty())
 		{
-			return error{error_code::queue_empty, "there are no jobs to dequeue"};
+			return common::error_info{static_cast<int>(error_code::queue_empty), "there are no jobs to dequeue", "thread_system"};
 		}
 
 		// Efficiently extract first job from queue
@@ -296,12 +296,12 @@ namespace kcenon::thread
 	 *
 	 * @return Unique pointer to job on success, error if queue empty/stopped
 	 */
-	auto job_queue::try_dequeue() -> result<std::unique_ptr<job>>
+	auto job_queue::try_dequeue() -> common::Result<std::unique_ptr<job>>
 	{
 		// Early validation: check if queue is stopped
 		if (stop_.load())
 		{
-			return error{error_code::queue_stopped, "Job queue is stopped"};
+			return common::error_info{static_cast<int>(error_code::queue_stopped), "Job queue is stopped", "thread_system"};
 		}
 
 		// Critical section: check and potentially extract job
@@ -310,7 +310,7 @@ namespace kcenon::thread
 		// Non-blocking check: return error if empty
 		if (queue_.empty())
 		{
-			return error{error_code::queue_empty, "there are no jobs to dequeue"};
+			return common::error_info{static_cast<int>(error_code::queue_empty), "there are no jobs to dequeue", "thread_system"};
 		}
 
 		// Efficiently extract first job from queue

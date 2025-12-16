@@ -200,7 +200,7 @@ namespace kcenon::thread
 		 * This method is typically called once, before using other methods such as
 		 * enqueue(). Calling start() multiple times without stopping is not recommended.
 		 */
-		auto start(void) -> result_void;
+		auto start(void) -> common::VoidResult;
 
 		/**
 		 * @brief Retrieves the underlying priority job queue managed by this thread pool.
@@ -217,8 +217,8 @@ namespace kcenon::thread
 			-> std::shared_ptr<typed_job_queue_t<job_type>>;
 
 		// Job execution methods
-		auto execute(std::unique_ptr<job>&& work) -> result_void;
-		auto shutdown() -> result_void { return stop(false); }
+		auto execute(std::unique_ptr<job>&& work) -> common::VoidResult;
+		auto shutdown() -> common::VoidResult { return stop(false); }
 
 #ifdef THREAD_HAS_COMMON_EXECUTOR
 		// ============================================================================
@@ -298,14 +298,14 @@ namespace kcenon::thread
 		 * This method is thread-safe; multiple threads can safely enqueue jobs
 		 * concurrently.
 		 */
-		auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& job) -> result_void;
+		auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& job) -> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a batch of priority jobs into the thread pool's job queue.
 		 *
 		 * @param jobs A vector of unique pointers to priority jobs to be added.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - Contains an error if the enqueue operation fails.
 		 *         - Otherwise, returns a success value.
 		 *
@@ -314,7 +314,7 @@ namespace kcenon::thread
 		 * concurrently.
 		 */
 		auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a new worker thread for this thread pool.
@@ -323,7 +323,7 @@ namespace kcenon::thread
 		 *
 		 * @param worker A unique pointer to the priority thread worker to be added.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - Contains an error if the enqueue operation fails.
 		 *         - Otherwise, returns a success value.
 		 *
@@ -336,7 +336,7 @@ namespace kcenon::thread
 		 * This method is thread-safe.
 		 */
 		auto enqueue(std::unique_ptr<typed_thread_worker_t<job_type>>&& worker)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a batch of new worker threads for this thread pool.
@@ -345,7 +345,7 @@ namespace kcenon::thread
 		 *
 		 * @param workers A vector of unique pointers to priority thread workers to be added.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - Contains an error if the enqueue operation fails.
 		 *         - Otherwise, returns a success value.
 		 *
@@ -359,7 +359,7 @@ namespace kcenon::thread
 		 */
 		auto enqueue_batch(
 			std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>>&& workers)
-			-> result_void;
+			-> common::VoidResult;
 
 		/**
 		 * @brief Stops the thread pool and optionally waits for currently running
@@ -368,7 +368,7 @@ namespace kcenon::thread
 		 * @param clear_queue If `true`, any queued jobs are removed.
 		 *                   If `false` (default), the pool stops accepting new jobs
 		 *                   but allows currently running jobs to complete.
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - Contains an error if the stop operation fails.
 		 *         - Otherwise, returns a success value.
 		 *
@@ -376,7 +376,7 @@ namespace kcenon::thread
 		 * Calling stop() from multiple threads simultaneously is safe,
 		 * but redundant calls to stop() will have no additional effect after the first.
 		 */
-		auto stop(bool clear_queue = false) -> result_void;
+		auto stop(bool clear_queue = false) -> common::VoidResult;
 
 		/**
 		 * @brief Generates a string representation of the thread pool's internal state.

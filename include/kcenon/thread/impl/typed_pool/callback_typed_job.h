@@ -57,7 +57,7 @@ namespace kcenon::thread
 		 *
 		 * @param callback
 		 *   The function object to be executed when the job is processed. It must return
-		 *   a @c result_void, where an error typically contains additional
+		 *   a @c common::VoidResult, where an error typically contains additional
 		 *   status or error information.
 		 * @param priority
 		 *   The priority level of the job (e.g., high, normal, low).
@@ -67,14 +67,14 @@ namespace kcenon::thread
 		 *
 		 * Example usage:
 		 * @code
-		 * auto jobCallback = []() -> result_void {
+		 * auto jobCallback = []() -> common::VoidResult {
 		 *     // Your job logic here
-		 *     return {};
+		 *     return common::ok();
 		 * };
 		 * auto myJob = std::make_shared<callback_typed_job_t<int>>(jobCallback, 10, "MyJob");
 		 * @endcode
 		 */
-		callback_typed_job_t(const std::function<result_void(void)>& callback,
+		callback_typed_job_t(const std::function<common::VoidResult(void)>& callback,
 							job_type priority,
 							const std::string& name = "typed_job");
 
@@ -89,23 +89,23 @@ namespace kcenon::thread
 		 * This method overrides @c typed_job_t::do_work. When invoked by the job executor,
 		 * the stored callback will be called and its result will be propagated.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *   - If the callback returns an error, it typically contains an informational or error
 		 * message.
 		 *   - If it returns a success value, the execution completed without additional
 		 * info.
 		 */
-		[[nodiscard]] auto do_work(void) -> result_void override;
+		[[nodiscard]] auto do_work(void) -> common::VoidResult override;
 
 	private:
 		/**
 		 * @brief The user-provided callback function to execute when the job is processed.
 		 *
 		 * This function should encapsulate the main logic of the job.
-		 * It must return a @c result_void, often representing
+		 * It must return a @c common::VoidResult, often representing
 		 * any error messages or status feedback.
 		 */
-		std::function<result_void(void)> callback_;
+		std::function<common::VoidResult(void)> callback_;
 	};
 
 	/**
@@ -118,7 +118,7 @@ namespace kcenon::thread
 	// Template definitions are provided in-header to support external priority types.
 	template <typename job_type>
 	callback_typed_job_t<job_type>::callback_typed_job_t(
-		const std::function<result_void(void)>& callback,
+		const std::function<common::VoidResult(void)>& callback,
 		job_type priority,
 		const std::string& name)
 		: typed_job_t<job_type>(priority, name)
@@ -130,11 +130,11 @@ namespace kcenon::thread
 	callback_typed_job_t<job_type>::~callback_typed_job_t() = default;
 
 	template <typename job_type>
-	auto callback_typed_job_t<job_type>::do_work() -> result_void
+	auto callback_typed_job_t<job_type>::do_work() -> common::VoidResult
 	{
 		if (!callback_)
 		{
-			return result_void(error(error_code::invalid_argument, "Callback is null"));
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "Callback is null", "thread_system"};
 		}
 
 		return callback_();

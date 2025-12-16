@@ -71,19 +71,19 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_thread_pool_t<job_type>::start() -> result_void
+	auto typed_thread_pool_t<job_type>::start() -> common::VoidResult
 	{
 		bool expected = false;
 		if (!start_pool_.compare_exchange_strong(expected, true))
 		{
-			return result_void(error(error_code::thread_already_running, "Thread pool already started"));
+			return common::error_info{static_cast<int>(error_code::thread_already_running), "Thread pool already started", "thread_system"};
 		}
 
 		// Check if there are workers to start
 		if (workers_.empty())
 		{
 			start_pool_.store(false); // Reset state since we didn't actually start
-			return result_void(error(error_code::invalid_argument, "no workers to start"));
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "no workers to start", "thread_system"};
 		}
 
 		// Start all workers
@@ -95,7 +95,7 @@ namespace kcenon::thread
 			}
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	template <typename job_type>
@@ -105,12 +105,12 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_thread_pool_t<job_type>::execute(std::unique_ptr<job>&& work) -> result_void
+	auto typed_thread_pool_t<job_type>::execute(std::unique_ptr<job>&& work) -> common::VoidResult
 	{
 		// Use acquire to ensure we see the latest pool state
 		if (!start_pool_.load(std::memory_order_acquire))
 		{
-			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
+			return common::error_info{static_cast<int>(error_code::thread_not_running), "Thread pool not started", "thread_system"};
 		}
 
 		return job_queue_->enqueue(std::move(work));
@@ -118,12 +118,12 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& job)
-		-> result_void
+		-> common::VoidResult
 	{
 		// Use acquire to ensure we see the latest pool state
 		if (!start_pool_.load(std::memory_order_acquire))
 		{
-			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
+			return common::error_info{static_cast<int>(error_code::thread_not_running), "Thread pool not started", "thread_system"};
 		}
 
 		return job_queue_->enqueue(std::move(job));
@@ -131,12 +131,12 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::enqueue_batch(
-		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> result_void
+		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> common::VoidResult
 	{
 		// Use acquire to ensure we see the latest pool state
 		if (!start_pool_.load(std::memory_order_acquire))
 		{
-			return result_void(error(error_code::thread_not_running, "Thread pool not started"));
+			return common::error_info{static_cast<int>(error_code::thread_not_running), "Thread pool not started", "thread_system"};
 		}
 
 		return job_queue_->enqueue_batch(std::move(jobs));
@@ -144,11 +144,11 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::enqueue(
-		std::unique_ptr<typed_thread_worker_t<job_type>>&& worker) -> result_void
+		std::unique_ptr<typed_thread_worker_t<job_type>>&& worker) -> common::VoidResult
 	{
 		if (!worker)
 		{
-			return result_void(error(error_code::invalid_argument, "Null worker"));
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "Null worker", "thread_system"};
 		}
 
 		// Set the job queue for the worker
@@ -166,7 +166,7 @@ namespace kcenon::thread
 		if (is_running)
 		{
 			auto start_result = workers_.back()->start();
-			if (start_result.has_error())
+			if (start_result.is_err())
 			{
 				// Remove the worker we just added since it failed to start
 				workers_.pop_back();
@@ -174,27 +174,27 @@ namespace kcenon::thread
 			}
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::enqueue_batch(
-		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>>&& workers) -> result_void
+		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>>&& workers) -> common::VoidResult
 	{
 		for (auto& worker : workers)
 		{
 			auto result = enqueue(std::move(worker));
-			if (result.has_error())
+			if (result.is_err())
 			{
 				return result;
 			}
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	template <typename job_type>
-	auto typed_thread_pool_t<job_type>::stop(bool clear_queue) -> result_void
+	auto typed_thread_pool_t<job_type>::stop(bool clear_queue) -> common::VoidResult
 	{
 		// Use compare_exchange_strong to atomically check and set state
 		// This prevents race conditions during concurrent stop() calls
@@ -203,7 +203,7 @@ namespace kcenon::thread
 												  std::memory_order_acq_rel,
 												  std::memory_order_acquire))
 		{
-			return {}; // Already stopped or being stopped by another thread
+			return common::ok(); // Already stopped or being stopped by another thread
 		}
 
 		// Always stop the queue to prevent new jobs from being enqueued
@@ -230,7 +230,7 @@ namespace kcenon::thread
 			}
 		}
 
-		return {};
+		return common::ok();
 	}
 
 	template <typename job_type>
@@ -279,23 +279,23 @@ namespace kcenon::thread
 		auto future = promise->get_future();
 
 		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
-			[task = std::move(task), promise]() mutable -> result_void {
+			[task = std::move(task), promise]() mutable -> common::VoidResult {
 				try {
 					task();
 					promise->set_value();
 				} catch (...) {
 					promise->set_exception(std::current_exception());
 				}
-				return result_void{};
+				return common::ok();
 			},
 			job_type{} // Default priority
 		);
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
-		if (enqueue_result.has_error()) {
+		if (enqueue_result.is_err()) {
 			try {
 				throw std::runtime_error("Failed to enqueue task: " +
-					enqueue_result.get_error().to_string());
+					enqueue_result.error().message);
 			} catch (...) {
 				promise->set_exception(std::current_exception());
 			}
@@ -312,7 +312,7 @@ namespace kcenon::thread
 		auto promise = std::make_shared<std::promise<void>>();
 		auto future = promise->get_future();
 
-		auto delayed_task = [task = std::move(task), delay, promise]() mutable -> result_void {
+		auto delayed_task = [task = std::move(task), delay, promise]() mutable -> common::VoidResult {
 			std::this_thread::sleep_for(delay);
 			try {
 				task();
@@ -320,7 +320,7 @@ namespace kcenon::thread
 			} catch (...) {
 				promise->set_exception(std::current_exception());
 			}
-			return result_void{};
+			return common::ok();
 		};
 
 		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
@@ -329,10 +329,10 @@ namespace kcenon::thread
 		);
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
-		if (enqueue_result.has_error()) {
+		if (enqueue_result.is_err()) {
 			try {
 				throw std::runtime_error("Failed to enqueue delayed task: " +
-					enqueue_result.get_error().to_string());
+					enqueue_result.error().message);
 			} catch (...) {
 				promise->set_exception(std::current_exception());
 			}
@@ -359,7 +359,7 @@ namespace kcenon::thread
 		// Use shared_ptr for copyable lambda
 		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
-			[shared_job, promise]() -> result_void {
+			[shared_job, promise]() -> common::VoidResult {
 				auto result = shared_job->execute();
 				if (result.is_ok()) {
 					promise->set_value();
@@ -370,14 +370,18 @@ namespace kcenon::thread
 						promise->set_exception(std::current_exception());
 					}
 				}
-				return result_void{};
+				return common::ok();
 			},
 			job_type{} // Default priority
 		);
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
-		if (enqueue_result.has_error()) {
-			return detail::to_common_error(enqueue_result.get_error());
+		if (enqueue_result.is_err()) {
+			return common_ns::error_info{
+				enqueue_result.error().code,
+				enqueue_result.error().message,
+				enqueue_result.error().module
+			};
 		}
 
 		return common_ns::Result<std::future<void>>(std::move(future));
@@ -402,7 +406,7 @@ namespace kcenon::thread
 		// Use shared_ptr for copyable lambda
 		auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
 		auto job_ptr = std::make_unique<callback_typed_job_t<job_type>>(
-			[shared_job, delay, promise]() -> result_void {
+			[shared_job, delay, promise]() -> common::VoidResult {
 				std::this_thread::sleep_for(delay);
 				auto result = shared_job->execute();
 				if (result.is_ok()) {
@@ -414,14 +418,18 @@ namespace kcenon::thread
 						promise->set_exception(std::current_exception());
 					}
 				}
-				return result_void{};
+				return common::ok();
 			},
 			job_type{} // Default priority
 		);
 
 		auto enqueue_result = enqueue(std::move(job_ptr));
-		if (enqueue_result.has_error()) {
-			return detail::to_common_error(enqueue_result.get_error());
+		if (enqueue_result.is_err()) {
+			return common_ns::error_info{
+				enqueue_result.error().code,
+				enqueue_result.error().message,
+				enqueue_result.error().module
+			};
 		}
 
 		return common_ns::Result<std::future<void>>(std::move(future));

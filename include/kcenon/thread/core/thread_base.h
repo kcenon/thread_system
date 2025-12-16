@@ -113,19 +113,19 @@ namespace kcenon::thread
 	 *     my_worker() : thread_base("my_worker") {}
 	 *
 	 * protected:
-	 *     result_void before_start() override {
+	 *     common::VoidResult before_start() override {
 	 *         // Initialize resources
-	 *         return {};
+	 *         return common::ok();
 	 *     }
 	 *
-	 *     result_void do_work() override {
+	 *     common::VoidResult do_work() override {
 	 *         // Perform work
-	 *         return {};
+	 *         return common::ok();
 	 *     }
 	 *
-	 *     result_void after_stop() override {
+	 *     common::VoidResult after_stop() override {
 	 *         // Clean up resources
-	 *         return {};
+	 *         return common::ok();
 	 *     }
 	 * };
 	 *
@@ -195,25 +195,25 @@ namespace kcenon::thread
 
 		/**
 		 * @brief Starts the worker thread.
-		 * @return @c result_void containing an error on failure, or success value if successful.
+		 * @return @c common::VoidResult containing an error on failure, or success value if successful.
 		 *
 		 * Internally, this method:
 		 * 1. Calls @c before_start() to allow derived classes to perform setup.
 		 * 2. Spawns a new thread (using either @c std::jthread or @c std::thread).
 		 * 3. Repeatedly calls @c do_work() until the thread is signaled to stop.
 		 */
-		auto start(void) -> result_void;
+		auto start(void) -> common::VoidResult;
 
 		/**
 		 * @brief Requests the worker thread to stop and waits for it to finish.
-		 * @return @c result_void containing an error on failure, or success value if successful.
+		 * @return @c common::VoidResult containing an error on failure, or success value if successful.
 		 *
 		 * Internally, this method:
 		 * 1. Signals the thread to stop (via @c stop_source_ or @c stop_requested_).
 		 * 2. Joins the thread, ensuring it has fully exited.
 		 * 3. Calls @c after_stop() for post-shutdown cleanup in derived classes.
 		 */
-		auto stop(void) -> result_void;
+		auto stop(void) -> common::VoidResult;
 
 		/**
 		 * @brief Returns the worker thread's title.
@@ -252,31 +252,31 @@ namespace kcenon::thread
 
 		/**
 		 * @brief Called just before the worker thread starts running.
-		 * @return @c result_void containing an error on failure, or success value if successful.
+		 * @return @c common::VoidResult containing an error on failure, or success value if successful.
 		 *
 		 * Override this method in derived classes to perform any initialization or setup
 		 * required before the worker thread begins its main loop.
 		 */
-		virtual auto before_start(void) -> result_void { return {}; }
+		virtual auto before_start(void) -> common::VoidResult { return common::ok(); }
 
 		/**
 		 * @brief The main work routine for the worker thread.
-		 * @return @c result_void containing an error on failure, or success value if successful.
+		 * @return @c common::VoidResult containing an error on failure, or success value if successful.
 		 *
 		 * Derived classes should override this method to implement the actual work the thread
 		 * needs to perform. This method is called repeatedly (in an internal loop) until the
 		 * thread is signaled to stop or @c should_continue_work() returns @c false.
 		 */
-		virtual auto do_work(void) -> result_void { return {}; }
+		virtual auto do_work(void) -> common::VoidResult { return common::ok(); }
 
 		/**
 		 * @brief Called immediately after the worker thread has stopped.
-		 * @return @c result_void containing an error on failure, or success value if successful.
+		 * @return @c common::VoidResult containing an error on failure, or success value if successful.
 		 *
 		 * Override this method in derived classes to perform any cleanup or finalization tasks
 		 * once the worker thread has fully exited.
 		 */
-		virtual auto after_stop(void) -> result_void { return {}; }
+		virtual auto after_stop(void) -> common::VoidResult { return common::ok(); }
 
 		/**
 		 * @brief Called when stop() is requested, before the thread actually stops.

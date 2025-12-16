@@ -139,18 +139,18 @@ namespace kcenon::thread
 	 * - Template method pattern: defines interface, requires implementation
 	 * - Pure virtual in spirit (returns error instead of being pure virtual)
 	 * - Enables compilation while encouraging proper inheritance
-	 * 
+	 *
 	 * Derived Class Requirements:
 	 * - Must override this method to provide actual work logic
-	 * - Should return empty result_void{} on success
-	 * - Should return error{...} on failure with descriptive message
-	 * 
+	 * - Should return common::ok() on success
+	 * - Should return common::error_info{...} on failure with descriptive message
+	 *
 	 * @return Error indicating method needs to be implemented in derived class
 	 */
-	auto job::do_work(void) -> result_void { 
+	auto job::do_work(void) -> common::VoidResult {
 		// Base implementation indicates missing override in derived class
 		// This should never be called in production code
-		return error{error_code::not_implemented, "job::do_work() must be implemented in derived class"};
+		return common::error_info{static_cast<int>(error_code::not_implemented), "job::do_work() must be implemented in derived class", "thread_system"};
 	}
 
 	/**
