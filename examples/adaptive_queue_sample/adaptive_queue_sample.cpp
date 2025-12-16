@@ -103,7 +103,7 @@ void policy_comparison_example()
             consumers.emplace_back([&queue, &consumed, num_jobs]() {
                 while (consumed.load() < num_jobs) {
                     auto result = queue.dequeue();
-                    if (result.has_value()) {
+                    if (result.is_ok()) {
                         auto& job = result.value();
                         auto work_result = job->do_work();
                         (void)work_result; // Ignore result for sample
@@ -173,7 +173,7 @@ void adaptive_behavior_example()
         std::thread consumer([&queue, &running, &jobs_processed]() {
             while (running) {
                 auto result = queue.dequeue();
-                if (result.has_value()) {
+                if (result.is_ok()) {
                     auto work_result = result.value()->do_work();
                     (void)work_result; // Ignore result for sample
                     jobs_processed.fetch_add(1);
@@ -225,7 +225,7 @@ void adaptive_behavior_example()
             threads.emplace_back([&queue, &running, &jobs_processed]() {
                 while (running) {
                     auto result = queue.dequeue();
-                    if (result.has_value()) {
+                    if (result.is_ok()) {
                         auto work_result = result.value()->do_work();
                         (void)work_result; // Ignore result for sample
                         jobs_processed.fetch_add(1);
@@ -282,7 +282,7 @@ void different_policies_example()
     int fail_count = 0;
     while (!mutex_queue.empty()) {
         auto result = mutex_queue.dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             auto work_result = result.value()->do_work();
             if (work_result.is_ok()) {
                 success_count++;
@@ -327,7 +327,7 @@ void performance_monitoring_example()
     std::thread consumer([&queue, &dequeued, num_operations]() {
         while (dequeued.load() < num_operations) {
             auto result = queue.dequeue();
-            if (result.has_value()) {
+            if (result.is_ok()) {
                 auto work_result = result.value()->do_work();
                 (void)work_result; // Ignore result for sample
                 dequeued.fetch_add(1);
@@ -415,7 +415,7 @@ void web_server_simulation()
         workers.emplace_back([&request_queue, &server_running, &requests_handled, worker_id]() {
             while (server_running) {
                 auto request = request_queue.dequeue();
-                if (request.has_value()) {
+                if (request.is_ok()) {
                     auto result = request.value()->do_work();
                     if (result.is_ok()) {
                         // Request processed successfully

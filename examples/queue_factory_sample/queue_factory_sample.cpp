@@ -128,9 +128,9 @@ void requirements_based_selection()
             return kcenon::common::ok();
         });
     auto schedule_result = monitoring_queue->schedule(std::move(job));
-    if (!schedule_result.is_err()) {
+    if (schedule_result.is_ok()) {
         auto next_job = monitoring_queue->get_next_job();
-        if (next_job.has_value()) {
+        if (next_job.is_ok()) {
             auto work_result = next_job.value()->do_work();
             (void)work_result;
         }
@@ -182,7 +182,7 @@ void optimal_selection()
     // Process all jobs
     for (int i = 0; i < num_jobs; ++i) {
         auto result = optimal->get_next_job();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             auto work_result = result.value()->do_work();
             (void)work_result;
         }
@@ -274,7 +274,7 @@ void practical_use_cases()
     // Process jobs
     while (!financial_queue->empty()) {
         auto result = financial_queue->dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             auto work_result = result.value()->do_work();
             (void)work_result;
         }
@@ -302,7 +302,7 @@ void practical_use_cases()
     // Process orders
     while (true) {
         auto result = hft_queue->dequeue();
-        if (!result.has_value()) break;
+        if (result.is_err()) break;
         auto work_result = result.value()->do_work();
         (void)work_result;
     }
