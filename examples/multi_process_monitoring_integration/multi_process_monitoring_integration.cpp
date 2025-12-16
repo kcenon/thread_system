@@ -79,8 +79,8 @@ int main() {
         std::vector<std::unique_ptr<thread_worker>> workers;
         for (int i = 0; i < 3; ++i) workers.push_back(std::make_unique<thread_worker>());
         auto r = primary_pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "Failed to add workers to primary_pool: " << r.get_error().to_string() << "\n";
+        if (r.is_err()) {
+            std::cerr << "Failed to add workers to primary_pool: " << r.error().message << "\n";
             return 1;
         }
     }
@@ -88,20 +88,20 @@ int main() {
         std::vector<std::unique_ptr<thread_worker>> workers;
         for (int i = 0; i < 2; ++i) workers.push_back(std::make_unique<thread_worker>());
         auto r = secondary_pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "Failed to add workers to secondary_pool: " << r.get_error().to_string() << "\n";
+        if (r.is_err()) {
+            std::cerr << "Failed to add workers to secondary_pool: " << r.error().message << "\n";
             return 1;
         }
     }
     
     auto start_primary = primary_pool->start();
-    if (start_primary.has_error()) {
-        std::cerr << "Failed to start primary_pool: " << start_primary.get_error().to_string() << "\n";
+    if (start_primary.is_err()) {
+        std::cerr << "Failed to start primary_pool: " << start_primary.error().message << "\n";
         return 1;
     }
     auto start_secondary = secondary_pool->start();
-    if (start_secondary.has_error()) {
-        std::cerr << "Failed to start secondary_pool: " << start_secondary.get_error().to_string() << "\n";
+    if (start_secondary.is_err()) {
+        std::cerr << "Failed to start secondary_pool: " << start_secondary.error().message << "\n";
         return 1;
     }
     
@@ -117,13 +117,13 @@ int main() {
             [i]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50 + i * 10));
                 std::cout << formatter::format("Primary job {} completed\n", i);
-                return result_void{};
+                return kcenon::common::ok();
             },
             formatter::format("primary_job_{}", i)
         );
         auto r = primary_pool->enqueue(std::move(job));
-        if (r.has_error()) {
-            std::cerr << "enqueue to primary_pool failed: " << r.get_error().to_string() << "\n";
+        if (r.is_err()) {
+            std::cerr << "enqueue to primary_pool failed: " << r.error().message << "\n";
         }
     }
     
@@ -133,13 +133,13 @@ int main() {
             [i]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 std::cout << formatter::format("Secondary job {} completed\n", i);
-                return result_void{};
+                return kcenon::common::ok();
             },
             formatter::format("secondary_job_{}", i)
         );
         auto r = secondary_pool->enqueue(std::move(job));
-        if (r.has_error()) {
-            std::cerr << "enqueue to secondary_pool failed: " << r.get_error().to_string() << "\n";
+        if (r.is_err()) {
+            std::cerr << "enqueue to secondary_pool failed: " << r.error().message << "\n";
         }
     }
     
@@ -154,12 +154,12 @@ int main() {
     // Stop pools
     std::cout << "\n--- Stopping pools ---\n";
     auto stop_primary = primary_pool->stop();
-    if (stop_primary.has_error()) {
-        std::cerr << "Error stopping primary_pool: " << stop_primary.get_error().to_string() << "\n";
+    if (stop_primary.is_err()) {
+        std::cerr << "Error stopping primary_pool: " << stop_primary.error().message << "\n";
     }
     auto stop_secondary = secondary_pool->stop();
-    if (stop_secondary.has_error()) {
-        std::cerr << "Error stopping secondary_pool: " << stop_secondary.get_error().to_string() << "\n";
+    if (stop_secondary.is_err()) {
+        std::cerr << "Error stopping secondary_pool: " << stop_secondary.error().message << "\n";
     }
     
     // Final metrics

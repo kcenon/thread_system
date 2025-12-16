@@ -123,12 +123,12 @@ void requirements_based_selection()
     // Demonstrate basic scheduler_interface usage
     std::cout << "\nUsing scheduler_interface:" << std::endl;
     auto job = std::make_unique<callback_job>(
-        []() -> result_void {
+        []() -> kcenon::common::VoidResult {
             std::cout << "  - Job executed!" << std::endl;
-            return result_void();
+            return kcenon::common::ok();
         });
     auto schedule_result = monitoring_queue->schedule(std::move(job));
-    if (!schedule_result.has_error()) {
+    if (!schedule_result.is_err()) {
         auto next_job = monitoring_queue->get_next_job();
         if (next_job.has_value()) {
             auto work_result = next_job.value()->do_work();
@@ -172,9 +172,9 @@ void optimal_selection()
 
     for (int i = 0; i < num_jobs; ++i) {
         auto job = std::make_unique<callback_job>(
-            [&job_count]() -> result_void {
+            [&job_count]() -> kcenon::common::VoidResult {
                 job_count.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             });
         optimal->schedule(std::move(job));
     }
@@ -261,12 +261,12 @@ void practical_use_cases()
     // Enqueue some jobs
     for (int i = 0; i < 5; ++i) {
         auto job = std::make_unique<callback_job>(
-            [i, &processed]() -> result_void {
+            [i, &processed]() -> kcenon::common::VoidResult {
                 processed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             });
         auto result = financial_queue->enqueue(std::move(job));
-        if (!result.has_error()) {
+        if (!result.is_err()) {
             std::cout << "  Enqueued job " << i << ", queue size: " << financial_queue->size() << std::endl;
         }
     }
@@ -291,9 +291,9 @@ void practical_use_cases()
     // Enqueue orders
     for (int i = 0; i < order_count; ++i) {
         auto job = std::make_unique<callback_job>(
-            [&orders_processed]() -> result_void {
+            [&orders_processed]() -> kcenon::common::VoidResult {
                 orders_processed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             });
         auto enqueue_result = hft_queue->enqueue(std::move(job));
         (void)enqueue_result;

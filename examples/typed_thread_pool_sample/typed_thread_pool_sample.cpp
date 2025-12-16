@@ -117,10 +117,10 @@ auto create_default(const uint16_t& high_priority_workers,
 	}
 
 	auto enqueue_result = pool->enqueue_batch(std::move(workers));
-	if (enqueue_result.has_error())
+	if (enqueue_result.is_err())
 	{
 		return { nullptr, formatter::format("cannot enqueue to workers: {}",
-											enqueue_result.get_error().message()) };
+											enqueue_result.error().message) };
 	}
 
 	return { pool, std::nullopt };
@@ -137,19 +137,19 @@ auto store_job(std::shared_ptr<typed_thread_pool> thread_pool) -> std::optional<
 	{
 		target = index % 3;
 		jobs.push_back(std::make_unique<callback_typed_job>(
-			[target](void) -> result_void
+			[target](void) -> kcenon::common::VoidResult
 			{
 				log_module::write_debug("Hello, World!: {} priority", target);
-				return {};
+				return kcenon::common::ok();
 			},
 			static_cast<job_types>(target)));
 	}
 
 	auto enqueue_result = thread_pool->enqueue_batch(std::move(jobs));
-	if (enqueue_result.has_error())
+	if (enqueue_result.is_err())
 	{
 		return formatter::format("error enqueuing jobs: {}",
-								 enqueue_result.get_error().message());
+								 enqueue_result.error().message);
 	}
 
 	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
@@ -191,10 +191,10 @@ auto main() -> int
 	}
 
 	auto start_result = thread_pool->start();
-	if (start_result.has_error())
+	if (start_result.is_err())
 	{
 		log_module::write_error("error starting thread pool: {}",
-								start_result.get_error().message());
+								start_result.error().message);
 
 		thread_pool.reset();
 
@@ -205,8 +205,8 @@ auto main() -> int
 
     {
         auto stop_result = thread_pool->stop();
-        if (stop_result.has_error()) {
-            log_module::write_error("error stopping thread pool: {}", stop_result.get_error().message());
+        if (stop_result.is_err()) {
+            log_module::write_error("error stopping thread pool: {}", stop_result.error().message);
         }
     }
 

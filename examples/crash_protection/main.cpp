@@ -214,7 +214,7 @@ int main() {
     
     using thread_pool_t = kcenon::thread::thread_pool;
     using thread_worker_t = kcenon::thread::thread_worker;
-    using thread_module::callback_job;
+    using kcenon::thread::callback_job;
     
     auto thread_pool = std::make_shared<thread_pool_t>("MainPool");
     
@@ -233,16 +233,16 @@ int main() {
             workers.push_back(std::make_unique<thread_worker_t>());
         }
         auto r = thread_pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "Failed to add workers: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "Failed to add workers: " << r.error().message << std::endl;
             return 1;
         }
     }
     // Start pool
     {
         auto r = thread_pool->start();
-        if (r.has_error()) {
-            std::cerr << "Failed to start thread pool: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "Failed to start thread pool: " << r.error().message << std::endl;
             return 1;
         }
     }
@@ -253,14 +253,14 @@ int main() {
     
     for (int i = 0; i < 10; ++i) {
         auto job = std::make_unique<callback_job>(
-            [i]() -> thread_module::result_void {
+            [i]() -> kcenon::common::VoidResult {
                 normal_task(i);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto r = thread_pool->enqueue(std::move(job));
-        if (r.has_error()) {
-            std::cerr << "enqueue normal task failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue normal task failed: " << r.error().message << std::endl;
         }
     }
     // Give some time for tasks
@@ -274,7 +274,7 @@ int main() {
     
     for (int i = 10; i < 25; ++i) {
         auto job = std::make_unique<callback_job>(
-            [i, &crash_handler]() -> thread_module::result_void {
+            [i, &crash_handler]() -> kcenon::common::VoidResult {
                 // Simulate occasional crash handling without real crash
                 std::random_device rd; std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dist(1, 10);
@@ -293,12 +293,12 @@ int main() {
                     std::this_thread::sleep_for(std::chrono::milliseconds(50));
                     tasks_completed.fetch_add(1);
                 }
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto r = thread_pool->enqueue(std::move(job));
-        if (r.has_error()) {
-            std::cerr << "enqueue risky task failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue risky task failed: " << r.error().message << std::endl;
         }
     }
     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -356,8 +356,8 @@ int main() {
     std::cout << "Stopping thread pool..." << std::endl;
     {
         auto r = thread_pool->stop();
-        if (r.has_error()) {
-            std::cerr << "Failed to stop thread pool: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "Failed to stop thread pool: " << r.error().message << std::endl;
         }
     }
     
