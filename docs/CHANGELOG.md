@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #303 - Phase 2a**: Replace internal result<T> with common::Result<T> in core headers
+  - Updated all core library headers and implementation files to use `kcenon::common::Result<T>` internally
+  - Replaced `result_void` return types with `kcenon::common::VoidResult`
+  - Updated error creation to use `common::error_info{code, message, module}` pattern
+  - All unit tests, integration tests, and examples updated to use new API
+  - API migration pattern: `.has_error()` → `.is_err()`, `.get_error()` → `.error()`
+  - Files updated include: thread_pool, thread_worker, job_queue, callback_job, and all queue implementations
+  - 14 example files updated to demonstrate new API usage
+
 ### Added
 - **Issue #289**: Unify Result type API across common_system and thread_system
   - Added `has_value()`, `is_ok()`, `is_error()` methods to `result_void` class
