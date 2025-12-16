@@ -225,13 +225,13 @@ namespace kcenon::thread
 
         /**
          * @brief Starts the thread pool and all associated workers.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          *
          * If the pool is already running, a subsequent call to @c start() may return an error.
          * On success, each @c thread_worker in @c workers_ is started, enabling them to process
          * jobs from the @c job_queue_.
          */
-        auto start(void) -> result_void;
+        auto start(void) -> common::VoidResult;
 
 		/**
 		 * @brief Returns the shared @c job_queue used by this thread pool.
@@ -255,39 +255,39 @@ namespace kcenon::thread
         /**
          * @brief Enqueues a new job into the shared @c job_queue.
          * @param job A @c std::unique_ptr<job> representing the work to be done.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          */
-        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+        auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
 
         /**
          * @brief Enqueues a batch of jobs into the shared @c job_queue.
          * @param jobs A vector of @c std::unique_ptr<job> objects to be added.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          */
-        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult;
 
         /**
          * @brief Adds a @c thread_worker to the thread pool for specialized or additional processing.
          * @param worker A @c std::unique_ptr<thread_worker> object.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          */
-        auto enqueue(std::unique_ptr<thread_worker>&& worker) -> result_void;
+        auto enqueue(std::unique_ptr<thread_worker>&& worker) -> common::VoidResult;
 
         /**
          * @brief Adds a batch of @c thread_worker objects to the thread pool.
          * @param workers A vector of @c std::unique_ptr<thread_worker> objects.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          */
         auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
-            -> result_void;
+            -> common::VoidResult;
 
         /**
          * @brief Stops the thread pool and all worker threads.
          * @param immediately_stop If @c true, any ongoing jobs may be interrupted; if @c false
          *        (default), each worker attempts to finish its current job before stopping.
-         * @return @c result_void containing an error on failure, or success value on success.
+         * @return @c common::VoidResult containing an error on failure, or success value on success.
          */
-        auto stop(const bool& immediately_stop = false) -> result_void;
+        auto stop(const bool& immediately_stop = false) -> common::VoidResult;
 
 		/**
 		 * @brief Provides a string representation of this @c thread_pool.
@@ -499,11 +499,11 @@ namespace kcenon::thread
 		 * Static Destruction Order Fiasco (SDOF) by avoiding access to potentially
 		 * destroyed logger/monitoring singletons.
 		 *
-		 * @return @c result_void containing an error on failure, or success value on success.
+		 * @return @c common::VoidResult containing an error on failure, or success value on success.
 		 *
 		 * @note This method should only be called from the destructor during static destruction.
 		 */
-		auto stop_unsafe() noexcept -> result_void;
+		auto stop_unsafe() noexcept -> common::VoidResult;
 
         /**
          * @brief Shared metrics collector used by workers.

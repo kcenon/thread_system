@@ -50,10 +50,10 @@ inline auto make_typed_job(job_types priority, const std::string& name = "test_j
 	-> std::unique_ptr<typed_job>
 {
 	return std::make_unique<callback_typed_job>(
-		[]() -> result_void { return result_void(); }, priority, name);
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); }, priority, name);
 }
 
-inline auto make_typed_job_with_callback(const std::function<result_void()>& callback,
+inline auto make_typed_job_with_callback(const std::function<kcenon::common::VoidResult()>& callback,
 										 job_types priority,
 										 const std::string& name = "test_job")
 	-> std::unique_ptr<typed_job>
@@ -110,26 +110,26 @@ TEST_F(AdaptiveTypedJobQueueTest, BasicTypedEnqueueDequeue)
 
 	std::atomic<int> counter{ 0 };
 	auto typed_job_ptr = make_typed_job_with_callback(
-		[&counter]() -> result_void
+		[&counter]() -> kcenon::common::VoidResult
 		{
 			counter.fetch_add(1, std::memory_order_relaxed);
-			return result_void();
+			return kcenon::common::ok();
 		},
 		job_types::RealTime, "test_job");
 
 	// Enqueue typed job
 	auto enqueue_result = queue.enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(enqueue_result.has_error());
+	EXPECT_FALSE(enqueue_result.is_err());
 
 	// Dequeue using typed interface
 	std::vector<job_types> types = { job_types::RealTime };
 	auto dequeue_result = queue.dequeue(types);
-	EXPECT_TRUE(dequeue_result.has_value());
+	EXPECT_TRUE(dequeue_result.is_ok());
 
 	// Execute job
 	auto& job_ptr = dequeue_result.value();
 	auto exec_result = job_ptr->do_work();
-	EXPECT_FALSE(exec_result.has_error());
+	EXPECT_FALSE(exec_result.is_err());
 	EXPECT_EQ(counter.load(), 1);
 }
 
@@ -140,25 +140,25 @@ TEST_F(AdaptiveTypedJobQueueTest, EnqueueBaseJob)
 	std::atomic<int> counter{ 0 };
 	// Use typed_job directly to ensure proper routing
 	auto typed_job_ptr = make_typed_job_with_callback(
-		[&counter]() -> result_void
+		[&counter]() -> kcenon::common::VoidResult
 		{
 			counter.fetch_add(1, std::memory_order_relaxed);
-			return result_void();
+			return kcenon::common::ok();
 		},
 		job_types::Batch, "base_job_test");
 
 	// Enqueue typed job
 	auto enqueue_result = queue.enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(enqueue_result.has_error());
+	EXPECT_FALSE(enqueue_result.is_err());
 
 	// Dequeue via typed interface with specific type
 	std::vector<job_types> batch_types = { job_types::Batch };
 	auto dequeue_result = queue.dequeue(batch_types);
-	EXPECT_TRUE(dequeue_result.has_value());
+	EXPECT_TRUE(dequeue_result.is_ok());
 
 	// Execute
 	auto exec_result = dequeue_result.value()->do_work();
-	EXPECT_FALSE(exec_result.has_error());
+	EXPECT_FALSE(exec_result.is_err());
 	EXPECT_EQ(counter.load(), 1);
 }
 
@@ -168,7 +168,7 @@ TEST_F(AdaptiveTypedJobQueueTest, DequeueEmpty)
 
 	std::vector<job_types> types = { job_types::RealTime };
 	auto result = queue.dequeue(types);
-	EXPECT_FALSE(result.has_value());
+	EXPECT_FALSE(result.is_ok());
 }
 
 TEST_F(AdaptiveTypedJobQueueTest, DequeueAllEmpty)
@@ -176,7 +176,7 @@ TEST_F(AdaptiveTypedJobQueueTest, DequeueAllEmpty)
 	adaptive_typed_job_queue_t<job_types> queue;
 
 	auto result = queue.dequeue();
-	EXPECT_FALSE(result.has_value());
+	EXPECT_FALSE(result.is_ok());
 }
 
 TEST_F(AdaptiveTypedJobQueueTest, Clear)
@@ -219,7 +219,7 @@ TEST_F(AdaptiveTypedJobQueueTest, TypeSafeEnqueueRealTime)
 	EXPECT_EQ(typed_job_ptr->priority(), job_types::RealTime);
 
 	auto result = queue.enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 }
 
 TEST_F(AdaptiveTypedJobQueueTest, TypeSafeEnqueueBatch)
@@ -230,7 +230,7 @@ TEST_F(AdaptiveTypedJobQueueTest, TypeSafeEnqueueBatch)
 	EXPECT_EQ(typed_job_ptr->priority(), job_types::Batch);
 
 	auto result = queue.enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 }
 
 TEST_F(AdaptiveTypedJobQueueTest, TypeSafeEnqueueBackground)
@@ -241,7 +241,7 @@ TEST_F(AdaptiveTypedJobQueueTest, TypeSafeEnqueueBackground)
 	EXPECT_EQ(typed_job_ptr->priority(), job_types::Background);
 
 	auto result = queue.enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 }
 
 TEST_F(AdaptiveTypedJobQueueTest, DequeueBySpecificType)
@@ -260,7 +260,7 @@ TEST_F(AdaptiveTypedJobQueueTest, DequeueBySpecificType)
 	// Dequeue only Batch type
 	std::vector<job_types> batch_types = { job_types::Batch };
 	auto result = queue.dequeue(batch_types);
-	EXPECT_TRUE(result.has_value());
+	EXPECT_TRUE(result.is_ok());
 	EXPECT_EQ(result.value()->priority(), job_types::Batch);
 
 	// Verify other types are still in queue
@@ -281,7 +281,7 @@ TEST_F(AdaptiveTypedJobQueueTest, DequeueMultipleTypes)
 	// Dequeue with multiple allowed types
 	std::vector<job_types> allowed_types = { job_types::RealTime, job_types::Batch };
 	auto result = queue.dequeue(allowed_types);
-	EXPECT_TRUE(result.has_value());
+	EXPECT_TRUE(result.is_ok());
 	EXPECT_EQ(result.value()->priority(), job_types::Batch);
 }
 
@@ -301,7 +301,7 @@ TEST_F(AdaptiveTypedJobQueueTest, PriorityPreservedAfterDequeue)
 	for (int i = 0; i < 5; ++i)
 	{
 		auto result = queue.dequeue(types);
-		EXPECT_TRUE(result.has_value());
+		EXPECT_TRUE(result.is_ok());
 		EXPECT_EQ(result.value()->priority(), job_types::RealTime);
 	}
 }
@@ -465,7 +465,7 @@ TEST_F(AdaptiveTypedJobQueueTest, EnqueueBatch)
 	}
 
 	auto result = queue.enqueue_batch(std::move(jobs));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	std::vector<job_types> types = { job_types::RealTime };
 	// Verify jobs were enqueued (queue is not empty)
@@ -490,7 +490,7 @@ TEST_F(AdaptiveTypedJobQueueTest, DequeueBatch)
 
 	// Dequeue one job to verify
 	auto result = queue.dequeue(batch_types);
-	EXPECT_TRUE(result.has_value());
+	EXPECT_TRUE(result.is_ok());
 }
 
 // ============================================
@@ -512,7 +512,7 @@ TEST_F(AdaptiveTypedJobQueueTest, ConcurrentTypedEnqueueDequeue)
 			for (int i = 0; i < job_count; ++i)
 			{
 				auto typed_job_ptr = make_typed_job(job_types::RealTime, "concurrent_job");
-				if (!queue.enqueue(std::move(typed_job_ptr)).has_error())
+				if (!queue.enqueue(std::move(typed_job_ptr)).is_err())
 				{
 					enqueued.fetch_add(1, std::memory_order_relaxed);
 				}
@@ -525,7 +525,7 @@ TEST_F(AdaptiveTypedJobQueueTest, ConcurrentTypedEnqueueDequeue)
 			std::vector<job_types> types = { job_types::RealTime };
 			while (!done.load(std::memory_order_acquire) || !queue.empty(types))
 			{
-				if (auto result = queue.dequeue(types); result.has_value())
+				if (auto result = queue.dequeue(types); result.is_ok())
 				{
 					dequeued.fetch_add(1, std::memory_order_relaxed);
 				}
@@ -613,7 +613,7 @@ TEST_F(AdaptiveTypedJobQueueTest, CreateTypedJobQueueForceLegacy)
 	// Should be functional
 	auto typed_job_ptr = make_typed_job(job_types::RealTime, "factory_test");
 	auto result = queue->enqueue(std::move(typed_job_ptr));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 }
 
 // ============================================
@@ -650,7 +650,7 @@ TEST_F(AdaptiveTypedJobQueueTest, RapidEnqueueDequeue)
 		auto typed_job_ptr = make_typed_job(job_types::Batch, "rapid_test");
 
 		auto enqueue_result = queue.enqueue(std::move(typed_job_ptr));
-		EXPECT_FALSE(enqueue_result.has_error());
+		EXPECT_FALSE(enqueue_result.is_err());
 
 		std::vector<job_types> batch_types = { job_types::Batch };
 		EXPECT_FALSE(queue.empty(batch_types));

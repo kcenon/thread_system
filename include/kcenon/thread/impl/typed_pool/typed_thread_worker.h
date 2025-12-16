@@ -195,7 +195,7 @@ namespace kcenon::thread
 		 * Derived classes can override this method if custom processing logic
 		 * is needed for job handling or error management.
 		 */
-		auto do_work() -> result_void override;
+		auto do_work() -> common::VoidResult override;
 
 	private:
 		/**

@@ -115,9 +115,9 @@ TEST_F(QueueReplacementTest, ConcurrentQueueReplacement) {
         auto new_queue = std::make_shared<job_queue>();
 
         // Add a simple job
-        auto job = std::make_unique<callback_job>([&job_count]() -> result_void {
+        auto job = std::make_unique<callback_job>([&job_count]() -> kcenon::common::VoidResult {
             job_count.fetch_add(1, std::memory_order_relaxed);
-            return {};
+            return kcenon::common::ok();
         });
         (void)new_queue->enqueue(std::move(job));
 
@@ -155,7 +155,7 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
     auto queue = std::make_shared<job_queue>();
 
     // Create a job that waits for signal
-    auto controlled_job = std::make_unique<callback_job>([&]() -> result_void {
+    auto controlled_job = std::make_unique<callback_job>([&]() -> kcenon::common::VoidResult {
         job_started.store(true, std::memory_order_release);
 
         // Wait for signal to finish with timeout to prevent hang
@@ -163,13 +163,13 @@ TEST_F(QueueReplacementTest, WaitsForCurrentJobCompletion) {
         while (!job_can_finish.load(std::memory_order_acquire)) {
             if (std::chrono::steady_clock::now() > deadline) {
                 // Timeout - fail gracefully
-                return {};
+                return kcenon::common::ok();
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
         job_finished.store(true, std::memory_order_release);
-        return {};
+        return kcenon::common::ok();
     });
 
     (void)queue->enqueue(std::move(controlled_job));
@@ -243,9 +243,9 @@ TEST_F(QueueReplacementTest, RapidQueueReplacements) {
 
         // Add some jobs
         for (int j = 0; j < 3; ++j) {  // Reduced from 5
-            auto job = std::make_unique<callback_job>([&total_jobs]() -> result_void {
+            auto job = std::make_unique<callback_job>([&total_jobs]() -> kcenon::common::VoidResult {
                 total_jobs.fetch_add(1, std::memory_order_relaxed);
-                return {};
+                return kcenon::common::ok();
             });
             (void)queue->enqueue(std::move(job));
         }

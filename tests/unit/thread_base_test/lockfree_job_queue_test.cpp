@@ -57,25 +57,25 @@ TEST_F(LockFreeJobQueueTest, BasicEnqueueDequeue) {
     lockfree_job_queue queue;
 
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();  // Success
+        return kcenon::common::ok();  // Success
     });
 
     // Enqueue
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_FALSE(enqueue_result.has_error());
+    EXPECT_FALSE(enqueue_result.is_err());
     EXPECT_FALSE(queue.empty());
 
     // Dequeue
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_TRUE(queue.empty());
 
     // Execute job
     auto& job_ptr = dequeue_result.value();
     auto exec_result = job_ptr->do_work();
-    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_FALSE(exec_result.is_err());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -86,7 +86,7 @@ TEST_F(LockFreeJobQueueTest, DequeueEmpty) {
     EXPECT_TRUE(queue.empty());
 
     auto result = queue.dequeue();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 }
 
 // Test null job rejection
@@ -94,7 +94,7 @@ TEST_F(LockFreeJobQueueTest, NullJobRejection) {
     lockfree_job_queue queue;
 
     auto result = queue.enqueue(nullptr);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 // Test multiple enqueue/dequeue
@@ -106,13 +106,13 @@ TEST_F(LockFreeJobQueueTest, MultipleOperations) {
 
     // Enqueue multiple jobs
     for (int i = 0; i < COUNT; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
 
         auto result = queue.enqueue(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     EXPECT_FALSE(queue.empty());
@@ -120,11 +120,11 @@ TEST_F(LockFreeJobQueueTest, MultipleOperations) {
     // Dequeue and execute all jobs
     for (int i = 0; i < COUNT; ++i) {
         auto result = queue.dequeue();
-        EXPECT_TRUE(result.has_value());
+        EXPECT_TRUE(result.is_ok());
 
         auto& job_ptr = result.value();
         auto exec_result = job_ptr->do_work();
-        EXPECT_FALSE(exec_result.has_error());
+        EXPECT_FALSE(exec_result.is_err());
     }
 
     EXPECT_TRUE(queue.empty());
@@ -132,7 +132,7 @@ TEST_F(LockFreeJobQueueTest, MultipleOperations) {
 
     // Queue should be empty now
     auto result = queue.dequeue();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 }
 
 // Test concurrent enqueue (multiple producers)
@@ -147,13 +147,13 @@ TEST_F(LockFreeJobQueueTest, ConcurrentEnqueue) {
     for (int t = 0; t < NUM_THREADS; ++t) {
         threads.emplace_back([&queue, &counter]() {
             for (int i = 0; i < JOBS_PER_THREAD; ++i) {
-                auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+                auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                     counter.fetch_add(1, std::memory_order_relaxed);
-                    return result_void();
+                    return kcenon::common::ok();
                 });
 
                 auto result = queue.enqueue(std::move(job));
-                EXPECT_FALSE(result.has_error());
+                EXPECT_FALSE(result.is_err());
             }
         });
     }
@@ -166,11 +166,14 @@ TEST_F(LockFreeJobQueueTest, ConcurrentEnqueue) {
 
     // Dequeue all jobs
     int dequeued = 0;
-    while (auto result = queue.dequeue()) {
-        EXPECT_TRUE(result.has_value());
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         auto& job_ptr = result.value();
         auto exec_result = job_ptr->do_work();
-        EXPECT_FALSE(exec_result.has_error());
+        EXPECT_FALSE(exec_result.is_err());
         ++dequeued;
     }
 
@@ -187,13 +190,13 @@ TEST_F(LockFreeJobQueueTest, ConcurrentDequeue) {
 
     // Enqueue jobs
     for (int i = 0; i < TOTAL_JOBS; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
 
         auto result = queue.enqueue(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     // Multiple consumer threads
@@ -205,13 +208,13 @@ TEST_F(LockFreeJobQueueTest, ConcurrentDequeue) {
         threads.emplace_back([&queue, &jobs_processed]() {
             while (true) {
                 auto result = queue.dequeue();
-                if (!result.has_value()) {
+                if (!result.is_ok()) {
                     break;  // Queue empty
                 }
 
                 auto& job_ptr = result.value();
                 auto exec_result = job_ptr->do_work();
-                EXPECT_FALSE(exec_result.has_error());
+                EXPECT_FALSE(exec_result.is_err());
 
                 jobs_processed.fetch_add(1, std::memory_order_relaxed);
             }
@@ -245,13 +248,13 @@ TEST_F(LockFreeJobQueueTest, ConcurrentMPMC) {
     for (int t = 0; t < NUM_PRODUCERS; ++t) {
         threads.emplace_back([&]() {
             for (int i = 0; i < JOBS_PER_PRODUCER; ++i) {
-                auto job = std::make_unique<callback_job>([&enqueued]() -> result_void {
+                auto job = std::make_unique<callback_job>([&enqueued]() -> kcenon::common::VoidResult {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
-                    return result_void();
+                    return kcenon::common::ok();
                 });
 
                 auto result = queue.enqueue(std::move(job));
-                EXPECT_FALSE(result.has_error());
+                EXPECT_FALSE(result.is_err());
 
                 // Simulate work
                 std::this_thread::yield();
@@ -265,10 +268,10 @@ TEST_F(LockFreeJobQueueTest, ConcurrentMPMC) {
             int local_dequeued = 0;
             while (true) {
                 auto result = queue.dequeue();
-                if (result.has_value()) {
+                if (result.is_ok()) {
                     auto& job_ptr = result.value();
                     auto exec_result = job_ptr->do_work();
-                    EXPECT_FALSE(exec_result.has_error());
+                    EXPECT_FALSE(exec_result.is_err());
 
                     ++local_dequeued;
                     dequeued.fetch_add(1, std::memory_order_relaxed);
@@ -313,16 +316,16 @@ TEST_F(LockFreeJobQueueTest, HazardPointerReclamation) {
         // Enqueue jobs
         for (int i = 0; i < JOBS_PER_ITERATION; ++i) {
             auto job =
-                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
             auto result = queue.enqueue(std::move(job));
-            EXPECT_FALSE(result.has_error());
+            EXPECT_FALSE(result.is_err());
         }
 
         // Dequeue all
         for (int i = 0; i < JOBS_PER_ITERATION; ++i) {
             auto result = queue.dequeue();
-            EXPECT_TRUE(result.has_value());
+            EXPECT_TRUE(result.is_ok());
         }
 
         EXPECT_TRUE(queue.empty());
@@ -342,10 +345,10 @@ TEST_F(LockFreeJobQueueTest, DestructionWithPendingJobs) {
 
         for (int i = 0; i < 100; ++i) {
             auto job =
-                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
             auto result = queue.enqueue(std::move(job));
-            EXPECT_FALSE(result.has_error());
+            EXPECT_FALSE(result.is_err());
         }
 
         // Queue goes out of scope with pending jobs
@@ -375,16 +378,16 @@ TEST_F(LockFreeJobQueueTest, StressTest) {
                 if ((t + i) % 2 == 0) {
                     // Enqueue
                     auto job = std::make_unique<callback_job>(
-                        []() -> result_void { return result_void(); });
+                        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
                     auto result = queue.enqueue(std::move(job));
-                    if (!result.has_error()) {
+                    if (!result.is_err()) {
                         total_enqueued.fetch_add(1, std::memory_order_relaxed);
                     }
                 } else {
                     // Dequeue
                     auto result = queue.dequeue();
-                    if (result.has_value()) {
+                    if (result.is_ok()) {
                         total_dequeued.fetch_add(1, std::memory_order_relaxed);
                     }
                 }
@@ -399,7 +402,11 @@ TEST_F(LockFreeJobQueueTest, StressTest) {
     }
 
     // Drain remaining jobs
-    while (auto result = queue.dequeue()) {
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         total_dequeued.fetch_add(1, std::memory_order_relaxed);
     }
 
@@ -435,10 +442,10 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnTest) {
     std::thread consumer([&]() {
         while (consumed.load(std::memory_order_relaxed) < TOTAL_ITEMS) {
             auto result = queue.dequeue();
-            if (result.has_value()) {
+            if (result.is_ok()) {
                 auto& job_ptr = result.value();
                 auto exec_result = job_ptr->do_work();
-                EXPECT_FALSE(exec_result.has_error());
+                EXPECT_FALSE(exec_result.is_err());
                 consumed.fetch_add(1, std::memory_order_relaxed);
             } else if (producers_done.load(std::memory_order_acquire)) {
                 // If producers are done and queue is empty, we're done
@@ -453,13 +460,14 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnTest) {
     // Short-lived producer threads
     for (int i = 0; i < TOTAL_ITEMS; ++i) {
         std::thread producer([&queue, i]() {
-            auto job = std::make_unique<callback_job>([i]() -> result_void {
+            auto job = std::make_unique<callback_job>([i]() -> kcenon::common::VoidResult {
                 // Simple work
-                return result_void();
+                (void)i;
+                return kcenon::common::ok();
             });
 
             auto result = queue.enqueue(std::move(job));
-            EXPECT_FALSE(result.has_error());
+            EXPECT_FALSE(result.is_err());
             // Thread exits immediately after push, triggering TLS destruction
         });
         producer.join();  // Wait for producer to finish (and TLS to be destroyed)
@@ -490,10 +498,10 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
         for (int t = 0; t < THREADS_PER_BATCH; ++t) {
             producers.emplace_back([&queue, &total_enqueued]() {
                 auto job =
-                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                    std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
                 auto result = queue.enqueue(std::move(job));
-                if (!result.has_error()) {
+                if (!result.is_err()) {
                     total_enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             });
@@ -507,7 +515,7 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
         // Drain some items between batches
         for (int i = 0; i < THREADS_PER_BATCH / 2; ++i) {
             auto result = queue.dequeue();
-            if (result.has_value()) {
+            if (result.is_ok()) {
                 auto& job_ptr = result.value();
                 job_ptr->do_work();
                 total_dequeued.fetch_add(1, std::memory_order_relaxed);
@@ -516,7 +524,11 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
     }
 
     // Drain remaining items
-    while (auto result = queue.dequeue()) {
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         auto& job_ptr = result.value();
         job_ptr->do_work();
         total_dequeued.fetch_add(1, std::memory_order_relaxed);
@@ -539,22 +551,22 @@ TEST_F(LockFreeJobQueueTest, ImplementsSchedulerInterface) {
     ASSERT_NE(scheduler, nullptr);
 
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     // Use scheduler_interface methods
     auto schedule_result = scheduler->schedule(std::move(job));
-    EXPECT_FALSE(schedule_result.has_error());
+    EXPECT_FALSE(schedule_result.is_err());
 
     auto get_job_result = scheduler->get_next_job();
-    EXPECT_TRUE(get_job_result.has_value());
+    EXPECT_TRUE(get_job_result.is_ok());
 
     // Execute the job
     auto& job_ptr = get_job_result.value();
     auto exec_result = job_ptr->do_work();
-    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_FALSE(exec_result.is_err());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -563,19 +575,19 @@ TEST_F(LockFreeJobQueueTest, ScheduleDelegatesToEnqueue) {
     lockfree_job_queue queue;
 
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     // Use schedule() method
     auto result = queue.schedule(std::move(job));
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_FALSE(queue.empty());
 
     // Verify job was enqueued by dequeuing it
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_TRUE(queue.empty());
 }
 
@@ -584,13 +596,13 @@ TEST_F(LockFreeJobQueueTest, GetNextJobDelegatesToDequeue) {
     lockfree_job_queue queue;
 
     // First enqueue a job
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_FALSE(enqueue_result.has_error());
+    EXPECT_FALSE(enqueue_result.is_err());
 
     // Use get_next_job() method
     auto result = queue.get_next_job();
-    EXPECT_TRUE(result.has_value());
+    EXPECT_TRUE(result.is_ok());
     EXPECT_TRUE(queue.empty());
 }
 
@@ -601,7 +613,7 @@ TEST_F(LockFreeJobQueueTest, GetNextJobReturnsErrorWhenEmpty) {
     EXPECT_TRUE(queue.empty());
 
     auto result = queue.get_next_job();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 }
 
 // Test schedule() rejects null job
@@ -609,7 +621,7 @@ TEST_F(LockFreeJobQueueTest, ScheduleRejectsNullJob) {
     lockfree_job_queue queue;
 
     auto result = queue.schedule(nullptr);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 // Test queue_capabilities_interface implementation
@@ -681,23 +693,23 @@ TEST_F(LockFreeJobQueueTest, PolymorphicUse) {
 
     // Schedule multiple jobs through interface
     for (int i = 0; i < JOB_COUNT; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
 
         auto result = scheduler->schedule(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     // Get and execute all jobs through interface
     for (int i = 0; i < JOB_COUNT; ++i) {
         auto result = scheduler->get_next_job();
-        EXPECT_TRUE(result.has_value());
+        EXPECT_TRUE(result.is_ok());
 
         auto& job_ptr = result.value();
         auto exec_result = job_ptr->do_work();
-        EXPECT_FALSE(exec_result.has_error());
+        EXPECT_FALSE(exec_result.is_err());
     }
 
     EXPECT_EQ(counter.load(), JOB_COUNT);
@@ -729,7 +741,7 @@ TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
         std::thread producer([&queue, &stop]() {
             while (!stop.load(std::memory_order_relaxed)) {
                 auto job =
-                    std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                    std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                 queue->enqueue(std::move(job));
             }
         });

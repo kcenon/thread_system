@@ -77,7 +77,7 @@ queue->enqueue(std::make_unique<my_job>());
 // Use try_dequeue pattern (non-blocking)
 while (running) {
     auto result = queue->try_dequeue();
-    if (result.has_value()) {
+    if (result.is_ok()) {
         auto& job = result.value();
         job->do_work();
     }

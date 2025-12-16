@@ -89,20 +89,20 @@ TEST_F(MPMCQueueTest, BasicEnqueueDequeue) {
 
     // Test basic enqueue/dequeue
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     // Enqueue
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_TRUE(enqueue_result);
+    EXPECT_TRUE(enqueue_result.is_ok());
     EXPECT_EQ(queue.size(), 1);
     EXPECT_FALSE(queue.empty());
 
     // Dequeue
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_EQ(queue.size(), 0);
     EXPECT_TRUE(queue.empty());
 
@@ -119,8 +119,8 @@ TEST_F(MPMCQueueTest, EmptyQueueDequeue) {
 
     // Try to dequeue from empty queue (using non-blocking version)
     auto result = queue.try_dequeue();
-    EXPECT_FALSE(result.has_value());
-    EXPECT_EQ(result.get_error().code(), error_code::queue_empty);
+    EXPECT_FALSE(result.is_ok());
+    EXPECT_EQ(result.error().code, static_cast<int>(error_code::queue_empty));
 }
 
 TEST_F(MPMCQueueTest, NullJobEnqueue) {
@@ -129,8 +129,8 @@ TEST_F(MPMCQueueTest, NullJobEnqueue) {
     // Try to enqueue null job
     std::unique_ptr<job> null_job;
     auto result = queue.enqueue(std::move(null_job));
-    EXPECT_FALSE(result);
-    EXPECT_EQ(result.get_error().code(), error_code::invalid_argument);
+    EXPECT_TRUE(result.is_err());
+    EXPECT_EQ(result.error().code, static_cast<int>(error_code::invalid_argument));
 }
 
 TEST_F(MPMCQueueTest, BatchOperations) {
@@ -139,13 +139,13 @@ TEST_F(MPMCQueueTest, BatchOperations) {
         job_queue queue;
 
         // Test single item first
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
         auto enqueue_result = queue.enqueue(std::move(job));
-        EXPECT_TRUE(enqueue_result);
+        EXPECT_TRUE(enqueue_result.is_ok());
 
         auto dequeue_result = queue.dequeue();
-        EXPECT_TRUE(dequeue_result.has_value());
+        EXPECT_TRUE(dequeue_result.is_ok());
     }
 
     // Now test batch operations
@@ -158,15 +158,15 @@ TEST_F(MPMCQueueTest, BatchOperations) {
         const size_t batch_size = 10;
 
         for (size_t i = 0; i < batch_size; ++i) {
-            jobs.push_back(std::make_unique<callback_job>([&counter, i]() -> result_void {
+            jobs.push_back(std::make_unique<callback_job>([&counter, i]() -> kcenon::common::VoidResult {
                 counter.fetch_add(static_cast<int>(i));
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
 
         // Batch enqueue
         auto enqueue_result = queue.enqueue_batch(std::move(jobs));
-        EXPECT_TRUE(enqueue_result);
+        EXPECT_TRUE(enqueue_result.is_ok());
         EXPECT_EQ(queue.size(), batch_size);
 
         // Batch dequeue
@@ -199,14 +199,14 @@ TEST_F(MPMCQueueTest, ConcurrentEnqueue) {
     for (size_t t = 0; t < num_threads; ++t) {
         threads.emplace_back([&queue, &counter, jobs_per_thread]() {
             for (size_t i = 0; i < jobs_per_thread; ++i) {
-                auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+                auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                     counter.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 });
 
                 while (true) {
                     auto result = queue.enqueue(std::move(job));
-                    if (result)
+                    if (result.is_ok())
                         break;
                     std::this_thread::yield();
                 }
@@ -226,7 +226,7 @@ TEST_F(MPMCQueueTest, ConcurrentEnqueue) {
     size_t dequeued_count = 0;
     while (!queue.empty()) {
         auto result = queue.dequeue();
-        if (result.has_value()) {
+        if (result.is_ok()) {
             auto work_result = result.value()->do_work();
             (void)work_result;
             dequeued_count++;
@@ -245,9 +245,10 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue) {
 
     // Enqueue jobs
     for (size_t i = 0; i < num_jobs; ++i) {
-        auto job = std::make_unique<callback_job>([&counter, i]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter, i]() -> kcenon::common::VoidResult {
             counter.fetch_add(1);
-            return result_void();
+            (void)i;
+            return kcenon::common::ok();
         });
         auto enqueue_result = queue.enqueue(std::move(job));
         (void)enqueue_result;
@@ -264,11 +265,11 @@ TEST_F(MPMCQueueTest, ConcurrentDequeue) {
             size_t local_count = 0;
             while (true) {
                 auto result = queue.try_dequeue();
-                if (!result.has_value()) {
+                if (!result.is_ok()) {
                     // Check if queue is really empty by trying a few more times
                     std::this_thread::yield();
                     auto retry_result = queue.try_dequeue();
-                    if (!retry_result.has_value()) {
+                    if (!retry_result.is_ok()) {
                         break;  // Queue is really empty
                     }
                     result = std::move(retry_result);
@@ -314,9 +315,9 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress) {
                 // Create job with proper scope management
                 std::unique_ptr<callback_job> job;
                 try {
-                    job = std::make_unique<callback_job>([&executed]() -> result_void {
+                    job = std::make_unique<callback_job>([&executed]() -> kcenon::common::VoidResult {
                         executed.fetch_add(1);
-                        return result_void();
+                        return kcenon::common::ok();
                     });
                 } catch (const std::exception& e) {
                     std::cout << "Failed to create job: " << e.what() << std::endl;
@@ -328,7 +329,7 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress) {
 
                 while (retry_count < max_enqueue_retries) {
                     auto enqueue_result = queue.enqueue(std::move(job));
-                    if (enqueue_result) {
+                    if (enqueue_result.is_ok()) {
                         produced.fetch_add(1);
                         break;
                     }
@@ -365,7 +366,7 @@ TEST_F(MPMCQueueTest, ProducerConsumerStress) {
 
                 // Use try_dequeue to avoid blocking indefinitely
                 auto result = queue.try_dequeue();
-                if (result.has_value() && result.value()) {
+                if (result.is_ok() && result.value()) {
                     try {
                         auto work_result = result.value()->do_work();
                         (void)work_result;
@@ -440,13 +441,13 @@ TEST_F(MPMCQueueTest, AdaptiveQueueBasicOperation) {
     job_queue queue;
 
     // Test basic operations
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
 
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_TRUE(enqueue_result);
+    EXPECT_TRUE(enqueue_result.is_ok());
 
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
 
     EXPECT_TRUE(queue.empty());
 }
@@ -461,12 +462,12 @@ TEST_F(MPMCQueueTest, AdaptiveQueueStrategySwitch) {
     EXPECT_EQ(queue_type, "standard_job_queue");  // Test current implementation
 
     // Simple test without multi-threading to avoid complexity
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
     auto enqueue_result = queue.enqueue(std::move(job));
-    EXPECT_TRUE(enqueue_result);
+    EXPECT_TRUE(enqueue_result.is_ok());
 
     auto dequeue_result = queue.try_dequeue();  // Use non-blocking version
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
 
     // Verify queue functionality works consistently
     EXPECT_TRUE(queue.empty());
@@ -483,12 +484,12 @@ TEST_F(MPMCQueueTest, PerformanceComparison) {
         // Sequential operations
         for (size_t i = 0; i < 100; ++i) {
             auto job =
-                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
             auto enqueue_result = legacy_queue.enqueue(std::move(job));
-            ASSERT_TRUE(enqueue_result);
+            ASSERT_TRUE(enqueue_result.is_ok());
 
             auto dequeue_result = legacy_queue.dequeue();
-            ASSERT_TRUE(dequeue_result.has_value());
+            ASSERT_TRUE(dequeue_result.is_ok());
             auto work_result = dequeue_result.value()->do_work();
             (void)work_result;
         }
@@ -507,15 +508,15 @@ TEST_F(MPMCQueueTest, PerformanceComparison) {
         // Sequential operations with just 10 iterations
         for (size_t i = 0; i < 10; ++i) {
             auto job =
-                std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+                std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
             auto enqueue_result = mpmc_queue.enqueue(std::move(job));
-            if (!enqueue_result) {
+            if (enqueue_result.is_err()) {
                 std::cout << "Enqueue failed at iteration " << i << std::endl;
                 break;
             }
 
             auto dequeue_result = mpmc_queue.dequeue();
-            if (!dequeue_result.has_value()) {
+            if (!dequeue_result.is_ok()) {
                 std::cout << "Dequeue failed at iteration " << i << std::endl;
                 break;
             }
@@ -543,13 +544,15 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance) {
     // Single producer, single consumer test
     std::thread producer([&]() {
         for (size_t i = 0; i < num_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+            auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                 counter.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             });
 
             size_t retry_count = 0;
-            while (!mpmc_queue.enqueue(std::move(job)) && retry_count < 1000) {
+            while (retry_count < 1000) {
+                auto enqueue_result = mpmc_queue.enqueue(std::move(job));
+                if (enqueue_result.is_ok()) break;
                 std::this_thread::yield();
                 ++retry_count;
             }
@@ -568,7 +571,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance) {
 
         while (consumed < num_jobs && consecutive_failures < max_failures) {
             auto result = mpmc_queue.try_dequeue();
-            if (result.has_value() && result.value()) {
+            if (result.is_ok() && result.value()) {
                 try {
                     auto work_result = result.value()->do_work();
                     (void)work_result;
@@ -594,7 +597,7 @@ TEST_F(MPMCQueueTest, SimpleMPMCPerformance) {
     // Clean up any remaining jobs to prevent memory leaks
     while (!mpmc_queue.empty()) {
         auto result = mpmc_queue.dequeue();
-        if (result.has_value() && result.value()) {
+        if (result.is_ok() && result.value()) {
             auto work_result = result.value()->do_work();
             (void)work_result;
         } else {
@@ -621,18 +624,20 @@ TEST_F(MPMCQueueTest, MultipleProducerConsumer) {
     for (size_t p = 0; p < num_producers; ++p) {
         producers.emplace_back([&, p]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
-                auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+                auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                     counter.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 });
 
                 size_t retry_count = 0;
-                while (!queue.enqueue(std::move(job)) && retry_count < 1000) {
+                while (retry_count < 1000) {
+                    auto enqueue_result = queue.enqueue(std::move(job));
+                    if (enqueue_result.is_ok()) {
+                        produced.fetch_add(1);
+                        break;
+                    }
                     std::this_thread::yield();
                     ++retry_count;
-                }
-                if (retry_count < 1000) {
-                    produced.fetch_add(1);
                 }
             }
         });
@@ -644,7 +649,7 @@ TEST_F(MPMCQueueTest, MultipleProducerConsumer) {
         consumers.emplace_back([&, c]() {
             while (!stop_consumers.load()) {
                 auto result = queue.try_dequeue();
-                if (result.has_value()) {
+                if (result.is_ok()) {
                     try {
                         auto work_result = result.value()->do_work();
                         (void)work_result;
@@ -707,13 +712,13 @@ TEST_F(MPMCQueueTest, SingleThreadedSafety) {
 
     // Enqueue jobs
     for (size_t i = 0; i < num_jobs; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1);
-            return result_void();
+            return kcenon::common::ok();
         });
 
         auto result = queue.enqueue(std::move(job));
-        EXPECT_TRUE(result);
+        EXPECT_TRUE(result.is_ok());
     }
 
     EXPECT_EQ(queue.size(), num_jobs);
@@ -723,11 +728,11 @@ TEST_F(MPMCQueueTest, SingleThreadedSafety) {
     size_t executed = 0;
     while (!queue.empty()) {
         auto result = queue.dequeue();
-        ASSERT_TRUE(result.has_value());
+        ASSERT_TRUE(result.is_ok());
         ASSERT_TRUE(result.value());
 
         auto work_result = result.value()->do_work();
-        EXPECT_TRUE(work_result);
+        EXPECT_TRUE(work_result.is_ok());
         executed++;
     }
 

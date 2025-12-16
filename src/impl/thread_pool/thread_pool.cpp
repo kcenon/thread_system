@@ -154,19 +154,19 @@ auto thread_pool::get_ptr(void) -> std::shared_ptr<thread_pool> {
  *
  * @return std::nullopt on success, error message on failure
  */
-auto thread_pool::start(void) -> result_void {
+auto thread_pool::start(void) -> common::VoidResult {
     // Acquire lock to check workers_ safely
     std::scoped_lock<std::mutex> lock(workers_mutex_);
 
     // Check if pool is already running
     // Use acquire to ensure we see all previous modifications to pool state
     if (start_pool_.load(std::memory_order_acquire)) {
-        return error{error_code::thread_already_running, "thread pool is already running"};
+        return common::error_info{static_cast<int>(error_code::thread_already_running), "thread pool is already running", "thread_system"};
     }
 
     // Validate that workers have been added
     if (workers_.empty()) {
-        return error{error_code::invalid_argument, "no workers to start"};
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "no workers to start", "thread_system"};
     }
 
     // Create fresh job queue for restart scenarios
@@ -188,10 +188,10 @@ auto thread_pool::start(void) -> result_void {
     // Attempt to start each worker
     for (auto& worker : workers_) {
         auto start_result = worker->start();
-        if (start_result.has_error()) {
+        if (start_result.is_err()) {
             // If any worker fails, stop all and return error
             stop();
-            return start_result.get_error();
+            return start_result.error();
         }
     }
 
@@ -200,7 +200,7 @@ auto thread_pool::start(void) -> result_void {
     // are visible to other threads before they see start_pool_ == true
     start_pool_.store(true, std::memory_order_release);
 
-    return {};
+    return common::ok();
 }
 
 /**
@@ -246,14 +246,14 @@ void thread_pool::reset_metrics() {
  * @param job Unique pointer to job (ownership transferred)
  * @return std::nullopt on success, error message on failure
  */
-auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> result_void {
+auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
     // Validate inputs
     if (job == nullptr) {
-        return error{error_code::invalid_argument, "job is null"};
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "job is null", "thread_system"};
     }
 
     if (job_queue_ == nullptr) {
-        return error{error_code::resource_allocation_failed, "job queue is null"};
+        return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
     }
 
     // Check if queue has been explicitly stopped (via stop())
@@ -261,51 +261,51 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> result_void {
     // but jobs might still be submitted. Note: We check the queue's stopped state
     // rather than start_pool_ to allow jobs to be enqueued before start() is called.
     if (job_queue_->is_stopped()) {
-        return error{error_code::queue_stopped, "thread pool is stopped"};
+        return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
     // Delegate to adaptive queue for optimal processing
     metrics_->record_submission();
     auto enqueue_result = job_queue_->enqueue(std::move(job));
-    if (enqueue_result.has_error()) {
-        return enqueue_result.get_error();
+    if (enqueue_result.is_err()) {
+        return enqueue_result.error();
     }
 
     metrics_->record_enqueue();
-    return {};
+    return common::ok();
 }
 
-auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void {
+auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult {
     if (jobs.empty()) {
-        return error{error_code::invalid_argument, "jobs are empty"};
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "jobs are empty", "thread_system"};
     }
 
     if (job_queue_ == nullptr) {
-        return error{error_code::resource_allocation_failed, "job queue is null"};
+        return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
     }
 
     // Check if queue has been explicitly stopped
     if (job_queue_->is_stopped()) {
-        return error{error_code::queue_stopped, "thread pool is stopped"};
+        return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
     metrics_->record_submission(jobs.size());
     auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
-    if (enqueue_result.has_error()) {
-        return enqueue_result.get_error();
+    if (enqueue_result.is_err()) {
+        return enqueue_result.error();
     }
 
     metrics_->record_enqueue(jobs.size());
-    return {};
+    return common::ok();
 }
 
-auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> result_void {
+auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> common::VoidResult {
     if (worker == nullptr) {
-        return error{error_code::invalid_argument, "worker is null"};
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "worker is null", "thread_system"};
     }
 
     if (job_queue_ == nullptr) {
-        return error{error_code::resource_allocation_failed, "job queue is null"};
+        return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
     }
 
     worker->set_job_queue(job_queue_);
@@ -330,24 +330,24 @@ auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> result_voi
     // Since we hold workers_mutex_, stop() cannot proceed until we release it
     if (is_running) {
         auto start_result = workers_.back()->start();
-        if (start_result.has_error()) {
+        if (start_result.is_err()) {
             // Remove the worker we just added since it failed to start
             workers_.pop_back();
-            return start_result.get_error();
+            return start_result.error();
         }
     }
 
-    return {};
+    return common::ok();
 }
 
 auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
-    -> result_void {
+    -> common::VoidResult {
     if (workers.empty()) {
-        return error{error_code::invalid_argument, "workers are empty"};
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "workers are empty", "thread_system"};
     }
 
     if (job_queue_ == nullptr) {
-        return error{error_code::resource_allocation_failed, "job queue is null"};
+        return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
     }
 
     // Acquire lock before processing workers
@@ -371,19 +371,19 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& wo
         // Only start if pool is running
         if (is_running) {
             auto start_result = workers_.back()->start();
-            if (start_result.has_error()) {
+            if (start_result.is_err()) {
                 // Rollback: remove all workers added in this batch
                 workers_.erase(workers_.begin() + static_cast<std::ptrdiff_t>(start_index),
                                workers_.end());
-                return start_result.get_error();
+                return start_result.error();
             }
         }
     }
 
-    return {};
+    return common::ok();
 }
 
-auto thread_pool::stop(const bool& immediately_stop) -> result_void {
+auto thread_pool::stop(const bool& immediately_stop) -> common::VoidResult {
     // Use compare_exchange_strong to atomically check and set state
     // This prevents TOCTOU (Time-Of-Check-Time-Of-Use) race conditions
     // where multiple threads might call stop() simultaneously
@@ -391,7 +391,7 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
     if (!start_pool_.compare_exchange_strong(expected, false, std::memory_order_acq_rel,
                                              std::memory_order_acquire)) {
         // Pool is already stopped or being stopped by another thread
-        return {};
+        return common::ok();
     }
 
     // At this point, we've atomically transitioned from running to stopped
@@ -417,13 +417,13 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
     std::scoped_lock<std::mutex> lock(workers_mutex_);
     for (auto& worker : workers_) {
         auto stop_result = worker->stop();
-        if (stop_result.has_error()) {
+        if (stop_result.is_err()) {
             context_.log(common::interfaces::log_level::error, formatter::format("error stopping worker: {}",
-                                                             stop_result.get_error().to_string()));
+                                                             stop_result.error().message));
         }
     }
 
-    return {};
+    return common::ok();
 }
 
 /**
@@ -444,14 +444,14 @@ auto thread_pool::stop(const bool& immediately_stop) -> result_void {
  *
  * @return @c result_void containing an error on failure, or success value on success.
  */
-auto thread_pool::stop_unsafe() noexcept -> result_void {
+auto thread_pool::stop_unsafe() noexcept -> common::VoidResult {
     // Use compare_exchange_strong to atomically check and set state
     // Same atomic transition as stop() to prevent race conditions
     bool expected = true;
     if (!start_pool_.compare_exchange_strong(expected, false, std::memory_order_acq_rel,
                                              std::memory_order_acquire)) {
         // Pool is already stopped or being stopped by another thread
-        return {};
+        return common::ok();
     }
 
     // Cancel pool-level token to propagate cancellation to all workers and jobs
@@ -471,7 +471,7 @@ auto thread_pool::stop_unsafe() noexcept -> result_void {
         worker->stop();
     }
 
-    return {};
+    return common::ok();
 }
 
 auto thread_pool::to_string(void) const -> std::string {
@@ -546,13 +546,13 @@ auto thread_pool::submit_task(std::function<void()> task) -> bool {
     }
 
     auto callback_job = std::make_unique<kcenon::thread::callback_job>(
-        [task = std::move(task)]() -> kcenon::thread::result_void {
+        [task = std::move(task)]() -> common::VoidResult {
             task();
-            return {};
+            return common::ok();
         });
 
     auto result = enqueue(std::move(callback_job));
-    return result.has_error() == false;
+    return result.is_ok();
 }
 
 auto thread_pool::get_thread_count() const -> std::size_t {
@@ -562,7 +562,7 @@ auto thread_pool::get_thread_count() const -> std::size_t {
 
 auto thread_pool::shutdown_pool(bool immediate) -> bool {
     auto result = stop(immediate);
-    return result.has_error() == false;
+    return result.is_ok();
 }
 
 auto thread_pool::is_running() const -> bool {
@@ -608,7 +608,7 @@ auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t {
 
             // Start the new worker
             auto start_result = worker->start();
-            if (start_result.has_error()) {
+            if (start_result.is_err()) {
                 // Failed to start, skip this worker
                 continue;
             }
@@ -639,22 +639,22 @@ std::future<void> thread_pool::submit(std::function<void()> task) {
     auto future = promise->get_future();
 
     auto job_ptr =
-        std::make_unique<callback_job>([task = std::move(task), promise]() mutable -> result_void {
+        std::make_unique<callback_job>([task = std::move(task), promise]() mutable -> common::VoidResult {
             try {
                 task();
                 promise->set_value();
             } catch (...) {
                 promise->set_exception(std::current_exception());
             }
-            return result_void{};
+            return common::ok();
         });
 
     auto enqueue_result = enqueue(std::move(job_ptr));
-    if (enqueue_result.has_error()) {
+    if (enqueue_result.is_err()) {
         // Set exception in promise if enqueue failed
         try {
             throw std::runtime_error("Failed to enqueue task: " +
-                                     enqueue_result.get_error().to_string());
+                                     enqueue_result.error().message);
         } catch (...) {
             promise->set_exception(std::current_exception());
         }
@@ -669,7 +669,7 @@ std::future<void> thread_pool::submit_delayed(std::function<void()> task,
     auto future = promise->get_future();
 
     // Create a delayed task that waits before executing
-    auto delayed_task = [task = std::move(task), delay, promise]() mutable -> result_void {
+    auto delayed_task = [task = std::move(task), delay, promise]() mutable -> common::VoidResult {
         std::this_thread::sleep_for(delay);
         try {
             task();
@@ -677,15 +677,15 @@ std::future<void> thread_pool::submit_delayed(std::function<void()> task,
         } catch (...) {
             promise->set_exception(std::current_exception());
         }
-        return result_void{};
+        return common::ok();
     };
 
     auto job_ptr = std::make_unique<callback_job>(std::move(delayed_task));
     auto enqueue_result = enqueue(std::move(job_ptr));
-    if (enqueue_result.has_error()) {
+    if (enqueue_result.is_err()) {
         try {
             throw std::runtime_error("Failed to enqueue delayed task: " +
-                                     enqueue_result.get_error().to_string());
+                                     enqueue_result.error().message);
         } catch (...) {
             promise->set_exception(std::current_exception());
         }
@@ -706,7 +706,7 @@ common_ns::Result<std::future<void>> thread_pool::execute(
 
     // Wrap common::IJob into thread::job - use shared_ptr for copyable lambda
     auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
-    auto job_ptr = std::make_unique<callback_job>([shared_job, promise]() -> result_void {
+    auto job_ptr = std::make_unique<callback_job>([shared_job, promise]() -> common::VoidResult {
         auto result = shared_job->execute();
         if (result.is_ok()) {
             promise->set_value();
@@ -717,12 +717,12 @@ common_ns::Result<std::future<void>> thread_pool::execute(
                 promise->set_exception(std::current_exception());
             }
         }
-        return result_void{};
+        return common::ok();
     });
 
     auto enqueue_result = enqueue(std::move(job_ptr));
-    if (enqueue_result.has_error()) {
-        return detail::to_common_error(enqueue_result.get_error());
+    if (enqueue_result.is_err()) {
+        return enqueue_result.error();
     }
 
     return common_ns::Result<std::future<void>>(std::move(future));
@@ -740,7 +740,7 @@ common_ns::Result<std::future<void>> thread_pool::execute_delayed(
 
     // Wrap common::IJob with delay - use shared_ptr for copyable lambda
     auto shared_job = std::shared_ptr<common_ns::interfaces::IJob>(std::move(common_job));
-    auto job_ptr = std::make_unique<callback_job>([shared_job, delay, promise]() -> result_void {
+    auto job_ptr = std::make_unique<callback_job>([shared_job, delay, promise]() -> common::VoidResult {
         std::this_thread::sleep_for(delay);
         auto result = shared_job->execute();
         if (result.is_ok()) {
@@ -752,12 +752,12 @@ common_ns::Result<std::future<void>> thread_pool::execute_delayed(
                 promise->set_exception(std::current_exception());
             }
         }
-        return result_void{};
+        return common::ok();
     });
 
     auto enqueue_result = enqueue(std::move(job_ptr));
-    if (enqueue_result.has_error()) {
-        return detail::to_common_error(enqueue_result.get_error());
+    if (enqueue_result.is_err()) {
+        return enqueue_result.error();
     }
 
     return common_ns::Result<std::future<void>>(std::move(future));

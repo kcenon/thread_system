@@ -68,27 +68,27 @@ TEST_F(TypedLockFreeJobQueueTest, BasicEnqueueDequeue) {
     std::atomic<int> counter{0};
     std::unique_ptr<typed_job_t<job_types>> typed_job =
         std::make_unique<callback_typed_job_t<job_types>>(
-            [&counter]() -> result_void {
+            [&counter]() -> kcenon::common::VoidResult {
                 counter.fetch_add(1, std::memory_order_relaxed);
-                return result_void();
+                return kcenon::common::ok();
             },
             job_types::Batch
         );
 
     // Enqueue
     auto enqueue_result = queue.enqueue(std::move(typed_job));
-    EXPECT_FALSE(enqueue_result.has_error());
+    EXPECT_FALSE(enqueue_result.is_err());
     EXPECT_FALSE(queue.empty());
 
     // Dequeue
     auto dequeue_result = queue.dequeue();
-    EXPECT_TRUE(dequeue_result.has_value());
+    EXPECT_TRUE(dequeue_result.is_ok());
     EXPECT_TRUE(queue.empty());
 
     // Execute job
     auto& job_ptr = dequeue_result.value();
     auto exec_result = job_ptr->do_work();
-    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_FALSE(exec_result.is_err());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -99,7 +99,7 @@ TEST_F(TypedLockFreeJobQueueTest, DequeueEmpty) {
     EXPECT_TRUE(queue.empty());
 
     auto result = queue.dequeue();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 }
 
 // Test multiple types
@@ -109,19 +109,19 @@ TEST_F(TypedLockFreeJobQueueTest, MultipleTypes) {
     // Enqueue jobs of different types
     std::unique_ptr<typed_job_t<job_types>> realtime_job =
         std::make_unique<callback_typed_job_t<job_types>>(
-            []() -> result_void { return result_void(); },
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
             job_types::RealTime
         );
 
     std::unique_ptr<typed_job_t<job_types>> batch_job =
         std::make_unique<callback_typed_job_t<job_types>>(
-            []() -> result_void { return result_void(); },
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
             job_types::Batch
         );
 
     std::unique_ptr<typed_job_t<job_types>> background_job =
         std::make_unique<callback_typed_job_t<job_types>>(
-            []() -> result_void { return result_void(); },
+            []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
             job_types::Background
         );
 
@@ -133,7 +133,11 @@ TEST_F(TypedLockFreeJobQueueTest, MultipleTypes) {
 
     // Dequeue all
     int count = 0;
-    while (auto result = queue.dequeue()) {
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         (void)result.value()->do_work();
         ++count;
     }
@@ -156,15 +160,15 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentEnqueue) {
             for (int i = 0; i < JOBS_PER_THREAD; ++i) {
                 std::unique_ptr<typed_job_t<job_types>> job =
                     std::make_unique<callback_typed_job_t<job_types>>(
-                        [&counter]() -> result_void {
+                        [&counter]() -> kcenon::common::VoidResult {
                             counter.fetch_add(1, std::memory_order_relaxed);
-                            return result_void();
+                            return kcenon::common::ok();
                         },
                         job_types::Batch
                     );
 
                 auto result = queue.enqueue(std::move(job));
-                EXPECT_FALSE(result.has_error());
+                EXPECT_FALSE(result.is_err());
             }
         });
     }
@@ -175,7 +179,11 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentEnqueue) {
 
     // Dequeue and execute all jobs
     int dequeued = 0;
-    while (auto result = queue.dequeue()) {
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) {
+            break;
+        }
         auto& job_ptr = result.value();
         (void)job_ptr->do_work();
         ++dequeued;
@@ -199,7 +207,7 @@ TEST_F(TypedLockFreeJobQueueTest, ThreadChurnTest) {
     std::thread consumer([&]() {
         while (consumed.load(std::memory_order_relaxed) < TOTAL_ITEMS) {
             auto result = queue.dequeue();
-            if (result.has_value()) {
+            if (result.is_ok()) {
                 auto& job_ptr = result.value();
                 (void)job_ptr->do_work();
                 consumed.fetch_add(1, std::memory_order_relaxed);
@@ -216,14 +224,14 @@ TEST_F(TypedLockFreeJobQueueTest, ThreadChurnTest) {
         std::thread producer([&queue, i]() {
             std::unique_ptr<typed_job_t<job_types>> job =
                 std::make_unique<callback_typed_job_t<job_types>>(
-                    []() -> result_void {
-                        return result_void();
+                    []() -> kcenon::common::VoidResult {
+                        return kcenon::common::ok();
                     },
                     static_cast<job_types>(i % 3)  // Rotate through types
                 );
 
             auto result = queue.enqueue(std::move(job));
-            EXPECT_FALSE(result.has_error());
+            EXPECT_FALSE(result.is_err());
         });
         producer.join();
     }
@@ -255,12 +263,12 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentMPMC) {
             for (int i = 0; i < JOBS_PER_PRODUCER; ++i) {
                 std::unique_ptr<typed_job_t<job_types>> job =
                     std::make_unique<callback_typed_job_t<job_types>>(
-                        []() -> result_void { return result_void(); },
+                        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
                         job_types::Batch
                     );
 
                 auto result = queue.enqueue(std::move(job));
-                if (!result.has_error()) {
+                if (!result.is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
 
@@ -274,7 +282,7 @@ TEST_F(TypedLockFreeJobQueueTest, ConcurrentMPMC) {
         threads.emplace_back([&]() {
             while (true) {
                 auto result = queue.dequeue();
-                if (result.has_value()) {
+                if (result.is_ok()) {
                     (void)result.value()->do_work();
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else if (producers_done.load(std::memory_order_acquire)) {
@@ -310,7 +318,7 @@ TEST_F(TypedLockFreeJobQueueTest, Statistics) {
     for (int i = 0; i < 10; ++i) {
         std::unique_ptr<typed_job_t<job_types>> job =
             std::make_unique<callback_typed_job_t<job_types>>(
-                []() -> result_void { return result_void(); },
+                []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
                 job_types::RealTime
             );
         (void)queue.enqueue(std::move(job));
@@ -319,7 +327,7 @@ TEST_F(TypedLockFreeJobQueueTest, Statistics) {
     for (int i = 0; i < 5; ++i) {
         std::unique_ptr<typed_job_t<job_types>> job =
             std::make_unique<callback_typed_job_t<job_types>>(
-                []() -> result_void { return result_void(); },
+                []() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
                 job_types::Batch
             );
         (void)queue.enqueue(std::move(job));

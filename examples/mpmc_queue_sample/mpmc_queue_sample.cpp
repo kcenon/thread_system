@@ -55,16 +55,16 @@ void basic_spsc_example()
     // Producer thread
     std::thread producer([&queue, &counter]() {
         for (int i = 0; i < 10; ++i) {
-            auto job = std::make_unique<callback_job>([&counter, i]() -> result_void {
+            auto job = std::make_unique<callback_job>([&counter, i]() -> kcenon::common::VoidResult {
                 counter.fetch_add(1);
                 write_information("Processed job {}", i);
-                return result_void(); // Success
+                return kcenon::common::ok(); // Success
             });
             
             auto result = queue.enqueue(std::move(job));
-            if (result.has_error()) {
+            if (result.is_err()) {
                 write_error(
-                    "Failed to enqueue job {}: {}", i, result.get_error().message());
+                    "Failed to enqueue job {}: {}", i, result.error().message);
             }
             
             std::this_thread::sleep_for(10ms);
@@ -80,11 +80,11 @@ void basic_spsc_example()
             if (result.has_value()) {
                 auto& job = result.value();
                 auto work_result = job->do_work();
-                if (!work_result) {
+                if (work_result.is_ok()) {
                     // Job executed successfully
                     consumed++;
                 } else {
-                    write_error("Job failed: {}", work_result.get_error().message());
+                    write_error("Job failed: {}", work_result.error().message);
                 }
             } else {
                 std::this_thread::sleep_for(5ms);
@@ -124,15 +124,15 @@ void mpmc_example()
             
             for (int i = 0; i < jobs_per_producer; ++i) {
                 auto job = std::make_unique<callback_job>(
-                    [p, i]() -> result_void {
+                    [p, i]() -> kcenon::common::VoidResult {
                         write_information("Job from producer {} #{}", p, i);
-                        return result_void();
+                        return kcenon::common::ok();
                     });
                 
                 // Retry on failure (high contention scenario)
                 while (true) {
                     auto result = queue.enqueue(std::move(job));
-                    if (!result.has_error()) {
+                    if (!result.is_err()) {
                         produced.fetch_add(1);
                         break;
                     }
@@ -157,11 +157,11 @@ void mpmc_example()
                 if (result.has_value()) {
                     auto& job = result.value();
                     auto work_result = job->do_work();
-                    if (!work_result) {
+                    if (work_result.is_ok()) {
                         // Job executed successfully
                         consumed.fetch_add(1);
                     } else {
-                        write_error("Consumer {} job failed: {}", c, work_result.get_error().message());
+                        write_error("Consumer {} job failed: {}", c, work_result.error().message);
                     }
                 } else {
                     std::this_thread::sleep_for(1ms);
@@ -194,10 +194,10 @@ void batch_operations_example()
     std::vector<std::unique_ptr<job>> batch;
     for (int i = 0; i < 50; ++i) {
         batch.push_back(std::make_unique<callback_job>(
-            [&processed, i]() -> result_void {
+            [&processed, i]() -> kcenon::common::VoidResult {
                 processed.fetch_add(1);
                 write_information("Batch job {}", i);
-                return result_void();
+                return kcenon::common::ok();
             }));
     }
     
@@ -205,9 +205,9 @@ void batch_operations_example()
         "Enqueueing {} jobs in batch", batch.size());
     
     auto enqueue_result = queue.enqueue_batch(std::move(batch));
-    if (enqueue_result.has_error()) {
+    if (enqueue_result.is_err()) {
         write_error(
-            "Batch enqueue failed: {}", enqueue_result.get_error().message());
+            "Batch enqueue failed: {}", enqueue_result.error().message);
         return;
     }
     
@@ -219,10 +219,10 @@ void batch_operations_example()
     // Process all dequeued jobs
     for (auto& job : dequeued) {
         auto result = job->do_work();
-        if (!result) {
+        if (result.is_ok()) {
             // Job executed successfully
         } else {
-            write_error("Batch job failed: {}", result.get_error().message());
+            write_error("Batch job failed: {}", result.error().message);
         }
     }
     
@@ -242,15 +242,15 @@ void performance_example()
     auto start = std::chrono::high_resolution_clock::now();
     
     for (int i = 0; i < num_operations; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+            return kcenon::common::ok();
         });
         
         while (true) {
             auto r = queue.enqueue(std::move(job));
-            if (!r.has_error()) break;
+            if (r.is_ok()) break;
             std::this_thread::yield();
-            job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
+            job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
         }
     }
     

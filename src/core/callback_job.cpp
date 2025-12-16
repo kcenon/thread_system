@@ -74,15 +74,15 @@ namespace kcenon::thread
 	 */
 	callback_job::callback_job(const std::function<std::optional<std::string>(void)>& callback,
 							   const std::string& name)
-		: job(name), callback_([callback](void) -> result_void {
+		: job(name), callback_([callback](void) -> common::VoidResult {
 			// Call the original callback and convert error format
 			auto result = callback();
 			if (result.has_value()) {
 				// Error occurred: convert string to error object
-				return error{error_code::job_execution_failed, result.value()};
+				return common::error_info{static_cast<int>(error_code::job_execution_failed), result.value(), "thread_system"};
 			}
-			// Success: return empty result_void
-			return result_void{};
+			// Success: return empty result
+			return common::ok();
 		}), data_callback_(nullptr)
 	{
 	}
@@ -105,7 +105,7 @@ namespace kcenon::thread
 	 * @param name Descriptive name for this job (for debugging/logging)
 	 */
 	callback_job::callback_job(
-		const std::function<result_void(void)>& callback,
+		const std::function<common::VoidResult(void)>& callback,
 		const std::string& name)
 		: job(name), callback_(callback), data_callback_(nullptr)
 	{
@@ -136,15 +136,15 @@ namespace kcenon::thread
 	callback_job::callback_job(
 		const std::function<std::optional<std::string>(const std::vector<uint8_t>&)>& data_callback,
 		const std::vector<uint8_t>& data, const std::string& name)
-		: job(data, name), callback_(nullptr), data_callback_([data_callback](const std::vector<uint8_t>& callback_data) -> result_void {
+		: job(data, name), callback_(nullptr), data_callback_([data_callback](const std::vector<uint8_t>& callback_data) -> common::VoidResult {
 			// Call the original data callback with provided data
 			auto result = data_callback(callback_data);
 			if (result.has_value()) {
 				// Error occurred: convert string to error object
-				return error{error_code::job_execution_failed, result.value()};
+				return common::error_info{static_cast<int>(error_code::job_execution_failed), result.value(), "thread_system"};
 			}
-			// Success: return empty result_void
-			return result_void{};
+			// Success: return empty result
+			return common::ok();
 		})
 	{
 	}
@@ -168,7 +168,7 @@ namespace kcenon::thread
 	 * @param name Descriptive name for this job
 	 */
 	callback_job::callback_job(
-		const std::function<result_void(const std::vector<uint8_t>&)>& data_callback,
+		const std::function<common::VoidResult(const std::vector<uint8_t>&)>& data_callback,
 		const std::vector<uint8_t>& data, const std::string& name)
 		: job(data, name), callback_(nullptr), data_callback_(data_callback)
 	{
@@ -210,7 +210,7 @@ namespace kcenon::thread
 	 * 
 	 * @return Result of callback execution or base class implementation
 	 */
-	auto callback_job::do_work(void) -> result_void
+	auto callback_job::do_work(void) -> common::VoidResult
 	{
 		// Priority 1: Data callback with stored binary data
 		if (data_callback_)

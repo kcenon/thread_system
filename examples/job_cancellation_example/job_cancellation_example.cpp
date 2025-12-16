@@ -52,7 +52,7 @@ public:
 	{
 	}
 
-	result_void do_work() override
+	kcenon::common::VoidResult do_work() override
 	{
 		std::cout << formatter::format("[{}] Starting job with {} iterations\n",
 		                               get_name(), iterations_);
@@ -65,8 +65,10 @@ public:
 				std::cout << formatter::format("[{}] Job cancelled at iteration {}/{}\n",
 				                               get_name(), i, iterations_);
 
-				return error{error_code::operation_canceled,
-				           formatter::format("Cancelled at iteration {}", i)};
+				return kcenon::common::error_info{
+				    error_code::operation_canceled,
+				    formatter::format("Cancelled at iteration {}", i),
+				    "job_cancellation_example"};
 			}
 
 			// Simulate work (100ms per iteration)
@@ -81,7 +83,7 @@ public:
 		}
 
 		std::cout << formatter::format("[{}] Job completed successfully\n", get_name());
-		return {};
+		return kcenon::common::ok();
 	}
 
 private:
@@ -107,7 +109,7 @@ public:
 	{
 	}
 
-	result_void do_work() override
+	kcenon::common::VoidResult do_work() override
 	{
 		std::cout << formatter::format("[{}] Starting non-cancellable job\n", get_name());
 
@@ -125,7 +127,7 @@ public:
 
 		std::cout << formatter::format("[{}] Job completed (never checked cancellation)\n",
 		                               get_name());
-		return {};
+		return kcenon::common::ok();
 	}
 
 private:

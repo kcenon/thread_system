@@ -66,7 +66,7 @@ TEST(thread_pool_test, enqueue)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 }
 
 TEST(thread_pool_test, stop)
@@ -75,10 +75,10 @@ TEST(thread_pool_test, stop)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, stop_immediately)
@@ -87,10 +87,10 @@ TEST(thread_pool_test, stop_immediately)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto stop_result = pool->stop(true);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, stop_no_workers)
@@ -98,7 +98,7 @@ TEST(thread_pool_test, stop_no_workers)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, start_and_stop)
@@ -107,13 +107,13 @@ TEST(thread_pool_test, start_and_stop)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, start_and_stop_no_worker)
@@ -121,11 +121,11 @@ TEST(thread_pool_test, start_and_stop_no_worker)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto start_result = pool->start();
-	EXPECT_TRUE(start_result.has_error());
-	EXPECT_EQ(start_result.get_error().message(), "no workers to start");
+	EXPECT_TRUE(start_result.is_err());
+	EXPECT_EQ(start_result.error().message, "no workers to start");
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, start_and_stop_immediately)
@@ -134,13 +134,13 @@ TEST(thread_pool_test, start_and_stop_immediately)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	auto stop_result = pool->stop(true);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, start_and_stop_immediately_no_worker)
@@ -148,11 +148,11 @@ TEST(thread_pool_test, start_and_stop_immediately_no_worker)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto start_result = pool->start();
-	EXPECT_TRUE(start_result.has_error());
-	EXPECT_EQ(start_result.get_error().message(), "no workers to start");
+	EXPECT_TRUE(start_result.is_err());
+	EXPECT_EQ(start_result.error().message, "no workers to start");
 
 	auto stop_result = pool->stop(true);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 TEST(thread_pool_test, start_and_one_sec_job_and_stop)
@@ -161,23 +161,23 @@ TEST(thread_pool_test, start_and_one_sec_job_and_stop)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	result = pool->enqueue(std::make_unique<callback_job>(
-		[](void) -> result_void
+		[](void) -> kcenon::common::VoidResult
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 
-			return result_void();
+			return kcenon::common::ok();
 		},
 		"10sec job"));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 // Test for Problem 1: enqueue after stop should fail
@@ -187,22 +187,22 @@ TEST(thread_pool_test, enqueue_after_stop_should_fail)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// Stop the pool
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// Try to enqueue a job after stop - should fail
 	auto job = std::make_unique<callback_job>(
-		[](void) -> result_void { return result_void(); },
+		[](void) -> kcenon::common::VoidResult { return kcenon::common::ok(); },
 		"test job");
 	result = pool->enqueue(std::move(job));
-	EXPECT_TRUE(result.has_error());
-	EXPECT_EQ(result.get_error().code(), error_code::queue_stopped);
+	EXPECT_TRUE(result.is_err());
+	EXPECT_EQ(result.error().code, static_cast<int>(error_code::queue_stopped));
 }
 
 // Test for Problem 1: enqueue_batch after stop should fail
@@ -212,27 +212,27 @@ TEST(thread_pool_test, enqueue_batch_after_stop_should_fail)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// Stop the pool
 	auto stop_result = pool->stop(true);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// Try to enqueue batch of jobs after stop - should fail
 	std::vector<std::unique_ptr<job>> jobs;
 	jobs.push_back(std::make_unique<callback_job>(
-		[](void) -> result_void { return result_void(); },
+		[](void) -> kcenon::common::VoidResult { return kcenon::common::ok(); },
 		"test job 1"));
 	jobs.push_back(std::make_unique<callback_job>(
-		[](void) -> result_void { return result_void(); },
+		[](void) -> kcenon::common::VoidResult { return kcenon::common::ok(); },
 		"test job 2"));
 
 	result = pool->enqueue_batch(std::move(jobs));
-	EXPECT_TRUE(result.has_error());
-	EXPECT_EQ(result.get_error().code(), error_code::queue_stopped);
+	EXPECT_TRUE(result.is_err());
+	EXPECT_EQ(result.error().code, static_cast<int>(error_code::queue_stopped));
 }
 
 // Test for Problem 2: concurrent stop calls should be safe
@@ -242,10 +242,10 @@ TEST(thread_pool_test, concurrent_stop_calls_should_be_safe)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// Call stop from multiple threads simultaneously
 	std::atomic<int> stop_success_count{0};
@@ -258,7 +258,7 @@ TEST(thread_pool_test, concurrent_stop_calls_should_be_safe)
 			auto stop_result = pool->stop(false);
 			// Only one thread should successfully execute stop logic
 			// Others should return immediately without error
-			if (!stop_result.has_error())
+			if (!stop_result.is_err())
 			{
 				stop_success_count++;
 			}
@@ -281,22 +281,22 @@ TEST(thread_pool_test, multiple_stop_calls_are_idempotent)
 
 	auto worker = std::make_unique<thread_worker>();
 	auto result = pool->enqueue(std::move(worker));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// First stop should succeed
 	auto stop_result1 = pool->stop(false);
-	EXPECT_FALSE(stop_result1.has_error());
+	EXPECT_FALSE(stop_result1.is_err());
 
 	// Second stop should also succeed (idempotent)
 	auto stop_result2 = pool->stop(false);
-	EXPECT_FALSE(stop_result2.has_error());
+	EXPECT_FALSE(stop_result2.is_err());
 
 	// Third stop with immediate flag should also succeed
 	auto stop_result3 = pool->stop(true);
-	EXPECT_FALSE(stop_result3.has_error());
+	EXPECT_FALSE(stop_result3.is_err());
 }
 
 // Test for Issue #223: Manual worker creation and batch enqueue on ARM64
@@ -317,11 +317,11 @@ TEST(thread_pool_test, manual_worker_batch_enqueue_arm64)
 
 	// Enqueue workers to pool - should not crash
 	auto result = pool->enqueue_batch(std::move(workers));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	// Start pool - should not crash
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// Submit job - should not crash
 	std::atomic<int> counter{0};
@@ -336,7 +336,7 @@ TEST(thread_pool_test, manual_worker_batch_enqueue_arm64)
 
 	// Stop pool
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// Verify job was executed
 	EXPECT_EQ(counter.load(), 1);
@@ -358,10 +358,10 @@ TEST(thread_pool_test, manual_workers_concurrent_job_submission_arm64)
 	}
 
 	auto result = pool->enqueue_batch(std::move(workers));
-	EXPECT_FALSE(result.has_error());
+	EXPECT_FALSE(result.is_err());
 
 	auto start_result = pool->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	// Submit multiple jobs concurrently
 	std::atomic<int> counter{0};
@@ -385,7 +385,7 @@ TEST(thread_pool_test, manual_workers_concurrent_job_submission_arm64)
 	}
 
 	auto stop_result = pool->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	EXPECT_EQ(counter.load(), job_count);
 }
@@ -402,11 +402,11 @@ TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
 		{
 			auto worker = std::make_unique<thread_worker>(false, context);
 			auto result = pool->enqueue(std::move(worker));
-			EXPECT_FALSE(result.has_error());
+			EXPECT_FALSE(result.is_err());
 		}
 
 		auto start_result = pool->start();
-		EXPECT_FALSE(start_result.has_error());
+		EXPECT_FALSE(start_result.is_err());
 
 		std::atomic<int> counter{0};
 		pool->submit_task([&counter]() { counter++; });
@@ -429,10 +429,10 @@ TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
 		}
 
 		auto result = pool->enqueue_batch(std::move(workers));
-		EXPECT_FALSE(result.has_error());
+		EXPECT_FALSE(result.is_err());
 
 		auto start_result = pool->start();
-		EXPECT_FALSE(start_result.has_error());
+		EXPECT_FALSE(start_result.is_err());
 
 		std::atomic<int> counter{0};
 		pool->submit_task([&counter]() { counter++; });

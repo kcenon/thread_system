@@ -73,11 +73,11 @@ adaptive_job_queue::~adaptive_job_queue() {
 // scheduler_interface implementation
 // ============================================
 
-auto adaptive_job_queue::schedule(std::unique_ptr<job>&& work) -> result_void {
+auto adaptive_job_queue::schedule(std::unique_ptr<job>&& work) -> common::VoidResult {
     return enqueue(std::move(work));
 }
 
-auto adaptive_job_queue::get_next_job() -> result<std::unique_ptr<job>> {
+auto adaptive_job_queue::get_next_job() -> common::Result<std::unique_ptr<job>> {
     return dequeue();
 }
 
@@ -85,25 +85,21 @@ auto adaptive_job_queue::get_next_job() -> result<std::unique_ptr<job>> {
 // Standard queue operations
 // ============================================
 
-auto adaptive_job_queue::enqueue(std::unique_ptr<job>&& j) -> result_void {
+auto adaptive_job_queue::enqueue(std::unique_ptr<job>&& j) -> common::VoidResult {
     if (stopped_.load(std::memory_order_acquire)) {
-        return result_void(error(error_code::queue_stopped, "Queue is stopped"));
+        return common::error_info{static_cast<int>(error_code::queue_stopped), "Queue is stopped", "thread_system"};
     }
 
     if (!j) {
-        return result_void(error(error_code::invalid_argument, "Cannot enqueue null job"));
+        return common::error_info{static_cast<int>(error_code::invalid_argument), "Cannot enqueue null job", "thread_system"};
     }
 
-    result_void result;
     mode current = current_mode_.load(std::memory_order_acquire);
+    common::VoidResult result = (current == mode::mutex)
+        ? mutex_queue_->enqueue(std::move(j))
+        : lockfree_queue_->enqueue(std::move(j));
 
-    if (current == mode::mutex) {
-        result = mutex_queue_->enqueue(std::move(j));
-    } else {
-        result = lockfree_queue_->enqueue(std::move(j));
-    }
-
-    if (!result.has_error()) {
+    if (result.is_ok()) {
         std::lock_guard<std::mutex> lock(stats_mutex_);
         ++stats_.enqueue_count;
     }
@@ -111,30 +107,30 @@ auto adaptive_job_queue::enqueue(std::unique_ptr<job>&& j) -> result_void {
     return result;
 }
 
-auto adaptive_job_queue::dequeue() -> result<std::unique_ptr<job>> {
+auto adaptive_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
     if (stopped_.load(std::memory_order_acquire)) {
-        return result<std::unique_ptr<job>>(error(error_code::queue_stopped, "Queue is stopped"));
+        return common::error_info{static_cast<int>(error_code::queue_stopped), "Queue is stopped", "thread_system"};
     }
 
-    result<std::unique_ptr<job>> result(error(error_code::queue_empty, "Queue is empty"));
+    common::Result<std::unique_ptr<job>> result = common::error_info{static_cast<int>(error_code::queue_empty), "Queue is empty", "thread_system"};
     mode current = current_mode_.load(std::memory_order_acquire);
 
     // Try current mode first
     if (current == mode::mutex) {
         result = mutex_queue_->try_dequeue();
         // If current mode is empty, also check other queue for race condition handling
-        if (!result.has_value()) {
+        if (result.is_err()) {
             result = lockfree_queue_->dequeue();
         }
     } else {
         result = lockfree_queue_->dequeue();
         // If current mode is empty, also check other queue for race condition handling
-        if (!result.has_value()) {
+        if (result.is_err()) {
             result = mutex_queue_->try_dequeue();
         }
     }
 
-    if (result.has_value()) {
+    if (result.is_ok()) {
         std::lock_guard<std::mutex> lock(stats_mutex_);
         ++stats_.dequeue_count;
     }
@@ -142,30 +138,30 @@ auto adaptive_job_queue::dequeue() -> result<std::unique_ptr<job>> {
     return result;
 }
 
-auto adaptive_job_queue::try_dequeue() -> result<std::unique_ptr<job>> {
+auto adaptive_job_queue::try_dequeue() -> common::Result<std::unique_ptr<job>> {
     if (stopped_.load(std::memory_order_acquire)) {
-        return result<std::unique_ptr<job>>(error(error_code::queue_stopped, "Queue is stopped"));
+        return common::error_info{static_cast<int>(error_code::queue_stopped), "Queue is stopped", "thread_system"};
     }
 
-    result<std::unique_ptr<job>> result(error(error_code::queue_empty, "Queue is empty"));
+    common::Result<std::unique_ptr<job>> result = common::error_info{static_cast<int>(error_code::queue_empty), "Queue is empty", "thread_system"};
     mode current = current_mode_.load(std::memory_order_acquire);
 
     // Try current mode first
     if (current == mode::mutex) {
         result = mutex_queue_->try_dequeue();
         // If current mode is empty, also check other queue for race condition handling
-        if (!result.has_value()) {
+        if (result.is_err()) {
             result = lockfree_queue_->try_dequeue();
         }
     } else {
         result = lockfree_queue_->try_dequeue();
         // If current mode is empty, also check other queue for race condition handling
-        if (!result.has_value()) {
+        if (result.is_err()) {
             result = mutex_queue_->try_dequeue();
         }
     }
 
-    if (result.has_value()) {
+    if (result.is_ok()) {
         std::lock_guard<std::mutex> lock(stats_mutex_);
         ++stats_.dequeue_count;
     }
@@ -194,7 +190,11 @@ auto adaptive_job_queue::clear() -> void {
 
     mutex_queue_->clear();
     // lockfree_queue doesn't have clear(), drain it
-    while (auto result = lockfree_queue_->dequeue()) {
+    while (true) {
+        auto result = lockfree_queue_->dequeue();
+        if (result.is_err()) {
+            break;
+        }
         // Jobs are destroyed when unique_ptr goes out of scope
     }
 }
@@ -250,19 +250,18 @@ auto adaptive_job_queue::current_policy() const -> policy {
     return policy_;
 }
 
-auto adaptive_job_queue::switch_mode(mode m) -> result_void {
+auto adaptive_job_queue::switch_mode(mode m) -> common::VoidResult {
     if (policy_ != policy::manual) {
-        return result_void(error(
-            error_code::invalid_argument,
-            "Mode switching is only allowed with manual policy"));
+        return common::error_info{static_cast<int>(error_code::invalid_argument),
+            "Mode switching is only allowed with manual policy", "thread_system"};
     }
 
     if (current_mode_.load(std::memory_order_acquire) == m) {
-        return result_void(); // Already in target mode
+        return common::ok(); // Already in target mode
     }
 
     migrate_to_mode(m);
-    return result_void();
+    return common::ok();
 }
 
 auto adaptive_job_queue::get_stats() const -> stats {
@@ -370,15 +369,19 @@ void adaptive_job_queue::migrate_to_mode(mode target) {
     if (target == mode::mutex) {
         // Migrate from lock-free to mutex
         // Drain lockfree queue and move jobs to mutex queue
-        while (auto result = lockfree_queue_->dequeue()) {
-            mutex_queue_->enqueue(std::move(result.value()));
+        while (true) {
+            auto result = lockfree_queue_->dequeue();
+            if (result.is_err()) {
+                break;
+            }
+            (void)mutex_queue_->enqueue(std::move(result.value()));
         }
     } else {
         // Migrate from mutex to lock-free
         // Drain mutex queue and move jobs to lockfree queue
         auto jobs = mutex_queue_->dequeue_batch();
         for (auto& job : jobs) {
-            lockfree_queue_->enqueue(std::move(job));
+            (void)lockfree_queue_->enqueue(std::move(job));
         }
     }
 

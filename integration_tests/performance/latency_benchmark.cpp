@@ -53,7 +53,7 @@ TEST_F(LatencyBenchmark, JobSubmissionLatency) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = ScaleForCI(5'000);  // Reduced from 10k
     PerformanceMetrics metrics;
@@ -62,13 +62,13 @@ TEST_F(LatencyBenchmark, JobSubmissionLatency) {
         auto start = std::chrono::high_resolution_clock::now();
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto submit_result = pool_->enqueue(std::move(job));
-        ASSERT_TRUE(submit_result);
+        ASSERT_TRUE(submit_result.is_ok());
 
         auto end = std::chrono::high_resolution_clock::now();
         metrics.add_sample(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start));
@@ -93,7 +93,7 @@ TEST_F(LatencyBenchmark, EndToEndLatency) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = ScaleForCI(1'000);  // Small count for accurate e2e measurement
     std::vector<std::chrono::nanoseconds> latencies(job_count);
@@ -104,13 +104,13 @@ TEST_F(LatencyBenchmark, EndToEndLatency) {
             std::chrono::high_resolution_clock::now());
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this, &latencies, &completed, i, submit_time]() -> kcenon::thread::result_void {
+            [this, &latencies, &completed, i, submit_time]() -> kcenon::common::VoidResult {
                 auto complete_time = std::chrono::high_resolution_clock::now();
                 latencies[i] = std::chrono::duration_cast<std::chrono::nanoseconds>(
                     complete_time - *submit_time);
                 completed.fetch_add(1);
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));

@@ -51,12 +51,12 @@ TEST_F(ErrorHandlingTest, ResultPatternSuccess) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
-    EXPECT_FALSE(result.has_error());
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_FALSE(result.is_err());
 
     result = pool_->stop();
-    ASSERT_TRUE(result);
-    EXPECT_FALSE(result.has_error());
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_FALSE(result.is_err());
 }
 
 TEST_F(ErrorHandlingTest, ResultPatternFailure) {
@@ -64,16 +64,16 @@ TEST_F(ErrorHandlingTest, ResultPatternFailure) {
 
     // Start pool
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Try to start again - should fail
     result = pool_->start();
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 
-    if (result.has_error()) {
-        const auto& error = result.get_error();
-        EXPECT_NE(error.code(), kcenon::thread::error_code::success);
-        std::cout << "Expected error: " << error.to_string() << "\n";
+    if (result.is_err()) {
+        const auto& error = result.error();
+        EXPECT_NE(error.code, static_cast<int>(kcenon::thread::error_code::success));
+        std::cout << "Expected error: " << error.message << "\n";
     }
 }
 
@@ -81,24 +81,24 @@ TEST_F(ErrorHandlingTest, ExceptionInJob) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     std::atomic<size_t> exceptions_caught{0};
 
     for (size_t i = 0; i < 100; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [&exceptions_caught, this]() -> kcenon::thread::result_void {
+            [&exceptions_caught, this]() -> kcenon::common::VoidResult {
                 try {
                     throw std::runtime_error("Intentional exception");
                 } catch (const std::exception& e) {
                     exceptions_caught.fetch_add(1);
                 }
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto submit_result = pool_->enqueue(std::move(job));
-        EXPECT_TRUE(submit_result);
+        EXPECT_TRUE(submit_result.is_ok());
     }
 
     EXPECT_TRUE(WaitForJobCompletion(100));
@@ -109,7 +109,7 @@ TEST_F(ErrorHandlingTest, PartialJobFailure) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     std::atomic<size_t> success_count{0};
     std::atomic<size_t> failure_count{0};
@@ -118,21 +118,22 @@ TEST_F(ErrorHandlingTest, PartialJobFailure) {
         bool should_fail = (i % 3 == 0);
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [&success_count, &failure_count, should_fail, this]() -> kcenon::thread::result_void {
+            [&success_count, &failure_count, should_fail, this]() -> kcenon::common::VoidResult {
                 if (should_fail) {
                     failure_count.fetch_add(1);
-                    return kcenon::thread::error{
+                    return kcenon::common::error_info{
                         kcenon::thread::error_code::job_execution_failed,
-                        "Intentional failure"
+                        "Intentional failure",
+                        "error_recovery_test"
                     };
                 }
                 success_count.fetch_add(1);
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto submit_result = pool_->enqueue(std::move(job));
-        EXPECT_TRUE(submit_result);
+        EXPECT_TRUE(submit_result.is_ok());
     }
 
     // Wait for processing
@@ -151,18 +152,18 @@ TEST_F(ErrorHandlingTest, QueueErrorHandling) {
 
     // Try to dequeue from empty queue (non-blocking)
     auto result = queue->try_dequeue();
-    EXPECT_FALSE(result.has_value());
+    EXPECT_FALSE(result.is_ok());
 
     // Enqueue a job
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        []() -> kcenon::thread::result_void { return {}; }
+        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
     );
     auto enqueue_result = queue->enqueue(std::move(job));
-    EXPECT_TRUE(enqueue_result);
+    EXPECT_TRUE(enqueue_result.is_ok());
 
     // Now dequeue should succeed
     result = queue->try_dequeue();
-    EXPECT_TRUE(result.has_value());
+    EXPECT_TRUE(result.is_ok());
 }
 
 TEST_F(ErrorHandlingTest, ResourceCleanupOnError) {
@@ -173,11 +174,11 @@ TEST_F(ErrorHandlingTest, ResourceCleanupOnError) {
         CreateThreadPool(4);
 
         auto result = pool_->start();
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         for (size_t i = 0; i < 100; ++i) {
             auto job = std::make_unique<kcenon::thread::callback_job>(
-                [&resource_acquired, &resource_released, this]() -> kcenon::thread::result_void {
+                [&resource_acquired, &resource_released, this]() -> kcenon::common::VoidResult {
                     resource_acquired.fetch_add(1);
 
                     // Simulate work
@@ -185,7 +186,7 @@ TEST_F(ErrorHandlingTest, ResourceCleanupOnError) {
 
                     resource_released.fetch_add(1);
                     completed_jobs_.fetch_add(1);
-                    return {};
+                    return kcenon::common::ok();
                 }
             );
             pool_->enqueue(std::move(job));
@@ -204,7 +205,7 @@ TEST_F(ErrorHandlingTest, ConcurrentErrorPropagation) {
     CreateThreadPool(8);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     std::atomic<size_t> error_count{0};
     std::mutex error_mutex;
@@ -216,22 +217,23 @@ TEST_F(ErrorHandlingTest, ConcurrentErrorPropagation) {
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
             [&error_count, &error_mutex, &error_messages, should_error, this]()
-            -> kcenon::thread::result_void {
+            -> kcenon::common::VoidResult {
                 if (should_error) {
                     error_count.fetch_add(1);
-                    auto err = kcenon::thread::error{
+                    auto err = kcenon::common::error_info{
                         kcenon::thread::error_code::job_execution_failed,
-                        "Concurrent error"
+                        "Concurrent error",
+                        "error_recovery_test"
                     };
 
                     std::lock_guard<std::mutex> lock(error_mutex);
-                    error_messages.push_back(err.to_string());
+                    error_messages.push_back(err.message);
 
                     return err;
                 }
 
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));
@@ -250,7 +252,7 @@ TEST_F(ErrorHandlingTest, ErrorRecoveryAfterStop) {
 
     // First lifecycle
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     for (size_t i = 0; i < 50; ++i) {
         SubmitCountingJob();
@@ -259,11 +261,11 @@ TEST_F(ErrorHandlingTest, ErrorRecoveryAfterStop) {
     EXPECT_TRUE(WaitForJobCompletion(50));
 
     result = pool_->stop();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Second lifecycle - should work fine
     result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     for (size_t i = 0; i < 50; ++i) {
         SubmitCountingJob();

@@ -84,12 +84,12 @@ namespace kcenon::thread
 		virtual ~adaptive_typed_job_queue_t();
 		
 		// typed_job_queue_t interface implementation
-		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> result_void override;
-		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> result_void;
-		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void override;
-		[[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>> override;
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> common::VoidResult override;
+		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> common::VoidResult;
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult override;
+		[[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>> override;
 		[[nodiscard]] auto dequeue_batch() -> std::deque<std::unique_ptr<job>> override;
-		[[nodiscard]] auto dequeue(const std::vector<job_type>& types) -> result<std::unique_ptr<typed_job_t<job_type>>>;
+		[[nodiscard]] auto dequeue(const std::vector<job_type>& types) -> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
 		auto clear() -> void override;
 		[[nodiscard]] auto empty(const std::vector<job_type>& types) const -> bool;
 		[[nodiscard]] auto size(const std::vector<job_type>& types) const -> std::size_t;
@@ -278,7 +278,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value) -> result_void
+	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value) -> common::VoidResult
 	{
 		auto start = std::chrono::steady_clock::now();
 		auto result = get_current_impl()->enqueue(std::move(value));
@@ -288,7 +288,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> result_void
+	auto adaptive_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<typed_job_t<job_type>>&& value) -> common::VoidResult
 	{
 		auto start = std::chrono::steady_clock::now();
 		auto result = get_current_impl()->enqueue(std::move(value));
@@ -298,7 +298,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto adaptive_typed_job_queue_t<job_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void
+	auto adaptive_typed_job_queue_t<job_type>::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult
 	{
 		auto start = std::chrono::steady_clock::now();
 		auto result = get_current_impl()->enqueue_batch(std::move(jobs));
@@ -308,7 +308,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto adaptive_typed_job_queue_t<job_type>::dequeue() -> result<std::unique_ptr<job>>
+	auto adaptive_typed_job_queue_t<job_type>::dequeue() -> common::Result<std::unique_ptr<job>>
 	{
 		auto start = std::chrono::steady_clock::now();
 		auto result = get_current_impl()->dequeue();
@@ -329,7 +329,7 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto adaptive_typed_job_queue_t<job_type>::dequeue(const std::vector<job_type>& types)
-		-> result<std::unique_ptr<typed_job_t<job_type>>>
+		-> common::Result<std::unique_ptr<typed_job_t<job_type>>>
 	{
 		auto start = std::chrono::steady_clock::now();
 		auto result = get_current_impl()->dequeue(types);
@@ -504,8 +504,13 @@ namespace kcenon::thread
 		}
 
 		// Migrate all jobs from legacy to lock-free
-		while (auto result = legacy_queue_->dequeue())
+		while (true)
 		{
+			auto result = legacy_queue_->dequeue();
+			if (result.is_err())
+			{
+				break;
+			}
 			lockfree_queue_->enqueue(std::move(result.value()));
 		}
 
@@ -524,8 +529,13 @@ namespace kcenon::thread
 		}
 
 		// Migrate all jobs from lock-free to legacy
-		while (auto result = lockfree_queue_->dequeue())
+		while (true)
 		{
+			auto result = lockfree_queue_->dequeue();
+			if (result.is_err())
+			{
+				break;
+			}
 			legacy_queue_->enqueue(std::move(result.value()));
 		}
 #endif

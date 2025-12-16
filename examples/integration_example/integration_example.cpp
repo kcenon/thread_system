@@ -93,46 +93,46 @@ void thread_pool_with_logger_example() {
     }
     {
         auto r = pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue_batch failed: " << r.error().message << std::endl;
             return;
         }
     }
-    
+
     // 5. Start pool
     {
         auto r = pool->start();
-        if (r.has_error()) {
-            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "start failed: " << r.error().message << std::endl;
             return;
         }
     }
-    
+
     // 6. Submit jobs
     for (int i = 0; i < 10; ++i) {
         auto r = pool->enqueue(std::make_unique<callback_job>(
-            [i, &context]() -> result_void {
+            [i, &context]() -> kcenon::common::VoidResult {
                 // Job logs through context
                 context.log(log_level_v2::info,
                     "Executing job " + std::to_string(i));
-                
+
                 // Simulate work
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                
-                return result_void();
+
+                return kcenon::common::ok();
             }
         ));
-        if (r.has_error()) {
-            std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue failed: " << r.error().message << std::endl;
         }
     }
-    
+
     // 7. Wait and stop
     std::this_thread::sleep_for(std::chrono::seconds(1));
     {
         auto r = pool->stop();
-        if (r.has_error()) {
-            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "stop failed: " << r.error().message << std::endl;
         }
     }
     logger->stop();
@@ -165,54 +165,54 @@ void thread_pool_with_monitoring_example() {
     }
     {
         auto r = pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue_batch failed: " << r.error().message << std::endl;
             return;
         }
     }
     {
         auto r = pool->start();
-        if (r.has_error()) {
-            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "start failed: " << r.error().message << std::endl;
             return;
         }
     }
-    
+
     // 5. Submit jobs and monitor
     std::cout << "Submitting jobs and monitoring performance..." << std::endl;
-    
+
     for (int batch = 0; batch < 3; ++batch) {
         // Submit batch of jobs
         for (int i = 0; i < 20; ++i) {
             auto r = pool->enqueue(std::make_unique<callback_job>(
-                [&context]() -> result_void {
+                [&context]() -> kcenon::common::VoidResult {
                     // Simulate varying workload
                     std::this_thread::sleep_for(
                         std::chrono::milliseconds(10 + rand() % 40));
-                    return result_void();
+                    return kcenon::common::ok();
                 }
             ));
-            if (r.has_error()) {
-                std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+            if (r.is_err()) {
+                std::cerr << "enqueue failed: " << r.error().message << std::endl;
             }
         }
-        
+
         // Wait and check metrics
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        
+
         auto snapshot = monitor->get_current_snapshot();
         std::cout << "Batch " << batch + 1 << " metrics:" << std::endl;
         std::cout << "  Jobs completed: " << snapshot.thread_pool.jobs_completed << std::endl;
         std::cout << "  Jobs pending: " << snapshot.thread_pool.jobs_pending << std::endl;
-        std::cout << "  Active workers: " << snapshot.thread_pool.worker_threads 
+        std::cout << "  Active workers: " << snapshot.thread_pool.worker_threads
                   << " (" << snapshot.thread_pool.idle_threads << " idle)" << std::endl;
     }
-    
+
     // 6. Stop and get final stats
     {
         auto r = pool->stop();
-        if (r.has_error()) {
-            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "stop failed: " << r.error().message << std::endl;
         }
     }
     monitor->stop();
@@ -255,27 +255,27 @@ void complete_integration_example() {
     }
     {
         auto r = pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue_batch failed: " << r.error().message << std::endl;
             return;
         }
     }
     {
         auto r = pool->start();
-        if (r.has_error()) {
-            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "start failed: " << r.error().message << std::endl;
             return;
         }
     }
-    
+
     // 5. Run workload with full instrumentation
     std::cout << "Running workload with logging and monitoring..." << std::endl;
-    
+
     auto workload_start = std::chrono::steady_clock::now();
-    
+
     for (int i = 0; i < 50; ++i) {
         auto r = pool->enqueue(std::make_unique<callback_job>(
-            [i, &context]() -> result_void {
+            [i, &context]() -> kcenon::common::VoidResult {
                 // Log job start
                 context.log(log_level_v2::debug,
                     "Job " + std::to_string(i) + " started");
@@ -290,11 +290,11 @@ void complete_integration_example() {
                         "Job " + std::to_string(i) + " took longer than expected");
                 }
 
-                return result_void();
+                return kcenon::common::ok();
             }
         ));
-        if (r.has_error()) {
-            std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue failed: " << r.error().message << std::endl;
         }
     }
     
@@ -312,8 +312,8 @@ void complete_integration_example() {
     // 7. Wait for completion
     {
         auto r = pool->stop();
-        if (r.has_error()) {
-            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "stop failed: " << r.error().message << std::endl;
         }
     }
     
@@ -353,30 +353,30 @@ void dynamic_service_example() {
     }
     {
         auto r = pool->enqueue_batch(std::move(workers));
-        if (r.has_error()) {
-            std::cerr << "enqueue_batch failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue_batch failed: " << r.error().message << std::endl;
             return;
         }
     }
     {
         auto r = pool->start();
-        if (r.has_error()) {
-            std::cerr << "start failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "start failed: " << r.error().message << std::endl;
             return;
         }
     }
-    
+
     // Submit jobs without logging
     std::cout << "Running without services..." << std::endl;
     for (int i = 0; i < 5; ++i) {
         auto r = pool->enqueue(std::make_unique<callback_job>(
-            []() -> result_void {
+            []() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                return result_void();
+                return kcenon::common::ok();
             }
         ));
-        if (r.has_error()) {
-            std::cerr << "enqueue failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "enqueue failed: " << r.error().message << std::endl;
         }
     }
     
@@ -394,24 +394,24 @@ void dynamic_service_example() {
     // Submit more jobs with logging
     for (int i = 5; i < 10; ++i) {
         auto r2 = pool->enqueue(std::make_unique<callback_job>(
-            [i, &new_context]() -> result_void {
+            [i, &new_context]() -> kcenon::common::VoidResult {
                 new_context.log(log_level_v2::info,
                     "Job " + std::to_string(i) + " with dynamic logger");
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                return result_void();
+                return kcenon::common::ok();
             }
         ));
-        if (r2.has_error()) {
-            std::cerr << "enqueue failed: " << r2.get_error().to_string() << std::endl;
+        if (r2.is_err()) {
+            std::cerr << "enqueue failed: " << r2.error().message << std::endl;
         }
     }
-    
+
     std::this_thread::sleep_for(std::chrono::milliseconds(600));
-    
+
     {
         auto r = pool->stop();
-        if (r.has_error()) {
-            std::cerr << "stop failed: " << r.get_error().to_string() << std::endl;
+        if (r.is_err()) {
+            std::cerr << "stop failed: " << r.error().message << std::endl;
         }
     }
     logger->stop();

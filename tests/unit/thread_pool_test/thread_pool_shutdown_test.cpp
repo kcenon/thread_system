@@ -74,7 +74,7 @@ protected:
 		{
 			auto worker = std::make_unique<thread_worker>();
 			auto result = pool_->enqueue(std::move(worker));
-			ASSERT_FALSE(result.has_error());
+			ASSERT_FALSE(result.is_err());
 		}
 	}
 
@@ -87,7 +87,7 @@ TEST_F(ThreadPoolShutdownTest, GracefulShutdownWithPendingTasks)
 	add_workers(4);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	std::atomic<int> completed{0};
 	constexpr int task_count = 100;
@@ -96,11 +96,11 @@ TEST_F(ThreadPoolShutdownTest, GracefulShutdownWithPendingTasks)
 	for (int i = 0; i < task_count; ++i)
 	{
 		auto job = std::make_unique<callback_job>(
-			[&completed](void) -> result_void
+			[&completed](void) -> kcenon::common::VoidResult
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 				completed++;
-				return result_void();
+				return kcenon::common::ok();
 			},
 			"pending_task_" + std::to_string(i));
 		auto result = pool_->enqueue(std::move(job));
@@ -109,7 +109,7 @@ TEST_F(ThreadPoolShutdownTest, GracefulShutdownWithPendingTasks)
 
 	// Graceful shutdown - should wait for pending tasks
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// With graceful shutdown, some tasks should have completed
 	EXPECT_GT(completed.load(), 0);
@@ -121,7 +121,7 @@ TEST_F(ThreadPoolShutdownTest, ImmediateShutdownClearsQueue)
 	add_workers(2);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	std::atomic<int> started{0};
 	std::atomic<int> completed{0};
@@ -131,12 +131,12 @@ TEST_F(ThreadPoolShutdownTest, ImmediateShutdownClearsQueue)
 	for (int i = 0; i < task_count; ++i)
 	{
 		auto job = std::make_unique<callback_job>(
-			[&started, &completed](void) -> result_void
+			[&started, &completed](void) -> kcenon::common::VoidResult
 			{
 				started++;
 				std::this_thread::sleep_for(std::chrono::milliseconds(50));
 				completed++;
-				return result_void();
+				return kcenon::common::ok();
 			},
 			"long_task_" + std::to_string(i));
 		pool_->enqueue(std::move(job));
@@ -147,7 +147,7 @@ TEST_F(ThreadPoolShutdownTest, ImmediateShutdownClearsQueue)
 
 	// Immediate shutdown - should not wait for pending tasks
 	auto stop_result = pool_->stop(true);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// Not all tasks should complete with immediate shutdown
 	EXPECT_LT(completed.load(), task_count);
@@ -159,7 +159,7 @@ TEST_F(ThreadPoolShutdownTest, ShutdownUnderHighLoad)
 	add_workers(4);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	std::atomic<bool> stop_requested{false};
 	std::atomic<int> submitted{0};
@@ -171,14 +171,14 @@ TEST_F(ThreadPoolShutdownTest, ShutdownUnderHighLoad)
 		while (!stop_requested.load())
 		{
 			auto job = std::make_unique<callback_job>(
-				[&completed](void) -> result_void
+				[&completed](void) -> kcenon::common::VoidResult
 				{
 					completed++;
-					return result_void();
+					return kcenon::common::ok();
 				},
 				"high_load_task");
 			auto result = pool_->enqueue(std::move(job));
-			if (!result.has_error())
+			if (!result.is_err())
 			{
 				submitted++;
 			}
@@ -194,7 +194,7 @@ TEST_F(ThreadPoolShutdownTest, ShutdownUnderHighLoad)
 
 	// Graceful shutdown while producer is still trying to submit
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	producer.join();
 
@@ -208,7 +208,7 @@ TEST_F(ThreadPoolShutdownTest, DoubleStartIsHandled)
 	add_workers(2);
 
 	auto start_result1 = pool_->start();
-	EXPECT_FALSE(start_result1.has_error());
+	EXPECT_FALSE(start_result1.is_err());
 
 	// Second start should not cause issues
 	auto start_result2 = pool_->start();
@@ -216,7 +216,7 @@ TEST_F(ThreadPoolShutdownTest, DoubleStartIsHandled)
 	// The important thing is no crash or undefined behavior
 
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 // Test restart after stop behavior
@@ -225,10 +225,10 @@ TEST_F(ThreadPoolShutdownTest, RestartAfterStopBehavior)
 	add_workers(2);
 
 	auto start_result = pool_->start();
-	EXPECT_FALSE(start_result.has_error());
+	EXPECT_FALSE(start_result.is_err());
 
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 
 	// After stop, start behavior depends on implementation
 	// The important thing is it doesn't crash or cause undefined behavior
@@ -243,18 +243,18 @@ TEST_F(ThreadPoolShutdownTest, ShutdownWithLongRunningTask)
 	add_workers(1);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	std::atomic<bool> task_started{false};
 	std::atomic<bool> task_completed{false};
 
 	auto job = std::make_unique<callback_job>(
-		[&task_started, &task_completed](void) -> result_void
+		[&task_started, &task_completed](void) -> kcenon::common::VoidResult
 		{
 			task_started.store(true);
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			task_completed.store(true);
-			return result_void();
+			return kcenon::common::ok();
 		},
 		"long_running_task");
 	pool_->enqueue(std::move(job));
@@ -267,7 +267,7 @@ TEST_F(ThreadPoolShutdownTest, ShutdownWithLongRunningTask)
 
 	// Graceful shutdown should wait for running task
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 	EXPECT_TRUE(task_completed.load());
 }
 
@@ -277,15 +277,15 @@ TEST_F(ThreadPoolShutdownTest, GracefulThenImmediateShutdown)
 	add_workers(2);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	// First graceful stop
 	auto stop1 = pool_->stop(false);
-	EXPECT_FALSE(stop1.has_error());
+	EXPECT_FALSE(stop1.is_err());
 
 	// Second immediate stop should also succeed (idempotent)
 	auto stop2 = pool_->stop(true);
-	EXPECT_FALSE(stop2.has_error());
+	EXPECT_FALSE(stop2.is_err());
 }
 
 // Test shutdown with no tasks submitted
@@ -294,11 +294,11 @@ TEST_F(ThreadPoolShutdownTest, ShutdownWithNoTasksSubmitted)
 	add_workers(4);
 
 	auto start_result = pool_->start();
-	ASSERT_FALSE(start_result.has_error());
+	ASSERT_FALSE(start_result.is_err());
 
 	// Immediately shutdown without submitting any tasks
 	auto stop_result = pool_->stop(false);
-	EXPECT_FALSE(stop_result.has_error());
+	EXPECT_FALSE(stop_result.is_err());
 }
 
 // Test rapid start-stop cycles
@@ -312,19 +312,19 @@ TEST_F(ThreadPoolShutdownTest, RapidStartStopCycles)
 		{
 			auto worker = std::make_unique<thread_worker>();
 			auto result = pool->enqueue(std::move(worker));
-			ASSERT_FALSE(result.has_error());
+			ASSERT_FALSE(result.is_err());
 		}
 
 		auto start_result = pool->start();
-		ASSERT_FALSE(start_result.has_error());
+		ASSERT_FALSE(start_result.is_err());
 
 		// Submit a quick task
 		auto job = std::make_unique<callback_job>(
-			[](void) -> result_void { return result_void(); },
+			[](void) -> kcenon::common::VoidResult { return kcenon::common::ok(); },
 			"quick_task");
 		pool->enqueue(std::move(job));
 
 		auto stop_result = pool->stop(false);
-		EXPECT_FALSE(stop_result.has_error());
+		EXPECT_FALSE(stop_result.is_err());
 	}
 }

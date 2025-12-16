@@ -222,19 +222,19 @@ TEST_F(QueueFactoryTest, CreateOptimal) {
 
     // Verify it implements scheduler_interface
     std::atomic<int> counter{0};
-    auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+    auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 
     auto schedule_result = queue->schedule(std::move(job));
-    EXPECT_FALSE(schedule_result.has_error());
+    EXPECT_FALSE(schedule_result.is_err());
 
     auto get_result = queue->get_next_job();
-    EXPECT_TRUE(get_result.has_value());
+    EXPECT_TRUE(get_result.is_ok());
 
     auto exec_result = get_result.value()->do_work();
-    EXPECT_FALSE(exec_result.has_error());
+    EXPECT_FALSE(exec_result.is_err());
     EXPECT_EQ(counter.load(), 1);
 }
 
@@ -294,19 +294,19 @@ TEST_F(QueueFactoryTest, StandardQueueFunctional) {
 
     std::atomic<int> counter{0};
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
         auto result = queue->enqueue(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     EXPECT_EQ(queue->size(), 10);
 
     for (int i = 0; i < 10; ++i) {
         auto result = queue->dequeue();
-        EXPECT_TRUE(result.has_value());
+        EXPECT_TRUE(result.is_ok());
         (void)result.value()->do_work();
     }
 
@@ -319,16 +319,20 @@ TEST_F(QueueFactoryTest, LockfreeQueueFunctional) {
 
     std::atomic<int> counter{0};
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
         auto result = queue->enqueue(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     int dequeued = 0;
-    while (auto result = queue->dequeue()) {
+    while (true) {
+        auto result = queue->dequeue();
+        if (result.is_err()) {
+            break;
+        }
         (void)result.value()->do_work();
         ++dequeued;
     }
@@ -342,16 +346,20 @@ TEST_F(QueueFactoryTest, AdaptiveQueueFunctional) {
 
     std::atomic<int> counter{0};
     for (int i = 0; i < 10; ++i) {
-        auto job = std::make_unique<callback_job>([&counter]() -> result_void {
+        auto job = std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
             counter.fetch_add(1, std::memory_order_relaxed);
-            return result_void();
+            return kcenon::common::ok();
         });
         auto result = queue->enqueue(std::move(job));
-        EXPECT_FALSE(result.has_error());
+        EXPECT_FALSE(result.is_err());
     }
 
     int dequeued = 0;
-    while (auto result = queue->dequeue()) {
+    while (true) {
+        auto result = queue->dequeue();
+        if (result.is_err()) {
+            break;
+        }
         (void)result.value()->do_work();
         ++dequeued;
     }
@@ -371,9 +379,9 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
-        EXPECT_TRUE(scheduler->get_next_job().has_value());
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).is_err());
+        EXPECT_TRUE(scheduler->get_next_job().is_ok());
     }
 
     // Lockfree queue
@@ -382,9 +390,9 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
-        EXPECT_TRUE(scheduler->get_next_job().has_value());
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).is_err());
+        EXPECT_TRUE(scheduler->get_next_job().is_ok());
     }
 
     // Adaptive queue
@@ -393,9 +401,9 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
-        auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-        EXPECT_FALSE(scheduler->schedule(std::move(job)).has_error());
-        EXPECT_TRUE(scheduler->get_next_job().has_value());
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(scheduler->schedule(std::move(job)).is_err());
+        EXPECT_TRUE(scheduler->get_next_job().is_ok());
     }
 }
 
@@ -420,7 +428,7 @@ TEST_F(QueueFactoryTest, ExistingCodeStillWorks) {
     EXPECT_TRUE(q3->empty());
 
     // All existing methods work
-    auto job = std::make_unique<callback_job>([]() -> result_void { return result_void(); });
-    EXPECT_FALSE(q1->enqueue(std::move(job)).has_error());
-    EXPECT_TRUE(q1->dequeue().has_value());
+    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+    EXPECT_FALSE(q1->enqueue(std::move(job)).is_err());
+    EXPECT_TRUE(q1->dequeue().is_ok());
 }

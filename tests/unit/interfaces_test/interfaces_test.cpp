@@ -55,14 +55,14 @@ TEST(interfaces_test, scheduler_interface_job_queue)
     job_queue queue;
 
     std::atomic<int> count{0};
-    auto r1 = queue.schedule(std::make_unique<callback_job>([&count]() -> result_void {
+    auto r1 = queue.schedule(std::make_unique<callback_job>([&count]() -> kcenon::common::VoidResult {
         count.fetch_add(1);
-        return result_void();
+        return kcenon::common::ok();
     }));
-    EXPECT_TRUE(r1);
+    EXPECT_TRUE(r1.is_ok());
 
     auto j = queue.get_next_job();
-    ASSERT_TRUE(j.has_value());
+    ASSERT_TRUE(j.is_ok());
     auto res = j.value()->do_work();
     (void)res;
     EXPECT_EQ(count.load(), 1);
@@ -78,25 +78,25 @@ TEST(interfaces_test, thread_pool_execute)
         w->set_wake_interval(std::chrono::milliseconds(10));
         workers.push_back(std::move(w));
     }
-    ASSERT_TRUE(pool->enqueue_batch(std::move(workers)));
+    ASSERT_TRUE(pool->enqueue_batch(std::move(workers)).is_ok());
 
     std::atomic<int> count{0};
     // Use thread_pool's enqueue method directly instead of deprecated executor_interface
-    auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> result_void {
+    auto r = pool->enqueue(std::make_unique<callback_job>([&count]() -> kcenon::common::VoidResult {
         count.fetch_add(1);
-        return result_void();
+        return kcenon::common::ok();
     }));
-    ASSERT_TRUE(r);
+    ASSERT_TRUE(r.is_ok());
 
     // Start after enqueue so worker picks up existing job
-    ASSERT_TRUE(pool->start());
+    ASSERT_TRUE(pool->start().is_ok());
 
     auto start = std::chrono::steady_clock::now();
     while (count.load() < 1 && std::chrono::steady_clock::now() - start < std::chrono::seconds(2)) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     EXPECT_EQ(count.load(), 1);
-    EXPECT_TRUE(pool->stop());
+    EXPECT_TRUE(pool->stop().is_ok());
 }
 
 namespace {

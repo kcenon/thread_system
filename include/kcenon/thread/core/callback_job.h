@@ -123,10 +123,10 @@ namespace kcenon::thread
 		 * @brief Constructs a new @c callback_job instance with a parameterless callback using modern error handling.
 		 *
 		 * @param callback A function object that performs the job's work.
-		 *                 - Returns @c result_void on success or failure.
+		 *                 - Returns @c common::VoidResult on success or failure.
 		 * @param name     An optional name for this job (default is "callback_job").
 		 */
-		callback_job(const std::function<result_void(void)>& callback,
+		callback_job(const std::function<common::VoidResult(void)>& callback,
 					 const std::string& name = "callback_job");
 
 		/**
@@ -170,12 +170,12 @@ namespace kcenon::thread
 		 *
 		 * @param data_callback A function object that performs the job's work, taking a
 		 *                      @c std::vector<uint8_t> as its input.
-		 *                      - Returns @c result_void on success or failure.
+		 *                      - Returns @c common::VoidResult on success or failure.
 		 * @param data          A vector of bytes that will be passed to @p data_callback
 		 *                      when the job is executed.
 		 * @param name          An optional name for this job (default is "data_callback_job").
 		 */
-		callback_job(const std::function<result_void(const std::vector<uint8_t>&)>&
+		callback_job(const std::function<common::VoidResult(const std::vector<uint8_t>&)>&
 						 data_callback,
 					 const std::vector<uint8_t>& data,
 					 const std::string& name = "data_callback_job");
@@ -199,7 +199,7 @@ namespace kcenon::thread
 		 * - If @c data_callback_ is set, @c do_work() invokes it with the associated data.
 		 * - Otherwise, it invokes the parameterless @c callback_.
 		 */
-		[[nodiscard]] auto do_work(void) -> result_void override;
+		[[nodiscard]] auto do_work(void) -> common::VoidResult override;
 
 	protected:
 		/**
@@ -208,7 +208,7 @@ namespace kcenon::thread
 		 * This callback is only valid if the @c callback_job was constructed via the
 		 * parameterless constructor. If this member is used, @c data_callback_ should be null.
 		 */
-		std::function<result_void(void)> callback_;
+		std::function<common::VoidResult(void)> callback_;
 
 		/**
 		 * @brief Stores the user-defined callback that takes a @c std::vector<uint8_t>.
@@ -216,7 +216,7 @@ namespace kcenon::thread
 		 * This callback is only valid if the @c callback_job was constructed via the
 		 * data-based constructor. If this member is used, @c callback_ should be null.
 		 */
-		std::function<result_void(const std::vector<uint8_t>&)> data_callback_;
+		std::function<common::VoidResult(const std::vector<uint8_t>&)> data_callback_;
     
     /**
      * @brief Compatibility layer for the old style callbacks.

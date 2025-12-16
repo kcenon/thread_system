@@ -121,49 +121,49 @@ namespace kcenon::thread
 		/**
 		 * @brief scheduler_interface implementation: schedule a job
 		 */
-		auto schedule(std::unique_ptr<job>&& value) -> result_void override { return enqueue(std::move(value)); }
+		auto schedule(std::unique_ptr<job>&& value) -> common::VoidResult override { return enqueue(std::move(value)); }
 
 		/**
 		 * @brief scheduler_interface implementation: get next job
 		 */
-		auto get_next_job() -> result<std::unique_ptr<job>> override { return dequeue(); }
+		auto get_next_job() -> common::Result<std::unique_ptr<job>> override { return dequeue(); }
 
 		/**
 		 * @brief Enqueues a new job into the queue.
 		 * @param value A unique pointer to the job being added.
-		 * @return A result_void indicating success or an error message.
+		 * @return A common::VoidResult indicating success or an error message.
 		 *
 		 * This method is thread-safe. If @c notify_ is set to @c true, a waiting
 		 * thread (if any) will be notified upon successful enqueue.
 		 */
-		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value) -> result_void;
+		[[nodiscard]] virtual auto enqueue(std::unique_ptr<job>&& value) -> common::VoidResult;
 
 		/**
 		 * @brief Enqueues a batch of jobs into the queue.
 		 * @param jobs A vector of unique pointers to the jobs being added.
-		 * @return A result_void indicating success or an error message.
+		 * @return A common::VoidResult indicating success or an error message.
 		 */
-		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
+		[[nodiscard]] virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult;
 
 		/**
 		 * @brief Dequeues a job from the queue in FIFO order (blocking operation).
-		 * @return A result<std::unique_ptr<job>> containing either a valid job
+		 * @return A common::Result<std::unique_ptr<job>> containing either a valid job
 		 *         or an error object.
 		 *
 		 * If the queue is empty, the caller will block until a job becomes available
 		 * or the queue is stopped. Use try_dequeue() for non-blocking operation.
 		 */
-		[[nodiscard]] virtual auto dequeue(void) -> result<std::unique_ptr<job>>;
+		[[nodiscard]] virtual auto dequeue(void) -> common::Result<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Attempts to dequeue a job from the queue without blocking.
-		 * @return A result<std::unique_ptr<job>> containing either a valid job
+		 * @return A common::Result<std::unique_ptr<job>> containing either a valid job
 		 *         or an error object.
 		 *
 		 * If the queue is empty, this method returns immediately with an error
 		 * instead of blocking. This is useful for polling-based consumers.
 		 */
-		[[nodiscard]] virtual auto try_dequeue(void) -> result<std::unique_ptr<job>>;
+		[[nodiscard]] virtual auto try_dequeue(void) -> common::Result<std::unique_ptr<job>>;
 
 		/**
 		 * @brief Dequeues all remaining jobs from the queue without processing them.

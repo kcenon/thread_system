@@ -73,7 +73,7 @@ auto initialize_logger() -> std::optional<std::string>
 }
 
 auto create_default(const uint16_t& worker_counts)
-	-> std::tuple<std::shared_ptr<thread_pool>, result_void>
+	-> std::tuple<std::shared_ptr<thread_pool>, kcenon::common::VoidResult>
 {
 	std::shared_ptr<thread_pool> pool;
 
@@ -83,10 +83,11 @@ auto create_default(const uint16_t& worker_counts)
 	}
 	catch (const std::bad_alloc& e)
 	{
-		return { nullptr, std::string(e.what()) };
+		return { nullptr, kcenon::common::error_info{
+			kcenon::thread::error_code::allocation_failed,
+			e.what(),
+			"thread_pool_sample"} };
 	}
-
-	result_void error_result;
 
 	std::vector<std::unique_ptr<thread_worker>> workers;
 	workers.reserve(worker_counts);
@@ -96,40 +97,38 @@ auto create_default(const uint16_t& worker_counts)
 	}
 
 	auto enqueue_result = pool->enqueue_batch(std::move(workers));
-	if (enqueue_result.has_error())
+	if (enqueue_result.is_err())
 	{
-		return { nullptr, result_void{enqueue_result.get_error()} };
+		return { nullptr, enqueue_result.error() };
 	}
 
-	return { pool, result_void{} };
+	return { pool, kcenon::common::ok() };
 }
 
-auto store_job(std::shared_ptr<thread_pool> thread_pool) -> result_void
+auto store_job(std::shared_ptr<thread_pool> thread_pool) -> kcenon::common::VoidResult
 {
-	result_void result;
-
 	std::vector<std::unique_ptr<job>> jobs;
 	jobs.reserve(test_line_count_);
 
 	for (auto index = 0; index < test_line_count_; ++index)
 	{
 		jobs.push_back(std::make_unique<callback_job>(
-			[index](void) -> result_void
+			[index](void) -> kcenon::common::VoidResult
 			{
 				log_module::write_debug("Hello, World!: {}", index);
-				return result_void();
+				return kcenon::common::ok();
 			}));
 	}
 
-	result = thread_pool->enqueue_batch(std::move(jobs));
-	if (result.has_error())
+	auto result = thread_pool->enqueue_batch(std::move(jobs));
+	if (result.is_err())
 	{
-		return result.get_error();
+		return result.error();
 	}
 
 	log_module::write_sequence("enqueued jobs: {}", test_line_count_);
 
-	return result_void{};
+	return kcenon::common::ok();
 }
 
 auto main() -> int
@@ -143,12 +142,12 @@ auto main() -> int
 	}
 
 	std::shared_ptr<thread_pool> thread_pool = nullptr;
-	result_void pool_init_result;
+	kcenon::common::VoidResult pool_init_result;
 	std::tie(thread_pool, pool_init_result) = create_default(thread_counts_);
-	if (pool_init_result.has_error())
+	if (pool_init_result.is_err())
 	{
 		log_module::write_error("error creating thread pool: {}",
-								pool_init_result.get_error().to_string());
+								pool_init_result.error().message);
 
 		return 0;
 	}
@@ -156,9 +155,9 @@ auto main() -> int
 	log_module::write_information("created {}", thread_pool->to_string());
 
 	auto store_result = store_job(thread_pool);
-	if (store_result.has_error())
+	if (store_result.is_err())
 	{
-		log_module::write_error("error storing job: {}", store_result.get_error().to_string());
+		log_module::write_error("error storing job: {}", store_result.error().message);
 
 		thread_pool.reset();
 
@@ -166,10 +165,10 @@ auto main() -> int
 	}
 
 	auto start_result = thread_pool->start();
-	if (start_result.has_error())
+	if (start_result.is_err())
 	{
 		log_module::write_error("error starting thread pool: {}",
-								start_result.get_error().to_string());
+								start_result.error().message);
 
 		thread_pool.reset();
 
@@ -179,10 +178,10 @@ auto main() -> int
 	log_module::write_information("started {}", thread_pool->to_string());
 
 	auto stop_result = thread_pool->stop();
-	if (stop_result.has_error())
+	if (stop_result.is_err())
 	{
 		log_module::write_error("error stopping thread pool: {}",
-								stop_result.get_error().to_string());
+								stop_result.error().message);
 	}
 
 	log_module::write_information("stopped {}", thread_pool->to_string());

@@ -127,15 +127,15 @@ public:
     /**
      * @brief Schedule a job (delegates to current queue)
      * @param work Job to schedule
-     * @return result_void Success or error
+     * @return common::VoidResult Success or error
      */
-    auto schedule(std::unique_ptr<job>&& work) -> result_void override;
+    auto schedule(std::unique_ptr<job>&& work) -> common::VoidResult override;
 
     /**
      * @brief Get next job (delegates to current queue)
-     * @return result<std::unique_ptr<job>> The dequeued job or error
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or error
      */
-    auto get_next_job() -> result<std::unique_ptr<job>> override;
+    auto get_next_job() -> common::Result<std::unique_ptr<job>> override;
 
     // ============================================
     // Standard queue operations
@@ -144,21 +144,21 @@ public:
     /**
      * @brief Enqueues a job into the current active queue
      * @param j Unique pointer to the job being added
-     * @return result_void indicating success or error
+     * @return common::VoidResult indicating success or error
      */
-    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& j) -> result_void;
+    [[nodiscard]] auto enqueue(std::unique_ptr<job>&& j) -> common::VoidResult;
 
     /**
      * @brief Dequeues a job from the current active queue
-     * @return result<std::unique_ptr<job>> The dequeued job or error
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or error
      */
-    [[nodiscard]] auto dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>>;
 
     /**
      * @brief Tries to dequeue a job without blocking
-     * @return result<std::unique_ptr<job>> The dequeued job or error
+     * @return common::Result<std::unique_ptr<job>> The dequeued job or error
      */
-    [[nodiscard]] auto try_dequeue() -> result<std::unique_ptr<job>>;
+    [[nodiscard]] auto try_dequeue() -> common::Result<std::unique_ptr<job>>;
 
     /**
      * @brief Checks if the queue is empty
@@ -225,7 +225,7 @@ public:
      * @param m Target mode to switch to
      * @return result_void Success or error if policy is not manual
      */
-    auto switch_mode(mode m) -> result_void;
+    auto switch_mode(mode m) -> common::VoidResult;
 
     /**
      * @brief Statistics about mode switching

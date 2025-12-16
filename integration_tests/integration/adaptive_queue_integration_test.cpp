@@ -85,7 +85,7 @@ protected:
     // Drain queue helper - non-blocking, fast
     void DrainQueue(adaptive_job_queue& queue, std::atomic<size_t>& dequeued) {
         for (int attempts = 0; attempts < 50; ++attempts) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
                 attempts = 0;
             } else if (queue.empty()) {
@@ -122,8 +122,8 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
     // Single producer-consumer pair for fast execution
     std::thread producer([&]() {
         for (int i = 0; i < 100 && !stop.load(std::memory_order_acquire); ++i) {
-            auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-            if (!queue.enqueue(std::move(job)).has_error()) {
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+            if (!queue.enqueue(std::move(job)).is_err()) {
                 enqueued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -131,7 +131,7 @@ TEST_F(AdaptiveQueueIntegrationTest, BalancedPolicyVariableLoad_DataIntegrityUnd
 
     std::thread consumer([&]() {
         while (!stop.load(std::memory_order_acquire) || !queue.empty()) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
             } else {
                 std::this_thread::yield();
@@ -167,8 +167,8 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
 
     std::thread producer([&]() {
         while (!stop.load(std::memory_order_acquire)) {
-            auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-            if (!queue.enqueue(std::move(job)).has_error()) {
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+            if (!queue.enqueue(std::move(job)).is_err()) {
                 enqueued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -176,7 +176,7 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_NoDeadlocks) {
 
     std::thread consumer([&]() {
         while (!stop.load(std::memory_order_acquire) || !queue.empty()) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
             } else {
                 std::this_thread::yield();
@@ -211,7 +211,7 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
 
     std::thread consumer([&]() {
         while (!stop_consumer.load(std::memory_order_acquire) || !queue.empty()) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 processed.fetch_add(1, std::memory_order_relaxed);
             } else {
                 std::this_thread::yield();
@@ -220,8 +220,8 @@ TEST_F(AdaptiveQueueIntegrationTest, ModeSwitchingConcurrent_CorrectJobCount) {
     });
 
     for (size_t i = 0; i < total_jobs; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        EXPECT_FALSE(queue.enqueue(std::move(job)).has_error());
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(queue.enqueue(std::move(job)).is_err());
 
         if (i % 50 == 0) {
             if (queue.current_mode() == adaptive_job_queue::mode::mutex) {
@@ -251,8 +251,8 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ExactSizeWithGuard) 
 
     constexpr size_t job_count = 50;
     for (size_t i = 0; i < job_count; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-        EXPECT_FALSE(queue.enqueue(std::move(job)).has_error());
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+        EXPECT_FALSE(queue.enqueue(std::move(job)).is_err());
     }
 
     {
@@ -274,11 +274,11 @@ TEST_F(AdaptiveQueueIntegrationTest, AccuracyGuardUnderLoad_ConcurrentAccess) {
 
     std::thread worker([&]() {
         while (!stop.load(std::memory_order_acquire)) {
-            auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-            if (!queue.enqueue(std::move(job)).has_error()) {
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+            if (!queue.enqueue(std::move(job)).is_err()) {
                 enqueued.fetch_add(1, std::memory_order_relaxed);
             }
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -326,7 +326,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_AccuracyFirstAlwaysMutex)
 
     constexpr size_t job_count = 100;
     for (size_t i = 0; i < job_count; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
         (void)queue.enqueue(std::move(job));
     }
 
@@ -334,7 +334,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_AccuracyFirstAlwaysMutex)
     EXPECT_EQ(queue.size(), job_count);
 
     auto result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
 }
 
@@ -347,7 +347,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_PerformanceFirstAlwaysLoc
 
     std::thread worker([&]() {
         while (!stop.load(std::memory_order_acquire)) {
-            auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
             (void)queue.enqueue(std::move(job));
             (void)queue.try_dequeue();
         }
@@ -364,7 +364,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_PerformanceFirstAlwaysLoc
     worker.join();
 
     auto result = queue.switch_mode(adaptive_job_queue::mode::mutex);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_ManualPolicyAllowsSwitch) {
@@ -373,11 +373,11 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_ManualPolicyAllowsSwitch)
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
 
     auto result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::lock_free);
 
     result = queue.switch_mode(adaptive_job_queue::mode::mutex);
-    EXPECT_FALSE(result.has_error());
+    EXPECT_FALSE(result.is_err());
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
 
     EXPECT_EQ(queue.get_stats().mode_switches, 2u);
@@ -389,7 +389,7 @@ TEST_F(AdaptiveQueueIntegrationTest, PolicyEnforcement_BalancedPolicyStartsMutex
     EXPECT_EQ(queue.current_mode(), adaptive_job_queue::mode::mutex);
 
     auto result = queue.switch_mode(adaptive_job_queue::mode::lock_free);
-    EXPECT_TRUE(result.has_error());
+    EXPECT_TRUE(result.is_err());
 }
 
 // ============================================
@@ -406,9 +406,9 @@ TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
 
     std::thread producer([&]() {
         for (size_t i = 0; i < total_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
-            while (queue.enqueue(std::move(job)).has_error()) {
-                job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
+            while (queue.enqueue(std::move(job)).is_err()) {
+                job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
                 std::this_thread::yield();
             }
             enqueued.fetch_add(1, std::memory_order_relaxed);
@@ -417,7 +417,7 @@ TEST_F(AdaptiveQueueIntegrationTest, StressTest_HighConcurrencyNoDataLoss) {
 
     std::thread consumer([&]() {
         while (!stop_all.load(std::memory_order_acquire)) {
-            if (auto result = queue.try_dequeue(); result.has_value()) {
+            if (auto result = queue.try_dequeue(); result.is_ok()) {
                 dequeued.fetch_add(1, std::memory_order_relaxed);
             } else {
                 std::this_thread::yield();
@@ -458,7 +458,7 @@ TEST_F(AdaptiveQueueIntegrationTest, StatisticsAccuracyAfterOperations) {
 
     constexpr size_t ops = 50;
     for (size_t i = 0; i < ops; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void { return {}; });
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
         (void)queue.enqueue(std::move(job));
     }
 

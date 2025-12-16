@@ -48,7 +48,7 @@ TEST_F(BasicJobExecutionSmoke, CanExecuteMultipleJobs) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 10;
     for (size_t i = 0; i < job_count; ++i) {
@@ -70,7 +70,7 @@ TEST_F(BasicJobExecutionSmoke, CanSubmitJobsBeforeStart) {
 
     // Now start pool - jobs should execute
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     EXPECT_TRUE(WaitForJobCompletion(job_count, std::chrono::seconds(2)));
     EXPECT_EQ(completed_jobs_.load(), job_count);
@@ -81,14 +81,14 @@ TEST_F(BasicJobExecutionSmoke, CanEnqueueAndDequeueFromQueue) {
     queue->set_notify(true);
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        []() -> kcenon::thread::result_void { return {}; }
+        []() -> kcenon::common::VoidResult { return kcenon::common::ok(); }
     );
 
     auto result = queue->enqueue(std::move(job));
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result.is_ok());
     EXPECT_EQ(queue->size(), 1);
 
     auto dequeued = queue->try_dequeue();
-    EXPECT_TRUE(dequeued.has_value());
+    EXPECT_TRUE(dequeued.is_ok());
     EXPECT_TRUE(queue->empty());
 }

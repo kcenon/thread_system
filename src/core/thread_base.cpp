@@ -155,7 +155,7 @@ namespace kcenon::thread
 	 * 
 	 * @return Empty result on success, error on failure
 	 */
-	auto thread_base::start(void) -> result_void
+	auto thread_base::start(void) -> common::VoidResult
 	{
 		// Check if thread is already running using platform-specific method
 #ifdef USE_STD_JTHREAD
@@ -164,7 +164,7 @@ namespace kcenon::thread
 		if (worker_thread_ && worker_thread_->joinable())
 #endif
 		{
-			return result_void{error{error_code::thread_already_running, "thread is already running"}};
+			return common::error_info{static_cast<int>(error_code::thread_already_running), "thread is already running", "thread_system"};
 		}
 
 		// Ensure clean state by stopping any existing thread first
@@ -194,9 +194,9 @@ namespace kcenon::thread
 
 					// Phase 1: Call derived class initialization hook
 					auto work_result = before_start();
-					if (work_result.has_error())
+					if (work_result.is_err())
 					{
-						std::cerr << "error before start: " << work_result.get_error().to_string()
+						std::cerr << "error before start: " << work_result.error().message
 								  << std::endl;
 					}
 
@@ -264,14 +264,14 @@ namespace kcenon::thread
 
 							// Call derived class work implementation
 							work_result = do_work();
-							if (work_result.has_error())
+							if (work_result.is_err())
 							{
 								// Use structured logger instead of raw std::cerr
 								kcenon::thread::thread_logger::instance().log(
 									kcenon::thread::log_level::error,
 									thread_title_,
 									"Work execution failed",
-									work_result.get_error().to_string());
+									work_result.error().message);
 							}
 
 							// Reset consecutive failures counter on successful completion
@@ -308,13 +308,13 @@ namespace kcenon::thread
 
 					// Phase 3: Call derived class cleanup hook after main loop exits
 					work_result = after_stop();
-					if (work_result.has_error())
+					if (work_result.is_err())
 					{
 						kcenon::thread::thread_logger::instance().log(
 							kcenon::thread::log_level::error,
 							thread_title_,
 							"Error during cleanup",
-							work_result.get_error().to_string());
+							work_result.error().message);
 					}
 				});  // End of lambda function passed to thread constructor
 		}
@@ -329,11 +329,11 @@ namespace kcenon::thread
 
 			worker_thread_.reset();
 
-			return result_void{error{error_code::resource_allocation_failed, e.what()}};
+			return common::error_info{static_cast<int>(error_code::resource_allocation_failed), e.what(), "thread_system"};
 		}
 
 		// Thread creation successful
-		return {};
+		return common::ok();
 	}
 
 	/**
@@ -363,12 +363,12 @@ namespace kcenon::thread
 	 * 
 	 * @return Empty result on success, error if thread wasn't running
 	 */
-	auto thread_base::stop(void) -> result_void
+	auto thread_base::stop(void) -> common::VoidResult
 	{
 		// Early exit if no thread to stop (idempotent behavior)
 		if (worker_thread_ == nullptr)
 		{
-			return result_void{error{error_code::thread_not_running, "thread is not running"}};
+			return common::error_info{static_cast<int>(error_code::thread_not_running), "thread is not running", "thread_system"};
 		}
 
 		// Only attempt to stop if thread is actually joinable
@@ -378,8 +378,8 @@ namespace kcenon::thread
 			// Calling join() from the same thread would cause deadlock
 			if (worker_thread_->get_id() == std::this_thread::get_id())
 			{
-				return result_void{error{error_code::invalid_argument,
-					"cannot stop thread from within itself - would cause deadlock"}};
+				return common::error_info{static_cast<int>(error_code::invalid_argument),
+					"cannot stop thread from within itself - would cause deadlock", "thread_system"};
 			}
 
 			// Step 1: Signal the thread to stop using platform-specific mechanism
@@ -415,7 +415,7 @@ namespace kcenon::thread
 		// Step 5: Update thread state to indicate complete shutdown
 		thread_condition_.store(thread_conditions::Stopped);
 
-		return {};
+		return common::ok();
 	}
 
 	/**

@@ -79,7 +79,7 @@ TEST_F(ThreadPoolPerformanceTest, JobSubmissionLatency) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 10'000;
     PerformanceMetrics metrics;
@@ -88,13 +88,13 @@ TEST_F(ThreadPoolPerformanceTest, JobSubmissionLatency) {
         auto start = std::chrono::high_resolution_clock::now();
 
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         auto submit_result = pool_->enqueue(std::move(job));
-        ASSERT_TRUE(submit_result);
+        ASSERT_TRUE(submit_result.is_ok());
 
         auto end = std::chrono::high_resolution_clock::now();
         metrics.add_sample(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start));
@@ -117,7 +117,7 @@ TEST_F(ThreadPoolPerformanceTest, ThroughputEmptyJobs) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 100'000;
 
@@ -125,9 +125,9 @@ TEST_F(ThreadPoolPerformanceTest, ThroughputEmptyJobs) {
 
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this]() -> kcenon::thread::result_void {
+            [this]() -> kcenon::common::VoidResult {
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));
@@ -153,7 +153,7 @@ TEST_F(ThreadPoolPerformanceTest, ThroughputWithWork) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t job_count = 10'000;
     const auto work_duration = std::chrono::microseconds(10);
@@ -162,10 +162,10 @@ TEST_F(ThreadPoolPerformanceTest, ThroughputWithWork) {
 
     for (size_t i = 0; i < job_count; ++i) {
         auto job = std::make_unique<kcenon::thread::callback_job>(
-            [this, work_duration]() -> kcenon::thread::result_void {
+            [this, work_duration]() -> kcenon::common::VoidResult {
                 WorkSimulator::simulate_work(work_duration);
                 completed_jobs_.fetch_add(1);
-                return {};
+                return kcenon::common::ok();
             }
         );
         pool_->enqueue(std::move(job));
@@ -198,7 +198,7 @@ TEST_F(ThreadPoolPerformanceTest, ScalabilityTest) {
         CreateThreadPool(workers);
 
         auto result = pool_->start();
-        ASSERT_TRUE(result);
+        ASSERT_TRUE(result.is_ok());
 
         completed_jobs_.store(0);
 
@@ -206,10 +206,10 @@ TEST_F(ThreadPoolPerformanceTest, ScalabilityTest) {
 
         for (size_t i = 0; i < job_count; ++i) {
             auto job = std::make_unique<kcenon::thread::callback_job>(
-                [this]() -> kcenon::thread::result_void {
+                [this]() -> kcenon::common::VoidResult {
                     WorkSimulator::simulate_work(std::chrono::microseconds(1));
                     completed_jobs_.fetch_add(1);
-                    return {};
+                    return kcenon::common::ok();
                 }
             );
             pool_->enqueue(std::move(job));
@@ -236,7 +236,7 @@ TEST_F(ThreadPoolPerformanceTest, HighContentionPerformance) {
     CreateThreadPool(8);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t num_producers = ScaleForCI(16);
     const size_t jobs_per_producer = ScaleForCI(5'000);
@@ -251,13 +251,13 @@ TEST_F(ThreadPoolPerformanceTest, HighContentionPerformance) {
         producers.emplace_back([this, &submitted, jobs_per_producer]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    [this]() -> kcenon::thread::result_void {
+                    [this]() -> kcenon::common::VoidResult {
                         completed_jobs_.fetch_add(1);
-                        return {};
+                        return kcenon::common::ok();
                     }
                 );
                 auto result = pool_->enqueue(std::move(job));
-                if (result) {
+                if (result.is_ok()) {
                     submitted.fetch_add(1);
                 }
             }
@@ -289,7 +289,7 @@ TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t num_batches = ScaleForCI(100);
     const size_t jobs_per_batch = ScaleForCI(1'000);
@@ -304,9 +304,9 @@ TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
 
         for (size_t i = 0; i < jobs_per_batch; ++i) {
             jobs.push_back(std::make_unique<kcenon::thread::callback_job>(
-                [this]() -> kcenon::thread::result_void {
+                [this]() -> kcenon::common::VoidResult {
                     completed_jobs_.fetch_add(1);
-                    return {};
+                    return kcenon::common::ok();
                 }
             ));
         }
@@ -315,7 +315,7 @@ TEST_F(ThreadPoolPerformanceTest, BatchSubmissionPerformance) {
         auto batch_result = pool_->enqueue_batch(std::move(jobs));
         auto batch_end = std::chrono::high_resolution_clock::now();
 
-        EXPECT_TRUE(batch_result);
+        EXPECT_TRUE(batch_result.is_ok());
         metrics.add_sample(std::chrono::duration_cast<std::chrono::nanoseconds>(
             batch_end - batch_start));
     }
@@ -344,7 +344,7 @@ TEST_F(ThreadPoolPerformanceTest, MemoryOverhead) {
     CreateThreadPool(worker_count);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     // Submit and complete jobs
     const size_t job_count = 10'000;
@@ -368,7 +368,7 @@ TEST_F(ThreadPoolPerformanceTest, SustainedLoad) {
     CreateThreadPool(4);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t duration_seconds = std::getenv("CI") ? 2 : 5;
     const size_t jobs_per_second = ScaleForCI(10'000);
@@ -380,9 +380,9 @@ TEST_F(ThreadPoolPerformanceTest, SustainedLoad) {
         while (!stop_flag.load()) {
             for (size_t i = 0; i < jobs_per_second / 10; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    [this]() -> kcenon::thread::result_void {
+                    [this]() -> kcenon::common::VoidResult {
                         completed_jobs_.fetch_add(1);
-                        return {};
+                        return kcenon::common::ok();
                     }
                 );
                 pool_->enqueue(std::move(job));
