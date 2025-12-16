@@ -49,7 +49,7 @@ TEST_F(SustainedLoadStress, ContinuousLoad5Minutes) {
     CreateThreadPool(8);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t duration_seconds = std::getenv("CI") ? 10 : 300;  // 5 min in normal, 10s in CI
     const size_t jobs_per_second = 1'000;
@@ -61,10 +61,10 @@ TEST_F(SustainedLoadStress, ContinuousLoad5Minutes) {
         while (!stop_flag.load()) {
             for (size_t i = 0; i < jobs_per_second / 10; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    [this]() -> kcenon::thread::result_void {
+                    [this]() -> kcenon::common::VoidResult {
                         WorkSimulator::simulate_work(std::chrono::microseconds(10));
                         completed_jobs_.fetch_add(1);
-                        return {};
+                        return kcenon::common::ok();
                     }
                 );
                 pool_->enqueue(std::move(job));
@@ -95,7 +95,7 @@ TEST_F(SustainedLoadStress, HighContentionLoad) {
     CreateThreadPool(8);
 
     auto result = pool_->start();
-    ASSERT_TRUE(result);
+    ASSERT_TRUE(result.is_ok());
 
     const size_t num_producers = std::getenv("CI") ? 4 : 16;
     const size_t jobs_per_producer = std::getenv("CI") ? 1'000 : 10'000;
@@ -110,13 +110,13 @@ TEST_F(SustainedLoadStress, HighContentionLoad) {
         producers.emplace_back([this, &submitted, jobs_per_producer]() {
             for (size_t i = 0; i < jobs_per_producer; ++i) {
                 auto job = std::make_unique<kcenon::thread::callback_job>(
-                    [this]() -> kcenon::thread::result_void {
+                    [this]() -> kcenon::common::VoidResult {
                         completed_jobs_.fetch_add(1);
-                        return {};
+                        return kcenon::common::ok();
                     }
                 );
                 auto result = pool_->enqueue(std::move(job));
-                if (result) {
+                if (result.is_ok()) {
                     submitted.fetch_add(1);
                 }
             }
@@ -151,7 +151,7 @@ TEST_F(SustainedLoadStress, RepeatedStartStop) {
 
     for (size_t cycle = 0; cycle < cycles; ++cycle) {
         auto result = pool_->start();
-        ASSERT_TRUE(result) << "Failed to start in cycle " << cycle;
+        ASSERT_TRUE(result.is_ok()) << "Failed to start in cycle " << cycle;
 
         for (size_t i = 0; i < jobs_per_cycle; ++i) {
             SubmitCountingJob();
@@ -161,7 +161,7 @@ TEST_F(SustainedLoadStress, RepeatedStartStop) {
         EXPECT_TRUE(WaitForJobCompletion(expected, std::chrono::seconds(10)));
 
         result = pool_->stop();
-        ASSERT_TRUE(result) << "Failed to stop in cycle " << cycle;
+        ASSERT_TRUE(result.is_ok()) << "Failed to stop in cycle " << cycle;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
