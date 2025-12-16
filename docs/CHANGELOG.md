@@ -47,6 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cleaner template declarations with improved compile-time error messages
 
 ### Deprecated
+- **Issue #299**: Add [[deprecated]] attribute to result types (Phase 2 of Result<T> unification)
+  - `thread::result<T>` marked deprecated - use `common::Result<T>` instead
+  - `thread::result_void` marked deprecated - use `common::VoidResult` instead
+  - `thread::result<void>` marked deprecated - use `common::VoidResult` instead
+  - Deprecation only active when `THREAD_HAS_COMMON_RESULT` is defined
+  - Internal compatibility layer functions have warnings suppressed
+  - See docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions
+  - Created sub-issues #300, #301 for remaining migration work
 - **Issue #263**: Mark thread-local logger_interface as deprecated
   - Added `[[deprecated]]` attribute to `log_level` enum in `logger_interface.h`
   - `logger_interface` and `logger_registry` classes already had deprecation attributes

@@ -1,8 +1,8 @@
 # Error System Migration Guide
 
-**Version:** 0.1.0
-**Date:** 2025-11-09
-**Status:** Phase 1 Complete
+**Version:** 0.2.0
+**Date:** 2025-12-16
+**Status:** Phase 2 In Progress
 
 ## Overview
 
@@ -10,7 +10,7 @@ The thread_system is migrating from its custom `thread::result<T>` error handlin
 
 ## Migration Phases
 
-### Phase 1: Internal Unification (CURRENT)
+### Phase 1: Internal Unification (COMPLETE)
 
 When `THREAD_HAS_COMMON_RESULT` is defined (i.e., when common_system is available), `thread::result<T>` now uses `common::Result<T>` internally. The public API remains unchanged, ensuring full backward compatibility.
 
@@ -19,12 +19,16 @@ When `THREAD_HAS_COMMON_RESULT` is defined (i.e., when common_system is availabl
 - All existing code continues to work without changes
 - No performance regression (89/89 tests pass)
 
-### Phase 2: Deprecation Period (UPCOMING)
+### Phase 2: Deprecation Period (CURRENT)
 
-In the next minor version release:
-- `thread::result<T>` will be marked with `[[deprecated]]` attribute
-- Compiler warnings will guide users to migrate
-- Both APIs will be supported for at least 6 months
+**Status:** 🔄 In Progress
+
+The following types are now marked with `[[deprecated]]` attribute when `THREAD_HAS_COMMON_RESULT` is defined:
+- `thread::result<T>` - Use `common::Result<T>` instead
+- `thread::result_void` - Use `common::VoidResult` instead
+- `thread::result<void>` - Use `common::VoidResult` instead
+
+Compiler warnings will guide users to migrate. Both APIs remain fully functional.
 
 ### Phase 3: Complete Migration (NEXT MAJOR VERSION)
 
@@ -178,8 +182,8 @@ Phase 1 implementation shows:
 
 | Phase | Version | Date | Status |
 |-------|---------|------|--------|
-| Phase 1 | Current | 2025-11-09 | ✅ Complete |
-| Phase 2 | Next minor | TBD | Planned |
+| Phase 1 | 0.1.0 | 2025-11-09 | ✅ Complete |
+| Phase 2 | Current | 2025-12-16 | 🔄 In Progress |
 | Phase 3 | Next major | TBD | Planned |
 
 ## Support
@@ -191,13 +195,14 @@ For questions or issues during migration:
 
 ## Breaking Changes Summary
 
-### Phase 1 (Current) - No Breaking Changes
+### Phase 1 (Complete) - No Breaking Changes
 - Fully backward compatible
 - Existing code works without modification
 
-### Phase 2 (Next Minor) - Deprecation Warnings Only
-- Compiler warnings for `thread::result<T>` usage
+### Phase 2 (Current) - Deprecation Warnings Only
+- Compiler warnings for `thread::result<T>` usage when `THREAD_HAS_COMMON_RESULT` is defined
 - Still fully functional
+- Internal compatibility layer functions suppress warnings to avoid noise
 
 ### Phase 3 (Next Major) - Breaking Changes
 - `thread::result<T>` removed
