@@ -197,11 +197,18 @@ class result;
 
 /**
  * @brief Wrapper for void result
- * 
+ *
  * This class represents a result that doesn't return a value (void),
  * but can indicate success or failure.
+ *
+ * @deprecated This class will be replaced by common::VoidResult in the next
+ *             major version. New code should use common::VoidResult directly.
  */
-class result_void {
+class
+#ifdef THREAD_HAS_COMMON_RESULT
+    [[deprecated("Use common::VoidResult instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
+#endif
+    result_void {
 public:
     /**
      * @brief Constructs a successful result
@@ -273,7 +280,11 @@ private:
  *             See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions.
  */
 template <typename T>
-class result {
+class
+#ifdef THREAD_HAS_COMMON_RESULT
+    [[deprecated("Use common::Result<T> instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
+#endif
+    result {
 public:
     using value_type = T;
     using error_type = error;
@@ -616,9 +627,16 @@ private:
 
 /**
  * @brief Specialization of result for void
+ *
+ * @deprecated This class will be replaced by common::VoidResult in the next
+ *             major version. New code should use common::VoidResult directly.
  */
 template <>
-class result<void> {
+class
+#ifdef THREAD_HAS_COMMON_RESULT
+    [[deprecated("Use common::VoidResult instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
+#endif
+    result<void> {
 public:
     using value_type = void;
     using error_type = error;
@@ -758,6 +776,24 @@ private:
 // Type aliases for common result types
 template <typename T>
 using result_t = result<T>;
+
+// ============================================================================
+// Compatibility Layer Functions
+// These functions use deprecated types internally but are provided for
+// backward compatibility during migration. Suppress deprecation warnings
+// in this section.
+// ============================================================================
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#endif
 
 // Helper to convert std::optional<std::string> to result<T>
 template <typename T>
@@ -908,6 +944,15 @@ result<T> from_common_result(const Result<T>& res) {
 // using Result = kcenon::common::Result<T>;
 
 #endif // THREAD_HAS_COMMON_RESULT
+
+// End of compatibility layer - restore deprecation warnings
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 // ============================================================================
 // std::error_code Integration
