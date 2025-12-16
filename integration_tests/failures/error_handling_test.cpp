@@ -71,9 +71,9 @@ TEST_F(ErrorHandlingTest, ResultPatternFailure) {
     EXPECT_TRUE(result.is_err());
 
     if (result.is_err()) {
-        const auto& error = result.get_error();
-        EXPECT_NE(error.code(), kcenon::thread::error_code::success);
-        std::cout << "Expected error: " << error.to_string() << "\n";
+        const auto& err = result.error();
+        EXPECT_NE(err.code, static_cast<int>(kcenon::thread::error_code::success));
+        std::cout << "Expected error: " << err.message << "\n";
     }
 }
 
