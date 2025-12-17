@@ -46,33 +46,31 @@ namespace kcenon::thread {
  * @class lockfree_queue
  * @brief Generic lock-free MPMC queue with blocking wait support
  *
- * This class implements a lock-free Multi-Producer Multi-Consumer (MPMC) queue
- * using the Michael-Scott algorithm. It provides both non-blocking and blocking
- * operations for flexible use cases.
+ * This class implements a thread-safe Multi-Producer Multi-Consumer (MPMC) queue
+ * using fine-grained locking for simplicity and correctness. It provides both
+ * non-blocking and blocking operations for flexible use cases.
  *
- * ## Algorithm
+ * ## Design Decision
  *
- * Uses the Michael-Scott queue algorithm (1996) with atomic compare-and-swap
- * operations. Memory reclamation uses epoch-based reclamation for simplicity.
+ * While a true lock-free Michael-Scott queue requires complex memory reclamation
+ * (Hazard Pointers or epoch-based reclamation), this implementation uses
+ * fine-grained locking with separate head and tail mutexes. This provides:
+ * - Correctness guarantee without complex memory reclamation
+ * - Good performance for most use cases
+ * - Blocking wait support with condition variables
  *
  * ## Key Features
  *
- * - **Lock-free Operations**: enqueue and try_dequeue are lock-free
- * - **Blocking Wait**: wait_dequeue provides efficient blocking with timeout
  * - **Thread Safety**: Safe for concurrent access from multiple threads
+ * - **Blocking Wait**: wait_dequeue provides efficient blocking with timeout
  * - **Generic**: Works with any move-constructible type
+ * - **Low Contention**: Separate locks for head and tail operations
  *
  * ## Performance Characteristics
  *
- * - Enqueue: O(1) amortized, practically wait-free
- * - Dequeue: O(1) amortized, lock-free
- * - Memory overhead: ~24 bytes per node (data + next pointer)
- *
- * ## Thread Safety
- *
- * - All methods are thread-safe
- * - Can be called concurrently from any number of threads
- * - Uses atomic operations with acquire/release memory ordering
+ * - Enqueue: O(1), acquires tail lock only
+ * - Dequeue: O(1), acquires head lock only
+ * - No lock contention between enqueue and dequeue operations
  *
  * ## Example Usage
  *
@@ -101,21 +99,18 @@ class lockfree_queue {
 
 public:
     /**
-     * @brief Constructs an empty lock-free queue
+     * @brief Constructs an empty queue
      *
      * Initializes the queue with a dummy node to simplify the algorithm.
-     * The dummy node allows concurrent enqueue/dequeue without special cases.
      */
     lockfree_queue() {
         auto* dummy = new node{};
-        head_.store(dummy, std::memory_order_relaxed);
-        tail_.store(dummy, std::memory_order_relaxed);
+        head_ = dummy;
+        tail_ = dummy;
     }
 
     /**
      * @brief Destructor - signals shutdown and drains the queue
-     *
-     * All waiting threads are notified and will return immediately.
      */
     ~lockfree_queue() {
         shutdown();
@@ -123,25 +118,21 @@ public:
         while (try_dequeue()) {
         }
         // Delete the dummy node
-        delete head_.load(std::memory_order_relaxed);
+        delete head_;
     }
 
-    // Non-copyable and non-movable (queue has shared state)
+    // Non-copyable and non-movable
     lockfree_queue(const lockfree_queue&) = delete;
     lockfree_queue& operator=(const lockfree_queue&) = delete;
     lockfree_queue(lockfree_queue&&) = delete;
     lockfree_queue& operator=(lockfree_queue&&) = delete;
 
     /**
-     * @brief Enqueues a value into the queue (lock-free)
-     *
-     * This operation is practically wait-free under normal conditions.
-     * It allocates a new node and atomically links it to the tail.
+     * @brief Enqueues a value into the queue
      *
      * @param value The value to enqueue (moved)
      *
-     * @note Thread-safe, can be called from any thread
-     * @note Does nothing if queue is shutdown
+     * @note Thread-safe, uses tail lock only
      */
     void enqueue(T value) {
         if (shutdown_.load(std::memory_order_acquire)) {
@@ -150,92 +141,53 @@ public:
 
         auto* new_node = new node{std::move(value)};
 
-        while (true) {
-            node* tail = tail_.load(std::memory_order_acquire);
-            node* next = tail->next.load(std::memory_order_acquire);
-
-            if (tail == tail_.load(std::memory_order_acquire)) {
-                if (next == nullptr) {
-                    // Tail is pointing to the last node - try to link new node
-                    if (tail->next.compare_exchange_weak(
-                            next, new_node,
-                            std::memory_order_release, std::memory_order_relaxed)) {
-                        // Successfully linked - try to advance tail
-                        tail_.compare_exchange_strong(
-                            tail, new_node,
-                            std::memory_order_release, std::memory_order_relaxed);
-
-                        // Update size and notify waiters
-                        size_.fetch_add(1, std::memory_order_release);
-                        notify_one();
-                        return;
-                    }
-                } else {
-                    // Tail is lagging - try to advance it
-                    tail_.compare_exchange_weak(
-                        tail, next,
-                        std::memory_order_release, std::memory_order_relaxed);
-                }
-            }
+        {
+            std::lock_guard<std::mutex> lock(tail_mutex_);
+            tail_->next = new_node;
+            tail_ = new_node;
         }
+
+        size_.fetch_add(1, std::memory_order_release);
+        notify_one();
     }
 
     /**
-     * @brief Tries to dequeue a value (non-blocking, lock-free)
-     *
-     * Returns immediately with nullopt if the queue is empty.
+     * @brief Tries to dequeue a value (non-blocking)
      *
      * @return The dequeued value, or nullopt if queue is empty
      *
-     * @note Thread-safe, can be called from any thread
+     * @note Thread-safe, uses head lock only
      */
     [[nodiscard]] auto try_dequeue() -> std::optional<T> {
-        while (true) {
-            node* head = head_.load(std::memory_order_acquire);
-            node* tail = tail_.load(std::memory_order_acquire);
-            node* next = head->next.load(std::memory_order_acquire);
+        std::lock_guard<std::mutex> lock(head_mutex_);
 
-            if (head == head_.load(std::memory_order_acquire)) {
-                if (head == tail) {
-                    if (next == nullptr) {
-                        return std::nullopt;  // Queue is empty
-                    }
-                    // Tail is lagging - try to advance it
-                    tail_.compare_exchange_weak(
-                        tail, next,
-                        std::memory_order_release, std::memory_order_relaxed);
-                } else {
-                    if (next == nullptr) {
-                        continue;  // Inconsistent state, retry
-                    }
+        node* old_head = head_;
+        node* next = old_head->next;
 
-                    // Read value before CAS
-                    T value = std::move(*next->data);
-
-                    if (head_.compare_exchange_weak(
-                            head, next,
-                            std::memory_order_release, std::memory_order_relaxed)) {
-                        // Success - delete old head (was dummy node)
-                        delete head;
-                        size_.fetch_sub(1, std::memory_order_release);
-                        return value;
-                    }
-                    // CAS failed - value was moved but we'll retry with new head
-                }
-            }
+        if (next == nullptr) {
+            return std::nullopt;  // Queue is empty
         }
+
+        // Extract value from next node
+        std::optional<T> value;
+        if (next->data.has_value()) {
+            value = std::move(*next->data);
+            next->data.reset();
+        }
+
+        // Advance head (old_head becomes the new dummy)
+        head_ = next;
+        delete old_head;
+
+        size_.fetch_sub(1, std::memory_order_release);
+        return value;
     }
 
     /**
      * @brief Dequeues a value with blocking wait
      *
-     * Blocks until a value is available or the timeout expires.
-     * Uses a condition variable for efficient waiting.
-     *
      * @param timeout Maximum time to wait
      * @return The dequeued value, or nullopt if timeout or shutdown
-     *
-     * @note Thread-safe, can be called from any thread
      */
     template <typename Rep, typename Period>
     [[nodiscard]] auto wait_dequeue(const std::chrono::duration<Rep, Period>& timeout)
@@ -246,7 +198,7 @@ public:
         }
 
         // Wait for notification
-        std::unique_lock<std::mutex> lock(mutex_);
+        std::unique_lock<std::mutex> lock(cv_mutex_);
         auto deadline = std::chrono::steady_clock::now() + timeout;
 
         while (!shutdown_.load(std::memory_order_acquire)) {
@@ -273,22 +225,14 @@ public:
     /**
      * @brief Dequeues a value with indefinite blocking wait
      *
-     * Blocks until a value is available or shutdown is signaled.
-     *
      * @return The dequeued value, or nullopt if shutdown
-     *
-     * @note Thread-safe, can be called from any thread
      */
     [[nodiscard]] auto wait_dequeue() -> std::optional<T> {
-        return wait_dequeue(std::chrono::hours{24 * 365});  // ~1 year
+        return wait_dequeue(std::chrono::hours{24 * 365});
     }
 
     /**
      * @brief Checks if the queue appears empty
-     *
-     * @return true if queue appears empty, false otherwise
-     *
-     * @note This is a snapshot view; queue may change immediately after
      */
     [[nodiscard]] auto empty() const noexcept -> bool {
         return size_.load(std::memory_order_acquire) == 0;
@@ -296,10 +240,6 @@ public:
 
     /**
      * @brief Gets approximate queue size
-     *
-     * @return Approximate number of elements in queue
-     *
-     * @note This is an estimate due to concurrent modifications
      */
     [[nodiscard]] auto size() const noexcept -> std::size_t {
         return size_.load(std::memory_order_acquire);
@@ -307,29 +247,22 @@ public:
 
     /**
      * @brief Wakes one waiting consumer
-     *
-     * Useful for signaling after enqueue or external events.
      */
     void notify_one() {
-        std::lock_guard<std::mutex> lock(mutex_);
+        std::lock_guard<std::mutex> lock(cv_mutex_);
         cv_.notify_one();
     }
 
     /**
      * @brief Wakes all waiting consumers
-     *
-     * Useful for shutdown scenarios where all consumers should stop waiting.
      */
     void notify_all() {
-        std::lock_guard<std::mutex> lock(mutex_);
+        std::lock_guard<std::mutex> lock(cv_mutex_);
         cv_.notify_all();
     }
 
     /**
      * @brief Signals shutdown and wakes all waiters
-     *
-     * After calling this, wait_dequeue will return immediately.
-     * New enqueue operations will be ignored.
      */
     void shutdown() {
         shutdown_.store(true, std::memory_order_release);
@@ -338,35 +271,31 @@ public:
 
     /**
      * @brief Checks if shutdown has been signaled
-     *
-     * @return true if shutdown was called
      */
     [[nodiscard]] auto is_shutdown() const noexcept -> bool {
         return shutdown_.load(std::memory_order_acquire);
     }
 
 private:
-    /**
-     * @brief Internal queue node
-     *
-     * Uses raw pointer for next node. Memory is managed manually.
-     */
     struct node {
         std::optional<T> data;
-        std::atomic<node*> next{nullptr};
+        node* next{nullptr};
 
         node() = default;
         explicit node(T value) : data(std::move(value)) {}
     };
 
-    std::atomic<node*> head_;  ///< Dequeue end
-    std::atomic<node*> tail_;  ///< Enqueue end
+    node* head_;
+    node* tail_;
 
-    std::atomic<std::size_t> size_{0};     ///< Approximate size
-    std::atomic<bool> shutdown_{false};    ///< Shutdown flag
+    mutable std::mutex head_mutex_;
+    mutable std::mutex tail_mutex_;
+
+    std::atomic<std::size_t> size_{0};
+    std::atomic<bool> shutdown_{false};
 
     // For blocking wait support
-    mutable std::mutex mutex_;
+    mutable std::mutex cv_mutex_;
     std::condition_variable cv_;
 };
 
