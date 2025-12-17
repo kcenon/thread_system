@@ -49,6 +49,10 @@ if(UNIX AND NOT WIN32)
   # Validates platform-specific features, atomic operations, and cache performance
   add_subdirectory(platform_test)
 
+  # Lock-free data structure tests
+  # Validates lock-free queue operations and concurrent access
+  add_subdirectory(lockfree_test)
+
   # Adapter tests
   # Validates adapters that bridge thread_system components to common_system interfaces
   if(BUILD_WITH_COMMON_SYSTEM AND BUILD_WITH_LOGGER_SYSTEM)
