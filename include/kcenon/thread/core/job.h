@@ -66,9 +66,9 @@ namespace kcenon::thread
 	 *   manage lifetimes across multiple threads.
 	 *
 	 * ### Error Handling
-	 * - A job returns a @c result_void from @c do_work().
-	 *   - Returning @c result_void{} indicates success.
-	 *   - Returning an error indicates failure with a typed error code and message.
+	 * - A job returns a @c common::VoidResult from @c do_work().
+	 *   - Returning @c common::ok() indicates success.
+	 *   - Returning a @c common::error_info indicates failure with a typed error code and message.
 	 * - Error information can be used for logging, debugging, or to retry a job if desired.
 	 *
 	 * ### Usage Example

@@ -90,7 +90,7 @@ namespace kcenon::thread
 		 * to enqueue.
 		 *
 		 * @param jobs A vector of unique pointers to jobs to enqueue.
-		 * @return @c result_void containing an error if the operation fails, or a success value.
+		 * @return @c common::VoidResult containing an error if the operation fails, or a success value.
 		 */
 		// This method accepts job references (different from base class which takes rvalue
 		// references)

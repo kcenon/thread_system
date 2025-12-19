@@ -69,7 +69,7 @@ namespace kcenon::thread {
          * @brief Execute the job's work
          * @return Result indicating success or failure
          */
-        [[nodiscard]] virtual result_void execute() = 0;
+        [[nodiscard]] virtual common::VoidResult execute() = 0;
         
         /**
          * @brief Get a human-readable description of this job

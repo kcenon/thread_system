@@ -191,7 +191,7 @@ namespace kcenon::thread
 		 * @brief Starts the thread pool by creating worker threads and
 		 * initializing internal structures.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - If an error occurs during start-up, the returned result
 		 *           will contain an error object.
 		 *         - If no error occurs, the result will be a success value.
@@ -290,7 +290,7 @@ namespace kcenon::thread
 		 *
 		 * @param job A unique pointer to the priority job to be added.
 		 *
-		 * @return result_void
+		 * @return common::VoidResult
 		 *         - Contains an error if the enqueue operation fails.
 		 *         - Otherwise, returns a success value.
 		 *

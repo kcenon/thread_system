@@ -328,7 +328,7 @@ namespace kcenon::thread
 		// ============================================================================
 		// These methods provide a simplified interface with bool return types
 		// for easier integration with code that doesn't use result<T> types.
-		// For detailed error information, prefer using the result_void methods above.
+		// For detailed error information, prefer using the common::VoidResult methods above.
 
 		/**
 		 * @brief Submit a task to the thread pool (simplified API)
