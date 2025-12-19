@@ -79,16 +79,16 @@ namespace kcenon::thread::adapters {
 
 namespace detail {
 
-inline ::common::error_info make_error_info(const kcenon::thread::error& err) {
-    return ::common::error_info{
-        static_cast<int>(err.code()),
-        err.message(),
-        "thread_system"
-    };
-}
-
 inline ::common::error_info make_error_info(int code, std::string message, std::string module = "thread_system") {
     return ::common::error_info{code, std::move(message), std::move(module)};
+}
+
+inline ::common::error_info make_error_info(kcenon::thread::error_code code, std::string message) {
+    return ::common::error_info{
+        static_cast<int>(code),
+        std::move(message),
+        "thread_system"
+    };
 }
 
 inline std::exception_ptr to_exception(const ::common::error_info& info) {
@@ -100,40 +100,34 @@ inline std::exception_ptr to_exception(const ::common::error_info& info) {
     return std::make_exception_ptr(std::runtime_error(ss.str()));
 }
 
-inline kcenon::thread::result_void make_thread_error(const ::common::error_info& info) {
-    // Use unified conversion from error_handling.h
-    return kcenon::thread::detail::from_common_result(::common::VoidResult(info));
+inline ::common::VoidResult make_error(const ::common::error_info& info) {
+    return ::common::VoidResult(info);
 }
 
-inline kcenon::thread::result_void make_thread_error(kcenon::thread::error_code code, std::string message) {
-    return kcenon::thread::result_void(kcenon::thread::error{code, std::move(message)});
+inline ::common::VoidResult make_error(kcenon::thread::error_code code, std::string message) {
+    return ::common::VoidResult(make_error_info(code, std::move(message)));
 }
 
 inline ::common::error_info unexpected_pool_error() {
     return make_error_info(-1, "Thread pool unavailable");
 }
 
-inline kcenon::thread::result_void wrap_user_task(const std::function<void()>& task) {
+inline ::common::VoidResult wrap_user_task(const std::function<void()>& task) {
     try {
         task();
-        return kcenon::thread::result_void{};
+        return ::common::ok();
     } catch (const std::exception& ex) {
-        return make_thread_error(kcenon::thread::error_code::job_execution_failed, ex.what());
+        return make_error(kcenon::thread::error_code::job_execution_failed, ex.what());
     } catch (...) {
-        return make_thread_error(kcenon::thread::error_code::job_execution_failed,
-                                 "Unknown exception while executing task");
+        return make_error(kcenon::thread::error_code::job_execution_failed,
+                          "Unknown exception while executing task");
     }
-}
-
-inline ::common::VoidResult convert_result(kcenon::thread::result_void result) {
-    // Use unified conversion from error_handling.h
-    return kcenon::thread::detail::to_common_result(result);
 }
 
 inline std::optional<::common::error_info> enqueue_job(
     const std::shared_ptr<kcenon::thread::thread_pool>& pool,
     const std::shared_ptr<std::promise<void>>& promise,
-    std::function<kcenon::thread::result_void()> body) {
+    std::function<::common::VoidResult()> body) {
     if (!pool) {
         auto info = unexpected_pool_error();
         promise->set_exception(to_exception(info));
@@ -143,11 +137,11 @@ inline std::optional<::common::error_info> enqueue_job(
     auto completion_once = std::make_shared<std::once_flag>();
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        [promise, completion_once, body = std::move(body)]() mutable -> kcenon::thread::result_void {
+        [promise, completion_once, body = std::move(body)]() mutable -> ::common::VoidResult {
             try {
                 auto result = body();
-                if (result.has_error()) {
-                    auto info = make_error_info(result.get_error());
+                if (result.is_err()) {
+                    auto info = result.error();
                     std::call_once(*completion_once, [&]() {
                         promise->set_exception(to_exception(info));
                     });
@@ -158,30 +152,29 @@ inline std::optional<::common::error_info> enqueue_job(
                 });
                 return result;
             } catch (const std::exception& ex) {
-                auto info = make_error_info(kcenon::thread::error{
+                auto info = make_error_info(
                     kcenon::thread::error_code::job_execution_failed,
                     ex.what()
-                });
+                );
                 std::call_once(*completion_once, [&]() {
                     promise->set_exception(to_exception(info));
                 });
-                return make_thread_error(info);
+                return make_error(info);
             } catch (...) {
-                auto info = make_error_info(kcenon::thread::error{
+                auto info = make_error_info(
                     kcenon::thread::error_code::job_execution_failed,
                     "Unhandled exception while executing job"
-                });
+                );
                 std::call_once(*completion_once, [&]() {
                     promise->set_exception(to_exception(info));
                 });
-                return make_thread_error(info);
+                return make_error(info);
             }
         });
 
     auto enqueue_result = pool->enqueue(std::move(job));
-    if (enqueue_result.has_error()) {
-        const auto& err = enqueue_result.get_error();
-        auto info = make_error_info(err);
+    if (enqueue_result.is_err()) {
+        const auto& info = enqueue_result.error();
         std::call_once(*completion_once, [&]() {
             promise->set_exception(to_exception(info));
         });
@@ -193,7 +186,7 @@ inline std::optional<::common::error_info> enqueue_job(
 
 inline ::common::Result<std::future<void>> schedule_task(
     const std::shared_ptr<kcenon::thread::thread_pool>& pool,
-    std::function<kcenon::thread::result_void()> body) {
+    std::function<::common::VoidResult()> body) {
     auto promise = std::make_shared<std::promise<void>>();
     auto future = promise->get_future();
 
@@ -207,7 +200,7 @@ inline ::common::Result<std::future<void>> schedule_task(
 inline void schedule_task_async(
     std::shared_ptr<kcenon::thread::thread_pool> pool,
     std::shared_ptr<std::promise<void>> promise,
-    std::function<kcenon::thread::result_void()> body,
+    std::function<::common::VoidResult()> body,
     std::chrono::milliseconds delay) {
     // Use the thread pool itself to handle delayed execution
     // This avoids creating detached threads or extra std::async threads
@@ -221,7 +214,7 @@ inline void schedule_task_async(
 
     // Create a wrapper job that handles delay and then enqueues the actual task
     auto delayed_job = std::make_unique<kcenon::thread::callback_job>(
-        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> kcenon::thread::result_void {
+        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> ::common::VoidResult {
             try {
                 if (delay.count() > 0) {
                     std::this_thread::sleep_for(delay);
@@ -229,21 +222,21 @@ inline void schedule_task_async(
                 // Enqueue the actual job after the delay
                 // Note: enqueue_job has its own once_flag protection internally
                 (void)enqueue_job(pool, promise, std::move(body));
-                return kcenon::thread::result_void{};
+                return ::common::ok();
             } catch (...) {
                 std::call_once(*completion_once, [&]() {
                     promise->set_exception(std::current_exception());
                 });
-                return make_thread_error(kcenon::thread::error_code::job_execution_failed,
-                                       "Exception during delayed task scheduling");
+                return make_error(kcenon::thread::error_code::job_execution_failed,
+                                  "Exception during delayed task scheduling");
             }
         });
 
     // Enqueue the delayed job to the pool
     auto enqueue_result = pool->enqueue(std::move(delayed_job));
-    if (enqueue_result.has_error()) {
+    if (enqueue_result.is_err()) {
         std::call_once(*completion_once, [&]() {
-            promise->set_exception(to_exception(make_error_info(enqueue_result.get_error())));
+            promise->set_exception(to_exception(enqueue_result.error()));
         });
     }
 }
@@ -288,19 +281,19 @@ public:
 
     ::common::Result<std::future<void>> execute(std::unique_ptr<::common::interfaces::IJob>&& job) override {
         return detail::schedule_task(pool_,
-            [job = std::move(job)]() mutable -> kcenon::thread::result_void {
+            [job = std::move(job)]() mutable -> ::common::VoidResult {
                 try {
                     auto result = job->execute();
                     if (result.is_err()) {
-                        return detail::make_thread_error(result.error());
+                        return detail::make_error(result.error());
                     }
-                    return kcenon::thread::result_void{};
+                    return ::common::ok();
                 } catch (const std::exception& ex) {
-                    return detail::make_thread_error(
+                    return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
                         ex.what());
                 } catch (...) {
-                    return detail::make_thread_error(
+                    return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
                         "Unknown exception while executing common job");
                 }
@@ -314,19 +307,19 @@ public:
         auto future = promise->get_future();
 
         detail::schedule_task_async(pool_, promise,
-            [job = std::move(job)]() mutable -> kcenon::thread::result_void {
+            [job = std::move(job)]() mutable -> ::common::VoidResult {
                 try {
                     auto result = job->execute();
                     if (result.is_err()) {
-                        return detail::make_thread_error(result.error());
+                        return detail::make_error(result.error());
                     }
-                    return kcenon::thread::result_void{};
+                    return ::common::ok();
                 } catch (const std::exception& ex) {
-                    return detail::make_thread_error(
+                    return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
                         ex.what());
                 } catch (...) {
-                    return detail::make_thread_error(
+                    return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
                         "Unknown exception while executing common job");
                 }
@@ -354,9 +347,10 @@ public:
         }
 
         auto stop_result = pool_->stop(!wait_for_completion);
-        if (stop_result.has_error()) {
+        if (stop_result.is_err()) {
             // Best effort: surface error via exception to aid debugging.
-            throw std::runtime_error(stop_result.get_error().to_string());
+            const auto& err = stop_result.error();
+            throw std::runtime_error(err.message);
         }
     }
 

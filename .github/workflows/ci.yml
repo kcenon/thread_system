@@ -7,6 +7,25 @@ on:
     branches: [ main ]
 
 jobs:
+  # Guard against re-introduction of legacy error types in public API
+  api-guard:
+    name: API Guard - No Legacy Types
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check for legacy types in public headers
+      run: |
+        echo "=== Checking for legacy thread::result/thread::error in include/ ==="
+        # These types were removed in v3.0, use common::Result<T> and common::VoidResult instead
+        if grep -rn '\bkcenon::thread::result\b\|\bkcenon::thread::error\b' include/; then
+          echo "::error::Legacy types found in public headers!"
+          echo "Use kcenon::common::Result<T> or kcenon::common::VoidResult instead"
+          exit 1
+        fi
+        echo "No legacy types found in public headers"
+
   build:
     name: ${{ matrix.os }} / ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Issue #310 - Phase 3**: Remove legacy error types from public API
+  - Removed `kcenon::thread::result<T>` class from public headers
+  - Removed `kcenon::thread::result_void` class from public headers
+  - Removed `kcenon::thread::error` class from public headers
+  - All public APIs now exclusively use `kcenon::common::Result<T>` and `kcenon::common::VoidResult`
+  - Added helper functions: `to_error_info()`, `make_error_result()`, `get_error_code()`
+  - `error_code` enum and `std::error_code` integration preserved
+  - Added CI guard to prevent re-introduction of legacy types
+  - Updated all tests to use unified common::Result types
+  - See docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions
+
 ### Changed
 - **Issue #303 - Phase 2a**: Replace internal result<T> with common::Result<T> in core headers
   - Updated all core library headers and implementation files to use `kcenon::common::Result<T>` internally
