@@ -268,10 +268,10 @@ v3.0 requires `common_system >= 2.0.0` which provides all unified interfaces.
 
 ## Implementation Checklist
 
-- [ ] **#310**: Remove `thread::result` / `thread::error` from installed API
-- [ ] **#311**: Remove deprecated `thread_system logger_interface`
-- [ ] **#312**: Migrate monitoring to `common::interfaces::{IMonitor, IMonitorable}`
-- [ ] **#313**: Remove `shared_interfaces.h` and consolidate adapters
+- [x] **#310**: Remove `thread::result` / `thread::error` from installed API
+- [x] **#311**: Remove deprecated `thread_system logger_interface`
+- [x] **#312**: Migrate monitoring to `common::interfaces::{IMonitor, IMonitorable}`
+- [x] **#313**: Remove `shared_interfaces.h` and consolidate adapters
 - [ ] **#314**: Add stable umbrella headers + align API docs
 - [ ] **#315**: Update tests/examples to common_system-only API
 - [ ] **CI**: Add check to verify no legacy types are exported

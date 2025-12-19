@@ -49,8 +49,10 @@ thread_system/
 ├── services/              # 서비스 인프라
 │   ├── service_registry.h
 │   └── service_base.h
+├── adapters/              # 통합 어댑터
+│   ├── common_executor_adapter.h  # IExecutor 어댑터
+│   └── logger_system_adapter.h    # ILogger 어댑터
 └── utilities/             # 유틸리티
-    ├── thread_pool_executor.h
     └── job_traits.h
 ```
 
@@ -212,7 +214,7 @@ class typed_thread_pool : public thread_base {
 #### Dependency Inversion
 ```cpp
 // ✅ 인터페이스에 의존
-class thread_pool_executor : public kcenon::common::IExecutor {
+class thread_pool_executor_adapter : public common::interfaces::IExecutor {
     // 구체 클래스가 아닌 인터페이스에 의존
 };
 ```
