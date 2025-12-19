@@ -1,7 +1,7 @@
 {
   "name": "thread-system",
   "version": "3.0.0",
-  "description": "High-performance thread management system with dependency injection and interface abstraction",
+  "description": "High-performance C++20 multithreading framework with common_system integration",
   "homepage": "https://github.com/kcenon/thread_system",
   "license": "MIT",
   "builtin-baseline": "50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2",
