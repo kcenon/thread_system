@@ -107,7 +107,7 @@ public:
      * @brief Enqueues a job into the queue (thread-safe)
      *
      * @param job Unique pointer to the job to enqueue
-     * @return result_void Success or error
+     * @return common::VoidResult Success or error
      *
      * @note Wait-free operation (bounded number of steps)
      * @note Takes ownership of the job pointer

@@ -223,7 +223,7 @@ public:
     /**
      * @brief Manually switch mode (only if policy is manual)
      * @param m Target mode to switch to
-     * @return result_void Success or error if policy is not manual
+     * @return common::VoidResult Success or error if policy is not manual
      */
     auto switch_mode(mode m) -> common::VoidResult;
 
