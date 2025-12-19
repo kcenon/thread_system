@@ -74,6 +74,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Timeline**: Deprecated in v1.x, to be removed in v2.0
 
 ### Fixed
+- **Issue #316**: Replace unsafe hazard_pointer with safe_hazard_pointer in lockfree_job_queue
+  - TICKET-002 follow-up: Fixed memory ordering issues on weak memory model architectures (ARM64)
+  - Removed `HAZARD_POINTER_FORCE_ENABLE` usage from production code
+  - Migrated to `safe_hazard_pointer.h` with explicit memory ordering guarantees
+  - Uses `safe_hazard_guard` for RAII-style hazard pointer management
+  - Uses `safe_retire_hazard<T>()` for safe memory reclamation
+  - Added weak memory model verification tests for ARM64/Apple Silicon
+  - Resolves CVSS 8.5 security issue on weak memory model architectures
 - **Issue #297**: Improve atexit handler registration timing for SDOF prevention
   - Added `thread_logger_init.cpp` for early atexit handler registration
   - Uses platform-specific initialization (GCC/Clang `__attribute__((constructor(101)))`, MSVC CRT section)

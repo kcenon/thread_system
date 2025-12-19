@@ -33,6 +33,14 @@
   - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
 
 ### 수정됨
+- **이슈 #316**: lockfree_job_queue에서 unsafe hazard_pointer를 safe_hazard_pointer로 교체
+  - TICKET-002 후속 조치: 약한 메모리 모델 아키텍처(ARM64)의 메모리 순서 문제 수정
+  - 프로덕션 코드에서 `HAZARD_POINTER_FORCE_ENABLE` 사용 제거
+  - 명시적 메모리 순서 보장을 제공하는 `safe_hazard_pointer.h`로 마이그레이션
+  - RAII 스타일 hazard pointer 관리를 위한 `safe_hazard_guard` 사용
+  - 안전한 메모리 회수를 위한 `safe_retire_hazard<T>()` 사용
+  - ARM64/Apple Silicon을 위한 약한 메모리 모델 검증 테스트 추가
+  - 약한 메모리 모델 아키텍처의 CVSS 8.5 보안 이슈 해결
 - **이슈 #297**: SDOF 방지를 위한 atexit 핸들러 등록 타이밍 개선
   - 조기 atexit 핸들러 등록을 위한 `thread_logger_init.cpp` 추가
   - 플랫폼별 초기화 사용 (GCC/Clang `__attribute__((constructor(101)))`, MSVC CRT 섹션)
