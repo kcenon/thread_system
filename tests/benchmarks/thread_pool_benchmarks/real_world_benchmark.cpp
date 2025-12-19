@@ -42,6 +42,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <chrono>
 #include <vector>
 #include <random>
@@ -197,7 +199,7 @@ static void BM_WebServerSimulation(benchmark::State& state) {
             for (const auto& req_type : g_request_types) {
                 cumulative += req_type.frequency;
                 if (rand_val <= cumulative) {
-                    pool->enqueue(std::make_unique<callback_job>([&req_type, &completed_requests, &total_response_time_ms]() -> result_void {
+                    pool->enqueue(std::make_unique<callback_job>([&req_type, &completed_requests, &total_response_time_ms]() -> kcenon::common::VoidResult {
                         auto req_start = std::chrono::high_resolution_clock::now();
                         
                         // Process request
@@ -211,7 +213,7 @@ static void BM_WebServerSimulation(benchmark::State& state) {
                         
                         total_response_time_ms.fetch_add(response_time);
                         completed_requests.fetch_add(1);
-                        return result_void();
+                        return kcenon::common::ok();
                     }));
                     break;
                 }
@@ -267,14 +269,14 @@ static void BM_ImageProcessingPipeline(benchmark::State& state) {
         
         // Process each image through all stages
         for (size_t img = 0; img < num_images; ++img) {
-            pool->enqueue(std::make_unique<callback_job>([&stages, &images_processed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&stages, &images_processed]() -> kcenon::common::VoidResult {
                 // Simulate processing through each stage
                 for (const auto& stage : stages) {
                     WorkloadSimulator::simulate_cpu_work(stage.complexity);
                 }
                 
                 images_processed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -323,7 +325,7 @@ static void BM_DataAnalysisWorkload(benchmark::State& state) {
         
         // Submit map tasks
         for (size_t i = 0; i < num_chunks; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([i, chunk_size_mb, p = promises[i]]() mutable -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([i, chunk_size_mb, p = promises[i]]() mutable -> kcenon::common::VoidResult {
                 // Simulate data processing
                 WorkloadSimulator::simulate_memory_work(chunk_size_mb);
                 WorkloadSimulator::simulate_cpu_work(100);
@@ -331,7 +333,7 @@ static void BM_DataAnalysisWorkload(benchmark::State& state) {
                 // Return partial result
                 double result = static_cast<double>(i) * 3.14159;
                 p->set_value(result);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -345,11 +347,11 @@ static void BM_DataAnalysisWorkload(benchmark::State& state) {
         auto reduce_promise = std::make_shared<std::promise<double>>();
         auto reduce_future = reduce_promise->get_future();
         
-        pool->enqueue(std::make_unique<callback_job>([map_sum, p = reduce_promise]() mutable -> result_void {
+        pool->enqueue(std::make_unique<callback_job>([map_sum, p = reduce_promise]() mutable -> kcenon::common::VoidResult {
             // Simulate reduce operation
             WorkloadSimulator::simulate_cpu_work(50);
             p->set_value(map_sum / 2.0);
-            return result_void();
+            return kcenon::common::ok();
         }));
         
         double final_result = reduce_future.get();
@@ -417,7 +419,7 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
                 for (int i = 0; i < subsystem.frequency; ++i) {
                     total_subsystems++;
                     
-                    pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>([&subsystem, &subsystems_completed]() -> result_void {
+                    pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>([&subsystem, &subsystems_completed]() -> kcenon::common::VoidResult {
                         // Simulate subsystem update
                         auto end_time = std::chrono::high_resolution_clock::now() + 
                                        std::chrono::microseconds(subsystem.update_time_us);
@@ -426,7 +428,7 @@ static void BM_GameEngineSimulation(benchmark::State& state) {
                         }
                         
                         subsystems_completed.fetch_add(1);
-                        return result_void();
+                        return kcenon::common::ok();
                     }, subsystem.priority));
                 }
             }
@@ -504,7 +506,7 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
         std::atomic<size_t> total_latency_ms{0};
         
         for (size_t req = 0; req < num_requests; ++req) {
-            pool->enqueue(std::make_unique<callback_job>([&services, &completed_requests, &total_latency_ms, &pool]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&services, &completed_requests, &total_latency_ms, &pool]() -> kcenon::common::VoidResult {
                 auto req_start = std::chrono::high_resolution_clock::now();
                 
                 // Process through service chain
@@ -522,10 +524,10 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
                     auto promise = std::make_shared<std::promise<void>>();
                     service_futures[service.name] = promise->get_future();
                     
-                    pool->enqueue(std::make_unique<callback_job>([&service, p = promise]() mutable -> result_void {
+                    pool->enqueue(std::make_unique<callback_job>([&service, p = promise]() mutable -> kcenon::common::VoidResult {
                         WorkloadSimulator::simulate_io_work(service.processing_time_ms);
                         p->set_value();
-                        return result_void();
+                        return kcenon::common::ok();
                     }));
                 }
                 
@@ -539,7 +541,7 @@ static void BM_MicroserviceCommunication(benchmark::State& state) {
                 
                 total_latency_ms.fetch_add(latency);
                 completed_requests.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -600,7 +602,7 @@ static void BM_BatchFileProcessing(benchmark::State& state) {
         for (size_t i = 0; i < total_files; i += batch_size) {
             size_t current_batch_size = std::min(batch_size, total_files - i);
             
-            pool->enqueue(std::make_unique<callback_job>([current_batch_size, &file_types, &files_processed, &total_bytes_processed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([current_batch_size, &file_types, &files_processed, &total_bytes_processed]() -> kcenon::common::VoidResult {
                 size_t batch_bytes = 0;
                 
                 for (size_t j = 0; j < current_batch_size; ++j) {
@@ -616,7 +618,7 @@ static void BM_BatchFileProcessing(benchmark::State& state) {
                 
                 files_processed.fetch_add(current_batch_size);
                 total_bytes_processed.fetch_add(batch_bytes);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         

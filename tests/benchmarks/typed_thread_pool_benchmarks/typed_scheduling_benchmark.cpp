@@ -335,7 +335,7 @@ private:
         
         auto job = std::make_unique<typed_job_t<job_types>>(
             priority,
-            [this, job_id, priority, submit_time, work_duration]() -> result_void {
+            [this, job_id, priority, submit_time, work_duration]() -> kcenon::common::VoidResult {
                 auto start_time = std::chrono::high_resolution_clock::now();
                 
                 // Simulate work
@@ -361,8 +361,8 @@ private:
                     std::lock_guard<std::mutex> lock(records_mutex_);
                     execution_records_.push_back(record);
                 }
-                
-                return {};
+
+                return kcenon::common::ok();
             }
         );
         

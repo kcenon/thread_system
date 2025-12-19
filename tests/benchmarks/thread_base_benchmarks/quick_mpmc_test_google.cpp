@@ -8,6 +8,8 @@ Quick MPMC Performance Test using Google Benchmark
 *****************************************************************************/
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <thread>
 #include <vector>
 #include <atomic>
@@ -34,11 +36,11 @@ static void run_producer_consumer_test(QueueType& queue,
     for (size_t i = 0; i < num_producers; ++i) {
         producers.emplace_back([&queue, &total_produced, ops_per_thread]() {
             for (size_t j = 0; j < ops_per_thread; ++j) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
                     // Simulate minimal work
                     volatile int x = 0;
                     for (int i = 0; i < 10; ++i) x = x + 1;
-                    return result_void();
+                    return kcenon::common::ok();
                 });
                 
                 while (!queue.enqueue(std::move(job))) {

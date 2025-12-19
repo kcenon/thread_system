@@ -14,6 +14,8 @@ All rights reserved.
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <vector>
 #include <thread>
 #include <atomic>
@@ -55,14 +57,14 @@ static void BM_CPUBoundScalability(benchmark::State& state) {
         state.PauseTiming();
         // Submit CPU-intensive jobs
         for (size_t i = 0; i < job_count; ++i) {
-            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 // CPU-intensive work: prime number calculation
                 volatile uint64_t sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j * j;
                 }
                 completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             pool->enqueue(std::move(job));
         }
@@ -119,11 +121,11 @@ static void BM_IOBoundScalability(benchmark::State& state) {
         state.PauseTiming();
         // Submit I/O-bound jobs
         for (size_t i = 0; i < job_count; ++i) {
-            auto job = std::make_unique<callback_job>([&completed, io_delay_us]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed, io_delay_us]() -> kcenon::common::VoidResult {
                 // Simulate I/O wait
                 std::this_thread::sleep_for(std::chrono::microseconds(io_delay_us));
                 completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             pool->enqueue(std::move(job));
         }
@@ -186,7 +188,7 @@ static void BM_MixedWorkloadScalability(benchmark::State& state) {
         for (size_t i = 0; i < job_count; ++i) {
             int workload_type = workload_dist(gen);
             
-            auto job = std::make_unique<callback_job>([&completed, workload_type]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed, workload_type]() -> kcenon::common::VoidResult {
                 switch (workload_type) {
                     case 0: // CPU-intensive
                         {
@@ -208,7 +210,7 @@ static void BM_MixedWorkloadScalability(benchmark::State& state) {
                         break;
                 }
                 completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             pool->enqueue(std::move(job));
         }
@@ -263,13 +265,13 @@ static void BM_BurstWorkloadScalability(benchmark::State& state) {
         for (size_t burst = 0; burst < num_bursts; ++burst) {
             // Submit burst of jobs
             for (size_t i = 0; i < burst_size; ++i) {
-                auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+                auto job = std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                     volatile uint64_t sum = 0;
                     for (int j = 0; j < 100; ++j) {
                         sum += j;
                     }
                     completed.fetch_add(1, std::memory_order_relaxed);
-                    return result_void{};
+                    return kcenon::common::ok();
                 });
                 pool->enqueue(std::move(job));
             }
@@ -328,14 +330,14 @@ static void BM_ScalingEfficiency(benchmark::State& state) {
         
         // Submit all jobs
         for (size_t i = 0; i < total_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 // Simulate some work
                 volatile int sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j;
                 }
                 completed.fetch_add(1);
-                return result_void{};
+                return kcenon::common::ok();
             });
             pool->enqueue(std::move(job));
         }
@@ -391,14 +393,14 @@ static void BM_WeakScaling(benchmark::State& state) {
         state.PauseTiming();
         // Submit jobs
         for (size_t i = 0; i < total_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&completed]() -> result_void {
+            auto job = std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 // Fixed amount of work per job
                 volatile uint64_t sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j * j;
                 }
                 completed.fetch_add(1);
-                return result_void{};
+                return kcenon::common::ok();
             });
             pool->enqueue(std::move(job));
         }

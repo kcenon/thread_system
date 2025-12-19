@@ -47,6 +47,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../sources/utilities/core/formatter.h"
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <thread>
 #include <vector>
 #include <atomic>
@@ -64,7 +66,7 @@ public:
     std::atomic<size_t> access_count_;
     
 protected:
-    auto do_work() -> result_void override {
+    auto do_work() -> kcenon::common::VoidResult override {
         // Simulate frequent wake_interval access
         for (int i = 0; i < 100; ++i) {
             auto interval = get_wake_interval_unsafe(); // Direct access without lock
@@ -72,7 +74,7 @@ protected:
                 access_count_++;
             }
         }
-        return {};
+        return kcenon::common::ok();
     }
     
     auto should_continue_work() const -> bool override {
@@ -156,7 +158,7 @@ static void BM_JobQueueConsistency(benchmark::State& state) {
         for (int i = 0; i < state.range(0) / 2; ++i) {
             threads.emplace_back([&queue, &enqueue_count]() {
                 for (int j = 0; j < 1000; ++j) {
-                    auto job = std::make_unique<callback_job>([]() { return result_void{}; });
+                    auto job = std::make_unique<callback_job>([]() { return kcenon::common::ok(); });
                     auto result = queue->enqueue(std::move(job));
                     if (!result) {
                         enqueue_count++;
@@ -218,7 +220,7 @@ static void BM_ThreadPoolStress(benchmark::State& state) {
                     auto result = pool->enqueue(std::make_unique<callback_job>(
                         [&completed_jobs]() {
                             completed_jobs++;
-                            return result_void{};
+                            return kcenon::common::ok();
                         }
                     ));
                     if (result.has_error()) {
