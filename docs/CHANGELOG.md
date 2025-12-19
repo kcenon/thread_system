@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
+- **Issue #311 - Phase 3**: Remove deprecated thread_system logger_interface
+  - Removed `kcenon::thread::logger_interface` class from public headers
+  - Removed `kcenon::thread::log_level` enum from public headers
+  - Removed `kcenon::thread::logger_registry` class from public headers
+  - Removed `include/kcenon/thread/interfaces/logger_interface.h` header file
+  - Removed `interfaces/logger_interface.cpp` implementation file
+  - Removed `include/kcenon/thread/adapters/common_system_logger_adapter.h` adapter
+  - All code should now use `kcenon::common::interfaces::ILogger` from common_system
+  - See docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md for migration instructions
 - **Issue #310 - Phase 3**: Remove legacy error types from public API
   - Removed `kcenon::thread::result<T>` class from public headers
   - Removed `kcenon::thread::result_void` class from public headers
