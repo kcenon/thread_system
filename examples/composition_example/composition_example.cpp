@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/common/interfaces/logger_interface.h>
 #include <kcenon/common/interfaces/global_logger_registry.h>
-#include <kcenon/thread/interfaces/monitoring_interface.h>
+#include <kcenon/common/interfaces/monitoring_interface.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/core/log_level.h>
@@ -121,41 +121,61 @@ private:
 };
 
 /**
- * @brief Simple monitoring implementation
+ * @brief Simple monitoring implementation using common::interfaces::IMonitor
+ *
+ * @note Issue #312: Updated to use common_system's IMonitor interface.
  */
-class console_monitoring : public ::monitoring_interface::monitoring_interface {
+class console_monitoring : public kcenon::common::interfaces::IMonitor {
 public:
-    void update_system_metrics(const ::monitoring_interface::system_metrics& metrics) override {
-        std::cout << "[MONITORING] System - CPU: " << metrics.cpu_usage_percent << "%, "
-                  << "Memory: " << metrics.memory_usage_bytes << " bytes, "
-                  << "Threads: " << metrics.active_threads << std::endl;
+    using VoidResult = kcenon::common::VoidResult;
+
+    VoidResult record_metric(const std::string& name, double value) override {
+        std::cout << "[MONITORING] " << name << ": " << value << std::endl;
+        snapshot_.add_metric(name, value);
+        return kcenon::common::ok();
     }
-    
-    void update_thread_pool_metrics(const ::monitoring_interface::thread_pool_metrics& metrics) override {
-        std::cout << "[MONITORING] Pool - Completed: " << metrics.jobs_completed << ", "
-                  << "Pending: " << metrics.jobs_pending << ", "
-                  << "Workers: " << metrics.worker_threads << " (" 
-                  << metrics.idle_threads << " idle)" << std::endl;
+
+    VoidResult record_metric(
+        const std::string& name,
+        double value,
+        const std::unordered_map<std::string, std::string>& tags) override {
+        std::cout << "[MONITORING] " << name << ": " << value;
+        if (!tags.empty()) {
+            std::cout << " {";
+            bool first = true;
+            for (const auto& [k, v] : tags) {
+                if (!first) std::cout << ", ";
+                std::cout << k << "=" << v;
+                first = false;
+            }
+            std::cout << "}";
+        }
+        std::cout << std::endl;
+
+        kcenon::common::interfaces::metric_value mv(name, value);
+        mv.tags = tags;
+        snapshot_.metrics.push_back(mv);
+        return kcenon::common::ok();
     }
-    
-    void update_worker_metrics(std::size_t worker_id, const ::monitoring_interface::worker_metrics& metrics) override {
-        std::cout << "[MONITORING] Worker " << worker_id << " - "
-                  << "Processed: " << metrics.jobs_processed << ", "
-                  << "Time: " << metrics.total_processing_time_ns << " ns" << std::endl;
+
+    kcenon::common::Result<kcenon::common::interfaces::metrics_snapshot> get_metrics() override {
+        return kcenon::common::ok(snapshot_);
     }
-    
-    ::monitoring_interface::metrics_snapshot get_current_snapshot() const override {
-        return current_snapshot_;
+
+    kcenon::common::Result<kcenon::common::interfaces::health_check_result> check_health() override {
+        kcenon::common::interfaces::health_check_result result;
+        result.status = kcenon::common::interfaces::health_status::healthy;
+        result.message = "Console monitoring active";
+        return kcenon::common::ok(result);
     }
-    
-    std::vector<::monitoring_interface::metrics_snapshot> get_recent_snapshots(std::size_t count) const override {
-        return {}; // Not implemented for demo
+
+    VoidResult reset() override {
+        snapshot_ = {};
+        return kcenon::common::ok();
     }
-    
-    bool is_active() const override { return true; }
-    
+
 private:
-    ::monitoring_interface::metrics_snapshot current_snapshot_;
+    kcenon::common::interfaces::metrics_snapshot snapshot_;
 };
 
 /**
@@ -172,7 +192,7 @@ void demonstrate_composition() {
         std::make_shared<console_logger>());
     
     // Register monitoring service
-    container.register_singleton<::monitoring_interface::monitoring_interface>(
+    container.register_singleton<kcenon::common::interfaces::IMonitor>(
         std::make_shared<console_monitoring>());
     
     // 2. Create thread pool with context from global container

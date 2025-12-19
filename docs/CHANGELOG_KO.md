@@ -7,6 +7,17 @@
 
 ## [미출시]
 
+### 제거됨
+- **이슈 #312 - Phase 3**: monitoring을 common::interfaces::IMonitor/IMonitorable로 마이그레이션
+  - 공개 헤더에서 `kcenon::thread::monitoring_interface` 네임스페이스 제거
+  - `include/kcenon/thread/interfaces/monitoring_interface.h` 헤더 파일 제거
+  - `include/kcenon/thread/interfaces/monitorable_interface.h` 헤더 파일 제거
+  - `include/kcenon/thread/adapters/common_system_monitoring_adapter.h` 어댑터 제거
+  - `thread_context`는 이제 메트릭 기록에 `common::interfaces::IMonitor` 사용
+  - 메트릭은 컴포넌트 식별을 위한 태그와 함께 `IMonitor::record_metric()`으로 기록
+  - 모든 코드는 이제 common_system의 `kcenon::common::interfaces::IMonitor` 사용 필요
+  - 새로운 IMonitor API 사용법을 보여주는 예제 업데이트
+
 ### 추가됨
 - **이슈 #276**: C++20 Concepts 기능 감지를 위한 CMake 설정 추가
   - `ThreadSystemFeatures.cmake`에 새로운 `check_common_concepts_support()` 함수 추가

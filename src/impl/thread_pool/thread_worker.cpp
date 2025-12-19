@@ -473,10 +473,9 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 			// Update worker metrics if monitoring is available
 			if (context_.monitoring())
 			{
-				monitoring_interface::worker_metrics metrics;
-				metrics.jobs_processed = 1;
-				metrics.total_processing_time_ns = execution_duration_ns;
-				metrics.timestamp = std::chrono::steady_clock::now();
+				common::interfaces::worker_metrics metrics(worker_id_);
+				metrics.jobs_processed.value = 1;
+				metrics.total_processing_time_ns.value = static_cast<double>(execution_duration_ns);
 				// Use proper worker ID instead of thread hash
 				context_.update_worker_metrics(worker_id_, metrics);
 			}

@@ -68,6 +68,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace kcenon::thread;
 using ILogger = kcenon::common::interfaces::ILogger;
+using IMonitor = kcenon::common::interfaces::IMonitor;
 
 /**
  * @brief Example 1: Thread pool with external logger only
@@ -152,7 +153,7 @@ void thread_pool_with_monitoring_example() {
     monitor->start();
     
     // 2. Register monitoring in service container
-    service_container::global().register_singleton<monitoring_interface::monitoring_interface>(monitor);
+    service_container::global().register_singleton<IMonitor>(monitor);
     
     // 3. Create thread pool with monitoring
     thread_context context;
@@ -200,12 +201,12 @@ void thread_pool_with_monitoring_example() {
         // Wait and check metrics
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
-        auto snapshot = monitor->get_current_snapshot();
-        std::cout << "Batch " << batch + 1 << " metrics:" << std::endl;
-        std::cout << "  Jobs completed: " << snapshot.thread_pool.jobs_completed << std::endl;
-        std::cout << "  Jobs pending: " << snapshot.thread_pool.jobs_pending << std::endl;
-        std::cout << "  Active workers: " << snapshot.thread_pool.worker_threads
-                  << " (" << snapshot.thread_pool.idle_threads << " idle)" << std::endl;
+        auto snapshot_result = monitor->get_metrics();
+        if (snapshot_result.is_ok()) {
+            const auto& snapshot = snapshot_result.value();
+            std::cout << "Batch " << batch + 1 << " metrics:" << std::endl;
+            std::cout << "  Total metrics recorded: " << snapshot.metrics.size() << std::endl;
+        }
     }
 
     // 6. Stop and get final stats
@@ -239,7 +240,7 @@ void complete_integration_example() {
     
     // 2. Register both services
     service_container::global().register_singleton<ILogger>(logger);
-    service_container::global().register_singleton<monitoring_interface::monitoring_interface>(monitor);
+    service_container::global().register_singleton<IMonitor>(monitor);
     
     // 3. Create fully integrated thread pool
     thread_context context;
@@ -301,12 +302,13 @@ void complete_integration_example() {
     // 6. Monitor progress
     for (int i = 0; i < 5; ++i) {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        
-        auto snapshot = monitor->get_current_snapshot();
-        context.log(log_level_v2::info,
-            "Progress: " + std::to_string(snapshot.thread_pool.jobs_completed) +
-            " jobs completed, " + std::to_string(snapshot.thread_pool.jobs_pending) +
-            " pending");
+
+        auto snapshot_result = monitor->get_metrics();
+        if (snapshot_result.is_ok()) {
+            context.log(log_level_v2::info,
+                "Progress: " + std::to_string(snapshot_result.value().metrics.size()) +
+                " metrics recorded");
+        }
     }
     
     // 7. Wait for completion
@@ -325,12 +327,12 @@ void complete_integration_example() {
         "Workload completed in " + std::to_string(duration.count()) + " ms");
     
     // 8. Final metrics
-    auto final_snapshot = monitor->get_current_snapshot();
-    std::cout << "\nFinal metrics:" << std::endl;
-    std::cout << "  Total jobs: " << final_snapshot.thread_pool.jobs_completed << std::endl;
-    std::cout << "  Total processing time: " 
-              << (final_snapshot.thread_pool.total_execution_time_ns / 1000000.0) 
-              << " ms" << std::endl;
+    auto final_result = monitor->get_metrics();
+    if (final_result.is_ok()) {
+        const auto& final_snapshot = final_result.value();
+        std::cout << "\nFinal metrics:" << std::endl;
+        std::cout << "  Total metrics collected: " << final_snapshot.metrics.size() << std::endl;
+    }
     
     // 9. Cleanup
     logger->stop();

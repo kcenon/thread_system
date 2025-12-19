@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
+- **Issue #312 - Phase 3**: Migrate monitoring to common::interfaces::IMonitor/IMonitorable
+  - Removed `kcenon::thread::monitoring_interface` namespace from public headers
+  - Removed `include/kcenon/thread/interfaces/monitoring_interface.h` header file
+  - Removed `include/kcenon/thread/interfaces/monitorable_interface.h` header file
+  - Removed `include/kcenon/thread/adapters/common_system_monitoring_adapter.h` adapter
+  - `thread_context` now uses `common::interfaces::IMonitor` for metrics recording
+  - Metrics are now recorded via `IMonitor::record_metric()` with tags for component identification
+  - All code should now use `kcenon::common::interfaces::IMonitor` from common_system
+  - Updated examples to demonstrate new IMonitor API usage
 - **Issue #311 - Phase 3**: Remove deprecated thread_system logger_interface
   - Removed `kcenon::thread::logger_interface` class from public headers
   - Removed `kcenon::thread::log_level` enum from public headers

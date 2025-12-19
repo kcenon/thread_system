@@ -8,16 +8,18 @@ All rights reserved.
 /**
  * @file multi_process_monitoring_integration.cpp
  * @brief Example demonstrating integration with multi-process monitoring system
- * 
+ *
  * This example shows how to:
  * - Use thread pools with proper instance identification
  * - Report metrics through the monitoring interface
  * - Handle multiple thread pools in the same process
  * - Integrate with process identification for multi-process scenarios
+ *
+ * @note Issue #312: Updated to use common::interfaces::IMonitor
  */
 
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/interfaces/monitoring_interface.h>
+#include <kcenon/common/interfaces/monitoring_interface.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <kcenon/thread/core/thread_worker.h>
@@ -30,50 +32,79 @@ All rights reserved.
 #include <random>
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
 using namespace utility_module;
 
-// Mock implementation of multi-process monitoring
-class sample_monitoring : public ::monitoring_interface::monitoring_interface {
+// Implementation of IMonitor for multi-process monitoring
+class sample_monitoring : public kcenon::common::interfaces::IMonitor {
 public:
-    void update_system_metrics(const ::monitoring_interface::system_metrics& metrics) override {
-        std::cout << formatter::format("System metrics: CPU: {}%, Memory: {} bytes\n", 
-                                      metrics.cpu_usage_percent, metrics.memory_usage_bytes);
+    using VoidResult = kcenon::common::VoidResult;
+
+    VoidResult record_metric(const std::string& name, double value) override {
+        std::cout << formatter::format("{}: {}\n", name, value);
+        snapshot_.add_metric(name, value);
+        return kcenon::common::ok();
     }
-    
-    void update_thread_pool_metrics(const ::monitoring_interface::thread_pool_metrics& metrics) override {
-        std::cout << formatter::format("Thread pool '{}' (ID: {}): Workers: {}, Idle: {}, Pending: {}\n",
-                                      metrics.pool_name, metrics.pool_instance_id,
-                                      metrics.worker_threads, metrics.idle_threads, metrics.jobs_pending);
+
+    VoidResult record_metric(
+        const std::string& name,
+        double value,
+        const std::unordered_map<std::string, std::string>& tags) override {
+        std::cout << formatter::format("{}: {}", name, value);
+        if (!tags.empty()) {
+            std::cout << " [";
+            bool first = true;
+            for (const auto& [k, v] : tags) {
+                if (!first) std::cout << ", ";
+                std::cout << k << "=" << v;
+                first = false;
+            }
+            std::cout << "]";
+        }
+        std::cout << "\n";
+
+        kcenon::common::interfaces::metric_value mv(name, value);
+        mv.tags = tags;
+        snapshot_.metrics.push_back(mv);
+        return kcenon::common::ok();
     }
-    
-    void update_worker_metrics(std::size_t worker_id, const ::monitoring_interface::worker_metrics& metrics) override {
-        std::cout << formatter::format("Worker {}: Processed {} jobs, Total time: {} ns\n",
-                                      worker_id, metrics.jobs_processed, metrics.total_processing_time_ns);
+
+    kcenon::common::Result<kcenon::common::interfaces::metrics_snapshot> get_metrics() override {
+        return kcenon::common::ok(snapshot_);
     }
-    
-    ::monitoring_interface::metrics_snapshot get_current_snapshot() const override { return {}; }
-    std::vector<::monitoring_interface::metrics_snapshot> get_recent_snapshots(std::size_t) const override { return {}; }
-    bool is_active() const override { return true; }
+
+    kcenon::common::Result<kcenon::common::interfaces::health_check_result> check_health() override {
+        kcenon::common::interfaces::health_check_result result;
+        result.status = kcenon::common::interfaces::health_status::healthy;
+        result.message = "Sample monitoring active";
+        return kcenon::common::ok(result);
+    }
+
+    VoidResult reset() override {
+        snapshot_ = {};
+        return kcenon::common::ok();
+    }
+
+private:
+    kcenon::common::interfaces::metrics_snapshot snapshot_;
 };
 
 int main() {
     std::cout << "=== Multi-Process Monitoring Integration Example ===\n\n";
-    
+
     // Create monitoring instance
     auto monitoring = std::make_shared<sample_monitoring>();
-    
+
     // Create thread context with monitoring
     thread_context context(nullptr, monitoring);
-    
+
     // Create multiple thread pools with unique names
     auto primary_pool = std::make_shared<thread_pool>("primary_pool", context);
     auto secondary_pool = std::make_shared<thread_pool>("secondary_pool", context);
-    
+
     // Display pool instance IDs
     std::cout << formatter::format("Primary pool instance ID: {}\n", primary_pool->get_pool_instance_id());
     std::cout << formatter::format("Secondary pool instance ID: {}\n\n", secondary_pool->get_pool_instance_id());
-    
+
     // Add workers then start pools
     {
         std::vector<std::unique_ptr<thread_worker>> workers;
@@ -93,7 +124,7 @@ int main() {
             return 1;
         }
     }
-    
+
     auto start_primary = primary_pool->start();
     if (start_primary.is_err()) {
         std::cerr << "Failed to start primary_pool: " << start_primary.error().message << "\n";
@@ -104,13 +135,13 @@ int main() {
         std::cerr << "Failed to start secondary_pool: " << start_secondary.error().message << "\n";
         return 1;
     }
-    
+
     // Report initial metrics
     primary_pool->report_metrics();
     secondary_pool->report_metrics();
-    
+
     std::cout << "\n--- Submitting jobs ---\n";
-    
+
     // Submit jobs to primary pool
     for (int i = 0; i < 10; ++i) {
         auto job = std::make_unique<callback_job>(
@@ -126,7 +157,7 @@ int main() {
             std::cerr << "enqueue to primary_pool failed: " << r.error().message << "\n";
         }
     }
-    
+
     // Submit jobs to secondary pool
     for (int i = 0; i < 5; ++i) {
         auto job = std::make_unique<callback_job>(
@@ -142,7 +173,7 @@ int main() {
             std::cerr << "enqueue to secondary_pool failed: " << r.error().message << "\n";
         }
     }
-    
+
     // Periodically report metrics while jobs are processing
     for (int i = 0; i < 3; ++i) {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
@@ -150,7 +181,7 @@ int main() {
         primary_pool->report_metrics();
         secondary_pool->report_metrics();
     }
-    
+
     // Stop pools
     std::cout << "\n--- Stopping pools ---\n";
     auto stop_primary = primary_pool->stop();
@@ -161,13 +192,13 @@ int main() {
     if (stop_secondary.is_err()) {
         std::cerr << "Error stopping secondary_pool: " << stop_secondary.error().message << "\n";
     }
-    
+
     // Final metrics
     std::cout << "\n--- Final Metrics ---\n";
     primary_pool->report_metrics();
     secondary_pool->report_metrics();
-    
+
     std::cout << "\n=== Example completed ===\n";
-    
+
     return 0;
 }
