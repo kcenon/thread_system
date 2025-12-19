@@ -34,7 +34,7 @@ BSD 3-Clause License
 #include <gtest/gtest.h>
 
 #include <kcenon/thread/interfaces/scheduler_interface.h>
-#include <kcenon/thread/interfaces/monitorable_interface.h>
+#include <kcenon/common/interfaces/monitoring_interface.h>
 
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/job_queue.h>
@@ -44,11 +44,9 @@ BSD 3-Clause License
 
 using namespace kcenon::thread;
 
-#ifdef BUILD_WITH_COMMON_SYSTEM
 // Support both old (namespace common) and new (namespace kcenon::common) versions
 // At global scope, need to use kcenon::common directly
 namespace common_test = kcenon::common;
-#endif
 
 TEST(interfaces_test, scheduler_interface_job_queue)
 {
@@ -100,35 +98,40 @@ TEST(interfaces_test, thread_pool_execute)
 }
 
 namespace {
-class dummy_monitorable : public monitorable_interface {
+// Test implementation of common::interfaces::IMonitorable
+class dummy_monitorable : public common_test::interfaces::IMonitorable {
 public:
-    auto get_metrics() -> ::monitoring_interface::metrics_snapshot override {
-        return snapshot_;
+    common_test::Result<common_test::interfaces::metrics_snapshot> get_monitoring_data() override {
+        return common_test::ok(snapshot_);
     }
 
-#ifdef BUILD_WITH_COMMON_SYSTEM
-    auto reset_metrics() -> common_test::VoidResult override {
-        snapshot_ = {};
-        return common_test::ok();
+    common_test::Result<common_test::interfaces::health_check_result> health_check() override {
+        common_test::interfaces::health_check_result result;
+        result.status = common_test::interfaces::health_status::healthy;
+        result.message = "OK";
+        return common_test::ok(result);
     }
-#else
-    void reset_metrics() override {
-        snapshot_ = {};
+
+    std::string get_component_name() const override {
+        return "dummy_monitorable";
     }
-#endif
 
 private:
-    ::monitoring_interface::metrics_snapshot snapshot_{};
+    common_test::interfaces::metrics_snapshot snapshot_{};
 };
 }
 
 TEST(interfaces_test, monitorable_interface_mock)
 {
     dummy_monitorable m;
-    auto s = m.get_metrics();
-    (void)s;
-    m.reset_metrics();
-    SUCCEED();
+    auto data_result = m.get_monitoring_data();
+    ASSERT_TRUE(data_result.is_ok());
+
+    auto health_result = m.health_check();
+    ASSERT_TRUE(health_result.is_ok());
+    EXPECT_EQ(health_result.value().status, common_test::interfaces::health_status::healthy);
+
+    EXPECT_EQ(m.get_component_name(), "dummy_monitorable");
 }
 
 TEST(interfaces_test, service_registry_basic)
