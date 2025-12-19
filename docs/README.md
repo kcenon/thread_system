@@ -128,6 +128,9 @@ int main() {
 - [성능 튜닝](advanced/PERFORMANCE_TUNING.md)
 - [Lock-Free 알고리즘](advanced/LOCK_FREE_ALGORITHMS.md)
 
+### Architecture Decision Records (ADR)
+- [ADR-001: v3.0 API Surface and Compatibility Policy](adr/ADR-001-v3-api-surface.md)
+
 ## 기여
 
 기여 가이드는 [CONTRIBUTING.md](contributing/CONTRIBUTING.md)를 참조하세요.
