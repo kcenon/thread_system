@@ -84,11 +84,8 @@ thread_pool::thread_pool(const std::string& thread_title, const thread_context& 
     , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
     // Report initial pool registration if monitoring is available
     if (context_.monitoring()) {
-        monitoring_interface::thread_pool_metrics initial_metrics;
-        initial_metrics.pool_name = thread_title_;
-        initial_metrics.pool_instance_id = pool_instance_id_;
-        initial_metrics.worker_threads = 0;
-        initial_metrics.timestamp = std::chrono::steady_clock::now();
+        common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
+        initial_metrics.worker_threads.value = 0;
         context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, initial_metrics);
     }
 }
@@ -507,23 +504,19 @@ void thread_pool::report_metrics() {
         return;
     }
 
-    monitoring_interface::thread_pool_metrics metrics;
-    metrics.pool_name = thread_title_;
-    metrics.pool_instance_id = pool_instance_id_;
+    common::interfaces::thread_pool_metrics metrics(thread_title_, pool_instance_id_);
 
     // Protect workers_ access with lock
     {
         std::scoped_lock<std::mutex> lock(workers_mutex_);
-        metrics.worker_threads = workers_.size();
+        metrics.worker_threads.value = static_cast<double>(workers_.size());
     }
 
-    metrics.idle_threads = get_idle_worker_count();
+    metrics.idle_threads.value = static_cast<double>(get_idle_worker_count());
 
     if (job_queue_) {
-        metrics.jobs_pending = job_queue_->size();
+        metrics.jobs_pending.value = static_cast<double>(job_queue_->size());
     }
-
-    metrics.timestamp = std::chrono::steady_clock::now();
 
     // Report metrics with pool identification
     context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, metrics);

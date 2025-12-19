@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 #include <kcenon/common/interfaces/logger_interface.h>
 #include <kcenon/common/interfaces/global_logger_registry.h>
-#include "monitoring_interface.h"
+#include <kcenon/common/interfaces/monitoring_interface.h>
 #include "service_container.h"
 #include <kcenon/thread/core/log_level.h>
 #include <kcenon/thread/core/thread_logger.h>
@@ -46,6 +46,9 @@ namespace kcenon::thread {
 // Type alias for common_system ILogger
 using ILogger = common::interfaces::ILogger;
 
+// Type alias for common_system IMonitor
+using IMonitor = common::interfaces::IMonitor;
+
 /**
  * @brief Context object that provides access to optional services
  *
@@ -53,6 +56,7 @@ using ILogger = common::interfaces::ILogger;
  * with optional access to logger and monitoring services.
  *
  * @note Issue #261: Migrated to use common_system's ILogger interface.
+ * @note Issue #312: Migrated to use common_system's IMonitor interface.
  *       The context now uses GlobalLoggerRegistry for default logger resolution.
  */
 class thread_context {
@@ -62,17 +66,17 @@ public:
      */
     thread_context()
         : logger_(common::interfaces::GlobalLoggerRegistry::instance().get_default_logger())
-        , monitoring_(service_container::global().resolve<monitoring_interface::monitoring_interface>()) {
+        , monitoring_(service_container::global().resolve<common::interfaces::IMonitor>()) {
     }
 
     /**
      * @brief Constructor with explicit service injection
      * @param logger Optional logger service (ILogger from common_system)
-     * @param monitoring Optional monitoring service
+     * @param monitoring Optional monitoring service (IMonitor from common_system)
      */
     explicit thread_context(
         std::shared_ptr<ILogger> logger,
-        std::shared_ptr<monitoring_interface::monitoring_interface> monitoring = nullptr)
+        std::shared_ptr<IMonitor> monitoring = nullptr)
         : logger_(std::move(logger))
         , monitoring_(std::move(monitoring)) {
     }
@@ -89,7 +93,7 @@ public:
      * @brief Get the monitoring service
      * @return Monitoring service or nullptr if not available
      */
-    std::shared_ptr<monitoring_interface::monitoring_interface> monitoring() const {
+    std::shared_ptr<IMonitor> monitoring() const {
         return monitoring_;
     }
 
@@ -155,14 +159,19 @@ public:
      * @param metrics System metrics to record
      *
      * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
+     * @note Issue #312: Now uses common::interfaces::IMonitor::record_metric().
      */
-    void update_system_metrics(const monitoring_interface::system_metrics& metrics) const {
+    void update_system_metrics(const common::interfaces::system_metrics& metrics) const {
         // Skip monitoring during static destruction to prevent SDOF
         if (thread_logger::is_shutting_down()) {
             return;
         }
         if (monitoring_) {
-            monitoring_->update_system_metrics(metrics);
+            std::unordered_map<std::string, std::string> tags{{"component", "system"}};
+            monitoring_->record_metric("cpu_usage_percent", metrics.cpu_usage_percent.value, tags);
+            monitoring_->record_metric("memory_usage_bytes", metrics.memory_usage_bytes.value, tags);
+            monitoring_->record_metric("active_threads", metrics.active_threads.value, tags);
+            monitoring_->record_metric("total_allocations", metrics.total_allocations.value, tags);
         }
     }
 
@@ -171,14 +180,25 @@ public:
      * @param metrics Thread pool metrics to record
      *
      * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
+     * @note Issue #312: Now uses common::interfaces::IMonitor::record_metric().
      */
-    void update_thread_pool_metrics(const monitoring_interface::thread_pool_metrics& metrics) const {
+    void update_thread_pool_metrics(const common::interfaces::thread_pool_metrics& metrics) const {
         // Skip monitoring during static destruction to prevent SDOF
         if (thread_logger::is_shutting_down()) {
             return;
         }
         if (monitoring_) {
-            monitoring_->update_thread_pool_metrics(metrics);
+            std::unordered_map<std::string, std::string> tags{
+                {"component", "thread_pool"},
+                {"pool_name", metrics.pool_name},
+                {"pool_instance_id", std::to_string(metrics.pool_instance_id)}
+            };
+            monitoring_->record_metric("jobs_completed", metrics.jobs_completed.value, tags);
+            monitoring_->record_metric("jobs_pending", metrics.jobs_pending.value, tags);
+            monitoring_->record_metric("worker_threads", metrics.worker_threads.value, tags);
+            monitoring_->record_metric("idle_threads", metrics.idle_threads.value, tags);
+            monitoring_->record_metric("average_latency_ns", metrics.average_latency_ns.value, tags);
+            monitoring_->record_metric("total_execution_time_ns", metrics.total_execution_time_ns.value, tags);
         }
     }
 
@@ -189,16 +209,27 @@ public:
      * @param metrics Thread pool metrics to record
      *
      * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
+     * @note Issue #312: Now uses common::interfaces::IMonitor::record_metric().
      */
     void update_thread_pool_metrics(const std::string& pool_name,
                                    std::uint32_t pool_instance_id,
-                                   const monitoring_interface::thread_pool_metrics& metrics) const {
+                                   const common::interfaces::thread_pool_metrics& metrics) const {
         // Skip monitoring during static destruction to prevent SDOF
         if (thread_logger::is_shutting_down()) {
             return;
         }
         if (monitoring_) {
-            monitoring_->update_thread_pool_metrics(pool_name, pool_instance_id, metrics);
+            std::unordered_map<std::string, std::string> tags{
+                {"component", "thread_pool"},
+                {"pool_name", pool_name},
+                {"pool_instance_id", std::to_string(pool_instance_id)}
+            };
+            monitoring_->record_metric("jobs_completed", metrics.jobs_completed.value, tags);
+            monitoring_->record_metric("jobs_pending", metrics.jobs_pending.value, tags);
+            monitoring_->record_metric("worker_threads", metrics.worker_threads.value, tags);
+            monitoring_->record_metric("idle_threads", metrics.idle_threads.value, tags);
+            monitoring_->record_metric("average_latency_ns", metrics.average_latency_ns.value, tags);
+            monitoring_->record_metric("total_execution_time_ns", metrics.total_execution_time_ns.value, tags);
         }
     }
 
@@ -208,15 +239,23 @@ public:
      * @param metrics Worker metrics to record
      *
      * @note Issue #295: Skips monitoring during static destruction to prevent SDOF.
+     * @note Issue #312: Now uses common::interfaces::IMonitor::record_metric().
      */
     void update_worker_metrics(std::size_t worker_id,
-                              const monitoring_interface::worker_metrics& metrics) const {
+                              const common::interfaces::worker_metrics& metrics) const {
         // Skip monitoring during static destruction to prevent SDOF
         if (thread_logger::is_shutting_down()) {
             return;
         }
         if (monitoring_) {
-            monitoring_->update_worker_metrics(worker_id, metrics);
+            std::unordered_map<std::string, std::string> tags{
+                {"component", "worker"},
+                {"worker_id", std::to_string(worker_id)}
+            };
+            monitoring_->record_metric("jobs_processed", metrics.jobs_processed.value, tags);
+            monitoring_->record_metric("total_processing_time_ns", metrics.total_processing_time_ns.value, tags);
+            monitoring_->record_metric("idle_time_ns", metrics.idle_time_ns.value, tags);
+            monitoring_->record_metric("context_switches", metrics.context_switches.value, tags);
         }
     }
 
@@ -264,7 +303,7 @@ public:
 
 private:
     std::shared_ptr<ILogger> logger_;
-    std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
+    std::shared_ptr<IMonitor> monitoring_;
     mutable std::string context_name_;
 
     /**
@@ -288,6 +327,7 @@ private:
  * @brief Builder for thread_context with fluent interface
  *
  * @note Issue #261: Updated to use common_system's ILogger interface.
+ * @note Issue #312: Updated to use common_system's IMonitor interface.
  */
 class thread_context_builder {
 public:
@@ -296,15 +336,14 @@ public:
         return *this;
     }
 
-    thread_context_builder& with_monitoring(
-        std::shared_ptr<monitoring_interface::monitoring_interface> monitoring) {
+    thread_context_builder& with_monitoring(std::shared_ptr<IMonitor> monitoring) {
         monitoring_ = std::move(monitoring);
         return *this;
     }
 
     thread_context_builder& from_global_registry() {
         logger_ = common::interfaces::GlobalLoggerRegistry::instance().get_default_logger();
-        monitoring_ = service_container::global().resolve<monitoring_interface::monitoring_interface>();
+        monitoring_ = service_container::global().resolve<common::interfaces::IMonitor>();
         return *this;
     }
 
@@ -314,7 +353,7 @@ public:
 
 private:
     std::shared_ptr<ILogger> logger_;
-    std::shared_ptr<monitoring_interface::monitoring_interface> monitoring_;
+    std::shared_ptr<IMonitor> monitoring_;
 };
 
 } // namespace kcenon::thread
