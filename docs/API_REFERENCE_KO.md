@@ -1,7 +1,7 @@
 # thread_system API 레퍼런스
 
-> **버전**: 0.2.0
-> **최종 업데이트**: 2025-11-21
+> **버전**: 3.0.0
+> **최종 업데이트**: 2025-12-19
 > **언어**: [English](API_REFERENCE.md) | [한국어]
 
 ## 목차
@@ -22,10 +22,10 @@ thread_system의 모든 공개 API는 이 네임스페이스에 포함됩니다.
 
 **포함 항목**:
 - `thread_pool` - 태스크 기반 스레드 풀
-- `typed_thread_pool` - 타입 안전 스레드 풀
-- `mpmc_queue` - Multi-Producer Multi-Consumer 큐
-- `spsc_queue` - Single-Producer Single-Consumer 큐
-- `adaptive_queue` - 적응형 큐
+- `typed_thread_pool_t` - 타입 안전 스레드 풀
+- `lockfree_queue<T>` - Lock-free MPMC 큐
+- `lockfree_job_queue` - Lock-free 작업 큐
+- `adaptive_job_queue` - 적응형 작업 큐
 - 동기화 프리미티브
 
 ---
@@ -36,13 +36,15 @@ thread_system의 모든 공개 API는 이 네임스페이스에 포함됩니다.
 
 **헤더**: `#include <kcenon/thread/thread_pool.h>`
 
-**설명**: 고성능 태스크 기반 스레드 풀 (4.5배 성능 향상)
+**설명**: 고성능 태스크 기반 스레드 풀
 
 **주요 기능**:
-- Work-stealing 알고리즘
 - Future/Promise 패턴
-- 우선순위 기반 태스크 실행
-- 동적 워커 스케일링
+- 우선순위 기반 태스크 실행 (선택사항)
+- 동적 워커 설정
+- Common system IExecutor 통합 (사용 가능 시)
+
+> **참고**: Work-stealing은 계획 중이지만 아직 구현되지 않았습니다. 설정 옵션은 `config.h`를 참조하세요.
 
 ### 생성 및 사용
 
@@ -114,9 +116,11 @@ size_t thread_count() const noexcept;
 
 | 메트릭 | 값 | 비고 |
 |--------|-------|-------|
-| 처리량 | 1.2M ops/sec | Work-stealing |
-| 지연시간 (p50) | 0.8 μs | 태스크 스케줄링 |
-| 확장성 | 16코어까지 선형에 가까움 | 95%+ 효율 |
+| 처리량 | ~1M ops/sec | 워크로드에 따라 다름 |
+| 지연시간 (p50) | ~1 μs | 태스크 스케줄링 |
+| 확장성 | 16코어까지 선형에 가까움 | 태스크 크기에 따라 다름 |
+
+> **참고**: 실제 성능은 워크로드 특성, 하드웨어 및 설정에 따라 다릅니다.
 
 ---
 
@@ -199,214 +203,237 @@ void stop();
 
 ## Lock-Free 큐
 
-### mpmc_queue
+### lockfree_queue
 
-**헤더**: `#include <kcenon/thread/queues/mpmc_queue.h>`
+**헤더**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
 
-**설명**: Multi-Producer Multi-Consumer 큐 (5.2배 성능 향상)
+**설명**: 블로킹 대기를 지원하는 범용 Lock-free MPMC 큐
 
-**알고리즘**: Lock-free 링 버퍼
+**알고리즘**: 분리된 head/tail 뮤텍스를 사용하는 세밀한 잠금
 
-**성능**: 2.1M ops/sec
+**주요 기능**:
+- 다중 프로듀서/컨슈머의 스레드 안전한 동시 접근
+- 타임아웃을 지원하는 블로킹 대기
+- 이동 생성 가능한 모든 타입에서 동작
+- enqueue와 dequeue 작업 간 낮은 경합
 
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/queues/mpmc_queue.h>
+#include <kcenon/thread/lockfree/lockfree_queue.h>
 
 using namespace kcenon::thread;
 
-// 생성 (용량: 1024)
-mpmc_queue<int> queue(1024);
+lockfree_queue<std::string> queue;
 
 // 프로듀서 스레드
 std::thread producer([&queue]() {
-    for (int i = 0; i < 1000; ++i) {
-        queue.enqueue(i);
+    queue.enqueue("message");
+});
+
+// 컨슈머 스레드 (논블로킹)
+std::thread consumer([&queue]() {
+    if (auto value = queue.try_dequeue()) {
+        process(*value);
     }
 });
 
-// 컨슈머 스레드
-std::thread consumer([&queue]() {
-    int value;
-    while (queue.dequeue(value)) {
-        process(value);
-    }
-});
+// 컨슈머 스레드 (타임아웃 블로킹)
+if (auto value = queue.wait_dequeue(std::chrono::milliseconds{100})) {
+    process(*value);
+}
 ```
 
 #### 핵심 메서드
 
 ```cpp
-bool enqueue(const T& item);        // 큐에 추가
-bool dequeue(T& item);              // 큐에서 제거
-bool try_enqueue(const T& item);    // 논블로킹 추가
-bool try_dequeue(T& item);          // 논블로킹 제거
-size_t size() const;                // 현재 크기
-bool empty() const;                 // 비어있는지 확인
+void enqueue(T value);                              // 큐에 추가
+std::optional<T> try_dequeue();                     // 논블로킹 제거
+std::optional<T> wait_dequeue(duration timeout);    // 타임아웃 블로킹 제거
+size_t size() const;                                // 현재 크기 (근사값)
+bool empty() const;                                 // 비어있는지 확인
+void shutdown();                                    // 종료 신호
 ```
 
 ---
 
-### spsc_queue
+### adaptive_job_queue
 
-**헤더**: `#include <kcenon/thread/queues/spsc_queue.h>`
+**헤더**: `#include <kcenon/thread/queue/adaptive_job_queue.h>`
 
-**설명**: Single-Producer Single-Consumer 큐
+**설명**: 뮤텍스 모드와 Lock-free 모드를 자동 전환하는 적응형 큐
 
-**알고리즘**: Lock-free 순환 버퍼
+**알고리즘**: 정책 기반 동적 모드 전환
 
-**성능**: 3.5M ops/sec
-
-#### 사용 예시
-
-```cpp
-#include <kcenon/thread/queues/spsc_queue.h>
-
-using namespace kcenon::thread;
-
-// 생성 (용량: 1024)
-spsc_queue<int> queue(1024);
-
-// 프로듀서 스레드 (단일만!)
-std::thread producer([&queue]() {
-    for (int i = 0; i < 1000; ++i) {
-        queue.push(i);
-    }
-});
-
-// 컨슈머 스레드 (단일만!)
-std::thread consumer([&queue]() {
-    int value;
-    while (queue.pop(value)) {
-        process(value);
-    }
-});
-```
-
----
-
-### adaptive_queue
-
-**헤더**: `#include <kcenon/thread/queues/adaptive_queue.h>`
-
-**설명**: 부하 기반 자동 리사이징 큐
-
-**알고리즘**: 동적 리사이징 큐
-
-**성능**: 1.5M ops/sec
+**주요 기능**:
+- 뮤텍스 기반 및 Lock-free 큐 구현을 래핑
+- 다중 선택 정책 (정확도, 성능, 균형, 수동)
+- 임시 정확도 모드를 위한 RAII 가드
+- 데이터 마이그레이션과 함께 스레드 안전한 모드 전환
 
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/queues/adaptive_queue.h>
+#include <kcenon/thread/queue/adaptive_job_queue.h>
 
 using namespace kcenon::thread;
 
-// 생성 (초기 용량: 128)
-adaptive_queue<int> queue(128);
+// 적응형 큐 생성 (기본값: balanced 정책)
+auto queue = std::make_unique<adaptive_job_queue>();
 
-// 설정
-queue.set_high_watermark(0.8);   // 80% 사용 시 확장
-queue.set_low_watermark(0.2);    // 20% 사용 시 축소
+// 일반 큐처럼 사용
+queue->enqueue(std::make_unique<my_job>());
+auto job = queue->dequeue();
 
-// 사용 (자동 리사이징)
-for (int i = 0; i < 10000; ++i) {
-    queue.enqueue(i);
-    // 부하에 따라 큐가 자동으로 리사이징됨
+// 임시로 정확도 요구
+{
+    auto guard = queue->require_accuracy();
+    size_t exact = queue->size();  // 이제 정확한 값 보장
 }
+
+// 특정 정책으로 생성
+auto perf_queue = std::make_unique<adaptive_job_queue>(
+    adaptive_job_queue::policy::performance_first
+);
+```
+
+#### 정책
+
+| 정책 | 설명 |
+|------|------|
+| `accuracy_first` | 항상 뮤텍스 모드 사용 |
+| `performance_first` | 항상 Lock-free 모드 사용 |
+| `balanced` | 사용량에 따라 자동 전환 |
+| `manual` | 사용자가 모드 제어 |
+
+#### 핵심 메서드
+
+```cpp
+auto enqueue(std::unique_ptr<job>&& j) -> common::VoidResult;
+auto dequeue() -> std::unique_ptr<job>;
+size_t size() const;
+bool empty() const;
+auto require_accuracy() -> accuracy_guard;  // 정확한 크기를 위한 RAII 가드
+void set_mode(mode m);                      // 모드 전환 (manual 정책만)
+mode current_mode() const;                  // 현재 모드 조회
 ```
 
 ---
 
 ## 동기화 프리미티브
 
-### hazard_pointer
+### safe_hazard_pointer
 
-**헤더**: `#include <kcenon/thread/sync/hazard_pointer.h>`
+**헤더**: `#include <kcenon/thread/core/safe_hazard_pointer.h>`
 
-**설명**: Lock-free 구조를 위한 안전한 메모리 회수
+**설명**: Lock-free 데이터 구조를 위한 스레드 안전 해저드 포인터 구현
 
 **주요 기능**:
-- ABA 문제 완화
-- 자동 가비지 컬렉션
-- 스레드 안전 메모리 회수
+- ARM 및 약한 메모리 모델 아키텍처를 위한 명시적 메모리 순서
+- 자동 등록이 있는 스레드별 해저드 포인터 레코드
+- 설정 가능한 임계값을 사용한 지연 회수
+- 적절한 동기화를 통한 스레드 안전
+
+> **참고**: 레거시 `hazard_pointer.h`는 메모리 순서 문제(TICKET-002)로 인해 더 이상 사용되지 않습니다.
+> 대신 `safe_hazard_pointer.h` 또는 `atomic_shared_ptr.h`를 사용하세요.
 
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/sync/hazard_pointer.h>
+#include <kcenon/thread/core/safe_hazard_pointer.h>
 
 using namespace kcenon::thread;
 
 // 해저드 포인터 도메인 생성
-hazard_pointer_domain<Node> hp_domain;
+safe_hazard_pointer_domain<Node> hp_domain;
 
-// 해저드 포인터 획득
-auto hp = hp_domain.acquire();
+// 레코드 획득
+auto* record = hp_domain.acquire();
 
-// 포인터 보호
-Node* node = load_node();
-hp.protect(node);
+// 포인터 보호 (기본값: 슬롯 0)
+Node* node = shared_head.load();
+record->protect(node);
 
-// 노드를 안전하게 사용
+// 노드를 안전하게 사용 - 다른 스레드가 회수하지 않음
 process(node);
 
-// 해제 (소멸자에서 자동)
+// 완료 시 보호 해제
+record->clear();
+
+// 지연 회수를 위해 노드 퇴역
+hp_domain.retire(old_node);
 ```
 
 ---
 
-### spinlock
+### scoped_lock_guard
 
-**헤더**: `#include <kcenon/thread/sync/spinlock.h>`
+**헤더**: `#include <kcenon/thread/core/sync_primitives.h>`
 
-**설명**: 저지연 스핀락
+**설명**: 선택적 타임아웃을 지원하는 RAII 기반 스코프 락 가드
+
+**주요 기능**:
+- 자동 락 획득 및 해제
+- 타이밍 뮤텍스를 위한 선택적 타임아웃
+- 예외 안전 락 관리
 
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/sync/spinlock.h>
+#include <kcenon/thread/core/sync_primitives.h>
 
-using namespace kcenon::thread;
+using namespace kcenon::thread::sync;
 
-spinlock lock;
+std::mutex mtx;
 
-// RAII와 함께 사용
+// 기본 사용
 {
-    std::lock_guard<spinlock> guard(lock);
+    scoped_lock_guard<std::mutex> guard(mtx);
     // 크리티컬 섹션
 }
+
+// 타임아웃 사용 (timed_mutex용)
+std::timed_mutex timed_mtx;
+{
+    scoped_lock_guard<std::timed_mutex> guard(
+        timed_mtx, std::chrono::milliseconds{100}
+    );
+    if (guard.owns_lock()) {
+        // 락 획득됨
+    }
+}
 ```
 
 ---
 
-### rw_lock
+### atomic_shared_ptr
 
-**헤더**: `#include <kcenon/thread/sync/rw_lock.h>`
+**헤더**: `#include <kcenon/thread/core/atomic_shared_ptr.h>`
 
-**설명**: 읽기-쓰기 락 (읽기 중심 워크로드에 최적화)
+**설명**: shared_ptr에 대한 스레드 안전 원자적 연산 (해저드 포인터 대안)
+
+**주요 기능**:
+- shared_ptr에 대한 Lock-free 원자적 load/store/exchange
+- 해저드 포인터보다 간단한 API
+- 표준 shared_ptr과 호환
 
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/sync/rw_lock.h>
+#include <kcenon/thread/core/atomic_shared_ptr.h>
 
 using namespace kcenon::thread;
 
-rw_lock lock;
+atomic_shared_ptr<Node> shared_node;
 
-// 읽기
-{
-    std::shared_lock<rw_lock> read_guard(lock);
-    // 읽기 작업
-}
+// 원자적 저장
+shared_node.store(std::make_shared<Node>());
 
-// 쓰기
-{
-    std::unique_lock<rw_lock> write_guard(lock);
-    // 쓰기 작업
-}
+// 원자적 로드
+auto node = shared_node.load();
+
+// 원자적 교환
+auto old = shared_node.exchange(std::make_shared<Node>());
 ```
 
 ---
@@ -415,18 +442,21 @@ rw_lock lock;
 
 ### 큐 성능 비교
 
-| 큐 타입 | 처리량 | 지연시간 | 사용 사례 |
-|---------|------------|---------|----------|
-| **spsc_queue** | 3.5M ops/sec | 0.29 μs | 파이프라인, 단일 프로듀서/컨슈머 |
-| **mpmc_queue** | 2.1M ops/sec | 0.48 μs | 고처리량 태스크 큐 |
-| **adaptive_queue** | 1.5M ops/sec | 0.67 μs | 가변 부하 시스템 |
+| 큐 타입 | 설명 | 사용 사례 |
+|---------|------|----------|
+| **job_queue** | 뮤텍스 기반, 정확한 크기 | 정확한 크기가 중요할 때 |
+| **lockfree_job_queue** | Lock-free MPMC | 고처리량 태스크 큐 |
+| **lockfree_queue<T>** | 블로킹 대기 지원 범용 Lock-free | 일반 MPMC 사용 사례 |
+| **adaptive_job_queue** | 모드 자동 전환 | 가변 부하 시스템 |
 
-### 스레드 풀 성능 비교
+> **참고**: 실제 성능은 워크로드 특성과 하드웨어에 따라 다릅니다.
 
-| 풀 타입 | 처리량 | 지연시간 (p50) | 타입 안전 |
-|----------|------------|---------------|-------------|
-| **thread_pool** | 1.2M ops/sec | 0.8 μs | 런타임 |
-| **typed_thread_pool** | 980K ops/sec | 1.0 μs | 컴파일 타임 |
+### 스레드 풀 비교
+
+| 풀 타입 | 타입 안전 | 사용 사례 |
+|---------|-----------|----------|
+| **thread_pool** | 런타임 | 범용 태스크 실행 |
+| **typed_thread_pool_t** | 컴파일 타임 | 우선순위 기반 작업 스케줄링 |
 
 ---
 
@@ -492,24 +522,28 @@ int main() {
 
 ## 마이그레이션 가이드
 
-### v1.x에서 v2.0으로
+### v2.x에서 v3.0으로
 
 **변경사항**:
-- Work-stealing 알고리즘 구현
-- Lock-free 큐 최적화 (5.2배)
-- 타입 스레드 풀 추가
-- 적응형 큐 추가
-- 해저드 포인터 구현
+- `common_system` Result/Error 타입으로 마이그레이션
+- 레거시 `thread::result<T>` 및 `thread::error` 타입 제거
+- `hazard_pointer.h` 폐기 (`safe_hazard_pointer.h` 사용)
+- 안정적인 umbrella 헤더 추가 (`<kcenon/thread/thread_pool.h>`)
+- `shared_interfaces.h` 제거 - `common_system` 인터페이스 사용
 
 **마이그레이션 예시**:
 ```cpp
-// v1.x
-thread_pool pool(4);
-auto future = pool.submit_task(task);
+// v2.x - 레거시 include
+#include <kcenon/thread/core/thread_pool.h>
 
-// v2.0
-thread_pool pool(4);
-auto future = pool.enqueue(task);
+// v3.0 - 안정적인 umbrella 헤더
+#include <kcenon/thread/thread_pool.h>
+
+// v2.x - thread-specific Result
+thread::result<int> result = ...;
+
+// v3.0 - common system Result
+common::Result<int> result = ...;
 ```
 
 ---
@@ -519,21 +553,24 @@ auto future = pool.enqueue(task);
 ### 스레드 안전성
 
 - **thread_pool**: 스레드 안전 (모든 메서드)
-- **typed_thread_pool**: 스레드 안전 (모든 메서드)
-- **mpmc_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
-- **spsc_queue**: 스레드 안전 (단일 프로듀서, 단일 컨슈머만)
-- **adaptive_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
+- **typed_thread_pool_t**: 스레드 안전 (모든 메서드)
+- **lockfree_queue<T>**: 스레드 안전 (다중 프로듀서/컨슈머)
+- **lockfree_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
+- **job_queue**: 스레드 안전 (뮤텍스 기반)
+- **adaptive_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
 
 ### 권장사항
 
 - **일반 태스크 처리**: `thread_pool` 사용 (권장)
-- **타입 안전 필요**: `typed_thread_pool` 사용
-- **고처리량 큐**: `mpmc_queue` 사용
-- **파이프라인**: `spsc_queue` 사용
-- **가변 부하**: `adaptive_queue` 사용
+- **우선순위 기반 스케줄링**: `typed_thread_pool_t` 사용
+- **고처리량 큐**: `lockfree_job_queue` 사용
+- **범용 타입 큐**: `lockfree_queue<T>` 사용
+- **가변 부하**: `adaptive_job_queue` 사용
+- **안전한 메모리 회수**: `safe_hazard_pointer` 또는 `atomic_shared_ptr` 사용
 
 ---
 
 **작성일**: 2025-11-21
-**버전**: 0.2.0
+**업데이트**: 2025-12-19
+**버전**: 3.0.0
 **관리자**: kcenon@naver.com

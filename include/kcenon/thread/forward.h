@@ -2,60 +2,92 @@
  * @file forward.h
  * @brief Forward declarations for thread system types
  * @date 2025-11-20
+ *
+ * This file provides forward declarations for commonly used types in
+ * thread_system. Include this header when you need to declare pointers
+ * or references to thread_system types without pulling in full definitions.
+ *
+ * For detailed forward declarations within the core module, see
+ * <kcenon/thread/core/forward_declarations.h>.
  */
 
 #pragma once
 
-namespace kcenon {
-namespace thread {
+namespace kcenon::thread {
 
+// ============================================================================
 // Core types
-class ThreadPool;
-class ThreadWorker;
-class ThreadBase;
-class Job;
-class JobQueue;
-class CancellationToken;
+// ============================================================================
 
+class thread_pool;
+struct thread_pool_config;
+class thread_worker;
+class thread_base;
+class job;
+class job_queue;
+class cancellation_token;
+
+// ============================================================================
 // Typed thread pool types
-class TypedThreadPool;
-class TypedThreadWorker;
-class TypedJob;
-class TypedJobQueue;
+// ============================================================================
 
-// Task related types
-class TaskQueue;
-enum class TaskPriority;
+// typed_thread_pool_t is a template class - forward declare requires template param
+template<typename JobType>
+class typed_thread_pool_t;
 
-// Synchronization primitives
-class Mutex;
-class Semaphore;
-class ConditionVariable;
-class SpinLock;
-class ReadWriteLock;
+template<typename JobType>
+class typed_thread_worker_t;
 
-// Async operation types
-template<typename T> class Future;
-template<typename T> class Promise;
-template<typename T> class SharedFuture;
+template<typename JobType>
+class typed_job_t;
 
-// Thread utilities
-template<typename T> class ThreadSafeQueue;
-template<typename K, typename V> class ThreadSafeMap;
-class ThreadLocalStorage;
+template<typename JobType>
+class typed_job_queue_t;
 
-// Timer and scheduling
-class Timer;
-class PeriodicTimer;
-class Scheduler;
+// Default job type enum
+enum class job_types;
 
-// Lockfree structures
-class LockfreeJobQueue;
-template<typename T> class LockfreeQueue;
+// ============================================================================
+// Builder and policy types
+// ============================================================================
 
-// Error types
-class ThreadError;
-class ThreadPoolError;
+class thread_pool_builder;
+class pool_factory;
+struct worker_policy;
+enum class scheduling_policy;
+enum class worker_state;
 
-} // namespace thread
-} // namespace kcenon
+// ============================================================================
+// Queue types
+// ============================================================================
+
+class lockfree_job_queue;
+
+template<typename T>
+class lockfree_queue;
+
+class adaptive_job_queue;
+class bounded_job_queue;
+
+// ============================================================================
+// Synchronization primitives (in sync sub-namespace)
+// ============================================================================
+
+namespace sync {
+    template<typename Mutex>
+    class scoped_lock_guard;
+}
+
+// ============================================================================
+// Async operation types (C++20 only)
+// ============================================================================
+
+#if __cplusplus >= 202002L && __has_include(<coroutine>)
+template<typename T>
+class task;
+
+template<typename T>
+class awaitable;
+#endif
+
+} // namespace kcenon::thread
