@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/interfaces/error_handler.h>
 #include <kcenon/thread/interfaces/service_container.h>
-#include <kcenon/thread/interfaces/logger_interface.h>
+#include <kcenon/common/interfaces/logger_interface.h>
 
 #include <atomic>
 #include <string>
@@ -342,24 +342,28 @@ TEST_F(ServiceContainerTest, RegisterTransient)
 }
 
 // ============================================================================
-// Log Level Enum Tests
+// Log Level Enum Tests (common::interfaces::log_level)
 // ============================================================================
 
 TEST(LogLevelTest, EnumValues)
 {
-	// Verify log level ordering (inverted in this implementation)
-	EXPECT_EQ(static_cast<int>(log_level::critical), 0);
-	EXPECT_EQ(static_cast<int>(log_level::error), 1);
-	EXPECT_EQ(static_cast<int>(log_level::warning), 2);
-	EXPECT_EQ(static_cast<int>(log_level::info), 3);
-	EXPECT_EQ(static_cast<int>(log_level::debug), 4);
-	EXPECT_EQ(static_cast<int>(log_level::trace), 5);
+	// Verify log level ordering (standard ordering: trace=0...critical=5)
+	// Issue #311: Migrated to common::interfaces::log_level
+	using kcenon::common::interfaces::log_level;
+	EXPECT_EQ(static_cast<int>(log_level::trace), 0);
+	EXPECT_EQ(static_cast<int>(log_level::debug), 1);
+	EXPECT_EQ(static_cast<int>(log_level::info), 2);
+	EXPECT_EQ(static_cast<int>(log_level::warning), 3);
+	EXPECT_EQ(static_cast<int>(log_level::error), 4);
+	EXPECT_EQ(static_cast<int>(log_level::critical), 5);
 }
 
 TEST(LogLevelTest, CriticalIsHighestPriority)
 {
-	// In inverted ordering, critical has lowest numeric value
-	EXPECT_LT(static_cast<int>(log_level::critical), static_cast<int>(log_level::trace));
+	// In standard ordering, critical has highest numeric value
+	// Issue #311: Migrated to common::interfaces::log_level
+	using kcenon::common::interfaces::log_level;
+	EXPECT_GT(static_cast<int>(log_level::critical), static_cast<int>(log_level::trace));
 }
 
 // ============================================================================

@@ -8,7 +8,9 @@
 
 ## 개요
 
-이 가이드는 deprecated된 `kcenon::thread::logger_interface`에서 common_system의 통합 `kcenon::common::interfaces::ILogger`로 마이그레이션하는 방법을 설명합니다. thread_system의 로컬 로거 인터페이스는 현재 deprecated 상태이며 v2.0에서 제거될 예정입니다.
+이 가이드는 deprecated된 `kcenon::thread::logger_interface`에서 common_system의 통합 `kcenon::common::interfaces::ILogger`로 마이그레이션하는 방법을 설명합니다.
+
+> **⚠️ Breaking Change (v3.0.0):** thread_system의 로컬 로거 인터페이스가 v3.0.0에서 **제거**되었습니다 (Issue #311). 이전 인터페이스를 사용 중이라면 즉시 `common::interfaces::ILogger`로 마이그레이션해야 합니다.
 
 ## 마이그레이션 이유
 
@@ -31,9 +33,9 @@
 
 | 단계 | 버전 | 상태 | 설명 |
 |------|------|------|------|
-| 1단계 | v1.x | **현재** | Deprecation 경고 추가 |
-| 2단계 | v1.x | **현재** | 마이그레이션 문서 |
-| 3단계 | v2.0 | 예정 | 파일 완전 제거 |
+| 1단계 | v1.x | 완료 | Deprecation 경고 추가 |
+| 2단계 | v1.x | 완료 | 마이그레이션 문서 |
+| 3단계 | v3.0 | **완료** | 파일 완전 제거 (Issue #311) |
 
 ## 마이그레이션 단계
 

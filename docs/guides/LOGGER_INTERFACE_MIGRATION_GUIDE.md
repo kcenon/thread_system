@@ -8,7 +8,9 @@
 
 ## Overview
 
-This guide helps you migrate from the deprecated `kcenon::thread::logger_interface` to the unified `kcenon::common::interfaces::ILogger` from common_system. The thread_system's local logger interface is now deprecated and will be removed in v2.0.
+This guide helps you migrate from the deprecated `kcenon::thread::logger_interface` to the unified `kcenon::common::interfaces::ILogger` from common_system.
+
+> **⚠️ Breaking Change (v3.0.0):** The thread_system's local logger interface has been **removed** as of v3.0.0 (Issue #311). If you are using the old interface, you must migrate to `common::interfaces::ILogger` immediately.
 
 ## Why Migrate?
 
@@ -31,9 +33,9 @@ This guide helps you migrate from the deprecated `kcenon::thread::logger_interfa
 
 | Phase | Version | Status | Description |
 |-------|---------|--------|-------------|
-| Phase 1 | v1.x | **Current** | Deprecation warnings added |
-| Phase 2 | v1.x | **Current** | Migration documentation |
-| Phase 3 | v2.0 | Planned | File removed entirely |
+| Phase 1 | v1.x | Completed | Deprecation warnings added |
+| Phase 2 | v1.x | Completed | Migration documentation |
+| Phase 3 | v3.0 | **Completed** | File removed entirely (Issue #311) |
 
 ## Migration Steps
 
