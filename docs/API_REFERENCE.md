@@ -1,7 +1,7 @@
 # thread_system API Reference
 
-> **Version**: 0.2.0
-> **Last Updated**: 2025-11-21
+> **Version**: 3.0.0
+> **Last Updated**: 2025-12-19
 > **Language**: [English]
 
 ## Table of Contents
@@ -36,13 +36,15 @@ All public APIs of thread_system are contained in this namespace
 
 **Header**: `#include <kcenon/thread/thread_pool.h>`
 
-**Description**: High-performance task-based thread pool (4.5x performance improvement)
+**Description**: High-performance task-based thread pool
 
 **Key Features**:
-- Work-stealing algorithm
 - Future/Promise pattern
-- Priority-based task execution
-- Dynamic worker scaling
+- Priority-based task execution (optional)
+- Dynamic worker configuration
+- Common system IExecutor integration (when available)
+
+> **Note**: Work-stealing is planned but not yet implemented. See `config.h` for configuration options.
 
 ### Creation and Usage
 
@@ -120,9 +122,11 @@ std::cout << "Workers: " << pool.thread_count() << std::endl;  // 4
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Throughput | 1.2M ops/sec | Work-stealing |
-| Latency (p50) | 0.8 μs | Task scheduling |
-| Scalability | Near-linear to 16 cores | 95%+ efficiency |
+| Throughput | ~1M ops/sec | Varies by workload |
+| Latency (p50) | ~1 μs | Task scheduling |
+| Scalability | Near-linear to 16 cores | Depends on task granularity |
+
+> **Note**: Actual performance depends on workload characteristics, hardware, and configuration.
 
 ---
 
@@ -329,235 +333,237 @@ struct requirements {
 
 ## Lock-Free Queues
 
-### mpmc_queue
+### lockfree_queue
 
-**Header**: `#include <kcenon/thread/queues/mpmc_queue.h>`
+**Header**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
 
-**Description**: Multi-Producer Multi-Consumer queue (5.2x performance improvement)
+**Description**: Generic lock-free MPMC queue with blocking wait support
 
-**Algorithm**: Lock-free ring buffer
+**Algorithm**: Fine-grained locking with separate head/tail mutexes
 
-**Performance**: 2.1M ops/sec
+**Key Features**:
+- Thread-safe concurrent access from multiple producers and consumers
+- Blocking wait with timeout support
+- Works with any move-constructible type
+- Low contention between enqueue and dequeue operations
 
 #### Usage Example
 
 ```cpp
-#include <kcenon/thread/queues/mpmc_queue.h>
+#include <kcenon/thread/lockfree/lockfree_queue.h>
 
 using namespace kcenon::thread;
 
-// Create (capacity: 1024)
-mpmc_queue<int> queue(1024);
+lockfree_queue<std::string> queue;
 
 // Producer thread
 std::thread producer([&queue]() {
-    for (int i = 0; i < 1000; ++i) {
-        queue.enqueue(i);
-    }
+    queue.enqueue("message");
 });
 
-// Consumer thread
+// Consumer thread (non-blocking)
 std::thread consumer([&queue]() {
-    int value;
-    while (queue.dequeue(value)) {
-        process(value);
-    }
-});
-```
-
-#### Core Methods
-
-```cpp
-bool enqueue(const T& item);        // Add to queue
-bool dequeue(T& item);              // Remove from queue
-bool try_enqueue(const T& item);    // Non-blocking add
-bool try_dequeue(T& item);          // Non-blocking remove
-size_t size() const;                // Current size
-bool empty() const;                 // Check if empty
-```
-
----
-
-### spsc_queue
-
-**Header**: `#include <kcenon/thread/queues/spsc_queue.h>`
-
-**Description**: Single-Producer Single-Consumer queue
-
-**Algorithm**: Lock-free circular buffer
-
-**Performance**: 3.5M ops/sec
-
-#### Usage Example
-
-```cpp
-#include <kcenon/thread/queues/spsc_queue.h>
-
-using namespace kcenon::thread;
-
-// Create (capacity: 1024)
-spsc_queue<int> queue(1024);
-
-// Producer thread (single only!)
-std::thread producer([&queue]() {
-    for (int i = 0; i < 1000; ++i) {
-        queue.push(i);
+    if (auto value = queue.try_dequeue()) {
+        process(*value);
     }
 });
 
-// Consumer thread (single only!)
-std::thread consumer([&queue]() {
-    int value;
-    while (queue.pop(value)) {
-        process(value);
-    }
-});
-```
-
-#### Core Methods
-
-```cpp
-bool push(const T& item);       // Add to queue
-bool pop(T& item);              // Remove from queue
-size_t size() const;            // Current size
-bool empty() const;             // Check if empty
-size_t capacity() const;        // Capacity
-```
-
----
-
-### adaptive_queue
-
-**Header**: `#include <kcenon/thread/queues/adaptive_queue.h>`
-
-**Description**: Load-based automatic resizing queue
-
-**Algorithm**: Dynamic resizing queue
-
-**Performance**: 1.5M ops/sec
-
-#### Usage Example
-
-```cpp
-#include <kcenon/thread/queues/adaptive_queue.h>
-
-using namespace kcenon::thread;
-
-// Create (initial capacity: 128)
-adaptive_queue<int> queue(128);
-
-// Configure
-queue.set_high_watermark(0.8);   // Expand at 80% usage
-queue.set_low_watermark(0.2);    // Shrink at 20% usage
-
-// Use (automatic resizing)
-for (int i = 0; i < 10000; ++i) {
-    queue.enqueue(i);
-    // Queue automatically resizes based on load
+// Consumer thread (blocking with timeout)
+if (auto value = queue.wait_dequeue(std::chrono::milliseconds{100})) {
+    process(*value);
 }
 ```
 
 #### Core Methods
 
 ```cpp
-void enqueue(const T& item);             // Add to queue (auto-expand)
-bool dequeue(T& item);                   // Remove from queue (auto-shrink)
-void set_high_watermark(double ratio);   // Set expansion threshold (0.0-1.0)
-void set_low_watermark(double ratio);    // Set shrink threshold (0.0-1.0)
-size_t capacity() const;                 // Current capacity
-size_t size() const;                     // Current size
+void enqueue(T value);                              // Add to queue
+std::optional<T> try_dequeue();                     // Non-blocking remove
+std::optional<T> wait_dequeue(duration timeout);    // Blocking remove with timeout
+size_t size() const;                                // Current size (approximate)
+bool empty() const;                                 // Check if empty
+void shutdown();                                    // Signal shutdown
+```
+
+---
+
+### adaptive_job_queue
+
+**Header**: `#include <kcenon/thread/queue/adaptive_job_queue.h>`
+
+**Description**: Adaptive queue that switches between mutex and lock-free modes
+
+**Algorithm**: Dynamic mode switching based on policy
+
+**Key Features**:
+- Wraps both mutex-based and lock-free queue implementations
+- Multiple selection policies (accuracy, performance, balanced, manual)
+- RAII guard for temporary accuracy mode
+- Thread-safe mode switching with data migration
+
+#### Usage Example
+
+```cpp
+#include <kcenon/thread/queue/adaptive_job_queue.h>
+
+using namespace kcenon::thread;
+
+// Create adaptive queue (defaults to balanced policy)
+auto queue = std::make_unique<adaptive_job_queue>();
+
+// Use like any other queue
+queue->enqueue(std::make_unique<my_job>());
+auto job = queue->dequeue();
+
+// Temporarily require accuracy
+{
+    auto guard = queue->require_accuracy();
+    size_t exact = queue->size();  // Now guaranteed exact
+}
+
+// Create with specific policy
+auto perf_queue = std::make_unique<adaptive_job_queue>(
+    adaptive_job_queue::policy::performance_first
+);
+```
+
+#### Policies
+
+| Policy | Description |
+|--------|-------------|
+| `accuracy_first` | Always use mutex mode |
+| `performance_first` | Always use lock-free mode |
+| `balanced` | Auto-switch based on usage |
+| `manual` | User controls mode |
+
+#### Core Methods
+
+```cpp
+auto enqueue(std::unique_ptr<job>&& j) -> common::VoidResult;
+auto dequeue() -> std::unique_ptr<job>;
+size_t size() const;
+bool empty() const;
+auto require_accuracy() -> accuracy_guard;  // RAII guard for exact size
+void set_mode(mode m);                      // Switch mode (manual policy only)
+mode current_mode() const;                  // Get current mode
 ```
 
 ---
 
 ## Synchronization Primitives
 
-### hazard_pointer
+### safe_hazard_pointer
 
-**Header**: `#include <kcenon/thread/sync/hazard_pointer.h>`
+**Header**: `#include <kcenon/thread/core/safe_hazard_pointer.h>`
 
-**Description**: Safe memory reclamation for lock-free structures
+**Description**: Thread-safe hazard pointer implementation for lock-free data structures
 
 **Key Features**:
-- ABA problem mitigation
-- Automatic garbage collection
-- Thread-safe memory reclamation
+- Explicit memory ordering for ARM and weak memory model architectures
+- Per-thread hazard pointer records with automatic registration
+- Deferred reclamation with configurable threshold
+- Thread-safe with proper synchronization
+
+> **Note**: The legacy `hazard_pointer.h` is deprecated due to memory ordering issues (TICKET-002).
+> Use `safe_hazard_pointer.h` or `atomic_shared_ptr.h` instead.
 
 #### Usage Example
 
 ```cpp
-#include <kcenon/thread/sync/hazard_pointer.h>
+#include <kcenon/thread/core/safe_hazard_pointer.h>
 
 using namespace kcenon::thread;
 
 // Create hazard pointer domain
-hazard_pointer_domain<Node> hp_domain;
+safe_hazard_pointer_domain<Node> hp_domain;
 
-// Acquire hazard pointer
-auto hp = hp_domain.acquire();
+// Acquire a record
+auto* record = hp_domain.acquire();
 
-// Protect pointer
-Node* node = load_node();
-hp.protect(node);
+// Protect a pointer (slot 0 by default)
+Node* node = shared_head.load();
+record->protect(node);
 
-// Use node safely
+// Use node safely - other threads won't reclaim it
 process(node);
 
-// Release (automatic on destruction)
+// Clear protection when done
+record->clear();
+
+// Retire a node for deferred reclamation
+hp_domain.retire(old_node);
 ```
 
 ---
 
-### spinlock
+### scoped_lock_guard
 
-**Header**: `#include <kcenon/thread/sync/spinlock.h>`
+**Header**: `#include <kcenon/thread/core/sync_primitives.h>`
 
-**Description**: Low-latency spinlock
+**Description**: RAII-based scoped lock guard with optional timeout support
+
+**Key Features**:
+- Automatic lock acquisition and release
+- Optional timeout for timed mutexes
+- Exception-safe lock management
 
 #### Usage Example
 
 ```cpp
-#include <kcenon/thread/sync/spinlock.h>
+#include <kcenon/thread/core/sync_primitives.h>
 
-using namespace kcenon::thread;
+using namespace kcenon::thread::sync;
 
-spinlock lock;
+std::mutex mtx;
 
-// Use with RAII
+// Basic usage
 {
-    std::lock_guard<spinlock> guard(lock);
+    scoped_lock_guard<std::mutex> guard(mtx);
     // Critical section
 }
+
+// With timeout (for timed_mutex)
+std::timed_mutex timed_mtx;
+{
+    scoped_lock_guard<std::timed_mutex> guard(
+        timed_mtx, std::chrono::milliseconds{100}
+    );
+    if (guard.owns_lock()) {
+        // Lock acquired
+    }
+}
 ```
 
 ---
 
-### rw_lock
+### atomic_shared_ptr
 
-**Header**: `#include <kcenon/thread/sync/rw_lock.h>`
+**Header**: `#include <kcenon/thread/core/atomic_shared_ptr.h>`
 
-**Description**: Reader-writer lock (optimized for read-heavy workloads)
+**Description**: Thread-safe atomic operations on shared_ptr (alternative to hazard pointers)
+
+**Key Features**:
+- Lock-free atomic load/store/exchange for shared_ptr
+- Simpler API than hazard pointers
+- Compatible with standard shared_ptr
 
 #### Usage Example
 
 ```cpp
-#include <kcenon/thread/sync/rw_lock.h>
+#include <kcenon/thread/core/atomic_shared_ptr.h>
 
 using namespace kcenon::thread;
 
-rw_lock lock;
+atomic_shared_ptr<Node> shared_node;
 
-// Reader
-{
-    std::shared_lock<rw_lock> read_guard(lock);
-    // Read operations
-}
+// Atomic store
+shared_node.store(std::make_shared<Node>());
 
-// Writer
-{
-    std::unique_lock<rw_lock> write_guard(lock);
-    // Write operations
-}
+// Atomic load
+auto node = shared_node.load();
+
+// Atomic exchange
+auto old = shared_node.exchange(std::make_shared<Node>());
 ```
 
 ---
@@ -566,18 +572,21 @@ rw_lock lock;
 
 ### Queue Performance Comparison
 
-| Queue Type | Throughput | Latency | Use Case |
-|-----------|------------|---------|----------|
-| **spsc_queue** | 3.5M ops/sec | 0.29 μs | Pipeline, single producer/consumer |
-| **mpmc_queue** | 2.1M ops/sec | 0.48 μs | High-throughput task queue |
-| **adaptive_queue** | 1.5M ops/sec | 0.67 μs | Variable load systems |
+| Queue Type | Description | Use Case |
+|-----------|-------------|----------|
+| **job_queue** | Mutex-based, accurate size | When exact size matters |
+| **lockfree_job_queue** | Lock-free MPMC | High-throughput task queue |
+| **lockfree_queue<T>** | Generic lock-free with blocking wait | General MPMC use cases |
+| **adaptive_job_queue** | Auto-switching between modes | Variable load systems |
 
-### Thread Pool Performance Comparison
+> **Note**: Actual performance depends on workload characteristics and hardware.
 
-| Pool Type | Throughput | Latency (p50) | Type Safety |
-|----------|------------|---------------|-------------|
-| **thread_pool** | 1.2M ops/sec | 0.8 μs | Runtime |
-| **typed_thread_pool** | 980K ops/sec | 1.0 μs | Compile-time |
+### Thread Pool Comparison
+
+| Pool Type | Type Safety | Use Case |
+|----------|-------------|----------|
+| **thread_pool** | Runtime | General-purpose task execution |
+| **typed_thread_pool_t** | Compile-time | Priority-based job scheduling |
 
 ---
 
@@ -675,24 +684,28 @@ int main() {
 
 ## Migration Guide
 
-### From v1.x to v2.0
+### From v2.x to v3.0
 
 **Changes**:
-- Work-stealing algorithm implementation
-- Lock-free queue optimization (5.2x)
-- Added typed thread pool
-- Added adaptive queue
-- Hazard pointer implementation
+- Migrated to `common_system` Result/Error types
+- Removed legacy `thread::result<T>` and `thread::error` types
+- Deprecated `hazard_pointer.h` (use `safe_hazard_pointer.h`)
+- Added stable umbrella headers (`<kcenon/thread/thread_pool.h>`)
+- Removed `shared_interfaces.h` - use `common_system` interfaces
 
 **Migration Example**:
 ```cpp
-// v1.x
-thread_pool pool(4);
-auto future = pool.submit_task(task);
+// v2.x - legacy includes
+#include <kcenon/thread/core/thread_pool.h>
 
-// v2.0
-thread_pool pool(4);
-auto future = pool.enqueue(task);
+// v3.0 - stable umbrella headers
+#include <kcenon/thread/thread_pool.h>
+
+// v2.x - thread-specific Result
+thread::result<int> result = ...;
+
+// v3.0 - common system Result
+common::Result<int> result = ...;
 ```
 
 ---
@@ -702,21 +715,24 @@ auto future = pool.enqueue(task);
 ### Thread Safety
 
 - **thread_pool**: Thread-safe (all methods)
-- **typed_thread_pool**: Thread-safe (all methods)
-- **mpmc_queue**: Thread-safe (multiple producers/consumers)
-- **spsc_queue**: Thread-safe (single producer, single consumer only)
-- **adaptive_queue**: Thread-safe (multiple producers/consumers)
+- **typed_thread_pool_t**: Thread-safe (all methods)
+- **lockfree_queue<T>**: Thread-safe (multiple producers/consumers)
+- **lockfree_job_queue**: Thread-safe (multiple producers/consumers)
+- **job_queue**: Thread-safe (mutex-based)
+- **adaptive_job_queue**: Thread-safe (multiple producers/consumers)
 
 ### Recommendations
 
 - **General task processing**: Use `thread_pool` (recommended)
-- **Type safety required**: Use `typed_thread_pool`
-- **High-throughput queue**: Use `mpmc_queue`
-- **Pipeline**: Use `spsc_queue`
-- **Variable load**: Use `adaptive_queue`
+- **Priority-based scheduling**: Use `typed_thread_pool_t`
+- **High-throughput queue**: Use `lockfree_job_queue`
+- **Generic type queue**: Use `lockfree_queue<T>`
+- **Variable load**: Use `adaptive_job_queue`
+- **Safe memory reclamation**: Use `safe_hazard_pointer` or `atomic_shared_ptr`
 
 ---
 
 **Created**: 2025-11-21
-**Version**: 0.2.0
+**Updated**: 2025-12-19
+**Version**: 3.0.0
 **Author**: kcenon@naver.com
