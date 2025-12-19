@@ -156,13 +156,17 @@ public:
                     expected, true,
                     std::memory_order_acq_rel,
                     std::memory_order_relaxed)) {
+                // Clear hazard pointers immediately after acquiring to avoid
+                // stale pointers from previous use affecting collect()
+                p->clear(0);
+                p->clear(1);
                 active_count_.fetch_add(1, std::memory_order_relaxed);
                 return p;
             }
             p = p->next.load(std::memory_order_acquire);
         }
 
-        // 2. Create new record
+        // 2. Create new record (constructor already clears hazard pointers)
         auto* new_record = new safe_hazard_pointer_record();
         new_record->active.store(true, std::memory_order_relaxed);
 
@@ -203,21 +207,39 @@ public:
      * @param deleter Deletion callback
      *
      * Thread-safe. Triggers collection when threshold is reached.
+     * Handles duplicate addresses by removing old entries (memory reuse scenario).
      */
     void retire(void* p, retire_callback deleter) {
         if (p == nullptr) {
             return;
         }
 
+        bool should_collect = false;
         {
             std::lock_guard<std::mutex> lock(retire_mutex_);
+
+            // Remove any existing entry with the same address to handle memory reuse.
+            // This can happen when memory is freed and reallocated to the same address.
+            // In this case, the old entry's deleter must NOT be called since the memory
+            // is now occupied by a new valid object.
+            auto it = std::remove_if(retired_list_.begin(), retired_list_.end(),
+                [p](const auto& entry) { return entry.first == p; });
+            if (it != retired_list_.end()) {
+                size_t removed = std::distance(it, retired_list_.end());
+                retired_list_.erase(it, retired_list_.end());
+                retired_count_.fetch_sub(removed, std::memory_order_relaxed);
+            }
+
             retired_list_.emplace_back(p, std::move(deleter));
             retired_count_.fetch_add(1, std::memory_order_relaxed);
+
+            // Check threshold inside lock to avoid race
+            size_t threshold = get_adaptive_threshold();
+            should_collect = (retired_count_.load(std::memory_order_relaxed) >= threshold);
         }
 
-        // Trigger collection when threshold exceeded
-        size_t threshold = get_adaptive_threshold();
-        if (retired_count_.load(std::memory_order_relaxed) >= threshold) {
+        // Trigger collection after releasing lock to avoid deadlock
+        if (should_collect) {
             collect();
         }
     }
@@ -280,18 +302,21 @@ private:
         }
 
         // Gather all currently protected pointers
+        // IMPORTANT: Check ALL records, not just active ones, to avoid race condition
+        // where a record is being reused while we're scanning.
+        // The hazard pointer value is set before active=true, so we must check
+        // the pointer value itself, not the active flag.
         std::unordered_set<void*> hazards;
         hazards.reserve(active_count_.load(std::memory_order_relaxed) *
                         safe_hazard_pointer_record::MAX_HAZARD_POINTERS);
 
         safe_hazard_pointer_record* p = head_.load(std::memory_order_acquire);
         while (p != nullptr) {
-            if (p->active.load(std::memory_order_acquire)) {
-                for (size_t i = 0; i < safe_hazard_pointer_record::MAX_HAZARD_POINTERS; ++i) {
-                    void* hp = p->get(i);
-                    if (hp != nullptr) {
-                        hazards.insert(hp);
-                    }
+            // Check all records regardless of active status to avoid race condition
+            for (size_t i = 0; i < safe_hazard_pointer_record::MAX_HAZARD_POINTERS; ++i) {
+                void* hp = p->get(i);
+                if (hp != nullptr) {
+                    hazards.insert(hp);
                 }
             }
             p = p->next.load(std::memory_order_acquire);

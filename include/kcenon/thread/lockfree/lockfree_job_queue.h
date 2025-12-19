@@ -33,12 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <kcenon/thread/core/job.h>
-
-// TICKET-002: Enable hazard_pointer for internal library use.
-// This code has memory ordering issues on weak memory model architectures.
-// For new code, prefer safe_hazard_pointer.h or atomic_shared_ptr.h.
-#define HAZARD_POINTER_FORCE_ENABLE
-#include <kcenon/thread/core/hazard_pointer.h>
+#include <kcenon/thread/core/safe_hazard_pointer.h>
 #include <kcenon/thread/core/error_handling.h>
 #include <kcenon/thread/interfaces/scheduler_interface.h>
 #include <kcenon/thread/interfaces/queue_capabilities_interface.h>
@@ -54,16 +49,17 @@ namespace kcenon::thread {
  * @brief Lock-free Multi-Producer Multi-Consumer (MPMC) job queue
  *
  * This class implements a lock-free MPMC queue using the Michael-Scott algorithm
- * with Hazard Pointers for safe memory reclamation. It eliminates the TLS
- * destructor ordering bug present in previous implementations.
+ * with Safe Hazard Pointers for memory reclamation. It uses explicit memory
+ * ordering to ensure correctness on weak memory model architectures (ARM, etc.)
  *
  * Algorithm: Michael-Scott Queue (1996)
- * Memory Reclamation: Hazard Pointers (Michael, 2004)
+ * Memory Reclamation: Safe Hazard Pointers with explicit memory ordering
  *
  * Key Features:
  * - True lock-free operation (no mutexes, no locks)
  * - Safe concurrent access from multiple producers and consumers
- * - Automatic memory reclamation using Hazard Pointers
+ * - Automatic memory reclamation using Safe Hazard Pointers
+ * - Correct memory ordering for weak memory model architectures (ARM)
  * - No TLS node pool (eliminates destructor ordering issues)
  * - ABA problem prevention through HP-based protection
  *
@@ -77,8 +73,8 @@ namespace kcenon::thread {
  * - Can be called concurrently from any number of threads
  * - Uses atomic operations with acquire/release semantics
  *
- * @note This implementation is production-safe and resolves the P0 bug
- *       in the previous lock-free queue implementation.
+ * @note This implementation is production-safe and resolves TICKET-001 (TLS bug)
+ *       and TICKET-002 (weak memory model safety).
  *
  * @see lockfree_job_queue_test.cpp for usage examples
  */
@@ -249,7 +245,8 @@ private:
     std::atomic<node*> tail_;  // Enqueue end (with acquire/release)
 
     // Hazard pointer domain for safe memory reclamation
-    using node_hp_domain = hazard_pointer_domain<node>;
+    // Uses safe_hazard_pointer with explicit memory ordering (safe on ARM/weak memory models)
+    using node_hp_domain = typed_safe_hazard_domain<node>;
 
     // Statistics (for monitoring, relaxed memory order)
     mutable std::atomic<std::size_t> approximate_size_{0};

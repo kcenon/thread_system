@@ -82,6 +82,7 @@ enum class error_code {
     queue_full = 200,
     queue_empty,
     queue_stopped,
+    queue_busy,  // Queue is temporarily busy with concurrent operations
     
     // Job errors
     job_creation_failed = 300,
@@ -123,6 +124,7 @@ inline std::string error_code_to_string(error_code code) {
         {error_code::queue_full, "Queue is full"},
         {error_code::queue_empty, "Queue is empty"},
         {error_code::queue_stopped, "Queue is stopped"},
+        {error_code::queue_busy, "Queue is busy"},
         {error_code::job_creation_failed, "Failed to create job"},
         {error_code::job_execution_failed, "Failed to execute job"},
         {error_code::job_invalid, "Invalid job"},

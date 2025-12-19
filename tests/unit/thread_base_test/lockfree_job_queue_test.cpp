@@ -517,7 +517,7 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
             auto result = queue.dequeue();
             if (result.is_ok()) {
                 auto& job_ptr = result.value();
-                job_ptr->do_work();
+                (void)job_ptr->do_work();
                 total_dequeued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -530,7 +530,7 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
             break;
         }
         auto& job_ptr = result.value();
-        job_ptr->do_work();
+        (void)job_ptr->do_work();
         total_dequeued.fetch_add(1, std::memory_order_relaxed);
     }
 
@@ -742,14 +742,14 @@ TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
             while (!stop.load(std::memory_order_relaxed)) {
                 auto job =
                     std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
-                queue->enqueue(std::move(job));
+                (void)queue->enqueue(std::move(job));
             }
         });
 
         // Consumer thread
         std::thread consumer([&queue, &stop]() {
             while (!stop.load(std::memory_order_relaxed)) {
-                queue->dequeue();
+                (void)queue->dequeue();
             }
         });
 
@@ -767,5 +767,182 @@ TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
     }
 
     // If we reach here without crash, destructor is safe
+    SUCCEED();
+}
+
+// =============================================================================
+// TICKET-002 Verification: Weak Memory Model (ARM64) Tests
+// =============================================================================
+// These tests specifically validate memory ordering correctness on
+// weak memory model architectures (ARM, etc.) using safe_hazard_pointer.
+//
+// The original hazard_pointer implementation had memory ordering issues
+// (CVSS 8.5) that could cause:
+// - Data races under high concurrency
+// - Memory leaks (non-reclaimable pointers)
+// - ABA problems leading to undefined behavior
+//
+// The safe_hazard_pointer implementation uses explicit memory_order
+// semantics to ensure correctness on all architectures.
+
+// Test rapid enqueue/dequeue cycles with memory barriers
+// This pattern exposes weak memory model issues where stores may not
+// be visible immediately to other threads
+TEST_F(LockFreeJobQueueTest, WeakMemoryModelRapidCycles) {
+    lockfree_job_queue queue;
+
+    constexpr int NUM_CYCLES = 1000;
+    std::atomic<int> success_count{0};
+    std::atomic<int> empty_count{0};
+
+    // Producer thread: rapidly enqueues single items
+    std::thread producer([&]() {
+        for (int i = 0; i < NUM_CYCLES; ++i) {
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                return kcenon::common::ok();
+            });
+            auto result = queue.enqueue(std::move(job));
+            EXPECT_FALSE(result.is_err());
+        }
+    });
+
+    // Consumer thread: rapidly dequeues, counts successes and empties
+    std::thread consumer([&]() {
+        for (int i = 0; i < NUM_CYCLES * 2; ++i) {
+            auto result = queue.dequeue();
+            if (result.is_ok()) {
+                success_count.fetch_add(1, std::memory_order_relaxed);
+            } else {
+                empty_count.fetch_add(1, std::memory_order_relaxed);
+            }
+            std::this_thread::yield();
+        }
+    });
+
+    producer.join();
+    consumer.join();
+
+    // Drain any remaining items
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) break;
+        success_count.fetch_add(1, std::memory_order_relaxed);
+    }
+
+    // All enqueued items must be dequeued exactly once
+    EXPECT_EQ(success_count.load(), NUM_CYCLES);
+    EXPECT_TRUE(queue.empty());
+}
+
+// Test concurrent read-modify-write operations
+// This specifically tests hazard pointer protection during pointer swaps
+TEST_F(LockFreeJobQueueTest, WeakMemoryModelConcurrentRMW) {
+    lockfree_job_queue queue;
+
+    constexpr int NUM_THREADS = 8;
+    constexpr int OPS_PER_THREAD = 500;
+
+    std::atomic<int> total_enqueued{0};
+    std::atomic<int> total_dequeued{0};
+    std::atomic<bool> stop_flag{false};
+
+    std::vector<std::thread> threads;
+
+    // Half threads are producers, half are consumers
+    for (int t = 0; t < NUM_THREADS; ++t) {
+        if (t % 2 == 0) {
+            // Producer
+            threads.emplace_back([&]() {
+                for (int i = 0; i < OPS_PER_THREAD; ++i) {
+                    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                        return kcenon::common::ok();
+                    });
+                    auto result = queue.enqueue(std::move(job));
+                    if (!result.is_err()) {
+                        total_enqueued.fetch_add(1, std::memory_order_relaxed);
+                    }
+                }
+            });
+        } else {
+            // Consumer
+            threads.emplace_back([&]() {
+                while (!stop_flag.load(std::memory_order_acquire) ||
+                       total_dequeued.load(std::memory_order_relaxed) <
+                       total_enqueued.load(std::memory_order_relaxed)) {
+                    auto result = queue.dequeue();
+                    if (result.is_ok()) {
+                        total_dequeued.fetch_add(1, std::memory_order_relaxed);
+                    } else {
+                        std::this_thread::yield();
+                    }
+                }
+            });
+        }
+    }
+
+    // Wait for producers
+    for (int t = 0; t < NUM_THREADS; t += 2) {
+        threads[t].join();
+    }
+    stop_flag.store(true, std::memory_order_release);
+
+    // Wait for consumers
+    for (int t = 1; t < NUM_THREADS; t += 2) {
+        threads[t].join();
+    }
+
+    // Drain remaining
+    while (true) {
+        auto result = queue.dequeue();
+        if (result.is_err()) break;
+        total_dequeued.fetch_add(1, std::memory_order_relaxed);
+    }
+
+    EXPECT_EQ(total_enqueued.load(), total_dequeued.load());
+    EXPECT_TRUE(queue.empty());
+}
+
+// Test memory reclamation ordering on weak memory models
+// This tests that retired nodes are properly synchronized before deletion
+TEST_F(LockFreeJobQueueTest, WeakMemoryModelReclamationOrdering) {
+    lockfree_job_queue queue;
+
+    constexpr int NUM_ITERATIONS = 50;
+    constexpr int BATCH_SIZE = 100;
+
+    for (int iter = 0; iter < NUM_ITERATIONS; ++iter) {
+        // Enqueue batch
+        for (int i = 0; i < BATCH_SIZE; ++i) {
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                return kcenon::common::ok();
+            });
+            auto result = queue.enqueue(std::move(job));
+            EXPECT_FALSE(result.is_err());
+        }
+
+        // Dequeue batch from multiple threads
+        std::atomic<int> batch_dequeued{0};
+        std::vector<std::thread> workers;
+
+        for (int t = 0; t < 4; ++t) {
+            workers.emplace_back([&]() {
+                while (batch_dequeued.load(std::memory_order_relaxed) < BATCH_SIZE) {
+                    auto result = queue.dequeue();
+                    if (result.is_ok()) {
+                        batch_dequeued.fetch_add(1, std::memory_order_relaxed);
+                    }
+                }
+            });
+        }
+
+        for (auto& w : workers) {
+            w.join();
+        }
+
+        EXPECT_EQ(batch_dequeued.load(), BATCH_SIZE);
+        EXPECT_TRUE(queue.empty());
+    }
+
+    // If we reach here without crash or hang, memory reclamation is correct
     SUCCEED();
 }

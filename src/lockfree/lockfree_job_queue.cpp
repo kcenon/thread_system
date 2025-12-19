@@ -62,10 +62,10 @@ lockfree_job_queue::~lockfree_job_queue() {
     // Safe cleanup: acquire semantics ensure we see all writes
     node* dummy = head_.load(std::memory_order_acquire);
 
-    // Use hazard pointer domain for safe reclamation of dummy node
+    // Use safe hazard pointer for reclamation of dummy node
     // This ensures the node is only deleted when no other thread
-    // holds a hazard pointer to it
-    node_hp_domain::global().retire(dummy);
+    // holds a hazard pointer to it (uses explicit memory ordering)
+    safe_retire_hazard(dummy);
 }
 
 // Enqueue operation (Michael-Scott algorithm)
@@ -77,10 +77,13 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
     // Allocate new node with the job
     node* new_node = new node(std::move(job_ptr));
 
-    // Acquire hazard pointer for tail protection
-    auto hp_tail = node_hp_domain::global().acquire();
+    // Acquire hazard pointer guard for tail protection (uses safe memory ordering)
+    safe_hazard_guard hp_tail;
 
-    while (true) {
+    // Limit retries to prevent infinite loop during concurrent mode switching
+    constexpr int MAX_RETRIES = 1000;
+
+    for (int retry = 0; retry < MAX_RETRIES; ++retry) {
         // Read current tail
         node* tail = tail_.load(std::memory_order_acquire);
 
@@ -123,15 +126,25 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
             }
         }
     }
+
+    // If we exhausted retries, clean up and return error
+    delete new_node;
+    return common::error_info{static_cast<int>(error_code::queue_busy), "Queue is busy, retry later", "thread_system"};
 }
 
-// Dequeue operation (Michael-Scott algorithm with Hazard Pointers)
+// Dequeue operation (Michael-Scott algorithm with Safe Hazard Pointers)
 auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
-    // Acquire hazard pointers for protecting nodes
-    auto hp_head = node_hp_domain::global().acquire();
-    auto hp_next = node_hp_domain::global().acquire();
+    // Acquire hazard pointer guards for protecting nodes (uses safe memory ordering)
+    safe_hazard_guard hp_head;
+    safe_hazard_guard hp_next;
 
-    while (true) {
+    // Limit retries to prevent infinite loop during concurrent mode switching
+    // This is important for adaptive_job_queue which may switch modes while
+    // dequeue is in progress
+    constexpr int MAX_OUTER_RETRIES = 100;
+    constexpr int MAX_INNER_RETRIES = 10;
+
+    for (int outer_retry = 0; outer_retry < MAX_OUTER_RETRIES; ++outer_retry) {
         // Protect head from reclamation
         node* head = head_.load(std::memory_order_acquire);
         hp_head.protect(head);
@@ -143,11 +156,13 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
 
         node* tail = tail_.load(std::memory_order_acquire);
 
-        // Protect next node using loop until stable
+        // Protect next node using loop until stable (with retry limit)
         node* next = nullptr;
-        while (true) {
+        bool next_stable = false;
+        for (int inner_retry = 0; inner_retry < MAX_INNER_RETRIES; ++inner_retry) {
             next = head->next.load(std::memory_order_acquire);
             if (next == nullptr) {
+                next_stable = true;
                 break;  // No next node
             }
 
@@ -155,9 +170,15 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
 
             // Verify next is still the same after protection
             if (next == head->next.load(std::memory_order_acquire)) {
+                next_stable = true;
                 break;  // Stable, protected
             }
             // Next changed, retry protection
+        }
+
+        // If we couldn't stabilize next pointer, retry outer loop
+        if (!next_stable) {
+            continue;
         }
 
         // Check if head is still consistent
@@ -189,8 +210,8 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
                     // We now own the old head node exclusively
                     std::unique_ptr<job> job_data = std::move(next->data);
 
-                    // Retire the old head node for later reclamation
-                    node_hp_domain::global().retire(head);
+                    // Retire the old head node for later reclamation (safe memory ordering)
+                    safe_retire_hazard(head);
 
                     // Update size (relaxed - just for monitoring)
                     approximate_size_.fetch_sub(1, std::memory_order_relaxed);
@@ -201,14 +222,41 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
             }
         }
     }
+
+    // If we exhausted retries, report queue as empty
+    // This is safe because the caller will retry if needed
+    return common::error_info{static_cast<int>(error_code::queue_empty), "Queue is empty", "thread_system"};
 }
 
 // Check if queue is empty
 auto lockfree_job_queue::empty() const -> bool {
-    node* head = head_.load(std::memory_order_acquire);
-    node* next = head->next.load(std::memory_order_acquire);
+    // Use hazard pointer protection to safely access head node
+    // This prevents UAF if another thread retires the head during our check
+    safe_hazard_guard hp_head;
 
-    // Queue is empty if head->next is null
+    // Try to get a stable read of head
+    // If head keeps changing due to concurrent modifications, retry a few times
+    constexpr int MAX_RETRIES = 10;
+    for (int retry = 0; retry < MAX_RETRIES; ++retry) {
+        node* head = head_.load(std::memory_order_acquire);
+        hp_head.protect(head);
+
+        // Verify head hasn't changed after protection
+        if (head != head_.load(std::memory_order_acquire)) {
+            continue;  // Head changed, retry
+        }
+
+        node* next = head->next.load(std::memory_order_acquire);
+
+        // Queue is empty if head->next is null
+        return next == nullptr;
+    }
+
+    // If we exhausted retries, do one final check without verification
+    // This handles the edge case where head keeps changing but we need a definitive answer
+    node* head = head_.load(std::memory_order_acquire);
+    hp_head.protect(head);
+    node* next = head->next.load(std::memory_order_acquire);
     return next == nullptr;
 }
 

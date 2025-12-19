@@ -577,7 +577,7 @@ namespace kcenon::thread
 		{
 			while (!queue->empty())
 			{
-				queue->dequeue();
+				(void)queue->dequeue();
 			}
 		}
 		typed_queues_.clear();
