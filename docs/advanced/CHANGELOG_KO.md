@@ -7,9 +7,15 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)를 기반으로 하며,
 이 프로젝트는 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 따릅니다.
 
-## [Unreleased] - 2025-09-13
+## [3.0.0] - 2025-12-19
 
-참고: 아직 공식 릴리스가 게시되지 않았습니다. 아래의 모든 항목은 Unreleased 하에서의 사전 릴리스 마일스톤입니다.
+이 릴리스는 common_system 전용 공개 계약으로의 마이그레이션을 완료합니다. 전체 릴리스 노트는 [docs/CHANGELOG_KO.md](../CHANGELOG_KO.md)를 참조하세요.
+
+---
+
+## [Unreleased: 이전 마일스톤] - 2025-09-13
+
+참고: 아래의 모든 항목은 이전 사전 릴리스 마일스톤입니다.
 
 ### Changed
 - **주요 모듈화** 🏗️

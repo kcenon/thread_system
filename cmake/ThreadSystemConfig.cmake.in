@@ -1,24 +1,17 @@
 @PACKAGE_INIT@
 
-# ThreadSystem CMake configuration file
+# ThreadSystem CMake configuration file (v3.0.0+)
 # This file helps other projects find and use ThreadSystem
+#
+# ThreadSystem v3.0.0 uses C++20 std::format exclusively (no fmt dependency)
+# ThreadSystem v3.0.0 requires common_system for interfaces
 
 include(CMakeFindDependencyMacro)
 
 # Find required dependencies
 find_dependency(Threads)
 
-# Handle optional dependencies based on configuration
-# Check if std::format is used or if we need fmt library
-if(DEFINED USE_STD_FORMAT)
-    if(NOT USE_STD_FORMAT)
-        find_dependency(fmt CONFIG)
-    endif()
-else()
-    # Default case: try to find fmt if available
-    find_dependency(fmt CONFIG QUIET)
-endif()
-
+# Optional: iconv for wide/narrow string conversion
 find_dependency(Iconv QUIET)
 
 # Include the targets file

@@ -4,6 +4,7 @@
 
 ## Table of Contents
 
+- [v3.0.0 Migration (common_system)](#v300-migration-common_system)
 - [Overview](#overview)
 - [Migration Status](#migration-status)
   - [Phase 1: Interface Extraction and Cleanup ✅ COMPLETE](#phase-1-interface-extraction-and-cleanup-complete)
@@ -21,6 +22,50 @@
 - [Timeline](#timeline)
   - [Current Status (2025-09-13)](#current-status-2025-09-13)
   - [Detailed Status Log](#detailed-status-log)
+
+## v3.0.0 Migration (common_system)
+
+**Release Date:** 2025-12-19
+
+v3.0.0 completes the migration to **common_system-only** public contracts. This is a **breaking change** release.
+
+### Removed Types
+
+| Legacy Type | Replacement |
+|-------------|-------------|
+| `kcenon::thread::result<T>` | `kcenon::common::Result<T>` |
+| `kcenon::thread::result_void` | `kcenon::common::VoidResult` |
+| `kcenon::thread::error` | `kcenon::common::error_info` |
+| `kcenon::thread::logger_interface` | `kcenon::common::interfaces::ILogger` |
+| `kcenon::thread::log_level` | `kcenon::common::log_level` |
+| `kcenon::thread::monitoring_interface` | `kcenon::common::interfaces::IMonitor` |
+| `kcenon::thread::monitorable_interface` | `kcenon::common::interfaces::IMonitorable` |
+| `kcenon::shared::*` | `kcenon::common::interfaces::IExecutor` |
+
+### Quick Migration
+
+```cpp
+// Error handling
+// Before:
+#include <kcenon/thread/core/error_handling.h>
+kcenon::thread::result<int> foo();
+
+// After:
+#include <kcenon/common/result.h>
+kcenon::common::Result<int> foo();
+
+// API changes:
+// .has_error() → .is_err()
+// .get_error() → .error()
+// .value() → .value() (unchanged)
+```
+
+### Detailed Migration Guides
+
+- [Error System Migration Guide](ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [Logger Interface Migration Guide](../guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md)
+
+---
 
 ## Overview
 

@@ -5,7 +5,56 @@
 이 형식은 [Keep a Changelog](https://keepachangelog.com/ko/1.0.0/)를 기반으로 하며,
 이 프로젝트는 [Semantic Versioning](https://semver.org/lang/ko/)을 준수합니다.
 
-## [미출시]
+## [3.0.0] - 2025-12-19
+
+### 주요 변경 사항 (BREAKING CHANGES)
+
+이 릴리스는 **common_system 전용** 공개 계약으로의 마이그레이션을 완료합니다. 다음 레거시 타입과 인터페이스가 공개 API에서 제거되었습니다:
+
+**에러 처리**
+- `kcenon::thread::result<T>` → `kcenon::common::Result<T>` 사용
+- `kcenon::thread::result_void` → `kcenon::common::VoidResult` 사용
+- `kcenon::thread::error` → `kcenon::common::error_info` 사용
+
+**로깅**
+- `kcenon::thread::logger_interface` → `kcenon::common::interfaces::ILogger` 사용
+- `kcenon::thread::log_level` → `kcenon::common::log_level` 사용
+- `kcenon::thread::logger_registry` → common_system의 로거 등록 사용
+
+**모니터링**
+- `kcenon::thread::monitoring_interface` → `kcenon::common::interfaces::IMonitor` 사용
+- `kcenon::thread::monitorable_interface` → `kcenon::common::interfaces::IMonitorable` 사용
+
+**Executor/공유 인터페이스**
+- `kcenon::shared::*` 계약 → `kcenon::common::interfaces::IExecutor` 사용
+- `shared_interfaces.h` 헤더 제거
+- 레거시 어댑터들을 `thread_pool_executor_adapter`로 통합
+
+### 마이그레이션 가이드
+
+자세한 지침은 다음 마이그레이션 가이드를 참조하세요:
+- [에러 시스템 마이그레이션 가이드](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [로거 인터페이스 마이그레이션 가이드](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
+
+**빠른 마이그레이션 요약:**
+
+```cpp
+// 이전 (v2.x)
+#include <kcenon/thread/core/error_handling.h>
+kcenon::thread::result<int> foo();
+
+// 이후 (v3.0)
+#include <kcenon/common/result.h>
+kcenon::common::Result<int> foo();
+```
+
+```cpp
+// 이전 (v2.x)
+class MyLogger : public kcenon::thread::logger_interface { ... };
+
+// 이후 (v3.0)
+class MyLogger : public kcenon::common::interfaces::ILogger { ... };
+```
 
 ### 제거됨
 - **이슈 #313 - Phase 3**: shared_interfaces.h 제거 및 executor 어댑터 통합
@@ -276,7 +325,8 @@
 
 ---
 
-[미출시]: https://github.com/kcenon/thread_system/compare/v2.0.0...HEAD
+[미출시]: https://github.com/kcenon/thread_system/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/kcenon/thread_system/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/kcenon/thread_system/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/kcenon/thread_system/compare/v1.0.0...v1.5.0
 [1.0.0]: https://github.com/kcenon/thread_system/releases/tag/v1.0.0

@@ -4,6 +4,7 @@
 
 ## 목차
 
+- [v3.0.0 마이그레이션 (common_system)](#v300-마이그레이션-common_system)
 - [개요](#개요)
 - [마이그레이션 상태](#마이그레이션-상태)
   - [Phase 1: Interface 추출 및 정리 ✅ 완료](#phase-1-interface-추출-및-정리--완료)
@@ -21,6 +22,50 @@
 - [타임라인](#타임라인)
   - [현재 상태 (2025-09-13)](#현재-상태-2025-09-13)
   - [상세 상태 로그](#상세-상태-로그)
+
+## v3.0.0 마이그레이션 (common_system)
+
+**릴리스 날짜:** 2025-12-19
+
+v3.0.0은 **common_system 전용** 공개 계약으로의 마이그레이션을 완료합니다. 이것은 **주요 변경사항(breaking change)** 릴리스입니다.
+
+### 제거된 타입
+
+| 레거시 타입 | 대체 타입 |
+|-------------|-----------|
+| `kcenon::thread::result<T>` | `kcenon::common::Result<T>` |
+| `kcenon::thread::result_void` | `kcenon::common::VoidResult` |
+| `kcenon::thread::error` | `kcenon::common::error_info` |
+| `kcenon::thread::logger_interface` | `kcenon::common::interfaces::ILogger` |
+| `kcenon::thread::log_level` | `kcenon::common::log_level` |
+| `kcenon::thread::monitoring_interface` | `kcenon::common::interfaces::IMonitor` |
+| `kcenon::thread::monitorable_interface` | `kcenon::common::interfaces::IMonitorable` |
+| `kcenon::shared::*` | `kcenon::common::interfaces::IExecutor` |
+
+### 빠른 마이그레이션
+
+```cpp
+// 에러 처리
+// 이전:
+#include <kcenon/thread/core/error_handling.h>
+kcenon::thread::result<int> foo();
+
+// 이후:
+#include <kcenon/common/result.h>
+kcenon::common::Result<int> foo();
+
+// API 변경:
+// .has_error() → .is_err()
+// .get_error() → .error()
+// .value() → .value() (변경 없음)
+```
+
+### 상세 마이그레이션 가이드
+
+- [에러 시스템 마이그레이션 가이드](ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [로거 인터페이스 마이그레이션 가이드](../guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
+
+---
 
 ## 개요
 

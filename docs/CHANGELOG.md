@@ -5,7 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.0.0] - 2025-12-19
+
+### BREAKING CHANGES
+
+This release completes the migration to **common_system-only** public contracts. The following legacy types and interfaces have been removed from the public API:
+
+**Error Handling**
+- `kcenon::thread::result<T>` → Use `kcenon::common::Result<T>`
+- `kcenon::thread::result_void` → Use `kcenon::common::VoidResult`
+- `kcenon::thread::error` → Use `kcenon::common::error_info`
+
+**Logging**
+- `kcenon::thread::logger_interface` → Use `kcenon::common::interfaces::ILogger`
+- `kcenon::thread::log_level` → Use `kcenon::common::log_level`
+- `kcenon::thread::logger_registry` → Use common_system's logger registration
+
+**Monitoring**
+- `kcenon::thread::monitoring_interface` → Use `kcenon::common::interfaces::IMonitor`
+- `kcenon::thread::monitorable_interface` → Use `kcenon::common::interfaces::IMonitorable`
+
+**Executor/Shared Interfaces**
+- `kcenon::shared::*` contracts → Use `kcenon::common::interfaces::IExecutor`
+- `shared_interfaces.h` header removed
+- Legacy adapters consolidated to `thread_pool_executor_adapter`
+
+### Migration Guide
+
+See the following migration guides for detailed instructions:
+- [Error System Migration Guide](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [Logger Interface Migration Guide](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md)
+
+**Quick Migration Summary:**
+
+```cpp
+// Before (v2.x)
+#include <kcenon/thread/core/error_handling.h>
+kcenon::thread::result<int> foo();
+
+// After (v3.0)
+#include <kcenon/common/result.h>
+kcenon::common::Result<int> foo();
+```
+
+```cpp
+// Before (v2.x)
+class MyLogger : public kcenon::thread::logger_interface { ... };
+
+// After (v3.0)
+class MyLogger : public kcenon::common::interfaces::ILogger { ... };
+```
 
 ### Removed
 - **Issue #313 - Phase 3**: Remove shared_interfaces.h and consolidate executor adapters
@@ -381,7 +430,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/kcenon/thread_system/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/kcenon/thread_system/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/kcenon/thread_system/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/kcenon/thread_system/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/kcenon/thread_system/compare/v1.0.0...v1.5.0
 [1.0.0]: https://github.com/kcenon/thread_system/releases/tag/v1.0.0
