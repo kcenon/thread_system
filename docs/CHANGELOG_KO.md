@@ -41,6 +41,15 @@
   - 안전한 메모리 회수를 위한 `safe_retire_hazard<T>()` 사용
   - ARM64/Apple Silicon을 위한 약한 메모리 모델 검증 테스트 추가
   - 약한 메모리 모델 아키텍처의 CVSS 8.5 보안 이슈 해결
+- **PR #319**: safe_hazard_pointer 통합 CI 실패 수정 (#316 후속 조치)
+  - `retire()`에서 `collect()` 호출을 락 외부로 이동하여 데드락 수정
+  - 메모리 재사용 시나리오에서 이중 해제 방지를 위한 중복 주소 처리 추가
+  - 재사용 레코드의 오래된 포인터 방지를 위해 `acquire()`에서 hazard pointer 클리어
+  - 레코드 재사용 중 경쟁 조건 처리를 위해 `collect_internal()`에서 모든 레코드 검사
+  - 경합 중 행 방지를 위해 `enqueue()`와 `dequeue()`에 재시도 제한 추가
+  - 재시도 제한 초과 시를 위한 `queue_busy` 에러 코드 추가
+  - UAF 방지를 위해 `empty()`에 hazard pointer 보호 추가
+  - 드레인 전 모드 업데이트로 `adaptive_job_queue::migrate_to_mode()`의 무한 드레인 루프 수정
 - **이슈 #297**: SDOF 방지를 위한 atexit 핸들러 등록 타이밍 개선
   - 조기 atexit 핸들러 등록을 위한 `thread_logger_init.cpp` 추가
   - 플랫폼별 초기화 사용 (GCC/Clang `__attribute__((constructor(101)))`, MSVC CRT 섹션)
