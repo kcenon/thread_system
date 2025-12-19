@@ -366,9 +366,15 @@ void adaptive_job_queue::migrate_to_mode(mode target) {
     // Update time tracking before mode change
     update_mode_time();
 
+    // IMPORTANT: Update mode FIRST, then drain the old queue.
+    // This ensures new enqueues go to the target queue while we drain,
+    // preventing an infinite drain loop where the producer keeps adding
+    // to the source queue faster than we can drain it.
+    current_mode_.store(target, std::memory_order_release);
+
     if (target == mode::mutex) {
         // Migrate from lock-free to mutex
-        // Drain lockfree queue and move jobs to mutex queue
+        // Drain remaining jobs from lockfree queue and move to mutex queue
         while (true) {
             auto result = lockfree_queue_->dequeue();
             if (result.is_err()) {
@@ -384,9 +390,6 @@ void adaptive_job_queue::migrate_to_mode(mode target) {
             (void)lockfree_queue_->enqueue(std::move(job));
         }
     }
-
-    // Update mode
-    current_mode_.store(target, std::memory_order_release);
 
     // Update statistics
     {
