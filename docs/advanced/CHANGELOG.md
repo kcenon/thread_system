@@ -7,9 +7,9 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-12-04
+## [3.0.0] - 2025-12-19
 
-Note: No official releases have been published yet. All entries below are pre-release milestones under Unreleased.
+This release completes the migration to common_system-only public contracts. See [docs/CHANGELOG.md](../CHANGELOG.md) for full release notes.
 
 ### Added
 - **Queue Capabilities System** (Phase 1-6)
