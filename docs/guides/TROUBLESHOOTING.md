@@ -202,9 +202,9 @@ cmake -S . -B build -DENABLE_ASAN=ON
 
 1. Check job return values:
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // Your work
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 

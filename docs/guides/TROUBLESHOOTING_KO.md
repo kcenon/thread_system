@@ -202,9 +202,9 @@ cmake -S . -B build -DENABLE_ASAN=ON
 
 1. 작업 반환 값 확인:
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // 작업 내용
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 

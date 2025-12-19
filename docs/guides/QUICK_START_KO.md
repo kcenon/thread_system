@@ -160,9 +160,9 @@ pool->submit_task([]() {
 });
 
 // callback_job을 사용하여 더 세밀한 제어
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // 작업 내용
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 
@@ -184,11 +184,11 @@ for (int i = 0; i < 1000; ++i) {
 ### 오류 처리
 
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     if (some_error_condition) {
-        return result_void::error(error_code::operation_failed, "태스크 실패");
+        return kcenon::thread::make_error_result(kcenon::thread::error_code::operation_failed, "태스크 실패");
     }
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 

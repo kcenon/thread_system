@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include "typed_thread_pool/scheduling/typed_lockfree_job_queue.h"
 #include "typed_thread_pool/scheduling/typed_job_queue.h"
 #include "typed_thread_pool/jobs/callback_typed_job.h"
@@ -45,11 +47,11 @@ class simple_test_job : public typed_job_t<job_types> {
 public:
     simple_test_job(job_types type) : typed_job_t<job_types>(type) {}
     
-    result_void do_work() override {
+    kcenon::common::VoidResult do_work() override {
         // Minimal work
         volatile int x = 42;
         x++;
-        return {};
+        return kcenon::common::ok();
     }
 };
 

@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include "job_queue.h"
 #include "lockfree/queues/lockfree_job_queue.h"
 #include "lockfree/queues/adaptive_job_queue.h"
@@ -50,9 +52,9 @@ constexpr size_t LARGE_WORKLOAD = 100000;
 
 // Helper function to create a simple job
 std::unique_ptr<job> create_simple_job(std::atomic<size_t>& counter) {
-    return std::make_unique<callback_job>([&counter]() -> result_void {
+    return std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
         counter.fetch_add(1, std::memory_order_relaxed);
-        return result_void();
+        return kcenon::common::ok();
     });
 }
 

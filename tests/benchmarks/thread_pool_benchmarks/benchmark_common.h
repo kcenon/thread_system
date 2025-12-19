@@ -37,14 +37,17 @@
 #include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
 #include "../../sources/typed_thread_pool/scheduling/typed_thread_worker.h"
 
-// Make sure we have the proper namespace aliases
-using result_void = thread_module::result_void;
+// Include common_system Result types for v3.0 API
+#include <kcenon/common/patterns/result.h>
+
+// Alias for common::VoidResult to simplify benchmark code
+using VoidResult = kcenon::common::VoidResult;
 
 // Helper macro to create callback jobs with proper return type
 #define MAKE_JOB(lambda_body) \
-    std::make_unique<thread_module::callback_job>([&]() -> result_void { \
+    std::make_unique<thread_module::callback_job>([&]() -> VoidResult { \
         lambda_body \
-        return result_void{}; \
+        return kcenon::common::ok(); \
     })
 
 // Helper function to create and setup a thread pool
