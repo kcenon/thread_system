@@ -7,6 +7,5 @@ var searchData=
   ['lock_5fshared_4',['lock_shared',['../d3/d18/classkcenon_1_1thread_1_1sync_1_1shared__mutex__wrapper.html#ab1e9f481b67edb9a5963198feda5b87c',1,'kcenon::thread::sync::shared_mutex_wrapper']]],
   ['locked_5f_5',['locked_',['../dd/d19/classkcenon_1_1thread_1_1sync_1_1scoped__lock__guard.html#ae1e2daddfa860da565a1f580c9c8b080',1,'kcenon::thread::sync::scoped_lock_guard']]],
   ['log_5fmodule_6',['log_module',['../index.html#logger',1,'Asynchronous Logging System (log_module)'],['../d9/de0/namespacelog__module.html',1,'log_module']]],
-  ['logger_5finterface_2ecpp_7',['logger_interface.cpp',['../de/d6d/logger__interface_8cpp.html',1,'']]],
-  ['logging_20system_20log_5fmodule_8',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]]
+  ['logging_20system_20log_5fmodule_7',['Asynchronous Logging System (log_module)',['../index.html#logger',1,'']]]
 ];

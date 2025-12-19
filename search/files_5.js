@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['span_2eh_0',['span.h',['../d4/d7a/span_8h.html',1,'']]],
-  ['sync_5fprimitives_2eh_1',['sync_primitives.h',['../df/d7d/sync__primitives_8h.html',1,'']]]
+  ['thread_5fimpl_2eh_0',['thread_impl.h',['../d5/d68/thread__impl_8h.html',1,'']]]
 ];

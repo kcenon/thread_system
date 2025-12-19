@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_5finterface_2ecpp_0',['logger_interface.cpp',['../de/d6d/logger__interface_8cpp.html',1,'']]]
+  ['mainpage_2edox_0',['mainpage.dox',['../d5/d4d/mainpage_8dox.html',1,'']]]
 ];
