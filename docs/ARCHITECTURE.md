@@ -51,8 +51,10 @@ thread_system/
 ├── services/              # Service infrastructure
 │   ├── service_registry.h
 │   └── service_base.h
+├── adapters/              # Integration adapters
+│   ├── common_executor_adapter.h  # IExecutor adapter
+│   └── logger_system_adapter.h    # ILogger adapter
 └── utilities/             # Utilities
-    ├── thread_pool_executor.h
     └── job_traits.h
 ```
 
@@ -214,7 +216,7 @@ class typed_thread_pool : public thread_base {
 #### Dependency Inversion
 ```cpp
 // Depend on interfaces
-class thread_pool_executor : public kcenon::common::IExecutor {
+class thread_pool_executor_adapter : public common::interfaces::IExecutor {
     // Depends on interface, not concrete class
 };
 ```

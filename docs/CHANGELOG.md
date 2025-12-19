@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
+- **Issue #313 - Phase 3**: Remove shared_interfaces.h and consolidate executor adapters
+  - Removed `kcenon::shared::*` contracts from public headers
+  - Removed `include/kcenon/thread/interfaces/shared_interfaces.h` header file
+  - Removed `include/kcenon/thread/adapters/thread_pool_executor.h` legacy adapter
+  - Removed `include/kcenon/thread/adapters/common_system_executor_adapter.h` duplicate adapter
+  - Consolidated to single canonical adapter: `thread_pool_executor_adapter` in `common_executor_adapter.h`
+  - Updated `service_registration.h` to use canonical `thread_pool_executor_adapter`
+  - All integrations now use `kcenon::common::interfaces::IExecutor` exclusively
 - **Issue #312 - Phase 3**: Migrate monitoring to common::interfaces::IMonitor/IMonitorable
   - Removed `kcenon::thread::monitoring_interface` namespace from public headers
   - Removed `include/kcenon/thread/interfaces/monitoring_interface.h` header file
