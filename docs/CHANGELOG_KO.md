@@ -8,6 +8,14 @@
 ## [미출시]
 
 ### 제거됨
+- **이슈 #313 - Phase 3**: shared_interfaces.h 제거 및 executor 어댑터 통합
+  - 공개 헤더에서 `kcenon::shared::*` 컨트랙트 제거
+  - `include/kcenon/thread/interfaces/shared_interfaces.h` 헤더 파일 제거
+  - `include/kcenon/thread/adapters/thread_pool_executor.h` 레거시 어댑터 제거
+  - `include/kcenon/thread/adapters/common_system_executor_adapter.h` 중복 어댑터 제거
+  - `common_executor_adapter.h`의 `thread_pool_executor_adapter`로 단일 canonical 어댑터 통합
+  - canonical `thread_pool_executor_adapter` 사용하도록 `service_registration.h` 업데이트
+  - 모든 통합은 이제 `kcenon::common::interfaces::IExecutor`만 사용
 - **이슈 #312 - Phase 3**: monitoring을 common::interfaces::IMonitor/IMonitorable로 마이그레이션
   - 공개 헤더에서 `kcenon::thread::monitoring_interface` 네임스페이스 제거
   - `include/kcenon/thread/interfaces/monitoring_interface.h` 헤더 파일 제거

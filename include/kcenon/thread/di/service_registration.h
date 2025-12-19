@@ -22,7 +22,7 @@
 #include <kcenon/common/di/service_container.h>
 #include <kcenon/common/interfaces/executor_interface.h>
 
-#include "../adapters/common_system_executor_adapter.h"
+#include "../adapters/common_executor_adapter.h"
 #include "../core/thread_pool.h"
 
 namespace kcenon::thread::di {
@@ -89,7 +89,8 @@ inline common::VoidResult register_executor_services(
     // Register executor factory
     return container.register_factory<common::interfaces::IExecutor>(
         [workers](common::di::IServiceContainer&) -> std::shared_ptr<common::interfaces::IExecutor> {
-            return std::make_shared<adapters::common_system_executor_adapter>(workers);
+            auto pool = std::make_shared<thread_pool>(workers);
+            return std::make_shared<adapters::thread_pool_executor_adapter>(pool);
         },
         config.lifetime
     );
@@ -125,7 +126,7 @@ inline common::VoidResult register_executor_instance(
         );
     }
 
-    auto adapter = std::make_shared<adapters::common_system_executor_adapter>(pool);
+    auto adapter = std::make_shared<adapters::thread_pool_executor_adapter>(pool);
     return container.register_instance<common::interfaces::IExecutor>(adapter);
 }
 
