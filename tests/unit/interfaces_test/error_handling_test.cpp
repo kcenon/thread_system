@@ -12,6 +12,7 @@ All rights reserved.
 namespace error_handling_test {
 
 using namespace kcenon::thread;
+namespace common = kcenon::common;
 
 class ErrorHandlingTest : public ::testing::Test {
 protected:
@@ -38,106 +39,70 @@ TEST_F(ErrorHandlingTest, ErrorCodeUnknownValue) {
 }
 
 // =============================================================================
-// error class tests
+// to_error_info tests
 // =============================================================================
 
-TEST_F(ErrorHandlingTest, ErrorConstruction) {
-    error err(error_code::queue_full, "Queue capacity exceeded");
+TEST_F(ErrorHandlingTest, ToErrorInfoConstruction) {
+    auto info = to_error_info(error_code::queue_full, "Queue capacity exceeded");
 
-    EXPECT_EQ(err.code(), error_code::queue_full);
-    EXPECT_EQ(err.message(), "Queue capacity exceeded");
+    EXPECT_EQ(get_error_code(info), error_code::queue_full);
+    EXPECT_EQ(info.message, "Queue capacity exceeded");
+    EXPECT_EQ(info.module, "thread_system");
 }
 
-TEST_F(ErrorHandlingTest, ErrorToString) {
-    error err1(error_code::queue_full);
-    EXPECT_EQ(err1.to_string(), "Queue is full");
+TEST_F(ErrorHandlingTest, ToErrorInfoDefaultMessage) {
+    auto info = to_error_info(error_code::queue_full);
+    EXPECT_EQ(info.message, "Queue is full");
 
-    error err2(error_code::queue_full, "Max capacity: 100");
-    EXPECT_EQ(err2.to_string(), "Queue is full: Max capacity: 100");
+    auto info2 = to_error_info(error_code::queue_full, "Max capacity: 100");
+    EXPECT_EQ(info2.message, "Max capacity: 100");
 }
 
 // =============================================================================
-// result<T> tests
+// common::Result<T> tests
 // =============================================================================
 
 TEST_F(ErrorHandlingTest, ResultWithValue) {
-    result<int> res(42);
+    common::Result<int> res = common::Result<int>::ok(42);
 
-    EXPECT_TRUE(res.has_value());
-    EXPECT_TRUE(static_cast<bool>(res));
+    EXPECT_TRUE(res.is_ok());
+    EXPECT_FALSE(res.is_err());
     EXPECT_EQ(res.value(), 42);
 }
 
 TEST_F(ErrorHandlingTest, ResultWithError) {
-    auto err = error{error_code::queue_empty};
-    result<int> res{err};
+    common::Result<int> res = make_error_result<int>(error_code::queue_empty);
 
-    EXPECT_FALSE(res.has_value());
-    EXPECT_FALSE(static_cast<bool>(res));
-    EXPECT_EQ(res.get_error().code(), error_code::queue_empty);
+    EXPECT_FALSE(res.is_ok());
+    EXPECT_TRUE(res.is_err());
+    EXPECT_EQ(get_error_code(res.error()), error_code::queue_empty);
 }
 
 TEST_F(ErrorHandlingTest, ResultValueOr) {
-    result<int> success_res{42};
-    auto err = error{error_code::queue_empty};
-    result<int> error_res{err};
+    common::Result<int> success_res = common::Result<int>::ok(42);
+    common::Result<int> error_res = make_error_result<int>(error_code::queue_empty);
 
     EXPECT_EQ(success_res.value_or(0), 42);
     EXPECT_EQ(error_res.value_or(0), 0);
 }
 
-TEST_F(ErrorHandlingTest, ResultValueOrThrow) {
-    result<int> success_res{42};
-    auto err = error{error_code::queue_empty};
-    result<int> error_res{err};
-
-    EXPECT_EQ(success_res.value_or_throw(), 42);
-    EXPECT_THROW(error_res.value_or_throw(), std::runtime_error);
-}
-
-TEST_F(ErrorHandlingTest, ResultMap) {
-    result<int> res(10);
-    auto mapped = res.map([](int v) { return v * 2; });
-
-    EXPECT_TRUE(mapped.has_value());
-    EXPECT_EQ(mapped.value(), 20);
-}
-
-TEST_F(ErrorHandlingTest, ResultMapError) {
-    auto err = error{error_code::queue_empty};
-    result<int> res{err};
-    auto mapped = res.map([](int v) { return v * 2; });
-
-    EXPECT_FALSE(mapped.has_value());
-    EXPECT_EQ(mapped.get_error().code(), error_code::queue_empty);
-}
-
 // =============================================================================
-// result<void> tests
+// common::VoidResult tests
 // =============================================================================
 
 TEST_F(ErrorHandlingTest, VoidResultSuccess) {
-    result<void> res;
+    common::VoidResult res = common::ok();
 
-    EXPECT_TRUE(res.has_value());
-    EXPECT_TRUE(static_cast<bool>(res));
+    EXPECT_TRUE(res.is_ok());
+    EXPECT_FALSE(res.is_err());
 }
 
 TEST_F(ErrorHandlingTest, VoidResultError) {
-    auto err = error{error_code::mutex_error};
-    result<void> res{err};
+    common::VoidResult res = make_error_result(error_code::mutex_error);
 
-    EXPECT_FALSE(res.has_value());
-    EXPECT_EQ(res.get_error().code(), error_code::mutex_error);
-}
-
-TEST_F(ErrorHandlingTest, VoidResultValueOrThrow) {
-    result<void> success_res;
-    auto err = error{error_code::mutex_error};
-    result<void> error_res{err};
-
-    EXPECT_NO_THROW(success_res.value_or_throw());
-    EXPECT_THROW(error_res.value_or_throw(), std::runtime_error);
+    EXPECT_TRUE(res.is_err());
+    EXPECT_FALSE(res.is_ok());
+    EXPECT_EQ(get_error_code(res.error()), error_code::mutex_error);
 }
 
 // =============================================================================
@@ -194,52 +159,33 @@ TEST_F(ErrorHandlingTest, ThreadCategorySingleton) {
 }
 
 // =============================================================================
-// result_void tests
+// GetErrorCode helper tests
 // =============================================================================
 
-TEST_F(ErrorHandlingTest, ResultVoidSuccess) {
-    result_void res;
+TEST_F(ErrorHandlingTest, GetErrorCodeFromInfo) {
+    common::error_info info{
+        static_cast<int>(error_code::io_error),
+        "I/O failure",
+        "thread_system"
+    };
 
-    EXPECT_FALSE(res.has_error());
-    EXPECT_TRUE(static_cast<bool>(res));
+    EXPECT_EQ(get_error_code(info), error_code::io_error);
 }
 
-TEST_F(ErrorHandlingTest, ResultVoidError) {
-    auto err = error{error_code::io_error};
-    result_void res{err};
+TEST_F(ErrorHandlingTest, MakeErrorResultVoid) {
+    common::VoidResult res = make_error_result(error_code::io_error, "Custom message");
 
-    EXPECT_TRUE(res.has_error());
-    EXPECT_FALSE(static_cast<bool>(res));
-    EXPECT_EQ(res.get_error().code(), error_code::io_error);
+    EXPECT_TRUE(res.is_err());
+    EXPECT_EQ(get_error_code(res.error()), error_code::io_error);
+    EXPECT_EQ(res.error().message, "Custom message");
 }
 
-// =============================================================================
-// Helper function tests
-// =============================================================================
+TEST_F(ErrorHandlingTest, MakeErrorResultWithType) {
+    common::Result<int> res = make_error_result<int>(error_code::invalid_argument, "Bad value");
 
-TEST_F(ErrorHandlingTest, OptionalErrorToResult) {
-    std::optional<std::string> no_error = std::nullopt;
-    std::optional<std::string> has_error = "Something went wrong";
-
-    auto success = optional_error_to_result(no_error, 42);
-    auto failure = optional_error_to_result(has_error, 0);
-
-    EXPECT_TRUE(success.has_value());
-    EXPECT_EQ(success.value(), 42);
-
-    EXPECT_FALSE(failure.has_value());
-}
-
-TEST_F(ErrorHandlingTest, ResultToOptionalError) {
-    result<void> success;
-    auto err = error{error_code::io_error};
-    result<void> failure{err};
-
-    auto opt1 = result_to_optional_error(success);
-    auto opt2 = result_to_optional_error(failure);
-
-    EXPECT_FALSE(opt1.has_value());
-    EXPECT_TRUE(opt2.has_value());
+    EXPECT_TRUE(res.is_err());
+    EXPECT_EQ(get_error_code(res.error()), error_code::invalid_argument);
+    EXPECT_EQ(res.error().message, "Bad value");
 }
 
 } // namespace error_handling_test

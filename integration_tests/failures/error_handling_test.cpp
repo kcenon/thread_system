@@ -121,10 +121,10 @@ TEST_F(ErrorHandlingTest, PartialJobFailure) {
             [&success_count, &failure_count, should_fail, this]() -> kcenon::common::VoidResult {
                 if (should_fail) {
                     failure_count.fetch_add(1);
-                    return kcenon::thread::error{
+                    return kcenon::thread::make_error_result(
                         kcenon::thread::error_code::job_execution_failed,
                         "Intentional failure"
-                    };
+                    );
                 }
                 success_count.fetch_add(1);
                 completed_jobs_.fetch_add(1);
@@ -219,15 +219,15 @@ TEST_F(ErrorHandlingTest, ConcurrentErrorPropagation) {
             -> kcenon::common::VoidResult {
                 if (should_error) {
                     error_count.fetch_add(1);
-                    auto err = kcenon::thread::error{
+                    auto err = kcenon::thread::to_error_info(
                         kcenon::thread::error_code::job_execution_failed,
                         "Concurrent error"
-                    };
+                    );
 
                     std::lock_guard<std::mutex> lock(error_mutex);
-                    error_messages.push_back(err.to_string());
+                    error_messages.push_back(err.message);
 
-                    return err;
+                    return kcenon::common::VoidResult(err);
                 }
 
                 completed_jobs_.fetch_add(1);
@@ -289,18 +289,18 @@ TEST_F(ErrorHandlingTest, NullJobHandling) {
 }
 
 TEST_F(ErrorHandlingTest, ErrorCodeValidation) {
-    using kcenon::thread::error;
     using kcenon::thread::error_code;
+    using kcenon::thread::to_error_info;
+    using kcenon::thread::get_error_code;
 
-    error err1(error_code::queue_full, "Queue is full");
-    EXPECT_EQ(err1.code(), error_code::queue_full);
-    EXPECT_FALSE(err1.message().empty());
+    auto err1 = to_error_info(error_code::queue_full, "Queue is full");
+    EXPECT_EQ(get_error_code(err1), error_code::queue_full);
+    EXPECT_FALSE(err1.message.empty());
 
-    error err2(error_code::thread_start_failure);
-    EXPECT_EQ(err2.code(), error_code::thread_start_failure);
+    auto err2 = to_error_info(error_code::thread_start_failure);
+    EXPECT_EQ(get_error_code(err2), error_code::thread_start_failure);
 
-    // Test error to string conversion
-    std::string err_str = err1.to_string();
-    EXPECT_FALSE(err_str.empty());
-    EXPECT_NE(err_str.find("Queue is full"), std::string::npos);
+    // Test error message
+    EXPECT_FALSE(err1.message.empty());
+    EXPECT_NE(err1.message.find("Queue is full"), std::string::npos);
 }
