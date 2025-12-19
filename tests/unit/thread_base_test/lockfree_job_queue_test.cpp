@@ -517,7 +517,7 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
             auto result = queue.dequeue();
             if (result.is_ok()) {
                 auto& job_ptr = result.value();
-                job_ptr->do_work();
+                (void)job_ptr->do_work();
                 total_dequeued.fetch_add(1, std::memory_order_relaxed);
             }
         }
@@ -530,7 +530,7 @@ TEST_F(LockFreeJobQueueTest, ThreadChurnHighContention) {
             break;
         }
         auto& job_ptr = result.value();
-        job_ptr->do_work();
+        (void)job_ptr->do_work();
         total_dequeued.fetch_add(1, std::memory_order_relaxed);
     }
 
@@ -742,14 +742,14 @@ TEST_F(LockFreeJobQueueTest, DestructorSafetyStressTest) {
             while (!stop.load(std::memory_order_relaxed)) {
                 auto job =
                     std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
-                queue->enqueue(std::move(job));
+                (void)queue->enqueue(std::move(job));
             }
         });
 
         // Consumer thread
         std::thread consumer([&queue, &stop]() {
             while (!stop.load(std::memory_order_relaxed)) {
-                queue->dequeue();
+                (void)queue->dequeue();
             }
         });
 
