@@ -62,10 +62,10 @@ lockfree_job_queue::~lockfree_job_queue() {
     // Safe cleanup: acquire semantics ensure we see all writes
     node* dummy = head_.load(std::memory_order_acquire);
 
-    // Use hazard pointer domain for safe reclamation of dummy node
+    // Use safe hazard pointer for reclamation of dummy node
     // This ensures the node is only deleted when no other thread
-    // holds a hazard pointer to it
-    node_hp_domain::global().retire(dummy);
+    // holds a hazard pointer to it (uses explicit memory ordering)
+    safe_retire_hazard(dummy);
 }
 
 // Enqueue operation (Michael-Scott algorithm)
@@ -77,8 +77,8 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
     // Allocate new node with the job
     node* new_node = new node(std::move(job_ptr));
 
-    // Acquire hazard pointer for tail protection
-    auto hp_tail = node_hp_domain::global().acquire();
+    // Acquire hazard pointer guard for tail protection (uses safe memory ordering)
+    safe_hazard_guard hp_tail;
 
     while (true) {
         // Read current tail
@@ -125,11 +125,11 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
     }
 }
 
-// Dequeue operation (Michael-Scott algorithm with Hazard Pointers)
+// Dequeue operation (Michael-Scott algorithm with Safe Hazard Pointers)
 auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
-    // Acquire hazard pointers for protecting nodes
-    auto hp_head = node_hp_domain::global().acquire();
-    auto hp_next = node_hp_domain::global().acquire();
+    // Acquire hazard pointer guards for protecting nodes (uses safe memory ordering)
+    safe_hazard_guard hp_head;
+    safe_hazard_guard hp_next;
 
     while (true) {
         // Protect head from reclamation
@@ -189,8 +189,8 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
                     // We now own the old head node exclusively
                     std::unique_ptr<job> job_data = std::move(next->data);
 
-                    // Retire the old head node for later reclamation
-                    node_hp_domain::global().retire(head);
+                    // Retire the old head node for later reclamation (safe memory ordering)
+                    safe_retire_hazard(head);
 
                     // Update size (relaxed - just for monitoring)
                     approximate_size_.fetch_sub(1, std::memory_order_relaxed);
