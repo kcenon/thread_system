@@ -2,23 +2,23 @@
 
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2024, DongCheol Shin
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,35 +33,33 @@
 
 /**
  * @file error_handling.h
- * @brief Modern error handling for the thread system
+ * @brief Error codes and utilities for the thread system
  *
- * This file provides typed error handling capabilities using a result type pattern
- * that is similar to std::expected from C++23, but can be used with C++20.
+ * This file provides thread-system-specific error codes and integration with
+ * the common_system Result/VoidResult types for unified error handling.
+ *
+ * @note As of v3.0, all result types have been unified to use kcenon::common::Result<T>
+ *       and kcenon::common::VoidResult. The legacy thread::result<T>, thread::result_void,
+ *       and thread::error types have been removed. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md
+ *       for migration instructions.
  */
 
 #include <string>
-#include <optional>
-#include <type_traits>
 #include <string_view>
-#include <ostream>
-#include <functional>
-#include <stdexcept>
 #include <system_error>
 
-// THREAD_HAS_COMMON_RESULT is defined by CMake when common_system is available
-// This is more reliable than __has_include alone, which may not respect build configuration
-#if defined(THREAD_HAS_COMMON_RESULT) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/patterns/result.h>))
-#ifndef THREAD_HAS_COMMON_RESULT
-#define THREAD_HAS_COMMON_RESULT 1
-#endif
+// Include common_system Result types
 #include <kcenon/common/patterns/result.h>
-#endif
 
 namespace kcenon::thread {
 
 /**
  * @enum error_code
  * @brief Strongly typed error codes for thread system operations
+ *
+ * These error codes are specific to thread_system operations and can be
+ * converted to common::error_info for use with common::Result<T> and
+ * common::VoidResult.
  */
 enum class error_code {
     // General errors
@@ -71,33 +69,33 @@ enum class error_code {
     operation_timeout,
     not_implemented,
     invalid_argument,
-    
+
     // Thread errors
     thread_already_running = 100,
     thread_not_running,
     thread_start_failure,
     thread_join_failure,
-    
+
     // Queue errors
     queue_full = 200,
     queue_empty,
     queue_stopped,
     queue_busy,  // Queue is temporarily busy with concurrent operations
-    
+
     // Job errors
     job_creation_failed = 300,
     job_execution_failed,
     job_invalid,
-    
+
     // Resource errors
     resource_allocation_failed = 400,
     resource_limit_reached,
-    
+
     // Synchronization errors
     mutex_error = 500,
     deadlock_detected,
     condition_variable_error,
-    
+
     // IO errors
     io_error = 600,
     file_not_found
@@ -142,727 +140,24 @@ inline std::string error_code_to_string(error_code code) {
     return std::string("Unknown error code");
 }
 
-/**
- * @class error
- * @brief Represents an error in the thread system
- * 
- * This class encapsulates an error code and an optional message.
- */
-class error {
-public:
-    /**
-     * @brief Constructs an error with a code and optional message
-     * @param code The error code
-     * @param message Optional detailed message about the error
-     */
-    explicit error(error_code code, std::string message = {})
-        : code_(code), message_(std::move(message)) {}
-    
-    /**
-     * @brief Gets the error code
-     * @return The error code
-     */
-    [[nodiscard]] error_code code() const noexcept { return code_; }
-    
-    /**
-     * @brief Gets the error message
-     * @return The error message
-     */
-    [[nodiscard]] const std::string& message() const noexcept { return message_; }
-    
-    /**
-     * @brief Converts the error to a string representation
-     * @return A string describing the error
-     */
-    [[nodiscard]] std::string to_string() const {
-        if (message_.empty()) {
-            return error_code_to_string(code_);
-        }
-        return error_code_to_string(code_) + ": " + message_;
-    }
-    
-    /**
-     * @brief Implicit conversion to string
-     */
-    operator std::string() const {
-        return to_string();
-    }
-    
-private:
-    error_code code_;
-    std::string message_;
-};
-
-// Forward declaration of result template
-template <typename T>
-class result;
-
-/**
- * @brief Wrapper for void result
- *
- * This class represents a result that doesn't return a value (void),
- * but can indicate success or failure.
- *
- * @deprecated This class will be replaced by common::VoidResult in the next
- *             major version. New code should use common::VoidResult directly.
- */
-class
-#ifdef THREAD_HAS_COMMON_RESULT
-    [[deprecated("Use common::VoidResult instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
-#endif
-    result_void {
-public:
-    /**
-     * @brief Constructs a successful result
-     */
-    result_void() = default;
-    
-    /**
-     * @brief Constructs a result with an error
-     * @param err The error
-     */
-    result_void(const error& err) : has_error_(true), error_(err) {}
-    
-    /**
-     * @brief Checks if the result contains an error
-     * @return true if the result contains an error, false otherwise
-     */
-    [[nodiscard]] bool has_error() const noexcept { return has_error_; }
-
-    /**
-     * @brief Checks if the result is successful (has a value)
-     * @return true if successful, false if it contains an error
-     * @note Added for API compatibility with common::Result and result<T>
-     */
-    [[nodiscard]] bool has_value() const noexcept { return !has_error_; }
-
-    /**
-     * @brief Checks if the result is successful
-     * @return true if successful, false if it contains an error
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_ok() const noexcept { return !has_error_; }
-
-    /**
-     * @brief Checks if the result contains an error
-     * @return true if the result contains an error, false otherwise
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_error() const noexcept { return has_error_; }
-
-    /**
-     * @brief Gets the error
-     * @return A reference to the contained error
-     */
-    [[nodiscard]] const error& get_error() const { return error_; }
-
-    /**
-     * @brief Converts to bool for condition checking
-     * @return true if successful (no error), false otherwise
-     */
-    explicit operator bool() const noexcept { return !has_error_; }
-    
-private:
-    bool has_error_ = false;
-    error error_{error_code::success, ""};
-};
-
-/**
- * @class result
- * @brief A template class representing either a value or an error
- *
- * This class is similar to std::expected from C++23, but can be used with C++20.
- * It holds either a value of type T or an error.
- *
- * @note Phase 1 Migration: When THREAD_HAS_COMMON_RESULT is defined, this class
- *       uses common::Result<T> internally for unified error handling.
- *
- * @deprecated This class will be replaced by kcenon::common::Result<T> in the next
- *             major version. New code should use kcenon::common::Result<T> directly.
- *             See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions.
- */
-template <typename T>
-class
-#ifdef THREAD_HAS_COMMON_RESULT
-    [[deprecated("Use common::Result<T> instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
-#endif
-    result {
-public:
-    using value_type = T;
-    using error_type = error;
-
-    /**
-     * @brief Constructs a result with a value
-     * @param value The value to store
-     */
-    result(T value)
-#ifdef THREAD_HAS_COMMON_RESULT
-        : impl_(common::Result<T>::ok(std::move(value))) {}
-#else
-        : has_value_(true), value_(std::move(value)), error_(error_code::success, "") {}
-#endif
-
-    /**
-     * @brief Constructs a result with an error
-     * @param err The error to store
-     */
-    result(error err)
-#ifdef THREAD_HAS_COMMON_RESULT
-        : impl_(common::error_info{static_cast<int>(err.code()), err.message(), "thread_system"}) {}
-#else
-        : has_value_(false), error_(std::move(err)) {}
-#endif
-
-    /**
-     * @brief Checks if the result contains a value
-     * @return true if the result contains a value, false if it contains an error
-     */
-    [[nodiscard]] explicit operator bool() const noexcept {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.is_ok();
-#else
-        return has_value_;
-#endif
-    }
-
-    /**
-     * @brief Checks if the result contains a value
-     * @return true if the result contains a value, false if it contains an error
-     */
-    [[nodiscard]] bool has_value() const noexcept {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.is_ok();
-#else
-        return has_value_;
-#endif
-    }
-
-    /**
-     * @brief Checks if the result is successful
-     * @return true if the result contains a value, false if it contains an error
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_ok() const noexcept {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.is_ok();
-#else
-        return has_value_;
-#endif
-    }
-
-    /**
-     * @brief Checks if the result contains an error
-     * @return true if the result contains an error, false if it contains a value
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_error() const noexcept {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.is_err();
-#else
-        return !has_value_;
-#endif
-    }
-
-    /**
-     * @brief Gets the value
-     * @return A reference to the contained value
-     * @throws std::runtime_error if the result contains an error
-     */
-    [[nodiscard]] T& value() & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (!impl_.is_ok()) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return const_cast<T&>(impl_.value());
-#else
-        if (!has_value_) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return value_;
-#endif
-    }
-
-    /**
-     * @brief Gets the value
-     * @return A const reference to the contained value
-     * @throws std::runtime_error if the result contains an error
-     */
-    [[nodiscard]] const T& value() const & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (!impl_.is_ok()) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return impl_.value();
-#else
-        if (!has_value_) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return value_;
-#endif
-    }
-
-    /**
-     * @brief Gets the value
-     * @return An rvalue reference to the contained value
-     * @throws std::runtime_error if the result contains an error
-     */
-    [[nodiscard]] T&& value() && {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (!impl_.is_ok()) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return std::move(const_cast<T&>(impl_.value()));
-#else
-        if (!has_value_) {
-            throw std::runtime_error("Cannot access value of an error result");
-        }
-        return std::move(value_);
-#endif
-    }
-    
-    /**
-     * @brief Gets the error
-     * @return A reference to the contained error
-     * @throws std::runtime_error if the result contains a value
-     */
-    [[nodiscard]] error& get_error() & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_ok()) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        // Convert common::error_info to thread::error on demand
-        cached_error_ = error{
-            static_cast<error_code>(impl_.error().code),
-            impl_.error().message
-        };
-        return cached_error_;
-#else
-        if (has_value_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return error_;
-#endif
-    }
-
-    /**
-     * @brief Gets the error
-     * @return A const reference to the contained error
-     * @throws std::runtime_error if the result contains a value
-     */
-    [[nodiscard]] const error& get_error() const & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_ok()) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        // Convert common::error_info to thread::error on demand
-        cached_error_ = error{
-            static_cast<error_code>(impl_.error().code),
-            impl_.error().message
-        };
-        return cached_error_;
-#else
-        if (has_value_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return error_;
-#endif
-    }
-
-    /**
-     * @brief Gets the error
-     * @return An rvalue reference to the contained error
-     * @throws std::runtime_error if the result contains a value
-     */
-    [[nodiscard]] error&& get_error() && {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_ok()) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        cached_error_ = error{
-            static_cast<error_code>(impl_.error().code),
-            impl_.error().message
-        };
-        return std::move(cached_error_);
-#else
-        if (has_value_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return std::move(error_);
-#endif
-    }
-    
-    /**
-     * @brief Gets the value or a default
-     * @param default_value The value to return if the result contains an error
-     * @return The contained value or the default
-     */
-    template <typename U>
-    [[nodiscard]] T value_or(U&& default_value) const & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.value_or(static_cast<T>(std::forward<U>(default_value)));
-#else
-        if (has_value_) {
-            return value_;
-        }
-        return static_cast<T>(std::forward<U>(default_value));
-#endif
-    }
-
-    /**
-     * @brief Gets the value or a default
-     * @param default_value The value to return if the result contains an error
-     * @return The contained value or the default
-     */
-    template <typename U>
-    [[nodiscard]] T value_or(U&& default_value) && {
-#ifdef THREAD_HAS_COMMON_RESULT
-        return impl_.value_or(static_cast<T>(std::forward<U>(default_value)));
-#else
-        if (has_value_) {
-            return std::move(value_);
-        }
-        return static_cast<T>(std::forward<U>(default_value));
-#endif
-    }
-
-    /**
-     * @brief Gets the value or throws an exception
-     * @return The contained value
-     * @throws std::runtime_error with the error message if the result contains an error
-     */
-    [[nodiscard]] T value_or_throw() const & {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_err()) {
-            throw std::runtime_error(impl_.error().message);
-        }
-        return impl_.value();
-#else
-        if (has_value_) {
-            return value_;
-        }
-        throw std::runtime_error(error_.to_string());
-#endif
-    }
-
-    /**
-     * @brief Gets the value or throws an exception
-     * @return The contained value
-     * @throws std::runtime_error with the error message if the result contains an error
-     */
-    [[nodiscard]] T value_or_throw() && {
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_err()) {
-            throw std::runtime_error(impl_.error().message);
-        }
-        return std::move(const_cast<T&>(impl_.value()));
-#else
-        if (has_value_) {
-            return std::move(value_);
-        }
-        throw std::runtime_error(error_.to_string());
-#endif
-    }
-    
-    /**
-     * @brief Maps the result to another type using a function
-     * @param fn The function to apply to the value
-     * @return A new result with the mapped value or the original error
-     */
-    template <typename Fn>
-    [[nodiscard]] auto map(Fn&& fn) const -> result<std::invoke_result_t<Fn, const T&>> {
-        using ResultType = result<std::invoke_result_t<Fn, const T&>>;
-
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_ok()) {
-            return ResultType(std::invoke(std::forward<Fn>(fn), impl_.value()));
-        }
-        // Convert common::error_info to thread::error
-        return ResultType(error{
-            static_cast<error_code>(impl_.error().code),
-            impl_.error().message
-        });
-#else
-        if (has_value_) {
-            return ResultType(std::invoke(std::forward<Fn>(fn), value_));
-        }
-        return ResultType(error_);
-#endif
-    }
-    
-    /**
-     * @brief Maps the result to another type using a function that returns a result
-     * @param fn The function to apply to the value
-     * @return A new result with the mapped value or the original error
-     */
-    template <typename Fn>
-    [[nodiscard]] auto and_then(Fn&& fn) const -> std::invoke_result_t<Fn, const T&> {
-        using ResultType = std::invoke_result_t<Fn, const T&>;
-        static_assert(std::is_same_v<typename ResultType::error_type, error>, "Function must return a result with the same error type");
-
-#ifdef THREAD_HAS_COMMON_RESULT
-        if (impl_.is_ok()) {
-            return std::invoke(std::forward<Fn>(fn), impl_.value());
-        }
-        // Convert common::error_info to thread::error
-        return ResultType(error{
-            static_cast<error_code>(impl_.error().code),
-            impl_.error().message
-        });
-#else
-        if (has_value_) {
-            return std::invoke(std::forward<Fn>(fn), value_);
-        }
-        return ResultType(error_);
-#endif
-    }
-
-private:
-#ifdef THREAD_HAS_COMMON_RESULT
-    common::Result<T> impl_;
-    mutable error cached_error_{error_code::success, ""};  // For get_error() conversion
-#else
-    bool has_value_ = false;
-    T value_{};
-    error error_{error_code::success, ""};
-#endif
-};
-
-/**
- * @brief Specialization of result for void
- *
- * @deprecated This class will be replaced by common::VoidResult in the next
- *             major version. New code should use common::VoidResult directly.
- */
-template <>
-class
-#ifdef THREAD_HAS_COMMON_RESULT
-    [[deprecated("Use common::VoidResult instead. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md")]]
-#endif
-    result<void> {
-public:
-    using value_type = void;
-    using error_type = error;
-    
-    /**
-     * @brief Constructs a successful void result
-     */
-    result() : success_(true) {}
-    
-    /**
-     * @brief Constructs a void result from a result_void
-     */
-    result(const result_void& r) : success_(!r.has_error()), error_(r.has_error() ? r.get_error() : error{error_code::success, ""}) {}
-    
-    /**
-     * @brief Constructs a result with an error
-     * @param err The error to store
-     */
-    result(error err) : success_(false), error_(std::move(err)) {}
-    
-    /**
-     * @brief Checks if the result is successful
-     * @return true if the result is successful, false if it contains an error
-     */
-    [[nodiscard]] explicit operator bool() const noexcept {
-        return success_;
-    }
-    
-    /**
-     * @brief Checks if the result is successful
-     * @return true if the result is successful, false if it contains an error
-     */
-    [[nodiscard]] bool has_value() const noexcept {
-        return success_;
-    }
-
-    /**
-     * @brief Checks if the result is successful
-     * @return true if the result is successful, false if it contains an error
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_ok() const noexcept {
-        return success_;
-    }
-
-    /**
-     * @brief Checks if the result contains an error
-     * @return true if the result contains an error, false if successful
-     * @note Added for API compatibility with common::Result
-     */
-    [[nodiscard]] bool is_error() const noexcept {
-        return !success_;
-    }
-
-    /**
-     * @brief Gets the error
-     * @return A reference to the contained error
-     * @throws std::runtime_error if the result is successful
-     */
-    [[nodiscard]] error& get_error() & {
-        if (success_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return error_;
-    }
-
-    /**
-     * @brief Gets the error
-     * @return A const reference to the contained error
-     * @throws std::runtime_error if the result is successful
-     */
-    [[nodiscard]] const error& get_error() const & {
-        if (success_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return error_;
-    }
-    
-    /**
-     * @brief Gets the error
-     * @return An rvalue reference to the contained error
-     * @throws std::runtime_error if the result is successful
-     */
-    [[nodiscard]] error&& get_error() && {
-        if (success_) {
-            throw std::runtime_error("Cannot get error from successful result");
-        }
-        return std::move(error_);
-    }
-    
-    /**
-     * @brief Throws an exception if the result contains an error
-     * @throws std::runtime_error with the error message if the result contains an error
-     */
-    void value_or_throw() const {
-        if (!success_) {
-            throw std::runtime_error(error_.to_string());
-        }
-    }
-    
-    /**
-     * @brief Maps the result to another type using a function
-     * @param fn The function to apply if successful
-     * @return A new result with the mapped value or the original error
-     */
-    template <typename Fn>
-    [[nodiscard]] auto map(Fn&& fn) const -> result<std::invoke_result_t<Fn>> {
-        using ResultType = result<std::invoke_result_t<Fn>>;
-        
-        if (success_) {
-            return ResultType(std::invoke(std::forward<Fn>(fn)));
-        }
-        return ResultType(error_);
-    }
-    
-    /**
-     * @brief Maps the result to another type using a function that returns a result
-     * @param fn The function to apply if successful
-     * @return A new result with the mapped value or the original error
-     */
-    template <typename Fn>
-    [[nodiscard]] auto and_then(Fn&& fn) const -> std::invoke_result_t<Fn> {
-        using ResultType = std::invoke_result_t<Fn>;
-        static_assert(std::is_same_v<typename ResultType::error_type, error>, "Function must return a result with the same error type");
-        
-        if (success_) {
-            return std::invoke(std::forward<Fn>(fn));
-        }
-        return ResultType(error_);
-    }
-    
-private:
-    bool success_ = false;
-    error error_{error_code::success, ""};
-};
-
-// Type aliases for common result types
-template <typename T>
-using result_t = result<T>;
-
 // ============================================================================
-// Compatibility Layer Functions
-// These functions use deprecated types internally but are provided for
-// backward compatibility during migration. Suppress deprecation warnings
-// in this section.
+// common::Result Integration Utilities
 // ============================================================================
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4996)
-#endif
-
-// Helper to convert std::optional<std::string> to result<T>
-template <typename T>
-result<T> optional_error_to_result(const std::optional<std::string>& error, T&& value) {
-    if (error) {
-        return result<T>(kcenon::thread::error{error_code::unknown_error, *error});
-    }
-    return result<T>(std::forward<T>(value));
-}
-
-// Helper to convert std::optional<std::string> to result<void>
-inline result<void> optional_error_to_result(const std::optional<std::string>& error) {
-    if (error) {
-        return result<void>(kcenon::thread::error{error_code::unknown_error, *error});
-    }
-    return result<void>();
-}
-
-// Compatibility layer for existing code
-inline std::optional<std::string> result_to_optional_error(const result<void>& res) {
-    if (res) {
-        return std::nullopt;
-    }
-    return res.get_error().to_string();
-}
-
-template <typename T>
-std::pair<std::optional<T>, std::optional<std::string>> result_to_pair(const result<T>& res) {
-    if (res) {
-        return {res.value(), std::nullopt};
-    }
-    return {std::nullopt, res.get_error().to_string()};
-}
-
-// ============================================================================
-// Migration to common::Result - Phase 1: Type Mapping and Conversion
-// ============================================================================
-
-#ifdef THREAD_HAS_COMMON_RESULT
-namespace detail {
-
-// Explicit using declarations for common_system types
-// This avoids namespace pollution while maintaining compatibility
-using kcenon::common::error_info;
-using kcenon::common::Result;
-using kcenon::common::VoidResult;
-using kcenon::common::ok;
-
 /**
- * @brief Convert thread::error to common::error_info
+ * @brief Convert a thread::error_code to common::error_info
+ * @param code The thread-specific error code
+ * @param message Optional additional message (defaults to error_code_to_string)
+ * @return A common::error_info structure
  *
- * This function facilitates the migration from thread-specific error types
- * to the unified common::error_info type.
+ * Example:
+ * @code
+ * auto info = to_error_info(error_code::queue_full, "Custom message");
+ * return common::VoidResult(info);
+ * @endcode
  */
-inline error_info to_common_error(const error& err) {
-    return error_info{
-        static_cast<int>(err.code()),
-        err.message(),
-        "thread_system"  // module name
-    };
-}
-
-/**
- * @brief Convert thread::error_code to common::error_info
- */
-inline error_info to_common_error(error_code code, const std::string& message = "") {
-    return error_info{
+inline common::error_info to_error_info(error_code code, const std::string& message = "") {
+    return common::error_info{
         static_cast<int>(code),
         message.empty() ? error_code_to_string(code) : message,
         "thread_system"
@@ -870,91 +165,64 @@ inline error_info to_common_error(error_code code, const std::string& message = 
 }
 
 /**
- * @brief Convert common::error_info to thread::error
+ * @brief Create a common::VoidResult error from a thread::error_code
+ * @param code The thread-specific error code
+ * @param message Optional additional message
+ * @return A common::VoidResult in error state
  *
- * Used for backward compatibility during migration.
+ * Example:
+ * @code
+ * if (queue_is_full) {
+ *     return make_error_result(error_code::queue_full);
+ * }
+ * return common::ok();
+ * @endcode
  */
-inline error from_common_error(const error_info& info) {
-    return error{
-        static_cast<error_code>(info.code),
-        info.message
-    };
+inline common::VoidResult make_error_result(error_code code, const std::string& message = "") {
+    return common::VoidResult(to_error_info(code, message));
 }
 
 /**
- * @brief Convert thread::result_void to common::VoidResult
- */
-inline VoidResult to_common_result(const result_void& res) {
-    if (res.has_error()) {
-        return VoidResult(to_common_error(res.get_error()));
-    }
-    return ok();
-}
-
-/**
- * @brief Convert thread::result<T> to common::Result<T>
+ * @brief Create a common::Result<T> error from a thread::error_code
+ * @tparam T The value type of the result
+ * @param code The thread-specific error code
+ * @param message Optional additional message
+ * @return A common::Result<T> in error state
+ *
+ * Example:
+ * @code
+ * common::Result<int> get_value() {
+ *     if (not_ready) {
+ *         return make_error_result<int>(error_code::not_implemented);
+ *     }
+ *     return common::Result<int>::ok(42);
+ * }
+ * @endcode
  */
 template<typename T>
-Result<T> to_common_result(const result<T>& res) {
-    if (!res) {
-        return Result<T>(to_common_error(res.get_error()));
-    }
-    return Result<T>(res.value());
+common::Result<T> make_error_result(error_code code, const std::string& message = "") {
+    return common::Result<T>(to_error_info(code, message));
 }
 
 /**
- * @brief Convert common::VoidResult to thread::result_void
+ * @brief Extract thread::error_code from a common::error_info
+ * @param info The error_info from a common::Result or common::VoidResult
+ * @return The corresponding thread::error_code
+ *
+ * Example:
+ * @code
+ * auto result = some_operation();
+ * if (result.is_err()) {
+ *     auto code = get_error_code(result.error());
+ *     if (code == error_code::queue_full) {
+ *         // handle queue full case
+ *     }
+ * }
+ * @endcode
  */
-inline result_void from_common_result(const VoidResult& res) {
-    if (res.is_err()) {
-        return result_void(from_common_error(res.error()));
-    }
-    return result_void{};
+inline error_code get_error_code(const common::error_info& info) {
+    return static_cast<error_code>(info.code);
 }
-
-/**
- * @brief Convert common::Result<T> to thread::result<T>
- */
-template<typename T>
-result<T> from_common_result(const Result<T>& res) {
-    if (res.is_err()) {
-        return result<T>(from_common_error(res.error()));
-    }
-    return result<T>(res.value());
-}
-
-} // namespace detail
-
-// ============================================================================
-// Migration Phase 2: Unified Type Aliases (Planned)
-// ============================================================================
-//
-// Once all code is migrated, these aliases will replace the thread-specific
-// result types. Currently commented out to maintain existing code.
-//
-// WARNING: These are transition typedefs. The long-term plan is to:
-// 1. Migrate all code to use common::Result directly
-// 2. Remove thread-specific result/result_void classes
-// 3. Remove these typedefs
-//
-// For new code, prefer using kcenon::common::Result<T> and
-// kcenon::common::VoidResult directly.
-
-// Uncomment these when ready for phase 2 migration:
-// using ResultVoid = kcenon::common::VoidResult;
-// template<typename T>
-// using Result = kcenon::common::Result<T>;
-
-#endif // THREAD_HAS_COMMON_RESULT
-
-// End of compatibility layer - restore deprecation warnings
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#pragma GCC diagnostic pop
-#elif defined(_MSC_VER)
-#pragma warning(pop)
-#endif
 
 // ============================================================================
 // std::error_code Integration
