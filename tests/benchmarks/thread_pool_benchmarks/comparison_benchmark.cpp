@@ -41,6 +41,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <chrono>
 #include <vector>
 #include <thread>
@@ -127,14 +129,14 @@ class SimpleThreadPool {
 public:
     explicit SimpleThreadPool(size_t num_threads) : stop_(false) {
         for (size_t i = 0; i < num_threads; ++i) {
-            workers_.emplace_back([this]() -> result_void {
+            workers_.emplace_back([this]() -> kcenon::common::VoidResult {
                 while (true) {
                     std::function<void()> task;
                     {
                         std::unique_lock<std::mutex> lock(mutex_);
                         cv_.wait(lock, [this] { return stop_ || !tasks_.empty(); });
                         
-                        if (stop_ && tasks_.empty()) return result_void();
+                        if (stop_ && tasks_.empty()) return kcenon::common::ok();
                         
                         task = std::move(tasks_.front());
                         tasks_.pop();
@@ -216,9 +218,9 @@ static void BM_SimpleTaskExecution_ThreadSystem(benchmark::State& state) {
         std::atomic<size_t> counter{0};
         
         for (size_t i = 0; i < num_tasks; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&counter]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                 counter.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -395,13 +397,13 @@ static void BM_ParallelComputation_ThreadSystem(benchmark::State& state) {
             size_t end_idx = (i == num_workers - 1) ? data_size : start_idx + chunk_size;
             
             auto promise_ptr = promises[i];
-            pool->enqueue(std::make_unique<callback_job>([&data, start_idx, end_idx, promise_ptr]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&data, start_idx, end_idx, promise_ptr]() -> kcenon::common::VoidResult {
                 double local_sum = 0;
                 for (size_t j = start_idx; j < end_idx; ++j) {
                     local_sum += std::sin(data[j]) * std::cos(data[j]);
                 }
                 promise_ptr->set_value(local_sum);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -524,11 +526,11 @@ static void BM_IOBound_ThreadSystem_ManyWorkers(benchmark::State& state) {
         std::atomic<size_t> completed{0};
         
         for (size_t i = 0; i < num_operations; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> kcenon::common::VoidResult {
                 // Simulate I/O
                 std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -561,10 +563,10 @@ static void BM_IOBound_ThreadSystem_NormalWorkers(benchmark::State& state) {
         std::atomic<size_t> completed{0};
         
         for (size_t i = 0; i < num_operations; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([io_delay_ms, &completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms));
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -636,9 +638,9 @@ static void BM_MixedWorkload_ThreadSystem(benchmark::State& state) {
         pool->start();
         
         for (size_t i = 0; i < num_tasks; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([mixed_work]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([mixed_work]() -> kcenon::common::VoidResult {
                 mixed_work();
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -682,19 +684,19 @@ static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
         for (size_t i = 0; i < num_tasks / 2; ++i) {
             // CPU-heavy tasks get higher priority
             pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<TaskType>>(
-                [cpu_work_units]() -> result_void {
+                [cpu_work_units]() -> kcenon::common::VoidResult {
                     volatile double result = 0;
                     for (int j = 0; j < cpu_work_units * 2; ++j) {
                         result += std::sin(j) * std::cos(j);
                     }
-                    return result_void();
+                    return kcenon::common::ok();
                 }, TaskType::CPU));
             
             // I/O-heavy tasks get lower priority
             pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<TaskType>>(
-                [io_delay_ms]() -> result_void {
+                [io_delay_ms]() -> kcenon::common::VoidResult {
                     std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms * 2));
-                    return result_void();
+                    return kcenon::common::ok();
                 }, TaskType::IO));
         }
         
@@ -761,8 +763,8 @@ static void BM_TaskCreation_ThreadSystem(benchmark::State& state) {
     
     for (auto _ : state) {
         for (size_t i = 0; i < tasks_per_iteration; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
+            pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                return kcenon::common::ok();
             }));
         }
     }

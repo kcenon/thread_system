@@ -14,6 +14,8 @@ All rights reserved.
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <vector>
 #include <thread>
 #include <atomic>
@@ -61,7 +63,7 @@ static void submit_test_job(std::shared_ptr<typed_thread_pool> pool,
     
     auto job = std::make_unique<typed_job_t<job_types>>(
         priority,
-        [job_id, priority, submit_time, work_duration]() -> result_void {
+        [job_id, priority, submit_time, work_duration]() -> kcenon::common::VoidResult {
             auto start_time = high_resolution_clock::now();
             
             // Simulate work
@@ -87,8 +89,8 @@ static void submit_test_job(std::shared_ptr<typed_thread_pool> pool,
                 std::lock_guard<std::mutex> lock(g_records_mutex);
                 g_execution_records.push_back(record);
             }
-            
-            return {};
+
+            return kcenon::common::ok();
         }
     );
     
@@ -359,7 +361,7 @@ static void BM_StarvationResistance(benchmark::State& state) {
         std::atomic<bool> stop_stream{false};
         
         // Continuous high-priority job stream
-        std::thread high_priority_thread([&]() -> result_void {
+        std::thread high_priority_thread([&]() -> kcenon::common::VoidResult {
             for (size_t i = 0; i < high_priority_stream && !stop_stream.load(); ++i) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::RealTime,
                               milliseconds(5));
@@ -368,7 +370,7 @@ static void BM_StarvationResistance(benchmark::State& state) {
         });
         
         // Low-priority jobs that shouldn't be starved
-        std::thread low_priority_thread([&]() -> result_void {
+        std::thread low_priority_thread([&]() -> kcenon::common::VoidResult {
             for (size_t i = 0; i < low_priority_jobs; ++i) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::Background,
                               milliseconds(20));
@@ -437,7 +439,7 @@ static void BM_MixedPriorityWorkload(benchmark::State& state) {
         std::vector<std::thread> load_generators;
         
         // High-frequency low priority
-        load_generators.emplace_back([&]() -> result_void {
+        load_generators.emplace_back([&]() -> kcenon::common::VoidResult {
             while (!stop_generators.load()) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::Background,
                               milliseconds(20));
@@ -446,7 +448,7 @@ static void BM_MixedPriorityWorkload(benchmark::State& state) {
         });
         
         // Medium-frequency normal priority
-        load_generators.emplace_back([&]() -> result_void {
+        load_generators.emplace_back([&]() -> kcenon::common::VoidResult {
             while (!stop_generators.load()) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::Batch,
                               milliseconds(30));
@@ -455,7 +457,7 @@ static void BM_MixedPriorityWorkload(benchmark::State& state) {
         });
         
         // Low-frequency high priority
-        load_generators.emplace_back([&]() -> result_void {
+        load_generators.emplace_back([&]() -> kcenon::common::VoidResult {
             while (!stop_generators.load()) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::RealTime,
                               milliseconds(15));
@@ -464,7 +466,7 @@ static void BM_MixedPriorityWorkload(benchmark::State& state) {
         });
         
         // Burst critical priority
-        load_generators.emplace_back([&]() -> result_void {
+        load_generators.emplace_back([&]() -> kcenon::common::VoidResult {
             std::this_thread::sleep_for(milliseconds(duration_ms / 2));
             for (int i = 0; i < 20 && !stop_generators.load(); ++i) {
                 submit_test_job(pool, job_counter.fetch_add(1), job_types::Critical,

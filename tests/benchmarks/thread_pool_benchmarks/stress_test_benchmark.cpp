@@ -41,6 +41,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <chrono>
 #include <vector>
 #include <atomic>
@@ -166,9 +168,9 @@ static void BM_MaximumThreads(benchmark::State& state) {
         const size_t test_jobs = 1000;
         
         for (size_t i = 0; i < test_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -203,9 +205,9 @@ static void BM_QueueOverflow(benchmark::State& state) {
     // Submit jobs that take time to process
     const size_t slow_jobs = 100;
     for (size_t i = 0; i < slow_jobs; ++i) {
-        pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+        pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
             std::this_thread::sleep_for(std::chrono::seconds(10));
-            return result_void();
+            return kcenon::common::ok();
         }));
     }
     
@@ -213,9 +215,9 @@ static void BM_QueueOverflow(benchmark::State& state) {
         // Flood with many quick jobs
         try {
             for (size_t i = 0; i < flood_size; ++i) {
-                pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
                     // Quick job
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
         } catch (const std::exception& e) {
@@ -267,9 +269,9 @@ static void BM_RapidStartStop(benchmark::State& state) {
             // Submit a few jobs
             std::atomic<int> counter{0};
             for (int j = 0; j < 10; ++j) {
-                pool->enqueue(std::make_unique<callback_job>([&counter]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([&counter]() -> kcenon::common::VoidResult {
                     counter.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
             
@@ -325,10 +327,10 @@ static void BM_ExceptionHandling(benchmark::State& state) {
         
         for (size_t i = 0; i < total_jobs; ++i) {
             pool->enqueue(std::make_unique<callback_job>([&dis, &gen, &successful_jobs, &failed_jobs, exception_rate]() 
-                         -> result_void {
+                         -> kcenon::common::VoidResult {
                 if (dis(gen) < exception_rate) {
                     failed_jobs.fetch_add(1);
-                    return result_void(thread_module::error{thread_module::error_code::job_execution_failed, "Simulated job failure"});
+                    return kcenon::thread::make_error_result(kcenon::thread::error_code::job_execution_failed, "Simulated job failure");
                 }
                 
                 // Simulate some work
@@ -338,7 +340,7 @@ static void BM_ExceptionHandling(benchmark::State& state) {
                 }
                 
                 successful_jobs.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -380,13 +382,13 @@ static void BM_MemoryPressure(benchmark::State& state) {
                 std::vector<char> large_data(size_mb * 1024 * 1024);
                 std::fill(large_data.begin(), large_data.end(), 'X');
                 
-                pool->enqueue(std::make_unique<callback_job>([data = std::move(large_data), &completed]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([data = std::move(large_data), &completed]() -> kcenon::common::VoidResult {
                     // Access data to ensure it's not optimized away
                     volatile char c = data[data.size() / 2];
                     (void)c;
                     
                     completed.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
             
@@ -435,34 +437,34 @@ static void BM_PriorityStarvation(benchmark::State& state) {
         
         // Submit all jobs
         for (size_t i = 0; i < jobs_per_priority; ++i) {
-            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&highest_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&highest_completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::microseconds(100));
                 highest_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }, Type::Highest));
             
-            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&high_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&high_completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::microseconds(100));
                 high_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }, Type::High));
             
-            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&medium_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&medium_completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::microseconds(100));
                 medium_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }, Type::Medium));
             
-            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&low_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&low_completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::microseconds(100));
                 low_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }, Type::Low));
             
-            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&lowest_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_typed_job_t<Type>>([&lowest_completed]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::microseconds(100));
                 lowest_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }, Type::Lowest));
         }
         
@@ -515,7 +517,7 @@ static void BM_ThunderingHerd(benchmark::State& state) {
         
         // Create many jobs that all wait for the same signal
         for (size_t i = 0; i < num_waiters; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&start_future, &started, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&start_future, &started, &completed]() -> kcenon::common::VoidResult {
                 // Wait for signal
                 start_future.wait();
                 started.fetch_add(1);
@@ -527,7 +529,7 @@ static void BM_ThunderingHerd(benchmark::State& state) {
                 }
                 
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -607,7 +609,7 @@ static void BM_CascadingFailures(benchmark::State& state) {
             // Submit chain of dependent tasks
             for (size_t i = 0; i < chain_length; ++i) {
                 pool->enqueue(std::make_unique<callback_job>([i, &futures, &promises, will_fail, chain_length, 
-                              &successful_chains, &failed_chains]() -> result_void {
+                              &successful_chains, &failed_chains]() -> kcenon::common::VoidResult {
                     // Wait for previous task (except first)
                     if (i > 0) {
                         try {
@@ -620,11 +622,11 @@ static void BM_CascadingFailures(benchmark::State& state) {
                                 if (i == chain_length - 1) {
                                     failed_chains.fetch_add(1);
                                 }
-                                return result_void();
+                                return kcenon::common::ok();
                             }
                         } catch (...) {
                             promises[i].set_value(false);
-                            return result_void();
+                            return kcenon::common::ok();
                         }
                     }
                     
@@ -642,7 +644,7 @@ static void BM_CascadingFailures(benchmark::State& state) {
                             successful_chains.fetch_add(1);
                         }
                     }
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
         }

@@ -43,6 +43,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <chrono>
 #include <vector>
 #include <atomic>
@@ -267,10 +269,10 @@ static void BM_JobComplexity(benchmark::State& state) {
         std::atomic<size_t> completed{0};
         
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([complexity, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([complexity, &completed]() -> kcenon::common::VoidResult {
                 execute_job_with_complexity(complexity);
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -312,10 +314,10 @@ static void BM_WorkerScaling(benchmark::State& state) {
         std::atomic<size_t> completed{0};
         
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([complexity, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([complexity, &completed]() -> kcenon::common::VoidResult {
                 execute_job_with_complexity(complexity);
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -360,11 +362,11 @@ static void BM_MemoryAllocationImpact(benchmark::State& state) {
         std::atomic<size_t> completed{0};
         
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([pattern, &completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([pattern, &completed]() -> kcenon::common::VoidResult {
                 auto buffer = allocate_with_pattern(pattern);
                 execute_job_with_complexity(JobComplexity::Light);
                 completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -407,10 +409,10 @@ static void BM_QueueDepth(benchmark::State& state) {
             size_t batch_end = std::min(i + batch_size, total_jobs);
             
             for (size_t j = i; j < batch_end; ++j) {
-                pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                     execute_job_with_complexity(JobComplexity::Medium);
                     completed.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
         }
@@ -453,10 +455,10 @@ static void BM_BurstPattern(benchmark::State& state) {
         for (int burst = 0; burst < num_bursts; ++burst) {
             // Submit burst
             for (size_t i = 0; i < burst_size; ++i) {
-                pool->enqueue(std::make_unique<callback_job>([&completed]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                     execute_job_with_complexity(JobComplexity::Light);
                     completed.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
             
@@ -510,7 +512,7 @@ static void BM_JobDependencies(benchmark::State& state) {
             }
             
             for (size_t i = 0; i < chain_length; ++i) {
-                pool->enqueue(std::make_unique<callback_job>([i, &futures, &promises, &completed, chain_length]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([i, &futures, &promises, &completed, chain_length]() -> kcenon::common::VoidResult {
                     // Wait for previous job in chain
                     if (i > 0) {
                         futures[i-1].get();
@@ -523,7 +525,7 @@ static void BM_JobDependencies(benchmark::State& state) {
                     if (i < chain_length) {
                         promises[i].set_value();
                     }
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
             }
         }
@@ -579,10 +581,10 @@ static void BM_PriorityImpact(benchmark::State& state) {
         // Submit jobs with different priorities
         for (size_t i = 0; i < jobs_per_priority; ++i) {
             for (auto priority : {Critical, High, Normal, Low, Background}) {
-                pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<Priority>>([&completed, priority]() -> result_void {
+                pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<Priority>>([&completed, priority]() -> kcenon::common::VoidResult {
                     execute_job_with_complexity(JobComplexity::Light);
                     completed[priority].fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }, priority));
             }
         }
@@ -647,9 +649,9 @@ static void BM_MixedWorkload(benchmark::State& state) {
         
         for (size_t i = 0; i < total_jobs; ++i) {
             auto job = generate_job();
-            pool->enqueue(std::make_unique<callback_job>([job]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([job]() -> kcenon::common::VoidResult {
                 job();
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         
@@ -695,10 +697,10 @@ static void BM_SustainedThroughput(benchmark::State& state) {
         // Job submission thread
         std::thread submitter([&pool, &jobs_submitted, &running, &jobs_completed]() {
             while (running.load()) {
-                pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> result_void {
+                pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> kcenon::common::VoidResult {
                     execute_job_with_complexity(JobComplexity::Medium);
                     jobs_completed.fetch_add(1);
-                    return result_void();
+                    return kcenon::common::ok();
                 }));
                 jobs_submitted.fetch_add(1);
                 

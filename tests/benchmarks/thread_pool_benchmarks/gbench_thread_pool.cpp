@@ -35,6 +35,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include "../../sources/thread_pool/core/thread_pool.h"
 #include "../../sources/thread_pool/workers/thread_worker.h"
 #include "../../sources/thread_base/jobs/callback_job.h"
@@ -78,8 +80,8 @@ static void BM_EmptyJobSubmission(benchmark::State& state) {
     pool->start();
     
     for (auto _ : state) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+            return kcenon::common::ok();
         });
         auto result = pool->enqueue(std::move(job));
         benchmark::DoNotOptimize(result);
@@ -101,7 +103,7 @@ static void BM_JobThroughput(benchmark::State& state) {
     std::atomic<size_t> jobs_completed{0};
     
     for (auto _ : state) {
-        auto job = std::make_unique<callback_job>([&jobs_completed, job_duration_us]() -> result_void {
+        auto job = std::make_unique<callback_job>([&jobs_completed, job_duration_us]() -> kcenon::common::VoidResult {
             if (job_duration_us > 0) {
                 auto start = std::chrono::high_resolution_clock::now();
                 while (std::chrono::duration_cast<std::chrono::microseconds>(
@@ -110,7 +112,7 @@ static void BM_JobThroughput(benchmark::State& state) {
                 }
             }
             jobs_completed.fetch_add(1);
-            return result_void();
+            return kcenon::common::ok();
         });
         pool->enqueue(std::move(job));
     }
@@ -138,8 +140,8 @@ static void BM_BatchJobSubmission(benchmark::State& state) {
         batch.reserve(batch_size);
         
         for (size_t i = 0; i < batch_size; ++i) {
-            batch.push_back(std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
+            batch.push_back(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                return kcenon::common::ok();
             }));
         }
         
@@ -170,14 +172,14 @@ static void BM_ScalingEfficiency(benchmark::State& state) {
         
         // Submit all jobs
         for (size_t i = 0; i < total_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([&jobs_completed]() -> kcenon::common::VoidResult {
                 // Simulate some work
                 volatile int sum = 0;
                 for (int j = 0; j < 1000; ++j) {
                     sum += j;
                 }
                 jobs_completed.fetch_add(1);
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         state.ResumeTiming();

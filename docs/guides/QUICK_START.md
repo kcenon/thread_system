@@ -160,9 +160,9 @@ pool->submit_task([]() {
 });
 
 // Using callback_job for more control
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // Your work here
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 
@@ -184,11 +184,11 @@ for (int i = 0; i < 1000; ++i) {
 ### Error Handling
 
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> result_void {
+pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     if (some_error_condition) {
-        return result_void::error(error_code::operation_failed, "Task failed");
+        return kcenon::thread::make_error_result(kcenon::thread::error_code::operation_failed, "Task failed");
     }
-    return result_void();
+    return kcenon::common::ok();
 }));
 ```
 

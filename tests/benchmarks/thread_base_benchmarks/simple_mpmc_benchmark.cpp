@@ -21,6 +21,8 @@ Google Benchmark-based MPMC Queue Performance Tests
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <atomic>
 #include <vector>
 #include <thread>
@@ -46,8 +48,8 @@ static void BM_MutexQueue_SPSC(benchmark::State& state) {
         // Producer thread
         std::thread producer([&]() {
             for (size_t i = 0; i < ops_per_iteration; ++i) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
                 });
                 queue.enqueue(std::move(job));
             }
@@ -89,8 +91,8 @@ static void BM_LockFreeQueue_SPSC(benchmark::State& state) {
         // Producer thread
         std::thread producer([&]() {
             for (size_t i = 0; i < ops_per_iteration; ++i) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
                 });
                 queue.enqueue(std::move(job));
             }
@@ -132,8 +134,8 @@ static void BM_AdaptiveQueue_SPSC(benchmark::State& state) {
         // Producer thread
         std::thread producer([&]() {
             for (size_t i = 0; i < ops_per_iteration; ++i) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
                 });
                 queue.enqueue(std::move(job));
             }
@@ -185,8 +187,8 @@ static void BM_Queue_MPMC(benchmark::State& state) {
         for (size_t i = 0; i < num_producers; ++i) {
             producers.emplace_back([&]() {
                 for (size_t j = 0; j < ops_per_thread; ++j) {
-                    auto job = std::make_unique<callback_job>([]() -> result_void {
-                        return result_void();
+                    auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                        return kcenon::common::ok();
                     });
                     queue.enqueue(std::move(job));
                     produced.fetch_add(1);
@@ -257,8 +259,8 @@ static void BM_Queue_Latency(benchmark::State& state) {
     
     // Pre-fill queue
     for (size_t i = 0; i < 1000; ++i) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+            return kcenon::common::ok();
         });
         queue.enqueue(std::move(job));
     }
@@ -270,8 +272,8 @@ static void BM_Queue_Latency(benchmark::State& state) {
     for (size_t i = 0; i < num_threads - 1; ++i) {
         background_threads.emplace_back([&]() {
             while (!stop_flag.load()) {
-                auto job = std::make_unique<callback_job>([]() -> result_void {
-                    return result_void();
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
                 });
                 queue.enqueue(std::move(job));
                 
@@ -285,8 +287,8 @@ static void BM_Queue_Latency(benchmark::State& state) {
     
     // Measure latency
     for (auto _ : state) {
-        auto job = std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
+        auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+            return kcenon::common::ok();
         });
         
         auto start = std::chrono::high_resolution_clock::now();
@@ -332,16 +334,16 @@ static void BM_Queue_Batch(benchmark::State& state) {
     // Prepare batch of jobs
     std::vector<std::unique_ptr<job>> batch;
     for (size_t i = 0; i < batch_size; ++i) {
-        batch.push_back(std::make_unique<callback_job>([]() -> result_void {
-            return result_void();
+        batch.push_back(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+            return kcenon::common::ok();
         }));
     }
     
     for (auto _ : state) {
         // Enqueue batch
         for (size_t i = 0; i < batch_size; ++i) {
-            auto job = std::make_unique<callback_job>([]() -> result_void {
-                return result_void();
+            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                return kcenon::common::ok();
             });
             queue.enqueue(std::move(job));
         }

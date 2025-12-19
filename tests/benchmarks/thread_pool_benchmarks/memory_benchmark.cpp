@@ -35,6 +35,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <iomanip>
 #include <thread>
 #include <vector>
@@ -263,9 +265,9 @@ static void BM_JobQueueMemory(benchmark::State& state) {
         
         // Submit jobs that will queue up
         for (size_t i = 0; i < job_count; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([]() -> result_void {
+            pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
                 std::this_thread::sleep_for(std::chrono::seconds(10));
-                return result_void();
+                return kcenon::common::ok();
             }));
         }
         

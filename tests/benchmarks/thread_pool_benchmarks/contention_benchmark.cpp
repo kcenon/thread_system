@@ -14,6 +14,8 @@ All rights reserved.
  */
 
 #include <benchmark/benchmark.h>
+#include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/error_handling.h>
 #include <vector>
 #include <thread>
 #include <atomic>
@@ -72,14 +74,14 @@ static void BM_QueueContention(benchmark::State& state) {
                 for (size_t j = 0; j < jobs_per_producer; ++j) {
                     int work_amount = work_dist(gen);
                     
-                    auto job = std::make_unique<callback_job>([&jobs_completed, work_amount]() -> result_void {
+                    auto job = std::make_unique<callback_job>([&jobs_completed, work_amount]() -> kcenon::common::VoidResult {
                         // Simulate work
                         volatile uint64_t sum = 0;
                         for (int k = 0; k < work_amount; ++k) {
                             sum += k;
                         }
                         jobs_completed.fetch_add(1, std::memory_order_relaxed);
-                        return result_void{};
+                        return kcenon::common::ok();
                     });
                     
                     // Measure queue contention
@@ -161,7 +163,7 @@ static void BM_SharedResourceContention(benchmark::State& state) {
         
         // Submit jobs that contend for shared resources
         for (size_t i = 0; i < num_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&, i]() -> result_void {
+            auto job = std::make_unique<callback_job>([&, i]() -> kcenon::common::VoidResult {
                 // Atomic operation (low contention)
                 shared_counter.fetch_add(1, std::memory_order_relaxed);
                 
@@ -178,7 +180,7 @@ static void BM_SharedResourceContention(benchmark::State& state) {
                 }
                 
                 jobs_completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             
             pool->enqueue(std::move(job));
@@ -242,7 +244,7 @@ static void BM_MemoryContention(benchmark::State& state) {
         
         // Submit jobs that cause false sharing
         for (size_t i = 0; i < num_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&cache_lines, &jobs_completed, &cache_misses, i, num_cache_lines]() -> result_void {
+            auto job = std::make_unique<callback_job>([&cache_lines, &jobs_completed, &cache_misses, i, num_cache_lines]() -> kcenon::common::VoidResult {
                 // Access different cache lines to cause bouncing
                 size_t line_index = i % num_cache_lines;
                 
@@ -261,7 +263,7 @@ static void BM_MemoryContention(benchmark::State& state) {
                 }
                 
                 jobs_completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             
             pool->enqueue(std::move(job));
@@ -331,14 +333,14 @@ static void BM_ProducerConsumerContention(benchmark::State& state) {
             while (std::chrono::high_resolution_clock::now() - start_time < test_duration && running.load()) {
                 auto now = std::chrono::high_resolution_clock::now();
                 if (now >= next_submit) {
-                    auto job = std::make_unique<callback_job>([&jobs_completed]() -> result_void {
+                    auto job = std::make_unique<callback_job>([&jobs_completed]() -> kcenon::common::VoidResult {
                         // Simulate light work
                         volatile int sum = 0;
                         for (int i = 0; i < 100; ++i) {
                             sum += i;
                         }
                         jobs_completed.fetch_add(1, std::memory_order_relaxed);
-                        return result_void{};
+                        return kcenon::common::ok();
                     });
                     
                     auto queue_start = std::chrono::high_resolution_clock::now();
@@ -408,7 +410,7 @@ static void BM_CascadingDependencies(benchmark::State& state) {
         // Submit initial jobs that will spawn chains
         std::function<void(size_t)> submit_chain_job;
         submit_chain_job = [&](size_t remaining_depth) {
-            auto job = std::make_unique<callback_job>([&, remaining_depth]() -> result_void {
+            auto job = std::make_unique<callback_job>([&, remaining_depth]() -> kcenon::common::VoidResult {
                 // Do some work
                 volatile int sum = 0;
                 for (int i = 0; i < 200; ++i) {
@@ -422,7 +424,7 @@ static void BM_CascadingDependencies(benchmark::State& state) {
                     submit_chain_job(remaining_depth - 1);
                 }
                 
-                return result_void{};
+                return kcenon::common::ok();
             });
             
             pool->enqueue(std::move(job));
@@ -490,14 +492,14 @@ static void BM_ExtremeContention(benchmark::State& state) {
         
         // Submit jobs that all compete for the same counter
         for (size_t i = 0; i < num_jobs; ++i) {
-            auto job = std::make_unique<callback_job>([&single_counter, &jobs_completed]() -> result_void {
+            auto job = std::make_unique<callback_job>([&single_counter, &jobs_completed]() -> kcenon::common::VoidResult {
                 // Extreme contention on single counter
                 for (int j = 0; j < 1000; ++j) {
                     single_counter.fetch_add(1, std::memory_order_seq_cst);
                 }
                 
                 jobs_completed.fetch_add(1, std::memory_order_relaxed);
-                return result_void{};
+                return kcenon::common::ok();
             });
             
             pool->enqueue(std::move(job));
