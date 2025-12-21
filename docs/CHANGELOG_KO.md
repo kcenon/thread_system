@@ -5,6 +5,14 @@
 이 형식은 [Keep a Changelog](https://keepachangelog.com/ko/1.0.0/)를 기반으로 하며,
 이 프로젝트는 [Semantic Versioning](https://semver.org/lang/ko/)을 준수합니다.
 
+## [Unreleased]
+
+### 변경
+- **이슈 #329**: 컴파일러 플래그에서 deprecated 선언 경고 활성화
+  - GCC/Clang에서 `-Wno-deprecated-declarations`를 `-Wdeprecated-declarations`로 변경
+  - MSVC에서 deprecated 경고 활성화를 위해 `/wd4996` 플래그 제거
+  - common_system v3.0.0 이전에 deprecated API 사용을 조기에 감지할 수 있음
+
 ## [3.0.0] - 2025-12-19
 
 ### 주요 변경 사항 (BREAKING CHANGES)
