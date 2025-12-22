@@ -7,7 +7,17 @@
 
 ## [Unreleased]
 
+### 제거됨
+- **이슈 #331**: thread_logger.h에서 deprecated THREAD_LOG_* 매크로 제거
+  - 사용되지 않던 THREAD_LOG_TRACE, THREAD_LOG_DEBUG, THREAD_LOG_INFO, THREAD_LOG_WARN, THREAD_LOG_ERROR 매크로 제거
+  - 이 매크로들은 정의만 되어 있고 사용되지 않았으며, 표준 LOG_* 매크로와 혼동될 수 있음
+
 ### 변경
+- **이슈 #331**: deprecated common_system API로부터 마이그레이션
+  - logger_system_adapter에서 레거시 ILogger::log() 메서드에 대한 deprecation 경고 억제 추가
+  - 이 메서드는 ILogger 인터페이스의 순수 가상 함수를 override하므로 계속 구현됨
+  - common_system v3.0.0에서 deprecated 기본 메서드가 제거되면 함께 제거될 예정
+
 - **이슈 #329**: 컴파일러 플래그에서 deprecated 선언 경고 활성화
   - GCC/Clang에서 `-Wno-deprecated-declarations`를 `-Wdeprecated-declarations`로 변경
   - MSVC에서 deprecated 경고 활성화를 위해 `/wd4996` 플래그 제거

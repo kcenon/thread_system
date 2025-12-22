@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Issue #331**: Remove deprecated THREAD_LOG_* macros from thread_logger.h
+  - Removed unused THREAD_LOG_TRACE, THREAD_LOG_DEBUG, THREAD_LOG_INFO, THREAD_LOG_WARN, THREAD_LOG_ERROR macros
+  - These were defined but never used, and conflicted with the standard LOG_* macros
+
 ### Changed
+- **Issue #331**: Migrate from deprecated common_system APIs
+  - Added deprecation warning suppression for legacy ILogger::log() method in logger_system_adapter
+  - This method remains implemented as it overrides a pure virtual function in ILogger interface
+  - Will be removed when common_system v3.0.0 removes the deprecated base method
+
 - **Issue #329**: Enable deprecated declaration warnings in compiler flags
   - Changed `-Wno-deprecated-declarations` to `-Wdeprecated-declarations` for GCC/Clang
   - Removed `/wd4996` flag for MSVC to enable deprecated warnings
