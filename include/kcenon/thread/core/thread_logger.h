@@ -263,25 +263,4 @@ public:
     }
 };
 
-// Convenience macros
-#define THREAD_LOG_TRACE(thread, msg, ctx) \
-    kcenon::thread::thread_logger::instance().log(\
-        kcenon::thread::log_level::trace, thread, msg, ctx)
-
-#define THREAD_LOG_DEBUG(thread, msg, ctx) \
-    kcenon::thread::thread_logger::instance().log(\
-        kcenon::thread::log_level::debug, thread, msg, ctx)
-
-#define THREAD_LOG_INFO(thread, msg, ctx) \
-    kcenon::thread::thread_logger::instance().log(\
-        kcenon::thread::log_level::info, thread, msg, ctx)
-
-#define THREAD_LOG_WARN(thread, msg, ctx) \
-    kcenon::thread::thread_logger::instance().log(\
-        kcenon::thread::log_level::warning, thread, msg, ctx)
-
-#define THREAD_LOG_ERROR(thread, msg, ctx) \
-    kcenon::thread::thread_logger::instance().log(\
-        kcenon::thread::log_level::error, thread, msg, ctx)
-
 } // namespace kcenon::thread

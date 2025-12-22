@@ -132,7 +132,19 @@ public:
      * @param line Source line number
      * @param function Function name
      * @return VoidResult indicating success or error
+     *
+     * @deprecated This method implements the deprecated ILogger interface method.
+     *             Will be removed when common_system v3.0.0 removes the base method.
+     *             Use log(level, message, source_location) instead.
      */
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#endif
     ::common::VoidResult log(
         ::common::interfaces::log_level level,
         const std::string& message,
@@ -148,6 +160,12 @@ public:
         this->impl_->log(logger_level, message, file, line, function);
         return ::common::VoidResult(std::monostate{});
     }
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
     /**
      * @brief Log a structured entry
