@@ -39,12 +39,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "typed_job_queue.h"
 #include "typed_thread_worker.h"
 
-// Common system unified interfaces
-// THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
-#if defined(THREAD_HAS_COMMON_EXECUTOR) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/interfaces/executor_interface.h>))
-#ifndef THREAD_HAS_COMMON_EXECUTOR
-#define THREAD_HAS_COMMON_EXECUTOR 1
+// Include unified feature flags from common_system if available
+#if __has_include(<kcenon/common/config/feature_flags.h>)
+#include <kcenon/common/config/feature_flags.h>
 #endif
+
+// Common system unified interfaces
+// KCENON_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
+// Fallback to 0 if not defined (standalone build without common_system)
+#ifndef KCENON_HAS_COMMON_EXECUTOR
+#define KCENON_HAS_COMMON_EXECUTOR 0
+#endif
+
+#if KCENON_HAS_COMMON_EXECUTOR
 #include <kcenon/common/interfaces/executor_interface.h>
 #endif
 
@@ -81,7 +88,7 @@ namespace kcenon::thread
 {
 	// Support both old (namespace common) and new (namespace kcenon::common) versions
 	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	namespace common_ns = common;
 #endif
 
@@ -153,7 +160,7 @@ namespace kcenon::thread
 	template <typename job_type = job_types>
 	class typed_thread_pool_t
 		: public std::enable_shared_from_this<typed_thread_pool_t<job_type>>
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 		, public common_ns::interfaces::IExecutor
 #endif
 	{
@@ -220,7 +227,7 @@ namespace kcenon::thread
 		auto execute(std::unique_ptr<job>&& work) -> common::VoidResult;
 		auto shutdown() -> common::VoidResult { return stop(false); }
 
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 		// ============================================================================
 		// IExecutor interface implementation (common_system)
 		// ============================================================================
@@ -283,7 +290,7 @@ namespace kcenon::thread
 		 * @param wait_for_completion Wait for all pending tasks to complete
 		 */
 		void shutdown(bool wait_for_completion) override;
-#endif // THREAD_HAS_COMMON_EXECUTOR
+#endif // KCENON_HAS_COMMON_EXECUTOR
 
 		/**
 		 * @brief Enqueues a priority job into the thread pool's job queue.

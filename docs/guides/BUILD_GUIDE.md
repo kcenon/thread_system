@@ -282,7 +282,7 @@ When building with `common_system`, the build system automatically detects and e
 - Service: `ServiceInterface`, `ServiceImplementation`
 - Container: `SequenceContainer`, `AssociativeContainer`
 
-The `THREAD_HAS_COMMON_CONCEPTS` macro is defined when concepts are available.
+The `KCENON_HAS_COMMON_CONCEPTS` macro is defined when concepts are available. The legacy `THREAD_HAS_COMMON_CONCEPTS` macro is also defined as an alias for backward compatibility.
 
 ### Compiler Selection
 

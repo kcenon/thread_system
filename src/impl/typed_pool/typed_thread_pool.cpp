@@ -40,7 +40,7 @@ namespace kcenon::thread
 {
 	// Support both old (namespace common) and new (namespace kcenon::common) versions
 	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	namespace common_ns = common;
 #endif
 
@@ -267,7 +267,7 @@ namespace kcenon::thread
 		return context_;
 	}
 
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	// ============================================================================
 	// IExecutor interface implementation
 	// ============================================================================
@@ -458,7 +458,7 @@ namespace kcenon::thread
 	{
 		stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
 	}
-#endif // THREAD_HAS_COMMON_EXECUTOR
+#endif // KCENON_HAS_COMMON_EXECUTOR
 
 	// Explicit template instantiation for job_types
 	template class typed_thread_pool_t<job_types>;

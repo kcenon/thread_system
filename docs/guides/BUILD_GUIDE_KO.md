@@ -283,7 +283,7 @@ cmake -S . -B build \
 - Service: `ServiceInterface`, `ServiceImplementation`
 - Container: `SequenceContainer`, `AssociativeContainer`
 
-concepts가 사용 가능할 때 `THREAD_HAS_COMMON_CONCEPTS` 매크로가 정의됩니다.
+concepts가 사용 가능할 때 `KCENON_HAS_COMMON_CONCEPTS` 매크로가 정의됩니다. 레거시 `THREAD_HAS_COMMON_CONCEPTS` 매크로도 하위 호환성을 위해 별칭으로 정의됩니다.
 
 ### 컴파일러 선택
 

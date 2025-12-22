@@ -73,25 +73,11 @@ public:
         return VoidResult::ok({});
     }
 
-#if defined(__GNUC__) || defined(__clang__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-
-    VoidResult log(common_log_level level, const std::string& message,
-                   const std::string& file, int line, const std::string& function) override {
-        std::cout << "[" << level_to_string(level) << "] "
-                  << file << ":" << line << " (" << function << ") - "
-                  << message << std::endl;
-        return VoidResult::ok({});
-    }
-
-#if defined(__GNUC__) || defined(__clang__)
-    #pragma GCC diagnostic pop
-#endif
-
     VoidResult log(const log_entry& entry) override {
-        return log(entry.level, entry.message, entry.file, entry.line, entry.function);
+        std::cout << "[" << level_to_string(entry.level) << "] "
+                  << entry.file << ":" << entry.line << " (" << entry.function << ") - "
+                  << entry.message << std::endl;
+        return VoidResult::ok({});
     }
 
     bool is_enabled(common_log_level /*level*/) const override {
