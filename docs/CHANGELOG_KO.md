@@ -7,12 +7,20 @@
 
 ## [Unreleased]
 
+### 변경
+- **이슈 #333**: 통합된 KCENON_* 기능 플래그 채택
+  - `THREAD_HAS_COMMON_EXECUTOR`, `THREAD_HAS_COMMON_RESULT`, `THREAD_HAS_COMMON_CONCEPTS`를 `KCENON_HAS_*` 동등 항목으로 교체
+  - common_system의 `feature_flags.h` include 추가 (가드됨)
+  - thread_pool 헤더에서 로컬 `__has_include` 기반 매크로 정의 제거
+  - 레거시 `THREAD_HAS_*` 매크로는 하위 호환성을 위해 별칭으로 계속 정의됨 (deprecated, v1.0.0에서 제거 예정)
+  - CMake에서 `KCENON_HAS_*` (주) 및 `THREAD_HAS_*` (레거시 별칭) 컴파일 정의를 모두 정의
+
 ### 제거됨
 - **이슈 #331**: thread_logger.h에서 deprecated THREAD_LOG_* 매크로 제거
   - 사용되지 않던 THREAD_LOG_TRACE, THREAD_LOG_DEBUG, THREAD_LOG_INFO, THREAD_LOG_WARN, THREAD_LOG_ERROR 매크로 제거
   - 이 매크로들은 정의만 되어 있고 사용되지 않았으며, 표준 LOG_* 매크로와 혼동될 수 있음
 
-### 변경
+### 변경 (계속)
 - **이슈 #331**: deprecated common_system API로부터 마이그레이션
   - logger_system_adapter에서 레거시 ILogger::log() 메서드에 대한 deprecation 경고 억제 추가
   - 이 메서드는 ILogger 인터페이스의 순수 가상 함수를 override하므로 계속 구현됨

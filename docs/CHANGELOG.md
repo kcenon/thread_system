@@ -7,12 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #333**: Adopt unified KCENON_* feature flags
+  - Replaced `THREAD_HAS_COMMON_EXECUTOR`, `THREAD_HAS_COMMON_RESULT`, `THREAD_HAS_COMMON_CONCEPTS` with `KCENON_HAS_*` equivalents
+  - Added `feature_flags.h` include from common_system (guarded)
+  - Removed local `__has_include` based macro definitions in thread_pool headers
+  - Legacy `THREAD_HAS_*` macros are still defined as aliases for backward compatibility (deprecated, will be removed in v1.0.0)
+  - CMake now defines both `KCENON_HAS_*` (primary) and `THREAD_HAS_*` (legacy alias) compile definitions
+
 ### Removed
 - **Issue #331**: Remove deprecated THREAD_LOG_* macros from thread_logger.h
   - Removed unused THREAD_LOG_TRACE, THREAD_LOG_DEBUG, THREAD_LOG_INFO, THREAD_LOG_WARN, THREAD_LOG_ERROR macros
   - These were defined but never used, and conflicted with the standard LOG_* macros
 
-### Changed
+### Changed (Continued)
 - **Issue #331**: Migrate from deprecated common_system APIs
   - Added deprecation warning suppression for legacy ILogger::log() method in logger_system_adapter
   - This method remains implemented as it overrides a pure virtual function in ILogger interface
