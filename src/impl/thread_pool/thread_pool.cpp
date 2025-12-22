@@ -49,7 +49,7 @@ using namespace utility_module;
 namespace kcenon::thread {
 // Support both old (namespace common) and new (namespace kcenon::common) versions
 // When inside namespace kcenon::thread, 'common' resolves to kcenon::common
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 namespace common_ns = common;
 #endif
 
@@ -622,7 +622,7 @@ auto thread_pool::get_active_worker_count() const -> std::size_t {
                                                   }));
 }
 
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 // ============================================================================
 // IExecutor interface implementation
 // ============================================================================
@@ -768,6 +768,6 @@ size_t thread_pool::pending_tasks() const {
 void thread_pool::shutdown(bool wait_for_completion) {
     stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
 }
-#endif  // THREAD_HAS_COMMON_EXECUTOR
+#endif  // KCENON_HAS_COMMON_EXECUTOR
 
 }  // namespace kcenon::thread
