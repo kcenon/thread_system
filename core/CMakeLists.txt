@@ -92,6 +92,17 @@ if(BUILD_WITH_COMMON_SYSTEM)
             $<BUILD_INTERFACE:${COMMON_SYSTEM_INCLUDE_DIR}>
         )
         target_compile_definitions(${PROJECT_NAME} PUBLIC BUILD_WITH_COMMON_SYSTEM)
+
+        # Check for executor interface and define KCENON_HAS_COMMON_EXECUTOR
+        # This is required for consistent class layout across compilation units
+        if(EXISTS "${COMMON_SYSTEM_INCLUDE_DIR}/kcenon/common/interfaces/executor_interface.h")
+            target_compile_definitions(${PROJECT_NAME} PUBLIC
+                KCENON_HAS_COMMON_EXECUTOR=1
+                KCENON_HAS_COMMON_RESULT=1
+            )
+            message(STATUS "ThreadSystem: IExecutor interface enabled (KCENON_HAS_COMMON_EXECUTOR=1)")
+        endif()
+
         message(STATUS "ThreadSystem: common_system support enabled from ${COMMON_SYSTEM_INCLUDE_DIR}")
     else()
         message(WARNING "ThreadSystem: BUILD_WITH_COMMON_SYSTEM is ON but common_system not found")
