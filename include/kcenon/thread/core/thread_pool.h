@@ -42,12 +42,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 
-// Common system unified interfaces
-// THREAD_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
-#if defined(THREAD_HAS_COMMON_EXECUTOR) || (defined(BUILD_WITH_COMMON_SYSTEM) && __has_include(<kcenon/common/interfaces/executor_interface.h>))
-#ifndef THREAD_HAS_COMMON_EXECUTOR
-#define THREAD_HAS_COMMON_EXECUTOR 1
+// Include unified feature flags from common_system if available
+#if __has_include(<kcenon/common/config/feature_flags.h>)
+#include <kcenon/common/config/feature_flags.h>
 #endif
+
+// Common system unified interfaces
+// KCENON_HAS_COMMON_EXECUTOR is defined by CMake when common_system is available
+// Fallback to 0 if not defined (standalone build without common_system)
+#ifndef KCENON_HAS_COMMON_EXECUTOR
+#define KCENON_HAS_COMMON_EXECUTOR 0
+#endif
+
+#if KCENON_HAS_COMMON_EXECUTOR
 #include <kcenon/common/interfaces/executor_interface.h>
 #endif
 
@@ -84,7 +91,7 @@ namespace kcenon::thread
 {
 	// Support both old (namespace common) and new (namespace kcenon::common) versions
 	// When inside namespace kcenon::thread, 'common' resolves to kcenon::common
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	namespace common_ns = common;
 #endif
 
@@ -130,7 +137,7 @@ namespace kcenon::thread
 	 * @see typed_kcenon::thread::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	                   , public common_ns::interfaces::IExecutor
 #endif
 	{
@@ -164,7 +171,7 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
 
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 	// ============================================================================
 	// IExecutor interface implementation (common_system)
 	// ============================================================================
@@ -221,7 +228,7 @@ namespace kcenon::thread
 	 * @param wait_for_completion Wait for all pending tasks to complete
 	 */
 	void shutdown(bool wait_for_completion) override;
-#endif // THREAD_HAS_COMMON_EXECUTOR
+#endif // KCENON_HAS_COMMON_EXECUTOR
 
         /**
          * @brief Starts the thread pool and all associated workers.
@@ -356,7 +363,7 @@ namespace kcenon::thread
 		 * @brief Check if the thread pool is currently running (IExecutor)
 		 * @return true if the pool is active, false otherwise
 		 */
-#ifdef THREAD_HAS_COMMON_EXECUTOR
+#if KCENON_HAS_COMMON_EXECUTOR
 		auto is_running() const -> bool override;
 #else
 		auto is_running() const -> bool;
