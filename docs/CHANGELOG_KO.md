@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+### 수정
+- **이슈 #333**: 예제 로거 구현에서 deprecated 5-파라미터 log() 메서드 제거
+  - `composition_example.cpp`의 console_logger가 `log(const log_entry&)`를 직접 사용하도록 업데이트
+  - `mock_logger.h`가 `log(const log_entry&)`를 직접 사용하도록 업데이트
+  - common_system ILogger 인터페이스에서 deprecated 메서드 제거로 인한 빌드 실패 수정
+
 ### 변경
 - **이슈 #333**: 통합된 KCENON_* 기능 플래그 채택
   - `THREAD_HAS_COMMON_EXECUTOR`, `THREAD_HAS_COMMON_RESULT`, `THREAD_HAS_COMMON_CONCEPTS`를 `KCENON_HAS_*` 동등 항목으로 교체

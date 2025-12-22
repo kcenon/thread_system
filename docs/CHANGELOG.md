@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Issue #333**: Remove deprecated 5-parameter log() method from example logger implementations
+  - Updated `composition_example.cpp` console_logger to use `log(const log_entry&)` directly
+  - Updated `mock_logger.h` to use `log(const log_entry&)` directly
+  - Fixes build failure due to common_system ILogger interface removing the deprecated method
+
 ### Changed
 - **Issue #333**: Adopt unified KCENON_* feature flags
   - Replaced `THREAD_HAS_COMMON_EXECUTOR`, `THREAD_HAS_COMMON_RESULT`, `THREAD_HAS_COMMON_CONCEPTS` with `KCENON_HAS_*` equivalents
