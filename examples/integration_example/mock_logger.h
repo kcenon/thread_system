@@ -97,46 +97,26 @@ public:
         return VoidResult::ok({});
     }
 
-// Suppress deprecation warning for implementing the deprecated interface method
-#if defined(__GNUC__) || defined(__clang__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(_MSC_VER)
-    #pragma warning(push)
-    #pragma warning(disable: 4996)
-#endif
-
-    VoidResult log(log_level level, const std::string& message,
-                   const std::string& file, int line, const std::string& function) override {
-        if (!is_enabled(level)) {
+    VoidResult log(const log_entry& entry) override {
+        if (!is_enabled(entry.level)) {
             return VoidResult::ok({});
         }
 
         std::lock_guard<std::mutex> lock(mutex_);
-        auto& stream = (level >= log_level::error) ? std::cerr : std::cout;
+        auto& stream = (entry.level >= log_level::error) ? std::cerr : std::cout;
 
         stream << "[" << format_time() << "] "
-               << "[" << level_to_string(level) << "] ";
+               << "[" << level_to_string(entry.level) << "] ";
 
-        if (!file.empty()) {
-            size_t pos = file.find_last_of("/\\");
-            std::string filename = (pos != std::string::npos) ? file.substr(pos + 1) : file;
-            stream << filename << ":" << line << " (" << function << ") ";
+        if (!entry.file.empty()) {
+            size_t pos = entry.file.find_last_of("/\\");
+            std::string filename = (pos != std::string::npos) ? entry.file.substr(pos + 1) : entry.file;
+            stream << filename << ":" << entry.line << " (" << entry.function << ") ";
         }
 
-        stream << message << std::endl;
+        stream << entry.message << std::endl;
 
         return VoidResult::ok({});
-    }
-
-#if defined(__GNUC__) || defined(__clang__)
-    #pragma GCC diagnostic pop
-#elif defined(_MSC_VER)
-    #pragma warning(pop)
-#endif
-
-    VoidResult log(const log_entry& entry) override {
-        return log(entry.level, entry.message, entry.file, entry.line, entry.function);
     }
 
     bool is_enabled(log_level level) const override {
