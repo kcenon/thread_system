@@ -39,6 +39,7 @@
 #include <iostream>
 #include <atomic>
 #include <cstdlib>
+#include <ctime>
 
 namespace kcenon::thread {
 
@@ -168,12 +169,20 @@ public:
         std::lock_guard<std::mutex> lock(mutex_);
 
         auto now = std::chrono::system_clock::now();
-        auto time_t = std::chrono::system_clock::to_time_t(now);
+        auto time_t_val = std::chrono::system_clock::to_time_t(now);
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
             now.time_since_epoch()) % 1000;
 
+        // Use thread-safe localtime variant
+        std::tm tm_buf{};
+#if defined(_MSC_VER) || defined(_WIN32)
+        localtime_s(&tm_buf, &time_t_val);
+#else
+        localtime_r(&time_t_val, &tm_buf);
+#endif
+
         std::cerr << "["
-                  << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S")
+                  << std::put_time(&tm_buf, "%Y-%m-%d %H:%M:%S")
                   << "." << std::setfill('0') << std::setw(3) << ms.count()
                   << "] "
                   << "[" << level_to_string(level) << "] "
