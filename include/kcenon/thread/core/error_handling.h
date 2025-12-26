@@ -60,46 +60,64 @@ namespace kcenon::thread {
  * These error codes are specific to thread_system operations and can be
  * converted to common::error_info for use with common::Result<T> and
  * common::VoidResult.
+ *
+ * Error codes are in the range [-199, -100] to comply with the central
+ * error code registry in common_system. The range is organized as:
+ * - General errors: -100 to -109
+ * - Thread errors: -110 to -119
+ * - Queue errors: -120 to -129
+ * - Job errors: -130 to -139
+ * - Resource errors: -140 to -149
+ * - Synchronization errors: -150 to -159
+ * - IO errors: -160 to -169
  */
 enum class error_code {
-    // General errors
+    // General errors (-100 to -109)
     success = 0,
-    unknown_error,
-    operation_canceled,
-    operation_timeout,
-    not_implemented,
-    invalid_argument,
+    unknown_error = -101,
+    operation_canceled = -102,
+    operation_timeout = -103,
+    not_implemented = -104,
+    invalid_argument = -105,
 
-    // Thread errors
-    thread_already_running = 100,
-    thread_not_running,
-    thread_start_failure,
-    thread_join_failure,
+    // Thread errors (-110 to -119)
+    thread_already_running = -110,
+    thread_not_running = -111,
+    thread_start_failure = -112,
+    thread_join_failure = -113,
 
-    // Queue errors
-    queue_full = 200,
-    queue_empty,
-    queue_stopped,
-    queue_busy,  // Queue is temporarily busy with concurrent operations
+    // Queue errors (-120 to -129)
+    queue_full = -120,
+    queue_empty = -121,
+    queue_stopped = -122,
+    queue_busy = -123,  // Queue is temporarily busy with concurrent operations
 
-    // Job errors
-    job_creation_failed = 300,
-    job_execution_failed,
-    job_invalid,
+    // Job errors (-130 to -139)
+    job_creation_failed = -130,
+    job_execution_failed = -131,
+    job_invalid = -132,
 
-    // Resource errors
-    resource_allocation_failed = 400,
-    resource_limit_reached,
+    // Resource errors (-140 to -149)
+    resource_allocation_failed = -140,
+    resource_limit_reached = -141,
 
-    // Synchronization errors
-    mutex_error = 500,
-    deadlock_detected,
-    condition_variable_error,
+    // Synchronization errors (-150 to -159)
+    mutex_error = -150,
+    deadlock_detected = -151,
+    condition_variable_error = -152,
 
-    // IO errors
-    io_error = 600,
-    file_not_found
+    // IO errors (-160 to -169)
+    io_error = -160,
+    file_not_found = -161
 };
+
+// Compile-time validation for error code range
+static_assert(static_cast<int>(error_code::unknown_error) >= -199 &&
+              static_cast<int>(error_code::unknown_error) <= -100,
+              "error_code values must be in range [-199, -100]");
+static_assert(static_cast<int>(error_code::file_not_found) >= -199 &&
+              static_cast<int>(error_code::file_not_found) <= -100,
+              "error_code values must be in range [-199, -100]");
 
 /**
  * @brief Converts an error_code to a string representation

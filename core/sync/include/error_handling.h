@@ -52,45 +52,64 @@ namespace kcenon::thread {
 /**
  * @enum error_code
  * @brief Strongly typed error codes for thread system operations
+ *
+ * Error codes are in the range [-199, -100] to comply with the central
+ * error code registry in common_system. The range is organized as:
+ * - General errors: -100 to -109
+ * - Thread errors: -110 to -119
+ * - Queue errors: -120 to -129
+ * - Job errors: -130 to -139
+ * - Resource errors: -140 to -149
+ * - Synchronization errors: -150 to -159
+ * - IO errors: -160 to -169
  */
 enum class error_code {
-    // General errors
+    // General errors (-100 to -109)
     success = 0,
-    unknown_error,
-    operation_canceled,
-    operation_timeout,
-    not_implemented,
-    invalid_argument,
-    
-    // Thread errors
-    thread_already_running = 100,
-    thread_not_running,
-    thread_start_failure,
-    thread_join_failure,
-    
-    // Queue errors
-    queue_full = 200,
-    queue_empty,
-    queue_stopped,
-    
-    // Job errors
-    job_creation_failed = 300,
-    job_execution_failed,
-    job_invalid,
-    
-    // Resource errors
-    resource_allocation_failed = 400,
-    resource_limit_reached,
-    
-    // Synchronization errors
-    mutex_error = 500,
-    deadlock_detected,
-    condition_variable_error,
-    
-    // IO errors
-    io_error = 600,
-    file_not_found
+    unknown_error = -101,
+    operation_canceled = -102,
+    operation_timeout = -103,
+    not_implemented = -104,
+    invalid_argument = -105,
+
+    // Thread errors (-110 to -119)
+    thread_already_running = -110,
+    thread_not_running = -111,
+    thread_start_failure = -112,
+    thread_join_failure = -113,
+
+    // Queue errors (-120 to -129)
+    queue_full = -120,
+    queue_empty = -121,
+    queue_stopped = -122,
+    queue_busy = -123,  // Queue is temporarily busy with concurrent operations
+
+    // Job errors (-130 to -139)
+    job_creation_failed = -130,
+    job_execution_failed = -131,
+    job_invalid = -132,
+
+    // Resource errors (-140 to -149)
+    resource_allocation_failed = -140,
+    resource_limit_reached = -141,
+
+    // Synchronization errors (-150 to -159)
+    mutex_error = -150,
+    deadlock_detected = -151,
+    condition_variable_error = -152,
+
+    // IO errors (-160 to -169)
+    io_error = -160,
+    file_not_found = -161
 };
+
+// Compile-time validation for error code range
+static_assert(static_cast<int>(error_code::unknown_error) >= -199 &&
+              static_cast<int>(error_code::unknown_error) <= -100,
+              "error_code values must be in range [-199, -100]");
+static_assert(static_cast<int>(error_code::file_not_found) >= -199 &&
+              static_cast<int>(error_code::file_not_found) <= -100,
+              "error_code values must be in range [-199, -100]");
 
 /**
  * @brief Converts an error_code to a string representation
@@ -113,6 +132,7 @@ inline std::string error_code_to_string(error_code code) {
         {error_code::queue_full, "Queue is full"},
         {error_code::queue_empty, "Queue is empty"},
         {error_code::queue_stopped, "Queue is stopped"},
+        {error_code::queue_busy, "Queue is busy"},
         {error_code::job_creation_failed, "Failed to create job"},
         {error_code::job_execution_failed, "Failed to execute job"},
         {error_code::job_invalid, "Invalid job"},
