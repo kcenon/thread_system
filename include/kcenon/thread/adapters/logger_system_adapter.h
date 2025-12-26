@@ -24,6 +24,23 @@ namespace kcenon::thread::adapters {
 /**
  * @brief Adapter that bridges logger_system to common_system's ILogger
  *
+ * @deprecated Since v0.4.0.0. This adapter creates a bidirectional dependency
+ *             risk between thread_system and logger_system. Use common_system's
+ *             ILogger interface directly instead. logger_system can provide its
+ *             ILogger implementation via ServiceContainer.
+ *
+ *             Migration example:
+ *             @code
+ *             // Before: Direct logger_system dependency
+ *             auto adapter = std::make_shared<logger_system_adapter>(logger);
+ *
+ *             // After: Use common ILogger via ServiceContainer
+ *             auto logger = container.resolve<common::interfaces::ILogger>().value();
+ *             @endcode
+ *
+ *             See GitHub issue #336 for detailed migration guide.
+ *             Will be removed in v0.5.0.0.
+ *
  * This adapter implements the ILogger interface and forwards calls
  * to logger_system's concrete implementation. It enables runtime binding
  * of logger_system's logger to the common ILogger interface.
@@ -54,7 +71,7 @@ namespace kcenon::thread::adapters {
  * adapter->log(common::interfaces::log_level::info, "Application started");
  * @endcode
  */
-class logger_system_adapter
+class [[deprecated("Use common_system ILogger directly. See issue #336.")]] logger_system_adapter
     : public ::common::adapters::typed_adapter<
           ::common::interfaces::ILogger,
           ::kcenon::logger::logger> {
