@@ -7,6 +7,21 @@
 
 ## [Unreleased]
 
+### 변경
+- **이슈 #338**: 중앙 레지스트리 준수를 위한 error_code enum 음수 범위 마이그레이션
+  - 모든 error_code 값을 양수에서 음수 범위 (-100 ~ -199)로 변경
+  - 에러 코드 범위 구성:
+    - 일반 에러: -100 ~ -109
+    - 스레드 에러: -110 ~ -119
+    - 큐 에러: -120 ~ -129
+    - 작업 에러: -130 ~ -139
+    - 리소스 에러: -140 ~ -149
+    - 동기화 에러: -150 ~ -159
+    - IO 에러: -160 ~ -169
+  - 일관성을 위해 sync/error_handling.h에 `queue_busy` 에러 코드 추가
+  - static_assert를 통한 컴파일 타임 범위 검증 추가
+  - **BREAKING CHANGE**: error_code 정수 값을 확인하는 모든 코드 업데이트 필요
+
 ### 수정
 - **이슈 #333**: 예제 로거 구현에서 deprecated 5-파라미터 log() 메서드 제거
   - `composition_example.cpp`의 console_logger가 `log(const log_entry&)`를 직접 사용하도록 업데이트
