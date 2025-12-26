@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #338**: Migrate error_code enum to negative range for central registry compliance
+  - Moved all error_code values from positive to negative range (-100 to -199)
+  - Error code ranges are now organized as:
+    - General errors: -100 to -109
+    - Thread errors: -110 to -119
+    - Queue errors: -120 to -129
+    - Job errors: -130 to -139
+    - Resource errors: -140 to -149
+    - Synchronization errors: -150 to -159
+    - IO errors: -160 to -169
+  - Added `queue_busy` error code to sync/error_handling.h for consistency
+  - Added compile-time range validation via static_assert
+  - **BREAKING CHANGE**: Any code checking specific error_code integer values will need to be updated
+
 ### Deprecated
 - **Issue #336**: Deprecate BUILD_WITH_LOGGER_SYSTEM and logger_system_adapter
   - Mark `BUILD_WITH_LOGGER_SYSTEM` CMake option as deprecated (will be removed in v0.5.0.0)
