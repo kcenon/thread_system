@@ -51,6 +51,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/common/di/service_container.h>
 #include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/common/patterns/result.h>
+
+// Provide global namespace alias for common_executor_adapter.h compatibility
+namespace common = kcenon::common;
+
 #include <kcenon/thread/di/service_registration.h>
 
 namespace {
