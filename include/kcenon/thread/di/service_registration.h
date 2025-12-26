@@ -21,6 +21,7 @@
 
 #include <kcenon/common/di/service_container.h>
 #include <kcenon/common/interfaces/executor_interface.h>
+#include <kcenon/common/interfaces/logger_interface.h>
 
 #include "../adapters/common_executor_adapter.h"
 #include "../core/thread_pool.h"
@@ -140,6 +141,112 @@ inline common::VoidResult unregister_executor_services(
     common::di::IServiceContainer& container) {
 
     return container.unregister<common::interfaces::IExecutor>();
+}
+
+// ============================================================================
+// ILogger Registration (Issue #336)
+// ============================================================================
+
+/**
+ * @brief Register a logger instance with the service container.
+ *
+ * Use this to register any ILogger implementation (from logger_system or
+ * elsewhere) with the container. This is the preferred way to integrate
+ * logging with thread_system instead of using logger_system_adapter directly.
+ *
+ * @param container The service container to register with
+ * @param logger The ILogger instance to register
+ * @return VoidResult indicating success or registration error
+ *
+ * @code
+ * // logger_system can provide ILogger via:
+ * auto logger = create_my_logger();  // Any ILogger implementation
+ *
+ * // Register with container
+ * register_logger_instance(container, logger);
+ *
+ * // Resolve anywhere in application
+ * auto log = container.resolve<common::interfaces::ILogger>().value();
+ * log->log(common::interfaces::log_level::info, "Message");
+ * @endcode
+ *
+ * @see Issue #336 for migration from logger_system_adapter
+ */
+inline common::VoidResult register_logger_instance(
+    common::di::IServiceContainer& container,
+    std::shared_ptr<common::interfaces::ILogger> logger) {
+
+    if (!logger) {
+        return common::make_error<std::monostate>(
+            common::error_codes::INVALID_ARGUMENT,
+            "Cannot register null logger instance",
+            "thread_system::di"
+        );
+    }
+
+    return container.register_instance<common::interfaces::ILogger>(logger);
+}
+
+/**
+ * @brief Register a logger factory with the service container.
+ *
+ * Use this when you want lazy logger creation or need to create
+ * different logger instances per resolution.
+ *
+ * @param container The service container to register with
+ * @param factory Factory function that creates ILogger instances
+ * @param lifetime Service lifetime (default: singleton)
+ * @return VoidResult indicating success or registration error
+ *
+ * @code
+ * register_logger_factory(container, []() {
+ *     return create_my_logger();
+ * });
+ * @endcode
+ */
+inline common::VoidResult register_logger_factory(
+    common::di::IServiceContainer& container,
+    std::function<std::shared_ptr<common::interfaces::ILogger>()> factory,
+    common::di::service_lifetime lifetime = common::di::service_lifetime::singleton) {
+
+    if (!factory) {
+        return common::make_error<std::monostate>(
+            common::error_codes::INVALID_ARGUMENT,
+            "Cannot register null logger factory",
+            "thread_system::di"
+        );
+    }
+
+    return container.register_factory<common::interfaces::ILogger>(
+        [factory = std::move(factory)](common::di::IServiceContainer&) {
+            return factory();
+        },
+        lifetime
+    );
+}
+
+/**
+ * @brief Check if a logger is registered with the container.
+ *
+ * @param container The service container to check
+ * @return true if ILogger is registered
+ */
+inline bool is_logger_registered(
+    const common::di::IServiceContainer& container) {
+
+    return container.is_registered<common::interfaces::ILogger>();
+}
+
+/**
+ * @brief Unregister logger from the container.
+ *
+ * @param container The service container to unregister from
+ * @return VoidResult indicating success or error
+ */
+inline common::VoidResult unregister_logger(
+    common::di::IServiceContainer& container) {
+
+    return container.unregister<common::interfaces::ILogger>();
 }
 
 /**
