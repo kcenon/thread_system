@@ -333,15 +333,95 @@ A: Use compiler-specific pragmas:
 
 ### Q: Is there an adapter for gradual migration?
 
-A: Yes, consider using `logger_system_adapter` which bridges between different logger interfaces.
+A: The `logger_system_adapter` is now **deprecated** (Issue #336). Instead, use the DI-based approach with `ServiceContainer`. See the section below.
+
+## Migrating from logger_system_adapter (Issue #336)
+
+> **⚠️ Deprecation Notice:** `logger_system_adapter` is deprecated as of v0.4.0.0 and will be removed in v0.5.0.0. Use the ServiceContainer approach instead.
+
+### Why Deprecate logger_system_adapter?
+
+The `logger_system_adapter` creates a bidirectional dependency risk:
+- thread_system optionally depends on logger_system (`BUILD_WITH_LOGGER_SYSTEM`)
+- logger_system optionally depends on thread_system (`LOGGER_HAS_THREAD_SYSTEM`)
+- Both enabled creates circular dependency risk
+
+### Migration: From logger_system_adapter to ServiceContainer
+
+**Before (Direct dependency - deprecated):**
+```cpp
+#ifdef BUILD_WITH_LOGGER_SYSTEM
+#include <kcenon/thread/adapters/logger_system_adapter.h>
+#include <kcenon/logger/core/logger.h>
+
+// Create logger_system logger
+auto logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+logger->start();
+
+// Wrap with adapter
+auto adapter = std::make_shared<kcenon::thread::adapters::logger_system_adapter>(logger);
+
+// Use adapter
+adapter->log(kcenon::common::interfaces::log_level::info, "Message");
+#endif
+```
+
+**After (DI-based - recommended):**
+```cpp
+#include <kcenon/common/di/service_container.h>
+#include <kcenon/common/interfaces/logger_interface.h>
+#include <kcenon/thread/di/service_registration.h>
+
+// Get service container
+auto& container = kcenon::common::di::service_container::global();
+
+// Option 1: Register existing ILogger instance
+auto logger = create_my_logger();  // Any ILogger implementation
+kcenon::thread::di::register_logger_instance(container, logger);
+
+// Option 2: Register factory (lazy creation)
+kcenon::thread::di::register_logger_factory(container, []() {
+    return create_my_logger();
+});
+
+// Resolve and use anywhere
+auto resolved = container.resolve<kcenon::common::interfaces::ILogger>();
+if (resolved.is_ok()) {
+    resolved.value()->log(kcenon::common::interfaces::log_level::info, "Message");
+}
+```
+
+### CMake Migration
+
+**Before:**
+```cmake
+option(BUILD_WITH_LOGGER_SYSTEM "Enable logger_system integration" ON)
+```
+
+**After:**
+```cmake
+# BUILD_WITH_LOGGER_SYSTEM is deprecated and OFF by default
+# logger_system can provide ILogger implementation via ServiceContainer
+# No direct dependency required
+```
+
+### Deprecation Timeline
+
+| Version | Action |
+|---------|--------|
+| v0.4.0.0 | Add deprecation warnings, document migration |
+| v0.4.x | Monitor usage, assist migrations |
+| v0.5.0.0 | Remove BUILD_WITH_LOGGER_SYSTEM and logger_system_adapter |
 
 ## Related Documents
 
 - [LOG_LEVEL_MIGRATION_GUIDE.md](LOG_LEVEL_MIGRATION_GUIDE.md) - Log level enum migration
 - [Issue #263](https://github.com/kcenon/thread_system/issues/263) - Deprecation tracking issue
+- [Issue #336](https://github.com/kcenon/thread_system/issues/336) - logger_system_adapter deprecation
 
 ## Revision History
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1 | 2025-12-26 | Added Issue #336 migration guide for logger_system_adapter deprecation |
 | 1.0 | 2025-12-06 | Initial release |

@@ -6,6 +6,27 @@
 ##################################################
 
 ##################################################
+# DEPRECATED: logger_system integration (Issue #336)
+# Use common_system ILogger interface instead
+##################################################
+option(BUILD_WITH_LOGGER_SYSTEM
+    "DEPRECATED: Direct logger_system integration. Use common_system ILogger instead."
+    OFF)
+
+function(check_logger_system_deprecation)
+    if(BUILD_WITH_LOGGER_SYSTEM)
+        message(DEPRECATION
+            "BUILD_WITH_LOGGER_SYSTEM is deprecated and will be removed in v0.5.0.0. "
+            "Use common_system's ILogger interface instead. "
+            "logger_system can provide ILogger implementation via ServiceContainer. "
+            "See GitHub issue #336 for migration guide.")
+
+        # Define the macro for code compilation
+        add_compile_definitions(BUILD_WITH_LOGGER_SYSTEM)
+    endif()
+endfunction()
+
+##################################################
 # Find common_system (required)
 ##################################################
 function(find_common_system_dependency)
@@ -185,6 +206,9 @@ endfunction()
 ##################################################
 function(find_thread_system_dependencies)
   message(STATUS "Finding ThreadSystem dependencies...")
+
+  # Check for deprecated logger_system flag (Issue #336)
+  check_logger_system_deprecation()
 
   find_common_system_dependency()
   # Note: fmt library is no longer used - using C++20 std::format exclusively

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Deprecated
+- **Issue #336**: Deprecate BUILD_WITH_LOGGER_SYSTEM and logger_system_adapter
+  - Mark `BUILD_WITH_LOGGER_SYSTEM` CMake option as deprecated (will be removed in v0.5.0.0)
+  - Add `[[deprecated]]` attribute to `logger_system_adapter` class
+  - Add CMake deprecation warning when BUILD_WITH_LOGGER_SYSTEM is enabled
+  - This resolves bidirectional dependency risk between thread_system and logger_system
+
+### Added
+- **Issue #336**: Add ILogger DI registration functions
+  - `register_logger_instance()`: Register existing ILogger with ServiceContainer
+  - `register_logger_factory()`: Register logger factory function (singleton/transient)
+  - `is_logger_registered()`: Check if ILogger is registered
+  - `unregister_logger()`: Remove ILogger from container
+  - Integration tests for ILogger DI registration
+  - This provides the preferred way to integrate logging without direct logger_system dependency
+
 ### Fixed
 - **Issue #333**: Remove deprecated 5-parameter log() method from example logger implementations
   - Updated `composition_example.cpp` console_logger to use `log(const log_entry&)` directly
