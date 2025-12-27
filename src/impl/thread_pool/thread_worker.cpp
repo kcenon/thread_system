@@ -181,6 +181,87 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 	metrics_ = std::move(metrics);
 }
 
+void thread_worker::set_policy(const worker_policy& policy)
+{
+	policy_ = policy;
+
+	// Initialize local deque if work-stealing is enabled
+	if (policy_.enable_work_stealing && !local_deque_)
+	{
+		local_deque_ = std::make_unique<lockfree::work_stealing_deque<job*>>();
+	}
+}
+
+const worker_policy& thread_worker::get_policy() const
+{
+	return policy_;
+}
+
+lockfree::work_stealing_deque<job*>* thread_worker::get_local_deque() noexcept
+{
+	return local_deque_.get();
+}
+
+void thread_worker::set_steal_function(std::function<job*(std::size_t)> steal_fn)
+{
+	steal_function_ = std::move(steal_fn);
+}
+
+std::unique_ptr<job> thread_worker::try_get_job()
+{
+	// If work-stealing is enabled, try local deque first (LIFO for cache locality)
+	if (policy_.enable_work_stealing && local_deque_)
+	{
+		auto local_result = local_deque_->pop();
+		if (local_result.has_value())
+		{
+			return std::unique_ptr<job>(*local_result);
+		}
+	}
+
+	// Fallback to global queue
+	std::lock_guard<std::mutex> lock(queue_mutex_);
+	if (job_queue_ == nullptr)
+	{
+		return nullptr;
+	}
+
+	auto dequeue_result = job_queue_->try_dequeue();
+	if (dequeue_result.is_ok())
+	{
+		return std::move(dequeue_result.value());
+	}
+
+	return nullptr;
+}
+
+std::unique_ptr<job> thread_worker::try_steal_work()
+{
+	if (!policy_.enable_work_stealing || !steal_function_)
+	{
+		return nullptr;
+	}
+
+	// Apply exponential backoff between steal attempts
+	for (std::size_t attempt = 0; attempt < policy_.max_steal_attempts; ++attempt)
+	{
+		job* stolen = steal_function_(worker_id_);
+		if (stolen != nullptr)
+		{
+			return std::unique_ptr<job>(stolen);
+		}
+
+		// Exponential backoff
+		if (attempt > 0)
+		{
+			auto backoff = policy_.steal_backoff * (1 << (attempt - 1));
+			std::this_thread::sleep_for(backoff);
+		}
+	}
+
+	return nullptr;
+}
+
 	/**
 	 * @brief Gets the thread context for this worker.
 	 * 
@@ -321,65 +402,107 @@ void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metr
 		// Release lock before dequeuing to allow other operations
 		lock.unlock();
 
-		// Hybrid wait strategy: short spin followed by blocking dequeue
-		// This approach provides:
-		// - Sub-ms pickup latency (via spin loop)
-		// - Near-zero idle CPU usage (via blocking dequeue)
-		// - No busy-waiting overhead
-
-		// Phase 1: Short bounded spin (16 iterations)
-		// Optimized for scenarios where jobs arrive quickly
 		std::unique_ptr<job> current_job;
-		constexpr int spin_count = 16;
-		for (int i = 0; i < spin_count; ++i)
+
+		// Work-stealing path: try local deque first, then global queue, then steal
+		if (policy_.enable_work_stealing)
 		{
-			auto dequeue_result = local_queue->try_dequeue();
-			if (dequeue_result.is_ok())
+			// Step 1: Try local deque (LIFO for cache locality)
+			if (local_deque_)
 			{
-				// Job found during spin - fast path
-				current_job = std::move(dequeue_result.value());
-				break;
+				auto local_result = local_deque_->pop();
+				if (local_result.has_value())
+				{
+					current_job = std::unique_ptr<job>(*local_result);
+				}
 			}
 
-			// CPU pause hint to reduce contention and power consumption
-			// Different intrinsics per compiler and architecture
-			#if defined(_MSC_VER)
-				// MSVC: Use _mm_pause() for x86/x64, YieldProcessor() for ARM
-				#if defined(_M_IX86) || defined(_M_X64)
-					_mm_pause();
-				#elif defined(_M_ARM) || defined(_M_ARM64)
-					__yield();
-				#else
-					std::this_thread::yield();
-				#endif
-			#elif defined(__GNUC__) || defined(__clang__)
-				// GCC/Clang: Use builtin functions
-				#if defined(__x86_64__) || defined(__i386__)
-					__builtin_ia32_pause();
-				#elif defined(__aarch64__) || defined(__arm__)
-					__asm__ __volatile__("yield");
-				#else
-					std::this_thread::yield();
-				#endif
-			#else
-				std::this_thread::yield();
-			#endif
+			// Step 2: Try global queue
+			if (!current_job)
+			{
+				auto dequeue_result = local_queue->try_dequeue();
+				if (dequeue_result.is_ok())
+				{
+					current_job = std::move(dequeue_result.value());
+				}
+			}
+
+			// Step 3: Try to steal from other workers
+			if (!current_job)
+			{
+				current_job = try_steal_work();
+			}
+
+			// No work found - mark as idle and sleep
+			if (!current_job)
+			{
+				is_idle_.store(true, std::memory_order_relaxed);
+				std::this_thread::sleep_for(policy_.idle_sleep_duration);
+				return common::ok();
+			}
 		}
-
-		// Phase 2: Polling with longer sleep if spin didn't find a job
-		// Use longer sleep (10ms) instead of blocking to avoid hang issues
-		// This provides near-zero CPU usage while maintaining responsiveness
-		if (!current_job)
+		else
 		{
-			is_idle_.store(true, std::memory_order_relaxed);
+			// Original non-work-stealing path
+			// Hybrid wait strategy: short spin followed by blocking dequeue
+			// This approach provides:
+			// - Sub-ms pickup latency (via spin loop)
+			// - Near-zero idle CPU usage (via blocking dequeue)
+			// - No busy-waiting overhead
 
-			// Sleep longer than spin to reduce CPU usage
-			// 10ms provides good balance between latency and efficiency
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			// Phase 1: Short bounded spin (16 iterations)
+			// Optimized for scenarios where jobs arrive quickly
+			constexpr int spin_count = 16;
+			for (int i = 0; i < spin_count; ++i)
+			{
+				auto dequeue_result = local_queue->try_dequeue();
+				if (dequeue_result.is_ok())
+				{
+					// Job found during spin - fast path
+					current_job = std::move(dequeue_result.value());
+					break;
+				}
 
-			// Return immediately - will be called again by thread_base loop
-			// should_continue_work() will determine when to exit
-			return common::ok();
+				// CPU pause hint to reduce contention and power consumption
+				// Different intrinsics per compiler and architecture
+				#if defined(_MSC_VER)
+					// MSVC: Use _mm_pause() for x86/x64, YieldProcessor() for ARM
+					#if defined(_M_IX86) || defined(_M_X64)
+						_mm_pause();
+					#elif defined(_M_ARM) || defined(_M_ARM64)
+						__yield();
+					#else
+						std::this_thread::yield();
+					#endif
+				#elif defined(__GNUC__) || defined(__clang__)
+					// GCC/Clang: Use builtin functions
+					#if defined(__x86_64__) || defined(__i386__)
+						__builtin_ia32_pause();
+					#elif defined(__aarch64__) || defined(__arm__)
+						__asm__ __volatile__("yield");
+					#else
+						std::this_thread::yield();
+					#endif
+				#else
+					std::this_thread::yield();
+				#endif
+			}
+
+			// Phase 2: Polling with longer sleep if spin didn't find a job
+			// Use longer sleep (10ms) instead of blocking to avoid hang issues
+			// This provides near-zero CPU usage while maintaining responsiveness
+			if (!current_job)
+			{
+				is_idle_.store(true, std::memory_order_relaxed);
+
+				// Sleep longer than spin to reduce CPU usage
+				// 10ms provides good balance between latency and efficiency
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+				// Return immediately - will be called again by thread_base loop
+				// should_continue_work() will determine when to exit
+				return common::ok();
+			}
 		}
 
 		// Validate job pointer

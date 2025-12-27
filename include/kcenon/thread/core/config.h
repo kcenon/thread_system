@@ -69,9 +69,9 @@ namespace kcenon::thread::config {
      * reducing tail latency and improving throughput in mixed workloads.
      *
      * Architecture (when enabled):
-     * - Each worker maintains a local LIFO deque
+     * - Each worker maintains a local LIFO deque (Chase-Lev algorithm)
      * - Workers push/pop from their own deque (cache-friendly)
-     * - Idle workers steal from tail of other workers' deques (FIFO)
+     * - Idle workers steal from top of other workers' deques (FIFO)
      * - Global queue serves as fallback for work submission
      *
      * Performance Characteristics:
@@ -80,15 +80,26 @@ namespace kcenon::thread::config {
      * - Lower tail latency for mixed job sizes
      * - Slight overhead for steal attempts (backoff mechanism)
      *
-     * Tuning Parameters (future):
-     * - STEAL_BATCH_SIZE: Number of jobs to steal at once (default: 1)
-     * - STEAL_BACKOFF_NS: Backoff delay between steal attempts (default: 100ns)
-     * - MAX_STEAL_ATTEMPTS: Cap on consecutive steal failures (default: 16)
-     *
-     * @note Currently disabled by default (not yet implemented)
-     * @note Will be gated behind feature flag when implemented
+     * @see worker_policy for tuning steal_backoff and max_steal_attempts
+     * @see steal_policy for victim selection strategies
      */
+#ifdef THREAD_WORK_STEALING_ENABLED
+    constexpr bool default_work_stealing = true;
+#else
     constexpr bool default_work_stealing = false;
+#endif
+
+    // Work-stealing tuning parameters
+
+    /**
+     * @brief Default maximum steal attempts before backing off.
+     */
+    constexpr size_t default_max_steal_attempts = 3;
+
+    /**
+     * @brief Default backoff duration between steal attempts (microseconds).
+     */
+    constexpr auto default_steal_backoff = std::chrono::microseconds(50);
 
     constexpr bool default_pin_threads = false;
     constexpr bool default_use_priorities = false;

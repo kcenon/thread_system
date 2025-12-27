@@ -41,12 +41,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include "worker_policy.h"
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
+#include <kcenon/thread/lockfree/work_stealing_deque.h>
 
 #include <memory>
 #include <vector>
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
+#include <functional>
 
 namespace kcenon::thread
 {
@@ -113,6 +115,37 @@ namespace kcenon::thread
          * @brief Provide shared metrics storage for this worker.
          */
         void set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metrics);
+
+		/**
+		 * @brief Set the worker policy for this worker.
+		 * @param policy The worker policy configuration.
+		 */
+		void set_policy(const worker_policy& policy);
+
+		/**
+		 * @brief Get the current worker policy.
+		 * @return The worker policy configuration.
+		 */
+		[[nodiscard]] const worker_policy& get_policy() const;
+
+		/**
+		 * @brief Get the local work-stealing deque for this worker.
+		 * @return Pointer to the local deque (nullptr if work-stealing disabled).
+		 *
+		 * This deque is used for work-stealing: other workers can steal jobs
+		 * from this worker's local deque when they are idle.
+		 */
+		[[nodiscard]] lockfree::work_stealing_deque<job*>* get_local_deque() noexcept;
+
+		/**
+		 * @brief Set the steal function for finding other workers' deques.
+		 * @param steal_fn Function that returns a job to steal, or nullptr.
+		 *
+		 * The steal function is called when this worker's local deque and the
+		 * global queue are both empty. It should try to steal work from other
+		 * workers.
+		 */
+		void set_steal_function(std::function<job*(std::size_t)> steal_fn);
 
 		/**
 		 * @brief Get the worker ID.
@@ -280,6 +313,48 @@ namespace kcenon::thread
 		 * Protected by queue_mutex_.
 		 */
 		bool queue_being_replaced_{false};
+
+		/**
+		 * @brief Worker policy configuration.
+		 *
+		 * Controls worker behavior including work-stealing settings.
+		 */
+		worker_policy policy_;
+
+		/**
+		 * @brief Local work-stealing deque for this worker.
+		 *
+		 * When work-stealing is enabled, jobs submitted to this worker
+		 * are stored in this deque. The owner (this worker) can push/pop
+		 * from the bottom (LIFO), while other workers can steal from the
+		 * top (FIFO).
+		 */
+		std::unique_ptr<lockfree::work_stealing_deque<job*>> local_deque_;
+
+		/**
+		 * @brief Function to steal work from other workers.
+		 *
+		 * This function is provided by the thread pool and returns a stolen
+		 * job from another worker's deque, or nullptr if no work available.
+		 */
+		std::function<job*(std::size_t)> steal_function_;
+
+		/**
+		 * @brief Counter for round-robin steal victim selection.
+		 */
+		std::size_t steal_victim_index_{0};
+
+		/**
+		 * @brief Try to get a job from local deque first, then global queue.
+		 * @return A unique_ptr to the job, or nullptr if no work available.
+		 */
+		[[nodiscard]] std::unique_ptr<job> try_get_job();
+
+		/**
+		 * @brief Try to steal work from other workers.
+		 * @return A unique_ptr to the stolen job, or nullptr if stealing failed.
+		 */
+		[[nodiscard]] std::unique_ptr<job> try_steal_work();
 	};
 } // namespace kcenon::thread
 

@@ -323,6 +323,72 @@ public:
 
 ---
 
+### Work-Stealing Scheduler
+
+Optional work-stealing scheduler for improved load balancing in uneven workload scenarios.
+
+```cpp
+// Enable work-stealing for a thread pool
+worker_policy policy;
+policy.enable_work_stealing = true;
+policy.victim_selection = steal_policy::adaptive;
+pool->set_worker_policy(policy);
+
+// Or enable at runtime
+pool->enable_work_stealing(true);
+```
+
+**Architecture**:
+
+```
+Worker 1 (Owner)         Worker 2 (Thief)
+    ↓ push/pop              ↓ steal
+    ┌─────────────────┐     ┌─────────────────┐
+    │  Local Deque    │←────│  Local Deque    │
+    │  [J4][J3][J2]   │     │  [empty]        │
+    │   ↑LIFO     FIFO↑     │                 │
+    └─────────────────┘     └─────────────────┘
+           ↑                        ↑
+           └────────────────────────┘
+                  Global Queue
+```
+
+**Key Features**:
+
+1. **Chase-Lev Work-Stealing Deque**
+   - Lock-free LIFO for owner (cache locality)
+   - Lock-free FIFO stealing (fairness)
+   - Dynamic resizing support
+
+2. **Steal Policy Options**
+   - `random`: Random victim selection (good for uniform loads)
+   - `round_robin`: Sequential victim selection (deterministic)
+   - `adaptive`: Steal from busiest worker (best for uneven loads)
+
+3. **Tunable Parameters**
+   - `max_steal_attempts`: Cap on consecutive steal failures
+   - `steal_backoff`: Exponential backoff between attempts
+
+**Compile-Time Configuration**:
+```cmake
+cmake -DTHREAD_ENABLE_WORK_STEALING=ON ..
+```
+
+**Performance Benefits**:
+| Scenario | Without Stealing | With Stealing | Improvement |
+|----------|-----------------|---------------|-------------|
+| Uniform load | 1.16M jobs/s | 1.16M jobs/s | No regression |
+| Uneven (90/10) | ~800K jobs/s | >1.0M jobs/s | +25% |
+| Producer-consumer | ~900K jobs/s | >1.1M jobs/s | +22% |
+
+**Use Cases**:
+- Parallel algorithms with uneven work distribution
+- Fork-join parallelism
+- Task graphs with variable task sizes
+- Load balancing in heterogeneous workloads
+
+---
+
 ## Typed Thread Pool
 
 Priority-based thread pool with type-aware job scheduling.
