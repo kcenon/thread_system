@@ -38,12 +38,20 @@ option(ENABLE_COVERAGE "Enable code coverage" OFF)
 # Lock-free queue option (TICKET-001 RESOLVED - Now safe with Hazard Pointers)
 option(THREAD_ENABLE_LOCKFREE_QUEUE "Enable lock-free queue (safe with Hazard Pointers)" ON)
 
+# Work-stealing option for improved load balancing
+option(THREAD_ENABLE_WORK_STEALING "Enable work-stealing scheduler for load balancing" OFF)
+
 if(NOT BUILD_WITH_COMMON_SYSTEM)
     message(FATAL_ERROR "ThreadSystem now requires common_system. Set BUILD_WITH_COMMON_SYSTEM=ON.")
 endif()
 
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(STATUS "Lock-free queue is ENABLED (TICKET-001 resolved with Hazard Pointers)")
+endif()
+
+if(THREAD_ENABLE_WORK_STEALING)
+    message(STATUS "Work-stealing scheduler is ENABLED")
+    add_compile_definitions(THREAD_WORK_STEALING_ENABLED=1)
 endif()
 
 # Respect global BUILD_INTEGRATION_TESTS flag if set
@@ -208,4 +216,5 @@ message(STATUS "  Lock-free queue: ${THREAD_ENABLE_LOCKFREE_QUEUE}")
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(STATUS "    TICKET-001 resolved: Safe with Hazard Pointers")
 endif()
+message(STATUS "  Work-stealing: ${THREAD_ENABLE_WORK_STEALING}")
 message(STATUS "========================================")
