@@ -67,6 +67,18 @@ namespace kcenon::thread {
         priority,    ///< Priority-based scheduling
         work_stealing ///< Work-stealing scheduling
     };
+
+    /**
+     * @brief Policy for selecting steal victims
+     *
+     * When a worker's local queue is empty, it attempts to steal work
+     * from other workers. This enum defines how victims are selected.
+     */
+    enum class steal_policy {
+        random,      ///< Random victim selection (default, good load distribution)
+        round_robin, ///< Sequential victim selection (deterministic, fair)
+        adaptive     ///< Select based on queue sizes (best for uneven loads)
+    };
     
     /**
      * @brief Worker behavior policy configuration
@@ -86,6 +98,7 @@ namespace kcenon::thread {
         
         // Work stealing behavior
         bool enable_work_stealing = config::default_work_stealing;
+        steal_policy victim_selection = steal_policy::random;
         size_t max_steal_attempts = 3;
         std::chrono::microseconds steal_backoff{50};
         
@@ -173,5 +186,17 @@ namespace kcenon::thread {
             default: return "unknown";
         }
     }
-    
+
+    /**
+     * @brief Convert steal policy to string representation
+     */
+    constexpr const char* to_string(steal_policy policy) {
+        switch (policy) {
+            case steal_policy::random: return "random";
+            case steal_policy::round_robin: return "round_robin";
+            case steal_policy::adaptive: return "adaptive";
+            default: return "unknown";
+        }
+    }
+
 } // namespace kcenon::thread
