@@ -64,7 +64,11 @@ enum class worker_state;
 class lockfree_job_queue;
 
 template<typename T>
-class lockfree_queue;
+class concurrent_queue;
+
+/// @deprecated Use concurrent_queue instead
+template<typename T>
+using lockfree_queue [[deprecated("Use concurrent_queue instead")]] = concurrent_queue<T>;
 
 class adaptive_job_queue;
 class bounded_job_queue;

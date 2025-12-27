@@ -8,6 +8,11 @@
 ## [Unreleased]
 
 ### 변경
+- **이슈 #340**: `lockfree_queue<T>`를 `concurrent_queue<T>`로 이름 변경
+  - 클래스 이름이 lock-free 알고리즘이 아닌 fine-grained locking을 사용하므로 오해의 소지가 있었음
+  - 이전 이름 `lockfree_queue<T>`는 하위 호환성을 위해 deprecated 별칭으로 유지
+  - deprecation 경고를 피하려면 기존 코드를 `concurrent_queue<T>`로 업데이트 필요
+
 - **이슈 #338**: 중앙 레지스트리 준수를 위한 error_code enum 음수 범위 마이그레이션
   - 모든 error_code 값을 양수에서 음수 범위 (-100 ~ -199)로 변경
   - 에러 코드 범위 구성:

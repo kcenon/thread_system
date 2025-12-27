@@ -23,7 +23,7 @@ thread_system의 모든 공개 API는 이 네임스페이스에 포함됩니다.
 **포함 항목**:
 - `thread_pool` - 태스크 기반 스레드 풀
 - `typed_thread_pool_t` - 타입 안전 스레드 풀
-- `lockfree_queue<T>` - Lock-free MPMC 큐
+- `concurrent_queue<T>` - 스레드 안전 MPMC 큐
 - `lockfree_job_queue` - Lock-free 작업 큐
 - `adaptive_job_queue` - 적응형 작업 큐
 - 동기화 프리미티브
@@ -203,13 +203,17 @@ void stop();
 
 ## Lock-Free 큐
 
-### lockfree_queue
+### concurrent_queue
 
 **헤더**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
 
-**설명**: 블로킹 대기를 지원하는 범용 Lock-free MPMC 큐
+**설명**: 블로킹 대기를 지원하는 스레드 안전 MPMC 큐
 
 **알고리즘**: 분리된 head/tail 뮤텍스를 사용하는 세밀한 잠금
+
+> **참고**: `lockfree/` 디렉토리에 있지만, 이 구현은 진정한 lock-free 알고리즘이 아닌
+> 세밀한 잠금(fine-grained locking)을 사용합니다. `lockfree_queue<T>` 별칭은 deprecated되었으며,
+> 대신 `concurrent_queue<T>`를 사용하세요.
 
 **주요 기능**:
 - 다중 프로듀서/컨슈머의 스레드 안전한 동시 접근
@@ -224,7 +228,7 @@ void stop();
 
 using namespace kcenon::thread;
 
-lockfree_queue<std::string> queue;
+concurrent_queue<std::string> queue;
 
 // 프로듀서 스레드
 std::thread producer([&queue]() {
@@ -446,7 +450,7 @@ auto old = shared_node.exchange(std::make_shared<Node>());
 |---------|------|----------|
 | **job_queue** | 뮤텍스 기반, 정확한 크기 | 정확한 크기가 중요할 때 |
 | **lockfree_job_queue** | Lock-free MPMC | 고처리량 태스크 큐 |
-| **lockfree_queue<T>** | 블로킹 대기 지원 범용 Lock-free | 일반 MPMC 사용 사례 |
+| **concurrent_queue<T>** | 블로킹 대기 지원 스레드 안전 큐 | 일반 MPMC 사용 사례 |
 | **adaptive_job_queue** | 모드 자동 전환 | 가변 부하 시스템 |
 
 > **참고**: 실제 성능은 워크로드 특성과 하드웨어에 따라 다릅니다.
@@ -554,7 +558,7 @@ common::Result<int> result = ...;
 
 - **thread_pool**: 스레드 안전 (모든 메서드)
 - **typed_thread_pool_t**: 스레드 안전 (모든 메서드)
-- **lockfree_queue<T>**: 스레드 안전 (다중 프로듀서/컨슈머)
+- **concurrent_queue<T>**: 스레드 안전 (다중 프로듀서/컨슈머)
 - **lockfree_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
 - **job_queue**: 스레드 안전 (뮤텍스 기반)
 - **adaptive_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
@@ -564,7 +568,7 @@ common::Result<int> result = ...;
 - **일반 태스크 처리**: `thread_pool` 사용 (권장)
 - **우선순위 기반 스케줄링**: `typed_thread_pool_t` 사용
 - **고처리량 큐**: `lockfree_job_queue` 사용
-- **범용 타입 큐**: `lockfree_queue<T>` 사용
+- **범용 타입 큐**: `concurrent_queue<T>` 사용
 - **가변 부하**: `adaptive_job_queue` 사용
 - **안전한 메모리 회수**: `safe_hazard_pointer` 또는 `atomic_shared_ptr` 사용
 
