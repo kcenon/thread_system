@@ -35,6 +35,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_logger.h>
 #include <kcenon/thread/utils/formatter.h>
 
+#include <random>
+
 using namespace utility_module;
 
 /**
@@ -769,5 +771,142 @@ void thread_pool::shutdown(bool wait_for_completion) {
     stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
 }
 #endif  // KCENON_HAS_COMMON_EXECUTOR
+
+// ============================================================================
+// Work-Stealing Support
+// ============================================================================
+
+void thread_pool::set_worker_policy(const worker_policy& policy) {
+    worker_policy_ = policy;
+
+    // Apply policy to existing workers
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+    for (auto& worker : workers_) {
+        if (worker) {
+            worker->set_policy(policy);
+            if (policy.enable_work_stealing) {
+                worker->set_steal_function(create_steal_function());
+            }
+        }
+    }
+}
+
+const worker_policy& thread_pool::get_worker_policy() const {
+    return worker_policy_;
+}
+
+void thread_pool::enable_work_stealing(bool enable) {
+    worker_policy_.enable_work_stealing = enable;
+
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+    for (auto& worker : workers_) {
+        if (worker) {
+            worker_policy policy = worker->get_policy();
+            policy.enable_work_stealing = enable;
+            worker->set_policy(policy);
+            if (enable) {
+                worker->set_steal_function(create_steal_function());
+            } else {
+                worker->set_steal_function(nullptr);
+            }
+        }
+    }
+}
+
+bool thread_pool::is_work_stealing_enabled() const {
+    return worker_policy_.enable_work_stealing;
+}
+
+std::function<job*(std::size_t)> thread_pool::create_steal_function() {
+    // Capture 'this' to access workers
+    return [this](std::size_t requester_id) -> job* {
+        return steal_from_workers(requester_id);
+    };
+}
+
+job* thread_pool::steal_from_workers(std::size_t requester_id) {
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+    if (workers_.empty()) {
+        return nullptr;
+    }
+
+    const std::size_t worker_count = workers_.size();
+
+    // Select victim based on policy
+    switch (worker_policy_.victim_selection) {
+        case steal_policy::random: {
+            // Random victim selection
+            static thread_local std::mt19937 rng(std::random_device{}());
+            std::uniform_int_distribution<std::size_t> dist(0, worker_count - 1);
+
+            for (std::size_t attempts = 0; attempts < worker_count; ++attempts) {
+                std::size_t victim_idx = dist(rng);
+                if (workers_[victim_idx] &&
+                    workers_[victim_idx]->get_worker_id() != requester_id) {
+                    auto* deque = workers_[victim_idx]->get_local_deque();
+                    if (deque) {
+                        auto stolen = deque->steal();
+                        if (stolen.has_value()) {
+                            return *stolen;
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+        case steal_policy::round_robin: {
+            // Round-robin victim selection
+            for (std::size_t i = 0; i < worker_count; ++i) {
+                std::size_t victim_idx = (requester_id + 1 + i) % worker_count;
+                if (workers_[victim_idx] &&
+                    workers_[victim_idx]->get_worker_id() != requester_id) {
+                    auto* deque = workers_[victim_idx]->get_local_deque();
+                    if (deque) {
+                        auto stolen = deque->steal();
+                        if (stolen.has_value()) {
+                            return *stolen;
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+        case steal_policy::adaptive: {
+            // Adaptive: steal from worker with most work
+            std::size_t best_victim = worker_count;
+            std::size_t max_size = 0;
+
+            for (std::size_t i = 0; i < worker_count; ++i) {
+                if (workers_[i] &&
+                    workers_[i]->get_worker_id() != requester_id) {
+                    auto* deque = workers_[i]->get_local_deque();
+                    if (deque) {
+                        std::size_t size = deque->size();
+                        if (size > max_size) {
+                            max_size = size;
+                            best_victim = i;
+                        }
+                    }
+                }
+            }
+
+            if (best_victim < worker_count && max_size > 0) {
+                auto* deque = workers_[best_victim]->get_local_deque();
+                if (deque) {
+                    auto stolen = deque->steal();
+                    if (stolen.has_value()) {
+                        return *stolen;
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    return nullptr;
+}
 
 }  // namespace kcenon::thread

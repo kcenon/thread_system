@@ -415,6 +415,37 @@ namespace kcenon::thread
 		 */
 		auto get_active_worker_count() const -> std::size_t;
 
+		/**
+		 * @brief Set the worker policy for all workers in the pool.
+		 * @param policy The worker policy configuration.
+		 *
+		 * This should be called before start() to configure work-stealing
+		 * and other worker behaviors. If called after start(), only affects
+		 * newly added workers.
+		 */
+		void set_worker_policy(const worker_policy& policy);
+
+		/**
+		 * @brief Get the current worker policy.
+		 * @return The worker policy configuration.
+		 */
+		[[nodiscard]] const worker_policy& get_worker_policy() const;
+
+		/**
+		 * @brief Enable or disable work-stealing at runtime.
+		 * @param enable Whether to enable work-stealing.
+		 *
+		 * This method allows toggling work-stealing behavior after pool creation.
+		 * Changes take effect for subsequent job executions.
+		 */
+		void enable_work_stealing(bool enable);
+
+		/**
+		 * @brief Check if work-stealing is currently enabled.
+		 * @return true if work-stealing is enabled, false otherwise.
+		 */
+		[[nodiscard]] bool is_work_stealing_enabled() const;
+
 	private:
 		/**
 		 * @brief Static counter for generating unique pool instance IDs.
@@ -516,6 +547,30 @@ namespace kcenon::thread
          * @brief Shared metrics collector used by workers.
          */
         std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
+
+		/**
+		 * @brief Worker policy configuration for this pool.
+		 *
+		 * Defines behavior for all workers including work-stealing settings.
+		 */
+		worker_policy worker_policy_;
+
+		/**
+		 * @brief Create a steal function for the given worker.
+		 * @param requester_id ID of the worker requesting to steal.
+		 * @return Function that attempts to steal work from other workers.
+		 *
+		 * The returned function implements the steal policy (random, round-robin,
+		 * or adaptive) and returns a raw pointer to a stolen job.
+		 */
+		[[nodiscard]] std::function<job*(std::size_t)> create_steal_function();
+
+		/**
+		 * @brief Try to steal a job from another worker.
+		 * @param requester_id ID of the worker requesting to steal.
+		 * @return Raw pointer to stolen job, or nullptr if no work available.
+		 */
+		[[nodiscard]] job* steal_from_workers(std::size_t requester_id);
 	};
 } // namespace kcenon::thread
 
