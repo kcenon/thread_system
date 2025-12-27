@@ -18,7 +18,7 @@ All rights reserved.
 using namespace kcenon::thread;
 using namespace std::chrono_literals;
 
-class LockfreeQueueTest : public ::testing::Test {
+class ConcurrentQueueTest : public ::testing::Test {
 protected:
     void SetUp() override {}
     void TearDown() override {}
@@ -28,15 +28,15 @@ protected:
 // Basic Operations
 // =============================================================================
 
-TEST_F(LockfreeQueueTest, DefaultConstruction) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, DefaultConstruction) {
+    concurrent_queue<int> queue;
     EXPECT_TRUE(queue.empty());
     EXPECT_EQ(queue.size(), 0);
     EXPECT_FALSE(queue.is_shutdown());
 }
 
-TEST_F(LockfreeQueueTest, EnqueueDequeue) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, EnqueueDequeue) {
+    concurrent_queue<int> queue;
 
     queue.enqueue(42);
     EXPECT_FALSE(queue.empty());
@@ -48,8 +48,8 @@ TEST_F(LockfreeQueueTest, EnqueueDequeue) {
     EXPECT_TRUE(queue.empty());
 }
 
-TEST_F(LockfreeQueueTest, MultipleEnqueueDequeue) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, MultipleEnqueueDequeue) {
+    concurrent_queue<int> queue;
 
     for (int i = 0; i < 100; ++i) {
         queue.enqueue(i);
@@ -64,15 +64,15 @@ TEST_F(LockfreeQueueTest, MultipleEnqueueDequeue) {
     EXPECT_TRUE(queue.empty());
 }
 
-TEST_F(LockfreeQueueTest, TryDequeueEmpty) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, TryDequeueEmpty) {
+    concurrent_queue<int> queue;
 
     auto value = queue.try_dequeue();
     EXPECT_FALSE(value.has_value());
 }
 
-TEST_F(LockfreeQueueTest, StringType) {
-    lockfree_queue<std::string> queue;
+TEST_F(ConcurrentQueueTest, StringType) {
+    concurrent_queue<std::string> queue;
 
     queue.enqueue("hello");
     queue.enqueue("world");
@@ -86,8 +86,8 @@ TEST_F(LockfreeQueueTest, StringType) {
     EXPECT_EQ(*v2, "world");
 }
 
-TEST_F(LockfreeQueueTest, MoveOnlyType) {
-    lockfree_queue<std::unique_ptr<int>> queue;
+TEST_F(ConcurrentQueueTest, MoveOnlyType) {
+    concurrent_queue<std::unique_ptr<int>> queue;
 
     queue.enqueue(std::make_unique<int>(42));
 
@@ -101,8 +101,8 @@ TEST_F(LockfreeQueueTest, MoveOnlyType) {
 // Blocking Wait
 // =============================================================================
 
-TEST_F(LockfreeQueueTest, WaitDequeueTimeout) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, WaitDequeueTimeout) {
+    concurrent_queue<int> queue;
 
     auto start = std::chrono::steady_clock::now();
     auto value = queue.wait_dequeue(50ms);
@@ -112,8 +112,8 @@ TEST_F(LockfreeQueueTest, WaitDequeueTimeout) {
     EXPECT_GE(elapsed, 40ms);  // Allow some tolerance
 }
 
-TEST_F(LockfreeQueueTest, WaitDequeueSuccess) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, WaitDequeueSuccess) {
+    concurrent_queue<int> queue;
 
     std::thread producer([&queue]() {
         std::this_thread::sleep_for(10ms);
@@ -127,8 +127,8 @@ TEST_F(LockfreeQueueTest, WaitDequeueSuccess) {
     producer.join();
 }
 
-TEST_F(LockfreeQueueTest, ShutdownWakesWaiters) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, ShutdownWakesWaiters) {
+    concurrent_queue<int> queue;
 
     std::atomic<bool> received{false};
     std::thread consumer([&]() {
@@ -149,8 +149,8 @@ TEST_F(LockfreeQueueTest, ShutdownWakesWaiters) {
 // Concurrent Access
 // =============================================================================
 
-TEST_F(LockfreeQueueTest, SingleProducerSingleConsumer) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, SingleProducerSingleConsumer) {
+    concurrent_queue<int> queue;
     const int count = 10000;
 
     std::thread producer([&]() {
@@ -181,8 +181,8 @@ TEST_F(LockfreeQueueTest, SingleProducerSingleConsumer) {
     }
 }
 
-TEST_F(LockfreeQueueTest, MultipleProducersSingleConsumer) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, MultipleProducersSingleConsumer) {
+    concurrent_queue<int> queue;
     const int producers = 4;
     const int per_producer = 1000;
     const int total = producers * per_producer;
@@ -216,8 +216,8 @@ TEST_F(LockfreeQueueTest, MultipleProducersSingleConsumer) {
     EXPECT_TRUE(queue.empty());
 }
 
-TEST_F(LockfreeQueueTest, MultipleProducersMultipleConsumers) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, MultipleProducersMultipleConsumers) {
+    concurrent_queue<int> queue;
     const int producers = 4;
     const int consumers = 4;
     const int per_producer = 1000;
@@ -270,8 +270,8 @@ TEST_F(LockfreeQueueTest, MultipleProducersMultipleConsumers) {
 // Stress Test
 // =============================================================================
 
-TEST_F(LockfreeQueueTest, StressTest) {
-    lockfree_queue<int> queue;
+TEST_F(ConcurrentQueueTest, StressTest) {
+    concurrent_queue<int> queue;
     const int threads = 8;
     const int operations = 5000;
 

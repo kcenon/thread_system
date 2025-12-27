@@ -43,21 +43,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace kcenon::thread {
 
 /**
- * @class lockfree_queue
- * @brief Generic lock-free MPMC queue with blocking wait support
+ * @class concurrent_queue
+ * @brief Thread-safe MPMC queue with blocking wait support
  *
  * This class implements a thread-safe Multi-Producer Multi-Consumer (MPMC) queue
  * using fine-grained locking for simplicity and correctness. It provides both
  * non-blocking and blocking operations for flexible use cases.
  *
- * ## Design Decision
+ * ## Implementation Notes
  *
- * While a true lock-free Michael-Scott queue requires complex memory reclamation
- * (Hazard Pointers or epoch-based reclamation), this implementation uses
- * fine-grained locking with separate head and tail mutexes. This provides:
+ * This implementation uses fine-grained locking with separate head and tail
+ * mutexes rather than a true lock-free algorithm. This provides:
  * - Correctness guarantee without complex memory reclamation
  * - Good performance for most use cases
  * - Blocking wait support with condition variables
+ *
+ * While a true lock-free Michael-Scott queue requires complex memory reclamation
+ * (Hazard Pointers or epoch-based reclamation), fine-grained locking offers
+ * comparable performance for most practical scenarios.
  *
  * ## Key Features
  *
@@ -75,7 +78,7 @@ namespace kcenon::thread {
  * ## Example Usage
  *
  * @code
- * lockfree_queue<std::string> queue;
+ * concurrent_queue<std::string> queue;
  *
  * // Producer thread
  * queue.enqueue("message");
@@ -94,7 +97,7 @@ namespace kcenon::thread {
  * @tparam T The element type (must be move-constructible)
  */
 template <typename T>
-class lockfree_queue {
+class concurrent_queue {
     static_assert(std::is_move_constructible_v<T>, "T must be move constructible");
 
 public:
@@ -103,7 +106,7 @@ public:
      *
      * Initializes the queue with a dummy node to simplify the algorithm.
      */
-    lockfree_queue() {
+    concurrent_queue() {
         auto* dummy = new node{};
         head_ = dummy;
         tail_ = dummy;
@@ -112,7 +115,7 @@ public:
     /**
      * @brief Destructor - signals shutdown and drains the queue
      */
-    ~lockfree_queue() {
+    ~concurrent_queue() {
         shutdown();
         // Drain remaining items
         while (try_dequeue()) {
@@ -122,10 +125,10 @@ public:
     }
 
     // Non-copyable and non-movable
-    lockfree_queue(const lockfree_queue&) = delete;
-    lockfree_queue& operator=(const lockfree_queue&) = delete;
-    lockfree_queue(lockfree_queue&&) = delete;
-    lockfree_queue& operator=(lockfree_queue&&) = delete;
+    concurrent_queue(const concurrent_queue&) = delete;
+    concurrent_queue& operator=(const concurrent_queue&) = delete;
+    concurrent_queue(concurrent_queue&&) = delete;
+    concurrent_queue& operator=(concurrent_queue&&) = delete;
 
     /**
      * @brief Enqueues a value into the queue
@@ -298,5 +301,20 @@ private:
     mutable std::mutex cv_mutex_;
     std::condition_variable cv_;
 };
+
+/**
+ * @brief Backward compatibility alias for concurrent_queue
+ *
+ * @deprecated Use concurrent_queue instead. This alias will be removed in a future version.
+ *
+ * The name "lockfree_queue" is misleading as the implementation uses fine-grained
+ * locking rather than true lock-free algorithms. The new name "concurrent_queue"
+ * more accurately describes the thread-safe, concurrent nature of this container.
+ *
+ * @tparam T The element type (must be move-constructible)
+ */
+template <typename T>
+using lockfree_queue [[deprecated("Use concurrent_queue instead. "
+    "This class uses fine-grained locking, not lock-free algorithms.")]] = concurrent_queue<T>;
 
 }  // namespace kcenon::thread

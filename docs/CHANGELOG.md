@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Issue #340**: Rename `lockfree_queue<T>` to `concurrent_queue<T>`
+  - The class name was misleading as it uses fine-grained locking, not lock-free algorithms
+  - Old name `lockfree_queue<T>` is now a deprecated alias for backward compatibility
+  - Update any existing code to use `concurrent_queue<T>` to avoid deprecation warnings
+
 - **Issue #338**: Migrate error_code enum to negative range for central registry compliance
   - Moved all error_code values from positive to negative range (-100 to -199)
   - Error code ranges are now organized as:

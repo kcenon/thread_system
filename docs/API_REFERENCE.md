@@ -333,13 +333,17 @@ struct requirements {
 
 ## Lock-Free Queues
 
-### lockfree_queue
+### concurrent_queue
 
 **Header**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
 
-**Description**: Generic lock-free MPMC queue with blocking wait support
+**Description**: Thread-safe MPMC queue with blocking wait support
 
 **Algorithm**: Fine-grained locking with separate head/tail mutexes
+
+> **Note**: Despite residing in the `lockfree/` directory, this implementation uses fine-grained
+> locking rather than true lock-free algorithms. The `lockfree_queue<T>` alias is deprecated;
+> use `concurrent_queue<T>` instead.
 
 **Key Features**:
 - Thread-safe concurrent access from multiple producers and consumers
@@ -354,7 +358,7 @@ struct requirements {
 
 using namespace kcenon::thread;
 
-lockfree_queue<std::string> queue;
+concurrent_queue<std::string> queue;
 
 // Producer thread
 std::thread producer([&queue]() {
@@ -576,7 +580,7 @@ auto old = shared_node.exchange(std::make_shared<Node>());
 |-----------|-------------|----------|
 | **job_queue** | Mutex-based, accurate size | When exact size matters |
 | **lockfree_job_queue** | Lock-free MPMC | High-throughput task queue |
-| **lockfree_queue<T>** | Generic lock-free with blocking wait | General MPMC use cases |
+| **concurrent_queue<T>** | Thread-safe with blocking wait | General MPMC use cases |
 | **adaptive_job_queue** | Auto-switching between modes | Variable load systems |
 
 > **Note**: Actual performance depends on workload characteristics and hardware.
@@ -716,7 +720,7 @@ common::Result<int> result = ...;
 
 - **thread_pool**: Thread-safe (all methods)
 - **typed_thread_pool_t**: Thread-safe (all methods)
-- **lockfree_queue<T>**: Thread-safe (multiple producers/consumers)
+- **concurrent_queue<T>**: Thread-safe (multiple producers/consumers)
 - **lockfree_job_queue**: Thread-safe (multiple producers/consumers)
 - **job_queue**: Thread-safe (mutex-based)
 - **adaptive_job_queue**: Thread-safe (multiple producers/consumers)
@@ -726,7 +730,7 @@ common::Result<int> result = ...;
 - **General task processing**: Use `thread_pool` (recommended)
 - **Priority-based scheduling**: Use `typed_thread_pool_t`
 - **High-throughput queue**: Use `lockfree_job_queue`
-- **Generic type queue**: Use `lockfree_queue<T>`
+- **Generic type queue**: Use `concurrent_queue<T>`
 - **Variable load**: Use `adaptive_job_queue`
 - **Safe memory reclamation**: Use `safe_hazard_pointer` or `atomic_shared_ptr`
 
