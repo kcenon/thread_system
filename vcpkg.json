@@ -1,10 +1,12 @@
 {
-  "name": "thread-system",
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "kcenon-thread-system",
   "version": "3.0.0",
+  "port-version": 0,
   "description": "High-performance C++20 multithreading framework with common_system integration",
   "homepage": "https://github.com/kcenon/thread_system",
-  "license": "MIT",
-  "builtin-baseline": "50c0cb48a0cf2f6fc5c7b2c0d2bafbe26d0a7ca2",
+  "license": "BSD-3-Clause",
+  "supports": "!(uwp | xbox)",
   "dependencies": [
     {
       "name": "libiconv",
@@ -13,24 +15,26 @@
   ],
   "features": {
     "testing": {
-      "description": "Enable testing dependencies",
+      "description": "Build unit tests and benchmarks",
       "dependencies": [
-        "gtest",
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
         "benchmark"
       ]
     },
     "logging": {
       "description": "Enable advanced logging capabilities",
-      "dependencies": [
-        {
-          "name": "spdlog"
-        }
-      ]
+      "dependencies": ["spdlog"]
     },
     "development": {
       "description": "Enable development and debugging tools",
       "dependencies": [
-        "gtest",
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
         "benchmark",
         "spdlog"
       ]
