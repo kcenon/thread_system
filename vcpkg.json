@@ -8,7 +8,6 @@
   "license": "BSD-3-Clause",
   "supports": "!(uwp | xbox)",
   "dependencies": [
-    "kcenon-common-system",
     {
       "name": "libiconv",
       "platform": "!windows"

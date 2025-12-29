@@ -324,6 +324,10 @@ The package is available as `kcenon-thread-system` in the kcenon vcpkg registry:
 }
 ```
 
+> **Note**: This package requires [kcenon-common-system](https://github.com/kcenon/common_system)
+> which must be cloned alongside thread_system. The vcpkg integration for common_system
+> will be available once the kcenon vcpkg registry is established.
+
 Optional features:
 - `testing`: Includes gtest and benchmark for unit tests
 - `logging`: Enables spdlog integration
