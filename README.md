@@ -312,6 +312,34 @@ FetchContent_MakeAvailable(thread_system)
 target_link_libraries(your_target PRIVATE thread_system)
 ```
 
+### With vcpkg
+
+The package is available as `kcenon-thread-system` in the kcenon vcpkg registry:
+
+```json
+{
+  "dependencies": [
+    "kcenon-thread-system"
+  ]
+}
+```
+
+Optional features:
+- `testing`: Includes gtest and benchmark for unit tests
+- `logging`: Enables spdlog integration
+- `development`: All testing and logging dependencies
+
+```json
+{
+  "dependencies": [
+    {
+      "name": "kcenon-thread-system",
+      "features": ["testing", "logging"]
+    }
+  ]
+}
+```
+
 ---
 
 ## Examples
