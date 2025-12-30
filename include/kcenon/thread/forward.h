@@ -1,17 +1,52 @@
+#pragma once
+
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, kcenon
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 /**
  * @file forward.h
  * @brief Forward declarations for thread system types
  * @date 2025-11-20
  *
- * This file provides forward declarations for commonly used types in
- * thread_system. Include this header when you need to declare pointers
- * or references to thread_system types without pulling in full definitions.
+ * This file provides forward declarations for all types in thread_system.
+ * Include this header when you need to declare pointers or references to
+ * thread_system types without pulling in full definitions.
  *
- * For detailed forward declarations within the core module, see
- * <kcenon/thread/core/forward_declarations.h>.
+ * This is the single authoritative source for forward declarations in the
+ * thread_system library. All forward declarations are consolidated here to
+ * comply with the Simple Design principle of "No Duplication".
  */
 
-#pragma once
+#include <cstdint>
 
 namespace kcenon::thread {
 
@@ -31,21 +66,32 @@ class cancellation_token;
 // Typed thread pool types
 // ============================================================================
 
-// typed_thread_pool_t is a template class - forward declare requires template param
+/// @brief Default job type enumeration
+enum class job_types : uint8_t;
+
+/// @brief Typed thread pool template
 template<typename JobType>
 class typed_thread_pool_t;
 
+/// @brief Typed thread worker template
 template<typename JobType>
 class typed_thread_worker_t;
 
+/// @brief Typed job template
 template<typename JobType>
 class typed_job_t;
 
+/// @brief Callback-based typed job template
+template<typename JobType>
+class callback_typed_job_t;
+
+/// @brief Typed job queue template
 template<typename JobType>
 class typed_job_queue_t;
 
-// Default job type enum
-enum class job_types;
+/// @brief Typed job interface template
+template<typename JobType>
+class typed_job_interface;
 
 // ============================================================================
 // Builder and policy types
@@ -56,6 +102,10 @@ class pool_factory;
 struct worker_policy;
 enum class scheduling_policy;
 enum class worker_state;
+
+/// @brief Typed thread pool builder template
+template<typename JobType>
+class typed_thread_pool_builder;
 
 // ============================================================================
 // Queue types

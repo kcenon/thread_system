@@ -39,7 +39,7 @@
  * that integrate well with the thread pool system.
  */
 
-#include <kcenon/thread/core/forward_declarations.h>
+#include <kcenon/thread/forward.h>
 #include <kcenon/thread/core/error_handling.h>
 #include <future>
 #include <memory>

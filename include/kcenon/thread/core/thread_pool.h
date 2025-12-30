@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/cancellation_token.h>
 #include <kcenon/thread/utils/convert_string.h>
-#include <kcenon/thread/core/forward_declarations.h>
+#include <kcenon/thread/forward.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 
