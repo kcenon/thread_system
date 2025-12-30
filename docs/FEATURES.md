@@ -223,6 +223,34 @@ struct queue_statistics {
 
 ## Thread Pool Features
 
+### Choosing Between Thread Pools
+
+The thread_system provides two thread pool implementations optimized for different use cases:
+
+| Feature | `thread_pool` | `typed_thread_pool_t<T>` |
+|---------|--------------|--------------------------|
+| Scheduling | FIFO (First In, First Out) | Priority-based |
+| Job Priority | Not supported | Template parameter (compile-time) |
+| Worker Specialization | All workers handle all jobs | Workers can be assigned specific priorities |
+| Work Stealing | Supported | Not supported |
+| Metrics Collection | Built-in `ThreadPoolMetrics` | Basic statistics |
+| Health Checks | Supported | Not supported |
+| Best For | General task execution | Priority-critical workloads |
+
+**When to use `thread_pool`:**
+- General-purpose concurrent task execution
+- When all tasks have equal priority
+- When work-stealing load balancing is needed
+- When detailed metrics and health monitoring are required
+
+**When to use `typed_thread_pool_t<T>`:**
+- Real-time systems with strict priority requirements
+- When tasks must be processed in priority order
+- When workers should specialize in handling specific priority levels
+- When compile-time type safety for priorities is desired
+
+---
+
 ### Standard Thread Pool
 
 Multi-worker thread pool with adaptive queue support.
