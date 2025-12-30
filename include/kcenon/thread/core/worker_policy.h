@@ -39,7 +39,7 @@
  * including scheduling strategies, idle handling, and work stealing.
  */
 
-#include <kcenon/thread/core/forward_declarations.h>
+#include <kcenon/thread/forward.h>
 #include "config.h"
 #include <chrono>
 #include <string>

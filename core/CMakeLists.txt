@@ -14,7 +14,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/configuration_manager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/error_handling.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/event_bus.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/forward_declarations.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/future_extensions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/hazard_pointer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job.h
