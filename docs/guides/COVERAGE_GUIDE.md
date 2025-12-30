@@ -5,7 +5,7 @@
 - **Overall Coverage**: 72% (Target: 80%)
 - **Unit Tests**: `unittest/` directory
 - **Integration Tests**: `integration_tests/` directory
-- **Benchmarks**: `benchmarks/` directory
+- **Benchmarks**: `tests/benchmarks/` directory
 
 ## Running Coverage Locally
 

@@ -348,7 +348,7 @@ Comprehensive benchmarks demonstrating adaptive job queue performance with autom
 
 The Thread System includes comprehensive benchmarks for performance testing:
 
-#### Thread Pool Benchmarks (`benchmarks/thread_pool_benchmarks/`)
+#### Thread Pool Benchmarks (`tests/benchmarks/thread_pool_benchmarks/`)
 - **gbench_thread_pool**: Basic Google Benchmark integration
 - **thread_pool_benchmark**: Core thread pool performance metrics
 - **memory_benchmark**: Memory usage and allocation patterns (logger benchmark removed)
@@ -359,7 +359,7 @@ The Thread System includes comprehensive benchmarks for performance testing:
 - **comparison_benchmark**: Cross-library comparisons
 - **throughput_detailed_benchmark**: Detailed throughput analysis
 
-#### Queue Benchmarks (`benchmarks/thread_base_benchmarks/`)
+#### Queue Benchmarks (`tests/benchmarks/thread_base_benchmarks/`)
 - **mpmc_performance_test**: MPMC queue performance analysis
 - **simple_mpmc_benchmark**: Basic queue operations
 - **quick_mpmc_test**: Fast queue validation

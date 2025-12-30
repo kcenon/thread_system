@@ -206,7 +206,7 @@ thread_system/
 │   ├── typed_thread_pool/{include,src}
 │   └── lockfree/{include,src}
 ├── utilities/{include,src}
-├── benchmarks/
+├── tests/benchmarks/
 ├── samples/
 ├── docs/
 └── cmake/

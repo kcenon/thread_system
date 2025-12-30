@@ -62,10 +62,10 @@ static void BM_UniformLoad_NoStealing(benchmark::State& state) {
         std::atomic<size_t> completed{0};
 
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 do_work(1000);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -104,10 +104,10 @@ static void BM_UniformLoad_WithStealing(benchmark::State& state) {
         std::atomic<size_t> completed{0};
 
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 do_work(1000);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -148,10 +148,10 @@ static void BM_UnevenLoad_NoStealing(benchmark::State& state) {
             // 90% small jobs, 10% large jobs
             int work_size = (rng() % 10 < 9) ? 100 : 10000;
 
-            pool->enqueue(std::make_unique<callback_job>([&completed, work_size]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed, work_size]() -> kcenon::common::VoidResult {
                 do_work(work_size);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -192,10 +192,10 @@ static void BM_UnevenLoad_WithStealing(benchmark::State& state) {
             // 90% small jobs, 10% large jobs
             int work_size = (rng() % 10 < 9) ? 100 : 10000;
 
-            pool->enqueue(std::make_unique<callback_job>([&completed, work_size]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed, work_size]() -> kcenon::common::VoidResult {
                 do_work(work_size);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -231,10 +231,10 @@ static void BM_StealPolicy_Random(benchmark::State& state) {
 
         std::atomic<size_t> completed{0};
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 do_work(500);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -267,10 +267,10 @@ static void BM_StealPolicy_RoundRobin(benchmark::State& state) {
 
         std::atomic<size_t> completed{0};
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 do_work(500);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
@@ -303,10 +303,10 @@ static void BM_StealPolicy_Adaptive(benchmark::State& state) {
 
         std::atomic<size_t> completed{0};
         for (size_t i = 0; i < num_jobs; ++i) {
-            pool->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+            pool->enqueue(std::make_unique<callback_job>([&completed]() -> kcenon::common::VoidResult {
                 do_work(500);
                 completed++;
-                return common::ok();
+                return kcenon::common::ok();
             }));
         }
 
