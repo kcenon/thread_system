@@ -139,7 +139,7 @@ To modify, edit the workflow:
 
 ### Adding New Benchmarks
 
-1. Create benchmark executable in `benchmarks/` directory
+1. Create benchmark executable in `tests/benchmarks/` directory
 2. Ensure it outputs JSON format (`--benchmark_format=json`)
 3. It will be automatically discovered and executed
 

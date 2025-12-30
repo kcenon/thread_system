@@ -62,6 +62,11 @@ add_executable(contention_benchmark
     contention_benchmark.cpp
 )
 
+# NEW: Work-stealing benchmark
+add_executable(work_stealing_benchmark
+    work_stealing_benchmark.cpp
+)
+
 # Set common properties for all benchmarks
 set(THREAD_POOL_BENCHMARK_TARGETS
     thread_pool_benchmark
@@ -72,6 +77,7 @@ set(THREAD_POOL_BENCHMARK_TARGETS
     throughput_detailed_benchmark
     scalability_benchmark
     contention_benchmark
+    work_stealing_benchmark
 )
 
 foreach(target ${THREAD_POOL_BENCHMARK_TARGETS})
@@ -111,6 +117,7 @@ add_custom_target(run_thread_pool_benchmarks
     COMMAND memory_benchmark
     COMMAND scalability_benchmark
     COMMAND contention_benchmark
+    COMMAND work_stealing_benchmark
     COMMAND real_world_benchmark
     COMMAND stress_test_benchmark
     COMMAND comparison_benchmark
