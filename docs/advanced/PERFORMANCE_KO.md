@@ -348,7 +348,7 @@ Type Thread Pool은 adaptive job queue 구현을 특징으로 합니다:
 
 Thread System에는 성능 테스트를 위한 포괄적인 benchmark가 포함되어 있습니다:
 
-#### Thread Pool Benchmark (`benchmarks/thread_pool_benchmarks/`)
+#### Thread Pool Benchmark (`tests/benchmarks/thread_pool_benchmarks/`)
 - **gbench_thread_pool**: 기본 Google Benchmark 통합
 - **thread_pool_benchmark**: 핵심 thread pool 성능 metric
 - **memory_benchmark**: 메모리 사용량 및 할당 패턴 (logger benchmark 제거됨)
@@ -359,7 +359,7 @@ Thread System에는 성능 테스트를 위한 포괄적인 benchmark가 포함�
 - **comparison_benchmark**: 라이브러리 간 비교
 - **throughput_detailed_benchmark**: 상세한 처리량 분석
 
-#### Queue Benchmark (`benchmarks/thread_base_benchmarks/`)
+#### Queue Benchmark (`tests/benchmarks/thread_base_benchmarks/`)
 - **mpmc_performance_test**: MPMC queue 성능 분석
 - **simple_mpmc_benchmark**: 기본 queue 작업
 - **quick_mpmc_test**: 빠른 queue 검증
