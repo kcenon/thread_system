@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Issue #358**: Queue consolidation - Phase 1 & 2
+  - Move `concurrent_queue<T>` and `lockfree_job_queue` to `detail::` namespace (internal implementation)
+  - `queue_factory::create_lockfree_queue()` now returns `adaptive_job_queue` with `performance_first` policy
+  - `queue_type_selector<false, true>` now returns `adaptive_job_queue` instead of `lockfree_job_queue`
+  - Add optional `max_size` parameter to `job_queue` constructor for bounded queue functionality
+  - Add `is_bounded()`, `get_max_size()`, `set_max_size()`, `is_full()` methods to `job_queue`
+
+### Deprecated
+- **Issue #358**: Queue consolidation deprecations
+  - `lockfree_job_queue` - Use `adaptive_job_queue` with `policy::performance_first` instead
+  - `concurrent_queue<T>` - Use `adaptive_job_queue` or `job_queue` instead
+  - `bounded_job_queue` - Use `job_queue` with `max_size` parameter instead
+  - `queue_factory::create_lockfree_queue()` - Use `create_adaptive_queue(policy::performance_first)` instead
+
+### Changed
 - **Issue #340**: Rename `lockfree_queue<T>` to `concurrent_queue<T>`
   - The class name was misleading as it uses fine-grained locking, not lock-free algorithms
   - Old name `lockfree_queue<T>` is now a deprecated alias for backward compatibility
