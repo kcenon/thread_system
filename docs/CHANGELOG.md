@@ -59,6 +59,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This provides the preferred way to integrate logging without direct logger_system dependency
 
 ### Fixed
+- **Issue #358**: Fix queue_factory_integration_test for deprecated lockfree_job_queue
+  - Update `RequirementsSatisfaction_LockFreeUnderLoad` test to use `adaptive_job_queue`
+  - Remove dead code in `OptimalSelection_FunctionalUnderLoad` that cast to `lockfree_job_queue`
+  - Add deprecation warning suppression for backward compatibility test
+
 - **Issue #333**: Remove deprecated 5-parameter log() method from example logger implementations
   - Updated `composition_example.cpp` console_logger to use `log(const log_entry&)` directly
   - Updated `mock_logger.h` to use `log(const log_entry&)` directly
