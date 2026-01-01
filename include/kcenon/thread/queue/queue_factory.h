@@ -107,7 +107,10 @@ public:
 
     /**
      * @brief Create lock-free queue
-     * @return Unique pointer to new lockfree_job_queue
+     * @return Unique pointer to new adaptive_job_queue with performance_first policy
+     *
+     * @deprecated Use create_adaptive_queue(policy::performance_first) instead.
+     * lockfree_job_queue is now an internal implementation detail.
      *
      * Use this when you need:
      * - Maximum throughput (>500K ops/sec)
@@ -116,8 +119,9 @@ public:
      *
      * @note size() returns approximate values, empty() is non-atomic
      */
-    [[nodiscard]] static auto create_lockfree_queue() -> std::unique_ptr<lockfree_job_queue> {
-        return std::make_unique<lockfree_job_queue>();
+    [[deprecated("Use create_adaptive_queue(policy::performance_first) instead")]]
+    [[nodiscard]] static auto create_lockfree_queue() -> std::unique_ptr<adaptive_job_queue> {
+        return std::make_unique<adaptive_job_queue>(adaptive_job_queue::policy::performance_first);
     }
 
     /**
@@ -183,15 +187,18 @@ public:
 /**
  * @brief Compile-time queue type selector
  * @tparam NeedExactSize If true, selects job_queue
- * @tparam PreferLockFree If true and NeedExactSize is false, selects lockfree_job_queue
+ * @tparam PreferLockFree If true and NeedExactSize is false, selects adaptive_job_queue
  *
  * This template allows compile-time selection of queue types based on requirements.
  * Invalid combinations (exact size + lock-free) trigger a static_assert.
  *
+ * @note lockfree_job_queue is now an internal implementation detail.
+ * PreferLockFree now selects adaptive_job_queue which wraps lockfree_job_queue internally.
+ *
  * @code
  * // Compile-time selection
  * queue_type_selector<true, false>::type accurate_queue;   // job_queue
- * queue_type_selector<false, true>::type fast_queue;       // lockfree_job_queue
+ * queue_type_selector<false, true>::type fast_queue;       // adaptive_job_queue
  * queue_type_selector<false, false>::type balanced_queue;  // adaptive_job_queue
  * @endcode
  */
@@ -201,10 +208,12 @@ struct queue_type_selector {
         "Cannot require both exact size AND lock-free. These are mutually exclusive. "
         "Lock-free queues cannot provide exact size due to concurrent modifications.");
 
+    // Both PreferLockFree and default case now use adaptive_job_queue
+    // (lockfree_job_queue is an internal implementation detail)
     using type = std::conditional_t<
         NeedExactSize,
         job_queue,
-        std::conditional_t<PreferLockFree, lockfree_job_queue, adaptive_job_queue>
+        adaptive_job_queue
     >;
 };
 
@@ -223,7 +232,8 @@ using queue_t = typename queue_type_selector<NeedExactSize, PreferLockFree>::typ
 /// @brief Queue type for accurate size/empty operations (job_queue)
 using accurate_queue_t = queue_t<true, false>;
 
-/// @brief Queue type for maximum throughput (lockfree_job_queue)
+/// @brief Queue type for maximum throughput (adaptive_job_queue with performance_first policy)
+/// @note lockfree_job_queue is now an internal implementation detail
 using fast_queue_t = queue_t<false, true>;
 
 /// @brief Queue type for balanced performance (adaptive_job_queue)

@@ -111,17 +111,34 @@ class typed_thread_pool_builder;
 // Queue types
 // ============================================================================
 
-class lockfree_job_queue;
-
-template<typename T>
-class concurrent_queue;
-
-/// @deprecated Use concurrent_queue instead
-template<typename T>
-using lockfree_queue [[deprecated("Use concurrent_queue instead")]] = concurrent_queue<T>;
-
 class adaptive_job_queue;
 class bounded_job_queue;
+
+// ============================================================================
+// Internal implementation types (detail namespace)
+// ============================================================================
+
+namespace detail {
+    class lockfree_job_queue;
+
+    template<typename T>
+    class concurrent_queue;
+}  // namespace detail
+
+/// @deprecated Use adaptive_job_queue or job_queue instead. lockfree_job_queue is now an internal implementation.
+using lockfree_job_queue [[deprecated(
+    "lockfree_job_queue is moving to detail:: namespace. "
+    "Use adaptive_job_queue with policy::performance_first instead.")]] = detail::lockfree_job_queue;
+
+/// @deprecated Use adaptive_job_queue or job_queue instead. concurrent_queue is now an internal implementation.
+template<typename T>
+using concurrent_queue [[deprecated(
+    "concurrent_queue is moving to detail:: namespace. "
+    "Use adaptive_job_queue or job_queue instead.")]] = detail::concurrent_queue<T>;
+
+/// @deprecated Use adaptive_job_queue or job_queue instead
+template<typename T>
+using lockfree_queue [[deprecated("Use adaptive_job_queue or job_queue instead")]] = detail::concurrent_queue<T>;
 
 // ============================================================================
 // Synchronization primitives (in sync sub-namespace)
