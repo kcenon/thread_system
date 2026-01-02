@@ -23,6 +23,7 @@ Thread System is a comprehensive multithreading framework that provides intuitiv
 - **Cross-Platform**: Linux, macOS, Windows support with multiple compilers
 
 **Latest Updates**:
+- ✅ Queue API simplified: 8 implementations → 2 public types (adaptive_job_queue, job_queue)
 - ✅ Hazard Pointer implementation completed - lock-free queue safe for production
 - ✅ 4x performance improvement with lock-free queue (71 μs vs 291 μs)
 - ✅ Enhanced synchronization primitives and cancellation tokens
@@ -105,13 +106,15 @@ int main() {
 - **Dynamic Worker Management**: Add/remove workers at runtime
 - **Dual API**: Result-based (detailed errors) and convenience API (simple)
 
-### Queue Implementations
-- **Standard Queue**: Mutex-based FIFO with reliable performance
-- **Bounded Queue**: Well-tested with backpressure and capacity limits
-- **Lock-Free Queue**: 4x faster MPMC queue with hazard pointers
-- **Adaptive Queue**: Automatic strategy selection (mutex ↔ lock-free)
+### Queue Implementations (Simplified to 2 Public Types)
+Following Kent Beck's Simple Design principle, we now offer only 2 public queue types:
+- **Adaptive Queue** (Recommended): Auto-optimizing queue that switches between mutex and lock-free modes
+- **Standard Queue**: Mutex-based FIFO with blocking wait and exact size tracking (supports optional size limits)
 - **Queue Factory**: Requirements-based queue creation with compile-time selection
 - **Capability Introspection**: Runtime query for queue characteristics (exact_size, lock_free, etc.)
+
+> **Note**: `bounded_job_queue` is now merged into `job_queue` with optional `max_size` parameter.
+> Internal implementations (`lockfree_job_queue`, `concurrent_queue`) are in `detail::` namespace.
 
 ### Advanced Features
 - **Hazard Pointers**: Safe memory reclamation for lock-free structures
@@ -178,10 +181,9 @@ int main() {
 │  └───────────────────────────────────┘  │
 │  ┌───────────────────────────────────┐  │
 │  │  Queue Implementations            │  │
-│  │  - Mutex Queue (baseline)         │  │
-│  │  - Bounded Queue (backpressure)   │  │
-│  │  - Lock-free MPMC (4x faster)     │  │
-│  │  - Adaptive (auto-optimizing)     │  │
+│  │  - Adaptive Queue (recommended)   │  │
+│  │  - Standard Queue (blocking wait) │  │
+│  │  - Internal: lock-free MPMC       │  │
 │  └───────────────────────────────────┘  │
 │  ┌───────────────────────────────────┐  │
 │  │  Advanced Features                │  │
@@ -206,7 +208,8 @@ Optional Integration Projects (Separate Repos):
 - **thread_base**: Abstract thread class with lifecycle management
 - **thread_pool**: Multi-worker pool with adaptive queues
 - **typed_thread_pool**: Priority scheduling with type-aware routing
-- **job_queue**: Thread-safe FIFO queue implementations
+- **adaptive_job_queue**: Auto-optimizing queue (recommended default)
+- **job_queue**: Mutex-based queue with blocking wait support
 - **hazard_pointer**: Safe memory reclamation for lock-free structures
 - **cancellation_token**: Cooperative cancellation mechanism
 

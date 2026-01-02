@@ -6,19 +6,31 @@ This guide helps you choose the right queue implementation for your use case.
 
 ---
 
+## Simplified Queue API (v1.0)
+
+Following Kent Beck's Simple Design principle, we've reduced **8 queue implementations to 2 public types**:
+
+| Queue Type | Use Case | Key Feature |
+|------------|----------|-------------|
+| **adaptive_job_queue** (Recommended) | Most use cases | Auto-optimizing, best of both worlds |
+| **job_queue** | Blocking wait required | Mutex-based, exact size tracking |
+
+> **Note**: `bounded_job_queue` functionality is now integrated into `job_queue` via optional `max_size` parameter.
+> Internal implementations (`lockfree_job_queue`, `concurrent_queue`) are in `detail::` namespace.
+
+---
+
 ## Quick Decision Tree
 
 ```
-Do you need EXACT size() or empty()?
-├─ YES → Use job_queue (standard)
+Do you need BLOCKING dequeue with condition variable wait?
+├─ YES → Use job_queue
+│        (Optional: pass max_size for bounded behavior)
 │
-└─ NO → Do you need MAXIMUM throughput?
-        ├─ YES → Use lockfree_job_queue
-        │
-        └─ NO/UNSURE → Do you need automatic optimization?
-                       ├─ YES → Use adaptive_job_queue
-                       │
-                       └─ NO → Use job_queue (safe default)
+└─ NO → Use adaptive_job_queue (RECOMMENDED)
+        - Auto-switches between mutex and lock-free modes
+        - Use policy::performance_first for maximum throughput
+        - Use policy::accuracy_first for exact size tracking
 ```
 
 ---
@@ -52,7 +64,10 @@ auto exact_size = queue->size();  // Always exact
 
 ---
 
-### lockfree_job_queue (High Performance)
+### lockfree_job_queue (Internal - use adaptive_job_queue instead)
+
+> **Note**: `lockfree_job_queue` is now an internal implementation in `detail::` namespace.
+> Use `adaptive_job_queue` with `policy::performance_first` for maximum throughput.
 
 Lock-free MPMC queue using Michael-Scott algorithm with hazard pointers.
 
@@ -63,20 +78,16 @@ Lock-free MPMC queue using Michael-Scott algorithm with hazard pointers.
 - Wait-free enqueue, lock-free dequeue
 - No blocking wait support
 
-**Use When:**
-- Maximum throughput required (>500K ops/sec)
-- Many concurrent producers/consumers
-- You don't need exact size/empty checks
-- Using `try_dequeue()` loop pattern
-
-**Example:**
+**Recommended Usage:**
 ```cpp
-auto queue = std::make_unique<lockfree_job_queue>();
+// Use adaptive_job_queue with performance_first policy
+auto queue = std::make_unique<adaptive_job_queue>(
+    adaptive_job_queue::policy::performance_first);
 queue->enqueue(std::make_unique<my_job>());
 
 // Use try_dequeue pattern (non-blocking)
 while (running) {
-    auto result = queue->try_dequeue();
+    auto result = queue->dequeue();
     if (result.is_ok()) {
         auto& job = result.value();
         job->do_work();
@@ -86,22 +97,25 @@ while (running) {
 
 ---
 
-### adaptive_job_queue (Flexible)
+### adaptive_job_queue (RECOMMENDED)
 
 Adaptive queue that automatically switches between mutex and lock-free modes.
+**This is the recommended default choice for most applications.**
 
 **Characteristics:**
-- Wraps both job_queue and lockfree_job_queue
+- Wraps both job_queue and lockfree_job_queue internally
 - Automatic or manual mode switching
 - RAII guard for temporary accuracy mode
 - Statistics tracking for mode usage
 - Policy-based behavior (accuracy, performance, balanced, manual)
+- Template `enqueue<T>()` for type-safe job submission
 
 **Use When:**
-- You want automatic optimization
+- You want automatic optimization (most use cases)
 - Workload varies between accuracy-critical and throughput-critical phases
 - You need temporary accuracy sometimes
 - You're unsure which implementation to choose
+- You need maximum throughput (use `policy::performance_first`)
 
 **Example:**
 ```cpp
@@ -179,10 +193,18 @@ Use `queue_factory` for convenient queue creation.
 ```cpp
 #include <kcenon/thread/queue/queue_factory.h>
 
-// Create specific queue types
-auto standard = queue_factory::create_standard_queue();
-auto lockfree = queue_factory::create_lockfree_queue();
+// Recommended: Create adaptive queue (auto-optimizing)
 auto adaptive = queue_factory::create_adaptive_queue();
+
+// When blocking wait is essential
+auto standard = queue_factory::create_standard_queue();
+
+// With size limit (bounded queue merged into job_queue)
+auto bounded = std::make_shared<job_queue>(/*max_size=*/1000);
+
+// For maximum throughput
+auto performance = queue_factory::create_adaptive_queue(
+    adaptive_job_queue::policy::performance_first);
 ```
 
 ### Requirements-Based Creation
@@ -216,12 +238,12 @@ For zero-runtime-overhead queue selection:
 
 // Type aliases
 accurate_queue_t accurate;   // job_queue
-fast_queue_t fast;           // lockfree_job_queue
-balanced_queue_t balanced;   // adaptive_job_queue
+fast_queue_t fast;           // adaptive_job_queue (performance mode)
+balanced_queue_t balanced;   // adaptive_job_queue (balanced mode)
 
 // Template-based selection
 queue_t<true, false> q1;     // Need exact size → job_queue
-queue_t<false, true> q2;     // Prefer lock-free → lockfree_job_queue
+queue_t<false, true> q2;     // Prefer lock-free → adaptive_job_queue
 queue_t<false, false> q3;    // Balanced → adaptive_job_queue
 ```
 
@@ -312,13 +334,15 @@ void process_queue(scheduler_interface* queue) {
 
 ## Best Practices
 
-### 1. Start with job_queue
+### 1. Start with adaptive_job_queue
 
-When in doubt, use `job_queue`. It's reliable, predictable, and sufficient for most workloads.
+When in doubt, use `adaptive_job_queue`. It auto-optimizes based on workload and provides
+the best of both worlds. Use `job_queue` only when you specifically need blocking wait.
 
 ### 2. Profile Before Optimizing
 
-Don't switch to lock-free prematurely. Profile your actual workload to confirm contention is a bottleneck.
+Don't prematurely use `policy::performance_first`. Profile your actual workload to confirm
+contention is a bottleneck. The default `balanced` policy is often sufficient.
 
 ### 3. Use Capability Checking for Generic Code
 
@@ -377,4 +401,4 @@ This might indicate a workload with varied characteristics. Consider using `manu
 
 ---
 
-*Last Updated: 2025-12-05*
+*Last Updated: 2026-01-02*

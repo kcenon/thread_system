@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add template `enqueue<T>()` method to `adaptive_job_queue` for type-safe job submission
   - Enables submitting job subclasses without explicit casting
 
+### Documentation
+- **Issue #358 / #363**: Queue consolidation - Phase 4 (Documentation)
+  - Update `queue_factory.h` documentation to recommend `adaptive_job_queue` as default choice
+  - Update README.md with simplified queue API (8 → 2 public types)
+  - Update QUEUE_SELECTION_GUIDE.md with new decision tree and recommendations
+  - Update queue_factory_sample.cpp to use `adaptive_job_queue` instead of deprecated `lockfree_job_queue`
+  - Add Kent Beck Simple Design principle references throughout documentation
+
 ### Changed
 - **Issue #358**: Queue consolidation - Phase 1 & 2
   - Move `concurrent_queue<T>` and `lockfree_job_queue` to `detail::` namespace (internal implementation)
