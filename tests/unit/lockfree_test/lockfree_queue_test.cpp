@@ -5,7 +5,7 @@ Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 *****************************************************************************/
 
-#include <kcenon/thread/lockfree/lockfree_queue.h>
+#include <kcenon/thread/concurrent/concurrent_queue.h>
 
 #include <gtest/gtest.h>
 
@@ -15,7 +15,7 @@ All rights reserved.
 #include <thread>
 #include <vector>
 
-using namespace kcenon::thread;
+using namespace kcenon::thread::detail;
 using namespace std::chrono_literals;
 
 class ConcurrentQueueTest : public ::testing::Test {

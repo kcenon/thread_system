@@ -136,9 +136,12 @@ using concurrent_queue [[deprecated(
     "concurrent_queue is moving to detail:: namespace. "
     "Use adaptive_job_queue or job_queue instead.")]] = detail::concurrent_queue<T>;
 
-/// @deprecated Use adaptive_job_queue or job_queue instead
+/// @deprecated MISLEADING NAME: Uses fine-grained locking, not lock-free algorithms
 template<typename T>
-using lockfree_queue [[deprecated("Use adaptive_job_queue or job_queue instead")]] = detail::concurrent_queue<T>;
+using lockfree_queue [[deprecated(
+    "MISLEADING NAME: This class uses fine-grained locking, not lock-free algorithms. "
+    "Use detail::concurrent_queue<T> instead. "
+    "For true lock-free queue, see detail::lockfree_job_queue with hazard pointers.")]] = detail::concurrent_queue<T>;
 
 // ============================================================================
 // Synchronization primitives (in sync sub-namespace)
