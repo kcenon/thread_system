@@ -201,19 +201,22 @@ void stop();
 
 ---
 
-## Lock-Free 큐
+## Concurrent 큐
 
 ### concurrent_queue
 
-**헤더**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
+**헤더**: `#include <kcenon/thread/concurrent/concurrent_queue.h>`
 
-**설명**: 블로킹 대기를 지원하는 스레드 안전 MPMC 큐
+**네임스페이스**: `kcenon::thread::detail`
+
+**설명**: 블로킹 대기를 지원하는 스레드 안전 MPMC 큐 (내부 구현)
 
 **알고리즘**: 분리된 head/tail 뮤텍스를 사용하는 세밀한 잠금
 
-> **참고**: `lockfree/` 디렉토리에 있지만, 이 구현은 진정한 lock-free 알고리즘이 아닌
-> 세밀한 잠금(fine-grained locking)을 사용합니다. `lockfree_queue<T>` 별칭은 deprecated되었으며,
-> 대신 `concurrent_queue<T>`를 사용하세요.
+> **참고**: 이것은 `detail::` 네임스페이스의 내부 구현입니다.
+> 공개 API로는 `adaptive_job_queue` 또는 `job_queue`를 사용하세요.
+> 기존 `lockfree_queue<T>` 별칭은 오해의 소지가 있는 이름으로 인해 deprecated되었습니다
+> (lock-free 알고리즘이 아닌 세밀한 잠금 사용).
 
 **주요 기능**:
 - 다중 프로듀서/컨슈머의 스레드 안전한 동시 접근
@@ -224,9 +227,9 @@ void stop();
 #### 사용 예시
 
 ```cpp
-#include <kcenon/thread/lockfree/lockfree_queue.h>
+#include <kcenon/thread/concurrent/concurrent_queue.h>
 
-using namespace kcenon::thread;
+using namespace kcenon::thread::detail;
 
 concurrent_queue<std::string> queue;
 
