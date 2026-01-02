@@ -47,21 +47,25 @@ namespace kcenon::thread {
  * @brief Factory for creating queue instances
  *
  * Provides convenient methods for queue creation based on requirements.
- * This is a NEW utility class that does not break any existing code.
+ * Following Kent Beck's Simple Design principle, we now offer only 2 public queue types:
  *
- * @note Existing code that creates queues directly continues to work unchanged:
- * @code
- * // These still work exactly as before:
- * auto q1 = std::make_shared<job_queue>();
- * auto q2 = std::make_unique<lockfree_job_queue>();
- * @endcode
+ * ## Queue Selection Guide (Simplified)
  *
- * ### Factory Usage
+ * | Queue Type | Use Case | Key Feature |
+ * |------------|----------|-------------|
+ * | **adaptive_job_queue** (Recommended) | Most use cases | Auto-optimizing, best of both worlds |
+ * | **job_queue** | Blocking wait required | Mutex-based, exact size tracking |
+ *
+ * ## Recommended Usage
  * @code
- * // Convenience methods
- * auto standard = queue_factory::create_standard_queue();
- * auto lockfree = queue_factory::create_lockfree_queue();
- * auto adaptive = queue_factory::create_adaptive_queue();
+ * // Default choice: adaptive_job_queue (auto-optimizing)
+ * auto queue = queue_factory::create_adaptive_queue();
+ *
+ * // When blocking dequeue is essential
+ * auto blocking_queue = queue_factory::create_standard_queue();
+ *
+ * // With size limit (bounded queue merged into job_queue)
+ * auto bounded = std::make_shared<job_queue>(/*max_size=*/1000);
  *
  * // Requirements-based creation
  * queue_factory::requirements reqs;
@@ -71,6 +75,9 @@ namespace kcenon::thread {
  * // Environment-optimized
  * auto optimal = queue_factory::create_optimal();
  * @endcode
+ *
+ * @note Internal implementations (lockfree_job_queue, concurrent_queue) are now
+ * in the detail:: namespace and should not be used directly.
  */
 class queue_factory {
 public:
@@ -99,7 +106,14 @@ public:
      * Use this when you need:
      * - Exact size() and empty() checks
      * - Batch operations
-     * - Blocking dequeue
+     * - Blocking dequeue with condition variable wait
+     *
+     * @note For bounded queue functionality, use:
+     * @code
+     * auto bounded = std::make_shared<job_queue>(/*max_size=*/1000);
+     * @endcode
+     *
+     * @see create_adaptive_queue() for the recommended default choice
      */
     [[nodiscard]] static auto create_standard_queue() -> std::shared_ptr<job_queue> {
         return std::make_shared<job_queue>();
@@ -125,14 +139,20 @@ public:
     }
 
     /**
-     * @brief Create adaptive queue
+     * @brief Create adaptive queue (RECOMMENDED for most use cases)
      * @param policy Adaptation policy (default: balanced)
      * @return Unique pointer to new adaptive_job_queue
      *
+     * This is the **recommended default choice** for most applications.
+     *
      * Use this when you:
-     * - Want automatic optimization
-     * - Need temporary accuracy sometimes
+     * - Want automatic optimization between mutex and lock-free modes
+     * - Need high throughput with variable workloads
      * - Are unsure which implementation to choose
+     * - Want the best of both worlds (safety + performance)
+     *
+     * @note Internally uses lock-free queue for high-contention scenarios
+     * and mutex-based queue for low-contention scenarios.
      */
     [[nodiscard]] static auto create_adaptive_queue(
         adaptive_job_queue::policy policy = adaptive_job_queue::policy::balanced)
