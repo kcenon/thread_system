@@ -8,6 +8,13 @@
 ## [Unreleased]
 
 ### 변경
+- **이슈 #359**: 오해의 소지가 있는 lockfree_queue 이름 수정 (Kent Beck "Reveals Intention" 원칙)
+  - fine-grained locking 큐 구현을 위한 `concurrent/` 디렉토리 생성
+  - `concurrent_queue<T>`를 `lockfree/`에서 `concurrent/concurrent_queue.h`로 이동
+  - `lockfree/lockfree_queue.h`를 하위 호환성 헤더로 변환
+  - "MISLEADING NAME" 경고를 포함하도록 deprecation 메시지 개선
+  - 새 헤더 경로와 네임스페이스 참조로 문서 업데이트
+
 - **이슈 #340**: `lockfree_queue<T>`를 `concurrent_queue<T>`로 이름 변경
   - 클래스 이름이 lock-free 알고리즘이 아닌 fine-grained locking을 사용하므로 오해의 소지가 있었음
   - 이전 이름 `lockfree_queue<T>`는 하위 호환성을 위해 deprecated 별칭으로 유지

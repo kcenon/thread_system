@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #359**: Fix misleading lockfree_queue naming (Kent Beck "Reveals Intention" principle)
+  - Create `concurrent/` directory for fine-grained locking queue implementations
+  - Move `concurrent_queue<T>` from `lockfree/` to `concurrent/concurrent_queue.h`
+  - Convert `lockfree/lockfree_queue.h` to backward compatibility header
+  - Improve deprecation messages to include "MISLEADING NAME" warning
+  - Update documentation with new header paths and namespace references
+
 ### Added
 - **Issue #358 / #362**: Queue consolidation - Phase 3
   - Add template `enqueue<T>()` method to `job_queue` for type-safe job submission
