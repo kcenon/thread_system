@@ -2,9 +2,11 @@
 
 > **Language:** **English** | [한국어](QUEUE_BACKWARD_COMPATIBILITY_KO.md)
 
-## TL;DR: Your Code Still Works
+## TL;DR: Your Code (Probably) Still Works
 
-**No migration is required.** All existing code continues to work exactly as before. The queue capability enhancements introduced in Phase 1-5 are purely additive and non-breaking.
+**For most users: No migration is required.** If you're using `job_queue`, `adaptive_job_queue`, or `queue_factory`, your code continues to work exactly as before.
+
+**Exception:** If you were using `lockfree_job_queue` directly, you need to migrate to `adaptive_job_queue` with `policy::performance_first`.
 
 ---
 
@@ -13,19 +15,23 @@
 | Change | Impact on Existing Code |
 |--------|------------------------|
 | `job_queue` gains `queue_capabilities_interface` | None - additive inheritance |
-| `lockfree_job_queue` gains `scheduler_interface` | None - additive inheritance |
+| `job_queue` gains optional `max_size` parameter | None - backward compatible |
+| `lockfree_job_queue` moved to `detail::` namespace | **Migration required** if used directly |
+| `concurrent_queue` moved to `detail::` namespace | **Migration required** if used directly |
+| `bounded_job_queue` deprecated | Migrate to `job_queue(max_size)` |
+| `typed_*` variants deprecated | Migrate to `adaptive_job_queue` |
 | New `queue_capabilities` struct | None - new type |
 | New `queue_capabilities_interface` | None - optional mixin |
-| New `adaptive_job_queue` class | None - new class |
+| New `adaptive_job_queue` class | None - new class (recommended) |
 | New `queue_factory` utility | None - new utility |
 
 ### Compatibility Guarantees
 
 | Aspect | Guarantee | Details |
 |--------|-----------|---------|
-| **Source Compatibility** | 100% | Existing code compiles without changes |
-| **Binary Compatibility** | 100% | No ABI breaking changes |
-| **API Compatibility** | 100% | All existing methods preserved |
+| **Source Compatibility** | 99% | Breaking: direct `lockfree_job_queue` usage |
+| **Binary Compatibility** | 99% | Breaking: `lockfree_job_queue` moved to `detail::` |
+| **API Compatibility** | 100% | Public API (`job_queue`, `adaptive_job_queue`) unchanged |
 | **Behavioral Compatibility** | 100% | Existing behavior unchanged |
 
 ---
@@ -39,8 +45,14 @@ All of these continue to work **exactly as before**:
 ```cpp
 // These still work exactly as before:
 auto queue = std::make_shared<job_queue>();
-auto lockfree = std::make_unique<lockfree_job_queue>();
+
+// For lock-free behavior, use adaptive_job_queue with performance_first policy:
+auto lockfree = std::make_unique<adaptive_job_queue>(
+    adaptive_job_queue::policy::performance_first);
 ```
+
+> **Note**: `lockfree_job_queue` has been moved to `detail::` namespace.
+> Use `adaptive_job_queue` with `policy::performance_first` for maximum throughput.
 
 ### Queue Operations
 
@@ -104,8 +116,11 @@ if (auto* cap = dynamic_cast<queue_capabilities_interface*>(queue.get())) {
 
 // Use factory (optional)
 auto standard = queue_factory::create_standard_queue();
-auto lockfree = queue_factory::create_lockfree_queue();
 auto adaptive = queue_factory::create_adaptive_queue();
+
+// For maximum throughput (replaces create_lockfree_queue which is deprecated)
+auto performance = queue_factory::create_adaptive_queue(
+    adaptive_job_queue::policy::performance_first);
 
 // Environment-optimized selection
 auto optimal = queue_factory::create_optimal();
@@ -188,15 +203,28 @@ You might want to adopt the new features if:
 
 ### Q: Do I need to change my existing code?
 
-**No.** All existing code continues to work without any modifications.
+**For most users: No.** If you're using `job_queue`, `adaptive_job_queue`, or the `queue_factory`, your code continues to work without any modifications.
+
+**Exception:** If you were using `lockfree_job_queue` directly, you need to migrate to `adaptive_job_queue` with `policy::performance_first`. See the FAQ entry below for details.
 
 ### Q: Will my code break if I update to the latest version?
 
-**No.** All changes are additive. Existing APIs remain unchanged.
+**For most users: No.** The public APIs (`job_queue`, `adaptive_job_queue`, `queue_factory`) remain unchanged.
+
+**Exception:** Direct usage of `lockfree_job_queue` will break as it's been moved to `detail::` namespace. Use `adaptive_job_queue` with `policy::performance_first` instead.
 
 ### Q: What if I'm using `lockfree_job_queue` directly?
 
-It still works exactly as before. The only addition is that it now also implements `scheduler_interface`, which is purely additive.
+`lockfree_job_queue` has been moved to the `detail::` namespace as an internal implementation. Use `adaptive_job_queue` with `policy::performance_first` instead:
+
+```cpp
+// Old code (no longer works)
+// auto queue = std::make_unique<lockfree_job_queue>();
+
+// New code
+auto queue = std::make_unique<adaptive_job_queue>(
+    adaptive_job_queue::policy::performance_first);
+```
 
 ### Q: What if I'm using `job_queue` through `scheduler_interface`?
 
@@ -218,7 +246,8 @@ It still works exactly as before. The queue now also implements `queue_capabilit
 | Phase 4 | Added `adaptive_job_queue` |
 | Phase 5 | Added `queue_factory` and compile-time selection |
 | Phase 6 | Documentation and migration guide |
+| Phase 7 | Consolidated queue implementations (8 → 2 public types), moved internal queues to `detail::` namespace |
 
 ---
 
-*Last Updated: 2025-12-04*
+*Last Updated: 2026-01-02*
