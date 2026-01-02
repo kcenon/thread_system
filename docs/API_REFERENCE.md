@@ -331,19 +331,22 @@ struct requirements {
 
 ---
 
-## Lock-Free Queues
+## Concurrent Queues
 
 ### concurrent_queue
 
-**Header**: `#include <kcenon/thread/lockfree/lockfree_queue.h>`
+**Header**: `#include <kcenon/thread/concurrent/concurrent_queue.h>`
 
-**Description**: Thread-safe MPMC queue with blocking wait support
+**Namespace**: `kcenon::thread::detail`
+
+**Description**: Thread-safe MPMC queue with blocking wait support (internal implementation)
 
 **Algorithm**: Fine-grained locking with separate head/tail mutexes
 
-> **Note**: Despite residing in the `lockfree/` directory, this implementation uses fine-grained
-> locking rather than true lock-free algorithms. The `lockfree_queue<T>` alias is deprecated;
-> use `concurrent_queue<T>` instead.
+> **Note**: This is an internal implementation in the `detail::` namespace.
+> For public API, use `adaptive_job_queue` or `job_queue` instead.
+> The old `lockfree_queue<T>` alias is deprecated due to misleading naming
+> (uses fine-grained locking, not lock-free algorithms).
 
 **Key Features**:
 - Thread-safe concurrent access from multiple producers and consumers
@@ -354,9 +357,9 @@ struct requirements {
 #### Usage Example
 
 ```cpp
-#include <kcenon/thread/lockfree/lockfree_queue.h>
+#include <kcenon/thread/concurrent/concurrent_queue.h>
 
-using namespace kcenon::thread;
+using namespace kcenon::thread::detail;
 
 concurrent_queue<std::string> queue;
 
