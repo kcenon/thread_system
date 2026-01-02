@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <memory>
 #include <mutex>
+#include <type_traits>
 
 namespace kcenon::thread {
 
@@ -147,6 +148,28 @@ public:
      * @return common::VoidResult indicating success or error
      */
     [[nodiscard]] auto enqueue(std::unique_ptr<job>&& j) -> common::VoidResult;
+
+    /**
+     * @brief Type-safe enqueue for job subclasses.
+     *
+     * This template method provides type-safe job submission, allowing callers
+     * to enqueue jobs without explicit casting. The JobType must be derived
+     * from the base job class.
+     *
+     * @tparam JobType A type derived from job
+     * @param value A unique pointer to the job being added.
+     * @return common::VoidResult indicating success or error
+     *
+     * @code
+     * auto queue = std::make_unique<adaptive_job_queue>();
+     * queue->enqueue<my_custom_job>(std::make_unique<my_custom_job>());
+     * @endcode
+     */
+    template<typename JobType, typename = std::enable_if_t<std::is_base_of_v<job, JobType>>>
+    [[nodiscard]] auto enqueue(std::unique_ptr<JobType>&& value) -> common::VoidResult
+    {
+        return enqueue(std::unique_ptr<job>(std::move(value)));
+    }
 
     /**
      * @brief Dequeues a job from the current active queue

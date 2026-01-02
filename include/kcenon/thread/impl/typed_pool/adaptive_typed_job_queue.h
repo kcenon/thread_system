@@ -49,13 +49,27 @@ namespace kcenon::thread
 	/**
 	 * @class adaptive_typed_job_queue_t
 	 * @brief Adaptive priority queue that switches between mutex-based and lock-free implementations
-	 * 
+	 *
+	 * @deprecated Use adaptive_job_queue with template enqueue<T>() method instead.
+	 * This class will be removed in a future major version.
+	 *
+	 * Migration example:
+	 * @code
+	 * // Old code:
+	 * auto queue = std::make_shared<adaptive_typed_job_queue_t<my_job_type>>();
+	 *
+	 * // New code:
+	 * auto queue = std::make_unique<adaptive_job_queue>(adaptive_job_queue::policy::balanced);
+	 * queue->enqueue<my_job>(std::make_unique<my_job>());
+	 * @endcode
+	 *
 	 * This queue monitors performance metrics and automatically switches between
 	 * a traditional mutex-based typed queue and a lock-free typed queue based on
 	 * contention levels and performance characteristics.
 	 */
 	template <typename job_type = job_types>
-	class adaptive_typed_job_queue_t : public typed_job_queue_t<job_type>
+	class [[deprecated("Use adaptive_job_queue with template enqueue<T>() instead")]]
+	adaptive_typed_job_queue_t : public typed_job_queue_t<job_type>
 	{
 	public:
 		/**

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Issue #358 / #362**: Queue consolidation - Phase 3
+  - Add template `enqueue<T>()` method to `job_queue` for type-safe job submission
+  - Add template `enqueue<T>()` method to `adaptive_job_queue` for type-safe job submission
+  - Enables submitting job subclasses without explicit casting
+
 ### Changed
 - **Issue #358**: Queue consolidation - Phase 1 & 2
   - Move `concurrent_queue<T>` and `lockfree_job_queue` to `detail::` namespace (internal implementation)
@@ -21,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `concurrent_queue<T>` - Use `adaptive_job_queue` or `job_queue` instead
   - `bounded_job_queue` - Use `job_queue` with `max_size` parameter instead
   - `queue_factory::create_lockfree_queue()` - Use `create_adaptive_queue(policy::performance_first)` instead
+- **Issue #358 / #362**: Typed queue deprecations
+  - `typed_job_queue_t<T>` - Use `job_queue` or `adaptive_job_queue` with template `enqueue<T>()` instead
+  - `typed_lockfree_job_queue_t<T>` - Use `adaptive_job_queue` with `policy::performance_first` instead
+  - `adaptive_typed_job_queue_t<T>` - Use `adaptive_job_queue` with template `enqueue<T>()` instead
 
 ### Changed
 - **Issue #340**: Rename `lockfree_queue<T>` to `concurrent_queue<T>`

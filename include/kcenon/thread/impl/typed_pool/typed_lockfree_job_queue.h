@@ -104,6 +104,19 @@ namespace kcenon::thread
 	 * @class typed_lockfree_job_queue_t
 	 * @brief High-performance lock-free priority-based job queue
 	 *
+	 * @deprecated Use adaptive_job_queue with policy::performance_first and template enqueue<T>() instead.
+	 * This class will be removed in a future major version.
+	 *
+	 * Migration example:
+	 * @code
+	 * // Old code:
+	 * auto queue = std::make_unique<typed_lockfree_job_queue_t<my_job_type>>();
+	 *
+	 * // New code:
+	 * auto queue = std::make_unique<adaptive_job_queue>(adaptive_job_queue::policy::performance_first);
+	 * queue->enqueue<my_job>(std::make_unique<my_job>());
+	 * @endcode
+	 *
 	 * This class provides a lock-free implementation of a typed job queue that
 	 * manages jobs with distinct priority levels. It maintains separate lock-free
 	 * queues for each job type/priority, ensuring thread-safe operations with
@@ -138,7 +151,8 @@ namespace kcenon::thread
 	 * @see hazard_pointer.h for memory reclamation details
 	 */
 	template <typename job_type = job_types>
-	class typed_lockfree_job_queue_t : public job_queue
+	class [[deprecated("Use adaptive_job_queue with policy::performance_first and template enqueue<T>() instead")]]
+	typed_lockfree_job_queue_t : public job_queue
 	{
 	public:
 		/**
