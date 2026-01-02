@@ -42,7 +42,7 @@ adaptive_job_queue::adaptive_job_queue(policy p)
     : policy_(p)
     , current_mode_(mode::mutex)
     , mutex_queue_(std::make_shared<job_queue>())
-    , lockfree_queue_(std::make_unique<lockfree_job_queue>())
+    , lockfree_queue_(std::make_unique<detail::lockfree_job_queue>())
     , mode_start_time_(std::chrono::steady_clock::now()) {
 
     // Set initial mode based on policy

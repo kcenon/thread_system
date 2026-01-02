@@ -307,7 +307,7 @@ namespace kcenon::thread
 		
 	private:
 		// Type aliases
-		using lockfree_queue_ptr = std::unique_ptr<lockfree_job_queue>;
+		using lockfree_queue_ptr = std::unique_ptr<detail::lockfree_job_queue>;
 		using queue_map = std::unordered_map<job_type, lockfree_queue_ptr>;
 		
 		// Per-type queues
@@ -326,8 +326,8 @@ namespace kcenon::thread
 		mutable std::atomic<job_type> last_dequeue_type_{};
 		
 		// Helper methods
-		auto get_or_create_queue(const job_type& type) -> lockfree_job_queue*;
-		auto get_queue(const job_type& type) const -> lockfree_job_queue*;
+		auto get_or_create_queue(const job_type& type) -> detail::lockfree_job_queue*;
+		auto get_queue(const job_type& type) const -> detail::lockfree_job_queue*;
 		auto update_priority_order() -> void;
 		auto should_update_priority_order() const -> bool;
 	};
@@ -353,7 +353,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_lockfree_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> lockfree_job_queue*
+	auto typed_lockfree_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> detail::lockfree_job_queue*
 	{
 		auto it = typed_queues_.find(type);
 		if (it != typed_queues_.end())
@@ -362,7 +362,7 @@ namespace kcenon::thread
 		}
 
 		// Create a new lockfree_job_queue for this type
-		auto new_queue = std::make_unique<lockfree_job_queue>();
+		auto new_queue = std::make_unique<detail::lockfree_job_queue>();
 		auto* queue_ptr = new_queue.get();
 		typed_queues_[type] = std::move(new_queue);
 
@@ -373,7 +373,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_lockfree_job_queue_t<job_type>::get_queue(const job_type& type) const -> lockfree_job_queue*
+	auto typed_lockfree_job_queue_t<job_type>::get_queue(const job_type& type) const -> detail::lockfree_job_queue*
 	{
 		auto it = typed_queues_.find(type);
 		if (it != typed_queues_.end())

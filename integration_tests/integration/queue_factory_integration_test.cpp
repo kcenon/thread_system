@@ -177,8 +177,10 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_LockFreeUnderLoad) 
     auto caps = caps_interface->get_capabilities();
     EXPECT_TRUE(caps.lock_free) << "Queue must be lock-free when requested";
 
-    auto* lockfree_q = dynamic_cast<lockfree_job_queue*>(queue.get());
-    ASSERT_NE(lockfree_q, nullptr);
+    // Note: lockfree_job_queue is now an internal implementation detail.
+    // prefer_lock_free returns adaptive_job_queue with performance_first policy.
+    auto* adaptive_q = dynamic_cast<adaptive_job_queue*>(queue.get());
+    ASSERT_NE(adaptive_q, nullptr) << "prefer_lock_free should return adaptive_job_queue";
 
     constexpr size_t producer_count = 4;
     constexpr size_t jobs_per_producer = 100;
@@ -196,7 +198,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_LockFreeUnderLoad) 
                     completed_jobs_.fetch_add(1, std::memory_order_relaxed);
                     return kcenon::common::ok();
                 });
-                if (!lockfree_q->enqueue(std::move(new_job)).is_err()) {
+                if (!adaptive_q->enqueue(std::move(new_job)).is_err()) {
                     enqueued.fetch_add(1, std::memory_order_relaxed);
                 }
             }
@@ -208,7 +210,7 @@ TEST_F(QueueFactoryIntegrationTest, RequirementsSatisfaction_LockFreeUnderLoad) 
         consumers.emplace_back([&]() {
             while (!stop_consumers.load(std::memory_order_acquire) ||
                    dequeued.load() < enqueued.load()) {
-                if (auto result = lockfree_q->try_dequeue(); result.is_ok()) {
+                if (auto result = adaptive_q->try_dequeue(); result.is_ok()) {
                     (void)result.value()->do_work();
                     dequeued.fetch_add(1, std::memory_order_relaxed);
                 } else {
@@ -506,8 +508,9 @@ TEST_F(QueueFactoryIntegrationTest, OptimalSelection_FunctionalUnderLoad) {
     std::atomic<size_t> dequeued{0};
     std::atomic<bool> stop_consumers{false};
 
+    // Note: create_optimal() returns either job_queue or adaptive_job_queue
+    // (lockfree_job_queue is now an internal implementation detail)
     auto* job_q = dynamic_cast<job_queue*>(queue.get());
-    auto* lockfree_q = dynamic_cast<lockfree_job_queue*>(queue.get());
     auto* adaptive_q = dynamic_cast<adaptive_job_queue*>(queue.get());
 
     std::vector<std::thread> producers;
@@ -527,17 +530,12 @@ TEST_F(QueueFactoryIntegrationTest, OptimalSelection_FunctionalUnderLoad) {
 
     std::vector<std::thread> consumers;
     for (size_t c = 0; c < 2; ++c) {
-        consumers.emplace_back([&, job_q, lockfree_q, adaptive_q]() {
+        consumers.emplace_back([&, job_q, adaptive_q]() {
             while (!stop_consumers.load(std::memory_order_acquire) ||
                    dequeued.load() < enqueued.load()) {
                 bool got_job = false;
                 if (job_q != nullptr) {
                     if (auto result = job_q->try_dequeue(); result.is_ok()) {
-                        (void)result.value()->do_work();
-                        got_job = true;
-                    }
-                } else if (lockfree_q != nullptr) {
-                    if (auto result = lockfree_q->try_dequeue(); result.is_ok()) {
                         (void)result.value()->do_work();
                         got_job = true;
                     }
@@ -636,7 +634,12 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_StandardQueue) {
 }
 
 TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_LockfreeQueue) {
+    // Note: create_lockfree_queue() is deprecated but tested for backward compatibility
+    // It now returns adaptive_job_queue with performance_first policy
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     auto queue = queue_factory::create_lockfree_queue();
+#pragma GCC diagnostic pop
     ASSERT_NE(queue, nullptr);
 
     scheduler_interface* scheduler = queue.get();

@@ -44,17 +44,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace kcenon::thread
 {
 	/**
-	 * @brief Constructs a new job_queue with default settings.
-	 * 
+	 * @brief Constructs a new job_queue with optional size limit.
+	 *
 	 * Implementation details:
 	 * - notify_ starts as true (enables condition variable notifications)
 	 * - stop_ starts as false (queue is active)
 	 * - mutex_ and condition_ are default constructed
 	 * - queue_ is an empty deque ready for job storage
-	 * 
+	 * - max_size_ controls the maximum queue size (std::nullopt = unlimited)
+	 *
 	 * The queue is immediately ready for use after construction.
+	 *
+	 * @param max_size Optional maximum queue size. If set, enqueue will fail
+	 *                 when the queue reaches this size. Use std::nullopt for unlimited.
 	 */
-	job_queue::job_queue() : notify_(true), stop_(false), mutex_(), condition_(), queue_() {}
+	job_queue::job_queue(std::optional<std::size_t> max_size)
+		: notify_(true), stop_(false), mutex_(), condition_(), queue_(), max_size_(max_size) {}
 
 	/**
 	 * @brief Destroys the job_queue.
@@ -142,6 +147,12 @@ namespace kcenon::thread
 		// Critical section: modify queue with proper synchronization
 		std::scoped_lock<std::mutex> lock(mutex_);
 
+		// Check size limit if bounded
+		if (max_size_.has_value() && queue_.size() >= max_size_.value())
+		{
+			return common::error_info{static_cast<int>(error_code::queue_full), "Job queue is full", "thread_system"};
+		}
+
 		// Move job into queue (efficient transfer of ownership)
 		queue_.push_back(std::move(value));
 
@@ -201,6 +212,17 @@ namespace kcenon::thread
 
 		// Critical section: add entire batch with single lock acquisition
 		std::scoped_lock<std::mutex> lock(mutex_);
+
+		// Check size limit if bounded
+		if (max_size_.has_value())
+		{
+			std::size_t available_space = max_size_.value() - queue_.size();
+			if (jobs.size() > available_space)
+			{
+				return common::error_info{static_cast<int>(error_code::queue_full),
+					"Job queue cannot fit entire batch", "thread_system"};
+			}
+		}
 
 		// Move all jobs into queue efficiently
 		for (auto& job : jobs)
@@ -573,4 +595,58 @@ namespace kcenon::thread
 	{
 		return utility_module::formatter::format("contained {} jobs", size());
 	}
+
+	// ============================================
+	// Bounded queue functionality
+	// ============================================
+
+	/**
+	 * @brief Checks if the queue has a size limit.
+	 *
+	 * @return true if max_size is set, false if unlimited
+	 */
+	auto job_queue::is_bounded() const -> bool
+	{
+		return max_size_.has_value();
+	}
+
+	/**
+	 * @brief Gets the maximum queue size.
+	 *
+	 * @return The maximum size, or std::nullopt if unlimited
+	 */
+	auto job_queue::get_max_size() const -> std::optional<std::size_t>
+	{
+		return max_size_;
+	}
+
+	/**
+	 * @brief Sets the maximum queue size.
+	 *
+	 * Note: This does not remove existing jobs if the queue is currently
+	 * larger than the new max_size. It only affects future enqueue operations.
+	 *
+	 * @param max_size New maximum size (std::nullopt for unlimited)
+	 */
+	auto job_queue::set_max_size(std::optional<std::size_t> max_size) -> void
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+		max_size_ = max_size;
+	}
+
+	/**
+	 * @brief Checks if the queue is at capacity.
+	 *
+	 * @return true if queue is at max_size (bounded and full), false otherwise
+	 */
+	auto job_queue::is_full() const -> bool
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+		if (!max_size_.has_value())
+		{
+			return false;  // Unbounded queue is never full
+		}
+		return queue_.size() >= max_size_.value();
+	}
+
 } // namespace kcenon::thread

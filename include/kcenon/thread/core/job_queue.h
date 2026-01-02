@@ -80,10 +80,13 @@ namespace kcenon::thread
 		/**
 		 * @brief Constructs a new, empty @c job_queue.
 		 *
+		 * @param max_size Optional maximum queue size. If set, enqueue will fail when
+		 *                 the queue reaches this size. Use std::nullopt for unlimited.
+		 *
 		 * Initializes internal synchronization primitives and sets all flags to
 		 * their default states (e.g., @c notify_ = false, @c stop_ = false).
 		 */
-		job_queue();
+		explicit job_queue(std::optional<std::size_t> max_size = std::nullopt);
 
 		/**
 		 * @brief Virtual destructor. Cleans up resources used by the @c job_queue.
@@ -283,6 +286,34 @@ namespace kcenon::thread
 			};
 		}
 
+		// ============================================
+		// Bounded queue functionality (merged from bounded_job_queue)
+		// ============================================
+
+		/**
+		 * @brief Check if queue has a size limit
+		 * @return true if max_size is set, false otherwise
+		 */
+		[[nodiscard]] auto is_bounded() const -> bool;
+
+		/**
+		 * @brief Get the maximum queue size
+		 * @return The maximum size, or std::nullopt if unlimited
+		 */
+		[[nodiscard]] auto get_max_size() const -> std::optional<std::size_t>;
+
+		/**
+		 * @brief Set maximum queue size
+		 * @param max_size New maximum size (std::nullopt for unlimited)
+		 */
+		auto set_max_size(std::optional<std::size_t> max_size) -> void;
+
+		/**
+		 * @brief Check if queue is at capacity
+		 * @return true if queue is at max_size, false otherwise
+		 */
+		[[nodiscard]] auto is_full() const -> bool;
+
 	protected:
 		/**
 		 * @brief If @c true, threads waiting for new jobs are notified when a new job
@@ -324,6 +355,14 @@ namespace kcenon::thread
 		 *       source of truth for the queue size to prevent inconsistencies.
 		 */
 		std::deque<std::unique_ptr<job>> queue_;
+
+		/**
+		 * @brief Optional maximum queue size.
+		 *
+		 * If set, enqueue operations will fail when the queue reaches this size.
+		 * std::nullopt means unlimited size (default behavior).
+		 */
+		std::optional<std::size_t> max_size_;
 	};
 }
 
