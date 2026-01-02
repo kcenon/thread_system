@@ -50,6 +50,21 @@ namespace kcenon::thread
 	 * @class typed_job_queue_t
 	 * @brief A template-based queue that manages jobs with distinct priority levels.
 	 *
+	 * @deprecated Use job_queue or adaptive_job_queue with template enqueue<T>() method instead.
+	 * This class will be removed in a future major version.
+	 *
+	 * Migration example:
+	 * @code
+	 * // Old code:
+	 * auto queue = std::make_shared<typed_job_queue_t<my_job_type>>();
+	 * queue->enqueue(std::make_unique<my_typed_job>(priority));
+	 *
+	 * // New code:
+	 * auto queue = std::make_shared<job_queue>();
+	 * queue->enqueue<my_job>(std::make_unique<my_job>());
+	 * // Or use adaptive_job_queue for performance-critical code
+	 * @endcode
+	 *
 	 * This class inherits from @c job_queue and provides functionality to enqueue and
 	 * dequeue priority-based jobs. Internally, it maintains multiple queues (one per
 	 * priority level) and tracks their sizes.
@@ -57,7 +72,9 @@ namespace kcenon::thread
 	 * @tparam job_type The type used to represent job priority levels. Defaults to
 	 *         @c job_types.
 	 */
-	template <typename job_type = job_types> class typed_job_queue_t : public job_queue
+	template <typename job_type = job_types>
+	class [[deprecated("Use job_queue or adaptive_job_queue with template enqueue<T>() instead")]]
+	typed_job_queue_t : public job_queue
 	{
 	public:
 		/**
