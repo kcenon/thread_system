@@ -65,11 +65,12 @@ void simple_factory_usage()
     std::cout << "  - has_exact_size: " << std::boolalpha << standard->has_exact_size() << std::endl;
     std::cout << "  - is_lock_free: " << standard->is_lock_free() << std::endl;
 
-    // Create lock-free queue - maximum throughput, non-blocking
-    auto lockfree = queue_factory::create_lockfree_queue();
-    std::cout << "Lock-free queue (lockfree_job_queue):" << std::endl;
-    std::cout << "  - has_exact_size: " << lockfree->has_exact_size() << std::endl;
-    std::cout << "  - is_lock_free: " << lockfree->is_lock_free() << std::endl;
+    // Create adaptive queue with performance_first policy - maximum throughput
+    // Note: create_lockfree_queue() is deprecated, use create_adaptive_queue() instead
+    auto performance = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
+    std::cout << "Performance-first queue (adaptive_job_queue with lock-free mode):" << std::endl;
+    std::cout << "  - has_exact_size: " << performance->has_exact_size() << std::endl;
+    std::cout << "  - is_lock_free: " << performance->is_lock_free() << std::endl;
 
     // Create adaptive queue - auto-optimizing based on workload
     auto adaptive = queue_factory::create_adaptive_queue();
@@ -104,7 +105,7 @@ void requirements_based_selection()
     queue_factory::requirements logging_reqs;
     logging_reqs.prefer_lock_free = true;
     auto logging_queue = queue_factory::create_for_requirements(logging_reqs);
-    std::cout << "  - Returns lockfree_job_queue via scheduler_interface" << std::endl;
+    std::cout << "  - Returns adaptive_job_queue via scheduler_interface" << std::endl;
     std::cout << "  - Maximum throughput for high-volume logging" << std::endl;
 
     // Scenario: Batch processing needs batch operations
@@ -204,7 +205,7 @@ void compile_time_selection()
     // Type aliases for common use cases
     std::cout << "Pre-defined type aliases:" << std::endl;
     std::cout << "  - accurate_queue_t = job_queue (exact size/empty)" << std::endl;
-    std::cout << "  - fast_queue_t = lockfree_job_queue (maximum throughput)" << std::endl;
+    std::cout << "  - fast_queue_t = adaptive_job_queue (maximum throughput)" << std::endl;
     std::cout << "  - balanced_queue_t = adaptive_job_queue (auto-tuning)" << std::endl;
 
     // Demonstrate usage
@@ -220,8 +221,8 @@ void compile_time_selection()
     // Show template-based selection
     std::cout << "\nTemplate-based selection (queue_t<NeedExactSize, PreferLockFree>):" << std::endl;
     std::cout << "  - queue_t<true, false>  -> job_queue" << std::endl;
-    std::cout << "  - queue_t<false, true>  -> lockfree_job_queue" << std::endl;
-    std::cout << "  - queue_t<false, false> -> adaptive_job_queue" << std::endl;
+    std::cout << "  - queue_t<false, true>  -> adaptive_job_queue (performance mode)" << std::endl;
+    std::cout << "  - queue_t<false, false> -> adaptive_job_queue (balanced mode)" << std::endl;
     std::cout << "  - queue_t<true, true>   -> compile error (mutually exclusive)" << std::endl;
 
     std::cout << std::endl;
@@ -245,8 +246,8 @@ void practical_use_cases()
     // High-frequency trading: needs maximum speed
     std::cout << "\n[High-Frequency Trading - Order Queue]" << std::endl;
     std::cout << "  Requirements: prefer_lock_free" << std::endl;
-    std::cout << "  Selected: lockfree_job_queue (maximum throughput)" << std::endl;
-    auto hft_queue = queue_factory::create_lockfree_queue();
+    std::cout << "  Selected: adaptive_job_queue with performance_first policy" << std::endl;
+    auto hft_queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
 
     // Web server: balanced workload
     std::cout << "\n[Web Server - Request Queue]" << std::endl;
