@@ -65,7 +65,7 @@ namespace kcenon::thread {
  * auto blocking_queue = queue_factory::create_standard_queue();
  *
  * // With size limit (bounded queue merged into job_queue)
- * auto bounded = std::make_shared<job_queue>(/*max_size=*/1000);
+ * auto bounded = std::make_shared<job_queue>(1000);  // max_size = 1000
  *
  * // Requirements-based creation
  * queue_factory::requirements reqs;
@@ -110,7 +110,7 @@ public:
      *
      * @note For bounded queue functionality, use:
      * @code
-     * auto bounded = std::make_shared<job_queue>(/*max_size=*/1000);
+     * auto bounded = std::make_shared<job_queue>(1000);  // max_size = 1000
      * @endcode
      *
      * @see create_adaptive_queue() for the recommended default choice
