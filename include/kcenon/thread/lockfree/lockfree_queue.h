@@ -42,9 +42,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread {
 
+namespace detail {
+
 /**
  * @class concurrent_queue
- * @brief Thread-safe MPMC queue with blocking wait support
+ * @brief Thread-safe MPMC queue with blocking wait support (Internal implementation)
  *
  * This class implements a thread-safe Multi-Producer Multi-Consumer (MPMC) queue
  * using fine-grained locking for simplicity and correctness. It provides both
@@ -302,19 +304,39 @@ private:
     std::condition_variable cv_;
 };
 
+}  // namespace detail
+
 /**
- * @brief Backward compatibility alias for concurrent_queue
+ * @brief Public alias for detail::concurrent_queue
  *
- * @deprecated Use concurrent_queue instead. This alias will be removed in a future version.
+ * @deprecated This class is being moved to detail:: namespace as it's an internal implementation.
+ * For new code, prefer using adaptive_job_queue or job_queue directly.
  *
- * The name "lockfree_queue" is misleading as the implementation uses fine-grained
- * locking rather than true lock-free algorithms. The new name "concurrent_queue"
- * more accurately describes the thread-safe, concurrent nature of this container.
+ * This class implements a thread-safe Multi-Producer Multi-Consumer (MPMC) queue
+ * using fine-grained locking (not true lock-free). The class remains available for
+ * backward compatibility but may be removed in a future major version.
  *
  * @tparam T The element type (must be move-constructible)
  */
 template <typename T>
-using lockfree_queue [[deprecated("Use concurrent_queue instead. "
-    "This class uses fine-grained locking, not lock-free algorithms.")]] = concurrent_queue<T>;
+using concurrent_queue [[deprecated(
+    "concurrent_queue is moving to detail:: namespace. "
+    "For public API, use adaptive_job_queue or job_queue instead. "
+    "If you need this class directly, use detail::concurrent_queue<T>.")]] = detail::concurrent_queue<T>;
+
+/**
+ * @brief Backward compatibility alias for concurrent_queue
+ *
+ * @deprecated Use adaptive_job_queue or job_queue instead.
+ *
+ * The name "lockfree_queue" is misleading as the implementation uses fine-grained
+ * locking rather than true lock-free algorithms.
+ *
+ * @tparam T The element type (must be move-constructible)
+ */
+template <typename T>
+using lockfree_queue [[deprecated(
+    "lockfree_queue is deprecated. Use adaptive_job_queue or job_queue instead. "
+    "This class uses fine-grained locking, not lock-free algorithms.")]] = detail::concurrent_queue<T>;
 
 }  // namespace kcenon::thread

@@ -46,8 +46,10 @@ auto queue_factory::create_for_requirements(const requirements& reqs)
     }
 
     // If lock-free is preferred and no accuracy needs
+    // Use adaptive_job_queue with performance_first policy instead of direct lockfree_job_queue
+    // (lockfree_job_queue is now an internal implementation detail)
     if (reqs.prefer_lock_free) {
-        return std::make_unique<lockfree_job_queue>();
+        return std::make_unique<adaptive_job_queue>(adaptive_job_queue::policy::performance_first);
     }
 
     // Default: adaptive queue for flexibility

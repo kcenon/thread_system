@@ -312,7 +312,7 @@ private:
 
     // Wrapped queues (existing classes, unchanged)
     std::shared_ptr<job_queue> mutex_queue_;
-    std::unique_ptr<lockfree_job_queue> lockfree_queue_;
+    std::unique_ptr<detail::lockfree_job_queue> lockfree_queue_;
 
     // Synchronization for mode switching
     mutable std::mutex migration_mutex_;

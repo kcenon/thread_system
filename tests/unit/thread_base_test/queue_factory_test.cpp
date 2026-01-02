@@ -71,19 +71,21 @@ TEST_F(QueueFactoryTest, CreateStandardQueue) {
 }
 
 TEST_F(QueueFactoryTest, CreateLockfreeQueue) {
+    // Note: create_lockfree_queue() now returns adaptive_job_queue with performance_first policy
+    // (lockfree_job_queue is now an internal implementation detail)
     auto queue = queue_factory::create_lockfree_queue();
 
     ASSERT_NE(queue, nullptr);
     EXPECT_TRUE(queue->empty());
 
-    // Verify it's a lockfree_job_queue
+    // Verify it's an adaptive_job_queue in lock-free mode
     auto caps = queue->get_capabilities();
-    EXPECT_FALSE(caps.exact_size);
-    EXPECT_FALSE(caps.atomic_empty_check);
-    EXPECT_TRUE(caps.lock_free);
-    EXPECT_FALSE(caps.supports_batch);
-    EXPECT_FALSE(caps.supports_blocking_wait);
-    EXPECT_FALSE(caps.supports_stop);
+    EXPECT_FALSE(caps.exact_size);       // Lock-free mode doesn't have exact size
+    EXPECT_FALSE(caps.atomic_empty_check); // Lock-free mode doesn't have atomic empty check
+    EXPECT_TRUE(caps.lock_free);         // Should be in lock-free mode
+    EXPECT_FALSE(caps.supports_batch);   // Lock-free mode doesn't support batch
+    EXPECT_FALSE(caps.supports_blocking_wait); // Lock-free mode doesn't support blocking wait
+    EXPECT_TRUE(caps.supports_stop);     // adaptive_job_queue supports stop
 }
 
 TEST_F(QueueFactoryTest, CreateAdaptiveQueueDefaultPolicy) {
@@ -254,14 +256,15 @@ TEST_F(QueueFactoryTest, CompileTimeSelectionAccurate) {
 }
 
 TEST_F(QueueFactoryTest, CompileTimeSelectionFast) {
-    // queue_type_selector<false, true> should be lockfree_job_queue
+    // queue_type_selector<false, true> now returns adaptive_job_queue
+    // (lockfree_job_queue is now an internal implementation detail)
     using selected_type = queue_type_selector<false, true>::type;
-    static_assert(std::is_same_v<selected_type, lockfree_job_queue>,
-                  "queue_type_selector<false, true> should select lockfree_job_queue");
+    static_assert(std::is_same_v<selected_type, adaptive_job_queue>,
+                  "queue_type_selector<false, true> should select adaptive_job_queue");
 
     // Using queue_t alias
-    static_assert(std::is_same_v<queue_t<false, true>, lockfree_job_queue>,
-                  "queue_t<false, true> should be lockfree_job_queue");
+    static_assert(std::is_same_v<queue_t<false, true>, adaptive_job_queue>,
+                  "queue_t<false, true> should be adaptive_job_queue");
 }
 
 TEST_F(QueueFactoryTest, CompileTimeSelectionBalanced) {
@@ -279,8 +282,9 @@ TEST_F(QueueFactoryTest, TypeAliases) {
     // Verify pre-defined type aliases
     static_assert(std::is_same_v<accurate_queue_t, job_queue>,
                   "accurate_queue_t should be job_queue");
-    static_assert(std::is_same_v<fast_queue_t, lockfree_job_queue>,
-                  "fast_queue_t should be lockfree_job_queue");
+    // fast_queue_t now returns adaptive_job_queue (lockfree_job_queue is internal)
+    static_assert(std::is_same_v<fast_queue_t, adaptive_job_queue>,
+                  "fast_queue_t should be adaptive_job_queue");
     static_assert(std::is_same_v<balanced_queue_t, adaptive_job_queue>,
                   "balanced_queue_t should be adaptive_job_queue");
 }

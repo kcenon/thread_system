@@ -72,6 +72,23 @@ struct queue_metrics {
  * @class bounded_job_queue
  * @brief Thread-safe job queue with size limits and backpressure support
  *
+ * @deprecated Use job_queue with max_size parameter instead. The functionality
+ * of bounded_job_queue has been merged into job_queue.
+ *
+ * Migration:
+ * @code
+ * // Old code:
+ * auto queue = std::make_shared<bounded_job_queue>(1000);
+ *
+ * // New code:
+ * auto queue = std::make_shared<job_queue>(1000);  // max_size = 1000
+ *
+ * // For backpressure, check is_full() and size() manually
+ * if (queue->is_full()) {
+ *     // Handle backpressure
+ * }
+ * @endcode
+ *
  * This enhanced job queue provides:
  * - Maximum queue size enforcement to prevent memory exhaustion
  * - Backpressure signaling when queue is near capacity
@@ -119,7 +136,7 @@ struct queue_metrics {
  * }
  * @endcode
  */
-class bounded_job_queue : public job_queue {
+class [[deprecated("Use job_queue with max_size parameter instead")]] bounded_job_queue : public job_queue {
 public:
     /**
      * @brief Constructs a bounded job queue

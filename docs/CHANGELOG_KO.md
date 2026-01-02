@@ -28,6 +28,11 @@
   - **BREAKING CHANGE**: error_code 정수 값을 확인하는 모든 코드 업데이트 필요
 
 ### 수정
+- **이슈 #358**: deprecated lockfree_job_queue에 대한 queue_factory_integration_test 수정
+  - `RequirementsSatisfaction_LockFreeUnderLoad` 테스트가 `adaptive_job_queue`를 사용하도록 업데이트
+  - `OptimalSelection_FunctionalUnderLoad`에서 `lockfree_job_queue`로 캐스트하는 불필요한 코드 제거
+  - 하위 호환성 테스트를 위한 deprecation 경고 억제 추가
+
 - **이슈 #333**: 예제 로거 구현에서 deprecated 5-파라미터 log() 메서드 제거
   - `composition_example.cpp`의 console_logger가 `log(const log_entry&)`를 직접 사용하도록 업데이트
   - `mock_logger.h`가 `log(const log_entry&)`를 직접 사용하도록 업데이트

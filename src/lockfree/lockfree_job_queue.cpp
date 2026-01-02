@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/lockfree/lockfree_job_queue.h>
 
-namespace kcenon::thread {
+namespace kcenon::thread::detail {
 
 // Constructor: Initialize with a dummy node
 lockfree_job_queue::lockfree_job_queue() {
@@ -266,4 +266,4 @@ auto lockfree_job_queue::size() const -> std::size_t {
     return approximate_size_.load(std::memory_order_relaxed);
 }
 
-} // namespace kcenon::thread
+}  // namespace kcenon::thread::detail
