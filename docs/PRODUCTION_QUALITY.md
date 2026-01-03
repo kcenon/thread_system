@@ -12,7 +12,7 @@ The thread_system includes comprehensive quality assurance, rigorous testing, an
 
 **Quality Highlights**:
 - ✅ 95%+ CI/CD success rate across all platforms
-- ✅ 70%+ code coverage with comprehensive test suite
+- ✅ 50%+ code coverage with comprehensive test suite
 - ✅ Zero ThreadSanitizer warnings in production code
 - ✅ Zero AddressSanitizer memory leaks
 - ✅ 100% RAII compliance (Grade A)
