@@ -286,6 +286,52 @@ logger_system    monitoring_system
 
 ---
 
+## C++20 Module Support
+
+Thread System provides C++20 module support as an alternative to the header-based interface.
+
+### Requirements for Modules
+- **CMake 3.28+**
+- **Clang 16+, GCC 14+, or MSVC 2022 17.4+**
+- **common_system** with module support
+
+### Building with Modules
+
+```bash
+cmake -B build -DTHREAD_BUILD_MODULES=ON
+cmake --build build
+```
+
+### Using Modules
+
+```cpp
+// Instead of includes:
+// #include <kcenon/thread/core/thread_pool.h>
+
+// Use module import:
+import kcenon.thread;
+
+int main() {
+    using namespace kcenon::thread;
+
+    auto pool = std::make_shared<thread_pool>("MyPool");
+    pool->start();
+    // ...
+}
+```
+
+### Module Structure
+
+| Module | Contents |
+|--------|----------|
+| `kcenon.thread` | Primary module (imports all partitions) |
+| `kcenon.thread:core` | Thread pool, workers, jobs, cancellation |
+| `kcenon.thread:queue` | Queue implementations (job_queue, adaptive_job_queue) |
+
+> **Note**: C++20 modules are experimental. The header-based interface remains the primary API.
+
+---
+
 ## CMake Integration
 
 ### Basic Integration

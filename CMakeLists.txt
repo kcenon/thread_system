@@ -7,6 +7,9 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+# Note: C++20 modules require CMake 3.28+.
+# The THREAD_BUILD_MODULES option is only available when using CMake 3.28 or later.
+
 # Define the project
 project(ThreadSystem
     VERSION 0.3.0.0
@@ -201,6 +204,87 @@ else()
 endif()
 
 ##################################################
+# C++20 Module Support (Phase 2)
+##################################################
+# Enable C++20 modules with CMake 3.28+ when building with module-capable compilers.
+# This provides an alternative to the header-based interface.
+#
+# Usage:
+#   cmake -DTHREAD_BUILD_MODULES=ON ..
+#
+# Requirements:
+#   - CMake 3.28 or later
+#   - Clang 16+, GCC 14+, or MSVC 2022 17.4+
+#   - common_system with module support enabled
+##################################################
+
+option(THREAD_BUILD_MODULES "Build C++20 module version of thread_system" OFF)
+
+if(THREAD_BUILD_MODULES)
+    # Check CMake version
+    if(CMAKE_VERSION VERSION_LESS "3.28")
+        message(WARNING "C++20 modules require CMake 3.28+. Current version: ${CMAKE_VERSION}. Disabling module build.")
+        set(THREAD_BUILD_MODULES OFF)
+    else()
+        message(STATUS "C++20 module build enabled")
+
+        # Create module library target
+        add_library(thread_system_modules)
+        add_library(kcenon::thread_modules ALIAS thread_system_modules)
+
+        # Set C++20 standard for module target
+        target_compile_features(thread_system_modules PUBLIC cxx_std_20)
+
+        # Enable module scanning
+        set_target_properties(thread_system_modules PROPERTIES
+            CXX_SCAN_FOR_MODULES ON
+        )
+
+        # Add module source files
+        target_sources(thread_system_modules
+            PUBLIC FILE_SET CXX_MODULES
+            FILES
+                # Primary module
+                src/modules/thread.cppm
+                # Tier 1: Core partition
+                src/modules/core.cppm
+                # Tier 2: Queue partition
+                src/modules/queue.cppm
+        )
+
+        # Include directories for module target
+        target_include_directories(thread_system_modules PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+            $<INSTALL_INTERFACE:include>
+        )
+
+        # Link to common_system modules if available
+        if(TARGET kcenon::common_modules)
+            target_link_libraries(thread_system_modules PUBLIC kcenon::common_modules)
+            message(STATUS "Linking thread_system_modules to kcenon::common_modules")
+        elseif(TARGET kcenon::common)
+            target_link_libraries(thread_system_modules PUBLIC kcenon::common)
+            message(STATUS "Linking thread_system_modules to kcenon::common (header-only)")
+        endif()
+
+        # Link to ThreadSystem library for implementation
+        if(TARGET ThreadSystem)
+            target_link_libraries(thread_system_modules PUBLIC ThreadSystem)
+        elseif(TARGET thread_base)
+            target_link_libraries(thread_system_modules PUBLIC thread_base)
+        endif()
+
+        # Compile definitions
+        target_compile_definitions(thread_system_modules PUBLIC
+            KCENON_USE_MODULES=1
+        )
+
+        message(STATUS "C++20 module target: thread_system_modules")
+    endif()
+endif()
+
+##################################################
 # Build Summary
 ##################################################
 
@@ -217,4 +301,5 @@ if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(STATUS "    TICKET-001 resolved: Safe with Hazard Pointers")
 endif()
 message(STATUS "  Work-stealing: ${THREAD_ENABLE_WORK_STEALING}")
+message(STATUS "  C++20 Modules: ${THREAD_BUILD_MODULES}")
 message(STATUS "========================================")
