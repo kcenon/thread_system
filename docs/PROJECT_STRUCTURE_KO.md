@@ -104,6 +104,10 @@ thread_system/
 │   │       ├── typed_job_queue.h
 │   │       ├── adaptive_typed_job_queue.h
 │   │       └── adaptive_typed_job_queue.cpp
+│   ├── 📁 modules/                 # C++20 모듈 파일 (실험적)
+│   │   ├── thread.cppm             # 주 모듈 인터페이스 (kcenon.thread)
+│   │   ├── core.cppm               # 코어 파티션 (thread_pool, jobs)
+│   │   └── queue.cppm              # 큐 파티션 (job_queue, adaptive)
 │   └── 📁 utils/
 │       └── convert_string.cpp
 │
@@ -388,7 +392,7 @@ thread_system/
 
 **총 테스트 코드**: ~3,000 라인
 
-**커버리지**: ~70% (codecov로 추적)
+**커버리지**: ~52% (codecov로 추적)
 
 ---
 

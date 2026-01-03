@@ -108,6 +108,10 @@ thread_system/
 │   │       ├── typed_job_queue.h   # Typed queue
 │   │       ├── adaptive_typed_job_queue.h # Adaptive typed queue
 │   │       └── adaptive_typed_job_queue.cpp # Implementation
+│   ├── 📁 modules/                 # C++20 Module files (experimental)
+│   │   ├── thread.cppm             # Primary module interface (kcenon.thread)
+│   │   ├── core.cppm               # Core partition (thread_pool, jobs)
+│   │   └── queue.cppm              # Queue partition (job_queue, adaptive)
 │   └── 📁 utils/                   # Utility implementations
 │       └── convert_string.cpp      # String conversion impl
 │
@@ -751,7 +755,7 @@ thread_system/
 
 **Total Test Code**: ~3,000 lines
 
-**Coverage**: ~70% (tracked by codecov)
+**Coverage**: ~52% (tracked by codecov)
 
 ---
 
