@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/metrics/enhanced_metrics.h>
+#include <kcenon/thread/scaling/autoscaling_policy.h>
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -79,6 +80,8 @@ namespace kcenon::thread::diagnostics {
 namespace kcenon::thread {
 	class circuit_breaker;
 	struct circuit_breaker_config;
+	class autoscaler;
+	struct autoscaling_policy;
 }
 
 /**
@@ -641,6 +644,57 @@ namespace kcenon::thread
 		[[nodiscard]] auto enqueue_protected(std::unique_ptr<job>&& job) -> common::VoidResult;
 
 		// =========================================================================
+		// Autoscaling
+		// =========================================================================
+
+		/**
+		 * @brief Enable autoscaling with the specified policy.
+		 * @param policy Autoscaling policy configuration.
+		 *
+		 * When enabled, the pool will automatically adjust worker count
+		 * based on load metrics (utilization, queue depth, latency).
+		 *
+		 * @see autoscaling_policy
+		 */
+		void enable_autoscaling(const autoscaling_policy& policy);
+
+		/**
+		 * @brief Disable autoscaling.
+		 *
+		 * Stops the autoscaler monitor thread. Worker count remains
+		 * at current level after disabling.
+		 */
+		void disable_autoscaling();
+
+		/**
+		 * @brief Get the autoscaler (if enabled).
+		 * @return Shared pointer to the autoscaler, or nullptr if not enabled.
+		 */
+		[[nodiscard]] auto get_autoscaler() -> std::shared_ptr<autoscaler>;
+
+		/**
+		 * @brief Check if autoscaling is enabled.
+		 * @return true if autoscaling is enabled.
+		 */
+		[[nodiscard]] auto is_autoscaling_enabled() const -> bool;
+
+		/**
+		 * @brief Remove workers from the pool.
+		 * @param count Number of workers to remove.
+		 * @return Error if operation fails.
+		 *
+		 * Gracefully stops and removes idle workers. If not enough
+		 * idle workers are available, waits briefly for workers to
+		 * become idle. Never removes more workers than would leave
+		 * min_workers (if autoscaling) or 1 worker (if not).
+		 *
+		 * Thread Safety:
+		 * - Acquires workers_mutex_ for safe access
+		 * - Workers are stopped before removal
+		 */
+		[[nodiscard]] auto remove_workers(std::size_t count) -> common::VoidResult;
+
+		// =========================================================================
 		// Diagnostics
 		// =========================================================================
 
@@ -814,6 +868,14 @@ namespace kcenon::thread
 		 * failure rates and automatically opens when thresholds are exceeded.
 		 */
 		std::shared_ptr<circuit_breaker> circuit_breaker_;
+
+		/**
+		 * @brief Autoscaler for dynamic worker management.
+		 *
+		 * When enabled, automatically adjusts worker count based on
+		 * load metrics (utilization, queue depth, latency).
+		 */
+		std::shared_ptr<autoscaler> autoscaler_;
 
 		/**
 		 * @brief Create a steal function for the given worker.
