@@ -8,6 +8,25 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #388**: Phase 1.3.3 - Job Inspection 구현
+  - 고유 ID를 사용한 작업 추적 구현:
+    - `job` 클래스에 `job_id_` 멤버 및 `get_job_id()` 추가
+    - 대기 시간 계산을 위한 `enqueue_time_` 멤버 및 `get_enqueue_time()` 추가
+    - `next_job_id_` 정적 카운터를 통한 원자적 ID 생성
+  - `thread_pool_diagnostics`에 `get_active_jobs()` 구현:
+    - 현재 실행 중인 모든 작업에 대한 `job_info` 반환
+    - 작업 ID, 이름, 시작 시간, 실행 시간, 워커 스레드 ID 포함
+  - `thread_pool_diagnostics`에 `get_pending_jobs()` 구현:
+    - 큐에서 대기 중인 작업에 대한 `job_info` 반환
+    - 큐 등록 시간부터의 대기 시간 계산 포함
+    - 구성 가능한 limit 매개변수 (기본값: 100)
+  - `job_queue`에 `inspect_pending_jobs()` 추가:
+    - 작업을 제거하지 않고 큐를 스레드 안전하게 검사
+    - 타이밍 정보가 포함된 job_info 스냅샷 생성
+  - `thread_worker`의 `get_current_job_info()` 업데이트:
+    - 이제 job 클래스의 실제 job_id 사용
+    - 정확한 enqueue_time 및 wait_time 계산
+
 - **이슈 #377**: Phase 2.1 - 비동기 결과 반환을 위한 Future/Promise 통합
   - 새로운 `future_job<R>` 템플릿 클래스:
     - `std::promise<R>`로 callable을 래핑하여 비동기 결과 검색 가능

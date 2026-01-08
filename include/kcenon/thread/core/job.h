@@ -45,6 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string_view>
 #include <atomic>
 #include <chrono>
+#include <cstdint>
 
 namespace kcenon::thread
 {
@@ -99,6 +100,24 @@ namespace kcenon::thread
 	class job
 	{
 	public:
+		/**
+		 * @brief Gets the unique ID of this job.
+		 * @return The unique job identifier.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread (ID is immutable after construction)
+		 */
+		[[nodiscard]] auto get_job_id() const -> std::uint64_t { return job_id_; }
+
+		/**
+		 * @brief Gets the time when this job was created (enqueued).
+		 * @return Time point when the job was created.
+		 */
+		[[nodiscard]] auto get_enqueue_time() const -> std::chrono::steady_clock::time_point
+		{
+			return enqueue_time_;
+		}
+
 		/**
 		 * @brief Constructs a new @c job with an optional human-readable name.
 		 *
@@ -272,14 +291,36 @@ namespace kcenon::thread
 		 * @c std::shared_ptr before use to avoid invalid access.
 		 */
 		std::weak_ptr<job_queue> job_queue_;
-		
+
 		/**
 		 * @brief The cancellation token associated with this job.
-		 * 
+		 *
 		 * This token can be used to cancel the job during execution. The job should
 		 * periodically check this token and abort if it is cancelled.
 		 */
 		cancellation_token cancellation_token_;
+
+	private:
+		/**
+		 * @brief Static counter for generating unique job IDs.
+		 */
+		static std::atomic<std::uint64_t> next_job_id_;
+
+		/**
+		 * @brief Unique identifier for this job.
+		 *
+		 * Generated automatically during construction, unique within the
+		 * lifetime of the application.
+		 */
+		std::uint64_t job_id_;
+
+		/**
+		 * @brief Time when the job was created.
+		 *
+		 * Captured during construction, used for wait time calculations
+		 * in diagnostics.
+		 */
+		std::chrono::steady_clock::time_point enqueue_time_;
 	};
 } // namespace kcenon::thread
 

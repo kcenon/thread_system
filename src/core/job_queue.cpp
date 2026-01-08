@@ -649,4 +649,70 @@ namespace kcenon::thread
 		return queue_.size() >= max_size_.value();
 	}
 
+	// ============================================
+	// Diagnostics support
+	// ============================================
+
+	/**
+	 * @brief Inspects pending jobs in the queue without removing them.
+	 *
+	 * Implementation details:
+	 * - Thread-safe operation using mutex
+	 * - Creates job_info snapshots for each pending job
+	 * - Does not modify the queue (read-only inspection)
+	 * - Returns up to 'limit' jobs, or all if limit is 0
+	 *
+	 * Performance Characteristics:
+	 * - O(min(limit, queue_size)) complexity
+	 * - Single lock acquisition for entire inspection
+	 * - Minimal overhead on normal queue operations
+	 *
+	 * @param limit Maximum number of jobs to inspect (0 = all)
+	 * @return Vector of job_info for pending jobs
+	 */
+	auto job_queue::inspect_pending_jobs(std::size_t limit) const
+		-> std::vector<diagnostics::job_info>
+	{
+		std::scoped_lock<std::mutex> lock(mutex_);
+
+		std::vector<diagnostics::job_info> result;
+		auto count = (limit == 0) ? queue_.size() : std::min(limit, queue_.size());
+		result.reserve(count);
+
+		auto now = std::chrono::steady_clock::now();
+		std::size_t index = 0;
+
+		for (const auto& job_ptr : queue_)
+		{
+			if (limit > 0 && index >= limit)
+			{
+				break;
+			}
+
+			if (job_ptr == nullptr)
+			{
+				++index;
+				continue;
+			}
+
+			diagnostics::job_info info;
+			info.job_id = job_ptr->get_job_id();
+			info.job_name = job_ptr->get_name();
+			info.status = diagnostics::job_status::pending;
+			info.enqueue_time = job_ptr->get_enqueue_time();
+			info.start_time = job_ptr->get_enqueue_time(); // Not started yet
+
+			// Calculate wait time (time since enqueue)
+			info.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				now - job_ptr->get_enqueue_time()
+			);
+			info.execution_time = std::chrono::nanoseconds{0}; // Not started yet
+
+			result.push_back(std::move(info));
+			++index;
+		}
+
+		return result;
+	}
+
 } // namespace kcenon::thread
