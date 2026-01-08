@@ -304,7 +304,7 @@ namespace kcenon::thread::diagnostics
 
 	auto thread_pool_diagnostics::is_healthy() const -> bool
 	{
-		return pool_.is_running() && pool_.get_active_worker_count() > 0;
+		return pool_.is_running() && pool_.get_thread_count() > 0;
 	}
 
 	auto thread_pool_diagnostics::check_worker_health() const -> component_health
