@@ -93,6 +93,39 @@ thread_pool::thread_pool(const std::string& thread_title, const thread_context& 
 }
 
 /**
+ * @brief Constructs a thread pool with a custom job queue.
+ *
+ * Implementation details:
+ * - Initializes with provided thread title for identification
+ * - Uses the provided custom job queue (e.g., backpressure_job_queue)
+ * - Pool starts in stopped state (start_pool_ = false)
+ * - No workers are initially assigned (workers_ is empty)
+ * - Stores thread context for logging and monitoring
+ * - Creates pool-level cancellation token for hierarchical cancellation
+ *
+ * @param thread_title Descriptive name for this thread pool instance
+ * @param custom_queue Custom job queue implementation
+ * @param context Thread context providing logging and monitoring services
+ */
+thread_pool::thread_pool(const std::string& thread_title,
+                         std::shared_ptr<job_queue> custom_queue,
+                         const thread_context& context)
+    : thread_title_(thread_title)
+    , pool_instance_id_(next_pool_instance_id_.fetch_add(1))
+    , start_pool_(false)
+    , job_queue_(std::move(custom_queue))
+    , context_(context)
+    , pool_cancellation_token_(cancellation_token::create())
+    , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
+    // Report initial pool registration if monitoring is available
+    if (context_.monitoring()) {
+        common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
+        initial_metrics.worker_threads.value = 0;
+        context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, initial_metrics);
+    }
+}
+
+/**
  * @brief Destroys the thread pool, ensuring all workers are stopped.
  *
  * Implementation details:

@@ -8,6 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #375**: Phase 1.2 - Backpressure Mechanisms with Rate Limiting and Adaptive Control
+  - New `token_bucket` class for lock-free rate limiting
+    - Continuous refill algorithm with fixed-point arithmetic for sub-token precision
+    - Lock-free implementation using atomic CAS operations
+    - Methods: `try_acquire()`, `try_acquire_for()`, `available_tokens()`, `set_rate()`
+  - New `backpressure_config.h` header with configuration and types
+    - `backpressure_policy` enum: `block`, `drop_oldest`, `drop_newest`, `callback`, `adaptive`
+    - `backpressure_decision` enum for callback-based decisions
+    - `pressure_level` enum: `none`, `low`, `high`, `critical`
+    - `backpressure_config` struct with watermarks, rate limiting settings, callbacks
+    - `backpressure_stats` for tracking accepted/rejected/dropped jobs and rate limit waits
+  - New `backpressure_job_queue` class extending `job_queue`
+    - Supports all 5 backpressure policies with policy-specific handlers
+    - Pressure level detection based on configurable watermarks (low/high)
+    - Optional rate limiting integration via token bucket
+    - Pressure callback invocation when crossing thresholds
+    - Statistics tracking with `get_backpressure_stats()` and `reset_stats()`
+  - Extended `thread_pool` with custom queue constructor
+    - New constructor: `thread_pool(name, custom_queue, context)` for queue injection
+    - Enables using `backpressure_job_queue` with thread pools
+  - Comprehensive integration tests (11 test cases)
+    - Token bucket basic acquisition and timeout tests
+    - Pressure level detection tests
+    - Drop newest/oldest policy tests
+    - Rate limiting integration tests
+    - Statistics tracking tests
+    - Thread pool with backpressure queue integration tests
 - **Issue #374**: Enhanced Metrics System with Histogram and Percentile Support
   - `LatencyHistogram`: HDR-style histogram with logarithmic buckets for latency distribution
     - Provides accurate percentile calculations (P50/P90/P99/P99.9)
