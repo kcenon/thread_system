@@ -231,6 +231,17 @@ namespace kcenon::thread
 		[[nodiscard]] auto is_running() const -> bool;
 
 		/**
+		 * @brief Gets the native thread ID of the worker thread.
+		 * @return The std::thread::id of the worker thread, or default-constructed
+		 *         id if the thread is not running.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Returns valid ID only when thread is running
+		 */
+		[[nodiscard]] auto get_thread_id() const -> std::thread::id;
+
+		/**
 		 * @brief Returns a string representation of this @c thread_base object.
 		 * @return A string containing descriptive or diagnostic information about the thread.
 		 *

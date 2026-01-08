@@ -1023,4 +1023,51 @@ auto thread_pool::diagnostics() const -> const diagnostics::thread_pool_diagnost
     return *diagnostics_;
 }
 
+auto thread_pool::collect_worker_diagnostics() const
+    -> std::vector<diagnostics::thread_info> {
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+    std::vector<diagnostics::thread_info> result;
+    result.reserve(workers_.size());
+
+    for (std::size_t i = 0; i < workers_.size(); ++i) {
+        const auto& worker = workers_[i];
+        if (!worker) {
+            continue;
+        }
+
+        diagnostics::thread_info info;
+        info.thread_id = worker->get_thread_id();
+        info.thread_name = "Worker-" + std::to_string(i);
+        info.worker_id = worker->get_worker_id();
+
+        // Determine worker state
+        if (!worker->is_running()) {
+            info.state = diagnostics::worker_state::stopped;
+        } else if (worker->is_idle()) {
+            info.state = diagnostics::worker_state::idle;
+        } else {
+            info.state = diagnostics::worker_state::active;
+        }
+
+        info.state_since = worker->get_state_since();
+
+        // Get current job info if active
+        info.current_job = worker->get_current_job_info();
+
+        // Get statistics
+        info.jobs_completed = worker->get_jobs_completed();
+        info.jobs_failed = worker->get_jobs_failed();
+        info.total_busy_time = worker->get_total_busy_time();
+        info.total_idle_time = worker->get_total_idle_time();
+
+        // Calculate utilization
+        info.update_utilization();
+
+        result.push_back(std::move(info));
+    }
+
+    return result;
+}
+
 }  // namespace kcenon::thread

@@ -511,8 +511,22 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			return common::error_info{static_cast<int>(error_code::job_invalid), "error executing job: nullptr", "thread_system"};
 		}
 
-		// Mark worker as busy (processing a job)
+		// Update idle time statistics before transitioning to busy state
+		auto now = std::chrono::steady_clock::now();
+		auto state_since = get_state_since();
+		if (is_idle_.load(std::memory_order_relaxed))
+		{
+			auto idle_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - state_since);
+			total_idle_time_ns_.fetch_add(
+				static_cast<std::uint64_t>(idle_duration.count()),
+				std::memory_order_relaxed
+			);
+		}
+
+		// Mark worker as busy and update state timestamp
 		is_idle_.store(false, std::memory_order_relaxed);
+		state_since_rep_.store(now.time_since_epoch().count(), std::memory_order_release);
+		current_job_start_time_ = now;
 
 		// Initialize timing measurement if performance monitoring is enabled
 		std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
@@ -567,8 +581,26 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			queue_cv_.notify_all();
 		}
 
+		// Update busy time and state transition for diagnostics
+		{
+			auto end_now = std::chrono::steady_clock::now();
+			auto busy_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				end_now - current_job_start_time_
+			);
+			total_busy_time_ns_.fetch_add(
+				static_cast<std::uint64_t>(busy_duration.count()),
+				std::memory_order_relaxed
+			);
+			// Transition back to idle state
+			is_idle_.store(true, std::memory_order_relaxed);
+			state_since_rep_.store(end_now.time_since_epoch().count(), std::memory_order_release);
+		}
+
 		if (work_result.is_err())
 		{
+			// Increment failed job counter
+			jobs_failed_.fetch_add(1, std::memory_order_relaxed);
+
 			if (metrics_)
 			{
 				metrics_->record_execution(0, false);
@@ -576,6 +608,9 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			return common::error_info{static_cast<int>(error_code::job_execution_failed),
 				formatter::format("error executing job: {}", work_result.error().message), "thread_system"};
 		}
+
+		// Increment completed job counter
+		jobs_completed_.fetch_add(1, std::memory_order_relaxed);
 
 		// Log successful job completion based on timing configuration
 		// Note: Using captured job_name since job is already destroyed
@@ -689,5 +724,61 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			            formatter::format("Cancellation requested for job: {} on worker {}",
 			                            job_ptr->get_name(), worker_id_));
 		}
+	}
+
+	std::uint64_t thread_worker::get_jobs_completed() const noexcept
+	{
+		return jobs_completed_.load(std::memory_order_relaxed);
+	}
+
+	std::uint64_t thread_worker::get_jobs_failed() const noexcept
+	{
+		return jobs_failed_.load(std::memory_order_relaxed);
+	}
+
+	std::chrono::nanoseconds thread_worker::get_total_busy_time() const noexcept
+	{
+		return std::chrono::nanoseconds{total_busy_time_ns_.load(std::memory_order_relaxed)};
+	}
+
+	std::chrono::nanoseconds thread_worker::get_total_idle_time() const noexcept
+	{
+		return std::chrono::nanoseconds{total_idle_time_ns_.load(std::memory_order_relaxed)};
+	}
+
+	std::chrono::steady_clock::time_point thread_worker::get_state_since() const noexcept
+	{
+		auto rep = state_since_rep_.load(std::memory_order_acquire);
+		return std::chrono::steady_clock::time_point{
+			std::chrono::steady_clock::duration{rep}
+		};
+	}
+
+	std::optional<diagnostics::job_info> thread_worker::get_current_job_info() const noexcept
+	{
+		std::lock_guard<std::mutex> lock(queue_mutex_);
+		auto* job_ptr = current_job_.load(std::memory_order_acquire);
+		if (job_ptr == nullptr)
+		{
+			return std::nullopt;
+		}
+
+		diagnostics::job_info info;
+		// Note: job_id is not available in the current job class
+		// Using 0 as placeholder until job class is enhanced with ID support
+		info.job_id = 0;
+		info.job_name = job_ptr->get_name();
+		info.status = diagnostics::job_status::running;
+		info.start_time = current_job_start_time_;
+		info.enqueue_time = current_job_start_time_; // Approximation
+		info.executed_by = std::this_thread::get_id();
+
+		auto now = std::chrono::steady_clock::now();
+		info.execution_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+			now - current_job_start_time_
+		);
+		info.wait_time = std::chrono::nanoseconds{0};
+
+		return info;
 	}
 } // namespace kcenon::thread
