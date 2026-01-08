@@ -35,6 +35,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_logger.h>
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
+#include <kcenon/thread/resilience/circuit_breaker.h>
+#include <kcenon/thread/resilience/protected_job.h>
 
 #include <random>
 
@@ -1068,6 +1070,48 @@ auto thread_pool::collect_worker_diagnostics() const
     }
 
     return result;
+}
+
+// ============================================================================
+// Circuit Breaker
+// ============================================================================
+
+void thread_pool::enable_circuit_breaker(const circuit_breaker_config& config) {
+    circuit_breaker_ = std::make_shared<circuit_breaker>(config);
+}
+
+void thread_pool::disable_circuit_breaker() {
+    circuit_breaker_.reset();
+}
+
+auto thread_pool::get_circuit_breaker() -> std::shared_ptr<circuit_breaker> {
+    return circuit_breaker_;
+}
+
+auto thread_pool::is_accepting_work() const -> bool {
+    if (!circuit_breaker_) {
+        return true;  // No circuit breaker means always accepting
+    }
+
+    auto state = circuit_breaker_->get_state();
+    return state != circuit_state::open;
+}
+
+auto thread_pool::enqueue_protected(std::unique_ptr<job>&& j) -> common::VoidResult {
+    if (!j) {
+        return make_error_result(error_code::job_invalid, "Job is null");
+    }
+
+    // If no circuit breaker, behave like regular enqueue
+    if (!circuit_breaker_) {
+        return enqueue(std::move(j));
+    }
+
+    // Wrap job with circuit breaker protection
+    auto protected_j = std::make_unique<protected_job>(
+        std::move(j), circuit_breaker_);
+
+    return enqueue(std::move(protected_j));
 }
 
 }  // namespace kcenon::thread

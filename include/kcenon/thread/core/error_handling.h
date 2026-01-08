@@ -108,7 +108,11 @@ enum class error_code {
 
     // IO errors (-160 to -169)
     io_error = -160,
-    file_not_found = -161
+    file_not_found = -161,
+
+    // Circuit breaker errors (-170 to -179)
+    circuit_open = -170,           ///< Circuit breaker is open, request rejected
+    circuit_half_open = -171       ///< Circuit breaker is in half-open state
 };
 
 // Compile-time validation for error code range
@@ -151,6 +155,8 @@ inline std::string error_code_to_string(error_code code) {
         {error_code::condition_variable_error, "Condition variable error"},
         {error_code::io_error, "I/O error"},
         {error_code::file_not_found, "File not found"},
+        {error_code::circuit_open, "Circuit breaker is open"},
+        {error_code::circuit_half_open, "Circuit breaker is in half-open state"},
     };
     for (const auto& [k, v] : kMap) {
         if (k == code) return std::string(v);
