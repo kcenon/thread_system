@@ -68,6 +68,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <optional>
 
+// Forward declaration for diagnostics
+namespace kcenon::thread::diagnostics {
+	class thread_pool_diagnostics;
+}
+
 /**
  * @namespace kcenon::thread
  * @brief Thread pool implementation for managing worker threads.
@@ -491,6 +496,29 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] bool is_work_stealing_enabled() const;
 
+		// =========================================================================
+		// Diagnostics
+		// =========================================================================
+
+		/**
+		 * @brief Get the diagnostics interface for this pool.
+		 * @return Reference to the diagnostics object.
+		 *
+		 * The diagnostics interface provides:
+		 * - Thread dump capabilities
+		 * - Job inspection
+		 * - Bottleneck detection
+		 * - Health check integration
+		 * - Event tracing
+		 */
+		[[nodiscard]] auto diagnostics() -> diagnostics::thread_pool_diagnostics&;
+
+		/**
+		 * @brief Get the diagnostics interface for this pool (const version).
+		 * @return Const reference to the diagnostics object.
+		 */
+		[[nodiscard]] auto diagnostics() const -> const diagnostics::thread_pool_diagnostics&;
+
 	private:
 		/**
 		 * @brief Static counter for generating unique pool instance IDs.
@@ -613,6 +641,13 @@ namespace kcenon::thread
 		 * Defines behavior for all workers including work-stealing settings.
 		 */
 		worker_policy worker_policy_;
+
+		/**
+		 * @brief Diagnostics interface for this pool.
+		 *
+		 * Lazily initialized on first access to diagnostics().
+		 */
+		mutable std::unique_ptr<diagnostics::thread_pool_diagnostics> diagnostics_;
 
 		/**
 		 * @brief Create a steal function for the given worker.

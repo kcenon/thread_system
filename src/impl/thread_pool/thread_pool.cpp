@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_logger.h>
 #include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
 
 #include <random>
 
@@ -1001,6 +1002,25 @@ job* thread_pool::steal_from_workers(std::size_t requester_id) {
     }
 
     return nullptr;
+}
+
+// ============================================================================
+// Diagnostics
+// ============================================================================
+
+auto thread_pool::diagnostics() -> diagnostics::thread_pool_diagnostics& {
+    if (!diagnostics_) {
+        diagnostics_ = std::make_unique<diagnostics::thread_pool_diagnostics>(*this);
+    }
+    return *diagnostics_;
+}
+
+auto thread_pool::diagnostics() const -> const diagnostics::thread_pool_diagnostics& {
+    if (!diagnostics_) {
+        diagnostics_ = std::make_unique<diagnostics::thread_pool_diagnostics>(
+            const_cast<thread_pool&>(*this));
+    }
+    return *diagnostics_;
 }
 
 }  // namespace kcenon::thread
