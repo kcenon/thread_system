@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
 #include <kcenon/thread/resilience/circuit_breaker.h>
 #include <kcenon/thread/resilience/protected_job.h>
+#include <kcenon/thread/scaling/autoscaler.h>
 
 #include <random>
 
@@ -1112,6 +1113,92 @@ auto thread_pool::enqueue_protected(std::unique_ptr<job>&& j) -> common::VoidRes
         std::move(j), circuit_breaker_);
 
     return enqueue(std::move(protected_j));
+}
+
+// ============================================================================
+// Autoscaling
+// ============================================================================
+
+void thread_pool::enable_autoscaling(const autoscaling_policy& policy) {
+    if (autoscaler_) {
+        // Already enabled, update policy
+        autoscaler_->set_policy(policy);
+        return;
+    }
+
+    autoscaler_ = std::make_shared<autoscaler>(*this, policy);
+
+    // Start autoscaler if pool is running
+    if (start_pool_.load(std::memory_order_acquire)) {
+        autoscaler_->start();
+    }
+}
+
+void thread_pool::disable_autoscaling() {
+    if (autoscaler_) {
+        autoscaler_->stop();
+        autoscaler_.reset();
+    }
+}
+
+auto thread_pool::get_autoscaler() -> std::shared_ptr<autoscaler> {
+    return autoscaler_;
+}
+
+auto thread_pool::is_autoscaling_enabled() const -> bool {
+    return autoscaler_ != nullptr && autoscaler_->is_active();
+}
+
+auto thread_pool::remove_workers(std::size_t count) -> common::VoidResult {
+    if (count == 0) {
+        return common::ok();
+    }
+
+    std::scoped_lock<std::mutex> lock(workers_mutex_);
+
+    // Determine minimum workers to keep
+    std::size_t min_workers = 1;
+    if (autoscaler_) {
+        min_workers = autoscaler_->get_policy().min_workers;
+    }
+
+    if (workers_.size() <= min_workers) {
+        return common::error_info{
+            static_cast<int>(error_code::invalid_argument),
+            "Cannot remove workers: already at minimum",
+            "thread_system"
+        };
+    }
+
+    // Calculate how many we can actually remove
+    std::size_t max_removable = workers_.size() - min_workers;
+    count = std::min(count, max_removable);
+
+    std::size_t removed = 0;
+
+    // First pass: remove idle workers
+    auto it = workers_.begin();
+    while (it != workers_.end() && removed < count) {
+        if (*it && (*it)->is_idle()) {
+            // Stop the worker
+            (*it)->stop();
+            it = workers_.erase(it);
+            ++removed;
+        } else {
+            ++it;
+        }
+    }
+
+    // If we still need to remove more, wait briefly for workers to become idle
+    if (removed < count) {
+        // Just return success with what we removed
+        // Remaining workers will be removed on subsequent calls
+        context_.log(common::interfaces::log_level::info,
+            formatter::format("Removed {} of {} requested workers (remaining are busy)",
+                              removed, count));
+    }
+
+    return common::ok();
 }
 
 }  // namespace kcenon::thread
