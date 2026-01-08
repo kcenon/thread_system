@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "error_handling.h"
 #include <kcenon/thread/interfaces/scheduler_interface.h>
 #include <kcenon/thread/interfaces/queue_capabilities_interface.h>
+#include <kcenon/thread/diagnostics/job_info.h>
 
 #include <mutex>
 #include <deque>
@@ -49,6 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 #include <condition_variable>
 #include <memory>
+#include <functional>
 
 namespace kcenon::thread
 {
@@ -337,6 +339,28 @@ namespace kcenon::thread
 		 * @return true if queue is at max_size, false otherwise
 		 */
 		[[nodiscard]] auto is_full() const -> bool;
+
+		// ============================================
+		// Diagnostics support
+		// ============================================
+
+		/**
+		 * @brief Inspects pending jobs in the queue without removing them.
+		 * @param limit Maximum number of jobs to inspect (0 = all).
+		 * @return Vector of job_info for pending jobs.
+		 *
+		 * Thread Safety:
+		 * - Acquires mutex for safe inspection
+		 * - Returns snapshot of current queue state
+		 * - No performance impact on normal queue operations
+		 *
+		 * Use Cases:
+		 * - Diagnostics and monitoring
+		 * - Queue depth analysis
+		 * - Job wait time tracking
+		 */
+		[[nodiscard]] virtual auto inspect_pending_jobs(std::size_t limit = 100) const
+			-> std::vector<diagnostics::job_info>;
 
 	protected:
 		/**

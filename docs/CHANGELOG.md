@@ -8,6 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #388**: Phase 1.3.3 - Job Inspection Implementation
+  - Implemented job tracking with unique IDs:
+    - Added `job_id_` member and `get_job_id()` to `job` class
+    - Added `enqueue_time_` member and `get_enqueue_time()` for wait time calculation
+    - Atomic ID generation via `next_job_id_` static counter
+  - Implemented `get_active_jobs()` in `thread_pool_diagnostics`:
+    - Returns `job_info` for all currently executing jobs
+    - Includes job ID, name, start time, execution time, and worker thread ID
+  - Implemented `get_pending_jobs()` in `thread_pool_diagnostics`:
+    - Returns `job_info` for jobs waiting in queue
+    - Includes wait time calculation from enqueue time
+    - Configurable limit parameter (default: 100)
+  - Added `inspect_pending_jobs()` to `job_queue`:
+    - Thread-safe queue inspection without removing jobs
+    - Creates job_info snapshots with timing information
+  - Updated `get_current_job_info()` in `thread_worker`:
+    - Now uses actual job_id from job class
+    - Accurate enqueue_time and wait_time calculation
+
 - **Issue #377**: Phase 2.1 - Future/Promise Integration for Async Result Returns
   - New `future_job<R>` template class:
     - Wraps callables with `std::promise<R>` for async result retrieval
