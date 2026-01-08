@@ -14,6 +14,7 @@ All rights reserved.
 
 #include <chrono>
 #include <thread>
+#include <set>
 
 namespace kcenon::thread::diagnostics::test
 {
@@ -269,6 +270,224 @@ TEST(EnumConversionTest, BottleneckTypeToString)
 	EXPECT_EQ(bottleneck_type_to_string(bottleneck_type::queue_full), "queue_full");
 	EXPECT_EQ(bottleneck_type_to_string(bottleneck_type::slow_consumer), "slow_consumer");
 	EXPECT_EQ(bottleneck_type_to_string(bottleneck_type::worker_starvation), "worker_starvation");
+}
+
+// Thread Dump Phase 1.3.2 Tests
+class ThreadDumpTest : public ::testing::Test
+{
+protected:
+	void SetUp() override
+	{
+		pool_ = std::make_shared<thread_pool>("ThreadDumpTestPool");
+
+		for (int i = 0; i < 4; ++i)
+		{
+			pool_->enqueue(std::make_unique<thread_worker>());
+		}
+
+		pool_->start();
+	}
+
+	void TearDown() override
+	{
+		if (pool_)
+		{
+			pool_->stop();
+		}
+	}
+
+	std::shared_ptr<thread_pool> pool_;
+};
+
+TEST_F(ThreadDumpTest, WorkerIdsAreUnique)
+{
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	EXPECT_EQ(threads.size(), 4);
+
+	std::set<std::size_t> worker_ids;
+	for (const auto& t : threads)
+	{
+		worker_ids.insert(t.worker_id);
+	}
+
+	// All worker IDs should be unique
+	EXPECT_EQ(worker_ids.size(), threads.size());
+}
+
+TEST_F(ThreadDumpTest, IdleWorkersHaveCorrectState)
+{
+	// Wait for workers to become idle
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	// All workers should be idle when no jobs are submitted
+	for (const auto& t : threads)
+	{
+		EXPECT_EQ(t.state, worker_state::idle);
+		EXPECT_FALSE(t.current_job.has_value());
+	}
+}
+
+TEST_F(ThreadDumpTest, JobsCompletedTracking)
+{
+	// Submit some jobs
+	const int job_count = 20;
+	std::atomic<int> completed{0};
+
+	for (int i = 0; i < job_count; ++i)
+	{
+		pool_->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+			std::this_thread::sleep_for(std::chrono::milliseconds(5));
+			completed.fetch_add(1);
+			return common::ok();
+		}));
+	}
+
+	// Wait for jobs to complete
+	while (completed.load() < job_count)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	// Sum up completed jobs across all workers
+	std::uint64_t total_completed = 0;
+	for (const auto& t : threads)
+	{
+		total_completed += t.jobs_completed;
+	}
+
+	EXPECT_EQ(total_completed, static_cast<std::uint64_t>(job_count));
+}
+
+TEST_F(ThreadDumpTest, BusyTimeTracking)
+{
+	// Submit jobs that take some time
+	const int job_count = 4;
+	std::atomic<int> completed{0};
+
+	for (int i = 0; i < job_count; ++i)
+	{
+		pool_->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			completed.fetch_add(1);
+			return common::ok();
+		}));
+	}
+
+	// Wait for jobs to complete
+	while (completed.load() < job_count)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	// At least some workers should have busy time > 0
+	std::chrono::nanoseconds total_busy_time{0};
+	for (const auto& t : threads)
+	{
+		total_busy_time += t.total_busy_time;
+	}
+
+	// Total busy time should be at least job_count * 50ms
+	auto min_expected = std::chrono::milliseconds(job_count * 40);
+	EXPECT_GE(total_busy_time, min_expected);
+}
+
+TEST_F(ThreadDumpTest, ActiveWorkerHasCurrentJob)
+{
+	// Submit a long-running job
+	std::atomic<bool> job_started{false};
+	std::atomic<bool> should_continue{true};
+
+	pool_->enqueue(std::make_unique<callback_job>([&job_started, &should_continue]() -> common::VoidResult {
+		job_started.store(true);
+		while (should_continue.load())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+		return common::ok();
+	}));
+
+	// Wait for job to start
+	while (!job_started.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	// At least one worker should be active with a current job
+	bool found_active_worker = false;
+	for (const auto& t : threads)
+	{
+		if (t.state == worker_state::active && t.current_job.has_value())
+		{
+			found_active_worker = true;
+			EXPECT_EQ(t.current_job->status, job_status::running);
+			break;
+		}
+	}
+
+	EXPECT_TRUE(found_active_worker);
+
+	// Stop the long-running job
+	should_continue.store(false);
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+}
+
+TEST_F(ThreadDumpTest, UtilizationCalculation)
+{
+	// Submit jobs to generate some utilization
+	const int job_count = 10;
+	std::atomic<int> completed{0};
+
+	for (int i = 0; i < job_count; ++i)
+	{
+		pool_->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			completed.fetch_add(1);
+			return common::ok();
+		}));
+	}
+
+	// Wait for jobs to complete
+	while (completed.load() < job_count)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto& diag = pool_->diagnostics();
+	auto threads = diag.dump_thread_states();
+
+	// Check that utilization is calculated and in valid range
+	for (const auto& t : threads)
+	{
+		EXPECT_GE(t.utilization, 0.0);
+		EXPECT_LE(t.utilization, 1.0);
+	}
+
+	// At least some workers should have non-zero utilization
+	double total_utilization = 0.0;
+	for (const auto& t : threads)
+	{
+		total_utilization += t.utilization;
+	}
+
+	EXPECT_GT(total_utilization, 0.0);
 }
 
 } // namespace kcenon::thread::diagnostics::test

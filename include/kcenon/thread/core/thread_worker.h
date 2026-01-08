@@ -42,8 +42,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "worker_policy.h"
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/lockfree/work_stealing_deque.h>
+#include <kcenon/thread/diagnostics/job_info.h>
 
 #include <memory>
+#include <optional>
 #include <vector>
 #include <atomic>
 #include <mutex>
@@ -175,6 +177,66 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] bool is_idle() const noexcept;
 
+		/**
+		 * @brief Gets the total number of jobs successfully completed by this worker.
+		 * @return Count of successfully completed jobs.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic load with relaxed memory ordering
+		 */
+		[[nodiscard]] std::uint64_t get_jobs_completed() const noexcept;
+
+		/**
+		 * @brief Gets the total number of jobs that failed during execution.
+		 * @return Count of failed jobs.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic load with relaxed memory ordering
+		 */
+		[[nodiscard]] std::uint64_t get_jobs_failed() const noexcept;
+
+		/**
+		 * @brief Gets the total time spent executing jobs (busy time).
+		 * @return Duration of busy time in nanoseconds.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic load with relaxed memory ordering
+		 */
+		[[nodiscard]] std::chrono::nanoseconds get_total_busy_time() const noexcept;
+
+		/**
+		 * @brief Gets the total time spent waiting for jobs (idle time).
+		 * @return Duration of idle time in nanoseconds.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic load with relaxed memory ordering
+		 */
+		[[nodiscard]] std::chrono::nanoseconds get_total_idle_time() const noexcept;
+
+		/**
+		 * @brief Gets the time when the worker entered its current state.
+		 * @return Time point when current state was entered.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Uses atomic load with acquire memory ordering
+		 */
+		[[nodiscard]] std::chrono::steady_clock::time_point get_state_since() const noexcept;
+
+		/**
+		 * @brief Gets information about the currently executing job.
+		 * @return Optional job_info if a job is currently executing, std::nullopt otherwise.
+		 *
+		 * Thread Safety:
+		 * - Safe to call from any thread
+		 * - Provides snapshot of current state
+		 */
+		[[nodiscard]] std::optional<diagnostics::job_info> get_current_job_info() const noexcept;
+
 	protected:
 		/**
 		 * @brief Determines if there are jobs available in the queue to continue working on.
@@ -287,6 +349,52 @@ namespace kcenon::thread
 		 * @note Used by thread pool for statistics and monitoring purposes.
 		 */
 		std::atomic<bool> is_idle_{true};
+
+		/**
+		 * @brief Total number of jobs successfully completed by this worker.
+		 *
+		 * Incremented atomically after each successful job execution.
+		 */
+		std::atomic<std::uint64_t> jobs_completed_{0};
+
+		/**
+		 * @brief Total number of jobs that failed during execution.
+		 *
+		 * Incremented atomically when a job's do_work() returns an error.
+		 */
+		std::atomic<std::uint64_t> jobs_failed_{0};
+
+		/**
+		 * @brief Total time spent executing jobs (busy time) in nanoseconds.
+		 *
+		 * Accumulated after each job execution with the job's execution duration.
+		 */
+		std::atomic<std::uint64_t> total_busy_time_ns_{0};
+
+		/**
+		 * @brief Total time spent waiting for jobs (idle time) in nanoseconds.
+		 *
+		 * Accumulated when transitioning from idle to busy state.
+		 */
+		std::atomic<std::uint64_t> total_idle_time_ns_{0};
+
+		/**
+		 * @brief Time point when the worker entered its current state.
+		 *
+		 * Updated when transitioning between idle and busy states.
+		 * Used to calculate current state duration.
+		 */
+		std::atomic<std::chrono::steady_clock::time_point::rep> state_since_rep_{
+			std::chrono::steady_clock::now().time_since_epoch().count()
+		};
+
+		/**
+		 * @brief Time point when the current job started executing.
+		 *
+		 * Used to track job execution time for diagnostics.
+		 * Only valid when a job is currently executing.
+		 */
+		std::chrono::steady_clock::time_point current_job_start_time_;
 
 		/**
 		 * @brief Mutex protecting job queue replacement.

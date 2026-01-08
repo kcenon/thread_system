@@ -461,4 +461,23 @@ namespace kcenon::thread
 	{
 		return utility_module::formatter::format("{} is {}", thread_title_, thread_condition_.load());
 	}
+
+	/**
+	 * @brief Gets the native thread ID of the worker thread.
+	 *
+	 * Implementation details:
+	 * - Returns the std::thread::id from the underlying thread object
+	 * - Returns default-constructed (empty) id if thread is not running
+	 * - Thread-safe as worker_thread_ pointer is only modified in start()/stop()
+	 *
+	 * @return The std::thread::id of the worker thread
+	 */
+	auto thread_base::get_thread_id() const -> std::thread::id
+	{
+		if (worker_thread_ && worker_thread_->joinable())
+		{
+			return worker_thread_->get_id();
+		}
+		return std::thread::id{};
+	}
 } // namespace kcenon::thread
