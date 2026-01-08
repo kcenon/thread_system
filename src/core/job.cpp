@@ -59,6 +59,9 @@ using namespace utility_module;
 
 namespace kcenon::thread
 {
+	// Initialize static member for job ID generation
+	std::atomic<std::uint64_t> job::next_job_id_{0};
+
 	/**
 	 * @brief Constructs a basic job with name only.
 	 * 
@@ -75,7 +78,13 @@ namespace kcenon::thread
 	 * 
 	 * @param name Descriptive name for debugging and logging
 	 */
-	job::job(const std::string& name) : name_(name), data_(std::vector<uint8_t>()) {}
+	job::job(const std::string& name)
+		: name_(name)
+		, data_(std::vector<uint8_t>())
+		, job_id_(next_job_id_.fetch_add(1, std::memory_order_relaxed))
+		, enqueue_time_(std::chrono::steady_clock::now())
+	{
+	}
 
 	/**
 	 * @brief Constructs a data-processing job with binary data.
@@ -99,7 +108,11 @@ namespace kcenon::thread
 	 * @param data Binary data to be processed by this job
 	 * @param name Descriptive name for debugging and logging
 	 */
-	job::job(const std::vector<uint8_t>& data, const std::string& name) : name_(name), data_(data)
+	job::job(const std::vector<uint8_t>& data, const std::string& name)
+		: name_(name)
+		, data_(data)
+		, job_id_(next_job_id_.fetch_add(1, std::memory_order_relaxed))
+		, enqueue_time_(std::chrono::steady_clock::now())
 	{
 	}
 

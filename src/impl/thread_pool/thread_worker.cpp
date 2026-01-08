@@ -764,20 +764,21 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 		}
 
 		diagnostics::job_info info;
-		// Note: job_id is not available in the current job class
-		// Using 0 as placeholder until job class is enhanced with ID support
-		info.job_id = 0;
+		info.job_id = job_ptr->get_job_id();
 		info.job_name = job_ptr->get_name();
 		info.status = diagnostics::job_status::running;
 		info.start_time = current_job_start_time_;
-		info.enqueue_time = current_job_start_time_; // Approximation
+		info.enqueue_time = job_ptr->get_enqueue_time();
 		info.executed_by = std::this_thread::get_id();
 
 		auto now = std::chrono::steady_clock::now();
 		info.execution_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
 			now - current_job_start_time_
 		);
-		info.wait_time = std::chrono::nanoseconds{0};
+		// Calculate wait time from enqueue to start
+		info.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+			current_job_start_time_ - job_ptr->get_enqueue_time()
+		);
 
 		return info;
 	}

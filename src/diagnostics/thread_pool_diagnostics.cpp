@@ -121,18 +121,32 @@ namespace kcenon::thread::diagnostics
 	auto thread_pool_diagnostics::get_active_jobs() const -> std::vector<job_info>
 	{
 		std::vector<job_info> result;
-		// Active jobs tracking would require modifications to thread_worker
-		// For now, return empty vector
+
+		// Get thread states which include current job info
+		auto threads = dump_thread_states();
+
+		for (const auto& thread : threads)
+		{
+			if (thread.current_job.has_value())
+			{
+				result.push_back(thread.current_job.value());
+			}
+		}
+
 		return result;
 	}
 
 	auto thread_pool_diagnostics::get_pending_jobs(std::size_t limit) const
 	    -> std::vector<job_info>
 	{
-		std::vector<job_info> result;
-		// Pending jobs would require access to job_queue internals
-		// For now, return empty vector
-		return result;
+		// Delegate to job_queue's inspect_pending_jobs
+		auto queue = pool_.get_job_queue();
+		if (!queue)
+		{
+			return {};
+		}
+
+		return queue->inspect_pending_jobs(limit);
 	}
 
 	auto thread_pool_diagnostics::get_recent_jobs(std::size_t limit) const
