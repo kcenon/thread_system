@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #377**: Phase 2.1 - Future/Promise Integration for Async Result Returns
+  - New `future_job<R>` template class:
+    - Wraps callables with `std::promise<R>` for async result retrieval
+    - Supports void return types via `if constexpr`
+    - Exception propagation to promise
+    - Integration with existing `cancellation_token`
+    - `make_future_job()` helper function
+  - New async methods in `thread_pool`:
+    - `submit_async()`: Submit callable and get `std::future<R>`
+    - `submit_batch_async()`: Submit multiple callables, get vector of futures
+    - `submit_all()`: Submit batch and block until all complete
+    - `submit_any()`: Submit batch and return first completed result
+  - New `cancellable_future<R>` template:
+    - Wraps `std::future` with `cancellation_token` integration
+    - `get_for(timeout)`: Wait with timeout support
+    - `is_ready()`, `is_cancelled()` status methods
+    - `cancel()` method for cooperative cancellation
+  - New when_all/when_any helpers in `<kcenon/thread/utils/when_helpers.h>`:
+    - `when_all()`: Combine multiple heterogeneous futures into tuple
+    - `when_any()`: Return first completed result from vector of futures
+    - `when_any_with_index()`: Return first completed with index info
+  - Comprehensive test suite (21 tests) for all async features
+
 - **Issue #387**: Phase 1.3.2 - Thread Dump Functionality Enhancement
   - Enhanced `dump_thread_states()` to return actual worker information:
     - Real thread IDs via `thread_base::get_thread_id()`
