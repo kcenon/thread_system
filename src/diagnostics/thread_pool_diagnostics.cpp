@@ -1,0 +1,587 @@
+/*****************************************************************************
+BSD 3-Clause License
+
+Copyright (c) 2024, kcenon
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
+#include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+
+#include <algorithm>
+#include <cmath>
+#include <format>
+#include <iomanip>
+#include <sstream>
+
+namespace kcenon::thread::diagnostics
+{
+	// =========================================================================
+	// Constructor / Destructor
+	// =========================================================================
+
+	thread_pool_diagnostics::thread_pool_diagnostics(thread_pool& pool,
+	                                                const diagnostics_config& config)
+	    : pool_(pool)
+	    , config_(config)
+	    , tracing_enabled_(config.enable_tracing)
+	    , start_time_(std::chrono::steady_clock::now())
+	{
+	}
+
+	thread_pool_diagnostics::~thread_pool_diagnostics() = default;
+
+	// =========================================================================
+	// Thread Dump
+	// =========================================================================
+
+	auto thread_pool_diagnostics::dump_thread_states() const -> std::vector<thread_info>
+	{
+		std::vector<thread_info> result;
+
+		auto worker_count = pool_.get_thread_count();
+		result.reserve(worker_count);
+
+		// Get basic statistics from pool
+		auto idle_count = pool_.get_idle_worker_count();
+		auto active_count = pool_.get_active_worker_count();
+
+		// Create thread info for each worker
+		// Note: In a full implementation, we would iterate over actual workers
+		// For now, we provide aggregate information
+		for (std::size_t i = 0; i < worker_count; ++i)
+		{
+			thread_info info;
+			info.worker_id = i;
+			info.thread_name = "Worker-" + std::to_string(i);
+			info.state = (i < active_count) ? worker_state::active : worker_state::idle;
+			info.state_since = std::chrono::steady_clock::now();
+
+			// Get metrics if available
+			auto metrics_snap = pool_.metrics().snapshot();
+			if (worker_count > 0)
+			{
+				info.jobs_completed = metrics_snap.tasks_executed / worker_count;
+				info.jobs_failed = metrics_snap.tasks_failed / worker_count;
+			}
+
+			info.update_utilization();
+			result.push_back(std::move(info));
+		}
+
+		return result;
+	}
+
+	auto thread_pool_diagnostics::format_thread_dump() const -> std::string
+	{
+		std::ostringstream oss;
+
+		auto threads = dump_thread_states();
+		auto now = std::chrono::system_clock::now();
+		auto time_t = std::chrono::system_clock::to_time_t(now);
+
+		auto worker_count = pool_.get_thread_count();
+		auto active_count = pool_.get_active_worker_count();
+		auto idle_count = pool_.get_idle_worker_count();
+
+		// Header
+		oss << "=== Thread Pool Dump: " << pool_.to_string() << " ===\n";
+		oss << "Time: " << std::put_time(std::gmtime(&time_t), "%Y-%m-%dT%H:%M:%SZ") << "\n";
+		oss << "Workers: " << worker_count << ", Active: " << active_count
+		    << ", Idle: " << idle_count << "\n\n";
+
+		// Worker details
+		for (const auto& t : threads)
+		{
+			auto state_duration = t.state_duration();
+			auto duration_sec = std::chrono::duration<double>(state_duration).count();
+
+			oss << t.thread_name << " [tid:" << t.thread_id << "] "
+			    << worker_state_to_string(t.state)
+			    << " (" << std::fixed << std::setprecision(1) << duration_sec << "s)\n";
+
+			if (t.current_job.has_value())
+			{
+				const auto& job = t.current_job.value();
+				auto exec_time_ms = std::chrono::duration<double, std::milli>(
+				    job.execution_time).count();
+				oss << "  Current Job: " << job.job_name << "#" << job.job_id
+				    << " (running " << std::fixed << std::setprecision(0)
+				    << exec_time_ms << "ms)\n";
+			}
+
+			oss << "  Jobs: " << t.jobs_completed << " completed, "
+			    << t.jobs_failed << " failed\n";
+			oss << "  Utilization: " << std::fixed << std::setprecision(1)
+			    << (t.utilization * 100.0) << "%\n\n";
+		}
+
+		return oss.str();
+	}
+
+	// =========================================================================
+	// Job Inspection
+	// =========================================================================
+
+	auto thread_pool_diagnostics::get_active_jobs() const -> std::vector<job_info>
+	{
+		std::vector<job_info> result;
+		// Active jobs tracking would require modifications to thread_worker
+		// For now, return empty vector
+		return result;
+	}
+
+	auto thread_pool_diagnostics::get_pending_jobs(std::size_t limit) const
+	    -> std::vector<job_info>
+	{
+		std::vector<job_info> result;
+		// Pending jobs would require access to job_queue internals
+		// For now, return empty vector
+		return result;
+	}
+
+	auto thread_pool_diagnostics::get_recent_jobs(std::size_t limit) const
+	    -> std::vector<job_info>
+	{
+		std::lock_guard<std::mutex> lock(jobs_mutex_);
+
+		std::vector<job_info> result;
+		auto count = std::min(limit, recent_jobs_.size());
+		result.reserve(count);
+
+		auto it = recent_jobs_.rbegin();
+		for (std::size_t i = 0; i < count && it != recent_jobs_.rend(); ++i, ++it)
+		{
+			result.push_back(*it);
+		}
+
+		return result;
+	}
+
+	void thread_pool_diagnostics::record_job_completion(const job_info& info)
+	{
+		std::lock_guard<std::mutex> lock(jobs_mutex_);
+
+		recent_jobs_.push_back(info);
+		while (recent_jobs_.size() > config_.recent_jobs_capacity)
+		{
+			recent_jobs_.pop_front();
+		}
+	}
+
+	// =========================================================================
+	// Bottleneck Detection
+	// =========================================================================
+
+	auto thread_pool_diagnostics::detect_bottlenecks() const -> bottleneck_report
+	{
+		bottleneck_report report;
+
+		// Gather metrics
+		auto metrics_snap = pool_.metrics().snapshot();
+		auto worker_count = pool_.get_thread_count();
+		auto active_count = pool_.get_active_worker_count();
+		auto idle_count = pool_.get_idle_worker_count();
+		auto queue_depth = pool_.get_pending_task_count();
+
+		report.queue_depth = queue_depth;
+		report.idle_workers = idle_count;
+		report.total_workers = worker_count;
+
+		// Calculate worker utilization
+		if (worker_count > 0)
+		{
+			report.worker_utilization = static_cast<double>(active_count) /
+			                            static_cast<double>(worker_count);
+		}
+
+		// Calculate average wait time from metrics
+		auto total_jobs = metrics_snap.tasks_executed + metrics_snap.tasks_failed;
+		if (total_jobs > 0)
+		{
+			// Estimate wait time from idle time (approximation)
+			auto avg_idle_ns = metrics_snap.total_idle_time_ns / total_jobs;
+			report.avg_wait_time_ms = static_cast<double>(avg_idle_ns) / 1e6;
+		}
+
+		// Jobs rejected tracking not available in basic metrics
+		report.jobs_rejected = 0;
+
+		// Detect bottleneck type
+		if (report.jobs_rejected > 0 || report.queue_saturation > 0.95)
+		{
+			report.has_bottleneck = true;
+			report.type = bottleneck_type::queue_full;
+			report.description = "Queue is at or near capacity, jobs are being rejected";
+		}
+		else if (report.avg_wait_time_ms > config_.wait_time_threshold_ms &&
+		         report.worker_utilization > config_.utilization_high_threshold)
+		{
+			report.has_bottleneck = true;
+			report.type = bottleneck_type::slow_consumer;
+			report.description = "Workers cannot keep up with job submission rate";
+		}
+		else if (report.worker_utilization > 0.95 && queue_depth > worker_count * 2)
+		{
+			report.has_bottleneck = true;
+			report.type = bottleneck_type::worker_starvation;
+			report.description = "Not enough workers to handle the workload";
+		}
+
+		// Generate recommendations if bottleneck detected
+		if (report.has_bottleneck)
+		{
+			generate_recommendations(report);
+		}
+
+		return report;
+	}
+
+	void thread_pool_diagnostics::generate_recommendations(bottleneck_report& report) const
+	{
+		switch (report.type)
+		{
+			case bottleneck_type::queue_full:
+				report.recommendations.push_back("Consider increasing queue capacity");
+				report.recommendations.push_back("Enable backpressure with adaptive policy");
+				report.recommendations.push_back("Add more worker threads if CPU permits");
+				break;
+
+			case bottleneck_type::slow_consumer:
+				report.recommendations.push_back("Add more worker threads");
+				report.recommendations.push_back("Optimize job execution time");
+				report.recommendations.push_back("Consider job batching for small tasks");
+				break;
+
+			case bottleneck_type::worker_starvation:
+				report.recommendations.push_back("Increase worker thread count");
+				report.recommendations.push_back("Consider scaling based on hardware cores");
+				break;
+
+			case bottleneck_type::uneven_distribution:
+				report.recommendations.push_back("Enable work stealing if not already");
+				report.recommendations.push_back("Review job distribution patterns");
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	// =========================================================================
+	// Health Checks
+	// =========================================================================
+
+	auto thread_pool_diagnostics::health_check() const -> health_status
+	{
+		health_status status;
+		status.check_time = std::chrono::steady_clock::now();
+
+		// Calculate uptime
+		auto uptime = status.check_time - start_time_;
+		status.uptime_seconds = std::chrono::duration<double>(uptime).count();
+
+		// Get metrics
+		auto metrics_snap = pool_.metrics().snapshot();
+		status.total_jobs_processed = metrics_snap.tasks_executed +
+		                              metrics_snap.tasks_failed;
+
+		if (status.total_jobs_processed > 0)
+		{
+			status.success_rate = static_cast<double>(metrics_snap.tasks_executed) /
+			                      static_cast<double>(status.total_jobs_processed);
+		}
+
+		// Worker stats
+		status.total_workers = pool_.get_thread_count();
+		status.active_workers = pool_.get_active_worker_count();
+		status.queue_depth = pool_.get_pending_task_count();
+
+		// Check components
+		status.components.push_back(check_worker_health());
+		status.components.push_back(check_queue_health());
+
+		// Calculate overall status
+		status.calculate_overall_status();
+
+		return status;
+	}
+
+	auto thread_pool_diagnostics::is_healthy() const -> bool
+	{
+		return pool_.is_running() && pool_.get_active_worker_count() > 0;
+	}
+
+	auto thread_pool_diagnostics::check_worker_health() const -> component_health
+	{
+		component_health health;
+		health.name = "workers";
+
+		auto total = pool_.get_thread_count();
+		auto active = pool_.get_active_worker_count();
+		auto idle = pool_.get_idle_worker_count();
+
+		health.details["total"] = std::to_string(total);
+		health.details["active"] = std::to_string(active);
+		health.details["idle"] = std::to_string(idle);
+
+		if (!pool_.is_running())
+		{
+			health.state = health_state::unhealthy;
+			health.message = "Thread pool is not running";
+		}
+		else if (total == 0)
+		{
+			health.state = health_state::unhealthy;
+			health.message = "No workers available";
+		}
+		else if (active == total)
+		{
+			health.state = health_state::degraded;
+			health.message = "All workers are busy";
+		}
+		else
+		{
+			health.state = health_state::healthy;
+			health.message = std::to_string(idle) + " workers available";
+		}
+
+		return health;
+	}
+
+	auto thread_pool_diagnostics::check_queue_health() const -> component_health
+	{
+		component_health health;
+		health.name = "queue";
+
+		auto depth = pool_.get_pending_task_count();
+		health.details["depth"] = std::to_string(depth);
+
+		// Note: Job rejection tracking requires backpressure queue
+		// For basic queue, assume no rejections
+		std::uint64_t rejected = 0;
+		health.details["rejected"] = std::to_string(rejected);
+
+		if (rejected > 0)
+		{
+			health.state = health_state::degraded;
+			health.message = std::to_string(rejected) + " jobs rejected due to backpressure";
+		}
+		else
+		{
+			health.state = health_state::healthy;
+			health.message = "Queue operational";
+		}
+
+		return health;
+	}
+
+	// =========================================================================
+	// Event Tracing
+	// =========================================================================
+
+	void thread_pool_diagnostics::enable_tracing(bool enable, std::size_t history_size)
+	{
+		tracing_enabled_.store(enable, std::memory_order_relaxed);
+
+		if (enable)
+		{
+			std::lock_guard<std::mutex> lock(events_mutex_);
+			// Clear and resize if needed
+			while (event_history_.size() > history_size)
+			{
+				event_history_.pop_front();
+			}
+		}
+
+		// Update config
+		config_.event_history_size = history_size;
+		config_.enable_tracing = enable;
+	}
+
+	auto thread_pool_diagnostics::is_tracing_enabled() const -> bool
+	{
+		return tracing_enabled_.load(std::memory_order_relaxed);
+	}
+
+	void thread_pool_diagnostics::add_event_listener(
+	    std::shared_ptr<execution_event_listener> listener)
+	{
+		if (!listener) return;
+
+		std::lock_guard<std::mutex> lock(listeners_mutex_);
+		listeners_.push_back(std::move(listener));
+	}
+
+	void thread_pool_diagnostics::remove_event_listener(
+	    std::shared_ptr<execution_event_listener> listener)
+	{
+		if (!listener) return;
+
+		std::lock_guard<std::mutex> lock(listeners_mutex_);
+		auto it = std::find(listeners_.begin(), listeners_.end(), listener);
+		if (it != listeners_.end())
+		{
+			listeners_.erase(it);
+		}
+	}
+
+	void thread_pool_diagnostics::record_event(const job_execution_event& event)
+	{
+		if (!tracing_enabled_.load(std::memory_order_relaxed))
+		{
+			return;
+		}
+
+		// Store in history
+		{
+			std::lock_guard<std::mutex> lock(events_mutex_);
+			event_history_.push_back(event);
+			while (event_history_.size() > config_.event_history_size)
+			{
+				event_history_.pop_front();
+			}
+		}
+
+		// Notify listeners
+		notify_listeners(event);
+	}
+
+	void thread_pool_diagnostics::notify_listeners(const job_execution_event& event)
+	{
+		std::vector<std::shared_ptr<execution_event_listener>> listeners_copy;
+		{
+			std::lock_guard<std::mutex> lock(listeners_mutex_);
+			listeners_copy = listeners_;
+		}
+
+		for (const auto& listener : listeners_copy)
+		{
+			if (listener)
+			{
+				listener->on_event(event);
+			}
+		}
+	}
+
+	auto thread_pool_diagnostics::get_recent_events(std::size_t limit) const
+	    -> std::vector<job_execution_event>
+	{
+		std::lock_guard<std::mutex> lock(events_mutex_);
+
+		std::vector<job_execution_event> result;
+		auto count = std::min(limit, event_history_.size());
+		result.reserve(count);
+
+		auto it = event_history_.rbegin();
+		for (std::size_t i = 0; i < count && it != event_history_.rend(); ++i, ++it)
+		{
+			result.push_back(*it);
+		}
+
+		return result;
+	}
+
+	// =========================================================================
+	// Export
+	// =========================================================================
+
+	auto thread_pool_diagnostics::to_json() const -> std::string
+	{
+		std::ostringstream oss;
+		oss << "{\n";
+
+		// Health status
+		auto health = health_check();
+		oss << "  \"health\": {\n";
+		oss << "    \"status\": \"" << health_state_to_string(health.overall_status) << "\",\n";
+		oss << "    \"message\": \"" << health.status_message << "\",\n";
+		oss << "    \"uptime_seconds\": " << std::fixed << std::setprecision(2)
+		    << health.uptime_seconds << ",\n";
+		oss << "    \"total_jobs_processed\": " << health.total_jobs_processed << ",\n";
+		oss << "    \"success_rate\": " << std::fixed << std::setprecision(4)
+		    << health.success_rate << "\n";
+		oss << "  },\n";
+
+		// Workers
+		oss << "  \"workers\": {\n";
+		oss << "    \"total\": " << health.total_workers << ",\n";
+		oss << "    \"active\": " << health.active_workers << ",\n";
+		oss << "    \"idle\": " << (health.total_workers - health.active_workers) << "\n";
+		oss << "  },\n";
+
+		// Queue
+		oss << "  \"queue\": {\n";
+		oss << "    \"depth\": " << health.queue_depth << "\n";
+		oss << "  },\n";
+
+		// Bottleneck
+		auto bottleneck = detect_bottlenecks();
+		oss << "  \"bottleneck\": {\n";
+		oss << "    \"detected\": " << (bottleneck.has_bottleneck ? "true" : "false") << ",\n";
+		oss << "    \"type\": \"" << bottleneck_type_to_string(bottleneck.type) << "\",\n";
+		oss << "    \"severity\": \"" << bottleneck.severity_string() << "\"\n";
+		oss << "  }\n";
+
+		oss << "}";
+		return oss.str();
+	}
+
+	auto thread_pool_diagnostics::to_string() const -> std::string
+	{
+		return format_thread_dump();
+	}
+
+	// =========================================================================
+	// Configuration
+	// =========================================================================
+
+	auto thread_pool_diagnostics::get_config() const -> diagnostics_config
+	{
+		return config_;
+	}
+
+	void thread_pool_diagnostics::set_config(const diagnostics_config& config)
+	{
+		config_ = config;
+		tracing_enabled_.store(config.enable_tracing, std::memory_order_relaxed);
+	}
+
+	auto thread_pool_diagnostics::get_worker_info(const thread_worker& worker,
+	                                              std::size_t index) const -> thread_info
+	{
+		thread_info info;
+		info.worker_id = worker.get_worker_id();
+		info.thread_name = "Worker-" + std::to_string(index);
+		info.state = worker.is_idle() ? worker_state::idle : worker_state::active;
+		info.state_since = std::chrono::steady_clock::now();
+		return info;
+	}
+
+} // namespace kcenon::thread::diagnostics

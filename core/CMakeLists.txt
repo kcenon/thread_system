@@ -34,6 +34,13 @@ set(CORE_HEADERS
     # Queue module
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/queue/adaptive_job_queue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/queue/queue_factory.h
+    # Diagnostics module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/job_info.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_info.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/bottleneck_report.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/health_status.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/execution_event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_pool_diagnostics.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -60,6 +67,8 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job_queue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_worker.cpp
+    # Diagnostics implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC

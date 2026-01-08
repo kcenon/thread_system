@@ -144,6 +144,28 @@ using lockfree_queue [[deprecated(
     "For true lock-free queue, see detail::lockfree_job_queue with hazard pointers.")]] = detail::concurrent_queue<T>;
 
 // ============================================================================
+// Diagnostics types (in diagnostics sub-namespace)
+// ============================================================================
+
+namespace diagnostics {
+    class thread_pool_diagnostics;
+    struct job_info;
+    struct thread_info;
+    struct health_status;
+    struct component_health;
+    struct bottleneck_report;
+    struct job_execution_event;
+    struct diagnostics_config;
+    class execution_event_listener;
+
+    enum class job_status;
+    enum class worker_state;
+    enum class health_state;
+    enum class bottleneck_type;
+    enum class event_type;
+}  // namespace diagnostics
+
+// ============================================================================
 // Synchronization primitives (in sync sub-namespace)
 // ============================================================================
 
