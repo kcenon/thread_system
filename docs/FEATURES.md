@@ -828,6 +828,65 @@ if (result.has_error()) {
 
 ---
 
+### Circuit Breaker Pattern
+
+Prevent cascading failures with circuit breaker protection.
+
+```cpp
+#include <kcenon/thread/resilience/circuit_breaker.h>
+
+// Configure circuit breaker
+circuit_breaker_config config;
+config.failure_threshold = 5;          // Open after 5 consecutive failures
+config.failure_rate_threshold = 0.5;   // Or 50% failure rate
+config.minimum_requests = 10;          // Minimum requests before rate check
+config.open_duration = std::chrono::seconds{30};
+config.half_open_max_requests = 3;     // Test requests in half-open
+config.half_open_success_threshold = 2; // Successes to close
+
+// Enable in thread pool
+pool->enable_circuit_breaker(config);
+
+// Submit protected jobs
+auto result = pool->enqueue_protected(std::move(job));
+if (result.is_err()) {
+    // Circuit may be open
+    auto code = thread::get_error_code(result.error());
+    if (code == thread::error_code::circuit_open) {
+        // Handle circuit open - retry later or fallback
+    }
+}
+
+// Check health before submitting
+if (pool->is_accepting_work()) {
+    pool->enqueue_protected(std::move(job));
+}
+
+// Manual circuit control
+auto cb = pool->get_circuit_breaker();
+cb->trip();   // Force open
+cb->reset();  // Force close
+
+// State change monitoring
+config.state_change_callback = [](circuit_state old_state, circuit_state new_state) {
+    log("Circuit transitioned from {} to {}", to_string(old_state), to_string(new_state));
+};
+```
+
+**State Machine**:
+- **Closed**: Normal operation, requests allowed
+- **Open**: Failure threshold exceeded, requests blocked
+- **Half-Open**: Testing recovery, limited requests allowed
+
+**Features**:
+- Sliding window failure rate calculation
+- Configurable thresholds and timeouts
+- RAII guard for automatic success/failure recording
+- State change callbacks for monitoring
+- Thread-safe operations
+
+---
+
 ## Integration Features
 
 ### Logger Integration (Optional)
