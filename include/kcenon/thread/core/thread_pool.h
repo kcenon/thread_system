@@ -67,6 +67,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <chrono>
 #include <optional>
+#include <future>
+#include <type_traits>
 
 // Forward declaration for diagnostics
 namespace kcenon::thread::diagnostics {
@@ -382,6 +384,93 @@ namespace kcenon::thread
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
 		// ============================================================================
+		// Future-based Async API
+		// ============================================================================
+		// These methods provide async result retrieval through std::future.
+		// They enable callers to receive execution results without manual callbacks.
+
+		/**
+		 * @brief Submit a callable and get a future for the result
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callable The function to execute
+		 * @param name Optional job name for debugging
+		 * @return Future for the result
+		 *
+		 * @example
+		 * @code
+		 * auto future = pool->submit_async([]{ return 42; });
+		 * int result = future.get();  // Blocks until complete
+		 * @endcode
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_async(F&& callable, const std::string& name = "")
+		    -> std::future<R>;
+
+		/**
+		 * @brief Submit batch of callables and get futures
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @return Vector of futures for the results
+		 *
+		 * @example
+		 * @code
+		 * std::vector<std::function<int()>> tasks;
+		 * tasks.push_back([]{ return 1; });
+		 * tasks.push_back([]{ return 2; });
+		 * auto futures = pool->submit_batch_async(std::move(tasks));
+		 * @endcode
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_batch_async(std::vector<F>&& callables)
+		    -> std::vector<std::future<R>>;
+
+		/**
+		 * @brief Submit batch and wait for all results
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @return Vector of results (blocks until all complete)
+		 *
+		 * @example
+		 * @code
+		 * std::vector<std::function<int()>> tasks;
+		 * for (int i = 0; i < 10; ++i) {
+		 *     tasks.push_back([i]{ return i * i; });
+		 * }
+		 * auto results = pool->submit_all(std::move(tasks));
+		 * // results contains [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+		 * @endcode
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_all(std::vector<F>&& callables)
+		    -> std::vector<R>;
+
+		/**
+		 * @brief Submit batch and return first completed result
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @return First completed result
+		 *
+		 * @example
+		 * @code
+		 * auto result = pool->submit_any({
+		 *     []{ return fetch_from_server_a(); },
+		 *     []{ return fetch_from_server_b(); }
+		 * });
+		 * @endcode
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_any(std::vector<F>&& callables)
+		    -> R;
+
+		// ============================================================================
 		// Simplified Public API (bool return type for convenience)
 		// ============================================================================
 		// These methods provide a simplified interface with bool return types
@@ -680,6 +769,104 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] job* steal_from_workers(std::size_t requester_id);
 	};
+} // namespace kcenon::thread
+
+// ----------------------------------------------------------------------------
+// Template method implementations for thread_pool
+// ----------------------------------------------------------------------------
+
+#include <kcenon/thread/core/future_job.h>
+
+namespace kcenon::thread {
+
+template<typename F, typename R>
+auto thread_pool::submit_async(F&& callable, const std::string& name)
+    -> std::future<R>
+{
+    auto job_ptr = std::make_unique<future_job<R>>(
+        std::forward<F>(callable),
+        name.empty() ? "async_job" : name
+    );
+
+    auto future = job_ptr->get_future();
+
+    auto result = enqueue(std::move(job_ptr));
+    if (result.is_err()) {
+        std::promise<R> error_promise;
+        error_promise.set_exception(
+            std::make_exception_ptr(
+                std::runtime_error(result.error().message)
+            )
+        );
+        return error_promise.get_future();
+    }
+
+    return future;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit_batch_async(std::vector<F>&& callables)
+    -> std::vector<std::future<R>>
+{
+    std::vector<std::future<R>> futures;
+    futures.reserve(callables.size());
+
+    for (auto&& callable : callables) {
+        futures.push_back(submit_async<F, R>(std::move(callable)));
+    }
+
+    return futures;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit_all(std::vector<F>&& callables)
+    -> std::vector<R>
+{
+    auto futures = submit_batch_async<F, R>(std::move(callables));
+
+    std::vector<R> results;
+    results.reserve(futures.size());
+
+    for (auto& future : futures) {
+        results.push_back(future.get());
+    }
+
+    return results;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit_any(std::vector<F>&& callables)
+    -> R
+{
+    if (callables.empty()) {
+        throw std::invalid_argument("Empty callables vector");
+    }
+
+    auto futures = submit_batch_async<F, R>(std::move(callables));
+    auto completed = std::make_shared<std::atomic<bool>>(false);
+    auto result_promise = std::make_shared<std::promise<R>>();
+    auto result_future = result_promise->get_future();
+
+    for (std::size_t i = 0; i < futures.size(); ++i) {
+        std::thread([completed, result_promise, fut = std::move(futures[i])]() mutable {
+            try {
+                R result = fut.get();
+                bool expected = false;
+                if (completed->compare_exchange_strong(expected, true)) {
+                    result_promise->set_value(std::move(result));
+                }
+            } catch (...) {
+                bool expected = false;
+                if (completed->compare_exchange_strong(expected, true)) {
+                    result_promise->set_exception(std::current_exception());
+                }
+            }
+        }).detach();
+    }
+
+    return result_future.get();
+}
+
 } // namespace kcenon::thread
 
 // ----------------------------------------------------------------------------

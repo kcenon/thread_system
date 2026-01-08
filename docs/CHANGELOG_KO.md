@@ -8,6 +8,29 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #377**: Phase 2.1 - 비동기 결과 반환을 위한 Future/Promise 통합
+  - 새로운 `future_job<R>` 템플릿 클래스:
+    - `std::promise<R>`로 callable을 래핑하여 비동기 결과 검색 가능
+    - `if constexpr`를 통한 void 반환 타입 지원
+    - Promise로의 예외 전파
+    - 기존 `cancellation_token`과의 통합
+    - `make_future_job()` 헬퍼 함수
+  - `thread_pool`의 새로운 비동기 메서드:
+    - `submit_async()`: callable을 제출하고 `std::future<R>` 반환
+    - `submit_batch_async()`: 여러 callable을 제출하고 future 벡터 반환
+    - `submit_all()`: 배치를 제출하고 모두 완료될 때까지 블록
+    - `submit_any()`: 배치를 제출하고 먼저 완료된 결과 반환
+  - 새로운 `cancellable_future<R>` 템플릿:
+    - `std::future`를 `cancellation_token` 통합과 함께 래핑
+    - `get_for(timeout)`: 타임아웃 지원 대기
+    - `is_ready()`, `is_cancelled()` 상태 메서드
+    - 협력적 취소를 위한 `cancel()` 메서드
+  - `<kcenon/thread/utils/when_helpers.h>`의 새로운 when_all/when_any 헬퍼:
+    - `when_all()`: 여러 이종 future를 튜플로 결합
+    - `when_any()`: future 벡터에서 먼저 완료된 결과 반환
+    - `when_any_with_index()`: 인덱스 정보와 함께 먼저 완료된 결과 반환
+  - 모든 비동기 기능에 대한 포괄적인 테스트 스위트 (21개 테스트)
+
 - **이슈 #387**: Phase 1.3.2 - Thread Dump 기능 향상
   - `dump_thread_states()`가 실제 워커 정보를 반환하도록 향상:
     - `thread_base::get_thread_id()`를 통한 실제 스레드 ID
