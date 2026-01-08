@@ -152,7 +152,20 @@ namespace kcenon::thread
 		 * This title can be used for logging or debugging purposes.
 		 * The context provides access to logging and monitoring services.
 		 */
-		thread_pool(const std::string& thread_title = "thread_pool", 
+		thread_pool(const std::string& thread_title = "thread_pool",
+		           const thread_context& context = thread_context());
+
+		/**
+		 * @brief Constructs a new @c thread_pool instance with a custom job queue.
+		 * @param thread_title A title or identifier for the thread pool.
+		 * @param custom_queue A custom job queue implementation (e.g., backpressure_job_queue).
+		 * @param context Optional thread context for logging and monitoring (defaults to empty context).
+		 *
+		 * This constructor allows injecting a specialized job queue such as
+		 * @c backpressure_job_queue for rate limiting and flow control.
+		 */
+		thread_pool(const std::string& thread_title,
+		           std::shared_ptr<job_queue> custom_queue,
 		           const thread_context& context = thread_context());
 
 		/**
