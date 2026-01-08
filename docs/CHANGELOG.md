@@ -8,6 +8,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #376**: Phase 1.3 - Diagnostics API with Thread Dump and Health Checks
+  - New `thread_pool_diagnostics` class providing comprehensive observability features
+  - Thread dump functionality:
+    - `dump_thread_states()`: Get detailed info for all worker threads
+    - `format_thread_dump()`: Human-readable thread dump output (Java-style)
+    - `thread_info` struct with worker state, utilization, current job info
+    - `worker_state` enum: `idle`, `active`, `stopping`, `stopped`
+  - Job inspection:
+    - `get_active_jobs()`: List currently executing jobs
+    - `get_pending_jobs()`: List jobs waiting in queue
+    - `get_recent_jobs()`: Circular buffer of recently completed jobs
+    - `job_info` struct with timing, status, and optional stack trace
+    - `job_status` enum: `pending`, `running`, `completed`, `failed`, `cancelled`, `timed_out`
+  - Bottleneck detection:
+    - `detect_bottlenecks()`: Analyze pool for performance issues
+    - `bottleneck_report` struct with saturation levels and recommendations
+    - `bottleneck_type` enum: `none`, `queue_full`, `slow_consumer`, `worker_starvation`, etc.
+    - Automatic severity calculation (0-3 scale)
+  - Health check (HTTP integration ready):
+    - `health_check()`: Get pool operational status
+    - `is_healthy()`: Quick boolean check
+    - `health_status` struct with component-level health
+    - `health_state` enum: `healthy`, `degraded`, `unhealthy`, `unknown`
+    - `is_operational()` helper for liveness probes
+  - Event tracing:
+    - `enable_tracing()`: Enable/disable event history
+    - `add_listener()` / `remove_listener()`: Observer pattern support
+    - `execution_event_listener` interface for custom event handling
+    - `job_execution_event` struct with event type, timestamps, worker info
+    - `event_type` enum: `enqueued`, `dequeued`, `started`, `completed`, `failed`, etc.
+  - Export/serialization:
+    - `to_json()`: Full diagnostics state in JSON format
+    - `to_prometheus()`: Prometheus/OpenMetrics format export
+    - Configurable via `diagnostics_config` struct
+  - Integration:
+    - Lazy initialization via `thread_pool::diagnostics()` method
+    - Zero overhead when diagnostics not accessed
+    - Forward declarations in `forward.h`
+    - Umbrella header `<kcenon/thread/diagnostics.h>`
+  - Comprehensive integration tests (18 test cases)
 - **Issue #375**: Phase 1.2 - Backpressure Mechanisms with Rate Limiting and Adaptive Control
   - New `token_bucket` class for lock-free rate limiting
     - Continuous refill algorithm with fixed-point arithmetic for sub-token precision
