@@ -114,6 +114,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `to_json()`: JSON serialization of metrics
     - `to_prometheus(prefix)`: Prometheus/OpenMetrics format export
 
+### Fixed
+- **Issue #387**: Fix `is_healthy()` returning false for idle thread pools
+  - Changed health check condition from `get_active_worker_count() > 0` to `get_thread_count() > 0`
+  - A running pool with registered workers (whether idle or active) is now correctly identified as healthy
+  - This aligns with `check_worker_health()` logic which uses total worker count
+
 ### Changed
 - **Issue #359**: Fix misleading lockfree_queue naming (Kent Beck "Reveals Intention" principle)
   - Create `concurrent/` directory for fine-grained locking queue implementations

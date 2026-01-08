@@ -47,6 +47,12 @@
     - `to_json()`: JSON 직렬화
     - `to_prometheus(prefix)`: Prometheus/OpenMetrics 형식
 
+### 수정
+- **이슈 #387**: 유휴 상태 스레드 풀에서 `is_healthy()`가 false를 반환하는 문제 수정
+  - 상태 검사 조건을 `get_active_worker_count() > 0`에서 `get_thread_count() > 0`으로 변경
+  - 등록된 워커가 있는 실행 중인 풀(유휴 또는 활성 상태)이 이제 올바르게 정상으로 식별됨
+  - 전체 워커 수를 사용하는 `check_worker_health()` 로직과 일관성 유지
+
 ### 변경
 - **이슈 #359**: 오해의 소지가 있는 lockfree_queue 이름 수정 (Kent Beck "Reveals Intention" 원칙)
   - fine-grained locking 큐 구현을 위한 `concurrent/` 디렉토리 생성
