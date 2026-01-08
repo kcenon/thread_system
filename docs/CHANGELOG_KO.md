@@ -7,6 +7,31 @@
 
 ## [Unreleased]
 
+### 추가
+- **이슈 #374**: 히스토그램 및 백분위수 지원이 포함된 향상된 메트릭 시스템
+  - `LatencyHistogram`: 지연 시간 분포를 위한 HDR 스타일 히스토그램
+    - 정확한 백분위수 계산 (P50/P90/P99/P99.9)
+    - < 100ns 오버헤드로 lock-free 원자적 작업
+    - 메모리 효율: 히스토그램당 < 1KB
+  - `SlidingWindowCounter`: 처리량 측정을 위한 시간 기반 카운터
+    - 구성 가능한 윈도우 크기 (1초, 60초 등)
+    - Lock-free 순환 버퍼 구현
+  - `EnhancedThreadPoolMetrics`: 종합 메트릭 집계:
+    - 큐 추가 지연 시간 히스토그램
+    - 실행 지연 시간 히스토그램
+    - 대기 시간 (큐 시간) 히스토그램
+    - 처리량 카운터 (1초 및 1분 윈도우)
+    - 워커별 활용률 추적
+    - 큐 깊이 모니터링
+  - 스레드 풀 통합:
+    - `set_enhanced_metrics_enabled(bool)`: 향상된 메트릭 활성화/비활성화
+    - `is_enhanced_metrics_enabled()`: 향상된 메트릭 활성화 여부 확인
+    - `enhanced_metrics()`: 향상된 메트릭 접근 (비활성화시 예외 발생)
+    - `enhanced_metrics_snapshot()`: 모든 메트릭의 스냅샷 가져오기
+  - 내보내기 형식:
+    - `to_json()`: JSON 직렬화
+    - `to_prometheus(prefix)`: Prometheus/OpenMetrics 형식
+
 ### 변경
 - **이슈 #359**: 오해의 소지가 있는 lockfree_queue 이름 수정 (Kent Beck "Reveals Intention" 원칙)
   - fine-grained locking 큐 구현을 위한 `concurrent/` 디렉토리 생성

@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/forward.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
+#include <kcenon/thread/metrics/enhanced_metrics.h>
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -258,6 +259,37 @@ namespace kcenon::thread
          * @brief Reset accumulated metrics.
          */
         void reset_metrics();
+
+        /**
+         * @brief Enable or disable enhanced metrics collection.
+         * @param enabled True to enable enhanced metrics (histograms, percentiles).
+         *
+         * When enabled, additional metrics like latency histograms and throughput
+         * counters are collected. This has minimal overhead (< 100ns per operation)
+         * but can be disabled for maximum performance.
+         */
+        void set_enhanced_metrics_enabled(bool enabled);
+
+        /**
+         * @brief Check if enhanced metrics is enabled.
+         * @return True if enhanced metrics collection is enabled.
+         */
+        [[nodiscard]] bool is_enhanced_metrics_enabled() const;
+
+        /**
+         * @brief Access enhanced metrics (read-only reference).
+         * @return Reference to enhanced metrics with histograms and percentiles.
+         * @throw std::runtime_error if enhanced metrics is not enabled.
+         */
+        [[nodiscard]] const metrics::EnhancedThreadPoolMetrics& enhanced_metrics() const;
+
+        /**
+         * @brief Get enhanced metrics snapshot.
+         * @return EnhancedSnapshot with all current metric values.
+         *
+         * Returns empty snapshot if enhanced metrics is not enabled.
+         */
+        [[nodiscard]] metrics::EnhancedSnapshot enhanced_metrics_snapshot() const;
 
         /**
          * @brief Enqueues a new job into the shared @c job_queue.
@@ -547,6 +579,20 @@ namespace kcenon::thread
          * @brief Shared metrics collector used by workers.
          */
         std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
+
+        /**
+         * @brief Enhanced metrics collector for histograms and percentiles.
+         *
+         * Provides production-grade observability including latency histograms,
+         * percentile calculations, and sliding window throughput tracking.
+         * Lazily initialized when set_enhanced_metrics_enabled(true) is called.
+         */
+        std::shared_ptr<metrics::EnhancedThreadPoolMetrics> enhanced_metrics_;
+
+        /**
+         * @brief Flag indicating if enhanced metrics collection is enabled.
+         */
+        std::atomic<bool> enhanced_metrics_enabled_{false};
 
 		/**
 		 * @brief Worker policy configuration for this pool.

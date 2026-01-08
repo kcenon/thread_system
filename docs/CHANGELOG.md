@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Issue #374**: Enhanced Metrics System with Histogram and Percentile Support
+  - `LatencyHistogram`: HDR-style histogram with logarithmic buckets for latency distribution
+    - Provides accurate percentile calculations (P50/P90/P99/P99.9)
+    - Lock-free atomic operations with < 100ns overhead per record
+    - Memory efficient: < 1KB per histogram
+  - `SlidingWindowCounter`: Time-based counter for throughput measurement
+    - Configurable window sizes (1s, 60s, etc.)
+    - Lock-free circular buffer implementation
+  - `EnhancedThreadPoolMetrics`: Comprehensive metrics aggregating:
+    - Enqueue latency histogram
+    - Execution latency histogram
+    - Wait time (queue time) histogram
+    - Throughput counters (1s and 1min windows)
+    - Per-worker utilization tracking
+    - Queue depth monitoring
+  - Thread pool integration:
+    - `set_enhanced_metrics_enabled(bool)`: Enable/disable enhanced metrics
+    - `is_enhanced_metrics_enabled()`: Check if enhanced metrics is enabled
+    - `enhanced_metrics()`: Access enhanced metrics (throws if not enabled)
+    - `enhanced_metrics_snapshot()`: Get snapshot of all metrics
+  - Export formats:
+    - `to_json()`: JSON serialization of metrics
+    - `to_prometheus(prefix)`: Prometheus/OpenMetrics format export
+
 ### Changed
 - **Issue #359**: Fix misleading lockfree_queue naming (Kent Beck "Reveals Intention" principle)
   - Create `concurrent/` directory for fine-grained locking queue implementations
