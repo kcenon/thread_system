@@ -222,6 +222,37 @@ const metrics::ThreadPoolMetrics& thread_pool::metrics() const noexcept {
 
 void thread_pool::reset_metrics() {
     metrics_->reset();
+    if (enhanced_metrics_) {
+        enhanced_metrics_->reset();
+    }
+}
+
+void thread_pool::set_enhanced_metrics_enabled(bool enabled) {
+    if (enabled && !enhanced_metrics_) {
+        // Lazily initialize enhanced metrics with current worker count
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
+        enhanced_metrics_ = std::make_shared<metrics::EnhancedThreadPoolMetrics>(workers_.size());
+        enhanced_metrics_->set_active_workers(workers_.size());
+    }
+    enhanced_metrics_enabled_.store(enabled, std::memory_order_release);
+}
+
+bool thread_pool::is_enhanced_metrics_enabled() const {
+    return enhanced_metrics_enabled_.load(std::memory_order_acquire);
+}
+
+const metrics::EnhancedThreadPoolMetrics& thread_pool::enhanced_metrics() const {
+    if (!enhanced_metrics_) {
+        throw std::runtime_error("Enhanced metrics is not enabled. Call set_enhanced_metrics_enabled(true) first.");
+    }
+    return *enhanced_metrics_;
+}
+
+metrics::EnhancedSnapshot thread_pool::enhanced_metrics_snapshot() const {
+    if (!enhanced_metrics_enabled_.load(std::memory_order_acquire) || !enhanced_metrics_) {
+        return metrics::EnhancedSnapshot{};
+    }
+    return enhanced_metrics_->snapshot();
 }
 
 /**
@@ -265,12 +296,25 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
 
     // Delegate to adaptive queue for optimal processing
     metrics_->record_submission();
+
+    // Record enhanced metrics if enabled
+    auto start_time = std::chrono::steady_clock::now();
     auto enqueue_result = job_queue_->enqueue(std::move(job));
     if (enqueue_result.is_err()) {
         return enqueue_result.error();
     }
 
     metrics_->record_enqueue();
+
+    // Record enhanced metrics
+    if (enhanced_metrics_enabled_.load(std::memory_order_relaxed) && enhanced_metrics_) {
+        auto end_time = std::chrono::steady_clock::now();
+        auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        enhanced_metrics_->record_submission();
+        enhanced_metrics_->record_enqueue(latency);
+        enhanced_metrics_->record_queue_depth(job_queue_->size());
+    }
+
     return common::ok();
 }
 
@@ -288,13 +332,30 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
         return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
-    metrics_->record_submission(jobs.size());
+    const auto batch_size = jobs.size();
+    metrics_->record_submission(batch_size);
+
+    // Record enhanced metrics if enabled
+    auto start_time = std::chrono::steady_clock::now();
     auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
     if (enqueue_result.is_err()) {
         return enqueue_result.error();
     }
 
-    metrics_->record_enqueue(jobs.size());
+    metrics_->record_enqueue(batch_size);
+
+    // Record enhanced metrics for batch
+    if (enhanced_metrics_enabled_.load(std::memory_order_relaxed) && enhanced_metrics_) {
+        auto end_time = std::chrono::steady_clock::now();
+        auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        // Record submission for each job in batch
+        for (std::size_t i = 0; i < batch_size; ++i) {
+            enhanced_metrics_->record_submission();
+            enhanced_metrics_->record_enqueue(latency / static_cast<long>(batch_size));
+        }
+        enhanced_metrics_->record_queue_depth(job_queue_->size());
+    }
+
     return common::ok();
 }
 
