@@ -63,39 +63,8 @@ namespace kcenon::thread::diagnostics
 
 	auto thread_pool_diagnostics::dump_thread_states() const -> std::vector<thread_info>
 	{
-		std::vector<thread_info> result;
-
-		auto worker_count = pool_.get_thread_count();
-		result.reserve(worker_count);
-
-		// Get basic statistics from pool
-		auto idle_count = pool_.get_idle_worker_count();
-		auto active_count = pool_.get_active_worker_count();
-
-		// Create thread info for each worker
-		// Note: In a full implementation, we would iterate over actual workers
-		// For now, we provide aggregate information
-		for (std::size_t i = 0; i < worker_count; ++i)
-		{
-			thread_info info;
-			info.worker_id = i;
-			info.thread_name = "Worker-" + std::to_string(i);
-			info.state = (i < active_count) ? worker_state::active : worker_state::idle;
-			info.state_since = std::chrono::steady_clock::now();
-
-			// Get metrics if available
-			auto metrics_snap = pool_.metrics().snapshot();
-			if (worker_count > 0)
-			{
-				info.jobs_completed = metrics_snap.tasks_executed / worker_count;
-				info.jobs_failed = metrics_snap.tasks_failed / worker_count;
-			}
-
-			info.update_utilization();
-			result.push_back(std::move(info));
-		}
-
-		return result;
+		// Delegate to thread_pool's collect_worker_diagnostics for actual worker info
+		return pool_.collect_worker_diagnostics();
 	}
 
 	auto thread_pool_diagnostics::format_thread_dump() const -> std::string

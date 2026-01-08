@@ -71,6 +71,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Forward declaration for diagnostics
 namespace kcenon::thread::diagnostics {
 	class thread_pool_diagnostics;
+	struct thread_info;
 }
 
 /**
@@ -519,7 +520,20 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] auto diagnostics() const -> const diagnostics::thread_pool_diagnostics&;
 
+		/**
+		 * @brief Collects diagnostics information from all workers.
+		 * @return Vector of thread_info for each worker.
+		 *
+		 * Thread Safety:
+		 * - Acquires workers_mutex_ for safe access
+		 * - Returns snapshot of current worker states
+		 */
+		[[nodiscard]] auto collect_worker_diagnostics() const
+			-> std::vector<diagnostics::thread_info>;
+
 	private:
+		// Allow diagnostics to access internal state
+		friend class diagnostics::thread_pool_diagnostics;
 		/**
 		 * @brief Static counter for generating unique pool instance IDs.
 		 */
