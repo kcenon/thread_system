@@ -70,10 +70,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <future>
 #include <type_traits>
 
-// Forward declaration for diagnostics
+// Forward declarations
 namespace kcenon::thread::diagnostics {
 	class thread_pool_diagnostics;
 	struct thread_info;
+}
+
+namespace kcenon::thread {
+	class circuit_breaker;
+	struct circuit_breaker_config;
 }
 
 /**
@@ -587,6 +592,55 @@ namespace kcenon::thread
 		[[nodiscard]] bool is_work_stealing_enabled() const;
 
 		// =========================================================================
+		// Circuit Breaker
+		// =========================================================================
+
+		/**
+		 * @brief Enable circuit breaker for the pool.
+		 * @param config Circuit breaker configuration.
+		 *
+		 * When enabled, jobs can be wrapped with circuit breaker protection
+		 * using enqueue_protected(). The circuit breaker will automatically
+		 * open when failure thresholds are exceeded.
+		 *
+		 * @see circuit_breaker_config
+		 */
+		void enable_circuit_breaker(const circuit_breaker_config& config);
+
+		/**
+		 * @brief Disable circuit breaker.
+		 *
+		 * When disabled, enqueue_protected() will behave like regular enqueue().
+		 */
+		void disable_circuit_breaker();
+
+		/**
+		 * @brief Get the circuit breaker (if enabled).
+		 * @return Shared pointer to the circuit breaker, or nullptr if not enabled.
+		 */
+		[[nodiscard]] auto get_circuit_breaker() -> std::shared_ptr<circuit_breaker>;
+
+		/**
+		 * @brief Check if pool is accepting work.
+		 * @return false if circuit breaker is open, true otherwise.
+		 *
+		 * This method checks the circuit breaker state without consuming
+		 * a request slot. Useful for quick health checks.
+		 */
+		[[nodiscard]] auto is_accepting_work() const -> bool;
+
+		/**
+		 * @brief Enqueue a job with circuit breaker protection.
+		 * @param job The job to enqueue.
+		 * @return Error if circuit is open or job is invalid.
+		 *
+		 * If circuit breaker is not enabled, this behaves like regular enqueue().
+		 * When circuit breaker is enabled, the job is wrapped with protection
+		 * that automatically records success/failure.
+		 */
+		[[nodiscard]] auto enqueue_protected(std::unique_ptr<job>&& job) -> common::VoidResult;
+
+		// =========================================================================
 		// Diagnostics
 		// =========================================================================
 
@@ -751,6 +805,15 @@ namespace kcenon::thread
 		 * Lazily initialized on first access to diagnostics().
 		 */
 		mutable std::unique_ptr<diagnostics::thread_pool_diagnostics> diagnostics_;
+
+		/**
+		 * @brief Circuit breaker for failure detection and recovery.
+		 *
+		 * When enabled, jobs submitted via enqueue_protected() are wrapped
+		 * with circuit breaker protection. The circuit breaker monitors
+		 * failure rates and automatically opens when thresholds are exceeded.
+		 */
+		std::shared_ptr<circuit_breaker> circuit_breaker_;
 
 		/**
 		 * @brief Create a steal function for the given worker.

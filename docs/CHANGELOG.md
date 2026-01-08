@@ -8,6 +8,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #378**: Circuit Breaker Pattern Implementation
+  - New `circuit_breaker` class in `<kcenon/thread/resilience/circuit_breaker.h>`:
+    - Three-state machine: `closed`, `open`, `half_open`
+    - Configurable failure threshold and failure rate threshold
+    - Automatic state transitions based on success/failure patterns
+    - RAII `guard` class for automatic success/failure recording
+    - State change callbacks for monitoring integration
+    - Thread-safe operations with atomic variables
+  - New `failure_window` class for sliding window failure tracking:
+    - Time-bucketed failure rate calculation
+    - Configurable window size
+    - Automatic bucket expiration
+  - New `circuit_breaker_config` struct with configuration options:
+    - `failure_threshold`: Consecutive failures to trip circuit
+    - `failure_rate_threshold`: Failure rate (0.0-1.0) to trip circuit
+    - `minimum_requests`: Minimum requests before rate check
+    - `open_duration`: Time before transitioning to half-open
+    - `half_open_max_requests`: Requests allowed in half-open state
+    - `half_open_success_threshold`: Successes needed to close circuit
+    - State change callback support
+    - Custom failure predicate for exception filtering
+  - New `protected_job` wrapper class:
+    - Wraps any job with circuit breaker protection
+    - Automatically records success/failure to circuit breaker
+    - Returns circuit_open error when circuit is open
+  - Thread pool integration:
+    - `enable_circuit_breaker(config)` / `disable_circuit_breaker()`
+    - `get_circuit_breaker()` for monitoring access
+    - `is_accepting_work()` for health checks
+    - `enqueue_protected()` for protected job submission
+  - New error codes: `circuit_open`, `circuit_half_open`
+  - Comprehensive test suite (23 tests) for all circuit breaker functionality
+
 - **Issue #388**: Phase 1.3.3 - Job Inspection Implementation
   - Implemented job tracking with unique IDs:
     - Added `job_id_` member and `get_job_id()` to `job` class
