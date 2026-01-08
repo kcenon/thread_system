@@ -8,6 +8,21 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #387**: Phase 1.3.2 - Thread Dump 기능 향상
+  - `dump_thread_states()`가 실제 워커 정보를 반환하도록 향상:
+    - `thread_base::get_thread_id()`를 통한 실제 스레드 ID
+    - `thread_worker::get_worker_id()`를 통한 고유 워커 ID
+    - 활성 워커의 현재 작업 정보
+  - `thread_worker`에 워커 통계 추적 추가:
+    - `get_jobs_completed()`: 성공적으로 완료된 작업 수
+    - `get_jobs_failed()`: 실패한 작업 수
+    - `get_total_busy_time()`: 작업 실행에 소요된 누적 시간
+    - `get_total_idle_time()`: 작업 대기에 소요된 누적 시간
+    - `get_state_since()`: 마지막 상태 전환 타임스탬프
+    - `get_current_job_info()`: 현재 실행 중인 작업 정보
+  - `thread_pool`에 스레드 안전한 워커 정보 수집을 위한 `collect_worker_diagnostics()` 추가
+  - 실제 busy/idle 시간 기반의 정확한 활용률 계산
+  - 적절한 동기화를 통한 스레드 안전한 상태 수집
 - **이슈 #374**: 히스토그램 및 백분위수 지원이 포함된 향상된 메트릭 시스템
   - `LatencyHistogram`: 지연 시간 분포를 위한 HDR 스타일 히스토그램
     - 정확한 백분위수 계산 (P50/P90/P99/P99.9)

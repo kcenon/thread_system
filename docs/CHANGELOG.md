@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #387**: Phase 1.3.2 - Thread Dump Functionality Enhancement
+  - Enhanced `dump_thread_states()` to return actual worker information:
+    - Real thread IDs via `thread_base::get_thread_id()`
+    - Unique worker IDs from `thread_worker::get_worker_id()`
+    - Current job information for active workers
+  - Worker statistics tracking in `thread_worker`:
+    - `get_jobs_completed()`: Count of successfully completed jobs
+    - `get_jobs_failed()`: Count of failed jobs
+    - `get_total_busy_time()`: Accumulated time executing jobs
+    - `get_total_idle_time()`: Accumulated time waiting for jobs
+    - `get_state_since()`: Timestamp of last state transition
+    - `get_current_job_info()`: Information about currently executing job
+  - Added `collect_worker_diagnostics()` to `thread_pool` for thread-safe worker info collection
+  - Accurate utilization calculation based on actual busy/idle time
+  - Thread-safe state collection with proper synchronization
 - **Issue #376**: Phase 1.3 - Diagnostics API with Thread Dump and Health Checks
   - New `thread_pool_diagnostics` class providing comprehensive observability features
   - Thread dump functionality:
