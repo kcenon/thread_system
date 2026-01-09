@@ -1,7 +1,7 @@
 # thread_system API 레퍼런스
 
-> **버전**: 3.0.0
-> **최종 업데이트**: 2025-12-19
+> **버전**: 3.1.0
+> **최종 업데이트**: 2025-01-09
 > **언어**: [English](API_REFERENCE.md) | [한국어]
 
 ## 목차
@@ -11,6 +11,7 @@
 3. [typed_thread_pool](#typed_thread_pool)
 4. [Lock-Free 큐](#lock-free-큐)
 5. [동기화 프리미티브](#동기화-프리미티브)
+6. [NUMA 토폴로지](#numa-토폴로지)
 
 ---
 
@@ -555,6 +556,107 @@ common::Result<int> result = ...;
 
 ---
 
+## NUMA 토폴로지
+
+### 개요
+
+**헤더**: `#include <kcenon/thread/stealing/numa_topology.h>`
+
+`numa_topology` 클래스는 시스템의 NUMA(Non-Uniform Memory Access) 토폴로지 정보를 제공하여 멀티 소켓 시스템에서 성능 향상을 위한 NUMA 인식 태스크 스케줄링을 가능하게 합니다.
+
+### 플랫폼 지원
+
+| 플랫폼 | 지원 수준 | 감지 방법 |
+|--------|----------|----------|
+| Linux | 전체 지원 | /sys/devices/system/node |
+| macOS | 폴백 | 단일 노드 토폴로지 |
+| Windows | 폴백 | 단일 노드 토폴로지 |
+
+### numa_node
+
+```cpp
+struct numa_node {
+    int node_id;                    // NUMA 노드 식별자
+    std::vector<int> cpu_ids;       // 이 노드에 속한 CPU들
+    std::size_t memory_size_bytes;  // 이 노드의 총 메모리
+};
+```
+
+### numa_topology
+
+```cpp
+class numa_topology {
+public:
+    // 감지
+    [[nodiscard]] static auto detect() -> numa_topology;
+
+    // 노드 쿼리
+    [[nodiscard]] auto get_node_for_cpu(int cpu_id) const -> int;
+    [[nodiscard]] auto get_distance(int node1, int node2) const -> int;
+    [[nodiscard]] auto is_same_node(int cpu1, int cpu2) const -> bool;
+    [[nodiscard]] auto is_numa_available() const -> bool;
+
+    // 통계
+    [[nodiscard]] auto node_count() const -> std::size_t;
+    [[nodiscard]] auto cpu_count() const -> std::size_t;
+    [[nodiscard]] auto get_nodes() const -> const std::vector<numa_node>&;
+    [[nodiscard]] auto get_cpus_for_node(int node_id) const -> std::vector<int>;
+};
+```
+
+### 사용 예시
+
+```cpp
+#include <kcenon/thread/stealing/numa_topology.h>
+#include <iostream>
+
+using namespace kcenon::thread;
+
+int main() {
+    // 시스템 NUMA 토폴로지 감지
+    auto topology = numa_topology::detect();
+
+    std::cout << "NUMA 노드: " << topology.node_count() << "\n";
+    std::cout << "총 CPU: " << topology.cpu_count() << "\n";
+
+    if (topology.is_numa_available()) {
+        // 시스템에 여러 NUMA 노드가 있음
+        for (const auto& node : topology.get_nodes()) {
+            std::cout << "노드 " << node.node_id << ": "
+                      << node.cpu_ids.size() << " CPU\n";
+        }
+
+        // CPU 로컬리티 확인
+        int cpu1 = 0, cpu2 = 4;
+        if (topology.is_same_node(cpu1, cpu2)) {
+            std::cout << "CPU " << cpu1 << "과 " << cpu2
+                      << "는 같은 NUMA 노드에 있음\n";
+        }
+
+        // 노드 간 거리 조회
+        int dist = topology.get_distance(0, 1);
+        std::cout << "노드 0과 1 사이 거리: " << dist << "\n";
+    } else {
+        std::cout << "단일 NUMA 노드 (UMA 시스템)\n";
+    }
+
+    return 0;
+}
+```
+
+### 거리 값
+
+`get_distance()` 메서드는 통신 비용의 상대적 측정값을 반환합니다:
+
+| 거리 | 의미 |
+|------|------|
+| 10 | 로컬 (같은 노드) |
+| 20-40 | 인접 노드 |
+| 50+ | 원격 노드 |
+| -1 | 유효하지 않은 노드 ID |
+
+---
+
 ## 참고사항
 
 ### 스레드 안전성
@@ -565,6 +667,7 @@ common::Result<int> result = ...;
 - **lockfree_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
 - **job_queue**: 스레드 안전 (뮤텍스 기반)
 - **adaptive_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
+- **numa_topology**: 스레드 안전 (생성 후 불변)
 
 ### 권장사항
 
@@ -578,6 +681,6 @@ common::Result<int> result = ...;
 ---
 
 **작성일**: 2025-11-21
-**업데이트**: 2025-12-19
-**버전**: 3.0.0
+**업데이트**: 2025-01-09
+**버전**: 3.1.0
 **관리자**: kcenon@naver.com

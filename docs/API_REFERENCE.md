@@ -14,6 +14,7 @@
 6. [Synchronization Primitives](#synchronization-primitives)
 7. [Diagnostics API](#diagnostics-api)
 8. [DAG Scheduler](#dag-scheduler)
+9. [NUMA Topology](#numa-topology)
 
 ---
 
@@ -1034,6 +1035,107 @@ auto result = future.get();
 
 ---
 
+## NUMA Topology
+
+### Overview
+
+**Header**: `#include <kcenon/thread/stealing/numa_topology.h>`
+
+The `numa_topology` class provides information about the system's NUMA (Non-Uniform Memory Access) topology, enabling NUMA-aware task scheduling for improved performance on multi-socket systems.
+
+### Platform Support
+
+| Platform | Support Level | Detection Method |
+|----------|--------------|------------------|
+| Linux | Full | /sys/devices/system/node |
+| macOS | Fallback | Single-node topology |
+| Windows | Fallback | Single-node topology |
+
+### numa_node
+
+```cpp
+struct numa_node {
+    int node_id;                    // NUMA node identifier
+    std::vector<int> cpu_ids;       // CPUs belonging to this node
+    std::size_t memory_size_bytes;  // Total memory on this node
+};
+```
+
+### numa_topology
+
+```cpp
+class numa_topology {
+public:
+    // Detection
+    [[nodiscard]] static auto detect() -> numa_topology;
+
+    // Node queries
+    [[nodiscard]] auto get_node_for_cpu(int cpu_id) const -> int;
+    [[nodiscard]] auto get_distance(int node1, int node2) const -> int;
+    [[nodiscard]] auto is_same_node(int cpu1, int cpu2) const -> bool;
+    [[nodiscard]] auto is_numa_available() const -> bool;
+
+    // Statistics
+    [[nodiscard]] auto node_count() const -> std::size_t;
+    [[nodiscard]] auto cpu_count() const -> std::size_t;
+    [[nodiscard]] auto get_nodes() const -> const std::vector<numa_node>&;
+    [[nodiscard]] auto get_cpus_for_node(int node_id) const -> std::vector<int>;
+};
+```
+
+### Usage Example
+
+```cpp
+#include <kcenon/thread/stealing/numa_topology.h>
+#include <iostream>
+
+using namespace kcenon::thread;
+
+int main() {
+    // Detect system NUMA topology
+    auto topology = numa_topology::detect();
+
+    std::cout << "NUMA nodes: " << topology.node_count() << "\n";
+    std::cout << "Total CPUs: " << topology.cpu_count() << "\n";
+
+    if (topology.is_numa_available()) {
+        // System has multiple NUMA nodes
+        for (const auto& node : topology.get_nodes()) {
+            std::cout << "Node " << node.node_id << ": "
+                      << node.cpu_ids.size() << " CPUs\n";
+        }
+
+        // Check CPU locality
+        int cpu1 = 0, cpu2 = 4;
+        if (topology.is_same_node(cpu1, cpu2)) {
+            std::cout << "CPU " << cpu1 << " and " << cpu2
+                      << " are on the same NUMA node\n";
+        }
+
+        // Get inter-node distance
+        int dist = topology.get_distance(0, 1);
+        std::cout << "Distance between node 0 and 1: " << dist << "\n";
+    } else {
+        std::cout << "Single NUMA node (UMA system)\n";
+    }
+
+    return 0;
+}
+```
+
+### Distance Values
+
+The `get_distance()` method returns a relative measure of communication cost:
+
+| Distance | Meaning |
+|----------|---------|
+| 10 | Local (same node) |
+| 20-40 | Adjacent nodes |
+| 50+ | Remote nodes |
+| -1 | Invalid node ID |
+
+---
+
 ## Notes
 
 ### Thread Safety
@@ -1044,6 +1146,7 @@ auto result = future.get();
 - **lockfree_job_queue**: Thread-safe (multiple producers/consumers)
 - **job_queue**: Thread-safe (mutex-based)
 - **adaptive_job_queue**: Thread-safe (multiple producers/consumers)
+- **numa_topology**: Thread-safe after construction (immutable)
 
 ### Recommendations
 
