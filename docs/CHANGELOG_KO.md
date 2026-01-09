@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+### 수정
+- **steal_backoff_strategy.h**: libc++와 함께 사용하는 Clang에서 컴파일 오류를 발생시키던
+  `apply_jitter()` 메서드의 타입 불일치 문제 수정. 일부 플랫폼에서 `std::int64_t`가 `long`으로
+  정의되고 `std::chrono::microseconds::rep`가 `long long`으로 정의되어 발생한 문제로,
+  메서드 전체에서 일관된 `std::chrono::microseconds::rep` 타입을 사용하도록 변경.
+
 ### 추가
 - **이슈 #426**: Phase 3.3.4 - NUMA 인식 작업 훔치기 및 향상된 정책 구현
   - `<kcenon/thread/stealing/enhanced_steal_policy.h>`에 새로운 `enhanced_steal_policy` 열거형:

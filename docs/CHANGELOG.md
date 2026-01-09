@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **steal_backoff_strategy.h**: Fixed type mismatch in `apply_jitter()` method that caused
+  compilation errors on Clang with libc++. The issue occurred because `std::int64_t` is
+  defined as `long` while `std::chrono::microseconds::rep` is `long long` on some platforms.
+  Changed to use consistent `std::chrono::microseconds::rep` type throughout the method.
+
 ### Added
 - **Issue #426**: Phase 3.3.4 - Implement NUMA-aware work stealer and enhanced policies
   - New `enhanced_steal_policy` enum in `<kcenon/thread/stealing/enhanced_steal_policy.h>`:
