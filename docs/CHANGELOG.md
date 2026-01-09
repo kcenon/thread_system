@@ -8,6 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #425**: Phase 3.3.3 - Implement work affinity tracker and backoff strategies
+  - New `steal_backoff_strategy` enum in `<kcenon/thread/stealing/steal_backoff_strategy.h>`:
+    - `fixed`: Constant delay between steal attempts
+    - `linear`: Linear increase (delay = initial * (attempt + 1))
+    - `exponential`: Exponential increase with multiplier
+    - `adaptive_jitter`: Exponential with random jitter for anti-correlation
+  - New `steal_backoff_config` struct for configuring backoff behavior:
+    - `initial_backoff`, `max_backoff`: Delay bounds
+    - `multiplier`: Factor for exponential backoff
+    - `jitter_factor`: Random jitter range (0.0 - 1.0)
+  - New `backoff_calculator` class for computing backoff delays:
+    - Thread-safe delay calculation for each strategy
+    - Automatic capping at max_backoff
+    - Random jitter support for adaptive strategy
+  - New `work_affinity_tracker` class in `<kcenon/thread/stealing/work_affinity_tracker.h>`:
+    - Track cooperation patterns between workers
+    - `record_cooperation(thief_id, victim_id)`: Record successful steal
+    - `get_affinity(worker_a, worker_b)`: Get symmetric affinity score
+    - `get_preferred_victims(worker_id, max_count)`: Get sorted victim list
+    - `reset()`: Clear all affinity data
+    - Thread-safe atomic operations for concurrent access
+    - Efficient upper triangular matrix storage
+  - Comprehensive unit tests (43 new tests) covering:
+    - All backoff strategies with boundary conditions
+    - Affinity tracking, normalization, and symmetry
+    - Thread safety under concurrent read/write operations
+
 - **Issue #424**: Phase 3.3.2 - Implement enhanced work-stealing deque with batch stealing
   - New `steal_batch(std::size_t max_count)` method in `work_stealing_deque`:
     - Atomically steals up to `max_count` elements from the deque

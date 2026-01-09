@@ -15,6 +15,7 @@
 7. [Diagnostics API](#diagnostics-api)
 8. [DAG Scheduler](#dag-scheduler)
 9. [NUMA Topology](#numa-topology)
+10. [Work Stealing Utilities](#work-stealing-utilities)
 
 ---
 
@@ -1253,6 +1254,167 @@ The `get_distance()` method returns a relative measure of communication cost:
 | 20-40 | Adjacent nodes |
 | 50+ | Remote nodes |
 | -1 | Invalid node ID |
+
+---
+
+## Work Stealing Utilities
+
+### Overview
+
+Work stealing utilities provide building blocks for implementing efficient work-stealing schedulers. These components handle backoff strategies and worker affinity tracking.
+
+### Backoff Strategies
+
+**Header**: `#include <kcenon/thread/stealing/steal_backoff_strategy.h>`
+
+#### steal_backoff_strategy
+
+Defines different backoff strategies for work-stealing operations:
+
+```cpp
+enum class steal_backoff_strategy : std::uint8_t {
+    fixed,           // Constant delay between steal attempts
+    linear,          // Linear increase: delay = initial * (attempt + 1)
+    exponential,     // Exponential increase: delay = initial * 2^attempt
+    adaptive_jitter  // Exponential with random jitter for anti-correlation
+};
+```
+
+#### steal_backoff_config
+
+Configuration for backoff behavior:
+
+```cpp
+struct steal_backoff_config {
+    steal_backoff_strategy strategy = steal_backoff_strategy::exponential;
+    std::chrono::microseconds initial_backoff{50};
+    std::chrono::microseconds max_backoff{1000};
+    double multiplier = 2.0;        // Multiplier for exponential backoff
+    double jitter_factor = 0.5;     // Jitter range as fraction (0.0 - 1.0)
+};
+```
+
+#### backoff_calculator
+
+Calculates backoff delays based on strategy:
+
+```cpp
+class backoff_calculator {
+public:
+    explicit backoff_calculator(steal_backoff_config config = {});
+
+    // Calculate backoff delay for a given attempt number
+    [[nodiscard]] auto calculate(std::size_t attempt) -> std::chrono::microseconds;
+
+    // Configuration access
+    [[nodiscard]] auto get_config() const -> const steal_backoff_config&;
+    void set_config(steal_backoff_config config);
+};
+```
+
+#### Backoff Usage Example
+
+```cpp
+#include <kcenon/thread/stealing/steal_backoff_strategy.h>
+#include <thread>
+
+using namespace kcenon::thread;
+
+void steal_with_backoff(/* ... */) {
+    steal_backoff_config config;
+    config.strategy = steal_backoff_strategy::exponential;
+    config.initial_backoff = std::chrono::microseconds{50};
+    config.max_backoff = std::chrono::microseconds{1000};
+
+    backoff_calculator calculator(config);
+
+    std::size_t attempt = 0;
+    while (!steal_successful && attempt < max_attempts) {
+        auto delay = calculator.calculate(attempt);
+        std::this_thread::sleep_for(delay);
+        ++attempt;
+    }
+}
+```
+
+### Work Affinity Tracker
+
+**Header**: `#include <kcenon/thread/stealing/work_affinity_tracker.h>`
+
+The `work_affinity_tracker` tracks cooperation patterns between workers to enable locality-aware victim selection in work-stealing schedulers.
+
+#### work_affinity_tracker
+
+```cpp
+class work_affinity_tracker {
+public:
+    // Construction
+    explicit work_affinity_tracker(std::size_t worker_count,
+                                   std::size_t history_size = 16);
+
+    // Record a cooperation event between two workers
+    void record_cooperation(std::size_t thief_id, std::size_t victim_id);
+
+    // Get affinity score between two workers (symmetric)
+    [[nodiscard]] auto get_affinity(std::size_t worker_a,
+                                    std::size_t worker_b) const -> double;
+
+    // Get preferred victims sorted by descending affinity
+    [[nodiscard]] auto get_preferred_victims(std::size_t worker_id,
+                                             std::size_t max_count) const
+        -> std::vector<std::size_t>;
+
+    // Reset all affinity data
+    void reset();
+
+    // Statistics
+    [[nodiscard]] auto worker_count() const -> std::size_t;
+    [[nodiscard]] auto history_size() const -> std::size_t;
+    [[nodiscard]] auto total_cooperations() const -> std::uint64_t;
+};
+```
+
+#### Affinity Tracker Usage Example
+
+```cpp
+#include <kcenon/thread/stealing/work_affinity_tracker.h>
+
+using namespace kcenon::thread;
+
+int main() {
+    // Create tracker for 8 workers
+    work_affinity_tracker tracker(8, 16);
+
+    // Record successful steal: worker 2 stole from worker 5
+    tracker.record_cooperation(2, 5);
+    tracker.record_cooperation(2, 5);  // Another cooperation
+
+    // Check affinity
+    double affinity = tracker.get_affinity(2, 5);
+    // Higher values indicate stronger cooperation history
+
+    // Get preferred victims for worker 2
+    auto victims = tracker.get_preferred_victims(2, 3);
+    // Returns up to 3 workers sorted by affinity
+
+    return 0;
+}
+```
+
+#### Thread Safety
+
+- `record_cooperation()`: Thread-safe, uses atomic operations
+- `get_affinity()`: Thread-safe, snapshot view
+- `get_preferred_victims()`: Thread-safe, consistent ranking
+
+#### Performance Characteristics
+
+| Operation | Complexity | Notes |
+|-----------|------------|-------|
+| `record_cooperation()` | O(1) | Atomic increment |
+| `get_affinity()` | O(1) | Direct lookup |
+| `get_preferred_victims()` | O(n log n) | Sorting by affinity |
+| Memory usage | O(n²) | Upper triangular matrix |
 
 ---
 

@@ -12,6 +12,7 @@
 4. [Lock-Free 큐](#lock-free-큐)
 5. [동기화 프리미티브](#동기화-프리미티브)
 6. [NUMA 토폴로지](#numa-토폴로지)
+7. [작업 훔치기 유틸리티](#작업-훔치기-유틸리티)
 
 ---
 
@@ -777,6 +778,142 @@ int main() {
 
 ---
 
+## 작업 훔치기 유틸리티
+
+### 개요
+
+작업 훔치기 유틸리티는 효율적인 작업 훔치기 스케줄러 구현을 위한 빌딩 블록을 제공합니다. 이 컴포넌트들은 백오프 전략과 워커 친화도 추적을 처리합니다.
+
+### 백오프 전략
+
+**헤더**: `#include <kcenon/thread/stealing/steal_backoff_strategy.h>`
+
+#### steal_backoff_strategy
+
+작업 훔치기 연산을 위한 다양한 백오프 전략을 정의합니다:
+
+```cpp
+enum class steal_backoff_strategy : std::uint8_t {
+    fixed,           // 스틸 시도 간 고정 지연
+    linear,          // 선형 증가: delay = initial * (attempt + 1)
+    exponential,     // 지수 증가: delay = initial * 2^attempt
+    adaptive_jitter  // 상관관계 방지를 위한 랜덤 지터가 포함된 지수 백오프
+};
+```
+
+#### steal_backoff_config
+
+백오프 동작 설정:
+
+```cpp
+struct steal_backoff_config {
+    steal_backoff_strategy strategy = steal_backoff_strategy::exponential;
+    std::chrono::microseconds initial_backoff{50};
+    std::chrono::microseconds max_backoff{1000};
+    double multiplier = 2.0;        // 지수 백오프 승수
+    double jitter_factor = 0.5;     // 지터 범위 비율 (0.0 - 1.0)
+};
+```
+
+#### backoff_calculator
+
+전략에 따른 백오프 지연 계산:
+
+```cpp
+class backoff_calculator {
+public:
+    explicit backoff_calculator(steal_backoff_config config = {});
+
+    // 주어진 시도 횟수에 대한 백오프 지연 계산
+    [[nodiscard]] auto calculate(std::size_t attempt) -> std::chrono::microseconds;
+
+    // 설정 접근
+    [[nodiscard]] auto get_config() const -> const steal_backoff_config&;
+    void set_config(steal_backoff_config config);
+};
+```
+
+### 작업 친화도 추적기
+
+**헤더**: `#include <kcenon/thread/stealing/work_affinity_tracker.h>`
+
+`work_affinity_tracker`는 작업 훔치기 스케줄러에서 로컬리티 인식 희생자 선택을 위해 워커 간 협력 패턴을 추적합니다.
+
+#### work_affinity_tracker
+
+```cpp
+class work_affinity_tracker {
+public:
+    // 생성
+    explicit work_affinity_tracker(std::size_t worker_count,
+                                   std::size_t history_size = 16);
+
+    // 두 워커 간 협력 이벤트 기록
+    void record_cooperation(std::size_t thief_id, std::size_t victim_id);
+
+    // 두 워커 간 친화도 점수 조회 (대칭)
+    [[nodiscard]] auto get_affinity(std::size_t worker_a,
+                                    std::size_t worker_b) const -> double;
+
+    // 친화도 내림차순으로 정렬된 선호 희생자 목록 조회
+    [[nodiscard]] auto get_preferred_victims(std::size_t worker_id,
+                                             std::size_t max_count) const
+        -> std::vector<std::size_t>;
+
+    // 모든 친화도 데이터 초기화
+    void reset();
+
+    // 통계
+    [[nodiscard]] auto worker_count() const -> std::size_t;
+    [[nodiscard]] auto history_size() const -> std::size_t;
+    [[nodiscard]] auto total_cooperations() const -> std::uint64_t;
+};
+```
+
+#### 사용 예시
+
+```cpp
+#include <kcenon/thread/stealing/work_affinity_tracker.h>
+
+using namespace kcenon::thread;
+
+int main() {
+    // 8개 워커용 추적기 생성
+    work_affinity_tracker tracker(8, 16);
+
+    // 성공적인 스틸 기록: 워커 2가 워커 5로부터 훔침
+    tracker.record_cooperation(2, 5);
+    tracker.record_cooperation(2, 5);  // 또 다른 협력
+
+    // 친화도 확인
+    double affinity = tracker.get_affinity(2, 5);
+    // 높은 값은 강한 협력 이력을 나타냄
+
+    // 워커 2의 선호 희생자 조회
+    auto victims = tracker.get_preferred_victims(2, 3);
+    // 친화도순으로 정렬된 최대 3개 워커 반환
+
+    return 0;
+}
+```
+
+#### 스레드 안전성
+
+- `record_cooperation()`: 스레드 안전, 원자적 연산 사용
+- `get_affinity()`: 스레드 안전, 스냅샷 뷰
+- `get_preferred_victims()`: 스레드 안전, 일관된 순위
+
+#### 성능 특성
+
+| 연산 | 복잡도 | 비고 |
+|------|--------|------|
+| `record_cooperation()` | O(1) | 원자적 증가 |
+| `get_affinity()` | O(1) | 직접 조회 |
+| `get_preferred_victims()` | O(n log n) | 친화도 정렬 |
+| 메모리 사용량 | O(n²) | 상삼각 행렬 |
+
+---
+
 ## 참고사항
 
 ### 스레드 안전성
@@ -788,6 +925,8 @@ int main() {
 - **job_queue**: 스레드 안전 (뮤텍스 기반)
 - **adaptive_job_queue**: 스레드 안전 (다중 프로듀서/컨슈머)
 - **numa_topology**: 스레드 안전 (생성 후 불변)
+- **work_affinity_tracker**: 스레드 안전 (원자적 연산)
+- **backoff_calculator**: 인스턴스별 스레드 안전 (각 워커가 별도 인스턴스 사용)
 
 ### 권장사항
 
