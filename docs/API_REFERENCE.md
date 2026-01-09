@@ -13,6 +13,7 @@
 5. [Concurrent Queues](#concurrent-queues)
 6. [Synchronization Primitives](#synchronization-primitives)
 7. [Diagnostics API](#diagnostics-api)
+8. [DAG Scheduler](#dag-scheduler)
 
 ---
 
@@ -888,6 +889,147 @@ thread::result<int> result = ...;
 
 // v3.0 - common system Result
 common::Result<int> result = ...;
+```
+
+---
+
+## DAG Scheduler
+
+### Overview
+
+**Header**: `#include <kcenon/thread/dag/dag_scheduler.h>`
+
+**Description**: DAG-based job scheduling with dependency management
+
+The DAG Scheduler provides a way to define jobs with dependencies and execute them in the correct order. Jobs are executed in parallel when their dependencies are satisfied.
+
+### dag_job
+
+**Header**: `#include <kcenon/thread/dag/dag_job.h>`
+
+A job with dependency support for DAG-based scheduling.
+
+```cpp
+#include <kcenon/thread/dag/dag_job.h>
+
+using namespace kcenon::thread;
+
+// Create a DAG job
+auto job = std::make_unique<dag_job>("process_data");
+job->set_work([]() -> common::VoidResult {
+    // Do work
+    return common::ok();
+});
+job->add_dependency(other_job_id);
+```
+
+#### Key Types
+
+| Type | Description |
+|------|-------------|
+| `job_id` | `std::uint64_t` unique identifier |
+| `INVALID_JOB_ID` | Constant for invalid job ID (0) |
+| `dag_job_state` | Job state enum: `pending`, `ready`, `running`, `completed`, `failed`, `cancelled`, `skipped` |
+
+### dag_job_builder
+
+**Header**: `#include <kcenon/thread/dag/dag_job_builder.h>`
+
+Fluent builder for creating dag_job instances with validation and reusability.
+
+#### Basic Usage
+
+```cpp
+#include <kcenon/thread/dag/dag_job_builder.h>
+
+using namespace kcenon::thread;
+
+auto job = dag_job_builder("process_data")
+    .depends_on(fetch_job_id)
+    .work([]() -> common::VoidResult {
+        process_data();
+        return common::ok();
+    })
+    .on_failure([]() -> common::VoidResult {
+        log_failure();
+        return common::ok();
+    })
+    .build();
+```
+
+#### Methods
+
+| Method | Description |
+|--------|-------------|
+| `work(callable)` | Sets the work function (returns `common::VoidResult`) |
+| `work_with_result<T>(callable)` | Sets work function with result type T |
+| `returns<T>()` | Specifies the expected result type |
+| `depends_on(job_id)` | Adds a single dependency |
+| `depends_on({ids...})` | Adds multiple dependencies |
+| `on_failure(callable)` | Sets fallback function on failure |
+| `is_valid()` | Validates builder configuration |
+| `get_validation_error()` | Gets validation error message |
+| `build()` | Builds the dag_job (returns nullptr if invalid) |
+| `reset()` | Resets builder for reuse |
+
+#### Validation
+
+The builder validates configuration before building:
+- A work function must be set (via `work()` or `work_with_result<T>()`)
+- If invalid, `build()` returns `nullptr`
+
+```cpp
+dag_job_builder builder("job");
+// No work function set
+ASSERT_FALSE(builder.is_valid());
+ASSERT_EQ(builder.build(), nullptr);
+```
+
+#### Reusability
+
+After calling `build()`, the builder is automatically reset and can be reused:
+
+```cpp
+dag_job_builder builder("reusable");
+
+auto job1 = builder.work(work_func1).depends_on(1).build();
+// Builder is now reset
+
+auto job2 = builder.work(work_func2).depends_on({2, 3}).build();
+// Both jobs are valid with different dependencies
+```
+
+### dag_scheduler
+
+**Header**: `#include <kcenon/thread/dag/dag_scheduler.h>`
+
+Manages DAG-based job execution.
+
+```cpp
+#include <kcenon/thread/dag/dag_scheduler.h>
+
+using namespace kcenon::thread;
+
+// Create scheduler with a thread pool
+dag_scheduler scheduler(pool);
+
+// Add jobs
+auto job_a = scheduler.add_job(
+    dag_job_builder("job_a")
+        .work([]() -> common::VoidResult { return common::ok(); })
+        .build()
+);
+
+auto job_b = scheduler.add_job(
+    dag_job_builder("job_b")
+        .depends_on(job_a)
+        .work([]() -> common::VoidResult { return common::ok(); })
+        .build()
+);
+
+// Execute all jobs
+auto future = scheduler.execute_all();
+auto result = future.get();
 ```
 
 ---

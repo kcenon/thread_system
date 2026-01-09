@@ -85,8 +85,28 @@ auto dag_job_builder::on_failure(std::function<common::VoidResult()> fallback) -
 	return *this;
 }
 
+auto dag_job_builder::is_valid() const -> bool
+{
+	return work_func_ != nullptr || work_with_result_func_ != nullptr;
+}
+
+auto dag_job_builder::get_validation_error() const -> std::optional<std::string>
+{
+	if (!work_func_ && !work_with_result_func_)
+	{
+		return "No work function specified. Use work() or work_with_result() before build().";
+	}
+	return std::nullopt;
+}
+
 auto dag_job_builder::build() -> std::unique_ptr<dag_job>
 {
+	// Validate configuration
+	if (!is_valid())
+	{
+		return nullptr;
+	}
+
 	auto job = std::make_unique<dag_job>(name_);
 
 	// Set dependencies
@@ -112,7 +132,20 @@ auto dag_job_builder::build() -> std::unique_ptr<dag_job>
 		job->set_fallback(std::move(fallback_func_));
 	}
 
+	// Reset builder for reuse (keep name)
+	reset();
+
 	return job;
+}
+
+auto dag_job_builder::reset() -> dag_job_builder&
+{
+	work_func_ = nullptr;
+	work_with_result_func_ = nullptr;
+	fallback_func_ = nullptr;
+	dependencies_.clear();
+	has_return_type_ = false;
+	return *this;
 }
 
 } // namespace kcenon::thread

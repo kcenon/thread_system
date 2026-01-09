@@ -37,8 +37,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <functional>
 #include <initializer_list>
 #include <memory>
+#include <optional>
 #include <string>
-#include <type_traits>
 #include <vector>
 
 namespace kcenon::thread
@@ -143,6 +143,35 @@ namespace kcenon::thread
 		}
 
 		/**
+		 * @brief Specifies the result type for the job
+		 * @tparam T The result type
+		 * @return Reference to this builder for chaining
+		 *
+		 * This method is used in combination with work() when the work function
+		 * will set the result manually via the job's set_result() method.
+		 *
+		 * @note This is a marker method that documents intent. The actual result
+		 * type is determined at runtime when set_result() is called.
+		 *
+		 * ### Usage Example
+		 * @code
+		 * auto job = dag_job_builder("compute")
+		 *     .returns<int>()
+		 *     .work([&scheduler, dep_id]() -> common::VoidResult {
+		 *         // Result type is specified by returns<int>()
+		 *         return common::ok();
+		 *     })
+		 *     .build();
+		 * @endcode
+		 */
+		template<typename T>
+		auto returns() -> dag_job_builder&
+		{
+			has_return_type_ = true;
+			return *this;
+		}
+
+		/**
 		 * @brief Adds a single dependency
 		 * @param dependency The job ID to depend on
 		 * @return Reference to this builder for chaining
@@ -174,13 +203,42 @@ namespace kcenon::thread
 		auto on_failure(std::function<common::VoidResult()> fallback) -> dag_job_builder&;
 
 		/**
-		 * @brief Builds and returns the configured dag_job
-		 * @return A unique_ptr to the built dag_job
+		 * @brief Validates the builder configuration
+		 * @return true if the configuration is valid
 		 *
-		 * After calling build(), the builder is in a moved-from state and
-		 * should not be used again.
+		 * Checks that:
+		 * - A work function is set (either work() or work_with_result())
+		 * - Dependencies do not contain INVALID_JOB_ID
+		 */
+		[[nodiscard]] auto is_valid() const -> bool;
+
+		/**
+		 * @brief Gets the validation error message
+		 * @return Error message if invalid, std::nullopt if valid
+		 */
+		[[nodiscard]] auto get_validation_error() const -> std::optional<std::string>;
+
+		/**
+		 * @brief Builds and returns the configured dag_job
+		 * @return A unique_ptr to the built dag_job, or nullptr if validation fails
+		 *
+		 * Validates the configuration before building. If validation fails,
+		 * returns nullptr. Use is_valid() to check before building, or
+		 * get_validation_error() to get the error message.
+		 *
+		 * After calling build(), the builder is reset and can be reused.
 		 */
 		[[nodiscard]] auto build() -> std::unique_ptr<dag_job>;
+
+		/**
+		 * @brief Resets the builder to its initial state
+		 * @return Reference to this builder for chaining
+		 *
+		 * Clears all configured settings (work function, dependencies, fallback)
+		 * while preserving the job name. This allows the builder to be reused
+		 * for creating multiple jobs.
+		 */
+		auto reset() -> dag_job_builder&;
 
 	private:
 		std::string name_;
@@ -188,6 +246,7 @@ namespace kcenon::thread
 		std::function<common::VoidResult(dag_job&)> work_with_result_func_;
 		std::function<common::VoidResult()> fallback_func_;
 		std::vector<job_id> dependencies_;
+		bool has_return_type_{false};
 	};
 
 } // namespace kcenon::thread
