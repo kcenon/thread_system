@@ -8,6 +8,42 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #426**: Phase 3.3.4 - NUMA 인식 작업 훔치기 및 향상된 정책 구현
+  - `<kcenon/thread/stealing/enhanced_steal_policy.h>`에 새로운 `enhanced_steal_policy` 열거형:
+    - `random`: 무작위 희생자 선택 (기본)
+    - `round_robin`: 순차적 희생자 선택 (결정적)
+    - `adaptive`: 큐 크기 기반 선택 (불균등 부하에 적합)
+    - `numa_aware`: 동일 NUMA 노드의 워커 선호
+    - `locality_aware`: 최근 협력한 워커 선호
+    - `hierarchical`: NUMA 노드 우선, 그 다음 노드 내 무작위
+  - `<kcenon/thread/stealing/enhanced_work_stealing_config.h>`에 새로운 `enhanced_work_stealing_config` 구조체:
+    - NUMA 인식 작업 훔치기를 위한 포괄적 설정
+    - NUMA 페널티 계수 및 동일 노드 선호 설정
+    - 배치 스틸링 설정 (min/max batch, 적응형 크기 조정)
+    - 백오프 전략 통합
+    - 지역성 추적 및 통계 수집 옵션
+    - 팩토리 메서드: `numa_optimized()`, `locality_optimized()`, `batch_optimized()`, `hierarchical_numa()`
+  - `<kcenon/thread/stealing/work_stealing_stats.h>`에 새로운 `work_stealing_stats` 구조체:
+    - 스틸 시도, 성공, 실패에 대한 원자적 카운터
+    - NUMA 특화 통계 (same_node vs cross_node steals)
+    - 배치 스틸링 메트릭 (배치 수, 총 배치 크기)
+    - 타이밍 통계 (스틸 시간, 백오프 시간)
+    - 계산된 메트릭: `steal_success_rate()`, `avg_batch_size()`, `cross_node_ratio()`
+    - 일관된 읽기를 위한 스레드 안전 `snapshot()` 메서드
+  - `<kcenon/thread/stealing/numa_work_stealer.h>`에 새로운 `numa_work_stealer` 클래스:
+    - `steal_for(worker_id)`: NUMA 인식 희생자 선택을 통한 단일 작업 훔치기
+    - `steal_batch_for(worker_id, max_count)`: 적응형 크기 조정을 통한 배치 훔치기
+    - 6가지 희생자 선택 정책 구현
+    - 지역성 인식 훔치기를 위한 work_affinity_tracker 통합
+    - 경합 처리를 위한 backoff_calculator 통합
+    - 포괄적인 통계 수집
+  - 포괄적인 단위 테스트 (26개 신규 테스트) 포함:
+    - enhanced_steal_policy 열거형 및 to_string 변환
+    - work_stealing_stats 초기화, 메트릭, 스레드 안전성
+    - numa_work_stealer 생성, 단일 스틸, 배치 스틸
+    - 모든 희생자 선택 정책
+    - 통계 추적 및 설정 업데이트
+
 - **이슈 #425**: Phase 3.3.3 - 작업 친화도 추적기 및 백오프 전략 구현
   - `<kcenon/thread/stealing/steal_backoff_strategy.h>`에 새로운 `steal_backoff_strategy` 열거형:
     - `fixed`: 스틸 시도 간 고정 지연

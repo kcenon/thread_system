@@ -8,6 +8,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #426**: Phase 3.3.4 - Implement NUMA-aware work stealer and enhanced policies
+  - New `enhanced_steal_policy` enum in `<kcenon/thread/stealing/enhanced_steal_policy.h>`:
+    - `random`: Random victim selection (baseline)
+    - `round_robin`: Sequential victim selection (deterministic)
+    - `adaptive`: Queue size based selection (uneven loads)
+    - `numa_aware`: Prefer same NUMA node workers
+    - `locality_aware`: Prefer recently cooperated workers
+    - `hierarchical`: NUMA node first, then random within node
+  - New `enhanced_work_stealing_config` struct in `<kcenon/thread/stealing/enhanced_work_stealing_config.h>`:
+    - Comprehensive configuration for NUMA-aware work stealing
+    - NUMA penalty factor and same-node preference settings
+    - Batch stealing configuration (min/max batch, adaptive sizing)
+    - Backoff strategy integration
+    - Locality tracking and statistics collection options
+    - Factory methods: `numa_optimized()`, `locality_optimized()`, `batch_optimized()`, `hierarchical_numa()`
+  - New `work_stealing_stats` struct in `<kcenon/thread/stealing/work_stealing_stats.h>`:
+    - Atomic counters for steal attempts, successes, and failures
+    - NUMA-specific statistics (same_node vs cross_node steals)
+    - Batch stealing metrics (batch count, total batch size)
+    - Timing statistics (steal time, backoff time)
+    - Computed metrics: `steal_success_rate()`, `avg_batch_size()`, `cross_node_ratio()`
+    - Thread-safe `snapshot()` method for consistent reads
+  - New `numa_work_stealer` class in `<kcenon/thread/stealing/numa_work_stealer.h>`:
+    - `steal_for(worker_id)`: Single job steal with NUMA-aware victim selection
+    - `steal_batch_for(worker_id, max_count)`: Batch steal with adaptive sizing
+    - Six victim selection policies implemented
+    - Integration with work_affinity_tracker for locality-aware stealing
+    - Integration with backoff_calculator for contention handling
+    - Comprehensive statistics collection
+  - Comprehensive unit tests (26 new tests) covering:
+    - Enhanced steal policy enum and to_string conversion
+    - Work stealing stats initialization, metrics, and thread safety
+    - NUMA work stealer construction, single steal, batch steal
+    - All victim selection policies
+    - Statistics tracking and configuration updates
+
 - **Issue #425**: Phase 3.3.3 - Implement work affinity tracker and backoff strategies
   - New `steal_backoff_strategy` enum in `<kcenon/thread/stealing/steal_backoff_strategy.h>`:
     - `fixed`: Constant delay between steal attempts
