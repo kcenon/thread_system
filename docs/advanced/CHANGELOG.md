@@ -7,6 +7,20 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Bottleneck Detection** (#389)
+  - Complete bottleneck detection analysis with queue saturation calculation
+  - Utilization variance calculation for detecting uneven work distribution
+  - Estimated backlog time based on processing rate and queue depth
+  - Lock contention detection (high wait time with low utilization pattern)
+  - Memory pressure detection using queue memory statistics
+  - Actionable recommendations for each bottleneck type
+  - Comprehensive unit tests for bottleneck detection
+
+---
+
 ## [3.0.0] - 2025-12-19
 
 This release completes the migration to common_system-only public contracts. See [docs/CHANGELOG.md](../CHANGELOG.md) for full release notes.
