@@ -207,20 +207,21 @@ private:
 	[[nodiscard]] auto apply_jitter(std::chrono::microseconds delay)
 		-> std::chrono::microseconds
 	{
-		auto base = delay.count();
-		auto jitter_range =
-			static_cast<std::int64_t>(static_cast<double>(base) * config_.jitter_factor);
+		using rep = std::chrono::microseconds::rep;
+		rep base = delay.count();
+		rep jitter_range =
+			static_cast<rep>(static_cast<double>(base) * config_.jitter_factor);
 
 		if (jitter_range <= 0)
 		{
 			return delay;
 		}
 
-		std::uniform_int_distribution<std::int64_t> dist(-jitter_range, jitter_range);
-		auto jittered = base + dist(rng_);
+		std::uniform_int_distribution<rep> dist(-jitter_range, jitter_range);
+		rep jittered = base + dist(rng_);
 
 		// Ensure we don't go negative
-		return std::chrono::microseconds{std::max(std::int64_t{1}, jittered)};
+		return std::chrono::microseconds{std::max(rep{1}, jittered)};
 	}
 
 	/**

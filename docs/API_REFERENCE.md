@@ -1416,6 +1416,168 @@ int main() {
 | `get_preferred_victims()` | O(n log n) | Sorting by affinity |
 | Memory usage | O(n²) | Upper triangular matrix |
 
+### NUMA-Aware Work Stealer
+
+**Header**: `#include <kcenon/thread/stealing/numa_work_stealer.h>`
+
+The `numa_work_stealer` provides NUMA-aware work stealing with enhanced victim selection policies, batch stealing, and comprehensive statistics.
+
+#### enhanced_steal_policy
+
+Defines different policies for selecting steal victims:
+
+```cpp
+enum class enhanced_steal_policy : std::uint8_t {
+    random,           // Random victim selection (baseline)
+    round_robin,      // Sequential victim selection (deterministic)
+    adaptive,         // Select based on queue sizes (uneven loads)
+    numa_aware,       // Prefer workers on same NUMA node
+    locality_aware,   // Prefer recently cooperated workers
+    hierarchical      // NUMA node first, then random within node
+};
+```
+
+#### enhanced_work_stealing_config
+
+Comprehensive configuration for the work stealer:
+
+```cpp
+struct enhanced_work_stealing_config {
+    bool enabled = false;
+    enhanced_steal_policy policy = enhanced_steal_policy::adaptive;
+
+    // NUMA settings
+    bool numa_aware = false;
+    double numa_penalty_factor = 2.0;
+    bool prefer_same_node = true;
+
+    // Batch stealing
+    std::size_t min_steal_batch = 1;
+    std::size_t max_steal_batch = 4;
+    bool adaptive_batch_size = true;
+
+    // Backoff
+    steal_backoff_strategy backoff_strategy = steal_backoff_strategy::exponential;
+    std::chrono::microseconds initial_backoff{50};
+    std::chrono::microseconds max_backoff{1000};
+
+    // Locality & Statistics
+    bool track_locality = false;
+    bool collect_statistics = false;
+
+    // Factory methods
+    static auto numa_optimized() -> enhanced_work_stealing_config;
+    static auto locality_optimized() -> enhanced_work_stealing_config;
+    static auto batch_optimized() -> enhanced_work_stealing_config;
+    static auto hierarchical_numa() -> enhanced_work_stealing_config;
+};
+```
+
+#### work_stealing_stats
+
+Statistics for monitoring work-stealing performance:
+
+```cpp
+struct work_stealing_stats {
+    // Steal counts (atomic)
+    std::atomic<std::uint64_t> steal_attempts{0};
+    std::atomic<std::uint64_t> successful_steals{0};
+    std::atomic<std::uint64_t> failed_steals{0};
+    std::atomic<std::uint64_t> jobs_stolen{0};
+
+    // NUMA stats
+    std::atomic<std::uint64_t> same_node_steals{0};
+    std::atomic<std::uint64_t> cross_node_steals{0};
+
+    // Batch stats
+    std::atomic<std::uint64_t> batch_steals{0};
+    std::atomic<std::uint64_t> total_batch_size{0};
+
+    // Computed metrics
+    [[nodiscard]] auto steal_success_rate() const -> double;
+    [[nodiscard]] auto avg_batch_size() const -> double;
+    [[nodiscard]] auto cross_node_ratio() const -> double;
+
+    void reset();
+    [[nodiscard]] auto snapshot() const -> work_stealing_stats_snapshot;
+};
+```
+
+#### numa_work_stealer
+
+```cpp
+class numa_work_stealer {
+public:
+    using deque_accessor_fn = std::function<work_stealing_deque<job*>*(std::size_t)>;
+    using cpu_accessor_fn = std::function<int(std::size_t)>;
+
+    numa_work_stealer(std::size_t worker_count,
+                      deque_accessor_fn deque_accessor,
+                      cpu_accessor_fn cpu_accessor,
+                      enhanced_work_stealing_config config = {});
+
+    // Steal single job
+    [[nodiscard]] auto steal_for(std::size_t worker_id) -> job*;
+
+    // Batch steal
+    [[nodiscard]] auto steal_batch_for(std::size_t worker_id, std::size_t max_count)
+        -> std::vector<job*>;
+
+    // Statistics
+    [[nodiscard]] auto get_stats() const -> const work_stealing_stats&;
+    [[nodiscard]] auto get_stats_snapshot() const -> work_stealing_stats_snapshot;
+    void reset_stats();
+
+    // Configuration
+    [[nodiscard]] auto get_config() const -> const enhanced_work_stealing_config&;
+    void set_config(const enhanced_work_stealing_config& config);
+    [[nodiscard]] auto get_topology() const -> const numa_topology&;
+};
+```
+
+#### NUMA Work Stealer Usage Example
+
+```cpp
+#include <kcenon/thread/stealing/numa_work_stealer.h>
+#include <kcenon/thread/lockfree/work_stealing_deque.h>
+
+using namespace kcenon::thread;
+
+int main() {
+    // Setup deques and accessor functions
+    std::vector<std::unique_ptr<lockfree::work_stealing_deque<job*>>> deques;
+    // ... initialize deques ...
+
+    auto deque_accessor = [&](std::size_t id) {
+        return deques[id].get();
+    };
+    auto cpu_accessor = [](std::size_t id) {
+        return static_cast<int>(id);
+    };
+
+    // Create NUMA-optimized work stealer
+    auto config = enhanced_work_stealing_config::numa_optimized();
+    numa_work_stealer stealer(4, deque_accessor, cpu_accessor, config);
+
+    // Steal work for worker 0
+    if (auto* job = stealer.steal_for(0)) {
+        // Process stolen job
+    }
+
+    // Batch steal
+    auto batch = stealer.steal_batch_for(0, 4);
+    for (auto* j : batch) {
+        // Process jobs
+    }
+
+    // Check statistics
+    auto stats = stealer.get_stats_snapshot();
+    // stats.steal_success_rate(), stats.cross_node_ratio(), etc.
+
+    return 0;
+}
+```
+
 ---
 
 ## Notes
@@ -1429,6 +1591,8 @@ int main() {
 - **job_queue**: Thread-safe (mutex-based)
 - **adaptive_job_queue**: Thread-safe (multiple producers/consumers)
 - **numa_topology**: Thread-safe after construction (immutable)
+- **numa_work_stealer**: Thread-safe (all methods use atomic operations)
+- **work_stealing_stats**: Thread-safe (atomic counters with relaxed ordering)
 
 ### Recommendations
 
