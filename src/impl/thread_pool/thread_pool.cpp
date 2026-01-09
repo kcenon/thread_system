@@ -38,6 +38,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/resilience/circuit_breaker.h>
 #include <kcenon/thread/resilience/protected_job.h>
 #include <kcenon/thread/scaling/autoscaler.h>
+#include <kcenon/thread/stealing/numa_work_stealer.h>
+#include <kcenon/thread/lockfree/work_stealing_deque.h>
 
 #include <random>
 
@@ -925,6 +927,85 @@ bool thread_pool::is_work_stealing_enabled() const {
     return worker_policy_.enable_work_stealing;
 }
 
+// ============================================================================
+// Enhanced Work-Stealing (NUMA-aware)
+// ============================================================================
+
+void thread_pool::set_work_stealing_config(const enhanced_work_stealing_config& config) {
+    enhanced_ws_config_ = config;
+    worker_policy_.enable_work_stealing = config.enabled;
+
+    if (config.enabled) {
+        if (numa_topology_.node_count() == 0) {
+            numa_topology_ = numa_topology::detect();
+        }
+
+        std::unique_lock<std::mutex> lock(workers_mutex_);
+
+        if (!workers_.empty()) {
+            // Store worker count for closures (won't change while pool is running)
+            std::size_t worker_count = workers_.size();
+
+            // Note: These accessors don't lock workers_mutex_ because:
+            // 1. Worker count is fixed while pool is running
+            // 2. Individual workers are accessed by index (no iteration)
+            // 3. get_local_deque() and get_policy() are thread-safe
+            auto deque_accessor = [this, worker_count](std::size_t worker_id)
+                -> lockfree::work_stealing_deque<job*>* {
+                if (worker_id < worker_count && workers_[worker_id]) {
+                    return workers_[worker_id]->get_local_deque();
+                }
+                return nullptr;
+            };
+
+            auto cpu_accessor = [this, worker_count](std::size_t worker_id) -> int {
+                if (worker_id < worker_count && workers_[worker_id]) {
+                    return workers_[worker_id]->get_policy().preferred_cpu;
+                }
+                return -1;
+            };
+
+            lock.unlock();
+
+            numa_work_stealer_ = std::make_unique<numa_work_stealer>(
+                worker_count, deque_accessor, cpu_accessor, config);
+
+            lock.lock();
+            for (auto& worker : workers_) {
+                if (worker) {
+                    worker->set_steal_function(create_steal_function());
+                }
+            }
+        }
+    } else {
+        numa_work_stealer_.reset();
+        std::scoped_lock<std::mutex> lock(workers_mutex_);
+        for (auto& worker : workers_) {
+            if (worker) {
+                worker->set_steal_function(nullptr);
+            }
+        }
+    }
+}
+
+const enhanced_work_stealing_config& thread_pool::get_work_stealing_config() const {
+    return enhanced_ws_config_;
+}
+
+work_stealing_stats_snapshot thread_pool::get_work_stealing_stats() const {
+    if (numa_work_stealer_) {
+        return numa_work_stealer_->get_stats_snapshot();
+    }
+    return work_stealing_stats_snapshot{};
+}
+
+const numa_topology& thread_pool::get_numa_topology() const {
+    if (numa_topology_.node_count() == 0) {
+        const_cast<thread_pool*>(this)->numa_topology_ = numa_topology::detect();
+    }
+    return numa_topology_;
+}
+
 std::function<job*(std::size_t)> thread_pool::create_steal_function() {
     // Capture 'this' to access workers
     return [this](std::size_t requester_id) -> job* {
@@ -933,6 +1014,12 @@ std::function<job*(std::size_t)> thread_pool::create_steal_function() {
 }
 
 job* thread_pool::steal_from_workers(std::size_t requester_id) {
+    // Use enhanced work stealer if configured
+    if (numa_work_stealer_ && enhanced_ws_config_.enabled) {
+        return numa_work_stealer_->steal_for(requester_id);
+    }
+
+    // Fall back to basic work stealing
     std::scoped_lock<std::mutex> lock(workers_mutex_);
 
     if (workers_.empty()) {
