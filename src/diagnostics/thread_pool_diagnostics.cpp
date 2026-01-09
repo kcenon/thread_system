@@ -753,6 +753,12 @@ namespace kcenon::thread::diagnostics
 		return format_thread_dump();
 	}
 
+	auto thread_pool_diagnostics::to_prometheus() const -> std::string
+	{
+		auto health = health_check();
+		return health.to_prometheus(pool_.to_string());
+	}
+
 	// =========================================================================
 	// Configuration
 	// =========================================================================

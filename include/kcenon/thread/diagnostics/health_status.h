@@ -540,6 +540,125 @@ namespace kcenon::thread::diagnostics
 
 			return oss.str();
 		}
+
+		/**
+		 * @brief Converts health status to Prometheus-compatible metrics format.
+		 *
+		 * Produces metrics in Prometheus exposition format suitable for scraping
+		 * by Prometheus or compatible monitoring systems.
+		 *
+		 * @param pool_name Name of the thread pool for metric labels.
+		 * @return Prometheus-formatted metrics string.
+		 *
+		 * Output format:
+		 * ```
+		 * # HELP thread_pool_health_status Health status (1=healthy, 0.5=degraded, 0=unhealthy)
+		 * # TYPE thread_pool_health_status gauge
+		 * thread_pool_health_status{pool="MyPool"} 1
+		 * # HELP thread_pool_uptime_seconds Total uptime in seconds
+		 * # TYPE thread_pool_uptime_seconds counter
+		 * thread_pool_uptime_seconds{pool="MyPool"} 3600.5
+		 * ```
+		 */
+		[[nodiscard]] auto to_prometheus(const std::string& pool_name = "default") const
+		    -> std::string
+		{
+			std::ostringstream oss;
+			oss << std::fixed;
+
+			// Health status (1 = healthy, 0.5 = degraded, 0 = unhealthy/unknown)
+			double health_value = 0.0;
+			switch (overall_status)
+			{
+				case health_state::healthy: health_value = 1.0; break;
+				case health_state::degraded: health_value = 0.5; break;
+				default: health_value = 0.0; break;
+			}
+			oss << "# HELP thread_pool_health_status Health status (1=healthy, 0.5=degraded, 0=unhealthy)\n";
+			oss << "# TYPE thread_pool_health_status gauge\n";
+			oss << "thread_pool_health_status{pool=\"" << pool_name << "\"} "
+			    << std::setprecision(1) << health_value << "\n\n";
+
+			// Uptime
+			oss << "# HELP thread_pool_uptime_seconds Total uptime in seconds\n";
+			oss << "# TYPE thread_pool_uptime_seconds counter\n";
+			oss << "thread_pool_uptime_seconds{pool=\"" << pool_name << "\"} "
+			    << std::setprecision(2) << uptime_seconds << "\n\n";
+
+			// Jobs processed
+			oss << "# HELP thread_pool_jobs_total Total number of jobs processed\n";
+			oss << "# TYPE thread_pool_jobs_total counter\n";
+			oss << "thread_pool_jobs_total{pool=\"" << pool_name << "\"} "
+			    << total_jobs_processed << "\n\n";
+
+			// Success rate
+			oss << "# HELP thread_pool_success_rate Ratio of successful jobs (0.0 to 1.0)\n";
+			oss << "# TYPE thread_pool_success_rate gauge\n";
+			oss << "thread_pool_success_rate{pool=\"" << pool_name << "\"} "
+			    << std::setprecision(4) << success_rate << "\n\n";
+
+			// Average latency
+			oss << "# HELP thread_pool_latency_avg_ms Average job latency in milliseconds\n";
+			oss << "# TYPE thread_pool_latency_avg_ms gauge\n";
+			oss << "thread_pool_latency_avg_ms{pool=\"" << pool_name << "\"} "
+			    << std::setprecision(3) << avg_latency_ms << "\n\n";
+
+			// Workers
+			oss << "# HELP thread_pool_workers_total Total number of workers\n";
+			oss << "# TYPE thread_pool_workers_total gauge\n";
+			oss << "thread_pool_workers_total{pool=\"" << pool_name << "\"} "
+			    << total_workers << "\n\n";
+
+			oss << "# HELP thread_pool_workers_active Number of active workers\n";
+			oss << "# TYPE thread_pool_workers_active gauge\n";
+			oss << "thread_pool_workers_active{pool=\"" << pool_name << "\"} "
+			    << active_workers << "\n\n";
+
+			oss << "# HELP thread_pool_workers_idle Number of idle workers\n";
+			oss << "# TYPE thread_pool_workers_idle gauge\n";
+			oss << "thread_pool_workers_idle{pool=\"" << pool_name << "\"} "
+			    << (total_workers - active_workers) << "\n\n";
+
+			// Queue
+			oss << "# HELP thread_pool_queue_depth Current queue depth\n";
+			oss << "# TYPE thread_pool_queue_depth gauge\n";
+			oss << "thread_pool_queue_depth{pool=\"" << pool_name << "\"} "
+			    << queue_depth << "\n\n";
+
+			if (queue_capacity > 0)
+			{
+				oss << "# HELP thread_pool_queue_capacity Maximum queue capacity\n";
+				oss << "# TYPE thread_pool_queue_capacity gauge\n";
+				oss << "thread_pool_queue_capacity{pool=\"" << pool_name << "\"} "
+				    << queue_capacity << "\n\n";
+
+				double saturation = static_cast<double>(queue_depth) /
+				                    static_cast<double>(queue_capacity);
+				oss << "# HELP thread_pool_queue_saturation Queue saturation ratio (0.0 to 1.0)\n";
+				oss << "# TYPE thread_pool_queue_saturation gauge\n";
+				oss << "thread_pool_queue_saturation{pool=\"" << pool_name << "\"} "
+				    << std::setprecision(4) << saturation << "\n\n";
+			}
+
+			// Component health
+			for (const auto& comp : components)
+			{
+				double comp_health = 0.0;
+				switch (comp.state)
+				{
+					case health_state::healthy: comp_health = 1.0; break;
+					case health_state::degraded: comp_health = 0.5; break;
+					default: comp_health = 0.0; break;
+				}
+				oss << "# HELP thread_pool_component_health Component health status\n";
+				oss << "# TYPE thread_pool_component_health gauge\n";
+				oss << "thread_pool_component_health{pool=\"" << pool_name
+				    << "\",component=\"" << comp.name << "\"} "
+				    << std::setprecision(1) << comp_health << "\n";
+			}
+
+			return oss.str();
+		}
 	};
 
 } // namespace kcenon::thread::diagnostics

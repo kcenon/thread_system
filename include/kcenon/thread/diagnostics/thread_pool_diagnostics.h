@@ -318,6 +318,16 @@ namespace diagnostics
 		 */
 		[[nodiscard]] auto to_string() const -> std::string;
 
+		/**
+		 * @brief Exports diagnostics as Prometheus-compatible metrics.
+		 * @return Prometheus exposition format string.
+		 *
+		 * Produces metrics suitable for scraping by Prometheus or compatible
+		 * monitoring systems. Includes health status, worker metrics, queue
+		 * metrics, and job statistics.
+		 */
+		[[nodiscard]] auto to_prometheus() const -> std::string;
+
 		// =========================================================================
 		// Configuration
 		// =========================================================================

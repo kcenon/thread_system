@@ -10,6 +10,11 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 ## [Unreleased]
 
 ### Added
+- **내보내기 및 직렬화** (#392)
+  - `job_info`, `thread_info`, `bottleneck_report`의 `to_json()` 및 `to_string()` 메서드
+  - Prometheus 호환 메트릭 내보내기를 위한 `to_prometheus()` 메서드
+  - 시간 변환을 위한 헬퍼 메서드 (wait_time_ms, execution_time_ms, busy_time_ms, idle_time_ms)
+
 - **향상된 취소 토큰** (#382)
   - 타임아웃 및 데드라인 지원이 포함된 `enhanced_cancellation_token`
   - 취소 이유를 추적하기 위한 `cancellation_reason` 구조체
