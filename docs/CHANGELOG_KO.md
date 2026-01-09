@@ -8,6 +8,42 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #381**: Phase 3.1 - 작업 의존성 그래프 (DAG 스케줄러)
+  - `<kcenon/thread/dag/dag_job.h>`에 새로운 `dag_job` 클래스:
+    - 의존성 지원으로 기본 `job` 클래스 확장
+    - 원자적 카운터를 통한 고유 작업 ID 생성
+    - 상태 머신: `pending`, `ready`, `running`, `completed`, `failed`, `cancelled`, `skipped`
+    - `try_transition_state()`를 통한 원자적 상태 전환
+    - `std::any`를 통한 작업 간 데이터 전달을 위한 결과 저장
+    - 실패 복구를 위한 대체 함수 지원
+    - 타이밍 메트릭 (제출, 시작, 종료 시간)
+  - 유창한 작업 생성을 위한 새로운 `dag_job_builder` 클래스:
+    - 메서드 체이닝: `work()`, `depends_on()`, `on_failure()`, `with_result()`
+    - 단일 의존성 및 배치 의존성 지원
+    - `std::unique_ptr<dag_job>` 빌드
+  - `<kcenon/thread/dag/dag_scheduler.h>`에 새로운 `dag_scheduler` 클래스:
+    - 병렬 실행을 위한 스레드 풀 통합
+    - 실행 순서를 위한 위상 정렬
+    - 3색 마킹을 사용한 DFS 기반 순환 감지
+    - 순환 검증을 통한 동적 의존성 추가
+    - `execute_all()` 및 `execute(target_id)` 비동기 실행
+    - 완료 대기를 위한 `wait()`
+    - 협력적 취소를 위한 `cancel_all()`
+  - 구성 옵션이 포함된 새로운 `dag_config` 구조체:
+    - `dag_failure_policy`: `fail_fast`, `continue_others`, `retry`, `fallback`
+    - 재시도 정책을 위한 `max_retries` 및 `retry_delay`
+    - 성능을 위한 `detect_cycles` 토글
+    - 순차/병렬 실행을 위한 `execute_in_parallel` 토글
+    - 상태 변경, 완료 및 오류 콜백
+  - 시각화 지원:
+    - `to_dot()`: 상태 색상이 포함된 Graphviz DOT 형식으로 DAG 내보내기
+    - `to_json()`: 작업 및 통계가 포함된 JSON으로 DAG 내보내기
+  - `dag_stats` 구조체를 통한 통계 추적:
+    - 상태별 작업 수 (전체, 완료, 실패, 대기, 실행, 건너뜀, 취소)
+    - 총 실행 시간
+    - `all_succeeded()` 헬퍼 메서드
+  - 모든 기능을 다루는 종합 테스트 스위트 (17개 테스트)
+
 - **이슈 #388**: Phase 1.3.3 - Job Inspection 구현
   - 고유 ID를 사용한 작업 추적 구현:
     - `job` 클래스에 `job_id_` 멤버 및 `get_job_id()` 추가

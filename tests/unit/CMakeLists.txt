@@ -59,6 +59,10 @@ if(UNIX AND NOT WIN32)
     add_subdirectory(adapters_test)
   endif()
 
+  # DAG scheduler tests
+  # Validates DAG-based job scheduling with dependencies
+  add_subdirectory(dag_test)
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
