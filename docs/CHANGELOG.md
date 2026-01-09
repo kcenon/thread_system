@@ -14,6 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Changed to use consistent `std::chrono::microseconds::rep` type throughout the method.
 
 ### Added
+- **Issue #427**: Phase 3.3.5 - Integrate enhanced work-stealing into thread_pool
+  - New `thread_pool` methods for NUMA-aware work-stealing integration:
+    - `set_work_stealing_config(config)`: Configure enhanced work-stealing policies
+    - `get_work_stealing_config()`: Retrieve current configuration
+    - `get_work_stealing_stats()`: Get stealing statistics snapshot
+    - `get_numa_topology()`: Access detected NUMA topology information
+  - Integration with `numa_work_stealer` for NUMA-aware batch stealing
+  - Enhanced configuration overrides basic worker policy for work-stealing
+  - Comprehensive unit tests (16 new tests) covering:
+    - Configuration get/set with batch, locality, NUMA optimized presets
+    - NUMA topology detection, consistency, CPU mapping
+    - Statistics initialization and computed metrics
+    - Integration with jobs execution and pool shutdown
+    - Edge cases: config before workers, reconfigure while running
+
 - **Issue #426**: Phase 3.3.4 - Implement NUMA-aware work stealer and enhanced policies
   - New `enhanced_steal_policy` enum in `<kcenon/thread/stealing/enhanced_steal_policy.h>`:
     - `random`: Random victim selection (baseline)
