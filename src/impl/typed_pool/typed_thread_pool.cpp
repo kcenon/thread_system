@@ -34,6 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/impl/typed_pool/typed_thread_worker.h>
 #include <kcenon/thread/impl/typed_pool/typed_job_queue.h>
 #include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
+#include <kcenon/thread/impl/typed_pool/aging_typed_job_queue.h>
+#include <kcenon/thread/impl/typed_pool/aging_typed_job.h>
 #include <sstream>
 
 namespace kcenon::thread
@@ -265,6 +267,109 @@ namespace kcenon::thread
 	auto typed_thread_pool_t<job_type>::get_context() const -> const thread_context&
 	{
 		return context_;
+	}
+
+	// ============================================================================
+	// Priority Aging Integration
+	// ============================================================================
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enable_priority_aging(priority_aging_config config)
+		-> void
+	{
+		if (priority_aging_enabled_)
+		{
+			// Already enabled, just update config
+			if (aging_job_queue_)
+			{
+				aging_job_queue_->set_aging_config(std::move(config));
+			}
+			return;
+		}
+
+		// Create new aging job queue with config
+		config.enabled = true;
+		aging_job_queue_ = std::make_shared<aging_typed_job_queue_t<job_type>>(config);
+
+		// Set the aging queue as the main job queue
+		set_job_queue(aging_job_queue_);
+
+		// Start aging if pool is running
+		if (start_pool_.load())
+		{
+			aging_job_queue_->start_aging();
+		}
+
+		priority_aging_enabled_ = true;
+	}
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::disable_priority_aging() -> void
+	{
+		if (!priority_aging_enabled_)
+		{
+			return;
+		}
+
+		if (aging_job_queue_)
+		{
+			aging_job_queue_->stop_aging();
+		}
+
+		// Create a new regular job queue
+		auto new_queue = std::make_shared<typed_job_queue_t<job_type>>();
+		set_job_queue(new_queue);
+
+		aging_job_queue_.reset();
+		priority_aging_enabled_ = false;
+	}
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::is_priority_aging_enabled() const -> bool
+	{
+		return priority_aging_enabled_ && aging_job_queue_ &&
+		       aging_job_queue_->is_aging_running();
+	}
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::get_aging_stats() const -> aging_stats
+	{
+		if (aging_job_queue_)
+		{
+			return aging_job_queue_->get_aging_stats();
+		}
+		return aging_stats{};
+	}
+
+	template <typename job_type>
+	auto typed_thread_pool_t<job_type>::enqueue(
+		std::unique_ptr<aging_typed_job_t<job_type>>&& job) -> common::VoidResult
+	{
+		if (!start_pool_.load(std::memory_order_acquire))
+		{
+			return common::error_info{
+				static_cast<int>(error_code::thread_not_running),
+				"Thread pool not started",
+				"thread_system"
+			};
+		}
+
+		if (!job)
+		{
+			return common::error_info{
+				static_cast<int>(error_code::invalid_argument),
+				"Null job",
+				"thread_system"
+			};
+		}
+
+		if (aging_job_queue_)
+		{
+			return aging_job_queue_->enqueue(std::move(job));
+		}
+
+		// Fall back to regular enqueue if aging is not enabled
+		return job_queue_->enqueue(std::move(job));
 	}
 
 #if KCENON_HAS_COMMON_EXECUTOR

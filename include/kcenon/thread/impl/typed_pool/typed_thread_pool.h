@@ -38,6 +38,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/thread_context.h>
 #include "typed_job_queue.h"
 #include "typed_thread_worker.h"
+#include "aging_typed_job_queue.h"
+#include "priority_aging_config.h"
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -415,6 +417,58 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
+		// ============================================
+		// Priority Aging Integration
+		// ============================================
+
+		/**
+		 * @brief Enables priority aging for this thread pool.
+		 *
+		 * Priority aging prevents starvation of low-priority jobs by
+		 * automatically boosting their priority based on wait time.
+		 *
+		 * @param config The aging configuration.
+		 *
+		 * ### Example
+		 * @code{.cpp}
+		 * pool->enable_priority_aging({
+		 *     .enabled = true,
+		 *     .aging_interval = std::chrono::seconds{1},
+		 *     .max_priority_boost = 3
+		 * });
+		 * @endcode
+		 */
+		auto enable_priority_aging(priority_aging_config config = {}) -> void;
+
+		/**
+		 * @brief Disables priority aging.
+		 *
+		 * Stops the background aging thread if running.
+		 */
+		auto disable_priority_aging() -> void;
+
+		/**
+		 * @brief Checks if priority aging is enabled.
+		 *
+		 * @return true if aging is enabled and running.
+		 */
+		[[nodiscard]] auto is_priority_aging_enabled() const -> bool;
+
+		/**
+		 * @brief Gets priority aging statistics.
+		 *
+		 * @return The current aging statistics.
+		 */
+		[[nodiscard]] auto get_aging_stats() const -> aging_stats;
+
+		/**
+		 * @brief Enqueues an aging typed job.
+		 *
+		 * @param job The aging job to enqueue.
+		 * @return Result indicating success or failure.
+		 */
+		auto enqueue(std::unique_ptr<aging_typed_job_t<job_type>>&& job) -> common::VoidResult;
+
 	private:
 		/** @brief A descriptive name or title for this thread pool, useful for logging. */
 		std::string thread_title_;
@@ -430,6 +484,12 @@ namespace kcenon::thread
 
 		/** @brief The thread context providing optional services. */
 		thread_context context_;
+
+		/** @brief The aging job queue for priority aging support. */
+		std::shared_ptr<aging_typed_job_queue_t<job_type>> aging_job_queue_;
+
+		/** @brief Flag indicating whether priority aging is enabled. */
+		bool priority_aging_enabled_{false};
 	};
 
 	/// Alias for a typed_thread_pool with the default job_types type.

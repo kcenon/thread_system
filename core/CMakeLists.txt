@@ -41,6 +41,10 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/health_status.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/execution_event.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_pool_diagnostics.h
+    # Priority aging
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/priority_aging_config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job_queue.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -67,6 +71,9 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job_queue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_thread_worker.cpp
+    # Priority aging implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job_queue.cpp
     # Diagnostics implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
 )
