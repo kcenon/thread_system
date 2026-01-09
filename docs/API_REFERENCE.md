@@ -1035,6 +1035,126 @@ auto result = future.get();
 
 ---
 
+## Work-Stealing Deque
+
+### Overview
+
+**Header**: `#include <kcenon/thread/lockfree/work_stealing_deque.h>`
+
+The `work_stealing_deque` class implements a lock-free work-stealing deque based on the Chase-Lev algorithm. It provides efficient local operations for the owner thread and concurrent stealing for other threads.
+
+### Key Features
+
+- **Owner-side push/pop**: LIFO order for cache locality
+- **Thief-side steal**: FIFO order for fairness
+- **Batch stealing**: Efficiently steal multiple items at once
+- **Lock-free operations**: Proper memory ordering with CAS operations
+- **Dynamic resizing**: Automatic growth when full
+
+### work_stealing_deque
+
+```cpp
+template<typename T>
+class work_stealing_deque {
+public:
+    // Construction
+    explicit work_stealing_deque(std::size_t log_initial_size = 5);
+
+    // Owner operations (single-threaded)
+    void push(T item);
+    [[nodiscard]] std::optional<T> pop();
+
+    // Thief operations (multi-threaded)
+    [[nodiscard]] std::optional<T> steal();
+    [[nodiscard]] std::vector<T> steal_batch(std::size_t max_count);
+
+    // Query
+    [[nodiscard]] bool empty() const noexcept;
+    [[nodiscard]] std::size_t size() const noexcept;
+    [[nodiscard]] std::size_t capacity() const noexcept;
+
+    // Maintenance
+    void cleanup_old_arrays();
+};
+```
+
+### Thread Safety
+
+| Method | Thread Safety |
+|--------|---------------|
+| `push()` | Owner thread only |
+| `pop()` | Owner thread only |
+| `steal()` | Any thief thread (concurrent safe) |
+| `steal_batch()` | Any thief thread (concurrent safe) |
+| `empty()`, `size()` | Any thread (approximate) |
+
+### Usage Example
+
+```cpp
+#include <kcenon/thread/lockfree/work_stealing_deque.h>
+#include <thread>
+#include <vector>
+
+using namespace kcenon::thread::lockfree;
+
+int main() {
+    work_stealing_deque<int*> deque;
+    std::vector<int> values(100);
+
+    // Owner pushes work
+    for (int i = 0; i < 100; ++i) {
+        values[i] = i;
+        deque.push(&values[i]);
+    }
+
+    // Thieves steal work in batches
+    std::vector<std::thread> thieves;
+    for (int t = 0; t < 4; ++t) {
+        thieves.emplace_back([&]() {
+            while (!deque.empty()) {
+                // Batch steal up to 4 items at once
+                auto batch = deque.steal_batch(4);
+                for (auto* item : batch) {
+                    // Process stolen item
+                }
+            }
+        });
+    }
+
+    // Owner can also pop locally (LIFO)
+    while (auto item = deque.pop()) {
+        // Process local item
+    }
+
+    for (auto& t : thieves) {
+        t.join();
+    }
+
+    return 0;
+}
+```
+
+### Batch Stealing
+
+The `steal_batch()` method allows efficient stealing of multiple items:
+
+```cpp
+// Steal up to 4 items atomically
+auto batch = deque.steal_batch(4);
+
+// Returns:
+// - Empty vector if deque is empty or contention
+// - Up to max_count items in FIFO order
+// - May return fewer items than requested
+```
+
+**Benefits of batch stealing**:
+- Reduced contention overhead (one CAS instead of multiple)
+- Better cache efficiency for transferring work
+- Improved throughput under high contention
+
+---
+
 ## NUMA Topology
 
 ### Overview
