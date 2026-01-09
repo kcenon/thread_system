@@ -1,7 +1,7 @@
 # thread_system API Reference
 
-> **Version**: 3.0.0
-> **Last Updated**: 2025-12-19
+> **Version**: 3.1.0
+> **Last Updated**: 2025-01-09
 > **Language**: [English]
 
 ## Table of Contents
@@ -9,8 +9,10 @@
 1. [Namespace](#namespace)
 2. [thread_pool (Recommended)](#thread_pool-recommended)
 3. [typed_thread_pool](#typed_thread_pool)
-4. [Lock-Free Queues](#lock-free-queues)
-5. [Synchronization Primitives](#synchronization-primitives)
+4. [Queue Factory](#queue-factory)
+5. [Concurrent Queues](#concurrent-queues)
+6. [Synchronization Primitives](#synchronization-primitives)
+7. [Diagnostics API](#diagnostics-api)
 
 ---
 
@@ -689,6 +691,179 @@ int main() {
 
 ---
 
+## Diagnostics API
+
+### Overview
+
+**Header**: `#include <kcenon/thread/diagnostics.h>`
+
+**Description**: Comprehensive diagnostics API for thread pool monitoring, health checks, and event tracing.
+
+**Key Features**:
+- Thread dump functionality
+- Job inspection and tracing
+- Bottleneck detection
+- Health check integration (Kubernetes, Prometheus compatible)
+- Event tracing with listener support
+
+### Quick Start
+
+```cpp
+#include <kcenon/thread/thread_pool.h>
+#include <kcenon/thread/diagnostics.h>
+
+using namespace kcenon::thread;
+using namespace kcenon::thread::diagnostics;
+
+auto pool = std::make_shared<thread_pool>("MyPool");
+pool->start();
+
+// Get diagnostics
+auto& diag = pool->diagnostics();
+
+// Health check
+auto health = diag.health_check();
+if (!health.is_operational()) {
+    std::cerr << health.to_json() << std::endl;
+}
+
+// Thread dump
+std::cout << diag.format_thread_dump() << std::endl;
+
+// Bottleneck detection
+auto report = diag.detect_bottlenecks();
+if (report.has_bottleneck) {
+    std::cerr << report.to_string() << std::endl;
+}
+```
+
+### Health Check
+
+```cpp
+// Get comprehensive health status
+auto health = pool->diagnostics().health_check();
+
+// Check overall status
+if (health.is_healthy()) {
+    std::cout << "Pool is healthy" << std::endl;
+}
+
+// HTTP integration
+return http_response(health.http_status_code(), health.to_json());
+
+// Prometheus metrics
+std::cout << health.to_prometheus("MyPool") << std::endl;
+```
+
+#### Health States
+
+| State | HTTP Code | Description |
+|-------|-----------|-------------|
+| `healthy` | 200 | All components operational |
+| `degraded` | 200 | Operational but with reduced capacity |
+| `unhealthy` | 503 | Not operational |
+| `unknown` | 503 | Status cannot be determined |
+
+### Thread Dump
+
+```cpp
+// Get thread states
+auto threads = pool->diagnostics().dump_thread_states();
+for (const auto& t : threads) {
+    std::cout << t.thread_name << ": " << worker_state_to_string(t.state)
+              << " (utilization: " << t.utilization * 100 << "%)" << std::endl;
+}
+
+// Formatted dump
+std::cout << pool->diagnostics().format_thread_dump() << std::endl;
+```
+
+### Job Inspection
+
+```cpp
+// Active jobs currently executing
+auto active = pool->diagnostics().get_active_jobs();
+
+// Pending jobs in queue
+auto pending = pool->diagnostics().get_pending_jobs(100);
+
+// Recent completed/failed jobs
+auto recent = pool->diagnostics().get_recent_jobs(50);
+```
+
+### Bottleneck Detection
+
+```cpp
+auto report = pool->diagnostics().detect_bottlenecks();
+
+if (report.has_bottleneck) {
+    std::cout << "Type: " << bottleneck_type_to_string(report.type) << std::endl;
+    std::cout << "Severity: " << report.severity_string() << std::endl;
+
+    for (const auto& rec : report.recommendations) {
+        std::cout << "  - " << rec << std::endl;
+    }
+}
+```
+
+#### Bottleneck Types
+
+| Type | Description |
+|------|-------------|
+| `queue_full` | Queue at capacity |
+| `slow_consumer` | Workers can't keep up |
+| `worker_starvation` | Not enough workers |
+| `lock_contention` | High mutex wait times |
+| `uneven_distribution` | Work not evenly distributed |
+| `memory_pressure` | Excessive memory usage |
+
+### Event Tracing
+
+```cpp
+// Enable tracing
+pool->diagnostics().enable_tracing(true, 1000);
+
+// Add custom listener
+class MyListener : public execution_event_listener {
+public:
+    void on_event(const job_execution_event& event) override {
+        std::cout << event.to_json() << std::endl;
+    }
+};
+
+auto listener = std::make_shared<MyListener>();
+pool->diagnostics().add_event_listener(listener);
+
+// Get recent events
+auto events = pool->diagnostics().get_recent_events(100);
+```
+
+### Export Formats
+
+```cpp
+// JSON export
+std::cout << pool->diagnostics().to_json() << std::endl;
+
+// Human-readable string
+std::cout << pool->diagnostics().to_string() << std::endl;
+
+// Prometheus metrics
+std::cout << pool->diagnostics().to_prometheus() << std::endl;
+```
+
+### Performance Characteristics
+
+| Operation | Overhead | Notes |
+|-----------|----------|-------|
+| `health_check()` | ~15 μs | Full health evaluation |
+| `is_healthy()` | ~50 ns | Quick check |
+| `detect_bottlenecks()` | ~3 μs | Full analysis |
+| `dump_thread_states()` | ~5 μs | O(n) worker count |
+| Event recording (enabled) | ~250 ns | Per event |
+| Event recording (disabled) | ~12 ns | Negligible |
+
+---
+
 ## Migration Guide
 
 ### From v2.x to v3.0
@@ -740,6 +915,6 @@ common::Result<int> result = ...;
 ---
 
 **Created**: 2025-11-21
-**Updated**: 2025-12-19
-**Version**: 3.0.0
+**Updated**: 2025-01-09
+**Version**: 3.1.0
 **Author**: kcenon@naver.com

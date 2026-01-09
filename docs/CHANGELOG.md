@@ -8,6 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #393**: Phase 1.3.8 - Tests and Documentation for Diagnostics
+  - Comprehensive unit test suite for diagnostics API (120 tests across 13 test suites):
+    - `thread_info_test.cpp`: Tests for thread_info and job_info structures
+    - `health_check_test.cpp`: Tests for health check functionality
+    - `event_tracing_test.cpp`: Tests for event tracing and listeners
+    - `diagnostics_integration_test.cpp`: Integration tests with thread_pool
+    - `diagnostics_performance_test.cpp`: Performance benchmarks
+  - Test coverage includes:
+    - All enum-to-string conversions (worker_state, job_status, health_state, event_type, bottleneck_type)
+    - JSON and human-readable string serialization
+    - Prometheus metrics export format
+    - Concurrent access performance tests
+    - Event recording overhead verification (<1μs when enabled)
+  - API documentation updates:
+    - Added Diagnostics API section to API_REFERENCE.md
+    - Updated Table of Contents with new sections
+    - Documented health check, thread dump, job inspection, bottleneck detection, and event tracing
+    - Added performance characteristics table
+
 - **Issue #392**: Phase 1.3.7 - Export and Serialization for Diagnostics
   - New serialization methods in `job_info` struct:
     - `to_json()`: JSON output with job details, timing, and error info
