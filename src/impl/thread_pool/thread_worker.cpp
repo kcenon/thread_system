@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
 
 #include <kcenon/thread/utils/formatter.h>
 
@@ -179,6 +180,11 @@ auto thread_worker::set_context(const thread_context& context) -> void
 void thread_worker::set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metrics)
 {
 	metrics_ = std::move(metrics);
+}
+
+void thread_worker::set_diagnostics(diagnostics::thread_pool_diagnostics* diag)
+{
+	diagnostics_ = diag;
 }
 
 void thread_worker::set_policy(const worker_policy& policy)
@@ -511,6 +517,27 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			return common::error_info{static_cast<int>(error_code::job_invalid), "error executing job: nullptr", "thread_system"};
 		}
 
+		// Capture job info for event tracing (before any state changes)
+		const auto job_id = current_job->get_job_id();
+		const auto job_name_for_event = current_job->get_name();
+		const auto enqueue_time = current_job->get_enqueue_time();
+
+		// Record dequeued event if tracing is enabled
+		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		{
+			diagnostics::job_execution_event dequeued_event;
+			dequeued_event.job_id = job_id;
+			dequeued_event.job_name = job_name_for_event;
+			dequeued_event.type = diagnostics::event_type::dequeued;
+			dequeued_event.timestamp = std::chrono::steady_clock::now();
+			dequeued_event.system_timestamp = std::chrono::system_clock::now();
+			dequeued_event.thread_id = std::this_thread::get_id();
+			dequeued_event.worker_id = worker_id_;
+			dequeued_event.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				dequeued_event.timestamp - enqueue_time);
+			diagnostics_->record_event(dequeued_event);
+		}
+
 		// Update idle time statistics before transitioning to busy state
 		auto now = std::chrono::steady_clock::now();
 		auto state_since = get_state_since();
@@ -547,6 +574,22 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 		// Track currently executing job atomically for on_stop_requested()
 		// Use release ordering to ensure job state is visible to cancellation thread
 		current_job_.store(current_job.get(), std::memory_order_release);
+
+		// Record started event if tracing is enabled
+		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		{
+			diagnostics::job_execution_event started_event;
+			started_event.job_id = job_id;
+			started_event.job_name = job_name_for_event;
+			started_event.type = diagnostics::event_type::started;
+			started_event.timestamp = std::chrono::steady_clock::now();
+			started_event.system_timestamp = std::chrono::system_clock::now();
+			started_event.thread_id = std::this_thread::get_id();
+			started_event.worker_id = worker_id_;
+			started_event.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				started_event.timestamp - enqueue_time);
+			diagnostics_->record_event(started_event);
+		}
 
 		// Execute the job's work method and capture the result
 		auto work_result = current_job->do_work();
@@ -601,6 +644,25 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			// Increment failed job counter
 			jobs_failed_.fetch_add(1, std::memory_order_relaxed);
 
+			// Record failed event if tracing is enabled
+			if (diagnostics_ && diagnostics_->is_tracing_enabled())
+			{
+				diagnostics::job_execution_event failed_event;
+				failed_event.job_id = job_id;
+				failed_event.job_name = job_name_for_event;
+				failed_event.type = diagnostics::event_type::failed;
+				failed_event.timestamp = std::chrono::steady_clock::now();
+				failed_event.system_timestamp = std::chrono::system_clock::now();
+				failed_event.thread_id = std::this_thread::get_id();
+				failed_event.worker_id = worker_id_;
+				failed_event.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+					current_job_start_time_ - enqueue_time);
+				failed_event.execution_time = std::chrono::nanoseconds(execution_duration_ns);
+				failed_event.error_code = work_result.error().code;
+				failed_event.error_message = work_result.error().message;
+				diagnostics_->record_event(failed_event);
+			}
+
 			if (metrics_)
 			{
 				metrics_->record_execution(0, false);
@@ -611,6 +673,23 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 
 		// Increment completed job counter
 		jobs_completed_.fetch_add(1, std::memory_order_relaxed);
+
+		// Record completed event if tracing is enabled
+		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		{
+			diagnostics::job_execution_event completed_event;
+			completed_event.job_id = job_id;
+			completed_event.job_name = job_name_for_event;
+			completed_event.type = diagnostics::event_type::completed;
+			completed_event.timestamp = std::chrono::steady_clock::now();
+			completed_event.system_timestamp = std::chrono::system_clock::now();
+			completed_event.thread_id = std::this_thread::get_id();
+			completed_event.worker_id = worker_id_;
+			completed_event.wait_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				current_job_start_time_ - enqueue_time);
+			completed_event.execution_time = std::chrono::nanoseconds(execution_duration_ns);
+			diagnostics_->record_event(completed_event);
+		}
 
 		// Log successful job completion based on timing configuration
 		// Note: Using captured job_name since job is already destroyed

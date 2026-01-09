@@ -490,4 +490,328 @@ TEST_F(ThreadDumpTest, UtilizationCalculation)
 	EXPECT_GT(total_utilization, 0.0);
 }
 
+// ============================================================================
+// Event Tracing Tests (Phase 1.3.6)
+// ============================================================================
+
+class EventTracingTest : public ::testing::Test
+{
+protected:
+	void SetUp() override
+	{
+		pool_ = std::make_shared<thread_pool>("EventTracingTestPool");
+
+		for (int i = 0; i < 2; ++i)
+		{
+			pool_->enqueue(std::make_unique<thread_worker>());
+		}
+
+		pool_->start();
+	}
+
+	void TearDown() override
+	{
+		if (pool_)
+		{
+			pool_->stop();
+		}
+	}
+
+	std::shared_ptr<thread_pool> pool_;
+};
+
+TEST_F(EventTracingTest, EventsRecordedWhenTracingEnabled)
+{
+	auto& diag = pool_->diagnostics();
+
+	// Enable tracing
+	diag.enable_tracing(true, 100);
+	EXPECT_TRUE(diag.is_tracing_enabled());
+
+	// Submit a job
+	std::atomic<bool> job_completed{false};
+	pool_->enqueue(std::make_unique<callback_job>([&job_completed]() -> common::VoidResult {
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		job_completed.store(true);
+		return common::ok();
+	}));
+
+	// Wait for job to complete
+	while (!job_completed.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Check that events were recorded
+	auto events = diag.get_recent_events(20);
+	EXPECT_GE(events.size(), 3u); // dequeued, started, completed
+}
+
+TEST_F(EventTracingTest, NoEventsWhenTracingDisabled)
+{
+	auto& diag = pool_->diagnostics();
+
+	// Ensure tracing is disabled
+	diag.enable_tracing(false);
+	EXPECT_FALSE(diag.is_tracing_enabled());
+
+	// Submit a job
+	std::atomic<bool> job_completed{false};
+	pool_->enqueue(std::make_unique<callback_job>([&job_completed]() -> common::VoidResult {
+		job_completed.store(true);
+		return common::ok();
+	}));
+
+	// Wait for job to complete
+	while (!job_completed.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Check that no events were recorded
+	auto events = diag.get_recent_events(20);
+	EXPECT_TRUE(events.empty());
+}
+
+TEST_F(EventTracingTest, EventSequence)
+{
+	auto& diag = pool_->diagnostics();
+	diag.enable_tracing(true, 100);
+
+	std::atomic<bool> job_completed{false};
+	pool_->enqueue(std::make_unique<callback_job>([&job_completed]() -> common::VoidResult {
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		job_completed.store(true);
+		return common::ok();
+	}));
+
+	while (!job_completed.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto events = diag.get_recent_events(20);
+	ASSERT_GE(events.size(), 3u);
+
+	// Events are returned in reverse order (most recent first)
+	// Check for expected event types
+	bool has_dequeued = false;
+	bool has_started = false;
+	bool has_completed = false;
+
+	for (const auto& event : events)
+	{
+		if (event.type == event_type::dequeued) has_dequeued = true;
+		if (event.type == event_type::started) has_started = true;
+		if (event.type == event_type::completed) has_completed = true;
+	}
+
+	EXPECT_TRUE(has_dequeued);
+	EXPECT_TRUE(has_started);
+	EXPECT_TRUE(has_completed);
+}
+
+TEST_F(EventTracingTest, FailedEventOnJobFailure)
+{
+	auto& diag = pool_->diagnostics();
+	diag.enable_tracing(true, 100);
+
+	std::atomic<bool> job_executed{false};
+	pool_->enqueue(std::make_unique<callback_job>([&job_executed]() -> common::VoidResult {
+		job_executed.store(true);
+		return common::error_info{42, "test error", "test"};
+	}));
+
+	while (!job_executed.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto events = diag.get_recent_events(20);
+
+	// Check for failed event
+	bool has_failed = false;
+	for (const auto& event : events)
+	{
+		if (event.type == event_type::failed)
+		{
+			has_failed = true;
+			EXPECT_TRUE(event.error_code.has_value());
+			EXPECT_TRUE(event.error_message.has_value());
+		}
+	}
+
+	EXPECT_TRUE(has_failed);
+}
+
+// Test event listener
+class TestEventListener : public execution_event_listener
+{
+public:
+	void on_event(const job_execution_event& event) override
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+		events_.push_back(event);
+	}
+
+	std::vector<job_execution_event> get_events() const
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+		return events_;
+	}
+
+	void clear()
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+		events_.clear();
+	}
+
+private:
+	mutable std::mutex mutex_;
+	std::vector<job_execution_event> events_;
+};
+
+TEST_F(EventTracingTest, EventListenerReceivesEvents)
+{
+	auto& diag = pool_->diagnostics();
+	diag.enable_tracing(true, 100);
+
+	auto listener = std::make_shared<TestEventListener>();
+	diag.add_event_listener(listener);
+
+	std::atomic<bool> job_completed{false};
+	pool_->enqueue(std::make_unique<callback_job>([&job_completed]() -> common::VoidResult {
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		job_completed.store(true);
+		return common::ok();
+	}));
+
+	while (!job_completed.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto received_events = listener->get_events();
+	EXPECT_GE(received_events.size(), 3u);
+
+	diag.remove_event_listener(listener);
+}
+
+TEST_F(EventTracingTest, EventToJsonFormat)
+{
+	job_execution_event event;
+	event.event_id = 123;
+	event.job_id = 456;
+	event.job_name = "TestJob";
+	event.type = event_type::completed;
+	event.timestamp = std::chrono::steady_clock::now();
+	event.system_timestamp = std::chrono::system_clock::now();
+	event.thread_id = std::this_thread::get_id();
+	event.worker_id = 0;
+	event.wait_time = std::chrono::milliseconds(5);
+	event.execution_time = std::chrono::milliseconds(10);
+
+	auto json = event.to_json();
+
+	EXPECT_FALSE(json.empty());
+	EXPECT_NE(json.find("event_id"), std::string::npos);
+	EXPECT_NE(json.find("123"), std::string::npos);
+	EXPECT_NE(json.find("job_id"), std::string::npos);
+	EXPECT_NE(json.find("456"), std::string::npos);
+	EXPECT_NE(json.find("TestJob"), std::string::npos);
+	EXPECT_NE(json.find("completed"), std::string::npos);
+}
+
+TEST_F(EventTracingTest, EventToStringFormat)
+{
+	job_execution_event event;
+	event.event_id = 123;
+	event.job_id = 456;
+	event.job_name = "TestJob";
+	event.type = event_type::completed;
+	event.timestamp = std::chrono::steady_clock::now();
+	event.system_timestamp = std::chrono::system_clock::now();
+	event.thread_id = std::this_thread::get_id();
+	event.worker_id = 0;
+	event.wait_time = std::chrono::milliseconds(5);
+	event.execution_time = std::chrono::milliseconds(10);
+
+	auto str = event.to_string();
+
+	EXPECT_FALSE(str.empty());
+	EXPECT_NE(str.find("Event#123"), std::string::npos);
+	EXPECT_NE(str.find("TestJob"), std::string::npos);
+	EXPECT_NE(str.find("completed"), std::string::npos);
+}
+
+TEST_F(EventTracingTest, EventTypeConversion)
+{
+	EXPECT_EQ(event_type_to_string(event_type::enqueued), "enqueued");
+	EXPECT_EQ(event_type_to_string(event_type::dequeued), "dequeued");
+	EXPECT_EQ(event_type_to_string(event_type::started), "started");
+	EXPECT_EQ(event_type_to_string(event_type::completed), "completed");
+	EXPECT_EQ(event_type_to_string(event_type::failed), "failed");
+	EXPECT_EQ(event_type_to_string(event_type::cancelled), "cancelled");
+	EXPECT_EQ(event_type_to_string(event_type::retried), "retried");
+}
+
+TEST_F(EventTracingTest, EventHelperMethods)
+{
+	job_execution_event event;
+	event.type = event_type::completed;
+	EXPECT_TRUE(event.is_terminal());
+	EXPECT_FALSE(event.is_error());
+
+	event.type = event_type::failed;
+	EXPECT_TRUE(event.is_terminal());
+	EXPECT_TRUE(event.is_error());
+
+	event.type = event_type::started;
+	EXPECT_FALSE(event.is_terminal());
+	EXPECT_FALSE(event.is_error());
+}
+
+TEST_F(EventTracingTest, EventTimingCalculation)
+{
+	job_execution_event event;
+	event.wait_time = std::chrono::milliseconds(15);
+	event.execution_time = std::chrono::milliseconds(25);
+
+	EXPECT_NEAR(event.wait_time_ms(), 15.0, 0.1);
+	EXPECT_NEAR(event.execution_time_ms(), 25.0, 0.1);
+}
+
+TEST_F(EventTracingTest, MultipleJobsGenerateMultipleEvents)
+{
+	auto& diag = pool_->diagnostics();
+	diag.enable_tracing(true, 100);
+
+	const int job_count = 5;
+	std::atomic<int> completed{0};
+
+	for (int i = 0; i < job_count; ++i)
+	{
+		pool_->enqueue(std::make_unique<callback_job>([&completed]() -> common::VoidResult {
+			std::this_thread::sleep_for(std::chrono::milliseconds(5));
+			completed.fetch_add(1);
+			return common::ok();
+		}));
+	}
+
+	while (completed.load() < job_count)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	auto events = diag.get_recent_events(100);
+	// Each job generates at least 3 events (dequeued, started, completed)
+	EXPECT_GE(events.size(), static_cast<std::size_t>(job_count * 3));
+}
+
 } // namespace kcenon::thread::diagnostics::test
