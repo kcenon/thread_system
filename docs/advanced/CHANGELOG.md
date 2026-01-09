@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Enhanced Cancellation Token** (#382)
+  - `enhanced_cancellation_token` with timeout and deadline support
+  - `cancellation_reason` struct for tracking why cancellation occurred
+  - `operation_cancelled_exception` for structured exception handling
+  - Helper classes: `cancellation_callback_guard`, `cancellation_scope`, `cancellation_context`
+  - 29 comprehensive unit tests
+
 - **Event Tracing** (#391)
   - `to_json()` and `to_string()` serialization methods for `job_execution_event`
   - Event generation in worker threads (dequeued, started, completed, failed)

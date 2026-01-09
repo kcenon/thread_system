@@ -10,6 +10,13 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 ## [Unreleased]
 
 ### Added
+- **향상된 취소 토큰** (#382)
+  - 타임아웃 및 데드라인 지원이 포함된 `enhanced_cancellation_token`
+  - 취소 이유를 추적하기 위한 `cancellation_reason` 구조체
+  - 구조화된 예외 처리를 위한 `operation_cancelled_exception`
+  - 헬퍼 클래스: `cancellation_callback_guard`, `cancellation_scope`, `cancellation_context`
+  - 29개의 포괄적인 단위 테스트
+
 - **이벤트 트레이싱** (#391)
   - `job_execution_event`의 `to_json()` 및 `to_string()` 직렬화 메서드
   - 워커 스레드에서 이벤트 생성 (dequeued, started, completed, failed)

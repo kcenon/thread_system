@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #382**: Phase 3.2 - Enhanced Cancellation Token with Timeout and Deadline Support
+  - New `cancellation_reason` struct in `<kcenon/thread/core/cancellation_reason.h>`:
+    - Reason types: `none`, `user_requested`, `timeout`, `deadline`, `parent_cancelled`, `pool_shutdown`, `error`
+    - Human-readable message and cancel timestamp
+    - Optional exception storage for error-triggered cancellations
+    - `to_string()` and `type_to_string()` for debugging
+  - New `operation_cancelled_exception` class in `<kcenon/thread/core/cancellation_exception.h>`:
+    - Derives from `std::exception` with rich cancellation_reason
+    - Used by `throw_if_cancelled()` for structured exception handling
+  - New `enhanced_cancellation_token` class in `<kcenon/thread/core/enhanced_cancellation_token.h>`:
+    - Timeout-based automatic cancellation via `create_with_timeout()`
+    - Deadline-based automatic cancellation via `create_with_deadline()`
+    - Hierarchical token linking via `create_linked()` and `create_linked_with_timeout()`
+    - Cancellation reason tracking via `get_reason()`
+    - Callback registration with handles for unregistration
+    - `remaining_time()` and `extend_timeout()` for timeout management
+    - Wait methods: `wait()`, `wait_for()`, `wait_until()`
+  - New helper classes:
+    - `cancellation_callback_guard`: RAII guard for automatic callback unregistration
+    - `cancellation_scope`: Structured cancellation with check points
+    - `cancellation_context`: Thread-local cancellation token propagation
+  - Comprehensive test suite (29 tests) for enhanced cancellation token functionality
+
 - **Issue #391**: Phase 1.3.6 - Implement Event Tracing
   - New serialization methods in `job_execution_event` struct:
     - `to_json()`: JSON output with event details, timestamps, and error info
