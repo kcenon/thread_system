@@ -8,6 +8,33 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #425**: Phase 3.3.3 - 작업 친화도 추적기 및 백오프 전략 구현
+  - `<kcenon/thread/stealing/steal_backoff_strategy.h>`에 새로운 `steal_backoff_strategy` 열거형:
+    - `fixed`: 스틸 시도 간 고정 지연
+    - `linear`: 선형 증가 (delay = initial * (attempt + 1))
+    - `exponential`: 승수를 사용한 지수 증가
+    - `adaptive_jitter`: 상관관계 방지를 위한 랜덤 지터가 포함된 지수 백오프
+  - 백오프 동작 설정을 위한 `steal_backoff_config` 구조체:
+    - `initial_backoff`, `max_backoff`: 지연 경계
+    - `multiplier`: 지수 백오프 계수
+    - `jitter_factor`: 랜덤 지터 범위 (0.0 - 1.0)
+  - 백오프 지연 계산을 위한 `backoff_calculator` 클래스:
+    - 각 전략에 대한 스레드 안전 지연 계산
+    - max_backoff 자동 제한
+    - 적응형 전략을 위한 랜덤 지터 지원
+  - `<kcenon/thread/stealing/work_affinity_tracker.h>`에 새로운 `work_affinity_tracker` 클래스:
+    - 워커 간 협력 패턴 추적
+    - `record_cooperation(thief_id, victim_id)`: 성공적인 스틸 기록
+    - `get_affinity(worker_a, worker_b)`: 대칭적 친화도 점수 조회
+    - `get_preferred_victims(worker_id, max_count)`: 정렬된 희생자 목록 조회
+    - `reset()`: 모든 친화도 데이터 초기화
+    - 동시 접근을 위한 스레드 안전 원자적 연산
+    - 효율적인 상삼각 행렬 저장소
+  - 포괄적인 단위 테스트 (43개 신규 테스트) 포함:
+    - 경계 조건을 포함한 모든 백오프 전략
+    - 친화도 추적, 정규화, 대칭성
+    - 동시 읽기/쓰기 연산 하의 스레드 안전성
+
 - **이슈 #424**: Phase 3.3.2 - 배치 스틸링 기능이 포함된 향상된 작업 훔치기 덱 구현
   - `work_stealing_deque`에 새로운 `steal_batch(std::size_t max_count)` 메서드:
     - 덱에서 최대 `max_count`개의 요소를 원자적으로 훔침
