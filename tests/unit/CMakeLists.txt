@@ -63,6 +63,10 @@ if(UNIX AND NOT WIN32)
   # Validates DAG-based job scheduling with dependencies
   add_subdirectory(dag_test)
 
+  # Diagnostics tests
+  # Validates thread pool diagnostics, health checks, event tracing, and bottleneck detection
+  add_subdirectory(diagnostics_test)
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
