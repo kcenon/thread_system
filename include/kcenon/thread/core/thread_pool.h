@@ -43,6 +43,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/metrics/enhanced_metrics.h>
 #include <kcenon/thread/scaling/autoscaling_policy.h>
+#include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
+#include <kcenon/thread/stealing/work_stealing_stats.h>
+#include <kcenon/thread/stealing/numa_topology.h>
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -82,6 +85,7 @@ namespace kcenon::thread {
 	struct circuit_breaker_config;
 	class autoscaler;
 	struct autoscaling_policy;
+	class numa_work_stealer;
 }
 
 /**
@@ -595,6 +599,34 @@ namespace kcenon::thread
 		[[nodiscard]] bool is_work_stealing_enabled() const;
 
 		// =========================================================================
+		// Enhanced Work-Stealing (NUMA-aware)
+		// =========================================================================
+
+		/**
+		 * @brief Set enhanced work-stealing configuration.
+		 * @param config The enhanced work-stealing configuration.
+		 */
+		void set_work_stealing_config(const enhanced_work_stealing_config& config);
+
+		/**
+		 * @brief Get the current enhanced work-stealing configuration.
+		 * @return Reference to the current enhanced work-stealing configuration.
+		 */
+		[[nodiscard]] const enhanced_work_stealing_config& get_work_stealing_config() const;
+
+		/**
+		 * @brief Get a snapshot of work-stealing statistics.
+		 * @return Non-atomic snapshot of current work-stealing statistics.
+		 */
+		[[nodiscard]] work_stealing_stats_snapshot get_work_stealing_stats() const;
+
+		/**
+		 * @brief Get the NUMA topology information.
+		 * @return Reference to the detected NUMA topology.
+		 */
+		[[nodiscard]] const numa_topology& get_numa_topology() const;
+
+		// =========================================================================
 		// Circuit Breaker
 		// =========================================================================
 
@@ -876,6 +908,21 @@ namespace kcenon::thread
 		 * load metrics (utilization, queue depth, latency).
 		 */
 		std::shared_ptr<autoscaler> autoscaler_;
+
+		/**
+		 * @brief Enhanced work-stealing configuration.
+		 */
+		enhanced_work_stealing_config enhanced_ws_config_;
+
+		/**
+		 * @brief NUMA-aware work stealer for enhanced work-stealing.
+		 */
+		std::unique_ptr<numa_work_stealer> numa_work_stealer_;
+
+		/**
+		 * @brief Cached NUMA topology for the system.
+		 */
+		numa_topology numa_topology_;
 
 		/**
 		 * @brief Create a steal function for the given worker.
