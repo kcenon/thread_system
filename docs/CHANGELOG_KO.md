@@ -8,6 +8,28 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #390**: Phase 1.3.5 - 헬스 체크 구현
+  - `<kcenon/thread/diagnostics/health_status.h>`에 새로운 `health_thresholds` 구조체:
+    - `min_success_rate`: 정상 상태를 위한 최소 성공률 (기본값: 0.95)
+    - `unhealthy_success_rate`: 비정상으로 판단되는 성공률 임계값 (기본값: 0.8)
+    - `max_healthy_latency_ms`: 정상 상태를 위한 최대 평균 레이턴시 (기본값: 100.0ms)
+    - `degraded_latency_ms`: 저하 상태로 판단되는 레이턴시 임계값 (기본값: 500.0ms)
+    - `queue_saturation_warning`: 저하 상태를 위한 큐 포화도 임계값 (기본값: 0.8)
+    - `queue_saturation_critical`: 비정상 상태를 위한 큐 포화도 임계값 (기본값: 0.95)
+    - `worker_utilization_warning`: 저하 상태를 위한 워커 활용도 임계값 (기본값: 0.9)
+    - `min_idle_workers`: 정상 상태를 위한 최소 유휴 워커 수 (기본값: 0)
+  - `health_status` 구조체에 새로운 직렬화 메서드:
+    - `to_json()`: HTTP 헬스 엔드포인트 호환 JSON 출력
+    - `to_string()`: 로깅을 위한 사람이 읽기 쉬운 형식 출력
+  - 향상된 `health_check()` 구현:
+    - 메트릭에서 `avg_latency_ms` 계산
+    - 작업 큐에서 `queue_capacity` 보고
+    - `check_metrics_health()`를 통한 메트릭 컴포넌트 상태 확인 추가
+  - 향상된 `check_queue_health()` 구현:
+    - 큐 포화도 계산 및 보고
+    - 임계값 기반 상태 결정
+  - `diagnostics_config`에 `health_thresholds_config` 필드 추가
+
 - **이슈 #381**: Phase 3.1 - 작업 의존성 그래프 (DAG 스케줄러)
   - `<kcenon/thread/dag/dag_job.h>`에 새로운 `dag_job` 클래스:
     - 의존성 지원으로 기본 `job` 클래스 확장

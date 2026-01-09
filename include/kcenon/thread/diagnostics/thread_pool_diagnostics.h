@@ -92,6 +92,11 @@ namespace diagnostics
 		 * @brief Wait time threshold (ms) for slow consumer detection.
 		 */
 		double wait_time_threshold_ms{100.0};
+
+		/**
+		 * @brief Configurable thresholds for health status determination.
+		 */
+		health_thresholds health_thresholds_config{};
 	};
 
 	/**
@@ -421,6 +426,15 @@ namespace diagnostics
 		 * @return Component health status for queue.
 		 */
 		[[nodiscard]] auto check_queue_health() const -> component_health;
+
+		/**
+		 * @brief Checks metrics component health.
+		 * @param avg_latency_ms Current average latency.
+		 * @param success_rate Current success rate.
+		 * @return Component health status for metrics.
+		 */
+		[[nodiscard]] auto check_metrics_health(double avg_latency_ms,
+		                                        double success_rate) const -> component_health;
 	};
 
 } // namespace diagnostics

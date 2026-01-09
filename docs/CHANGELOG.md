@@ -8,6 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #390**: Phase 1.3.5 - Implement Health Check
+  - New `health_thresholds` struct in `<kcenon/thread/diagnostics/health_status.h>`:
+    - `min_success_rate`: Minimum success rate for healthy status (default: 0.95)
+    - `unhealthy_success_rate`: Success rate below which pool is unhealthy (default: 0.8)
+    - `max_healthy_latency_ms`: Maximum average latency for healthy status (default: 100.0ms)
+    - `degraded_latency_ms`: Latency above which pool is degraded (default: 500.0ms)
+    - `queue_saturation_warning`: Queue saturation threshold for degraded status (default: 0.8)
+    - `queue_saturation_critical`: Queue saturation threshold for unhealthy status (default: 0.95)
+    - `worker_utilization_warning`: Worker utilization threshold for degraded status (default: 0.9)
+    - `min_idle_workers`: Minimum idle workers required for healthy status (default: 0)
+  - New serialization methods in `health_status` struct:
+    - `to_json()`: HTTP health endpoint compatible JSON output
+    - `to_string()`: Human-readable formatted output for logging
+  - Enhanced `health_check()` implementation:
+    - Calculates `avg_latency_ms` from metrics
+    - Reports `queue_capacity` from job queue
+    - Added metrics component health check via `check_metrics_health()`
+  - Enhanced `check_queue_health()` implementation:
+    - Queue saturation calculation and reporting
+    - Threshold-based health state determination
+  - Updated `diagnostics_config` with `health_thresholds_config` field
+
 - **Issue #381**: Phase 3.1 - Job Dependency Graph (DAG Scheduler)
   - New `dag_job` class in `<kcenon/thread/dag/dag_job.h>`:
     - Extends base `job` class with dependency support

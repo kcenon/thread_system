@@ -34,12 +34,71 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 
 namespace kcenon::thread::diagnostics
 {
+	/**
+	 * @struct health_thresholds
+	 * @brief Configurable thresholds for health status determination.
+	 *
+	 * @ingroup diagnostics
+	 *
+	 * Defines the thresholds used to determine if components are
+	 * healthy, degraded, or unhealthy. These can be customized
+	 * based on application requirements.
+	 */
+	struct health_thresholds
+	{
+		/**
+		 * @brief Minimum success rate for healthy status (0.0 to 1.0).
+		 *
+		 * Below this threshold, the pool is considered degraded.
+		 */
+		double min_success_rate{0.95};
+
+		/**
+		 * @brief Success rate below which pool is unhealthy (0.0 to 1.0).
+		 */
+		double unhealthy_success_rate{0.8};
+
+		/**
+		 * @brief Maximum average latency (ms) for healthy status.
+		 */
+		double max_healthy_latency_ms{100.0};
+
+		/**
+		 * @brief Latency (ms) above which pool is considered degraded.
+		 */
+		double degraded_latency_ms{500.0};
+
+		/**
+		 * @brief Queue saturation threshold for degraded status (0.0 to 1.0).
+		 */
+		double queue_saturation_warning{0.8};
+
+		/**
+		 * @brief Queue saturation threshold for unhealthy status (0.0 to 1.0).
+		 */
+		double queue_saturation_critical{0.95};
+
+		/**
+		 * @brief Worker utilization threshold for degraded status (0.0 to 1.0).
+		 */
+		double worker_utilization_warning{0.9};
+
+		/**
+		 * @brief Minimum number of idle workers required for healthy status.
+		 *
+		 * Set to 0 to disable this check.
+		 */
+		std::size_t min_idle_workers{0};
+	};
+
 	/**
 	 * @enum health_state
 	 * @brief Overall health state of a component or system.
@@ -344,6 +403,142 @@ namespace kcenon::thread::diagnostics
 				overall_status = health_state::healthy;
 				status_message = "All components are healthy";
 			}
+		}
+
+		// =========================================================================
+		// Serialization
+		// =========================================================================
+
+		/**
+		 * @brief Converts health status to JSON string.
+		 *
+		 * Output format is compatible with standard health check endpoints
+		 * and monitoring tools like Kubernetes, Spring Boot Actuator, etc.
+		 *
+		 * @return JSON string representation of the health status.
+		 */
+		[[nodiscard]] auto to_json() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << std::fixed;
+
+			oss << "{\n";
+			oss << "  \"status\": \"" << health_state_to_string(overall_status) << "\",\n";
+			oss << "  \"message\": \"" << status_message << "\",\n";
+			oss << "  \"http_code\": " << http_status_code() << ",\n";
+
+			// Metrics
+			oss << "  \"metrics\": {\n";
+			oss << "    \"uptime_seconds\": " << std::setprecision(2) << uptime_seconds << ",\n";
+			oss << "    \"total_jobs_processed\": " << total_jobs_processed << ",\n";
+			oss << "    \"success_rate\": " << std::setprecision(4) << success_rate << ",\n";
+			oss << "    \"avg_latency_ms\": " << std::setprecision(3) << avg_latency_ms << "\n";
+			oss << "  },\n";
+
+			// Workers
+			oss << "  \"workers\": {\n";
+			oss << "    \"total\": " << total_workers << ",\n";
+			oss << "    \"active\": " << active_workers << ",\n";
+			oss << "    \"idle\": " << (total_workers - active_workers) << "\n";
+			oss << "  },\n";
+
+			// Queue
+			oss << "  \"queue\": {\n";
+			oss << "    \"depth\": " << queue_depth << ",\n";
+			oss << "    \"capacity\": " << queue_capacity << "\n";
+			oss << "  },\n";
+
+			// Components
+			oss << "  \"components\": [\n";
+			for (std::size_t i = 0; i < components.size(); ++i)
+			{
+				const auto& comp = components[i];
+				oss << "    {\n";
+				oss << "      \"name\": \"" << comp.name << "\",\n";
+				oss << "      \"status\": \"" << health_state_to_string(comp.state) << "\",\n";
+				oss << "      \"message\": \"" << comp.message << "\"";
+
+				if (!comp.details.empty())
+				{
+					oss << ",\n      \"details\": {\n";
+					std::size_t detail_idx = 0;
+					for (const auto& [key, value] : comp.details)
+					{
+						oss << "        \"" << key << "\": \"" << value << "\"";
+						if (++detail_idx < comp.details.size())
+						{
+							oss << ",";
+						}
+						oss << "\n";
+					}
+					oss << "      }\n";
+				}
+				else
+				{
+					oss << "\n";
+				}
+
+				oss << "    }";
+				if (i < components.size() - 1)
+				{
+					oss << ",";
+				}
+				oss << "\n";
+			}
+			oss << "  ]\n";
+			oss << "}";
+
+			return oss.str();
+		}
+
+		/**
+		 * @brief Converts health status to human-readable string.
+		 *
+		 * Provides a formatted text representation suitable for logging
+		 * or console output.
+		 *
+		 * @return Human-readable string representation.
+		 */
+		[[nodiscard]] auto to_string() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << std::fixed;
+
+			oss << "=== Health Status: " << health_state_to_string(overall_status)
+			    << " (HTTP " << http_status_code() << ") ===\n";
+			oss << "Message: " << status_message << "\n\n";
+
+			oss << "Metrics:\n";
+			oss << "  Uptime: " << std::setprecision(1) << uptime_seconds << " seconds\n";
+			oss << "  Jobs processed: " << total_jobs_processed << "\n";
+			oss << "  Success rate: " << std::setprecision(1) << (success_rate * 100.0) << "%\n";
+			oss << "  Avg latency: " << std::setprecision(2) << avg_latency_ms << " ms\n\n";
+
+			oss << "Workers: " << active_workers << "/" << total_workers << " active";
+			if (total_workers > 0)
+			{
+				oss << " (" << (total_workers - active_workers) << " idle)";
+			}
+			oss << "\n";
+
+			oss << "Queue: " << queue_depth;
+			if (queue_capacity > 0)
+			{
+				double saturation = static_cast<double>(queue_depth) /
+				                    static_cast<double>(queue_capacity) * 100.0;
+				oss << "/" << queue_capacity << " (" << std::setprecision(1)
+				    << saturation << "% full)";
+			}
+			oss << "\n\n";
+
+			oss << "Components:\n";
+			for (const auto& comp : components)
+			{
+				oss << "  [" << health_state_to_string(comp.state) << "] "
+				    << comp.name << ": " << comp.message << "\n";
+			}
+
+			return oss.str();
 		}
 	};
 
