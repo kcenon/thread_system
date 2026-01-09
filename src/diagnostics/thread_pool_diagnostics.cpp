@@ -418,6 +418,12 @@ namespace kcenon::thread::diagnostics
 		{
 			status.success_rate = static_cast<double>(metrics_snap.tasks_executed) /
 			                      static_cast<double>(status.total_jobs_processed);
+
+			// Calculate average latency (total execution time / total jobs)
+			// busy_time represents total execution time across all workers
+			double total_exec_time_ms = static_cast<double>(metrics_snap.total_busy_time_ns) / 1e6;
+			status.avg_latency_ms = total_exec_time_ms /
+			                        static_cast<double>(status.total_jobs_processed);
 		}
 
 		// Worker stats
@@ -425,9 +431,22 @@ namespace kcenon::thread::diagnostics
 		status.active_workers = pool_.get_active_worker_count();
 		status.queue_depth = pool_.get_pending_task_count();
 
+		// Get queue capacity
+		auto queue = pool_.get_job_queue();
+		if (queue)
+		{
+			auto max_size = queue->get_max_size();
+			if (max_size.has_value())
+			{
+				status.queue_capacity = max_size.value();
+			}
+		}
+
 		// Check components
 		status.components.push_back(check_worker_health());
 		status.components.push_back(check_queue_health());
+		status.components.push_back(check_metrics_health(status.avg_latency_ms,
+		                                                  status.success_rate));
 
 		// Calculate overall status
 		status.calculate_overall_status();
@@ -485,20 +504,94 @@ namespace kcenon::thread::diagnostics
 		auto depth = pool_.get_pending_task_count();
 		health.details["depth"] = std::to_string(depth);
 
+		// Get queue capacity and calculate saturation
+		auto queue = pool_.get_job_queue();
+		double saturation = 0.0;
+		if (queue)
+		{
+			auto max_size = queue->get_max_size();
+			if (max_size.has_value() && max_size.value() > 0)
+			{
+				health.details["capacity"] = std::to_string(max_size.value());
+				saturation = static_cast<double>(depth) / static_cast<double>(max_size.value());
+				health.details["saturation"] = std::format("{:.2f}", saturation);
+			}
+		}
+
 		// Note: Job rejection tracking requires backpressure queue
 		// For basic queue, assume no rejections
 		std::uint64_t rejected = 0;
 		health.details["rejected"] = std::to_string(rejected);
 
-		if (rejected > 0)
+		const auto& thresholds = config_.health_thresholds_config;
+
+		if (saturation >= thresholds.queue_saturation_critical)
+		{
+			health.state = health_state::unhealthy;
+			health.message = "Queue at critical capacity";
+		}
+		else if (saturation >= thresholds.queue_saturation_warning || rejected > 0)
 		{
 			health.state = health_state::degraded;
-			health.message = std::to_string(rejected) + " jobs rejected due to backpressure";
+			if (rejected > 0)
+			{
+				health.message = std::to_string(rejected) + " jobs rejected due to backpressure";
+			}
+			else
+			{
+				health.message = "Queue saturation above warning threshold";
+			}
 		}
 		else
 		{
 			health.state = health_state::healthy;
 			health.message = "Queue operational";
+		}
+
+		return health;
+	}
+
+	auto thread_pool_diagnostics::check_metrics_health(double avg_latency_ms,
+	                                                    double success_rate) const -> component_health
+	{
+		component_health health;
+		health.name = "metrics";
+
+		health.details["avg_latency_ms"] = std::format("{:.3f}", avg_latency_ms);
+		health.details["success_rate"] = std::format("{:.4f}", success_rate);
+
+		const auto& thresholds = config_.health_thresholds_config;
+
+		// Check success rate first (more critical)
+		if (success_rate < thresholds.unhealthy_success_rate)
+		{
+			health.state = health_state::unhealthy;
+			health.message = "Success rate critically low: " +
+			                 std::format("{:.1f}%", success_rate * 100.0);
+		}
+		else if (success_rate < thresholds.min_success_rate)
+		{
+			health.state = health_state::degraded;
+			health.message = "Success rate below threshold: " +
+			                 std::format("{:.1f}%", success_rate * 100.0);
+		}
+		// Check latency
+		else if (avg_latency_ms > thresholds.degraded_latency_ms)
+		{
+			health.state = health_state::degraded;
+			health.message = "High average latency: " +
+			                 std::format("{:.2f}ms", avg_latency_ms);
+		}
+		else if (avg_latency_ms > thresholds.max_healthy_latency_ms)
+		{
+			health.state = health_state::degraded;
+			health.message = "Elevated latency: " +
+			                 std::format("{:.2f}ms", avg_latency_ms);
+		}
+		else
+		{
+			health.state = health_state::healthy;
+			health.message = "Performance metrics within normal range";
 		}
 
 		return health;
