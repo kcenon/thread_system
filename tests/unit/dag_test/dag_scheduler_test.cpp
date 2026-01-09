@@ -166,6 +166,127 @@ TEST_F(dag_scheduler_test, dag_job_builder_with_dependencies)
 	EXPECT_EQ(deps.size(), 3);
 }
 
+TEST_F(dag_scheduler_test, dag_job_builder_validation_no_work)
+{
+	dag_job_builder builder("no_work_job");
+
+	// Without work() set, is_valid() should return false
+	EXPECT_FALSE(builder.is_valid());
+
+	// get_validation_error() should return an error message
+	auto error = builder.get_validation_error();
+	EXPECT_TRUE(error.has_value());
+	EXPECT_FALSE(error->empty());
+
+	// build() should return nullptr for invalid configuration
+	auto job = builder.build();
+	EXPECT_EQ(job, nullptr);
+}
+
+TEST_F(dag_scheduler_test, dag_job_builder_validation_with_work)
+{
+	dag_job_builder builder("valid_job");
+	builder.work([]() -> kcenon::common::VoidResult {
+		return kcenon::common::ok();
+	});
+
+	// With work() set, is_valid() should return true
+	EXPECT_TRUE(builder.is_valid());
+
+	// get_validation_error() should return nullopt
+	EXPECT_FALSE(builder.get_validation_error().has_value());
+}
+
+TEST_F(dag_scheduler_test, dag_job_builder_reusability)
+{
+	dag_job_builder builder("reusable_job");
+
+	// Build first job
+	auto job1 = builder
+		.work([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
+		})
+		.depends_on(1)
+		.build();
+
+	EXPECT_NE(job1, nullptr);
+	EXPECT_EQ(job1->get_dependencies().size(), 1);
+
+	// After build(), builder should be reset and reusable
+	// Dependencies should be cleared
+	auto job2 = builder
+		.work([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
+		})
+		.depends_on({2, 3, 4})
+		.build();
+
+	EXPECT_NE(job2, nullptr);
+	EXPECT_EQ(job2->get_dependencies().size(), 3);
+
+	// Job IDs should be different
+	EXPECT_NE(job1->get_dag_id(), job2->get_dag_id());
+}
+
+TEST_F(dag_scheduler_test, dag_job_builder_reset)
+{
+	dag_job_builder builder("reset_test");
+
+	builder
+		.work([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
+		})
+		.depends_on(1)
+		.on_failure([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
+		});
+
+	// Manually reset
+	builder.reset();
+
+	// After reset, builder should be invalid (no work function)
+	EXPECT_FALSE(builder.is_valid());
+
+	// build() should return nullptr
+	auto job = builder.build();
+	EXPECT_EQ(job, nullptr);
+}
+
+TEST_F(dag_scheduler_test, dag_job_builder_returns_method)
+{
+	auto job = dag_job_builder("returns_test")
+		.returns<int>()
+		.work([]() -> kcenon::common::VoidResult {
+			return kcenon::common::ok();
+		})
+		.build();
+
+	EXPECT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "returns_test");
+}
+
+TEST_F(dag_scheduler_test, dag_job_builder_work_with_result)
+{
+	dag_scheduler scheduler(pool_);
+
+	auto job_id = scheduler.add_job(
+		dag_job_builder("compute_job")
+			.work_with_result<int>([]() -> kcenon::common::Result<int> {
+				return kcenon::common::Result<int>::ok(42);
+			})
+			.build()
+	);
+
+	auto future = scheduler.execute_all();
+	auto result = future.get();
+
+	EXPECT_TRUE(result.is_ok());
+
+	auto info = scheduler.get_job_info(job_id);
+	EXPECT_EQ(info->state, dag_job_state::completed);
+	EXPECT_TRUE(info->result.has_value());
+}
+
 // ============================================
 // dag_scheduler Core Tests
 // ============================================
