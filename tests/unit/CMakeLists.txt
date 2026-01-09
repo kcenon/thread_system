@@ -67,6 +67,10 @@ if(UNIX AND NOT WIN32)
   # Validates thread pool diagnostics, health checks, event tracing, and bottleneck detection
   add_subdirectory(diagnostics_test)
 
+  # Work-stealing tests
+  # Validates NUMA topology detection and work-stealing optimization
+  add_subdirectory(stealing_test)
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
