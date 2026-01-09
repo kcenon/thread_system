@@ -7,6 +7,20 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)를 기반으로 하며,
 이 프로젝트는 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 따릅니다.
 
+## [Unreleased]
+
+### Added
+- **병목 현상 탐지** (#389)
+  - 큐 포화도 계산을 포함한 완전한 병목 현상 분석
+  - 불균등 작업 분배 탐지를 위한 활용도 분산 계산
+  - 처리 속도와 큐 깊이 기반 예상 백로그 시간
+  - 잠금 경합 탐지 (높은 대기 시간 + 낮은 활용도 패턴)
+  - 큐 메모리 통계를 사용한 메모리 압박 탐지
+  - 각 병목 유형에 대한 실행 가능한 권장사항
+  - 병목 현상 탐지를 위한 포괄적인 단위 테스트
+
+---
+
 ## [3.0.0] - 2025-12-19
 
 이 릴리스는 common_system 전용 공개 계약으로의 마이그레이션을 완료합니다. 전체 릴리스 노트는 [docs/CHANGELOG_KO.md](../CHANGELOG_KO.md)를 참조하세요.
