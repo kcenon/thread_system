@@ -8,6 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #391**: Phase 1.3.6 - Implement Event Tracing
+  - New serialization methods in `job_execution_event` struct:
+    - `to_json()`: JSON output with event details, timestamps, and error info
+    - `to_string()`: Human-readable formatted output for logging/debugging
+  - Event generation in worker threads:
+    - `dequeued` event when job is taken from queue
+    - `started` event when job execution begins
+    - `completed` event on successful job completion
+    - `failed` event on job failure (includes error code and message)
+  - Worker-diagnostics integration:
+    - `set_diagnostics()` method in `thread_worker` for event recording
+    - Automatic diagnostics propagation in `thread_pool` worker creation
+    - Event recording when tracing is enabled via `enable_tracing()`
+  - Helper methods for `job_execution_event`:
+    - `wait_time_ms()`: Convert wait time to milliseconds
+    - `execution_time_ms()`: Convert execution time to milliseconds
+    - `is_terminal()`: Check if event is terminal (completed/failed/cancelled)
+    - `is_error()`: Check if event indicates an error
+    - `format_timestamp()`: Format system timestamp as ISO 8601 string
+  - Comprehensive test suite (12 tests) for event tracing functionality
+
 - **Issue #390**: Phase 1.3.5 - Implement Health Check
   - New `health_thresholds` struct in `<kcenon/thread/diagnostics/health_status.h>`:
     - `min_success_rate`: Minimum success rate for healthy status (default: 0.95)
