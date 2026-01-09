@@ -8,6 +8,27 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #391**: Phase 1.3.6 - 이벤트 트레이싱 구현
+  - `job_execution_event` 구조체에 새로운 직렬화 메서드:
+    - `to_json()`: 이벤트 상세, 타임스탬프, 에러 정보를 포함한 JSON 출력
+    - `to_string()`: 로깅/디버깅을 위한 사람이 읽기 쉬운 형식 출력
+  - 워커 스레드에서 이벤트 생성:
+    - `dequeued` 이벤트: 작업이 큐에서 꺼내질 때
+    - `started` 이벤트: 작업 실행이 시작될 때
+    - `completed` 이벤트: 작업이 성공적으로 완료될 때
+    - `failed` 이벤트: 작업 실패 시 (에러 코드와 메시지 포함)
+  - 워커-진단 통합:
+    - 이벤트 기록을 위한 `thread_worker`의 `set_diagnostics()` 메서드
+    - `thread_pool` 워커 생성 시 자동 진단 전파
+    - `enable_tracing()`을 통한 트레이싱 활성화 시 이벤트 기록
+  - `job_execution_event`의 헬퍼 메서드:
+    - `wait_time_ms()`: 대기 시간을 밀리초로 변환
+    - `execution_time_ms()`: 실행 시간을 밀리초로 변환
+    - `is_terminal()`: 이벤트가 종료 상태인지 확인 (completed/failed/cancelled)
+    - `is_error()`: 이벤트가 에러를 나타내는지 확인
+    - `format_timestamp()`: 시스템 타임스탬프를 ISO 8601 문자열로 포맷
+  - 이벤트 트레이싱 기능을 위한 종합 테스트 (12개 테스트)
+
 - **이슈 #390**: Phase 1.3.5 - 헬스 체크 구현
   - `<kcenon/thread/diagnostics/health_status.h>`에 새로운 `health_thresholds` 구조체:
     - `min_success_rate`: 정상 상태를 위한 최소 성공률 (기본값: 0.95)

@@ -408,6 +408,7 @@ auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> common::Vo
     worker->set_job_queue(job_queue_);
     worker->set_context(context_);
     worker->set_metrics(metrics_);
+    worker->set_diagnostics(&diagnostics());
 
     // Acquire lock before checking start_pool_ and adding worker
     // This prevents race condition with stop():
@@ -457,10 +458,14 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& wo
     // Track the starting index for rollback in case of error
     std::size_t start_index = workers_.size();
 
+    // Get diagnostics pointer once outside the loop for efficiency
+    auto* diag = &diagnostics();
+
     for (auto& worker : workers) {
         worker->set_job_queue(job_queue_);
         worker->set_context(context_);
         worker->set_metrics(metrics_);
+        worker->set_diagnostics(diag);
 
         // Add worker to vector first
         workers_.emplace_back(std::move(worker));
@@ -691,13 +696,18 @@ auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t {
 
     // Restart workers if requested and pool is running
     if (restart_failed && failed_count > 0 && is_running()) {
+        // Get diagnostics pointer for new workers
+        auto* diag = &diagnostics();
+
         // Create new workers to replace failed ones
         for (std::size_t i = 0; i < failed_count; ++i) {
             // Create worker with default settings and context
             auto worker = std::make_unique<thread_worker>(true, context_);
 
-            // Set job queue
+            // Set job queue and diagnostics
             worker->set_job_queue(job_queue_);
+            worker->set_metrics(metrics_);
+            worker->set_diagnostics(diag);
 
             // Start the new worker
             auto start_result = worker->start();
