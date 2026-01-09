@@ -32,11 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <algorithm>
 #include <atomic>
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <vector>
-#include <cstdint>
 
 namespace kcenon::thread::lockfree {
 
@@ -290,6 +291,76 @@ public:
             return item;
         }
         return std::nullopt;
+    }
+
+    /**
+     * @brief Steal multiple elements from the top of the deque (thief threads)
+     * @param max_count Maximum number of elements to steal
+     * @return Vector of stolen elements (may be empty or smaller than max_count)
+     *
+     * Time Complexity: O(max_count)
+     *
+     * This method attempts to steal up to max_count elements atomically.
+     * The batch steal uses a CAS loop to claim a range of elements from the top.
+     *
+     * Key behaviors:
+     * - Returns empty vector if deque is empty or contention prevents stealing
+     * - May return fewer elements than requested if deque has fewer elements
+     * - All returned elements are guaranteed to have been successfully claimed
+     * - Uses FIFO order (oldest elements first)
+     *
+     * Memory Ordering:
+     * - Uses seq_cst for top CAS to ensure proper synchronization
+     * - Uses acquire/release for reading bottom and array
+     *
+     * @note This method can be called concurrently by multiple thief threads.
+     *       Batch stealing is more efficient than repeated single steals when
+     *       multiple items need to be transferred.
+     */
+    [[nodiscard]] std::vector<T> steal_batch(std::size_t max_count) {
+        if (max_count == 0) {
+            return {};
+        }
+
+        std::int64_t t = top_.load(std::memory_order_acquire);
+        std::atomic_thread_fence(std::memory_order_seq_cst);
+        std::int64_t b = bottom_.load(std::memory_order_acquire);
+
+        if (t >= b) {
+            // Empty queue
+            return {};
+        }
+
+        // Calculate how many we can actually steal
+        std::int64_t available = b - t;
+        std::size_t to_steal = std::min(
+            max_count,
+            static_cast<std::size_t>(available)
+        );
+
+        // Try to atomically claim the range [t, t + to_steal)
+        std::int64_t new_top = t + static_cast<std::int64_t>(to_steal);
+
+        if (!top_.compare_exchange_strong(
+                t, new_top,
+                std::memory_order_seq_cst,
+                std::memory_order_relaxed)) {
+            // Lost race with another thief or owner
+            // Return empty and let caller retry if needed
+            return {};
+        }
+
+        // Successfully claimed the range - now read the elements
+        // The CAS already ensured we have exclusive access to [t, new_top)
+        circular_array<T>* a = array_.load(std::memory_order_consume);
+        std::vector<T> result;
+        result.reserve(to_steal);
+
+        for (std::int64_t i = t; i < new_top; ++i) {
+            result.push_back(a->get(i));
+        }
+
+        return result;
     }
 
     /**
