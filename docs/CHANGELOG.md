@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **core/CMakeLists.txt**: Added missing modules to submodule build configuration that caused
+  undefined reference linker errors when building thread_system as a submodule (e.g., in pacs_system):
+  - Metrics module: `enhanced_metrics`, `latency_histogram`, `sliding_window_counter`, `thread_pool_metrics`
+  - Resilience module: `circuit_breaker`, `failure_window`, `protected_job`
+  - Scaling module: `autoscaler`, `autoscaling_policy`, `scaling_metrics`
+  This resolves linker errors for `EnhancedThreadPoolMetrics`, `circuit_breaker`, `autoscaler`,
+  and `protected_job` classes.
+
 - **steal_backoff_strategy.h**: Fixed type mismatch in `apply_jitter()` method that caused
   compilation errors on Clang with libc++. The issue occurred because `std::int64_t` is
   defined as `long` while `std::chrono::microseconds::rep` is `long long` on some platforms.

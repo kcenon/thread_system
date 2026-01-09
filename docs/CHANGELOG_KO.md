@@ -8,6 +8,14 @@
 ## [Unreleased]
 
 ### 수정
+- **core/CMakeLists.txt**: thread_system을 서브모듈로 빌드할 때 (예: pacs_system에서) 발생하던
+  undefined reference 링커 오류를 일으키는 누락된 모듈을 서브모듈 빌드 설정에 추가:
+  - Metrics 모듈: `enhanced_metrics`, `latency_histogram`, `sliding_window_counter`, `thread_pool_metrics`
+  - Resilience 모듈: `circuit_breaker`, `failure_window`, `protected_job`
+  - Scaling 모듈: `autoscaler`, `autoscaling_policy`, `scaling_metrics`
+  이 수정으로 `EnhancedThreadPoolMetrics`, `circuit_breaker`, `autoscaler`, `protected_job` 클래스의
+  링커 오류가 해결됨.
+
 - **steal_backoff_strategy.h**: libc++와 함께 사용하는 Clang에서 컴파일 오류를 발생시키던
   `apply_jitter()` 메서드의 타입 불일치 문제 수정. 일부 플랫폼에서 `std::int64_t`가 `long`으로
   정의되고 `std::chrono::microseconds::rep`가 `long long`으로 정의되어 발생한 문제로,
