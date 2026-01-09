@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Export and Serialization** (#392)
+  - `to_json()` and `to_string()` methods for `job_info`, `thread_info`, `bottleneck_report`
+  - `to_prometheus()` method for Prometheus-compatible metrics export
+  - Helper methods for time conversion (wait_time_ms, execution_time_ms, busy_time_ms, idle_time_ms)
+
 - **Enhanced Cancellation Token** (#382)
   - `enhanced_cancellation_token` with timeout and deadline support
   - `cancellation_reason` struct for tracking why cancellation occurred

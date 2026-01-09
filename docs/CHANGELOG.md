@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #392**: Phase 1.3.7 - Export and Serialization for Diagnostics
+  - New serialization methods in `job_info` struct:
+    - `to_json()`: JSON output with job details, timing, and error info
+    - `to_string()`: Human-readable formatted output for logging/debugging
+    - `wait_time_ms()`: Convert wait time to milliseconds
+    - `execution_time_ms()`: Convert execution time to milliseconds
+  - New serialization methods in `thread_info` struct:
+    - `to_json()`: JSON output with worker details, statistics, and current job
+    - `to_string()`: Human-readable formatted output for logging/debugging
+    - `busy_time_ms()`: Convert busy time to milliseconds
+    - `idle_time_ms()`: Convert idle time to milliseconds
+  - New serialization methods in `bottleneck_report` struct:
+    - `to_json()`: JSON output with bottleneck type, metrics, and recommendations
+    - `to_string()`: Human-readable formatted output with severity and recommendations
+  - New Prometheus-compatible metrics export in `health_status` struct:
+    - `to_prometheus(pool_name)`: Prometheus exposition format output
+    - Health status gauge (1=healthy, 0.5=degraded, 0=unhealthy)
+    - Counter for uptime, jobs processed
+    - Gauges for success rate, latency, worker counts, queue metrics
+    - Component health metrics with labels
+  - New Prometheus export in `thread_pool_diagnostics` class:
+    - `to_prometheus()`: Exports all diagnostics in Prometheus format
+
 - **Issue #382**: Phase 3.2 - Enhanced Cancellation Token with Timeout and Deadline Support
   - New `cancellation_reason` struct in `<kcenon/thread/core/cancellation_reason.h>`:
     - Reason types: `none`, `user_requested`, `timeout`, `deadline`, `parent_cancelled`, `pool_shutdown`, `error`

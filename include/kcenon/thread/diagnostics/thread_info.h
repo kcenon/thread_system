@@ -36,7 +36,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <optional>
+#include <sstream>
 #include <string>
 #include <thread>
 
@@ -249,6 +251,129 @@ namespace kcenon::thread::diagnostics
 				utilization = static_cast<double>(total_busy_time.count()) /
 				              static_cast<double>(total_time.count());
 			}
+		}
+
+		/**
+		 * @brief Converts busy time to milliseconds.
+		 * @return Busy time in milliseconds.
+		 */
+		[[nodiscard]] auto busy_time_ms() const -> double
+		{
+			return std::chrono::duration<double, std::milli>(total_busy_time).count();
+		}
+
+		/**
+		 * @brief Converts idle time to milliseconds.
+		 * @return Idle time in milliseconds.
+		 */
+		[[nodiscard]] auto idle_time_ms() const -> double
+		{
+			return std::chrono::duration<double, std::milli>(total_idle_time).count();
+		}
+
+		/**
+		 * @brief Converts the thread info to a JSON string.
+		 * @return JSON representation of the thread info.
+		 *
+		 * Output format:
+		 * @code
+		 * {
+		 *   "worker_id": 0,
+		 *   "thread_name": "Worker-0",
+		 *   "thread_id": "12345",
+		 *   "state": "ACTIVE",
+		 *   "state_duration_ms": 2500.0,
+		 *   "jobs_completed": 1523,
+		 *   "jobs_failed": 2,
+		 *   "success_rate": 0.9987,
+		 *   "utilization": 0.873,
+		 *   "busy_time_ms": 87300.0,
+		 *   "idle_time_ms": 12700.0,
+		 *   "current_job": null
+		 * }
+		 * @endcode
+		 */
+		[[nodiscard]] auto to_json() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << "{\n";
+			oss << "  \"worker_id\": " << worker_id << ",\n";
+			oss << "  \"thread_name\": \"" << thread_name << "\",\n";
+
+			// Format thread_id as string
+			std::ostringstream tid_oss;
+			tid_oss << thread_id;
+			oss << "  \"thread_id\": \"" << tid_oss.str() << "\",\n";
+
+			oss << "  \"state\": \"" << worker_state_to_string(state) << "\",\n";
+			oss << std::fixed << std::setprecision(3);
+			oss << "  \"state_duration_ms\": "
+			    << std::chrono::duration<double, std::milli>(state_duration()).count() << ",\n";
+			oss << "  \"jobs_completed\": " << jobs_completed << ",\n";
+			oss << "  \"jobs_failed\": " << jobs_failed << ",\n";
+			oss << std::setprecision(4);
+			oss << "  \"success_rate\": " << success_rate() << ",\n";
+			oss << "  \"utilization\": " << utilization << ",\n";
+			oss << std::setprecision(3);
+			oss << "  \"busy_time_ms\": " << busy_time_ms() << ",\n";
+			oss << "  \"idle_time_ms\": " << idle_time_ms();
+
+			if (current_job.has_value())
+			{
+				oss << ",\n  \"current_job\": " << current_job.value().to_json();
+			}
+			else
+			{
+				oss << ",\n  \"current_job\": null";
+			}
+
+			oss << "\n}";
+			return oss.str();
+		}
+
+		/**
+		 * @brief Converts the thread info to a human-readable string.
+		 * @return String representation of the thread info.
+		 *
+		 * Output format:
+		 * ```
+		 * Worker-0 [tid:12345] ACTIVE (2.5s)
+		 *   Current Job: ProcessOrder#1234 (running 150ms)
+		 *   Jobs: 1523 completed, 2 failed (99.9% success)
+		 *   Utilization: 87.3%
+		 * ```
+		 */
+		[[nodiscard]] auto to_string() const -> std::string
+		{
+			std::ostringstream oss;
+
+			auto duration_sec = std::chrono::duration<double>(state_duration()).count();
+
+			// First line: name, thread id, state, duration
+			oss << thread_name << " [tid:" << thread_id << "] "
+			    << worker_state_to_string(state)
+			    << " (" << std::fixed << std::setprecision(1) << duration_sec << "s)\n";
+
+			// Current job if present
+			if (current_job.has_value())
+			{
+				const auto& job = current_job.value();
+				auto exec_time_ms_val = std::chrono::duration<double, std::milli>(
+				    job.execution_time).count();
+				oss << "  Current Job: " << job.job_name << "#" << job.job_id
+				    << " (running " << std::setprecision(0) << exec_time_ms_val << "ms)\n";
+			}
+
+			// Job statistics
+			oss << "  Jobs: " << jobs_completed << " completed, "
+			    << jobs_failed << " failed ("
+			    << std::setprecision(1) << (success_rate() * 100.0) << "% success)\n";
+
+			// Utilization
+			oss << "  Utilization: " << std::setprecision(1)
+			    << (utilization * 100.0) << "%";
+
+			return oss.str();
 		}
 	};
 

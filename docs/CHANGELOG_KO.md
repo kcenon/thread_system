@@ -8,6 +8,29 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #392**: Phase 1.3.7 - 진단 데이터 내보내기 및 직렬화
+  - `job_info` 구조체에 새로운 직렬화 메서드:
+    - `to_json()`: 작업 상세, 타이밍, 에러 정보를 포함한 JSON 출력
+    - `to_string()`: 로깅/디버깅을 위한 사람이 읽기 쉬운 형식 출력
+    - `wait_time_ms()`: 대기 시간을 밀리초로 변환
+    - `execution_time_ms()`: 실행 시간을 밀리초로 변환
+  - `thread_info` 구조체에 새로운 직렬화 메서드:
+    - `to_json()`: 워커 상세, 통계, 현재 작업을 포함한 JSON 출력
+    - `to_string()`: 로깅/디버깅을 위한 사람이 읽기 쉬운 형식 출력
+    - `busy_time_ms()`: 작업 시간을 밀리초로 변환
+    - `idle_time_ms()`: 유휴 시간을 밀리초로 변환
+  - `bottleneck_report` 구조체에 새로운 직렬화 메서드:
+    - `to_json()`: 병목 유형, 메트릭, 권장 사항을 포함한 JSON 출력
+    - `to_string()`: 심각도 및 권장 사항을 포함한 사람이 읽기 쉬운 형식 출력
+  - `health_status` 구조체에 새로운 Prometheus 호환 메트릭 내보내기:
+    - `to_prometheus(pool_name)`: Prometheus exposition 형식 출력
+    - 상태 게이지 (1=정상, 0.5=저하, 0=비정상)
+    - 업타임, 처리된 작업 수 카운터
+    - 성공률, 지연 시간, 워커 수, 큐 메트릭 게이지
+    - 라벨이 포함된 컴포넌트 상태 메트릭
+  - `thread_pool_diagnostics` 클래스에 새로운 Prometheus 내보내기:
+    - `to_prometheus()`: 모든 진단 데이터를 Prometheus 형식으로 내보내기
+
 - **이슈 #382**: Phase 3.2 - 타임아웃 및 데드라인 지원이 포함된 향상된 취소 토큰
   - `<kcenon/thread/core/cancellation_reason.h>`에 새로운 `cancellation_reason` 구조체:
     - 이유 타입: `none`, `user_requested`, `timeout`, `deadline`, `parent_cancelled`, `pool_shutdown`, `error`
