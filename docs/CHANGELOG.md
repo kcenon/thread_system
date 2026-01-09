@@ -8,6 +8,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #381**: Phase 3.1 - Job Dependency Graph (DAG Scheduler)
+  - New `dag_job` class in `<kcenon/thread/dag/dag_job.h>`:
+    - Extends base `job` class with dependency support
+    - Unique job ID generation via atomic counter
+    - State machine: `pending`, `ready`, `running`, `completed`, `failed`, `cancelled`, `skipped`
+    - Atomic state transitions with `try_transition_state()`
+    - Result storage for passing data between jobs via `std::any`
+    - Fallback function support for failure recovery
+    - Timing metrics (submit, start, end times)
+  - New `dag_job_builder` class for fluent job construction:
+    - Method chaining: `work()`, `depends_on()`, `on_failure()`, `with_result()`
+    - Single dependency and batch dependency support
+    - Builds `std::unique_ptr<dag_job>`
+  - New `dag_scheduler` class in `<kcenon/thread/dag/dag_scheduler.h>`:
+    - Thread pool integration for parallel execution
+    - Topological sort for execution ordering
+    - DFS-based cycle detection with three-color marking
+    - Dynamic dependency addition with cycle validation
+    - `execute_all()` and `execute(target_id)` async execution
+    - `wait()` for blocking on completion
+    - `cancel_all()` for cooperative cancellation
+  - New `dag_config` struct with configuration options:
+    - `dag_failure_policy`: `fail_fast`, `continue_others`, `retry`, `fallback`
+    - `max_retries` and `retry_delay` for retry policy
+    - `detect_cycles` toggle for performance
+    - `execute_in_parallel` toggle for sequential/parallel execution
+    - State change, completion, and error callbacks
+  - Visualization support:
+    - `to_dot()`: Export DAG as Graphviz DOT format with state coloring
+    - `to_json()`: Export DAG as JSON with jobs and statistics
+  - Statistics tracking via `dag_stats` struct:
+    - Job counts by state (total, completed, failed, pending, running, skipped, cancelled)
+    - Total execution time
+    - `all_succeeded()` helper method
+  - Comprehensive test suite (17 tests) covering all functionality
+
 - **Issue #378**: Circuit Breaker Pattern Implementation
   - New `circuit_breaker` class in `<kcenon/thread/resilience/circuit_breaker.h>`:
     - Three-state machine: `closed`, `open`, `half_open`
