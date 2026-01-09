@@ -8,6 +8,21 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #423**: Phase 3.3.1 - NUMA 토폴로지 감지 구현
+  - `<kcenon/thread/stealing/numa_topology.h>`에 새로운 `numa_topology` 클래스:
+    - 자동 NUMA 토폴로지 감지를 위한 정적 `detect()` 메서드
+    - `get_node_for_cpu(cpu_id)`: 특정 CPU의 NUMA 노드 조회
+    - `get_distance(node1, node2)`: 노드 간 거리 메트릭 조회
+    - `is_same_node(cpu1, cpu2)`: 두 CPU가 같은 노드에 있는지 확인
+    - `is_numa_available()`: 시스템에 여러 NUMA 노드가 있는지 확인
+    - `node_count()`, `cpu_count()`: 토폴로지 통계 조회
+    - `get_nodes()`, `get_cpus_for_node(node_id)`: 노드 상세 정보 조회
+  - node_id, cpu_ids, memory_size_bytes를 포함하는 `numa_node` 구조체
+  - 크로스 플랫폼 지원:
+    - Linux: /sys/devices/system/node를 통한 전체 NUMA 감지
+    - macOS/Windows: 단일 노드 토폴로지로 폴백
+  - 모든 공개 API를 커버하는 포괄적인 단위 테스트 (17개 테스트)
+
 - **이슈 #392**: Phase 1.3.7 - 진단 데이터 내보내기 및 직렬화
   - `job_info` 구조체에 새로운 직렬화 메서드:
     - `to_json()`: 작업 상세, 타이밍, 에러 정보를 포함한 JSON 출력
