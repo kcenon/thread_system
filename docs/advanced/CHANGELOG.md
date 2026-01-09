@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Event Tracing** (#391)
+  - `to_json()` and `to_string()` serialization methods for `job_execution_event`
+  - Event generation in worker threads (dequeued, started, completed, failed)
+  - `set_diagnostics()` method in `thread_worker` for event recording
+  - Automatic diagnostics propagation in `thread_pool`
+  - Comprehensive test suite (12 tests) for event tracing
+
 - **Bottleneck Detection** (#389)
   - Complete bottleneck detection analysis with queue saturation calculation
   - Utilization variance calculation for detecting uneven work distribution

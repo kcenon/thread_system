@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/lockfree/work_stealing_deque.h>
 #include <kcenon/thread/diagnostics/job_info.h>
+#include <kcenon/thread/diagnostics/execution_event.h>
 
 #include <memory>
 #include <optional>
@@ -51,6 +52,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <condition_variable>
 #include <functional>
+
+// Forward declarations
+namespace kcenon::thread::diagnostics
+{
+	class thread_pool_diagnostics;
+}
 
 namespace kcenon::thread
 {
@@ -117,6 +124,15 @@ namespace kcenon::thread
          * @brief Provide shared metrics storage for this worker.
          */
         void set_metrics(std::shared_ptr<metrics::ThreadPoolMetrics> metrics);
+
+		/**
+		 * @brief Set the diagnostics instance for event tracing.
+		 * @param diag Pointer to the diagnostics instance.
+		 *
+		 * When set, the worker will record execution events to the diagnostics
+		 * instance if tracing is enabled. If nullptr, no events are recorded.
+		 */
+		void set_diagnostics(diagnostics::thread_pool_diagnostics* diag);
 
 		/**
 		 * @brief Set the worker policy for this worker.
@@ -311,6 +327,14 @@ namespace kcenon::thread
          * @brief Shared metrics aggregator provided by the owning thread pool.
          */
         std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
+
+		/**
+		 * @brief Pointer to the diagnostics instance for event tracing.
+		 *
+		 * When set, the worker records execution events if tracing is enabled.
+		 * Raw pointer because the diagnostics outlives the worker.
+		 */
+		diagnostics::thread_pool_diagnostics* diagnostics_{nullptr};
 
 		/**
 		 * @brief Cancellation token for this worker.

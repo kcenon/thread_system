@@ -10,6 +10,13 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 ## [Unreleased]
 
 ### Added
+- **이벤트 트레이싱** (#391)
+  - `job_execution_event`의 `to_json()` 및 `to_string()` 직렬화 메서드
+  - 워커 스레드에서 이벤트 생성 (dequeued, started, completed, failed)
+  - 이벤트 기록을 위한 `thread_worker`의 `set_diagnostics()` 메서드
+  - `thread_pool`에서 자동 진단 전파
+  - 이벤트 트레이싱을 위한 포괄적인 테스트 (12개 테스트)
+
 - **병목 현상 탐지** (#389)
   - 큐 포화도 계산을 포함한 완전한 병목 현상 분석
   - 불균등 작업 분배 탐지를 위한 활용도 분산 계산

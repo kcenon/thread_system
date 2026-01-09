@@ -35,8 +35,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <cstdint>
 #include <functional>
+#include <iomanip>
 #include <memory>
 #include <optional>
+#include <sstream>
 #include <string>
 #include <thread>
 
@@ -252,6 +254,113 @@ namespace kcenon::thread::diagnostics
 		{
 			return type == event_type::failed ||
 			       type == event_type::cancelled;
+		}
+
+		/**
+		 * @brief Converts the event to a JSON string.
+		 * @return JSON representation of the event.
+		 *
+		 * Output format:
+		 * @code
+		 * {
+		 *   "event_id": 123,
+		 *   "job_id": 456,
+		 *   "job_name": "ProcessOrder",
+		 *   "type": "completed",
+		 *   "timestamp": "2025-01-08T10:30:00.123Z",
+		 *   "thread_id": "12345",
+		 *   "worker_id": 0,
+		 *   "wait_time_ms": 1.5,
+		 *   "execution_time_ms": 10.2,
+		 *   "error_code": null,
+		 *   "error_message": null
+		 * }
+		 * @endcode
+		 */
+		[[nodiscard]] auto to_json() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << "{\n";
+			oss << "  \"event_id\": " << event_id << ",\n";
+			oss << "  \"job_id\": " << job_id << ",\n";
+			oss << "  \"job_name\": \"" << job_name << "\",\n";
+			oss << "  \"type\": \"" << event_type_to_string(type) << "\",\n";
+			oss << "  \"timestamp\": \"" << format_timestamp() << "\",\n";
+
+			// Format thread_id as string
+			std::ostringstream tid_oss;
+			tid_oss << thread_id;
+			oss << "  \"thread_id\": \"" << tid_oss.str() << "\",\n";
+
+			oss << "  \"worker_id\": " << worker_id << ",\n";
+			oss << std::fixed << std::setprecision(3);
+			oss << "  \"wait_time_ms\": " << wait_time_ms() << ",\n";
+			oss << "  \"execution_time_ms\": " << execution_time_ms();
+
+			if (error_code.has_value())
+			{
+				oss << ",\n  \"error_code\": " << error_code.value();
+			}
+			else
+			{
+				oss << ",\n  \"error_code\": null";
+			}
+
+			if (error_message.has_value())
+			{
+				oss << ",\n  \"error_message\": \"" << error_message.value() << "\"";
+			}
+			else
+			{
+				oss << ",\n  \"error_message\": null";
+			}
+
+			oss << "\n}";
+			return oss.str();
+		}
+
+		/**
+		 * @brief Converts the event to a human-readable string.
+		 * @return String representation of the event.
+		 *
+		 * Output format:
+		 * ```
+		 * [2025-01-08T10:30:00.123Z] Event#123 job:ProcessOrder#456 type:completed
+		 *   worker:0 thread:12345 wait:1.500ms exec:10.200ms
+		 * ```
+		 */
+		[[nodiscard]] auto to_string() const -> std::string
+		{
+			std::ostringstream oss;
+
+			// First line: timestamp, event info, job info, type
+			oss << "[" << format_timestamp() << "] ";
+			oss << "Event#" << event_id << " ";
+			oss << "job:" << job_name << "#" << job_id << " ";
+			oss << "type:" << event_type_to_string(type) << "\n";
+
+			// Second line: worker, thread, timing
+			oss << "  worker:" << worker_id << " ";
+			oss << "thread:" << thread_id << " ";
+			oss << std::fixed << std::setprecision(3);
+			oss << "wait:" << wait_time_ms() << "ms ";
+			oss << "exec:" << execution_time_ms() << "ms";
+
+			// Error info if present
+			if (error_code.has_value() || error_message.has_value())
+			{
+				oss << "\n  error:";
+				if (error_code.has_value())
+				{
+					oss << " code=" << error_code.value();
+				}
+				if (error_message.has_value())
+				{
+					oss << " msg=\"" << error_message.value() << "\"";
+				}
+			}
+
+			return oss.str();
 		}
 	};
 
