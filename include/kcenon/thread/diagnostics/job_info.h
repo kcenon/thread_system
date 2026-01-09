@@ -34,7 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <optional>
+#include <sstream>
 #include <string>
 #include <thread>
 
@@ -215,6 +217,116 @@ namespace kcenon::thread::diagnostics
 		{
 			return status == job_status::pending ||
 			       status == job_status::running;
+		}
+
+		/**
+		 * @brief Converts wait_time to milliseconds.
+		 * @return Wait time in milliseconds.
+		 */
+		[[nodiscard]] auto wait_time_ms() const -> double
+		{
+			return std::chrono::duration<double, std::milli>(wait_time).count();
+		}
+
+		/**
+		 * @brief Converts execution_time to milliseconds.
+		 * @return Execution time in milliseconds.
+		 */
+		[[nodiscard]] auto execution_time_ms() const -> double
+		{
+			return std::chrono::duration<double, std::milli>(execution_time).count();
+		}
+
+		/**
+		 * @brief Converts the job info to a JSON string.
+		 * @return JSON representation of the job info.
+		 *
+		 * Output format:
+		 * @code
+		 * {
+		 *   "job_id": 123,
+		 *   "job_name": "ProcessOrder",
+		 *   "status": "running",
+		 *   "wait_time_ms": 1.5,
+		 *   "execution_time_ms": 10.2,
+		 *   "total_latency_ms": 11.7,
+		 *   "thread_id": "12345",
+		 *   "error_message": null
+		 * }
+		 * @endcode
+		 */
+		[[nodiscard]] auto to_json() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << "{\n";
+			oss << "  \"job_id\": " << job_id << ",\n";
+			oss << "  \"job_name\": \"" << job_name << "\",\n";
+			oss << "  \"status\": \"" << job_status_to_string(status) << "\",\n";
+			oss << std::fixed << std::setprecision(3);
+			oss << "  \"wait_time_ms\": " << wait_time_ms() << ",\n";
+			oss << "  \"execution_time_ms\": " << execution_time_ms() << ",\n";
+			oss << "  \"total_latency_ms\": "
+			    << std::chrono::duration<double, std::milli>(total_latency()).count() << ",\n";
+
+			// Format thread_id as string
+			std::ostringstream tid_oss;
+			tid_oss << executed_by;
+			oss << "  \"thread_id\": \"" << tid_oss.str() << "\"";
+
+			if (error_message.has_value())
+			{
+				oss << ",\n  \"error_message\": \"" << error_message.value() << "\"";
+			}
+			else
+			{
+				oss << ",\n  \"error_message\": null";
+			}
+
+			if (stack_trace.has_value())
+			{
+				oss << ",\n  \"stack_trace\": \"" << stack_trace.value() << "\"";
+			}
+
+			oss << "\n}";
+			return oss.str();
+		}
+
+		/**
+		 * @brief Converts the job info to a human-readable string.
+		 * @return String representation of the job info.
+		 *
+		 * Output format:
+		 * ```
+		 * Job#123 "ProcessOrder" [running]
+		 *   Wait: 1.500ms, Exec: 10.200ms, Total: 11.700ms
+		 *   Thread: 12345
+		 * ```
+		 */
+		[[nodiscard]] auto to_string() const -> std::string
+		{
+			std::ostringstream oss;
+
+			// First line: job id, name, status
+			oss << "Job#" << job_id << " \"" << job_name << "\" ["
+			    << job_status_to_string(status) << "]\n";
+
+			// Second line: timing info
+			oss << std::fixed << std::setprecision(3);
+			oss << "  Wait: " << wait_time_ms() << "ms, ";
+			oss << "Exec: " << execution_time_ms() << "ms, ";
+			oss << "Total: "
+			    << std::chrono::duration<double, std::milli>(total_latency()).count() << "ms\n";
+
+			// Third line: thread info
+			oss << "  Thread: " << executed_by;
+
+			// Error info if present
+			if (error_message.has_value())
+			{
+				oss << "\n  Error: " << error_message.value();
+			}
+
+			return oss.str();
 		}
 	};
 

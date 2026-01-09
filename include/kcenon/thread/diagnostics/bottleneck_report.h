@@ -33,6 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <cstddef>
+#include <iomanip>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -253,6 +255,146 @@ namespace kcenon::thread::diagnostics
 		[[nodiscard]] auto requires_immediate_action() const -> bool
 		{
 			return severity() >= 3;
+		}
+
+		/**
+		 * @brief Converts the bottleneck report to a JSON string.
+		 * @return JSON representation of the bottleneck report.
+		 *
+		 * Output format:
+		 * @code
+		 * {
+		 *   "has_bottleneck": true,
+		 *   "type": "slow_consumer",
+		 *   "severity": "medium",
+		 *   "description": "Workers cannot keep up with job submission rate",
+		 *   "metrics": {
+		 *     "queue_saturation": 0.75,
+		 *     "avg_wait_time_ms": 150.5,
+		 *     "worker_utilization": 0.92,
+		 *     "utilization_variance": 0.05,
+		 *     "estimated_backlog_time_ms": 5000,
+		 *     "queue_depth": 100,
+		 *     "idle_workers": 1,
+		 *     "total_workers": 8,
+		 *     "jobs_rejected": 0
+		 *   },
+		 *   "recommendations": [...]
+		 * }
+		 * @endcode
+		 */
+		[[nodiscard]] auto to_json() const -> std::string
+		{
+			std::ostringstream oss;
+			oss << "{\n";
+			oss << "  \"has_bottleneck\": " << (has_bottleneck ? "true" : "false") << ",\n";
+			oss << "  \"type\": \"" << bottleneck_type_to_string(type) << "\",\n";
+			oss << "  \"severity\": \"" << severity_string() << "\",\n";
+			oss << "  \"description\": \"" << description << "\",\n";
+
+			// Metrics
+			oss << "  \"metrics\": {\n";
+			oss << std::fixed << std::setprecision(4);
+			oss << "    \"queue_saturation\": " << queue_saturation << ",\n";
+			oss << std::setprecision(3);
+			oss << "    \"avg_wait_time_ms\": " << avg_wait_time_ms << ",\n";
+			oss << std::setprecision(4);
+			oss << "    \"worker_utilization\": " << worker_utilization << ",\n";
+			oss << "    \"utilization_variance\": " << utilization_variance << ",\n";
+			oss << "    \"estimated_backlog_time_ms\": " << estimated_backlog_time_ms << ",\n";
+			oss << "    \"queue_depth\": " << queue_depth << ",\n";
+			oss << "    \"idle_workers\": " << idle_workers << ",\n";
+			oss << "    \"total_workers\": " << total_workers << ",\n";
+			oss << "    \"jobs_rejected\": " << jobs_rejected << "\n";
+			oss << "  },\n";
+
+			// Recommendations
+			oss << "  \"recommendations\": [";
+			for (std::size_t i = 0; i < recommendations.size(); ++i)
+			{
+				oss << "\n    \"" << recommendations[i] << "\"";
+				if (i < recommendations.size() - 1)
+				{
+					oss << ",";
+				}
+			}
+			if (!recommendations.empty())
+			{
+				oss << "\n  ";
+			}
+			oss << "]\n";
+
+			oss << "}";
+			return oss.str();
+		}
+
+		/**
+		 * @brief Converts the bottleneck report to a human-readable string.
+		 * @return String representation of the bottleneck report.
+		 *
+		 * Output format:
+		 * ```
+		 * === Bottleneck Report ===
+		 * Status: DETECTED (medium severity)
+		 * Type: slow_consumer
+		 * Description: Workers cannot keep up with job submission rate
+		 *
+		 * Metrics:
+		 *   Queue: 100 items (75.0% saturated)
+		 *   Workers: 7/8 active (1 idle)
+		 *   Utilization: 92.0% (variance: 0.0500)
+		 *   Wait time: 150.500ms avg
+		 *   Backlog: ~5000ms to clear
+		 *
+		 * Recommendations:
+		 *   - Add more worker threads
+		 *   - Optimize job execution time
+		 * ```
+		 */
+		[[nodiscard]] auto to_string() const -> std::string
+		{
+			std::ostringstream oss;
+
+			oss << "=== Bottleneck Report ===\n";
+			if (has_bottleneck)
+			{
+				oss << "Status: DETECTED (" << severity_string() << " severity)\n";
+				oss << "Type: " << bottleneck_type_to_string(type) << "\n";
+				oss << "Description: " << description << "\n\n";
+			}
+			else
+			{
+				oss << "Status: No bottleneck detected\n\n";
+			}
+
+			// Metrics
+			oss << "Metrics:\n";
+			oss << std::fixed;
+			oss << "  Queue: " << queue_depth << " items ("
+			    << std::setprecision(1) << (queue_saturation * 100.0) << "% saturated)\n";
+			oss << "  Workers: " << (total_workers - idle_workers) << "/" << total_workers
+			    << " active (" << idle_workers << " idle)\n";
+			oss << "  Utilization: " << std::setprecision(1) << (worker_utilization * 100.0)
+			    << "% (variance: " << std::setprecision(4) << utilization_variance << ")\n";
+			oss << "  Wait time: " << std::setprecision(3) << avg_wait_time_ms << "ms avg\n";
+			oss << "  Backlog: ~" << estimated_backlog_time_ms << "ms to clear\n";
+
+			if (jobs_rejected > 0)
+			{
+				oss << "  Jobs rejected: " << jobs_rejected << "\n";
+			}
+
+			// Recommendations
+			if (!recommendations.empty())
+			{
+				oss << "\nRecommendations:\n";
+				for (const auto& rec : recommendations)
+				{
+					oss << "  - " << rec << "\n";
+				}
+			}
+
+			return oss.str();
 		}
 	};
 
