@@ -8,6 +8,29 @@
 ## [Unreleased]
 
 ### 추가
+- **이슈 #382**: Phase 3.2 - 타임아웃 및 데드라인 지원이 포함된 향상된 취소 토큰
+  - `<kcenon/thread/core/cancellation_reason.h>`에 새로운 `cancellation_reason` 구조체:
+    - 이유 타입: `none`, `user_requested`, `timeout`, `deadline`, `parent_cancelled`, `pool_shutdown`, `error`
+    - 사람이 읽을 수 있는 메시지와 취소 타임스탬프
+    - 오류로 인한 취소를 위한 옵션 예외 저장
+    - 디버깅을 위한 `to_string()` 및 `type_to_string()`
+  - `<kcenon/thread/core/cancellation_exception.h>`에 새로운 `operation_cancelled_exception` 클래스:
+    - 풍부한 cancellation_reason을 포함한 `std::exception` 상속
+    - 구조화된 예외 처리를 위한 `throw_if_cancelled()`에서 사용
+  - `<kcenon/thread/core/enhanced_cancellation_token.h>`에 새로운 `enhanced_cancellation_token` 클래스:
+    - `create_with_timeout()`을 통한 타임아웃 기반 자동 취소
+    - `create_with_deadline()`을 통한 데드라인 기반 자동 취소
+    - `create_linked()` 및 `create_linked_with_timeout()`을 통한 계층적 토큰 연결
+    - `get_reason()`을 통한 취소 이유 추적
+    - 해제를 위한 핸들이 포함된 콜백 등록
+    - 타임아웃 관리를 위한 `remaining_time()` 및 `extend_timeout()`
+    - 대기 메서드: `wait()`, `wait_for()`, `wait_until()`
+  - 새로운 헬퍼 클래스:
+    - `cancellation_callback_guard`: 자동 콜백 해제를 위한 RAII 가드
+    - `cancellation_scope`: 체크포인트가 있는 구조화된 취소
+    - `cancellation_context`: 스레드 로컬 취소 토큰 전파
+  - 향상된 취소 토큰 기능을 위한 종합 테스트 (29개 테스트)
+
 - **이슈 #391**: Phase 1.3.6 - 이벤트 트레이싱 구현
   - `job_execution_event` 구조체에 새로운 직렬화 메서드:
     - `to_json()`: 이벤트 상세, 타임스탬프, 에러 정보를 포함한 JSON 출력
