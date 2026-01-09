@@ -53,6 +53,20 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/steal_backoff_strategy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/work_affinity_tracker.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/work_stealing_stats.h
+    # Metrics module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/enhanced_metrics.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/latency_histogram.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/sliding_window_counter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/thread_pool_metrics.h
+    # Resilience module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/circuit_breaker.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/circuit_breaker_config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/failure_window.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/protected_job.h
+    # Scaling module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/autoscaler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/autoscaling_policy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/scaling_metrics.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -88,6 +102,16 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/numa_topology.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/numa_work_stealer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/work_affinity_tracker.cpp
+    # Metrics implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/enhanced_metrics.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/latency_histogram.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/sliding_window_counter.cpp
+    # Resilience implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/circuit_breaker.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/failure_window.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/protected_job.cpp
+    # Scaling implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/scaling/autoscaler.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
