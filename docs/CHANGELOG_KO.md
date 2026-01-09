@@ -22,6 +22,21 @@
   메서드 전체에서 일관된 `std::chrono::microseconds::rep` 타입을 사용하도록 변경.
 
 ### 추가
+- **이슈 #427**: Phase 3.3.5 - thread_pool에 향상된 작업 훔치기 통합
+  - NUMA 인식 작업 훔치기 통합을 위한 새로운 `thread_pool` 메서드:
+    - `set_work_stealing_config(config)`: 향상된 작업 훔치기 정책 설정
+    - `get_work_stealing_config()`: 현재 설정 조회
+    - `get_work_stealing_stats()`: 스틸링 통계 스냅샷 조회
+    - `get_numa_topology()`: 감지된 NUMA 토폴로지 정보 접근
+  - NUMA 인식 배치 스틸링을 위한 `numa_work_stealer` 통합
+  - 향상된 설정이 기본 워커 정책의 작업 훔치기를 오버라이드
+  - 포괄적인 단위 테스트 (16개 신규 테스트) 포함:
+    - 배치, 지역성, NUMA 최적화 프리셋을 사용한 설정 get/set
+    - NUMA 토폴로지 감지, 일관성, CPU 매핑
+    - 통계 초기화 및 계산된 메트릭
+    - 작업 실행 및 풀 종료 통합
+    - 에지 케이스: 워커 전 설정, 실행 중 재설정
+
 - **이슈 #426**: Phase 3.3.4 - NUMA 인식 작업 훔치기 및 향상된 정책 구현
   - `<kcenon/thread/stealing/enhanced_steal_policy.h>`에 새로운 `enhanced_steal_policy` 열거형:
     - `random`: 무작위 희생자 선택 (기본)
