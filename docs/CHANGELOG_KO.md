@@ -22,6 +22,18 @@
   메서드 전체에서 일관된 `std::chrono::microseconds::rep` 타입을 사용하도록 변경.
 
 ### 추가
+- **이슈 #383**: Phase 3.3 완료 - NUMA 인식 작업 훔치기 최적화
+  - `integration_tests/performance/work_stealing_benchmark.cpp`에 포괄적인 성능 벤치마크 스위트:
+    - 정책 비교 벤치마크 (random, round-robin, adaptive, NUMA-aware, hierarchical)
+    - 배치 크기 최적화 테스트 (1, 2, 4, 8, adaptive)
+    - 백오프 전략 비교 (fixed, linear, exponential, adaptive jitter)
+    - 불균형 워크로드 성능 테스트
+    - NUMA 토폴로지 감지 및 보고
+  - 벤치마크 결과:
+    - Adaptive 정책이 최대 47.9% 처리량 향상 제공
+    - Round-robin 정책은 기준 대비 41.0% 향상
+    - NUMA 인식 정책이 non-NUMA 시스템에서 우아하게 폴백
+
 - **이슈 #427**: Phase 3.3.5 - thread_pool에 향상된 작업 훔치기 통합
   - NUMA 인식 작업 훔치기 통합을 위한 새로운 `thread_pool` 메서드:
     - `set_work_stealing_config(config)`: 향상된 작업 훔치기 정책 설정
