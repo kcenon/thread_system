@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/stealing/numa_topology.h>
 
 #include <algorithm>
+#include <string>
 #include <thread>
 
 #ifdef __linux__
