@@ -45,6 +45,14 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/priority_aging_config.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job_queue.h
+    # Work-stealing module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/enhanced_steal_policy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/enhanced_work_stealing_config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/numa_topology.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/numa_work_stealer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/steal_backoff_strategy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/work_affinity_tracker.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/stealing/work_stealing_stats.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -76,6 +84,10 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job_queue.cpp
     # Diagnostics implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
+    # Work-stealing implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/numa_topology.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/numa_work_stealer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/stealing/work_affinity_tracker.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
