@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #423**: Phase 3.3.1 - Implement NUMA topology detection
+  - New `numa_topology` class in `<kcenon/thread/stealing/numa_topology.h>`:
+    - Static `detect()` method for automatic NUMA topology detection
+    - `get_node_for_cpu(cpu_id)`: Get NUMA node for a specific CPU
+    - `get_distance(node1, node2)`: Get inter-node distance metric
+    - `is_same_node(cpu1, cpu2)`: Check if two CPUs are on the same node
+    - `is_numa_available()`: Check if system has multiple NUMA nodes
+    - `node_count()`, `cpu_count()`: Get topology statistics
+    - `get_nodes()`, `get_cpus_for_node(node_id)`: Query node details
+  - New `numa_node` struct with node_id, cpu_ids, and memory_size_bytes
+  - Cross-platform support:
+    - Linux: Full NUMA detection via /sys/devices/system/node
+    - macOS/Windows: Fallback to single-node topology
+  - Comprehensive unit tests (17 tests) covering all public APIs
+
 - **Issue #409**: Phase 3.1.2 - Implement dag_job_builder
   - New `returns<T>()` method for specifying job result type
   - New `is_valid()` method to validate builder configuration before building
