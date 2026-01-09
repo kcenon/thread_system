@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #409**: Phase 3.1.2 - Implement dag_job_builder
+  - New `returns<T>()` method for specifying job result type
+  - New `is_valid()` method to validate builder configuration before building
+  - New `get_validation_error()` method to get validation error messages
+  - New `reset()` method for builder reusability
+  - Enhanced `build()` method:
+    - Now validates configuration and returns nullptr on invalid config
+    - Automatically resets builder after successful build for reuse
+  - Comprehensive test suite (8 tests) for dag_job_builder functionality
+
 - **Issue #393**: Phase 1.3.8 - Tests and Documentation for Diagnostics
   - Comprehensive unit test suite for diagnostics API (120 tests across 13 test suites):
     - `thread_info_test.cpp`: Tests for thread_info and job_info structures
