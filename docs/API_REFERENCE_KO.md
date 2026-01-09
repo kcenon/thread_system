@@ -556,6 +556,126 @@ common::Result<int> result = ...;
 
 ---
 
+## 작업 훔치기 덱 (Work-Stealing Deque)
+
+### 개요
+
+**헤더**: `#include <kcenon/thread/lockfree/work_stealing_deque.h>`
+
+`work_stealing_deque` 클래스는 Chase-Lev 알고리즘을 기반으로 한 락프리 작업 훔치기 덱을 구현합니다. 소유자 스레드를 위한 효율적인 로컬 연산과 다른 스레드를 위한 동시 훔치기 기능을 제공합니다.
+
+### 주요 기능
+
+- **소유자 측 push/pop**: 캐시 지역성을 위한 LIFO 순서
+- **도둑 측 steal**: 공정성을 위한 FIFO 순서
+- **배치 훔치기**: 여러 항목을 한 번에 효율적으로 훔침
+- **락프리 연산**: CAS 연산을 통한 적절한 메모리 순서
+- **동적 크기 조정**: 가득 찰 때 자동 확장
+
+### work_stealing_deque
+
+```cpp
+template<typename T>
+class work_stealing_deque {
+public:
+    // 생성
+    explicit work_stealing_deque(std::size_t log_initial_size = 5);
+
+    // 소유자 연산 (단일 스레드)
+    void push(T item);
+    [[nodiscard]] std::optional<T> pop();
+
+    // 도둑 연산 (멀티 스레드)
+    [[nodiscard]] std::optional<T> steal();
+    [[nodiscard]] std::vector<T> steal_batch(std::size_t max_count);
+
+    // 조회
+    [[nodiscard]] bool empty() const noexcept;
+    [[nodiscard]] std::size_t size() const noexcept;
+    [[nodiscard]] std::size_t capacity() const noexcept;
+
+    // 유지보수
+    void cleanup_old_arrays();
+};
+```
+
+### 스레드 안전성
+
+| 메서드 | 스레드 안전성 |
+|--------|--------------|
+| `push()` | 소유자 스레드만 |
+| `pop()` | 소유자 스레드만 |
+| `steal()` | 모든 도둑 스레드 (동시 안전) |
+| `steal_batch()` | 모든 도둑 스레드 (동시 안전) |
+| `empty()`, `size()` | 모든 스레드 (근사값) |
+
+### 사용 예제
+
+```cpp
+#include <kcenon/thread/lockfree/work_stealing_deque.h>
+#include <thread>
+#include <vector>
+
+using namespace kcenon::thread::lockfree;
+
+int main() {
+    work_stealing_deque<int*> deque;
+    std::vector<int> values(100);
+
+    // 소유자가 작업을 푸시
+    for (int i = 0; i < 100; ++i) {
+        values[i] = i;
+        deque.push(&values[i]);
+    }
+
+    // 도둑들이 배치로 작업을 훔침
+    std::vector<std::thread> thieves;
+    for (int t = 0; t < 4; ++t) {
+        thieves.emplace_back([&]() {
+            while (!deque.empty()) {
+                // 한 번에 최대 4개 항목을 배치로 훔침
+                auto batch = deque.steal_batch(4);
+                for (auto* item : batch) {
+                    // 훔친 항목 처리
+                }
+            }
+        });
+    }
+
+    // 소유자도 로컬로 팝 가능 (LIFO)
+    while (auto item = deque.pop()) {
+        // 로컬 항목 처리
+    }
+
+    for (auto& t : thieves) {
+        t.join();
+    }
+
+    return 0;
+}
+```
+
+### 배치 훔치기
+
+`steal_batch()` 메서드는 여러 항목을 효율적으로 훔칠 수 있습니다:
+
+```cpp
+// 최대 4개 항목을 원자적으로 훔침
+auto batch = deque.steal_batch(4);
+
+// 반환값:
+// - 덱이 비어있거나 경합 시 빈 벡터
+// - FIFO 순서로 최대 max_count개 항목
+// - 요청보다 적은 항목을 반환할 수 있음
+```
+
+**배치 훔치기의 장점**:
+- 경합 오버헤드 감소 (여러 CAS 대신 한 번의 CAS)
+- 작업 전송을 위한 더 나은 캐시 효율성
+- 높은 경합 상황에서 향상된 처리량
+
+---
+
 ## NUMA 토폴로지
 
 ### 개요

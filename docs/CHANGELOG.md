@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #424**: Phase 3.3.2 - Implement enhanced work-stealing deque with batch stealing
+  - New `steal_batch(std::size_t max_count)` method in `work_stealing_deque`:
+    - Atomically steals up to `max_count` elements from the deque
+    - Returns vector of stolen elements in FIFO order
+    - Uses CAS operation for thread-safe batch claiming
+    - Returns empty vector on contention (let caller retry)
+    - No performance regression for single-item operations
+  - Comprehensive unit tests (13 batch-specific tests) covering:
+    - Basic batch stealing (empty, zero count, partial, exact, full)
+    - Interaction with single steal and pop operations
+    - Concurrent batch stealing from multiple thieves
+    - Stress tests with mixed batch sizes
+    - FIFO order verification for batch operations
+
 - **Issue #423**: Phase 3.3.1 - Implement NUMA topology detection
   - New `numa_topology` class in `<kcenon/thread/stealing/numa_topology.h>`:
     - Static `detect()` method for automatic NUMA topology detection
