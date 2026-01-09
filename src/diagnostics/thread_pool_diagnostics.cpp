@@ -197,11 +197,58 @@ namespace kcenon::thread::diagnostics
 		report.idle_workers = idle_count;
 		report.total_workers = worker_count;
 
-		// Calculate worker utilization
+		// Calculate queue saturation
+		auto queue = pool_.get_job_queue();
+		if (queue)
+		{
+			auto max_size = queue->get_max_size();
+			if (max_size.has_value() && max_size.value() > 0)
+			{
+				report.queue_saturation = static_cast<double>(queue_depth) /
+				                          static_cast<double>(max_size.value());
+			}
+			else if (queue_depth > 0)
+			{
+				// For unbounded queues, use heuristic: saturation based on queue depth vs workers
+				// High queue depth relative to workers indicates potential saturation
+				report.queue_saturation = std::min(1.0,
+					static_cast<double>(queue_depth) / static_cast<double>(worker_count * 10));
+			}
+		}
+
+		// Calculate worker utilization (instantaneous)
 		if (worker_count > 0)
 		{
 			report.worker_utilization = static_cast<double>(active_count) /
 			                            static_cast<double>(worker_count);
+		}
+
+		// Get per-worker utilization for variance calculation
+		auto thread_states = pool_.collect_worker_diagnostics();
+		if (!thread_states.empty())
+		{
+			// Calculate mean utilization from worker stats
+			double sum_utilization = 0.0;
+			for (const auto& t : thread_states)
+			{
+				sum_utilization += t.utilization;
+			}
+			double mean_utilization = sum_utilization / static_cast<double>(thread_states.size());
+
+			// Calculate variance
+			double variance_sum = 0.0;
+			for (const auto& t : thread_states)
+			{
+				double diff = t.utilization - mean_utilization;
+				variance_sum += diff * diff;
+			}
+			report.utilization_variance = variance_sum / static_cast<double>(thread_states.size());
+
+			// Use mean utilization from actual worker stats if available
+			if (mean_utilization > 0.0)
+			{
+				report.worker_utilization = mean_utilization;
+			}
 		}
 
 		// Calculate average wait time from metrics
@@ -211,18 +258,50 @@ namespace kcenon::thread::diagnostics
 			// Estimate wait time from idle time (approximation)
 			auto avg_idle_ns = metrics_snap.total_idle_time_ns / total_jobs;
 			report.avg_wait_time_ms = static_cast<double>(avg_idle_ns) / 1e6;
+
+			// Calculate estimated backlog time
+			// Average execution time per job
+			double avg_exec_time_ms = 0.0;
+			if (metrics_snap.total_busy_time_ns > 0 && total_jobs > 0)
+			{
+				avg_exec_time_ms = static_cast<double>(metrics_snap.total_busy_time_ns) /
+				                   static_cast<double>(total_jobs) / 1e6;
+			}
+
+			// Estimated time to clear backlog = (queue_depth * avg_exec_time) / active_workers
+			if (active_count > 0 && avg_exec_time_ms > 0)
+			{
+				report.estimated_backlog_time_ms = static_cast<std::size_t>(
+					(static_cast<double>(queue_depth) * avg_exec_time_ms) /
+					static_cast<double>(active_count));
+			}
+			else if (worker_count > 0 && avg_exec_time_ms > 0)
+			{
+				report.estimated_backlog_time_ms = static_cast<std::size_t>(
+					(static_cast<double>(queue_depth) * avg_exec_time_ms) /
+					static_cast<double>(worker_count));
+			}
 		}
 
 		// Jobs rejected tracking not available in basic metrics
 		report.jobs_rejected = 0;
 
-		// Detect bottleneck type
-		if (report.jobs_rejected > 0 || report.queue_saturation > 0.95)
+		// Detect bottleneck type (ordered by severity)
+		// 1. Queue full - most critical
+		if (report.queue_saturation > 0.95 || report.jobs_rejected > 0)
 		{
 			report.has_bottleneck = true;
 			report.type = bottleneck_type::queue_full;
 			report.description = "Queue is at or near capacity, jobs are being rejected";
 		}
+		// 2. Worker starvation - high utilization with growing backlog
+		else if (report.worker_utilization > 0.95 && queue_depth > worker_count * 2)
+		{
+			report.has_bottleneck = true;
+			report.type = bottleneck_type::worker_starvation;
+			report.description = "Not enough workers to handle the workload";
+		}
+		// 3. Slow consumer - high wait time with high utilization
 		else if (report.avg_wait_time_ms > config_.wait_time_threshold_ms &&
 		         report.worker_utilization > config_.utilization_high_threshold)
 		{
@@ -230,11 +309,34 @@ namespace kcenon::thread::diagnostics
 			report.type = bottleneck_type::slow_consumer;
 			report.description = "Workers cannot keep up with job submission rate";
 		}
-		else if (report.worker_utilization > 0.95 && queue_depth > worker_count * 2)
+		// 4. Uneven distribution - high variance in worker utilization
+		else if (report.utilization_variance > 0.1 && worker_count > 1)
+		{
+			// Variance > 0.1 means standard deviation > ~0.32 which is significant
+			report.has_bottleneck = true;
+			report.type = bottleneck_type::uneven_distribution;
+			report.description = "Work is not evenly distributed across workers";
+		}
+		// 5. Lock contention - high wait time but low utilization (workers waiting on locks)
+		else if (report.avg_wait_time_ms > config_.wait_time_threshold_ms * 2 &&
+		         report.worker_utilization < 0.5 && active_count > 0)
 		{
 			report.has_bottleneck = true;
-			report.type = bottleneck_type::worker_starvation;
-			report.description = "Not enough workers to handle the workload";
+			report.type = bottleneck_type::lock_contention;
+			report.description = "High wait times with low utilization suggests lock contention";
+		}
+		// 6. Memory pressure - check queue memory usage
+		else if (queue)
+		{
+			auto mem_stats = queue->get_memory_stats();
+			// Consider memory pressure if queue uses more than 100MB
+			constexpr std::size_t memory_threshold = 100 * 1024 * 1024;
+			if (mem_stats.queue_size_bytes > memory_threshold)
+			{
+				report.has_bottleneck = true;
+				report.type = bottleneck_type::memory_pressure;
+				report.description = "Excessive memory usage in job queue";
+			}
 		}
 
 		// Generate recommendations if bottleneck detected
@@ -265,13 +367,30 @@ namespace kcenon::thread::diagnostics
 			case bottleneck_type::worker_starvation:
 				report.recommendations.push_back("Increase worker thread count");
 				report.recommendations.push_back("Consider scaling based on hardware cores");
+				report.recommendations.push_back("Enable autoscaling for dynamic adjustment");
 				break;
 
 			case bottleneck_type::uneven_distribution:
 				report.recommendations.push_back("Enable work stealing if not already");
 				report.recommendations.push_back("Review job distribution patterns");
+				report.recommendations.push_back("Consider using priority-based scheduling");
 				break;
 
+			case bottleneck_type::lock_contention:
+				report.recommendations.push_back("Review shared resource access patterns");
+				report.recommendations.push_back("Consider using lock-free data structures");
+				report.recommendations.push_back("Reduce critical section scope");
+				report.recommendations.push_back("Use finer-grained locking strategies");
+				break;
+
+			case bottleneck_type::memory_pressure:
+				report.recommendations.push_back("Reduce queue capacity or enable backpressure");
+				report.recommendations.push_back("Optimize job object size");
+				report.recommendations.push_back("Add more workers to process jobs faster");
+				report.recommendations.push_back("Consider job prioritization to clear backlog");
+				break;
+
+			case bottleneck_type::none:
 			default:
 				break;
 		}
