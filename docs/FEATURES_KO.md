@@ -92,36 +92,31 @@ public:
 
 ---
 
-### 2. 경계 Job 큐
+### 2. 경계 크기 제한 Job 큐
 
-백프레셔 지원과 용량 제한이 있는 고품질 큐입니다.
+`max_size` 파라미터를 통한 선택적 용량 제한이 있는 스레드 안전 큐입니다.
 
 ```cpp
-class bounded_job_queue {
+class job_queue {
 public:
-    bounded_job_queue(size_t max_size);
+    // 무제한 큐 생성 (기본값)
+    job_queue();
 
-    auto enqueue(std::unique_ptr<job>&& job,
-                 std::optional<std::chrono::milliseconds> timeout = std::nullopt)
-        -> result_void;
-    auto dequeue() -> result<std::unique_ptr<job>>;
-    auto get_metrics() const -> queue_metrics;
-};
+    // 최대 용량이 있는 경계 큐 생성
+    explicit job_queue(std::optional<std::size_t> max_size);
 
-struct queue_metrics {
-    size_t total_enqueued;
-    size_t total_dequeued;
-    size_t total_rejected;
-    size_t timeout_count;
-    size_t peak_size;
-    size_t current_size;
+    auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
+    auto dequeue() -> common::Result<std::unique_ptr<job>>;
+    auto is_bounded() const -> bool;
+    auto get_max_size() const -> std::optional<std::size_t>;
+    auto is_full() const -> bool;
 };
 ```
 
 **기능**:
-- 최대 큐 크기 강제
-- 용량 근처에서 백프레셔 시그널링
-- enqueue 작업에 대한 타임아웃 지원
+- 선택적 최대 큐 크기 강제
+- `backpressure_job_queue`를 통한 백프레셔 지원
+- 뮤텍스 보호를 통한 스레드 안전 작업
 - 포괄적인 메트릭 추적
 - 메모리 고갈 방지
 
