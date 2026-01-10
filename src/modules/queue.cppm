@@ -36,7 +36,6 @@ module;
 
 // Include existing headers in the global module fragment
 #include <kcenon/thread/core/job_queue.h>
-#include <kcenon/thread/core/bounded_job_queue.h>
 #include <kcenon/thread/queue/adaptive_job_queue.h>
 #include <kcenon/thread/queue/queue_factory.h>
 #include <kcenon/thread/lockfree/lockfree_queue.h>

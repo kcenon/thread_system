@@ -112,7 +112,12 @@ class typed_thread_pool_builder;
 // ============================================================================
 
 class adaptive_job_queue;
-class bounded_job_queue;
+
+/// @deprecated Use job_queue with max_size parameter instead. bounded_job_queue has been removed.
+/// Migration: std::make_shared<bounded_job_queue>(1000) → std::make_shared<job_queue>(1000)
+using bounded_job_queue [[deprecated(
+    "bounded_job_queue has been removed. "
+    "Use job_queue with max_size parameter instead.")]] = job_queue;
 
 // ============================================================================
 // Internal implementation types (detail namespace)
