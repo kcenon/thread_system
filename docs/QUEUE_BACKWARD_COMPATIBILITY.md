@@ -18,7 +18,7 @@
 | `job_queue` gains optional `max_size` parameter | None - backward compatible |
 | `lockfree_job_queue` moved to `detail::` namespace | **Migration required** if used directly |
 | `concurrent_queue` moved to `detail::` namespace | **Migration required** if used directly |
-| `bounded_job_queue` deprecated | Migrate to `job_queue(max_size)` |
+| `bounded_job_queue` **removed** | Use `job_queue(max_size)` instead |
 | `typed_*` variants deprecated | Migrate to `adaptive_job_queue` |
 | New `queue_capabilities` struct | None - new type |
 | New `queue_capabilities_interface` | None - optional mixin |

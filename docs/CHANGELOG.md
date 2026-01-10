@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Issue #434**: Phase 1.0 - Queue Variants Consolidation
+  - Removed `bounded_job_queue` class (functionality merged into `job_queue` with `max_size` parameter)
+  - Migration: `std::make_shared<bounded_job_queue>(1000)` → `std::make_shared<job_queue>(1000)`
+  - Added deprecated type alias in `forward.h` for transition support
+
 ### Fixed
 - **core/CMakeLists.txt**: Added missing modules to submodule build configuration that caused
   undefined reference linker errors when building thread_system as a submodule (e.g., in pacs_system):

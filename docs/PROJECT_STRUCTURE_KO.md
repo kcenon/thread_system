@@ -62,7 +62,7 @@ thread_system/
 │   │   ├── job.h                   # 작업 인터페이스
 │   │   ├── callback_job.h          # 함수 기반 작업
 │   │   ├── job_queue.h             # 스레드 안전 큐
-│   │   ├── bounded_job_queue.h     # 백프레셔 지원 큐
+│   │   ├── backpressure_job_queue.h # 백프레셔 지원 큐
 │   │   ├── lockfree_job_queue.h    # 락프리 MPMC 큐
 │   │   ├── adaptive_job_queue.h    # 적응형 듀얼 모드 큐
 │   │   ├── hazard_pointer.h        # 메모리 회수
@@ -89,7 +89,7 @@ thread_system/
 │   │   ├── job.cpp
 │   │   ├── callback_job.cpp
 │   │   ├── job_queue.cpp
-│   │   ├── bounded_job_queue.cpp
+│   │   ├── backpressure_job_queue.cpp
 │   │   ├── lockfree_job_queue.cpp
 │   │   ├── adaptive_job_queue.cpp
 │   │   ├── hazard_pointer.cpp
@@ -283,7 +283,7 @@ thread_system/
 | job.cpp | 작업 인터페이스 구현 | ~50 | 낮음 |
 | callback_job.cpp | 콜백 작업 구현 | ~80 | 낮음 |
 | job_queue.cpp | 뮤텍스 큐 구현 | ~150 | 중간 |
-| bounded_job_queue.cpp | 바운드 큐 구현 | ~250 | 중간 |
+| backpressure_job_queue.cpp | 백프레셔 큐 구현 | ~350 | 중간 |
 | lockfree_job_queue.cpp | 락프리 큐 구현 | ~400 | 높음 |
 | adaptive_job_queue.cpp | 적응형 큐 구현 | ~300 | 높음 |
 | hazard_pointer.cpp | 메모리 회수 구현 | ~350 | 높음 |
