@@ -62,7 +62,7 @@ thread_system/
 │   │   ├── job.h                   # Job interface
 │   │   ├── callback_job.h          # Function-based jobs
 │   │   ├── job_queue.h             # Thread-safe queue
-│   │   ├── bounded_job_queue.h     # Queue with backpressure
+│   │   ├── backpressure_job_queue.h # Queue with backpressure
 │   │   ├── hazard_pointer.h        # Memory reclamation
 │   │   ├── node_pool.h             # Memory pool
 │   │   ├── service_registry.h      # Dependency injection
@@ -91,7 +91,7 @@ thread_system/
 │   │   ├── job.cpp                 # Job implementation
 │   │   ├── callback_job.cpp        # Callback job implementation
 │   │   ├── job_queue.cpp           # Queue implementation
-│   │   ├── bounded_job_queue.cpp   # Bounded queue impl
+│   │   ├── backpressure_job_queue.cpp # Backpressure queue impl
 │   │   ├── hazard_pointer.cpp      # Hazard pointer impl
 │   │   ├── node_pool.cpp           # Memory pool impl
 │   │   └── cancellation_token.cpp  # Cancellation impl
@@ -283,17 +283,19 @@ thread_system/
 
 ---
 
-#### bounded_job_queue.h
+#### backpressure_job_queue.h
 
-**Purpose**: Well-tested queue with backpressure
+**Purpose**: Queue with comprehensive backpressure mechanisms
 
 **Key Components**:
-- `bounded_job_queue` class: Capacity-limited queue
-- Timeout support
-- Comprehensive metrics
-- Backpressure signaling
+- `backpressure_job_queue` class: Capacity-limited queue with pressure handling
+- Multiple backpressure policies (block, drop_oldest, drop_newest, callback, adaptive)
+- Rate limiting with token bucket
+- Watermark-based pressure detection
 
 **Use Cases**: Production systems, resource-constrained environments
+
+> **Note**: For simple capacity limits, use `job_queue` with `max_size` parameter instead.
 
 ---
 
@@ -514,7 +516,7 @@ thread_system/
 | job.cpp | Job interface implementation | ~50 | Low |
 | callback_job.cpp | Callback job implementation | ~80 | Low |
 | job_queue.cpp | Mutex queue implementation | ~150 | Medium |
-| bounded_job_queue.cpp | Bounded queue implementation | ~250 | Medium |
+| backpressure_job_queue.cpp | Backpressure queue implementation | ~350 | Medium |
 | lockfree_job_queue.cpp | Lock-free queue implementation | ~400 | High |
 | adaptive_job_queue.cpp | Adaptive queue implementation | ~300 | High |
 | hazard_pointer.cpp | Memory reclamation implementation | ~350 | High |

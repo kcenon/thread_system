@@ -520,7 +520,7 @@ worker->set_batch_processing(true, 32);  // Process 32 jobs at once
 
 4. **Ignoring Queue Depth**
    - Problem: Unbounded memory growth
-   - Solution: Use bounded_job_queue with backpressure
+   - Solution: Use `job_queue` with `max_size` or `backpressure_job_queue` for rate limiting
 
 ---
 

@@ -92,36 +92,31 @@ public:
 
 ---
 
-### 2. Bounded Job Queue
+### 2. Job Queue with Bounded Size
 
-Well-tested queue with backpressure support and capacity limits.
+Thread-safe queue with optional capacity limits via `max_size` parameter.
 
 ```cpp
-class bounded_job_queue {
+class job_queue {
 public:
-    bounded_job_queue(size_t max_size);
+    // Create unbounded queue (default)
+    job_queue();
 
-    auto enqueue(std::unique_ptr<job>&& job,
-                 std::optional<std::chrono::milliseconds> timeout = std::nullopt)
-        -> result_void;
-    auto dequeue() -> result<std::unique_ptr<job>>;
-    auto get_metrics() const -> queue_metrics;
-};
+    // Create bounded queue with max capacity
+    explicit job_queue(std::optional<std::size_t> max_size);
 
-struct queue_metrics {
-    size_t total_enqueued;
-    size_t total_dequeued;
-    size_t total_rejected;
-    size_t timeout_count;
-    size_t peak_size;
-    size_t current_size;
+    auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
+    auto dequeue() -> common::Result<std::unique_ptr<job>>;
+    auto is_bounded() const -> bool;
+    auto get_max_size() const -> std::optional<std::size_t>;
+    auto is_full() const -> bool;
 };
 ```
 
 **Features**:
-- Maximum queue size enforcement
-- Backpressure signaling when near capacity
-- Timeout support for enqueue operations
+- Optional maximum queue size enforcement
+- Backpressure support via `backpressure_job_queue`
+- Thread-safe operations with mutex protection
 - Comprehensive metrics tracking
 - Memory exhaustion prevention
 

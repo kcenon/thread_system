@@ -6,7 +6,6 @@ project(thread_base)
 
 # Explicit header file list (do not use GLOB - CMake won't detect new files automatically)
 set(CORE_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/bounded_job_queue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/callback_job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellable_job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellation_token.h

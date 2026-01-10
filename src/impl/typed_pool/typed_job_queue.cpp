@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/impl/typed_pool/typed_job_queue.h>
-#include <kcenon/thread/core/bounded_job_queue.h>
+#include <kcenon/thread/core/job_queue.h>
 #include <sstream>
 
 namespace kcenon::thread
@@ -57,8 +57,8 @@ namespace kcenon::thread
 			return it->second.get();
 		}
 
-		// Create a new bounded queue for this priority level
-		auto new_queue = std::make_unique<bounded_job_queue>(10000); // Default capacity
+		// Create a new queue for this priority level (with max size)
+		auto new_queue = std::make_unique<job_queue>(std::make_optional<std::size_t>(10000)); // Default capacity
 		auto* queue_ptr = new_queue.get();
 		job_queues_[type] = std::move(new_queue);
 		return queue_ptr;
