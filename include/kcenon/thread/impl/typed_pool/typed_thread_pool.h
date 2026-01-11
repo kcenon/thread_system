@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/interfaces/thread_context.h>
-#include "typed_job_queue.h"
 #include "typed_thread_worker.h"
 #include "aging_typed_job_queue.h"
 #include "priority_aging_config.h"
@@ -76,7 +75,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * - typed_thread_pool_t: A templated thread pool class supporting prioritized job scheduling
  * - typed_thread_worker_t: A worker thread that retrieves jobs based on priority
  * - typed_job_t: A job with an associated priority level
- * - typed_job_queue_t: A thread-safe job queue that orders jobs by priority
+ * - aging_typed_job_queue_t: A thread-safe job queue that orders jobs by priority with aging support
  * - job_types: Default enumeration of priority levels
  *
  * This implementation allows for:
@@ -214,8 +213,8 @@ namespace kcenon::thread
 		/**
 		 * @brief Retrieves the underlying priority job queue managed by this thread pool.
 		 *
-		 * @return std::shared_ptr<typed_job_queue_t<job_type>>
-		 * A shared pointer to the thread-safe priority job queue.
+		 * @return std::shared_ptr<aging_typed_job_queue_t<job_type>>
+		 * A shared pointer to the thread-safe priority job queue with aging support.
 		 *
 		 * ### Thread Safety
 		 * This queue is shared and used by worker threads, so care should be taken
@@ -223,7 +222,7 @@ namespace kcenon::thread
 		 * to enqueue new jobs via enqueue(), rather than directly accessing the queue.
 		 */
 		[[nodiscard]] auto get_job_queue(void)
-			-> std::shared_ptr<typed_job_queue_t<job_type>>;
+			-> std::shared_ptr<aging_typed_job_queue_t<job_type>>;
 
 		// Job execution methods
 		auto execute(std::unique_ptr<job>&& work) -> common::VoidResult;
@@ -408,7 +407,7 @@ namespace kcenon::thread
 		 *
 		 * @param job_queue A shared pointer to the job queue to use.
 		 */
-		auto set_job_queue(std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void;
+		auto set_job_queue(std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue) -> void;
 
 		/**
 		 * @brief Gets the thread context for this pool.
@@ -477,16 +476,13 @@ namespace kcenon::thread
 		std::atomic<bool> start_pool_;
 
 		/** @brief The shared priority job queue from which workers fetch jobs. */
-		std::shared_ptr<typed_job_queue_t<job_type>> job_queue_;
+		std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue_;
 
 		/** @brief The collection of worker threads responsible for processing jobs. */
 		std::vector<std::unique_ptr<typed_thread_worker_t<job_type>>> workers_;
 
 		/** @brief The thread context providing optional services. */
 		thread_context context_;
-
-		/** @brief The aging job queue for priority aging support. */
-		std::shared_ptr<aging_typed_job_queue_t<job_type>> aging_job_queue_;
 
 		/** @brief Flag indicating whether priority aging is enabled. */
 		bool priority_aging_enabled_{false};

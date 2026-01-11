@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/impl/typed_pool/typed_thread_worker.h>
-#include <kcenon/thread/impl/typed_pool/typed_job_queue.h>
 
 namespace kcenon::thread
 {
@@ -54,17 +53,10 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_thread_worker_t<job_type>::set_job_queue(
-		std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void
-	{
-		job_queue_ = std::move(job_queue);
-	}
-
-	template <typename job_type>
 	auto typed_thread_worker_t<job_type>::set_aging_job_queue(
 		std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue) -> void
 	{
-		aging_job_queue_ = std::move(job_queue);
+		job_queue_ = std::move(job_queue);
 	}
 
 	template <typename job_type>
@@ -88,12 +80,6 @@ namespace kcenon::thread
 	template <typename job_type>
 	auto typed_thread_worker_t<job_type>::should_continue_work() const -> bool
 	{
-		// Check aging queue first if available
-		if (aging_job_queue_)
-		{
-			return !aging_job_queue_->empty(types_);
-		}
-
 		if (!job_queue_)
 		{
 			return false;
@@ -105,24 +91,6 @@ namespace kcenon::thread
 	template <typename job_type>
 	auto typed_thread_worker_t<job_type>::do_work() -> common::VoidResult
 	{
-		// Use aging queue if available
-		if (aging_job_queue_)
-		{
-			auto job_result = aging_job_queue_->dequeue(types_);
-			if (job_result.is_err())
-			{
-				return common::ok(); // No job available or error occurred
-			}
-
-			auto job = std::move(job_result.value());
-			if (!job)
-			{
-				return common::ok(); // No job to process
-			}
-
-			return job->do_work();
-		}
-
 		if (!job_queue_)
 		{
 			return common::ok(); // No queue available

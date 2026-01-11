@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/impl/typed_pool/typed_job.h>
-#include <kcenon/thread/impl/typed_pool/typed_job_queue.h>
 
 namespace kcenon::thread
 {
@@ -45,24 +44,6 @@ namespace kcenon::thread
 	template <typename job_type>
 	typed_job_t<job_type>::~typed_job_t()
 	{
-	}
-
-	template <typename job_type>
-	auto typed_job_t<job_type>::set_job_queue(const std::shared_ptr<job_queue>& queue) -> void
-	{
-		job::set_job_queue(queue);
-		auto typed_queue = std::dynamic_pointer_cast<typed_job_queue_t<job_type>>(queue);
-		if (typed_queue)
-		{
-			job_queue_ = typed_queue;
-		}
-	}
-
-	template <typename job_type>
-	auto typed_job_t<job_type>::get_job_queue() const -> std::shared_ptr<job_queue>
-	{
-		auto typed_queue = job_queue_.lock();
-		return std::static_pointer_cast<job_queue>(typed_queue);
 	}
 
 	// Explicit template instantiation for job_types
