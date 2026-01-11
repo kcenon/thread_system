@@ -763,6 +763,14 @@ thread_system/
 
 ## Documentation
 
+### Design Documents (`docs/design/`)
+
+| File | Purpose | Lines |
+|------|---------|-------|
+| QUEUE_POLICY_DESIGN.md | Queue policy interface design | ~450 |
+
+---
+
 ### Advanced Documentation (`docs/advanced/`)
 
 | File | Purpose | Lines |
