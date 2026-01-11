@@ -291,8 +291,14 @@ namespace kcenon::thread
 		config.enabled = true;
 		aging_job_queue_ = std::make_shared<aging_typed_job_queue_t<job_type>>(config);
 
-		// Set the aging queue as the main job queue
-		set_job_queue(aging_job_queue_);
+		// Set the aging queue on all workers
+		for (auto& worker : workers_)
+		{
+			if (worker)
+			{
+				worker->set_aging_job_queue(aging_job_queue_);
+			}
+		}
 
 		// Start aging if pool is running
 		if (start_pool_.load())
@@ -316,9 +322,14 @@ namespace kcenon::thread
 			aging_job_queue_->stop_aging();
 		}
 
-		// Create a new regular job queue
-		auto new_queue = std::make_shared<typed_job_queue_t<job_type>>();
-		set_job_queue(new_queue);
+		// Clear aging queue from all workers
+		for (auto& worker : workers_)
+		{
+			if (worker)
+			{
+				worker->set_aging_job_queue(nullptr);
+			}
+		}
 
 		aging_job_queue_.reset();
 		priority_aging_enabled_ = false;
