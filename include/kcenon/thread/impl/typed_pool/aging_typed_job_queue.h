@@ -32,15 +32,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "typed_job_queue.h"
 #include "aging_typed_job.h"
 #include "priority_aging_config.h"
+#include "typed_job.h"
+#include "job_types.h"
+#include <kcenon/thread/policies/policy_queue.h>
+#include <kcenon/thread/policies/sync_policies.h>
+#include <kcenon/thread/policies/bound_policies.h>
+#include <kcenon/thread/utils/span.h>
 
 #include <thread>
 #include <atomic>
 #include <vector>
 #include <mutex>
+#include <shared_mutex>
 #include <condition_variable>
+#include <unordered_map>
+#include <optional>
+#include <sstream>
 
 namespace kcenon::thread
 {
@@ -60,11 +69,11 @@ namespace kcenon::thread
 
 	/**
 	 * @class aging_typed_job_queue_t
-	 * @brief A typed job queue with priority aging support.
+	 * @brief A typed job queue with priority aging support, based on policy_queue.
 	 *
-	 * This class extends typed_job_queue_t to add priority aging functionality.
-	 * Jobs that wait in the queue for extended periods automatically receive
-	 * priority boosts to prevent starvation of low-priority jobs.
+	 * This class provides priority aging functionality using policy_queue internally
+	 * instead of inheriting from typed_job_queue_t. It maintains API compatibility
+	 * while leveraging the modern policy-based queue design.
 	 *
 	 * @tparam job_type The type used to represent priority levels.
 	 *
@@ -73,6 +82,7 @@ namespace kcenon::thread
 	 * - Configurable aging curves (linear, exponential, logarithmic)
 	 * - Starvation detection and alerting
 	 * - Statistics tracking
+	 * - Uses policy_queue internally for efficient queue operations
 	 *
 	 * ### Thread Safety
 	 * All public methods are thread-safe.
@@ -96,10 +106,12 @@ namespace kcenon::thread
 	 * @endcode
 	 */
 	template <typename job_type = job_types>
-	class aging_typed_job_queue_t : public typed_job_queue_t<job_type>
+	class aging_typed_job_queue_t
 	{
 	public:
-		using base = typed_job_queue_t<job_type>;
+		using queue_type = policy_queue<policies::mutex_sync_policy,
+		                                policies::unbounded_policy,
+		                                policies::overflow_reject_policy>;
 
 		/**
 		 * @brief Constructs an aging typed job queue.
@@ -113,7 +125,7 @@ namespace kcenon::thread
 		 *
 		 * Stops the aging thread if running.
 		 */
-		~aging_typed_job_queue_t() override;
+		~aging_typed_job_queue_t();
 
 		// Non-copyable
 		aging_typed_job_queue_t(const aging_typed_job_queue_t&) = delete;
@@ -228,12 +240,125 @@ namespace kcenon::thread
 		 */
 		auto unregister_aging_job(aging_typed_job_t<job_type>* job) -> void;
 
+		// ============================================
+		// typed_job_queue_t compatible API
+		// ============================================
+
+		/**
+		 * @brief Enqueues a base job into the queue.
+		 *
+		 * @param value A unique pointer to the base job to enqueue.
+		 * @return Result indicating success or failure.
+		 */
+		[[nodiscard]] auto enqueue(std::unique_ptr<job>&& value) -> common::VoidResult;
+
+		/**
+		 * @brief Enqueues a typed job into the appropriate priority queue.
+		 *
+		 * @param value A unique pointer to the typed job to enqueue.
+		 * @return Result indicating success or failure.
+		 */
+		[[nodiscard]] auto enqueue(std::unique_ptr<typed_job_t<job_type>>&& value)
+			-> common::VoidResult;
+
+		/**
+		 * @brief Enqueues a derived typed job.
+		 *
+		 * @tparam DerivedJob A type that derives from typed_job_t<job_type>
+		 * @param value A unique pointer to the derived job to enqueue.
+		 * @return Result indicating success or failure.
+		 */
+		template<typename DerivedJob, typename = std::enable_if_t<std::is_base_of_v<typed_job_t<job_type>, DerivedJob>>>
+		[[nodiscard]] auto enqueue(std::unique_ptr<DerivedJob>&& value) -> common::VoidResult
+		{
+			return enqueue(std::unique_ptr<typed_job_t<job_type>>(std::move(value)));
+		}
+
+		/**
+		 * @brief Enqueues a batch of jobs.
+		 *
+		 * @param jobs A vector of unique pointers to jobs to enqueue.
+		 * @return Result indicating success or failure.
+		 */
+		[[nodiscard]] auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs)
+			-> common::VoidResult;
+
+		/**
+		 * @brief Dequeues the next available job.
+		 *
+		 * @return Result containing the dequeued job or error.
+		 */
+		[[nodiscard]] auto dequeue() -> common::Result<std::unique_ptr<job>>;
+
+		/**
+		 * @brief Dequeues a job with one of the specified types.
+		 *
+		 * @param types A list of priority levels from which to attempt a dequeue.
+		 * @return Result containing the dequeued job or error.
+		 */
+		[[nodiscard]] auto dequeue(const std::vector<job_type>& types)
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
+
+		/**
+		 * @brief Dequeues a job with one of the specified types using span.
+		 *
+		 * @param types A span of priority levels from which to attempt a dequeue.
+		 * @return Result containing the dequeued job or error.
+		 */
+		[[nodiscard]] auto dequeue(utility_module::span<const job_type> types)
+			-> common::Result<std::unique_ptr<typed_job_t<job_type>>>;
+
+		/**
+		 * @brief Removes all jobs from all priority queues.
+		 */
+		auto clear() -> void;
+
+		/**
+		 * @brief Checks if there are no jobs in any of the specified priority queues.
+		 *
+		 * @param types A list of priority levels to check.
+		 * @return true if all specified priority queues are empty.
+		 */
+		[[nodiscard]] auto empty(const std::vector<job_type>& types) const -> bool;
+
+		/**
+		 * @brief Checks if there are no jobs in any of the specified priority queues using span.
+		 *
+		 * @param types A span of priority levels to check.
+		 * @return true if all specified priority queues are empty.
+		 */
+		[[nodiscard]] auto empty(utility_module::span<const job_type> types) const -> bool;
+
+		/**
+		 * @brief Returns a string representation of the queue.
+		 *
+		 * @return A string describing the current state of the queue.
+		 */
+		[[nodiscard]] auto to_string() const -> std::string;
+
+		/**
+		 * @brief Stops accepting new jobs and marks the queue as stopped.
+		 */
+		auto stop() -> void;
+
+		/**
+		 * @brief Gets the total number of jobs in all queues.
+		 *
+		 * @return The total number of jobs.
+		 */
+		[[nodiscard]] auto size() const -> std::size_t;
+
 	private:
 		priority_aging_config config_;
 		std::unique_ptr<std::thread> aging_thread_;
 		std::atomic<bool> aging_running_{false};
+		std::atomic<bool> stopped_{false};
 		std::condition_variable aging_cv_;
 		mutable std::mutex aging_mutex_;
+
+		// Type-based job storage using policy_queue for each type
+		std::unordered_map<job_type, std::unique_ptr<queue_type>> job_queues_;
+		mutable std::shared_mutex queues_mutex_;
 
 		// Tracked aging jobs
 		std::vector<aging_typed_job_t<job_type>*> aging_jobs_;
@@ -274,6 +399,23 @@ namespace kcenon::thread
 		                  std::chrono::milliseconds max_wait,
 		                  std::chrono::milliseconds total_wait,
 		                  std::size_t job_count) -> void;
+
+		/**
+		 * @brief Get or create a queue for the specified type.
+		 *
+		 * @param type The job type.
+		 * @return Pointer to the queue.
+		 */
+		auto get_or_create_queue(const job_type& type) -> queue_type*;
+
+		/**
+		 * @brief Attempts to dequeue a single job from the queue for a given priority.
+		 *
+		 * @param priority The priority level from which to dequeue.
+		 * @return The dequeued job, or std::nullopt if empty.
+		 */
+		[[nodiscard]] auto try_dequeue_from_priority(const job_type& priority)
+			-> std::optional<std::unique_ptr<typed_job_t<job_type>>>;
 	};
 
 	/**
