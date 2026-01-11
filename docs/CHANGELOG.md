@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #448**: Phase 1.3.1 - Policy Queue Migration Guide
+  - Comprehensive migration guide from legacy queues to policy-based queue
+  - Step-by-step examples for each legacy queue type
+  - Common patterns and troubleshooting section
+  - Located at `docs/design/QUEUE_MIGRATION_GUIDE.md`
+
 - **Issue #438**: Phase 1.2 - Implement Policy-Based Queue Template
   - New compile-time policy-based queue system in `<kcenon/thread/policies/>`
   - **Sync Policies** (`sync_policies.h`):
