@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <kcenon/thread/metrics/latency_histogram.h>
+#include <kcenon/thread/metrics/metrics_base.h>
 #include <kcenon/thread/metrics/sliding_window_counter.h>
 
 #include <atomic>
@@ -266,8 +267,9 @@ struct WorkerMetrics {
  * @see LatencyHistogram
  * @see SlidingWindowCounter
  * @see ThreadPoolMetrics
+ * @see MetricsBase
  */
-class EnhancedThreadPoolMetrics {
+class EnhancedThreadPoolMetrics : public MetricsBase {
 public:
     /**
      * @brief Constructs enhanced metrics with the specified worker count.
@@ -278,7 +280,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~EnhancedThreadPoolMetrics() = default;
+    ~EnhancedThreadPoolMetrics() override = default;
 
     // Non-copyable, non-movable for thread safety
     EnhancedThreadPoolMetrics(const EnhancedThreadPoolMetrics&) = delete;
@@ -394,7 +396,7 @@ public:
      *
      * Clears all histograms, counters, and per-worker stats.
      */
-    void reset();
+    void reset() override;
 
     /**
      * @brief Update worker count.
@@ -432,10 +434,8 @@ private:
     SlidingWindowCounter throughput_1s_;
     SlidingWindowCounter throughput_1m_;
 
-    // Basic counters
-    std::atomic<std::uint64_t> tasks_submitted_{0};
-    std::atomic<std::uint64_t> tasks_executed_{0};
-    std::atomic<std::uint64_t> tasks_failed_{0};
+    // Note: Basic counters (tasks_submitted_, tasks_executed_, tasks_failed_,
+    // total_busy_time_ns_, total_idle_time_ns_) are inherited from MetricsBase
 
     // Queue depth tracking
     std::atomic<std::size_t> current_queue_depth_{0};
@@ -445,8 +445,6 @@ private:
 
     // Worker tracking
     std::atomic<std::size_t> active_workers_{0};
-    std::atomic<std::uint64_t> total_busy_time_ns_{0};
-    std::atomic<std::uint64_t> total_idle_time_ns_{0};
 
     // Per-worker metrics
     mutable std::mutex workers_mutex_;

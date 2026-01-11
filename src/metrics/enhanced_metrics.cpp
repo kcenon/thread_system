@@ -31,9 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/metrics/enhanced_metrics.h>
-
-#include <sstream>
-#include <iomanip>
+#include <kcenon/thread/metrics/metrics_backend.h>
 
 namespace kcenon::thread::metrics {
 
@@ -129,10 +127,10 @@ EnhancedSnapshot EnhancedThreadPoolMetrics::snapshot() const {
     EnhancedSnapshot snap;
     snap.snapshot_time = std::chrono::steady_clock::now();
 
-    // Basic counters
-    snap.tasks_submitted = tasks_submitted_.load(std::memory_order_relaxed);
-    snap.tasks_executed = tasks_executed_.load(std::memory_order_relaxed);
-    snap.tasks_failed = tasks_failed_.load(std::memory_order_relaxed);
+    // Basic counters (from MetricsBase)
+    snap.tasks_submitted = tasks_submitted();
+    snap.tasks_executed = tasks_executed();
+    snap.tasks_failed = tasks_failed();
 
     // Latency percentiles (convert ns to μs)
     snap.enqueue_latency_p50_us = ns_to_us(enqueue_latency_.p50());
@@ -162,9 +160,9 @@ EnhancedSnapshot EnhancedThreadPoolMetrics::snapshot() const {
             static_cast<double>(samples);
     }
 
-    // Worker utilization
-    snap.total_busy_time_ns = total_busy_time_ns_.load(std::memory_order_relaxed);
-    snap.total_idle_time_ns = total_idle_time_ns_.load(std::memory_order_relaxed);
+    // Worker utilization (from MetricsBase)
+    snap.total_busy_time_ns = total_busy_time_ns();
+    snap.total_idle_time_ns = total_idle_time_ns();
     snap.active_workers = active_workers_.load(std::memory_order_relaxed);
 
     auto total_time = snap.total_busy_time_ns + snap.total_idle_time_ns;
@@ -219,6 +217,9 @@ const SlidingWindowCounter& EnhancedThreadPoolMetrics::throughput_1m() const {
 }
 
 void EnhancedThreadPoolMetrics::reset() {
+    // Reset base class counters first
+    MetricsBase::reset();
+
     // Reset histograms
     enqueue_latency_.reset();
     execution_latency_.reset();
@@ -228,21 +229,13 @@ void EnhancedThreadPoolMetrics::reset() {
     throughput_1s_.reset();
     throughput_1m_.reset();
 
-    // Reset basic counters
-    tasks_submitted_.store(0, std::memory_order_relaxed);
-    tasks_executed_.store(0, std::memory_order_relaxed);
-    tasks_failed_.store(0, std::memory_order_relaxed);
-
     // Reset queue depth tracking
     current_queue_depth_.store(0, std::memory_order_relaxed);
     peak_queue_depth_.store(0, std::memory_order_relaxed);
     queue_depth_sum_.store(0, std::memory_order_relaxed);
     queue_depth_samples_.store(0, std::memory_order_relaxed);
 
-    // Reset worker metrics
-    total_busy_time_ns_.store(0, std::memory_order_relaxed);
-    total_idle_time_ns_.store(0, std::memory_order_relaxed);
-
+    // Reset per-worker metrics
     {
         std::lock_guard<std::mutex> lock(workers_mutex_);
         for (auto& worker : per_worker_metrics_) {
@@ -266,132 +259,23 @@ void EnhancedThreadPoolMetrics::update_worker_count(std::size_t count) {
 }
 
 std::string EnhancedThreadPoolMetrics::to_json() const {
-    auto snap = snapshot();
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(2);
-
-    oss << "{\n";
-    oss << "  \"tasks\": {\n";
-    oss << "    \"submitted\": " << snap.tasks_submitted << ",\n";
-    oss << "    \"executed\": " << snap.tasks_executed << ",\n";
-    oss << "    \"failed\": " << snap.tasks_failed << "\n";
-    oss << "  },\n";
-
-    oss << "  \"latency_us\": {\n";
-    oss << "    \"enqueue\": { \"p50\": " << snap.enqueue_latency_p50_us
-        << ", \"p90\": " << snap.enqueue_latency_p90_us
-        << ", \"p99\": " << snap.enqueue_latency_p99_us << " },\n";
-    oss << "    \"execution\": { \"p50\": " << snap.execution_latency_p50_us
-        << ", \"p90\": " << snap.execution_latency_p90_us
-        << ", \"p99\": " << snap.execution_latency_p99_us << " },\n";
-    oss << "    \"wait_time\": { \"p50\": " << snap.wait_time_p50_us
-        << ", \"p90\": " << snap.wait_time_p90_us
-        << ", \"p99\": " << snap.wait_time_p99_us << " }\n";
-    oss << "  },\n";
-
-    oss << "  \"throughput\": {\n";
-    oss << "    \"rate_1s\": " << snap.throughput_1s << ",\n";
-    oss << "    \"rate_1m\": " << snap.throughput_1m << "\n";
-    oss << "  },\n";
-
-    oss << "  \"queue\": {\n";
-    oss << "    \"current_depth\": " << snap.current_queue_depth << ",\n";
-    oss << "    \"peak_depth\": " << snap.peak_queue_depth << ",\n";
-    oss << "    \"avg_depth\": " << snap.avg_queue_depth << "\n";
-    oss << "  },\n";
-
-    oss << "  \"workers\": {\n";
-    oss << "    \"active\": " << snap.active_workers << ",\n";
-    oss << "    \"utilization\": " << snap.worker_utilization << ",\n";
-    oss << "    \"per_worker_utilization\": [";
-    for (std::size_t i = 0; i < snap.per_worker_utilization.size(); ++i) {
-        if (i > 0) oss << ", ";
-        oss << snap.per_worker_utilization[i];
+    // Delegate to JsonBackend for consistent output format
+    auto backend = BackendRegistry::instance().get("json");
+    if (backend) {
+        return backend->export_enhanced(snapshot());
     }
-    oss << "]\n";
-    oss << "  }\n";
 
-    oss << "}";
-
-    return oss.str();
+    // Fallback if registry is not initialized (shouldn't happen)
+    JsonBackend fallback;
+    return fallback.export_enhanced(snapshot());
 }
 
 std::string EnhancedThreadPoolMetrics::to_prometheus(
     const std::string& prefix) const {
-    auto snap = snapshot();
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(6);
-
-    // Task counters
-    oss << "# HELP " << prefix << "_tasks_submitted_total Total tasks submitted\n";
-    oss << "# TYPE " << prefix << "_tasks_submitted_total counter\n";
-    oss << prefix << "_tasks_submitted_total " << snap.tasks_submitted << "\n\n";
-
-    oss << "# HELP " << prefix << "_tasks_executed_total Total tasks executed\n";
-    oss << "# TYPE " << prefix << "_tasks_executed_total counter\n";
-    oss << prefix << "_tasks_executed_total " << snap.tasks_executed << "\n\n";
-
-    oss << "# HELP " << prefix << "_tasks_failed_total Total tasks failed\n";
-    oss << "# TYPE " << prefix << "_tasks_failed_total counter\n";
-    oss << prefix << "_tasks_failed_total " << snap.tasks_failed << "\n\n";
-
-    // Latency summary (enqueue)
-    oss << "# HELP " << prefix << "_enqueue_latency_us Enqueue latency in microseconds\n";
-    oss << "# TYPE " << prefix << "_enqueue_latency_us summary\n";
-    oss << prefix << "_enqueue_latency_us{quantile=\"0.5\"} " << snap.enqueue_latency_p50_us << "\n";
-    oss << prefix << "_enqueue_latency_us{quantile=\"0.9\"} " << snap.enqueue_latency_p90_us << "\n";
-    oss << prefix << "_enqueue_latency_us{quantile=\"0.99\"} " << snap.enqueue_latency_p99_us << "\n\n";
-
-    // Latency summary (execution)
-    oss << "# HELP " << prefix << "_execution_latency_us Execution latency in microseconds\n";
-    oss << "# TYPE " << prefix << "_execution_latency_us summary\n";
-    oss << prefix << "_execution_latency_us{quantile=\"0.5\"} " << snap.execution_latency_p50_us << "\n";
-    oss << prefix << "_execution_latency_us{quantile=\"0.9\"} " << snap.execution_latency_p90_us << "\n";
-    oss << prefix << "_execution_latency_us{quantile=\"0.99\"} " << snap.execution_latency_p99_us << "\n\n";
-
-    // Latency summary (wait time)
-    oss << "# HELP " << prefix << "_wait_time_us Queue wait time in microseconds\n";
-    oss << "# TYPE " << prefix << "_wait_time_us summary\n";
-    oss << prefix << "_wait_time_us{quantile=\"0.5\"} " << snap.wait_time_p50_us << "\n";
-    oss << prefix << "_wait_time_us{quantile=\"0.9\"} " << snap.wait_time_p90_us << "\n";
-    oss << prefix << "_wait_time_us{quantile=\"0.99\"} " << snap.wait_time_p99_us << "\n\n";
-
-    // Throughput
-    oss << "# HELP " << prefix << "_throughput_1s Tasks per second (1s window)\n";
-    oss << "# TYPE " << prefix << "_throughput_1s gauge\n";
-    oss << prefix << "_throughput_1s " << snap.throughput_1s << "\n\n";
-
-    oss << "# HELP " << prefix << "_throughput_1m Tasks per second (1m window)\n";
-    oss << "# TYPE " << prefix << "_throughput_1m gauge\n";
-    oss << prefix << "_throughput_1m " << snap.throughput_1m << "\n\n";
-
-    // Queue depth
-    oss << "# HELP " << prefix << "_queue_depth_current Current queue depth\n";
-    oss << "# TYPE " << prefix << "_queue_depth_current gauge\n";
-    oss << prefix << "_queue_depth_current " << snap.current_queue_depth << "\n\n";
-
-    oss << "# HELP " << prefix << "_queue_depth_peak Peak queue depth\n";
-    oss << "# TYPE " << prefix << "_queue_depth_peak gauge\n";
-    oss << prefix << "_queue_depth_peak " << snap.peak_queue_depth << "\n\n";
-
-    // Worker utilization
-    oss << "# HELP " << prefix << "_worker_utilization Overall worker utilization\n";
-    oss << "# TYPE " << prefix << "_worker_utilization gauge\n";
-    oss << prefix << "_worker_utilization " << snap.worker_utilization << "\n\n";
-
-    oss << "# HELP " << prefix << "_active_workers Number of active workers\n";
-    oss << "# TYPE " << prefix << "_active_workers gauge\n";
-    oss << prefix << "_active_workers " << snap.active_workers << "\n\n";
-
-    // Per-worker utilization
-    oss << "# HELP " << prefix << "_worker_utilization_per_worker Per-worker utilization\n";
-    oss << "# TYPE " << prefix << "_worker_utilization_per_worker gauge\n";
-    for (std::size_t i = 0; i < snap.per_worker_utilization.size(); ++i) {
-        oss << prefix << "_worker_utilization_per_worker{worker=\"" << i << "\"} "
-            << snap.per_worker_utilization[i] << "\n";
-    }
-
-    return oss.str();
+    // Create a PrometheusBackend with the specified prefix
+    PrometheusBackend backend;
+    backend.set_prefix(prefix);
+    return backend.export_enhanced(snapshot());
 }
 
 } // namespace kcenon::thread::metrics
