@@ -331,7 +331,8 @@ using backpressure_queue = queue<
 >;
 
 // Lock-free queue (replaces lockfree_job_queue)
-using lockfree_queue = queue<
+// Named policy_lockfree_queue to avoid collision with deprecated lockfree_queue<T>
+using policy_lockfree_queue = queue<
     policy::lockfree_sync,
     policy::unbounded
 >;
@@ -373,10 +374,10 @@ using aging_queue = queue<
 | `job_queue` | `standard_queue` | Direct replacement |
 | `bounded_job_queue` | `bounded_queue<N>` | Use template parameter |
 | `backpressure_job_queue` | `backpressure_queue` | Configure watermarks |
-| `lockfree_job_queue` | `lockfree_queue` | Check for capability changes |
+| `lockfree_job_queue` | `policy_lockfree_queue` | Check for capability changes |
 | `adaptive_job_queue` | `adaptive_queue` | Minimal changes |
 | `typed_job_queue_t<T>` | `standard_queue` with `enqueue<T>()` | Use template enqueue |
-| `typed_lockfree_job_queue_t<T>` | `lockfree_queue` with `enqueue<T>()` | Use template enqueue |
+| `typed_lockfree_job_queue_t<T>` | `policy_lockfree_queue` with `enqueue<T>()` | Use template enqueue |
 | `adaptive_typed_job_queue_t<T>` | `adaptive_queue` with `enqueue<T>()` | Use template enqueue |
 | `aging_typed_job_queue_t<T>` | `aging_queue` | Configure aging params |
 

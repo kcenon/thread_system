@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Issue #449**: Phase 1.3.2 - Update scheduler_interface for policy_queue
+  - New `queue_traits.h` with compile-time type detection utilities:
+    - `is_policy_queue_v<T>`: Detect policy_queue instantiations
+    - `is_scheduler_v<T>`: Detect scheduler_interface implementations
+    - `policy_queue_traits<T>`: Extract policy types from policy_queue
+    - Policy detection traits: `is_sync_policy_v`, `is_bound_policy_v`, `is_overflow_policy_v`
+    - Queue capability traits: `is_lockfree_queue_v`, `is_bounded_queue_v`, `has_blocking_overflow_v`
+  - Extended `queue_factory` with policy_queue creation methods:
+    - `create_policy_queue()`: Standard mutex-based unbounded queue
+    - `create_lockfree_policy_queue()`: Lock-free unbounded queue
+    - `create_bounded_policy_queue(size)`: Bounded queue with rejection
+    - `create_custom_policy_queue()`: Fully customizable policy queue with static assertions
+  - Renamed `lockfree_queue` type alias to `policy_lockfree_queue` to avoid collision
+    with deprecated `lockfree_queue<T>` template in forward.h
+
 - **Issue #448**: Phase 1.3.1 - Policy Queue Migration Guide
   - Comprehensive migration guide from legacy queues to policy-based queue
   - Step-by-step examples for each legacy queue type
@@ -33,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Policy Queue Template** (`policy_queue.h`):
     - `policy_queue<SyncPolicy, BoundPolicy, OverflowPolicy>`: Composable queue template
     - Implements `scheduler_interface` and `queue_capabilities_interface`
-    - Type aliases: `standard_queue`, `lockfree_queue`
+    - Type aliases: `standard_queue`, `policy_lockfree_queue`
   - Comprehensive unit tests for all policy combinations (36 new tests)
   - Forward declarations added to `forward.h`
 

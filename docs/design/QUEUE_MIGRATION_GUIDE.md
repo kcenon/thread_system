@@ -65,7 +65,7 @@ auto queue = std::make_unique<standard_queue>();  // Same behavior as job_queue
 | `job_queue` | `policy_queue<mutex_sync_policy, unbounded_policy>` | `standard_queue` |
 | `bounded_job_queue(N)` | `policy_queue<mutex_sync_policy, bounded_policy>` | `bounded_rejecting_queue<N>` |
 | `backpressure_job_queue` | `policy_queue<mutex_sync_policy, bounded_policy, overflow_block_policy>` | `bounded_blocking_queue<N>` |
-| `lockfree_job_queue` | `policy_queue<lockfree_sync_policy, unbounded_policy>` | `lockfree_queue` |
+| `lockfree_job_queue` | `policy_queue<lockfree_sync_policy, unbounded_policy>` | `policy_lockfree_queue` |
 | `adaptive_job_queue` | `policy_queue<adaptive_sync_policy, unbounded_policy>` | (custom) |
 | `typed_job_queue_t<T>` | `standard_queue` with `enqueue<T>()` | N/A |
 
@@ -187,7 +187,7 @@ auto result = queue->dequeue();  // Non-blocking, returns error if empty
 
 using namespace kcenon::thread;
 
-auto queue = std::make_unique<lockfree_queue>();
+auto queue = std::make_unique<policy_lockfree_queue>();
 
 queue->enqueue(std::make_unique<my_job>());
 auto result = queue->dequeue();  // Non-blocking (same behavior)
@@ -338,8 +338,8 @@ void consumer() {
 ```cpp
 using namespace kcenon::thread;
 
-auto stage1 = std::make_unique<lockfree_queue>();
-auto stage2 = std::make_unique<lockfree_queue>();
+auto stage1 = std::make_unique<policy_lockfree_queue>();
+auto stage2 = std::make_unique<policy_lockfree_queue>();
 
 // Pipeline processing without locks
 void pipeline_worker() {
@@ -403,7 +403,7 @@ auto queue = std::make_unique<policy_queue<
 
 ```cpp
 // This dequeue() returns immediately with error if empty
-lockfree_queue queue;
+policy_lockfree_queue queue;
 auto result = queue.dequeue();  // Non-blocking!
 ```
 
@@ -431,7 +431,7 @@ auto result = queue.dequeue();  // Now blocks
 **Problem:** Lock-free queue size is approximate.
 
 ```cpp
-lockfree_queue queue;
+policy_lockfree_queue queue;
 if (queue.empty()) {  // May be inaccurate under contention!
     // ...
 }

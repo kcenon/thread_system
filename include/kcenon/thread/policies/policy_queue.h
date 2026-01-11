@@ -408,8 +408,11 @@ using standard_queue = policy_queue<
 
 /**
  * @brief Lock-free unbounded queue
+ *
+ * @note Named policy_lockfree_queue to avoid collision with the deprecated
+ *       template lockfree_queue<T> in forward.h
  */
-using lockfree_queue = policy_queue<
+using policy_lockfree_queue = policy_queue<
     policies::lockfree_sync_policy,
     policies::unbounded_policy,
     policies::overflow_reject_policy

@@ -465,7 +465,7 @@ TEST(TypeAliasTest, StandardQueue) {
 }
 
 TEST(TypeAliasTest, LockfreeQueue) {
-    lockfree_queue queue;
+    policy_lockfree_queue queue;
     auto result = queue.enqueue(std::make_unique<callback_job>([]() -> std::optional<std::string> { return std::nullopt; }));
     ASSERT_TRUE(result.is_ok());
 }
