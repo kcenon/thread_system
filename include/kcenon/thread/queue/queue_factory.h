@@ -226,7 +226,7 @@ public:
 
     /**
      * @brief Create a lock-free policy_queue
-     * @return Unique pointer to lockfree_queue
+     * @return Unique pointer to policy_lockfree_queue
      *
      * This creates a policy_queue with:
      * - lockfree_sync_policy: High-throughput, non-blocking
@@ -238,7 +238,7 @@ public:
      * @note size() returns approximate values, empty() is non-atomic
      */
     [[nodiscard]] static auto create_lockfree_policy_queue()
-        -> std::unique_ptr<lockfree_queue>;
+        -> std::unique_ptr<policy_lockfree_queue>;
 
     /**
      * @brief Create a bounded policy_queue with specified size

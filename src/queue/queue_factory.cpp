@@ -87,9 +87,9 @@ auto queue_factory::create_policy_queue() -> std::unique_ptr<standard_queue>
     return std::make_unique<standard_queue>();
 }
 
-auto queue_factory::create_lockfree_policy_queue() -> std::unique_ptr<lockfree_queue>
+auto queue_factory::create_lockfree_policy_queue() -> std::unique_ptr<policy_lockfree_queue>
 {
-    return std::make_unique<lockfree_queue>();
+    return std::make_unique<policy_lockfree_queue>();
 }
 
 auto queue_factory::create_bounded_policy_queue(std::size_t max_size)
