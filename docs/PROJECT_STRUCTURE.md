@@ -57,7 +57,9 @@ thread_system/
 ├── 📁 include/kcenon/thread/       # Public headers
 │   ├── 📁 core/                    # Core components
 │   │   ├── thread_base.h           # Abstract thread class
-│   │   ├── thread_pool.h           # Thread pool interface
+│   │   ├── thread_pool.h           # Thread pool interface (umbrella header)
+│   │   ├── thread_pool_impl.h      # Thread pool template implementations
+│   │   ├── thread_pool_fmt.h       # Thread pool std::formatter specializations
 │   │   ├── thread_worker.h         # Worker thread
 │   │   ├── job.h                   # Job interface
 │   │   ├── callback_job.h          # Function-based jobs
