@@ -55,6 +55,8 @@ set(CORE_HEADERS
     # Metrics module
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/enhanced_metrics.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/latency_histogram.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_backend.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_base.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/sliding_window_counter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/thread_pool_metrics.h
     # Resilience module
@@ -102,6 +104,7 @@ set(CORE_SOURCES
     # Metrics implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/enhanced_metrics.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/latency_histogram.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_backend.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/sliding_window_counter.cpp
     # Resilience implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/circuit_breaker.cpp
