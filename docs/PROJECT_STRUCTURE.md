@@ -1,7 +1,7 @@
 # Thread System Project Structure
 
-**Version**: 0.2.0
-**Last Updated**: 2025-11-15
+**Version**: 0.3.0
+**Last Updated**: 2026-01-11
 **Language**: [English] | [한국어](PROJECT_STRUCTURE_KO.md)
 
 ---
@@ -885,7 +885,7 @@ utilities (no dependencies)
              │
              └──> typed_thread_pool
                         │
-                        └── adaptive_typed_job_queue
+                        └── aging_typed_job_queue (policy_queue based)
 ```
 
 ---
@@ -1048,5 +1048,5 @@ Each module is self-contained:
 
 ---
 
-**Last Updated**: 2025-11-15
+**Last Updated**: 2026-01-11
 **Maintained by**: kcenon@naver.com

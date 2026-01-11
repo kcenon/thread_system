@@ -1,7 +1,7 @@
 # Thread System 프로젝트 구조
 
-**버전**: 0.2.0
-**최종 업데이트**: 2025-11-28
+**버전**: 0.3.0
+**최종 업데이트**: 2026-01-11
 **언어**: [English](PROJECT_STRUCTURE.md) | **한국어**
 
 ---
@@ -502,7 +502,7 @@ utilities (의존성 없음)
              │
              └──> typed_thread_pool
                         │
-                        └── adaptive_typed_job_queue
+                        └── aging_typed_job_queue (policy_queue 기반)
 ```
 
 ---
@@ -636,7 +636,7 @@ utilities (의존성 없음)
 
 ---
 
-**최종 업데이트**: 2025-11-28
+**최종 업데이트**: 2026-01-11
 **관리자**: kcenon@naver.com
 
 ---
