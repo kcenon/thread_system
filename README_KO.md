@@ -14,7 +14,11 @@ Thread System Project는 동시성 프로그래밍의 민주화를 목표로 설
 
 > **🏗️ Modular Architecture**: 공격적인 리팩토링과 coroutine 제거를 통해 약 2,700줄의 고도로 최적화된 코드로 간소화되었습니다. Logger와 monitoring system은 최대한의 유연성을 위해 별도의 선택적 프로젝트로 제공됩니다.
 
-> **✅ 최신 업데이트**: 향상된 synchronization primitive, 개선된 cancellation token, service registry 패턴, 포괄적인 header 포함 수정. 모든 플랫폼에서 CI/CD pipeline이 정상 작동합니다.
+> **✅ 최신 업데이트 (2026-01)**:
+> - Queue 통합 완료: 10개 구현 → 2개 공개 타입 (adaptive_job_queue, job_queue)
+> - Deprecated queue 제거: typed_job_queue_t, typed_lockfree_job_queue_t, adaptive_typed_job_queue_t
+> - Policy-based queue 템플릿 시스템 도입 (Kent Beck Simple Design 원칙)
+> - 모든 플랫폼에서 CI/CD pipeline이 정상 작동합니다.
 
 ## 🔗 프로젝트 생태계 및 상호 의존성
 
@@ -334,8 +338,8 @@ thread_system/
 │   │   │   └── thread_worker.cpp   # Worker 구현
 │   │   └── 📁 typed_pool/          # Typed thread pool
 │   │       ├── typed_thread_pool.h # Typed pool header
-│   │       ├── typed_job_queue.h   # Typed queue
-│   │       └── adaptive_typed_job_queue.cpp # Adaptive queue
+│   │       ├── aging_typed_job_queue.h # Priority aging queue
+│   │       └── typed_job.h        # Typed job base
 │   └── 📁 utils/                   # Utility 구현
 │       └── convert_string.cpp      # 문자열 변환 구현
 ├── 📁 examples/                    # 예제 애플리케이션
@@ -376,17 +380,11 @@ thread_system/
 - **`thread_worker.h/cpp`**: Job을 처리하는 worker thread
 - **`future_extensions.h`**: 비동기 결과를 위한 future 기반 작업 확장
 
-#### Typed Thread Pool 파일 (Mutex 기반)
-- **`typed_thread_pool.h/tpp`**: Template 기반 priority thread pool
-- **`typed_job_queue.h/tpp`**: Typed job을 위한 priority queue
-- **`typed_thread_worker.h/tpp`**: Type 책임 목록이 있는 worker
+#### Typed Thread Pool 파일
+- **`typed_thread_pool.h`**: Template 기반 priority thread pool
+- **`typed_thread_worker.h`**: Type 책임 목록이 있는 worker
 - **`job_types.h`**: 기본 priority 열거형 (RealTime, Batch, Background)
-
-#### Typed Thread Pool 파일 (Adaptive) 🆕
-- **`typed_thread_pool.h/tpp`**: Adaptive priority thread pool 구현
-- **`adaptive_typed_job_queue.h/tpp/cpp`**: Type별 adaptive MPMC queue
-- **`typed_thread_worker.h/tpp`**: Priority 처리를 지원하는 adaptive worker
-- **`typed_queue_statistics_t`**: 성능 monitoring 및 metric 수집
+- **`aging_typed_job_queue.h`**: Priority aging 지원 queue (policy_queue 기반)
 
 #### Logger 파일
 - **`logger.h`**: 자유 함수가 있는 공용 API
@@ -447,12 +445,14 @@ build/
 - **`job` 클래스**: Cancellation 지원이 있는 작업 단위의 추상 기본 클래스
 - **`callback_job` 클래스**: `std::function`을 사용하는 구체적인 job 구현
 - **`job_queue` 클래스**: Job 관리를 위한 thread-safe queue
-- **`bounded_job_queue`** 🆕: Backpressure 지원이 있는 고품질 queue
+- **`backpressure_job_queue`**: Backpressure 지원이 있는 고품질 queue
   - 최대 queue 크기 강제 (메모리 고갈 방지)
-  - Queue가 용량에 근접할 때 backpressure 신호 전달
-  - Enqueue 작업에 대한 timeout 지원
-  - 포괄적인 metric (총 enqueue/dequeue/거부/timeout, 최대 크기)
+  - 다양한 backpressure 정책 (block, drop_oldest, drop_newest, callback, adaptive)
+  - Token bucket 기반 rate limiting
+  - Watermark 기반 pressure detection
   - 리소스 제약이 있는 시스템에 이상적
+
+> **참고**: 간단한 용량 제한의 경우 `job_queue`의 `max_size` 파라미터를 사용하세요.
 - **`cancellation_token`** 🆕: 향상된 협력적 cancellation 메커니즘
   - 계층적 cancellation을 위한 연결된 token 생성
   - Thread-safe callback 등록
@@ -548,9 +548,8 @@ Framework는 다양한 시나리오에 최적화된 두 가지 별개의 typed t
 - **`job_types` 열거형**: 기본 priority 수준 (RealTime, Batch, Background)
 - **Type 인식 구성 요소**:
   - `typed_job_t<T>`: 관련 type/priority가 있는 job
-  - `adaptive_typed_job_queue_t<T>`: Adaptive priority queue 구현
-  - `typed_lockfree_job_queue_t<T>`: Lock-free priority queue (adaptive 모드에서 사용)
-  - `typed_thread_worker_t<T>`: Adaptive queue 처리를 지원하는 worker
+  - `aging_typed_job_queue_t<T>`: Priority aging 지원 queue (policy_queue 기반)
+  - `typed_thread_worker_t<T>`: Queue 처리를 지원하는 worker
 - **`callback_typed_job<T>`**: Lambda 기반 typed job 구현
 - **사용자 정의 type 지원**: Job prioritization을 위해 자체 열거형 또는 type 사용
 
@@ -668,30 +667,36 @@ bool success = pool->shutdown_pool(false);
 success = pool->shutdown_pool(true);
 ```
 
-### Bounded Job Queue API
+### Backpressure Job Queue API
 
-`bounded_job_queue` 클래스는 backpressure 지원이 있는 고품질 queue를 제공합니다:
+`backpressure_job_queue` 클래스는 다양한 backpressure 정책을 지원하는 고품질 queue를 제공합니다:
 
 ```cpp
-#include <kcenon/thread/core/bounded_job_queue.h>
+#include <kcenon/thread/core/backpressure_job_queue.h>
 
-// 최대 용량으로 bounded queue 생성
-auto queue = std::make_shared<bounded_job_queue>(1000);  // 최대 1000개 job
+// Backpressure 설정으로 queue 생성
+backpressure_config config;
+config.max_size = 1000;
+config.policy = backpressure_policy::adaptive;
+config.low_watermark = 100;
+config.high_watermark = 800;
 
-// Timeout으로 enqueue
-auto timeout = std::chrono::milliseconds(100);
-auto result = queue->enqueue(std::move(job), timeout);
+auto queue = std::make_shared<backpressure_job_queue>(config);
+
+// Job enqueue
+auto result = queue->enqueue(std::move(job));
 if (!result) {
-    // Timeout 또는 거부 처리
+    // Backpressure로 인한 거부 처리
 }
 
-// Metric 가져오기
-auto metrics = queue->get_metrics();
-std::cout << "총 enqueue: " << metrics.total_enqueued << "\n";
-std::cout << "총 거부: " << metrics.total_rejected << "\n";
-std::cout << "최대 크기: " << metrics.peak_size << "\n";
-std::cout << "Timeout 횟수: " << metrics.timeout_count << "\n";
+// Pressure 수준 확인
+auto level = queue->get_pressure_level();
+if (level == pressure_level::high) {
+    // Producer 속도 조절
+}
 ```
+
+> **참고**: 간단한 크기 제한의 경우 `job_queue`의 `max_size` 파라미터를 사용하세요.
 
 ### Worker Policy API
 
@@ -1162,20 +1167,9 @@ namespace typed_thread_pool_module {
         auto enqueue_batch(std::vector<std::unique_ptr<typed_job_t<T>>>&& jobs) -> result_void;
     };
 
-    // Adaptive Typed Queue API (mutex 및 lock-free 모드 모두 지원)
+    // Aging Priority Queue (policy_queue 기반)
     template<typename T>
-    class adaptive_typed_job_queue_t {
-        auto enqueue(std::unique_ptr<typed_job_t<T>>&& job) -> result_void;
-        auto dequeue() -> result<std::unique_ptr<job>>;
-        auto dequeue(const T& type) -> result<std::unique_ptr<typed_job_t<T>>>;
-        auto size() const -> std::size_t;
-        auto empty() const -> bool;
-        auto get_typed_statistics() const -> typed_queue_statistics_t<T>;
-    };
-
-    // Lock-free Queue (유익할 때 adaptive 모드에서 사용)
-    template<typename T>
-    class typed_lockfree_job_queue_t {
+    class aging_typed_job_queue_t {
         auto enqueue(std::unique_ptr<typed_job_t<T>>&& job) -> result_void;
         auto dequeue() -> result<std::unique_ptr<job>>;
         auto dequeue(const T& type) -> result<std::unique_ptr<typed_job_t<T>>>;
