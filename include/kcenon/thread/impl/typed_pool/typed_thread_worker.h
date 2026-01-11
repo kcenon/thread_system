@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/interfaces/thread_context.h>
 #include "typed_job_queue.h"
+#include "aging_typed_job_queue.h"
 
 #include <memory>
 #include <vector>
@@ -142,6 +143,18 @@ namespace kcenon::thread
 		auto set_job_queue(std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void;
 
 		/**
+		 * @brief Assigns an aging priority job queue to this worker.
+		 *
+		 * When an aging queue is set, it takes precedence over the regular
+		 * typed job queue for job retrieval.
+		 *
+		 * @param job_queue
+		 * A shared pointer to an \c aging_typed_job_queue_t instance from which
+		 * this worker will fetch jobs.
+		 */
+		auto set_aging_job_queue(std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue) -> void;
+
+		/**
 		 * @brief Retrieves the list of priority levels this worker handles.
 		 *
 		 * @return
@@ -219,10 +232,18 @@ namespace kcenon::thread
 		 * @brief The priority job queue to retrieve and execute jobs from.
 		 *
 		 * The worker continually checks this queue for new jobs that match
-		 * its priority levels. Must be valid for the duration of this worker’s
+		 * its priority levels. Must be valid for the duration of this worker's
 		 * execution.
 		 */
 		std::shared_ptr<typed_job_queue_t<job_type>> job_queue_;
+
+		/**
+		 * @brief The aging priority job queue (optional).
+		 *
+		 * When set, this queue takes precedence over the regular typed job queue.
+		 * Supports priority aging functionality.
+		 */
+		std::shared_ptr<aging_typed_job_queue_t<job_type>> aging_job_queue_;
 
 		/**
 		 * @brief The thread context providing optional services.
