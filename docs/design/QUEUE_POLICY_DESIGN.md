@@ -399,20 +399,19 @@ using aging_queue = queue<
 - [x] Design policy interface hierarchy
 - [x] Document consolidation roadmap
 
-### Milestone 2: Implementation (Phase 1.2)
+### Milestone 2: Implementation (Phase 1.2) ✓
 
-- [ ] Create policy header files
-- [ ] Implement sync policies
-- [ ] Implement capacity policies
-- [ ] Implement overflow policies
-- [ ] Implement backpressure policies
-- [ ] Create queue template class
-- [ ] Add unit tests for policies
+- [x] Create policy header files
+- [x] Implement sync policies (mutex, lockfree, adaptive)
+- [x] Implement capacity policies (unbounded, bounded, dynamic_bounded)
+- [x] Implement overflow policies (reject, block, drop_oldest, drop_newest, timeout)
+- [x] Create queue template class (policy_queue)
+- [x] Add unit tests for policies (42 tests passing)
 
-### Milestone 3: Migration (Phase 1.3)
+### Milestone 3: Migration (Phase 1.3) (In Progress)
 
-- [ ] Create migration guide
-- [ ] Update thread_pool to use new queue
+- [x] Create migration guide (see [QUEUE_MIGRATION_GUIDE.md](./QUEUE_MIGRATION_GUIDE.md))
+- [ ] Update thread_pool to use new queue (#450)
 - [ ] Migrate internal usages
 - [ ] Performance regression testing
 - [ ] Update examples
