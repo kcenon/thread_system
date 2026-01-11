@@ -1,9 +1,9 @@
 # Queue Policy Interface Design
 
-**Version**: 1.0.0
-**Issue**: #437 (Phase 1.1)
-**Status**: Design Complete
-**Last Updated**: 2025-01-11
+**Version**: 1.1.0
+**Issue**: #437 (Phase 1.1), #438 (Phase 1.2)
+**Status**: Implementation Complete
+**Last Updated**: 2026-01-11
 
 ---
 

@@ -113,6 +113,33 @@ class typed_thread_pool_builder;
 
 class adaptive_job_queue;
 
+// ============================================================================
+// Policy types (in policies sub-namespace)
+// ============================================================================
+
+namespace policies {
+    // Sync policies
+    class mutex_sync_policy;
+    class lockfree_sync_policy;
+    class adaptive_sync_policy;
+
+    // Bound policies
+    class unbounded_policy;
+    class bounded_policy;
+    class dynamic_bounded_policy;
+
+    // Overflow policies
+    class overflow_reject_policy;
+    class overflow_block_policy;
+    class overflow_drop_oldest_policy;
+    class overflow_drop_newest_policy;
+    class overflow_timeout_policy;
+}  // namespace policies
+
+/// @brief Policy-based queue template
+template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
+class policy_queue;
+
 /// @deprecated Use job_queue with max_size parameter instead. bounded_job_queue has been removed.
 /// Migration: std::make_shared<bounded_job_queue>(1000) → std::make_shared<job_queue>(1000)
 using bounded_job_queue [[deprecated(
