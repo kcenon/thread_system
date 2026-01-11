@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/scaling/autoscaler.h>
 #include <kcenon/thread/stealing/numa_work_stealer.h>
 #include <kcenon/thread/lockfree/work_stealing_deque.h>
+#include <kcenon/thread/adapters/job_queue_adapter.h>
 
 #include <random>
 
@@ -132,6 +133,41 @@ thread_pool::thread_pool(const std::string& thread_title,
 }
 
 /**
+ * @brief Constructs a thread pool with a policy_queue adapter.
+ *
+ * Implementation details:
+ * - Initializes with provided thread title for identification
+ * - Uses the provided queue adapter for queue operations
+ * - If adapter wraps a job_queue, extracts it for backward compatibility
+ * - Pool starts in stopped state (start_pool_ = false)
+ * - No workers are initially assigned (workers_ is empty)
+ * - Stores thread context for logging and monitoring
+ * - Creates pool-level cancellation token for hierarchical cancellation
+ *
+ * @param thread_title Descriptive name for this thread pool instance
+ * @param queue_adapter Queue adapter wrapping job_queue or policy_queue
+ * @param context Thread context providing logging and monitoring services
+ */
+thread_pool::thread_pool(const std::string& thread_title,
+                         std::unique_ptr<pool_queue_adapter_interface> queue_adapter,
+                         const thread_context& context)
+    : thread_title_(thread_title)
+    , pool_instance_id_(next_pool_instance_id_.fetch_add(1))
+    , start_pool_(false)
+    , job_queue_(queue_adapter ? queue_adapter->get_job_queue() : nullptr)
+    , queue_adapter_(std::move(queue_adapter))
+    , context_(context)
+    , pool_cancellation_token_(cancellation_token::create())
+    , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
+    // Report initial pool registration if monitoring is available
+    if (context_.monitoring()) {
+        common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
+        initial_metrics.worker_threads.value = 0;
+        context_.update_thread_pool_metrics(thread_title_, pool_instance_id_, initial_metrics);
+    }
+}
+
+/**
  * @brief Destroys the thread pool, ensuring all workers are stopped.
  *
  * Implementation details:
@@ -207,9 +243,23 @@ auto thread_pool::start(void) -> common::VoidResult {
         return common::error_info{static_cast<int>(error_code::invalid_argument), "no workers to start", "thread_system"};
     }
 
-    // Create fresh job queue for restart scenarios
-    // Stopped queues cannot accept new jobs, so we must create a new instance
-    if (job_queue_ == nullptr || job_queue_->is_stopped()) {
+    // Handle queue initialization for restart scenarios
+    // The approach differs based on whether we're using job_queue or queue_adapter
+    if (queue_adapter_) {
+        // Using queue_adapter (policy_queue or wrapped job_queue)
+        if (queue_adapter_->is_stopped()) {
+            // For policy_queue adapters, we can't easily recreate,
+            // so we return an error suggesting pool recreation
+            return common::error_info{
+                static_cast<int>(error_code::queue_stopped),
+                "queue is stopped; create a new thread_pool instance for restart",
+                "thread_system"};
+        }
+        // Update job_queue_ reference if adapter wraps a job_queue
+        job_queue_ = queue_adapter_->get_job_queue();
+    } else if (job_queue_ == nullptr || job_queue_->is_stopped()) {
+        // Create fresh job queue for restart scenarios
+        // Stopped queues cannot accept new jobs, so we must create a new instance
         job_queue_ = std::make_shared<kcenon::thread::job_queue>();
 
         // Update all workers with the new queue reference
@@ -321,26 +371,34 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
         return common::error_info{static_cast<int>(error_code::invalid_argument), "job is null", "thread_system"};
     }
 
-    if (job_queue_ == nullptr) {
+    // Check queue availability and stopped state
+    // Supports both queue_adapter_ (policy_queue) and job_queue_ (legacy)
+    if (queue_adapter_) {
+        if (queue_adapter_->is_stopped()) {
+            return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
+        }
+    } else if (job_queue_ == nullptr) {
         return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
-    }
-
-    // Check if queue has been explicitly stopped (via stop())
-    // This prevents race conditions during shutdown where stop() has been called
-    // but jobs might still be submitted. Note: We check the queue's stopped state
-    // rather than start_pool_ to allow jobs to be enqueued before start() is called.
-    if (job_queue_->is_stopped()) {
+    } else if (job_queue_->is_stopped()) {
         return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
-    // Delegate to adaptive queue for optimal processing
+    // Delegate to queue for processing
     metrics_->record_submission();
 
     // Record enhanced metrics if enabled
     auto start_time = std::chrono::steady_clock::now();
-    auto enqueue_result = job_queue_->enqueue(std::move(job));
-    if (enqueue_result.is_err()) {
-        return enqueue_result.error();
+
+    if (queue_adapter_) {
+        auto enqueue_result = queue_adapter_->enqueue(std::move(job));
+        if (enqueue_result.is_err()) {
+            return enqueue_result.error();
+        }
+    } else {
+        auto enqueue_result = job_queue_->enqueue(std::move(job));
+        if (enqueue_result.is_err()) {
+            return enqueue_result.error();
+        }
     }
 
     metrics_->record_enqueue();
@@ -351,7 +409,8 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
         auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
         enhanced_metrics_->record_submission();
         enhanced_metrics_->record_enqueue(latency);
-        enhanced_metrics_->record_queue_depth(job_queue_->size());
+        auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+        enhanced_metrics_->record_queue_depth(queue_size);
     }
 
     return common::ok();
@@ -362,12 +421,15 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
         return common::error_info{static_cast<int>(error_code::invalid_argument), "jobs are empty", "thread_system"};
     }
 
-    if (job_queue_ == nullptr) {
+    // Check queue availability and stopped state
+    // Supports both queue_adapter_ (policy_queue) and job_queue_ (legacy)
+    if (queue_adapter_) {
+        if (queue_adapter_->is_stopped()) {
+            return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
+        }
+    } else if (job_queue_ == nullptr) {
         return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
-    }
-
-    // Check if queue has been explicitly stopped
-    if (job_queue_->is_stopped()) {
+    } else if (job_queue_->is_stopped()) {
         return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
@@ -376,9 +438,17 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
 
     // Record enhanced metrics if enabled
     auto start_time = std::chrono::steady_clock::now();
-    auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
-    if (enqueue_result.is_err()) {
-        return enqueue_result.error();
+
+    if (queue_adapter_) {
+        auto enqueue_result = queue_adapter_->enqueue_batch(std::move(jobs));
+        if (enqueue_result.is_err()) {
+            return enqueue_result.error();
+        }
+    } else {
+        auto enqueue_result = job_queue_->enqueue_batch(std::move(jobs));
+        if (enqueue_result.is_err()) {
+            return enqueue_result.error();
+        }
     }
 
     metrics_->record_enqueue(batch_size);
@@ -392,7 +462,8 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
             enhanced_metrics_->record_submission();
             enhanced_metrics_->record_enqueue(latency / static_cast<long>(batch_size));
         }
-        enhanced_metrics_->record_queue_depth(job_queue_->size());
+        auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+        enhanced_metrics_->record_queue_depth(queue_size);
     }
 
     return common::ok();
@@ -403,11 +474,25 @@ auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> common::Vo
         return common::error_info{static_cast<int>(error_code::invalid_argument), "worker is null", "thread_system"};
     }
 
-    if (job_queue_ == nullptr) {
+    // Get job_queue from adapter if available, otherwise use direct job_queue_
+    std::shared_ptr<job_queue> worker_queue;
+    if (queue_adapter_) {
+        worker_queue = queue_adapter_->get_job_queue();
+        if (!worker_queue) {
+            // policy_queue adapter without job_queue backend
+            // Workers currently require job_queue; this limitation may be lifted in future versions
+            return common::error_info{
+                static_cast<int>(error_code::resource_allocation_failed),
+                "policy_queue adapter without job_queue backend not yet supported for workers",
+                "thread_system"};
+        }
+    } else if (job_queue_ == nullptr) {
         return common::error_info{static_cast<int>(error_code::resource_allocation_failed), "job queue is null", "thread_system"};
+    } else {
+        worker_queue = job_queue_;
     }
 
-    worker->set_job_queue(job_queue_);
+    worker->set_job_queue(worker_queue);
     worker->set_context(context_);
     worker->set_metrics(metrics_);
     worker->set_diagnostics(&diagnostics());
@@ -507,9 +592,14 @@ auto thread_pool::stop(const bool& immediately_stop) -> common::VoidResult {
     // 2. Worker tokens cancelled → running jobs receive cancellation signal
     pool_cancellation_token_.cancel();
 
-    if (job_queue_ != nullptr) {
+    // Stop the queue (supports both queue_adapter_ and job_queue_)
+    if (queue_adapter_) {
+        queue_adapter_->stop();
+        if (immediately_stop) {
+            queue_adapter_->clear();
+        }
+    } else if (job_queue_ != nullptr) {
         job_queue_->stop();
-
         if (immediately_stop) {
             job_queue_->clear();
         }
@@ -561,8 +651,10 @@ auto thread_pool::stop_unsafe() noexcept -> common::VoidResult {
     // Cancel pool-level token to propagate cancellation to all workers and jobs
     pool_cancellation_token_.cancel();
 
-    // Stop job queue if it exists
-    if (job_queue_ != nullptr) {
+    // Stop the queue (supports both queue_adapter_ and job_queue_)
+    if (queue_adapter_) {
+        queue_adapter_->stop();
+    } else if (job_queue_ != nullptr) {
         job_queue_->stop();
     }
 
@@ -585,8 +677,17 @@ auto thread_pool::to_string(void) const -> std::string {
     // Exact state ordering is not critical for debug output
     formatter::format_to(std::back_inserter(format_string), "{} is {},\n", thread_title_,
                          start_pool_.load(std::memory_order_relaxed) ? "running" : "stopped");
-    formatter::format_to(std::back_inserter(format_string), "\tjob_queue: {}\n\n",
-                         (job_queue_ != nullptr ? job_queue_->to_string() : "nullptr"));
+
+    // Get queue string representation (supports both queue_adapter_ and job_queue_)
+    std::string queue_str;
+    if (queue_adapter_) {
+        queue_str = queue_adapter_->to_string();
+    } else if (job_queue_ != nullptr) {
+        queue_str = job_queue_->to_string();
+    } else {
+        queue_str = "nullptr";
+    }
+    formatter::format_to(std::back_inserter(format_string), "\tjob_queue: {}\n\n", queue_str);
 
     // Protect workers_ access with lock
     std::scoped_lock<std::mutex> lock(workers_mutex_);
@@ -621,7 +722,10 @@ void thread_pool::report_metrics() {
 
     metrics.idle_threads.value = static_cast<double>(get_idle_worker_count());
 
-    if (job_queue_) {
+    // Get pending jobs count (supports both queue_adapter_ and job_queue_)
+    if (queue_adapter_) {
+        metrics.jobs_pending.value = static_cast<double>(queue_adapter_->size());
+    } else if (job_queue_) {
         metrics.jobs_pending.value = static_cast<double>(job_queue_->size());
     }
 
@@ -672,6 +776,10 @@ auto thread_pool::is_running() const -> bool {
 }
 
 auto thread_pool::get_pending_task_count() const -> std::size_t {
+    // Supports both queue_adapter_ and job_queue_
+    if (queue_adapter_) {
+        return queue_adapter_->size();
+    }
     if (job_queue_) {
         return job_queue_->size();
     }
