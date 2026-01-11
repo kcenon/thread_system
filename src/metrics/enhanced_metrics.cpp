@@ -129,10 +129,10 @@ EnhancedSnapshot EnhancedThreadPoolMetrics::snapshot() const {
     EnhancedSnapshot snap;
     snap.snapshot_time = std::chrono::steady_clock::now();
 
-    // Basic counters
-    snap.tasks_submitted = tasks_submitted_.load(std::memory_order_relaxed);
-    snap.tasks_executed = tasks_executed_.load(std::memory_order_relaxed);
-    snap.tasks_failed = tasks_failed_.load(std::memory_order_relaxed);
+    // Basic counters (from MetricsBase)
+    snap.tasks_submitted = tasks_submitted();
+    snap.tasks_executed = tasks_executed();
+    snap.tasks_failed = tasks_failed();
 
     // Latency percentiles (convert ns to μs)
     snap.enqueue_latency_p50_us = ns_to_us(enqueue_latency_.p50());
@@ -162,9 +162,9 @@ EnhancedSnapshot EnhancedThreadPoolMetrics::snapshot() const {
             static_cast<double>(samples);
     }
 
-    // Worker utilization
-    snap.total_busy_time_ns = total_busy_time_ns_.load(std::memory_order_relaxed);
-    snap.total_idle_time_ns = total_idle_time_ns_.load(std::memory_order_relaxed);
+    // Worker utilization (from MetricsBase)
+    snap.total_busy_time_ns = total_busy_time_ns();
+    snap.total_idle_time_ns = total_idle_time_ns();
     snap.active_workers = active_workers_.load(std::memory_order_relaxed);
 
     auto total_time = snap.total_busy_time_ns + snap.total_idle_time_ns;
@@ -219,6 +219,9 @@ const SlidingWindowCounter& EnhancedThreadPoolMetrics::throughput_1m() const {
 }
 
 void EnhancedThreadPoolMetrics::reset() {
+    // Reset base class counters first
+    MetricsBase::reset();
+
     // Reset histograms
     enqueue_latency_.reset();
     execution_latency_.reset();
@@ -228,21 +231,13 @@ void EnhancedThreadPoolMetrics::reset() {
     throughput_1s_.reset();
     throughput_1m_.reset();
 
-    // Reset basic counters
-    tasks_submitted_.store(0, std::memory_order_relaxed);
-    tasks_executed_.store(0, std::memory_order_relaxed);
-    tasks_failed_.store(0, std::memory_order_relaxed);
-
     // Reset queue depth tracking
     current_queue_depth_.store(0, std::memory_order_relaxed);
     peak_queue_depth_.store(0, std::memory_order_relaxed);
     queue_depth_sum_.store(0, std::memory_order_relaxed);
     queue_depth_samples_.store(0, std::memory_order_relaxed);
 
-    // Reset worker metrics
-    total_busy_time_ns_.store(0, std::memory_order_relaxed);
-    total_idle_time_ns_.store(0, std::memory_order_relaxed);
-
+    // Reset per-worker metrics
     {
         std::lock_guard<std::mutex> lock(workers_mutex_);
         for (auto& worker : per_worker_metrics_) {
