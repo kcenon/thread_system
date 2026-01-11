@@ -75,32 +75,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <future>
 #include <type_traits>
 
-// Forward declarations
+// Forward declarations for thread_pool-specific types
+// Core forward declarations are in <kcenon/thread/forward.h>
 namespace kcenon::thread::diagnostics {
 	class thread_pool_diagnostics;
 	struct thread_info;
 }
 
 namespace kcenon::thread {
-	class circuit_breaker;
-	struct circuit_breaker_config;
-	class autoscaler;
-	struct autoscaling_policy;
-	class numa_work_stealer;
-	class pool_queue_adapter_interface;
-
-	// Forward declaration for policy_queue
-	template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
-	class policy_queue;
-
-	namespace policies {
-		struct mutex_sync_policy;
-		struct lockfree_sync_policy;
-		struct unbounded_policy;
-		struct overflow_reject_policy;
-	}
-
 	// Type aliases for common policy_queue configurations
+	// Uses forward declarations from forward.h
 	using standard_queue = policy_queue<
 		policies::mutex_sync_policy,
 		policies::unbounded_policy,
