@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Issue #438**: Phase 1.2 - Implement Policy-Based Queue Template
+  - New compile-time policy-based queue system in `<kcenon/thread/policies/>`
+  - **Sync Policies** (`sync_policies.h`):
+    - `mutex_sync_policy`: Thread-safe with mutex and condition variable, supports blocking waits
+    - `lockfree_sync_policy`: Lock-free Michael-Scott queue algorithm
+    - `adaptive_sync_policy`: Runtime mode switching between mutex and lock-free
+  - **Bound Policies** (`bound_policies.h`):
+    - `unbounded_policy`: No size limits
+    - `bounded_policy`: Fixed maximum size limit
+    - `dynamic_bounded_policy`: Runtime adjustable size limits
+  - **Overflow Policies** (`overflow_policies.h`):
+    - `overflow_reject_policy`: Fail enqueue when queue is full
+    - `overflow_block_policy`: Block until space is available
+    - `overflow_drop_oldest_policy`: Ring buffer behavior
+    - `overflow_drop_newest_policy`: Silent drop of new item
+    - `overflow_timeout_policy`: Block with configurable timeout
+  - **Policy Queue Template** (`policy_queue.h`):
+    - `policy_queue<SyncPolicy, BoundPolicy, OverflowPolicy>`: Composable queue template
+    - Implements `scheduler_interface` and `queue_capabilities_interface`
+    - Type aliases: `standard_queue`, `lockfree_queue`
+  - Comprehensive unit tests for all policy combinations (36 new tests)
+  - Forward declarations added to `forward.h`
+
 ### Removed
 - **Issue #434**: Phase 1.0 - Queue Variants Consolidation
   - Removed `bounded_job_queue` class (functionality merged into `job_queue` with `max_size` parameter)
