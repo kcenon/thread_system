@@ -104,6 +104,17 @@ template<typename JobType>
 class typed_thread_pool_builder;
 
 // ============================================================================
+// Scaling and resilience types
+// ============================================================================
+
+class circuit_breaker;
+struct circuit_breaker_config;
+class autoscaler;
+struct autoscaling_policy;
+class numa_work_stealer;
+class pool_queue_adapter_interface;
+
+// ============================================================================
 // Queue types
 // ============================================================================
 
