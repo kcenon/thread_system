@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/forward.h>
 #include <kcenon/thread/interfaces/thread_context.h>
+#include <kcenon/thread/interfaces/pool_queue_adapter.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/metrics/enhanced_metrics.h>
 #include <kcenon/thread/scaling/autoscaling_policy.h>
@@ -86,6 +87,31 @@ namespace kcenon::thread {
 	class autoscaler;
 	struct autoscaling_policy;
 	class numa_work_stealer;
+	class pool_queue_adapter_interface;
+
+	// Forward declaration for policy_queue
+	template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
+	class policy_queue;
+
+	namespace policies {
+		struct mutex_sync_policy;
+		struct lockfree_sync_policy;
+		struct unbounded_policy;
+		struct overflow_reject_policy;
+	}
+
+	// Type aliases for common policy_queue configurations
+	using standard_queue = policy_queue<
+		policies::mutex_sync_policy,
+		policies::unbounded_policy,
+		policies::overflow_reject_policy
+	>;
+
+	using policy_lockfree_queue = policy_queue<
+		policies::lockfree_sync_policy,
+		policies::unbounded_policy,
+		policies::overflow_reject_policy
+	>;
 }
 
 /**
@@ -186,6 +212,34 @@ namespace kcenon::thread
 		 */
 		thread_pool(const std::string& thread_title,
 		           std::shared_ptr<job_queue> custom_queue,
+		           const thread_context& context = thread_context());
+
+		/**
+		 * @brief Constructs a new @c thread_pool instance with a policy_queue adapter.
+		 * @param thread_title A title or identifier for the thread pool.
+		 * @param queue_adapter A queue adapter wrapping a policy_queue.
+		 * @param context Optional thread context for logging and monitoring (defaults to empty context).
+		 *
+		 * This constructor allows using the new policy-based queue system with thread_pool.
+		 * Use adapters from <kcenon/thread/adapters/policy_queue_adapter.h>.
+		 *
+		 * ### Example
+		 * @code
+		 * #include <kcenon/thread/adapters/policy_queue_adapter.h>
+		 *
+		 * // Create thread_pool with standard_queue (mutex-based, unbounded)
+		 * auto pool = std::make_shared<thread_pool>(
+		 *     "my_pool",
+		 *     make_standard_queue_adapter());
+		 *
+		 * // Or with lock-free queue
+		 * auto fast_pool = std::make_shared<thread_pool>(
+		 *     "fast_pool",
+		 *     make_lockfree_queue_adapter());
+		 * @endcode
+		 */
+		thread_pool(const std::string& thread_title,
+		           std::unique_ptr<pool_queue_adapter_interface> queue_adapter,
 		           const thread_context& context = thread_context());
 
 		/**
@@ -791,8 +845,24 @@ namespace kcenon::thread
 		 *
 		 * Worker threads dequeue jobs from this queue to perform tasks. The queue persists
 		 * for the lifetime of the pool or until no more references exist.
+		 *
+		 * @note When queue_adapter_ is set, this may be nullptr for policy_queue adapters.
+		 *       Use get_queue_adapter() for unified access.
 		 */
 		std::shared_ptr<job_queue> job_queue_;
+
+		/**
+		 * @brief Queue adapter for unified access to different queue types.
+		 *
+		 * When set, provides a unified interface for both job_queue and policy_queue.
+		 * This enables thread_pool to work with the new policy-based queue system
+		 * while maintaining backward compatibility.
+		 *
+		 * The adapter wraps either:
+		 * - job_queue: Legacy queue with full feature support
+		 * - policy_queue: New policy-based queue with compile-time configuration
+		 */
+		std::unique_ptr<pool_queue_adapter_interface> queue_adapter_;
 
 		/**
 		 * @brief A collection of worker threads associated with this pool.
