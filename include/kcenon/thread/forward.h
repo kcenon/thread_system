@@ -183,6 +183,24 @@ using lockfree_queue [[deprecated(
     "For true lock-free queue, see detail::lockfree_job_queue with hazard pointers.")]] = detail::concurrent_queue<T>;
 
 // ============================================================================
+// Metrics types (in metrics sub-namespace)
+// ============================================================================
+
+namespace metrics {
+    class MetricsBase;
+    class ThreadPoolMetrics;
+    class EnhancedThreadPoolMetrics;
+    class MetricsBackend;
+    class PrometheusBackend;
+    class JsonBackend;
+    class LoggingBackend;
+    class BackendRegistry;
+    struct BaseSnapshot;
+    struct EnhancedSnapshot;
+    struct WorkerMetrics;
+}  // namespace metrics
+
+// ============================================================================
 // Diagnostics types (in diagnostics sub-namespace)
 // ============================================================================
 
