@@ -238,6 +238,71 @@ Action items for downstream integrations:
 - Will require separate module dependencies in future phases
 - Include paths will change from internal to external modules
 
+### Phase 1.3.3: thread_pool policy_queue Support (2025-01)
+
+**New Feature:** `thread_pool` now supports `policy_queue` through the adapter pattern.
+
+#### New Constructors
+
+```cpp
+#include <kcenon/thread/adapters/job_queue_adapter.h>
+#include <kcenon/thread/adapters/policy_queue_adapter.h>
+
+// Using job_queue_adapter (wraps existing job_queue)
+auto adapter = std::make_unique<job_queue_adapter>();
+auto pool = std::make_shared<thread_pool>("my_pool", std::move(adapter));
+
+// Using make_standard_queue_adapter() helper
+auto pool2 = std::make_shared<thread_pool>(
+    "pool2",
+    make_standard_queue_adapter());
+
+// Using make_lockfree_queue_adapter() helper
+auto pool3 = std::make_shared<thread_pool>(
+    "pool3",
+    make_lockfree_queue_adapter());
+```
+
+#### Backward Compatibility
+
+All existing code continues to work without changes:
+
+```cpp
+// Still works - default constructor
+auto pool = std::make_shared<thread_pool>();
+
+// Still works - custom job_queue
+auto queue = std::make_shared<job_queue>();
+auto pool = std::make_shared<thread_pool>("my_pool", queue);
+```
+
+#### Adapter Interface
+
+The `pool_queue_adapter_interface` provides a unified API for both queue types:
+
+```cpp
+class pool_queue_adapter_interface {
+public:
+    virtual auto enqueue(std::unique_ptr<job>&&) -> common::VoidResult = 0;
+    virtual auto enqueue_batch(std::vector<std::unique_ptr<job>>&&) -> common::VoidResult = 0;
+    virtual auto dequeue() -> common::Result<std::unique_ptr<job>> = 0;
+    virtual auto try_dequeue() -> common::Result<std::unique_ptr<job>> = 0;
+    virtual auto empty() const -> bool = 0;
+    virtual auto size() const -> std::size_t = 0;
+    virtual auto clear() -> void = 0;
+    virtual auto stop() -> void = 0;
+    virtual auto is_stopped() const -> bool = 0;
+    virtual auto get_capabilities() const -> queue_capabilities = 0;
+    virtual auto to_string() const -> std::string = 0;
+    virtual auto get_job_queue() const -> std::shared_ptr<job_queue> = 0;
+    virtual auto get_scheduler() -> scheduler_interface& = 0;
+};
+```
+
+#### Current Limitations
+
+- **Workers with policy_queue:** When using `policy_queue_adapter` directly (not wrapping a `job_queue`), workers currently require a `job_queue` backend. This limitation may be lifted in future versions when `thread_worker` is updated to use `scheduler_interface`.
+
 ## Migration Instructions for Users
 
 ### Current Users (Phase 1)
