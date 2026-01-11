@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Issue #458**: Phase 1.4.3 - Migrate aging_typed_job_queue_t to policy_queue basis
+  - `aging_typed_job_queue_t` no longer inherits from `typed_job_queue_t`
+  - Uses composition with `policy_queue<mutex_sync_policy, unbounded_policy, overflow_reject_policy>` internally
+  - Per-type queue storage using `std::unordered_map<job_type, std::unique_ptr<queue_type>>`
+  - Maintains full API compatibility with `typed_job_queue_t` interface:
+    - `enqueue(std::unique_ptr<job>&&)`
+    - `enqueue(std::unique_ptr<typed_job_t<job_type>>&&)`
+    - `enqueue_batch(std::vector<std::unique_ptr<typed_job_t<job_type>>>&&)`
+    - `dequeue(const std::vector<job_type>&)`
+    - `dequeue(utility_module::span<const job_type>)`
+    - `empty(const std::vector<job_type>&)`
+    - `clear()`, `stop()`, `size()`, `to_string()`
+  - `typed_thread_worker_t` updated with `set_aging_job_queue()` method for direct aging queue support
+  - `typed_thread_pool_t` updated to set aging queue directly on workers instead of using `set_job_queue()`
+  - All 15 aging-related tests pass successfully
+
 ### Added
 - **Issue #449**: Phase 1.3.2 - Update scheduler_interface for policy_queue
   - New `queue_traits.h` with compile-time type detection utilities:

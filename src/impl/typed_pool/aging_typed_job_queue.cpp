@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/impl/typed_pool/aging_typed_job_queue.h>
+#include <kcenon/thread/core/error_handling.h>
 
 #include <cmath>
 #include <algorithm>
@@ -39,8 +40,7 @@ namespace kcenon::thread
 {
 	template <typename job_type>
 	aging_typed_job_queue_t<job_type>::aging_typed_job_queue_t(priority_aging_config config)
-		: base()
-		, config_(std::move(config))
+		: config_(std::move(config))
 		, stats_start_time_(std::chrono::steady_clock::now())
 	{
 	}
@@ -300,14 +300,25 @@ namespace kcenon::thread
 			};
 		}
 
+		if (stopped_.load())
+		{
+			return common::error_info{
+				static_cast<int>(error_code::queue_stopped),
+				"Queue is stopped",
+				"thread_system"
+			};
+		}
+
 		// Register for aging tracking
 		register_aging_job(value.get());
 
 		// Set max boost from config
 		value->set_max_boost(config_.max_priority_boost);
 
-		// Enqueue via base class
-		return base::enqueue(std::move(value));
+		// Get the priority and enqueue to appropriate queue
+		auto priority = value->priority();
+		auto* queue = get_or_create_queue(priority);
+		return queue->enqueue(std::move(value));
 	}
 
 	template <typename job_type>
@@ -372,6 +383,281 @@ namespace kcenon::thread
 			stats_.boost_rate = static_cast<double>(stats_.total_boosts_applied) /
 			                    static_cast<double>(elapsed.count());
 		}
+	}
+
+	// ============================================
+	// typed_job_queue_t compatible API implementation
+	// ============================================
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::get_or_create_queue(const job_type& type) -> queue_type*
+	{
+		std::unique_lock lock(queues_mutex_);
+		auto it = job_queues_.find(type);
+		if (it == job_queues_.end())
+		{
+			auto [new_it, inserted] = job_queues_.emplace(type, std::make_unique<queue_type>());
+			return new_it->second.get();
+		}
+		return it->second.get();
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::enqueue(std::unique_ptr<job>&& value) -> common::VoidResult
+	{
+		if (!value)
+		{
+			return common::error_info{
+				static_cast<int>(error_code::invalid_argument),
+				"Null job",
+				"thread_system"
+			};
+		}
+
+		if (stopped_.load())
+		{
+			return common::error_info{
+				static_cast<int>(error_code::queue_stopped),
+				"Queue is stopped",
+				"thread_system"
+			};
+		}
+
+		// For non-typed jobs, use default priority
+		auto* queue = get_or_create_queue(job_type{});
+		return queue->enqueue(std::move(value));
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::enqueue(
+		std::unique_ptr<typed_job_t<job_type>>&& value) -> common::VoidResult
+	{
+		if (!value)
+		{
+			return common::error_info{
+				static_cast<int>(error_code::invalid_argument),
+				"Null job",
+				"thread_system"
+			};
+		}
+
+		if (stopped_.load())
+		{
+			return common::error_info{
+				static_cast<int>(error_code::queue_stopped),
+				"Queue is stopped",
+				"thread_system"
+			};
+		}
+
+		auto priority = value->priority();
+		auto* queue = get_or_create_queue(priority);
+		return queue->enqueue(std::move(value));
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::enqueue_batch(
+		std::vector<std::unique_ptr<typed_job_t<job_type>>>&& jobs) -> common::VoidResult
+	{
+		for (auto& job : jobs)
+		{
+			auto result = enqueue(std::move(job));
+			if (result.is_err())
+			{
+				return result;
+			}
+		}
+		return common::ok();
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::dequeue() -> common::Result<std::unique_ptr<job>>
+	{
+		std::shared_lock lock(queues_mutex_);
+
+		for (auto& [type, queue] : job_queues_)
+		{
+			if (queue && !queue->empty())
+			{
+				auto result = queue->dequeue();
+				if (result.is_ok())
+				{
+					return result;
+				}
+			}
+		}
+
+		return common::error_info{
+			static_cast<int>(error_code::job_invalid),
+			"No job available",
+			"thread_system"
+		};
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::try_dequeue_from_priority(const job_type& priority)
+		-> std::optional<std::unique_ptr<typed_job_t<job_type>>>
+	{
+		std::shared_lock lock(queues_mutex_);
+
+		auto it = job_queues_.find(priority);
+		if (it == job_queues_.end() || !it->second || it->second->empty())
+		{
+			return std::nullopt;
+		}
+
+		auto result = it->second->dequeue();
+		if (result.is_err())
+		{
+			return std::nullopt;
+		}
+
+		auto job = std::move(result.value());
+		// Cast back to typed_job_t if possible
+		auto* typed_ptr = dynamic_cast<typed_job_t<job_type>*>(job.release());
+		if (typed_ptr)
+		{
+			return std::unique_ptr<typed_job_t<job_type>>(typed_ptr);
+		}
+
+		return std::nullopt;
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::dequeue(const std::vector<job_type>& types)
+		-> common::Result<std::unique_ptr<typed_job_t<job_type>>>
+	{
+		for (const auto& type : types)
+		{
+			auto result = try_dequeue_from_priority(type);
+			if (result.has_value())
+			{
+				return std::move(result.value());
+			}
+		}
+
+		return common::error_info{
+			static_cast<int>(error_code::job_invalid),
+			"No job available for specified types",
+			"thread_system"
+		};
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::dequeue(utility_module::span<const job_type> types)
+		-> common::Result<std::unique_ptr<typed_job_t<job_type>>>
+	{
+		for (const auto& type : types)
+		{
+			auto result = try_dequeue_from_priority(type);
+			if (result.has_value())
+			{
+				return std::move(result.value());
+			}
+		}
+
+		return common::error_info{
+			static_cast<int>(error_code::job_invalid),
+			"No job available for specified types",
+			"thread_system"
+		};
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::clear() -> void
+	{
+		std::unique_lock lock(queues_mutex_);
+
+		for (auto& [type, queue] : job_queues_)
+		{
+			if (queue)
+			{
+				queue->clear();
+			}
+		}
+
+		{
+			std::lock_guard jobs_lock(jobs_mutex_);
+			aging_jobs_.clear();
+		}
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::empty(const std::vector<job_type>& types) const -> bool
+	{
+		std::shared_lock lock(queues_mutex_);
+
+		for (const auto& type : types)
+		{
+			auto it = job_queues_.find(type);
+			if (it != job_queues_.end() && it->second && !it->second->empty())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::empty(utility_module::span<const job_type> types) const -> bool
+	{
+		std::shared_lock lock(queues_mutex_);
+
+		for (const auto& type : types)
+		{
+			auto it = job_queues_.find(type);
+			if (it != job_queues_.end() && it->second && !it->second->empty())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::to_string() const -> std::string
+	{
+		std::ostringstream oss;
+		oss << "aging_typed_job_queue{";
+		oss << "aging_running: " << (aging_running_.load() ? "true" : "false");
+		oss << ", stopped: " << (stopped_.load() ? "true" : "false");
+		oss << ", total_jobs: " << size();
+		oss << "}";
+		return oss.str();
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::stop() -> void
+	{
+		stopped_.store(true);
+
+		std::unique_lock lock(queues_mutex_);
+		for (auto& [type, queue] : job_queues_)
+		{
+			if (queue)
+			{
+				queue->stop();
+			}
+		}
+	}
+
+	template <typename job_type>
+	auto aging_typed_job_queue_t<job_type>::size() const -> std::size_t
+	{
+		std::shared_lock lock(queues_mutex_);
+		std::size_t total = 0;
+
+		for (const auto& [type, queue] : job_queues_)
+		{
+			if (queue)
+			{
+				total += queue->size();
+			}
+		}
+
+		return total;
 	}
 
 	// Explicit template instantiation for job_types
