@@ -75,32 +75,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <future>
 #include <type_traits>
 
-// Forward declarations
+// Forward declarations for thread_pool-specific types
+// Core forward declarations are in <kcenon/thread/forward.h>
 namespace kcenon::thread::diagnostics {
 	class thread_pool_diagnostics;
 	struct thread_info;
 }
 
 namespace kcenon::thread {
-	class circuit_breaker;
-	struct circuit_breaker_config;
-	class autoscaler;
-	struct autoscaling_policy;
-	class numa_work_stealer;
-	class pool_queue_adapter_interface;
-
-	// Forward declaration for policy_queue
-	template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
-	class policy_queue;
-
-	namespace policies {
-		struct mutex_sync_policy;
-		struct lockfree_sync_policy;
-		struct unbounded_policy;
-		struct overflow_reject_policy;
-	}
-
 	// Type aliases for common policy_queue configurations
+	// Uses forward declarations from forward.h
 	using standard_queue = policy_queue<
 		policies::mutex_sync_policy,
 		policies::unbounded_policy,
@@ -1016,154 +1000,15 @@ namespace kcenon::thread
 // ----------------------------------------------------------------------------
 // Template method implementations for thread_pool
 // ----------------------------------------------------------------------------
+// Separated into thread_pool_impl.h for improved compilation times.
+// See thread_pool_impl.h for submit_async, submit_batch_async, submit_all, submit_any.
 
-#include <kcenon/thread/core/future_job.h>
-
-namespace kcenon::thread {
-
-template<typename F, typename R>
-auto thread_pool::submit_async(F&& callable, const std::string& name)
-    -> std::future<R>
-{
-    auto job_ptr = std::make_unique<future_job<R>>(
-        std::forward<F>(callable),
-        name.empty() ? "async_job" : name
-    );
-
-    auto future = job_ptr->get_future();
-
-    auto result = enqueue(std::move(job_ptr));
-    if (result.is_err()) {
-        std::promise<R> error_promise;
-        error_promise.set_exception(
-            std::make_exception_ptr(
-                std::runtime_error(result.error().message)
-            )
-        );
-        return error_promise.get_future();
-    }
-
-    return future;
-}
-
-template<typename F, typename R>
-auto thread_pool::submit_batch_async(std::vector<F>&& callables)
-    -> std::vector<std::future<R>>
-{
-    std::vector<std::future<R>> futures;
-    futures.reserve(callables.size());
-
-    for (auto&& callable : callables) {
-        futures.push_back(submit_async<F, R>(std::move(callable)));
-    }
-
-    return futures;
-}
-
-template<typename F, typename R>
-auto thread_pool::submit_all(std::vector<F>&& callables)
-    -> std::vector<R>
-{
-    auto futures = submit_batch_async<F, R>(std::move(callables));
-
-    std::vector<R> results;
-    results.reserve(futures.size());
-
-    for (auto& future : futures) {
-        results.push_back(future.get());
-    }
-
-    return results;
-}
-
-template<typename F, typename R>
-auto thread_pool::submit_any(std::vector<F>&& callables)
-    -> R
-{
-    if (callables.empty()) {
-        throw std::invalid_argument("Empty callables vector");
-    }
-
-    auto futures = submit_batch_async<F, R>(std::move(callables));
-    auto completed = std::make_shared<std::atomic<bool>>(false);
-    auto result_promise = std::make_shared<std::promise<R>>();
-    auto result_future = result_promise->get_future();
-
-    for (std::size_t i = 0; i < futures.size(); ++i) {
-        std::thread([completed, result_promise, fut = std::move(futures[i])]() mutable {
-            try {
-                R result = fut.get();
-                bool expected = false;
-                if (completed->compare_exchange_strong(expected, true)) {
-                    result_promise->set_value(std::move(result));
-                }
-            } catch (...) {
-                bool expected = false;
-                if (completed->compare_exchange_strong(expected, true)) {
-                    result_promise->set_exception(std::current_exception());
-                }
-            }
-        }).detach();
-    }
-
-    return result_future.get();
-}
-
-} // namespace kcenon::thread
+#include <kcenon/thread/core/thread_pool_impl.h>
 
 // ----------------------------------------------------------------------------
 // Formatter specializations for thread_pool
 // ----------------------------------------------------------------------------
+// Separated into thread_pool_fmt.h for improved compilation times.
+// See thread_pool_fmt.h for std::formatter specializations.
 
-/**
- * @brief Specialization of std::formatter for @c kcenon::thread::thread_pool.
- *
- * Enables formatting of @c thread_pool objects as strings using C++20 std::format.
- *
- * ### Example
- * @code
- * auto pool = std::make_shared<kcenon::thread::thread_pool>("MyPool");
- * std::string output = std::format("Pool Info: {}", *pool); // e.g. "Pool Info: [thread_pool: MyPool]"
- * @endcode
- */
-template <>
-struct std::formatter<kcenon::thread::thread_pool> : std::formatter<std::string_view>
-{
-	/**
-	 * @brief Formats a @c thread_pool object as a string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param item The @c thread_pool to format.
-	 * @param ctx  The format context for the output.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
-	{
-		return std::formatter<std::string_view>::format(item.to_string(), ctx);
-	}
-};
-
-/**
- * @brief Specialization of std::formatter for wide-character @c kcenon::thread::thread_pool.
- *
- * Allows wide-string formatting of @c thread_pool objects using C++20 std::format.
- */
-template <>
-struct std::formatter<kcenon::thread::thread_pool, wchar_t>
-	: std::formatter<std::wstring_view, wchar_t>
-{
-	/**
-	 * @brief Formats a @c thread_pool object as a wide string.
-	 * @tparam FormatContext The type of the format context.
-	 * @param item The @c thread_pool to format.
-	 * @param ctx  The wide-character format context.
-	 * @return An iterator to the end of the formatted output.
-	 */
-	template <typename FormatContext>
-	auto format(const kcenon::thread::thread_pool& item, FormatContext& ctx) const
-	{
-		auto str = item.to_string();
-		auto wstr = utility_module::convert_string::to_wstring(str);
-		return std::formatter<std::wstring_view, wchar_t>::format(wstr, ctx);
-	}
-};
+#include <kcenon/thread/core/thread_pool_fmt.h>
