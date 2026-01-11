@@ -36,6 +36,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/lockfree/lockfree_job_queue.h>
 #include <kcenon/thread/queue/adaptive_job_queue.h>
 #include <kcenon/thread/interfaces/scheduler_interface.h>
+#include <kcenon/thread/interfaces/queue_traits.h>
+#include <kcenon/thread/policies/policy_queue.h>
 
 #include <memory>
 #include <type_traits>
@@ -198,6 +200,110 @@ public:
      * - Otherwise: adaptive_job_queue (best of both worlds)
      */
     [[nodiscard]] static auto create_optimal() -> std::unique_ptr<scheduler_interface>;
+
+    // ============================================
+    // Policy-based queue factory methods
+    // ============================================
+
+    /**
+     * @brief Create a standard policy_queue (mutex-based, unbounded)
+     * @return Unique pointer to standard_queue
+     *
+     * This creates a policy_queue with:
+     * - mutex_sync_policy: Thread-safe with blocking support
+     * - unbounded_policy: No size limits
+     * - overflow_reject_policy: Rejects on overflow (not applicable for unbounded)
+     *
+     * Use this as the modern replacement for legacy job_queue.
+     *
+     * @code
+     * auto queue = queue_factory::create_policy_queue();
+     * queue->schedule(std::make_unique<my_job>());
+     * @endcode
+     */
+    [[nodiscard]] static auto create_policy_queue()
+        -> std::unique_ptr<standard_queue>;
+
+    /**
+     * @brief Create a lock-free policy_queue
+     * @return Unique pointer to lockfree_queue
+     *
+     * This creates a policy_queue with:
+     * - lockfree_sync_policy: High-throughput, non-blocking
+     * - unbounded_policy: No size limits
+     * - overflow_reject_policy: Rejects on overflow (not applicable for unbounded)
+     *
+     * Use this for high-contention scenarios.
+     *
+     * @note size() returns approximate values, empty() is non-atomic
+     */
+    [[nodiscard]] static auto create_lockfree_policy_queue()
+        -> std::unique_ptr<lockfree_queue>;
+
+    /**
+     * @brief Create a bounded policy_queue with specified size
+     * @param max_size Maximum number of jobs the queue can hold
+     * @return Unique pointer to bounded queue
+     *
+     * This creates a policy_queue with:
+     * - mutex_sync_policy: Thread-safe with blocking support
+     * - bounded_policy: Limited to max_size items
+     * - overflow_reject_policy: Returns error when full
+     *
+     * @code
+     * auto queue = queue_factory::create_bounded_policy_queue(1000);
+     * auto result = queue->schedule(std::make_unique<my_job>());
+     * if (result.is_err()) {
+     *     // Queue was full
+     * }
+     * @endcode
+     */
+    [[nodiscard]] static auto create_bounded_policy_queue(std::size_t max_size)
+        -> std::unique_ptr<policy_queue<
+            policies::mutex_sync_policy,
+            policies::bounded_policy,
+            policies::overflow_reject_policy>>;
+
+    /**
+     * @brief Create a policy_queue with custom policies
+     * @tparam SyncPolicy Synchronization policy type
+     * @tparam BoundPolicy Bounding policy type
+     * @tparam OverflowPolicy Overflow handling policy type
+     * @param sync_policy Sync policy instance
+     * @param bound_policy Bound policy instance
+     * @param overflow_policy Overflow policy instance
+     * @return Unique pointer to the configured policy_queue
+     *
+     * This factory method allows full customization of queue behavior.
+     *
+     * @code
+     * auto queue = queue_factory::create_custom_policy_queue(
+     *     policies::mutex_sync_policy{},
+     *     policies::bounded_policy{100},
+     *     policies::overflow_drop_oldest_policy{}
+     * );
+     * @endcode
+     */
+    template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
+    [[nodiscard]] static auto create_custom_policy_queue(
+        SyncPolicy sync_policy,
+        BoundPolicy bound_policy,
+        OverflowPolicy overflow_policy)
+        -> std::unique_ptr<policy_queue<SyncPolicy, BoundPolicy, OverflowPolicy>>
+    {
+        static_assert(is_sync_policy_v<SyncPolicy>,
+            "SyncPolicy must be a valid sync policy type");
+        static_assert(is_bound_policy_v<BoundPolicy>,
+            "BoundPolicy must be a valid bound policy type");
+        static_assert(is_overflow_policy_v<OverflowPolicy>,
+            "OverflowPolicy must be a valid overflow policy type");
+
+        return std::make_unique<policy_queue<SyncPolicy, BoundPolicy, OverflowPolicy>>(
+            std::move(sync_policy),
+            std::move(bound_policy),
+            std::move(overflow_policy)
+        );
+    }
 };
 
 // ============================================

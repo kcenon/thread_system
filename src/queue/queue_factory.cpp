@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/queue/queue_factory.h>
+#include <kcenon/thread/policies/policy_queue.h>
 
 #include <thread>
 
@@ -79,6 +80,28 @@ auto queue_factory::create_optimal() -> std::unique_ptr<scheduler_interface>
 
     // Default: adaptive for best of both worlds
     return std::make_unique<adaptive_job_queue>();
+}
+
+auto queue_factory::create_policy_queue() -> std::unique_ptr<standard_queue>
+{
+    return std::make_unique<standard_queue>();
+}
+
+auto queue_factory::create_lockfree_policy_queue() -> std::unique_ptr<lockfree_queue>
+{
+    return std::make_unique<lockfree_queue>();
+}
+
+auto queue_factory::create_bounded_policy_queue(std::size_t max_size)
+    -> std::unique_ptr<policy_queue<
+        policies::mutex_sync_policy,
+        policies::bounded_policy,
+        policies::overflow_reject_policy>>
+{
+    return std::make_unique<policy_queue<
+        policies::mutex_sync_policy,
+        policies::bounded_policy,
+        policies::overflow_reject_policy>>(policies::bounded_policy(max_size));
 }
 
 } // namespace kcenon::thread
