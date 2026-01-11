@@ -36,7 +36,7 @@ This document defines the policy-based design for consolidating the thread_syste
 | 4 | detail::lockfree_job_queue | Atomic | **Active** | lockfree/lockfree_job_queue.h |
 | 5 | detail::concurrent_queue | Fine-grain | **Internal** | concurrent/concurrent_queue.h |
 | 6 | adaptive_job_queue | Wrapper | **Active** | queue/adaptive_job_queue.h |
-| 7 | typed_job_queue_t | Mutex | **DEPRECATED** | impl/typed_pool/typed_job_queue.h |
+| 7 | typed_job_queue_t | Mutex | **REMOVED** | (removed in Phase 1.4.4) |
 | 8 | typed_lockfree_job_queue_t | Lock-free | **REMOVED** | (removed in Phase 1.4.2) |
 | 9 | adaptive_typed_job_queue_t | Wrapper | **REMOVED** | (removed in Phase 1.4.1) |
 | 10 | aging_typed_job_queue_t | Mutex + Thread | **Active** | impl/typed_pool/aging_typed_job_queue.h |
@@ -387,8 +387,8 @@ using aging_queue = queue<
 2. Update all internal usages to new types
 3. **DONE**: Remove `adaptive_typed_job_queue_t` (Phase 1.4.1)
 4. **DONE**: Remove `typed_lockfree_job_queue_t` (Phase 1.4.2)
-5. TODO: Migrate `aging_typed_job_queue_t` to policy_queue (Phase 1.4.3)
-6. TODO: Remove `typed_job_queue_t` (Phase 1.4.4)
+5. **DONE**: Migrate `aging_typed_job_queue_t` to policy_queue (Phase 1.4.3)
+6. **DONE**: Remove `typed_job_queue_t` (Phase 1.4.4)
 7. TODO: Update documentation and examples (Phase 1.4.5)
 
 ---
@@ -424,8 +424,8 @@ using aging_queue = queue<
 
 - [x] Phase 1.4.1: Remove adaptive_typed_job_queue_t (#456)
 - [x] Phase 1.4.2: Remove typed_lockfree_job_queue_t (#457)
-- [ ] Phase 1.4.3: Migrate aging_typed_job_queue_t to policy_queue (#458)
-- [ ] Phase 1.4.4: Remove typed_job_queue_t (#459)
+- [x] Phase 1.4.3: Migrate aging_typed_job_queue_t to policy_queue (#458)
+- [x] Phase 1.4.4: Remove typed_job_queue_t (#459)
 - [ ] Phase 1.4.5: Update all documentation (#460)
 
 ---

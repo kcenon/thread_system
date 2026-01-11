@@ -101,9 +101,7 @@ thread_system/
 │   │   │   └── thread_worker.cpp
 │   │   └── 📁 typed_pool/
 │   │       ├── typed_thread_pool.h
-│   │       ├── typed_job_queue.h
-│   │       ├── adaptive_typed_job_queue.h
-│   │       └── adaptive_typed_job_queue.cpp
+│   │       └── aging_typed_job_queue.h
 │   ├── 📁 modules/                 # C++20 모듈 파일 (실험적)
 │   │   ├── thread.cppm             # 주 모듈 인터페이스 (kcenon.thread)
 │   │   ├── core.cppm               # 코어 파티션 (thread_pool, jobs)

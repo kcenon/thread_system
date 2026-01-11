@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/job_types.h>
 #include <kcenon/thread/core/typed_thread_pool.h>
 #include <kcenon/thread/core/typed_thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
 
 using namespace kcenon::thread;
 

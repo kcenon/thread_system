@@ -105,7 +105,6 @@ thread_system/
 │   │   │   └── thread_worker.cpp   # Worker implementation
 │   │   └── 📁 typed_pool/          # Typed thread pool
 │   │       ├── typed_thread_pool.h # Typed pool header
-│   │       ├── typed_job_queue.h   # Typed queue (deprecated)
 │   │       └── aging_typed_job_queue.h # Priority aging queue
 │   ├── 📁 modules/                 # C++20 Module files (experimental)
 │   │   ├── thread.cppm             # Primary module interface (kcenon.thread)
@@ -544,7 +543,6 @@ thread_system/
 | File | Purpose | Lines | Complexity |
 |------|---------|-------|------------|
 | typed_thread_pool.h | Typed pool template header | ~300 | High |
-| typed_job_queue.h | Typed queue template (deprecated) | ~250 | Medium |
 | aging_typed_job_queue.h | Priority aging queue | ~280 | High |
 | typed_thread_worker.h | Typed worker template | ~180 | Medium |
 | typed_job.h | Typed job base | ~100 | Low |
@@ -556,10 +554,9 @@ thread_system/
 | File | Purpose | Lines | Complexity |
 |------|---------|-------|------------|
 | typed_thread_pool.cpp | Typed pool instantiation | ~400 | High |
-| typed_job_queue.cpp | Queue implementation | ~250 | Medium |
-| adaptive_typed_job_queue.cpp | Adaptive queue impl | ~150 | High |
+| aging_typed_job_queue.cpp | Priority aging queue impl | ~350 | High |
 
-**Total Typed Pool Lines**: ~900 lines
+**Total Typed Pool Lines**: ~750 lines
 
 ---
 
@@ -920,7 +917,7 @@ utilities (no dependencies)
 
 **typed_thread_pool.h depends on**:
 - thread_base.h
-- typed_job_queue.h (or adaptive_typed_job_queue.h)
+- aging_typed_job_queue.h
 - error_handling.h
 
 **lockfree_job_queue.h depends on**:

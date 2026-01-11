@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_base.h>
 #include <kcenon/thread/utils/convert_string.h>
 #include <kcenon/thread/interfaces/thread_context.h>
-#include "typed_job_queue.h"
 #include "aging_typed_job_queue.h"
 
 #include <memory>
@@ -49,7 +48,7 @@ namespace kcenon::thread
 	 * @brief A template-based worker thread class that processes jobs from a priority job queue.
 	 *
 	 * This class extends the functionality of \c thread_base by continually
-	 * retrieving and executing jobs from a \c typed_job_queue_t. Each
+	 * retrieving and executing jobs from an \c aging_typed_job_queue_t. Each
 	 * worker can be configured to handle specific priority levels, allowing
 	 * for flexible job distribution among multiple workers.
 	 *
@@ -64,20 +63,17 @@ namespace kcenon::thread
 	 *     true
 	 * );
 	 *
-	 * auto queue = std::make_shared<typed_job_queue_t<job_types>>();
-	 * worker->set_job_queue(queue);
+	 * auto queue = std::make_shared<aging_typed_job_queue_t<job_types>>();
+	 * worker->set_aging_job_queue(queue);
 	 *
 	 * // Start the worker thread
 	 * worker->start();
 	 *
 	 * // Enqueue some jobs
-	 * queue->push_job(
-	 *     // job lambda or functor
-	 *     , job_types::HIGH
-	 * );
-	 ** // Stop and join the worker once done
-	 *worker->stop();
-	 *worker->join();
+	 * queue->enqueue(std::make_unique<typed_job_t<job_types>>(job_types::HIGH));
+	 *
+	 * // Stop and join the worker once done
+	 * worker->stop();
 	 * @endcode
 	 *
 	 * ### Thread Safety
@@ -86,7 +82,7 @@ namespace kcenon::thread
 	 * thread-safe or externally synchronized.
 	 *
 	 * @see thread_base
-	 * @see typed_job_queue_t
+	 * @see aging_typed_job_queue_t
 	 */
 	template <typename job_type = job_types>
 	class typed_thread_worker_t : public thread_base
@@ -133,24 +129,12 @@ namespace kcenon::thread
 		 * for subsequent job retrieval.
 		 *
 		 * @param job_queue
-		 * A shared pointer to a \c typed_job_queue_t instance from which
+		 * A shared pointer to an \c aging_typed_job_queue_t instance from which
 		 * this worker will fetch jobs.
 		 *
 		 * @note
 		 * It is the responsibility of the caller to ensure the \c job_queue
 		 * remains valid for the lifespan of this worker.
-		 */
-		auto set_job_queue(std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void;
-
-		/**
-		 * @brief Assigns an aging priority job queue to this worker.
-		 *
-		 * When an aging queue is set, it takes precedence over the regular
-		 * typed job queue for job retrieval.
-		 *
-		 * @param job_queue
-		 * A shared pointer to an \c aging_typed_job_queue_t instance from which
-		 * this worker will fetch jobs.
 		 */
 		auto set_aging_job_queue(std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue) -> void;
 
@@ -233,17 +217,9 @@ namespace kcenon::thread
 		 *
 		 * The worker continually checks this queue for new jobs that match
 		 * its priority levels. Must be valid for the duration of this worker's
-		 * execution.
+		 * execution. Supports priority aging functionality.
 		 */
-		std::shared_ptr<typed_job_queue_t<job_type>> job_queue_;
-
-		/**
-		 * @brief The aging priority job queue (optional).
-		 *
-		 * When set, this queue takes precedence over the regular typed job queue.
-		 * Supports priority aging functionality.
-		 */
-		std::shared_ptr<aging_typed_job_queue_t<job_type>> aging_job_queue_;
+		std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue_;
 
 		/**
 		 * @brief The thread context providing optional services.

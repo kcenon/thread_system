@@ -565,14 +565,19 @@ Worker with type-based job handling.
 template<typename T>
 class typed_thread_worker_t : public thread_base {
 public:
-    typed_thread_worker_t(const std::string& name = "typed_worker");
-    
+    typed_thread_worker_t(std::vector<T> types = get_all_job_types(),
+                         const bool& use_time_tag = true,
+                         const thread_context& context = thread_context());
+
     // Type responsibilities
-    auto set_responsibilities(const std::vector<T>& types) -> void;
-    auto get_responsibilities() const -> std::vector<T>;
-    
-    // Queue association
-    auto set_job_queue(const std::shared_ptr<typed_job_queue_t<T>>& queue) -> void;
+    auto types() const -> std::vector<T>;
+
+    // Queue association (uses aging queue for priority aging support)
+    auto set_aging_job_queue(std::shared_ptr<aging_typed_job_queue_t<T>> job_queue) -> void;
+
+    // Context management
+    auto set_context(const thread_context& context) -> void;
+    auto get_context() const -> const thread_context&;
 };
 ```
 

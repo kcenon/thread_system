@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
 #include <kcenon/thread/impl/typed_pool/typed_thread_worker.h>
-#include <kcenon/thread/impl/typed_pool/typed_job_queue.h>
 #include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
 #include <kcenon/thread/impl/typed_pool/aging_typed_job_queue.h>
 #include <kcenon/thread/impl/typed_pool/aging_typed_job.h>
@@ -52,7 +51,7 @@ namespace kcenon::thread
 		const thread_context& context)
 		: thread_title_(thread_title)
 		, start_pool_(false)
-		, job_queue_(std::make_shared<typed_job_queue_t<job_type>>())
+		, job_queue_(std::make_shared<aging_typed_job_queue_t<job_type>>())
 		, context_(context)
 	{
 	}
@@ -101,7 +100,7 @@ namespace kcenon::thread
 	}
 
 	template <typename job_type>
-	auto typed_thread_pool_t<job_type>::get_job_queue() -> std::shared_ptr<typed_job_queue_t<job_type>>
+	auto typed_thread_pool_t<job_type>::get_job_queue() -> std::shared_ptr<aging_typed_job_queue_t<job_type>>
 	{
 		return job_queue_;
 	}
@@ -153,8 +152,8 @@ namespace kcenon::thread
 			return common::error_info{static_cast<int>(error_code::invalid_argument), "Null worker", "thread_system"};
 		}
 
-		// Set the job queue for the worker
-		worker->set_job_queue(job_queue_);
+		// Set the aging job queue for the worker
+		worker->set_aging_job_queue(job_queue_);
 		worker->set_context(context_);
 
 		// Add worker first, then start if pool is running
@@ -249,7 +248,7 @@ namespace kcenon::thread
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::set_job_queue(
-		std::shared_ptr<typed_job_queue_t<job_type>> job_queue) -> void
+		std::shared_ptr<aging_typed_job_queue_t<job_type>> job_queue) -> void
 	{
 		job_queue_ = std::move(job_queue);
 
@@ -258,7 +257,7 @@ namespace kcenon::thread
 		{
 			if (worker)
 			{
-				worker->set_job_queue(job_queue_);
+				worker->set_aging_job_queue(job_queue_);
 			}
 		}
 	}
@@ -280,30 +279,24 @@ namespace kcenon::thread
 		if (priority_aging_enabled_)
 		{
 			// Already enabled, just update config
-			if (aging_job_queue_)
+			if (job_queue_)
 			{
-				aging_job_queue_->set_aging_config(std::move(config));
+				job_queue_->set_aging_config(std::move(config));
 			}
 			return;
 		}
 
-		// Create new aging job queue with config
+		// Update the job queue config and start aging
 		config.enabled = true;
-		aging_job_queue_ = std::make_shared<aging_typed_job_queue_t<job_type>>(config);
-
-		// Set the aging queue on all workers
-		for (auto& worker : workers_)
+		if (job_queue_)
 		{
-			if (worker)
+			job_queue_->set_aging_config(config);
+
+			// Start aging if pool is running
+			if (start_pool_.load())
 			{
-				worker->set_aging_job_queue(aging_job_queue_);
+				job_queue_->start_aging();
 			}
-		}
-
-		// Start aging if pool is running
-		if (start_pool_.load())
-		{
-			aging_job_queue_->start_aging();
 		}
 
 		priority_aging_enabled_ = true;
@@ -317,37 +310,27 @@ namespace kcenon::thread
 			return;
 		}
 
-		if (aging_job_queue_)
+		if (job_queue_)
 		{
-			aging_job_queue_->stop_aging();
+			job_queue_->stop_aging();
 		}
 
-		// Clear aging queue from all workers
-		for (auto& worker : workers_)
-		{
-			if (worker)
-			{
-				worker->set_aging_job_queue(nullptr);
-			}
-		}
-
-		aging_job_queue_.reset();
 		priority_aging_enabled_ = false;
 	}
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::is_priority_aging_enabled() const -> bool
 	{
-		return priority_aging_enabled_ && aging_job_queue_ &&
-		       aging_job_queue_->is_aging_running();
+		return priority_aging_enabled_ && job_queue_ &&
+		       job_queue_->is_aging_running();
 	}
 
 	template <typename job_type>
 	auto typed_thread_pool_t<job_type>::get_aging_stats() const -> aging_stats
 	{
-		if (aging_job_queue_)
+		if (job_queue_)
 		{
-			return aging_job_queue_->get_aging_stats();
+			return job_queue_->get_aging_stats();
 		}
 		return aging_stats{};
 	}
@@ -374,12 +357,6 @@ namespace kcenon::thread
 			};
 		}
 
-		if (aging_job_queue_)
-		{
-			return aging_job_queue_->enqueue(std::move(job));
-		}
-
-		// Fall back to regular enqueue if aging is not enabled
 		return job_queue_->enqueue(std::move(job));
 	}
 

@@ -70,6 +70,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Forward declarations added to `forward.h`
 
 ### Removed
+- **Issue #459**: Phase 1.4.4 - Remove typed_job_queue_t implementation
+  - Removed `typed_job_queue_t` class (functionality consolidated into `aging_typed_job_queue_t`)
+  - Removed `include/kcenon/thread/impl/typed_pool/typed_job_queue.h`
+  - Removed `src/impl/typed_pool/typed_job_queue.cpp`
+  - Removed forward declaration from `forward.h`
+  - Updated `typed_thread_pool_t` to use `aging_typed_job_queue_t` as default queue
+  - Updated `typed_thread_worker_t` to use only `aging_typed_job_queue_t`
+  - Simplified `typed_job_t` to use base class `job_queue` reference
+  - Migration: Use `aging_typed_job_queue_t` for all typed pool operations
+
 - **Issue #434**: Phase 1.0 - Queue Variants Consolidation
   - Removed `bounded_job_queue` class (functionality merged into `job_queue` with `max_size` parameter)
   - Migration: `std::make_shared<bounded_job_queue>(1000)` → `std::make_shared<job_queue>(1000)`

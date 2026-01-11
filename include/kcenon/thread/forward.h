@@ -85,10 +85,6 @@ class typed_job_t;
 template<typename JobType>
 class callback_typed_job_t;
 
-/// @brief Typed job queue template
-template<typename JobType>
-class typed_job_queue_t;
-
 /// @brief Typed job interface template
 template<typename JobType>
 class typed_job_interface;
