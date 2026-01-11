@@ -303,6 +303,50 @@ public:
 
 - **Workers with policy_queue:** When using `policy_queue_adapter` directly (not wrapping a `job_queue`), workers currently require a `job_queue` backend. This limitation may be lifted in future versions when `thread_worker` is updated to use `scheduler_interface`.
 
+### Phase 1.3.4: Integration Tests for policy_queue (2025-01)
+
+**New Test Files:** Comprehensive integration tests for policy_queue have been added.
+
+#### Test Files
+
+| File | Description |
+|------|-------------|
+| `policy_queue_integration_test.cpp` | Tests standard_queue, policy_lockfree_queue, bounded queues |
+| `queue_performance_comparison_test.cpp` | Performance benchmarks comparing legacy job_queue vs policy_queue |
+
+#### Test Coverage
+
+- Basic queue operations (enqueue, dequeue, clear, stop)
+- FIFO ordering verification
+- Concurrent enqueue/dequeue with multiple threads
+- Bounded queue overflow policies (reject, drop_oldest)
+- Queue capabilities and scheduler interface compliance
+- Single-threaded and multi-threaded throughput benchmarks
+- Dequeue latency measurements
+
+#### Running Tests
+
+```bash
+# Run policy_queue tests only
+./bin/integration_tests --gtest_filter="PolicyQueue*"
+
+# Run performance comparison tests
+./bin/integration_tests --gtest_filter="QueuePerformance*"
+
+# Run all integration tests
+./bin/integration_tests
+```
+
+#### Known Disabled Tests
+
+| Test | Reason |
+|------|--------|
+| `ThreadPoolWithStandardQueueAdapter` | policy_queue adapter requires job_queue backend for workers |
+| `ThreadPoolWithLockfreeQueueAdapter` | Same limitation as above |
+| `LockfreeQueueConcurrentOperations` | Potential issues in lockfree_sync_policy under high contention |
+
+These limitations will be addressed in future updates when `thread_worker` is updated to use `scheduler_interface` directly.
+
 ## Migration Instructions for Users
 
 ### Current Users (Phase 1)
@@ -331,4 +375,4 @@ The previously separate status document (MIGRATION_STATUS.md) has been merged in
 
 ---
 
-*Last Updated: 2025-10-20*
+*Last Updated: 2025-01-11*
