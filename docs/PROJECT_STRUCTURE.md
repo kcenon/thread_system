@@ -105,9 +105,8 @@ thread_system/
 │   │   │   └── thread_worker.cpp   # Worker implementation
 │   │   └── 📁 typed_pool/          # Typed thread pool
 │   │       ├── typed_thread_pool.h # Typed pool header
-│   │       ├── typed_job_queue.h   # Typed queue
-│   │       ├── adaptive_typed_job_queue.h # Adaptive typed queue
-│   │       └── adaptive_typed_job_queue.cpp # Implementation
+│   │       ├── typed_job_queue.h   # Typed queue (deprecated)
+│   │       └── aging_typed_job_queue.h # Priority aging queue
 │   ├── 📁 modules/                 # C++20 Module files (experimental)
 │   │   ├── thread.cppm             # Primary module interface (kcenon.thread)
 │   │   ├── core.cppm               # Core partition (thread_pool, jobs)
@@ -545,9 +544,8 @@ thread_system/
 | File | Purpose | Lines | Complexity |
 |------|---------|-------|------------|
 | typed_thread_pool.h | Typed pool template header | ~300 | High |
-| typed_job_queue.h | Typed queue template | ~250 | Medium |
-| adaptive_typed_job_queue.h | Adaptive typed queue header | ~200 | High |
-| typed_lockfree_job_queue.h | Lock-free typed queue | ~400 | High |
+| typed_job_queue.h | Typed queue template (deprecated) | ~250 | Medium |
+| aging_typed_job_queue.h | Priority aging queue | ~280 | High |
 | typed_thread_worker.h | Typed worker template | ~180 | Medium |
 | typed_job.h | Typed job base | ~100 | Low |
 | job_types.h | Job type definitions | ~120 | Low |

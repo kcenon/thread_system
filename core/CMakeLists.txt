@@ -86,7 +86,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_worker.cpp
     # Typed pool implementation
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/adaptive_typed_job_queue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/callback_typed_job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/typed_job_queue.cpp

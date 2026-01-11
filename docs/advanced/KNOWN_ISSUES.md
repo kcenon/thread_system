@@ -61,37 +61,28 @@ The original lock-free MPMC queue implementation used thread-local storage (TLS)
 - Design Document: `docs/HAZARD_POINTER_DESIGN.md`
 - Tests: `unittest/thread_base_test/hazard_pointer_test.cpp`, `unittest/thread_base_test/lockfree_job_queue_test.cpp`
 
-### 2. Typed Lock-Free Queue TLS Bug ✅ RESOLVED
+### 2. Typed Lock-Free Queue TLS Bug ✅ RESOLVED → 🗑️ REMOVED
 
 **Component**: typed_lockfree_job_queue_t
 **Severity**: P0 (Critical - Blocks Production Use)
-**Status**: ✅ **RESOLVED** (2025-12-02)
+**Status**: 🗑️ **REMOVED** (2026-01-11) - Component deleted in Phase 1.4.2
+**Previously**: ✅ RESOLVED (2025-12-02)
 **Discovered**: GitHub Issue #217
-**Resolution**: Refactored to use lockfree_job_queue internally
+**Resolution**: Refactored to use lockfree_job_queue internally, then **REMOVED** in favor of `policy_lockfree_queue`
 
 **Original Description**:
 The typed_lockfree_job_queue_t implementation was blocked by `#error` directive due to TLS destructor ordering bugs. The class had incomplete implementation and could not be safely used.
 
-**Resolution Details**:
-1. **Removed #error directive** from typed_lockfree_job_queue.h
-2. **Implemented complete template methods** using lockfree_job_queue internally
-   - Each job type gets its own lockfree_job_queue instance
-   - All memory reclamation handled by Hazard Pointers
-   - GlobalReclamationManager handles orphaned nodes
-3. **Updated CMakeLists.txt**
-   - Enabled lock-free queue by default (THREAD_ENABLE_LOCKFREE_QUEUE=ON)
-   - Removed THREAD_ALLOW_UNSAFE_LOCKFREE_QUEUE flag requirement
-4. **Added thread churn tests**
-   - ThreadChurnTest: Short-lived producers, long-running consumers
-   - ThreadChurnHighContention: Batch operations under contention
-   - Validates no Use-After-Free during thread exits
+**Final Resolution**:
+The entire `typed_lockfree_job_queue_t` class has been **removed** from the codebase as part of the Phase 1.4 queue consolidation effort (#440). Users should migrate to:
+- `policy_queue<lockfree_sync_policy, unbounded_policy>` (alias: `policy_lockfree_queue`)
 
-**Production Status**: ✅ **Safe for production use**
+**Migration Guide**: See [QUEUE_MIGRATION_GUIDE.md](../design/QUEUE_MIGRATION_GUIDE.md)
 
 **References**:
-- Typed Lock-Free Queue: `include/kcenon/thread/impl/typed_pool/typed_lockfree_job_queue.h`
-- Tests: `tests/unit/thread_base_test/typed_lockfree_job_queue_test.cpp`
-- GitHub Issue: #217
+- Removal PR: Phase 1.4.2 (#457)
+- Migration Guide: `docs/design/QUEUE_MIGRATION_GUIDE.md`
+- New implementation: `include/kcenon/thread/policies/policy_queue.h`
 
 ---
 

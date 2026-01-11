@@ -37,8 +37,8 @@ This document defines the policy-based design for consolidating the thread_syste
 | 5 | detail::concurrent_queue | Fine-grain | **Internal** | concurrent/concurrent_queue.h |
 | 6 | adaptive_job_queue | Wrapper | **Active** | queue/adaptive_job_queue.h |
 | 7 | typed_job_queue_t | Mutex | **DEPRECATED** | impl/typed_pool/typed_job_queue.h |
-| 8 | typed_lockfree_job_queue_t | Lock-free | **DEPRECATED** | impl/typed_pool/typed_lockfree_job_queue.h |
-| 9 | adaptive_typed_job_queue_t | Wrapper | **DEPRECATED** | impl/typed_pool/adaptive_typed_job_queue.h |
+| 8 | typed_lockfree_job_queue_t | Lock-free | **REMOVED** | (removed in Phase 1.4.2) |
+| 9 | adaptive_typed_job_queue_t | Wrapper | **REMOVED** | (removed in Phase 1.4.1) |
 | 10 | aging_typed_job_queue_t | Mutex + Thread | **Active** | impl/typed_pool/aging_typed_job_queue.h |
 
 ### Common Functionality (>80% Shared)
@@ -377,16 +377,19 @@ using aging_queue = queue<
 | `lockfree_job_queue` | `policy_lockfree_queue` | Check for capability changes |
 | `adaptive_job_queue` | `adaptive_queue` | Minimal changes |
 | `typed_job_queue_t<T>` | `standard_queue` with `enqueue<T>()` | Use template enqueue |
-| `typed_lockfree_job_queue_t<T>` | `policy_lockfree_queue` with `enqueue<T>()` | Use template enqueue |
-| `adaptive_typed_job_queue_t<T>` | `adaptive_queue` with `enqueue<T>()` | Use template enqueue |
+| `typed_lockfree_job_queue_t<T>` | `policy_lockfree_queue` with `enqueue<T>()` | **REMOVED** in Phase 1.4.2 |
+| `adaptive_typed_job_queue_t<T>` | `adaptive_queue` with `enqueue<T>()` | **REMOVED** in Phase 1.4.1 |
 | `aging_typed_job_queue_t<T>` | `aging_queue` | Configure aging params |
 
-### Phase 1.4: Cleanup
+### Phase 1.4: Cleanup (In Progress)
 
-1. Mark deprecated classes with `[[deprecated("Use queue<...> instead")]]`
+1. ~~Mark deprecated classes with `[[deprecated("Use queue<...> instead")]]`~~
 2. Update all internal usages to new types
-3. Remove deprecated implementations after one release cycle
-4. Update documentation and examples
+3. **DONE**: Remove `adaptive_typed_job_queue_t` (Phase 1.4.1)
+4. **DONE**: Remove `typed_lockfree_job_queue_t` (Phase 1.4.2)
+5. TODO: Migrate `aging_typed_job_queue_t` to policy_queue (Phase 1.4.3)
+6. TODO: Remove `typed_job_queue_t` (Phase 1.4.4)
+7. TODO: Update documentation and examples (Phase 1.4.5)
 
 ---
 
@@ -417,12 +420,13 @@ using aging_queue = queue<
 - [ ] Performance regression testing
 - [ ] Update examples
 
-### Milestone 4: Cleanup (Phase 1.4)
+### Milestone 4: Cleanup (Phase 1.4) (In Progress)
 
-- [ ] Add deprecation notices
-- [ ] Remove deprecated code
-- [ ] Update all documentation
-- [ ] Final code duplication analysis
+- [x] Phase 1.4.1: Remove adaptive_typed_job_queue_t (#456)
+- [x] Phase 1.4.2: Remove typed_lockfree_job_queue_t (#457)
+- [ ] Phase 1.4.3: Migrate aging_typed_job_queue_t to policy_queue (#458)
+- [ ] Phase 1.4.4: Remove typed_job_queue_t (#459)
+- [ ] Phase 1.4.5: Update all documentation (#460)
 
 ---
 
