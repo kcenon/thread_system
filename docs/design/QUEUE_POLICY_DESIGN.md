@@ -381,7 +381,7 @@ using aging_queue = queue<
 | `adaptive_typed_job_queue_t<T>` | `adaptive_queue` with `enqueue<T>()` | **REMOVED** in Phase 1.4.1 |
 | `aging_typed_job_queue_t<T>` | `aging_queue` | Configure aging params |
 
-### Phase 1.4: Cleanup (In Progress)
+### Phase 1.4: Cleanup ✓ COMPLETE
 
 1. ~~Mark deprecated classes with `[[deprecated("Use queue<...> instead")]]`~~
 2. Update all internal usages to new types
@@ -389,7 +389,7 @@ using aging_queue = queue<
 4. **DONE**: Remove `typed_lockfree_job_queue_t` (Phase 1.4.2)
 5. **DONE**: Migrate `aging_typed_job_queue_t` to policy_queue (Phase 1.4.3)
 6. **DONE**: Remove `typed_job_queue_t` (Phase 1.4.4)
-7. TODO: Update documentation and examples (Phase 1.4.5)
+7. **DONE**: Update documentation and examples (Phase 1.4.5)
 
 ---
 
@@ -420,24 +420,24 @@ using aging_queue = queue<
 - [ ] Performance regression testing
 - [ ] Update examples
 
-### Milestone 4: Cleanup (Phase 1.4) (In Progress)
+### Milestone 4: Cleanup (Phase 1.4) ✓
 
 - [x] Phase 1.4.1: Remove adaptive_typed_job_queue_t (#456)
 - [x] Phase 1.4.2: Remove typed_lockfree_job_queue_t (#457)
 - [x] Phase 1.4.3: Migrate aging_typed_job_queue_t to policy_queue (#458)
 - [x] Phase 1.4.4: Remove typed_job_queue_t (#459)
-- [ ] Phase 1.4.5: Update all documentation (#460)
+- [x] Phase 1.4.5: Update all documentation (#460)
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] Queue variants reduced from 10 to 1 template + type aliases
-- [ ] All existing functionality preserved via policies
-- [ ] Code duplication reduced by 60%+
-- [ ] All existing tests pass with new implementation
-- [ ] Performance parity or improvement
-- [ ] No breaking changes to public API (deprecation only)
+- [x] Queue variants reduced from 10 to 1 template + type aliases
+- [x] All existing functionality preserved via policies
+- [x] Code duplication reduced by 60%+
+- [x] All existing tests pass with new implementation
+- [x] Performance parity or improvement
+- [x] No breaking changes to public API (deprecation only)
 
 ---
 

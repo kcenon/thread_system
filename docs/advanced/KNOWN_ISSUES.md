@@ -1,7 +1,7 @@
 # Known Issues
 
-**Version**: 0.2.0
-**Last Updated**: 2025-12-02
+**Version**: 0.3.0
+**Last Updated**: 2026-01-11
 **Status**: Active Tracking
 
 This document tracks known issues in thread_system that require attention.
@@ -144,5 +144,5 @@ When reporting a new issue, please include:
 
 ---
 
-Last Updated: 2025-12-02
+Last Updated: 2026-01-11
 Maintainer: Architecture Review Team
