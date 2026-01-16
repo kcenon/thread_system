@@ -48,7 +48,7 @@ autoscaler::autoscaler(thread_pool& pool, autoscaling_policy policy)
 {
 	// Initialize stats with current worker count
 	std::scoped_lock<std::mutex> lock(stats_mutex_);
-	stats_.min_workers = pool_.get_thread_count();
+	stats_.min_workers = pool_.get_active_worker_count();
 	stats_.peak_workers = stats_.min_workers;
 }
 
@@ -138,7 +138,7 @@ auto autoscaler::scale_to(std::size_t target_workers) -> common::VoidResult
 	// Clamp to policy bounds
 	target_workers = std::clamp(target_workers, policy_.min_workers, policy_.max_workers);
 
-	std::size_t current_workers = pool_.get_thread_count();
+	std::size_t current_workers = pool_.get_active_worker_count();
 
 	if (target_workers > current_workers)
 	{
@@ -154,7 +154,7 @@ auto autoscaler::scale_to(std::size_t target_workers) -> common::VoidResult
 
 auto autoscaler::scale_up() -> common::VoidResult
 {
-	std::size_t current = pool_.get_thread_count();
+	std::size_t current = pool_.get_active_worker_count();
 	std::size_t increment = policy_.use_multiplicative_scaling
 		? static_cast<std::size_t>(current * (policy_.scale_up_factor - 1.0))
 		: policy_.scale_up_increment;
@@ -170,7 +170,7 @@ auto autoscaler::scale_up() -> common::VoidResult
 
 auto autoscaler::scale_down() -> common::VoidResult
 {
-	std::size_t current = pool_.get_thread_count();
+	std::size_t current = pool_.get_active_worker_count();
 	std::size_t target = current > policy_.scale_down_increment
 		? current - policy_.scale_down_increment
 		: policy_.min_workers;
@@ -224,7 +224,7 @@ auto autoscaler::reset_stats() -> void
 {
 	std::scoped_lock<std::mutex> lock(stats_mutex_);
 	stats_ = autoscaling_stats{};
-	stats_.min_workers = pool_.get_thread_count();
+	stats_.min_workers = pool_.get_active_worker_count();
 	stats_.peak_workers = stats_.min_workers;
 }
 
@@ -304,7 +304,7 @@ auto autoscaler::monitor_loop() -> void
 			std::scoped_lock<std::mutex> lock(stats_mutex_);
 			++stats_.decisions_evaluated;
 
-			std::size_t current = pool_.get_thread_count();
+			std::size_t current = pool_.get_active_worker_count();
 			stats_.peak_workers = std::max(stats_.peak_workers, current);
 			if (stats_.min_workers == 0 || current < stats_.min_workers)
 			{
@@ -320,7 +320,7 @@ auto autoscaler::collect_metrics() const -> scaling_metrics_sample
 
 	scaling_metrics_sample sample;
 	sample.timestamp = now;
-	sample.worker_count = pool_.get_thread_count();
+	sample.worker_count = pool_.get_active_worker_count();
 	sample.active_workers = sample.worker_count - pool_.get_idle_worker_count();
 	sample.queue_depth = pool_.get_pending_task_count();
 
@@ -393,7 +393,7 @@ auto autoscaler::make_decision(const std::vector<scaling_metrics_sample>& sample
 	avg_latency /= sample_count;
 	avg_queue_depth /= samples.size();
 
-	std::size_t current_workers = pool_.get_thread_count();
+	std::size_t current_workers = pool_.get_active_worker_count();
 
 	// Check scale-up triggers (ANY trigger)
 	if (can_scale_up())
@@ -492,7 +492,7 @@ auto autoscaler::make_decision(const std::vector<scaling_metrics_sample>& sample
 
 auto autoscaler::execute_scaling(const scaling_decision& decision) -> void
 {
-	std::size_t current_workers = pool_.get_thread_count();
+	std::size_t current_workers = pool_.get_active_worker_count();
 	auto now = std::chrono::steady_clock::now();
 
 	if (decision.direction == scaling_direction::up)
@@ -541,7 +541,7 @@ auto autoscaler::execute_scaling(const scaling_decision& decision) -> void
 
 auto autoscaler::can_scale_up() const -> bool
 {
-	if (pool_.get_thread_count() >= policy_.max_workers)
+	if (pool_.get_active_worker_count() >= policy_.max_workers)
 	{
 		return false;
 	}
@@ -555,7 +555,7 @@ auto autoscaler::can_scale_up() const -> bool
 
 auto autoscaler::can_scale_down() const -> bool
 {
-	if (pool_.get_thread_count() <= policy_.min_workers)
+	if (pool_.get_active_worker_count() <= policy_.min_workers)
 	{
 		return false;
 	}

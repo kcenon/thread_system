@@ -75,7 +75,11 @@ namespace kcenon::thread::diagnostics
 		auto now = std::chrono::system_clock::now();
 		auto time_t = std::chrono::system_clock::to_time_t(now);
 
-		auto worker_count = pool_.get_thread_count();
+		std::size_t worker_count;
+		{
+			std::scoped_lock<std::mutex> lock(pool_.workers_mutex_);
+			worker_count = pool_.workers_.size();
+		}
 		auto active_count = pool_.get_active_worker_count();
 		auto idle_count = pool_.get_idle_worker_count();
 
@@ -188,7 +192,11 @@ namespace kcenon::thread::diagnostics
 
 		// Gather metrics
 		auto metrics_snap = pool_.metrics().snapshot();
-		auto worker_count = pool_.get_thread_count();
+		std::size_t worker_count;
+		{
+			std::scoped_lock<std::mutex> lock(pool_.workers_mutex_);
+			worker_count = pool_.workers_.size();
+		}
 		auto active_count = pool_.get_active_worker_count();
 		auto idle_count = pool_.get_idle_worker_count();
 		auto queue_depth = pool_.get_pending_task_count();
@@ -427,7 +435,10 @@ namespace kcenon::thread::diagnostics
 		}
 
 		// Worker stats
-		status.total_workers = pool_.get_thread_count();
+		{
+			std::scoped_lock<std::mutex> lock(pool_.workers_mutex_);
+			status.total_workers = pool_.workers_.size();
+		}
 		status.active_workers = pool_.get_active_worker_count();
 		status.queue_depth = pool_.get_pending_task_count();
 
@@ -456,7 +467,12 @@ namespace kcenon::thread::diagnostics
 
 	auto thread_pool_diagnostics::is_healthy() const -> bool
 	{
-		return pool_.is_running() && pool_.get_thread_count() > 0;
+		std::size_t worker_count;
+		{
+			std::scoped_lock<std::mutex> lock(pool_.workers_mutex_);
+			worker_count = pool_.workers_.size();
+		}
+		return pool_.is_running() && worker_count > 0;
 	}
 
 	auto thread_pool_diagnostics::check_worker_health() const -> component_health
@@ -464,7 +480,11 @@ namespace kcenon::thread::diagnostics
 		component_health health;
 		health.name = "workers";
 
-		auto total = pool_.get_thread_count();
+		std::size_t total;
+		{
+			std::scoped_lock<std::mutex> lock(pool_.workers_mutex_);
+			total = pool_.workers_.size();
+		}
 		auto active = pool_.get_active_worker_count();
 		auto idle = pool_.get_idle_worker_count();
 
