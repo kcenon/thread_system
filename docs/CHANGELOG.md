@@ -40,6 +40,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Renamed `lockfree_queue` type alias to `policy_lockfree_queue` to avoid collision
     with deprecated `lockfree_queue<T>` template in forward.h
 
+- **Issue #478**: Thread Pool API Migration Guide
+  - Comprehensive migration guide for deprecated `thread_pool` methods
+  - Step-by-step examples for each deprecated method:
+    - `submit_task()` -> `enqueue()` with job wrapper
+    - `get_thread_count()` -> `metrics().worker_count` or `get_active_worker_count()`
+    - `shutdown_pool()` -> `stop()`
+  - Error handling improvements with `common::VoidResult`
+  - Located at `docs/guides/THREAD_POOL_API_MIGRATION_GUIDE.md`
+
 - **Issue #448**: Phase 1.3.1 - Policy Queue Migration Guide
   - Comprehensive migration guide from legacy queues to policy-based queue
   - Step-by-step examples for each legacy queue type
@@ -68,6 +77,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Type aliases: `standard_queue`, `policy_lockfree_queue`
   - Comprehensive unit tests for all policy combinations (36 new tests)
   - Forward declarations added to `forward.h`
+
+### Deprecated
+- **Issue #475**: Thread Pool API Simplification (Part 1 of #475)
+  - The following `thread_pool` methods are marked deprecated and will be removed in v2.0:
+    - `submit_task(std::function<void()>)` - Use `enqueue()` with a job wrapper instead
+    - `get_thread_count()` - Use `metrics().worker_count` or `get_active_worker_count()` instead
+    - `shutdown_pool(bool)` - Use `stop()` instead
+  - Migration guide: `docs/guides/THREAD_POOL_API_MIGRATION_GUIDE.md`
 
 ### Removed
 - **Issue #459**: Phase 1.4.4 - Remove typed_job_queue_t implementation
