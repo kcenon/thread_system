@@ -685,29 +685,53 @@ namespace kcenon::thread
 		// =========================================================================
 		// Enhanced Work-Stealing (NUMA-aware)
 		// =========================================================================
+		// DEPRECATED: NUMA-specific methods will be removed in v2.0.
+		// Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead.
+		//
+		// Migration example:
+		//   // Old way (deprecated):
+		//   auto pool = std::make_shared<thread_pool>("my_pool");
+		//   pool->set_work_stealing_config(config);
+		//
+		//   // New way (recommended):
+		//   auto pool = std::make_shared<numa_thread_pool>("my_pool");
+		//   pool->configure_numa_work_stealing(config);
+		// =========================================================================
 
 		/**
 		 * @brief Set enhanced work-stealing configuration.
 		 * @param config The enhanced work-stealing configuration.
+		 * @deprecated Use numa_thread_pool::configure_numa_work_stealing() instead.
+		 *             This method will be removed in v2.0.
 		 */
+		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
 		void set_work_stealing_config(const enhanced_work_stealing_config& config);
 
 		/**
 		 * @brief Get the current enhanced work-stealing configuration.
 		 * @return Reference to the current enhanced work-stealing configuration.
+		 * @deprecated Use numa_thread_pool::numa_work_stealing_config() instead.
+		 *             This method will be removed in v2.0.
 		 */
+		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
 		[[nodiscard]] const enhanced_work_stealing_config& get_work_stealing_config() const;
 
 		/**
 		 * @brief Get a snapshot of work-stealing statistics.
 		 * @return Non-atomic snapshot of current work-stealing statistics.
+		 * @deprecated Use numa_thread_pool::numa_work_stealing_stats() instead.
+		 *             This method will be removed in v2.0.
 		 */
+		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
 		[[nodiscard]] work_stealing_stats_snapshot get_work_stealing_stats() const;
 
 		/**
 		 * @brief Get the NUMA topology information.
 		 * @return Reference to the detected NUMA topology.
+		 * @deprecated Use numa_thread_pool::numa_topology_info() instead.
+		 *             This method will be removed in v2.0.
 		 */
+		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
 		[[nodiscard]] const numa_topology& get_numa_topology() const;
 
 		// =========================================================================

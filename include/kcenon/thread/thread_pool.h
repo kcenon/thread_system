@@ -31,17 +31,23 @@
 
 /**
  * @file thread_pool.h
- * @brief Stable public include for thread_pool
+ * @brief Stable public include for thread_pool and numa_thread_pool
  *
- * This umbrella header provides a stable include path for the thread_pool class.
- * Downstream code should include this header rather than the internal core/ path.
+ * This umbrella header provides a stable include path for the thread_pool class
+ * and its NUMA-aware variant. Downstream code should include this header rather
+ * than the internal core/ path.
  *
  * @code
  * #include <kcenon/thread/thread_pool.h>
  *
- * auto pool = std::make_shared<kcenon::thread::thread_pool>(4);
- * auto future = pool->enqueue([]() { return 42; });
+ * // Standard thread pool
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
+ *
+ * // NUMA-aware thread pool (for multi-socket servers)
+ * auto numa_pool = std::make_shared<kcenon::thread::numa_thread_pool>("numa_pool");
+ * numa_pool->enable_numa_work_stealing();
  * @endcode
  */
 
 #include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/numa_thread_pool.h>
