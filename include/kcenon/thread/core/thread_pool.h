@@ -532,13 +532,17 @@ namespace kcenon::thread
 		 * @param task The task to be executed
 		 * @return true if task was successfully submitted, false otherwise
 		 * @note For detailed error information, use enqueue() instead
+		 * @deprecated Use enqueue() with a job wrapper instead. This method will be removed in v2.0.
 		 */
+		[[deprecated("Use enqueue() with a job wrapper instead. This method will be removed in v2.0.")]]
 		auto submit_task(std::function<void()> task) -> bool;
 
 		/**
 		 * @brief Get the number of worker threads in the pool
 		 * @return Number of active worker threads
+		 * @deprecated Use metrics().worker_count or get_active_worker_count() instead. This method will be removed in v2.0.
 		 */
+		[[deprecated("Use metrics().worker_count or get_active_worker_count() instead. This method will be removed in v2.0.")]]
 		auto get_thread_count() const -> std::size_t;
 
 		/**
@@ -546,7 +550,9 @@ namespace kcenon::thread
 		 * @param immediate If true, stop immediately; if false, wait for current tasks to complete
 		 * @return true if shutdown was successful, false otherwise
 		 * @note For detailed error information, use stop() instead
+		 * @deprecated Use stop() instead. This method will be removed in v2.0.
 		 */
+		[[deprecated("Use stop() instead. This method will be removed in v2.0.")]]
 		auto shutdown_pool(bool immediate = false) -> bool;
 
 		/**
