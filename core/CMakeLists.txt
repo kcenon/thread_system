@@ -26,6 +26,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_impl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_logger.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_pool.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/numa_thread_pool.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/thread_worker.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/typed_thread_pool.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/typed_thread_worker.h
@@ -86,6 +87,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/queue/queue_factory.cpp
     # Thread pool implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_pool.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/numa_thread_pool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/thread_pool/thread_worker.cpp
     # Typed pool implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/callback_typed_job.cpp
