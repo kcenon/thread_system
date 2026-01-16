@@ -844,8 +844,21 @@ auto thread_pool::get_active_worker_count() const -> std::size_t {
 
 #if KCENON_HAS_COMMON_EXECUTOR
 // ============================================================================
-// IExecutor interface implementation
+// IExecutor interface implementation (DEPRECATED)
 // ============================================================================
+// These methods are deprecated and will be removed in v2.0.
+// Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h>
+// for IExecutor compatibility.
+// ============================================================================
+
+// Suppress deprecation warnings for the implementation of deprecated methods
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#endif
 
 std::future<void> thread_pool::submit(std::function<void()> task) {
     auto promise = std::make_shared<std::promise<void>>();
@@ -988,6 +1001,13 @@ size_t thread_pool::pending_tasks() const {
 void thread_pool::shutdown(bool wait_for_completion) {
     stop(!wait_for_completion);  // immediately_stop = !wait_for_completion
 }
+
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+
 #endif  // KCENON_HAS_COMMON_EXECUTOR
 
 // ============================================================================

@@ -163,11 +163,24 @@ namespace kcenon::thread
 	 * - Very large thread pools (significantly more threads than cores) may degrade
 	 *   performance due to context switching overhead.
 	 *
+	 * ### IExecutor Interface (Deprecated)
+	 * Direct inheritance from common::interfaces::IExecutor is deprecated and will be
+	 * removed in v2.0. For IExecutor compatibility, use thread_pool_executor_adapter:
+	 * @code
+	 * #include <kcenon/thread/adapters/common_executor_adapter.h>
+	 *
+	 * auto pool = std::make_shared<thread_pool>("my_pool");
+	 * auto executor = std::make_shared<adapters::thread_pool_executor_adapter>(pool);
+	 * @endcode
+	 *
 	 * @see thread_worker The worker thread class used by the pool
 	 * @see job_queue The shared queue for storing pending jobs
+	 * @see adapters::thread_pool_executor_adapter For IExecutor compatibility
 	 * @see typed_kcenon::thread::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
+// DEPRECATED: Direct IExecutor inheritance will be removed in v2.0.
+// Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h>
 #if KCENON_HAS_COMMON_EXECUTOR
 	                   , public common_ns::interfaces::IExecutor
 #endif
@@ -247,12 +260,27 @@ namespace kcenon::thread
 	// ============================================================================
 	// IExecutor interface implementation (common_system)
 	// ============================================================================
+	// DEPRECATED: Direct IExecutor inheritance is deprecated.
+	// Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h>
+	// for IExecutor compatibility. This interface will be removed in v2.0.
+	//
+	// Migration example:
+	//   // Old way (deprecated):
+	//   auto pool = std::make_shared<thread_pool>("my_pool");
+	//   IExecutor* executor = pool.get();
+	//
+	//   // New way (recommended):
+	//   auto pool = std::make_shared<thread_pool>("my_pool");
+	//   auto executor = std::make_shared<adapters::thread_pool_executor_adapter>(pool);
+	// ============================================================================
 
 	/**
 	 * @brief Submit a task for immediate execution (IExecutor)
 	 * @param task The function to execute
 	 * @return Future representing the task result
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	std::future<void> submit(std::function<void()> task);
 
 	/**
@@ -260,7 +288,9 @@ namespace kcenon::thread
 	 * @param task The function to execute
 	 * @param delay The delay before execution
 	 * @return Future representing the task result
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	std::future<void> submit_delayed(
 		std::function<void()> task,
 		std::chrono::milliseconds delay);
@@ -269,7 +299,9 @@ namespace kcenon::thread
 	 * @brief Execute a job with Result-based error handling (IExecutor)
 	 * @param job The job to execute
 	 * @return Result containing future or error
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	common_ns::Result<std::future<void>> execute(
 		std::unique_ptr<common_ns::interfaces::IJob>&& job) override;
 
@@ -278,7 +310,9 @@ namespace kcenon::thread
 	 * @param job The job to execute
 	 * @param delay The delay before execution
 	 * @return Result containing future or error
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	common_ns::Result<std::future<void>> execute_delayed(
 		std::unique_ptr<common_ns::interfaces::IJob>&& job,
 		std::chrono::milliseconds delay) override;
@@ -286,19 +320,25 @@ namespace kcenon::thread
 	/**
 	 * @brief Get the number of worker threads (IExecutor)
 	 * @return Number of available workers
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	size_t worker_count() const override;
 
 	/**
 	 * @brief Get the number of pending tasks (IExecutor)
 	 * @return Number of tasks waiting to be executed
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	size_t pending_tasks() const override;
 
 	/**
 	 * @brief Shutdown the executor gracefully (IExecutor)
 	 * @param wait_for_completion Wait for all pending tasks to complete
+	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
 	 */
+	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
 	void shutdown(bool wait_for_completion) override;
 #endif // KCENON_HAS_COMMON_EXECUTOR
 

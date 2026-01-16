@@ -33,6 +33,33 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /**
  * @file common_executor_adapter.h
  * @brief Adapter to bridge thread_system pools with common IExecutor interface.
+ *
+ * This adapter provides the recommended way to use thread_pool with the
+ * common::interfaces::IExecutor interface. Direct inheritance of IExecutor
+ * by thread_pool is deprecated and will be removed in v2.0.
+ *
+ * @par Migration Guide
+ * If you were previously using thread_pool directly as an IExecutor:
+ * @code
+ * // Old way (deprecated):
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
+ * kcenon::common::interfaces::IExecutor* executor = pool.get();
+ * executor->execute(std::move(job));
+ *
+ * // New way (recommended):
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
+ * auto executor = std::make_shared<kcenon::thread::adapters::thread_pool_executor_adapter>(pool);
+ * executor->execute(std::move(job));
+ * @endcode
+ *
+ * @par Benefits of the Adapter Approach
+ * - Cleaner separation of concerns: thread_pool focuses on thread management
+ * - Easier maintenance: IExecutor changes don't affect thread_pool core
+ * - Better testability: adapter can be mocked independently
+ * - Reduced compilation dependencies: conditional compilation isolated to adapter
+ *
+ * @see thread_pool_executor_adapter The main adapter class
+ * @see common_executor_factory Factory for creating adapters
  */
 
 #pragma once
@@ -245,6 +272,30 @@ inline void schedule_task_async(
 
 /**
  * @brief Adapter exposing thread_pool through common::interfaces::IExecutor.
+ *
+ * This is the recommended way to use thread_pool with the IExecutor interface.
+ * It provides a clean separation between thread_pool's core functionality and
+ * the IExecutor interface contract.
+ *
+ * @par Example Usage
+ * @code
+ * #include <kcenon/thread/core/thread_pool.h>
+ * #include <kcenon/thread/adapters/common_executor_adapter.h>
+ *
+ * // Create and configure the thread pool
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
+ * pool->enqueue(std::make_unique<kcenon::thread::thread_worker>());
+ * pool->start();
+ *
+ * // Create the adapter for IExecutor compatibility
+ * auto executor = std::make_shared<kcenon::thread::adapters::thread_pool_executor_adapter>(pool);
+ *
+ * // Use through IExecutor interface
+ * auto future = executor->execute(std::make_unique<MyJob>());
+ * @endcode
+ *
+ * @note The adapter holds a shared_ptr to the thread_pool, ensuring the pool
+ *       remains alive as long as the adapter exists.
  */
 class thread_pool_executor_adapter : public ::common::interfaces::IExecutor {
 public:
@@ -330,7 +381,7 @@ public:
     }
 
     size_t worker_count() const override {
-        return pool_ ? pool_->get_thread_count() : 0U;
+        return pool_ ? pool_->get_active_worker_count() : 0U;
     }
 
     bool is_running() const override {
@@ -362,8 +413,25 @@ private:
     std::shared_ptr<kcenon::thread::thread_pool> pool_;
 };
 
+/**
+ * @brief Factory for creating IExecutor adapters from thread_pool instances.
+ *
+ * Provides a convenient way to create thread_pool_executor_adapter instances.
+ *
+ * @par Example Usage
+ * @code
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
+ * auto executor = kcenon::thread::adapters::common_executor_factory::create_from_thread_pool(pool);
+ * @endcode
+ */
 class common_executor_factory {
 public:
+    /**
+     * @brief Create an IExecutor adapter from a thread_pool.
+     *
+     * @param pool The thread_pool to wrap
+     * @return Shared pointer to an IExecutor that delegates to the pool
+     */
     static std::shared_ptr<::common::interfaces::IExecutor> create_from_thread_pool(
         std::shared_ptr<kcenon::thread::thread_pool> pool) {
         return std::make_shared<thread_pool_executor_adapter>(std::move(pool));
