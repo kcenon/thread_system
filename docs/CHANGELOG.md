@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Issue #486**: Remove deprecated methods from thread_pool and related classes
+  - **thread_pool.h**: Removed direct IExecutor inheritance and deprecated methods:
+    - `submit()`, `submit_delayed()`, `execute()`, `execute_delayed()` (IExecutor interface)
+    - `worker_count()`, `pending_tasks()`, `shutdown()` (IExecutor interface)
+    - `submit_task()`, `get_thread_count()`, `shutdown_pool()` (simplified API)
+    - `set_work_stealing_config()`, `get_work_stealing_config()`, `get_work_stealing_stats()`, `get_numa_topology()` (NUMA methods)
+    - Use `adapters::thread_pool_executor_adapter` for IExecutor compatibility
+    - Use `numa_thread_pool` for NUMA-specific functionality
+  - **forward.h**: Removed deprecated using aliases:
+    - `bounded_job_queue`, `lockfree_job_queue`, `concurrent_queue<T>`, `lockfree_queue<T>`
+    - Use `job_queue` with max_size, `detail::lockfree_job_queue`, `detail::concurrent_queue<T>` instead
+  - **lockfree_job_queue.h**: Removed public `lockfree_job_queue` alias (use `detail::lockfree_job_queue`)
+  - **lockfree_queue.h**: Removed `concurrent_queue<T>` and `lockfree_queue<T>` aliases
+  - **queue_factory.h**: Removed `create_lockfree_queue()` (use `create_adaptive_queue(policy::performance_first)`)
+  - **logger_system_adapter.h**: Removed entire file (use DI-based logger registration instead)
+  - Updated tests and examples to use new APIs
+
 ### Changed
 - **Issue #458**: Phase 1.4.3 - Migrate aging_typed_job_queue_t to policy_queue basis
   - `aging_typed_job_queue_t` no longer inherits from `typed_job_queue_t`

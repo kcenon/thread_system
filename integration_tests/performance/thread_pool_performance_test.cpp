@@ -355,7 +355,7 @@ TEST_F(ThreadPoolPerformanceTest, MemoryOverhead) {
     EXPECT_TRUE(WaitForJobCompletion(job_count));
 
     // Pool should handle memory efficiently
-    EXPECT_EQ(pool_->get_thread_count(), worker_count);
+    EXPECT_EQ(pool_->get_active_worker_count(), worker_count);
     EXPECT_EQ(completed_jobs_.load(), job_count);
 
     std::cout << "\nMemory Overhead Test:\n"

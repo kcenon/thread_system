@@ -122,25 +122,6 @@ public:
     }
 
     /**
-     * @brief Create lock-free queue
-     * @return Unique pointer to new adaptive_job_queue with performance_first policy
-     *
-     * @deprecated Use create_adaptive_queue(policy::performance_first) instead.
-     * lockfree_job_queue is now an internal implementation detail.
-     *
-     * Use this when you need:
-     * - Maximum throughput (>500K ops/sec)
-     * - Many concurrent producers/consumers
-     * - Non-blocking try_dequeue() pattern
-     *
-     * @note size() returns approximate values, empty() is non-atomic
-     */
-    [[deprecated("Use create_adaptive_queue(policy::performance_first) instead")]]
-    [[nodiscard]] static auto create_lockfree_queue() -> std::unique_ptr<adaptive_job_queue> {
-        return std::make_unique<adaptive_job_queue>(adaptive_job_queue::policy::performance_first);
-    }
-
-    /**
      * @brief Create adaptive queue (RECOMMENDED for most use cases)
      * @param policy Adaptation policy (default: balanced)
      * @return Unique pointer to new adaptive_job_queue
