@@ -40,6 +40,7 @@ BSD 3-Clause License
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
+using namespace kcenon::thread::detail;
 
 // Test queue_capabilities struct default values
 TEST(queue_capabilities_test, default_values)
