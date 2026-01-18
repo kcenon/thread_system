@@ -680,44 +680,62 @@ namespace kcenon::thread
 		[[nodiscard]] auto enqueue_protected(std::unique_ptr<job>&& job) -> common::VoidResult;
 
 		// =========================================================================
-		// Autoscaling
+		// Autoscaling (Deprecated - Use autoscaling_pool_policy instead)
 		// =========================================================================
 
 		/**
 		 * @brief Enable autoscaling with the specified policy.
 		 * @param policy Autoscaling policy configuration.
 		 *
+		 * @deprecated Use add_policy() with autoscaling_pool_policy instead:
+		 * @code
+		 * pool->add_policy(std::make_unique<autoscaling_pool_policy>(*pool, policy));
+		 * @endcode
+		 *
 		 * When enabled, the pool will automatically adjust worker count
 		 * based on load metrics (utilization, queue depth, latency).
 		 *
 		 * @see autoscaling_policy
+		 * @see autoscaling_pool_policy
 		 */
+		[[deprecated("Use add_policy() with autoscaling_pool_policy instead")]]
 		void enable_autoscaling(const autoscaling_policy& policy);
 
 		/**
 		 * @brief Disable autoscaling.
 		 *
+		 * @deprecated Use remove_policy("autoscaling_pool_policy") instead.
+		 *
 		 * Stops the autoscaler monitor thread. Worker count remains
 		 * at current level after disabling.
 		 */
+		[[deprecated("Use remove_policy(\"autoscaling_pool_policy\") instead")]]
 		void disable_autoscaling();
 
 		/**
 		 * @brief Get the autoscaler (if enabled).
 		 * @return Shared pointer to the autoscaler, or nullptr if not enabled.
+		 *
+		 * @deprecated Use find_policy<autoscaling_pool_policy>() and get_autoscaler() instead.
 		 */
+		[[deprecated("Use find_policy<autoscaling_pool_policy>() instead")]]
 		[[nodiscard]] auto get_autoscaler() -> std::shared_ptr<autoscaler>;
 
 		/**
 		 * @brief Check if autoscaling is enabled.
 		 * @return true if autoscaling is enabled.
+		 *
+		 * @deprecated Use find_policy<autoscaling_pool_policy>()->is_active() instead.
 		 */
+		[[deprecated("Use find_policy<autoscaling_pool_policy>()->is_active() instead")]]
 		[[nodiscard]] auto is_autoscaling_enabled() const -> bool;
 
 		/**
 		 * @brief Remove workers from the pool.
 		 * @param count Number of workers to remove.
 		 * @return Error if operation fails.
+		 *
+		 * @deprecated Use find_policy<autoscaling_pool_policy>()->get_autoscaler()->scale_down() instead.
 		 *
 		 * Gracefully stops and removes idle workers. If not enough
 		 * idle workers are available, waits briefly for workers to
@@ -728,6 +746,7 @@ namespace kcenon::thread
 		 * - Acquires workers_mutex_ for safe access
 		 * - Workers are stopped before removal
 		 */
+		[[deprecated("Use autoscaling_pool_policy with scale_to() instead")]]
 		[[nodiscard]] auto remove_workers(std::size_t count) -> common::VoidResult;
 
 		// =========================================================================
