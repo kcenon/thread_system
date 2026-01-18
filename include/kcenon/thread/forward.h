@@ -99,6 +99,13 @@ struct worker_policy;
 enum class scheduling_policy;
 enum class worker_state;
 
+// ============================================================================
+// Pool policy types
+// ============================================================================
+
+class pool_policy;
+class circuit_breaker_policy;
+
 /// @brief Typed thread pool builder template
 template<typename JobType>
 class typed_thread_pool_builder;

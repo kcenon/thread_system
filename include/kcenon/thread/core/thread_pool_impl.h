@@ -142,4 +142,18 @@ auto thread_pool::submit_any(std::vector<F>&& callables)
     return result_future.get();
 }
 
+template<typename T>
+auto thread_pool::find_policy(const std::string& name) -> T*
+{
+    std::scoped_lock<std::mutex> lock(policies_mutex_);
+
+    for (auto& policy : policies_) {
+        if (policy && policy->get_name() == name) {
+            return dynamic_cast<T*>(policy.get());
+        }
+    }
+
+    return nullptr;
+}
+
 } // namespace kcenon::thread

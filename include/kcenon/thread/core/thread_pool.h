@@ -47,6 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
 #include <kcenon/thread/stealing/work_stealing_stats.h>
 #include <kcenon/thread/stealing/numa_topology.h>
+#include <kcenon/thread/pool_policies/pool_policy.h>
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -555,41 +556,113 @@ namespace kcenon::thread
 		[[nodiscard]] bool is_work_stealing_enabled() const;
 
 		// =========================================================================
-		// Circuit Breaker
+		// Pool Policies
+		// =========================================================================
+
+		/**
+		 * @brief Add a policy to the pool.
+		 * @param policy Unique pointer to the policy to add.
+		 *
+		 * Policies provide a way to extend thread pool behavior without
+		 * modifying the thread_pool class. Multiple policies can be added
+		 * and they will be called in order of addition.
+		 *
+		 * @see pool_policy
+		 * @see circuit_breaker_policy
+		 *
+		 * ### Example
+		 * @code
+		 * auto pool = std::make_shared<thread_pool>("my_pool");
+		 *
+		 * // Add circuit breaker protection
+		 * pool->add_policy(std::make_unique<circuit_breaker_policy>(config));
+		 *
+		 * pool->start();
+		 * @endcode
+		 */
+		void add_policy(std::unique_ptr<pool_policy> policy);
+
+		/**
+		 * @brief Get all registered policies.
+		 * @return Const reference to the vector of policies.
+		 */
+		[[nodiscard]] auto get_policies() const -> const std::vector<std::unique_ptr<pool_policy>>&;
+
+		/**
+		 * @brief Find a policy by name.
+		 * @param name The policy name to search for.
+		 * @return Pointer to the policy, or nullptr if not found.
+		 *
+		 * ### Example
+		 * @code
+		 * auto* cb = pool->find_policy<circuit_breaker_policy>("circuit_breaker_policy");
+		 * if (cb) {
+		 *     std::cout << "Circuit state: " << to_string(cb->get_state()) << std::endl;
+		 * }
+		 * @endcode
+		 */
+		template<typename T = pool_policy>
+		[[nodiscard]] auto find_policy(const std::string& name) -> T*;
+
+		/**
+		 * @brief Remove a policy by name.
+		 * @param name The policy name to remove.
+		 * @return True if policy was found and removed.
+		 */
+		auto remove_policy(const std::string& name) -> bool;
+
+		// =========================================================================
+		// Circuit Breaker (Deprecated - Use circuit_breaker_policy instead)
 		// =========================================================================
 
 		/**
 		 * @brief Enable circuit breaker for the pool.
 		 * @param config Circuit breaker configuration.
 		 *
+		 * @deprecated Use add_policy() with circuit_breaker_policy instead:
+		 * @code
+		 * pool->add_policy(std::make_unique<circuit_breaker_policy>(config));
+		 * @endcode
+		 *
 		 * When enabled, jobs can be wrapped with circuit breaker protection
 		 * using enqueue_protected(). The circuit breaker will automatically
 		 * open when failure thresholds are exceeded.
 		 *
 		 * @see circuit_breaker_config
+		 * @see circuit_breaker_policy
 		 */
+		[[deprecated("Use add_policy() with circuit_breaker_policy instead")]]
 		void enable_circuit_breaker(const circuit_breaker_config& config);
 
 		/**
 		 * @brief Disable circuit breaker.
 		 *
+		 * @deprecated Use remove_policy("circuit_breaker_policy") instead.
+		 *
 		 * When disabled, enqueue_protected() will behave like regular enqueue().
 		 */
+		[[deprecated("Use remove_policy(\"circuit_breaker_policy\") instead")]]
 		void disable_circuit_breaker();
 
 		/**
 		 * @brief Get the circuit breaker (if enabled).
 		 * @return Shared pointer to the circuit breaker, or nullptr if not enabled.
+		 *
+		 * @deprecated Use find_policy<circuit_breaker_policy>() and get_circuit_breaker() instead.
 		 */
+		[[deprecated("Use find_policy<circuit_breaker_policy>() instead")]]
 		[[nodiscard]] auto get_circuit_breaker() -> std::shared_ptr<circuit_breaker>;
 
 		/**
 		 * @brief Check if pool is accepting work.
 		 * @return false if circuit breaker is open, true otherwise.
 		 *
+		 * @deprecated Use find_policy<circuit_breaker_policy>()->is_accepting_work() instead.
+		 *
 		 * This method checks the circuit breaker state without consuming
 		 * a request slot. Useful for quick health checks.
 		 */
+		[[deprecated("Use find_policy<circuit_breaker_policy>()->is_accepting_work() instead")]]
 		[[nodiscard]] auto is_accepting_work() const -> bool;
 
 		/**
@@ -597,10 +670,13 @@ namespace kcenon::thread
 		 * @param job The job to enqueue.
 		 * @return Error if circuit is open or job is invalid.
 		 *
+		 * @deprecated Use add_policy() with circuit_breaker_policy and regular enqueue() instead.
+		 *
 		 * If circuit breaker is not enabled, this behaves like regular enqueue().
 		 * When circuit breaker is enabled, the job is wrapped with protection
 		 * that automatically records success/failure.
 		 */
+		[[deprecated("Use add_policy() with circuit_breaker_policy and regular enqueue() instead")]]
 		[[nodiscard]] auto enqueue_protected(std::unique_ptr<job>&& job) -> common::VoidResult;
 
 		// =========================================================================
@@ -837,7 +913,22 @@ namespace kcenon::thread
 		mutable std::unique_ptr<diagnostics::thread_pool_diagnostics> diagnostics_;
 
 		/**
+		 * @brief Registered pool policies for extending thread pool behavior.
+		 *
+		 * Policies are called in order of addition for each lifecycle event.
+		 * Protected by policies_mutex_ for thread-safe access.
+		 */
+		std::vector<std::unique_ptr<pool_policy>> policies_;
+
+		/**
+		 * @brief Mutex protecting concurrent access to the policies_ vector.
+		 */
+		mutable std::mutex policies_mutex_;
+
+		/**
 		 * @brief Circuit breaker for failure detection and recovery.
+		 *
+		 * @deprecated This member is deprecated. Use circuit_breaker_policy instead.
 		 *
 		 * When enabled, jobs submitted via enqueue_protected() are wrapped
 		 * with circuit breaker protection. The circuit breaker monitors
