@@ -104,9 +104,9 @@ namespace kcenon::thread
 		circuit_breaker_policy(const circuit_breaker_policy&) = delete;
 		circuit_breaker_policy& operator=(const circuit_breaker_policy&) = delete;
 
-		// Movable
-		circuit_breaker_policy(circuit_breaker_policy&&) noexcept = default;
-		circuit_breaker_policy& operator=(circuit_breaker_policy&&) noexcept = default;
+		// Non-movable (std::atomic is not movable)
+		circuit_breaker_policy(circuit_breaker_policy&&) = delete;
+		circuit_breaker_policy& operator=(circuit_breaker_policy&&) = delete;
 
 		// ============================================
 		// pool_policy Interface

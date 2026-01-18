@@ -69,6 +69,10 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/autoscaler.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/autoscaling_policy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/scaling/scaling_metrics.h
+    # Pool policies module
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/pool_policies/pool_policy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/pool_policies/circuit_breaker_policy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/pool_policies/autoscaling_pool_policy.h
 )
 
 # Explicit source file list (do not use GLOB - CMake won't detect new files automatically)
@@ -114,6 +118,9 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/protected_job.cpp
     # Scaling implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/scaling/autoscaler.cpp
+    # Pool policies implementation
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/pool_policies/circuit_breaker_policy.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/pool_policies/autoscaling_pool_policy.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
