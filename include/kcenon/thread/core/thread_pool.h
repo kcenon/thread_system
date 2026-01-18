@@ -524,35 +524,58 @@ namespace kcenon::thread
 		 */
 		auto get_active_worker_count() const -> std::size_t;
 
+		// =========================================================================
+		// Work-Stealing (Deprecated - Use work_stealing_pool_policy instead)
+		// =========================================================================
+
 		/**
 		 * @brief Set the worker policy for all workers in the pool.
 		 * @param policy The worker policy configuration.
+		 *
+		 * @deprecated Use add_policy() with work_stealing_pool_policy instead:
+		 * @code
+		 * pool->add_policy(std::make_unique<work_stealing_pool_policy>(policy));
+		 * @endcode
 		 *
 		 * This should be called before start() to configure work-stealing
 		 * and other worker behaviors. If called after start(), only affects
 		 * newly added workers.
 		 */
+		[[deprecated("Use add_policy() with work_stealing_pool_policy instead")]]
 		void set_worker_policy(const worker_policy& policy);
 
 		/**
 		 * @brief Get the current worker policy.
 		 * @return The worker policy configuration.
+		 *
+		 * @deprecated Use find_policy<work_stealing_pool_policy>()->get_policy() instead.
 		 */
+		[[deprecated("Use find_policy<work_stealing_pool_policy>()->get_policy() instead")]]
 		[[nodiscard]] const worker_policy& get_worker_policy() const;
 
 		/**
 		 * @brief Enable or disable work-stealing at runtime.
 		 * @param enable Whether to enable work-stealing.
 		 *
+		 * @deprecated Use find_policy<work_stealing_pool_policy>()->set_enabled() instead:
+		 * @code
+		 * auto* ws = pool->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+		 * if (ws) ws->set_enabled(true);
+		 * @endcode
+		 *
 		 * This method allows toggling work-stealing behavior after pool creation.
 		 * Changes take effect for subsequent job executions.
 		 */
+		[[deprecated("Use find_policy<work_stealing_pool_policy>()->set_enabled() instead")]]
 		void enable_work_stealing(bool enable);
 
 		/**
 		 * @brief Check if work-stealing is currently enabled.
 		 * @return true if work-stealing is enabled, false otherwise.
+		 *
+		 * @deprecated Use find_policy<work_stealing_pool_policy>()->is_enabled() instead.
 		 */
+		[[deprecated("Use find_policy<work_stealing_pool_policy>()->is_enabled() instead")]]
 		[[nodiscard]] bool is_work_stealing_enabled() const;
 
 		// =========================================================================
