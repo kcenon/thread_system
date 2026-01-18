@@ -61,7 +61,7 @@ void basic_capability_query()
     std::cout << "=== Example 1: Basic Capability Query ===" << std::endl;
 
     auto mutex_queue = std::make_shared<job_queue>();
-    auto lockfree_queue = std::make_unique<lockfree_job_queue>();
+    auto lockfree_queue = std::make_unique<detail::lockfree_job_queue>();
 
     // Query capabilities using get_capabilities()
     auto mutex_caps = mutex_queue->get_capabilities();
@@ -76,7 +76,7 @@ void basic_capability_query()
     std::cout << "  supports_blocking_wait: " << mutex_caps.supports_blocking_wait << std::endl;
     std::cout << "  supports_stop: " << mutex_caps.supports_stop << std::endl;
 
-    std::cout << "\nlockfree_job_queue capabilities:" << std::endl;
+    std::cout << "\ndetail::lockfree_job_queue capabilities:" << std::endl;
     std::cout << "  exact_size: " << lockfree_caps.exact_size << std::endl;
     std::cout << "  atomic_empty_check: " << lockfree_caps.atomic_empty_check << std::endl;
     std::cout << "  lock_free: " << lockfree_caps.lock_free << std::endl;
@@ -189,7 +189,7 @@ public:
             exact_metrics_available_ = true;
             queue_ = std::move(jq);
         } else {
-            auto lfq = std::make_unique<lockfree_job_queue>();
+            auto lfq = std::make_unique<detail::lockfree_job_queue>();
             exact_metrics_available_ = false;
             queue_ = std::move(lfq);
         }
@@ -216,7 +216,7 @@ private:
             if (auto* jq = dynamic_cast<job_queue*>(queue_.get())) {
                 return jq->size();
             }
-            if (auto* lfq = dynamic_cast<lockfree_job_queue*>(queue_.get())) {
+            if (auto* lfq = dynamic_cast<detail::lockfree_job_queue*>(queue_.get())) {
                 return lfq->size();
             }
         }
@@ -262,7 +262,7 @@ void capability_comparison()
     std::cout << "=== Example 5: Capability Comparison Table ===" << std::endl;
 
     auto mutex_q = std::make_shared<job_queue>();
-    auto lockfree_q = std::make_unique<lockfree_job_queue>();
+    auto lockfree_q = std::make_unique<detail::lockfree_job_queue>();
     auto adaptive_q = std::make_unique<adaptive_job_queue>();
 
     auto print_caps = [](const char* name, const queue_capabilities& caps) {
@@ -277,7 +277,7 @@ void capability_comparison()
     };
 
     print_caps("job_queue (mutex-based)", mutex_q->get_capabilities());
-    print_caps("lockfree_job_queue", lockfree_q->get_capabilities());
+    print_caps("detail::lockfree_job_queue", lockfree_q->get_capabilities());
     print_caps("adaptive_job_queue (default mode)", adaptive_q->get_capabilities());
 
     // Summary table
@@ -294,7 +294,7 @@ void capability_comparison()
               << (caps.supports_blocking_wait ? "Y" : "N") << std::endl;
 
     caps = lockfree_q->get_capabilities();
-    std::cout << "lockfree_job_queue    |   "
+    std::cout << "detail::lockfree_job_queue    |   "
               << (caps.exact_size ? "Y" : "N") << "   |   "
               << (caps.atomic_empty_check ? "Y" : "N") << "    |     "
               << (caps.lock_free ? "Y" : "N") << "     |   "

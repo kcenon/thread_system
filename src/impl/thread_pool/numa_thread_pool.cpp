@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <kcenon/thread/core/numa_thread_pool.h>
+#include <kcenon/thread/stealing/numa_work_stealer.h>
 
 namespace kcenon::thread {
 
@@ -56,16 +57,27 @@ numa_thread_pool::numa_thread_pool(const std::string& thread_title,
 }
 
 void numa_thread_pool::configure_numa_work_stealing(const enhanced_work_stealing_config& config) {
-    // Delegate to base class method
-    set_work_stealing_config(config);
+    // Access base class private member directly (friend class)
+    enhanced_ws_config_ = config;
+    worker_policy_.enable_work_stealing = config.enabled;
+
+    if (config.enabled) {
+        if (numa_topology_.node_count() == 0) {
+            numa_topology_ = numa_topology::detect();
+        }
+        // Note: Full work stealer setup is done in thread_pool::start() or when workers are added
+    }
 }
 
 const enhanced_work_stealing_config& numa_thread_pool::numa_work_stealing_config() const {
-    return get_work_stealing_config();
+    return enhanced_ws_config_;
 }
 
 work_stealing_stats_snapshot numa_thread_pool::numa_work_stealing_stats() const {
-    return get_work_stealing_stats();
+    if (numa_work_stealer_) {
+        return numa_work_stealer_->get_stats_snapshot();
+    }
+    return work_stealing_stats_snapshot{};
 }
 
 const numa_topology& numa_thread_pool::numa_topology_info() const {

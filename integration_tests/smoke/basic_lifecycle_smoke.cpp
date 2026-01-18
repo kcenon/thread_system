@@ -46,7 +46,7 @@ class BasicLifecycleSmoke : public SystemFixture {};
 TEST_F(BasicLifecycleSmoke, CanCreateThreadPool) {
     CreateThreadPool(4);
     EXPECT_NE(pool_, nullptr);
-    EXPECT_EQ(pool_->get_thread_count(), 4);
+    EXPECT_EQ(pool_->get_active_worker_count(), 0);  // Not started yet
 }
 
 TEST_F(BasicLifecycleSmoke, CanStartAndStopPool) {
