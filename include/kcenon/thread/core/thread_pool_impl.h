@@ -54,6 +54,104 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread {
 
+// ============================================================================
+// Unified Submit API Implementations
+// ============================================================================
+
+template<typename F, typename R>
+auto thread_pool::submit(F&& callable, const submit_options& opts)
+    -> std::future<R>
+{
+    auto job_ptr = std::make_unique<future_job<R>>(
+        std::forward<F>(callable),
+        opts.name.empty() ? "async_job" : opts.name
+    );
+
+    auto future = job_ptr->get_future();
+
+    auto result = enqueue(std::move(job_ptr));
+    if (result.is_err()) {
+        std::promise<R> error_promise;
+        error_promise.set_exception(
+            std::make_exception_ptr(
+                std::runtime_error(result.error().message)
+            )
+        );
+        return error_promise.get_future();
+    }
+
+    return future;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit(std::vector<F>&& callables, const submit_options& opts)
+    -> std::vector<std::future<R>>
+{
+    std::vector<std::future<R>> futures;
+    futures.reserve(callables.size());
+
+    for (auto&& callable : callables) {
+        submit_options single_opts;
+        single_opts.name = opts.name;
+        futures.push_back(submit<F, R>(std::move(callable), single_opts));
+    }
+
+    return futures;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit_wait_all(std::vector<F>&& callables, const submit_options& opts)
+    -> std::vector<R>
+{
+    auto futures = submit<F, R>(std::move(callables), opts);
+
+    std::vector<R> results;
+    results.reserve(futures.size());
+
+    for (auto& future : futures) {
+        results.push_back(future.get());
+    }
+
+    return results;
+}
+
+template<typename F, typename R>
+auto thread_pool::submit_wait_any(std::vector<F>&& callables, const submit_options& opts)
+    -> R
+{
+    if (callables.empty()) {
+        throw std::invalid_argument("Empty callables vector");
+    }
+
+    auto futures = submit<F, R>(std::move(callables), opts);
+    auto completed = std::make_shared<std::atomic<bool>>(false);
+    auto result_promise = std::make_shared<std::promise<R>>();
+    auto result_future = result_promise->get_future();
+
+    for (std::size_t i = 0; i < futures.size(); ++i) {
+        std::thread([completed, result_promise, fut = std::move(futures[i])]() mutable {
+            try {
+                R result = fut.get();
+                bool expected = false;
+                if (completed->compare_exchange_strong(expected, true)) {
+                    result_promise->set_value(std::move(result));
+                }
+            } catch (...) {
+                bool expected = false;
+                if (completed->compare_exchange_strong(expected, true)) {
+                    result_promise->set_exception(std::current_exception());
+                }
+            }
+        }).detach();
+    }
+
+    return result_future.get();
+}
+
+// ============================================================================
+// Deprecated Submit API Implementations
+// ============================================================================
+
 template<typename F, typename R>
 auto thread_pool::submit_async(F&& callable, const std::string& name)
     -> std::future<R>

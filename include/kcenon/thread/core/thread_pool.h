@@ -48,6 +48,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/stealing/work_stealing_stats.h>
 #include <kcenon/thread/stealing/numa_topology.h>
 #include <kcenon/thread/pool_policies/pool_policy.h>
+#include <kcenon/thread/core/submit_options.h>
 
 // Include unified feature flags from common_system if available
 #if __has_include(<kcenon/common/config/feature_flags.h>)
@@ -386,89 +387,201 @@ namespace kcenon::thread
 		[[nodiscard]] auto get_context(void) const -> const thread_context&;
 
 		// ============================================================================
-		// Future-based Async API
+		// Unified Submit API
 		// ============================================================================
-		// These methods provide async result retrieval through std::future.
-		// They enable callers to receive execution results without manual callbacks.
+		// These methods provide a unified interface for job submission with
+		// configurable behavior through submit_options.
 
 		/**
-		 * @brief Submit a callable and get a future for the result
+		 * @brief Submit a callable with configurable options.
+		 *
+		 * This is the unified API for submitting single tasks. It replaces submit_async
+		 * with a more flexible options-based approach.
 		 *
 		 * @tparam F Callable type
 		 * @tparam R Return type (automatically deduced)
 		 * @param callable The function to execute
-		 * @param name Optional job name for debugging
+		 * @param opts Optional submit options (name, etc.)
 		 * @return Future for the result
 		 *
 		 * @example
 		 * @code
-		 * auto future = pool->submit_async([]{ return 42; });
-		 * int result = future.get();  // Blocks until complete
+		 * // Basic usage (equivalent to submit_async)
+		 * auto future = pool->submit([]{ return 42; });
+		 * int result = future.get();
+		 *
+		 * // With named job
+		 * auto future = pool->submit([]{ return 42; }, {.name = "compute"});
+		 *
+		 * // Using static factory
+		 * auto future = pool->submit([]{ return 42; }, submit_options::named("task"));
 		 * @endcode
+		 *
+		 * @see submit_options
 		 */
 		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-		[[nodiscard]] auto submit_async(F&& callable, const std::string& name = "")
+		[[nodiscard]] auto submit(F&& callable, const submit_options& opts = {})
 		    -> std::future<R>;
 
 		/**
-		 * @brief Submit batch of callables and get futures
+		 * @brief Submit a batch of callables with configurable options.
+		 *
+		 * This is the unified API for submitting batch tasks. The behavior depends
+		 * on the options provided:
+		 * - Default: Returns vector of futures (equivalent to submit_batch_async)
+		 * - wait_all=true: Blocks and returns vector of results (equivalent to submit_all)
+		 * - wait_any=true: Blocks and returns first result (equivalent to submit_any)
 		 *
 		 * @tparam F Callable type
 		 * @tparam R Return type (automatically deduced)
 		 * @param callables Vector of functions to execute
-		 * @return Vector of futures for the results
+		 * @param opts Optional submit options
+		 * @return Vector of futures for the results (when wait_all/wait_any are false)
 		 *
 		 * @example
 		 * @code
 		 * std::vector<std::function<int()>> tasks;
 		 * tasks.push_back([]{ return 1; });
 		 * tasks.push_back([]{ return 2; });
-		 * auto futures = pool->submit_batch_async(std::move(tasks));
+		 *
+		 * // Get futures (default)
+		 * auto futures = pool->submit(std::move(tasks));
+		 *
+		 * // Wait for all results
+		 * auto results = pool->submit(std::move(tasks), submit_options::all());
+		 *
+		 * // Get first completed
+		 * auto result = pool->submit(std::move(tasks), submit_options::any());
 		 * @endcode
+		 *
+		 * @see submit_options
 		 */
 		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit(std::vector<F>&& callables, const submit_options& opts = {})
+		    -> std::vector<std::future<R>>;
+
+		/**
+		 * @brief Submit a batch and wait for all results.
+		 *
+		 * Convenience overload that blocks until all tasks complete.
+		 * Equivalent to submit(callables, submit_options::all()).
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @param opts Submit options (wait_all is implicitly true)
+		 * @return Vector of results
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_wait_all(std::vector<F>&& callables,
+		                                   const submit_options& opts = {})
+		    -> std::vector<R>;
+
+		/**
+		 * @brief Submit a batch and return first completed result.
+		 *
+		 * Convenience overload that returns when any task completes.
+		 * Equivalent to submit(callables, submit_options::any()).
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @param opts Submit options (wait_any is implicitly true)
+		 * @return First completed result
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[nodiscard]] auto submit_wait_any(std::vector<F>&& callables,
+		                                   const submit_options& opts = {})
+		    -> R;
+
+		// ============================================================================
+		// Future-based Async API (Deprecated)
+		// ============================================================================
+		// These methods are deprecated in favor of the unified submit() API.
+		// They are kept for backward compatibility.
+
+		/**
+		 * @brief Submit a callable and get a future for the result
+		 *
+		 * @deprecated Use submit() instead:
+		 * @code
+		 * // Old way
+		 * auto future = pool->submit_async([]{ return 42; }, "job_name");
+		 * // New way
+		 * auto future = pool->submit([]{ return 42; }, {.name = "job_name"});
+		 * @endcode
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callable The function to execute
+		 * @param name Optional job name for debugging
+		 * @return Future for the result
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[deprecated("Use submit() instead")]]
+		[[nodiscard]] auto submit_async(F&& callable, const std::string& name = "")
+		    -> std::future<R>;
+
+		/**
+		 * @brief Submit batch of callables and get futures
+		 *
+		 * @deprecated Use submit(std::vector<F>&&) instead:
+		 * @code
+		 * // Old way
+		 * auto futures = pool->submit_batch_async(std::move(tasks));
+		 * // New way
+		 * auto futures = pool->submit(std::move(tasks));
+		 * @endcode
+		 *
+		 * @tparam F Callable type
+		 * @tparam R Return type (automatically deduced)
+		 * @param callables Vector of functions to execute
+		 * @return Vector of futures for the results
+		 */
+		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[deprecated("Use submit(std::vector<F>&&) instead")]]
 		[[nodiscard]] auto submit_batch_async(std::vector<F>&& callables)
 		    -> std::vector<std::future<R>>;
 
 		/**
 		 * @brief Submit batch and wait for all results
 		 *
+		 * @deprecated Use submit_wait_all() instead:
+		 * @code
+		 * // Old way
+		 * auto results = pool->submit_all(std::move(tasks));
+		 * // New way
+		 * auto results = pool->submit_wait_all(std::move(tasks));
+		 * @endcode
+		 *
 		 * @tparam F Callable type
 		 * @tparam R Return type (automatically deduced)
 		 * @param callables Vector of functions to execute
 		 * @return Vector of results (blocks until all complete)
-		 *
-		 * @example
-		 * @code
-		 * std::vector<std::function<int()>> tasks;
-		 * for (int i = 0; i < 10; ++i) {
-		 *     tasks.push_back([i]{ return i * i; });
-		 * }
-		 * auto results = pool->submit_all(std::move(tasks));
-		 * // results contains [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-		 * @endcode
 		 */
 		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[deprecated("Use submit_wait_all() instead")]]
 		[[nodiscard]] auto submit_all(std::vector<F>&& callables)
 		    -> std::vector<R>;
 
 		/**
 		 * @brief Submit batch and return first completed result
 		 *
+		 * @deprecated Use submit_wait_any() instead:
+		 * @code
+		 * // Old way
+		 * auto result = pool->submit_any(std::move(tasks));
+		 * // New way
+		 * auto result = pool->submit_wait_any(std::move(tasks));
+		 * @endcode
+		 *
 		 * @tparam F Callable type
 		 * @tparam R Return type (automatically deduced)
 		 * @param callables Vector of functions to execute
 		 * @return First completed result
-		 *
-		 * @example
-		 * @code
-		 * auto result = pool->submit_any({
-		 *     []{ return fetch_from_server_a(); },
-		 *     []{ return fetch_from_server_b(); }
-		 * });
-		 * @endcode
 		 */
 		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+		[[deprecated("Use submit_wait_any() instead")]]
 		[[nodiscard]] auto submit_any(std::vector<F>&& callables)
 		    -> R;
 
