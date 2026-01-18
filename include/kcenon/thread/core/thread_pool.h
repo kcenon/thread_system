@@ -163,9 +163,8 @@ namespace kcenon::thread
 	 * - Very large thread pools (significantly more threads than cores) may degrade
 	 *   performance due to context switching overhead.
 	 *
-	 * ### IExecutor Interface (Deprecated)
-	 * Direct inheritance from common::interfaces::IExecutor is deprecated and will be
-	 * removed in v2.0. For IExecutor compatibility, use thread_pool_executor_adapter:
+	 * ### IExecutor Interface
+	 * For IExecutor compatibility, use thread_pool_executor_adapter:
 	 * @code
 	 * #include <kcenon/thread/adapters/common_executor_adapter.h>
 	 *
@@ -179,12 +178,10 @@ namespace kcenon::thread
 	 * @see typed_kcenon::thread::typed_thread_pool For a priority-based version
 	 */
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
-// DEPRECATED: Direct IExecutor inheritance will be removed in v2.0.
-// Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h>
-#if KCENON_HAS_COMMON_EXECUTOR
-	                   , public common_ns::interfaces::IExecutor
-#endif
 	{
+		// Allow numa_thread_pool to access protected/private members for NUMA-specific functionality
+		friend class numa_thread_pool;
+
 	public:
 		/**
 		 * @brief Constructs a new @c thread_pool instance.
@@ -255,92 +252,6 @@ namespace kcenon::thread
 		 * within member functions to avoid storing a separate shared pointer.
 		 */
 		[[nodiscard]] auto get_ptr(void) -> std::shared_ptr<thread_pool>;
-
-#if KCENON_HAS_COMMON_EXECUTOR
-	// ============================================================================
-	// IExecutor interface implementation (common_system)
-	// ============================================================================
-	// DEPRECATED: Direct IExecutor inheritance is deprecated.
-	// Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h>
-	// for IExecutor compatibility. This interface will be removed in v2.0.
-	//
-	// Migration example:
-	//   // Old way (deprecated):
-	//   auto pool = std::make_shared<thread_pool>("my_pool");
-	//   IExecutor* executor = pool.get();
-	//
-	//   // New way (recommended):
-	//   auto pool = std::make_shared<thread_pool>("my_pool");
-	//   auto executor = std::make_shared<adapters::thread_pool_executor_adapter>(pool);
-	// ============================================================================
-
-	/**
-	 * @brief Submit a task for immediate execution (IExecutor)
-	 * @param task The function to execute
-	 * @return Future representing the task result
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	std::future<void> submit(std::function<void()> task);
-
-	/**
-	 * @brief Submit a task for delayed execution (IExecutor)
-	 * @param task The function to execute
-	 * @param delay The delay before execution
-	 * @return Future representing the task result
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	std::future<void> submit_delayed(
-		std::function<void()> task,
-		std::chrono::milliseconds delay);
-
-	/**
-	 * @brief Execute a job with Result-based error handling (IExecutor)
-	 * @param job The job to execute
-	 * @return Result containing future or error
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	common_ns::Result<std::future<void>> execute(
-		std::unique_ptr<common_ns::interfaces::IJob>&& job) override;
-
-	/**
-	 * @brief Execute a job with delay (IExecutor)
-	 * @param job The job to execute
-	 * @param delay The delay before execution
-	 * @return Result containing future or error
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	common_ns::Result<std::future<void>> execute_delayed(
-		std::unique_ptr<common_ns::interfaces::IJob>&& job,
-		std::chrono::milliseconds delay) override;
-
-	/**
-	 * @brief Get the number of worker threads (IExecutor)
-	 * @return Number of available workers
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	size_t worker_count() const override;
-
-	/**
-	 * @brief Get the number of pending tasks (IExecutor)
-	 * @return Number of tasks waiting to be executed
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	size_t pending_tasks() const override;
-
-	/**
-	 * @brief Shutdown the executor gracefully (IExecutor)
-	 * @param wait_for_completion Wait for all pending tasks to complete
-	 * @deprecated Use thread_pool_executor_adapter instead. This method will be removed in v2.0.
-	 */
-	[[deprecated("Use thread_pool_executor_adapter from <kcenon/thread/adapters/common_executor_adapter.h> instead. This method will be removed in v2.0.")]]
-	void shutdown(bool wait_for_completion) override;
-#endif // KCENON_HAS_COMMON_EXECUTOR
 
         /**
          * @brief Starts the thread pool and all associated workers.
@@ -560,50 +471,11 @@ namespace kcenon::thread
 		[[nodiscard]] auto submit_any(std::vector<F>&& callables)
 		    -> R;
 
-		// ============================================================================
-		// Simplified Public API (bool return type for convenience)
-		// ============================================================================
-		// These methods provide a simplified interface with bool return types
-		// for easier integration with code that doesn't use result<T> types.
-		// For detailed error information, prefer using the common::VoidResult methods above.
-
 		/**
-		 * @brief Submit a task to the thread pool (simplified API)
-		 * @param task The task to be executed
-		 * @return true if task was successfully submitted, false otherwise
-		 * @note For detailed error information, use enqueue() instead
-		 * @deprecated Use enqueue() with a job wrapper instead. This method will be removed in v2.0.
-		 */
-		[[deprecated("Use enqueue() with a job wrapper instead. This method will be removed in v2.0.")]]
-		auto submit_task(std::function<void()> task) -> bool;
-
-		/**
-		 * @brief Get the number of worker threads in the pool
-		 * @return Number of active worker threads
-		 * @deprecated Use metrics().worker_count or get_active_worker_count() instead. This method will be removed in v2.0.
-		 */
-		[[deprecated("Use metrics().worker_count or get_active_worker_count() instead. This method will be removed in v2.0.")]]
-		auto get_thread_count() const -> std::size_t;
-
-		/**
-		 * @brief Shutdown the thread pool (simplified API)
-		 * @param immediate If true, stop immediately; if false, wait for current tasks to complete
-		 * @return true if shutdown was successful, false otherwise
-		 * @note For detailed error information, use stop() instead
-		 * @deprecated Use stop() instead. This method will be removed in v2.0.
-		 */
-		[[deprecated("Use stop() instead. This method will be removed in v2.0.")]]
-		auto shutdown_pool(bool immediate = false) -> bool;
-
-		/**
-		 * @brief Check if the thread pool is currently running (IExecutor)
+		 * @brief Check if the thread pool is currently running
 		 * @return true if the pool is active, false otherwise
 		 */
-#if KCENON_HAS_COMMON_EXECUTOR
-		auto is_running() const -> bool override;
-#else
 		auto is_running() const -> bool;
-#endif
 
 		/**
 		 * @brief Get the number of pending tasks in the queue
@@ -681,58 +553,6 @@ namespace kcenon::thread
 		 * @return true if work-stealing is enabled, false otherwise.
 		 */
 		[[nodiscard]] bool is_work_stealing_enabled() const;
-
-		// =========================================================================
-		// Enhanced Work-Stealing (NUMA-aware)
-		// =========================================================================
-		// DEPRECATED: NUMA-specific methods will be removed in v2.0.
-		// Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead.
-		//
-		// Migration example:
-		//   // Old way (deprecated):
-		//   auto pool = std::make_shared<thread_pool>("my_pool");
-		//   pool->set_work_stealing_config(config);
-		//
-		//   // New way (recommended):
-		//   auto pool = std::make_shared<numa_thread_pool>("my_pool");
-		//   pool->configure_numa_work_stealing(config);
-		// =========================================================================
-
-		/**
-		 * @brief Set enhanced work-stealing configuration.
-		 * @param config The enhanced work-stealing configuration.
-		 * @deprecated Use numa_thread_pool::configure_numa_work_stealing() instead.
-		 *             This method will be removed in v2.0.
-		 */
-		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
-		void set_work_stealing_config(const enhanced_work_stealing_config& config);
-
-		/**
-		 * @brief Get the current enhanced work-stealing configuration.
-		 * @return Reference to the current enhanced work-stealing configuration.
-		 * @deprecated Use numa_thread_pool::numa_work_stealing_config() instead.
-		 *             This method will be removed in v2.0.
-		 */
-		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
-		[[nodiscard]] const enhanced_work_stealing_config& get_work_stealing_config() const;
-
-		/**
-		 * @brief Get a snapshot of work-stealing statistics.
-		 * @return Non-atomic snapshot of current work-stealing statistics.
-		 * @deprecated Use numa_thread_pool::numa_work_stealing_stats() instead.
-		 *             This method will be removed in v2.0.
-		 */
-		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
-		[[nodiscard]] work_stealing_stats_snapshot get_work_stealing_stats() const;
-
-		/**
-		 * @brief Get the NUMA topology information.
-		 * @return Reference to the detected NUMA topology.
-		 * @deprecated Use numa_thread_pool::numa_topology_info() instead.
-		 *             This method will be removed in v2.0.
-		 */
-		[[deprecated("Use numa_thread_pool from <kcenon/thread/core/numa_thread_pool.h> instead. This method will be removed in v2.0.")]]
-		[[nodiscard]] const numa_topology& get_numa_topology() const;
 
 		// =========================================================================
 		// Circuit Breaker

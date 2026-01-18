@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
 
@@ -325,11 +326,12 @@ TEST(thread_pool_test, manual_worker_batch_enqueue_arm64)
 
 	// Submit job - should not crash
 	std::atomic<int> counter{0};
-	bool submit_result = pool->submit_task([&counter]()
-	{
+	auto job = std::make_unique<callback_job>([&counter]() -> common::VoidResult {
 		counter++;
+		return common::ok();
 	});
-	EXPECT_TRUE(submit_result);
+	auto submit_result = pool->enqueue(std::move(job));
+	EXPECT_TRUE(submit_result.is_ok());
 
 	// Allow job to complete
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -369,11 +371,12 @@ TEST(thread_pool_test, manual_workers_concurrent_job_submission_arm64)
 
 	for (int i = 0; i < job_count; ++i)
 	{
-		bool submit_result = pool->submit_task([&counter]()
-		{
+		auto job = std::make_unique<callback_job>([&counter]() -> common::VoidResult {
 			counter++;
+			return common::ok();
 		});
-		EXPECT_TRUE(submit_result);
+		auto submit_result = pool->enqueue(std::move(job));
+		EXPECT_TRUE(submit_result.is_ok());
 	}
 
 	// Wait for all jobs to complete
@@ -409,7 +412,11 @@ TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
 		EXPECT_FALSE(start_result.is_err());
 
 		std::atomic<int> counter{0};
-		pool->submit_task([&counter]() { counter++; });
+		auto job1 = std::make_unique<callback_job>([&counter]() -> common::VoidResult {
+			counter++;
+			return common::ok();
+		});
+		pool->enqueue(std::move(job1));
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
@@ -435,7 +442,11 @@ TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
 		EXPECT_FALSE(start_result.is_err());
 
 		std::atomic<int> counter{0};
-		pool->submit_task([&counter]() { counter++; });
+		auto job2 = std::make_unique<callback_job>([&counter]() -> common::VoidResult {
+			counter++;
+			return common::ok();
+		});
+		pool->enqueue(std::move(job2));
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 

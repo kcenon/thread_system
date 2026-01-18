@@ -158,7 +158,10 @@ TEST_F(ThreadPoolLifecycleTest, AddWorkersAfterCreation) {
         EXPECT_TRUE(result.is_ok());
     }
 
-    EXPECT_EQ(pool_->get_thread_count(), 4);
+    // When pool is running, added workers start automatically, so we expect 4 active workers
+    // Give some time for workers to start
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    EXPECT_EQ(pool_->get_active_worker_count(), 4);
 }
 
 TEST_F(ThreadPoolLifecycleTest, MultipleStartStopCycles) {
@@ -186,12 +189,17 @@ TEST_F(ThreadPoolLifecycleTest, VerifyWorkerCount) {
     const size_t worker_count = 8;
     CreateThreadPool(worker_count);
 
-    EXPECT_EQ(pool_->get_thread_count(), worker_count);
+    // Before start, active worker count is 0
+    EXPECT_EQ(pool_->get_active_worker_count(), 0);
 
     auto result = pool_->start();
     ASSERT_TRUE(result.is_ok());
 
-    EXPECT_EQ(pool_->get_thread_count(), worker_count);
+    // Give workers time to fully start
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    // After start, all workers should be active
+    EXPECT_EQ(pool_->get_active_worker_count(), worker_count);
 }
 
 TEST_F(ThreadPoolLifecycleTest, SubmitBatchJobs) {

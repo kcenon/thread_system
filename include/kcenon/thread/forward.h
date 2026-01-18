@@ -147,12 +147,6 @@ namespace policies {
 template<typename SyncPolicy, typename BoundPolicy, typename OverflowPolicy>
 class policy_queue;
 
-/// @deprecated Use job_queue with max_size parameter instead. bounded_job_queue has been removed.
-/// Migration: std::make_shared<bounded_job_queue>(1000) → std::make_shared<job_queue>(1000)
-using bounded_job_queue [[deprecated(
-    "bounded_job_queue has been removed. "
-    "Use job_queue with max_size parameter instead.")]] = job_queue;
-
 // ============================================================================
 // Internal implementation types (detail namespace)
 // ============================================================================
@@ -163,24 +157,6 @@ namespace detail {
     template<typename T>
     class concurrent_queue;
 }  // namespace detail
-
-/// @deprecated Use adaptive_job_queue or job_queue instead. lockfree_job_queue is now an internal implementation.
-using lockfree_job_queue [[deprecated(
-    "lockfree_job_queue is moving to detail:: namespace. "
-    "Use adaptive_job_queue with policy::performance_first instead.")]] = detail::lockfree_job_queue;
-
-/// @deprecated Use adaptive_job_queue or job_queue instead. concurrent_queue is now an internal implementation.
-template<typename T>
-using concurrent_queue [[deprecated(
-    "concurrent_queue is moving to detail:: namespace. "
-    "Use adaptive_job_queue or job_queue instead.")]] = detail::concurrent_queue<T>;
-
-/// @deprecated MISLEADING NAME: Uses fine-grained locking, not lock-free algorithms
-template<typename T>
-using lockfree_queue [[deprecated(
-    "MISLEADING NAME: This class uses fine-grained locking, not lock-free algorithms. "
-    "Use detail::concurrent_queue<T> instead. "
-    "For true lock-free queue, see detail::lockfree_job_queue with hazard pointers.")]] = detail::concurrent_queue<T>;
 
 // ============================================================================
 // Metrics types (in metrics sub-namespace)

@@ -241,11 +241,11 @@ TEST_F(AutoscalerTest, GetCurrentMetrics) {
 TEST_F(AutoscalerTest, ManualScaleUp) {
     auto scaler = std::make_unique<autoscaler>(*pool_, policy_);
 
-    std::size_t initial_count = pool_->get_thread_count();
+    std::size_t initial_count = pool_->get_active_worker_count();
     auto result = scaler->scale_up();
 
     EXPECT_TRUE(result.is_ok());
-    EXPECT_GT(pool_->get_thread_count(), initial_count);
+    EXPECT_GT(pool_->get_active_worker_count(), initial_count);
 }
 
 // NOTE: ManualScaleDown test is disabled because it can block indefinitely
@@ -258,7 +258,7 @@ TEST_F(AutoscalerTest, ScaleToSpecificCount) {
     // Only test scale up to avoid blocking on scale down
     auto result = scaler->scale_to(6);
     EXPECT_TRUE(result.is_ok());
-    EXPECT_EQ(pool_->get_thread_count(), 6);
+    EXPECT_EQ(pool_->get_active_worker_count(), 6);
 }
 
 TEST_F(AutoscalerTest, ScaleToClampedByMax) {
@@ -267,7 +267,7 @@ TEST_F(AutoscalerTest, ScaleToClampedByMax) {
     // Try to scale above max (only testing scale up)
     auto result = scaler->scale_to(100);
     EXPECT_TRUE(result.is_ok());
-    EXPECT_EQ(pool_->get_thread_count(), policy_.max_workers);
+    EXPECT_EQ(pool_->get_active_worker_count(), policy_.max_workers);
 }
 
 // NOTE: ScaleToClampedByMinMax test for scale-down is disabled because

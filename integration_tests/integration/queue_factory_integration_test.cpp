@@ -633,13 +633,9 @@ TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_StandardQueue) {
     EXPECT_EQ(completed_jobs_.load(), job_count);
 }
 
-TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_LockfreeQueue) {
-    // Note: create_lockfree_queue() is deprecated but tested for backward compatibility
-    // It now returns adaptive_job_queue with performance_first policy
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    auto queue = queue_factory::create_lockfree_queue();
-#pragma GCC diagnostic pop
+TEST_F(QueueFactoryIntegrationTest, FunctionalVerification_PerformanceFirstQueue) {
+    // Note: create_lockfree_queue() has been removed. Use create_adaptive_queue with performance_first instead.
+    auto queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
     ASSERT_NE(queue, nullptr);
 
     scheduler_interface* scheduler = queue.get();

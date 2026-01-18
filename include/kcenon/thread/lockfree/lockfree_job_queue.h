@@ -259,22 +259,4 @@ private:
 
 }  // namespace detail
 
-/**
- * @brief Public alias for detail::lockfree_job_queue
- *
- * @deprecated This class is being moved to detail:: namespace as it's an internal implementation.
- * For new code, prefer using adaptive_job_queue (which wraps this internally) or job_queue directly.
- *
- * This lock-free job queue uses the Michael-Scott algorithm with Safe Hazard Pointers.
- * It's primarily used internally by adaptive_job_queue for its lock-free mode.
- *
- * Migration path:
- * - For new code: Use adaptive_job_queue with policy::performance_first
- * - For existing code: Use detail::lockfree_job_queue if you need direct access
- */
-using lockfree_job_queue [[deprecated(
-    "lockfree_job_queue is moving to detail:: namespace. "
-    "For public API, use adaptive_job_queue with policy::performance_first instead. "
-    "If you need this class directly, use detail::lockfree_job_queue.")]] = detail::lockfree_job_queue;
-
 }  // namespace kcenon::thread

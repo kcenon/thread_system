@@ -100,11 +100,13 @@ public:
         std::atomic<int> completed_jobs{0};
         auto start_time = std::chrono::high_resolution_clock::now();
         
-        // Use new interface methods
+        // Use enqueue with callback_job
         for (int i = 0; i < num_jobs; ++i) {
-            pool->submit_task([&completed_jobs]() {
+            auto job = std::make_unique<callback_job>([&completed_jobs]() -> common::VoidResult {
                 completed_jobs.fetch_add(1);
+                return common::ok();
             });
+            pool->enqueue(std::move(job));
         }
 
         // Wait for completion
