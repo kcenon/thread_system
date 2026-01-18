@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 
 using namespace kcenon::thread;
+using namespace kcenon::thread::detail;
 
 class LockFreeJobQueueTest : public ::testing::Test {
 protected:
