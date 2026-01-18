@@ -817,8 +817,19 @@ auto thread_pool::get_active_worker_count() const -> std::size_t {
 }
 
 // ============================================================================
-// Work-Stealing Support
+// Work-Stealing Support (Deprecated)
 // ============================================================================
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#endif
 
 void thread_pool::set_worker_policy(const worker_policy& policy) {
     worker_policy_ = policy;
@@ -860,6 +871,14 @@ void thread_pool::enable_work_stealing(bool enable) {
 bool thread_pool::is_work_stealing_enabled() const {
     return worker_policy_.enable_work_stealing;
 }
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 std::function<job*(std::size_t)> thread_pool::create_steal_function() {
     // Capture 'this' to access workers
