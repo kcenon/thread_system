@@ -1026,8 +1026,52 @@ auto thread_pool::collect_worker_diagnostics() const
 }
 
 // ============================================================================
-// Circuit Breaker
+// Pool Policies
 // ============================================================================
+
+void thread_pool::add_policy(std::unique_ptr<pool_policy> policy) {
+    if (!policy) {
+        return;
+    }
+
+    std::scoped_lock<std::mutex> lock(policies_mutex_);
+    policies_.push_back(std::move(policy));
+}
+
+auto thread_pool::get_policies() const -> const std::vector<std::unique_ptr<pool_policy>>& {
+    return policies_;
+}
+
+auto thread_pool::remove_policy(const std::string& name) -> bool {
+    std::scoped_lock<std::mutex> lock(policies_mutex_);
+
+    auto it = std::remove_if(policies_.begin(), policies_.end(),
+        [&name](const std::unique_ptr<pool_policy>& policy) {
+            return policy && policy->get_name() == name;
+        });
+
+    if (it != policies_.end()) {
+        policies_.erase(it, policies_.end());
+        return true;
+    }
+
+    return false;
+}
+
+// ============================================================================
+// Circuit Breaker (Deprecated)
+// ============================================================================
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#endif
 
 void thread_pool::enable_circuit_breaker(const circuit_breaker_config& config) {
     circuit_breaker_ = std::make_shared<circuit_breaker>(config);
@@ -1066,6 +1110,14 @@ auto thread_pool::enqueue_protected(std::unique_ptr<job>&& j) -> common::VoidRes
 
     return enqueue(std::move(protected_j));
 }
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 // ============================================================================
 // Autoscaling
