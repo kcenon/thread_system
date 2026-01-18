@@ -70,10 +70,10 @@ TEST_F(QueueFactoryTest, CreateStandardQueue) {
     EXPECT_TRUE(caps.supports_stop);
 }
 
-TEST_F(QueueFactoryTest, CreateLockfreeQueue) {
-    // Note: create_lockfree_queue() now returns adaptive_job_queue with performance_first policy
-    // (lockfree_job_queue is now an internal implementation detail)
-    auto queue = queue_factory::create_lockfree_queue();
+TEST_F(QueueFactoryTest, CreatePerformanceFirstAdaptiveQueue) {
+    // Note: create_lockfree_queue() has been replaced with create_adaptive_queue(policy::performance_first)
+    // (lockfree_job_queue is now an internal implementation detail in detail:: namespace)
+    auto queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
 
     ASSERT_NE(queue, nullptr);
     EXPECT_TRUE(queue->empty());
@@ -318,8 +318,8 @@ TEST_F(QueueFactoryTest, StandardQueueFunctional) {
     EXPECT_TRUE(queue->empty());
 }
 
-TEST_F(QueueFactoryTest, LockfreeQueueFunctional) {
-    auto queue = queue_factory::create_lockfree_queue();
+TEST_F(QueueFactoryTest, PerformanceFirstAdaptiveQueueFunctional) {
+    auto queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
 
     std::atomic<int> counter{0};
     for (int i = 0; i < 10; ++i) {
@@ -388,9 +388,9 @@ TEST_F(QueueFactoryTest, AllQueuesImplementSchedulerInterface) {
         EXPECT_TRUE(scheduler->get_next_job().is_ok());
     }
 
-    // Lockfree queue
+    // Performance-first adaptive queue (formerly lockfree queue)
     {
-        auto queue = queue_factory::create_lockfree_queue();
+        auto queue = queue_factory::create_adaptive_queue(adaptive_job_queue::policy::performance_first);
         scheduler_interface* scheduler = queue.get();
         ASSERT_NE(scheduler, nullptr);
 
@@ -423,9 +423,8 @@ TEST_F(QueueFactoryTest, ExistingCodeStillWorks) {
     auto q1 = std::make_shared<job_queue>();
     EXPECT_TRUE(q1->empty());
 
-    // Direct lockfree_job_queue construction
-    auto q2 = std::make_unique<lockfree_job_queue>();
-    EXPECT_TRUE(q2->empty());
+    // Note: lockfree_job_queue is now in detail:: namespace and not for direct use
+    // Use adaptive_job_queue with performance_first policy instead
 
     // Direct adaptive_job_queue construction
     auto q3 = std::make_unique<adaptive_job_queue>();

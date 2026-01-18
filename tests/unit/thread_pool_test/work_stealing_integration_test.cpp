@@ -32,13 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
  * @file work_stealing_integration_test.cpp
- * @brief Unit tests for thread_pool work-stealing integration (Issue #427)
+ * @brief Unit tests for thread_pool work-stealing integration using work_stealing_pool_policy
  *
- * This file tests the integration of enhanced work-stealing features
- * into thread_pool, including:
- * - set_work_stealing_config() / get_work_stealing_config()
- * - get_work_stealing_stats()
- * - get_numa_topology()
+ * This file tests the integration of work-stealing features via the policy pattern,
+ * including:
+ * - Adding work_stealing_pool_policy to thread_pool
+ * - Enabling/disabling work stealing at runtime
+ * - Work stealing with job execution
  */
 
 #include "gtest/gtest.h"
@@ -46,9 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/callback_job.h>
-#include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
-#include <kcenon/thread/stealing/work_stealing_stats.h>
-#include <kcenon/thread/stealing/numa_topology.h>
+#include <kcenon/thread/pool_policies/work_stealing_pool_policy.h>
 
 #include <atomic>
 #include <chrono>
@@ -73,157 +71,134 @@ protected:
 };
 
 // ============================================================================
+// Policy Addition Tests
+// ============================================================================
+
+TEST_F(WorkStealingIntegrationTest, AddWorkStealingPolicy) {
+    worker_policy config;
+    config.enable_work_stealing = true;
+
+    auto policy = std::make_unique<work_stealing_pool_policy>(config);
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+    EXPECT_TRUE(ws->is_enabled());
+}
+
+TEST_F(WorkStealingIntegrationTest, PolicyDisabledByDefault) {
+    auto policy = std::make_unique<work_stealing_pool_policy>();
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+    EXPECT_FALSE(ws->is_enabled());
+}
+
+TEST_F(WorkStealingIntegrationTest, EnableDisableAtRuntime) {
+    auto policy = std::make_unique<work_stealing_pool_policy>();
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+
+    // Initially disabled
+    EXPECT_FALSE(ws->is_enabled());
+
+    // Enable
+    ws->set_enabled(true);
+    EXPECT_TRUE(ws->is_enabled());
+
+    // Disable
+    ws->set_enabled(false);
+    EXPECT_FALSE(ws->is_enabled());
+}
+
+// ============================================================================
 // Configuration Tests
 // ============================================================================
 
-TEST_F(WorkStealingIntegrationTest, GetDefaultConfig) {
-    // Default config should have work-stealing disabled
-    const auto& config = pool_->get_work_stealing_config();
-    EXPECT_FALSE(config.enabled);
+TEST_F(WorkStealingIntegrationTest, ConfigureStealPolicy) {
+    worker_policy config;
+    config.enable_work_stealing = true;
+    config.victim_selection = steal_policy::adaptive;
+
+    auto policy = std::make_unique<work_stealing_pool_policy>(config);
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+    EXPECT_EQ(ws->get_steal_policy(), steal_policy::adaptive);
+
+    // Change policy at runtime
+    ws->set_steal_policy(steal_policy::round_robin);
+    EXPECT_EQ(ws->get_steal_policy(), steal_policy::round_robin);
 }
 
-TEST_F(WorkStealingIntegrationTest, SetAndGetConfig) {
-    auto config = enhanced_work_stealing_config::numa_optimized();
-    pool_->set_work_stealing_config(config);
+TEST_F(WorkStealingIntegrationTest, ConfigureMaxStealAttempts) {
+    worker_policy config;
+    config.enable_work_stealing = true;
+    config.max_steal_attempts = 10;
 
-    const auto& retrieved = pool_->get_work_stealing_config();
-    EXPECT_TRUE(retrieved.enabled);
-    EXPECT_EQ(retrieved.policy, enhanced_steal_policy::numa_aware);
-    EXPECT_TRUE(retrieved.numa_aware);
-    EXPECT_TRUE(retrieved.prefer_same_node);
+    auto policy = std::make_unique<work_stealing_pool_policy>(config);
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+    EXPECT_EQ(ws->get_max_steal_attempts(), 10);
+
+    // Change at runtime
+    ws->set_max_steal_attempts(5);
+    EXPECT_EQ(ws->get_max_steal_attempts(), 5);
 }
 
-TEST_F(WorkStealingIntegrationTest, SetBatchOptimizedConfig) {
-    auto config = enhanced_work_stealing_config::batch_optimized();
-    pool_->set_work_stealing_config(config);
+TEST_F(WorkStealingIntegrationTest, ConfigureStealBackoff) {
+    worker_policy config;
+    config.enable_work_stealing = true;
+    config.steal_backoff = std::chrono::microseconds(500);
 
-    const auto& retrieved = pool_->get_work_stealing_config();
-    EXPECT_TRUE(retrieved.enabled);
-    EXPECT_EQ(retrieved.policy, enhanced_steal_policy::adaptive);
-    EXPECT_EQ(retrieved.min_steal_batch, 2);
-    EXPECT_EQ(retrieved.max_steal_batch, 8);
-    EXPECT_TRUE(retrieved.adaptive_batch_size);
-}
+    auto policy = std::make_unique<work_stealing_pool_policy>(config);
+    pool_->add_policy(std::move(policy));
 
-TEST_F(WorkStealingIntegrationTest, SetLocalityOptimizedConfig) {
-    auto config = enhanced_work_stealing_config::locality_optimized();
-    pool_->set_work_stealing_config(config);
-
-    const auto& retrieved = pool_->get_work_stealing_config();
-    EXPECT_TRUE(retrieved.enabled);
-    EXPECT_EQ(retrieved.policy, enhanced_steal_policy::locality_aware);
-    EXPECT_TRUE(retrieved.track_locality);
-}
-
-TEST_F(WorkStealingIntegrationTest, DisableConfig) {
-    // First enable
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::numa_optimized());
-    EXPECT_TRUE(pool_->get_work_stealing_config().enabled);
-
-    // Then disable
-    enhanced_work_stealing_config disabled_config;
-    disabled_config.enabled = false;
-    pool_->set_work_stealing_config(disabled_config);
-    EXPECT_FALSE(pool_->get_work_stealing_config().enabled);
-}
-
-// ============================================================================
-// NUMA Topology Tests
-// ============================================================================
-
-TEST_F(WorkStealingIntegrationTest, GetNumaTopology) {
-    const auto& topology = pool_->get_numa_topology();
-
-    // Should have at least one node
-    EXPECT_GE(topology.node_count(), 1);
-
-    // Should have at least one CPU
-    EXPECT_GE(topology.cpu_count(), 1);
-}
-
-TEST_F(WorkStealingIntegrationTest, NumaTopologyConsistency) {
-    // Multiple calls should return consistent results
-    const auto& topology1 = pool_->get_numa_topology();
-    const auto& topology2 = pool_->get_numa_topology();
-
-    EXPECT_EQ(topology1.node_count(), topology2.node_count());
-    EXPECT_EQ(topology1.cpu_count(), topology2.cpu_count());
-}
-
-TEST_F(WorkStealingIntegrationTest, NumaTopologyCpuMapping) {
-    const auto& topology = pool_->get_numa_topology();
-
-    // Each CPU should map to a valid node
-    for (std::size_t cpu = 0; cpu < topology.cpu_count(); ++cpu) {
-        int node = topology.get_node_for_cpu(static_cast<int>(cpu));
-        EXPECT_GE(node, 0);
-        EXPECT_LT(node, static_cast<int>(topology.node_count()));
-    }
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+    EXPECT_EQ(ws->get_steal_backoff(), std::chrono::microseconds(500));
 }
 
 // ============================================================================
 // Statistics Tests
 // ============================================================================
 
-TEST_F(WorkStealingIntegrationTest, GetDefaultStats) {
-    // Default stats should be zero
-    auto stats = pool_->get_work_stealing_stats();
-    EXPECT_EQ(stats.steal_attempts, 0);
-    EXPECT_EQ(stats.successful_steals, 0);
-    EXPECT_EQ(stats.failed_steals, 0);
+TEST_F(WorkStealingIntegrationTest, StatsInitiallyZero) {
+    auto policy = std::make_unique<work_stealing_pool_policy>();
+    pool_->add_policy(std::move(policy));
+
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+
+    EXPECT_EQ(ws->get_successful_steals(), 0);
+    EXPECT_EQ(ws->get_failed_steals(), 0);
 }
 
-TEST_F(WorkStealingIntegrationTest, StatsAfterEnabling) {
-    // Add workers first
-    for (int i = 0; i < 4; ++i) {
-        pool_->enqueue(std::make_unique<thread_worker>());
-    }
+TEST_F(WorkStealingIntegrationTest, RecordAndResetStats) {
+    auto policy = std::make_unique<work_stealing_pool_policy>();
+    pool_->add_policy(std::move(policy));
 
-    // Start pool
-    pool_->start();
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
 
-    // Enable work stealing with statistics collection
-    auto config = enhanced_work_stealing_config::numa_optimized();
-    config.collect_statistics = true;
-    pool_->set_work_stealing_config(config);
+    // Record some steals
+    ws->record_successful_steal();
+    ws->record_successful_steal();
+    ws->record_failed_steal();
 
-    // Stats should be available (may still be zero if no stealing occurred)
-    auto stats = pool_->get_work_stealing_stats();
-    EXPECT_GE(stats.steal_attempts, 0);
-}
+    EXPECT_EQ(ws->get_successful_steals(), 2);
+    EXPECT_EQ(ws->get_failed_steals(), 1);
 
-TEST_F(WorkStealingIntegrationTest, StatsComputedMetrics) {
-    auto stats = pool_->get_work_stealing_stats();
-
-    // Computed metrics should return valid values even with zero data
-    EXPECT_GE(stats.steal_success_rate(), 0.0);
-    EXPECT_LE(stats.steal_success_rate(), 1.0);
-    EXPECT_GE(stats.avg_batch_size(), 0.0);
-    EXPECT_GE(stats.cross_node_ratio(), 0.0);
-    EXPECT_LE(stats.cross_node_ratio(), 1.0);
-}
-
-// ============================================================================
-// Integration with Worker Policy Tests
-// ============================================================================
-
-TEST_F(WorkStealingIntegrationTest, ConfigOverridesWorkerPolicy) {
-    // Set basic work stealing via worker policy
-    worker_policy policy;
-    policy.enable_work_stealing = true;
-    pool_->set_worker_policy(policy);
-    EXPECT_TRUE(pool_->is_work_stealing_enabled());
-
-    // Enhanced config should override
-    enhanced_work_stealing_config config;
-    config.enabled = false;
-    pool_->set_work_stealing_config(config);
-    EXPECT_FALSE(pool_->is_work_stealing_enabled());
-
-    // Re-enable via enhanced config
-    config.enabled = true;
-    pool_->set_work_stealing_config(config);
-    EXPECT_TRUE(pool_->is_work_stealing_enabled());
+    // Reset
+    ws->reset_stats();
+    EXPECT_EQ(ws->get_successful_steals(), 0);
+    EXPECT_EQ(ws->get_failed_steals(), 0);
 }
 
 // ============================================================================
@@ -231,15 +206,16 @@ TEST_F(WorkStealingIntegrationTest, ConfigOverridesWorkerPolicy) {
 // ============================================================================
 
 TEST_F(WorkStealingIntegrationTest, WorkStealingWithJobs) {
+    // Add work stealing policy
+    worker_policy config;
+    config.enable_work_stealing = true;
+    config.victim_selection = steal_policy::adaptive;
+    pool_->add_policy(std::make_unique<work_stealing_pool_policy>(config));
+
     // Add multiple workers
     for (int i = 0; i < 4; ++i) {
         pool_->enqueue(std::make_unique<thread_worker>());
     }
-
-    // Enable work stealing
-    auto config = enhanced_work_stealing_config::batch_optimized();
-    config.collect_statistics = true;
-    pool_->set_work_stealing_config(config);
 
     // Start pool
     auto start_result = pool_->start();
@@ -276,13 +252,15 @@ TEST_F(WorkStealingIntegrationTest, WorkStealingWithJobs) {
 }
 
 TEST_F(WorkStealingIntegrationTest, WorkStealingDoesNotBreakShutdown) {
+    // Add work stealing policy
+    worker_policy config;
+    config.enable_work_stealing = true;
+    pool_->add_policy(std::make_unique<work_stealing_pool_policy>(config));
+
     // Add workers
     for (int i = 0; i < 4; ++i) {
         pool_->enqueue(std::make_unique<thread_worker>());
     }
-
-    // Enable work stealing
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::numa_optimized());
 
     // Start and immediately stop
     pool_->start();
@@ -295,9 +273,11 @@ TEST_F(WorkStealingIntegrationTest, WorkStealingDoesNotBreakShutdown) {
 // Edge Case Tests
 // ============================================================================
 
-TEST_F(WorkStealingIntegrationTest, ConfigBeforeWorkers) {
-    // Set config before adding workers
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::numa_optimized());
+TEST_F(WorkStealingIntegrationTest, PolicyBeforeWorkers) {
+    // Add policy before workers
+    worker_policy config;
+    config.enable_work_stealing = true;
+    pool_->add_policy(std::make_unique<work_stealing_pool_policy>(config));
 
     // Add workers after
     for (int i = 0; i < 2; ++i) {
@@ -309,19 +289,52 @@ TEST_F(WorkStealingIntegrationTest, ConfigBeforeWorkers) {
     EXPECT_FALSE(result.is_err());
 }
 
-TEST_F(WorkStealingIntegrationTest, ReconfigureWhileRunning) {
-    // Add workers and start
-    for (int i = 0; i < 4; ++i) {
+TEST_F(WorkStealingIntegrationTest, RemovePolicy) {
+    // Add policy
+    worker_policy config;
+    config.enable_work_stealing = true;
+    pool_->add_policy(std::make_unique<work_stealing_pool_policy>(config));
+
+    // Verify it exists
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+
+    // Remove it
+    bool removed = pool_->remove_policy("work_stealing_pool_policy");
+    EXPECT_TRUE(removed);
+
+    // Verify it's gone
+    ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    EXPECT_EQ(ws, nullptr);
+}
+
+TEST_F(WorkStealingIntegrationTest, UpdatePolicyConfig) {
+    // Add policy with initial config
+    worker_policy config;
+    config.enable_work_stealing = true;
+    config.max_steal_attempts = 3;
+    pool_->add_policy(std::make_unique<work_stealing_pool_policy>(config));
+
+    // Start pool
+    for (int i = 0; i < 2; ++i) {
         pool_->enqueue(std::make_unique<thread_worker>());
     }
     pool_->start();
 
-    // Reconfigure multiple times while running
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::numa_optimized());
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::batch_optimized());
-    pool_->set_work_stealing_config(enhanced_work_stealing_config::locality_optimized());
+    // Update config while running
+    auto* ws = pool_->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
+    ASSERT_NE(ws, nullptr);
+
+    worker_policy new_config;
+    new_config.enable_work_stealing = true;
+    new_config.max_steal_attempts = 10;
+    new_config.victim_selection = steal_policy::round_robin;
+    ws->set_policy(new_config);
+
+    // Verify changes
+    EXPECT_EQ(ws->get_max_steal_attempts(), 10);
+    EXPECT_EQ(ws->get_steal_policy(), steal_policy::round_robin);
 
     // Pool should still be functional
     EXPECT_TRUE(pool_->is_running());
-    EXPECT_TRUE(pool_->get_work_stealing_config().enabled);
 }

@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/callback_job.h>
 
 using namespace kcenon::thread;
+using namespace kcenon;
 
 // Static assertions for ARM64 compatibility (Issue #223)
 // These compile-time checks verify memory alignment requirements
