@@ -1,6 +1,6 @@
 # Changelog
 
-**English** | [한국어](CHANGELOG_KO.md)
+**English** | [한국어](CHANGELOG.kr.md)
 
 All notable changes to the Thread System project will be documented in this file.
 

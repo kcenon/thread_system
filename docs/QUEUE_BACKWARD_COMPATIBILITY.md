@@ -1,6 +1,6 @@
 # Queue Backward Compatibility
 
-> **Language:** **English** | [한국어](QUEUE_BACKWARD_COMPATIBILITY_KO.md)
+> **Language:** **English** | [한국어](QUEUE_BACKWARD_COMPATIBILITY.kr.md)
 
 ## TL;DR: Your Code (Probably) Still Works
 

@@ -337,7 +337,7 @@ A: 예, 다양한 로거 인터페이스 간을 연결하는 `logger_system_adap
 
 ## 관련 문서
 
-- [LOG_LEVEL_MIGRATION_GUIDE_KO.md](LOG_LEVEL_MIGRATION_GUIDE_KO.md) - 로그 레벨 enum 마이그레이션
+- [LOG_LEVEL_MIGRATION_GUIDE.kr.md](LOG_LEVEL_MIGRATION_GUIDE.kr.md) - 로그 레벨 enum 마이그레이션
 - [이슈 #263](https://github.com/kcenon/thread_system/issues/263) - Deprecation 추적 이슈
 
 ## 개정 이력

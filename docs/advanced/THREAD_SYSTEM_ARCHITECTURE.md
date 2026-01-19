@@ -1,6 +1,6 @@
 # Architecture - Thread System
 
-> **Language:** **English** | [한국어](ARCHITECTURE_KO.md)
+> **Language:** **English** | [한국어](ARCHITECTURE.kr.md)
 
 ## Overview
 

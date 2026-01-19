@@ -1,6 +1,6 @@
 # Platform-Specific Build Guide
 
-> **Language:** **English** | [한국어](BUILD_GUIDE_KO.md)
+> **Language:** **English** | [한국어](BUILD_GUIDE.kr.md)
 
 ## Overview
 

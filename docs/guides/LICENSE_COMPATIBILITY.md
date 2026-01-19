@@ -1,6 +1,6 @@
 # License Compatibility Analysis
 
-> **Language:** **English** | [한국어](LICENSE_COMPATIBILITY_KO.md)
+> **Language:** **English** | [한국어](LICENSE_COMPATIBILITY.kr.md)
 
 ## Project License
 **thread-system** is licensed under the **MIT License**, which is permissive and compatible with most open source licenses.

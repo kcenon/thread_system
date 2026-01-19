@@ -1,6 +1,6 @@
 # C++20 Concepts Integration
 
-> **Language:** **English** | [한국어](CPP20_CONCEPTS_KO.md)
+> **Language:** **English** | [한국어](CPP20_CONCEPTS.kr.md)
 
 This document describes the C++20 Concepts integration in Thread System, providing type-safe constraints for thread pool operations.
 

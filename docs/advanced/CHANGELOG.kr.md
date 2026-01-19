@@ -42,7 +42,7 @@ Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니�
 
 ## [3.0.0] - 2025-12-19
 
-이 릴리스는 common_system 전용 공개 계약으로의 마이그레이션을 완료합니다. 전체 릴리스 노트는 [docs/CHANGELOG_KO.md](../CHANGELOG_KO.md)를 참조하세요.
+이 릴리스는 common_system 전용 공개 계약으로의 마이그레이션을 완료합니다. 전체 릴리스 노트는 [docs/CHANGELOG.kr.md](../CHANGELOG.kr.md)를 참조하세요.
 
 ---
 

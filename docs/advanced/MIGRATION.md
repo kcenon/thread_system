@@ -1,6 +1,6 @@
 # Thread System Migration Guide
 
-> **Language:** **English** | [한국어](MIGRATION_KO.md)
+> **Language:** **English** | [한국어](MIGRATION.kr.md)
 
 ## Table of Contents
 

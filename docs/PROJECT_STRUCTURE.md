@@ -2,7 +2,7 @@
 
 **Version**: 0.3.0
 **Last Updated**: 2026-01-11
-**Language**: [English] | [한국어](PROJECT_STRUCTURE_KO.md)
+**Language**: [English] | [한국어](PROJECT_STRUCTURE.kr.md)
 
 ---
 
@@ -43,7 +43,7 @@ thread_system/
 ├── 📄 vcpkg.json                   # Dependency manifest
 ├── 📄 LICENSE                      # BSD 3-Clause License
 ├── 📄 README.md                    # Project overview
-└── 📄 README_KO.md                 # Korean documentation
+└── 📄 README.kr.md                 # Korean documentation
 ```
 
 ---

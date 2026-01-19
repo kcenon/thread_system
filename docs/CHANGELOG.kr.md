@@ -444,7 +444,7 @@
 
 자세한 지침은 다음 마이그레이션 가이드를 참조하세요:
 - [에러 시스템 마이그레이션 가이드](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
-- [로거 인터페이스 마이그레이션 가이드](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
+- [로거 인터페이스 마이그레이션 가이드](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
 
 **빠른 마이그레이션 요약:**
 
@@ -506,7 +506,7 @@ class MyLogger : public kcenon::common::interfaces::ILogger { ... };
   - `logger_interface.h`의 `log_level` enum에 `[[deprecated]]` 속성 추가
   - `logger_interface`와 `logger_registry` 클래스는 이미 deprecation 속성 보유
   - deprecated 타입 사용 시 컴파일러 경고 발생
-  - 포괄적인 마이그레이션 가이드 생성: `docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md`
+  - 포괄적인 마이그레이션 가이드 생성: `docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md`
   - 마이그레이션 경로: common_system의 `common::interfaces::ILogger` 사용
   - **일정**: v1.x에서 deprecated, v2.0에서 제거 예정
 

@@ -5,7 +5,7 @@
 
 ---
 
-## Changes Required for README_KO.md
+## Changes Required for README.kr.md
 
 The English README.md has been simplified from 1,329 lines to 429 lines (68% reduction).
 
@@ -70,24 +70,24 @@ The Korean README should follow the same simplified structure:
 
 The following detailed content should be extracted to new Korean documentation files:
 
-1. **docs/FEATURES_KO.md** - Detailed feature descriptions
+1. **docs/FEATURES.kr.md** - Detailed feature descriptions
    - Queue implementations
    - Thread pool details
    - Lock-free structures
    - Adaptive components
 
-2. **docs/BENCHMARKS_KO.md** - Full performance data
+2. **docs/BENCHMARKS.kr.md** - Full performance data
    - Complete benchmark tables
    - Platform comparisons
    - Industry standard comparisons
    - Optimization insights
 
-3. **docs/PROJECT_STRUCTURE_KO.md** - Project structure
+3. **docs/PROJECT_STRUCTURE.kr.md** - Project structure
    - Detailed directory descriptions
    - File purposes
    - Module dependencies
 
-4. **docs/PRODUCTION_QUALITY_KO.md** - Quality metrics
+4. **docs/PRODUCTION_QUALITY.kr.md** - Quality metrics
    - CI/CD infrastructure
    - Thread safety validation
    - Sanitizer results
@@ -105,17 +105,17 @@ The following detailed content should be extracted to new Korean documentation f
 
 1. Translate new simplified README structure to Korean
 2. Create Korean versions of extracted documentation:
-   - FEATURES_KO.md
-   - BENCHMARKS_KO.md
-   - PROJECT_STRUCTURE_KO.md
-   - PRODUCTION_QUALITY_KO.md
-3. Update links in README_KO.md to point to Korean docs
+   - FEATURES.kr.md
+   - BENCHMARKS.kr.md
+   - PROJECT_STRUCTURE.kr.md
+   - PRODUCTION_QUALITY.kr.md
+3. Update links in README.kr.md to point to Korean docs
 4. Verify all cross-references are correct
 
 ---
 
 **Target Line Count**: ~450 lines (similar to English version)
-**Current README_KO.md**: Needs update to match new structure
+**Current README.kr.md**: Needs update to match new structure
 
 ---
 

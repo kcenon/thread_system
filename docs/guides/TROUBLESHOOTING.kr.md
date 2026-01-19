@@ -349,7 +349,7 @@ cmake -S . -B build -L  # CMake 변수 목록
 
 - **[GitHub Issues](https://github.com/kcenon/thread_system/issues)** - 버그 보고 및 기능 요청
 - **[FAQ](FAQ.md)** - 자주 묻는 질문
-- **[빌드 가이드](BUILD_GUIDE_KO.md)** - 상세한 빌드 지침
+- **[빌드 가이드](BUILD_GUIDE.kr.md)** - 상세한 빌드 지침
 - **이메일:** kcenon@naver.com
 
 ---

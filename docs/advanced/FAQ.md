@@ -1,6 +1,6 @@
 # Frequently Asked Questions (FAQ)
 
-> **Language:** **English** | [한국어](faq_KO.md)
+> **Language:** **English** | [한국어](faq.kr.md)
 
 ## General Questions
 
