@@ -33,9 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/worker_policy.h>
 #include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
 #include <kcenon/thread/stealing/work_stealing_stats.h>
 #include <kcenon/thread/stealing/numa_topology.h>
+#include <kcenon/thread/stealing/numa_work_stealer.h>
 
 namespace kcenon::thread
 {
@@ -229,6 +231,15 @@ private:
 
 	/// Flag indicating if topology has been detected
 	mutable bool topology_detected_{false};
+
+	/// Enhanced work-stealing configuration
+	enhanced_work_stealing_config enhanced_ws_config_;
+
+	/// NUMA-aware work stealer
+	std::unique_ptr<numa_work_stealer> numa_work_stealer_;
+
+	/// Worker policy configuration
+	worker_policy worker_policy_;
 
 	/// Ensure topology is detected
 	void ensure_topology_detected() const;

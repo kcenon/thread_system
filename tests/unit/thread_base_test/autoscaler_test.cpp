@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/scaling/autoscaler.h>
 #include <kcenon/thread/scaling/autoscaling_policy.h>
 #include <kcenon/thread/scaling/scaling_metrics.h>
+#include <kcenon/thread/pool_policies/autoscaling_pool_policy.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/callback_job.h>
@@ -330,11 +331,19 @@ TEST_F(ThreadPoolAutoscalingTest, EnableAndDisable) {
     policy.max_workers = 8;
     policy.scaling_mode = autoscaling_policy::mode::automatic;
 
-    pool_->enable_autoscaling(policy);
-    EXPECT_TRUE(pool_->is_autoscaling_enabled());
+    pool_->add_policy(std::make_unique<autoscaling_pool_policy>(*pool_, policy));
 
-    pool_->disable_autoscaling();
-    EXPECT_FALSE(pool_->is_autoscaling_enabled());
+    auto* as_policy = pool_->find_policy<autoscaling_pool_policy>("autoscaling_pool_policy");
+    ASSERT_NE(as_policy, nullptr);
+
+    // Policy added after pool start needs explicit start
+    as_policy->start();
+    EXPECT_TRUE(as_policy->is_active());
+
+    as_policy->stop();
+    pool_->remove_policy("autoscaling_pool_policy");
+    as_policy = pool_->find_policy<autoscaling_pool_policy>("autoscaling_pool_policy");
+    EXPECT_EQ(as_policy, nullptr);
 }
 
 TEST_F(ThreadPoolAutoscalingTest, GetAutoscaler) {
@@ -343,14 +352,21 @@ TEST_F(ThreadPoolAutoscalingTest, GetAutoscaler) {
     policy.max_workers = 8;
     policy.scaling_mode = autoscaling_policy::mode::automatic;
 
-    pool_->enable_autoscaling(policy);
+    pool_->add_policy(std::make_unique<autoscaling_pool_policy>(*pool_, policy));
 
-    auto scaler = pool_->get_autoscaler();
+    auto* as_policy = pool_->find_policy<autoscaling_pool_policy>("autoscaling_pool_policy");
+    ASSERT_NE(as_policy, nullptr);
+
+    // Policy added after pool start needs explicit start
+    as_policy->start();
+
+    auto scaler = as_policy->get_autoscaler();
     EXPECT_NE(scaler, nullptr);
     EXPECT_TRUE(scaler->is_active());
 
-    // Disable autoscaling before TearDown to avoid blocking
-    pool_->disable_autoscaling();
+    // Stop autoscaler before removing policy
+    as_policy->stop();
+    pool_->remove_policy("autoscaling_pool_policy");
 }
 
 // NOTE: RemoveWorkersBasic test is disabled because it can block indefinitely

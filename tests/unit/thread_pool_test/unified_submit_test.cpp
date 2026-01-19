@@ -243,39 +243,4 @@ TEST_F(UnifiedSubmitTest, SubmitWaitAnyWithOptions) {
     EXPECT_TRUE(result == 10 || result == 20);
 }
 
-// ============================================================================
-// Comparison with deprecated API
-// ============================================================================
-
-TEST_F(UnifiedSubmitTest, SubmitEquivalentToSubmitAsync) {
-    auto future_new = pool_->submit([] { return 42; });
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    auto future_old = pool_->submit_async([] { return 42; });
-#pragma GCC diagnostic pop
-
-    EXPECT_EQ(future_new.get(), 42);
-    EXPECT_EQ(future_old.get(), 42);
-}
-
-TEST_F(UnifiedSubmitTest, SubmitBatchEquivalentToSubmitBatchAsync) {
-    std::vector<std::function<int()>> tasks1;
-    std::vector<std::function<int()>> tasks2;
-    for (int i = 0; i < 3; ++i) {
-        tasks1.push_back([i] { return i; });
-        tasks2.push_back([i] { return i; });
-    }
-
-    auto futures_new = pool_->submit(std::move(tasks1));
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    auto futures_old = pool_->submit_batch_async(std::move(tasks2));
-#pragma GCC diagnostic pop
-
-    EXPECT_EQ(futures_new.size(), futures_old.size());
-    for (size_t i = 0; i < futures_new.size(); ++i) {
-        EXPECT_EQ(futures_new[i].get(), futures_old[i].get());
-    }
-}
-
 }  // namespace kcenon::thread::test
