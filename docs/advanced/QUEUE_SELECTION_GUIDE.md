@@ -1,6 +1,6 @@
 # Queue Selection Guide
 
-> **Language:** **English** | [한국어](QUEUE_SELECTION_GUIDE_KO.md)
+> **Language:** **English** | [한국어](QUEUE_SELECTION_GUIDE.kr.md)
 
 This guide helps you choose the right queue implementation for your use case.
 

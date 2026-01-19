@@ -1,6 +1,6 @@
 # Thread System: Patterns, Best Practices, and Troubleshooting Guide
 
-> **Language:** **English** | [한국어](PATTERNS_KO.md)
+> **Language:** **English** | [한국어](PATTERNS.kr.md)
 
 This comprehensive guide covers patterns, best practices, antipatterns to avoid, and solutions to common concurrency issues when working with Thread System. Following these guidelines will help you write efficient, maintainable, and bug-free concurrent applications.
 

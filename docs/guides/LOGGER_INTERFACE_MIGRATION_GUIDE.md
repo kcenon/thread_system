@@ -1,6 +1,6 @@
 # Logger Interface Migration Guide
 
-> **Language:** **English** | [한국어](LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
+> **Language:** **English** | [한국어](LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
 
 **Version:** 0.1.0
 **Date:** 2025-12-06

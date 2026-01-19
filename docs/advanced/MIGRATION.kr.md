@@ -63,7 +63,7 @@ kcenon::common::Result<int> foo();
 ### 상세 마이그레이션 가이드
 
 - [에러 시스템 마이그레이션 가이드](ERROR_SYSTEM_MIGRATION_GUIDE.md)
-- [로거 인터페이스 마이그레이션 가이드](../guides/LOGGER_INTERFACE_MIGRATION_GUIDE_KO.md)
+- [로거 인터페이스 마이그레이션 가이드](../guides/LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
 
 ---
 

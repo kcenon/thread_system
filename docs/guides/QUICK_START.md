@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-> **Language:** **English** | [한국어](QUICK_START_KO.md)
+> **Language:** **English** | [한국어](QUICK_START.kr.md)
 
 Get up and running with Thread System in 5 minutes.
 

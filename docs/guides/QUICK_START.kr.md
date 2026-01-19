@@ -206,9 +206,9 @@ pool->shutdown_pool(true);
 
 ## 다음 단계
 
-- **[빌드 가이드](BUILD_GUIDE_KO.md)** - 모든 플랫폼에 대한 상세한 빌드 지침
-- **[사용자 가이드](../advanced/USER_GUIDE_KO.md)** - 포괄적인 사용 가이드
-- **[API 레퍼런스](../advanced/02-API_REFERENCE_KO.md)** - 완전한 API 문서
+- **[빌드 가이드](BUILD_GUIDE.kr.md)** - 모든 플랫폼에 대한 상세한 빌드 지침
+- **[사용자 가이드](../advanced/USER_GUIDE.kr.md)** - 포괄적인 사용 가이드
+- **[API 레퍼런스](../advanced/02-API_REFERENCE.kr.md)** - 완전한 API 문서
 - **[예제](../../examples/)** - 더 많은 샘플 애플리케이션
 
 ---

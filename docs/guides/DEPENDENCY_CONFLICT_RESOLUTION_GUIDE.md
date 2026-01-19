@@ -1,6 +1,6 @@
 # Dependency Conflict Resolution Guide
 
-> **Language:** **English** | [한국어](DEPENDENCY_CONFLICT_RESOLUTION_GUIDE_KO.md)
+> **Language:** **English** | [한국어](DEPENDENCY_CONFLICT_RESOLUTION_GUIDE.kr.md)
 
 ## Overview
 

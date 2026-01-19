@@ -43,7 +43,7 @@ thread_system/
 ├── 📄 vcpkg.json                   # 의존성 매니페스트
 ├── 📄 LICENSE                      # BSD 3-Clause 라이선스
 ├── 📄 README.md                    # 프로젝트 개요
-└── 📄 README_KO.md                 # 한국어 문서
+└── 📄 README.kr.md                 # 한국어 문서
 ```
 
 ---
@@ -631,8 +631,8 @@ utilities (의존성 없음)
 ---
 
 **참고 문서**:
-- [기능 문서](FEATURES.md) / [기능 문서 (한국어)](FEATURES_KO.md)
-- [성능 벤치마크](BENCHMARKS.md) / [성능 벤치마크 (한국어)](BENCHMARKS_KO.md)
+- [기능 문서](FEATURES.md) / [기능 문서 (한국어)](FEATURES.kr.md)
+- [성능 벤치마크](BENCHMARKS.md) / [성능 벤치마크 (한국어)](BENCHMARKS.kr.md)
 - [아키텍처 가이드](advanced/ARCHITECTURE.md)
 - [빌드 가이드](guides/BUILD_GUIDE.md)
 

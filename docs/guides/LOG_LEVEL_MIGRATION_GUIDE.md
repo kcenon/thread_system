@@ -1,6 +1,6 @@
 # Log Level Migration Guide
 
-> **Language:** **English** | [한국어](LOG_LEVEL_MIGRATION_GUIDE_KO.md)
+> **Language:** **English** | [한국어](LOG_LEVEL_MIGRATION_GUIDE.kr.md)
 
 **Version:** 0.1.0
 **Date:** 2025-11-26

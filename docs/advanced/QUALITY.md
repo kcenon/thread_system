@@ -1,6 +1,6 @@
 # Quality & QA Guide
 
-> **Language:** **English** | [한국어](QUALITY_KO.md)
+> **Language:** **English** | [한국어](QUALITY.kr.md)
 
 ## Coverage
 

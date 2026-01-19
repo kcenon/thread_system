@@ -2,7 +2,7 @@
 
 **Version**: 0.2.0
 **Last Updated**: 2025-11-15
-**Language**: [English] | [한국어](PRODUCTION_QUALITY_KO.md)
+**Language**: [English] | [한국어](PRODUCTION_QUALITY.kr.md)
 
 ---
 

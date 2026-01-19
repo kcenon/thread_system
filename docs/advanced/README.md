@@ -1,6 +1,6 @@
 # Thread System Documentation
 
-> **Language:** **English** | [한국어](README_KO.md)
+> **Language:** **English** | [한국어](README.kr.md)
 
 Welcome to the comprehensive documentation for the Thread System framework. This guide helps you navigate to the right documentation based on your role and needs.
 
