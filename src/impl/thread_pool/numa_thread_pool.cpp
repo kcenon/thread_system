@@ -57,15 +57,14 @@ numa_thread_pool::numa_thread_pool(const std::string& thread_title,
 }
 
 void numa_thread_pool::configure_numa_work_stealing(const enhanced_work_stealing_config& config) {
-    // Access base class private member directly (friend class)
     enhanced_ws_config_ = config;
     worker_policy_.enable_work_stealing = config.enabled;
 
     if (config.enabled) {
-        if (numa_topology_.node_count() == 0) {
-            numa_topology_ = numa_topology::detect();
+        if (cached_topology_.node_count() == 0) {
+            ensure_topology_detected();
         }
-        // Note: Full work stealer setup is done in thread_pool::start() or when workers are added
+        // Note: Full work stealer setup is done in start() or when workers are added
     }
 }
 

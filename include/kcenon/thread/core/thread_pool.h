@@ -43,10 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/pool_queue_adapter.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/metrics/enhanced_metrics.h>
-#include <kcenon/thread/scaling/autoscaling_policy.h>
-#include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
-#include <kcenon/thread/stealing/work_stealing_stats.h>
-#include <kcenon/thread/stealing/numa_topology.h>
 #include <kcenon/thread/pool_policies/pool_policy.h>
 #include <kcenon/thread/core/submit_options.h>
 
@@ -183,6 +179,8 @@ namespace kcenon::thread
 	{
 		// Allow numa_thread_pool to access protected/private members for NUMA-specific functionality
 		friend class numa_thread_pool;
+		// Allow autoscaler to access remove_workers_internal for scaling operations
+		friend class autoscaler;
 
 	public:
 		/**
@@ -494,97 +492,6 @@ namespace kcenon::thread
 		                                   const submit_options& opts = {})
 		    -> R;
 
-		// ============================================================================
-		// Future-based Async API (Deprecated)
-		// ============================================================================
-		// These methods are deprecated in favor of the unified submit() API.
-		// They are kept for backward compatibility.
-
-		/**
-		 * @brief Submit a callable and get a future for the result
-		 *
-		 * @deprecated Use submit() instead:
-		 * @code
-		 * // Old way
-		 * auto future = pool->submit_async([]{ return 42; }, "job_name");
-		 * // New way
-		 * auto future = pool->submit([]{ return 42; }, {.name = "job_name"});
-		 * @endcode
-		 *
-		 * @tparam F Callable type
-		 * @tparam R Return type (automatically deduced)
-		 * @param callable The function to execute
-		 * @param name Optional job name for debugging
-		 * @return Future for the result
-		 */
-		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-		[[deprecated("Use submit() instead")]]
-		[[nodiscard]] auto submit_async(F&& callable, const std::string& name = "")
-		    -> std::future<R>;
-
-		/**
-		 * @brief Submit batch of callables and get futures
-		 *
-		 * @deprecated Use submit(std::vector<F>&&) instead:
-		 * @code
-		 * // Old way
-		 * auto futures = pool->submit_batch_async(std::move(tasks));
-		 * // New way
-		 * auto futures = pool->submit(std::move(tasks));
-		 * @endcode
-		 *
-		 * @tparam F Callable type
-		 * @tparam R Return type (automatically deduced)
-		 * @param callables Vector of functions to execute
-		 * @return Vector of futures for the results
-		 */
-		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-		[[deprecated("Use submit(std::vector<F>&&) instead")]]
-		[[nodiscard]] auto submit_batch_async(std::vector<F>&& callables)
-		    -> std::vector<std::future<R>>;
-
-		/**
-		 * @brief Submit batch and wait for all results
-		 *
-		 * @deprecated Use submit_wait_all() instead:
-		 * @code
-		 * // Old way
-		 * auto results = pool->submit_all(std::move(tasks));
-		 * // New way
-		 * auto results = pool->submit_wait_all(std::move(tasks));
-		 * @endcode
-		 *
-		 * @tparam F Callable type
-		 * @tparam R Return type (automatically deduced)
-		 * @param callables Vector of functions to execute
-		 * @return Vector of results (blocks until all complete)
-		 */
-		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-		[[deprecated("Use submit_wait_all() instead")]]
-		[[nodiscard]] auto submit_all(std::vector<F>&& callables)
-		    -> std::vector<R>;
-
-		/**
-		 * @brief Submit batch and return first completed result
-		 *
-		 * @deprecated Use submit_wait_any() instead:
-		 * @code
-		 * // Old way
-		 * auto result = pool->submit_any(std::move(tasks));
-		 * // New way
-		 * auto result = pool->submit_wait_any(std::move(tasks));
-		 * @endcode
-		 *
-		 * @tparam F Callable type
-		 * @tparam R Return type (automatically deduced)
-		 * @param callables Vector of functions to execute
-		 * @return First completed result
-		 */
-		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-		[[deprecated("Use submit_wait_any() instead")]]
-		[[nodiscard]] auto submit_any(std::vector<F>&& callables)
-		    -> R;
-
 		/**
 		 * @brief Check if the thread pool is currently running
 		 * @return true if the pool is active, false otherwise
@@ -636,60 +543,6 @@ namespace kcenon::thread
 		 * workers that are actively running, not stopped or stopping.
 		 */
 		auto get_active_worker_count() const -> std::size_t;
-
-		// =========================================================================
-		// Work-Stealing (Deprecated - Use work_stealing_pool_policy instead)
-		// =========================================================================
-
-		/**
-		 * @brief Set the worker policy for all workers in the pool.
-		 * @param policy The worker policy configuration.
-		 *
-		 * @deprecated Use add_policy() with work_stealing_pool_policy instead:
-		 * @code
-		 * pool->add_policy(std::make_unique<work_stealing_pool_policy>(policy));
-		 * @endcode
-		 *
-		 * This should be called before start() to configure work-stealing
-		 * and other worker behaviors. If called after start(), only affects
-		 * newly added workers.
-		 */
-		[[deprecated("Use add_policy() with work_stealing_pool_policy instead")]]
-		void set_worker_policy(const worker_policy& policy);
-
-		/**
-		 * @brief Get the current worker policy.
-		 * @return The worker policy configuration.
-		 *
-		 * @deprecated Use find_policy<work_stealing_pool_policy>()->get_policy() instead.
-		 */
-		[[deprecated("Use find_policy<work_stealing_pool_policy>()->get_policy() instead")]]
-		[[nodiscard]] const worker_policy& get_worker_policy() const;
-
-		/**
-		 * @brief Enable or disable work-stealing at runtime.
-		 * @param enable Whether to enable work-stealing.
-		 *
-		 * @deprecated Use find_policy<work_stealing_pool_policy>()->set_enabled() instead:
-		 * @code
-		 * auto* ws = pool->find_policy<work_stealing_pool_policy>("work_stealing_pool_policy");
-		 * if (ws) ws->set_enabled(true);
-		 * @endcode
-		 *
-		 * This method allows toggling work-stealing behavior after pool creation.
-		 * Changes take effect for subsequent job executions.
-		 */
-		[[deprecated("Use find_policy<work_stealing_pool_policy>()->set_enabled() instead")]]
-		void enable_work_stealing(bool enable);
-
-		/**
-		 * @brief Check if work-stealing is currently enabled.
-		 * @return true if work-stealing is enabled, false otherwise.
-		 *
-		 * @deprecated Use find_policy<work_stealing_pool_policy>()->is_enabled() instead.
-		 */
-		[[deprecated("Use find_policy<work_stealing_pool_policy>()->is_enabled() instead")]]
-		[[nodiscard]] bool is_work_stealing_enabled() const;
 
 		// =========================================================================
 		// Pool Policies
@@ -746,144 +599,6 @@ namespace kcenon::thread
 		 * @return True if policy was found and removed.
 		 */
 		auto remove_policy(const std::string& name) -> bool;
-
-		// =========================================================================
-		// Circuit Breaker (Deprecated - Use circuit_breaker_policy instead)
-		// =========================================================================
-
-		/**
-		 * @brief Enable circuit breaker for the pool.
-		 * @param config Circuit breaker configuration.
-		 *
-		 * @deprecated Use add_policy() with circuit_breaker_policy instead:
-		 * @code
-		 * pool->add_policy(std::make_unique<circuit_breaker_policy>(config));
-		 * @endcode
-		 *
-		 * When enabled, jobs can be wrapped with circuit breaker protection
-		 * using enqueue_protected(). The circuit breaker will automatically
-		 * open when failure thresholds are exceeded.
-		 *
-		 * @see circuit_breaker_config
-		 * @see circuit_breaker_policy
-		 */
-		[[deprecated("Use add_policy() with circuit_breaker_policy instead")]]
-		void enable_circuit_breaker(const circuit_breaker_config& config);
-
-		/**
-		 * @brief Disable circuit breaker.
-		 *
-		 * @deprecated Use remove_policy("circuit_breaker_policy") instead.
-		 *
-		 * When disabled, enqueue_protected() will behave like regular enqueue().
-		 */
-		[[deprecated("Use remove_policy(\"circuit_breaker_policy\") instead")]]
-		void disable_circuit_breaker();
-
-		/**
-		 * @brief Get the circuit breaker (if enabled).
-		 * @return Shared pointer to the circuit breaker, or nullptr if not enabled.
-		 *
-		 * @deprecated Use find_policy<circuit_breaker_policy>() and get_circuit_breaker() instead.
-		 */
-		[[deprecated("Use find_policy<circuit_breaker_policy>() instead")]]
-		[[nodiscard]] auto get_circuit_breaker() -> std::shared_ptr<circuit_breaker>;
-
-		/**
-		 * @brief Check if pool is accepting work.
-		 * @return false if circuit breaker is open, true otherwise.
-		 *
-		 * @deprecated Use find_policy<circuit_breaker_policy>()->is_accepting_work() instead.
-		 *
-		 * This method checks the circuit breaker state without consuming
-		 * a request slot. Useful for quick health checks.
-		 */
-		[[deprecated("Use find_policy<circuit_breaker_policy>()->is_accepting_work() instead")]]
-		[[nodiscard]] auto is_accepting_work() const -> bool;
-
-		/**
-		 * @brief Enqueue a job with circuit breaker protection.
-		 * @param job The job to enqueue.
-		 * @return Error if circuit is open or job is invalid.
-		 *
-		 * @deprecated Use add_policy() with circuit_breaker_policy and regular enqueue() instead.
-		 *
-		 * If circuit breaker is not enabled, this behaves like regular enqueue().
-		 * When circuit breaker is enabled, the job is wrapped with protection
-		 * that automatically records success/failure.
-		 */
-		[[deprecated("Use add_policy() with circuit_breaker_policy and regular enqueue() instead")]]
-		[[nodiscard]] auto enqueue_protected(std::unique_ptr<job>&& job) -> common::VoidResult;
-
-		// =========================================================================
-		// Autoscaling (Deprecated - Use autoscaling_pool_policy instead)
-		// =========================================================================
-
-		/**
-		 * @brief Enable autoscaling with the specified policy.
-		 * @param policy Autoscaling policy configuration.
-		 *
-		 * @deprecated Use add_policy() with autoscaling_pool_policy instead:
-		 * @code
-		 * pool->add_policy(std::make_unique<autoscaling_pool_policy>(*pool, policy));
-		 * @endcode
-		 *
-		 * When enabled, the pool will automatically adjust worker count
-		 * based on load metrics (utilization, queue depth, latency).
-		 *
-		 * @see autoscaling_policy
-		 * @see autoscaling_pool_policy
-		 */
-		[[deprecated("Use add_policy() with autoscaling_pool_policy instead")]]
-		void enable_autoscaling(const autoscaling_policy& policy);
-
-		/**
-		 * @brief Disable autoscaling.
-		 *
-		 * @deprecated Use remove_policy("autoscaling_pool_policy") instead.
-		 *
-		 * Stops the autoscaler monitor thread. Worker count remains
-		 * at current level after disabling.
-		 */
-		[[deprecated("Use remove_policy(\"autoscaling_pool_policy\") instead")]]
-		void disable_autoscaling();
-
-		/**
-		 * @brief Get the autoscaler (if enabled).
-		 * @return Shared pointer to the autoscaler, or nullptr if not enabled.
-		 *
-		 * @deprecated Use find_policy<autoscaling_pool_policy>() and get_autoscaler() instead.
-		 */
-		[[deprecated("Use find_policy<autoscaling_pool_policy>() instead")]]
-		[[nodiscard]] auto get_autoscaler() -> std::shared_ptr<autoscaler>;
-
-		/**
-		 * @brief Check if autoscaling is enabled.
-		 * @return true if autoscaling is enabled.
-		 *
-		 * @deprecated Use find_policy<autoscaling_pool_policy>()->is_active() instead.
-		 */
-		[[deprecated("Use find_policy<autoscaling_pool_policy>()->is_active() instead")]]
-		[[nodiscard]] auto is_autoscaling_enabled() const -> bool;
-
-		/**
-		 * @brief Remove workers from the pool.
-		 * @param count Number of workers to remove.
-		 * @return Error if operation fails.
-		 *
-		 * @deprecated Use find_policy<autoscaling_pool_policy>()->get_autoscaler()->scale_down() instead.
-		 *
-		 * Gracefully stops and removes idle workers. If not enough
-		 * idle workers are available, waits briefly for workers to
-		 * become idle. Never removes more workers than would leave
-		 * min_workers (if autoscaling) or 1 worker (if not).
-		 *
-		 * Thread Safety:
-		 * - Acquires workers_mutex_ for safe access
-		 * - Workers are stopped before removal
-		 */
-		[[deprecated("Use autoscaling_pool_policy with scale_to() instead")]]
-		[[nodiscard]] auto remove_workers(std::size_t count) -> common::VoidResult;
 
 		// =========================================================================
 		// Diagnostics
@@ -1053,12 +768,6 @@ namespace kcenon::thread
          */
         std::atomic<bool> enhanced_metrics_enabled_{false};
 
-		/**
-		 * @brief Worker policy configuration for this pool.
-		 *
-		 * Defines behavior for all workers including work-stealing settings.
-		 */
-		worker_policy worker_policy_;
 
 		/**
 		 * @brief Diagnostics interface for this pool.
@@ -1081,55 +790,16 @@ namespace kcenon::thread
 		mutable std::mutex policies_mutex_;
 
 		/**
-		 * @brief Circuit breaker for failure detection and recovery.
+		 * @brief Internal method to remove workers from the pool.
+		 * @param count Number of workers to remove.
+		 * @param min_workers Minimum workers to keep.
+		 * @return Error if operation fails.
 		 *
-		 * @deprecated This member is deprecated. Use circuit_breaker_policy instead.
-		 *
-		 * When enabled, jobs submitted via enqueue_protected() are wrapped
-		 * with circuit breaker protection. The circuit breaker monitors
-		 * failure rates and automatically opens when thresholds are exceeded.
+		 * Used internally by autoscaler for scale-down operations.
+		 * Gracefully stops and removes idle workers.
 		 */
-		std::shared_ptr<circuit_breaker> circuit_breaker_;
-
-		/**
-		 * @brief Autoscaler for dynamic worker management.
-		 *
-		 * When enabled, automatically adjusts worker count based on
-		 * load metrics (utilization, queue depth, latency).
-		 */
-		std::shared_ptr<autoscaler> autoscaler_;
-
-		/**
-		 * @brief Enhanced work-stealing configuration.
-		 */
-		enhanced_work_stealing_config enhanced_ws_config_;
-
-		/**
-		 * @brief NUMA-aware work stealer for enhanced work-stealing.
-		 */
-		std::unique_ptr<numa_work_stealer> numa_work_stealer_;
-
-		/**
-		 * @brief Cached NUMA topology for the system.
-		 */
-		numa_topology numa_topology_;
-
-		/**
-		 * @brief Create a steal function for the given worker.
-		 * @param requester_id ID of the worker requesting to steal.
-		 * @return Function that attempts to steal work from other workers.
-		 *
-		 * The returned function implements the steal policy (random, round-robin,
-		 * or adaptive) and returns a raw pointer to a stolen job.
-		 */
-		[[nodiscard]] std::function<job*(std::size_t)> create_steal_function();
-
-		/**
-		 * @brief Try to steal a job from another worker.
-		 * @param requester_id ID of the worker requesting to steal.
-		 * @return Raw pointer to stolen job, or nullptr if no work available.
-		 */
-		[[nodiscard]] job* steal_from_workers(std::size_t requester_id);
+		[[nodiscard]] auto remove_workers_internal(std::size_t count, std::size_t min_workers = 1)
+		    -> common::VoidResult;
 	};
 } // namespace kcenon::thread
 
