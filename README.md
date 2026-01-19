@@ -5,7 +5,7 @@
 
 # Thread System
 
-> **Language:** **English** | [한국어](README_KO.md)
+> **Language:** **English** | [한국어](README.kr.md)
 
 A modern C++20 multithreading framework designed to democratize concurrent programming.
 
