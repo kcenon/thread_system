@@ -35,14 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/core/thread_logger.h>
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
-#include <kcenon/thread/resilience/circuit_breaker.h>
-#include <kcenon/thread/resilience/protected_job.h>
-#include <kcenon/thread/scaling/autoscaler.h>
-#include <kcenon/thread/stealing/numa_work_stealer.h>
-#include <kcenon/thread/lockfree/work_stealing_deque.h>
 #include <kcenon/thread/adapters/job_queue_adapter.h>
-
-#include <random>
 
 using namespace utility_module;
 
@@ -817,168 +810,6 @@ auto thread_pool::get_active_worker_count() const -> std::size_t {
 }
 
 // ============================================================================
-// Work-Stealing Support (Deprecated)
-// ============================================================================
-
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4996)
-#endif
-
-void thread_pool::set_worker_policy(const worker_policy& policy) {
-    worker_policy_ = policy;
-
-    // Apply policy to existing workers
-    std::scoped_lock<std::mutex> lock(workers_mutex_);
-    for (auto& worker : workers_) {
-        if (worker) {
-            worker->set_policy(policy);
-            if (policy.enable_work_stealing) {
-                worker->set_steal_function(create_steal_function());
-            }
-        }
-    }
-}
-
-const worker_policy& thread_pool::get_worker_policy() const {
-    return worker_policy_;
-}
-
-void thread_pool::enable_work_stealing(bool enable) {
-    worker_policy_.enable_work_stealing = enable;
-
-    std::scoped_lock<std::mutex> lock(workers_mutex_);
-    for (auto& worker : workers_) {
-        if (worker) {
-            worker_policy policy = worker->get_policy();
-            policy.enable_work_stealing = enable;
-            worker->set_policy(policy);
-            if (enable) {
-                worker->set_steal_function(create_steal_function());
-            } else {
-                worker->set_steal_function(nullptr);
-            }
-        }
-    }
-}
-
-bool thread_pool::is_work_stealing_enabled() const {
-    return worker_policy_.enable_work_stealing;
-}
-
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#pragma GCC diagnostic pop
-#elif defined(_MSC_VER)
-#pragma warning(pop)
-#endif
-
-std::function<job*(std::size_t)> thread_pool::create_steal_function() {
-    // Capture 'this' to access workers
-    return [this](std::size_t requester_id) -> job* {
-        return steal_from_workers(requester_id);
-    };
-}
-
-job* thread_pool::steal_from_workers(std::size_t requester_id) {
-    // Use enhanced work stealer if configured
-    if (numa_work_stealer_ && enhanced_ws_config_.enabled) {
-        return numa_work_stealer_->steal_for(requester_id);
-    }
-
-    // Fall back to basic work stealing
-    std::scoped_lock<std::mutex> lock(workers_mutex_);
-
-    if (workers_.empty()) {
-        return nullptr;
-    }
-
-    const std::size_t worker_count = workers_.size();
-
-    // Select victim based on policy
-    switch (worker_policy_.victim_selection) {
-        case steal_policy::random: {
-            // Random victim selection
-            static thread_local std::mt19937 rng(std::random_device{}());
-            std::uniform_int_distribution<std::size_t> dist(0, worker_count - 1);
-
-            for (std::size_t attempts = 0; attempts < worker_count; ++attempts) {
-                std::size_t victim_idx = dist(rng);
-                if (workers_[victim_idx] &&
-                    workers_[victim_idx]->get_worker_id() != requester_id) {
-                    auto* deque = workers_[victim_idx]->get_local_deque();
-                    if (deque) {
-                        auto stolen = deque->steal();
-                        if (stolen.has_value()) {
-                            return *stolen;
-                        }
-                    }
-                }
-            }
-            break;
-        }
-
-        case steal_policy::round_robin: {
-            // Round-robin victim selection
-            for (std::size_t i = 0; i < worker_count; ++i) {
-                std::size_t victim_idx = (requester_id + 1 + i) % worker_count;
-                if (workers_[victim_idx] &&
-                    workers_[victim_idx]->get_worker_id() != requester_id) {
-                    auto* deque = workers_[victim_idx]->get_local_deque();
-                    if (deque) {
-                        auto stolen = deque->steal();
-                        if (stolen.has_value()) {
-                            return *stolen;
-                        }
-                    }
-                }
-            }
-            break;
-        }
-
-        case steal_policy::adaptive: {
-            // Adaptive: steal from worker with most work
-            std::size_t best_victim = worker_count;
-            std::size_t max_size = 0;
-
-            for (std::size_t i = 0; i < worker_count; ++i) {
-                if (workers_[i] &&
-                    workers_[i]->get_worker_id() != requester_id) {
-                    auto* deque = workers_[i]->get_local_deque();
-                    if (deque) {
-                        std::size_t size = deque->size();
-                        if (size > max_size) {
-                            max_size = size;
-                            best_victim = i;
-                        }
-                    }
-                }
-            }
-
-            if (best_victim < worker_count && max_size > 0) {
-                auto* deque = workers_[best_victim]->get_local_deque();
-                if (deque) {
-                    auto stolen = deque->steal();
-                    if (stolen.has_value()) {
-                        return *stolen;
-                    }
-                }
-            }
-            break;
-        }
-    }
-
-    return nullptr;
-}
-
-// ============================================================================
 // Diagnostics
 // ============================================================================
 
@@ -1078,112 +909,17 @@ auto thread_pool::remove_policy(const std::string& name) -> bool {
 }
 
 // ============================================================================
-// Circuit Breaker (Deprecated)
+// Internal Methods (for friend classes)
 // ============================================================================
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4996)
-#endif
-
-void thread_pool::enable_circuit_breaker(const circuit_breaker_config& config) {
-    circuit_breaker_ = std::make_shared<circuit_breaker>(config);
-}
-
-void thread_pool::disable_circuit_breaker() {
-    circuit_breaker_.reset();
-}
-
-auto thread_pool::get_circuit_breaker() -> std::shared_ptr<circuit_breaker> {
-    return circuit_breaker_;
-}
-
-auto thread_pool::is_accepting_work() const -> bool {
-    if (!circuit_breaker_) {
-        return true;  // No circuit breaker means always accepting
-    }
-
-    auto state = circuit_breaker_->get_state();
-    return state != circuit_state::open;
-}
-
-auto thread_pool::enqueue_protected(std::unique_ptr<job>&& j) -> common::VoidResult {
-    if (!j) {
-        return make_error_result(error_code::job_invalid, "Job is null");
-    }
-
-    // If no circuit breaker, behave like regular enqueue
-    if (!circuit_breaker_) {
-        return enqueue(std::move(j));
-    }
-
-    // Wrap job with circuit breaker protection
-    auto protected_j = std::make_unique<protected_job>(
-        std::move(j), circuit_breaker_);
-
-    return enqueue(std::move(protected_j));
-}
-
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#pragma GCC diagnostic pop
-#elif defined(_MSC_VER)
-#pragma warning(pop)
-#endif
-
-// ============================================================================
-// Autoscaling
-// ============================================================================
-
-void thread_pool::enable_autoscaling(const autoscaling_policy& policy) {
-    if (autoscaler_) {
-        // Already enabled, update policy
-        autoscaler_->set_policy(policy);
-        return;
-    }
-
-    autoscaler_ = std::make_shared<autoscaler>(*this, policy);
-
-    // Start autoscaler if pool is running
-    if (start_pool_.load(std::memory_order_acquire)) {
-        autoscaler_->start();
-    }
-}
-
-void thread_pool::disable_autoscaling() {
-    if (autoscaler_) {
-        autoscaler_->stop();
-        autoscaler_.reset();
-    }
-}
-
-auto thread_pool::get_autoscaler() -> std::shared_ptr<autoscaler> {
-    return autoscaler_;
-}
-
-auto thread_pool::is_autoscaling_enabled() const -> bool {
-    return autoscaler_ != nullptr && autoscaler_->is_active();
-}
-
-auto thread_pool::remove_workers(std::size_t count) -> common::VoidResult {
+auto thread_pool::remove_workers_internal(std::size_t count, std::size_t min_workers)
+    -> common::VoidResult
+{
     if (count == 0) {
         return common::ok();
     }
 
     std::scoped_lock<std::mutex> lock(workers_mutex_);
-
-    // Determine minimum workers to keep
-    std::size_t min_workers = 1;
-    if (autoscaler_) {
-        min_workers = autoscaler_->get_policy().min_workers;
-    }
 
     if (workers_.size() <= min_workers) {
         return common::error_info{

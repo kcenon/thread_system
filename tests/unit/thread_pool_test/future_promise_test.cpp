@@ -16,6 +16,7 @@
 #include <kcenon/thread/core/thread_worker.h>
 #include <kcenon/thread/core/future_job.h>
 #include <kcenon/thread/core/cancellable_future.h>
+#include <kcenon/thread/core/submit_options.h>
 #include <kcenon/thread/utils/when_helpers.h>
 
 #include <atomic>
@@ -92,23 +93,23 @@ TEST_F(FuturePromiseTest, FutureJobPropagatesException) {
 }
 
 // ============================================================================
-// submit_async tests
+// submit tests
 // ============================================================================
 
-TEST_F(FuturePromiseTest, SubmitAsyncReturnsCorrectResult) {
-    auto future = pool_->submit_async([]{ return 100; });
+TEST_F(FuturePromiseTest, SubmitReturnsCorrectResult) {
+    auto future = pool_->submit([]{ return 100; });
     EXPECT_EQ(future.get(), 100);
 }
 
-TEST_F(FuturePromiseTest, SubmitAsyncWithNamedJob) {
-    auto future = pool_->submit_async([]{ return 200; }, "named_job");
+TEST_F(FuturePromiseTest, SubmitWithNamedJob) {
+    auto future = pool_->submit([]{ return 200; }, submit_options::named("named_job"));
     EXPECT_EQ(future.get(), 200);
 }
 
-TEST_F(FuturePromiseTest, SubmitAsyncMultipleConcurrent) {
+TEST_F(FuturePromiseTest, SubmitMultipleConcurrent) {
     std::vector<std::future<int>> futures;
     for (int i = 0; i < 10; ++i) {
-        futures.push_back(pool_->submit_async([i]{ return i * i; }));
+        futures.push_back(pool_->submit([i]{ return i * i; }));
     }
 
     for (int i = 0; i < 10; ++i) {
@@ -120,13 +121,13 @@ TEST_F(FuturePromiseTest, SubmitAsyncMultipleConcurrent) {
 // Batch operation tests
 // ============================================================================
 
-TEST_F(FuturePromiseTest, SubmitBatchAsyncReturnsFutures) {
+TEST_F(FuturePromiseTest, SubmitBatchReturnsFutures) {
     std::vector<std::function<int()>> tasks;
     for (int i = 0; i < 5; ++i) {
         tasks.push_back([i]{ return i + 1; });
     }
 
-    auto futures = pool_->submit_batch_async(std::move(tasks));
+    auto futures = pool_->submit(std::move(tasks));
 
     EXPECT_EQ(futures.size(), 5u);
     for (int i = 0; i < 5; ++i) {
@@ -134,13 +135,13 @@ TEST_F(FuturePromiseTest, SubmitBatchAsyncReturnsFutures) {
     }
 }
 
-TEST_F(FuturePromiseTest, SubmitAllBlocksAndReturnsResults) {
+TEST_F(FuturePromiseTest, SubmitWaitAllBlocksAndReturnsResults) {
     std::vector<std::function<int()>> tasks;
     for (int i = 0; i < 5; ++i) {
         tasks.push_back([i]{ return i * 2; });
     }
 
-    auto results = pool_->submit_all(std::move(tasks));
+    auto results = pool_->submit_wait_all(std::move(tasks));
 
     EXPECT_EQ(results.size(), 5u);
     for (int i = 0; i < 5; ++i) {
@@ -148,7 +149,7 @@ TEST_F(FuturePromiseTest, SubmitAllBlocksAndReturnsResults) {
     }
 }
 
-TEST_F(FuturePromiseTest, SubmitAnyReturnsFirstResult) {
+TEST_F(FuturePromiseTest, SubmitWaitAnyReturnsFirstResult) {
     std::vector<std::function<int()>> tasks;
 
     // Add a slow task
@@ -160,15 +161,15 @@ TEST_F(FuturePromiseTest, SubmitAnyReturnsFirstResult) {
     // Add a fast task
     tasks.push_back([]{ return 2; });
 
-    auto result = pool_->submit_any(std::move(tasks));
+    auto result = pool_->submit_wait_any(std::move(tasks));
 
     // Should return quickly (the fast task)
     EXPECT_TRUE(result == 1 || result == 2);
 }
 
-TEST_F(FuturePromiseTest, SubmitAnyThrowsOnEmptyVector) {
+TEST_F(FuturePromiseTest, SubmitWaitAnyThrowsOnEmptyVector) {
     std::vector<std::function<int()>> empty_tasks;
-    EXPECT_THROW(pool_->submit_any(std::move(empty_tasks)), std::invalid_argument);
+    EXPECT_THROW(pool_->submit_wait_any(std::move(empty_tasks)), std::invalid_argument);
 }
 
 // ============================================================================
@@ -176,9 +177,9 @@ TEST_F(FuturePromiseTest, SubmitAnyThrowsOnEmptyVector) {
 // ============================================================================
 
 TEST_F(FuturePromiseTest, WhenAllCombinesMultipleFutures) {
-    auto f1 = pool_->submit_async([]{ return 1; });
-    auto f2 = pool_->submit_async([]{ return 2; });
-    auto f3 = pool_->submit_async([]{ return 3; });
+    auto f1 = pool_->submit([]{ return 1; });
+    auto f2 = pool_->submit([]{ return 2; });
+    auto f3 = pool_->submit([]{ return 3; });
 
     auto combined = when_all(std::move(f1), std::move(f2), std::move(f3));
     auto [a, b, c] = combined.get();
@@ -189,8 +190,8 @@ TEST_F(FuturePromiseTest, WhenAllCombinesMultipleFutures) {
 }
 
 TEST_F(FuturePromiseTest, WhenAllWithDifferentTypes) {
-    auto f1 = pool_->submit_async([]{ return 42; });
-    auto f2 = pool_->submit_async([]{ return std::string("hello"); });
+    auto f1 = pool_->submit([]{ return 42; });
+    auto f2 = pool_->submit([]{ return std::string("hello"); });
 
     auto combined = when_all(std::move(f1), std::move(f2));
     auto [num, str] = combined.get();
@@ -206,12 +207,12 @@ TEST_F(FuturePromiseTest, WhenAllWithDifferentTypes) {
 TEST_F(FuturePromiseTest, WhenAnyReturnsFirstCompleted) {
     std::vector<std::future<int>> futures;
 
-    futures.push_back(pool_->submit_async([]{
+    futures.push_back(pool_->submit([]{
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return 1;
     }));
 
-    futures.push_back(pool_->submit_async([]{
+    futures.push_back(pool_->submit([]{
         return 2;  // Fast
     }));
 
@@ -224,12 +225,12 @@ TEST_F(FuturePromiseTest, WhenAnyReturnsFirstCompleted) {
 TEST_F(FuturePromiseTest, WhenAnyWithIndexReturnsCorrectIndex) {
     std::vector<std::future<int>> futures;
 
-    futures.push_back(pool_->submit_async([]{
+    futures.push_back(pool_->submit([]{
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         return 100;
     }));
 
-    futures.push_back(pool_->submit_async([]{
+    futures.push_back(pool_->submit([]{
         return 200;  // Fast - should complete first
     }));
 
@@ -247,7 +248,7 @@ TEST_F(FuturePromiseTest, WhenAnyWithIndexReturnsCorrectIndex) {
 
 TEST_F(FuturePromiseTest, CancellableFutureBasicUsage) {
     auto token = cancellation_token::create();
-    auto future = pool_->submit_async([]{
+    auto future = pool_->submit([]{
         return 42;
     });
 
@@ -258,7 +259,7 @@ TEST_F(FuturePromiseTest, CancellableFutureBasicUsage) {
 
 TEST_F(FuturePromiseTest, CancellableFutureCancel) {
     auto token = cancellation_token::create();
-    auto future = pool_->submit_async([]{
+    auto future = pool_->submit([]{
         std::this_thread::sleep_for(std::chrono::seconds(10));
         return 42;
     });
@@ -271,7 +272,7 @@ TEST_F(FuturePromiseTest, CancellableFutureCancel) {
 
 TEST_F(FuturePromiseTest, CancellableFutureGetForWithTimeout) {
     auto token = cancellation_token::create();
-    auto future = pool_->submit_async([]{
+    auto future = pool_->submit([]{
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
         return 42;
     });
@@ -285,7 +286,7 @@ TEST_F(FuturePromiseTest, CancellableFutureGetForWithTimeout) {
 
 TEST_F(FuturePromiseTest, CancellableFutureIsReady) {
     auto token = cancellation_token::create();
-    auto future = pool_->submit_async([]{
+    auto future = pool_->submit([]{
         return 42;
     });
 
@@ -301,8 +302,8 @@ TEST_F(FuturePromiseTest, CancellableFutureIsReady) {
 // Exception propagation tests
 // ============================================================================
 
-TEST_F(FuturePromiseTest, SubmitAsyncPropagatesException) {
-    auto future = pool_->submit_async([]() -> int {
+TEST_F(FuturePromiseTest, SubmitPropagatesException) {
+    auto future = pool_->submit([]() -> int {
         throw std::logic_error("test exception");
     });
 
@@ -310,8 +311,8 @@ TEST_F(FuturePromiseTest, SubmitAsyncPropagatesException) {
 }
 
 TEST_F(FuturePromiseTest, WhenAllPropagatesException) {
-    auto f1 = pool_->submit_async([]{ return 1; });
-    auto f2 = pool_->submit_async([]() -> int {
+    auto f1 = pool_->submit([]{ return 1; });
+    auto f2 = pool_->submit([]() -> int {
         throw std::runtime_error("error in f2");
     });
 

@@ -597,9 +597,9 @@ auto autoscaler::remove_workers(std::size_t count) -> common::VoidResult
 		return common::ok();
 	}
 
-	// Request pool to remove workers
+	// Request pool to remove workers using internal method
 	// This will gracefully stop idle workers
-	auto result = pool_.remove_workers(count);
+	auto result = pool_.remove_workers_internal(count, policy_.min_workers);
 	return result;
 }
 
