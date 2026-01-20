@@ -44,6 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <kcenon/thread/core/future_job.h>
+#include <kcenon/thread/utils/batch_operations.h>
 
 #include <future>
 #include <vector>
@@ -87,16 +88,11 @@ template<typename F, typename R>
 auto thread_pool::submit(std::vector<F>&& callables, const submit_options& opts)
     -> std::vector<std::future<R>>
 {
-    std::vector<std::future<R>> futures;
-    futures.reserve(callables.size());
-
-    for (auto&& callable : callables) {
+    return detail::batch_apply(std::move(callables), [this, &opts](auto&& callable) {
         submit_options single_opts;
         single_opts.name = opts.name;
-        futures.push_back(submit<F, R>(std::move(callable), single_opts));
-    }
-
-    return futures;
+        return submit<F, R>(std::move(callable), single_opts);
+    });
 }
 
 template<typename F, typename R>
@@ -104,15 +100,7 @@ auto thread_pool::submit_wait_all(std::vector<F>&& callables, const submit_optio
     -> std::vector<R>
 {
     auto futures = submit<F, R>(std::move(callables), opts);
-
-    std::vector<R> results;
-    results.reserve(futures.size());
-
-    for (auto& future : futures) {
-        results.push_back(future.get());
-    }
-
-    return results;
+    return detail::collect_all(futures);
 }
 
 template<typename F, typename R>
