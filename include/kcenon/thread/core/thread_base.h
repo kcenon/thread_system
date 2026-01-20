@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_conditions.h"
 #include "error_handling.h"
 #include "thread_impl.h"
+#include "lifecycle_controller.h"
 
 #include <mutex>
 #include <memory>
@@ -336,71 +337,43 @@ namespace kcenon::thread
 		 * will stop automatically to prevent infinite error loops and resource exhaustion.
 		 */
 		static constexpr int max_consecutive_failures = 10;
+
 		/**
 		 * @brief Mutex for synchronizing access to the wake_interval_ member.
-		 * 
+		 *
 		 * This mutex must be acquired when reading or writing wake_interval_ to prevent
 		 * data races between the setter and the worker thread.
 		 */
 		mutable std::mutex wake_interval_mutex_;
 
 		/**
-		 * @brief Mutex for synchronizing access to internal state and condition variables.
+		 * @brief Lifecycle controller managing thread state and synchronization.
 		 *
-		 * @c worker_condition_ is typically waited on by the worker thread, and the main thread
-		 * may notify it to trigger wake-ups or shutdowns.
+		 * Consolidates condition variable, mutex, stop request, and state management
+		 * into a single reusable component.
 		 */
-		std::mutex cv_mutex_;
-
-		/**
-		 * @brief Condition variable used to block or wake the worker thread.
-		 *
-		 * Combined with @c cv_mutex_, this enables the worker thread to sleep until
-		 * a specific event (e.g., a stop request or a timed interval) occurs.
-		 */
-		std::condition_variable worker_condition_;
+		lifecycle_controller lifecycle_;
 
 #ifdef USE_STD_JTHREAD
 		/**
 		 * @brief A @c std::jthread (if available) for managing the worker thread's lifecycle.
 		 *
-		 * When using jthread, stopping is signaled via @c stop_source_ and @c stop_token.
+		 * When using jthread, stopping is signaled via lifecycle_controller.
 		 */
 		std::unique_ptr<std::jthread> worker_thread_;
-
-		/**
-		 * @brief The optional stop source (for jthread) to request stopping the thread.
-		 */
-		std::optional<std::stop_source> stop_source_;
 #else
 		/**
 		 * @brief A @c std::thread for managing the worker thread's lifecycle (legacy mode).
 		 *
-		 * If @c USE_STD_JTHREAD is not defined, we fall back to a standard thread and an atomic
-		 * stop flag.
+		 * If @c USE_STD_JTHREAD is not defined, we fall back to a standard thread.
 		 */
 		std::unique_ptr<std::thread> worker_thread_;
-
-		/**
-		 * @brief An atomic flag to indicate that the thread should stop.
-		 *
-		 * Set to @c true when @c stop() is called, signaling the worker thread to exit its loop.
-		 */
-		std::atomic<bool> stop_requested_;
 #endif
 
 		/**
 		 * @brief A string title for identifying or naming the worker thread.
 		 */
 		std::string thread_title_;
-
-		/**
-		 * @brief The current condition/state of the thread (e.g., running, stopped).
-		 *
-		 * Used internally to track whether the thread is active or if it has been requested to
-		 * stop.
-		 */
-		std::atomic<thread_conditions> thread_condition_;
 	};
 } // namespace kcenon::thread
 

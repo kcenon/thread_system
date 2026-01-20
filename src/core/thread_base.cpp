@@ -45,26 +45,18 @@ namespace kcenon::thread
 {
 	/**
 	 * @brief Constructs a new thread_base instance with the specified title.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Initializes the worker_thread_ pointer to nullptr (thread not started)
-	 * - Sets up thread control mechanisms based on configuration:
-	 *   - In C++20 mode (USE_STD_JTHREAD), initializes stop_source_ to std::nullopt
-	 *   - In legacy mode, initializes stop_requested_ to false
+	 * - lifecycle_controller handles stop control and state management
 	 * - Sets wake_interval_ to std::nullopt (no periodic wake-ups by default)
 	 * - Sets thread_title_ to the provided title
-	 * - Sets initial thread_condition_ to Created
 	 */
 	thread_base::thread_base(const std::string& thread_title)
 		: wake_interval_(std::nullopt)
+		, lifecycle_()
 		, worker_thread_(nullptr)
-#ifdef USE_STD_JTHREAD
-		, stop_source_(std::nullopt)
-#else
-		, stop_requested_(false)
-#endif
 		, thread_title_(thread_title)
-		, thread_condition_(thread_conditions::Created)
 	{
 	}
 
@@ -126,43 +118,27 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Starts the worker thread and begins execution loop.
-	 * 
+	 *
 	 * Implementation details:
-	 * - First checks if thread is already running using different methods:
-	 *   - C++20: stop_source_.has_value() indicates active thread
-	 *   - Legacy: worker_thread_->joinable() indicates active thread
+	 * - First checks if thread is already running via lifecycle_controller
 	 * - Calls stop() first to ensure clean state (idempotent operation)
-	 * - Initializes stop control mechanism:
-	 *   - C++20: Creates new std::stop_source for cooperative cancellation
-	 *   - Legacy: Resets atomic stop_requested_ flag to false
+	 * - Initializes lifecycle_controller for the new thread
 	 * - Creates worker thread that executes the main work loop
-	 * 
+	 *
 	 * Main Work Loop Logic:
 	 * 1. Calls before_start() hook for derived class initialization
 	 * 2. Enters main loop while not stopped and has work to do
-	 * 3. Sets thread_condition_ to Waiting before sleep
-	 * 4. Waits on condition variable with optional timeout (wake_interval)
-	 * 5. Sets thread_condition_ to Working before calling do_work()
-	 * 6. Calls do_work() hook for actual work execution
-	 * 7. Handles exceptions from do_work() gracefully
-	 * 8. Calls after_stop() hook for cleanup when exiting
-	 * 
-	 * Error Handling:
-	 * - Returns error if thread is already running
-	 * - Catches std::bad_alloc during thread creation
-	 * - Logs errors from hooks using std::cerr
-	 * - Exception-safe cleanup in catch blocks
-	 * 
+	 * 3. Uses lifecycle_controller for state and wait management
+	 * 4. Calls do_work() hook for actual work execution
+	 * 5. Handles exceptions from do_work() gracefully
+	 * 6. Calls after_stop() hook for cleanup when exiting
+	 *
 	 * @return Empty result on success, error on failure
 	 */
 	auto thread_base::start(void) -> common::VoidResult
 	{
-		// Check if thread is already running using platform-specific method
-#ifdef USE_STD_JTHREAD
-		if (stop_source_.has_value())
-#else
-		if (worker_thread_ && worker_thread_->joinable())
-#endif
+		// Check if thread is already running using lifecycle_controller
+		if (lifecycle_.has_active_source())
 		{
 			return common::error_info{static_cast<int>(error_code::thread_already_running), "thread is already running", "thread_system"};
 		}
@@ -170,12 +146,8 @@ namespace kcenon::thread
 		// Ensure clean state by stopping any existing thread first
 		stop();
 
-		// Initialize stop control mechanism for the new thread
-#ifdef USE_STD_JTHREAD
-		stop_source_ = std::stop_source();
-#else
-		stop_requested_ = false;
-#endif
+		// Initialize lifecycle controller for the new thread
+		lifecycle_.initialize_for_start();
 
 		try
 		{
@@ -187,11 +159,6 @@ namespace kcenon::thread
 #endif
 				[this](void)  // Capture 'this' to access member functions and variables
 				{
-#ifdef USE_STD_JTHREAD
-					// Get stop token for cooperative cancellation in C++20
-					auto stop_token = stop_source_.value().get_token();
-#endif
-
 					// Phase 1: Call derived class initialization hook
 					auto work_result = before_start();
 					if (work_result.is_err())
@@ -201,58 +168,36 @@ namespace kcenon::thread
 					}
 
 					// Phase 2: Main work loop - continues until stop requested and no more work
-#ifdef USE_STD_JTHREAD
-					while (!stop_token.stop_requested() || should_continue_work())
-#else
-					while (!stop_requested_ || should_continue_work())
-#endif
+					while (!lifecycle_.is_stop_requested() || should_continue_work())
 					{
 						// Update thread state to indicate it's waiting for work
-						thread_condition_.store(thread_conditions::Waiting);
+						lifecycle_.set_state(thread_conditions::Waiting);
 
 						// Get current wake interval with thread-safe access
 						auto interval = get_wake_interval();
-						
-						// Use unique_lock for condition variable operations (required by std::condition_variable)
-						std::unique_lock<std::mutex> lock(cv_mutex_);
-						
+
+						// Use lifecycle_controller for condition variable operations
+						auto lock = lifecycle_.acquire_lock();
+
 						// Wait strategy depends on whether wake interval is configured
 						if (interval.has_value())
 						{
 							// Timed wait: wake up after interval OR when condition is met
-#ifdef USE_STD_JTHREAD
-							worker_condition_.wait_for(
-								lock, interval.value(), [this, &stop_token]()
-								{ return stop_token.stop_requested() || should_continue_work(); });
-#else
-							worker_condition_.wait_for(
-								lock, interval.value(),
-								[this]() { return stop_requested_ || should_continue_work(); });
-#endif
+							lifecycle_.wait_for(lock, interval.value(),
+								[this]() { return should_continue_work(); });
 						}
 						else
 						{
 							// Indefinite wait: only wake up when condition is met
-#ifdef USE_STD_JTHREAD
-							worker_condition_.wait(
-								lock, [this, &stop_token]()
-								{ return stop_token.stop_requested() || should_continue_work(); });
-#else
-							worker_condition_.wait(
-								lock,
-								[this]() { return stop_requested_ || should_continue_work(); });
-#endif
+							lifecycle_.wait(lock,
+								[this]() { return should_continue_work(); });
 						}
 
 						// Check if we should exit the loop
-#ifdef USE_STD_JTHREAD
-						if (stop_token.stop_requested() && !should_continue_work())
-#else
-						if (stop_requested_ && !should_continue_work())
-#endif
+						if (lifecycle_.is_stop_requested() && !should_continue_work())
 						{
 							// Update state to indicate graceful shutdown in progress
-							thread_condition_.store(thread_conditions::Stopping);
+							lifecycle_.set_state(thread_conditions::Stopping);
 							break;
 						}
 
@@ -260,7 +205,7 @@ namespace kcenon::thread
 						try
 						{
 							// Update state to indicate active work is being performed
-							thread_condition_.store(thread_conditions::Working);
+							lifecycle_.set_state(thread_conditions::Working);
 
 							// Call derived class work implementation
 							work_result = do_work();
@@ -321,12 +266,7 @@ namespace kcenon::thread
 		catch (const std::bad_alloc& e)
 		{
 			// Exception-safe cleanup: reset all resources if thread creation fails
-#ifdef USE_STD_JTHREAD
-			stop_source_.reset();
-#else
-			stop_requested_ = true;
-#endif
-
+			lifecycle_.reset_stop_source();
 			worker_thread_.reset();
 
 			return common::error_info{static_cast<int>(error_code::resource_allocation_failed), e.what(), "thread_system"};
@@ -338,29 +278,22 @@ namespace kcenon::thread
 
 	/**
 	 * @brief Stops the worker thread and waits for it to complete.
-	 * 
+	 *
 	 * Implementation details:
 	 * - This method is idempotent - safe to call multiple times
 	 * - First checks if there's actually a thread to stop
-	 * - Uses platform-specific stop signaling:
-	 *   - C++20: Uses std::stop_source for cooperative cancellation
-	 *   - Legacy: Sets atomic flag stop_requested_ to true
+	 * - Uses lifecycle_controller for stop signaling and state management
 	 * - Notifies condition variable to wake up waiting thread
 	 * - Joins the thread to wait for complete shutdown
 	 * - Cleans up all thread-related resources
-	 * 
+	 *
 	 * Shutdown Sequence:
-	 * 1. Signal stop request using appropriate mechanism
-	 * 2. Notify condition variable to wake sleeping thread
-	 * 3. Wait for thread to exit its main loop and complete after_stop()
-	 * 4. Clean up thread object and stop control mechanism
-	 * 5. Update thread_condition_ to Stopped state
-	 * 
-	 * Thread Safety:
-	 * - Safe to call from any thread including the worker thread itself
-	 * - Uses proper synchronization to avoid race conditions
-	 * - join() ensures thread resources are properly released
-	 * 
+	 * 1. Signal stop request via lifecycle_controller
+	 * 2. Call derived class hook for cancellation propagation
+	 * 3. Notify condition variable to wake sleeping thread
+	 * 4. Wait for thread to exit its main loop and complete after_stop()
+	 * 5. Clean up thread object and reset lifecycle_controller
+	 *
 	 * @return Empty result on success, error if thread wasn't running
 	 */
 	auto thread_base::stop(void) -> common::VoidResult
@@ -382,84 +315,59 @@ namespace kcenon::thread
 					"cannot stop thread from within itself - would cause deadlock", "thread_system"};
 			}
 
-			// Step 1: Signal the thread to stop using platform-specific mechanism
-#ifdef USE_STD_JTHREAD
-			if (stop_source_.has_value())
-			{
-				stop_source_.value().request_stop();  // Cooperative cancellation
-			}
-#else
-			stop_requested_ = true;  // Atomic flag for legacy mode
-#endif
+			// Step 1: Signal the thread to stop via lifecycle_controller
+			lifecycle_.request_stop();
 
 			// Step 1.5: Call derived class hook for cancellation propagation
 			// This allows derived classes (e.g., thread_worker) to cancel running jobs
 			on_stop_requested();
 
 			// Step 2: Wake up the thread if it's waiting on condition variable
-			{
-				std::scoped_lock<std::mutex> lock(cv_mutex_);
-				worker_condition_.notify_all();  // Wake all waiting threads
-			}
+			lifecycle_.notify_all();
 
 			// Step 3: Wait for the thread to complete its shutdown sequence
 			worker_thread_->join();  // Blocks until thread exits
 		}
 
 		// Step 4: Clean up thread resources
-#ifdef USE_STD_JTHREAD
-		stop_source_.reset();  // Release stop_source
-#endif
+		lifecycle_.reset_stop_source();
 		worker_thread_.reset();  // Release thread object
 
 		// Step 5: Update thread state to indicate complete shutdown
-		thread_condition_.store(thread_conditions::Stopped);
+		lifecycle_.set_stopped();
 
 		return common::ok();
 	}
 
 	/**
 	 * @brief Checks if the worker thread is currently active.
-	 * 
+	 *
 	 * Implementation details:
-	 * - Uses the atomic thread_condition_ member instead of checking thread pointers
-	 * - This is more reliable as it reflects the actual thread state
+	 * - Uses lifecycle_controller for state checking
 	 * - Considers both Working and Waiting states as "running"
-	 * - Thread-safe operation due to atomic load
-	 * 
-	 * Thread States Considered "Running":
-	 * - Working: Thread is actively executing do_work()
-	 * - Waiting: Thread is alive but waiting for work or timeout
-	 * 
-	 * Thread States NOT Considered "Running":
-	 * - Created: Thread object created but not started
-	 * - Stopping: Thread is in shutdown sequence
-	 * - Stopped: Thread has completely finished
-	 * 
+	 * - Thread-safe operation
+	 *
 	 * @return true if thread is actively running (Working or Waiting)
 	 */
 	auto thread_base::is_running(void) const -> bool
-	{ 
-		// Use the thread_condition_ atomic flag instead of checking the pointer
-		auto condition = thread_condition_.load();
-		return condition == thread_conditions::Working || 
-			   condition == thread_conditions::Waiting;
+	{
+		return lifecycle_.is_running();
 	}
 
 	/**
 	 * @brief Provides a string representation of the thread's current state.
-	 * 
+	 *
 	 * Implementation details:
 	 * - Uses the formatter utility to create consistent output format
 	 * - Includes both thread title and current condition
 	 * - Useful for logging and debugging purposes
-	 * - Thread-safe due to atomic load of thread_condition_
-	 * 
+	 * - Thread-safe via lifecycle_controller
+	 *
 	 * @return Formatted string showing thread title and current state
 	 */
 	auto thread_base::to_string(void) const -> std::string
 	{
-		return utility_module::formatter::format("{} is {}", thread_title_, thread_condition_.load());
+		return utility_module::formatter::format("{} is {}", thread_title_, lifecycle_.get_state());
 	}
 
 	/**

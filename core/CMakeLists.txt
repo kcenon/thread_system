@@ -18,6 +18,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_queue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_types.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/lifecycle_controller.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/pool_traits.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/service_registry.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/sync_primitives.h
@@ -85,6 +86,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/hazard_pointer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/job_queue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/lifecycle_controller.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/thread_base.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/thread_logger_init.cpp
     # Lock-free implementation
