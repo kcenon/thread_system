@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/interfaces/pool_queue_adapter.h>
 #include <kcenon/thread/metrics/thread_pool_metrics.h>
 #include <kcenon/thread/metrics/enhanced_metrics.h>
+#include <kcenon/thread/metrics/metrics_service.h>
 #include <kcenon/thread/pool_policies/pool_policy.h>
 #include <kcenon/thread/core/submit_options.h>
 
@@ -750,23 +751,18 @@ namespace kcenon::thread
 		auto stop_unsafe() noexcept -> common::VoidResult;
 
         /**
-         * @brief Shared metrics collector used by workers.
-         */
-        std::shared_ptr<metrics::ThreadPoolMetrics> metrics_;
-
-        /**
-         * @brief Enhanced metrics collector for histograms and percentiles.
+         * @brief Centralized metrics service for all pool and worker metrics.
          *
-         * Provides production-grade observability including latency histograms,
-         * percentile calculations, and sliding window throughput tracking.
-         * Lazily initialized when set_enhanced_metrics_enabled(true) is called.
+         * Consolidates metrics management that was previously spread across
+         * thread_pool and thread_worker. Provides:
+         * - Basic metrics (ThreadPoolMetrics)
+         * - Enhanced metrics with histograms and percentiles (lazily initialized)
+         * - Unified recording interface
+         * - Clear ownership semantics (pool owns, workers borrow)
+         *
+         * @see metrics::metrics_service
          */
-        std::shared_ptr<metrics::EnhancedThreadPoolMetrics> enhanced_metrics_;
-
-        /**
-         * @brief Flag indicating if enhanced metrics collection is enabled.
-         */
-        std::atomic<bool> enhanced_metrics_enabled_{false};
+        std::shared_ptr<metrics::metrics_service> metrics_service_;
 
 
 		/**
