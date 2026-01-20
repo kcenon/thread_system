@@ -83,7 +83,7 @@ thread_pool::thread_pool(const std::string& thread_title, const thread_context& 
     , job_queue_(std::make_shared<kcenon::thread::job_queue>())
     , context_(context)
     , pool_cancellation_token_(cancellation_token::create())
-    , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
+    , metrics_service_(std::make_shared<metrics::metrics_service>()) {
     // Report initial pool registration if monitoring is available
     if (context_.monitoring()) {
         common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
@@ -116,7 +116,7 @@ thread_pool::thread_pool(const std::string& thread_title,
     , job_queue_(std::move(custom_queue))
     , context_(context)
     , pool_cancellation_token_(cancellation_token::create())
-    , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
+    , metrics_service_(std::make_shared<metrics::metrics_service>()) {
     // Report initial pool registration if monitoring is available
     if (context_.monitoring()) {
         common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
@@ -151,7 +151,7 @@ thread_pool::thread_pool(const std::string& thread_title,
     , queue_adapter_(std::move(queue_adapter))
     , context_(context)
     , pool_cancellation_token_(cancellation_token::create())
-    , metrics_(std::make_shared<metrics::ThreadPoolMetrics>()) {
+    , metrics_service_(std::make_shared<metrics::metrics_service>()) {
     // Report initial pool registration if monitoring is available
     if (context_.monitoring()) {
         common::interfaces::thread_pool_metrics initial_metrics(thread_title_, pool_instance_id_);
@@ -264,7 +264,7 @@ auto thread_pool::start(void) -> common::VoidResult {
     // Create fresh pool cancellation token for restart scenarios
     // This ensures workers start with a non-cancelled token
     pool_cancellation_token_ = cancellation_token::create();
-    metrics_->reset();
+    metrics_service_->reset();
 
     // Attempt to start each worker
     for (auto& worker : workers_) {
@@ -299,42 +299,32 @@ auto thread_pool::get_job_queue(void) -> std::shared_ptr<job_queue> {
 }
 
 const metrics::ThreadPoolMetrics& thread_pool::metrics() const noexcept {
-    return *metrics_;
+    return metrics_service_->basic_metrics();
 }
 
 void thread_pool::reset_metrics() {
-    metrics_->reset();
-    if (enhanced_metrics_) {
-        enhanced_metrics_->reset();
-    }
+    metrics_service_->reset();
 }
 
 void thread_pool::set_enhanced_metrics_enabled(bool enabled) {
-    if (enabled && !enhanced_metrics_) {
-        // Lazily initialize enhanced metrics with current worker count
+    std::size_t worker_count = 0;
+    {
         std::scoped_lock<std::mutex> lock(workers_mutex_);
-        enhanced_metrics_ = std::make_shared<metrics::EnhancedThreadPoolMetrics>(workers_.size());
-        enhanced_metrics_->set_active_workers(workers_.size());
+        worker_count = workers_.size();
     }
-    enhanced_metrics_enabled_.store(enabled, std::memory_order_release);
+    metrics_service_->set_enhanced_metrics_enabled(enabled, worker_count);
 }
 
 bool thread_pool::is_enhanced_metrics_enabled() const {
-    return enhanced_metrics_enabled_.load(std::memory_order_acquire);
+    return metrics_service_->is_enhanced_metrics_enabled();
 }
 
 const metrics::EnhancedThreadPoolMetrics& thread_pool::enhanced_metrics() const {
-    if (!enhanced_metrics_) {
-        throw std::runtime_error("Enhanced metrics is not enabled. Call set_enhanced_metrics_enabled(true) first.");
-    }
-    return *enhanced_metrics_;
+    return metrics_service_->enhanced_metrics();
 }
 
 metrics::EnhancedSnapshot thread_pool::enhanced_metrics_snapshot() const {
-    if (!enhanced_metrics_enabled_.load(std::memory_order_acquire) || !enhanced_metrics_) {
-        return metrics::EnhancedSnapshot{};
-    }
-    return enhanced_metrics_->snapshot();
+    return metrics_service_->enhanced_snapshot();
 }
 
 /**
@@ -376,10 +366,9 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
         return common::error_info{static_cast<int>(error_code::queue_stopped), "thread pool is stopped", "thread_system"};
     }
 
-    // Delegate to queue for processing
-    metrics_->record_submission();
+    // Record metrics and enqueue job
+    metrics_service_->record_submission();
 
-    // Record enhanced metrics if enabled
     auto start_time = std::chrono::steady_clock::now();
 
     if (queue_adapter_) {
@@ -394,17 +383,12 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
         }
     }
 
-    metrics_->record_enqueue();
+    auto end_time = std::chrono::steady_clock::now();
+    auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+    metrics_service_->record_enqueue_with_latency(latency);
 
-    // Record enhanced metrics
-    if (enhanced_metrics_enabled_.load(std::memory_order_relaxed) && enhanced_metrics_) {
-        auto end_time = std::chrono::steady_clock::now();
-        auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
-        enhanced_metrics_->record_submission();
-        enhanced_metrics_->record_enqueue(latency);
-        auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
-        enhanced_metrics_->record_queue_depth(queue_size);
-    }
+    auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+    metrics_service_->record_queue_depth(queue_size);
 
     return common::ok();
 }
@@ -427,9 +411,8 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
     }
 
     const auto batch_size = jobs.size();
-    metrics_->record_submission(batch_size);
+    metrics_service_->record_submission(batch_size);
 
-    // Record enhanced metrics if enabled
     auto start_time = std::chrono::steady_clock::now();
 
     if (queue_adapter_) {
@@ -444,20 +427,12 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
         }
     }
 
-    metrics_->record_enqueue(batch_size);
+    auto end_time = std::chrono::steady_clock::now();
+    auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+    metrics_service_->record_enqueue_with_latency(latency, batch_size);
 
-    // Record enhanced metrics for batch
-    if (enhanced_metrics_enabled_.load(std::memory_order_relaxed) && enhanced_metrics_) {
-        auto end_time = std::chrono::steady_clock::now();
-        auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
-        // Record submission for each job in batch
-        for (std::size_t i = 0; i < batch_size; ++i) {
-            enhanced_metrics_->record_submission();
-            enhanced_metrics_->record_enqueue(latency / static_cast<long>(batch_size));
-        }
-        auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
-        enhanced_metrics_->record_queue_depth(queue_size);
-    }
+    auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+    metrics_service_->record_queue_depth(queue_size);
 
     return common::ok();
 }
@@ -487,7 +462,7 @@ auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> common::Vo
 
     worker->set_job_queue(worker_queue);
     worker->set_context(context_);
-    worker->set_metrics(metrics_);
+    worker->set_metrics(metrics_service_->get_basic_metrics());
     worker->set_diagnostics(&diagnostics());
 
     // Acquire lock before checking start_pool_ and adding worker
@@ -544,7 +519,7 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& wo
     for (auto& worker : workers) {
         worker->set_job_queue(job_queue_);
         worker->set_context(context_);
-        worker->set_metrics(metrics_);
+        worker->set_metrics(metrics_service_->get_basic_metrics());
         worker->set_diagnostics(diag);
 
         // Add worker to vector first
@@ -783,7 +758,7 @@ auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t {
 
             // Set job queue and diagnostics
             worker->set_job_queue(job_queue_);
-            worker->set_metrics(metrics_);
+            worker->set_metrics(metrics_service_->get_basic_metrics());
             worker->set_diagnostics(diag);
 
             // Start the new worker
