@@ -86,6 +86,11 @@ set(THREAD_CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_service.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_base.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/thread_pool_metrics.h
+    # Enhanced metrics (required by metrics_service.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/enhanced_metrics.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/latency_histogram.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_backend.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/sliding_window_counter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_pool_diagnostics.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/job_info.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_info.h
@@ -122,6 +127,11 @@ set(THREAD_CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job_queue.cpp
     # Metrics and diagnostics (required by thread_pool.cpp and thread_worker.cpp)
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_service.cpp
+    # Enhanced metrics (required by metrics_service.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/enhanced_metrics.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/latency_histogram.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_backend.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/sliding_window_counter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
 )
 
@@ -223,24 +233,16 @@ if(NOT THREAD_BUILD_CORE_ONLY)
     endif()
 
     ##################################################
-    # Metrics Module (extended - metrics_service.cpp is in thread_core)
+    # Metrics Module (extended - all metrics sources moved to thread_core)
     ##################################################
     if(THREAD_BUILD_METRICS)
-        list(APPEND OPTIONAL_HEADERS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/enhanced_metrics.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/latency_histogram.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_backend.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/sliding_window_counter.h
-        )
-        list(APPEND OPTIONAL_SOURCES
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/enhanced_metrics.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/latency_histogram.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_backend.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/sliding_window_counter.cpp
-        )
-        message(STATUS "thread_metrics module: ENABLED (extended)")
+        # Note: All metrics headers and sources (including enhanced_metrics, latency_histogram,
+        # metrics_backend, sliding_window_counter) are now in thread_core because
+        # metrics_service.cpp requires EnhancedThreadPoolMetrics.
+        # This section is reserved for additional metrics features if needed.
+        message(STATUS "thread_metrics module: ENABLED (all metrics in thread_core)")
     else()
-        message(STATUS "thread_metrics module: DISABLED (core metrics_service still available)")
+        message(STATUS "thread_metrics module: DISABLED (core metrics still available)")
     endif()
 
     ##################################################
