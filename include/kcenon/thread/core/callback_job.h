@@ -46,6 +46,23 @@ namespace kcenon::thread
 	 * @class callback_job
 	 * @brief A specialized job class that encapsulates user-defined callbacks.
 	 *
+	 * @deprecated Since v3.0.0. Use composition pattern with job_builder instead:
+	 * @code
+	 * // Old way (deprecated):
+	 * auto job = std::make_shared<callback_job>(
+	 *     []() { return std::nullopt; }, "my_job");
+	 *
+	 * // New way (recommended):
+	 * #include <kcenon/thread/core/job_builder.h>
+	 * auto job = job_builder()
+	 *     .name("my_job")
+	 *     .work([]() { return common::ok(); })
+	 *     .on_complete([](auto result) { })
+	 *     .build();
+	 * @endcode
+	 *
+	 * This class will be removed in the next major version.
+	 *
 	 * The @c callback_job class provides two main mechanisms for defining job behavior:
 	 * - A callback that takes no parameters (@c callback_), for general-purpose tasks.
 	 * - A callback that takes a @c std::vector<uint8_t> as a parameter (@c data_callback_),
@@ -92,7 +109,8 @@ namespace kcenon::thread
 	 * // Submit 'data_job' to a queue or execute it directly...
 	 * @endcode
 	 */
-	class callback_job : public job
+	class [[deprecated("Use job_builder with composition pattern instead. See class documentation.")]]
+	callback_job : public job
 	{
 	public:
 		/**
