@@ -812,5 +812,8 @@ namespace kcenon::thread
 // ----------------------------------------------------------------------------
 // Separated into thread_pool_fmt.h for improved compilation times.
 // See thread_pool_fmt.h for std::formatter specializations.
+// For unified formatter access, include <kcenon/thread/formatters.h> instead.
 
+#define KCENON_THREAD_INTERNAL_INCLUDE
 #include <kcenon/thread/core/thread_pool_fmt.h>
+#undef KCENON_THREAD_INTERNAL_INCLUDE
