@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/utils/convert_string.h>
 #include "error_handling.h"
 #include "cancellation_token.h"
+#include "retry_policy.h"
 
 #include <tuple>
 #include <memory>
@@ -91,8 +92,14 @@ namespace kcenon::thread
 		/// Optional priority override for this job
 		std::optional<job_priority> priority;
 
-		/// Reserved for future retry_policy composition
-		// std::optional<retry_policy> retry;
+		/// Retry policy for automatic retry on failure
+		std::optional<retry_policy> retry;
+
+		/// Optional timeout for job execution
+		std::optional<std::chrono::milliseconds> timeout;
+
+		/// Flag indicating explicit cancellation token was set via composition
+		bool has_explicit_cancellation{false};
 	};
 
 	/**
@@ -383,11 +390,103 @@ namespace kcenon::thread
 		auto with_priority(job_priority priority) -> job&;
 
 		/**
+		 * @brief Attaches a cancellation token to this job via composition.
+		 *
+		 * The cancellation token enables cooperative cancellation of the job.
+		 * The job should periodically check the token and abort if cancelled.
+		 *
+		 * @param token The cancellation token to use
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Thread Safety
+		 * - The token itself is thread-safe for cancellation requests
+		 * - The job must cooperatively check the token during execution
+		 *
+		 * #### Example
+		 * @code
+		 * cancellation_token token;
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_cancellation(token);
+		 *
+		 * // Later, from another thread
+		 * token.cancel();
+		 * @endcode
+		 */
+		auto with_cancellation(const cancellation_token& token) -> job&;
+
+		/**
+		 * @brief Attaches a retry policy to this job.
+		 *
+		 * When the job fails, it can be automatically retried according to
+		 * the specified retry policy. The executor must support retry behavior.
+		 *
+		 * @param policy The retry policy to use
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Supported Policies
+		 * - retry_policy::none() - No retry
+		 * - retry_policy::fixed() - Fixed delay between retries
+		 * - retry_policy::linear() - Linearly increasing delay
+		 * - retry_policy::exponential_backoff() - Exponential delay
+		 *
+		 * #### Example
+		 * @code
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_retry(retry_policy::exponential_backoff(3))
+		 *     ->with_on_error([](auto& err) { log("Retry exhausted: {}", err.message); });
+		 * @endcode
+		 */
+		auto with_retry(const retry_policy& policy) -> job&;
+
+		/**
+		 * @brief Sets a timeout for job execution.
+		 *
+		 * If the job does not complete within the specified duration,
+		 * it may be cancelled (requires executor support for timeout handling).
+		 *
+		 * @param timeout Maximum execution time allowed
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Note
+		 * - Timeout enforcement requires executor/queue support
+		 * - The job should check cancellation token for cooperative timeout
+		 *
+		 * #### Example
+		 * @code
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_timeout(std::chrono::seconds(30))
+		 *     ->with_on_error([](auto& err) { log("Timed out: {}", err.message); });
+		 * @endcode
+		 */
+		auto with_timeout(std::chrono::milliseconds timeout) -> job&;
+
+		/**
 		 * @brief Gets the priority level of this job.
 		 *
 		 * @return The job's priority, or job_priority::normal if not set
 		 */
 		[[nodiscard]] auto get_priority() const -> job_priority;
+
+		/**
+		 * @brief Gets the retry policy of this job.
+		 *
+		 * @return The job's retry policy, or std::nullopt if not set
+		 */
+		[[nodiscard]] auto get_retry_policy() const -> std::optional<retry_policy>;
+
+		/**
+		 * @brief Gets the timeout duration for this job.
+		 *
+		 * @return The job's timeout, or std::nullopt if not set
+		 */
+		[[nodiscard]] auto get_timeout() const -> std::optional<std::chrono::milliseconds>;
+
+		/**
+		 * @brief Checks if this job has an explicit cancellation set via composition.
+		 *
+		 * @return true if with_cancellation() was called
+		 */
+		[[nodiscard]] auto has_explicit_cancellation() const -> bool;
 
 		/**
 		 * @brief Checks if this job has any composed components.

@@ -365,6 +365,58 @@ namespace kcenon::thread
 	}
 
 	/**
+	 * @brief Attaches a cancellation token to this job via composition.
+	 *
+	 * Implementation details:
+	 * - Sets the cancellation token on the job
+	 * - Marks the job as having explicit cancellation for querying
+	 * - Enables fluent method chaining
+	 *
+	 * @param token The cancellation token to use
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_cancellation(const cancellation_token& token) -> job&
+	{
+		cancellation_token_ = token;
+		ensure_components().has_explicit_cancellation = true;
+		return *this;
+	}
+
+	/**
+	 * @brief Attaches a retry policy to this job.
+	 *
+	 * Implementation details:
+	 * - Stores the retry policy in components for executor access
+	 * - The executor is responsible for implementing retry logic
+	 * - Enables fluent method chaining
+	 *
+	 * @param policy The retry policy to use
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_retry(const retry_policy& policy) -> job&
+	{
+		ensure_components().retry = policy;
+		return *this;
+	}
+
+	/**
+	 * @brief Sets a timeout for job execution.
+	 *
+	 * Implementation details:
+	 * - Stores timeout duration in components for executor access
+	 * - The executor is responsible for implementing timeout logic
+	 * - Enables fluent method chaining
+	 *
+	 * @param timeout Maximum execution time allowed
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_timeout(std::chrono::milliseconds timeout) -> job&
+	{
+		ensure_components().timeout = timeout;
+		return *this;
+	}
+
+	/**
 	 * @brief Gets the priority level of this job.
 	 *
 	 * Implementation details:
@@ -380,6 +432,56 @@ namespace kcenon::thread
 			return components_->priority.value();
 		}
 		return job_priority::normal;
+	}
+
+	/**
+	 * @brief Gets the retry policy of this job.
+	 *
+	 * Implementation details:
+	 * - Returns the retry policy if set via with_retry()
+	 * - Returns std::nullopt if no retry policy was configured
+	 *
+	 * @return The job's retry policy or std::nullopt
+	 */
+	auto job::get_retry_policy() const -> std::optional<retry_policy>
+	{
+		if (components_ && components_->retry.has_value())
+		{
+			return components_->retry;
+		}
+		return std::nullopt;
+	}
+
+	/**
+	 * @brief Gets the timeout duration for this job.
+	 *
+	 * Implementation details:
+	 * - Returns the timeout if set via with_timeout()
+	 * - Returns std::nullopt if no timeout was configured
+	 *
+	 * @return The job's timeout or std::nullopt
+	 */
+	auto job::get_timeout() const -> std::optional<std::chrono::milliseconds>
+	{
+		if (components_ && components_->timeout.has_value())
+		{
+			return components_->timeout;
+		}
+		return std::nullopt;
+	}
+
+	/**
+	 * @brief Checks if this job has an explicit cancellation set via composition.
+	 *
+	 * Implementation details:
+	 * - Returns true if with_cancellation() was called
+	 * - Distinguishes between explicit composition and set_cancellation_token()
+	 *
+	 * @return true if with_cancellation() was called
+	 */
+	auto job::has_explicit_cancellation() const -> bool
+	{
+		return components_ && components_->has_explicit_cancellation;
 	}
 
 	/**
