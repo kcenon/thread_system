@@ -37,11 +37,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @brief std::formatter specializations for thread_pool
  * @date 2025-01-11
  *
+ * @deprecated This header is deprecated. Include <kcenon/thread/formatters.h> instead
+ *             for unified access to all formatter specializations.
+ *
  * This file contains std::formatter specializations for the thread_pool class,
  * enabling formatting via C++20 std::format.
  *
  * Separated from thread_pool.h to reduce header size and improve compilation times.
  */
+
+// Deprecation warning is disabled for internal includes.
+// Define KCENON_THREAD_INTERNAL_INCLUDE before including to suppress the warning.
+#if !defined(KCENON_THREAD_INTERNAL_INCLUDE)
+#if defined(__GNUC__) || defined(__clang__)
+#pragma message("thread_pool_fmt.h is deprecated. Include <kcenon/thread/formatters.h> instead.")
+#elif defined(_MSC_VER)
+#pragma message("thread_pool_fmt.h is deprecated. Include <kcenon/thread/formatters.h> instead.")
+#endif
+#endif
 
 #include <kcenon/thread/utils/convert_string.h>
 
