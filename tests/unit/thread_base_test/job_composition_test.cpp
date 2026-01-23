@@ -429,3 +429,340 @@ TEST_F(JobCompositionTest, AllPriorityLevelsCanBeSet)
 		EXPECT_EQ(job->get_priority(), priority);
 	}
 }
+
+// ============================================================================
+// Retry Policy Tests
+// ============================================================================
+
+TEST_F(JobCompositionTest, NoRetryPolicyByDefault)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	EXPECT_FALSE(job->get_retry_policy().has_value());
+}
+
+TEST_F(JobCompositionTest, RetryPolicyCanBeSet)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	auto policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
+	job->with_retry(policy);
+
+	EXPECT_TRUE(job->get_retry_policy().has_value());
+	EXPECT_EQ(job->get_retry_policy()->get_max_attempts(), 3);
+	EXPECT_EQ(job->get_retry_policy()->get_initial_delay(), std::chrono::milliseconds(100));
+}
+
+TEST_F(JobCompositionTest, WithRetryReturnsJobReference)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	auto& ref = job->with_retry(retry_policy::no_retry());
+
+	EXPECT_EQ(&ref, job.get());
+}
+
+TEST_F(JobCompositionTest, ExponentialBackoffRetryPolicy)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	auto policy = retry_policy::exponential_backoff(5, std::chrono::milliseconds(50), 2.0);
+	job->with_retry(policy);
+
+	auto retrieved = job->get_retry_policy();
+	EXPECT_TRUE(retrieved.has_value());
+	EXPECT_EQ(retrieved->get_strategy(), retry_strategy::exponential_backoff);
+	EXPECT_EQ(retrieved->get_max_attempts(), 5);
+	EXPECT_EQ(retrieved->get_initial_delay(), std::chrono::milliseconds(50));
+	EXPECT_DOUBLE_EQ(retrieved->get_multiplier(), 2.0);
+}
+
+// ============================================================================
+// Timeout Tests
+// ============================================================================
+
+TEST_F(JobCompositionTest, NoTimeoutByDefault)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	EXPECT_FALSE(job->get_timeout().has_value());
+}
+
+TEST_F(JobCompositionTest, TimeoutCanBeSet)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	job->with_timeout(std::chrono::milliseconds(5000));
+
+	EXPECT_TRUE(job->get_timeout().has_value());
+	EXPECT_EQ(job->get_timeout().value(), std::chrono::milliseconds(5000));
+}
+
+TEST_F(JobCompositionTest, WithTimeoutReturnsJobReference)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	auto& ref = job->with_timeout(std::chrono::seconds(30));
+
+	EXPECT_EQ(&ref, job.get());
+}
+
+// ============================================================================
+// Cancellation Composition Tests
+// ============================================================================
+
+TEST_F(JobCompositionTest, NoExplicitCancellationByDefault)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	EXPECT_FALSE(job->has_explicit_cancellation());
+}
+
+TEST_F(JobCompositionTest, WithCancellationSetsToken)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	cancellation_token token;
+	job->with_cancellation(token);
+
+	EXPECT_TRUE(job->has_explicit_cancellation());
+	EXPECT_TRUE(job->has_components());
+}
+
+TEST_F(JobCompositionTest, WithCancellationReturnsJobReference)
+{
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	cancellation_token token;
+	auto& ref = job->with_cancellation(token);
+
+	EXPECT_EQ(&ref, job.get());
+}
+
+// ============================================================================
+// Combined Composition Tests
+// ============================================================================
+
+TEST_F(JobCompositionTest, AllCompositionMethodsCanBeChained)
+{
+	cancellation_token token;
+
+	auto job = std::make_unique<callback_job>(
+		[]() -> kcenon::common::VoidResult { return kcenon::common::ok(); },
+		"test_job"
+	);
+
+	job->with_priority(job_priority::high)
+		.with_cancellation(token)
+		.with_retry(retry_policy::fixed(3, std::chrono::milliseconds(100)))
+		.with_timeout(std::chrono::seconds(30))
+		.with_on_complete([](auto) {})
+		.with_on_error([](const auto&) {});
+
+	EXPECT_TRUE(job->has_components());
+	EXPECT_EQ(job->get_priority(), job_priority::high);
+	EXPECT_TRUE(job->has_explicit_cancellation());
+	EXPECT_TRUE(job->get_retry_policy().has_value());
+	EXPECT_TRUE(job->get_timeout().has_value());
+}
+
+// ============================================================================
+// Retry Policy Class Tests
+// ============================================================================
+
+TEST(RetryPolicyTest, NoRetryPolicyHasCorrectDefaults)
+{
+	auto policy = retry_policy::no_retry();
+
+	EXPECT_EQ(policy.get_strategy(), retry_strategy::none);
+	EXPECT_EQ(policy.get_max_attempts(), 1);
+	EXPECT_FALSE(policy.is_retry_enabled());
+}
+
+TEST(RetryPolicyTest, FixedPolicyConfiguration)
+{
+	auto policy = retry_policy::fixed(5, std::chrono::milliseconds(200));
+
+	EXPECT_EQ(policy.get_strategy(), retry_strategy::fixed);
+	EXPECT_EQ(policy.get_max_attempts(), 5);
+	EXPECT_EQ(policy.get_initial_delay(), std::chrono::milliseconds(200));
+	EXPECT_TRUE(policy.is_retry_enabled());
+}
+
+TEST(RetryPolicyTest, LinearPolicyConfiguration)
+{
+	auto policy = retry_policy::linear(4, std::chrono::milliseconds(100));
+
+	EXPECT_EQ(policy.get_strategy(), retry_strategy::linear);
+	EXPECT_EQ(policy.get_max_attempts(), 4);
+	EXPECT_EQ(policy.get_initial_delay(), std::chrono::milliseconds(100));
+	EXPECT_TRUE(policy.is_retry_enabled());
+}
+
+TEST(RetryPolicyTest, ExponentialBackoffPolicyConfiguration)
+{
+	auto policy = retry_policy::exponential_backoff(
+		6,
+		std::chrono::milliseconds(50),
+		3.0,
+		std::chrono::milliseconds(5000),
+		true
+	);
+
+	EXPECT_EQ(policy.get_strategy(), retry_strategy::exponential_backoff);
+	EXPECT_EQ(policy.get_max_attempts(), 6);
+	EXPECT_EQ(policy.get_initial_delay(), std::chrono::milliseconds(50));
+	EXPECT_DOUBLE_EQ(policy.get_multiplier(), 3.0);
+	EXPECT_EQ(policy.get_max_delay(), std::chrono::milliseconds(5000));
+	EXPECT_TRUE(policy.uses_jitter());
+	EXPECT_TRUE(policy.is_retry_enabled());
+}
+
+TEST(RetryPolicyTest, AttemptTracking)
+{
+	auto policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
+
+	EXPECT_EQ(policy.get_current_attempt(), 0);
+	EXPECT_TRUE(policy.has_attempts_remaining());
+
+	policy.record_attempt();
+	EXPECT_EQ(policy.get_current_attempt(), 1);
+	EXPECT_TRUE(policy.has_attempts_remaining());
+
+	policy.record_attempt();
+	EXPECT_EQ(policy.get_current_attempt(), 2);
+	EXPECT_FALSE(policy.has_attempts_remaining());
+}
+
+TEST(RetryPolicyTest, ResetClearsAttemptCounter)
+{
+	auto policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
+
+	policy.record_attempt();
+	policy.record_attempt();
+	EXPECT_EQ(policy.get_current_attempt(), 2);
+
+	policy.reset();
+	EXPECT_EQ(policy.get_current_attempt(), 0);
+	EXPECT_TRUE(policy.has_attempts_remaining());
+}
+
+TEST(RetryPolicyTest, FixedDelayCalculation)
+{
+	auto policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
+
+	// Initial attempt (0) has no delay
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(0));
+
+	policy.record_attempt();
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(100));
+
+	policy.record_attempt();
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(100));
+}
+
+TEST(RetryPolicyTest, LinearDelayCalculation)
+{
+	auto policy = retry_policy::linear(5, std::chrono::milliseconds(100));
+
+	// Initial attempt (0) has no delay
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(0));
+
+	policy.record_attempt();  // attempt 1
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(100));
+
+	policy.record_attempt();  // attempt 2
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(200));
+
+	policy.record_attempt();  // attempt 3
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(300));
+}
+
+TEST(RetryPolicyTest, ExponentialDelayCalculation)
+{
+	auto policy = retry_policy::exponential_backoff(
+		5,
+		std::chrono::milliseconds(100),
+		2.0,
+		std::chrono::milliseconds(10000),
+		false
+	);
+
+	// Initial attempt (0) has no delay
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(0));
+
+	policy.record_attempt();  // attempt 1: 100 * 2^0 = 100
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(100));
+
+	policy.record_attempt();  // attempt 2: 100 * 2^1 = 200
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(200));
+
+	policy.record_attempt();  // attempt 3: 100 * 2^2 = 400
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(400));
+
+	policy.record_attempt();  // attempt 4: 100 * 2^3 = 800
+	EXPECT_EQ(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(800));
+}
+
+TEST(RetryPolicyTest, MaxDelayIsCapped)
+{
+	auto policy = retry_policy::exponential_backoff(
+		10,
+		std::chrono::milliseconds(100),
+		2.0,
+		std::chrono::milliseconds(500),  // Cap at 500ms
+		false
+	);
+
+	// Record enough attempts to exceed cap
+	for (int i = 0; i < 5; ++i)
+	{
+		policy.record_attempt();
+	}
+
+	// Delay should be capped at 500ms
+	EXPECT_LE(policy.get_delay_for_current_attempt(), std::chrono::milliseconds(500));
+}
+
+TEST(RetryPolicyTest, ToStringOutput)
+{
+	auto none_policy = retry_policy::no_retry();
+	EXPECT_EQ(none_policy.to_string(), "retry_policy(none)");
+
+	auto fixed_policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
+	EXPECT_NE(fixed_policy.to_string().find("fixed"), std::string::npos);
+	EXPECT_NE(fixed_policy.to_string().find("attempts=3"), std::string::npos);
+
+	auto exp_policy = retry_policy::exponential_backoff(5);
+	EXPECT_NE(exp_policy.to_string().find("exponential"), std::string::npos);
+}
