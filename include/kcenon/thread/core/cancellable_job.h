@@ -20,6 +20,29 @@ namespace kcenon::thread {
  * @class cancellable_job
  * @brief Job that can be cancelled during execution
  *
+ * @deprecated Since v3.0.0. Use composition pattern with job_builder instead:
+ * @code
+ * // Old way (deprecated):
+ * auto job = std::make_unique<cancellable_job>([](auto& token) { ... });
+ *
+ * // New way (recommended):
+ * #include <kcenon/thread/core/job_builder.h>
+ * cancellation_token token;
+ * auto job = job_builder()
+ *     .name("my_job")
+ *     .work([&token]() {
+ *         if (token.is_cancelled()) {
+ *             return make_error_result(error_code::operation_canceled);
+ *         }
+ *         // Do work...
+ *         return common::ok();
+ *     })
+ *     .cancellation(token)
+ *     .build();
+ * @endcode
+ *
+ * This class will be removed in the next major version.
+ *
  * Provides cooperative cancellation mechanism where jobs can check
  * cancellation status and terminate early if requested.
  *
@@ -47,7 +70,8 @@ namespace kcenon::thread {
  * job->cancel();
  * @endcode
  */
-class cancellable_job : public job {
+class [[deprecated("Use job_builder with composition pattern instead. See class documentation.")]]
+cancellable_job : public job {
 public:
     using cancellable_work_function = std::function<void(const cancellation_token&)>;
 
@@ -157,10 +181,14 @@ protected:
 
 /**
  * @brief Factory function for creating cancellable jobs
+ *
+ * @deprecated Since v3.0.0. Use job_builder with cancellation composition instead.
+ *
  * @param work Function to execute
  * @return Unique pointer to cancellable_job
  */
 template<typename Func>
+[[deprecated("Use job_builder with cancellation composition instead.")]]
 [[nodiscard]] auto make_cancellable_job(Func&& work)
     -> std::unique_ptr<cancellable_job>
 {
@@ -169,11 +197,15 @@ template<typename Func>
 
 /**
  * @brief Create cancellable job with timeout
+ *
+ * @deprecated Since v3.0.0. Use job_builder with timeout and cancellation instead.
+ *
  * @param work Function to execute
  * @param timeout Maximum execution time
  * @return Unique pointer to cancellable_job
  */
 template<typename Func>
+[[deprecated("Use job_builder with timeout and cancellation instead.")]]
 [[nodiscard]] auto make_cancellable_job_with_timeout(
     Func&& work,
     std::chrono::milliseconds timeout)

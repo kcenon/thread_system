@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtest/gtest.h>
 #include <kcenon/thread/core/job.h>
+#include <kcenon/thread/core/job_builder.h>
 #include <kcenon/thread/core/callback_job.h>
 #include <atomic>
 #include <string>
@@ -765,4 +766,340 @@ TEST(RetryPolicyTest, ToStringOutput)
 
 	auto exp_policy = retry_policy::exponential_backoff(5);
 	EXPECT_NE(exp_policy.to_string().find("exponential"), std::string::npos);
+}
+
+// ============================================================================
+// Job Builder Tests
+// ============================================================================
+
+/**
+ * @class JobBuilderTest
+ * @brief Test fixture for job_builder functionality
+ */
+class JobBuilderTest : public ::testing::Test
+{
+protected:
+	void SetUp() override
+	{
+		work_executed = false;
+		callback_invoked = false;
+		error_callback_invoked = false;
+		received_result_ok = false;
+		received_error_code = 0;
+		received_error_message.clear();
+	}
+
+	bool work_executed{false};
+	bool callback_invoked{false};
+	bool error_callback_invoked{false};
+	bool received_result_ok{false};
+	int received_error_code{0};
+	std::string received_error_message;
+};
+
+TEST_F(JobBuilderTest, BasicJobCreation)
+{
+	auto job = job_builder()
+		.name("basic_job")
+		.work([this]() {
+			work_executed = true;
+			return kcenon::common::ok();
+		})
+		.build();
+
+	ASSERT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "basic_job");
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_TRUE(work_executed);
+}
+
+TEST_F(JobBuilderTest, DefaultNameWhenNotSpecified)
+{
+	auto job = job_builder()
+		.work([]() { return kcenon::common::ok(); })
+		.build();
+
+	ASSERT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "builder_job");
+}
+
+TEST_F(JobBuilderTest, JobWithPriority)
+{
+	auto job = job_builder()
+		.name("priority_job")
+		.work([]() { return kcenon::common::ok(); })
+		.priority(job_priority::high)
+		.build();
+
+	EXPECT_EQ(job->get_priority(), job_priority::high);
+}
+
+TEST_F(JobBuilderTest, JobWithOnCompleteCallback)
+{
+	auto job = job_builder()
+		.name("callback_job")
+		.work([]() { return kcenon::common::ok(); })
+		.on_complete([this](auto result) {
+			callback_invoked = true;
+			received_result_ok = result.is_ok();
+		})
+		.build();
+
+	auto result = job->do_work();
+
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_TRUE(callback_invoked);
+	EXPECT_TRUE(received_result_ok);
+}
+
+TEST_F(JobBuilderTest, JobWithOnErrorCallback)
+{
+	auto job = job_builder()
+		.name("error_callback_job")
+		.work([]() {
+			return kcenon::common::error_info{-100, "Test error", "test"};
+		})
+		.on_error([this](const auto& err) {
+			error_callback_invoked = true;
+			received_error_code = err.code;
+			received_error_message = err.message;
+		})
+		.build();
+
+	auto result = job->do_work();
+
+	EXPECT_TRUE(result.is_err());
+	EXPECT_TRUE(error_callback_invoked);
+	EXPECT_EQ(received_error_code, -100);
+	EXPECT_EQ(received_error_message, "Test error");
+}
+
+TEST_F(JobBuilderTest, JobWithRetryPolicy)
+{
+	auto job = job_builder()
+		.name("retry_job")
+		.work([]() { return kcenon::common::ok(); })
+		.retry(retry_policy::exponential_backoff(3))
+		.build();
+
+	auto policy = job->get_retry_policy();
+	EXPECT_TRUE(policy.has_value());
+	EXPECT_EQ(policy->get_max_attempts(), 3);
+	EXPECT_EQ(policy->get_strategy(), retry_strategy::exponential_backoff);
+}
+
+TEST_F(JobBuilderTest, JobWithTimeout)
+{
+	auto job = job_builder()
+		.name("timeout_job")
+		.work([]() { return kcenon::common::ok(); })
+		.timeout(std::chrono::seconds(30))
+		.build();
+
+	auto timeout = job->get_timeout();
+	EXPECT_TRUE(timeout.has_value());
+	EXPECT_EQ(timeout.value(), std::chrono::seconds(30));
+}
+
+TEST_F(JobBuilderTest, JobWithCancellation)
+{
+	cancellation_token token;
+
+	auto job = job_builder()
+		.name("cancellable_job")
+		.work([]() { return kcenon::common::ok(); })
+		.cancellation(token)
+		.build();
+
+	EXPECT_TRUE(job->has_explicit_cancellation());
+}
+
+TEST_F(JobBuilderTest, JobWithCancellationChecksDuringExecution)
+{
+	cancellation_token token;
+	token.cancel();
+
+	auto job = job_builder()
+		.name("cancellable_job")
+		.work([]() { return kcenon::common::ok(); })
+		.cancellation(token)
+		.build();
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(JobBuilderTest, FullCompositionChain)
+{
+	cancellation_token token;
+
+	auto job = job_builder()
+		.name("full_composition_job")
+		.work([this]() {
+			work_executed = true;
+			return kcenon::common::ok();
+		})
+		.priority(job_priority::realtime)
+		.cancellation(token)
+		.retry(retry_policy::fixed(5, std::chrono::milliseconds(100)))
+		.timeout(std::chrono::minutes(5))
+		.on_complete([this](auto result) {
+			callback_invoked = true;
+			received_result_ok = result.is_ok();
+		})
+		.on_error([this](const auto&) {
+			error_callback_invoked = true;
+		})
+		.build();
+
+	EXPECT_EQ(job->get_name(), "full_composition_job");
+	EXPECT_EQ(job->get_priority(), job_priority::realtime);
+	EXPECT_TRUE(job->has_explicit_cancellation());
+	EXPECT_TRUE(job->get_retry_policy().has_value());
+	EXPECT_TRUE(job->get_timeout().has_value());
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_TRUE(work_executed);
+	EXPECT_TRUE(callback_invoked);
+	EXPECT_TRUE(received_result_ok);
+	EXPECT_FALSE(error_callback_invoked);
+}
+
+TEST_F(JobBuilderTest, BuildSharedReturnsSharedPtr)
+{
+	auto job = job_builder()
+		.name("shared_job")
+		.work([]() { return kcenon::common::ok(); })
+		.build_shared();
+
+	ASSERT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "shared_job");
+}
+
+TEST_F(JobBuilderTest, MakeJobConvenienceFunction)
+{
+	auto job = make_job()
+		.name("convenience_job")
+		.work([]() { return kcenon::common::ok(); })
+		.build();
+
+	ASSERT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "convenience_job");
+}
+
+TEST_F(JobBuilderTest, JobWithNoWorkFunctionReturnsError)
+{
+	auto job = job_builder()
+		.name("no_work_job")
+		.build();
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(JobBuilderTest, JobWithDataWork)
+{
+	std::vector<uint8_t> test_data = {0x01, 0x02, 0x03, 0x04};
+	bool data_received = false;
+	std::vector<uint8_t> received_data;
+
+	auto job = job_builder()
+		.name("data_job")
+		.work_with_data(test_data, [&data_received, &received_data](const auto& data) {
+			data_received = true;
+			received_data = data;
+			return kcenon::common::ok();
+		})
+		.build();
+
+	auto result = job->do_work();
+
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_TRUE(data_received);
+	EXPECT_EQ(received_data, test_data);
+}
+
+// ============================================================================
+// Job Builder with Custom Job Type Tests
+// ============================================================================
+
+/**
+ * @class CustomTestJob
+ * @brief Custom job class for testing from<>() method
+ */
+class CustomTestJob : public job
+{
+public:
+	explicit CustomTestJob(int value, const std::string& name = "custom_test_job")
+		: job(name)
+		, value_(value)
+	{
+	}
+
+	[[nodiscard]] auto do_work() -> kcenon::common::VoidResult override
+	{
+		execution_count_++;
+		invoke_callbacks(kcenon::common::ok());
+		return kcenon::common::ok();
+	}
+
+	[[nodiscard]] auto get_value() const -> int { return value_; }
+	[[nodiscard]] static auto get_execution_count() -> int { return execution_count_; }
+	static void reset_execution_count() { execution_count_ = 0; }
+
+private:
+	int value_;
+	static int execution_count_;
+};
+
+int CustomTestJob::execution_count_ = 0;
+
+TEST_F(JobBuilderTest, FromCustomJobType)
+{
+	CustomTestJob::reset_execution_count();
+
+	auto job = job_builder()
+		.from<CustomTestJob>(42)
+		.priority(job_priority::high)
+		.build();
+
+	ASSERT_NE(job, nullptr);
+
+	// Verify it's actually a CustomTestJob
+	auto* custom = dynamic_cast<CustomTestJob*>(job.get());
+	ASSERT_NE(custom, nullptr);
+	EXPECT_EQ(custom->get_value(), 42);
+	EXPECT_EQ(job->get_priority(), job_priority::high);
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_EQ(CustomTestJob::get_execution_count(), 1);
+}
+
+TEST_F(JobBuilderTest, FromCustomJobTypeWithCallbacks)
+{
+	CustomTestJob::reset_execution_count();
+
+	auto job = job_builder()
+		.from<CustomTestJob>(100, "named_custom_job")
+		.on_complete([this](auto result) {
+			callback_invoked = true;
+			received_result_ok = result.is_ok();
+		})
+		.build();
+
+	ASSERT_NE(job, nullptr);
+	EXPECT_EQ(job->get_name(), "named_custom_job");
+
+	auto* custom = dynamic_cast<CustomTestJob*>(job.get());
+	ASSERT_NE(custom, nullptr);
+	EXPECT_EQ(custom->get_value(), 100);
+
+	auto result = job->do_work();
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_TRUE(callback_invoked);
+	EXPECT_TRUE(received_result_ok);
 }
