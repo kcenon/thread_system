@@ -82,6 +82,16 @@ set(THREAD_CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/priority_aging_config.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/impl/typed_pool/aging_typed_job_queue.h
+    # Metrics and diagnostics (required by thread_pool.h and thread_worker.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_service.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_base.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/thread_pool_metrics.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_pool_diagnostics.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/job_info.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_info.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/bottleneck_report.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/health_status.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/execution_event.h
 )
 
 set(THREAD_CORE_SOURCES
@@ -110,6 +120,9 @@ set(THREAD_CORE_SOURCES
     # Priority aging implementation
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/impl/typed_pool/aging_typed_job_queue.cpp
+    # Metrics and diagnostics (required by thread_pool.cpp and thread_worker.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_service.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
 )
 
 # Create thread_core library
@@ -210,28 +223,24 @@ if(NOT THREAD_BUILD_CORE_ONLY)
     endif()
 
     ##################################################
-    # Metrics Module
+    # Metrics Module (extended - metrics_service.cpp is in thread_core)
     ##################################################
     if(THREAD_BUILD_METRICS)
         list(APPEND OPTIONAL_HEADERS
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/enhanced_metrics.h
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/latency_histogram.h
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_backend.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_base.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/metrics_service.h
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/sliding_window_counter.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/metrics/thread_pool_metrics.h
         )
         list(APPEND OPTIONAL_SOURCES
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/enhanced_metrics.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/latency_histogram.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_backend.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/metrics_service.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/metrics/sliding_window_counter.cpp
         )
-        message(STATUS "thread_metrics module: ENABLED")
+        message(STATUS "thread_metrics module: ENABLED (extended)")
     else()
-        message(STATUS "thread_metrics module: DISABLED")
+        message(STATUS "thread_metrics module: DISABLED (core metrics_service still available)")
     endif()
 
     ##################################################
@@ -272,23 +281,14 @@ if(NOT THREAD_BUILD_CORE_ONLY)
     endif()
 
     ##################################################
-    # Diagnostics Module
+    # Diagnostics Module (extended - thread_pool_diagnostics.cpp is in thread_core)
     ##################################################
     if(THREAD_BUILD_DIAGNOSTICS)
-        list(APPEND OPTIONAL_HEADERS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/job_info.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_info.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/bottleneck_report.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/health_status.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/execution_event.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/diagnostics/thread_pool_diagnostics.h
-        )
-        list(APPEND OPTIONAL_SOURCES
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/diagnostics/thread_pool_diagnostics.cpp
-        )
-        message(STATUS "thread_diagnostics module: ENABLED")
+        # Note: Core diagnostics headers and thread_pool_diagnostics.cpp are now in thread_core
+        # This section is reserved for additional diagnostics features if needed
+        message(STATUS "thread_diagnostics module: ENABLED (extended)")
     else()
-        message(STATUS "thread_diagnostics module: DISABLED")
+        message(STATUS "thread_diagnostics module: DISABLED (core diagnostics still available)")
     endif()
 
     ##################################################
