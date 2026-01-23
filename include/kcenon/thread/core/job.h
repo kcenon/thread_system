@@ -46,10 +46,54 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <chrono>
 #include <cstdint>
+#include <functional>
 
 namespace kcenon::thread
 {
 	class job_queue;
+
+	/**
+	 * @enum job_priority
+	 * @brief Priority levels for job scheduling.
+	 *
+	 * Jobs with higher priority values are typically executed before lower priority jobs.
+	 * This enum provides a standardized set of priority levels for use with composition.
+	 */
+	enum class job_priority
+	{
+		lowest = 0,     ///< Lowest priority, executed when no other jobs are pending
+		low = 1,        ///< Low priority, background tasks
+		normal = 2,     ///< Normal priority, default for most jobs
+		high = 3,       ///< High priority, time-sensitive tasks
+		highest = 4,    ///< Highest priority, critical tasks
+		realtime = 5    ///< Real-time priority, should be used sparingly
+	};
+
+	// Forward declarations for future composition components
+	class retry_policy;
+
+	/**
+	 * @struct job_components
+	 * @brief Internal structure holding composed behaviors for a job.
+	 *
+	 * This structure enables the composition pattern by storing optional
+	 * callbacks and behaviors that can be attached to any job instance.
+	 * The components are lazily allocated only when first needed.
+	 */
+	struct job_components
+	{
+		/// Callback invoked when job completes (success or error)
+		std::function<void(common::VoidResult)> on_complete;
+
+		/// Callback invoked specifically on error
+		std::function<void(const common::error_info&)> on_error;
+
+		/// Optional priority override for this job
+		std::optional<job_priority> priority;
+
+		/// Reserved for future retry_policy composition
+		// std::optional<retry_policy> retry;
+	};
 
 	/**
 	 * @class job
@@ -270,7 +314,99 @@ namespace kcenon::thread
 		 */
 		[[nodiscard]] virtual auto to_string(void) const -> std::string;
 
+		// ========================================================================
+		// Composition Methods (Fluent Interface)
+		// ========================================================================
+
+		/**
+		 * @brief Attaches a completion callback to this job.
+		 *
+		 * The callback will be invoked after do_work() completes, regardless of
+		 * success or failure. The callback receives the VoidResult from do_work().
+		 *
+		 * @param callback Function to call with the job's result
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Thread Safety
+		 * - The callback is invoked on the same thread that executes do_work()
+		 * - Ensure callback is thread-safe if it accesses shared resources
+		 *
+		 * #### Example
+		 * @code
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_on_complete([](auto result) {
+		 *         if (result.is_ok()) {
+		 *             std::cout << "Job completed successfully\n";
+		 *         } else {
+		 *             std::cout << "Job failed: " << result.error().message << "\n";
+		 *         }
+		 *     });
+		 * @endcode
+		 */
+		auto with_on_complete(std::function<void(common::VoidResult)> callback) -> job&;
+
+		/**
+		 * @brief Attaches an error callback to this job.
+		 *
+		 * The callback will be invoked only if do_work() returns an error.
+		 * This is more specific than with_on_complete() for error-only handling.
+		 *
+		 * @param callback Function to call with the error information
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Example
+		 * @code
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_on_error([](const auto& err) {
+		 *         log_error("Job failed: code={}, message={}", err.code, err.message);
+		 *     });
+		 * @endcode
+		 */
+		auto with_on_error(std::function<void(const common::error_info&)> callback) -> job&;
+
+		/**
+		 * @brief Sets the priority level for this job.
+		 *
+		 * Priority can be used by job queues and schedulers to determine
+		 * execution order. Higher priority jobs are typically executed first.
+		 *
+		 * @param priority The priority level to set
+		 * @return Reference to this job for method chaining
+		 *
+		 * #### Example
+		 * @code
+		 * auto job = std::make_unique<my_job>()
+		 *     ->with_priority(job_priority::high)
+		 *     ->with_on_complete([](auto) { std::cout << "Done\n"; });
+		 * @endcode
+		 */
+		auto with_priority(job_priority priority) -> job&;
+
+		/**
+		 * @brief Gets the priority level of this job.
+		 *
+		 * @return The job's priority, or job_priority::normal if not set
+		 */
+		[[nodiscard]] auto get_priority() const -> job_priority;
+
+		/**
+		 * @brief Checks if this job has any composed components.
+		 *
+		 * @return true if any with_*() method has been called, false otherwise
+		 */
+		[[nodiscard]] auto has_components() const -> bool;
+
 	protected:
+		/**
+		 * @brief Invokes the completion callbacks if they are set.
+		 *
+		 * This method should be called by derived classes or the job execution
+		 * framework after do_work() completes. It handles invoking both the
+		 * on_complete and on_error callbacks as appropriate.
+		 *
+		 * @param result The result from do_work()
+		 */
+		auto invoke_callbacks(const common::VoidResult& result) -> void;
 		/**
 		 * @brief The descriptive name of the job, used primarily for identification and logging.
 		 */
@@ -321,6 +457,20 @@ namespace kcenon::thread
 		 * in diagnostics.
 		 */
 		std::chrono::steady_clock::time_point enqueue_time_;
+
+		/**
+		 * @brief Composed components for this job.
+		 *
+		 * Lazily allocated when first with_*() method is called.
+		 * This enables the composition pattern without memory overhead
+		 * for jobs that don't use composition.
+		 */
+		std::unique_ptr<job_components> components_;
+
+		/**
+		 * @brief Ensures components_ is allocated (lazy initialization).
+		 */
+		auto ensure_components() -> job_components&;
 	};
 } // namespace kcenon::thread
 

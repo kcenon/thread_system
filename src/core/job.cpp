@@ -288,4 +288,142 @@ namespace kcenon::thread
 	 * @return Formatted string representation of the job
 	 */
 	auto job::to_string(void) const -> std::string { return formatter::format("job: {}", name_); }
+
+	// ========================================================================
+	// Composition Methods Implementation
+	// ========================================================================
+
+	/**
+	 * @brief Ensures the components structure is allocated.
+	 *
+	 * Implementation details:
+	 * - Lazy initialization: only allocates memory when first needed
+	 * - Returns reference for convenient access after ensuring allocation
+	 * - Thread-safety note: this method is not thread-safe, but composition
+	 *   is typically done during job construction before submission to a queue
+	 *
+	 * @return Reference to the components structure
+	 */
+	auto job::ensure_components() -> job_components&
+	{
+		if (!components_)
+		{
+			components_ = std::make_unique<job_components>();
+		}
+		return *components_;
+	}
+
+	/**
+	 * @brief Attaches a completion callback to this job.
+	 *
+	 * Implementation details:
+	 * - Uses lazy initialization to avoid memory overhead for simple jobs
+	 * - Returns *this to enable fluent method chaining
+	 * - Callback is stored and invoked by invoke_callbacks()
+	 *
+	 * @param callback Function to call with the job's result
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_on_complete(std::function<void(common::VoidResult)> callback) -> job&
+	{
+		ensure_components().on_complete = std::move(callback);
+		return *this;
+	}
+
+	/**
+	 * @brief Attaches an error callback to this job.
+	 *
+	 * Implementation details:
+	 * - Called only when do_work() returns an error
+	 * - More specific than with_on_complete() for error-only handling
+	 * - Can be used in combination with with_on_complete()
+	 *
+	 * @param callback Function to call with the error information
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_on_error(std::function<void(const common::error_info&)> callback) -> job&
+	{
+		ensure_components().on_error = std::move(callback);
+		return *this;
+	}
+
+	/**
+	 * @brief Sets the priority level for this job.
+	 *
+	 * Implementation details:
+	 * - Priority is stored in optional to distinguish "not set" from "normal"
+	 * - Can be queried by schedulers via get_priority()
+	 * - Does not affect execution order in basic job_queue (for typed pools)
+	 *
+	 * @param priority The priority level to set
+	 * @return Reference to this job for chaining
+	 */
+	auto job::with_priority(job_priority priority) -> job&
+	{
+		ensure_components().priority = priority;
+		return *this;
+	}
+
+	/**
+	 * @brief Gets the priority level of this job.
+	 *
+	 * Implementation details:
+	 * - Returns normal priority if not explicitly set
+	 * - Returns the composed priority if set via with_priority()
+	 *
+	 * @return The job's priority level
+	 */
+	auto job::get_priority() const -> job_priority
+	{
+		if (components_ && components_->priority.has_value())
+		{
+			return components_->priority.value();
+		}
+		return job_priority::normal;
+	}
+
+	/**
+	 * @brief Checks if this job has any composed components.
+	 *
+	 * Implementation details:
+	 * - Simple null check on the components pointer
+	 * - Useful for conditional logic based on composition state
+	 *
+	 * @return true if any with_*() method has been called
+	 */
+	auto job::has_components() const -> bool
+	{
+		return components_ != nullptr;
+	}
+
+	/**
+	 * @brief Invokes the completion callbacks if they are set.
+	 *
+	 * Implementation details:
+	 * - Invokes on_complete callback with the full result
+	 * - Invokes on_error callback only if result is an error
+	 * - Order: on_error is called first (if applicable), then on_complete
+	 * - Exceptions from callbacks are not caught (propagate to caller)
+	 *
+	 * @param result The result from do_work()
+	 */
+	auto job::invoke_callbacks(const common::VoidResult& result) -> void
+	{
+		if (!components_)
+		{
+			return;
+		}
+
+		// Invoke error callback first if result is an error
+		if (result.is_err() && components_->on_error)
+		{
+			components_->on_error(result.error());
+		}
+
+		// Always invoke on_complete callback if set
+		if (components_->on_complete)
+		{
+			components_->on_complete(result);
+		}
+	}
 } // namespace kcenon::thread
