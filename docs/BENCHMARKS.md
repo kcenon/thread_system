@@ -44,7 +44,7 @@ This document provides comprehensive performance benchmarks for the thread_syste
 
 *Automated benchmarks will be displayed here after CI/CD integration is complete.*
 
-> 📊 Performance metrics are automatically measured in our CI pipeline. See [BASELINE.md](advanced/BASELINE.md) for detailed performance analysis and regression detection.
+> 📊 Performance metrics are automatically measured in our CI pipeline. See [BASELINE.md](performance/BASELINE.md) for detailed performance analysis and regression detection.
 
 ---
 
@@ -569,7 +569,7 @@ worker->set_batch_processing(true, 32);  // Process 32 jobs at once
 
 **Automated Performance Regression Detection**:
 - Every commit triggers benchmark suite
-- Compares against baseline metrics (see [BASELINE.md](advanced/BASELINE.md))
+- Compares against baseline metrics (see [BASELINE.md](performance/BASELINE.md))
 - Alerts on >5% performance regression
 - Tracks historical trends
 
@@ -626,7 +626,7 @@ worker->set_batch_processing(true, 32);  // Process 32 jobs at once
 
 **See Also**:
 - [Feature Documentation](FEATURES.md)
-- [Performance Baseline](advanced/BASELINE.md)
+- [Performance Baseline](performance/BASELINE.md)
 - [Architecture Guide](advanced/ARCHITECTURE.md)
 - [Optimization Guide](guides/PERFORMANCE.md)
 

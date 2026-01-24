@@ -178,7 +178,7 @@ logger_system    monitoring_system
 - 🏛️ [아키텍처](docs/advanced/01-ARCHITECTURE.kr.md) - 시스템 설계 및 내부
 
 ### 고급 주제
-- 🔬 [성능 기준](docs/advanced/BASELINE.md) - 기준 지표 및 회귀 감지
+- 🔬 [성능 기준](docs/performance/BASELINE.md) - 기준 지표 및 회귀 감지
 - 🛡️ [프로덕션 품질](docs/PRODUCTION_QUALITY.md) - CI/CD, 테스트, 품질 지표
 - 🧩 [C++20 Concepts](docs/advanced/CPP20_CONCEPTS.kr.md) - 스레드 작업을 위한 타입 안전 제약
 - 📁 [프로젝트 구조](docs/PROJECT_STRUCTURE.md) - 상세한 코드베이스 구성
@@ -1227,7 +1227,7 @@ thread_system은 포괄적인 품질 보증 및 성능 최적화를 통해 고�
 - Typed Pool: 1.24M job/초 (priority scheduling으로 6% 더 빠름)
 - P50 지연 시간: 0.8 μs (마이크로초 이하 job scheduling)
 - 메모리 baseline: 2 MB (최소 오버헤드)
-- 회귀 감지가 포함된 포괄적인 [BASELINE.md](BASELINE.md)
+- 회귀 감지가 포함된 포괄적인 [BASELINE.md](docs/performance/BASELINE.md)
 
 ### Thread Safety 및 동시성
 

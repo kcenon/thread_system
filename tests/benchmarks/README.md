@@ -2,6 +2,8 @@
 
 This directory contains comprehensive performance benchmarks for the Thread System framework.
 
+> **Performance Baseline**: For baseline performance metrics and regression thresholds, see [docs/performance/BASELINE.md](../../docs/performance/BASELINE.md).
+
 ## Available Benchmarks
 
 ### Core Benchmarks

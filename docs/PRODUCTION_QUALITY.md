@@ -657,7 +657,7 @@ Overall Status: ✅ EXCELLENT
 
 **Reference Platform**: Apple M1 @ 3.2GHz, 16GB RAM, macOS Sonoma
 
-For complete performance baselines and regression detection thresholds, see [BASELINE.md](advanced/BASELINE.md).
+For complete performance baselines and regression detection thresholds, see [BASELINE.md](performance/BASELINE.md).
 
 #### Key Performance Baselines
 
@@ -962,7 +962,7 @@ Overall           96% (480/500)   20 failures
 **See Also**:
 - [Feature Documentation](FEATURES.md)
 - [Performance Benchmarks](BENCHMARKS.md)
-- [Performance Baseline](advanced/BASELINE.md)
+- [Performance Baseline](performance/BASELINE.md)
 - [Architecture Guide](advanced/ARCHITECTURE.md)
 
 ---

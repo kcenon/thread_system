@@ -235,7 +235,7 @@ Potential improvements:
 
 ## References
 
-- [BASELINE.md](../BASELINE.md): Performance baseline specification
+- [BASELINE.md](../performance/BASELINE.md): Performance baseline specification
 - [Performance Benchmarks Workflow](../.github/workflows/performance-benchmarks.yml)
 - [GitHub Pages Dashboard](https://kcenon.github.io/thread_system/performance/)
 
