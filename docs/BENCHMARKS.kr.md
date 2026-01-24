@@ -288,7 +288,7 @@ size_t workers = std::thread::hardware_concurrency() * 1.5;
 
 **참고**:
 - [기능 문서](FEATURES.kr.md)
-- [성능 기준선](advanced/BASELINE.md)
+- [성능 기준선](performance/BASELINE.md)
 - [아키텍처 가이드](ARCHITECTURE.md)
 - [최적화 가이드](guides/PERFORMANCE.md)
 

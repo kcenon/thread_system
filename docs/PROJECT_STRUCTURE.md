@@ -164,8 +164,9 @@ thread_system/
 ├── 📁 docs/                        # Documentation
 │   ├── 📁 advanced/                # Advanced topics
 │   │   ├── ARCHITECTURE.md         # System architecture
-│   │   ├── BASELINE.md             # Performance baselines
 │   │   └── KNOWN_ISSUES.md         # Known issues
+│   ├── 📁 performance/             # Performance documentation
+│   │   └── BASELINE.md             # Performance baselines
 │   ├── 📁 guides/                  # User guides
 │   │   ├── API_REFERENCE.md        # API documentation
 │   │   ├── USER_GUIDE.md           # User guide
@@ -773,8 +774,13 @@ thread_system/
 | File | Purpose | Lines |
 |------|---------|-------|
 | ARCHITECTURE.md | System architecture | ~800 |
-| BASELINE.md | Performance baselines | ~500 |
 | KNOWN_ISSUES.md | Known issues | ~300 |
+
+### Performance Documentation (`docs/performance/`)
+
+| File | Purpose | Lines |
+|------|---------|-------|
+| BASELINE.md | Performance baselines | ~500 |
 
 ---
 

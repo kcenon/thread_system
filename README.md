@@ -213,7 +213,7 @@ Optional Integration Projects (Separate Repos):
 - **hazard_pointer**: Safe memory reclamation for lock-free structures
 - **cancellation_token**: Cooperative cancellation mechanism
 
-**🏗️ [Architecture Guide →](docs/advanced/01-ARCHITECTURE.md)**
+**🏗️ [Architecture Guide →](docs/advanced/ARCHITECTURE.md)**
 
 ---
 
@@ -227,11 +227,11 @@ Optional Integration Projects (Separate Repos):
 ### Core Documentation
 - 📚 [Features](docs/FEATURES.md) - Detailed feature descriptions
 - ⚡ [Benchmarks](docs/BENCHMARKS.md) - Comprehensive performance data
-- 📋 [API Reference](docs/advanced/02-API_REFERENCE.md) - Complete API documentation
-- 🏛️ [Architecture](docs/advanced/01-ARCHITECTURE.md) - System design and internals
+- 📋 [API Reference](docs/advanced/API_REFERENCE.md) - Complete API documentation
+- 🏛️ [Architecture](docs/advanced/ARCHITECTURE.md) - System design and internals
 
 ### Advanced Topics
-- 🔬 [Performance Baseline](docs/advanced/BASELINE.md) - Baseline metrics and regression detection
+- 🔬 [Performance Baseline](docs/performance/BASELINE.md) - Baseline metrics and regression detection
 - 🛡️ [Production Quality](docs/PRODUCTION_QUALITY.md) - CI/CD, testing, quality metrics
 - 🧩 [C++20 Concepts](docs/advanced/CPP20_CONCEPTS.md) - Type-safe constraints for thread operations
 - 📁 [Project Structure](docs/PROJECT_STRUCTURE.md) - Detailed codebase organization

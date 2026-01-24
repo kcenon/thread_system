@@ -834,7 +834,7 @@ See `core/sync/include/error_handling.h` for complete error code listing.
 - [README.md](README.md) - Project overview and quick start
 - [CHANGELOG.md](CHANGELOG.md) - Version history
 - [MIGRATION.md](MIGRATION.md) - Migration from older versions
-- [BASELINE.md](BASELINE.md) - Build requirements and baseline
+- [BASELINE.md](../performance/BASELINE.md) - Build requirements and baseline
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Ecosystem architecture
 - [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - Complete API documentation
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Build and usage guide
