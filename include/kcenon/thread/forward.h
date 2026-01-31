@@ -115,7 +115,8 @@ class typed_thread_pool_builder;
 // ============================================================================
 
 class circuit_breaker;
-struct circuit_breaker_config;
+// circuit_breaker_config is now a using alias in resilience/circuit_breaker_config.h
+// Forward declaration removed to avoid conflicts with using declaration
 class autoscaler;
 struct autoscaling_policy;
 class numa_work_stealer;

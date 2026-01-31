@@ -32,84 +32,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-/**
- * @deprecated This header is deprecated. Use thread_config.h instead.
- *
- * For unified configuration, include:
- * @code{.cpp}
- * #include <kcenon/thread/thread_config.h>
- *
- * auto config = thread_system_config::builder()
- *     .enable_circuit_breaker()
- *     .with_failure_threshold(5)
- *     .build();
- * @endcode
- */
-
-#include <chrono>
-#include <cstddef>
-#include <functional>
-#include <exception>
+// Redirect to common_system implementation (Issue #524)
+// The circuit_breaker_config and circuit_state have been consolidated into common_system.
+#include <kcenon/common/resilience/circuit_breaker_config.h>
+#include <kcenon/common/resilience/circuit_state.h>
 
 namespace kcenon::thread
 {
-	/**
-	 * @enum circuit_state
-	 * @brief Represents the current state of a circuit breaker.
-	 *
-	 * The circuit breaker follows a state machine with three states:
-	 * - closed: Normal operation, all requests allowed
-	 * - open: Failure threshold exceeded, requests blocked
-	 * - half_open: Testing recovery, limited requests allowed
-	 */
-	enum class circuit_state
-	{
-		closed,     ///< Normal operation, requests allowed
-		open,       ///< Failing, requests blocked
-		half_open   ///< Testing recovery, limited requests
-	};
+	// Deprecated aliases for backward compatibility
+	// These will be removed in a future version. Please migrate to kcenon::common::resilience types
 
 	/**
-	 * @brief Converts circuit_state to string representation.
-	 * @param state The circuit state to convert.
-	 * @return String representation of the state.
+	 * @brief Deprecated alias for kcenon::common::resilience::circuit_state
+	 * @deprecated Use kcenon::common::resilience::circuit_state instead
 	 */
+	using circuit_state [[deprecated("Use kcenon::common::resilience::circuit_state instead")]] =
+		common::resilience::circuit_state;
+
+	/**
+	 * @brief Deprecated alias for kcenon::common::resilience::circuit_breaker_config
+	 * @deprecated Use kcenon::common::resilience::circuit_breaker_config instead
+	 */
+	using circuit_breaker_config [[deprecated("Use kcenon::common::resilience::circuit_breaker_config instead")]] =
+		common::resilience::circuit_breaker_config;
+
+	/**
+	 * @brief Deprecated string conversion function for circuit_state
+	 * @deprecated Use kcenon::common::resilience::to_string instead
+	 * @note Returns pointer to static string for backward compatibility
+	 */
+	[[deprecated("Use kcenon::common::resilience::to_string instead")]]
 	inline const char* to_string(circuit_state state)
 	{
+		// Convert common_system's uppercase enum to thread_system's lowercase strings
 		switch (state)
 		{
-			case circuit_state::closed:    return "closed";
-			case circuit_state::open:      return "open";
-			case circuit_state::half_open: return "half_open";
+			case circuit_state::CLOSED:    return "closed";
+			case circuit_state::OPEN:      return "open";
+			case circuit_state::HALF_OPEN: return "half_open";
 			default:                       return "unknown";
 		}
 	}
-
-	/**
-	 * @struct circuit_breaker_config
-	 * @brief Configuration for the circuit breaker.
-	 *
-	 * This structure contains all configurable parameters for the circuit breaker
-	 * behavior, including failure thresholds, recovery settings, and callbacks.
-	 */
-	struct circuit_breaker_config
-	{
-		// Failure thresholds
-		std::size_t failure_threshold = 5;          ///< Consecutive failures to open circuit
-		double failure_rate_threshold = 0.5;        ///< Failure rate (0.0-1.0) to open circuit
-		std::size_t minimum_requests = 10;          ///< Minimum requests before rate check
-
-		// Recovery settings
-		std::chrono::seconds open_duration{30};     ///< Time in open state before half-open
-		std::size_t half_open_max_requests = 3;     ///< Max requests allowed in half-open
-		std::size_t half_open_success_threshold = 2; ///< Successes needed to close circuit
-
-		// Sliding window
-		std::chrono::seconds window_size{60};       ///< Sliding window for failure rate calculation
-
-		// Callbacks
-		std::function<void(circuit_state, circuit_state)> state_change_callback;
-		std::function<bool(const std::exception&)> failure_predicate;  ///< What counts as failure
-	};
 
 } // namespace kcenon::thread
