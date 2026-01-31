@@ -32,6 +32,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+/**
+ * @deprecated This header is deprecated. Use thread_config.h instead.
+ *
+ * For unified configuration, include:
+ * @code{.cpp}
+ * #include <kcenon/thread/thread_config.h>
+ *
+ * auto config = thread_system_config::builder()
+ *     .enable_backpressure()
+ *     .with_backpressure_policy(backpressure_policy::adaptive)
+ *     .build();
+ * @endcode
+ */
+
 #include "job.h"
 
 #include <atomic>
