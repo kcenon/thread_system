@@ -247,6 +247,8 @@ if(NOT THREAD_BUILD_CORE_ONLY)
 
     ##################################################
     # Resilience Module
+    # NOTE: circuit_breaker and failure_window now use common_system implementation
+    # Only protected_job remains in thread_system
     ##################################################
     if(THREAD_BUILD_RESILIENCE)
         list(APPEND OPTIONAL_HEADERS
@@ -256,11 +258,11 @@ if(NOT THREAD_BUILD_CORE_ONLY)
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/protected_job.h
         )
         list(APPEND OPTIONAL_SOURCES
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/circuit_breaker.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/failure_window.cpp
+            # circuit_breaker.cpp removed - using common_system implementation
+            # failure_window.cpp removed - using common_system implementation
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/resilience/protected_job.cpp
         )
-        message(STATUS "thread_resilience module: ENABLED")
+        message(STATUS "thread_resilience module: ENABLED (using common_system circuit_breaker)")
     else()
         message(STATUS "thread_resilience module: DISABLED")
     endif()

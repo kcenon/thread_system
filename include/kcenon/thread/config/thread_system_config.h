@@ -361,7 +361,8 @@ namespace kcenon::thread
 		 */
 		auto with_open_duration(std::chrono::seconds duration) -> config_builder&
 		{
-			config_.resilience.circuit_breaker.open_duration = duration;
+			// Note: common_system uses 'timeout' instead of 'open_duration'
+			config_.resilience.circuit_breaker.timeout = duration;
 			return *this;
 		}
 
