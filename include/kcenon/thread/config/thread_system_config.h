@@ -246,7 +246,7 @@ namespace kcenon::thread
 		 *
 		 * @return A new builder instance
 		 */
-		static auto builder() -> class config_builder;
+		static auto builder() -> config_builder;
 	};
 
 	/**
