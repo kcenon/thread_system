@@ -125,7 +125,7 @@ namespace
 		std::cout << "Failure threshold: "
 		          << config.resilience.circuit_breaker.failure_threshold << "\n";
 		std::cout << "Open duration: "
-		          << config.resilience.circuit_breaker.open_duration.count() << "s\n";
+		          << config.resilience.circuit_breaker.timeout.count() << "s\n";
 		std::cout << "Half-open max requests: "
 		          << config.resilience.circuit_breaker.half_open_max_requests << "\n";
 	}
@@ -230,7 +230,7 @@ namespace
 		std::cout << "Backpressure: adaptive (low=" << config.pool.backpressure.low_watermark
 		          << ", high=" << config.pool.backpressure.high_watermark << ")\n";
 		std::cout << "Circuit breaker: threshold=" << config.resilience.circuit_breaker.failure_threshold
-		          << ", open_duration=" << config.resilience.circuit_breaker.open_duration.count()
+		          << ", open_duration=" << config.resilience.circuit_breaker.timeout.count()
 		          << "s\n";
 		std::cout << "Work stealing: enabled, max_attempts=" << config.pool.max_steal_attempts
 		          << "\n";

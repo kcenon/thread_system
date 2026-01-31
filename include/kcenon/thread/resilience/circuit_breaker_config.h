@@ -37,6 +37,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/common/resilience/circuit_breaker_config.h>
 #include <kcenon/common/resilience/circuit_state.h>
 
+#include <chrono>
+#include <cstddef>
+
 namespace kcenon::thread
 {
 	// Deprecated aliases for backward compatibility
@@ -73,5 +76,25 @@ namespace kcenon::thread
 			default:                       return "unknown";
 		}
 	}
+
+	/**
+	 * @brief Deprecated statistics structure for backward compatibility
+	 * @deprecated Use circuit_breaker::get_stats() map interface instead
+	 * @note This structure is maintained for backward compatibility only
+	 */
+	struct [[deprecated("Use circuit_breaker::get_stats() map interface instead")]] circuit_breaker_stats
+	{
+		circuit_state current_state;
+		std::chrono::steady_clock::time_point state_since;
+
+		std::size_t total_requests;
+		std::size_t successful_requests;
+		std::size_t failed_requests;
+		std::size_t rejected_requests;
+
+		double failure_rate;
+		std::size_t consecutive_failures;
+		std::size_t state_transitions;
+	};
 
 } // namespace kcenon::thread

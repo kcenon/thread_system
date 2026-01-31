@@ -177,8 +177,11 @@ namespace kcenon::thread
 		/**
 		 * @brief Gets circuit breaker statistics.
 		 * @return Statistics structure with counters and state info.
+		 * @deprecated Limited functionality - common_system API doesn't provide all fields
+		 * @note Returns partial stats. Some fields may be zero/default.
 		 */
-		[[nodiscard]] auto get_stats() const -> circuit_breaker::stats;
+		[[deprecated("Limited functionality - use get_circuit_breaker()->get_stats() for full metrics")]]
+		[[nodiscard]] auto get_stats() const -> circuit_breaker_stats;
 
 		/**
 		 * @brief Gets the underlying circuit breaker.
@@ -191,16 +194,18 @@ namespace kcenon::thread
 
 		/**
 		 * @brief Manually trips (opens) the circuit.
-		 *
-		 * Use this for manual intervention or testing.
+		 * @deprecated common_system API doesn't support manual trip - this is a no-op
+		 * @note This method does nothing. Manual state control is not supported.
 		 */
+		[[deprecated("Manual trip not supported in common_system - no-op function")]]
 		void trip();
 
 		/**
 		 * @brief Manually resets (closes) the circuit.
-		 *
-		 * Use this for manual recovery or testing.
+		 * @deprecated common_system API doesn't support manual reset - this is a no-op
+		 * @note This method does nothing. Manual state control is not supported.
 		 */
+		[[deprecated("Manual reset not supported in common_system - no-op function")]]
 		void reset();
 
 	private:
