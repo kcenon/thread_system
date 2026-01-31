@@ -51,6 +51,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread
 {
+	// Forward declaration for builder pattern
+	class config_builder;
+
 	/**
 	 * @struct thread_system_config
 	 * @brief Unified configuration for thread_system
