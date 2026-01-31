@@ -94,3 +94,7 @@ add_subdirectory(multi_process_monitoring_integration)
 
 # Service registry sample
 add_subdirectory(service_registry_sample)
+
+# Configuration example
+# Demonstrates unified configuration system with builder pattern
+add_subdirectory(config_example)
