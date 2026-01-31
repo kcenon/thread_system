@@ -62,7 +62,7 @@ auto circuit_breaker_policy::on_enqueue(job& j) -> common::VoidResult
     // Check if circuit breaker allows the request
     if (!circuit_breaker_->allow_request()) {
         auto state = circuit_breaker_->get_state();
-        if (state == circuit_state::open) {
+        if (state == circuit_state::OPEN) {
             return make_error_result(error_code::circuit_open,
                                      "Circuit breaker is open, job rejected");
         }
@@ -117,7 +117,7 @@ auto circuit_breaker_policy::is_accepting_work() const -> bool
     }
 
     auto state = circuit_breaker_->get_state();
-    return state != circuit_state::open;
+    return state != circuit_state::OPEN;
 }
 
 auto circuit_breaker_policy::get_state() const -> circuit_state
@@ -125,9 +125,25 @@ auto circuit_breaker_policy::get_state() const -> circuit_state
     return circuit_breaker_->get_state();
 }
 
-auto circuit_breaker_policy::get_stats() const -> circuit_breaker::stats
+auto circuit_breaker_policy::get_stats() const -> circuit_breaker_stats
 {
-    return circuit_breaker_->get_stats();
+    // Convert common_system stats map to thread_system stats struct
+    // Note: common_system doesn't track all the same metrics, so some fields will be zero
+    circuit_breaker_stats stats{};
+    stats.current_state = circuit_breaker_->get_state();
+    stats.state_since = std::chrono::steady_clock::now(); // Approximation - not tracked by common_system
+
+    // Common_system doesn't expose these metrics in the same way
+    // These fields remain at their default (zero) values
+    stats.total_requests = 0;
+    stats.successful_requests = 0;
+    stats.failed_requests = 0;
+    stats.rejected_requests = 0;
+    stats.failure_rate = 0.0;
+    stats.consecutive_failures = 0;
+    stats.state_transitions = 0;
+
+    return stats;
 }
 
 auto circuit_breaker_policy::get_circuit_breaker() const -> std::shared_ptr<circuit_breaker>
@@ -137,12 +153,14 @@ auto circuit_breaker_policy::get_circuit_breaker() const -> std::shared_ptr<circ
 
 void circuit_breaker_policy::trip()
 {
-    circuit_breaker_->trip();
+    // No-op: common_system circuit_breaker doesn't support manual trip
+    // State transitions are automatic based on failure thresholds
 }
 
 void circuit_breaker_policy::reset()
 {
-    circuit_breaker_->reset();
+    // No-op: common_system circuit_breaker doesn't support manual reset
+    // State transitions are automatic based on success thresholds
 }
 
 } // namespace kcenon::thread

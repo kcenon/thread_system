@@ -32,129 +32,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <atomic>
-#include <chrono>
-#include <cstddef>
-#include <memory>
-#include <mutex>
-#include <vector>
+// Redirect to common_system implementation (Issue #524)
+// The failure_window implementation has been consolidated into common_system.
+#include <kcenon/common/resilience/failure_window.h>
 
 namespace kcenon::thread
 {
+	// Deprecated alias for backward compatibility
+	// This will be removed in a future version. Please migrate to kcenon::common::resilience::failure_window
+
 	/**
-	 * @class failure_window
-	 * @brief Sliding window failure tracker for circuit breaker.
-	 *
-	 * This class implements a time-bucketed sliding window to track success and
-	 * failure counts over a configurable time period. It provides efficient
-	 * failure rate calculation with automatic bucket rotation.
-	 *
-	 * ### Thread Safety
-	 * All public methods are thread-safe and can be called concurrently.
-	 *
-	 * ### Implementation Details
-	 * The window is divided into multiple time buckets (default 10). Each bucket
-	 * covers window_size/bucket_count seconds. Old buckets are automatically
-	 * expired when new requests arrive.
-	 *
-	 * @see circuit_breaker
+	 * @brief Deprecated alias for kcenon::common::resilience::failure_window
+	 * @deprecated Use kcenon::common::resilience::failure_window instead
 	 */
-	class failure_window
-	{
-	public:
-		/**
-		 * @brief Constructs a failure window with the specified window size.
-		 * @param window_size Duration of the sliding window.
-		 * @param bucket_count Number of time buckets (default 10).
-		 */
-		explicit failure_window(
-			std::chrono::seconds window_size,
-			std::size_t bucket_count = 10);
-
-		/**
-		 * @brief Records a successful operation.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		auto record_success() -> void;
-
-		/**
-		 * @brief Records a failed operation.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		auto record_failure() -> void;
-
-		/**
-		 * @brief Gets the total number of requests in the window.
-		 * @return Total requests (successes + failures).
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		[[nodiscard]] auto total_requests() const -> std::size_t;
-
-		/**
-		 * @brief Gets the number of failed requests in the window.
-		 * @return Number of failures.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		[[nodiscard]] auto failure_count() const -> std::size_t;
-
-		/**
-		 * @brief Gets the number of successful requests in the window.
-		 * @return Number of successes.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		[[nodiscard]] auto success_count() const -> std::size_t;
-
-		/**
-		 * @brief Calculates the failure rate in the window.
-		 * @return Failure rate between 0.0 and 1.0, or 0.0 if no requests.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		[[nodiscard]] auto failure_rate() const -> double;
-
-		/**
-		 * @brief Resets all counters in the window.
-		 *
-		 * Thread Safety:
-		 * - Safe to call from any thread
-		 */
-		auto reset() -> void;
-
-	private:
-		struct bucket
-		{
-			std::atomic<std::size_t> successes{0};
-			std::atomic<std::size_t> failures{0};
-			std::atomic<std::int64_t> timestamp{0};  // epoch seconds when bucket started
-		};
-
-		/**
-		 * @brief Gets the current bucket index and expires old buckets.
-		 * @return Index of the current bucket.
-		 */
-		auto get_current_bucket_index() const -> std::size_t;
-
-		/**
-		 * @brief Expires buckets older than the window size.
-		 */
-		auto expire_old_buckets() const -> void;
-
-		std::chrono::seconds window_size_;
-		std::chrono::seconds bucket_duration_;
-		std::size_t bucket_count_;
-		mutable std::vector<bucket> buckets_;
-		mutable std::mutex mutex_;
-	};
+	[[deprecated("Use kcenon::common::resilience::failure_window instead")]]
+	using failure_window = common::resilience::failure_window;
 
 } // namespace kcenon::thread

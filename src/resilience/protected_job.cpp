@@ -64,35 +64,30 @@ namespace kcenon::thread
 				"Inner job is null");
 		}
 
-		auto guard = cb_->make_guard();
-		if (!guard.is_allowed())
+		// Check if circuit breaker allows the request
+		if (!cb_->allow_request())
 		{
 			return make_error_result(
 				error_code::operation_canceled,
 				"Circuit breaker is open");
 		}
 
+		// Create guard for automatic failure recording
+		auto guard = cb_->make_guard();
+
 		try
 		{
 			auto result = inner_->do_work();
 			if (result.is_ok())
 			{
-				guard.mark_success();
+				guard.record_success();
 			}
-			else
-			{
-				guard.mark_failure(nullptr);
-			}
+			// If result is error, let guard destructor record failure
 			return result;
-		}
-		catch (const std::exception& e)
-		{
-			guard.mark_failure(&e);
-			throw;
 		}
 		catch (...)
 		{
-			guard.mark_failure(nullptr);
+			// Guard destructor will automatically record failure
 			throw;
 		}
 	}
