@@ -39,6 +39,8 @@ Thread System is a comprehensive multithreading framework that provides intuitiv
 - **CMake 3.20+**
 - **[common_system](https://github.com/kcenon/common_system)**: Required dependency (must be cloned alongside thread_system)
 
+> **⚠️ Downstream Impact**: Systems that depend on thread_system (monitoring_system, database_system, network_system) inherit these compiler requirements. When building the full ecosystem, ensure your compiler meets GCC 13+/Clang 17+.
+
 ### Installation
 
 ```bash
