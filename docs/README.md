@@ -1,6 +1,6 @@
 # thread_system
 
-> **Version**: 0.2.0
+> **Version**: 0.2.0.0
 > **Status**: Production
 > **Tier**: 1
 

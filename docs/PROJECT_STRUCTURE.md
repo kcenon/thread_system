@@ -1,6 +1,6 @@
 # Thread System Project Structure
 
-**Version**: 0.3.0
+**Version**: 0.3.0.0
 **Last Updated**: 2026-01-11
 **Language**: [English] | [한국어](PROJECT_STRUCTURE.kr.md)
 
