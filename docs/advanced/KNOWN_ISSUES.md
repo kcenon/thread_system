@@ -1,6 +1,6 @@
 # Known Issues
 
-**Version**: 0.3.0
+**Version**: 0.3.0.0
 **Last Updated**: 2026-01-11
 **Status**: Active Tracking
 

@@ -1,6 +1,6 @@
 # Hazard Pointer Design Document
 
-**Version**: 0.1.0
+**Version**: 0.1.0.0
 **Date**: 2025-11-08
 **Status**: Design Phase
 **Author**: Development Team

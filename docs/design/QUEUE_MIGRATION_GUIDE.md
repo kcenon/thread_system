@@ -1,6 +1,6 @@
 # Queue Migration Guide
 
-**Version**: 1.0.0
+**Version**: 0.1.0.0
 **Issue**: #439 (Phase 1.3), #448 (Phase 1.3.1)
 **Status**: Active
 **Last Updated**: 2026-01-11
