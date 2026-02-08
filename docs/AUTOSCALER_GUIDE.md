@@ -418,7 +418,7 @@ Multiple policies can coexist on the same thread pool:
 
 ```cpp
 // Autoscaling + circuit breaker
-pool->add_policy(std::make_unique<autoscaling_pool_policy>(pool, scaling_config));
+pool->add_policy(std::make_unique<autoscaling_pool_policy>(*pool, scaling_config));
 pool->add_policy(std::make_unique<circuit_breaker_policy>(cb_config));
 
 // Both policies are invoked for every job lifecycle event
