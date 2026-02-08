@@ -135,4 +135,4 @@ scheduler->schedule_periodic(
 ## Additional Resources
 
 - [Thread System API Reference](../API_REFERENCE.md)
-- [Ecosystem Integration Guide](../../../ECOSYSTEM_INTEGRATION.md)
+- [Ecosystem Integration Guide](../../../ECOSYSTEM.md)
