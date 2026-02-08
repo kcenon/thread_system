@@ -2,45 +2,42 @@
 
 Welcome! This directory contains comprehensive analysis of the Thread System architecture and capabilities.
 
-## Three Key Documents (1,731 lines total)
+## Key Documentation
 
 ### Start Here
-1. **[EXPLORATION_SUMMARY.md](EXPLORATION_SUMMARY.md)** (388 lines, 12 KB)
-   - Executive overview of findings
-   - Component inventory summary
-   - Key recommendations for integration
-   - Quick reference guide
-   
+1. **[README.md](README.md)** — System overview, quick start, features, performance, and production quality
+   - Executive overview and quick start guide
+   - Core features and architecture summary
+   - Performance benchmarks
+   - Production readiness assessment
+
    **Perfect for**: Getting oriented quickly, understanding what's available
 
-### Deep Dive - Capabilities
-2. **[THREAD_SYSTEM_CAPABILITIES_SUMMARY.md](THREAD_SYSTEM_CAPABILITIES_SUMMARY.md)** (761 lines, 25 KB)
+### Deep Dive - API & Architecture
+2. **[docs/advanced/API_REFERENCE.md](docs/advanced/API_REFERENCE.md)** — Complete API documentation
    - Complete feature inventory
    - Main classes and interfaces
-   - Threading patterns and mechanisms
-   - Synchronization primitives
    - Public APIs and interface contracts
    - Error handling patterns
-   - Performance benchmarks
-   - Integration points for other systems
-   - Reusability matrix
-   - Production readiness assessment
-   
+   - Integration points
+
    **Perfect for**: Learning what the system offers, finding components to reuse
 
-### Deep Dive - Architecture
-3. **[ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md)** (582 lines, 50 KB)
-   - 8 detailed ASCII architecture diagrams
-   - System overview
+3. **[docs/advanced/ARCHITECTURE.md](docs/advanced/ARCHITECTURE.md)** — System design and internals
+   - System architecture overview
    - Component hierarchy
    - Threading and job execution flow
-   - Queue implementation comparison
-   - Type-based thread pool architecture
-   - Hazard pointer memory reclamation
-   - Cancellation token hierarchy
-   - Error handling flow
-   
+   - Queue implementation strategies
+   - Design decisions and rationale
+
    **Perfect for**: Visual understanding, learning data flows, understanding design decisions
+
+### Additional Resources
+4. **[docs/advanced/USER_GUIDE.md](docs/advanced/USER_GUIDE.md)** — Usage patterns and tutorials
+5. **[docs/advanced/PERFORMANCE.md](docs/advanced/PERFORMANCE.md)** — Performance characteristics and benchmarks
+6. **[docs/advanced/HAZARD_POINTER_DESIGN.md](docs/advanced/HAZARD_POINTER_DESIGN.md)** — Lock-free memory reclamation design
+7. **[docs/advanced/JOB_CANCELLATION.md](docs/advanced/JOB_CANCELLATION.md)** — Cancellation token implementation
+8. **[docs/advanced/QUEUE_SELECTION_GUIDE.md](docs/advanced/QUEUE_SELECTION_GUIDE.md)** — Queue type selection criteria
 
 ---
 
@@ -48,55 +45,54 @@ Welcome! This directory contains comprehensive analysis of the Thread System arc
 
 ### If you want to...
 
-**Understand the system quickly** → Read EXPLORATION_SUMMARY.md
-- 15-20 minute read
-- High-level overview
-- Key findings summary
-- Integration recommendations
+**Understand the system quickly** → Read [README.md](README.md)
+- 10-15 minute read
+- High-level overview and quick start
+- Key features summary
+- Production quality metrics
 
-**Learn what components are available** → Read THREAD_SYSTEM_CAPABILITIES_SUMMARY.md (Sections 1-4)
-- Main classes (Section 1.2)
-- Threading patterns (Section 2)
-- Synchronization primitives (Section 3)
-- Public APIs (Section 4)
+**Learn what components are available** → Read [docs/advanced/API_REFERENCE.md](docs/advanced/API_REFERENCE.md)
+- Main classes and interfaces
+- Threading patterns
+- Synchronization primitives
+- Public APIs
 
-**Understand how things work internally** → Read ARCHITECTURE_DIAGRAM.md
-- Visual architecture maps
+**Understand how things work internally** → Read [docs/advanced/ARCHITECTURE.md](docs/advanced/ARCHITECTURE.md)
+- Architecture overview
 - Data flow diagrams
-- Algorithm visualizations
 - Design pattern illustrations
 
-**Find specific APIs** → Use THREAD_SYSTEM_CAPABILITIES_SUMMARY.md (Section 4)
+**Find specific APIs** → Use [docs/advanced/API_REFERENCE.md](docs/advanced/API_REFERENCE.md)
 - executor_interface
 - scheduler_interface
 - service_registry
 - result<T> pattern
 - error_code enumeration
 
-**See performance data** → See Section 7 of THREAD_SYSTEM_CAPABILITIES_SUMMARY.md
+**See performance data** → See [docs/advanced/PERFORMANCE.md](docs/advanced/PERFORMANCE.md)
 - Throughput benchmarks
 - Memory efficiency
 - Scalability characteristics
 - Performance validation
 
-**Learn about integration** → See Section 8 of THREAD_SYSTEM_CAPABILITIES_SUMMARY.md
+**Learn about integration** → See [docs/advanced/INTEGRATION.md](docs/advanced/INTEGRATION.md)
 - Module dependency graph
 - Integration points
 - Platform support
 - How other systems can leverage thread_system
 
-**Understand error handling** → See Section 5 of both files
+**Understand error handling** → See [docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
 - result<T> pattern
 - Error codes
-- Error handling flow diagram
+- Migration from legacy error handling
 
-**Learn cancellation** → See Section 3 of both files
+**Learn cancellation** → See [docs/advanced/JOB_CANCELLATION.md](docs/advanced/JOB_CANCELLATION.md)
 - Cancellation token
 - Linked tokens
 - Propagation mechanism
 - Weak pointer safety
 
-**Understand memory safety** → See Section 3 of both files
+**Understand memory safety** → See [docs/advanced/HAZARD_POINTER_DESIGN.md](docs/advanced/HAZARD_POINTER_DESIGN.md)
 - Hazard pointers
 - RAII wrappers
 - Thread safety mechanisms
@@ -185,17 +181,21 @@ Your System → operation → result<T> → map/and_then → error handling
 
 ### In This Repository Root
 ```
-ANALYSIS_README.md                    ← YOU ARE HERE
-EXPLORATION_SUMMARY.md                ← Start here (executive summary)
-THREAD_SYSTEM_CAPABILITIES_SUMMARY.md ← Complete reference
-ARCHITECTURE_DIAGRAM.md               ← Visual reference
+ANALYSIS_README.md       ← YOU ARE HERE
+README.md                ← System overview and quick start
+README.kr.md             ← Korean translation
 ```
 
 ### In `/docs/advanced/`
 ```
-01-ARCHITECTURE.md  - Ecosystem architecture
-02-API_REFERENCE.md - Complete API docs
-USER_GUIDE.md       - Usage guide with examples
+ARCHITECTURE.md          - System architecture and internals
+API_REFERENCE.md         - Complete API documentation
+USER_GUIDE.md            - Usage guide with examples
+PERFORMANCE.md           - Performance characteristics and benchmarks
+HAZARD_POINTER_DESIGN.md - Lock-free memory reclamation design
+JOB_CANCELLATION.md      - Cancellation token implementation
+QUEUE_SELECTION_GUIDE.md - Queue type selection criteria
+INTEGRATION.md           - Integration with other systems
 ```
 
 ### In `/examples/`
@@ -214,18 +214,18 @@ USER_GUIDE.md       - Usage guide with examples
 ## Recommended Reading Order
 
 **For First-Time Readers**:
-1. EXPLORATION_SUMMARY.md (10 min read)
-2. ARCHITECTURE_DIAGRAM.md - Sections 1-3 (10 min read)
-3. THREAD_SYSTEM_CAPABILITIES_SUMMARY.md - Sections 1-2 (20 min read)
+1. README.md (10 min read)
+2. docs/advanced/ARCHITECTURE.md (10 min read)
+3. docs/advanced/API_REFERENCE.md (20 min read)
 
 **For Integration Planning**:
-1. THREAD_SYSTEM_CAPABILITIES_SUMMARY.md - Section 8 (Integration)
-2. ARCHITECTURE_DIAGRAM.md - Relevant sections for your use case
+1. docs/advanced/INTEGRATION.md
+2. docs/advanced/ARCHITECTURE.md — relevant sections for your use case
 3. Review examples in `/examples/` directory
 
 **For Deep Understanding**:
-1. THREAD_SYSTEM_CAPABILITIES_SUMMARY.md (complete, 30 min read)
-2. ARCHITECTURE_DIAGRAM.md (complete, 20 min read)
+1. docs/advanced/API_REFERENCE.md (complete, 30 min read)
+2. docs/advanced/USER_GUIDE.md (complete, 20 min read)
 3. Examine source code in `/include/` and `/src/`
 
 ---
@@ -246,34 +246,30 @@ USER_GUIDE.md       - Usage guide with examples
 ## Questions?
 
 ### "What's the best queue for my scenario?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 1.2 (Queue Implementations)
-→ Or ARCHITECTURE_DIAGRAM.md Section 4 (Queue Strategy Comparison)
+→ See [docs/advanced/QUEUE_SELECTION_GUIDE.md](docs/advanced/QUEUE_SELECTION_GUIDE.md)
+→ Or [docs/advanced/API_REFERENCE.md](docs/advanced/API_REFERENCE.md) — Queue section
 
 ### "How do I integrate with my system?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 8 (Integration)
-→ Or EXPLORATION_SUMMARY.md (Integration Points)
+→ See [docs/advanced/INTEGRATION.md](docs/advanced/INTEGRATION.md)
 
 ### "What APIs are available?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 4 (Public APIs)
-→ Or `/docs/advanced/02-API_REFERENCE.md`
+→ See [docs/advanced/API_REFERENCE.md](docs/advanced/API_REFERENCE.md)
 
 ### "Can I use this component standalone?"
-→ See EXPLORATION_SUMMARY.md (Reusability Matrix)
+→ See [README.md](README.md) — Component Highlights
 
 ### "What are the performance characteristics?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 7 (Performance)
+→ See [docs/advanced/PERFORMANCE.md](docs/advanced/PERFORMANCE.md)
 
 ### "How does cancellation work?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 3.2
-→ Or ARCHITECTURE_DIAGRAM.md Section 7
+→ See [docs/advanced/JOB_CANCELLATION.md](docs/advanced/JOB_CANCELLATION.md)
 
 ### "What about error handling?"
-→ See THREAD_SYSTEM_CAPABILITIES_SUMMARY.md Section 5
-→ Or ARCHITECTURE_DIAGRAM.md Section 8
+→ See [docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
 
 ---
 
-**Analysis Date**: November 14, 2025
-**Total Documentation**: 1,731 lines across 3 comprehensive files
+**Last Updated**: February 8, 2026
+**Documentation**: See `docs/` directory for comprehensive guides
 **Status**: Ready for review and integration planning
 

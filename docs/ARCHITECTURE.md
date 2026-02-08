@@ -54,6 +54,30 @@ thread_system/
 ├── adapters/              # Integration adapters
 │   ├── common_executor_adapter.h  # IExecutor adapter
 │   └── logger_system_adapter.h    # ILogger adapter
+├── dag/                   # DAG scheduling
+│   ├── dag_job.h          # Job with dependencies
+│   ├── dag_job_builder.h  # Fluent builder
+│   ├── dag_scheduler.h    # DAG executor
+│   └── dag_config.h       # Configuration
+├── stealing/              # NUMA-aware work stealing
+│   ├── numa_topology.h    # NUMA detection
+│   ├── numa_work_stealer.h # NUMA-aware stealer
+│   ├── enhanced_work_stealing_config.h
+│   ├── enhanced_steal_policy.h
+│   ├── work_stealing_stats.h
+│   ├── work_affinity_tracker.h
+│   └── steal_backoff_strategy.h
+├── scaling/               # Autoscaling
+│   ├── autoscaler.h       # Scaling orchestrator
+│   ├── autoscaling_policy.h # Policy configuration
+│   └── scaling_metrics.h  # Metrics and decisions
+├── diagnostics/           # Observability
+│   ├── thread_pool_diagnostics.h # Main diagnostics API
+│   ├── health_status.h    # Health checks
+│   ├── bottleneck_report.h # Bottleneck detection
+│   ├── execution_event.h  # Event tracing
+│   ├── job_info.h         # Job metadata
+│   └── thread_info.h      # Worker metadata
 └── utilities/             # Utilities
     └── job_traits.h
 ```
@@ -149,6 +173,106 @@ thread_system
 **Algorithm**: Dynamic resizing queue
 **Performance**: 1.5M ops/sec
 **Use Cases**: Variable load systems
+
+---
+
+### 5. DAG Scheduler
+
+**Role**: Dependency-aware job orchestration
+
+**Key Classes**:
+- `dag_job`: Job with dependency tracking and state machine
+- `dag_job_builder`: Fluent builder for job construction
+- `dag_scheduler`: Topological execution engine with cycle detection
+
+**Architecture**:
+```
+dag_scheduler
+    │
+    ├─ Dependency Graph (adjacency list)
+    ├─ Topological Sort (execution ordering)
+    ├─ State Machine (pending → ready → running → completed/failed)
+    └─ thread_pool (parallel execution of ready jobs)
+```
+
+**Design Patterns**:
+- Builder Pattern (`dag_job_builder`)
+- State Machine (atomic job state transitions)
+- Observer Pattern (state/error/completion callbacks)
+- Strategy Pattern (failure policies: fail_fast, continue_others, retry, fallback)
+
+---
+
+### 6. NUMA-Aware Work Stealing
+
+**Role**: Locality-optimized load balancing
+
+**Key Classes**:
+- `numa_topology`: Platform-specific NUMA detection
+- `numa_work_stealer`: Victim selection with locality awareness
+- `enhanced_work_stealing_config`: Configuration with factory methods
+
+**Architecture**:
+```
+numa_work_stealer
+    │
+    ├─ numa_topology (detect node/CPU mapping)
+    ├─ Steal Policy Engine (6 strategies)
+    ├─ Backoff Strategy (exponential, linear)
+    ├─ work_affinity_tracker (locality history)
+    └─ work_stealing_stats (atomic counters)
+```
+
+**Thread Safety**: All public methods thread-safe; statistics use relaxed atomic ordering for updates, acquire ordering for snapshots
+
+---
+
+### 7. Autoscaling
+
+**Role**: Dynamic worker pool sizing
+
+**Key Classes**:
+- `autoscaler`: Monitoring thread with scaling decisions
+- `autoscaling_policy`: Threshold-based configuration
+- `scaling_metrics_sample`: Point-in-time pool metrics
+
+**Architecture**:
+```
+autoscaler (monitor thread)
+    │
+    ├─ Collect Metrics → Aggregate Samples → Make Decision
+    ├─ Check Cooldown → Execute Scale → Sleep Interval
+    └─ thread_pool (resize target)
+```
+
+**Design Principles**:
+- Asymmetric scaling (fast up, slow down)
+- OR-logic for scale-up (responsive), AND-logic for scale-down (conservative)
+- Cooldown periods prevent oscillation
+
+---
+
+### 8. Diagnostics
+
+**Role**: Non-intrusive observability
+
+**Key Classes**:
+- `thread_pool_diagnostics`: Central diagnostics API
+- `health_status`: Multi-component health assessment
+- `bottleneck_report`: Automatic bottleneck detection with recommendations
+
+**Architecture**:
+```
+thread_pool_diagnostics
+    │
+    ├─ Health Check (component-level, HTTP status codes)
+    ├─ Bottleneck Detection (queue, worker, distribution analysis)
+    ├─ Thread Dump (per-worker state snapshots)
+    ├─ Event Tracing (listener pattern, event history)
+    └─ Export (JSON, Prometheus, human-readable)
+```
+
+**Integration Points**: Kubernetes probes, Prometheus scraping, JSON dashboards
 
 ---
 
@@ -321,7 +445,10 @@ struct alignas(64) WorkerThread {
 
 - [ ] Coroutine support (C++20)
 - [ ] Execution policy integration (C++17)
-- [ ] NUMA-aware scheduling
+- [x] NUMA-aware scheduling (implemented: `numa_topology`, `numa_work_stealer`)
+- [x] DAG-based job scheduling (implemented: `dag_scheduler`, `dag_job_builder`)
+- [x] Dynamic autoscaling (implemented: `autoscaler`, `autoscaling_policy`)
+- [x] Thread pool diagnostics (implemented: `thread_pool_diagnostics`, health checks, bottleneck detection)
 - [ ] GPU task offloading
 - [ ] Heterogeneous computing support
 
@@ -335,6 +462,6 @@ struct alignas(64) WorkerThread {
 
 ---
 
-**Date**: 2025-11-21
-**Version**: 0.2.0.0
+**Date**: 2026-02-08
+**Version**: 0.3.0.0
 **Author**: kcenon@naver.com
