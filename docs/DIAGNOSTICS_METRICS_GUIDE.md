@@ -1515,6 +1515,6 @@ assert(pool->diagnostics().is_tracing_enabled());
 ## Related Documentation
 
 - [Architecture Overview](ARCHITECTURE.md) - System-wide architecture
-- [DAG Scheduler Guide](DAG_GUIDE.md) - Dependency-aware job scheduling
+- [Policy Queue Combinations Guide](POLICY_QUEUE_GUIDE.md) - Queue and policy configurations
 - [NUMA Work-Stealing Guide](NUMA_GUIDE.md) - NUMA topology and work stealing
 - [Autoscaler Guide](AUTOSCALER_GUIDE.md) - Dynamic worker pool sizing
