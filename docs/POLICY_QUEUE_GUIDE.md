@@ -1,6 +1,6 @@
 # Policy Queue Combinations Guide
 
-> **Language:** **English** | [한국어](POLICY_QUEUE_GUIDE.kr.md)
+> **Language:** **English**
 
 ## Table of Contents
 
@@ -477,6 +477,7 @@ using adaptive_queue = policy_queue<
 
 ```cpp
 #include <kcenon/thread/policies/policies.h>
+#include <kcenon/thread/core/job_builder.h>
 
 using namespace kcenon::thread;
 using namespace kcenon::thread::policies;
@@ -484,11 +485,13 @@ using namespace kcenon::thread::policies;
 // Create a standard unbounded queue
 standard_queue queue;
 
-auto job = std::make_unique<callback_job>(
-    []() -> std::optional<std::string> {
+auto job = job_builder()
+    .name("example_work")
+    .work([]() -> common::VoidResult {
         // Do work...
-        return std::nullopt;
-    });
+        return common::ok();
+    })
+    .build();
 
 auto result = queue.enqueue(std::move(job));
 if (result.is_err()) {
@@ -498,7 +501,7 @@ if (result.is_err()) {
 // Blocking dequeue (waits for item)
 auto next = queue.dequeue();
 if (next.is_ok()) {
-    next.unwrap()->execute();
+    next.unwrap()->do_work();
 }
 ```
 
@@ -510,7 +513,10 @@ policy_queue<mutex_sync_policy, bounded_policy, overflow_block_policy>
     queue(bounded_policy(1000));
 
 // Producer (blocks when queue is full)
-auto result = queue.enqueue(std::make_unique<callback_job>(work));
+auto job = job_builder()
+    .work([]() { return common::ok(); })
+    .build();
+auto result = queue.enqueue(std::move(job));
 
 // Check capacity
 std::size_t remaining = queue.remaining_capacity();
@@ -524,13 +530,16 @@ bool at_limit = queue.is_full();
 policy_lockfree_queue queue;
 
 // Producer thread
-queue.enqueue(std::make_unique<callback_job>(fast_work));
+auto job = job_builder()
+    .work([]() { return common::ok(); })
+    .build();
+queue.enqueue(std::move(job));
 
 // Consumer thread (non-blocking — must poll)
 while (running) {
     auto result = queue.try_dequeue();
     if (result.is_ok()) {
-        result.unwrap()->execute();
+        result.unwrap()->do_work();
     } else {
         // No items available — yield or do other work
         std::this_thread::yield();
@@ -546,7 +555,11 @@ policy_queue<mutex_sync_policy, bounded_policy, overflow_drop_oldest_policy>
     telemetry(bounded_policy(100));
 
 // Always succeeds — oldest item dropped if full
-telemetry.enqueue(std::make_unique<callback_job>(collect_metric));
+auto metric_job = job_builder()
+    .name("collect_metric")
+    .work([]() { return common::ok(); })
+    .build();
+telemetry.enqueue(std::move(metric_job));
 ```
 
 ### Dynamic Bounds with Adaptive Sync
@@ -578,7 +591,10 @@ adaptive_queue.sync_policy().switch_mode(
 scheduler_interface& scheduler = queue;
 
 // Schedule via interface (delegates to enqueue)
-scheduler.schedule(std::make_unique<callback_job>(work));
+auto job = job_builder()
+    .work([]() { return common::ok(); })
+    .build();
+scheduler.schedule(std::move(job));
 
 // Get next job via interface (delegates to dequeue)
 auto next = scheduler.get_next_job();
@@ -672,7 +688,8 @@ queue.sync_policy().switch_mode(target_mode);
 ```cpp
 // BAD: Caller cannot distinguish success from silent drop
 policy_queue<mutex_sync_policy, bounded_policy, overflow_drop_newest_policy> queue;
-auto result = queue.enqueue(make_job());
+auto result = queue.enqueue(
+    job_builder().work([]() { return common::ok(); }).build());
 // result.is_ok() == true even if item was dropped!
 ```
 
