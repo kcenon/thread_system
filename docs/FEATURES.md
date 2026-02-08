@@ -1,7 +1,7 @@
 # Thread System Features
 
-**Version**: 0.2.0.0
-**Last Updated**: 2025-11-15
+**Version**: 0.3.0.0
+**Last Updated**: 2026-02-08
 **Language**: [English] | [한국어](FEATURES.kr.md)
 
 ---
@@ -22,6 +22,10 @@ This document provides comprehensive coverage of all thread_system features, inc
 6. [Synchronization Primitives](#synchronization-primitives)
 7. [Service Infrastructure](#service-infrastructure)
 8. [Advanced Features](#advanced-features)
+9. [DAG Scheduler](#dag-scheduler)
+10. [NUMA-Aware Work Stealing](#numa-aware-work-stealing)
+11. [Autoscaling](#autoscaling)
+12. [Diagnostics](#diagnostics)
 
 ---
 
@@ -882,6 +886,428 @@ config.state_change_callback = [](circuit_state old_state, circuit_state new_sta
 
 ---
 
+## DAG Scheduler
+
+Directed Acyclic Graph (DAG) based job scheduling with dependency management.
+
+### Overview
+
+The DAG scheduler enables complex job orchestration where tasks have interdependencies. Jobs execute automatically when their dependencies are satisfied, with support for parallel execution of independent tasks.
+
+```cpp
+#include <kcenon/thread/dag/dag_job.h>
+#include <kcenon/thread/dag/dag_job_builder.h>
+#include <kcenon/thread/dag/dag_scheduler.h>
+```
+
+### dag_job_builder (Fluent Builder)
+
+```cpp
+auto job = dag_job_builder("process_data")
+    .depends_on(fetch_id)
+    .work([]() -> common::VoidResult {
+        // Execute task
+        return common::ok();
+    })
+    .on_failure([]() -> common::VoidResult {
+        // Fallback logic
+        return common::ok();
+    })
+    .build();
+```
+
+### dag_scheduler
+
+```cpp
+class dag_scheduler {
+public:
+    dag_scheduler(std::shared_ptr<thread_pool> pool, dag_config config = {});
+
+    // Job management
+    auto add_job(std::unique_ptr<dag_job> job) -> job_id;
+    auto add_job(dag_job_builder&& builder) -> job_id;
+    auto add_dependency(job_id dependent, job_id dependency) -> common::VoidResult;
+
+    // Execution
+    auto execute_all() -> std::future<common::VoidResult>;
+    auto execute(job_id target) -> std::future<common::VoidResult>;
+    auto cancel_all() -> void;
+    auto wait() -> common::VoidResult;
+
+    // Query
+    auto get_execution_order() -> std::vector<job_id>;
+    auto has_cycles() -> bool;
+    template<typename T> auto get_result(job_id id) -> const T&;
+
+    // Visualization
+    auto to_dot() -> std::string;   // Graphviz DOT format
+    auto to_json() -> std::string;  // JSON export
+    auto get_stats() -> dag_stats;
+};
+```
+
+### Features
+
+- **Dependency Resolution**: Automatic topological ordering and dependency tracking
+- **Parallel Execution**: Independent jobs execute concurrently on the thread pool
+- **Cycle Detection**: Validates DAG structure before execution
+- **Typed Results**: Pass results between jobs via `std::any` with type-safe retrieval
+- **Failure Policies**: Configurable behavior on job failure
+  - `fail_fast`: Cancel all dependents immediately
+  - `continue_others`: Continue unrelated jobs, skip dependents
+  - `retry`: Retry with configurable delay and max attempts
+  - `fallback`: Execute fallback function on failure
+- **Visualization**: Export DAG as DOT (Graphviz) or JSON for debugging
+- **Statistics**: Execution metrics including critical path time and parallelism efficiency
+
+### Configuration
+
+```cpp
+dag_config config;
+config.failure_policy = dag_failure_policy::continue_others;
+config.max_retries = 3;
+config.retry_delay = std::chrono::milliseconds(1000);
+config.detect_cycles = true;
+config.execute_in_parallel = true;
+config.state_callback = [](job_id id, dag_job_state old_s, dag_job_state new_s) {
+    // Monitor state transitions
+};
+```
+
+### Job States
+
+| State | Description |
+|-------|-------------|
+| `pending` | Waiting for dependencies |
+| `ready` | Dependencies satisfied |
+| `running` | Currently executing |
+| `completed` | Successfully completed |
+| `failed` | Execution failed |
+| `cancelled` | Cancelled by user or failure policy |
+| `skipped` | Skipped due to dependency failure |
+
+### Use Cases
+
+- ETL pipelines with dependent stages
+- Build systems with compilation dependencies
+- Workflow orchestration
+- Data processing graphs with fan-in/fan-out patterns
+
+---
+
+## NUMA-Aware Work Stealing
+
+Enhanced work-stealing scheduler with NUMA topology awareness for optimal memory locality.
+
+### Overview
+
+On NUMA (Non-Uniform Memory Access) systems, cross-node memory access incurs significant latency penalties. The NUMA-aware work stealer minimizes these penalties by preferring to steal work from workers on the same NUMA node.
+
+```cpp
+#include <kcenon/thread/stealing/numa_topology.h>
+#include <kcenon/thread/stealing/numa_work_stealer.h>
+#include <kcenon/thread/stealing/enhanced_work_stealing_config.h>
+```
+
+### NUMA Topology Detection
+
+```cpp
+auto topology = numa_topology::detect();
+
+// Query topology
+auto node_count = topology.node_count();
+auto cpu_count = topology.cpu_count();
+auto is_numa = topology.is_numa_available();
+
+// Check locality
+auto node = topology.get_node_for_cpu(cpu_id);
+auto distance = topology.get_distance(node1, node2);
+auto same = topology.is_same_node(cpu1, cpu2);
+```
+
+**Platform Support**:
+- **Linux**: Full support via `/sys/devices/system/node`
+- **macOS/Windows**: Fallback to single-node topology (no degradation)
+
+### Steal Policies
+
+| Policy | Description | Best For |
+|--------|-------------|----------|
+| `random` | Random victim selection | Baseline, uniform loads |
+| `round_robin` | Sequential rotation | Deterministic behavior |
+| `adaptive` | Queue-size based selection | Uneven workloads |
+| `numa_aware` | Prefer same NUMA node | NUMA systems |
+| `locality_aware` | Historical cooperation tracking | Repeated patterns |
+| `hierarchical` | NUMA node first, then random | Large NUMA systems |
+
+### Configuration
+
+```cpp
+// Pre-built configurations
+auto config = enhanced_work_stealing_config::numa_optimized();
+auto config = enhanced_work_stealing_config::locality_optimized();
+auto config = enhanced_work_stealing_config::batch_optimized();
+auto config = enhanced_work_stealing_config::hierarchical_numa();
+
+// Custom configuration
+enhanced_work_stealing_config config;
+config.enabled = true;
+config.policy = enhanced_steal_policy::numa_aware;
+config.numa_aware = true;
+config.numa_penalty_factor = 2.0;      // Cross-node cost multiplier
+config.prefer_same_node = true;
+config.max_steal_batch = 4;
+config.adaptive_batch_size = true;
+config.collect_statistics = true;
+```
+
+### Statistics
+
+```cpp
+auto stats = stealer.get_stats_snapshot();
+auto success_rate = stats.steal_success_rate();    // 0.0 - 1.0
+auto cross_ratio = stats.cross_node_ratio();       // Locality indicator
+auto avg_batch = stats.avg_batch_size();
+auto avg_time = stats.avg_steal_time_ns();
+```
+
+### Features
+
+- **Automatic Topology Detection**: Discovers NUMA layout at initialization
+- **Locality-Optimized Stealing**: Minimizes cross-node memory access
+- **Adaptive Batch Sizing**: Dynamic batch size based on queue depth
+- **Exponential Backoff**: Configurable backoff strategy on steal failures
+- **Detailed Statistics**: Atomic counters for monitoring steal efficiency
+- **Graceful Fallback**: Non-NUMA systems use standard work stealing without overhead
+
+---
+
+## Autoscaling
+
+Dynamic thread pool sizing that automatically adjusts worker count based on workload metrics.
+
+### Overview
+
+The autoscaler monitors thread pool metrics and makes scaling decisions to maintain optimal throughput while minimizing resource usage.
+
+### API Overview
+
+```cpp
+#include <kcenon/thread/scaling/autoscaler.h>
+#include <kcenon/thread/scaling/autoscaling_policy.h>
+
+autoscaling_policy policy;
+policy.min_workers = 2;
+policy.max_workers = 16;
+policy.scaling_mode = autoscaling_policy::mode::automatic;
+
+autoscaler scaler(*pool, policy);
+scaler.start();
+
+// Manual overrides
+auto decision = scaler.evaluate_now();
+scaler.scale_to(8);
+scaler.scale_up();
+scaler.scale_down();
+
+// Metrics
+auto metrics = scaler.get_current_metrics();
+auto history = scaler.get_metrics_history(60);
+auto stats = scaler.get_stats();
+
+scaler.stop();
+```
+
+### Scaling Policies
+
+**Scale-Up Triggers** (ANY condition triggers scale-up):
+- Queue depth per worker exceeds threshold (default: 100)
+- Worker utilization above threshold (default: 80%)
+- P95 latency above threshold (default: 50ms)
+- Pending jobs above threshold (default: 1000)
+
+**Scale-Down Triggers** (ALL conditions required):
+- Worker utilization below threshold (default: 30%)
+- Queue depth per worker below threshold (default: 10)
+- Idle duration exceeded (default: 60s)
+
+### Configuration
+
+```cpp
+autoscaling_policy policy;
+policy.min_workers = 2;
+policy.max_workers = std::thread::hardware_concurrency();
+policy.scale_up.utilization_threshold = 0.8;
+policy.scale_down.utilization_threshold = 0.3;
+policy.scale_up_cooldown = std::chrono::seconds{30};
+policy.scale_down_cooldown = std::chrono::seconds{60};
+policy.sample_interval = std::chrono::milliseconds{1000};
+policy.samples_for_decision = 5;
+policy.scaling_callback = [](scaling_direction dir, scaling_reason reason,
+                             std::size_t old_count, std::size_t new_count) {
+    // Monitor scaling events
+};
+```
+
+### Scaling Modes
+
+| Mode | Description |
+|------|-------------|
+| `disabled` | No automatic scaling |
+| `manual` | Only explicit API calls trigger scaling |
+| `automatic` | Fully automatic based on metrics |
+
+### Features
+
+- **Asymmetric Scaling**: Fast scale-up (responsive), slow scale-down (conservative)
+- **Cooldown Periods**: Prevents scaling oscillation
+- **Multi-Sample Decisions**: Aggregates metrics over configurable windows
+- **Manual Override**: Direct scale-to, scale-up, scale-down commands
+- **Metrics History**: Access historical metrics for analysis
+- **Multiplicative Scaling**: Optional multiplicative factor for rapid scaling
+
+### Use Cases
+
+- Cloud-native services with variable traffic
+- Batch processing with fluctuating job volumes
+- Microservices with auto-scaling requirements
+- Cost optimization through dynamic resource allocation
+
+---
+
+## Diagnostics
+
+Comprehensive thread pool health monitoring, bottleneck detection, and event tracing.
+
+### Overview
+
+The diagnostics system provides non-intrusive observability into thread pool behavior, including health checks, bottleneck analysis, and execution event tracing.
+
+```cpp
+#include <kcenon/thread/diagnostics/thread_pool_diagnostics.h>
+
+diagnostics_config config;
+config.enable_tracing = true;
+config.recent_jobs_capacity = 1000;
+
+thread_pool_diagnostics diag(*pool, config);
+```
+
+### Health Checks
+
+```cpp
+auto health = diag.health_check();
+
+// HTTP-compatible health endpoint
+int status_code = health.http_status_code();  // 200 or 503
+std::string json = health.to_json();
+
+// Component-level health
+for (const auto& component : health.components) {
+    // name, state, message, details
+}
+
+// Quick check
+bool ok = diag.is_healthy();
+```
+
+**Health States**:
+
+| State | HTTP Code | Description |
+|-------|-----------|-------------|
+| `healthy` | 200 | Fully operational |
+| `degraded` | 200 | Operational with reduced capacity |
+| `unhealthy` | 503 | Not operational |
+| `unknown` | 503 | State cannot be determined |
+
+### Bottleneck Detection
+
+```cpp
+auto report = diag.detect_bottlenecks();
+
+if (report.has_bottleneck) {
+    // type, description, severity (0-3)
+    for (const auto& rec : report.recommendations) {
+        // Actionable recommendations
+    }
+}
+```
+
+**Bottleneck Types**:
+
+| Type | Description |
+|------|-------------|
+| `queue_full` | Queue at capacity |
+| `slow_consumer` | Workers cannot keep up with producers |
+| `worker_starvation` | Not enough workers for load |
+| `lock_contention` | High mutex wait times |
+| `uneven_distribution` | Work not evenly distributed |
+| `memory_pressure` | Excessive memory allocations |
+
+### Thread Dump
+
+```cpp
+auto threads = diag.dump_thread_states();
+std::string formatted = diag.format_thread_dump();
+// Outputs worker state, current job, utilization per worker
+```
+
+### Event Tracing
+
+```cpp
+// Enable tracing
+diag.enable_tracing(true, 1000);
+
+// Custom event listener
+class MyListener : public execution_event_listener {
+public:
+    void on_event(const job_execution_event& event) override {
+        // event.type: enqueued, started, completed, failed, etc.
+        // event.to_json() for structured output
+    }
+};
+
+diag.add_event_listener(std::make_shared<MyListener>());
+
+// Query recent events
+auto events = diag.get_recent_events(100);
+```
+
+### Export Formats
+
+```cpp
+std::string json = diag.to_json();           // JSON for dashboards
+std::string text = diag.to_string();          // Human-readable
+std::string prom = diag.to_prometheus();      // Prometheus metrics
+```
+
+**Prometheus Metrics**:
+- `thread_pool_health_status` (gauge)
+- `thread_pool_jobs_total` (counter)
+- `thread_pool_success_rate` (gauge)
+- `thread_pool_latency_avg_ms` (gauge)
+- `thread_pool_workers_active` / `_idle` (gauge)
+- `thread_pool_queue_depth` / `_saturation` (gauge)
+
+### Features
+
+- **Non-Intrusive**: Minimal overhead when not actively queried
+- **Thread-Safe**: All methods callable from any thread
+- **Kubernetes Integration**: HTTP-compatible health checks for liveness/readiness probes
+- **Prometheus Compatible**: Export metrics in Prometheus format
+- **Bottleneck Analysis**: Automatic detection with severity levels and recommendations
+- **Event Tracing**: Fine-grained execution event tracking with listener pattern
+- **Thread Dump**: Per-worker state snapshots for debugging
+
+### Use Cases
+
+- Kubernetes liveness and readiness probes
+- Performance dashboards and alerting
+- Production debugging and root cause analysis
+- SLA monitoring and capacity planning
+
+---
+
 ## Integration Features
 
 ### Logger Integration (Optional)
@@ -933,6 +1359,10 @@ The thread_system provides a comprehensive threading framework with:
 - **Multiple queue implementations** for different scenarios
 - **Adaptive components** that automatically optimize
 - **Type-based scheduling** for priority workloads
+- **DAG-based orchestration** for complex dependency graphs
+- **NUMA-aware scheduling** for optimal memory locality
+- **Dynamic autoscaling** for workload-responsive pool sizing
+- **Comprehensive diagnostics** for health monitoring and bottleneck detection
 - **Rich synchronization primitives** for complex scenarios
 - **Service infrastructure** for clean architecture
 - **Optional integrations** for logging and monitoring
@@ -943,6 +1373,9 @@ Choose the right features for your use case:
 - **Bounded resources**: Bounded job queue
 - **Maximum performance**: Lock-free queue or adaptive mode
 - **Variable load**: Adaptive queue (automatic optimization)
+- **Complex workflows**: DAG scheduler for dependency management
+- **Multi-socket servers**: NUMA-aware work stealing
+- **Cloud services**: Autoscaling with diagnostics
 
 ---
 
@@ -954,5 +1387,5 @@ Choose the right features for your use case:
 
 ---
 
-**Last Updated**: 2025-11-15
+**Last Updated**: 2026-02-08
 **Maintained by**: kcenon@naver.com
