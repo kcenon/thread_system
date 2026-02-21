@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @code
  * // Old way (deprecated):
  * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool");
- * kcenon::common::interfaces::IExecutor* executor = pool.get();
+ * kcenoncommon::interfaces::IExecutor* executor = pool.get();
  * executor->execute(std::move(job));
  *
  * // New way (recommended):
@@ -106,19 +106,19 @@ namespace kcenon::thread::adapters {
 
 namespace detail {
 
-inline ::common::error_info make_error_info(int code, std::string message, std::string module = "thread_system") {
-    return ::common::error_info{code, std::move(message), std::move(module)};
+inline common::error_info make_error_info(int code, std::string message, std::string module = "thread_system") {
+    return common::error_info{code, std::move(message), std::move(module)};
 }
 
-inline ::common::error_info make_error_info(kcenon::thread::error_code code, std::string message) {
-    return ::common::error_info{
+inline common::error_info make_error_info(kcenon::thread::error_code code, std::string message) {
+    return common::error_info{
         static_cast<int>(code),
         std::move(message),
         "thread_system"
     };
 }
 
-inline std::exception_ptr to_exception(const ::common::error_info& info) {
+inline std::exception_ptr to_exception(const common::error_info& info) {
     std::ostringstream ss;
     ss << "[" << info.module << "] " << info.message << " (code=" << info.code << ")";
     if (info.details) {
@@ -127,22 +127,22 @@ inline std::exception_ptr to_exception(const ::common::error_info& info) {
     return std::make_exception_ptr(std::runtime_error(ss.str()));
 }
 
-inline ::common::VoidResult make_error(const ::common::error_info& info) {
-    return ::common::VoidResult(info);
+inline common::VoidResult make_error(const common::error_info& info) {
+    return common::VoidResult(info);
 }
 
-inline ::common::VoidResult make_error(kcenon::thread::error_code code, std::string message) {
-    return ::common::VoidResult(make_error_info(code, std::move(message)));
+inline common::VoidResult make_error(kcenon::thread::error_code code, std::string message) {
+    return common::VoidResult(make_error_info(code, std::move(message)));
 }
 
-inline ::common::error_info unexpected_pool_error() {
+inline common::error_info unexpected_pool_error() {
     return make_error_info(-1, "Thread pool unavailable");
 }
 
-inline ::common::VoidResult wrap_user_task(const std::function<void()>& task) {
+inline common::VoidResult wrap_user_task(const std::function<void()>& task) {
     try {
         task();
-        return ::common::ok();
+        return common::ok();
     } catch (const std::exception& ex) {
         return make_error(kcenon::thread::error_code::job_execution_failed, ex.what());
     } catch (...) {
@@ -151,10 +151,10 @@ inline ::common::VoidResult wrap_user_task(const std::function<void()>& task) {
     }
 }
 
-inline std::optional<::common::error_info> enqueue_job(
+inline std::optional<common::error_info> enqueue_job(
     const std::shared_ptr<kcenon::thread::thread_pool>& pool,
     const std::shared_ptr<std::promise<void>>& promise,
-    std::function<::common::VoidResult()> body) {
+    std::function<common::VoidResult()> body) {
     if (!pool) {
         auto info = unexpected_pool_error();
         promise->set_exception(to_exception(info));
@@ -164,7 +164,7 @@ inline std::optional<::common::error_info> enqueue_job(
     auto completion_once = std::make_shared<std::once_flag>();
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        [promise, completion_once, body = std::move(body)]() mutable -> ::common::VoidResult {
+        [promise, completion_once, body = std::move(body)]() mutable -> common::VoidResult {
             try {
                 auto result = body();
                 if (result.is_err()) {
@@ -211,23 +211,23 @@ inline std::optional<::common::error_info> enqueue_job(
     return std::nullopt;
 }
 
-inline ::common::Result<std::future<void>> schedule_task(
+inline common::Result<std::future<void>> schedule_task(
     const std::shared_ptr<kcenon::thread::thread_pool>& pool,
-    std::function<::common::VoidResult()> body) {
+    std::function<common::VoidResult()> body) {
     auto promise = std::make_shared<std::promise<void>>();
     auto future = promise->get_future();
 
     if (auto error = enqueue_job(pool, promise, std::move(body))) {
-        return ::common::Result<std::future<void>>(*error);
+        return common::Result<std::future<void>>(*error);
     }
 
-    return ::common::Result<std::future<void>>::ok(std::move(future));
+    return common::Result<std::future<void>>::ok(std::move(future));
 }
 
 inline void schedule_task_async(
     std::shared_ptr<kcenon::thread::thread_pool> pool,
     std::shared_ptr<std::promise<void>> promise,
-    std::function<::common::VoidResult()> body,
+    std::function<common::VoidResult()> body,
     std::chrono::milliseconds delay) {
     // Use the thread pool itself to handle delayed execution
     // This avoids creating detached threads or extra std::async threads
@@ -241,7 +241,7 @@ inline void schedule_task_async(
 
     // Create a wrapper job that handles delay and then enqueues the actual task
     auto delayed_job = std::make_unique<kcenon::thread::callback_job>(
-        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> ::common::VoidResult {
+        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> common::VoidResult {
             try {
                 if (delay.count() > 0) {
                     std::this_thread::sleep_for(delay);
@@ -249,7 +249,7 @@ inline void schedule_task_async(
                 // Enqueue the actual job after the delay
                 // Note: enqueue_job has its own once_flag protection internally
                 (void)enqueue_job(pool, promise, std::move(body));
-                return ::common::ok();
+                return common::ok();
             } catch (...) {
                 std::call_once(*completion_once, [&]() {
                     promise->set_exception(std::current_exception());
@@ -297,12 +297,12 @@ inline void schedule_task_async(
  * @note The adapter holds a shared_ptr to the thread_pool, ensuring the pool
  *       remains alive as long as the adapter exists.
  */
-class thread_pool_executor_adapter : public ::common::interfaces::IExecutor {
+class thread_pool_executor_adapter : public common::interfaces::IExecutor {
 public:
     explicit thread_pool_executor_adapter(std::shared_ptr<kcenon::thread::thread_pool> pool)
         : pool_(std::move(pool)) {}
 
-    std::future<void> submit(std::function<void()> task) override {
+    std::future<void> submit(std::function<void()> task) {
         auto result = detail::schedule_task(pool_, [task = std::move(task)]() mutable {
             return detail::wrap_user_task(task);
         });
@@ -317,7 +317,7 @@ public:
     }
 
     std::future<void> submit_delayed(std::function<void()> task,
-                                     std::chrono::milliseconds delay) override {
+                                     std::chrono::milliseconds delay) {
         auto promise = std::make_shared<std::promise<void>>();
         auto future = promise->get_future();
 
@@ -330,15 +330,16 @@ public:
         return future;
     }
 
-    ::common::Result<std::future<void>> execute(std::unique_ptr<::common::interfaces::IJob>&& job) override {
+    common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
+        auto shared_job = std::shared_ptr<common::interfaces::IJob>(std::move(job));
         return detail::schedule_task(pool_,
-            [job = std::move(job)]() mutable -> ::common::VoidResult {
+            [shared_job]() mutable -> common::VoidResult {
                 try {
-                    auto result = job->execute();
+                    auto result = shared_job->execute();
                     if (result.is_err()) {
                         return detail::make_error(result.error());
                     }
-                    return ::common::ok();
+                    return common::ok();
                 } catch (const std::exception& ex) {
                     return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
@@ -351,20 +352,21 @@ public:
             });
     }
 
-    ::common::Result<std::future<void>> execute_delayed(
-        std::unique_ptr<::common::interfaces::IJob>&& job,
+    common::Result<std::future<void>> execute_delayed(
+        std::unique_ptr<common::interfaces::IJob>&& job,
         std::chrono::milliseconds delay) override {
         auto promise = std::make_shared<std::promise<void>>();
         auto future = promise->get_future();
+        auto shared_job = std::shared_ptr<common::interfaces::IJob>(std::move(job));
 
         detail::schedule_task_async(pool_, promise,
-            [job = std::move(job)]() mutable -> ::common::VoidResult {
+            [shared_job]() mutable -> common::VoidResult {
                 try {
-                    auto result = job->execute();
+                    auto result = shared_job->execute();
                     if (result.is_err()) {
                         return detail::make_error(result.error());
                     }
-                    return ::common::ok();
+                    return common::ok();
                 } catch (const std::exception& ex) {
                     return detail::make_error(
                         kcenon::thread::error_code::job_execution_failed,
@@ -377,7 +379,7 @@ public:
             },
             delay);
 
-        return ::common::Result<std::future<void>>::ok(std::move(future));
+        return common::Result<std::future<void>>::ok(std::move(future));
     }
 
     size_t worker_count() const override {
@@ -432,7 +434,7 @@ public:
      * @param pool The thread_pool to wrap
      * @return Shared pointer to an IExecutor that delegates to the pool
      */
-    static std::shared_ptr<::common::interfaces::IExecutor> create_from_thread_pool(
+    static std::shared_ptr<common::interfaces::IExecutor> create_from_thread_pool(
         std::shared_ptr<kcenon::thread::thread_pool> pool) {
         return std::make_shared<thread_pool_executor_adapter>(std::move(pool));
     }
