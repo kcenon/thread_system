@@ -71,6 +71,10 @@ if(UNIX AND NOT WIN32)
   # Validates NUMA topology detection and work-stealing optimization
   add_subdirectory(stealing_test)
 
+  # Core infrastructure tests
+  # Validates configuration_manager and event_bus
+  add_subdirectory(core_test)
+
 else()
   message(STATUS "Unit tests are disabled on ${CMAKE_SYSTEM_NAME}")
   message(STATUS "Unit tests are only supported on Linux and macOS platforms")
