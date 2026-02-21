@@ -37,6 +37,7 @@
 #include <unordered_map>
 #include <vector>
 #include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_pool_builder.h>
 
 namespace kcenon::thread {
 
@@ -142,7 +143,9 @@ public:
         : thread_pool_(pool) {
         if (!thread_pool_) {
             // Create default thread pool with 2 threads for event processing
-            thread_pool_ = std::make_shared<thread_pool>(2);
+            thread_pool_ = thread_pool_builder("event_bus")
+                .with_workers(2)
+                .build_and_start();
         }
     }
 
