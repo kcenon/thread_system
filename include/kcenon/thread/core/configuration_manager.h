@@ -422,9 +422,23 @@ private:
 
     /**
      * @brief Check if two values are equal
+     *
+     * Uses std::visit to compare per-type because
+     * std::unordered_map<std::string, std::any> does not support operator==.
      */
     bool values_equal(const config_value& a, const config_value& b) const {
-        return a == b;
+        if (a.index() != b.index()) {
+            return false;
+        }
+        return std::visit([&b](const auto& val_a) -> bool {
+            using T = std::decay_t<decltype(val_a)>;
+            const auto& val_b = std::get<T>(b);
+            if constexpr (std::is_same_v<T, std::unordered_map<std::string, std::any>>) {
+                return false; // std::any has no operator==
+            } else {
+                return val_a == val_b;
+            }
+        }, a);
     }
 
     /**
