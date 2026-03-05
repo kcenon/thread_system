@@ -3,7 +3,7 @@
 > **Language:** **English** | [한국어](LICENSE_COMPATIBILITY.kr.md)
 
 ## Project License
-**thread-system** is licensed under the **MIT License**, which is permissive and compatible with most open source licenses.
+**thread-system** is licensed under the **BSD-3-Clause License**, which is permissive and compatible with most open source licenses.
 
 ## Dependency License Analysis
 
@@ -30,16 +30,16 @@
 
 ## Compatibility Matrix
 
-### MIT License (Our Project)
+### BSD-3-Clause License (Our Project)
 - **Compatible with**: MIT, BSD, Apache 2.0, LGPL (dynamic linking)
-- **Incompatible with**: GPL (static linking), AGPL, Proprietary
-- **Notes**: MIT is one of the most permissive licenses
+- **Incompatible with**: GPL (static linking), AGPL
+- **Notes**: BSD-3-Clause is one of the most permissive licenses
 
 ### License Obligations Summary
 
 | License | Attribution Required | Share Alike | Patent Grant | Commercial Use |
 |---------|---------------------|-------------|--------------|----------------|
-| MIT (our project) | ✅ | ❌ | ❌ | ✅ |
+| BSD-3-Clause (our project) | ✅ | ❌ | ❌ | ✅ |
 | MIT (spdlog - optional) | ✅ | ❌ | ❌ | ✅ |
 | BSD-3-Clause (gtest) | ✅ | ❌ | ❌ | ✅ |
 | Apache-2.0 (benchmark) | ✅ | ❌ | ✅ | ✅ |
@@ -85,9 +85,9 @@ This software uses the following open source packages:
 
 ### Recommendations
 
-1. **Current Setup**: All dependencies are compatible with MIT license
-2. **Dynamic Linking**: Ensure libiconv is dynamically linked
-3. **Attribution**: Include comprehensive license notices
+1. **Current Setup**: All dependencies are compatible with BSD-3-Clause license
+2. **Dynamic Linking**: CMake build-time check verifies libiconv is dynamically linked
+3. **Attribution**: See LICENSE-THIRD-PARTY for comprehensive license notices
 4. **Documentation**: Maintain this compatibility analysis
 
 ## Legal Review
@@ -99,8 +99,8 @@ This software uses the following open source packages:
 - ⏳ **Legal Counsel Review**: Recommended for commercial distribution
 
 ### Action Items
-- [ ] Verify libiconv dynamic linking in build system
-- [ ] Create comprehensive attribution document
+- [x] Verify libiconv dynamic linking in build system (CMake check added)
+- [x] Create comprehensive attribution document (LICENSE-THIRD-PARTY)
 - [ ] Establish license scanning automation
 - [ ] Schedule quarterly license compatibility reviews
 
@@ -121,8 +121,8 @@ For stricter license requirements:
 ## Contact Information
 **Legal Questions**: Contact project maintainer  
 **License Compliance Officer**: Backend Developer  
-**Last Review Date**: 2025-09-13  
-**Next Review Date**: 2025-12-13
+**Last Review Date**: 2026-03-06
+**Next Review Date**: 2026-06-06
 ---
 
-*Last Updated: 2025-10-20*
+*Last Updated: 2026-03-06*
