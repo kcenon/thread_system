@@ -115,6 +115,22 @@ function(find_iconv_library)
 
     if(TARGET Iconv::Iconv)
       set(THREAD_SYSTEM_ICONV_TARGET Iconv::Iconv PARENT_SCOPE)
+
+      # LGPL-2.1 compliance: verify libiconv is dynamically linked.
+      # Static linking of LGPL code requires providing object files for
+      # re-linking, which is complex. Dynamic linking satisfies LGPL automatically.
+      get_target_property(_iconv_type Iconv::Iconv TYPE)
+      if(_iconv_type STREQUAL "STATIC_LIBRARY")
+        message(WARNING
+          "libiconv is statically linked. "
+          "LGPL-2.1 compliance requires dynamic linking or providing object files for re-linking. "
+          "Consider using -DICONV_USE_SHARED=ON or installing a shared libiconv.")
+      elseif(_iconv_type STREQUAL "SHARED_LIBRARY" OR _iconv_type STREQUAL "INTERFACE_LIBRARY")
+        message(STATUS "  libiconv linking: ${_iconv_type} (LGPL-2.1 compliant)")
+      else()
+        # UNKNOWN or IMPORTED - common for system-provided iconv (macOS, glibc)
+        message(STATUS "  libiconv linking: ${_iconv_type} (system library, typically dynamic)")
+      endif()
     else()
       set(THREAD_SYSTEM_ICONV_TARGET "" PARENT_SCOPE)
       set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS "${Iconv_INCLUDE_DIRS}" PARENT_SCOPE)
