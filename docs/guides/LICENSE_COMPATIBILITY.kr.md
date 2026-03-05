@@ -3,7 +3,7 @@
 > **Language:** [English](LICENSE_COMPATIBILITY.md) | **한국어**
 
 ## 프로젝트 라이선스
-**thread-system**은 **MIT License** 하에 라이선스되며, 이는 허용적이고 대부분의 오픈 소스 라이선스와 호환됩니다.
+**thread-system**은 **BSD-3-Clause License** 하에 라이선스되며, 이는 허용적이고 대부분의 오픈 소스 라이선스와 호환됩니다.
 
 ## 의존성 라이선스 분석
 
@@ -30,16 +30,16 @@
 
 ## 호환성 매트릭스
 
-### MIT License (우리 프로젝트)
+### BSD-3-Clause License (우리 프로젝트)
 - **호환**: MIT, BSD, Apache 2.0, LGPL (동적 링킹)
-- **비호환**: GPL (정적 링킹), AGPL, Proprietary
-- **참고**: MIT는 가장 허용적인 라이선스 중 하나
+- **비호환**: GPL (정적 링킹), AGPL
+- **참고**: BSD-3-Clause는 가장 허용적인 라이선스 중 하나
 
 ### 라이선스 의무 요약
 
 | License | Attribution Required | Share Alike | Patent Grant | Commercial Use |
 |---------|---------------------|-------------|--------------|----------------|
-| MIT (our project) | ✅ | ❌ | ❌ | ✅ |
+| BSD-3-Clause (our project) | ✅ | ❌ | ❌ | ✅ |
 | MIT (spdlog - 선택적) | ✅ | ❌ | ❌ | ✅ |
 | BSD-3-Clause (gtest) | ✅ | ❌ | ❌ | ✅ |
 | Apache-2.0 (benchmark) | ✅ | ❌ | ✅ | ✅ |
@@ -85,9 +85,9 @@ This software uses the following open source packages:
 
 ### 권장사항
 
-1. **현재 설정**: 모든 의존성이 MIT 라이선스와 호환됨
-2. **동적 링킹**: libiconv가 동적으로 링크되도록 보장
-3. **귀속**: 포괄적인 라이선스 고지 포함
+1. **현재 설정**: 모든 의존성이 BSD-3-Clause 라이선스와 호환됨
+2. **동적 링킹**: CMake 빌드 시점 검사로 libiconv 동적 링킹 검증
+3. **귀속**: LICENSE-THIRD-PARTY 파일에 포괄적인 라이선스 고지 포함
 4. **문서화**: 이 호환성 분석 유지
 
 ## 법적 검토
@@ -99,8 +99,8 @@ This software uses the following open source packages:
 - ⏳ **법률 자문 검토**: 상업적 배포를 위해 권장됨
 
 ### 실행 항목
-- [ ] 빌드 시스템에서 libiconv 동적 링킹 확인
-- [ ] 포괄적인 귀속 문서 작성
+- [x] 빌드 시스템에서 libiconv 동적 링킹 확인 (CMake 검사 추가)
+- [x] 포괄적인 귀속 문서 작성 (LICENSE-THIRD-PARTY)
 - [ ] 라이선스 스캔 자동화 구축
 - [ ] 분기별 라이선스 호환성 검토 일정 수립
 
@@ -121,9 +121,9 @@ GPL 호환성이 필요한 경우:
 ## 연락처 정보
 **법적 질문**: 프로젝트 관리자에게 연락
 **라이선스 준수 담당자**: Backend Developer
-**마지막 검토 날짜**: 2025-09-13
-**다음 검토 날짜**: 2025-12-13
+**마지막 검토 날짜**: 2026-03-06
+**다음 검토 날짜**: 2026-06-06
 
 ---
 
-*Last Updated: 2025-10-20*
+*Last Updated: 2026-03-06*
