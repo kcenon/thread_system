@@ -270,7 +270,7 @@ jobs:
           done
         else
           echo "Running ctest with ${{ matrix.sanitizer }}..."
-          ctest -C Debug --output-on-failure --timeout 120
+          ctest -C Debug --output-on-failure --timeout 120 -LE performance
         fi
 
     - name: Upload sanitizer results
