@@ -36,14 +36,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 
 #include "logger/core/logger.h"
-#include "utilities/core/formatter.h"
+#include <kcenon/thread/utils/formatter.h>
 #include "test_type.h"
-#include "typed_thread_pool/pool/typed_thread_pool.h"
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
 
 #include <format>
 
-using namespace utility_module;
-using namespace kcenon::thread;
+using kcenon::thread::utils::formatter;
 using namespace kcenon::thread;
 
 bool use_backup_ = false;

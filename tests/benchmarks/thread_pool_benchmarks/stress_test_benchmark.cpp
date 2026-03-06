@@ -54,12 +54,12 @@
 #include <algorithm>
 #include <numeric>
 
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/typed_thread_pool/scheduling/typed_thread_worker.h"
-#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
-#include "../../sources/utilities/core/formatter.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
+#include <kcenon/thread/utils/formatter.h>
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
     -> std::tuple<std::shared_ptr<kcenon::thread::thread_pool>, std::optional<std::string>>
@@ -90,19 +90,19 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts)
-    -> std::tuple<std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>> pool;
+    std::shared_ptr<kcenon::thread::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_kcenon::thread::typed_thread_pool_t<Type>>();
+        pool = std::make_shared<kcenon::thread::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
-    
-    std::vector<std::unique_ptr<typed_kcenon::thread::typed_thread_worker_t<Type>>> workers;
+
+    std::vector<std::unique_ptr<kcenon::thread::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_kcenon::thread::typed_thread_worker_t<Type>>(
+        workers.push_back(std::make_unique<kcenon::thread::typed_thread_worker_t<Type>>(
             std::vector<Type>{}, true));
     }
     
@@ -116,8 +116,7 @@ auto create_priority_default(const uint16_t& worker_counts)
 }
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
-using namespace utility_module;
+using kcenon::thread::utils::formatter;
 
 // Forward declare Type enum before using it
 enum class Type { 

@@ -60,11 +60,11 @@
 #include <omp.h>
 #endif
 
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/typed_thread_pool/jobs/callback_typed_job.h"
-#include "../../sources/utilities/core/formatter.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
+#include <kcenon/thread/utils/formatter.h>
 
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
@@ -96,20 +96,20 @@ auto create_default(const uint16_t& worker_counts)
 // Helper function to create typed thread pool
 template<typename Type>
 auto create_priority_default(const uint16_t& worker_counts, const std::vector<Type>& types)
-    -> std::tuple<std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
+    -> std::tuple<std::shared_ptr<kcenon::thread::typed_thread_pool_t<Type>>, std::optional<std::string>>
 {
-    std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<Type>> pool;
+    std::shared_ptr<kcenon::thread::typed_thread_pool_t<Type>> pool;
     try {
-        pool = std::make_shared<typed_kcenon::thread::typed_thread_pool_t<Type>>();
+        pool = std::make_shared<kcenon::thread::typed_thread_pool_t<Type>>();
     } catch (const std::bad_alloc& e) {
         return { nullptr, std::string(e.what()) };
     }
-    
+
     std::optional<std::string> error_message = std::nullopt;
-    std::vector<std::unique_ptr<typed_kcenon::thread::typed_thread_worker_t<Type>>> workers;
+    std::vector<std::unique_ptr<kcenon::thread::typed_thread_worker_t<Type>>> workers;
     workers.reserve(worker_counts);
     for (uint16_t i = 0; i < worker_counts; ++i) {
-        workers.push_back(std::make_unique<typed_kcenon::thread::typed_thread_worker_t<Type>>(types));
+        workers.push_back(std::make_unique<kcenon::thread::typed_thread_worker_t<Type>>(types));
     }
     
     auto result = pool->enqueue_batch(std::move(workers));
@@ -121,7 +121,6 @@ auto create_priority_default(const uint16_t& worker_counts, const std::vector<Ty
 }
 
 using namespace std::chrono;
-using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 // Simple thread pool implementation for comparison
@@ -683,7 +682,7 @@ static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
         
         for (size_t i = 0; i < num_tasks / 2; ++i) {
             // CPU-heavy tasks get higher priority
-            pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<TaskType>>(
+            pool->enqueue(std::make_unique<kcenon::thread::callback_typed_job_t<TaskType>>(
                 [cpu_work_units]() -> kcenon::common::VoidResult {
                     volatile double result = 0;
                     for (int j = 0; j < cpu_work_units * 2; ++j) {
@@ -693,7 +692,7 @@ static void BM_MixedWorkload_TypedThreadSystem(benchmark::State& state) {
                 }, TaskType::CPU));
             
             // I/O-heavy tasks get lower priority
-            pool->enqueue(std::make_unique<typed_kcenon::thread::callback_typed_job_t<TaskType>>(
+            pool->enqueue(std::make_unique<kcenon::thread::callback_typed_job_t<TaskType>>(
                 [io_delay_ms]() -> kcenon::common::VoidResult {
                     std::this_thread::sleep_for(std::chrono::milliseconds(io_delay_ms * 2));
                     return kcenon::common::ok();
