@@ -31,11 +31,11 @@
 
 #include <memory>
 #include <string>
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/typed_thread_pool/scheduling/typed_thread_worker.h"
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_worker.h>
 
 // Include common_system Result types for v3.0 API
 #include <kcenon/common/patterns/result.h>
@@ -45,7 +45,7 @@ using VoidResult = kcenon::common::VoidResult;
 
 // Helper macro to create callback jobs with proper return type
 #define MAKE_JOB(lambda_body) \
-    std::make_unique<thread_module::callback_job>([&]() -> VoidResult { \
+    std::make_unique<kcenon::thread::callback_job>([&]() -> VoidResult { \
         lambda_body \
         return kcenon::common::ok(); \
     })
@@ -68,17 +68,17 @@ inline auto setup_thread_pool(size_t worker_count) -> std::shared_ptr<kcenon::th
 
 // Helper function for typed thread pool
 template<typename PriorityType>
-inline auto setup_typed_thread_pool(size_t worker_count) -> std::shared_ptr<typed_kcenon::thread::typed_thread_pool_t<PriorityType>> {
-    auto pool = std::make_shared<typed_kcenon::thread::typed_thread_pool_t<PriorityType>>();
-    
+inline auto setup_typed_thread_pool(size_t worker_count) -> std::shared_ptr<kcenon::thread::typed_thread_pool_t<PriorityType>> {
+    auto pool = std::make_shared<kcenon::thread::typed_thread_pool_t<PriorityType>>();
+
     // Add workers
     for (size_t i = 0; i < worker_count; ++i) {
-        auto worker = std::make_unique<typed_kcenon::thread::typed_thread_worker_t<PriorityType>>();
+        auto worker = std::make_unique<kcenon::thread::typed_thread_worker_t<PriorityType>>();
         pool->enqueue(std::move(worker));
     }
-    
+
     // Start the pool
     pool->start();
-    
+
     return pool;
 }

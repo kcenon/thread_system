@@ -55,13 +55,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <cmath>
 
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/callback_job.h>
 
-using namespace kcenon::thread;
-using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 /**

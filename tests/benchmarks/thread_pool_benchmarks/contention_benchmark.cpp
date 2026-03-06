@@ -24,14 +24,13 @@ All rights reserved.
 #include <memory>
 #include <unordered_map>
 
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/utilities/core/formatter.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/utils/formatter.h>
 
 using namespace kcenon::thread;
-using namespace kcenon::thread;
-using namespace utility_module;
+using kcenon::thread::utils::formatter;
 
 // Cache-aligned data structure for memory contention tests
 struct alignas(64) cache_line_data {

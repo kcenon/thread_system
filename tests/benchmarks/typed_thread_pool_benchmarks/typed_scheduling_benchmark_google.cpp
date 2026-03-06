@@ -27,8 +27,8 @@ All rights reserved.
 #include <chrono>
 #include <future>
 
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/utilities/core/formatter.h"
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/utils/formatter.h>
 
 using namespace kcenon::thread;
 using namespace std::chrono;

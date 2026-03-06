@@ -37,14 +37,13 @@
 #include <benchmark/benchmark.h>
 #include <kcenon/common/patterns/result.h>
 #include <kcenon/thread/core/error_handling.h>
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/callback_job.h>
 #include <atomic>
 #include <memory>
 #include <vector>
 
-using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 // Helper function to create thread pool with workers

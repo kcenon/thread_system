@@ -40,11 +40,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 3. job_queue consistency improvements
  */
 
-#include "../sources/thread_base/core/thread_base.h"
-#include "../sources/thread_base/jobs/job_queue.h"
-#include "../sources/thread_base/sync/cancellation_token.h"
-#include "../sources/thread_pool/core/thread_pool.h"
-#include "../sources/utilities/core/formatter.h"
+#include <kcenon/thread/core/thread_base.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/cancellation_token.h>
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/utils/formatter.h>
 
 #include <benchmark/benchmark.h>
 #include <kcenon/common/patterns/result.h>
@@ -55,7 +55,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 #include <random>
 
-using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 // Test worker that frequently accesses wake_interval

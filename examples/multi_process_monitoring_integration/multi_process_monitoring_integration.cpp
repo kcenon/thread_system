@@ -32,7 +32,7 @@ All rights reserved.
 #include <random>
 
 using namespace kcenon::thread;
-using namespace utility_module;
+using kcenon::thread::utils::formatter;
 
 // Implementation of IMonitor for multi-process monitoring
 class sample_monitoring : public kcenon::common::interfaces::IMonitor {

@@ -221,37 +221,21 @@ namespace kcenon::thread
 		/**
 		 * @brief The core task execution method to be overridden by derived classes.
 		 *
-		 * @return A @c std::optional<std::string> indicating success or error:
-		 * - @c std::nullopt on success, meaning no error occurred.
-		 * - A non-empty string on failure, providing an error message or explanation.
+		 * @return A @c common::VoidResult indicating success or error:
+		 * - A success result (constructed with common::ok()) if no error occurred.
+		 * - An error result (constructed with common::error_info{code, message}) on failure.
 		 *
 		 * #### Default Behavior
-		 * The base class implementation simply returns @c std::nullopt (i.e., no error).
+		 * The base class implementation simply returns a success result.
 		 * Override this method in a derived class to perform meaningful work.
 		 *
 		 * #### Concurrency
 		 * - Typically invoked by worker threads in a @c job_queue.
 		 * - Ensure that any shared data or resources accessed here are protected with
 		 *   appropriate synchronization mechanisms (mutexes, locks, etc.) if needed.
+		 * - This method should check the cancellation token if one is set and return
+		 *   an error with code operation_canceled if the token is cancelled.
 		 */
-		/**
-	 * @brief The core task execution method to be overridden by derived classes.
-	 *
-	 * @return A @c common::VoidResult indicating success or error:
-	 * - A success result (constructed with common::ok()) if no error occurred.
-	 * - An error result (constructed with common::error_info{code, message}) on failure.
-	 *
-	 * #### Default Behavior
-	 * The base class implementation simply returns a success result.
-	 * Override this method in a derived class to perform meaningful work.
-	 *
-	 * #### Concurrency
-	 * - Typically invoked by worker threads in a @c job_queue.
-	 * - Ensure that any shared data or resources accessed here are protected with
-	 *   appropriate synchronization mechanisms (mutexes, locks, etc.) if needed.
-	 * - This method should check the cancellation token if one is set and return
-	 *   an error with code operation_canceled if the token is cancelled.
-	 */
 	[[nodiscard]] virtual auto do_work(void) -> common::VoidResult;
 	
 	/**

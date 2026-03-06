@@ -53,10 +53,10 @@
 #endif
 #endif
 
-#include "../../sources/thread_pool/core/thread_pool.h"
-#include "../../sources/thread_pool/workers/thread_worker.h"
-#include "../../sources/typed_thread_pool/pool/typed_thread_pool.h"
-#include "../../sources/utilities/core/formatter.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/impl/typed_pool/typed_thread_pool.h>
+#include <kcenon/thread/utils/formatter.h>
 
 // Helper function to create thread pool
 auto create_default(const uint16_t& worker_counts)
@@ -93,7 +93,6 @@ auto create_priority_default(const uint16_t& worker_counts) {
     return std::make_tuple(pool, error);
 }
 
-using namespace kcenon::thread;
 using namespace kcenon::thread;
 
 class MemoryMonitor {
