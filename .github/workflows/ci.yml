@@ -199,7 +199,7 @@ jobs:
           build/CMakeFiles/*.log
           build/Testing/Temporary/
 
-  # Phase 0: Sanitizer builds (warnings allowed at this phase)
+  # Phase 1: Sanitizer builds (failures block merge)
   sanitizer:
     name: Sanitizer / ${{ matrix.sanitizer }}
     runs-on: ubuntu-24.04
@@ -258,8 +258,7 @@ jobs:
       timeout-minutes: 10
       run: |
         cd build
-        # Phase 0: Allow failures, just collect data
-        export ASAN_OPTIONS=detect_leaks=1
+        export ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0
         export UBSAN_OPTIONS=print_stacktrace=1
         export TSAN_OPTIONS=second_deadlock_stack=1
 
@@ -267,11 +266,11 @@ jobs:
           echo "Running unit tests with ${{ matrix.sanitizer }}..."
           find bin -name "*_unit" -executable 2>/dev/null | while read test; do
             echo "Running $test..."
-            timeout 120 ./$test || echo "Test $test failed but continuing..."
+            timeout 120 ./$test
           done
         else
           echo "Running ctest with ${{ matrix.sanitizer }}..."
-          ctest -C Debug --output-on-failure --timeout 120 || true
+          ctest -C Debug --output-on-failure --timeout 120 -LE performance
         fi
 
     - name: Upload sanitizer results
