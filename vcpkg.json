@@ -13,6 +13,12 @@
       "platform": "!windows"
     }
   ],
+  "overrides": [
+    { "name": "libiconv", "version": "1.17" },
+    { "name": "spdlog", "version": "1.13.0" },
+    { "name": "gtest", "version": "1.14.0" },
+    { "name": "benchmark", "version": "1.8.3" }
+  ],
   "features": {
     "testing": {
       "description": "Build unit tests and benchmarks",
