@@ -35,9 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 
 #include "logger/core/logger.h"
-#include "utilities/core/formatter.h"
+#include <kcenon/thread/utils/formatter.h>
 
-using namespace utility_module;
+using kcenon::thread::utils::formatter;
 
 bool use_backup_ = false;
 uint32_t max_lines_ = 0;

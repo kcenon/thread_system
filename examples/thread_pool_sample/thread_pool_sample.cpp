@@ -35,10 +35,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <chrono>
 
 #include "logger/core/logger.h"
-#include "utilities/core/formatter.h"
-#include "thread_pool/core/thread_pool.h"
+#include <kcenon/thread/utils/formatter.h>
+#include <kcenon/thread/core/thread_pool.h>
 
-using namespace utility_module;
+using kcenon::thread::utils::formatter;
 using namespace kcenon::thread;
 
 bool use_backup_ = false;

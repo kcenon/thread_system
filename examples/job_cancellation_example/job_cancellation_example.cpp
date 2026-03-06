@@ -33,7 +33,7 @@ All rights reserved.
 #include <atomic>
 
 using namespace kcenon::thread;
-using utility_module::formatter;
+using kcenon::thread::utils::formatter;
 
 /**
  * @class cancellable_long_job
