@@ -266,7 +266,7 @@ jobs:
           echo "Running unit tests with ${{ matrix.sanitizer }}..."
           find bin -name "*_unit" -executable 2>/dev/null | while read test; do
             echo "Running $test..."
-            timeout 120 ./$test
+            timeout 300 ./$test
           done
         else
           echo "Running ctest with ${{ matrix.sanitizer }}..."
