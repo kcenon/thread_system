@@ -135,7 +135,19 @@ function(find_simdutf_library)
   set(SIMDUTF_BENCHMARKS OFF CACHE BOOL "" FORCE)
   set(SIMDUTF_TOOLS OFF CACHE BOOL "" FORCE)
 
+  # Save CMake C++ standard variables before FetchContent
+  # simdutf-flags.cmake sets CMAKE_CXX_STANDARD=11 globally which would
+  # downgrade the entire project from C++20 to C++11
+  set(_SAVED_CXX_STANDARD ${CMAKE_CXX_STANDARD})
+  set(_SAVED_CXX_STANDARD_REQUIRED ${CMAKE_CXX_STANDARD_REQUIRED})
+  set(_SAVED_CXX_EXTENSIONS ${CMAKE_CXX_EXTENSIONS})
+
   FetchContent_MakeAvailable(simdutf)
+
+  # Restore C++ standard variables after FetchContent
+  set(CMAKE_CXX_STANDARD ${_SAVED_CXX_STANDARD})
+  set(CMAKE_CXX_STANDARD_REQUIRED ${_SAVED_CXX_STANDARD_REQUIRED})
+  set(CMAKE_CXX_EXTENSIONS ${_SAVED_CXX_EXTENSIONS})
 
   message(STATUS "simdutf fetched and configured (v5.2.5)")
   set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
