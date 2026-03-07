@@ -3,40 +3,28 @@
 This file documents third-party dependencies and their license compatibility
 with the project's BSD-3-Clause license.
 
-## libiconv
+## simdutf
 
 | Item               | Value                                         |
-|--------------------|--------------------------------------------- -|
-| Component          | GNU libiconv                                  |
-| License            | LGPL-2.1-or-later                             |
-| Usage              | Character encoding conversion (optional)      |
-| Platforms          | Linux, macOS (system library on macOS/glibc)  |
-| Linking            | Dynamic linking (LGPL-compliant)              |
+|--------------------|-----------------------------------------------|
+| Component          | simdutf                                       |
+| License            | MIT OR Apache-2.0 (dual license)              |
+| Usage              | SIMD-accelerated Unicode transcoding (UTF-8/16/32) |
+| Platforms          | All (Windows, Linux, macOS)                   |
+| Linking            | Static or dynamic                             |
 | BSD-3 Compatible   | Yes                                           |
 
-### LGPL-2.1 Compliance
+### License Details
 
-Under LGPL-2.1, users of this software retain the right to:
-- Replace the libiconv library with a modified version
-- Re-link the application with a different version of the library
-
-This is satisfied by:
-1. **Dynamic linking**: The build system links libiconv as a shared library
-2. **CMake verification**: A build-time check warns if static linking is detected
-3. **Platform defaults**: macOS provides iconv as a system framework (always dynamic);
-   Linux glibc includes iconv natively (no separate library needed)
-
-### Windows
-
-libiconv is excluded on Windows (`"platform": "!windows"` in vcpkg.json).
-Windows uses its own MultiByteToWideChar/WideCharToMultiByte APIs for
-character conversion.
+simdutf is dual-licensed under MIT and Apache-2.0. Both licenses are
+permissive and fully compatible with BSD-3-Clause. No copyleft obligations
+apply, and either static or dynamic linking is permitted.
 
 ## All Dependencies (License Summary)
 
-| Dependency        | License        | Type     | BSD-3 Compatible |
-|-------------------|----------------|----------|------------------|
-| libiconv          | LGPL-2.1       | Optional | Yes (dynamic)    |
-| GTest/GMock       | BSD-3-Clause   | Testing  | Yes              |
-| Google Benchmark  | Apache-2.0     | Testing  | Yes              |
-| spdlog            | MIT            | Optional | Yes              |
+| Dependency        | License            | Type     | BSD-3 Compatible |
+|-------------------|--------------------|----------|------------------|
+| simdutf           | MIT/Apache-2.0     | Required | Yes              |
+| GTest/GMock       | BSD-3-Clause       | Testing  | Yes              |
+| Google Benchmark  | Apache-2.0         | Testing  | Yes              |
+| spdlog            | MIT                | Optional | Yes              |

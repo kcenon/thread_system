@@ -36,14 +36,12 @@ if(UTIL_SOURCES)
     # Note: fmt library is no longer used - using C++20 std::format exclusively
     # The fmt fallback logic has been removed as part of issue #219
 
-    # Iconv for string conversions (optional)
-    find_package(Iconv QUIET)
-    if(Iconv_FOUND)
-        target_link_libraries(${PROJECT_NAME} PUBLIC Iconv::Iconv)
-        target_compile_definitions(${PROJECT_NAME} PUBLIC HAS_ICONV)
-        message(STATUS "✅ Found Iconv library")
+    # simdutf for Unicode string conversions (provided by find_simdutf_library)
+    if(TARGET simdutf::simdutf)
+        target_link_libraries(${PROJECT_NAME} PUBLIC simdutf::simdutf)
     else()
-        message(STATUS "⚠️ Iconv not found - some string conversion features may be limited")
+        find_package(simdutf CONFIG REQUIRED)
+        target_link_libraries(${PROJECT_NAME} PUBLIC simdutf::simdutf)
     endif()
 else()
     # Interface library case - add both utilities/include and root include
@@ -61,14 +59,12 @@ else()
     # Note: fmt library is no longer used - using C++20 std::format exclusively
     # The fmt fallback logic has been removed as part of issue #219
 
-    # Iconv for string conversions (optional)
-    find_package(Iconv QUIET)
-    if(Iconv_FOUND)
-        target_link_libraries(${PROJECT_NAME} INTERFACE Iconv::Iconv)
-        target_compile_definitions(${PROJECT_NAME} INTERFACE HAS_ICONV)
-        message(STATUS "✅ Found Iconv library (interface)")
+    # simdutf for Unicode string conversions (provided by find_simdutf_library)
+    if(TARGET simdutf::simdutf)
+        target_link_libraries(${PROJECT_NAME} INTERFACE simdutf::simdutf)
     else()
-        message(STATUS "⚠️ Iconv not found - some string conversion features may be limited (interface)")
+        find_package(simdutf CONFIG REQUIRED)
+        target_link_libraries(${PROJECT_NAME} INTERFACE simdutf::simdutf)
     endif()
 endif()
 

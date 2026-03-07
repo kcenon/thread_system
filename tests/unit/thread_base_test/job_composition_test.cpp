@@ -665,7 +665,7 @@ TEST(RetryPolicyTest, AttemptTracking)
 	EXPECT_FALSE(policy.has_attempts_remaining());
 }
 
-TEST(RetryPolicyTest, ResetClearsAttemptCounter)
+TEST(RetryPolicyCompositionTest, ResetClearsAttemptCounter)
 {
 	auto policy = retry_policy::fixed(3, std::chrono::milliseconds(100));
 

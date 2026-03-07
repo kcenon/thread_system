@@ -45,7 +45,7 @@ namespace kcenon::thread
 	 * @brief Deprecated alias for kcenon::common::resilience::failure_window
 	 * @deprecated Use kcenon::common::resilience::failure_window instead
 	 */
-	[[deprecated("Use kcenon::common::resilience::failure_window instead")]]
-	using failure_window = common::resilience::failure_window;
+	using failure_window [[deprecated("Use kcenon::common::resilience::failure_window instead")]] =
+		common::resilience::failure_window;
 
 } // namespace kcenon::thread

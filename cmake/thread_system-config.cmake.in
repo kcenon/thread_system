@@ -20,8 +20,8 @@ else()
     find_dependency(fmt CONFIG QUIET)
 endif()
 
-# Additional dependencies for full functionality
-find_dependency(Iconv QUIET)
+# simdutf for SIMD-accelerated Unicode conversion
+find_dependency(simdutf CONFIG REQUIRED)
 
 # Include the targets file with standardized naming
 include("${CMAKE_CURRENT_LIST_DIR}/thread_system-targets.cmake")

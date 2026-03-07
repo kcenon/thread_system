@@ -34,16 +34,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/utils/formatter.h>
 
+#include <simdutf.h>
+
 #include <stdexcept>
 #include <cstdint>
 #include <format>
 
 #ifdef _WIN32
 #include <windows.h>
-#else
-#ifdef HAS_ICONV
-#include "iconv.h"
-#endif
 #endif
 
 /**
@@ -51,127 +49,169 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @brief Implementation of cross-platform string conversion utilities.
  *
  * This file provides comprehensive string conversion functionality supporting:
- * - Character encoding conversion (UTF-8, UTF-16, system locale)
- * - Cross-platform compatibility (Windows, Linux, macOS)
+ * - Character encoding conversion (UTF-8, UTF-16, UTF-32)
+ * - Cross-platform compatibility via simdutf (Windows, Linux, macOS)
  * - Both wide and narrow string types
- * - Efficient conversion with proper error handling
- * 
- * Platform-specific implementations:
- * - Windows: Uses Windows API (MultiByteToWideChar, WideCharToMultiByte)
- * - Unix/Linux/macOS: Uses iconv library for encoding conversion
- * 
- * Performance considerations:
- * - Template-based implementation for compile-time optimization
- * - Minimal memory allocations
- * - Efficient buffer management
+ * - SIMD-accelerated conversion for high performance
+ *
+ * All platforms use simdutf for Unicode transcoding, providing a single
+ * unified code path with SIMD acceleration (AVX2, NEON, SSE2, AVX-512).
  */
 
 namespace utility_module
 {
-	/**
-	 * @brief Core template function for string encoding conversion.
-	 * 
-	 * Implementation details:
-	 * - Template-based for type safety and performance
-	 * - Supports conversion between different character encodings
-	 * - Uses platform-specific APIs for optimal performance
-	 * - Handles both narrow (char) and wide (wchar_t) character types
-	 * 
-	 * Error Handling:
-	 * - Throws std::runtime_error on conversion failures
-	 * - Provides detailed error messages with encoding information
-	 * - Handles edge cases like empty strings and invalid sequences
-	 * 
-	 * @tparam FromType Source string type (std::string, std::wstring, etc.)
-	 * @tparam ToType Target string type (std::string, std::wstring, etc.)
-	 * @param value Source string to convert
-	 * @param from_encoding Source character encoding
-	 * @param to_encoding Target character encoding
-	 * @return Converted string in target encoding
-	 */
-#ifdef _WIN32
-	// Windows implementation - uses platform-specific APIs
 	template <typename FromType, typename ToType>
 	auto convert_string::convert(const FromType& value,
 								 const std::string& from_encoding,
 								 const std::string& to_encoding)
 		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
 	{
-		// Windows uses its own character conversion APIs
-		// For fallback builds, provide minimal implementation
-		(void)from_encoding; // Suppress unused parameter warning
-		(void)to_encoding;   // Suppress unused parameter warning
-		
-		// Convert input to string representation
-		if constexpr (std::is_same_v<FromType, ToType>) {
-			return { static_cast<ToType>(value), std::nullopt };
-		} else {
-			// For different types, provide basic conversion
-			return { std::nullopt, "Character encoding conversion not supported in Windows fallback mode" };
+		if (value.empty())
+		{
+			return { ToType{}, std::nullopt };
 		}
+
+		if constexpr (std::is_same_v<FromType, ToType>)
+		{
+			if (from_encoding == to_encoding)
+			{
+				return { ToType(value), std::nullopt };
+			}
+		}
+
+		const auto* src_data = value.data();
+		size_t src_len = value.size();
+
+		// UTF-8 -> UTF-16LE (std::string -> std::wstring on Windows, or char16_t-based)
+		if (from_encoding == "UTF-8"
+			&& (to_encoding == "UTF-16LE" || to_encoding == "UTF-16"))
+		{
+			if (!simdutf::validate_utf8(reinterpret_cast<const char*>(src_data),
+										src_len * sizeof(typename FromType::value_type)))
+			{
+				return { std::nullopt, "Invalid UTF-8 input" };
+			}
+
+			size_t utf16_len = simdutf::utf16_length_from_utf8(
+				reinterpret_cast<const char*>(src_data),
+				src_len * sizeof(typename FromType::value_type));
+
+			if constexpr (sizeof(typename ToType::value_type) == 2)
+			{
+				ToType result(utf16_len, typename ToType::value_type{});
+				size_t written = simdutf::convert_utf8_to_utf16le(
+					reinterpret_cast<const char*>(src_data),
+					src_len * sizeof(typename FromType::value_type),
+					reinterpret_cast<char16_t*>(result.data()));
+				if (written == 0 && utf16_len > 0)
+				{
+					return { std::nullopt, "UTF-8 to UTF-16LE conversion failed" };
+				}
+				result.resize(written);
+				return { result, std::nullopt };
+			}
+		}
+
+		// UTF-8 -> UTF-32LE (std::string -> std::wstring on Unix)
+		if (from_encoding == "UTF-8"
+			&& (to_encoding == "UTF-32LE" || to_encoding == "UTF-32"))
+		{
+			if (!simdutf::validate_utf8(reinterpret_cast<const char*>(src_data),
+										src_len * sizeof(typename FromType::value_type)))
+			{
+				return { std::nullopt, "Invalid UTF-8 input" };
+			}
+
+			size_t utf32_len = simdutf::utf32_length_from_utf8(
+				reinterpret_cast<const char*>(src_data),
+				src_len * sizeof(typename FromType::value_type));
+
+			if constexpr (sizeof(typename ToType::value_type) == 4)
+			{
+				ToType result(utf32_len, typename ToType::value_type{});
+				size_t written = simdutf::convert_utf8_to_utf32(
+					reinterpret_cast<const char*>(src_data),
+					src_len * sizeof(typename FromType::value_type),
+					reinterpret_cast<char32_t*>(result.data()));
+				if (written == 0 && utf32_len > 0)
+				{
+					return { std::nullopt, "UTF-8 to UTF-32 conversion failed" };
+				}
+				result.resize(written);
+				return { result, std::nullopt };
+			}
+		}
+
+		// UTF-16LE -> UTF-8 (std::wstring -> std::string on Windows)
+		if ((from_encoding == "UTF-16LE" || from_encoding == "UTF-16")
+			&& to_encoding == "UTF-8")
+		{
+			if constexpr (sizeof(typename FromType::value_type) == 2)
+			{
+				const char16_t* utf16_data
+					= reinterpret_cast<const char16_t*>(src_data);
+
+				if (!simdutf::validate_utf16le(utf16_data, src_len))
+				{
+					return { std::nullopt, "Invalid UTF-16LE input" };
+				}
+
+				size_t utf8_len
+					= simdutf::utf8_length_from_utf16le(utf16_data, src_len);
+
+				if constexpr (std::is_same_v<ToType, std::string>)
+				{
+					std::string result(utf8_len, '\0');
+					size_t written = simdutf::convert_utf16le_to_utf8(
+						utf16_data, src_len, result.data());
+					if (written == 0 && utf8_len > 0)
+					{
+						return { std::nullopt,
+								 "UTF-16LE to UTF-8 conversion failed" };
+					}
+					result.resize(written);
+					return { result, std::nullopt };
+				}
+			}
+		}
+
+		// UTF-32LE -> UTF-8 (std::wstring -> std::string on Unix)
+		if ((from_encoding == "UTF-32LE" || from_encoding == "UTF-32")
+			&& to_encoding == "UTF-8")
+		{
+			if constexpr (sizeof(typename FromType::value_type) == 4)
+			{
+				const char32_t* utf32_data
+					= reinterpret_cast<const char32_t*>(src_data);
+
+				if (!simdutf::validate_utf32(utf32_data, src_len))
+				{
+					return { std::nullopt, "Invalid UTF-32 input" };
+				}
+
+				size_t utf8_len
+					= simdutf::utf8_length_from_utf32(utf32_data, src_len);
+
+				if constexpr (std::is_same_v<ToType, std::string>)
+				{
+					std::string result(utf8_len, '\0');
+					size_t written = simdutf::convert_utf32_to_utf8(
+						utf32_data, src_len, result.data());
+					if (written == 0 && utf8_len > 0)
+					{
+						return { std::nullopt,
+								 "UTF-32 to UTF-8 conversion failed" };
+					}
+					result.resize(written);
+					return { result, std::nullopt };
+				}
+			}
+		}
+
+		return { std::nullopt,
+				 std::format("Unsupported encoding conversion: {} -> {}",
+							 from_encoding, to_encoding) };
 	}
-#else
-	// Unix/Linux implementation - uses iconv
-	template <typename FromType, typename ToType>
-	auto convert_string::convert(const FromType& value,
-								 const std::string& from_encoding,
-								 const std::string& to_encoding)
-		-> std::tuple<std::optional<ToType>, std::optional<std::string>>
-	{
-#ifdef HAS_ICONV
-		iconv_t cd = iconv_open(to_encoding.c_str(), from_encoding.c_str());
-		if (cd == (iconv_t)-1)
-		{
-			return { std::nullopt, "iconv_open failed: " + std::string(strerror(errno)) };
-		}
-
-		std::vector<char> in_buf = string_to_vector(value);
-		char* in_ptr = in_buf.data();
-		size_t in_bytes_left = in_buf.size();
-
-		size_t out_buf_size = in_bytes_left * 2;
-		std::vector<char> out_buf(out_buf_size);
-		char* out_ptr = out_buf.data();
-		size_t out_bytes_left = out_buf.size();
-
-		size_t result = iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left);
-		while (result == (size_t)-1 && errno == E2BIG)
-		{
-			size_t used = out_buf_size - out_bytes_left;
-			out_buf_size *= 2;
-			out_buf.resize(out_buf_size);
-			out_ptr = out_buf.data() + used;
-			out_bytes_left = out_buf_size - used;
-			result = iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left);
-		}
-
-		if (result == (size_t)-1)
-		{
-			std::string error_msg = "iconv failed: " + std::string(strerror(errno));
-			iconv_close(cd);
-			return { std::nullopt, error_msg };
-		}
-
-		iconv_close(cd);
-
-		size_t converted_size = out_buf_size - out_bytes_left;
-		ToType converted_string(reinterpret_cast<typename ToType::value_type*>(out_buf.data()),
-								converted_size / sizeof(typename ToType::value_type));
-
-		return { converted_string, std::nullopt };
-#else
-		// Fallback when iconv is not available
-		(void)from_encoding;
-		(void)to_encoding;
-
-		if constexpr (std::is_same_v<FromType, ToType>) {
-			return { static_cast<ToType>(value), std::nullopt };
-		} else {
-			return { std::nullopt, "Character encoding conversion not supported without iconv" };
-		}
-#endif
-	}
-#endif
 
 	auto convert_string::to_string(const std::wstring& value)
 		-> std::tuple<std::optional<std::string>, std::optional<std::string>>

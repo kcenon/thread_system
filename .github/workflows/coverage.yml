@@ -66,7 +66,10 @@ jobs:
     - name: Run tests
       run: |
         cd build
-        ctest -C Debug --output-on-failure --verbose || true
+        # Exclude tests that hang under coverage instrumentation (same as TSan exclusions in ci.yml)
+        # - DataIntegrity*: hang due to concurrent mode switching overhead with coverage profiling
+        ctest -C Debug --output-on-failure --verbose --timeout 120 \
+          -E "DataIntegrityDuringModeSwitch|DataIntegrityWithMultipleProducersConsumers" || true
 
     - name: Generate coverage report
       run: |
