@@ -52,6 +52,13 @@ dag_scheduler::dag_scheduler(std::shared_ptr<thread_pool> pool, dag_config confi
 dag_scheduler::~dag_scheduler()
 {
 	cancel_all();
+
+	// Wait for in-flight callbacks to finish accessing members
+	// (e.g., completion_cv_.notify_all() after mutex unlock)
+	while (active_callbacks_.load(std::memory_order_acquire) > 0)
+	{
+		std::this_thread::yield();
+	}
 }
 
 dag_scheduler::dag_scheduler(dag_scheduler&& other) noexcept
@@ -655,6 +662,7 @@ auto dag_scheduler::get_stats() const -> dag_stats
 
 auto dag_scheduler::on_job_completed(job_id id) -> void
 {
+	++active_callbacks_;
 	std::unique_lock lock(mutex_);
 
 	auto it = jobs_.find(id);
@@ -706,10 +714,12 @@ auto dag_scheduler::on_job_completed(job_id id) -> void
 
 	// Notify waiters
 	completion_cv_.notify_all();
+	--active_callbacks_;
 }
 
 auto dag_scheduler::on_job_failed(job_id id, const std::string& error) -> void
 {
+	++active_callbacks_;
 	std::unique_lock lock(mutex_);
 
 	auto it = jobs_.find(id);
@@ -770,6 +780,7 @@ auto dag_scheduler::on_job_failed(job_id id, const std::string& error) -> void
 					lock.unlock();
 					schedule_ready_jobs();
 					completion_cv_.notify_all();
+					--active_callbacks_;
 					return;
 				}
 			}
@@ -832,6 +843,7 @@ auto dag_scheduler::on_job_failed(job_id id, const std::string& error) -> void
 	lock.unlock();
 	schedule_ready_jobs();
 	completion_cv_.notify_all();
+	--active_callbacks_;
 }
 
 auto dag_scheduler::schedule_ready_jobs() -> void
