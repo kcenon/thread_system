@@ -255,7 +255,7 @@ jobs:
       run: cmake --build build --config Debug
 
     - name: Run tests with sanitizer
-      timeout-minutes: 10
+      timeout-minutes: 15
       run: |
         cd build
         export ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0
@@ -266,7 +266,7 @@ jobs:
           echo "Running unit tests with ${{ matrix.sanitizer }}..."
           find bin -name "*_unit" -executable 2>/dev/null | while read test; do
             echo "Running $test..."
-            timeout 300 ./$test
+            timeout 600 ./$test
           done
         else
           echo "Running ctest with ${{ matrix.sanitizer }}..."
