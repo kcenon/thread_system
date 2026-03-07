@@ -190,6 +190,9 @@ protected:
 
         pool_->start();
 
+        // Allow workers to fully initialize under sanitizer
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
         // Create autoscaling policy
         policy_.min_workers = 2;
         policy_.max_workers = 8;
@@ -246,6 +249,8 @@ TEST_F(AutoscalerTest, ManualScaleUp) {
     auto result = scaler->scale_up();
 
     EXPECT_TRUE(result.is_ok());
+    // Allow new worker to register under sanitizer
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     EXPECT_GT(pool_->get_active_worker_count(), initial_count);
 }
 
@@ -259,6 +264,8 @@ TEST_F(AutoscalerTest, ScaleToSpecificCount) {
     // Only test scale up to avoid blocking on scale down
     auto result = scaler->scale_to(6);
     EXPECT_TRUE(result.is_ok());
+    // Allow workers to register under sanitizer
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     EXPECT_EQ(pool_->get_active_worker_count(), 6);
 }
 
@@ -268,6 +275,8 @@ TEST_F(AutoscalerTest, ScaleToClampedByMax) {
     // Try to scale above max (only testing scale up)
     auto result = scaler->scale_to(100);
     EXPECT_TRUE(result.is_ok());
+    // Allow workers to register under sanitizer
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     EXPECT_EQ(pool_->get_active_worker_count(), policy_.max_workers);
 }
 

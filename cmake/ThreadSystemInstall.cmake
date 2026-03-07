@@ -179,14 +179,11 @@ function(install_pkgconfig_file)
     set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_CHRONO_CURRENT_ZONE")
   endif()
 
-  # Get Iconv libraries for pkg-config
-  if(TARGET Iconv::Iconv)
-    get_target_property(ICONV_LIBRARIES Iconv::Iconv INTERFACE_LINK_LIBRARIES)
-    if(NOT ICONV_LIBRARIES)
-      set(ICONV_LIBRARIES "")
-    endif()
+  # Get simdutf libraries for pkg-config
+  if(TARGET simdutf::simdutf)
+    set(SIMDUTF_LIBRARIES "-lsimdutf")
   else()
-    set(ICONV_LIBRARIES "")
+    set(SIMDUTF_LIBRARIES "")
   endif()
 
   configure_file(

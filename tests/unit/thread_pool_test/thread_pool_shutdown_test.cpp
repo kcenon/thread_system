@@ -107,6 +107,9 @@ TEST_F(ThreadPoolShutdownTest, GracefulShutdownWithPendingTasks)
 		// Some tasks may be rejected if queue is full, but that's ok
 	}
 
+	// Allow workers to start processing tasks under sanitizer
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
 	// Graceful shutdown - should wait for pending tasks
 	auto stop_result = pool_->stop(false);
 	EXPECT_FALSE(stop_result.is_err());

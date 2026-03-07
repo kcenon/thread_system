@@ -378,6 +378,14 @@ namespace kcenon::thread
 		std::atomic<std::size_t> running_count_{0};
 
 		/**
+		 * @brief Number of active callbacks (for safe destruction)
+		 *
+		 * Tracks callbacks that may access members after releasing the mutex.
+		 * The destructor waits for this to reach 0 before destroying members.
+		 */
+		std::atomic<std::size_t> active_callbacks_{0};
+
+		/**
 		 * @brief Execution start time
 		 */
 		std::chrono::steady_clock::time_point execution_start_time_;

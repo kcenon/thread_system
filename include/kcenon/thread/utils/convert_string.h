@@ -36,8 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <string>
 #include <cstdint>
-#include <cstring>
-#include <errno.h>
 #include <optional>
 #include <algorithm>
 #include <string_view>
@@ -49,10 +47,9 @@ namespace utility_module
 	 * @brief Provides utilities for string encoding conversion, Base64 encoding/decoding,
 	 *        and substring operations like splitting or replacing.
 	 *
-	 * This class relies on platform-specific APIs or @c iconv (when available) to convert strings
-	 * between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding.
-	 * It also provides methods to handle Base64 encoding/decoding and some basic string
-	 * manipulation (split, replace).
+	 * This class uses simdutf for SIMD-accelerated Unicode transcoding between UTF-8,
+	 * UTF-16, and UTF-32 on all platforms. It also provides methods to handle Base64
+	 * encoding/decoding and some basic string manipulation (split, replace).
 	 *
 	 * ### Encoding Conversions
 	 * - Typically returns a tuple containing either a successful result (@c std::optional<T>)
@@ -86,8 +83,8 @@ namespace utility_module
 		 *         - @c std::optional<std::string>: The error message if conversion fails,
 		 *           otherwise @c std::nullopt.
 		 *
-		 * On Windows, this typically uses the current code page. On Unix-like systems,
-		 * it may use @c iconv or locale-based conversion functions.
+		 * Uses simdutf for SIMD-accelerated UTF-8/UTF-16/UTF-32 transcoding on
+		 * all platforms.
 		 */
 		static auto to_string(const std::wstring& value)
 			-> std::tuple<std::optional<std::string>, std::optional<std::string>>;
@@ -125,8 +122,8 @@ namespace utility_module
 		 * @brief Retrieves the system code page used for conversions.
 		 * @return An integer representing the system code page (e.g., CP_ACP on Windows).
 		 *
-		 * On Unix-like systems using @c iconv, this may return an approximation based
-		 * on locale info, or a default if detection fails.
+		 * On Unix-like systems, returns UTF-8 (65001) as the default.
+		 * On Windows, uses GetACP() to detect the system code page.
 		 */
 		static auto get_system_code_page() -> int;
 
@@ -243,7 +240,7 @@ namespace utility_module
 			unknown ///< Unknown or not applicable
 		};
 
-		/// @brief Supported encoding types used in iconv-based conversions.
+		/// @brief Supported encoding types for Unicode conversion.
 		enum class encoding_types
 		{
 			utf8,  ///< UTF-8 encoding
@@ -259,10 +256,10 @@ namespace utility_module
 		static auto get_code_page_name(int code_page) -> std::string;
 
 		/**
-		 * @brief Determines the encoding name used by iconv based on @p encoding and @p endian.
+		 * @brief Returns the encoding name string for the given encoding type and endianness.
 		 * @param encoding The base encoding (UTF-8, UTF-16, or UTF-32).
 		 * @param endian The byte order (little, big) if applicable.
-		 * @return A string recognized by iconv, such as "UTF-8" or "UTF-16LE".
+		 * @return An encoding name string such as "UTF-8" or "UTF-16LE".
 		 */
 		static auto get_encoding_name(encoding_types encoding,
 									  endian_types endian = endian_types::little) -> std::string;
@@ -275,19 +272,7 @@ namespace utility_module
 		static auto get_wchar_encoding(endian_types endian = endian_types::little) -> std::string;
 
 		/**
-		 * @brief Converts a string (or wide string) to a @c std::vector<char> for iconv processing.
-		 * @tparam T The character type of the input string (char, wchar_t, char16_t, etc.).
-		 * @param value The input string.
-		 * @return A vector containing the raw byte representation of @p value.
-		 */
-		template <typename T> static auto string_to_vector(const T& value) -> std::vector<char>
-		{
-			return std::vector<char>(reinterpret_cast<const char*>(value.data()),
-									 reinterpret_cast<const char*>(value.data() + value.size()));
-		}
-
-		/**
-		 * @brief Converts from one encoding to another using @c iconv or equivalent APIs.
+		 * @brief Converts from one encoding to another using simdutf.
 		 * @tparam FromType The input string type.
 		 * @tparam ToType The output string type.
 		 * @param value The input string.

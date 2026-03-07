@@ -69,19 +69,9 @@ function(create_thread_system_targets)
       # Note: fmt library is no longer used - using C++20 std::format exclusively
       # The HAS_FMT_LIBRARY definition and fmt linking have been removed
 
-      if(DEFINED THREAD_SYSTEM_ICONV_FOUND AND THREAD_SYSTEM_ICONV_FOUND)
-        if(DEFINED THREAD_SYSTEM_ICONV_TARGET AND THREAD_SYSTEM_ICONV_TARGET)
-          target_link_libraries(ThreadSystem PUBLIC ${THREAD_SYSTEM_ICONV_TARGET})
-        else()
-          if(DEFINED THREAD_SYSTEM_ICONV_INCLUDE_DIRS AND THREAD_SYSTEM_ICONV_INCLUDE_DIRS)
-            target_include_directories(ThreadSystem PUBLIC ${THREAD_SYSTEM_ICONV_INCLUDE_DIRS})
-          endif()
-          if(DEFINED THREAD_SYSTEM_ICONV_LIBRARIES AND THREAD_SYSTEM_ICONV_LIBRARIES)
-            target_link_libraries(ThreadSystem PUBLIC ${THREAD_SYSTEM_ICONV_LIBRARIES})
-          endif()
-        endif()
-        target_compile_definitions(ThreadSystem PUBLIC HAS_ICONV)
-        message(STATUS "ThreadSystem: iconv support enabled")
+      if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
+        target_link_libraries(ThreadSystem PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
+        message(STATUS "ThreadSystem: simdutf support enabled")
       endif()
 
       set(USE_LEGACY_BUILD FALSE PARENT_SCOPE)

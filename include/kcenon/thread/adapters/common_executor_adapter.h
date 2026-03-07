@@ -162,21 +162,29 @@ inline std::optional<common::error_info> enqueue_job(
     }
 
     auto completion_once = std::make_shared<std::once_flag>();
+    // Wrap promise in shared_ptr-to-shared_ptr so we can release it early
+    // from within the callback. This prevents the promise destructor from
+    // racing with future::get()'s condition_variable wait when the
+    // callback_job lambda is destroyed by the worker thread.
+    auto promise_holder = std::make_shared<std::shared_ptr<std::promise<void>>>(promise);
 
     auto job = std::make_unique<kcenon::thread::callback_job>(
-        [promise, completion_once, body = std::move(body)]() mutable -> common::VoidResult {
+        [promise_holder, completion_once, body = std::move(body)]() -> common::VoidResult {
+            auto& p = *promise_holder;
             try {
                 auto result = body();
                 if (result.is_err()) {
                     auto info = result.error();
                     std::call_once(*completion_once, [&]() {
-                        promise->set_exception(to_exception(info));
+                        p->set_exception(to_exception(info));
                     });
+                    p.reset();
                     return result;
                 }
                 std::call_once(*completion_once, [&]() {
-                    promise->set_value();
+                    p->set_value();
                 });
+                p.reset();
                 return result;
             } catch (const std::exception& ex) {
                 auto info = make_error_info(
@@ -184,8 +192,9 @@ inline std::optional<common::error_info> enqueue_job(
                     ex.what()
                 );
                 std::call_once(*completion_once, [&]() {
-                    promise->set_exception(to_exception(info));
+                    p->set_exception(to_exception(info));
                 });
+                p.reset();
                 return make_error(info);
             } catch (...) {
                 auto info = make_error_info(
@@ -193,8 +202,9 @@ inline std::optional<common::error_info> enqueue_job(
                     "Unhandled exception while executing job"
                 );
                 std::call_once(*completion_once, [&]() {
-                    promise->set_exception(to_exception(info));
+                    p->set_exception(to_exception(info));
                 });
+                p.reset();
                 return make_error(info);
             }
         });
@@ -239,21 +249,28 @@ inline void schedule_task_async(
     // Create once_flag to protect against race between delayed_job exception and enqueue failure
     auto completion_once = std::make_shared<std::once_flag>();
 
+    // Wrap promise for early release (same pattern as enqueue_job)
+    auto promise_holder = std::make_shared<std::shared_ptr<std::promise<void>>>(promise);
+
     // Create a wrapper job that handles delay and then enqueues the actual task
     auto delayed_job = std::make_unique<kcenon::thread::callback_job>(
-        [pool, promise, completion_once, body = std::move(body), delay]() mutable -> common::VoidResult {
+        [pool, promise_holder, completion_once, body = std::move(body), delay]() -> common::VoidResult {
+            auto& p = *promise_holder;
             try {
                 if (delay.count() > 0) {
                     std::this_thread::sleep_for(delay);
                 }
                 // Enqueue the actual job after the delay
                 // Note: enqueue_job has its own once_flag protection internally
-                (void)enqueue_job(pool, promise, std::move(body));
+                (void)enqueue_job(pool, p, std::move(body));
+                // Release this lambda's reference to promise early
+                p.reset();
                 return common::ok();
             } catch (...) {
                 std::call_once(*completion_once, [&]() {
-                    promise->set_exception(std::current_exception());
+                    p->set_exception(std::current_exception());
                 });
+                p.reset();
                 return make_error(kcenon::thread::error_code::job_execution_failed,
                                   "Exception during delayed task scheduling");
             }
