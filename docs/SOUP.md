@@ -8,34 +8,26 @@
 | Document | Version |
 |----------|---------|
 | IEC 62304 Reference | &sect;8.1.2 Software items from SOUP |
-| Last Reviewed | 2026-03-06 |
-| thread_system Version | 3.0.0 |
-
----
-
-## Internal Ecosystem Dependencies
-
-| ID | Name | Manufacturer | Version | License | Usage | Safety Class | Known Anomalies |
-|----|------|-------------|---------|---------|-------|-------------|-----------------|
-| INT-001 | [common_system](https://github.com/kcenon/common_system) | kcenon | Latest (source) | BSD-3-Clause | Result&lt;T&gt; pattern, error handling primitives, interfaces | B | None |
-
-> **Note**: common_system is integrated as source-level dependency via CMake `find_package` or adjacent directory detection.
+| Last Reviewed | 2026-03-07 |
+| thread_system Version | 0.1.0 |
 
 ---
 
 ## Production SOUP
 
-| ID | Name | Manufacturer | Version | License | Usage | Safety Class | Known Anomalies |
-|----|------|-------------|---------|---------|-------|-------------|-----------------|
-| SOUP-001 | [libiconv](https://www.gnu.org/software/libiconv/) | GNU Project | 1.17 | LGPL-2.1 | Character encoding conversion (non-Windows platforms only) | A | Dynamic linking required for LGPL compliance |
+| ID | Name | Manufacturer | Version | License | Usage | Safety Class | Linking | Known Anomalies |
+|----|------|-------------|---------|---------|-------|-------------|---------|-----------------|
+| SOUP-001 | [GNU libiconv](https://www.gnu.org/software/libiconv/) | GNU Project | 1.17 | LGPL-2.1-or-later | Character encoding conversion (wide/narrow strings, non-Windows only) | A | **Dynamic only** (LGPL) | None |
+
+> **LGPL Compliance**: libiconv must be dynamically linked to preserve BSD-3-Clause licensing. macOS provides it as a system framework (always dynamic). Linux glibc includes iconv natively. Windows is excluded (`"platform": "!windows"`).
 
 ---
 
 ## Optional SOUP
 
-| ID | Name | Manufacturer | Version | License | Usage | Safety Class | Known Anomalies |
-|----|------|-------------|---------|---------|-------|-------------|-----------------|
-| SOUP-002 | [spdlog](https://github.com/gabime/spdlog) | Gabi Melman | 1.13.0 | MIT | Advanced logging capabilities (optional `logging` feature) | A | None |
+| ID | Name | Manufacturer | Version | License | Usage | Safety Class | Linking | Known Anomalies |
+|----|------|-------------|---------|---------|-------|-------------|---------|-----------------|
+| SOUP-002 | [spdlog](https://github.com/gabime/spdlog) | Gabi Melman | 1.13.0 | MIT | Fast C++ logging library (optional `logging` feature) | A | Header-only or shared | None |
 
 ---
 
@@ -52,7 +44,7 @@
 
 | Class | Definition | Example |
 |-------|-----------|---------|
-| **A** | No contribution to hazardous situation | Logging, formatting, test frameworks |
+| **A** | No contribution to hazardous situation | Logging, formatting, character encoding |
 | **B** | Non-serious injury possible | Data processing, network communication |
 | **C** | Death or serious injury possible | Encryption, access control |
 
@@ -93,10 +85,9 @@ When updating any SOUP dependency:
 
 | License | Count | Copyleft | Obligation |
 |---------|-------|----------|------------|
-| LGPL-2.1 | 1 | Weak | Dynamic linking required |
+| LGPL-2.1-or-later | 1 | Weak | Dynamic linking required; include license text |
 | MIT | 1 | No | Include copyright notice |
 | BSD-3-Clause | 1 | No | Include copyright + no-endorsement clause |
 | Apache-2.0 | 1 | No | Include license + NOTICE file |
 
-> **GPL contamination**: None detected. All dependencies are permissively licensed.
-> **LGPL note**: libiconv (SOUP-001) uses LGPL-2.1; dynamic linking ensures compliance.
+> **LGPL contamination**: Avoided by dynamic linking. libiconv is always loaded as a shared library on supported platforms (macOS system framework, Linux glibc).
