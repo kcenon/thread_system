@@ -36,9 +36,13 @@ if(UTIL_SOURCES)
     # Note: fmt library is no longer used - using C++20 std::format exclusively
     # The fmt fallback logic has been removed as part of issue #219
 
-    # simdutf for Unicode string conversions
-    find_package(simdutf CONFIG REQUIRED)
-    target_link_libraries(${PROJECT_NAME} PUBLIC simdutf::simdutf)
+    # simdutf for Unicode string conversions (provided by find_simdutf_library)
+    if(TARGET simdutf::simdutf)
+        target_link_libraries(${PROJECT_NAME} PUBLIC simdutf::simdutf)
+    else()
+        find_package(simdutf CONFIG REQUIRED)
+        target_link_libraries(${PROJECT_NAME} PUBLIC simdutf::simdutf)
+    endif()
 else()
     # Interface library case - add both utilities/include and root include
     target_include_directories(${PROJECT_NAME} INTERFACE
@@ -55,8 +59,12 @@ else()
     # Note: fmt library is no longer used - using C++20 std::format exclusively
     # The fmt fallback logic has been removed as part of issue #219
 
-    # simdutf for Unicode string conversions
-    find_package(simdutf CONFIG REQUIRED)
-    target_link_libraries(${PROJECT_NAME} INTERFACE simdutf::simdutf)
+    # simdutf for Unicode string conversions (provided by find_simdutf_library)
+    if(TARGET simdutf::simdutf)
+        target_link_libraries(${PROJECT_NAME} INTERFACE simdutf::simdutf)
+    else()
+        find_package(simdutf CONFIG REQUIRED)
+        target_link_libraries(${PROJECT_NAME} INTERFACE simdutf::simdutf)
+    endif()
 endif()
 

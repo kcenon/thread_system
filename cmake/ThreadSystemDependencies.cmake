@@ -102,20 +102,44 @@ endfunction()
 # migration to C++20 std::format. See GitHub issue #219 for details.
 
 ##################################################
-# Find simdutf library (required for Unicode conversion)
+# Find or fetch simdutf library (required for Unicode conversion)
 ##################################################
 function(find_simdutf_library)
   message(STATUS "Looking for simdutf library...")
 
-  find_package(simdutf CONFIG REQUIRED)
+  # Try to find system or vcpkg-installed simdutf first
+  find_package(simdutf CONFIG QUIET)
 
   if(TARGET simdutf::simdutf)
     message(STATUS "Found simdutf: ${simdutf_VERSION}")
     set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
     set(THREAD_SYSTEM_SIMDUTF_TARGET simdutf::simdutf PARENT_SCOPE)
-  else()
-    message(FATAL_ERROR "simdutf target not found after find_package succeeded")
+    return()
   endif()
+
+  # Fallback: Use FetchContent to download and build simdutf
+  message(STATUS "System simdutf not found - fetching from source...")
+
+  include(FetchContent)
+
+  FetchContent_Declare(
+    simdutf
+    GIT_REPOSITORY https://github.com/simdutf/simdutf.git
+    GIT_TAG v5.2.5
+    GIT_SHALLOW TRUE
+    GIT_PROGRESS TRUE
+  )
+
+  # Configure simdutf build options
+  set(SIMDUTF_TESTS OFF CACHE BOOL "" FORCE)
+  set(SIMDUTF_BENCHMARKS OFF CACHE BOOL "" FORCE)
+  set(SIMDUTF_TOOLS OFF CACHE BOOL "" FORCE)
+
+  FetchContent_MakeAvailable(simdutf)
+
+  message(STATUS "simdutf fetched and configured (v5.2.5)")
+  set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_TARGET simdutf::simdutf PARENT_SCOPE)
 endfunction()
 
 ##################################################
