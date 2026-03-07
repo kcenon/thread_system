@@ -102,49 +102,20 @@ endfunction()
 # migration to C++20 std::format. See GitHub issue #219 for details.
 
 ##################################################
-# Find iconv library (optional, improves conversions)
+# Find simdutf library (required for Unicode conversion)
 ##################################################
-function(find_iconv_library)
-  message(STATUS "Looking for iconv library...")
+function(find_simdutf_library)
+  message(STATUS "Looking for simdutf library...")
 
-  find_package(Iconv QUIET)
+  find_package(simdutf CONFIG REQUIRED)
 
-  if(Iconv_FOUND)
-    message(STATUS "Found iconv: ${Iconv_LIBRARIES}")
-    set(THREAD_SYSTEM_ICONV_FOUND TRUE PARENT_SCOPE)
-
-    if(TARGET Iconv::Iconv)
-      set(THREAD_SYSTEM_ICONV_TARGET Iconv::Iconv PARENT_SCOPE)
-
-      # LGPL-2.1 compliance: verify libiconv is dynamically linked.
-      # Static linking of LGPL code requires providing object files for
-      # re-linking, which is complex. Dynamic linking satisfies LGPL automatically.
-      get_target_property(_iconv_type Iconv::Iconv TYPE)
-      if(_iconv_type STREQUAL "STATIC_LIBRARY")
-        message(WARNING
-          "libiconv is statically linked. "
-          "LGPL-2.1 compliance requires dynamic linking or providing object files for re-linking. "
-          "Consider using -DICONV_USE_SHARED=ON or installing a shared libiconv.")
-      elseif(_iconv_type STREQUAL "SHARED_LIBRARY" OR _iconv_type STREQUAL "INTERFACE_LIBRARY")
-        message(STATUS "  libiconv linking: ${_iconv_type} (LGPL-2.1 compliant)")
-      else()
-        # UNKNOWN or IMPORTED - common for system-provided iconv (macOS, glibc)
-        message(STATUS "  libiconv linking: ${_iconv_type} (system library, typically dynamic)")
-      endif()
-    else()
-      set(THREAD_SYSTEM_ICONV_TARGET "" PARENT_SCOPE)
-      set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS "${Iconv_INCLUDE_DIRS}" PARENT_SCOPE)
-      set(THREAD_SYSTEM_ICONV_LIBRARIES "${Iconv_LIBRARIES}" PARENT_SCOPE)
-    endif()
-
-    return()
+  if(TARGET simdutf::simdutf)
+    message(STATUS "Found simdutf: ${simdutf_VERSION}")
+    set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_TARGET simdutf::simdutf PARENT_SCOPE)
+  else()
+    message(FATAL_ERROR "simdutf target not found after find_package succeeded")
   endif()
-
-  message(WARNING "⚠️ Iconv not found - wide/narrow string conversion will use limited fallback")
-  set(THREAD_SYSTEM_ICONV_FOUND FALSE PARENT_SCOPE)
-  set(THREAD_SYSTEM_ICONV_TARGET "" PARENT_SCOPE)
-  set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS "" PARENT_SCOPE)
-  set(THREAD_SYSTEM_ICONV_LIBRARIES "" PARENT_SCOPE)
 endfunction()
 
 ##################################################
@@ -228,21 +199,15 @@ function(find_thread_system_dependencies)
 
   find_common_system_dependency()
   # Note: fmt library is no longer used - using C++20 std::format exclusively
-  find_iconv_library()
+  find_simdutf_library()
   find_threading_library()
   find_or_fetch_gtest()
 
-  if(DEFINED THREAD_SYSTEM_ICONV_FOUND)
-    set(THREAD_SYSTEM_ICONV_FOUND ${THREAD_SYSTEM_ICONV_FOUND} PARENT_SCOPE)
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND)
+    set(THREAD_SYSTEM_SIMDUTF_FOUND ${THREAD_SYSTEM_SIMDUTF_FOUND} PARENT_SCOPE)
   endif()
-  if(DEFINED THREAD_SYSTEM_ICONV_TARGET)
-    set(THREAD_SYSTEM_ICONV_TARGET ${THREAD_SYSTEM_ICONV_TARGET} PARENT_SCOPE)
-  endif()
-  if(DEFINED THREAD_SYSTEM_ICONV_INCLUDE_DIRS)
-    set(THREAD_SYSTEM_ICONV_INCLUDE_DIRS ${THREAD_SYSTEM_ICONV_INCLUDE_DIRS} PARENT_SCOPE)
-  endif()
-  if(DEFINED THREAD_SYSTEM_ICONV_LIBRARIES)
-    set(THREAD_SYSTEM_ICONV_LIBRARIES ${THREAD_SYSTEM_ICONV_LIBRARIES} PARENT_SCOPE)
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_TARGET)
+    set(THREAD_SYSTEM_SIMDUTF_TARGET ${THREAD_SYSTEM_SIMDUTF_TARGET} PARENT_SCOPE)
   endif()
 
   message(STATUS "Dependency detection complete")

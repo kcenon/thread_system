@@ -17,9 +17,7 @@
 
 | ID | Name | Manufacturer | Version | License | Usage | Safety Class | Linking | Known Anomalies |
 |----|------|-------------|---------|---------|-------|-------------|---------|-----------------|
-| SOUP-001 | [GNU libiconv](https://www.gnu.org/software/libiconv/) | GNU Project | 1.17 | LGPL-2.1-or-later | Character encoding conversion (wide/narrow strings, non-Windows only) | A | **Dynamic only** (LGPL) | None |
-
-> **LGPL Compliance**: libiconv must be dynamically linked to preserve BSD-3-Clause licensing. macOS provides it as a system framework (always dynamic). Linux glibc includes iconv natively. Windows is excluded (`"platform": "!windows"`).
+| SOUP-001 | [simdutf](https://github.com/simdutf/simdutf) | simdutf contributors | 5.2.5 | MIT OR Apache-2.0 | SIMD-accelerated Unicode transcoding (UTF-8/16/32, all platforms) | A | Static or dynamic | None |
 
 ---
 
@@ -57,7 +55,7 @@ All SOUP versions are pinned in `vcpkg.json` via the `overrides` field:
 ```json
 {
   "overrides": [
-    { "name": "libiconv", "version": "1.17" },
+    { "name": "simdutf", "version": "5.2.5" },
     { "name": "spdlog", "version": "1.13.0" },
     { "name": "gtest", "version": "1.14.0" },
     { "name": "benchmark", "version": "1.8.3" }
@@ -85,9 +83,10 @@ When updating any SOUP dependency:
 
 | License | Count | Copyleft | Obligation |
 |---------|-------|----------|------------|
-| LGPL-2.1-or-later | 1 | Weak | Dynamic linking required; include license text |
+| MIT OR Apache-2.0 | 1 | No | Include copyright notice |
 | MIT | 1 | No | Include copyright notice |
 | BSD-3-Clause | 1 | No | Include copyright + no-endorsement clause |
 | Apache-2.0 | 1 | No | Include license + NOTICE file |
 
-> **LGPL contamination**: Avoided by dynamic linking. libiconv is always loaded as a shared library on supported platforms (macOS system framework, Linux glibc).
+> **No LGPL dependencies**: All production dependencies use permissive licenses.
+> Static or dynamic linking is permitted without restriction.
