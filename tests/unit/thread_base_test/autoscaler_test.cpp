@@ -190,6 +190,9 @@ protected:
 
         pool_->start();
 
+        // Allow workers to fully initialize under sanitizer
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
         // Create autoscaling policy
         policy_.min_workers = 2;
         policy_.max_workers = 8;
