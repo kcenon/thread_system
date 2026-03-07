@@ -92,7 +92,7 @@ TEST_F(ThreadPoolBuilderTest, WithCircuitBreaker)
 {
 	circuit_breaker_config config;
 	config.failure_threshold = 3;
-	config.open_duration = std::chrono::seconds{10};
+	config.timeout = std::chrono::seconds{10};
 
 	auto pool = thread_pool_builder("cb_pool")
 		.with_workers(2)
@@ -104,7 +104,7 @@ TEST_F(ThreadPoolBuilderTest, WithCircuitBreaker)
 	auto* cb_policy = pool->find_policy<circuit_breaker_policy>("circuit_breaker_policy");
 	ASSERT_NE(cb_policy, nullptr);
 	EXPECT_TRUE(cb_policy->is_accepting_work());
-	EXPECT_EQ(cb_policy->get_state(), circuit_state::closed);
+	EXPECT_EQ(cb_policy->get_state(), circuit_state::CLOSED);
 
 	pool->stop();
 }
