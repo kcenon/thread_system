@@ -1,0 +1,76 @@
+name: OSV Vulnerability Scan
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'vcpkg.json'
+      - 'vcpkg-configuration.json'
+      - '.github/workflows/osv-scanner.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'vcpkg.json'
+      - 'vcpkg-configuration.json'
+  schedule:
+    # Run every Sunday at 3:17 AM UTC (offset from Trivy daily scan at 2 AM)
+    - cron: '17 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+# OSV-Scanner complements the existing Trivy scan (cve-scan.yml):
+#   - Trivy:       filesystem scan, runs daily on push/PR
+#   - OSV-Scanner: dependency manifest scan, runs weekly + on vcpkg.json changes
+#
+# OSV-Scanner uses the Open Source Vulnerabilities (OSV) database which covers
+# vcpkg ecosystem packages, GitHub Advisory Database, and more.
+# See: https://github.com/kcenon/common_system/issues/408
+
+jobs:
+  osv-scan:
+    name: OSV Scanner
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/gh-pages'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run OSV-Scanner on vcpkg manifest
+        uses: google/osv-scanner-action/osv-scanner-action@v2
+        with:
+          scan-args: |-
+            --lockfile=vcpkg.json
+            --format=sarif
+            --output=osv-results.sarif
+        continue-on-error: true
+
+      - name: Run OSV-Scanner filesystem scan (fallback)
+        if: hashFiles('osv-results.sarif') == ''
+        uses: google/osv-scanner-action/osv-scanner-action@v2
+        with:
+          scan-args: |-
+            --recursive
+            .
+            --format=sarif
+            --output=osv-results.sarif
+        continue-on-error: true
+
+      - name: Upload OSV SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('osv-results.sarif') != ''
+        continue-on-error: true
+        with:
+          sarif_file: osv-results.sarif
+          category: osv-scanner
+
+      - name: Upload OSV results artifact
+        uses: actions/upload-artifact@v4
+        if: always() && hashFiles('osv-results.sarif') != ''
+        with:
+          name: osv-scan-results-${{ github.sha }}
+          path: osv-results.sarif
+          retention-days: 30
