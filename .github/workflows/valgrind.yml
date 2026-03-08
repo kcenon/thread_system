@@ -74,7 +74,7 @@ jobs:
 
     - name: Upload Valgrind Results
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: valgrind-results
         path: |
@@ -138,7 +138,7 @@ jobs:
 
     - name: Upload Stress Test Results
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: valgrind-stress-results
         path: build/valgrind-stress-*.xml

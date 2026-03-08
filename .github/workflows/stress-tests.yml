@@ -83,7 +83,7 @@ jobs:
 
       - name: Upload Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: stress-test-results-${{ github.run_number }}
           path: stress_results/
@@ -135,7 +135,7 @@ jobs:
 
       - name: Upload Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: stress-test-results-macos-${{ github.run_number }}
           path: stress_results/
