@@ -101,6 +101,144 @@ endfunction()
 # Note: The find_fmt_library() function has been removed as part of the
 # migration to C++20 std::format. See GitHub issue #219 for details.
 
+set(THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_REPOSITORY "https://github.com/simdutf/simdutf.git")
+set(THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_TAG "v5.2.5")
+set(THREAD_SYSTEM_SIMDUTF_INTENDED_VERSION "5.2.5")
+
+function(_thread_system_json_escape output_variable input_value)
+  set(_escaped "${input_value}")
+  string(REPLACE "\\" "\\\\" _escaped "${_escaped}")
+  string(REPLACE "\"" "\\\"" _escaped "${_escaped}")
+  string(REPLACE "\n" "\\n" _escaped "${_escaped}")
+  string(REPLACE "\r" "\\r" _escaped "${_escaped}")
+  set(${output_variable} "${_escaped}" PARENT_SCOPE)
+endfunction()
+
+function(_thread_system_get_simdutf_target_hint output_variable)
+  set(_hint "")
+  set(_location_properties
+    IMPORTED_LOCATION
+    IMPORTED_LOCATION_RELEASE
+    IMPORTED_LOCATION_RELWITHDEBINFO
+    IMPORTED_LOCATION_DEBUG
+    IMPORTED_IMPLIB
+    IMPORTED_IMPLIB_RELEASE
+    IMPORTED_IMPLIB_RELWITHDEBINFO
+    IMPORTED_IMPLIB_DEBUG
+  )
+
+  foreach(_property IN LISTS _location_properties)
+    get_target_property(_value simdutf::simdutf ${_property})
+    if(_value AND NOT _value MATCHES "-NOTFOUND$")
+      set(_hint "${_value}")
+      break()
+    endif()
+  endforeach()
+
+  if(_hint STREQUAL "")
+    get_target_property(_include_directories simdutf::simdutf INTERFACE_INCLUDE_DIRECTORIES)
+    if(_include_directories)
+      list(GET _include_directories 0 _hint)
+    endif()
+  endif()
+
+  set(${output_variable} "${_hint}" PARENT_SCOPE)
+endfunction()
+
+function(_thread_system_determine_simdutf_source output_variable hint_value)
+  set(_source "system")
+
+  if(NOT "${hint_value}" STREQUAL "")
+    string(FIND "${hint_value}" "vcpkg_installed" _contains_vcpkg_installed)
+    string(FIND "${hint_value}" "/vcpkg/" _contains_vcpkg_root)
+    string(FIND "${hint_value}" "\\vcpkg\\" _contains_vcpkg_root_windows)
+    if(NOT _contains_vcpkg_installed EQUAL -1
+        OR NOT _contains_vcpkg_root EQUAL -1
+        OR NOT _contains_vcpkg_root_windows EQUAL -1)
+      set(_source "vcpkg")
+    endif()
+  endif()
+
+  if(_source STREQUAL "system" AND "${hint_value}" STREQUAL "" AND DEFINED CMAKE_TOOLCHAIN_FILE)
+    string(FIND "${CMAKE_TOOLCHAIN_FILE}" "vcpkg.cmake" _uses_vcpkg_toolchain)
+    if(NOT _uses_vcpkg_toolchain EQUAL -1)
+      set(_source "vcpkg")
+    endif()
+  endif()
+
+  set(${output_variable} "${_source}" PARENT_SCOPE)
+endfunction()
+
+function(write_simdutf_provenance_artifacts)
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE OR "${THREAD_SYSTEM_SIMDUTF_SOURCE}" STREQUAL "")
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE "unknown")
+  endif()
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_VERSION OR "${THREAD_SYSTEM_SIMDUTF_VERSION}" STREQUAL "")
+    set(THREAD_SYSTEM_SIMDUTF_VERSION "unknown")
+  endif()
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE OR "${THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE}" STREQUAL "")
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE "unknown")
+  endif()
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY "")
+  endif()
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH)
+    set(THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH "")
+  endif()
+  if(NOT DEFINED THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH)
+    set(THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH "")
+  endif()
+
+  string(TIMESTAMP _generated_at "%Y-%m-%dT%H:%M:%SZ" UTC)
+  set(_provenance_dir "${CMAKE_BINARY_DIR}/dependency-provenance")
+  set(_json_output "${_provenance_dir}/simdutf-provenance.json")
+  set(_markdown_output "${_provenance_dir}/simdutf-provenance.md")
+
+  file(MAKE_DIRECTORY "${_provenance_dir}")
+
+  _thread_system_json_escape(_json_source "${THREAD_SYSTEM_SIMDUTF_SOURCE}")
+  _thread_system_json_escape(_json_version "${THREAD_SYSTEM_SIMDUTF_VERSION}")
+  _thread_system_json_escape(_json_reference "${THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE}")
+  _thread_system_json_escape(_json_repository "${THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY}")
+  _thread_system_json_escape(_json_package_config "${THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH}")
+  _thread_system_json_escape(_json_resolved_path "${THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH}")
+  _thread_system_json_escape(_json_generated_at "${_generated_at}")
+
+  file(WRITE "${_json_output}" "{\n")
+  file(APPEND "${_json_output}" "  \"dependency\": \"simdutf\",\n")
+  file(APPEND "${_json_output}" "  \"intended_version\": \"${THREAD_SYSTEM_SIMDUTF_INTENDED_VERSION}\",\n")
+  file(APPEND "${_json_output}" "  \"resolved_source\": \"${_json_source}\",\n")
+  file(APPEND "${_json_output}" "  \"resolved_version\": \"${_json_version}\",\n")
+  file(APPEND "${_json_output}" "  \"source_reference\": \"${_json_reference}\",\n")
+  file(APPEND "${_json_output}" "  \"source_repository\": \"${_json_repository}\",\n")
+  file(APPEND "${_json_output}" "  \"package_config_path\": \"${_json_package_config}\",\n")
+  file(APPEND "${_json_output}" "  \"resolved_path\": \"${_json_resolved_path}\",\n")
+  file(APPEND "${_json_output}" "  \"cmake_target\": \"simdutf::simdutf\",\n")
+  file(APPEND "${_json_output}" "  \"generated_at_utc\": \"${_json_generated_at}\"\n")
+  file(APPEND "${_json_output}" "}\n")
+
+  file(WRITE "${_markdown_output}" "## simdutf Resolved Provenance\n\n")
+  file(APPEND "${_markdown_output}" "| Field | Value |\n")
+  file(APPEND "${_markdown_output}" "|-------|-------|\n")
+  file(APPEND "${_markdown_output}" "| Dependency | simdutf |\n")
+  file(APPEND "${_markdown_output}" "| Intended version | ${THREAD_SYSTEM_SIMDUTF_INTENDED_VERSION} |\n")
+  file(APPEND "${_markdown_output}" "| Resolved source | ${THREAD_SYSTEM_SIMDUTF_SOURCE} |\n")
+  file(APPEND "${_markdown_output}" "| Resolved version | ${THREAD_SYSTEM_SIMDUTF_VERSION} |\n")
+  file(APPEND "${_markdown_output}" "| Source reference | ${THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE} |\n")
+  file(APPEND "${_markdown_output}" "| Source repository | ${THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY} |\n")
+  file(APPEND "${_markdown_output}" "| Package config path | ${THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH} |\n")
+  file(APPEND "${_markdown_output}" "| Resolved path | ${THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH} |\n")
+  file(APPEND "${_markdown_output}" "| CMake target | simdutf::simdutf |\n")
+  file(APPEND "${_markdown_output}" "| Generated at (UTC) | ${_generated_at} |\n")
+
+  set(THREAD_SYSTEM_SIMDUTF_PROVENANCE_JSON "${_json_output}" PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_PROVENANCE_MARKDOWN "${_markdown_output}" PARENT_SCOPE)
+
+  message(STATUS
+    "Recorded simdutf provenance: ${THREAD_SYSTEM_SIMDUTF_SOURCE} "
+    "(${THREAD_SYSTEM_SIMDUTF_VERSION}) -> ${_json_output}")
+endfunction()
+
 ##################################################
 # Find or fetch simdutf library (required for Unicode conversion)
 ##################################################
@@ -111,9 +249,31 @@ function(find_simdutf_library)
   find_package(simdutf CONFIG QUIET)
 
   if(TARGET simdutf::simdutf)
-    message(STATUS "Found simdutf: ${simdutf_VERSION}")
+    _thread_system_get_simdutf_target_hint(_simdutf_hint)
+    _thread_system_determine_simdutf_source(_simdutf_source "${_simdutf_hint}")
+
+    set(_simdutf_version "${simdutf_VERSION}")
+    if("${_simdutf_version}" STREQUAL "" AND DEFINED simdutf_VERSION_STRING)
+      set(_simdutf_version "${simdutf_VERSION_STRING}")
+    endif()
+    if("${_simdutf_version}" STREQUAL "")
+      set(_simdutf_version "unknown")
+    endif()
+
+    set(_package_config_path "")
+    if(DEFINED simdutf_DIR)
+      set(_package_config_path "${simdutf_DIR}")
+    endif()
+
+    message(STATUS "Found simdutf via ${_simdutf_source}: ${_simdutf_version}")
     set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
     set(THREAD_SYSTEM_SIMDUTF_TARGET simdutf::simdutf PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE "${_simdutf_source}" PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_VERSION "${_simdutf_version}" PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE "${_simdutf_version}" PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY "" PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH "${_package_config_path}" PARENT_SCOPE)
+    set(THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH "${_simdutf_hint}" PARENT_SCOPE)
     return()
   endif()
 
@@ -124,8 +284,8 @@ function(find_simdutf_library)
 
   FetchContent_Declare(
     simdutf
-    GIT_REPOSITORY https://github.com/simdutf/simdutf.git
-    GIT_TAG v5.2.5
+    GIT_REPOSITORY ${THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_REPOSITORY}
+    GIT_TAG ${THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_TAG}
     GIT_SHALLOW TRUE
     GIT_PROGRESS TRUE
   )
@@ -149,9 +309,19 @@ function(find_simdutf_library)
   set(CMAKE_CXX_STANDARD_REQUIRED ${_SAVED_CXX_STANDARD_REQUIRED})
   set(CMAKE_CXX_EXTENSIONS ${_SAVED_CXX_EXTENSIONS})
 
-  message(STATUS "simdutf fetched and configured (v5.2.5)")
+  message(STATUS "simdutf fetched and configured (${THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_TAG})")
   set(THREAD_SYSTEM_SIMDUTF_FOUND TRUE PARENT_SCOPE)
   set(THREAD_SYSTEM_SIMDUTF_TARGET simdutf::simdutf PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_SOURCE "FetchContent" PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_VERSION "${THREAD_SYSTEM_SIMDUTF_INTENDED_VERSION}" PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE "${THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_TAG}" PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY "${THREAD_SYSTEM_SIMDUTF_FETCHCONTENT_REPOSITORY}" PARENT_SCOPE)
+  set(THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH "" PARENT_SCOPE)
+  if(DEFINED simdutf_SOURCE_DIR)
+    set(THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH "${simdutf_SOURCE_DIR}" PARENT_SCOPE)
+  else()
+    set(THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH "" PARENT_SCOPE)
+  endif()
 endfunction()
 
 ##################################################
@@ -244,6 +414,32 @@ function(find_thread_system_dependencies)
   endif()
   if(DEFINED THREAD_SYSTEM_SIMDUTF_TARGET)
     set(THREAD_SYSTEM_SIMDUTF_TARGET ${THREAD_SYSTEM_SIMDUTF_TARGET} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE ${THREAD_SYSTEM_SIMDUTF_SOURCE} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_VERSION)
+    set(THREAD_SYSTEM_SIMDUTF_VERSION ${THREAD_SYSTEM_SIMDUTF_VERSION} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE ${THREAD_SYSTEM_SIMDUTF_SOURCE_REFERENCE} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY)
+    set(THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY ${THREAD_SYSTEM_SIMDUTF_SOURCE_REPOSITORY} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH)
+    set(THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH ${THREAD_SYSTEM_SIMDUTF_PACKAGE_CONFIG_PATH} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH)
+    set(THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH ${THREAD_SYSTEM_SIMDUTF_RESOLVED_PATH} PARENT_SCOPE)
+  endif()
+
+  write_simdutf_provenance_artifacts()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_PROVENANCE_JSON)
+    set(THREAD_SYSTEM_SIMDUTF_PROVENANCE_JSON ${THREAD_SYSTEM_SIMDUTF_PROVENANCE_JSON} PARENT_SCOPE)
+  endif()
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_PROVENANCE_MARKDOWN)
+    set(THREAD_SYSTEM_SIMDUTF_PROVENANCE_MARKDOWN ${THREAD_SYSTEM_SIMDUTF_PROVENANCE_MARKDOWN} PARENT_SCOPE)
   endif()
 
   message(STATUS "Dependency detection complete")

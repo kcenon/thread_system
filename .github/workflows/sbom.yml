@@ -27,6 +27,21 @@ jobs:
       with:
         submodules: true
 
+    - name: Checkout common_system
+      uses: actions/checkout@v6
+      with:
+        repository: kcenon/common_system
+        path: common_system
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Configure project to capture simdutf provenance
+      run: |
+        cmake -S . -B build/sbom-provenance -G Ninja \
+          -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON \
+          -DBUILD_WITH_COMMON_SYSTEM=ON \
+          -DTHREAD_BUILD_INTEGRATION_TESTS=OFF \
+          -DBUILD_DOCUMENTATION=OFF
+
     - name: Generate SBOM with Syft (CycloneDX)
       uses: anchore/sbom-action@v0
       with:
@@ -113,8 +128,14 @@ jobs:
         echo "" >> SBOM_REPORT.md
         echo "- **CycloneDX**: sbom-cyclonedx.json" >> SBOM_REPORT.md
         echo "- **SPDX**: sbom-spdx.json" >> SBOM_REPORT.md
+        echo "- **simdutf provenance (JSON)**: build/sbom-provenance/dependency-provenance/simdutf-provenance.json" >> SBOM_REPORT.md
+        echo "- **simdutf provenance (Markdown)**: build/sbom-provenance/dependency-provenance/simdutf-provenance.md" >> SBOM_REPORT.md
         echo "" >> SBOM_REPORT.md
         cat vcpkg-dependencies.md >> SBOM_REPORT.md
+        if [ -f "build/sbom-provenance/dependency-provenance/simdutf-provenance.md" ]; then
+          echo "" >> SBOM_REPORT.md
+          cat build/sbom-provenance/dependency-provenance/simdutf-provenance.md >> SBOM_REPORT.md
+        fi
 
     - name: Upload SBOM artifacts
       uses: actions/upload-artifact@v7
@@ -125,6 +146,8 @@ jobs:
           sbom-spdx.json
           vcpkg-dependencies.md
           SBOM_REPORT.md
+          build/sbom-provenance/dependency-provenance/simdutf-provenance.json
+          build/sbom-provenance/dependency-provenance/simdutf-provenance.md
         retention-days: 90
 
     - name: Upload SBOM to release
@@ -135,6 +158,8 @@ jobs:
           sbom-cyclonedx.json
           sbom-spdx.json
           SBOM_REPORT.md
+          build/sbom-provenance/dependency-provenance/simdutf-provenance.json
+          build/sbom-provenance/dependency-provenance/simdutf-provenance.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

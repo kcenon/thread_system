@@ -8,7 +8,7 @@
 | Document | Version |
 |----------|---------|
 | IEC 62304 Reference | &sect;8.1.2 Software items from SOUP |
-| Last Reviewed | 2026-03-07 |
+| Last Reviewed | 2026-03-10 |
 | thread_system Version | 0.1.0 |
 
 ---
@@ -64,6 +64,26 @@ All SOUP versions are pinned in `vcpkg.json` via the `overrides` field:
 ```
 
 The vcpkg baseline is locked in `vcpkg-configuration.json` to ensure reproducible builds.
+
+---
+
+## Resolved Provenance Artifacts
+
+The SBOM workflow now performs a minimal CMake configure and publishes the resolved
+`simdutf` provenance alongside the CycloneDX/SPDX outputs:
+
+- `build/sbom-provenance/dependency-provenance/simdutf-provenance.json`
+- `build/sbom-provenance/dependency-provenance/simdutf-provenance.md`
+
+Interpret `resolved_source` as follows:
+
+- `system`: a pre-installed or OS package manager provided `simdutf` CMake package was used
+- `vcpkg`: the resolved target came from the active vcpkg toolchain / `vcpkg_installed`
+- `FetchContent`: CMake cloned `https://github.com/simdutf/simdutf.git` during configure
+
+When `resolved_source` is `FetchContent`, verify `resolved_version` and
+`source_reference` against the pinned tag `v5.2.5`. The `resolved_path` field shows
+the concrete package or source directory that satisfied the dependency in that CI run.
 
 ---
 
