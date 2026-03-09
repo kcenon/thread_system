@@ -479,6 +479,13 @@ namespace kcenon::thread
 			[state_weak, deadline_point]() mutable
 			{
 				auto s = state_weak.lock();
+				// Release the weak_ptr immediately after locking, regardless of
+				// lock success. This ensures ~weak_ptr() runs while the strong
+				// reference (s) is still alive, preventing a data race on the
+				// shared control block between this thread's operator delete
+				// (via __on_zero_shared_weak) and the token destructor's
+				// __release_shared read (ThreadSanitizer: data race).
+				state_weak.reset();
 				if (!s)
 				{
 					return;
@@ -544,13 +551,6 @@ namespace kcenon::thread
 				}
 
 				s->timer_active.store(false, std::memory_order_release);
-
-				// Release the weak_ptr while the strong reference (s) is still alive.
-				// This ensures ~weak_ptr() decrements the weak ref-count before the
-				// last shared_ptr is released, preventing a data race on the control
-				// block between this thread's operator delete and the token destructor's
-				// __release_shared read (ThreadSanitizer: data race).
-				state_weak.reset();
 			});
 
 		timer_thread.detach();
