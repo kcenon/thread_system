@@ -87,7 +87,7 @@ jobs:
         lcov --list coverage_filtered.info || true
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         files: ./build/coverage_filtered.info
         flags: unittests
@@ -99,7 +99,7 @@ jobs:
 
     - name: Upload coverage artifacts
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: coverage-report
         path: |
