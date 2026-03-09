@@ -125,7 +125,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: integration-test-results-ubuntu-gcc-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -209,7 +209,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: integration-test-results-macos-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -316,7 +316,7 @@ jobs:
 
     - name: Upload test results
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: integration-test-results-windows-${{ matrix.build-type }}
         path: build/Testing/Temporary/LastTest.log
@@ -588,7 +588,7 @@ jobs:
         ./bin/performance_tests --gtest_output=json:performance-results.json
 
     - name: Upload performance results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: performance-benchmark-results
         path: |
