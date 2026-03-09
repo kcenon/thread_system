@@ -298,7 +298,19 @@ TEST_F(DiagnosticsIntegrationTest, HealthCheckAfterJobsProcessed)
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
-	auto health = pool_->diagnostics().health_check();
+	// Allow diagnostics metrics to propagate after job callbacks complete
+	health_status health;
+	const auto deadline
+		= std::chrono::steady_clock::now() + std::chrono::milliseconds(500);
+	do
+	{
+		health = pool_->diagnostics().health_check();
+		if (health.total_jobs_processed >= 10U)
+		{
+			break;
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	} while (std::chrono::steady_clock::now() < deadline);
 
 	EXPECT_GE(health.total_jobs_processed, 10U);
 	EXPECT_GT(health.success_rate, 0.0);
