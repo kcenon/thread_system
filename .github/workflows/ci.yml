@@ -267,7 +267,12 @@ jobs:
         # Exclude tests with known pre-existing TSan issues:
         # - DataIntegrity*: hang due to concurrent mode switching overhead
         # - ConcurrentEnableDisable: non-atomic write to policy_.enable_work_stealing
-        TSAN_FILTER="--gtest_filter=*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable"
+        # - LinkedWithTimeoutParentCancel: TSan false positive — libc++ weak_ptr::lock()
+        #   uses memory_order_relaxed on failure, breaking TSan's happens-before tracking
+        #   between the main thread's __release_shared() and the timer thread's
+        #   ~weak_ptr() -> __on_zero_shared_weak() -> operator delete. The actual
+        #   synchronization is established via __weak_count_ acq_rel operations.
+        TSAN_FILTER="--gtest_filter=*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable:*LinkedWithTimeoutParentCancel"
 
         if [ -f "bin/thread_base_unit" ]; then
           echo "Running unit tests with ${{ matrix.sanitizer }}..."
