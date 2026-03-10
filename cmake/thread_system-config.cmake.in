@@ -9,6 +9,9 @@ include(CMakeFindDependencyMacro)
 # Find required dependencies as specified in T2.1
 find_dependency(Threads REQUIRED)
 
+# common_system for standard interfaces (result, executor, etc.)
+find_dependency(common_system CONFIG REQUIRED)
+
 # Handle optional dependencies based on configuration
 # Check if std::format is used or if we need fmt library
 if(DEFINED USE_STD_FORMAT)
