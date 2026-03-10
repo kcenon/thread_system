@@ -69,6 +69,14 @@ function(create_thread_system_targets)
       # Note: fmt library is no longer used - using C++20 std::format exclusively
       # The HAS_FMT_LIBRARY definition and fmt linking have been removed
 
+      # Link common_system when found via find_package(common_system CONFIG)
+      # This is required for vcpkg/find_package consumers to get transitive
+      # include directories and dependencies from the kcenon::common_system target
+      if(TARGET kcenon::common_system)
+        target_link_libraries(ThreadSystem PUBLIC kcenon::common_system)
+        message(STATUS "ThreadSystem: linked kcenon::common_system target")
+      endif()
+
       if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
         target_link_libraries(ThreadSystem PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
         message(STATUS "ThreadSystem: simdutf support enabled")

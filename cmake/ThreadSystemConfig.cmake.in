@@ -11,6 +11,9 @@ include(CMakeFindDependencyMacro)
 # Find required dependencies
 find_dependency(Threads)
 
+# common_system for standard interfaces (result, executor, etc.)
+find_dependency(common_system CONFIG REQUIRED)
+
 # simdutf for SIMD-accelerated Unicode conversion
 find_dependency(simdutf CONFIG REQUIRED)
 
