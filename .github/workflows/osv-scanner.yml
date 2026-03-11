@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Run OSV-Scanner on vcpkg manifest
-        uses: google/osv-scanner-action/osv-scanner-action@v2
+        uses: google/osv-scanner-action/osv-scanner-action@v2.3.3
         with:
           scan-args: |-
             --lockfile=vcpkg.json
@@ -50,7 +50,7 @@ jobs:
 
       - name: Run OSV-Scanner filesystem scan (fallback)
         if: hashFiles('osv-results.sarif') == ''
-        uses: google/osv-scanner-action/osv-scanner-action@v2
+        uses: google/osv-scanner-action/osv-scanner-action@v2.3.3
         with:
           scan-args: |-
             --recursive
