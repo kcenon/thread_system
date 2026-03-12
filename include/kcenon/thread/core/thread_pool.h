@@ -30,6 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
+/**
+ * @file thread_pool.h
+ * @brief Core thread pool implementation with work stealing and auto-scaling.
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

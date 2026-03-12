@@ -1,4 +1,5 @@
 PROJECT_NAME           = "Thread System"
+PROJECT_BRIEF          = "High-performance C++20 thread pool with work stealing and DAG scheduling"
 OUTPUT_DIRECTORY       = documents
 CREATE_SUBDIRS         = YES
 ALLOW_UNICODE_NAMES    = NO
@@ -85,7 +86,7 @@ QUIET                  = NO
 WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
-WARN_NO_PARAMDOC       = NO
+WARN_NO_PARAMDOC       = YES
 WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
@@ -103,25 +104,33 @@ FILE_PATTERNS          = *.c \
                          *.h \
                          *.hh \
                          *.hpp \
-                         *.tpp
+                         *.tpp \
+                         *.cppm
 RECURSIVE              = YES
-EXCLUDE                =
+EXCLUDE                = ./build \
+                         ./vcpkg \
+                         ./vcpkg_installed \
+                         ./documents
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       =
+EXCLUDE_PATTERNS       = */CMakeFiles/* \
+                         */.git/* \
+                         */build/* \
+                         */build-*/*
 EXCLUDE_SYMBOLS        =
-EXAMPLE_PATH           =
-EXAMPLE_PATTERNS       = *
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_PATH           = ./examples
+EXAMPLE_PATTERNS       = *.cpp \
+                         *.h
+EXAMPLE_RECURSIVE      = YES
 IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = README.md
 SOURCE_BROWSER         = YES
 INLINE_SOURCES         = YES
 STRIP_CODE_COMMENTS    = YES
-REFERENCED_BY_RELATION = NO
-REFERENCES_RELATION    = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
 REFERENCES_LINK_SOURCE = YES
 SOURCE_TOOLTIPS        = YES
 USE_HTAGS              = NO
@@ -144,7 +153,7 @@ GENERATE_HTMLHELP      = NO
 GENERATE_QHP           = NO
 GENERATE_ECLIPSEHELP   = NO
 DISABLE_INDEX          = NO
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 FULL_SIDEBAR           = NO
 ENUM_VALUES_PER_LINE   = 4
 TREEVIEW_WIDTH         = 250
@@ -167,7 +176,7 @@ GENERATE_DOCBOOK       = NO
 GENERATE_AUTOGEN_DEF   = NO
 GENERATE_PERLMOD       = NO
 ENABLE_PREPROCESSING   = YES
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 EXPAND_ONLY_PREDEF     = NO
 SEARCH_INCLUDES        = YES
 SKIP_FUNCTION_MACROS   = YES
@@ -185,7 +194,7 @@ UML_LOOK               = YES
 UML_LIMIT_NUM_FIELDS   = 10
 DOT_UML_DETAILS        = NO
 DOT_WRAP_THRESHOLD     = 17
-TEMPLATE_RELATIONS     = NO
+TEMPLATE_RELATIONS     = YES
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
 CALL_GRAPH             = YES
