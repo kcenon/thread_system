@@ -54,12 +54,19 @@ namespace kcenon::thread {
 // Core types
 // ============================================================================
 
+/// @brief Main thread pool managing worker threads and job dispatch
 class thread_pool;
+/// @brief Configuration parameters for thread pool initialization
 struct thread_pool_config;
+/// @brief Worker thread that executes jobs from the queue
 class thread_worker;
+/// @brief Base class for all thread types
 class thread_base;
+/// @brief Unit of work submitted to a thread pool
 class job;
+/// @brief Thread-safe queue for pending jobs
 class job_queue;
+/// @brief Cooperative cancellation token for job cancellation
 class cancellation_token;
 
 // ============================================================================
@@ -93,17 +100,24 @@ class typed_job_interface;
 // Builder and policy types
 // ============================================================================
 
+/// @brief Fluent builder for constructing thread pool instances
 class thread_pool_builder;
+/// @brief Factory for creating pre-configured thread pool instances
 class pool_factory;
+/// @brief Policy controlling worker thread behavior
 struct worker_policy;
+/// @brief Strategy for distributing jobs across workers
 enum class scheduling_policy;
+/// @brief Current lifecycle state of a worker thread
 enum class worker_state;
 
 // ============================================================================
 // Pool policy types
 // ============================================================================
 
+/// @brief Base class for thread pool behavior policies
 class pool_policy;
+/// @brief Policy controlling circuit breaker failure handling
 class circuit_breaker_policy;
 
 /// @brief Typed thread pool builder template
@@ -117,15 +131,20 @@ class typed_thread_pool_builder;
 // circuit_breaker is now a using alias in resilience/circuit_breaker.h
 // circuit_breaker_config is now a using alias in resilience/circuit_breaker_config.h
 // Forward declarations removed to avoid conflicts with using declarations
+/// @brief Dynamic worker count adjuster based on load metrics
 class autoscaler;
+/// @brief Configuration for autoscaling thresholds and intervals
 struct autoscaling_policy;
+/// @brief NUMA-aware work stealing scheduler
 class numa_work_stealer;
+/// @brief Interface for adapting pool queues to different implementations
 class pool_queue_adapter_interface;
 
 // ============================================================================
 // Queue types
 // ============================================================================
 
+/// @brief Job queue that adapts sync strategy based on contention
 class adaptive_job_queue;
 
 // ============================================================================

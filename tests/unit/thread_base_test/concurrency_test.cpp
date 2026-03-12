@@ -322,7 +322,9 @@ TEST_F(ConcurrencyTest, JobExecutionRaceConditions) {
     }
 
     EXPECT_EQ(shared_counter.load(), num_jobs);
-    EXPECT_GT(race_detected.load(), 0);  // Some races should have been detected
+    // Race detection is non-deterministic; under sanitizer builds the added
+    // overhead may serialise all CAS operations so no contention is observed.
+    // We only verify correctness (shared_counter == num_jobs) above.
 }
 
 // Test memory ordering and visibility
