@@ -31,8 +31,8 @@ else()
     set(PACKAGE_VERSION_EXACT FALSE)
 endif()
 
-# Minimum required version check (1.0.0 as specified in T2.1)
-set(MINIMUM_SUPPORTED_VERSION "1.0.0")
+# Minimum required version check
+set(MINIMUM_SUPPORTED_VERSION "0.1.0")
 if("${PACKAGE_VERSION}" VERSION_LESS "${MINIMUM_SUPPORTED_VERSION}")
     set(PACKAGE_VERSION_COMPATIBLE FALSE)
     message(WARNING "thread_system version ${PACKAGE_VERSION} is below minimum supported version ${MINIMUM_SUPPORTED_VERSION}")
