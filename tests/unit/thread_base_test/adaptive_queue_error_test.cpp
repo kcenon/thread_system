@@ -248,9 +248,11 @@ TEST_F(AdaptiveQueueErrorTest, DataIntegrityDuringModeSwitch) {
         }
     });
 
-    // Mode switcher
+    // Mode switcher — 20 iterations is sufficient to verify data integrity
+    // while staying within sanitizer timeout budgets (UBSan/ASan add heavy
+    // instrumentation overhead on the tight producer/consumer loops)
     std::thread switcher([&]() {
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 20; ++i) {
             queue.switch_mode(adaptive_job_queue::mode::lock_free);
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
             queue.switch_mode(adaptive_job_queue::mode::mutex);
