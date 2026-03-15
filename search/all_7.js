@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['get_5fcode_5fpage_5fname_0',['get_code_page_name',['../d1/d53/classutility__module_1_1convert__string.html#adfb32d54d7baaff343c88b63e5a1c31f',1,'utility_module::convert_string']]],
+  ['get_5fencoding_5fname_1',['get_encoding_name',['../d1/d53/classutility__module_1_1convert__string.html#a2421e57d852f6193654843abc1df50e5',1,'utility_module::convert_string']]],
+  ['get_5ferror_2',['get_error',['../de/dff/classkcenon_1_1thread_1_1result__void.html#af31cdb173f7d658dd9344eab57fd6d62',1,'kcenon::thread::result_void::get_error()'],['../d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd',1,'kcenon::thread::result::get_error() &amp;'],['../d0/d3c/classkcenon_1_1thread_1_1result.html#aeb8b55e3d7014df45e6ccd24b3562df3',1,'kcenon::thread::result::get_error() const &amp;'],['../d0/d3c/classkcenon_1_1thread_1_1result.html#aab78528d5f7adeab0aaf7c292ffaae89',1,'kcenon::thread::result::get_error() &amp;&amp;'],['../d0/d9a/classkcenon_1_1thread_1_1result_3_01void_01_4.html#a1120308559117513c917b069a0ce5a2b',1,'kcenon::thread::result&lt; void &gt;::get_error() &amp;'],['../d0/d9a/classkcenon_1_1thread_1_1result_3_01void_01_4.html#a128bb1eaf69b99059b866d731d20a7ed',1,'kcenon::thread::result&lt; void &gt;::get_error() const &amp;'],['../d0/d9a/classkcenon_1_1thread_1_1result_3_01void_01_4.html#a597429130c11c9c38981bfc6f14259f5',1,'kcenon::thread::result&lt; void &gt;::get_error() &amp;&amp;']]],
+  ['get_5fsystem_5fcode_5fpage_3',['get_system_code_page',['../d1/d53/classutility__module_1_1convert__string.html#a550e52055c5dd552d364a1fa60ae452d',1,'utility_module::convert_string']]],
+  ['get_5fwchar_5fencoding_4',['get_wchar_encoding',['../d1/d53/classutility__module_1_1convert__string.html#a9370c8d707e8c6caf6268472483b852b',1,'utility_module::convert_string']]],
+  ['getting_20help_5',['🤝 Getting Help',['../index.html#getting_help',1,'']]],
+  ['grade_20reliability_6',['🛡️ Production-Grade Reliability',['../index.html#reliability',1,'']]],
+  ['guide_7',['Quick Start Guide',['../index.html#quick_start',1,'']]],
+  ['guides_8',['📚 Comprehensive Guides',['../index.html#guides',1,'']]]
+];
