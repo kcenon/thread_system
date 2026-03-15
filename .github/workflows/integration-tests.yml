@@ -64,7 +64,7 @@ jobs:
         fi
 
     - name: Cache FetchContent dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           build/_deps
@@ -158,7 +158,7 @@ jobs:
         fi
 
     - name: Cache FetchContent dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           build/_deps
@@ -248,7 +248,7 @@ jobs:
         }
 
     - name: Cache FetchContent dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           build/_deps
@@ -375,7 +375,7 @@ jobs:
         fi
 
     - name: Cache FetchContent dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           build/_deps
@@ -545,7 +545,7 @@ jobs:
         fi
 
     - name: Cache FetchContent dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           build/_deps
