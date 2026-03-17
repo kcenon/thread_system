@@ -1,70 +1,43 @@
 @PACKAGE_INIT@
 
-# ThreadSystem CMake configuration file (v3.0.0+)
-# This file helps other projects find and use ThreadSystem
-#
-# ThreadSystem v3.0.0 uses C++20 std::format exclusively (no fmt dependency)
-# ThreadSystem v3.0.0 requires common_system for interfaces
+# ThreadSystem legacy CMake configuration file
+# This wrapper delegates to the standardized thread_system config
+# for backward compatibility with find_package(ThreadSystem) consumers.
 
+# Find the standardized package which does all the real work
 include(CMakeFindDependencyMacro)
+find_dependency(thread_system CONFIG REQUIRED
+    HINTS "${CMAKE_CURRENT_LIST_DIR}/../thread_system")
 
-# Find required dependencies
-find_dependency(Threads)
+# Legacy aliases for backward compatibility
+set(ThreadSystem_FOUND TRUE)
+set(ThreadSystem_VERSION ${thread_system_VERSION})
 
-# common_system for standard interfaces (result, executor, etc.)
-find_dependency(common_system CONFIG REQUIRED)
+# Map thread_system:: targets to ThreadSystem:: aliases
+# In unified mode, alias from the real imported target
+if(TARGET thread_system::ThreadSystem)
+    set(ThreadSystem_LIBRARIES thread_system::ThreadSystem)
 
-# simdutf for SIMD-accelerated Unicode conversion
-find_dependency(simdutf CONFIG REQUIRED)
-
-# Include the targets file
-include("${CMAKE_CURRENT_LIST_DIR}/ThreadSystemTargets.cmake")
-
-# Determine available target structure
-# New unified build exports ThreadSystem::ThreadSystem as a single library
-# Legacy build exports individual component libraries
-if(TARGET ThreadSystem::ThreadSystem)
-    # Unified library mode - create component aliases for compatibility
-    set(_THREAD_SYSTEM_UNIFIED_MODE TRUE)
-    set(_THREAD_SYSTEM_MAIN_TARGET ThreadSystem::ThreadSystem)
-
-    # Create component aliases pointing to the unified library
-    if(NOT TARGET ThreadSystem::utilities)
-        add_library(ThreadSystem::utilities ALIAS ThreadSystem::ThreadSystem)
-    endif()
-    if(NOT TARGET ThreadSystem::thread_base)
-        add_library(ThreadSystem::thread_base ALIAS ThreadSystem::ThreadSystem)
-    endif()
-    if(NOT TARGET ThreadSystem::interfaces)
-        add_library(ThreadSystem::interfaces ALIAS ThreadSystem::ThreadSystem)
-    endif()
-    if(NOT TARGET ThreadSystem::thread_pool)
-        add_library(ThreadSystem::thread_pool ALIAS ThreadSystem::ThreadSystem)
-    endif()
-    if(NOT TARGET ThreadSystem::typed_thread_pool)
-        add_library(ThreadSystem::typed_thread_pool ALIAS ThreadSystem::ThreadSystem)
-    endif()
-    if(NOT TARGET ThreadSystem::logger)
-        add_library(ThreadSystem::logger ALIAS ThreadSystem::ThreadSystem)
-    endif()
-
-    # Set convenience variable to main target
-    set(ThreadSystem_LIBRARIES ThreadSystem::ThreadSystem)
-else()
-    # Legacy component mode - individual libraries
-    set(_THREAD_SYSTEM_UNIFIED_MODE FALSE)
-    set(ThreadSystem_LIBRARIES "")
-
-    # Collect available component targets
-    foreach(_component utilities thread_base interfaces thread_pool typed_thread_pool logger)
-        if(TARGET ThreadSystem::${_component})
-            list(APPEND ThreadSystem_LIBRARIES ThreadSystem::${_component})
+    foreach(_component utilities thread_base interfaces thread_pool typed_thread_pool lockfree logger)
+        if(NOT TARGET ThreadSystem::${_component})
+            add_library(ThreadSystem::${_component} ALIAS thread_system::ThreadSystem)
         endif()
     endforeach()
 
-    if(NOT ThreadSystem_LIBRARIES)
-        message(FATAL_ERROR "No ThreadSystem targets found. Installation may be corrupted.")
+    if(NOT TARGET ThreadSystem::ThreadSystem)
+        add_library(ThreadSystem::ThreadSystem ALIAS thread_system::ThreadSystem)
     endif()
+else()
+    # Legacy component mode
+    set(ThreadSystem_LIBRARIES "")
+    foreach(_component utilities thread_base interfaces thread_pool typed_thread_pool lockfree logger)
+        if(TARGET thread_system::${_component})
+            list(APPEND ThreadSystem_LIBRARIES thread_system::${_component})
+            if(NOT TARGET ThreadSystem::${_component})
+                add_library(ThreadSystem::${_component} ALIAS thread_system::${_component})
+            endif()
+        endif()
+    endforeach()
 endif()
 
 check_required_components(ThreadSystem)

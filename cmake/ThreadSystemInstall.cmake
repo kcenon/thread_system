@@ -87,7 +87,7 @@ function(install_thread_system_libraries)
 
     if(INSTALL_TARGETS)
       install(TARGETS ${INSTALL_TARGETS}
-              EXPORT ThreadSystemTargets
+              EXPORT thread_system-targets
               ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
               LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
               RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -97,7 +97,7 @@ function(install_thread_system_libraries)
     # New structure - install ThreadSystem library
     if(TARGET ThreadSystem)
       install(TARGETS ThreadSystem
-              EXPORT ThreadSystemTargets
+              EXPORT thread_system-targets
               ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
               LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
               RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -110,17 +110,11 @@ endfunction()
 # Install CMake config files
 ##################################################
 function(install_cmake_config_files)
-  # Install targets with standardized namespace
-  install(EXPORT ThreadSystemTargets
+  # Install targets with single standardized namespace
+  install(EXPORT thread_system-targets
           FILE thread_system-targets.cmake
           NAMESPACE thread_system::
           DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system)
-
-  # Legacy compatibility
-  install(EXPORT ThreadSystemTargets
-          FILE ThreadSystemTargets.cmake
-          NAMESPACE ThreadSystem::
-          DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem)
 
   # Generate standardized config files
   configure_package_config_file(
@@ -129,13 +123,13 @@ function(install_cmake_config_files)
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
   )
 
-  configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system-config-version.cmake.in
+  write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
   )
 
-  # Legacy config files
+  # Legacy config wrapper (redirects to standardized config)
   configure_package_config_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThreadSystemConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
@@ -148,13 +142,14 @@ function(install_cmake_config_files)
     COMPATIBILITY SameMajorVersion
   )
 
-  # Install config files
+  # Install standardized config files
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
   )
 
+  # Install legacy config wrapper for find_package(ThreadSystem) consumers
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
