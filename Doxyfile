@@ -1,4 +1,5 @@
 PROJECT_NAME           = "Thread System"
+PROJECT_NUMBER         = "0.3.1"
 PROJECT_BRIEF          = "High-performance C++20 thread pool with work stealing and DAG scheduling"
 OUTPUT_DIRECTORY       = documents
 CREATE_SUBDIRS         = YES
