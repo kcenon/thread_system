@@ -117,6 +117,10 @@ else()
     endforeach()
 endif()
 
+# Legacy aliases for backward compatibility
+set(ThreadSystem_FOUND TRUE)
+set(ThreadSystem_VERSION ${PROJECT_VERSION})
+
 # Component handling for find_package with COMPONENTS
 set(thread_system_FOUND TRUE)
 
