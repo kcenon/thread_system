@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, kcenon
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #pragma once
+
+/**
+ * @defgroup core_threading Core Threading
+ * @brief Foundational thread primitives including thread base and lifecycle management.
+ * @{
+ */
+/** @} */ // end of core_threading
 
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/utils/convert_string.h>

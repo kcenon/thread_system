@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, kcenon
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #pragma once
+
+/**
+ * @defgroup thread_pools Thread Pools
+ * @brief Thread pool implementations for concurrent job execution.
+ * @{
+ */
+/** @} */ // end of thread_pools
 
 #include <kcenon/thread/utils/formatter.h>
 #include <kcenon/thread/utils/formatter_macros.h>
