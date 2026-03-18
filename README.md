@@ -61,6 +61,18 @@ cd thread_system
 ./build/bin/thread_pool_sample
 ```
 
+### Installation via vcpkg
+
+```bash
+vcpkg install kcenon-thread-system
+```
+
+In your `CMakeLists.txt`:
+```cmake
+find_package(thread_system CONFIG REQUIRED)
+target_link_libraries(your_target PRIVATE kcenon::thread_system)
+```
+
 ### Basic Usage
 
 ```cpp
