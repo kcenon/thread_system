@@ -32,6 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+/**
+ * @defgroup pool_policies Pool Policies
+ * @brief Extensible policies for customizing thread pool behavior.
+ * @{
+ */
+/** @} */ // end of pool_policies
+
 #include <kcenon/common/patterns/result.h>
 
 #include <memory>

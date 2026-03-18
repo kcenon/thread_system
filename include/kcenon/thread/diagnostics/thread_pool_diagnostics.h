@@ -32,6 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+/**
+ * @defgroup diagnostics Diagnostics
+ * @brief Runtime diagnostics, health monitoring, and execution tracing for thread pools.
+ * @{
+ */
+/** @} */ // end of diagnostics
+
 #include "thread_info.h"
 #include "job_info.h"
 #include "bottleneck_report.h"
