@@ -2,6 +2,8 @@
 [![Code Coverage](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml)
 [![Static Analysis](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml)
 [![codecov](https://codecov.io/gh/kcenon/thread_system/branch/main/graph/badge.svg)](https://codecov.io/gh/kcenon/thread_system)
+[![Documentation](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml)
+[![License](https://img.shields.io/github/license/kcenon/thread_system)](https://github.com/kcenon/thread_system/blob/main/LICENSE)
 
 # Thread System
 
