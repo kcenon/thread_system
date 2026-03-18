@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, kcenon
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @file cancellation_reason.h
  * @brief Cancellation reason structure for enhanced cancellation tokens.
  */
+
+/**
+ * @defgroup cancellation Cancellation
+ * @brief Cooperative cancellation tokens, exceptions, and reason tracking.
+ * @{
+ */
+/** @} */ // end of cancellation
 
 #include <chrono>
 #include <exception>

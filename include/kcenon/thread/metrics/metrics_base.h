@@ -32,6 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+/**
+ * @defgroup metrics Metrics
+ * @brief Thread pool metrics collection, histograms, and observability.
+ * @{
+ */
+/** @} */ // end of metrics
+
 #include <atomic>
 #include <cstdint>
 

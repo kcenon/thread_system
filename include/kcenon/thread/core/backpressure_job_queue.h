@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, kcenon
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #pragma once
+
+/**
+ * @defgroup backpressure Backpressure
+ * @brief Backpressure mechanisms for controlling queue overflow and rate limiting.
+ * @{
+ */
+/** @} */ // end of backpressure
 
 #include "job_queue.h"
 #include "backpressure_config.h"
