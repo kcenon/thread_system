@@ -186,6 +186,8 @@ MACRO_EXPANSION        = YES
 EXPAND_ONLY_PREDEF     = NO
 SEARCH_INCLUDES        = YES
 SKIP_FUNCTION_MACROS   = YES
+ALIASES                = "thread_safety=@par Thread Safety:^^" \
+                         "performance=@par Performance:^^"
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
 EXTERNAL_PAGES         = YES
