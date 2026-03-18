@@ -357,18 +357,17 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 	 * 8. Handle execution errors with detailed logging
 	 * 9. Log successful completion with timing info if enabled
 	 *
-	 * Non-Blocking Polling Strategy:
-	 * - Uses try_dequeue() instead of blocking dequeue()
-	 * - Avoids two-level condition variable problem completely
-	 * - When queue is empty: sleeps 100μs to prevent CPU spinning
-	 * - Returns success immediately, will be called again by thread_base loop
+	 * Hybrid Wait Strategy:
+	 * - Phase 1: Bounded spin (16 iterations) with CPU pause hints for fast pickup
+	 * - Phase 2: Blocking dequeue() on job_queue's condition_variable
+	 * - Wakes immediately on enqueue (notify_one) or stop (notify_all)
 	 * - should_continue_work() determines when to exit (on queue stop)
 	 *
 	 * Performance Characteristics:
-	 * - Zero blocking on condition variables (no CV synchronization)
-	 * - Minimal CPU overhead: 100μs sleep when idle
-	 * - Fast job pickup when available: <1μs typical latency
-	 * - Predictable behavior independent of queue notification timing
+	 * - Sub-microsecond pickup when jobs arrive during spin phase
+	 * - Near-zero idle CPU usage (CV blocking, not polling)
+	 * - Immediate wake-up on enqueue (<100μs vs previous 10ms floor)
+	 * - No busy-waiting overhead when idle
 	 *
 	 * Error Handling:
 	 * - Missing job queue: Returns resource allocation error
@@ -494,20 +493,27 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 				#endif
 			}
 
-			// Phase 2: Polling with longer sleep if spin didn't find a job
-			// Use longer sleep (10ms) instead of blocking to avoid hang issues
-			// This provides near-zero CPU usage while maintaining responsiveness
+			// Phase 2: Block on job_queue's condition variable if spin didn't find a job
+			// Uses the queue's blocking dequeue() which waits on its internal CV.
+			// This wakes immediately when a new job is enqueued (via notify_one)
+			// or when the queue is stopped (via notify_all in job_queue::stop).
 			if (!current_job)
 			{
 				is_idle_.store(true, std::memory_order_relaxed);
 
-				// Sleep longer than spin to reduce CPU usage
-				// 10ms provides good balance between latency and efficiency
-				std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-				// Return immediately - will be called again by thread_base loop
-				// should_continue_work() will determine when to exit
-				return common::ok();
+				// Blocking dequeue: waits on job_queue's condition_variable
+				// Wakes on: enqueue() notify_one, or stop() notify_all
+				auto dequeue_result = local_queue->dequeue();
+				if (dequeue_result.is_ok())
+				{
+					current_job = std::move(dequeue_result.value());
+				}
+				else
+				{
+					// Queue is stopped or empty after wake — return to let
+					// should_continue_work() decide whether to exit
+					return common::ok();
+				}
 			}
 		}
 
