@@ -33,6 +33,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /**
  * @file thread_pool.h
  * @brief Core thread pool implementation with work stealing and auto-scaling.
+ *
+ * @code
+ * #include <kcenon/thread/core/thread_pool.h>
+ *
+ * // Create a thread pool with 4 workers
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>("my_pool", 4);
+ *
+ * // Submit a task
+ * pool->enqueue([] { std::cout << "Task executed\n"; });
+ *
+ * // Submit a task with a result
+ * auto future = pool->enqueue([] { return 42; });
+ * int result = future.get();
+ *
+ * // Graceful shutdown (waits for pending tasks)
+ * pool->stop();
+ * @endcode
  */
 
 #pragma once
