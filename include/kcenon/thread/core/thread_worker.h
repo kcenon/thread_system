@@ -135,6 +135,16 @@ namespace kcenon::thread
 		void set_diagnostics(diagnostics::thread_pool_diagnostics* diag);
 
 		/**
+		 * @brief Set the diagnostics sampling rate.
+		 * @param rate Record diagnostics events every Nth job (1 = every job).
+		 *
+		 * When rate > 1, only every Nth job records diagnostic events,
+		 * reducing clock-read overhead while still providing representative data.
+		 * The is_tracing_enabled() check remains the top-level gate.
+		 */
+		void set_diagnostics_sample_rate(std::uint32_t rate);
+
+		/**
 		 * @brief Set the worker policy for this worker.
 		 * @param policy The worker policy configuration.
 		 */
@@ -344,6 +354,21 @@ namespace kcenon::thread
 		 * in on_stop_requested().
 		 */
 		cancellation_token worker_cancellation_token_;
+
+		/**
+		 * @brief Diagnostics sampling rate (record every Nth job).
+		 *
+		 * Default is 1 (every job) for backward compatibility.
+		 */
+		std::uint32_t diagnostics_sample_rate_{1};
+
+		/**
+		 * @brief Counter for diagnostics sampling.
+		 *
+		 * Incremented on each job execution. Diagnostics events are recorded
+		 * when (diagnostics_counter_ % diagnostics_sample_rate_ == 0).
+		 */
+		std::uint64_t diagnostics_counter_{0};
 
 		/**
 		 * @brief Pointer to the currently executing job.

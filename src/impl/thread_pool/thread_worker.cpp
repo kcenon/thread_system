@@ -203,6 +203,11 @@ void thread_worker::set_diagnostics(diagnostics::thread_pool_diagnostics* diag)
 	diagnostics_ = diag;
 }
 
+void thread_worker::set_diagnostics_sample_rate(std::uint32_t rate)
+{
+	diagnostics_sample_rate_ = (rate > 0) ? rate : 1;
+}
+
 void thread_worker::set_policy(const worker_policy& policy)
 {
 	policy_ = policy;
@@ -544,8 +549,15 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 		const auto job_name_for_event = current_job->get_name();
 		const auto enqueue_time = current_job->get_enqueue_time();
 
-		// Record dequeued event if tracing is enabled
-		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		// Determine whether this job should record diagnostics events.
+		// The sampling counter reduces clock-read overhead by skipping
+		// events for most jobs when sample_rate > 1.
+		const bool should_trace = diagnostics_
+			&& diagnostics_->is_tracing_enabled()
+			&& (++diagnostics_counter_ % diagnostics_sample_rate_ == 0);
+
+		// Record dequeued event if tracing is enabled and sampled
+		if (should_trace)
 		{
 			diagnostics::job_execution_event dequeued_event;
 			dequeued_event.job_id = job_id;
@@ -597,8 +609,8 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 		// Use release ordering to ensure job state is visible to cancellation thread
 		current_job_.store(current_job.get(), std::memory_order_release);
 
-		// Record started event if tracing is enabled
-		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		// Record started event if tracing is enabled and sampled
+		if (should_trace)
 		{
 			diagnostics::job_execution_event started_event;
 			started_event.job_id = job_id;
@@ -666,8 +678,8 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 			// Increment failed job counter
 			jobs_failed_.fetch_add(1, std::memory_order_relaxed);
 
-			// Record failed event if tracing is enabled
-			if (diagnostics_ && diagnostics_->is_tracing_enabled())
+			// Record failed event if tracing is enabled and sampled
+			if (should_trace)
 			{
 				diagnostics::job_execution_event failed_event;
 				failed_event.job_id = job_id;
@@ -696,8 +708,8 @@ std::unique_ptr<job> thread_worker::try_steal_work()
 		// Increment completed job counter
 		jobs_completed_.fetch_add(1, std::memory_order_relaxed);
 
-		// Record completed event if tracing is enabled
-		if (diagnostics_ && diagnostics_->is_tracing_enabled())
+		// Record completed event if tracing is enabled and sampled
+		if (should_trace)
 		{
 			diagnostics::job_execution_event completed_event;
 			completed_event.job_id = job_id;
