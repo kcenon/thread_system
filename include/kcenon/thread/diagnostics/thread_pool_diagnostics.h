@@ -104,6 +104,15 @@ namespace diagnostics
 		 * @brief Configurable thresholds for health status determination.
 		 */
 		health_thresholds health_thresholds_config{};
+
+		/**
+		 * @brief Diagnostics event sampling rate (record every Nth job).
+		 *
+		 * When greater than 1, workers only record diagnostic events
+		 * for every Nth job, reducing clock-read overhead.
+		 * Default: 1 (every job, for backward compatibility).
+		 */
+		std::uint32_t event_sample_rate{1};
 	};
 
 	/**
