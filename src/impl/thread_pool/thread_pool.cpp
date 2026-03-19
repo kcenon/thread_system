@@ -464,6 +464,7 @@ auto thread_pool::enqueue(std::unique_ptr<thread_worker>&& worker) -> common::Vo
     worker->set_context(context_);
     worker->set_metrics(metrics_service_->get_basic_metrics());
     worker->set_diagnostics(&diagnostics());
+    worker->set_diagnostics_sample_rate(diagnostics().get_config().event_sample_rate);
 
     // Acquire lock before checking start_pool_ and adding worker
     // This prevents race condition with stop():
@@ -513,14 +514,16 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& wo
     // Track the starting index for rollback in case of error
     std::size_t start_index = workers_.size();
 
-    // Get diagnostics pointer once outside the loop for efficiency
+    // Get diagnostics pointer and config once outside the loop for efficiency
     auto* diag = &diagnostics();
+    const auto sample_rate = diag->get_config().event_sample_rate;
 
     for (auto& worker : workers) {
         worker->set_job_queue(job_queue_);
         worker->set_context(context_);
         worker->set_metrics(metrics_service_->get_basic_metrics());
         worker->set_diagnostics(diag);
+        worker->set_diagnostics_sample_rate(sample_rate);
 
         // Add worker to vector first
         workers_.emplace_back(std::move(worker));
@@ -748,8 +751,9 @@ auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t {
 
     // Restart workers if requested and pool is running
     if (restart_failed && failed_count > 0 && is_running()) {
-        // Get diagnostics pointer for new workers
+        // Get diagnostics pointer and config for new workers
         auto* diag = &diagnostics();
+        const auto sample_rate = diag->get_config().event_sample_rate;
 
         // Create new workers to replace failed ones
         for (std::size_t i = 0; i < failed_count; ++i) {
@@ -760,6 +764,7 @@ auto thread_pool::check_worker_health(bool restart_failed) -> std::size_t {
             worker->set_job_queue(job_queue_);
             worker->set_metrics(metrics_service_->get_basic_metrics());
             worker->set_diagnostics(diag);
+            worker->set_diagnostics_sample_rate(sample_rate);
 
             // Start the new worker
             auto start_result = worker->start();

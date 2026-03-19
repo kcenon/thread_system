@@ -91,11 +91,23 @@ class work_affinity_tracker
 {
 public:
 	/**
+	 * @brief Maximum number of workers tracked for affinity.
+	 *
+	 * When the pool has more workers than this limit, only the first
+	 * MAX_TRACKED_WORKERS are tracked in the cooperation matrix to
+	 * prevent O(n^2) memory growth. Workers beyond this cap can still
+	 * participate in work stealing but won't have affinity data.
+	 */
+	static constexpr std::size_t MAX_TRACKED_WORKERS = 32;
+
+	/**
 	 * @brief Construct a work affinity tracker
 	 * @param worker_count Number of workers to track
 	 * @param history_size Size of history to consider for affinity calculations
 	 *
-	 * @note The history_size affects memory usage: O(worker_count^2 * history_size)
+	 * @note If worker_count exceeds MAX_TRACKED_WORKERS, only the first
+	 *       MAX_TRACKED_WORKERS workers are tracked in the cooperation matrix.
+	 * @note The history_size affects memory usage: O(min(worker_count, MAX_TRACKED_WORKERS)^2)
 	 */
 	explicit work_affinity_tracker(std::size_t worker_count,
 	                               std::size_t history_size = 16);
@@ -205,6 +217,7 @@ private:
 		-> std::pair<std::size_t, std::size_t>;
 
 	std::size_t worker_count_{0};
+	std::size_t tracked_count_{0};
 	std::size_t history_size_{16};
 	std::size_t matrix_size_{0};
 

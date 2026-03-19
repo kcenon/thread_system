@@ -40,15 +40,17 @@ namespace kcenon::thread
 work_affinity_tracker::work_affinity_tracker(std::size_t worker_count,
                                              std::size_t history_size)
 	: worker_count_(worker_count)
+	, tracked_count_(std::min(worker_count, MAX_TRACKED_WORKERS))
 	, history_size_(history_size)
 	, matrix_size_(0)
 	, total_cooperations_(0)
 {
-	if (worker_count_ > 1)
+	if (tracked_count_ > 1)
 	{
 		// Size of upper triangular matrix without diagonal
-		// For n workers: n*(n-1)/2 pairs
-		matrix_size_ = (worker_count_ * (worker_count_ - 1)) / 2;
+		// For n tracked workers: n*(n-1)/2 pairs
+		// Capped at MAX_TRACKED_WORKERS to prevent O(n^2) growth
+		matrix_size_ = (tracked_count_ * (tracked_count_ - 1)) / 2;
 		cooperation_matrix_ =
 			std::make_unique<std::atomic<std::uint64_t>[]>(matrix_size_);
 
@@ -62,12 +64,14 @@ work_affinity_tracker::work_affinity_tracker(std::size_t worker_count,
 
 work_affinity_tracker::work_affinity_tracker(work_affinity_tracker&& other) noexcept
 	: worker_count_(other.worker_count_)
+	, tracked_count_(other.tracked_count_)
 	, history_size_(other.history_size_)
 	, matrix_size_(other.matrix_size_)
 	, cooperation_matrix_(std::move(other.cooperation_matrix_))
 	, total_cooperations_(other.total_cooperations_.load(std::memory_order_relaxed))
 {
 	other.worker_count_ = 0;
+	other.tracked_count_ = 0;
 	other.history_size_ = 0;
 	other.matrix_size_ = 0;
 	other.total_cooperations_.store(0, std::memory_order_relaxed);
@@ -79,6 +83,7 @@ auto work_affinity_tracker::operator=(work_affinity_tracker&& other) noexcept
 	if (this != &other)
 	{
 		worker_count_ = other.worker_count_;
+		tracked_count_ = other.tracked_count_;
 		history_size_ = other.history_size_;
 		matrix_size_ = other.matrix_size_;
 		cooperation_matrix_ = std::move(other.cooperation_matrix_);
@@ -87,6 +92,7 @@ auto work_affinity_tracker::operator=(work_affinity_tracker&& other) noexcept
 			std::memory_order_relaxed);
 
 		other.worker_count_ = 0;
+		other.tracked_count_ = 0;
 		other.history_size_ = 0;
 		other.matrix_size_ = 0;
 		other.total_cooperations_.store(0, std::memory_order_relaxed);
@@ -97,7 +103,7 @@ auto work_affinity_tracker::operator=(work_affinity_tracker&& other) noexcept
 void work_affinity_tracker::record_cooperation(std::size_t thief_id,
                                                std::size_t victim_id)
 {
-	if (thief_id >= worker_count_ || victim_id >= worker_count_ ||
+	if (thief_id >= tracked_count_ || victim_id >= tracked_count_ ||
 	    thief_id == victim_id || !cooperation_matrix_)
 	{
 		return;
@@ -114,7 +120,7 @@ void work_affinity_tracker::record_cooperation(std::size_t thief_id,
 auto work_affinity_tracker::get_affinity(std::size_t worker_a,
                                          std::size_t worker_b) const -> double
 {
-	if (worker_a >= worker_count_ || worker_b >= worker_count_ ||
+	if (worker_a >= tracked_count_ || worker_b >= tracked_count_ ||
 	    worker_a == worker_b || !cooperation_matrix_)
 	{
 		return 0.0;
@@ -140,16 +146,16 @@ auto work_affinity_tracker::get_preferred_victims(std::size_t worker_id,
                                                   std::size_t max_count) const
 	-> std::vector<std::size_t>
 {
-	if (worker_id >= worker_count_ || max_count == 0)
+	if (worker_id >= tracked_count_ || max_count == 0)
 	{
 		return {};
 	}
 
-	// Build list of (affinity, worker_id) pairs for all other workers
+	// Build list of (affinity, worker_id) pairs for tracked workers only
 	std::vector<std::pair<double, std::size_t>> affinities;
-	affinities.reserve(worker_count_ - 1);
+	affinities.reserve(tracked_count_ - 1);
 
-	for (std::size_t i = 0; i < worker_count_; ++i)
+	for (std::size_t i = 0; i < tracked_count_; ++i)
 	{
 		if (i != worker_id)
 		{
@@ -211,8 +217,8 @@ auto work_affinity_tracker::get_matrix_index(std::size_t worker_a,
 
 	// Upper triangular matrix index formula:
 	// For pair (i, j) where i < j:
-	// index = i * worker_count - i*(i+1)/2 + j - i - 1
-	return (i * worker_count_) - ((i * (i + 1)) / 2) + j - i - 1;
+	// index = i * tracked_count - i*(i+1)/2 + j - i - 1
+	return (i * tracked_count_) - ((i * (i + 1)) / 2) + j - i - 1;
 }
 
 auto work_affinity_tracker::normalize_pair(std::size_t a, std::size_t b)

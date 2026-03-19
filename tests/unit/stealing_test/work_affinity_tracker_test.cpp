@@ -380,11 +380,22 @@ TEST(work_affinity_tracker_test, large_worker_count)
 {
 	work_affinity_tracker tracker(100, 16);
 
+	// Workers within the tracked cap should work normally
+	tracker.record_cooperation(0, 15);
+	tracker.record_cooperation(10, 20);
+
+	EXPECT_GT(tracker.get_affinity(0, 15), 0.0);
+	EXPECT_GT(tracker.get_affinity(10, 20), 0.0);
+
+	// Workers beyond MAX_TRACKED_WORKERS are silently ignored
 	tracker.record_cooperation(0, 99);
 	tracker.record_cooperation(50, 75);
 
-	EXPECT_GT(tracker.get_affinity(0, 99), 0.0);
-	EXPECT_GT(tracker.get_affinity(50, 75), 0.0);
+	EXPECT_EQ(tracker.get_affinity(0, 99), 0.0);
+	EXPECT_EQ(tracker.get_affinity(50, 75), 0.0);
+
+	// Verify the cap value is accessible
+	EXPECT_EQ(work_affinity_tracker::MAX_TRACKED_WORKERS, 32);
 }
 
 TEST(work_affinity_tracker_test, two_workers)
