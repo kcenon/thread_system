@@ -35,10 +35,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace kcenon::thread::detail {
 
 // Constructor: Initialize with a dummy node
-lockfree_job_queue::lockfree_job_queue() {
+lockfree_job_queue::lockfree_job_queue()
+    : pool_(std::make_shared<node_pool>()) {
     // Create dummy node (Michael-Scott algorithm requires one dummy node)
     // This simplifies the algorithm by ensuring head and tail are never null
-    node* dummy = new node(nullptr);
+    node* dummy = new node();
 
     head_.store(dummy, std::memory_order_relaxed);
     tail_.store(dummy, std::memory_order_relaxed);
@@ -62,10 +63,10 @@ lockfree_job_queue::~lockfree_job_queue() {
     // Safe cleanup: acquire semantics ensure we see all writes
     node* dummy = head_.load(std::memory_order_acquire);
 
-    // Use safe hazard pointer for reclamation of dummy node
+    // Retire dummy node through pool-aware reclamation
     // This ensures the node is only deleted when no other thread
     // holds a hazard pointer to it (uses explicit memory ordering)
-    safe_retire_hazard(dummy);
+    retire_node(dummy);
 }
 
 // Enqueue operation (Michael-Scott algorithm)
@@ -74,8 +75,8 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
         return common::error_info{static_cast<int>(error_code::invalid_argument), "Cannot enqueue null job", "thread_system"};
     }
 
-    // Allocate new node with the job
-    node* new_node = new node(std::move(job_ptr));
+    // Acquire node from pool (reuses retired nodes, falls back to new)
+    node* new_node = pool_->acquire(std::move(job_ptr));
 
     // Acquire hazard pointer guard for tail protection (uses safe memory ordering)
     safe_hazard_guard hp_tail;
@@ -127,8 +128,8 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
         }
     }
 
-    // If we exhausted retries, clean up and return error
-    delete new_node;
+    // If we exhausted retries, return node to pool and report error
+    pool_->release(new_node);
     return common::error_info{static_cast<int>(error_code::queue_busy), "Queue is busy, retry later", "thread_system"};
 }
 
@@ -211,7 +212,8 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
                     std::unique_ptr<job> job_data = std::move(next->data);
 
                     // Retire the old head node for later reclamation (safe memory ordering)
-                    safe_retire_hazard(head);
+                    // Reclaimed nodes are returned to the pool instead of deleted
+                    retire_node(head);
 
                     // Update size (relaxed - just for monitoring)
                     approximate_size_.fetch_sub(1, std::memory_order_relaxed);
@@ -264,6 +266,22 @@ auto lockfree_job_queue::empty() const -> bool {
 auto lockfree_job_queue::size() const -> std::size_t {
     // Return cached size (may not be exact due to concurrent modifications)
     return approximate_size_.load(std::memory_order_relaxed);
+}
+
+// Retire a node through hazard pointers, recycling via pool on reclamation
+void lockfree_job_queue::retire_node(node* n) {
+    if (!n) return;
+
+    // Capture pool by shared_ptr so the closure remains valid even if the
+    // queue is destroyed before the hazard pointer domain reclaims this node
+    std::shared_ptr<node_pool> pool = pool_;
+
+    safe_hazard_pointer_domain::instance().retire(
+        n,
+        [pool](void* ptr) {
+            pool->release(static_cast<node*>(ptr));
+        }
+    );
 }
 
 }  // namespace kcenon::thread::detail
