@@ -27,11 +27,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// IMPORTANT: This implementation has memory ordering issues (TICKET-002).
-// This macro enables the code for library builds while maintaining the header guard.
-// For production code, use safe_hazard_pointer.h or atomic_shared_ptr.h instead.
-#define HAZARD_POINTER_FORCE_ENABLE
-
 #include "kcenon/thread/core/hazard_pointer.h"
 
 #include <algorithm>
@@ -59,7 +54,9 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
         while (curr) {
             bool expected = false;
             // Try to claim an inactive list
-            if (curr->active.compare_exchange_strong(expected, true, std::memory_order_acquire,
+            // Use acq_rel: acquire to see prior hazard pointer clears,
+            // release to publish active=true to scanning threads
+            if (curr->active.compare_exchange_strong(expected, true, std::memory_order_acq_rel,
                                                      std::memory_order_relaxed)) {
                 thread_list = curr;
                 thread_count_.fetch_add(1, std::memory_order_relaxed);
@@ -73,10 +70,12 @@ thread_hazard_list* hazard_pointer_registry::get_thread_list() {
             thread_list = new thread_hazard_list();
 
             // Add to global linked list
-            thread_hazard_list* old_head = head_.load(std::memory_order_relaxed);
+            // Use acq_rel on CAS: acquire to read current list, release to
+            // publish the new node so that scanning threads see it
+            thread_hazard_list* old_head = head_.load(std::memory_order_acquire);
             do {
                 thread_list->next = old_head;
-            } while (!head_.compare_exchange_weak(old_head, thread_list, std::memory_order_release,
+            } while (!head_.compare_exchange_weak(old_head, thread_list, std::memory_order_acq_rel,
                                                   std::memory_order_relaxed));
 
             thread_count_.fetch_add(1, std::memory_order_relaxed);
@@ -132,28 +131,22 @@ std::vector<void*> hazard_pointer_registry::scan_hazard_pointers() {
     size_t inactive_count = 0;
 
     while (curr) {
-        bool is_active = curr->active.load(std::memory_order_acquire);
-
-        if (is_active) {
-            // Scan this thread's hazard pointers
-            for (auto& hazard : curr->hazards) {
-                void* ptr = hazard.load(std::memory_order_acquire);
-                // Only add if it's a real pointer (not nullptr or SLOT_OWNED_MARKER)
-                if (ptr != nullptr && ptr != SLOT_OWNED_MARKER) {
-                    protected_ptrs.push_back(ptr);
-                }
+        // IMPORTANT: Scan ALL records regardless of active status.
+        // A thread may be in the process of setting a hazard pointer before
+        // setting active=true (race window in get_thread_list). If we skip
+        // inactive records, we might miss a valid hazard pointer and
+        // prematurely reclaim a protected node.
+        // This matches the approach used in safe_hazard_pointer.h.
+        for (auto& hazard : curr->hazards) {
+            void* ptr = hazard.load(std::memory_order_acquire);
+            // Only add if it's a real pointer (not nullptr or SLOT_OWNED_MARKER)
+            if (ptr != nullptr && ptr != SLOT_OWNED_MARKER) {
+                protected_ptrs.push_back(ptr);
             }
-        } else {
-            // Skip inactive threads - optimization to reduce scan time
+        }
+
+        if (!curr->active.load(std::memory_order_acquire)) {
             ++inactive_count;
-
-            // Periodically unlink inactive threads to prevent list growth
-            // Only do this every N scans to avoid excessive overhead
-            if (should_cleanup && inactive_count > 10) {
-                // Unlinking is complex and requires careful synchronization
-                // For now, just count inactive threads for monitoring
-                // Full unlinking would require hazard pointers on the list itself
-            }
         }
 
         curr = curr->next;
@@ -193,10 +186,12 @@ void global_reclamation_manager::add_orphaned_nodes(retire_node* head, size_t co
     }
 
     // Atomically prepend to the global list
-    retire_node* old_head = head_.load(std::memory_order_relaxed);
+    // Use acq_rel: acquire to see the current list, release to publish
+    // the new nodes so that reclaim() sees them
+    retire_node* old_head = head_.load(std::memory_order_acquire);
     do {
         tail->next = old_head;
-    } while (!head_.compare_exchange_weak(old_head, head, std::memory_order_release,
+    } while (!head_.compare_exchange_weak(old_head, head, std::memory_order_acq_rel,
                                           std::memory_order_relaxed));
 
     count_.fetch_add(count, std::memory_order_relaxed);
@@ -204,12 +199,11 @@ void global_reclamation_manager::add_orphaned_nodes(retire_node* head, size_t co
 
 size_t global_reclamation_manager::reclaim(const std::vector<void*>& protected_ptrs) {
     // Take the entire list to process
-    retire_node* curr = head_.exchange(nullptr, std::memory_order_acquire);
+    // Use acq_rel: acquire to see all node data, release to publish
+    // the nullptr so concurrent add_orphaned_nodes sees it
+    retire_node* curr = head_.exchange(nullptr, std::memory_order_acq_rel);
     if (!curr)
         return 0;
-
-    // Reset count (we'll add back whatever we don't reclaim)
-    count_.store(0, std::memory_order_relaxed);
 
     size_t reclaimed = 0;
     retire_node* keep_head = nullptr;
@@ -247,7 +241,13 @@ size_t global_reclamation_manager::reclaim(const std::vector<void*>& protected_p
         curr = next;
     }
 
-    // Add back kept nodes
+    // Subtract reclaimed count (not kept, since kept nodes will be re-added
+    // via add_orphaned_nodes which increments count_ itself)
+    // We need to subtract the total taken (reclaimed + keep_count) because
+    // add_orphaned_nodes will add keep_count back
+    count_.fetch_sub(reclaimed + keep_count, std::memory_order_relaxed);
+
+    // Add back kept nodes (this will add keep_count to count_)
     if (keep_head) {
         add_orphaned_nodes(keep_head, keep_count);
     }
@@ -270,8 +270,10 @@ hazard_pointer::hazard_pointer() : slot_(nullptr), slot_index_(0) {
     for (size_t i = 0; i < detail::thread_hazard_list::MAX_HAZARDS_PER_THREAD; ++i) {
         void* expected = nullptr;
         // Try to claim this slot with SLOT_OWNED_MARKER
+        // Use acq_rel: acquire to synchronize with prior release of the slot,
+        // release to publish ownership to scanning threads
         if (thread_list->hazards[i].compare_exchange_strong(
-                expected, const_cast<void*>(SLOT_OWNED_MARKER), std::memory_order_acquire,
+                expected, const_cast<void*>(SLOT_OWNED_MARKER), std::memory_order_acq_rel,
                 std::memory_order_relaxed)) {
             slot_ = &thread_list->hazards[i];
             slot_index_ = i;
