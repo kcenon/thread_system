@@ -237,14 +237,95 @@ private:
         std::unique_ptr<job> data;          // Payload (nullptr for dummy node)
         std::atomic<node*> next{nullptr};   // Next node in queue
 
+        node() : data(nullptr), next(nullptr) {}
+
         explicit node(std::unique_ptr<job>&& job_data)
             : data(std::move(job_data))
             , next(nullptr) {}
     };
 
+    /**
+     * @brief Lock-free node freelist (Treiber stack) for node recycling
+     *
+     * Reduces heap allocations by reusing retired queue nodes. Nodes are
+     * returned to the pool via hazard pointer reclamation callbacks and
+     * acquired on enqueue instead of calling new.
+     *
+     * Shared via shared_ptr so retire callbacks remain valid after queue
+     * destruction (the hazard pointer domain is a process-wide singleton
+     * and may invoke deleters after the queue is destroyed).
+     */
+    class node_pool {
+    public:
+        node_pool() = default;
+
+        ~node_pool() {
+            // Drain freelist and delete all pooled nodes
+            node* head = free_list_.load(std::memory_order_relaxed);
+            while (head) {
+                node* next = head->next.load(std::memory_order_relaxed);
+                delete head;
+                head = next;
+            }
+        }
+
+        // Non-copyable, non-movable
+        node_pool(const node_pool&) = delete;
+        node_pool& operator=(const node_pool&) = delete;
+
+        /**
+         * @brief Acquire a node from the pool, or allocate a new one
+         * @param job_data Job to store in the node
+         * @return Pointer to a ready-to-use node
+         */
+        node* acquire(std::unique_ptr<job>&& job_data) {
+            node* head = free_list_.load(std::memory_order_acquire);
+            while (head) {
+                if (free_list_.compare_exchange_weak(
+                        head, head->next.load(std::memory_order_relaxed),
+                        std::memory_order_acq_rel,
+                        std::memory_order_acquire)) {
+                    // Reuse pooled node — reset fields
+                    head->data = std::move(job_data);
+                    head->next.store(nullptr, std::memory_order_relaxed);
+                    return head;
+                }
+                // head is updated by CAS on failure, retry
+            }
+            // Pool empty — allocate fresh node
+            return new node(std::move(job_data));
+        }
+
+        /**
+         * @brief Return a retired node to the pool for reuse
+         * @param n Node to recycle (must have been fully retired by HP scan)
+         */
+        void release(node* n) {
+            if (!n) return;
+            // Clear payload before pooling
+            n->data.reset();
+            node* old_head = free_list_.load(std::memory_order_relaxed);
+            do {
+                n->next.store(old_head, std::memory_order_relaxed);
+            } while (!free_list_.compare_exchange_weak(
+                old_head, n,
+                std::memory_order_release,
+                std::memory_order_relaxed));
+        }
+
+    private:
+        std::atomic<node*> free_list_{nullptr};
+    };
+
+    /// Retire a node through hazard pointers, recycling via pool on reclamation
+    void retire_node(node* n);
+
     // Queue state: head and tail pointers
     std::atomic<node*> head_;  // Dequeue end (with acquire/release)
     std::atomic<node*> tail_;  // Enqueue end (with acquire/release)
+
+    // Node pool for recycling retired nodes (shared_ptr for capture safety)
+    std::shared_ptr<node_pool> pool_;
 
     // Hazard pointer domain for safe memory reclamation
     // Uses safe_hazard_pointer with explicit memory ordering (safe on ARM/weak memory models)
