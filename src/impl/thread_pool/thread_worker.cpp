@@ -141,25 +141,41 @@ namespace kcenon::thread
 	 */
 	auto thread_worker::set_job_queue(std::shared_ptr<job_queue> job_queue) -> void
 	{
-		std::unique_lock<std::mutex> lock(queue_mutex_);
+		std::shared_ptr<kcenon::thread::job_queue> old_queue;
 
-		// Signal that queue replacement is in progress
-		queue_being_replaced_ = true;
+		{
+			std::unique_lock<std::mutex> lock(queue_mutex_);
 
-		// Wait for current job to complete
-		// Predicate ensures we don't proceed while a job is executing
-		queue_cv_.wait(lock, [this] {
-			return current_job_.load(std::memory_order_acquire) == nullptr;
-		});
+			// Signal that queue replacement is in progress
+			queue_being_replaced_ = true;
 
-		// Replace the queue pointer
-		job_queue_ = std::move(job_queue);
+			// Wait for current job to complete
+			// Predicate ensures we don't proceed while a job is executing
+			queue_cv_.wait(lock, [this] {
+				return current_job_.load(std::memory_order_acquire) == nullptr;
+			});
 
-		// Clear replacement flag
-		queue_being_replaced_ = false;
+			// Save old queue so we can wake any blocked dequeue() calls
+			old_queue = job_queue_;
 
-		// Notify worker thread that replacement is complete
-		queue_cv_.notify_all();
+			// Replace the queue pointer
+			job_queue_ = std::move(job_queue);
+
+			// Clear replacement flag
+			queue_being_replaced_ = false;
+
+			// Notify worker thread that replacement is complete
+			queue_cv_.notify_all();
+		}
+
+		// Stop the old queue outside the lock to wake any worker thread
+		// blocked on old_queue->dequeue(). Without this, the worker's
+		// do_work() would block indefinitely on the old queue's CV after
+		// the queue pointer has been replaced.
+		if (old_queue)
+		{
+			old_queue->stop();
+		}
 	}
 
 	/**
