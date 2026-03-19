@@ -28,6 +28,17 @@ cmake --preset default
 cmake --build build
 ```
 
+### Cleaning Build Directories
+
+To remove all build directories at once:
+
+```bash
+./scripts/clean.sh
+```
+
+> **Tip**: Prefer `cmake --preset <name>` over manual `mkdir build_*` directories.
+> Named presets produce consistent, reproducible builds and avoid build directory proliferation.
+
 ### Running Tests
 
 ```bash
