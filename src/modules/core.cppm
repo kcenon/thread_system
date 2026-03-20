@@ -12,7 +12,6 @@
  * - thread_base: Base thread class
  * - job: Job/task base class
  * - callback_job: Lambda-based jobs
- * - cancellable_job: Jobs with cancellation support
  * - cancellation_token: Cooperative cancellation
  * - error_handling: Thread-specific error types
  * - hazard_pointer: Memory reclamation for lock-free structures
@@ -50,7 +49,6 @@ module;
 #include <kcenon/thread/core/atomic_shared_ptr.h>
 #include <kcenon/thread/core/job.h>
 #include <kcenon/thread/core/callback_job.h>
-#include <kcenon/thread/core/cancellable_job.h>
 #include <kcenon/thread/core/job_types.h>
 #include <kcenon/thread/core/thread_base.h>
 #include <kcenon/thread/core/thread_conditions.h>
@@ -129,7 +127,6 @@ export namespace kcenon::thread {
 // Re-export job types
 using ::kcenon::thread::job;
 using ::kcenon::thread::callback_job;
-using ::kcenon::thread::cancellable_job;
 using ::kcenon::thread::job_priority;
 
 } // namespace kcenon::thread
