@@ -32,7 +32,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kcenon/thread/lockfree/lockfree_job_queue.h>
 
+#include <algorithm>
+#include <chrono>
+#include <thread>
+
+#if defined(__x86_64__) || defined(_M_X64)
+#include <immintrin.h>
+#endif
+
 namespace kcenon::thread::detail {
+
+namespace {
+
+// Exponential backoff for CAS retry loops.
+// Phase 1 (retry < 16): CPU pause (x86) or yield (other architectures)
+// Phase 2 (retry < 64): thread yield to let other threads progress
+// Phase 3 (retry >= 64): short sleep with exponential increase (capped at ~1ms)
+inline void backoff(int retry) {
+    if (retry < 16) {
+#if defined(__x86_64__) || defined(_M_X64)
+        _mm_pause();
+#else
+        std::this_thread::yield();
+#endif
+    } else if (retry < 64) {
+        std::this_thread::yield();
+    } else {
+        std::this_thread::sleep_for(
+            std::chrono::microseconds(1 << std::min(retry - 64, 10)));
+    }
+}
+
+}  // namespace
 
 // Constructor: Initialize with a dummy node
 lockfree_job_queue::lockfree_job_queue()
@@ -93,6 +124,7 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
 
         // Verify tail hasn't changed (if it changed, our protection might be on the wrong node)
         if (tail != tail_.load(std::memory_order_acquire)) {
+            backoff(retry);
             continue;
         }
 
@@ -118,6 +150,7 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
 
                     return common::ok();  // Success
                 }
+                backoff(retry);
             } else {
                 // Tail is behind, try to advance it
                 tail_.compare_exchange_weak(
@@ -125,6 +158,8 @@ auto lockfree_job_queue::enqueue(std::unique_ptr<job>&& job_ptr) -> common::Void
                     std::memory_order_release,
                     std::memory_order_relaxed);
             }
+        } else {
+            backoff(retry);
         }
     }
 
@@ -152,6 +187,7 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
 
         // Verify head hasn't changed (ABA protection)
         if (head != head_.load(std::memory_order_acquire)) {
+            backoff(outer_retry);
             continue;  // Head changed, retry
         }
 
@@ -174,11 +210,13 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
                 next_stable = true;
                 break;  // Stable, protected
             }
+            backoff(inner_retry);
             // Next changed, retry protection
         }
 
         // If we couldn't stabilize next pointer, retry outer loop
         if (!next_stable) {
+            backoff(outer_retry);
             continue;
         }
 
@@ -198,6 +236,7 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
             } else {
                 if (next == nullptr) {
                     // Inconsistent state, retry
+                    backoff(outer_retry);
                     continue;
                 }
 
@@ -221,7 +260,10 @@ auto lockfree_job_queue::dequeue() -> common::Result<std::unique_ptr<job>> {
                     // Return the job data
                     return std::move(job_data);
                 }
+                backoff(outer_retry);
             }
+        } else {
+            backoff(outer_retry);
         }
     }
 
