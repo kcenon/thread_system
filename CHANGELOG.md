@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Performance
 
 - Replace mutex with atomic counter for `job_queue` read-only query APIs ([#607](https://github.com/kcenon/thread_system/issues/607))
+- Add exponential backoff to `lockfree_job_queue` CAS retry loops to reduce CPU spin waste ([#608](https://github.com/kcenon/thread_system/issues/608))
 
 ## [0.3.1] - 2026-03-14
 
