@@ -411,6 +411,14 @@ namespace kcenon::thread
 		 * std::nullopt means unlimited size (default behavior).
 		 */
 		std::optional<std::size_t> max_size_;
+
+		/**
+		 * @brief Atomic size counter for lock-free read-only queries.
+		 *
+		 * Maintained in sync with queue_ by enqueue/dequeue operations.
+		 * Allows empty(), size(), and is_full() to operate without mutex.
+		 */
+		std::atomic<std::size_t> atomic_size_{0};
 	};
 }
 
