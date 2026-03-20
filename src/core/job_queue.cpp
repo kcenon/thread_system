@@ -155,6 +155,7 @@ namespace kcenon::thread
 
 		// Move job into queue (efficient transfer of ownership)
 		queue_.push_back(std::move(value));
+		atomic_size_.fetch_add(1, std::memory_order_relaxed);
 
 		// Conditionally notify waiting consumers
 		if (notify_)
@@ -229,6 +230,7 @@ namespace kcenon::thread
 		{
 			queue_.push_back(std::move(job));
 		}
+		atomic_size_.fetch_add(jobs.size(), std::memory_order_relaxed);
 
 		// Single notification for entire batch (performance optimization)
 		if (notify_)
@@ -293,6 +295,7 @@ namespace kcenon::thread
 		// 2. We just verified !queue_.empty() above
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
+		atomic_size_.fetch_sub(1, std::memory_order_relaxed);
 
 		return value;  // Return moved job (caller takes ownership)
 	}
@@ -338,6 +341,7 @@ namespace kcenon::thread
 		// Efficiently extract first job from queue
 		auto value = std::move(queue_.front());
 		queue_.pop_front();
+		atomic_size_.fetch_sub(1, std::memory_order_relaxed);
 
 		return value;  // Return moved job (caller takes ownership)
 	}
@@ -377,6 +381,7 @@ namespace kcenon::thread
 
 			// Efficient O(1) transfer of all jobs
 			std::swap(queue_, all_items);
+			atomic_size_.store(0, std::memory_order_relaxed);
 
 			// Wake all waiting threads since queue is now empty
 			condition_.notify_all();
@@ -431,6 +436,7 @@ namespace kcenon::thread
 				batch_items.push_back(std::move(queue_.front()));
 				queue_.pop_front();
 			}
+			atomic_size_.fetch_sub(count, std::memory_order_relaxed);
 
 			// Only notify if queue is now empty (to wake waiting workers)
 			// If jobs remain, other workers can continue dequeuing without wakeup overhead
@@ -466,6 +472,7 @@ namespace kcenon::thread
 
 		// Destroy all jobs in queue
 		queue_.clear();
+		atomic_size_.store(0, std::memory_order_relaxed);
 
 		// Wake all waiting threads since queue is now empty
 		condition_.notify_all();
@@ -485,9 +492,7 @@ namespace kcenon::thread
 	 */
 	auto job_queue::empty(void) const -> bool
 	{
-		std::scoped_lock<std::mutex> lock(mutex_);
-
-		return queue_.empty();
+		return atomic_size_.load(std::memory_order_relaxed) == 0;
 	}
 
 	/**
@@ -536,8 +541,7 @@ namespace kcenon::thread
 	 */
 	auto job_queue::size(void) const -> std::size_t
 	{
-		std::scoped_lock<std::mutex> lock(mutex_);
-		return queue_.size();
+		return atomic_size_.load(std::memory_order_relaxed);
 	}
 
 	/**
@@ -641,12 +645,11 @@ namespace kcenon::thread
 	 */
 	auto job_queue::is_full() const -> bool
 	{
-		std::scoped_lock<std::mutex> lock(mutex_);
 		if (!max_size_.has_value())
 		{
 			return false;  // Unbounded queue is never full
 		}
-		return queue_.size() >= max_size_.value();
+		return atomic_size_.load(std::memory_order_relaxed) >= max_size_.value();
 	}
 
 	// ============================================
