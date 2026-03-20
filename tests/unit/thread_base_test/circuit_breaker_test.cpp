@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, kcenon
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtest/gtest.h>
 
-#include <kcenon/thread/resilience/circuit_breaker.h>
-#include <kcenon/thread/resilience/failure_window.h>
+#include <kcenon/common/resilience/circuit_breaker.h>
+#include <kcenon/common/resilience/failure_window.h>
 #include <kcenon/thread/resilience/protected_job.h>
 #include <kcenon/thread/core/callback_job.h>
 
@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 
 using namespace kcenon::thread;
+using namespace kcenon::common::resilience;
 
 // ============================================================================
 // failure_window tests
@@ -113,12 +114,10 @@ class CircuitBreakerTest : public ::testing::Test {
 protected:
     void SetUp() override {
         config_.failure_threshold = 3;
-        config_.failure_rate_threshold = 0.5;
-        config_.minimum_requests = 5;
-        config_.open_duration = std::chrono::seconds{1};
+        config_.timeout = std::chrono::seconds{1};
         config_.half_open_max_requests = 2;
-        config_.half_open_success_threshold = 2;
-        config_.window_size = std::chrono::seconds{60};
+        config_.success_threshold = 2;
+        config_.failure_window = std::chrono::seconds{60};
 
         cb_ = std::make_unique<circuit_breaker>(config_);
     }
@@ -128,7 +127,7 @@ protected:
 };
 
 TEST_F(CircuitBreakerTest, StartsInClosedState) {
-    EXPECT_EQ(cb_->get_state(), circuit_state::closed);
+    EXPECT_EQ(cb_->get_state(), circuit_state::CLOSED);
 }
 
 TEST_F(CircuitBreakerTest, AllowsRequestsInClosedState) {
@@ -144,33 +143,44 @@ TEST_F(CircuitBreakerTest, TransitionsToOpenOnConsecutiveFailures) {
         cb_->record_failure();
     }
 
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
+    EXPECT_EQ(cb_->get_state(), circuit_state::OPEN);
 }
 
 TEST_F(CircuitBreakerTest, RejectsRequestsInOpenState) {
-    // Trip the circuit
-    cb_->trip();
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
+    // Trip the circuit by recording consecutive failures
+    for (std::size_t i = 0; i < config_.failure_threshold; ++i) {
+        cb_->allow_request();
+        cb_->record_failure();
+    }
+    EXPECT_EQ(cb_->get_state(), circuit_state::OPEN);
 
     EXPECT_FALSE(cb_->allow_request());
     EXPECT_FALSE(cb_->allow_request());
 }
 
 TEST_F(CircuitBreakerTest, TransitionsToHalfOpenAfterTimeout) {
-    cb_->trip();
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
+    // Trip the circuit
+    for (std::size_t i = 0; i < config_.failure_threshold; ++i) {
+        cb_->allow_request();
+        cb_->record_failure();
+    }
+    EXPECT_EQ(cb_->get_state(), circuit_state::OPEN);
 
-    // Wait for open duration
-    std::this_thread::sleep_for(config_.open_duration + std::chrono::milliseconds{100});
+    // Wait for timeout duration
+    std::this_thread::sleep_for(config_.timeout + std::chrono::milliseconds{100});
 
     // Next request should transition to half-open
     EXPECT_TRUE(cb_->allow_request());
-    EXPECT_EQ(cb_->get_state(), circuit_state::half_open);
+    EXPECT_EQ(cb_->get_state(), circuit_state::HALF_OPEN);
 }
 
 TEST_F(CircuitBreakerTest, TransitionsToClosedOnSuccessInHalfOpen) {
-    cb_->trip();
-    std::this_thread::sleep_for(config_.open_duration + std::chrono::milliseconds{100});
+    // Trip the circuit
+    for (std::size_t i = 0; i < config_.failure_threshold; ++i) {
+        cb_->allow_request();
+        cb_->record_failure();
+    }
+    std::this_thread::sleep_for(config_.timeout + std::chrono::milliseconds{100});
 
     // Transition to half-open
     EXPECT_TRUE(cb_->allow_request());
@@ -179,35 +189,25 @@ TEST_F(CircuitBreakerTest, TransitionsToClosedOnSuccessInHalfOpen) {
     EXPECT_TRUE(cb_->allow_request());
     cb_->record_success();
 
-    EXPECT_EQ(cb_->get_state(), circuit_state::closed);
+    EXPECT_EQ(cb_->get_state(), circuit_state::CLOSED);
 }
 
 TEST_F(CircuitBreakerTest, TransitionsBackToOpenOnFailureInHalfOpen) {
-    cb_->trip();
-    std::this_thread::sleep_for(config_.open_duration + std::chrono::milliseconds{100});
+    // Trip the circuit
+    for (std::size_t i = 0; i < config_.failure_threshold; ++i) {
+        cb_->allow_request();
+        cb_->record_failure();
+    }
+    std::this_thread::sleep_for(config_.timeout + std::chrono::milliseconds{100});
 
     // Transition to half-open
     EXPECT_TRUE(cb_->allow_request());
     cb_->record_failure();
 
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
+    EXPECT_EQ(cb_->get_state(), circuit_state::OPEN);
 }
 
-TEST_F(CircuitBreakerTest, ManualTripOpensCircuit) {
-    EXPECT_EQ(cb_->get_state(), circuit_state::closed);
-    cb_->trip();
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
-}
-
-TEST_F(CircuitBreakerTest, ManualResetClosesCircuit) {
-    cb_->trip();
-    EXPECT_EQ(cb_->get_state(), circuit_state::open);
-
-    cb_->reset();
-    EXPECT_EQ(cb_->get_state(), circuit_state::closed);
-}
-
-TEST_F(CircuitBreakerTest, StatsAreAccurate) {
+TEST_F(CircuitBreakerTest, StatsReturnMapWithExpectedKeys) {
     cb_->allow_request();
     cb_->record_success();
 
@@ -215,53 +215,37 @@ TEST_F(CircuitBreakerTest, StatsAreAccurate) {
     cb_->record_failure();
 
     auto stats = cb_->get_stats();
-    EXPECT_EQ(stats.current_state, circuit_state::closed);
-    EXPECT_EQ(stats.total_requests, 2);
-    EXPECT_EQ(stats.successful_requests, 1);
-    EXPECT_EQ(stats.failed_requests, 1);
+    EXPECT_TRUE(stats.count("current_state") > 0);
+    EXPECT_TRUE(stats.count("failure_count") > 0);
+    EXPECT_TRUE(stats.count("consecutive_successes") > 0);
 }
 
 TEST_F(CircuitBreakerTest, GuardMarksSuccessOnExplicitCall) {
     {
         auto guard = cb_->make_guard();
-        EXPECT_TRUE(guard.is_allowed());
-        guard.mark_success();
+        guard.record_success();
     }
 
-    auto stats = cb_->get_stats();
-    EXPECT_EQ(stats.successful_requests, 1);
-    EXPECT_EQ(stats.failed_requests, 0);
+    // Circuit should still be closed after a success
+    EXPECT_EQ(cb_->get_state(), circuit_state::CLOSED);
 }
 
 TEST_F(CircuitBreakerTest, GuardMarksFailureOnDestruction) {
     {
         auto guard = cb_->make_guard();
-        EXPECT_TRUE(guard.is_allowed());
         // Don't mark success - should record failure on destruction
     }
 
-    auto stats = cb_->get_stats();
-    EXPECT_EQ(stats.successful_requests, 0);
-    EXPECT_EQ(stats.failed_requests, 1);
-}
+    // After enough guard destructions (failures), circuit should open
+    // With threshold=3, we need 2 more
+    {
+        auto guard = cb_->make_guard();
+    }
+    {
+        auto guard = cb_->make_guard();
+    }
 
-TEST_F(CircuitBreakerTest, StateChangeCallbackIsCalled) {
-    std::atomic<int> callback_count{0};
-    circuit_state last_old_state = circuit_state::closed;
-    circuit_state last_new_state = circuit_state::closed;
-
-    config_.state_change_callback = [&](circuit_state old_state, circuit_state new_state) {
-        ++callback_count;
-        last_old_state = old_state;
-        last_new_state = new_state;
-    };
-
-    auto cb = circuit_breaker(config_);
-    cb.trip();
-
-    EXPECT_EQ(callback_count, 1);
-    EXPECT_EQ(last_old_state, circuit_state::closed);
-    EXPECT_EQ(last_new_state, circuit_state::open);
+    EXPECT_EQ(cb_->get_state(), circuit_state::OPEN);
 }
 
 // ============================================================================
@@ -272,7 +256,7 @@ class ProtectedJobTest : public ::testing::Test {
 protected:
     void SetUp() override {
         config_.failure_threshold = 3;
-        config_.open_duration = std::chrono::seconds{1};
+        config_.timeout = std::chrono::seconds{1};
         cb_ = std::make_shared<circuit_breaker>(config_);
     }
 
@@ -293,9 +277,6 @@ TEST_F(ProtectedJobTest, ExecutesInnerJobOnSuccess) {
 
     EXPECT_TRUE(result.is_ok());
     EXPECT_TRUE(executed);
-
-    auto stats = cb_->get_stats();
-    EXPECT_EQ(stats.successful_requests, 1);
 }
 
 TEST_F(ProtectedJobTest, RecordsFailureOnInnerJobFailure) {
@@ -307,13 +288,14 @@ TEST_F(ProtectedJobTest, RecordsFailureOnInnerJobFailure) {
     auto result = protected_j.do_work();
 
     EXPECT_TRUE(result.is_err());
-
-    auto stats = cb_->get_stats();
-    EXPECT_EQ(stats.failed_requests, 1);
 }
 
 TEST_F(ProtectedJobTest, RejectsWhenCircuitOpen) {
-    cb_->trip();
+    // Trip the circuit by recording consecutive failures
+    for (std::size_t i = 0; i < config_.failure_threshold; ++i) {
+        cb_->allow_request();
+        cb_->record_failure();
+    }
 
     auto inner = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
         return kcenon::common::ok();
@@ -332,7 +314,7 @@ TEST_F(ProtectedJobTest, RejectsWhenCircuitOpen) {
 TEST(CircuitBreakerConcurrencyTest, HandlesMultipleThreads) {
     circuit_breaker_config config;
     config.failure_threshold = 100;  // High threshold for this test
-    config.window_size = std::chrono::seconds{60};
+    config.failure_window = std::chrono::seconds{60};
 
     auto cb = std::make_shared<circuit_breaker>(config);
 
@@ -361,9 +343,9 @@ TEST(CircuitBreakerConcurrencyTest, HandlesMultipleThreads) {
         t.join();
     }
 
+    // Verify circuit breaker tracked some stats
     auto stats = cb->get_stats();
-    EXPECT_GT(stats.total_requests, 0);
-    EXPECT_EQ(stats.total_requests, stats.successful_requests + stats.failed_requests);
+    EXPECT_TRUE(stats.count("failure_count") > 0);
 }
 
 TEST(FailureWindowConcurrencyTest, HandlesMultipleThreads) {

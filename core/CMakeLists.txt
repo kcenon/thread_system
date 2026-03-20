@@ -27,9 +27,8 @@ set(THREAD_CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_queue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/job_types.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/retry_policy.h
-    # Deprecated job classes (for backward compatibility)
+    # Job types
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/callback_job.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellable_job.h
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/future_job.h
     # Cancellation support
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/core/cancellation_token.h
@@ -247,14 +246,11 @@ if(NOT THREAD_BUILD_CORE_ONLY)
 
     ##################################################
     # Resilience Module
-    # NOTE: circuit_breaker and failure_window now use common_system implementation
-    # Only protected_job remains in thread_system
+    # circuit_breaker, failure_window, and circuit_breaker_config are in common_system
+    # protected_job is the only thread_system resilience header
     ##################################################
     if(THREAD_BUILD_RESILIENCE)
         list(APPEND OPTIONAL_HEADERS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/circuit_breaker.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/circuit_breaker_config.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/failure_window.h
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/kcenon/thread/resilience/protected_job.h
         )
         list(APPEND OPTIONAL_SOURCES

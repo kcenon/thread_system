@@ -128,9 +128,8 @@ class typed_thread_pool_builder;
 // Scaling and resilience types
 // ============================================================================
 
-// circuit_breaker is now a using alias in resilience/circuit_breaker.h
-// circuit_breaker_config is now a using alias in resilience/circuit_breaker_config.h
-// Forward declarations removed to avoid conflicts with using declarations
+// circuit_breaker and circuit_breaker_config live in kcenon::common::resilience
+// and are imported via using declarations in headers that need them
 /// @brief Dynamic worker count adjuster based on load metrics
 class autoscaler;
 /// @brief Configuration for autoscaling thresholds and intervals

@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kcenon/thread/pool_policies/circuit_breaker_policy.h>
 #include <kcenon/thread/pool_policies/autoscaling_pool_policy.h>
 #include <kcenon/thread/pool_policies/work_stealing_pool_policy.h>
-#include <kcenon/thread/resilience/circuit_breaker_config.h>
+#include <kcenon/common/resilience/circuit_breaker_config.h>
 #include <kcenon/thread/scaling/autoscaling_policy.h>
 
 #include <memory>

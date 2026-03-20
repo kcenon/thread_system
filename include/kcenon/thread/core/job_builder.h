@@ -50,8 +50,7 @@ namespace kcenon::thread
 	 * @brief Fluent builder for creating and configuring jobs with composition.
 	 *
 	 * The job_builder class provides a clean, fluent interface for creating jobs
-	 * with various behaviors composed together. This replaces the need for
-	 * specialized job subclasses like cancellable_job, callback_job, etc.
+	 * with various behaviors composed together.
 	 *
 	 * ### Design Philosophy
 	 * Instead of inheritance-based specialization:

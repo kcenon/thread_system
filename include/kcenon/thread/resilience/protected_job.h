@@ -32,13 +32,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "circuit_breaker.h"
+#include <kcenon/common/resilience/circuit_breaker.h>
 #include <kcenon/thread/core/job.h>
 
 #include <memory>
 
 namespace kcenon::thread
 {
+	using common::resilience::circuit_breaker;
+
 	/**
 	 * @class protected_job
 	 * @brief A job wrapper that integrates circuit breaker protection.

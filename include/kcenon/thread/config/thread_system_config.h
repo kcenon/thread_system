@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "../core/backpressure_config.h"
-#include "../resilience/circuit_breaker_config.h"
+#include <kcenon/common/resilience/circuit_breaker_config.h>
 #include "../dag/dag_config.h"
 #include "../impl/typed_pool/priority_aging_config.h"
 
@@ -51,6 +51,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread
 {
+	using common::resilience::circuit_breaker_config;
+
 	// Forward declaration for builder pattern
 	class config_builder;
 
