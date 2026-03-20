@@ -114,11 +114,6 @@ namespace kcenon::thread::jobs {
     using job_function = std::function<void()>;
 
     /**
-     * @brief Function type for jobs that can be cancelled
-     */
-    using cancellable_job_function = std::function<void(const std::atomic<bool>&)>;
-
-    /**
      * @brief Utility function to create a job priority from integer
      * @param priority_value Integer priority (0=low, 1=normal, 2=high)
      * @return Corresponding job_priority enum value

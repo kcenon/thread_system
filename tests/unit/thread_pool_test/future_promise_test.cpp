@@ -3,8 +3,7 @@
  * @brief Unit tests for Future/Promise Integration feature (Issue #377)
  *
  * Tests cover:
- * - future_job template class
- * - submit_async method
+ * - submit API (backed by future_job internally)
  * - Batch operations (submit_batch_async, submit_all, submit_any)
  * - when_all/when_any helpers
  * - cancellable_future
@@ -14,7 +13,6 @@
 
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
-#include <kcenon/thread/core/future_job.h>
 #include <kcenon/thread/core/cancellable_future.h>
 #include <kcenon/thread/core/submit_options.h>
 #include <kcenon/thread/utils/when_helpers.h>
@@ -52,20 +50,18 @@ protected:
 };
 
 // ============================================================================
-// future_job tests
+// future_job tests (via submit API)
 // ============================================================================
 
 TEST_F(FuturePromiseTest, FutureJobReturnsIntResult) {
-    auto [job_ptr, future] = make_future_job([]{ return 42; });
-    pool_->enqueue(std::move(job_ptr));
+    auto future = pool_->submit([]{ return 42; });
 
     auto result = future.get();
     EXPECT_EQ(result, 42);
 }
 
 TEST_F(FuturePromiseTest, FutureJobReturnsStringResult) {
-    auto [job_ptr, future] = make_future_job([]{ return std::string("hello"); });
-    pool_->enqueue(std::move(job_ptr));
+    auto future = pool_->submit([]{ return std::string("hello"); });
 
     auto result = future.get();
     EXPECT_EQ(result, "hello");
@@ -74,20 +70,18 @@ TEST_F(FuturePromiseTest, FutureJobReturnsStringResult) {
 TEST_F(FuturePromiseTest, FutureJobHandlesVoidReturn) {
     std::atomic<int> counter{0};
 
-    auto [job_ptr, future] = make_future_job([&counter]{
+    auto future = pool_->submit([&counter]{
         counter.fetch_add(1);
     });
-    pool_->enqueue(std::move(job_ptr));
 
     future.get();  // Should not throw
     EXPECT_EQ(counter.load(), 1);
 }
 
 TEST_F(FuturePromiseTest, FutureJobPropagatesException) {
-    auto [job_ptr, future] = make_future_job([]() -> int {
+    auto future = pool_->submit([]() -> int {
         throw std::runtime_error("test error");
     });
-    pool_->enqueue(std::move(job_ptr));
 
     EXPECT_THROW(future.get(), std::runtime_error);
 }

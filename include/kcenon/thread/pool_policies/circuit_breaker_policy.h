@@ -33,8 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "pool_policy.h"
-#include <kcenon/thread/resilience/circuit_breaker.h>
-#include <kcenon/thread/resilience/circuit_breaker_config.h>
+#include <kcenon/common/resilience/circuit_breaker.h>
+#include <kcenon/common/resilience/circuit_breaker_config.h>
+#include <kcenon/common/resilience/circuit_state.h>
 
 #include <atomic>
 #include <memory>
@@ -42,6 +43,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace kcenon::thread
 {
+	// Import resilience types from common_system
+	using common::resilience::circuit_breaker;
+	using common::resilience::circuit_breaker_config;
+	using common::resilience::circuit_state;
+
 	/**
 	 * @class circuit_breaker_policy
 	 * @brief Pool policy that implements circuit breaker pattern for failure protection.
@@ -175,15 +181,6 @@ namespace kcenon::thread
 		[[nodiscard]] auto get_state() const -> circuit_state;
 
 		/**
-		 * @brief Gets circuit breaker statistics.
-		 * @return Statistics structure with counters and state info.
-		 * @deprecated Limited functionality - common_system API doesn't provide all fields
-		 * @note Returns partial stats. Some fields may be zero/default.
-		 */
-		[[deprecated("Limited functionality - use get_circuit_breaker()->get_stats() for full metrics")]]
-		[[nodiscard]] auto get_stats() const -> circuit_breaker_stats;
-
-		/**
 		 * @brief Gets the underlying circuit breaker.
 		 * @return Shared pointer to the circuit breaker.
 		 *
@@ -191,22 +188,6 @@ namespace kcenon::thread
 		 * or for advanced circuit breaker operations.
 		 */
 		[[nodiscard]] auto get_circuit_breaker() const -> std::shared_ptr<circuit_breaker>;
-
-		/**
-		 * @brief Manually trips (opens) the circuit.
-		 * @deprecated common_system API doesn't support manual trip - this is a no-op
-		 * @note This method does nothing. Manual state control is not supported.
-		 */
-		[[deprecated("Manual trip not supported in common_system - no-op function")]]
-		void trip();
-
-		/**
-		 * @brief Manually resets (closes) the circuit.
-		 * @deprecated common_system API doesn't support manual reset - this is a no-op
-		 * @note This method does nothing. Manual state control is not supported.
-		 */
-		[[deprecated("Manual reset not supported in common_system - no-op function")]]
-		void reset();
 
 	private:
 		std::shared_ptr<circuit_breaker> circuit_breaker_;

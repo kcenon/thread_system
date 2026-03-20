@@ -51,34 +51,13 @@ namespace kcenon::thread {
 
 /**
  * @class future_job
- * @brief A job that wraps a callable and provides a future for its result
- *
- * @deprecated Since v3.0.0. Use composition pattern with job_builder and
- * std::promise directly instead:
- * @code
- * // Old way (deprecated):
- * auto [job_ptr, future] = make_future_job([]{ return 42; });
- *
- * // New way (recommended):
- * #include <kcenon/thread/core/job_builder.h>
- * auto promise = std::make_shared<std::promise<int>>();
- * auto future = promise->get_future();
- * auto job = job_builder()
- *     .name("compute_job")
- *     .work([promise]() {
- *         promise->set_value(42);
- *         return common::ok();
- *     })
- *     .build();
- * @endcode
- *
- * This class will be removed in the next major version.
+ * @brief A job that wraps a callable and provides a future for its result.
  *
  * @tparam R The return type of the callable
  *
- * The future_job class extends the base job class to wrap any callable
- * and provide a std::future that can be used to retrieve the result
- * asynchronously.
+ * Used internally by thread_pool::submit() to provide std::future-based
+ * async result retrieval. Prefer using thread_pool::submit() directly
+ * rather than creating future_job instances manually.
  *
  * ### Thread Safety
  * - The promise is stored in a shared_ptr to ensure safe access from
@@ -88,27 +67,9 @@ namespace kcenon::thread {
  * ### Exception Handling
  * - Any exception thrown by the callable is captured and stored in the
  *   promise, to be rethrown when get() is called on the future.
- *
- * ### Usage Example
- * @code
- * // Create a future_job that returns an integer
- * auto job_ptr = std::make_unique<future_job<int>>(
- *     []{ return 42; }, "compute_answer"
- * );
- *
- * // Get the future before submitting the job
- * auto future = job_ptr->get_future();
- *
- * // Submit the job to a thread pool
- * pool->enqueue(std::move(job_ptr));
- *
- * // Wait for and retrieve the result
- * int result = future.get();  // returns 42
- * @endcode
  */
 template<typename R>
-class [[deprecated("Use job_builder with std::promise instead. See class documentation.")]]
-future_job : public job {
+class future_job : public job {
 public:
     /**
      * @brief Constructs a future_job from a callable
@@ -183,35 +144,5 @@ private:
     std::function<R()> callable_;
     std::shared_ptr<std::promise<R>> promise_;
 };
-
-/**
- * @brief Helper function to create a future_job
- *
- * @deprecated Since v3.0.0. Use job_builder with std::promise instead.
- *
- * @tparam F Callable type
- * @tparam R Return type (automatically deduced)
- * @param callable The function to execute
- * @param name Optional name for the job
- * @return A unique_ptr to the created future_job
- *
- * @example
- * @code
- * auto [job, future] = make_future_job([]{ return 42; });
- * pool->enqueue(std::move(job));
- * int result = future.get();
- * @endcode
- */
-template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
-[[deprecated("Use job_builder with std::promise instead.")]]
-[[nodiscard]] auto make_future_job(F&& callable, const std::string& name = "future_job")
-    -> std::pair<std::unique_ptr<future_job<R>>, std::future<R>>
-{
-    auto job_ptr = std::make_unique<future_job<R>>(
-        std::forward<F>(callable), name
-    );
-    auto future = job_ptr->get_future();
-    return {std::move(job_ptr), std::move(future)};
-}
 
 } // namespace kcenon::thread
