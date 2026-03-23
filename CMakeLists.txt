@@ -5,7 +5,7 @@
 # High-performance C++20 thread management system.
 ##################################################
 
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 
 # Note: C++20 modules require CMake 3.28+.
 # The THREAD_BUILD_MODULES option is only available when using CMake 3.28 or later.
