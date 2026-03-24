@@ -38,14 +38,18 @@ jobs:
           # Ubuntu 24.04 has GCC 13+ with full std::format support
           - os: ubuntu-24.04
             compiler: gcc
+            triplet: x64-linux
           - os: ubuntu-24.04
             compiler: clang
+            triplet: x64-linux
           - os: macos-latest
             compiler: clang
+            triplet: arm64-osx
           # Windows 2022 has MSVC 19.3x+ with full std::format support
           # Note: Uses version-based detection (not compile tests) due to Ninja+MSVC flag issues
           - os: windows-2022
             compiler: msvc
+            triplet: x64-windows
 
     steps:
     - name: Checkout code
@@ -107,16 +111,43 @@ jobs:
         path: common_system
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Configure CMake (Unix)
+    - name: Setup vcpkg
+      uses: kcenon/common_system/.github/actions/setup-vcpkg@main
+      with:
+        extra-cache-key: 'thread-system'
+
+    - name: Cache vcpkg installed
+      uses: actions/cache@v5
+      id: vcpkg-installed
+      with:
+        path: ${{ github.workspace }}/vcpkg_installed
+        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-
+
+    - name: Install vcpkg dependencies (Unix)
+      if: runner.os != 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
+      run: vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }}
+
+    - name: Install vcpkg dependencies (Windows)
+      if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }}
+
+    - name: Configure and Build (vcpkg - Unix)
       if: runner.os != 'Windows'
+      id: build-vcpkg-unix
+      continue-on-error: true
       run: |
         echo "=== Build Configuration ==="
         echo "Compiler: $CC / $CXX"
         echo "Common System: ON (required dependency)"
+        echo "Build method: vcpkg"
         echo "==========================="
 
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" \
           -DBUILD_WITH_COMMON_SYSTEM=ON \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DCMAKE_PREFIX_PATH="/usr;/usr/local" || {
@@ -125,18 +156,24 @@ jobs:
             exit 1
           }
 
-    - name: Configure CMake (Windows)
+        cmake --build build --config Debug
+
+    - name: Configure and Build (vcpkg - Windows)
       if: runner.os == 'Windows'
+      id: build-vcpkg-windows
+      continue-on-error: true
       shell: pwsh
       run: |
         Write-Host "=== Build Configuration ==="
         Write-Host "Compiler: MSVC"
         Write-Host "Common System: ON (required dependency)"
+        Write-Host "Build method: vcpkg"
         Write-Host "==========================="
 
         # Use Ninja with MSVC - feature detection uses version-based check
         cmake -B build -G Ninja `
           -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" `
           -DCMAKE_CXX_STANDARD=20 `
           -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
           -DBUILD_WITH_COMMON_SYSTEM=ON `
@@ -149,14 +186,48 @@ jobs:
           exit 1
         }
 
-    - name: Build (Unix)
-      if: runner.os != 'Windows'
-      run: cmake --build build --config Debug
+        cmake --build build --config Debug
 
-    - name: Build (Windows)
-      if: runner.os == 'Windows'
+    - name: Configure and Build (fallback - Unix)
+      if: runner.os != 'Windows' && steps.build-vcpkg-unix.outcome != 'success'
+      run: |
+        echo "vcpkg build failed. Falling back to FetchContent..."
+        rm -rf build
+
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_WITH_COMMON_SYSTEM=ON \
+          -DBUILD_INTEGRATION_TESTS=ON \
+          -DCMAKE_PREFIX_PATH="/usr;/usr/local" || {
+            echo "::error::CMake configuration failed (fallback)"
+            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No error log found"
+            exit 1
+          }
+
+        cmake --build build --config Debug
+
+    - name: Configure and Build (fallback - Windows)
+      if: runner.os == 'Windows' && steps.build-vcpkg-windows.outcome != 'success'
       shell: pwsh
-      run: cmake --build build --config Debug
+      run: |
+        Write-Host "vcpkg build failed. Falling back to FetchContent..."
+        if (Test-Path build) { Remove-Item -Recurse -Force build }
+
+        cmake -B build -G Ninja `
+          -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_CXX_STANDARD=20 `
+          -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
+          -DBUILD_WITH_COMMON_SYSTEM=ON `
+          -DBUILD_INTEGRATION_TESTS=ON
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::CMake configuration failed (fallback)"
+          if (Test-Path "build/CMakeFiles/CMakeError.log") {
+            Get-Content "build/CMakeFiles/CMakeError.log"
+          }
+          exit 1
+        }
+
+        cmake --build build --config Debug
 
     - name: Test (Unix)
       if: runner.os != 'Windows'
