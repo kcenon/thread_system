@@ -127,12 +127,14 @@ jobs:
 
     - name: Install vcpkg dependencies (Unix)
       if: runner.os != 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
-      run: vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }}
+      run: |
+        ${{ env.VCPKG_ROOT }}/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }}
 
     - name: Install vcpkg dependencies (Windows)
       if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
       shell: pwsh
-      run: vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }}
+      run: |
+        ${{ env.VCPKG_ROOT }}\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
 
     - name: Configure and Build (vcpkg - Unix)
       if: runner.os != 'Windows'
