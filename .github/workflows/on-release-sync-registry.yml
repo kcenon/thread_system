@@ -1,0 +1,14 @@
+name: Sync Registry on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  sync:
+    uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@main
+    with:
+      port-name: kcenon-thread-system
+      version: ${{ github.event.release.tag_name }}
+    secrets:
+      REGISTRY_PAT: ${{ secrets.VCPKG_REGISTRY_PAT }}
