@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/kcenon/thread_system/tree/main/docs
+    about: Check our documentation for guides and FAQs
+  - name: Discussions
+    url: https://github.com/kcenon/thread_system/discussions
+    about: Ask questions and discuss ideas
