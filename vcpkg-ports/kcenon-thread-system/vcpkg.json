@@ -1,6 +1,7 @@
 {
   "name": "kcenon-thread-system",
   "version-semver": "0.3.1",
+  "port-version": 0,
   "description": "High-performance C++20 multithreading framework with lock-free queues and adaptive optimization",
   "homepage": "https://github.com/kcenon/thread_system",
   "license": "BSD-3-Clause",
