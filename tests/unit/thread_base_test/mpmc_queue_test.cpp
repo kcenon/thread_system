@@ -1,59 +1,6 @@
-/*****************************************************************************
-BSD 3-Clause License
-
-Copyright (c) 2024, 🍀☀🌕🌥 🌊
-All rights reserved.
-
-IMPLEMENTATION NOTE - KNOWN ISSUE:
-The MPMC queue implementation is functional but has a critical issue with
-thread-local storage (TLS) cleanup that causes segmentation faults when
-running multiple tests in sequence. Individual tests pass when run separately.
-
-ROOT CAUSE:
-The lock-free node pool uses thread-local storage for per-thread caches.
-When test fixtures are destroyed, TLS destructors may access memory from
-the node pool that has already been freed, causing segmentation faults.
-
-CURRENT STATUS:
-- P0 Critical Issue: Must be resolved before production use
-- Workaround: TearDown() includes forced delays to allow TLS cleanup
-- This is a timing-dependent race condition
-
-RECOMMENDED SOLUTIONS (Priority Order):
-1. Implement hazard pointers for safe memory reclamation (3 weeks)
-2. Use epoch-based reclamation (EBR) for deterministic cleanup (2 weeks)
-3. Redesign node pool lifetime management to outlive all threads (1 week)
-
-TEMPORARY MITIGATION:
-The test suite includes cleanup delays in TearDown() to reduce the likelihood
-of segfaults, but this is NOT a permanent solution and does NOT guarantee
-safety in all scenarios.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-3. Neither the name of the copyright holder nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*****************************************************************************/
+// BSD 3-Clause License
+// Copyright (c) 2024, 🍀☀🌕🌥 🌊
+// See the LICENSE file in the project root for full license information.
 
 #include "gtest/gtest.h"
 // #include <kcenon/thread/core/job_queue.h>  // Not available
