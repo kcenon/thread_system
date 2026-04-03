@@ -10,6 +10,8 @@ category: "API"
 
 # C++20 Concepts 통합
 
+> **SSOT**: This document is the single source of truth for **C++20 Concepts 통합**.
+
 > **Language:** [English](CPP20_CONCEPTS.md) | **한국어**
 
 이 문서는 Thread System의 C++20 Concepts 통합에 대해 설명하며, 스레드 풀 작업에 대한 타입 안전 제약 조건을 제공합니다.

@@ -10,6 +10,8 @@ category: "GUID"
 
 # Frequently Asked Questions (FAQ)
 
+> **SSOT**: This document is the single source of truth for **Frequently Asked Questions (FAQ)**.
+
 > **Language:** **English** | [한국어](faq.kr.md)
 
 ## General Questions

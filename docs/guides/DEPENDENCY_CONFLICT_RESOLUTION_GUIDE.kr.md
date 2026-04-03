@@ -10,6 +10,8 @@ category: "GUID"
 
 # Dependency Conflict Resolution Guide
 
+> **SSOT**: This document is the single source of truth for **Dependency Conflict Resolution Guide**.
+
 > **Language:** [English](DEPENDENCY_CONFLICT_RESOLUTION_GUIDE.md) | **한국어**
 
 ## 개요

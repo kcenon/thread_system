@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Thread System 마이그레이션 가이드
 
+> **SSOT**: This document is the single source of truth for **Thread System 마이그레이션 가이드**.
+
 > **Language:** [English](MIGRATION.md) | **한국어**
 
 ## 목차

@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System 문서
 
+> **SSOT**: This document is the single source of truth for **Thread System 문서**.
+
 Thread System 프레임워크에 대한 포괄적인 문서에 오신 것을 환영합니다. 이 가이드는 여러분의 역할과 필요에 따라 올바른 문서를 찾는 데 도움을 줍니다.
 
 > **Language:** [English](README.md) | **한국어**

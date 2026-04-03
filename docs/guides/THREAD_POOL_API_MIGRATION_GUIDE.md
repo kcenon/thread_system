@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Thread Pool API Migration Guide
 
+> **SSOT**: This document is the single source of truth for **Thread Pool API Migration Guide**.
+
 This guide helps you migrate from deprecated `thread_pool` methods to their recommended replacements. All deprecated methods will be removed in v2.0.
 
 ## Deprecated Methods Overview

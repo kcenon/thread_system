@@ -10,6 +10,8 @@ category: "PROJ"
 
 # Thread System 프로젝트 구조
 
+> **SSOT**: This document is the single source of truth for **Thread System 프로젝트 구조**.
+
 **버전**: 0.3.0
 **최종 업데이트**: 2026-01-11
 **언어**: [English](PROJECT_STRUCTURE.md) | **한국어**

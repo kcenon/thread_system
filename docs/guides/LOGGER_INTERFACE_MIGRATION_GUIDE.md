@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Logger Interface Migration Guide
 
+> **SSOT**: This document is the single source of truth for **Logger Interface Migration Guide**.
+
 > **Language:** **English** | [한국어](LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
 
 **Version:** 0.1.0

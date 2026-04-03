@@ -10,6 +10,8 @@ category: "PROJ"
 
 # Dependency Version Compatibility Matrix
 
+> **SSOT**: This document is the single source of truth for **Dependency Version Compatibility Matrix**.
+
 > **Language:** [English](DEPENDENCY_COMPATIBILITY_MATRIX.md) | **한국어**
 
 ## 핵심 의존성

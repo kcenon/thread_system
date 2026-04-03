@@ -10,6 +10,8 @@ category: "GUID"
 
 # 빠른 시작 가이드
 
+> **SSOT**: This document is the single source of truth for **빠른 시작 가이드**.
+
 > **Language:** [English](QUICK_START.md) | **한국어**
 
 Thread System을 5분 안에 시작해보세요.

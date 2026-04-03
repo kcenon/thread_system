@@ -10,6 +10,8 @@ category: "INTR"
 
 # Integration Guide - Thread System
 
+> **SSOT**: This document is the single source of truth for **Integration Guide - Thread System**.
+
 > **Language:** **English** | [한국어](INTEGRATION.kr.md)
 
 ## Overview

@@ -10,6 +10,8 @@ category: "API"
 
 # C++20 Concepts Integration
 
+> **SSOT**: This document is the single source of truth for **C++20 Concepts Integration**.
+
 > **Language:** **English** | [한국어](CPP20_CONCEPTS.kr.md)
 
 This document describes the C++20 Concepts integration in Thread System, providing type-safe constraints for thread pool operations.

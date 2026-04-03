@@ -10,6 +10,8 @@ category: "GUID"
 
 # Diagnostics and Metrics Guide
 
+> **SSOT**: This document is the single source of truth for **Diagnostics and Metrics Guide**.
+
 > **Language:** **English**
 
 A comprehensive guide to thread_system's diagnostics and metrics subsystems, covering health checks, bottleneck detection, event tracing, latency histograms, throughput counters, and pluggable export backends.

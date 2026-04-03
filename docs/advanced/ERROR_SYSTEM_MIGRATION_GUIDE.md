@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Error System Migration Guide
 
+> **SSOT**: This document is the single source of truth for **Error System Migration Guide**.
+
 **Version:** 1.0.0
 **Date:** 2025-12-19
 **Status:** Phase 3 Complete

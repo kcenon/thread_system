@@ -10,6 +10,8 @@ category: "FEAT"
 
 # Thread System 기능 상세
 
+> **SSOT**: This document is the single source of truth for **Thread System 기능 상세**.
+
 **버전**: 0.3.0
 **최종 업데이트**: 2026-02-08
 **언어**: [English](FEATURES.md) | [한국어]

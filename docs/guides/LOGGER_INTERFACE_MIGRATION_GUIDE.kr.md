@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Logger Interface 마이그레이션 가이드
 
+> **SSOT**: This document is the single source of truth for **Logger Interface 마이그레이션 가이드**.
+
 > **Language:** [English](LOGGER_INTERFACE_MIGRATION_GUIDE.md) | **한국어**
 
 **버전:** 1.0

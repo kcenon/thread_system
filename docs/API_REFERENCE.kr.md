@@ -10,6 +10,8 @@ category: "API"
 
 # thread_system API 레퍼런스
 
+> **SSOT**: This document is the single source of truth for **thread_system API 레퍼런스**.
+
 > **버전**: 3.1.0
 > **최종 업데이트**: 2025-01-09
 > **언어**: [English](API_REFERENCE.md) | [한국어]

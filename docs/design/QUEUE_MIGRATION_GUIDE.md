@@ -10,6 +10,8 @@ category: "MIGR"
 
 # Queue Migration Guide
 
+> **SSOT**: This document is the single source of truth for **Queue Migration Guide**.
+
 **Version**: 0.1.0.0
 **Issue**: #439 (Phase 1.3), #448 (Phase 1.3.1)
 **Status**: Active

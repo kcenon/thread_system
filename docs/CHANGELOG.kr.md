@@ -10,6 +10,8 @@ category: "PROJ"
 
 # thread_system 변경 이력
 
+> **SSOT**: This document is the single source of truth for **thread_system 변경 이력**.
+
 이 프로젝트의 모든 주목할 만한 변경 사항은 이 파일에 문서화됩니다.
 
 이 형식은 [Keep a Changelog](https://keepachangelog.com/ko/1.0.0/)를 기반으로 하며,

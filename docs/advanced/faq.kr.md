@@ -10,6 +10,8 @@ category: "GUID"
 
 # 자주 묻는 질문 (FAQ)
 
+> **SSOT**: This document is the single source of truth for **자주 묻는 질문 (FAQ)**.
+
 > **Language:** [English](faq.md) | **한국어**
 
 ## 일반 질문

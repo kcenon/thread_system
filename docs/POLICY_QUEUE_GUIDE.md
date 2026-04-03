@@ -10,6 +10,8 @@ category: "GUID"
 
 # Policy Queue Combinations Guide
 
+> **SSOT**: This document is the single source of truth for **Policy Queue Combinations Guide**.
+
 > **Language:** **English**
 
 ## Table of Contents

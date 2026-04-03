@@ -10,6 +10,8 @@ category: "PROJ"
 
 # Contributing to Thread System
 
+> **SSOT**: This document is the single source of truth for **Contributing to Thread System**.
+
 > **Language:** **English** | [한국어](CONTRIBUTING.kr.md)
 
 ## Table of Contents

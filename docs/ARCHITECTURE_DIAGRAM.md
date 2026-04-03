@@ -10,6 +10,8 @@ category: "ARCH"
 
 # Thread System - Architecture Diagrams & Visual Reference
 
+> **SSOT**: This document is the single source of truth for **Thread System - Architecture Diagrams & Visual Reference**.
+
 ## 1. System Architecture Overview
 
 ```

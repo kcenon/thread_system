@@ -10,6 +10,8 @@ category: "PROJ"
 
 # License Compatibility Analysis
 
+> **SSOT**: This document is the single source of truth for **License Compatibility Analysis**.
+
 > **Language:** **English** | [한국어](LICENSE_COMPATIBILITY.kr.md)
 
 ## Project License

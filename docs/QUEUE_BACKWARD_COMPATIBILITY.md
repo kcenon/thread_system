@@ -10,6 +10,8 @@ category: "PROJ"
 
 # Queue Backward Compatibility
 
+> **SSOT**: This document is the single source of truth for **Queue Backward Compatibility**.
+
 > **Language:** **English** | [한국어](QUEUE_BACKWARD_COMPATIBILITY.kr.md)
 
 ## TL;DR: Your Code (Probably) Still Works

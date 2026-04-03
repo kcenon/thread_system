@@ -10,6 +10,8 @@ category: "ADR"
 
 # ADR-001: v3.0 API Surface and Compatibility Policy
 
+> **SSOT**: This document is the single source of truth for **ADR-001: v3.0 API Surface and Compatibility Policy**.
+
 **Status:** Proposed
 **Date:** 2025-12-19
 **Authors:** thread_system maintainers

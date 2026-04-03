@@ -10,6 +10,8 @@ category: "QUAL"
 
 # Thread System Production Quality
 
+> **SSOT**: This document is the single source of truth for **Thread System Production Quality**.
+
 **Version**: 0.2.0.0
 **Last Updated**: 2025-11-15
 **Language**: [English] | [한국어](PRODUCTION_QUALITY.kr.md)

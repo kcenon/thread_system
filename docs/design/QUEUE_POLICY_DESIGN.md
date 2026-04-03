@@ -10,6 +10,8 @@ category: "ARCH"
 
 # Queue Policy Interface Design
 
+> **SSOT**: This document is the single source of truth for **Queue Policy Interface Design**.
+
 **Version**: 0.1.1.0
 **Issue**: #437 (Phase 1.1), #438 (Phase 1.2)
 **Status**: Implementation Complete

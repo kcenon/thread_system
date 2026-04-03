@@ -10,6 +10,8 @@ category: "ADR"
 
 # ADR-002: typed_pool Template Hierarchy Evaluation
 
+> **SSOT**: This document is the single source of truth for **ADR-002: typed_pool Template Hierarchy Evaluation**.
+
 **Status:** Accepted
 **Date:** 2025-12-31
 **Authors:** thread_system maintainers
