@@ -10,6 +10,8 @@ category: "PERF"
 
 # NUMA Topology and Work-Stealing Guide
 
+> **SSOT**: This document is the single source of truth for **NUMA Topology and Work-Stealing Guide**.
+
 > **Language:** **English**
 
 A comprehensive guide to thread_system's NUMA-aware thread pool and work-stealing subsystem, covering topology detection, NUMA-local scheduling, and cross-node work stealing.

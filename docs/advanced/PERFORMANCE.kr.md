@@ -10,6 +10,8 @@ category: "PERF"
 
 # Thread System Performance Guide
 
+> **SSOT**: This document is the single source of truth for **Thread System Performance Guide**.
+
 > **Language:** [English](PERFORMANCE.md) | **한국어**
 
 이 포괄적인 가이드는 Thread System framework의 성능 benchmark, 튜닝 전략 및 최적화 기법을 다룹니다. 모든 측정은 실제 benchmark 데이터와 광범위한 테스트를 기반으로 합니다.

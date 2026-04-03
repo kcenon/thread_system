@@ -10,6 +10,8 @@ category: "GUID"
 
 # Autoscaler and Scaling Policies Guide
 
+> **SSOT**: This document is the single source of truth for **Autoscaler and Scaling Policies Guide**.
+
 > **Language:** **English**
 
 A comprehensive guide to thread_system's autoscaling subsystem, which dynamically adjusts thread pool size based on workload metrics.

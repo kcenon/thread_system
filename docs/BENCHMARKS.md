@@ -10,6 +10,8 @@ category: "PERF"
 
 # Thread System Performance Benchmarks
 
+> **SSOT**: This document is the single source of truth for **Thread System Performance Benchmarks**.
+
 **Version**: 0.2.0.0
 **Last Updated**: 2025-11-15
 **Language**: [English] | [한국어](BENCHMARKS.kr.md)

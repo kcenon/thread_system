@@ -10,6 +10,8 @@ category: "API"
 
 # thread_system API Reference
 
+> **SSOT**: This document is the single source of truth for **thread_system API Reference**.
+
 > **Version**: 0.3.1.0
 > **Last Updated**: 2025-01-09
 > **Language**: [English]

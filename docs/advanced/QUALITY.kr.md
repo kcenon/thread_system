@@ -10,6 +10,8 @@ category: "QUAL"
 
 # 품질 및 QA 가이드
 
+> **SSOT**: This document is the single source of truth for **품질 및 QA 가이드**.
+
 > **Language:** [English](QUALITY.md) | **한국어**
 
 ## 커버리지

@@ -10,6 +10,8 @@ category: "QUAL"
 
 # Test Coverage Guide
 
+> **SSOT**: This document is the single source of truth for **Test Coverage Guide**.
+
 ## Current Status
 
 - **Overall Coverage**: 72% (Target: 80%)

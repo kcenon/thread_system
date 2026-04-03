@@ -10,6 +10,8 @@ category: "GUID"
 
 # Queue Selection Guide
 
+> **SSOT**: This document is the single source of truth for **Queue Selection Guide**.
+
 > **Language:** **English** | [한국어](QUEUE_SELECTION_GUIDE.kr.md)
 
 This guide helps you choose the right queue implementation for your use case.

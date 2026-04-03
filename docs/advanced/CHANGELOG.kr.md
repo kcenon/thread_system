@@ -10,6 +10,8 @@ category: "PROJ"
 
 # 변경 이력
 
+> **SSOT**: This document is the single source of truth for **변경 이력**.
+
 [English](CHANGELOG.md) | **한국어**
 
 Thread System 프로젝트의 주요 변경사항이 이 파일에 기록됩니다.

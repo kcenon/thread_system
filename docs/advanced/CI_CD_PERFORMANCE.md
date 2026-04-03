@@ -10,6 +10,8 @@ category: "PERF"
 
 # CI/CD Performance Metrics Integration
 
+> **SSOT**: This document is the single source of truth for **CI/CD Performance Metrics Integration**.
+
 ## Overview
 
 This document describes the automated performance metrics system integrated into the thread_system CI/CD pipeline. The system automatically measures, tracks, and reports performance metrics for every commit and pull request.

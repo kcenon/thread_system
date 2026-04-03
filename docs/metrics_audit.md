@@ -10,6 +10,8 @@ category: "GUID"
 
 # Metrics System Audit
 
+> **SSOT**: This document is the single source of truth for **Metrics System Audit**.
+
 ## Overview
 
 This document provides a comprehensive audit of the metrics system in thread_system,

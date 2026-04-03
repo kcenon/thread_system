@@ -10,6 +10,8 @@ category: "API"
 
 # Thread System API Reference
 
+> **SSOT**: This document is the single source of truth for **Thread System API Reference**.
+
 > **Language:** [English](API_REFERENCE.md) | **한국어**
 
 Thread System framework의 완전한 API 문서입니다.

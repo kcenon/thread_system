@@ -10,6 +10,8 @@ category: "GUID"
 
 # Known Issues
 
+> **SSOT**: This document is the single source of truth for **Known Issues**.
+
 **Version**: 0.3.0.0
 **Last Updated**: 2026-01-11
 **Status**: Active Tracking
