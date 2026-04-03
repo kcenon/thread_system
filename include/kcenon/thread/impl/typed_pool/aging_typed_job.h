@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file aging_typed_job.h
+ * @brief Typed job with priority aging support to prevent starvation.
+ *
+ * @see aging_typed_job_queue_t For the queue that ages these jobs
+ */
+
 #pragma once
 
 #include "typed_job.h"

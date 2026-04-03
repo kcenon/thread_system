@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job.h
+ * @brief Base job class for schedulable work units in the thread system.
+ *
+ * Defines the core job abstraction used throughout the thread system.
+ * Jobs support composition via a fluent interface for attaching callbacks,
+ * priority, retry policies, timeout, and cancellation tokens.
+ *
+ * @see thread_base For the worker thread that executes jobs
+ * @see job_queue For the thread-safe queue that stores jobs
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

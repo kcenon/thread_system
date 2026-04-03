@@ -1,3 +1,9 @@
+/**
+ * @file service_container.h
+ * @brief Service container for dependency injection within the thread system.
+ *
+ */
+
 #pragma once
 
 // BSD 3-Clause License

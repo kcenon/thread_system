@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file policy_queue.h
+ * @brief Policy-based job queue template with customizable sync, bound, and overflow.
+ *
+ * @see job_queue For the default implementation
+ */
+
 #pragma once
 
 #include <type_traits>

@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_info.h
+ * @brief Job information snapshot for diagnostics and monitoring.
+ *
+ * @see thread_pool_diagnostics
+ */
+
 #pragma once
 
 #include <chrono>

@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file callback_typed_job.h
+ * @brief Callback-based typed job for priority-aware lambda execution.
+ *
+ * @see typed_thread_pool
+ */
+
 #pragma once
 
 #include "typed_job.h"

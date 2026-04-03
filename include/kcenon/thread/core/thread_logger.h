@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_logger.h
+ * @brief Internal logging interface for the thread system.
+ *
+ */
+
 #pragma once
 
 #include <string>

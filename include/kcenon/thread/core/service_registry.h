@@ -3,6 +3,12 @@
  * Copyright (c) 2025, DongCheol Shin
  */
 
+/**
+ * @file service_registry.h
+ * @brief Lightweight service registry for dependency lookup within the thread system.
+ *
+ */
+
 #pragma once
 
 #include <any>

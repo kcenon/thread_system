@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file convert_string.h
+ * @brief String encoding conversion, Base64 encoding/decoding utilities.
+ *
+ */
+
 #pragma once
 
 #include <tuple>

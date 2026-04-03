@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_types.h
+ * @brief Job type definitions for the typed thread pool.
+ *
+ * @see typed_thread_pool
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

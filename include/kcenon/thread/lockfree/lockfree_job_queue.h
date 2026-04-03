@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file lockfree_job_queue.h
+ * @brief Lock-free MPMC job queue using Michael-Scott algorithm with hazard pointers.
+ *
+ * @see job_queue For the mutex-based alternative
+ * @see adaptive_job_queue For the auto-switching wrapper
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/job.h>

@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file enhanced_work_stealing_config.h
+ * @brief Configuration for enhanced work-stealing with NUMA awareness.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include "enhanced_steal_policy.h"

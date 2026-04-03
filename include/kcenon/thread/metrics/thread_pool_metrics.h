@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_pool_metrics.h
+ * @brief Lightweight metrics container shared between thread_pool and workers.
+ *
+ * @see metrics_base For detailed observability
+ */
+
 #pragma once
 
 #include <kcenon/thread/metrics/metrics_base.h>

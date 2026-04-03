@@ -3,6 +3,13 @@
  * Copyright (c) 2025, DongCheol Shin
  */
 
+/**
+ * @file scheduler_interface.h
+ * @brief Abstract scheduler interface for queuing and retrieving jobs.
+ *
+ * @see job_queue For the primary implementation
+ */
+
 #pragma once
 
 #include <memory>

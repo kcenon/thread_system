@@ -1,3 +1,9 @@
+/**
+ * @file crash_handler.h
+ * @brief Crash safety levels and handler interface for thread failure recovery.
+ *
+ */
+
 #pragma once
 
 /*****************************************************************************

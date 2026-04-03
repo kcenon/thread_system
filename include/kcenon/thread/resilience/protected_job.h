@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file protected_job.h
+ * @brief Job wrapper integrating circuit breaker protection.
+ *
+ * @see circuit_breaker_policy
+ */
+
 #pragma once
 
 #include <kcenon/common/resilience/circuit_breaker.h>

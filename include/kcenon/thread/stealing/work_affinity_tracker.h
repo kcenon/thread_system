@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file work_affinity_tracker.h
+ * @brief Tracks cooperation patterns between workers for locality-aware stealing.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include <atomic>

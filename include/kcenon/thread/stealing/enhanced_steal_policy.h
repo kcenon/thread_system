@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file enhanced_steal_policy.h
+ * @brief Enhanced policies for selecting work-stealing victims.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include <cstdint>

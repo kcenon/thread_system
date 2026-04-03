@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file priority_aging_config.h
+ * @brief Configuration for priority aging and starvation prevention.
+ *
+ * @see aging_typed_job_queue_t
+ */
+
 #pragma once
 
 /**

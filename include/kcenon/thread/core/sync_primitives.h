@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file sync_primitives.h
+ * @brief RAII-based synchronization primitives including scoped lock with timeout.
+ *
+ */
+
 #pragma once
 
 #include <mutex>

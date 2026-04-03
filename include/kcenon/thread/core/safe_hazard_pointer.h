@@ -2,6 +2,13 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file safe_hazard_pointer.h
+ * @brief Thread-local hazard pointer with explicit memory ordering for safe reclamation.
+ *
+ * @see hazard_pointer For the basic implementation
+ */
+
 #pragma once
 
 #include <algorithm>

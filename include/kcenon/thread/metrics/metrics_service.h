@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file metrics_service.h
+ * @brief Centralized metrics service for thread pool metrics management.
+ *
+ * @see metrics_backend For export backends
+ */
+
 #pragma once
 
 #include <kcenon/thread/metrics/thread_pool_metrics.h>

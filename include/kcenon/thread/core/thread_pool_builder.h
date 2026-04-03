@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_pool_builder.h
+ * @brief Fluent builder for creating and configuring thread pools.
+ *
+ * @see thread_pool For the resulting pool type
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/thread_pool.h>

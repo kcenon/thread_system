@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_thread_pool.h
+ * @brief Type-based thread pool with priority scheduling and job type routing.
+ *
+ * @see thread_pool For the standard pool
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

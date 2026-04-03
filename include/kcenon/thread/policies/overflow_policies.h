@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file overflow_policies.h
+ * @brief Overflow handling policies: reject, drop-oldest, or block.
+ *
+ * @see policy_queue
+ */
+
 #pragma once
 
 #include <chrono>

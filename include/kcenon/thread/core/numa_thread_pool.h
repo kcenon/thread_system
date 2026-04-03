@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file numa_thread_pool.h
+ * @brief NUMA-aware thread pool optimized for Non-Uniform Memory Access architectures.
+ *
+ * @see thread_pool For the standard thread pool
+ * @see numa_topology For NUMA node detection
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/thread_pool.h>

@@ -1,3 +1,11 @@
+/**
+ * @file thread_worker.h
+ * @brief Specialized worker thread that processes jobs from a job_queue.
+ *
+ * @see thread_base For the base worker class
+ * @see job_queue For the queue this worker consumes
+ */
+
 #pragma once
 
 // BSD 3-Clause License

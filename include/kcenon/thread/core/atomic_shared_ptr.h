@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file atomic_shared_ptr.h
+ * @brief Thread-safe atomic shared_ptr wrapper with explicit memory ordering.
+ *
+ */
+
 #pragma once
 
 #include <atomic>
