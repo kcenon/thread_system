@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystemInstall.cmake
+# thread_system_install.cmake
 #
-# Installation configuration for ThreadSystem
+# Installation configuration for thread_system
 # Handles header and library installation, config files
 ##################################################
 
@@ -94,14 +94,14 @@ function(install_thread_system_libraries)
       message(STATUS "Configured library installation (legacy targets)")
     endif()
   else()
-    # New structure - install ThreadSystem library
-    if(TARGET ThreadSystem)
-      install(TARGETS ThreadSystem
+    # New structure - install thread_system library
+    if(TARGET thread_system)
+      install(TARGETS thread_system
               EXPORT thread_system-targets
               ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
               LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
               RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-      message(STATUS "Configured library installation (ThreadSystem)")
+      message(STATUS "Configured library installation (thread_system)")
     endif()
   endif()
 endfunction()
@@ -129,31 +129,11 @@ function(install_cmake_config_files)
     COMPATIBILITY SameMajorVersion
   )
 
-  # Legacy config wrapper (redirects to standardized config)
-  configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThreadSystemConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
-  )
-
-  write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
-  )
-
-  # Install standardized config files
+  # Install config files
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
-  )
-
-  # Install legacy config wrapper for find_package(ThreadSystem) consumers
-  install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
   )
 
   message(STATUS "Configured CMake config file installation")

@@ -1,20 +1,20 @@
 ##################################################
-# ThreadSystem Unit Tests CMakeLists.txt
+# thread_system Unit Tests CMakeLists.txt
 #
 # This script configures and builds the test suite for validating
-# the ThreadSystem library functionality.
+# the thread_system library functionality.
 # Tests are organized by component and run automatically during build if enabled.
 #
 # Platform Support: Linux and macOS only
 ##################################################
 
 # Set up library aliases for backward compatibility
-# When using new unified structure, map legacy names to ThreadSystem
-if(TARGET ThreadSystem)
-    set(thread_base ThreadSystem)
-    set(utilities ThreadSystem)
-    set(interfaces ThreadSystem)
-    message(STATUS "Unit tests: Using ThreadSystem as unified library")
+# When using new unified structure, map legacy names to thread_system
+if(TARGET thread_system)
+    set(thread_base thread_system)
+    set(utilities thread_system)
+    set(interfaces thread_system)
+    message(STATUS "Unit tests: Using thread_system as unified library")
 endif()
 
 # Check if we're on a supported platform (Linux or macOS)

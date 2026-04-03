@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystemDependencies.cmake
+# thread_system_dependencies.cmake
 #
-# Dependency finding module for ThreadSystem
+# Dependency finding module for thread_system
 # Handles common_system, fmt, and threading libraries
 ##################################################
 
@@ -31,7 +31,7 @@ endfunction()
 ##################################################
 function(find_common_system_dependency)
   if(NOT BUILD_WITH_COMMON_SYSTEM)
-    message(FATAL_ERROR "ThreadSystem requires common_system. BUILD_WITH_COMMON_SYSTEM must remain ON.")
+    message(FATAL_ERROR "thread_system requires common_system. BUILD_WITH_COMMON_SYSTEM must remain ON.")
   endif()
 
   message(STATUS "Looking for common_system...")
@@ -398,7 +398,7 @@ endfunction()
 # Main function to find all dependencies
 ##################################################
 function(find_thread_system_dependencies)
-  message(STATUS "Finding ThreadSystem dependencies...")
+  message(STATUS "Finding thread_system dependencies...")
 
   # Check for deprecated logger_system flag (Issue #336)
   check_logger_system_deprecation()

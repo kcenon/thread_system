@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystemFeatures.cmake
+# thread_system_features.cmake
 #
-# Feature detection module for ThreadSystem
+# Feature detection module for thread_system
 # Detects C++17/C++20 standard library features
 # Strategy: C++17 minimum, C++20 optional
 ##################################################
