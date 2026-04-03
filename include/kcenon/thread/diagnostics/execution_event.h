@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file execution_event.h
+ * @brief Job execution event types and listener interface for tracing.
+ *
+ * @see thread_pool_diagnostics
+ */
+
 #pragma once
 
 #include <chrono>

@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file compatibility.h
+ * @brief Backward-compatible type aliases for renamed thread system components.
+ *
+ */
+
 #pragma once
 
 // Forward declare canonical namespaces to allow aliasing without including

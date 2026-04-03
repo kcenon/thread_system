@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file token_bucket.h
+ * @brief Lock-free token bucket rate limiter for controlling throughput.
+ *
+ */
+
 #pragma once
 
 #include <atomic>

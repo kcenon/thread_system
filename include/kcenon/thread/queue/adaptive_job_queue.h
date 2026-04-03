@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file adaptive_job_queue.h
+ * @brief Adaptive queue that auto-switches between mutex and lock-free modes.
+ *
+ * @see job_queue For mutex mode
+ * @see lockfree_job_queue For lock-free mode
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/job_queue.h>

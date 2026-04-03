@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file pool_policy.h
+ * @brief Base interface for extensible thread pool behavior policies.
+ *
+ */
+
 #pragma once
 
 /**

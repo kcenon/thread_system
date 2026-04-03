@@ -2,6 +2,14 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file hazard_pointer.h
+ * @brief Hazard pointer implementation for lock-free memory reclamation.
+ *
+ * @see safe_hazard_pointer For the improved thread-local variant
+ * @see lockfree_job_queue For the primary consumer
+ */
+
 #pragma once
 
 #include <algorithm>

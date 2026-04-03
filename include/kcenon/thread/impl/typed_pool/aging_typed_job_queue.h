@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file aging_typed_job_queue.h
+ * @brief Priority queue with aging to prevent low-priority job starvation.
+ *
+ * @see typed_thread_pool For the pool that uses this queue
+ */
+
 #pragma once
 
 #include "aging_typed_job.h"

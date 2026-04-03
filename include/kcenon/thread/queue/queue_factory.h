@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file queue_factory.h
+ * @brief Factory for creating queue instances based on configuration.
+ *
+ * @see adaptive_job_queue
+ * @see job_queue
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/job_queue.h>

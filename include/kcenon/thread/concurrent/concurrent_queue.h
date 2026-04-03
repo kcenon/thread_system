@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file concurrent_queue.h
+ * @brief Thread-safe MPMC queue with blocking wait support.
+ *
+ * @see job_queue For the public queue API
+ */
+
 #pragma once
 
 #include <atomic>

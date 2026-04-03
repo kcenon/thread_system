@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file dag_job_builder.h
+ * @brief Fluent builder for creating dag_job instances with dependencies.
+ *
+ * @see dag_job For the job type
+ * @see dag_scheduler For the scheduler
+ */
+
 #pragma once
 
 #include "dag_job.h"

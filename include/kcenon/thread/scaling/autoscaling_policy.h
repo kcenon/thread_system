@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file autoscaling_policy.h
+ * @brief Configuration for autoscaling behavior and thresholds.
+ *
+ * @see autoscaler
+ */
+
 #pragma once
 
 #include "scaling_metrics.h"

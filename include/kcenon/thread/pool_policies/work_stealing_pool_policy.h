@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file work_stealing_pool_policy.h
+ * @brief Pool policy implementing work-stealing for load balancing.
+ *
+ * @see pool_policy For the base interface
+ */
+
 #pragma once
 
 #include "pool_policy.h"

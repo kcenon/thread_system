@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file dag_config.h
+ * @brief Configuration for DAG scheduler including failure handling policies.
+ *
+ * @see dag_scheduler For the scheduler that uses this config
+ */
+
 #pragma once
 
 /**

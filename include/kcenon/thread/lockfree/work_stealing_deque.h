@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file work_stealing_deque.h
+ * @brief Dynamic circular array work-stealing deque for lock-free task distribution.
+ *
+ * @see numa_work_stealer For NUMA-aware stealing
+ */
+
 #pragma once
 
 #include <algorithm>

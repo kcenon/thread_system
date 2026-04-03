@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file metrics_base.h
+ * @brief Thread pool metrics collection, histograms, and observability.
+ *
+ * @see thread_pool_metrics For the lightweight shared container
+ */
+
 #pragma once
 
 /**

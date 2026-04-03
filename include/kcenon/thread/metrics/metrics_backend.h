@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file metrics_backend.h
+ * @brief Abstract interface for metrics export backends.
+ *
+ * @see metrics_service
+ */
+
 #pragma once
 
 #include <kcenon/thread/metrics/enhanced_metrics.h>

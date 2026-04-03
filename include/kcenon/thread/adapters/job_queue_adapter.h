@@ -2,6 +2,13 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_queue_adapter.h
+ * @brief Adapter bridging job_queue to pool_queue_adapter_interface.
+ *
+ * @see pool_queue_adapter_interface
+ */
+
 #pragma once
 
 #include <kcenon/thread/interfaces/pool_queue_adapter.h>

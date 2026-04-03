@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file steal_backoff_strategy.h
+ * @brief Backoff strategies for work-stealing operations.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include <algorithm>

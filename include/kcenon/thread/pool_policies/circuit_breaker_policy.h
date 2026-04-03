@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file circuit_breaker_policy.h
+ * @brief Pool policy implementing circuit breaker pattern for failure protection.
+ *
+ * @see pool_policy For the base interface
+ */
+
 #pragma once
 
 #include "pool_policy.h"

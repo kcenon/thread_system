@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file numa_work_stealer.h
+ * @brief NUMA-aware work stealer with enhanced victim selection policies.
+ *
+ * @see work_stealing_deque
+ */
+
 #pragma once
 
 #include "enhanced_work_stealing_config.h"

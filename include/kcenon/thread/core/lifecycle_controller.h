@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file lifecycle_controller.h
+ * @brief Centralized thread lifecycle state and synchronization management.
+ *
+ * @see thread_base For the class that uses this controller
+ */
+
 #pragma once
 
 #include "thread_conditions.h"

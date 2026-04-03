@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file configuration_manager.h
+ * @brief Runtime configuration management with typed key-value storage.
+ *
+ */
+
 #pragma once
 
 #include <any>

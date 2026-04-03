@@ -2,6 +2,19 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_base.h
+ * @brief Foundational worker thread class with lifecycle management.
+ *
+ * Provides the base class for all worker threads in the thread system.
+ * Supports both std::jthread (C++20) and std::thread with unified
+ * start/stop lifecycle, periodic wake intervals, and customizable
+ * work hooks (before_start, do_work, after_stop).
+ *
+ * @see job For the work units processed by threads
+ * @see thread_worker For the specialized worker that processes job_queue
+ */
+
 #pragma once
 
 /**

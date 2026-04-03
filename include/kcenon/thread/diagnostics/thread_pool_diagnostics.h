@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_pool_diagnostics.h
+ * @brief Runtime diagnostics, health monitoring, and execution tracing for thread pools.
+ *
+ * @see thread_pool For the pool being diagnosed
+ */
+
 #pragma once
 
 /**

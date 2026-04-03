@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file error_handler.h
+ * @brief Error handler interface for customizable error handling strategies.
+ *
+ */
+
 #pragma once
 
 #include <functional>

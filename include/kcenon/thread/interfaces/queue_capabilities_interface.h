@@ -3,6 +3,13 @@
  * Copyright (c) 2025, DongCheol Shin
  */
 
+/**
+ * @file queue_capabilities_interface.h
+ * @brief Mixin interface for queue capability introspection.
+ *
+ * @see queue_capabilities
+ */
+
 #pragma once
 
 #include <kcenon/thread/interfaces/queue_capabilities.h>

@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file formatter.h
+ * @brief Generic formatter for enum types using user-provided converter functors.
+ *
+ */
+
 #pragma once
 
 #include <format>

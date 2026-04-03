@@ -5,6 +5,12 @@ Copyright (c) 2024, kcenon
 All rights reserved.
 *****************************************************************************/
 
+/**
+ * @file platform_detection.h
+ * @brief CPU architecture and platform detection utilities.
+ *
+ */
+
 #pragma once
 
 #include <cstdint>
