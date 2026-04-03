@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file scaling_metrics.h
+ * @brief Scaling direction and metrics for autoscaling decisions.
+ *
+ * @see autoscaler
+ */
+
 #pragma once
 
 #include <chrono>

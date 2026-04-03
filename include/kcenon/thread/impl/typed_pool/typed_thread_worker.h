@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_thread_worker.h
+ * @brief Worker thread for typed_thread_pool processing priority job queues.
+ *
+ * @see typed_thread_pool
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

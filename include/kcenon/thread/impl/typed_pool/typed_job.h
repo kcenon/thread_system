@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_job.h
+ * @brief Base typed job carrying a specific priority level.
+ *
+ * @see typed_thread_pool
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/job.h>

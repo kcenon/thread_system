@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_types.h
+ * @brief Job priority levels and type definitions for type-based scheduling.
+ *
+ * @see typed_thread_pool For the pool that uses these types
+ */
+
 #pragma once
 
 #include <memory>

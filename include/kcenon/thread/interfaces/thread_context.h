@@ -1,3 +1,9 @@
+/**
+ * @file thread_context.h
+ * @brief Context object providing access to optional thread system services.
+ *
+ */
+
 #pragma once
 
 // BSD 3-Clause License

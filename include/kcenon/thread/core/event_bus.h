@@ -2,6 +2,12 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file event_bus.h
+ * @brief Type-safe publish-subscribe event bus for thread system events.
+ *
+ */
+
 #pragma once
 
 #include <any>

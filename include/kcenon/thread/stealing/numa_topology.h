@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file numa_topology.h
+ * @brief NUMA node topology detection and information.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include <cstddef>

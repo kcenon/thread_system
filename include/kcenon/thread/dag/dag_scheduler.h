@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file dag_scheduler.h
+ * @brief DAG-based job scheduler with dependency management and topological execution.
+ *
+ * @see dag_job For the dependency-aware job type
+ */
+
 #pragma once
 
 #include "dag_job.h"

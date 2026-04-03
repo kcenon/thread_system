@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_queue.h
+ * @brief Thread-safe FIFO job queue with optional bounded size.
+ *
+ * Provides a mutex-based job queue supporting enqueue, blocking/non-blocking
+ * dequeue, batch operations, and graceful shutdown. Implements both
+ * scheduler_interface and queue_capabilities_interface.
+ *
+ * @see adaptive_job_queue For the auto-switching mutex/lock-free queue
+ * @see lockfree_job_queue For the lock-free Michael-Scott queue
+ */
+
 #pragma once
 
 #include "job.h"

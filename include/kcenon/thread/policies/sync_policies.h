@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file sync_policies.h
+ * @brief Synchronization policies: mutex-based or spinlock-based.
+ *
+ * @see policy_queue
+ */
+
 #pragma once
 
 #include <atomic>

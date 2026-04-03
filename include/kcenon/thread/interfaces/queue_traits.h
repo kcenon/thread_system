@@ -2,6 +2,12 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file queue_traits.h
+ * @brief Type traits for detecting queue synchronization policy tags.
+ *
+ */
+
 #pragma once
 
 #include <type_traits>

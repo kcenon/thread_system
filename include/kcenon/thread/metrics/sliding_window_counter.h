@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file sliding_window_counter.h
+ * @brief Sliding window counter for throughput measurement.
+ *
+ */
+
 #pragma once
 
 #include <atomic>

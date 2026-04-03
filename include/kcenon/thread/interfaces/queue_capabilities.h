@@ -3,6 +3,12 @@
  * Copyright (c) 2025, DongCheol Shin
  */
 
+/**
+ * @file queue_capabilities.h
+ * @brief Runtime-queryable queue capabilities descriptor.
+ *
+ */
+
 #pragma once
 
 namespace kcenon::thread {

@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_impl.h
+ * @brief Thread implementation abstraction bridging std::jthread and std::thread.
+ *
+ * @see thread_base For the public API built on this abstraction
+ */
+
 #pragma once
 
 #include <memory>

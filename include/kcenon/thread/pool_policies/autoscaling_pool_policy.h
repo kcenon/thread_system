@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file autoscaling_pool_policy.h
+ * @brief Pool policy implementing automatic worker scaling based on load.
+ *
+ * @see pool_policy For the base interface
+ * @see autoscaler
+ */
+
 #pragma once
 
 #include "pool_policy.h"

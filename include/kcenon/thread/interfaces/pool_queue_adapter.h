@@ -2,6 +2,14 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file pool_queue_adapter.h
+ * @brief Abstract interface for queue adapters used by thread_pool.
+ *
+ * @see job_queue_adapter
+ * @see policy_queue_adapter
+ */
+
 #pragma once
 
 #include <memory>

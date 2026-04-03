@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file dag_job.h
+ * @brief DAG-aware job with dependency tracking and unique identifiers.
+ *
+ * @see dag_scheduler For dependency-based execution
+ * @see dag_job_builder For fluent job construction
+ */
+
 #pragma once
 
 #include <kcenon/thread/core/job.h>

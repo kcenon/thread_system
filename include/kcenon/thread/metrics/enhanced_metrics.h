@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file enhanced_metrics.h
+ * @brief Enhanced metrics snapshot with latency percentiles and throughput.
+ *
+ * @see metrics_base
+ */
+
 #pragma once
 
 #include <kcenon/thread/metrics/latency_histogram.h>

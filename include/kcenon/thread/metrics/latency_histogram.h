@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file latency_histogram.h
+ * @brief HDR-style histogram for latency distribution with logarithmic buckets.
+ *
+ * @see enhanced_metrics
+ */
+
 #pragma once
 
 #include <array>

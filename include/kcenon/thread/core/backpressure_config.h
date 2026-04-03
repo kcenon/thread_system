@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file backpressure_config.h
+ * @brief Configuration for backpressure and queue overflow policies.
+ *
+ * @see backpressure_job_queue
+ */
+
 #pragma once
 
 /**

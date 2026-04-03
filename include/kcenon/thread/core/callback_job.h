@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file callback_job.h
+ * @brief Specialized job class that encapsulates user-defined callbacks.
+ *
+ * @see job For the base job class
+ * @see job_builder For fluent job construction
+ */
+
 #pragma once
 
 #include <functional>

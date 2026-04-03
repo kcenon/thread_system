@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file bottleneck_report.h
+ * @brief Bottleneck detection and reporting for thread pool performance analysis.
+ *
+ * @see thread_pool_diagnostics
+ */
+
 #pragma once
 
 #include <cstddef>

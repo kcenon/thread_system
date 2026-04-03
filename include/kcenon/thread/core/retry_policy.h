@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file retry_policy.h
+ * @brief Retry policy with configurable strategies: fixed, linear, and exponential backoff.
+ *
+ * @see job For retry integration via composition
+ */
+
 #pragma once
 
 #include <chrono>

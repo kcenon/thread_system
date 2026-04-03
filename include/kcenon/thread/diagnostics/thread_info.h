@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_info.h
+ * @brief Worker thread state information for diagnostics.
+ *
+ * @see thread_pool_diagnostics
+ */
+
 #pragma once
 
 #include "job_info.h"

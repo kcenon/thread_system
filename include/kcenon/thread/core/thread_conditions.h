@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_conditions.h
+ * @brief Enumeration of thread lifecycle states (starting, running, stopping, stopped).
+ *
+ * @see thread_base For the class that uses these states
+ */
+
 #pragma once
 
 #include <kcenon/thread/utils/formatter.h>

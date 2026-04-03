@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file bound_policies.h
+ * @brief Bound policies for queue capacity: unbounded or fixed-size.
+ *
+ * @see policy_queue
+ */
+
 #pragma once
 
 #include <cstddef>

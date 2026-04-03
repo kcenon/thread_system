@@ -1,6 +1,12 @@
 // BSD 3-Clause License
 // Copyright (c) 2024, kcenon
 
+/**
+ * @file log_level.h
+ * @brief Logging severity levels for the thread system.
+ *
+ */
+
 #pragma once
 
 #include <cstdint>

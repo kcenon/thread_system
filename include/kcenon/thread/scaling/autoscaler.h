@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file autoscaler.h
+ * @brief Automatic scaling of thread pool workers based on load metrics.
+ *
+ * @see autoscaling_policy For configuration
+ */
+
 #pragma once
 
 #include "autoscaling_policy.h"

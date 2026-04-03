@@ -2,6 +2,12 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file span.h
+ * @brief Polyfill for std::span on pre-C++20 compilers.
+ *
+ */
+
 #pragma once
 
 #include <array>

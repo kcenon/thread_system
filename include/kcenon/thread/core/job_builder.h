@@ -2,6 +2,14 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file job_builder.h
+ * @brief Fluent builder for creating and configuring jobs with composition.
+ *
+ * @see job For the base job class
+ * @see callback_job For lambda-based jobs
+ */
+
 #pragma once
 
 #include "job.h"

@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file backpressure_job_queue.h
+ * @brief Job queue with backpressure mechanisms for overflow and rate limiting.
+ *
+ * @see job_queue For the base queue implementation
+ */
+
 #pragma once
 
 /**

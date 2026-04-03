@@ -2,6 +2,13 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file work_stealing_stats.h
+ * @brief Statistics snapshot for work-stealing performance monitoring.
+ *
+ * @see numa_work_stealer
+ */
+
 #pragma once
 
 #include <atomic>
