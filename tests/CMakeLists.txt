@@ -1,5 +1,5 @@
 ##################################################
-# ThreadSystem Tests CMakeLists.txt
+# thread_system Tests CMakeLists.txt
 #
 # Unified test directory structure:
 #   tests/

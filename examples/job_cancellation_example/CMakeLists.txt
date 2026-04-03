@@ -3,8 +3,8 @@ project(job_cancellation_example)
 
 add_executable(${PROJECT_NAME} job_cancellation_example.cpp)
 
-# Link with ThreadSystem
-target_link_libraries(${PROJECT_NAME} PRIVATE ThreadSystem)
+# Link with thread_system
+target_link_libraries(${PROJECT_NAME} PRIVATE thread_system)
 
 # Include headers
 target_include_directories(${PROJECT_NAME} PRIVATE

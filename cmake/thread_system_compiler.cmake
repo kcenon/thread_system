@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystemCompiler.cmake
+# thread_system_compiler.cmake
 #
-# Compiler-specific configuration for ThreadSystem
+# Compiler-specific configuration for thread_system
 # Handles compiler flags, sanitizers, and static analysis
 ##################################################
 

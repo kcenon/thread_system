@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystemTargets.cmake
+# thread_system_targets.cmake
 #
-# Target creation and configuration for ThreadSystem
+# Target creation and configuration for thread_system
 # Handles library targets and subdirectory builds
 ##################################################
 
@@ -18,7 +18,7 @@ function(setup_build_directories)
 endfunction()
 
 ##################################################
-# Create ThreadSystem library targets
+# Create thread_system library targets
 ##################################################
 function(create_thread_system_targets)
   # Set up include directories
@@ -49,12 +49,12 @@ function(create_thread_system_targets)
       set(USE_LEGACY_BUILD TRUE PARENT_SCOPE)
     else()
       # Create the main library
-      add_library(ThreadSystem STATIC
+      add_library(thread_system STATIC
         ${THREAD_SYSTEM_SOURCES}
         ${THREAD_SYSTEM_HEADERS}
       )
 
-      target_include_directories(ThreadSystem
+      target_include_directories(thread_system
         PUBLIC
           $<BUILD_INTERFACE:${THREAD_SYSTEM_INCLUDE_DIR}>
           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -62,9 +62,9 @@ function(create_thread_system_targets)
       )
 
       # Create aliases for backward compatibility with legacy code
-      add_library(thread_base ALIAS ThreadSystem)
-      add_library(utilities ALIAS ThreadSystem)
-      add_library(interfaces ALIAS ThreadSystem)
+      add_library(thread_base ALIAS thread_system)
+      add_library(utilities ALIAS thread_system)
+      add_library(interfaces ALIAS thread_system)
 
       # Note: fmt library is no longer used - using C++20 std::format exclusively
       # The HAS_FMT_LIBRARY definition and fmt linking have been removed
@@ -73,17 +73,17 @@ function(create_thread_system_targets)
       # This is required for vcpkg/find_package consumers to get transitive
       # include directories and dependencies from the kcenon::common_system target
       if(TARGET kcenon::common_system)
-        target_link_libraries(ThreadSystem PUBLIC kcenon::common_system)
-        message(STATUS "ThreadSystem: linked kcenon::common_system target")
+        target_link_libraries(thread_system PUBLIC kcenon::common_system)
+        message(STATUS "thread_system: linked kcenon::common_system target")
       endif()
 
       if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
-        target_link_libraries(ThreadSystem PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
-        message(STATUS "ThreadSystem: simdutf support enabled")
+        target_link_libraries(thread_system PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
+        message(STATUS "thread_system: simdutf support enabled")
       endif()
 
       set(USE_LEGACY_BUILD FALSE PARENT_SCOPE)
-      message(STATUS "Created ThreadSystem library target with legacy aliases (thread_base, utilities, interfaces)")
+      message(STATUS "Created thread_system library target with legacy aliases (thread_base, utilities, interfaces)")
     endif()
   else()
     message(STATUS "New structure not complete, using legacy build")

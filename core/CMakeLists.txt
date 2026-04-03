@@ -1,7 +1,7 @@
 ##################################################
 # Core Component Build Configuration
 #
-# This file builds the ThreadSystem library with modular architecture:
+# This file builds the thread_system library with modular architecture:
 # - thread_core: Essential components (job, thread_pool, job_queue)
 # - Optional modules: stealing, resilience, scaling, metrics
 ##################################################
@@ -381,7 +381,7 @@ endif()
 ##################################################
 
 message(STATUS "----------------------------------------")
-message(STATUS "ThreadSystem Module Configuration:")
+message(STATUS "thread_system Module Configuration:")
 message(STATUS "  THREAD_BUILD_CORE_ONLY: ${THREAD_BUILD_CORE_ONLY}")
 if(NOT THREAD_BUILD_CORE_ONLY)
     message(STATUS "  THREAD_BUILD_STEALING: ${THREAD_BUILD_STEALING}")
