@@ -10,6 +10,8 @@ category: "GUID"
 
 # Platform-Specific Build Guide
 
+> **SSOT**: This document is the single source of truth for **Platform-Specific Build Guide**.
+
 > **Language:** **English** | [한국어](BUILD_GUIDE.kr.md)
 
 ## Overview

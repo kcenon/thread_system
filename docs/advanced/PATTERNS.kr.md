@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System: 패턴, 모범 사례 및 문제 해결 가이드
 
+> **SSOT**: This document is the single source of truth for **Thread System: 패턴, 모범 사례 및 문제 해결 가이드**.
+
 > **Language:** [English](PATTERNS.md) | **한국어**
 
 이 포괄적인 가이드는 Thread System 작업 시 패턴, 모범 사례, 피해야 할 안티패턴 및 일반적인 동시성 문제에 대한 해결책을 다룹니다. 이러한 지침을 따르면 효율적이고 유지 관리가 가능하며 버그 없는 동시 애플리케이션을 작성할 수 있습니다.

@@ -10,6 +10,8 @@ category: "ARCH"
 
 # Hazard Pointer Design Document
 
+> **SSOT**: This document is the single source of truth for **Hazard Pointer Design Document**.
+
 **Version**: 0.1.0.0
 **Date**: 2025-11-08
 **Status**: Design Phase

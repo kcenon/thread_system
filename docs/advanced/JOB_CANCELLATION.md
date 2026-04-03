@@ -10,6 +10,8 @@ category: "GUID"
 
 # Job Cancellation System
 
+> **SSOT**: This document is the single source of truth for **Job Cancellation System**.
+
 ## Overview
 
 The thread_system now provides a comprehensive job cancellation mechanism that allows running jobs to be cooperatively cancelled when workers or pools are stopped. This implements a graceful shutdown pattern that gives jobs the opportunity to clean up resources and terminate early.

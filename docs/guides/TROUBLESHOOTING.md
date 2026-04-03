@@ -10,6 +10,8 @@ category: "GUID"
 
 # Troubleshooting Guide
 
+> **SSOT**: This document is the single source of truth for **Troubleshooting Guide**.
+
 > **Language:** **English** | [한국어](TROUBLESHOOTING.kr.md)
 
 This guide covers common issues and their solutions when working with Thread System.

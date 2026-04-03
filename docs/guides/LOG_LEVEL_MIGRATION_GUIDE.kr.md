@@ -10,6 +10,8 @@ category: "MIGR"
 
 # 로그 레벨 마이그레이션 가이드
 
+> **SSOT**: This document is the single source of truth for **로그 레벨 마이그레이션 가이드**.
+
 > **Language:** [English](LOG_LEVEL_MIGRATION_GUIDE.md) | **한국어**
 
 **버전:** 1.0

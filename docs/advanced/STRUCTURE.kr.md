@@ -10,6 +10,8 @@ category: "ARCH"
 
 # Thread System - 새로운 구조
 
+> **SSOT**: This document is the single source of truth for **Thread System - 새로운 구조**.
+
 [English](STRUCTURE.md) | **한국어**
 
 ## 디렉토리 구조

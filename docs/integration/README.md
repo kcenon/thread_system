@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System Integration Guide
 
+> **SSOT**: This document is the single source of truth for **Thread System Integration Guide**.
+
 ## Overview
 
 This directory contains integration guides for using thread_system with other KCENON systems.

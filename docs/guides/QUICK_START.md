@@ -10,6 +10,8 @@ category: "GUID"
 
 # Quick Start Guide
 
+> **SSOT**: This document is the single source of truth for **Quick Start Guide**.
+
 > **Language:** **English** | [한국어](QUICK_START.kr.md)
 
 Get up and running with Thread System in 5 minutes.

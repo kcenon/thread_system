@@ -10,6 +10,8 @@ category: "ARCH"
 
 # thread_system 아키텍처
 
+> **SSOT**: This document is the single source of truth for **thread_system 아키텍처**.
+
 ## 목차
 
 1. [개요](#개요)

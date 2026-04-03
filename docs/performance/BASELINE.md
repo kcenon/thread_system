@@ -10,6 +10,8 @@ category: "PERF"
 
 # Baseline Performance Metrics
 
+> **SSOT**: This document is the single source of truth for **Baseline Performance Metrics**.
+
 **Document Version**: 1.0
 **Created**: 2025-10-07
 **System**: thread_system

@@ -10,6 +10,8 @@ category: "ARCH"
 
 # thread_system Architecture
 
+> **SSOT**: This document is the single source of truth for **thread_system Architecture**.
+
 > **Language:** **English** | [한국어](ARCHITECTURE.kr.md)
 
 ## Table of Contents

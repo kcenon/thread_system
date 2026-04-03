@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System - Frequently Asked Questions
 
+> **SSOT**: This document is the single source of truth for **Thread System - Frequently Asked Questions**.
+
 > **Version:** 0.1.0
 > **Last Updated:** 2025-11-11
 > **Audience:** Users, Developers

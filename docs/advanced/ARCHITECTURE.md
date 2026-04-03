@@ -10,6 +10,8 @@ category: "ARCH"
 
 # Threading Ecosystem Architecture
 
+> **SSOT**: This document is the single source of truth for **Threading Ecosystem Architecture**.
+
 > **Language:** **English** | [한국어](ARCHITECTURE.kr.md)
 
 ## Table of Contents

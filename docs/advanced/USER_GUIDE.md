@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System User Guide
 
+> **SSOT**: This document is the single source of truth for **Thread System User Guide**.
+
 > **Language:** **English** | [한국어](USER_GUIDE.kr.md)
 
 ## Build

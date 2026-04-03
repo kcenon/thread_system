@@ -10,6 +10,8 @@ category: "GUID"
 
 # Thread System Documentation
 
+> **SSOT**: This document is the single source of truth for **Thread System Documentation**.
+
 > **Language:** **English** | [한국어](README.kr.md)
 
 Welcome to the comprehensive documentation for the Thread System framework. This guide helps you navigate to the right documentation based on your role and needs.
