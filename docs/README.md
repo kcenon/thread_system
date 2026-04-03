@@ -13,7 +13,7 @@ category: "GUID"
 > **SSOT**: This file is the single source of truth for the documentation index
 > of **thread_system**.
 
-Total documents: **82**
+Total documents: **84**
 
 ## Document Index
 
@@ -82,25 +82,27 @@ Total documents: **82**
 | 61 | THR-INTR-001 | Integration Guide - Thread System | [INTEGRATION.md](./advanced/INTEGRATION.md) | Released |
 | 62 | THR-QUAL-001 | Thread System 프로덕션 품질 | [PRODUCTION_QUALITY.kr.md](./PRODUCTION_QUALITY.kr.md) | Released |
 | 63 | THR-QUAL-002 | Thread System Production Quality | [PRODUCTION_QUALITY.md](./PRODUCTION_QUALITY.md) | Released |
-| 64 | THR-QUAL-003 | 품질 및 QA 가이드 | [QUALITY.kr.md](./advanced/QUALITY.kr.md) | Released |
-| 65 | THR-QUAL-004 | Quality & QA Guide | [QUALITY.md](./advanced/QUALITY.md) | Released |
-| 66 | THR-QUAL-005 | Test Coverage Guide | [COVERAGE_GUIDE.md](./guides/COVERAGE_GUIDE.md) | Released |
-| 67 | THR-ADR-001 | ADR-001: v3.0 API Surface and Compatibility Policy | [ADR-001-v3-api-surface.md](./adr/ADR-001-v3-api-surface.md) | Released |
-| 68 | THR-ADR-002 | ADR-002: typed_pool Template Hierarchy Evaluation | [ADR-002-typed-pool-evaluation.md](./adr/ADR-002-typed-pool-evaluation.md) | Released |
-| 69 | THR-PROJ-001 | thread_system 변경 이력 | [CHANGELOG.kr.md](./CHANGELOG.kr.md) | Released |
-| 70 | THR-PROJ-002 | thread_system Changelog | [CHANGELOG.md](./CHANGELOG.md) | Released |
-| 71 | THR-PROJ-003 | Thread System 프로젝트 구조 | [PROJECT_STRUCTURE.kr.md](./PROJECT_STRUCTURE.kr.md) | Released |
-| 72 | THR-PROJ-004 | Thread System Project Structure | [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) | Released |
-| 73 | THR-PROJ-005 | Queue Backward Compatibility | [QUEUE_BACKWARD_COMPATIBILITY.md](./QUEUE_BACKWARD_COMPATIBILITY.md) | Released |
-| 74 | THR-PROJ-006 | SOUP List &mdash; thread_system | [SOUP.md](./SOUP.md) | Released |
-| 75 | THR-PROJ-007 | 변경 이력 | [CHANGELOG.kr.md](./advanced/CHANGELOG.kr.md) | Released |
-| 76 | THR-PROJ-008 | Changelog | [CHANGELOG.md](./advanced/CHANGELOG.md) | Released |
-| 77 | THR-PROJ-009 | Thread System에 기여하기 | [CONTRIBUTING.kr.md](./contributing/CONTRIBUTING.kr.md) | Released |
-| 78 | THR-PROJ-010 | Contributing to Thread System | [CONTRIBUTING.md](./contributing/CONTRIBUTING.md) | Released |
-| 79 | THR-PROJ-011 | Dependency Version Compatibility Matrix | [DEPENDENCY_COMPATIBILITY_MATRIX.kr.md](./guides/DEPENDENCY_COMPATIBILITY_MATRIX.kr.md) | Released |
-| 80 | THR-PROJ-012 | Dependency Version Compatibility Matrix | [DEPENDENCY_COMPATIBILITY_MATRIX.md](./guides/DEPENDENCY_COMPATIBILITY_MATRIX.md) | Released |
-| 81 | THR-PROJ-013 | License Compatibility Analysis | [LICENSE_COMPATIBILITY.kr.md](./guides/LICENSE_COMPATIBILITY.kr.md) | Released |
-| 82 | THR-PROJ-014 | License Compatibility Analysis | [LICENSE_COMPATIBILITY.md](./guides/LICENSE_COMPATIBILITY.md) | Released |
+| 64 | THR-QUAL-002 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
+| 65 | THR-QUAL-003 | 품질 및 QA 가이드 | [QUALITY.kr.md](./advanced/QUALITY.kr.md) | Released |
+| 66 | THR-QUAL-004 | Quality & QA Guide | [QUALITY.md](./advanced/QUALITY.md) | Released |
+| 67 | THR-QUAL-005 | Test Coverage Guide | [COVERAGE_GUIDE.md](./guides/COVERAGE_GUIDE.md) | Released |
+| 68 | THR-ADR-001 | ADR-001: v3.0 API Surface and Compatibility Policy | [ADR-001-v3-api-surface.md](./adr/ADR-001-v3-api-surface.md) | Released |
+| 69 | THR-ADR-002 | ADR-002: typed_pool Template Hierarchy Evaluation | [ADR-002-typed-pool-evaluation.md](./adr/ADR-002-typed-pool-evaluation.md) | Released |
+| 70 | THR-ADR-003 | ADR-003: Queue Architecture Selection | [ADR-003-queue-architecture-selection.md](./adr/ADR-003-queue-architecture-selection.md) | Accepted |
+| 71 | THR-PROJ-001 | thread_system 변경 이력 | [CHANGELOG.kr.md](./CHANGELOG.kr.md) | Released |
+| 72 | THR-PROJ-002 | thread_system Changelog | [CHANGELOG.md](./CHANGELOG.md) | Released |
+| 73 | THR-PROJ-003 | Thread System 프로젝트 구조 | [PROJECT_STRUCTURE.kr.md](./PROJECT_STRUCTURE.kr.md) | Released |
+| 74 | THR-PROJ-004 | Thread System Project Structure | [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) | Released |
+| 75 | THR-PROJ-005 | Queue Backward Compatibility | [QUEUE_BACKWARD_COMPATIBILITY.md](./QUEUE_BACKWARD_COMPATIBILITY.md) | Released |
+| 76 | THR-PROJ-006 | SOUP List &mdash; thread_system | [SOUP.md](./SOUP.md) | Released |
+| 77 | THR-PROJ-007 | 변경 이력 | [CHANGELOG.kr.md](./advanced/CHANGELOG.kr.md) | Released |
+| 78 | THR-PROJ-008 | Changelog | [CHANGELOG.md](./advanced/CHANGELOG.md) | Released |
+| 79 | THR-PROJ-009 | Thread System에 기여하기 | [CONTRIBUTING.kr.md](./contributing/CONTRIBUTING.kr.md) | Released |
+| 80 | THR-PROJ-010 | Contributing to Thread System | [CONTRIBUTING.md](./contributing/CONTRIBUTING.md) | Released |
+| 81 | THR-PROJ-011 | Dependency Version Compatibility Matrix | [DEPENDENCY_COMPATIBILITY_MATRIX.kr.md](./guides/DEPENDENCY_COMPATIBILITY_MATRIX.kr.md) | Released |
+| 82 | THR-PROJ-012 | Dependency Version Compatibility Matrix | [DEPENDENCY_COMPATIBILITY_MATRIX.md](./guides/DEPENDENCY_COMPATIBILITY_MATRIX.md) | Released |
+| 83 | THR-PROJ-013 | License Compatibility Analysis | [LICENSE_COMPATIBILITY.kr.md](./guides/LICENSE_COMPATIBILITY.kr.md) | Released |
+| 84 | THR-PROJ-014 | License Compatibility Analysis | [LICENSE_COMPATIBILITY.md](./guides/LICENSE_COMPATIBILITY.md) | Released |
 
 ## Documents by Category
 
@@ -200,22 +202,24 @@ Total documents: **82**
 |--------|-------|----------|--------|
 | THR-INTR-001 | Integration Guide - Thread System | [INTEGRATION.md](./advanced/INTEGRATION.md) | Released |
 
-### Quality (5)
+### Quality (6)
 
 | doc_id | Topic | Document | Status |
 |--------|-------|----------|--------|
 | THR-QUAL-001 | Thread System 프로덕션 품질 | [PRODUCTION_QUALITY.kr.md](./PRODUCTION_QUALITY.kr.md) | Released |
 | THR-QUAL-002 | Thread System Production Quality | [PRODUCTION_QUALITY.md](./PRODUCTION_QUALITY.md) | Released |
+| THR-QUAL-002 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
 | THR-QUAL-003 | 품질 및 QA 가이드 | [QUALITY.kr.md](./advanced/QUALITY.kr.md) | Released |
 | THR-QUAL-004 | Quality & QA Guide | [QUALITY.md](./advanced/QUALITY.md) | Released |
 | THR-QUAL-005 | Test Coverage Guide | [COVERAGE_GUIDE.md](./guides/COVERAGE_GUIDE.md) | Released |
 
-### Architecture Decision Records (2)
+### Architecture Decision Records (3)
 
 | doc_id | Topic | Document | Status |
 |--------|-------|----------|--------|
 | THR-ADR-001 | ADR-001: v3.0 API Surface and Compatibility Policy | [ADR-001-v3-api-surface.md](./adr/ADR-001-v3-api-surface.md) | Released |
 | THR-ADR-002 | ADR-002: typed_pool Template Hierarchy Evaluation | [ADR-002-typed-pool-evaluation.md](./adr/ADR-002-typed-pool-evaluation.md) | Released |
+| THR-ADR-003 | ADR-003: Queue Architecture Selection | [ADR-003-queue-architecture-selection.md](./adr/ADR-003-queue-architecture-selection.md) | Accepted |
 
 ### Project (14)
 
