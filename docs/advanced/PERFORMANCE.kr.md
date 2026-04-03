@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PERF-005"
+doc_title: "Thread System Performance Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PERF"
+---
+
 # Thread System Performance Guide
 
 > **Language:** [English](PERFORMANCE.md) | **한국어**

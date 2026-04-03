@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-010"
+doc_title: "Contributing to Thread System"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Contributing to Thread System
 
 > **Language:** **English** | [한국어](CONTRIBUTING.kr.md)

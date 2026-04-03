@@ -1,3 +1,13 @@
+---
+doc_id: "THR-QUAL-003"
+doc_title: "품질 및 QA 가이드"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "QUAL"
+---
+
 # 품질 및 QA 가이드
 
 > **Language:** [English](QUALITY.md) | **한국어**

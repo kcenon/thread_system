@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-003"
+doc_title: "Thread System 프로젝트 구조"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Thread System 프로젝트 구조
 
 **버전**: 0.3.0

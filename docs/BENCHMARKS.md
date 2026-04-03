@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PERF-002"
+doc_title: "Thread System Performance Benchmarks"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PERF"
+---
+
 # Thread System Performance Benchmarks
 
 **Version**: 0.2.0.0

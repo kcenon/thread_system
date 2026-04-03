@@ -1,3 +1,13 @@
+---
+doc_id: "THR-MIGR-005"
+doc_title: "Queue Migration Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "MIGR"
+---
+
 # Queue Migration Guide
 
 **Version**: 0.1.0.0

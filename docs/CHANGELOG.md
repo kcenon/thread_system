@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-002"
+doc_title: "thread_system Changelog"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # thread_system Changelog
 
 All notable changes to this project will be documented in this file.

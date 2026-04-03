@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-007"
+doc_title: "Known Issues"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Known Issues
 
 **Version**: 0.3.0.0

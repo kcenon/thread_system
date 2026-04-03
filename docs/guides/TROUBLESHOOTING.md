@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-024"
+doc_title: "Troubleshooting Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Troubleshooting Guide
 
 > **Language:** **English** | [한국어](TROUBLESHOOTING.kr.md)

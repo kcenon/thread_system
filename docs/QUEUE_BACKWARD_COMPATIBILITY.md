@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-005"
+doc_title: "Queue Backward Compatibility"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Queue Backward Compatibility
 
 > **Language:** **English** | [한국어](QUEUE_BACKWARD_COMPATIBILITY.kr.md)

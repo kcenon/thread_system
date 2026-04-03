@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-022"
+doc_title: "Quick Start Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Quick Start Guide
 
 > **Language:** **English** | [한국어](QUICK_START.kr.md)

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ADR-001"
+doc_title: "ADR-001: v3.0 API Surface and Compatibility Policy"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ADR"
+---
+
 # ADR-001: v3.0 API Surface and Compatibility Policy
 
 **Status:** Proposed

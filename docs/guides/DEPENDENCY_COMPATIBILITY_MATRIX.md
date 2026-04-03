@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-012"
+doc_title: "Dependency Version Compatibility Matrix"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Dependency Version Compatibility Matrix
 
 > **Language:** **English** | [한국어](DEPENDENCY_COMPATIBILITY_MATRIX.kr.md)
