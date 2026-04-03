@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-009"
+doc_title: "Thread System: Patterns, Best Practices, and Troubleshooting Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Thread System: Patterns, Best Practices, and Troubleshooting Guide
 
 > **Language:** **English** | [한국어](PATTERNS.kr.md)

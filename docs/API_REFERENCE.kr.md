@@ -1,3 +1,13 @@
+---
+doc_id: "THR-API-001"
+doc_title: "thread_system API 레퍼런스"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "API"
+---
+
 # thread_system API 레퍼런스
 
 > **버전**: 3.1.0

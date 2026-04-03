@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-011"
+doc_title: "Thread System 문서"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Thread System 문서
 
 Thread System 프레임워크에 대한 포괄적인 문서에 오신 것을 환영합니다. 이 가이드는 여러분의 역할과 필요에 따라 올바른 문서를 찾는 데 도움을 줍니다.

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-006"
+doc_title: "Job Cancellation System"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Job Cancellation System
 
 ## Overview

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-QUAL-002"
+doc_title: "Thread System Production Quality"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "QUAL"
+---
+
 # Thread System Production Quality
 
 **Version**: 0.2.0.0

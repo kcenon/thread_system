@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ARCH-010"
+doc_title: "Queue Policy Interface Design"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ARCH"
+---
+
 # Queue Policy Interface Design
 
 **Version**: 0.1.1.0

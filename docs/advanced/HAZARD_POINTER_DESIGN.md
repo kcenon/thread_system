@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ARCH-006"
+doc_title: "Hazard Pointer Design Document"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ARCH"
+---
+
 # Hazard Pointer Design Document
 
 **Version**: 0.1.0.0

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-006"
+doc_title: "SOUP List &mdash; thread_system"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # SOUP List &mdash; thread_system
 
 > **Software of Unknown Provenance (SOUP) Register per IEC 62304:2006+AMD1:2015 &sect;8.1.2**

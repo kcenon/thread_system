@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PERF-003"
+doc_title: "NUMA Topology and Work-Stealing Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PERF"
+---
+
 # NUMA Topology and Work-Stealing Guide
 
 > **Language:** **English**

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-MIGR-006"
+doc_title: "Logger Interface 마이그레이션 가이드"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "MIGR"
+---
+
 # Logger Interface 마이그레이션 가이드
 
 > **Language:** [English](LOGGER_INTERFACE_MIGRATION_GUIDE.md) | **한국어**

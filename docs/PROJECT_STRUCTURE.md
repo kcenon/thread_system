@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-004"
+doc_title: "Thread System Project Structure"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Thread System Project Structure
 
 **Version**: 0.3.0.0

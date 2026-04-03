@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-015"
+doc_title: "자주 묻는 질문 (FAQ)"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # 자주 묻는 질문 (FAQ)
 
 > **Language:** [English](faq.md) | **한국어**

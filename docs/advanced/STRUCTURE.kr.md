@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ARCH-007"
+doc_title: "Thread System - 새로운 구조"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ARCH"
+---
+
 # Thread System - 새로운 구조
 
 [English](STRUCTURE.md) | **한국어**

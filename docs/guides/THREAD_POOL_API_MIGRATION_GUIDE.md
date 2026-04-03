@@ -1,3 +1,13 @@
+---
+doc_id: "THR-MIGR-010"
+doc_title: "Thread Pool API Migration Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "MIGR"
+---
+
 # Thread Pool API Migration Guide
 
 This guide helps you migrate from deprecated `thread_pool` methods to their recommended replacements. All deprecated methods will be removed in v2.0.
