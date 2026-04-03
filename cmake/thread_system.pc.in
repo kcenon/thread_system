@@ -15,7 +15,7 @@ URL: @PROJECT_HOMEPAGE_URL@
 # Note: common_system is a header-only dependency, no Requires entry needed
 
 # Libraries provided by thread_system as specified in T2.2
-Libs: -L${libdir} -lThreadSystem
+Libs: -L${libdir} -lthread_system
 # Additional system libraries required
 Libs.private: -pthread @SIMDUTF_LIBRARIES@
 

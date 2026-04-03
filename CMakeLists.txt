@@ -1,7 +1,7 @@
 ##################################################
-# ThreadSystem CMakeLists.txt
+# thread_system CMakeLists.txt
 #
-# Main build configuration for the ThreadSystem library.
+# Main build configuration for the thread_system library.
 # High-performance C++20 thread management system.
 ##################################################
 
@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.20)
 # The THREAD_BUILD_MODULES option is only available when using CMake 3.28 or later.
 
 # Define the project
-project(ThreadSystem
+project(thread_system
     VERSION 0.3.1
     DESCRIPTION "High-performance C++20 multithreading framework"
     HOMEPAGE_URL "https://github.com/kcenon/thread_system"
@@ -24,9 +24,9 @@ project(ThreadSystem
 
 # Detect if we're being built as a submodule
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
+    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build thread_system as submodule" FORCE)
 else()
-    option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+    option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build thread_system as submodule" OFF)
 endif()
 
 ##################################################
@@ -45,7 +45,7 @@ option(THREAD_ENABLE_LOCKFREE_QUEUE "Enable lock-free queue (safe with Hazard Po
 option(THREAD_ENABLE_WORK_STEALING "Enable work-stealing scheduler for load balancing" OFF)
 
 if(NOT BUILD_WITH_COMMON_SYSTEM)
-    message(FATAL_ERROR "ThreadSystem now requires common_system. Set BUILD_WITH_COMMON_SYSTEM=ON.")
+    message(FATAL_ERROR "thread_system now requires common_system. Set BUILD_WITH_COMMON_SYSTEM=ON.")
 endif()
 
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
@@ -78,7 +78,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Detect if compiler supports C++20 features
-# Features will be auto-detected in ThreadSystemFeatures.cmake
+# Features will be auto-detected in thread_system_features.cmake
 
 ##################################################
 # Include CMake Modules
@@ -92,11 +92,11 @@ include(Coverage)
 include(dependency_checker)
 
 # Include new modular CMake files
-include(ThreadSystemCompiler)
-include(ThreadSystemDependencies)
-include(ThreadSystemFeatures)
-include(ThreadSystemTargets)
-include(ThreadSystemInstall)
+include(thread_system_compiler)
+include(thread_system_dependencies)
+include(thread_system_features)
+include(thread_system_targets)
+include(thread_system_install)
 
 ##################################################
 # Compiler Configuration
@@ -190,17 +190,14 @@ else()
     add_subdirectory(utilities)
     add_subdirectory(core)
     # Provide unified aliases for parent projects when building as a submodule.
-    # This allows dependents to link against ThreadSystem/thread_system even
+    # This allows dependents to link against thread_system even
     # though only the legacy targets (thread_base/utilities/interfaces) exist.
     if(TARGET thread_base)
-        if(NOT TARGET ThreadSystem)
-            add_library(ThreadSystem ALIAS thread_base)
-        endif()
         if(NOT TARGET thread_system)
             add_library(thread_system ALIAS thread_base)
         endif()
     endif()
-    message(STATUS "ThreadSystem building as submodule - samples and tests disabled")
+    message(STATUS "thread_system building as submodule - samples and tests disabled")
 endif()
 
 ##################################################
@@ -268,9 +265,9 @@ if(THREAD_BUILD_MODULES)
             message(STATUS "Linking thread_system_modules to kcenon::common (header-only)")
         endif()
 
-        # Link to ThreadSystem library for implementation
-        if(TARGET ThreadSystem)
-            target_link_libraries(thread_system_modules PUBLIC ThreadSystem)
+        # Link to thread_system library for implementation
+        if(TARGET thread_system)
+            target_link_libraries(thread_system_modules PUBLIC thread_system)
         elseif(TARGET thread_base)
             target_link_libraries(thread_system_modules PUBLIC thread_base)
         endif()
@@ -289,7 +286,7 @@ endif()
 ##################################################
 
 message(STATUS "========================================")
-message(STATUS "ThreadSystem Build Configuration:")
+message(STATUS "thread_system Build Configuration:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
 message(STATUS "  Build mode: ${CMAKE_BUILD_TYPE}")
 message(STATUS "  Submodule: ${BUILD_THREADSYSTEM_AS_SUBMODULE}")

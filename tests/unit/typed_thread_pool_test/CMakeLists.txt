@@ -25,7 +25,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    ThreadSystem
+    thread_system
     GTest::gtest
     GTest::gtest_main
     Threads::Threads
