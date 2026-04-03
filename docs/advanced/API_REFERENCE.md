@@ -1,3 +1,13 @@
+---
+doc_id: "THR-API-004"
+doc_title: "Thread System API Reference"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "API"
+---
+
 # Thread System API Reference
 
 > **Language:** **English** | [한국어](API_REFERENCE.kr.md)

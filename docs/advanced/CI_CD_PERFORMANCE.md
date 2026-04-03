@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PERF-004"
+doc_title: "CI/CD Performance Metrics Integration"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PERF"
+---
+
 # CI/CD Performance Metrics Integration
 
 ## Overview

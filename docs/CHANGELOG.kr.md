@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-001"
+doc_title: "thread_system 변경 이력"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # thread_system 변경 이력
 
 이 프로젝트의 모든 주목할 만한 변경 사항은 이 파일에 문서화됩니다.

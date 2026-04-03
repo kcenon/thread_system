@@ -1,3 +1,13 @@
+---
+doc_id: "THR-MIGR-008"
+doc_title: "로그 레벨 마이그레이션 가이드"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "MIGR"
+---
+
 # 로그 레벨 마이그레이션 가이드
 
 > **Language:** [English](LOG_LEVEL_MIGRATION_GUIDE.md) | **한국어**

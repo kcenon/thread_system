@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-016"
+doc_title: "Platform-Specific Build Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Platform-Specific Build Guide
 
 > **Language:** [English](BUILD_GUIDE.md) | **한국어**

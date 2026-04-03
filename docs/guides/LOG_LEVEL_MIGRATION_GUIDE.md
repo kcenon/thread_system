@@ -1,3 +1,13 @@
+---
+doc_id: "THR-MIGR-009"
+doc_title: "Log Level Migration Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "MIGR"
+---
+
 # Log Level Migration Guide
 
 > **Language:** **English** | [한국어](LOG_LEVEL_MIGRATION_GUIDE.kr.md)

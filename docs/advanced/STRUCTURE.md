@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ARCH-008"
+doc_title: "Thread System - New Structure"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ARCH"
+---
+
 # Thread System - New Structure
 
 **English** | [한국어](STRUCTURE.kr.md)

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-008"
+doc_title: "Changelog"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # Changelog
 
 **English** | [한국어](CHANGELOG.kr.md)

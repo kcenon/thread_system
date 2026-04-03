@@ -1,3 +1,13 @@
+---
+doc_id: "THR-FEAT-001"
+doc_title: "Thread System 기능 상세"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "FEAT"
+---
+
 # Thread System 기능 상세
 
 **버전**: 0.3.0

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-QUAL-004"
+doc_title: "Quality & QA Guide"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "QUAL"
+---
+
 # Quality & QA Guide
 
 > **Language:** **English** | [한국어](QUALITY.kr.md)

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-API-002"
+doc_title: "thread_system API Reference"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "API"
+---
+
 # thread_system API Reference
 
 > **Version**: 0.3.1.0

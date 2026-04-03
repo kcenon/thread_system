@@ -1,3 +1,13 @@
+---
+doc_id: "THR-API-006"
+doc_title: "C++20 Concepts Integration"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "API"
+---
+
 # C++20 Concepts Integration
 
 > **Language:** **English** | [한국어](CPP20_CONCEPTS.kr.md)

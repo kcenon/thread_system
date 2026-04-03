@@ -1,3 +1,13 @@
+---
+doc_id: "THR-ARCH-005"
+doc_title: "Threading Ecosystem Architecture"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "ARCH"
+---
+
 # Threading Ecosystem Architecture
 
 > **Language:** **English** | [한국어](ARCHITECTURE.kr.md)

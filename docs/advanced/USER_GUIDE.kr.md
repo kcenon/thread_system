@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-013"
+doc_title: "Thread System 사용자 가이드"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Thread System 사용자 가이드
 
 > **Language:** [English](USER_GUIDE.md) | **한국어**

@@ -1,3 +1,13 @@
+---
+doc_id: "THR-PROJ-014"
+doc_title: "License Compatibility Analysis"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "PROJ"
+---
+
 # License Compatibility Analysis
 
 > **Language:** **English** | [한국어](LICENSE_COMPATIBILITY.kr.md)

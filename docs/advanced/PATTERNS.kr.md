@@ -1,3 +1,13 @@
+---
+doc_id: "THR-GUID-008"
+doc_title: "Thread System: 패턴, 모범 사례 및 문제 해결 가이드"
+doc_version: "1.0.0"
+doc_date: "2026-04-04"
+doc_status: "Released"
+project: "thread_system"
+category: "GUID"
+---
+
 # Thread System: 패턴, 모범 사례 및 문제 해결 가이드
 
 > **Language:** [English](PATTERNS.md) | **한국어**
