@@ -1,0 +1,74 @@
+name: Documentation Audit
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'README.md'
+      - 'README.kr.md'
+      - 'CLAUDE.md'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  audit:
+    name: Documentation Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Fetch audit tool
+        run: |
+          curl -sL https://github.com/kcenon/common_system/archive/refs/heads/main.tar.gz | \
+            tar xz --strip-components=1 -C "$RUNNER_TEMP" 'common_system-main/tools/doc-audit'
+          mv "$RUNNER_TEMP/tools/doc-audit" "$RUNNER_TEMP/doc_audit"
+
+      - name: Run audit (quick mode)
+        id: audit
+        run: |
+          python -m doc_audit . --quick --format markdown | tee audit-report.md
+          EXIT_CODE=${PIPESTATUS[0]}
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          exit $EXIT_CODE
+        env:
+          PYTHONPATH: ${{ runner.temp }}
+        continue-on-error: true
+
+      - name: Comment on PR
+        if: steps.audit.outputs.exit_code == '1'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = 'audit-report.md';
+            if (\!fs.existsSync(reportPath)) return;
+            const report = fs.readFileSync(reportPath, 'utf8');
+            if (\!report.trim()) return;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## Documentation Audit Report
+
+${report}`
+            });
+
+      - name: Fail on critical findings
+        if: steps.audit.outputs.exit_code == '1'
+        run: |
+          echo "::error::Documentation audit found critical issues. See PR comment for details."
+          exit 1
+
