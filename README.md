@@ -290,6 +290,28 @@ cmake --build build --target docs
 
 ## Ecosystem Integration
 
+### Ecosystem Dependency Map
+
+```mermaid
+graph TD
+    A[common_system] --> B[thread_system]
+    A --> C[container_system]
+    B --> D[logger_system]
+    B --> E[monitoring_system]
+    D --> F[database_system]
+    E --> F
+    F --> G[network_system]
+    G --> H[pacs_system]
+
+    style B fill:#f9f,stroke:#333,stroke-width:3px
+```
+
+> **Ecosystem reference**:
+> [common_system](https://github.com/kcenon/common_system) — Tier 0: IExecutor interface and Result&lt;T&gt; pattern
+> [logger_system](https://github.com/kcenon/logger_system) — Tier 2: Async logging (optional consumer)
+> [monitoring_system](https://github.com/kcenon/monitoring_system) — Tier 3: Metrics collection (consumer)
+> [network_system](https://github.com/kcenon/network_system) — Tier 4: Transport layer (consumer)
+
 ### Project Ecosystem
 
 This project is part of a modular ecosystem:
