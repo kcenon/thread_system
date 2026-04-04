@@ -82,7 +82,7 @@ Total documents: **84**
 | 61 | THR-INTR-001 | Integration Guide - Thread System | [INTEGRATION.md](./advanced/INTEGRATION.md) | Released |
 | 62 | THR-QUAL-001 | Thread System 프로덕션 품질 | [PRODUCTION_QUALITY.kr.md](./PRODUCTION_QUALITY.kr.md) | Released |
 | 63 | THR-QUAL-002 | Thread System Production Quality | [PRODUCTION_QUALITY.md](./PRODUCTION_QUALITY.md) | Released |
-| 64 | THR-QUAL-002 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
+| 64 | THR-QUAL-006 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
 | 65 | THR-QUAL-003 | 품질 및 QA 가이드 | [QUALITY.kr.md](./advanced/QUALITY.kr.md) | Released |
 | 66 | THR-QUAL-004 | Quality & QA Guide | [QUALITY.md](./advanced/QUALITY.md) | Released |
 | 67 | THR-QUAL-005 | Test Coverage Guide | [COVERAGE_GUIDE.md](./guides/COVERAGE_GUIDE.md) | Released |
@@ -208,7 +208,7 @@ Total documents: **84**
 |--------|-------|----------|--------|
 | THR-QUAL-001 | Thread System 프로덕션 품질 | [PRODUCTION_QUALITY.kr.md](./PRODUCTION_QUALITY.kr.md) | Released |
 | THR-QUAL-002 | Thread System Production Quality | [PRODUCTION_QUALITY.md](./PRODUCTION_QUALITY.md) | Released |
-| THR-QUAL-002 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
+| THR-QUAL-006 | Feature-Test-Module Traceability Matrix | [TRACEABILITY.md](./TRACEABILITY.md) | Released |
 | THR-QUAL-003 | 품질 및 QA 가이드 | [QUALITY.kr.md](./advanced/QUALITY.kr.md) | Released |
 | THR-QUAL-004 | Quality & QA Guide | [QUALITY.md](./advanced/QUALITY.md) | Released |
 | THR-QUAL-005 | Test Coverage Guide | [COVERAGE_GUIDE.md](./guides/COVERAGE_GUIDE.md) | Released |
