@@ -2,7 +2,7 @@ PROJECT_NAME           = "Thread System"
 PROJECT_NUMBER         = "0.3.1"
 PROJECT_BRIEF          = "High-performance C++20 thread pool with work stealing and DAG scheduling"
 OUTPUT_DIRECTORY       = documents
-CREATE_SUBDIRS         = YES
+CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -96,9 +96,10 @@ WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
 INPUT                  = ./core \
                          ./interfaces \
-                         ./implementations \
                          ./utilities \
-                         ./samples
+                         ./src \
+                         ./include \
+                         ./examples
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
@@ -131,7 +132,7 @@ IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
-USE_MDFILE_AS_MAINPAGE = README.md
+USE_MDFILE_AS_MAINPAGE =
 SOURCE_BROWSER         = YES
 INLINE_SOURCES         = YES
 STRIP_CODE_COMMENTS    = YES
@@ -146,12 +147,21 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_COLORSTYLE        = AUTO_LIGHT
+HTML_COLORSTYLE        = LIGHT
 HTML_COLORSTYLE_HUE    = 220
 HTML_COLORSTYLE_SAT    = 100
 HTML_COLORSTYLE_GAMMA  = 80
 HTML_DYNAMIC_MENUS     = YES
 HTML_DYNAMIC_SECTIONS  = NO
+HTML_HEADER            = docs/header.html
+HTML_EXTRA_STYLESHEET  = docs/doxygen-awesome-css/doxygen-awesome.css \
+                         docs/doxygen-awesome-css/doxygen-awesome-sidebar-only.css \
+                         docs/custom.css
+HTML_EXTRA_FILES       = docs/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js \
+                         docs/doxygen-awesome-css/doxygen-awesome-fragment-copy-button.js \
+                         docs/doxygen-awesome-css/doxygen-awesome-interactive-toc.js \
+                         docs/doxygen-awesome-css/doxygen-awesome-paragraph-link.js
+HTML_COPY_CLIPBOARD    = NO
 HTML_CODE_FOLDING      = YES
 HTML_INDEX_NUM_ENTRIES = 100
 GENERATE_DOCSET        = NO
