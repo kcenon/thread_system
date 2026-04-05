@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+- Modernize Doxygen documentation with doxygen-awesome-css theme and refactored mainpage ([#652](https://github.com/kcenon/thread_system/issues/652))
+
 ### Removed
 - **Issue #486**: Remove deprecated methods from thread_pool and related classes
   - **thread_pool.h**: Removed direct IExecutor inheritance and deprecated methods:
