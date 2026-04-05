@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+
+- Modernize Doxygen documentation with doxygen-awesome-css theme and refactored mainpage ([#652](https://github.com/kcenon/thread_system/issues/652))
+
 ### Performance
 
 - Replace mutex with atomic counter for `job_queue` read-only query APIs ([#607](https://github.com/kcenon/thread_system/issues/607))

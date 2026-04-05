@@ -1,322 +1,241 @@
-/** \mainpage Thread System Documentation
+/**
+@mainpage Thread System
 
-The Thread System is a comprehensive, modern C++20 multithreading framework designed to democratize concurrent programming. By providing intuitive abstractions and robust implementations, it empowers developers of all skill levels to build high-performance, thread-safe applications without the typical complexity and pitfalls of manual thread management.
+@tableofcontents
 
-\section mission Mission & Vision
+@section overview System Overview
 
-This project addresses the fundamental challenge faced by developers worldwide: **making concurrent programming accessible, safe, and efficient**. Our mission is to provide a comprehensive solution that:
+Thread System is a comprehensive, modern C++20 multithreading framework designed
+to democratize concurrent programming. By providing intuitive abstractions and
+robust implementations, it empowers developers of all skill levels to build
+high-performance, thread-safe applications without the typical complexity and
+pitfalls of manual thread management.
 
-- **Eliminates threading complexity** through intuitive, high-level abstractions
-- **Ensures thread safety** by design, preventing common concurrency bugs  
-- **Maximizes performance** through optimized algorithms and modern C++ features
-- **Promotes code reusability** across different platforms and use cases
-- **Accelerates development** by providing ready-to-use threading components
+As a Tier 1 Core Services library in the kcenon ecosystem, Thread System depends
+only on common_system (Tier 0) and provides the concurrency foundation for
+logger_system, monitoring_system, network_system, and database_system.
 
-\section advantages Core Advantages
+Key goals:
+- **Eliminate threading complexity** through intuitive, high-level abstractions
+- **Ensure thread safety** by design, preventing common concurrency bugs
+- **Maximize performance** through optimized algorithms and modern C++ features
+- **Promote code reusability** across different platforms and use cases
 
-\subsection performance 🚀 Performance Excellence
-- **Zero-overhead abstractions**: Modern C++ design ensures minimal runtime cost
-- **Optimized data structures**: Lock-free algorithms and cache-friendly designs
-- **Adaptive scheduling**: Type-based job processing for optimal resource utilization
-- **Scalable architecture**: Linear performance scaling with hardware thread count
+@section features Key Features
 
-\subsection reliability 🛡️ Production-Grade Reliability
-- **Thread-safe by design**: All components guarantee safe concurrent access
-- **Comprehensive error handling**: Robust error reporting and recovery mechanisms
-- **Memory safety**: RAII principles and smart pointers prevent leaks and corruption
-- **Extensive testing**: 95%+ CI/CD success rate across multiple platforms and compilers
+| Category | Feature | Description |
+|----------|---------|-------------|
+| **Core** | Thread Pool | Multi-worker pool with adaptive queue and submit_task API |
+| **Core** | Typed Thread Pool | Priority-based scheduling with job type routing and aging |
+| **Queue** | Adaptive Job Queue | Auto-switches between mutex and lock-free modes |
+| **Queue** | Policy Queue | Configurable sync, overflow, and bounded policies |
+| **Lock-free** | Lock-free Job Queue | Michael-Scott algorithm with hazard pointer reclamation |
+| **Lock-free** | Work Stealing Deque | Chase-Lev deque for work stealing schedulers |
+| **Scheduling** | DAG Scheduler | Dependency graph-based job execution with dag_job_builder |
+| **Scheduling** | Work Stealing | NUMA-aware work stealing across thread pools |
+| **Scaling** | Autoscaler | Dynamic thread pool sizing based on load metrics |
+| **Diagnostics** | Health Status | Thread pool health monitoring and bottleneck detection |
+| **Metrics** | Latency Histogram | Per-job latency tracking with sliding window counters |
+| **Safety** | Cancellation Token | Cooperative cancellation with hierarchy support |
+| **Safety** | Hazard Pointers | Thread-local hazard arrays for lock-free memory reclamation |
 
-\subsection productivity 🔧 Developer Productivity
-- **Intuitive API design**: Clean, self-documenting interfaces reduce learning curve
-- **Rich documentation**: Comprehensive Doxygen documentation with examples
-- **Flexible configuration**: Template-based customization for specific needs
-- **Debugging support**: Built-in logging and monitoring capabilities
+@section architecture Architecture Diagram
 
-\section main_components Main Components
+The library is organized into layers. Higher layers depend on lower layers, but
+never the reverse.
 
-\subsection thread_base Thread Base Foundation (thread_module)
-The foundational layer providing:
-- **thread_base class**: Core threading functionality with lifecycle management
-- **C++20 compatibility**: Full std::jthread support with std::thread fallback
-- **job/job_queue classes**: Type-safe work unit management
-- **Cancellation support**: Cooperative task cancellation using std::stop_token
-- See namespace \ref thread_module for complete details
+@dot
+digraph architecture {
+    rankdir=TB;
+    node [shape=box, style="filled,rounded", fontname="Helvetica", fontsize=11];
+    edge [color="#555555"];
 
-\subsection logger Asynchronous Logging System (log_module)
-High-performance logging infrastructure:
-- **logger class**: Thread-safe singleton with multiple output targets
-- **Flexible levels**: Configurable log filtering (Trace, Debug, Info, Warning, Error, Critical)
-- **Multiple outputs**: Console, file, and callback writers running in separate threads
-- **Unicode support**: Full internationalization capabilities
-- See namespace \ref log_module for comprehensive documentation
+    subgraph cluster_core {
+        label="Core";
+        style="dashed";
+        color="#1a73e8";
+        fontcolor="#1a73e8";
+        ThreadPool [label="thread_pool\ntyped_thread_pool", fillcolor="#e8f0fe"];
+        Workers    [label="thread_worker\ntyped_thread_worker", fillcolor="#e8f0fe"];
+        Jobs       [label="job / typed_job\ncallback_job", fillcolor="#e8f0fe"];
+        Cancel     [label="cancellation_token\nsync_primitives", fillcolor="#e8f0fe"];
+    }
 
-\subsection thread_pool Thread Pool System (thread_pool_module)
-Efficient worker thread management:
-- **thread_worker class**: High-performance worker threads with automatic load balancing
-- **thread_pool class**: Scalable pool management with dynamic sizing
-- **Batch operations**: Optimized bulk job submission for improved throughput
-- **Factory functions**: Simple creation with sensible defaults
-- See namespace \ref thread_pool_module for implementation details
+    subgraph cluster_queue {
+        label="Queues";
+        style="dashed";
+        color="#34a853";
+        fontcolor="#34a853";
+        Adaptive   [label="adaptive_job_queue", fillcolor="#e6f4ea"];
+        LockFree   [label="lockfree_job_queue\nwork_stealing_deque", fillcolor="#e6f4ea"];
+        PolicyQ    [label="policy_queue\noverflow_policies", fillcolor="#e6f4ea"];
+    }
 
-\subsection typed_thread_pool Type-based Thread Pool System (typed_thread_pool_module)
-Advanced type-based task scheduling:
-- **Configurable job types**: Support for custom job type definitions and levels
-- **Worker specialization**: Per-worker type responsibility assignment  
-- **FIFO guarantee**: Strict ordering within same type levels
-- **O(log n) operations**: Optimized type queue implementation
-- See namespace \ref typed_thread_pool_module for advanced features
+    subgraph cluster_scheduling {
+        label="Scheduling";
+        style="dashed";
+        color="#ea8600";
+        fontcolor="#ea8600";
+        DAG        [label="dag_scheduler\ndag_job_builder", fillcolor="#fef7e0"];
+        Stealing   [label="work_stealing\nNUMA-aware", fillcolor="#fef7e0"];
+    }
 
-\subsection utilities Supporting Utilities (utility_module)
-Essential infrastructure components:
-- **String conversion**: Unicode and cross-platform text handling
-- **Error handling**: Modern result<T> pattern for robust error management
-- **Formatting**: C++20 std::format for type-safe string formatting
-- **Date/time helpers**: Time zone aware timestamp generation
-- See namespace \ref utility_module for utility functions
+    subgraph cluster_diagnostics {
+        label="Diagnostics & Scaling";
+        style="dashed";
+        color="#9334e6";
+        fontcolor="#9334e6";
+        Health     [label="health_status\nbottleneck_report", fillcolor="#f3e8fd"];
+        Metrics    [label="latency_histogram\nsliding_window_counter", fillcolor="#f3e8fd"];
+        Autoscale  [label="autoscaler\nautoscaling_policy", fillcolor="#f3e8fd"];
+    }
 
-\section performance_characteristics Performance Characteristics
+    ThreadPool -> Workers;
+    Workers    -> Jobs;
+    Workers    -> Adaptive;
+    Adaptive   -> LockFree;
+    Adaptive   -> PolicyQ;
+    Jobs       -> Cancel;
+    ThreadPool -> DAG;
+    ThreadPool -> Stealing;
+    ThreadPool -> Health;
+    Health     -> Metrics;
+    Health     -> Autoscale;
+}
+@enddot
 
-\subsection benchmarks 📈 Performance Benchmarks
-- **Thread creation overhead**: ~10-15 microseconds per thread
-- **Job scheduling latency**: ~1-2 microseconds per job
-- **Priority queue operations**: O(1) average complexity with optimized implementations
-- **Memory efficiency**: <1MB baseline memory usage for typical configurations
-- **Throughput**: 100,000+ jobs/second sustained processing rate
+@section quickstart Quick Start
 
-\subsection scalability 🎯 Scalability Features
-- **Linear scaling**: Performance scales with hardware thread count
-- **Memory efficient**: Minimal overhead per worker and job
-- **Platform optimized**: Specialized implementations for different architectures
-- **Load balancing**: Automatic work distribution across available threads
+Create a thread pool and submit jobs in a few lines:
 
-\section design_principles Design Principles
-
-The Thread System is built on four fundamental principles:
-
-1. **Safety First**: Thread-safe by design, preventing common concurrency bugs
-2. **Performance Oriented**: Zero-overhead abstractions with optimized algorithms
-3. **Developer Friendly**: Intuitive APIs that reduce learning curve and development time
-4. **Production Ready**: Robust error handling, comprehensive logging, and extensive testing
-
-Additional design considerations:
-- **Hierarchical Architecture**: Components build upon each other in a logical hierarchy
-- **Flexible Configuration**: Customizable behavior through inheritance and templates
-- **Modern C++**: Leverages C++20 features where available with fallbacks for compatibility
-- **Cross-platform**: Works seamlessly on Windows, Linux, and macOS
-
-\section quick_start Quick Start Guide
-
-\subsection five_minute 🚀 5-Minute Setup
-
-\code{.cpp}
-#include "typed_thread_pool.h"
-using namespace typed_thread_pool_module;
+@code{.cpp}
+#include <kcenon/thread/thread_pool.h>
+#include <iostream>
+#include <future>
 
 int main() {
-    // 1. Initialize logging
-    log_module::start();
-    
-    // 2. Create type-based thread pool
-    auto pool = std::make_shared<typed_thread_pool_t<job_types>>();
-    
-    // 3. Add workers with different responsibilities
-    pool->add_worker(job_types::High);  // High type specialist
-    pool->add_worker({job_types::High, job_types::Normal}); // Multi-type worker
-    
-    // 4. Start processing
+    // Create a thread pool with hardware concurrency workers
+    auto pool = kcenon::thread::thread_pool::create();
     pool->start();
-    
-    // 5. Submit jobs with types
-    pool->enqueue(std::make_unique<callback_typed_job_t<job_types>>(
-        []() -> result_void {
-            log_module::write_info("Processing high-type task");
-            return {};
-        }, job_types::High));
-    
-    // 6. Clean shutdown
+
+    // Submit a job and get a future
+    auto future = pool->submit_task([]() -> kcenon::thread::result_void {
+        std::cout << "Hello from thread pool!\n";
+        return {};
+    });
+
+    // Wait for completion
+    future.wait();
+
+    // Typed thread pool with priority scheduling
+    using job_types = kcenon::thread::job_types;
+    auto typed_pool = std::make_shared<
+        kcenon::thread::typed_thread_pool_t<job_types>>();
+
+    typed_pool->add_worker(job_types::High);
+    typed_pool->add_worker({job_types::High, job_types::Normal});
+    typed_pool->start();
+
+    typed_pool->enqueue(
+        std::make_unique<kcenon::thread::callback_typed_job_t<job_types>>(
+            []() -> kcenon::thread::result_void {
+                std::cout << "High-priority task executed\n";
+                return {};
+            }, job_types::High));
+
+    typed_pool->stop();
     pool->stop();
-    log_module::stop();
     return 0;
 }
-\endcode
+@endcode
 
-\section usage_examples Usage Examples
+@section installation Installation
 
-The library includes comprehensive sample code demonstrating:
-- **Basic logger usage**: High-performance, multi-target logging examples
-- **Thread pool processing**: Simple job processing with automatic load balancing
-- **Type-based scheduling**: Sophisticated type-based task management  
-- **Custom job types**: Extending framework with domain-specific types
-- **Error handling patterns**: Robust error management and recovery
-- **Performance optimization**: Benchmarking and tuning techniques
+@subsection install_fetchcontent CMake FetchContent (Recommended)
 
-\section use_cases Real-World Applications
-
-\subsection applications 🎯 Ideal Use Cases
-- **High-frequency trading systems**: Microsecond-level latency requirements
-- **Game engines**: Real-time rendering and physics simulation
-- **Web servers**: Concurrent request processing with priority handling
-- **Scientific computing**: Parallel algorithm execution and data processing
-- **Media processing**: Video encoding, image processing, audio streaming
-- **IoT systems**: Sensor data collection and real-time response
-
-\section quality_assurance Quality Assurance
-
-\subsection testing ✅ Comprehensive Testing
-- **200+ unit tests**: All major components thoroughly tested
-- **Platform coverage**: Automated CI/CD across Windows, Linux, macOS
-- **Performance regression**: Continuous benchmarking and monitoring
-- **Memory safety**: Valgrind and AddressSanitizer integration
-- **Code coverage**: 85%+ line coverage with comprehensive test suite
-
-\subsection standards 🏆 Industry Standards
-- **Code quality**: Clean reports from static analysis tools (PVS-Studio, Clang-Tidy, CodeFactor)
-- **Documentation**: 95%+ API coverage with examples
-- **Maintainability**: Low cyclomatic complexity across all modules
-- **Performance**: Optimized for both throughput and latency requirements
-
-\section integration Integration & Installation
-
-\subsection build 🛠️ Build Instructions
-
-\code{.bash}
-# Clone and build
-git clone https://github.com/kcenon/thread_system.git
-cd thread_system
-
-# One-command setup
-./dependency.sh && ./build.sh  # Linux/macOS
-./dependency.bat && ./build.bat # Windows
-
-# Verify installation
-./build/bin/thread_pool_sample
-\endcode
-
-\subsection cmake_integration CMake Integration
-
-\code{.cmake}
-# Using FetchContent
+@code{.cmake}
 include(FetchContent)
-FetchContent_Declare(thread_system
+FetchContent_Declare(
+    thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG v1.0.0
+    GIT_TAG        v0.3.1
 )
 FetchContent_MakeAvailable(thread_system)
-target_link_libraries(your_target PRIVATE thread_system)
-\endcode
 
-\section documentation_resources Documentation Resources
+target_link_libraries(your_target PRIVATE kcenon::thread_core)
+@endcode
 
-\subsection guides 📚 Comprehensive Guides
-- **Architecture Guide**: Detailed system design and component relationships
-- **Performance Tuning**: Optimization strategies and benchmarking techniques
-- **Migration Guide**: Step-by-step upgrade path from existing threading code
-- **Troubleshooting**: Common issues and solutions for concurrent programming
-- **API Reference**: Complete interface documentation with examples
-- **Quick Start**: Get running in 5 minutes with basic examples
+@subsection install_vcpkg vcpkg
 
-\section support Community & Support
+@code{.bash}
+vcpkg install kcenon-thread-system
+@endcode
 
-\subsection getting_help 🤝 Getting Help
-- **GitHub Issues**: Bug reports and feature requests
-- **GitHub Discussions**: Questions and community interaction
-- **Documentation**: Comprehensive guides and API reference
-- **Sample Code**: Real-world usage examples and patterns
+@code{.cmake}
+find_package(thread_system CONFIG REQUIRED)
+target_link_libraries(your_target PRIVATE kcenon::thread_core)
+@endcode
 
-\subsection contributing 🌟 Contributing
-We welcome contributions! See CONTRIBUTING.md for:
-- Development setup and workflow
-- Coding standards and best practices
-- Testing guidelines and requirements
-- Review process and quality criteria
+@subsection install_manual Build from Source
 
-\section roadmap Future Roadmap
+@code{.bash}
+git clone https://github.com/kcenon/thread_system.git
+cd thread_system
+./scripts/dependency.sh && ./scripts/build.sh   # Linux/macOS
+./scripts/dependency.bat && ./scripts/build.bat  # Windows
+@endcode
 
-\subsection planned_features 🚀 Planned Enhancements
-- **Coroutine integration**: C++20 coroutine support for async workflows
-- **Lock-free optimizations**: Zero-contention data structures
-- **NUMA awareness**: Topology-aware thread affinity and memory allocation
-- **Distributed computing**: Multi-node thread pool coordination
-- **GPU acceleration**: Hybrid CPU-GPU processing capabilities
+@section modules Module Overview
 
-\section license License
+| Module | Directory | Key Headers | Description |
+|--------|-----------|-------------|-------------|
+| **Core** | `core/` | thread_pool.h, thread_worker.h, job.h, job_queue.h | Thread pool, workers, jobs, cancellation, hazard pointers, sync primitives |
+| **Queue** | `queue/` | adaptive_job_queue.h, queue_factory.h | Adaptive job queue (auto mutex/lockfree) and factory |
+| **Lock-free** | `lockfree/` | lockfree_job_queue.h, work_stealing_deque.h | Michael-Scott queue, Chase-Lev deque |
+| **DAG** | `dag/` | dag_scheduler.h, dag_job.h, dag_config.h | Dependency graph-based job scheduling |
+| **Stealing** | `stealing/` | work_stealing_pool.h, numa_topology.h | NUMA-aware work stealing scheduler |
+| **Scaling** | `scaling/` | autoscaler.h, autoscaling_policy.h | Dynamic thread pool sizing |
+| **Diagnostics** | `diagnostics/` | thread_pool_diagnostics.h, health_status.h | Health monitoring, bottleneck reporting |
+| **Metrics** | `metrics/` | enhanced_metrics.h, latency_histogram.h | Latency histograms, sliding window counters |
+| **Policies** | `policies/` | sync_policies.h, overflow_policies.h | Sync and overflow policy abstractions |
+| **Pool Policies** | `pool_policies/` | autoscaling.h, circuit_breaker.h, work_stealing.h | Pool-level behavioral policies |
+| **Adapters** | `adapters/` | common_executor_adapter.h, job_queue_adapter.h | Bridges to common_system IExecutor |
+| **Concepts** | `concepts/` | thread_concepts.h | C++20 concepts for thread domain |
 
-This project is licensed under the BSD 3-Clause License, ensuring:
-- **Commercial use**: Free for commercial and proprietary applications
-- **Modification**: Freedom to modify and adapt the code
-- **Distribution**: Redistribution rights with proper attribution
-- **Patent protection**: Limited patent grant for safe usage
+@section examples Examples
 
-\section thread_modules Core Modules
+| Example | Source | Description |
+|---------|--------|-------------|
+| Thread Pool | @ref thread_pool_sample | Basic thread pool creation and job submission |
+| Typed Thread Pool | @ref typed_thread_pool_sample | Priority-based scheduling with job types |
+| Typed Thread Pool 2 | @ref typed_thread_pool_sample_2 | Advanced typed pool patterns |
+| Typed Job Queue | @ref typed_job_queue_sample | Type-aware job queue operations |
+| Job Cancellation | @ref job_cancellation_example | Cooperative task cancellation |
+| Adaptive Queue | @ref adaptive_queue_sample | Auto-switching mutex/lockfree queue |
+| Hazard Pointer | @ref hazard_pointer_sample | Lock-free memory reclamation |
+| MPMC Queue | @ref mpmc_queue_sample | Multi-producer multi-consumer queue |
+| Queue Factory | @ref queue_factory_sample | Queue creation via factory |
+| Queue Capabilities | @ref queue_capabilities_sample | Query and compare queue features |
+| Node Pool | @ref node_pool_sample | Pooled node allocation |
+| Crash Protection | @ref crash_protection | Fault-tolerant job execution |
+| Config Example | @ref config_example | Thread pool configuration |
+| Composition | @ref composition_example | Composing thread pools and queues |
+| Integration | @ref integration_example | Multi-component integration |
+| Minimal Pool | @ref minimal_thread_pool | Minimal thread pool setup |
+| Service Registry | @ref service_registry_sample | DI-based thread pool registration |
+| Logger Sample | @ref logger_sample | Async logging with thread pool |
 
-Each namespace encapsulates a logical set of components:
+@section related Related Systems
 
-\namespace thread_module
-\brief Core threading foundation of the thread system library.
+Thread System is a Tier 1 Core Services library in the kcenon ecosystem.
+It depends on common_system and provides concurrency for higher-tier systems:
 
-The thread_module namespace provides fundamental threading primitives 
-including the base thread class, jobs, job queues, and synchronization utilities.
-It serves as the foundation for all thread-related functionality in the library.
-
-Key classes:
-- thread_base: Foundation for all thread operations with lifecycle management
-- job: Abstract base for units of work
-- job_queue: Thread-safe queue for job management
-- callback_job: Function-based job implementation
-
-\namespace thread_pool_module
-\brief Thread pool implementation for managing worker threads.
-
-The thread_pool_module namespace provides a standard thread pool implementation
-for processing jobs concurrently using a team of worker threads.
-
-Key classes:
-- thread_pool: Main pool management class
-- thread_worker: Individual worker thread implementation
-- Factory functions for easy pool creation
-
-\namespace typed_thread_pool_module
-\brief Type-based thread pool implementation for job scheduling with custom types.
-
-The typed_thread_pool_module namespace extends the basic thread pool concept
-with type-based scheduling of jobs, allowing tasks to be processed according
-to their type classification rather than just their order of submission.
-
-Key classes:
-- typed_thread_pool_t: Template-based type pool
-- typed_thread_worker_t: Worker with type awareness
-- typed_job_t: Jobs with associated type levels
-- typed_job_queue_t: Type-aware job queue
-
-\namespace log_module
-\brief Thread-safe logging system built on the thread system foundation.
-
-The log_module namespace provides a comprehensive, thread-safe logging system
-that leverages the thread_module infrastructure for asynchronous log processing.
-
-Key features:
-- Multiple output targets (console, file, callback)
-- Configurable log levels and filtering
-- Unicode and internationalization support
-- High-performance asynchronous processing
-
-\namespace utility_module
-\brief Utility components supporting the thread system library.
-
-The utility_module namespace contains helper classes and functions used
-throughout the thread system library, providing common functionality not
-directly related to threading.
-
-Key utilities:
-- String conversion and formatting
-- Error handling with result<T> pattern
-- Date/time manipulation
-- File operations and argument parsing
-
----
-
-**Thread System: Making concurrent programming accessible, safe, and efficient for developers worldwide.**
-
-For the most up-to-date information and source code, visit: https://github.com/kcenon/thread_system
+| System | Tier | Relationship | Repository |
+|--------|------|--------------|------------|
+| common_system | 0 | Dependency (IExecutor, Result\<T\>) | https://github.com/kcenon/common_system |
+| logger_system | 2 | Downstream (async logging) | https://github.com/kcenon/logger_system |
+| monitoring_system | 3 | Downstream (concurrent monitoring) | https://github.com/kcenon/monitoring_system |
+| network_system | 4 | Downstream (concurrent I/O) | https://github.com/kcenon/network_system |
+| database_system | 3 | Downstream (async queries) | https://github.com/kcenon/database_system |
 
 */
