@@ -2,6 +2,18 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file composition_example.cpp
+ * @brief Composition-based design with service container, logger, and monitoring
+ * @example composition_example.cpp
+ *
+ * Demonstrates three usage patterns: minimal thread pool without any services,
+ * full composition with ILogger and IMonitor registered in the global
+ * service_container, and dynamic service registration at runtime.
+ *
+ * @see service_container, thread_context, thread_pool, ILogger, IMonitor
+ */
+
 #include <iostream>
 #include <chrono>
 #include <thread>

@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_thread_pool_sample.cpp
+ * @brief Typed thread pool with priority-based job routing using built-in job_types
+ * @example typed_thread_pool_sample.cpp
+ *
+ * Demonstrates priority scheduling with the typed_thread_pool. Workers are
+ * assigned to RealTime, Batch, or Background priority lanes, and jobs are
+ * routed to matching workers automatically.
+ *
+ * @see typed_thread_pool, typed_thread_worker, callback_typed_job, job_types
+ */
+
 #include <iostream>
 #include <memory>
 #include <chrono>

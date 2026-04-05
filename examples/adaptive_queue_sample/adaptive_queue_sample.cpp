@@ -2,6 +2,19 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file adaptive_queue_sample.cpp
+ * @brief Adaptive job queue sample comparing policies and demonstrating mode switching
+ * @example adaptive_queue_sample.cpp
+ *
+ * Covers five examples: queue policy comparison (accuracy, performance,
+ * balanced), adaptive behavior under varying contention, different queue
+ * policies, performance monitoring with live statistics, and a web server
+ * request-processing simulation.
+ *
+ * @see adaptive_job_queue, callback_job
+ */
+
 #include <kcenon/thread/queue/adaptive_job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
 

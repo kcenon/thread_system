@@ -2,9 +2,16 @@
 // Copyright (c) 2021-2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
-/*****************************************************************************
-BSD 3-Clause License
-*****************************************************************************/
+/**
+ * @file main.cpp
+ * @brief Service registry sample showing singleton service registration and thread pool usage
+ * @example service_registry_sample/main.cpp
+ *
+ * Demonstrates registering a simple service in the global service_registry,
+ * retrieving it, and running a basic thread pool with a single worker.
+ *
+ * @see service_registry, thread_pool, callback_job
+ */
 
 #include <iostream>
 #include <memory>
