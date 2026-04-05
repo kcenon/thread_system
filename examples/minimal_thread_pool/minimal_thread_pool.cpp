@@ -2,6 +2,18 @@
 // Copyright (c) 2025, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file minimal_thread_pool.cpp
+ * @brief Minimal thread pool example without external logger dependency
+ * @example minimal_thread_pool.cpp
+ *
+ * Demonstrates the simplest way to create a thread pool, add workers,
+ * submit callback jobs, and wait for completion. No logger or monitoring
+ * services are required.
+ *
+ * @see thread_pool, thread_worker, callback_job
+ */
+
 #include <atomic>
 #include <chrono>
 #include <iostream>

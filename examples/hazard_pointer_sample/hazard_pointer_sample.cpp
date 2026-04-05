@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file hazard_pointer_sample.cpp
+ * @brief Hazard pointer usage for safe lock-free memory reclamation
+ * @example hazard_pointer_sample.cpp
+ *
+ * Demonstrates basic hazard pointer acquisition and retirement, a
+ * concurrent lock-free stack using hazard pointers, and a memory
+ * safety test with concurrent reader/writer threads.
+ *
+ * @see hazard_pointer_manager, hazard_pointer
+ */
+
 #include "thread_base/lockfree/memory/hazard_pointer.h"
 #include "logger/core/logger.h"
 #include <thread>

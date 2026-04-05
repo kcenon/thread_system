@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file mpmc_queue_sample.cpp
+ * @brief Lock-free MPMC queue patterns: SPSC, MPMC, batch ops, and benchmarks
+ * @example mpmc_queue_sample.cpp
+ *
+ * Four examples: basic single-producer/single-consumer, multi-producer/
+ * multi-consumer, batch enqueue/dequeue, and enqueue/dequeue performance
+ * measurement with statistics.
+ *
+ * @see lockfree_job_queue, callback_job
+ */
+
 #include "thread_base/lockfree/queues/lockfree_job_queue.h"
 #include "thread_base/jobs/callback_job.h"
 #include "logger/core/logger.h"

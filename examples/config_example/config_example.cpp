@@ -4,10 +4,15 @@
 
 /**
  * @file config_example.cpp
- * @brief Examples demonstrating the unified configuration system
+ * @brief Unified configuration system examples using the builder pattern
+ * @example config_example.cpp
  *
- * This file shows various ways to configure thread_system using the
- * new unified configuration structure and builder pattern.
+ * Demonstrates nine configuration scenarios: defaults, builder basics,
+ * backpressure, circuit breaker, work stealing, priority aging, DAG
+ * scheduling, a production-ready combined config, and direct struct
+ * initialization.
+ *
+ * @see thread_system_config, thread_system_config::builder
  */
 
 #include <kcenon/thread/thread_config.h>

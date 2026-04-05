@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file logger_sample.cpp
+ * @brief Logger system sample with multi-language Unicode output
+ * @example logger_sample.cpp
+ *
+ * Demonstrates logger initialization, file/console targets, and Unicode
+ * output (Korean, Chinese, Japanese) through both narrow and wide string
+ * logging APIs.
+ *
+ * @see log_module
+ */
+
 #include <iostream>
 #include <chrono>
 #include <thread>

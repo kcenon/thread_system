@@ -7,19 +7,14 @@ All rights reserved.
 
 /**
  * @file job_cancellation_example.cpp
- * @brief Demonstrates the job cancellation system in thread_system.
+ * @brief Cooperative job cancellation and graceful shutdown patterns
+ * @example job_cancellation_example.cpp
  *
- * This example showcases:
- * 1. Jobs that cooperatively check for cancellation
- * 2. Worker-level cancellation when stop() is called
- * 3. Pool-level hierarchical cancellation
- * 4. Different cancellation scenarios (immediate vs. graceful)
+ * Showcases four scenarios: basic cancellation via worker stop,
+ * non-cooperative job anti-pattern, pool-level multi-worker cancellation,
+ * and immediate versus graceful shutdown comparison.
  *
- * Compilation:
- * g++ -std=c++20 -I../include job_cancellation_example.cpp -L../build/lib -lThreadSystem -o cancellation_demo
- *
- * Usage:
- * ./cancellation_demo
+ * @see thread_pool, job, cancellation_token
  */
 
 #include <kcenon/thread/core/thread_pool.h>

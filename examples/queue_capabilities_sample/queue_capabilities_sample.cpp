@@ -4,10 +4,15 @@
 
 /**
  * @file queue_capabilities_sample.cpp
- * @brief Demonstrates queue_capabilities_interface usage for runtime capability introspection
+ * @brief Runtime queue capability introspection and adaptive queue selection
+ * @example queue_capabilities_sample.cpp
  *
- * This sample shows how to use the queue_capabilities_interface to query
- * and adapt behavior based on queue implementation characteristics.
+ * Five examples: basic capability query, convenience methods, dynamic
+ * capability check through polymorphic interface, capability-driven queue
+ * selection, and a comparison table of all queue implementations.
+ *
+ * @see queue_capabilities_interface, queue_capabilities, job_queue,
+ *      lockfree_job_queue, adaptive_job_queue
  */
 
 #include <kcenon/thread/core/job_queue.h>

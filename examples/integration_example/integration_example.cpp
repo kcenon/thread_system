@@ -4,15 +4,15 @@
 
 /**
  * @file integration_example.cpp
- * @brief Demonstrates integration of thread_system with external logger and monitoring
- * 
- * This example shows how to:
- * 1. Use thread_system with external logger implementation
- * 2. Use thread_system with external monitoring implementation
- * 3. Combine both for a complete system
- * 
- * Note: This example assumes logger_system and monitoring_system are installed
- * or available in the build path.
+ * @brief Integration of thread_system with external logger and monitoring services
+ * @example integration_example.cpp
+ *
+ * Shows four patterns: thread pool with logger only, thread pool with
+ * monitoring only, complete integration with both services, and dynamic
+ * service registration at runtime. Uses mock implementations of ILogger
+ * and IMonitor.
+ *
+ * @see service_container, thread_context, ILogger, IMonitor
  */
 
 #include <iostream>

@@ -7,15 +7,14 @@ All rights reserved.
 
 /**
  * @file multi_process_monitoring_integration.cpp
- * @brief Example demonstrating integration with multi-process monitoring system
+ * @brief Multi-process monitoring integration with multiple thread pools
+ * @example multi_process_monitoring_integration.cpp
  *
- * This example shows how to:
- * - Use thread pools with proper instance identification
- * - Report metrics through the monitoring interface
- * - Handle multiple thread pools in the same process
- * - Integrate with process identification for multi-process scenarios
+ * Shows how to run multiple named thread pools in one process, report
+ * metrics through the IMonitor interface, and use pool instance IDs for
+ * multi-process monitoring scenarios.
  *
- * @note Issue #312: Updated to use common::interfaces::IMonitor
+ * @see thread_pool, thread_context, IMonitor
  */
 
 #include <kcenon/thread/core/thread_pool.h>
